@@ -1,0 +1,23 @@
+{
+  "name": "@wordinator/db",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run --passWithNoTests",
+    "generate": "drizzle-kit generate"
+  },
+  "dependencies": {
+    "drizzle-orm": "latest"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "~4.20250927.0",
+    "drizzle-kit": "latest",
+    "vitest": "~3.2.4"
+  }
+}

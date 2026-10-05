@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f5ede2" />
+    <script>
+      try {
+        var preference = localStorage.getItem("wordinator:color-scheme");
+        var scheme = preference === "light" || preference === "dark"
+          ? preference
+          : matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.setAttribute("data-mantine-color-scheme", scheme);
+        document.documentElement.style.colorScheme = scheme;
+        document.querySelector('meta[name="theme-color"]').content = scheme === "dark" ? "#1c1715" : "#f5ede2";
+      } catch (error) {
+        document.documentElement.setAttribute("data-mantine-color-scheme", "light");
+      }
+    </script>
+    <meta name="description" content="A shared language-learning journal for friends." />
+    <title>Wordinator</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

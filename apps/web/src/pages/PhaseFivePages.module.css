@@ -1,0 +1,15 @@
+.stack{display:grid;gap:var(--section-rhythm);animation:wordinator-enter var(--motion-reveal) var(--ease-physical) both}
+.directory{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(17rem,.65fr);align-items:start;gap:var(--space-8)}
+.directoryPanel{display:grid;gap:var(--space-5);padding:var(--card-inset)}
+.memberList{display:grid}
+.member{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-5) 0;border-bottom:1px solid var(--color-separator)}.member:last-child{border-bottom:0}
+.identity{display:flex;align-items:center;gap:var(--space-3);min-width:0}
+.identity a{font-weight:var(--weight-semibold);color:var(--color-foreground);overflow-wrap:anywhere}
+.identity p{margin:var(--space-1) 0 0;color:var(--color-foreground-muted)}
+.actions{display:flex;gap:var(--space-2);flex-wrap:wrap;justify-content:flex-end}
+.formerList{opacity:.78}.temporary{display:grid;gap:var(--space-4);padding:var(--space-6);overflow-wrap:anywhere}.temporary code{display:block;margin:var(--space-4) 0;padding:var(--space-4);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-md);font-family:var(--font-mono);font-size:var(--text-xl);letter-spacing:.08em;user-select:all}.leavePanel{padding:var(--card-inset)}
+.upload{display:grid;gap:var(--space-4);padding:var(--space-4);background:var(--color-muted);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-inset-highlight)}
+.preview{display:flex;align-items:center;gap:var(--space-4);padding-bottom:var(--space-4);border-bottom:1px solid var(--color-separator)}.preview span{max-width:32rem;color:var(--color-foreground-muted);font-size:var(--type-metadata)}
+@media(max-width:48em){.stack{gap:var(--space-10)}.directory{grid-template-columns:1fr;gap:var(--space-6)}}
+@media(max-width:40em){.member{align-items:flex-start;flex-direction:column}.actions{justify-content:flex-start}.actions>*{flex:1}.preview{align-items:flex-start;flex-direction:column}}
+@media(prefers-reduced-motion:reduce){.stack{animation:none}}

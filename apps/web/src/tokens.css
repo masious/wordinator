@@ -1,0 +1,302 @@
+:root {
+  /* Primitive palette: components should prefer the semantic roles below. */
+  --palette-paper: #f5ede2;
+  --palette-paper-deep: #eadfce;
+  --palette-surface: #fffaf2;
+  --palette-surface-raised: #fffdf8;
+  --palette-surface-muted: #eee5d8;
+  --palette-ink: #2d2622;
+  --palette-ink-muted: #6f6259;
+  --palette-coral: #e9826d;
+  --palette-coral-hover: #f09a87;
+  --palette-coral-active: #d66f5a;
+  --palette-sage: #a9c8b4;
+  --palette-sage-soft: #dce9df;
+  --palette-ochre: #e7bd62;
+  --palette-ochre-soft: #f6e6b9;
+  --palette-blue: #a8c8df;
+  --palette-blue-soft: #dce9f1;
+  --palette-danger: #b9534c;
+  --palette-danger-soft: #f5d7d1;
+  --palette-danger-ink: #6f2f2a;
+  --palette-success: #3f775a;
+  --palette-success-soft: #dceade;
+  --palette-focus: #315f8a;
+  --palette-page-glow: rgb(255 253 248 / 72%);
+  --palette-page-accent: rgb(169 200 180 / 14%);
+
+  /* Semantic color roles */
+  --color-page: var(--palette-paper);
+  --color-page-deep: var(--palette-paper-deep);
+  --color-surface: var(--palette-surface);
+  --color-surface-raised: var(--palette-surface-raised);
+  --color-surface-muted: var(--palette-surface-muted);
+  --color-muted: var(--palette-surface-muted);
+  --color-foreground: var(--palette-ink);
+  --color-foreground-muted: var(--palette-ink-muted);
+  --color-action: var(--palette-coral);
+  --color-action-text: var(--palette-ink);
+  --color-support: var(--palette-sage);
+  --color-support-soft: var(--palette-sage-soft);
+  --color-highlight: var(--palette-ochre);
+  --color-highlight-soft: var(--palette-ochre-soft);
+  --color-info: var(--palette-blue);
+  --color-info-soft: var(--palette-blue-soft);
+  --color-danger: var(--palette-danger);
+  --color-danger-surface: var(--palette-danger-soft);
+  --color-danger-text: var(--palette-danger-ink);
+  --color-success: var(--palette-success);
+  --color-success-surface: var(--palette-success-soft);
+  --color-focus: var(--palette-focus);
+
+  /* Surface, border, and state roles */
+  --color-bezel: rgb(45 38 34 / 5%);
+  --color-core: var(--color-surface-raised);
+  --color-hairline: rgb(45 38 34 / 13%);
+  --color-inner-highlight: rgb(255 255 255 / 72%);
+  --color-separator: rgb(45 38 34 / 20%);
+  --color-border-subtle: var(--color-hairline);
+  --color-border: var(--color-separator);
+  --color-navigation-glass: rgb(255 250 242 / 84%);
+  --color-overlay: rgb(45 38 34 / 38%);
+  --color-overlay-glass: rgb(255 250 242 / 88%);
+  --color-hover: var(--palette-coral-hover);
+  --color-active: var(--palette-coral-active);
+  --color-disabled: var(--palette-surface-muted);
+  --color-disabled-text: #786c64;
+  --color-unread: var(--palette-ochre-soft);
+  --color-selected: var(--palette-ochre-soft);
+  --color-concealed: var(--palette-blue-soft);
+  --color-pinned: var(--palette-sage-soft);
+  --color-wash-subtle: rgb(45 38 34 / 3%);
+  --color-wash: rgb(45 38 34 / 5%);
+  --color-wash-strong: rgb(45 38 34 / 8%);
+  --color-page-glow: var(--palette-page-glow);
+  --color-page-accent: var(--palette-page-accent);
+  --grain-opacity: 0.026;
+  --grain-blend-mode: multiply;
+
+  /* Compatibility aliases for primitive references during migration. */
+  --color-paper: var(--palette-paper);
+  --color-ink: var(--palette-ink);
+  --color-ink-muted: var(--palette-ink-muted);
+  --color-coral: var(--palette-coral);
+  --color-mint: var(--palette-sage);
+  --color-yellow: var(--palette-ochre);
+  --color-blue: var(--palette-blue);
+
+  /* Typography families and semantic roles */
+  --font-sans: "Manrope Variable", Manrope, system-ui, sans-serif;
+  --font-display: "Newsreader Variable", Newsreader, Georgia, serif;
+  --font-serif: var(--font-display);
+  --font-mono: "DM Mono", ui-monospace, monospace;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.25rem;
+  --text-4xl: 3rem;
+  --text-display: clamp(3.25rem, 8vw, 6.75rem);
+  --text-hero: var(--text-display);
+  --type-page-title: clamp(2.75rem, 6vw, 5.25rem);
+  --type-section-title: clamp(1.9rem, 3.5vw, 3rem);
+  --type-card-title: var(--text-xl);
+  --type-body: var(--text-md);
+  --type-authored: clamp(1.0625rem, 1.5vw, 1.1875rem);
+  --type-metadata: var(--text-sm);
+  --type-eyebrow: 0.6875rem;
+  --type-control-label: var(--text-sm);
+  --weight-regular: 400;
+  --weight-medium: 560;
+  --weight-semibold: 640;
+  --weight-bold: 720;
+  --line-compact: 1.25;
+  --line-heading: 1.04;
+  --line-title: 1.12;
+  --line-body: 1.65;
+  --tracking-display: -0.035em;
+  --tracking-title: -0.02em;
+  --tracking-eyebrow: 0.18em;
+
+  /* Spacing */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --space-40: 160px;
+
+  /* Shape, border, and elevation */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-shell: 36px;
+  --radius-core: calc(var(--radius-shell) - var(--space-2));
+  --radius-pill: 999px;
+  --ring-hairline: 1px solid var(--color-hairline);
+  --border-subtle: var(--ring-hairline);
+  --border-strong: 2px solid var(--color-foreground);
+  --shadow-inset-highlight: inset 0 1px 0 var(--color-inner-highlight);
+  --shadow-card: 0 1px 2px rgb(45 38 34 / 5%), 0 12px 32px rgb(67 51 40 / 8%);
+  --shadow-raised: 0 2px 4px rgb(45 38 34 / 5%), 0 24px 64px rgb(67 51 40 / 12%);
+  --shadow-floating: 0 8px 24px rgb(45 38 34 / 10%), 0 32px 80px rgb(67 51 40 / 13%);
+  --shadow-overlay: 0 28px 90px rgb(45 38 34 / 18%);
+  --shadow-pressed: 0 1px 2px rgb(45 38 34 / 8%), inset 0 1px 2px rgb(45 38 34 / 7%);
+
+  /* Layout and control sizing */
+  --width-reading: 760px;
+  --width-shell: 1200px;
+  --width-modal: 640px;
+  --width-modal-reading: 760px;
+  --page-gutter: clamp(var(--space-4), 4vw, var(--space-10));
+  --section-rhythm: clamp(var(--space-20), 10vw, var(--space-40));
+  --card-inset: clamp(var(--space-5), 3vw, var(--space-8));
+  --shell-clearance: var(--space-6);
+  --navigation-offset: var(--space-6);
+  --navigation-height: 72px;
+  --mobile-dock-height: 72px;
+  --mobile-dock-clearance: calc(var(--mobile-dock-height) + var(--navigation-offset) + env(safe-area-inset-bottom, 0px));
+  --control-height-sm: 40px;
+  --control-height: 44px;
+  --control-height-lg: 52px;
+  --touch-target: 44px;
+  --breakpoint-sm: 36em;
+  --breakpoint-md: 48em;
+  --breakpoint-lg: 62em;
+  --breakpoint-xl: 75em;
+
+  /* Layering */
+  --z-content: 10;
+  --z-grain: 50;
+  --z-navigation: 100;
+  --z-floating-action: 200;
+  --z-overlay: 300;
+  --z-transient: 400;
+
+  /* Motion */
+  --motion-press: 140ms;
+  --motion-standard: 360ms;
+  --motion-default: var(--motion-standard);
+  --motion-overlay: 520ms;
+  --motion-reveal: 820ms;
+  --ease-physical: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-out: var(--ease-physical);
+  --entry-distance: var(--space-5);
+}
+
+[data-mantine-color-scheme="dark"],
+[data-theme-preview="dark"] {
+  --palette-paper: #1c1715;
+  --palette-paper-deep: #120f0e;
+  --palette-surface: #251f1c;
+  --palette-surface-raised: #2d2521;
+  --palette-surface-muted: #38302b;
+  --palette-ink: #f6eadc;
+  --palette-ink-muted: #c6b5a8;
+  --palette-coral: #f09a87;
+  --palette-coral-hover: #f5aa99;
+  --palette-coral-active: #d98270;
+  --palette-sage: #92b99e;
+  --palette-sage-soft: #30443a;
+  --palette-ochre: #d8ad58;
+  --palette-ochre-soft: #493b25;
+  --palette-blue: #8db6d0;
+  --palette-blue-soft: #293d49;
+  --palette-danger: #ef938b;
+  --palette-danger-soft: #512c29;
+  --palette-danger-ink: #ffd9d5;
+  --palette-success: #86c79e;
+  --palette-success-soft: #294435;
+  --palette-focus: #9bcdf4;
+  --palette-page-glow: rgb(103 75 62 / 22%);
+  --palette-page-accent: rgb(91 128 104 / 13%);
+
+  --color-bezel: rgb(246 234 220 / 5%);
+  --color-action-text: #2d1c18;
+  --color-hairline: rgb(246 234 220 / 13%);
+  --color-inner-highlight: rgb(255 244 230 / 10%);
+  --color-separator: rgb(246 234 220 / 21%);
+  --color-navigation-glass: rgb(37 31 28 / 88%);
+  --color-overlay: rgb(12 9 8 / 66%);
+  --color-overlay-glass: rgb(45 37 33 / 94%);
+  --color-disabled-text: #ab9b90;
+  --color-wash-subtle: rgb(246 234 220 / 3%);
+  --color-wash: rgb(246 234 220 / 6%);
+  --color-wash-strong: rgb(246 234 220 / 10%);
+  --grain-opacity: 0.018;
+  --grain-blend-mode: soft-light;
+
+  --shadow-card: 0 1px 2px rgb(8 5 4 / 18%), 0 14px 36px rgb(8 5 4 / 20%);
+  --shadow-raised: 0 2px 5px rgb(8 5 4 / 20%), 0 26px 68px rgb(8 5 4 / 28%);
+  --shadow-floating: 0 10px 28px rgb(8 5 4 / 25%), 0 34px 84px rgb(8 5 4 / 32%);
+  --shadow-overlay: 0 30px 96px rgb(8 5 4 / 42%);
+  --shadow-pressed: 0 1px 2px rgb(8 5 4 / 24%), inset 0 1px 3px rgb(8 5 4 / 24%);
+}
+
+[data-theme-preview="light"] {
+  --palette-paper: #f5ede2;
+  --palette-paper-deep: #eadfce;
+  --palette-surface: #fffaf2;
+  --palette-surface-raised: #fffdf8;
+  --palette-surface-muted: #eee5d8;
+  --palette-ink: #2d2622;
+  --palette-ink-muted: #6f6259;
+  --palette-coral: #e9826d;
+  --palette-coral-hover: #f09a87;
+  --palette-coral-active: #d66f5a;
+  --palette-sage: #a9c8b4;
+  --palette-sage-soft: #dce9df;
+  --palette-ochre: #e7bd62;
+  --palette-ochre-soft: #f6e6b9;
+  --palette-blue: #a8c8df;
+  --palette-blue-soft: #dce9f1;
+  --palette-danger: #b9534c;
+  --palette-danger-soft: #f5d7d1;
+  --palette-danger-ink: #6f2f2a;
+  --palette-success: #3f775a;
+  --palette-success-soft: #dceade;
+  --palette-focus: #315f8a;
+  --palette-page-glow: rgb(255 253 248 / 72%);
+  --palette-page-accent: rgb(169 200 180 / 14%);
+
+  --color-bezel: rgb(45 38 34 / 5%);
+  --color-hairline: rgb(45 38 34 / 13%);
+  --color-inner-highlight: rgb(255 255 255 / 72%);
+  --color-separator: rgb(45 38 34 / 20%);
+  --color-navigation-glass: rgb(255 250 242 / 84%);
+  --color-overlay: rgb(45 38 34 / 38%);
+  --color-overlay-glass: rgb(255 250 242 / 88%);
+  --color-disabled-text: #786c64;
+  --color-wash-subtle: rgb(45 38 34 / 3%);
+  --color-wash: rgb(45 38 34 / 5%);
+  --color-wash-strong: rgb(45 38 34 / 8%);
+  --grain-opacity: 0.026;
+  --grain-blend-mode: multiply;
+
+  --shadow-card: 0 1px 2px rgb(45 38 34 / 5%), 0 12px 32px rgb(67 51 40 / 8%);
+  --shadow-raised: 0 2px 4px rgb(45 38 34 / 5%), 0 24px 64px rgb(67 51 40 / 12%);
+  --shadow-floating: 0 8px 24px rgb(45 38 34 / 10%), 0 32px 80px rgb(67 51 40 / 13%);
+  --shadow-overlay: 0 28px 90px rgb(45 38 34 / 18%);
+  --shadow-pressed: 0 1px 2px rgb(45 38 34 / 8%), inset 0 1px 2px rgb(45 38 34 / 7%);
+}
+
+@media (max-width: 48em) {
+  :root {
+    --page-gutter: var(--space-4);
+    --section-rhythm: var(--space-10);
+    --card-inset: var(--space-5);
+    --shell-clearance: var(--space-4);
+    --navigation-offset: var(--space-3);
+  }
+}

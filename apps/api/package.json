@@ -1,0 +1,30 @@
+{
+  "name": "@wordinator/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev --port 8787",
+    "build": "wrangler deploy --dry-run --outdir dist",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run && vitest run --config vitest.r2.config.ts",
+    "db:migrate:local": "wrangler d1 migrations apply wordinator --local",
+    "db:migrate:remote": "wrangler d1 migrations apply wordinator --remote"
+  },
+  "dependencies": {
+    "@wordinator/contracts": "workspace:*",
+    "@wordinator/db": "workspace:*",
+    "drizzle-orm": "latest",
+    "hono": "latest",
+    "zod": "latest"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-pool-workers": "~0.8.71",
+    "@cloudflare/workers-types": "~4.20250927.0",
+    "@vitest/runner": "~3.2.4",
+    "@vitest/snapshot": "~3.2.4",
+    "vitest": "~3.2.4",
+    "wrangler": "~4.38.0"
+  }
+}

@@ -1,0 +1,85 @@
+@import "./tokens.css";
+
+* { box-sizing: border-box; }
+
+html {
+  background: var(--color-page);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100dvh;
+  margin: 0;
+  background:
+    radial-gradient(circle at 12% -8%, var(--color-page-glow) 0 18rem, transparent 42rem),
+    radial-gradient(circle at 92% 14%, var(--color-page-accent) 0 12rem, transparent 34rem),
+    linear-gradient(180deg, var(--color-page) 0%, var(--color-page-deep) 180%);
+  background-attachment: fixed;
+  color: var(--color-foreground);
+  font-size: var(--text-md);
+  line-height: var(--line-body);
+}
+
+body::before {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-grain);
+  pointer-events: none;
+  content: "";
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 96 96' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.72'/%3E%3C/svg%3E");
+  background-size: 96px 96px;
+  mix-blend-mode: var(--grain-blend-mode);
+  contain: strict;
+}
+
+#root { min-height: 100dvh; }
+
+:where(h1, h2) {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-title);
+}
+
+::selection {
+  background: var(--color-selected);
+  color: var(--color-foreground);
+}
+
+:where(p, li, dd, blockquote, figcaption, a) { overflow-wrap: anywhere; }
+
+a { color: currentColor; }
+
+@keyframes wordinator-enter {
+  from { opacity: 0; transform: translateY(var(--entry-distance)); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes wordinator-enter-soft {
+  from { opacity: 0; transform: translateY(var(--space-3)); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+:where(button, a, input, textarea, select, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+@media print, (forced-colors: active) {
+  body { background: var(--color-page); }
+  body::before { display: none; }
+}

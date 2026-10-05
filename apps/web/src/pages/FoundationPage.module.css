@@ -1,0 +1,6 @@
+.page { min-height: 100dvh; display: grid; place-items: center; padding: var(--space-6); background: radial-gradient(circle at 15% 15%, var(--color-highlight) 0 7rem, transparent 7.1rem), var(--color-page); }
+.page > section { width: min(100%, var(--width-reading)); }
+.card { padding: clamp(24px, 6vw, 64px); }
+.heading { max-width: 12ch; margin: var(--space-4) 0 var(--space-6); font-size: var(--text-hero); line-height: var(--line-heading); letter-spacing: -.04em; }
+.intro { max-width: 55ch; margin: 0 0 var(--space-8); color: var(--color-foreground-muted); font-size: var(--text-lg); line-height: var(--line-body); }
+.statusRow { display: grid; gap: var(--space-3); }

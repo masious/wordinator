@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1790696687246,
+      "tag": "0000_platform_foundation",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1790765804204,
+      "tag": "0001_friendly_rhino",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1790785754195,
+      "tag": "0002_funny_scalphunter",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1790853505869,
+      "tag": "0003_motionless_photon",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1790854196048,
+      "tag": "0004_quick-reaction-defaults",
+      "breakpoints": true
+    }
+  ]
+}
