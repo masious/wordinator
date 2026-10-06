@@ -18,7 +18,7 @@
     }
   ],
   "vars": {
-    "PUBLIC_MEDIA_BASE_URL": "http://localhost:8787/api/media"
+    "PUBLIC_MEDIA_BASE_URL": "https://7ae6c114ff33d7282df4b8449c6ab7cf.r2.cloudflarestorage.com/wordinator-media"
   },
   "observability": {
 	"logs": {
