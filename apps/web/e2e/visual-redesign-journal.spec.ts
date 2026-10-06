@@ -12,10 +12,10 @@ test("the redesigned journal preserves order and collapses cleanly on narrow scr
   await page.getByRole("button", { name: "Sign in" }).click();
 
   await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
-  await expect(page.getByText("A new journal entry")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Write something…" })).toBeVisible();
 
   for (const body of [older, newer]) {
-    await page.getByRole("button", { name: "Create post" }).first().click();
+    await page.getByRole("button", { name: "Write something…" }).click();
     await page.getByLabel("Sentence").fill(body);
     await page.getByRole("button", { name: "Publish post" }).click();
     await expect(page.getByRole("dialog")).toBeHidden();
@@ -34,7 +34,7 @@ test("the redesigned journal preserves order and collapses cleanly on narrow scr
   await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
   await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
 
-  await page.getByRole("button", { name: "Create post" }).first().click();
+  await page.getByRole("button", { name: "Write something…" }).click();
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();
   await expect.poll(async () => (await dialog.boundingBox())?.width).toBe(390);

@@ -472,3 +472,16 @@ export const practiceDiscussionResponseSchema = z.object({
   items: z.array(discussionItemSchema), count: z.number().int().nonnegative(), quickReactions: quickReactionsSchema, reference: practiceReferenceSchema,
 });
 export type PracticeDiscussionResponse = z.infer<typeof practiceDiscussionResponseSchema>;
+
+// Course progress counts the lessons a member finished in the lesson player among the currently published lessons.
+export const courseParticipantProgressSchema = z.object({
+  user: postAuthorSchema, completedLessons: z.number().int().nonnegative(), percent: z.number().int().min(0).max(100),
+});
+export type CourseParticipantProgress = z.infer<typeof courseParticipantProgressSchema>;
+export const courseProgressResponseSchema = z.object({
+  publishedLessons: z.number().int().nonnegative(),
+  // The viewer's own finished lessons, including ones currently unpublished, so the outline can mark them.
+  completedLessonIds: z.array(opaqueIdSchema),
+  participants: z.array(courseParticipantProgressSchema),
+});
+export type CourseProgressResponse = z.infer<typeof courseProgressResponseSchema>;

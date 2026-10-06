@@ -19,7 +19,10 @@ export default defineConfig({
     },
   ],
   projects: [
-    { name: "chromium", use: { ...devices["Desktop Chrome"], channel: "chrome" } },
-    { name: "webkit", use: { ...devices["Desktop Safari"] } }
+    { name: "chromium", testIgnore: /mobile-.*\.spec\.ts/, use: { ...devices["Desktop Chrome"], channel: "chrome" } },
+    { name: "webkit", testIgnore: /mobile-.*\.spec\.ts/, use: { ...devices["Desktop Safari"] } },
+    { name: "mobile-chromium", testMatch: /mobile-.*\.spec\.ts/, use: { ...devices["Pixel 7"], channel: "chrome" } },
+    { name: "mobile-narrow", testMatch: /mobile-.*\.spec\.ts/, use: { ...devices["Pixel 7"], channel: "chrome", viewport: { width: 360, height: 740 } } },
+    { name: "mobile-webkit", testMatch: /mobile-.*\.spec\.ts/, use: { ...devices["iPhone 13"] } }
   ]
 });

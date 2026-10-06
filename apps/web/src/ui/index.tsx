@@ -123,8 +123,8 @@ export function SelectField({ className, ...props }: SelectProps) { return <Sele
 export function CheckboxField({ className, ...props }: CheckboxProps) { return <Checkbox className={`${styles.choice} ${className ?? ""}`} {...props} />; }
 export function RadioField({ className, ...props }: RadioProps) { return <Radio className={`${styles.choice} ${className ?? ""}`} {...props} />; }
 
-export function PageHeader({ eyebrow, title, intro, actions }: { eyebrow?: ReactNode; title: ReactNode; intro?: ReactNode; actions?: ReactNode }) {
-  return <header className={styles.pageHeader}><div className={styles.pageHeaderCopy}>{eyebrow && <div>{eyebrow}</div>}<h1>{title}</h1>{intro && <p>{intro}</p>}</div>{actions && <div className={styles.pageHeaderActions}>{actions}</div>}</header>;
+export function PageHeader({ eyebrow, title, intro, actions, className }: { eyebrow?: ReactNode; title: ReactNode; intro?: ReactNode; actions?: ReactNode; className?: string }) {
+  return <header className={className ? `${styles.pageHeader} ${className}` : styles.pageHeader}><div className={styles.pageHeaderCopy}>{eyebrow && <div>{eyebrow}</div>}<h1>{title}</h1>{intro && <p>{intro}</p>}</div>{actions && <div className={styles.pageHeaderActions}>{actions}</div>}</header>;
 }
 
 export function SectionHeader({ eyebrow, title, description, action }: { eyebrow?: ReactNode; title: ReactNode; description?: ReactNode; action?: ReactNode }) {

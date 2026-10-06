@@ -108,6 +108,10 @@
   --type-metadata: var(--text-sm);
   --type-eyebrow: 0.6875rem;
   --type-control-label: var(--text-sm);
+  --type-post-author: 0.9375rem;
+  --type-post-meta: 0.8125rem;
+  --type-post-body: var(--type-authored);
+  --line-post-body: var(--line-body);
   --weight-regular: 400;
   --weight-medium: 560;
   --weight-semibold: 640;
@@ -297,8 +301,14 @@
   :root {
     --page-gutter: var(--space-4);
     --section-rhythm: var(--space-10);
-    --card-inset: var(--space-5);
     --shell-clearance: var(--space-4);
     --navigation-offset: var(--space-3);
+    --card-inset: var(--space-4);
+    --navigation-height: 56px;
+    --mobile-dock-height: 64px;
+    --type-page-title: 1.75rem;
+    --type-section-title: 1.375rem;
+    --type-card-title: var(--text-lg);
+    --line-post-body: 1.55;
   }
 }

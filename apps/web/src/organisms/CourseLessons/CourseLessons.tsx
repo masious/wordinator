@@ -5,11 +5,12 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ApiError, apiRequest, courseQueryOptions, lessonQueryOptions } from "../../api";
+import { ApiError, apiRequest, courseProgressQueryOptions, courseQueryOptions, lessonQueryOptions } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
 import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, SectionHeader, Surface, TextAreaField, TextField } from "../../ui";
 import { BlockEditor, blockContent, courseBlockDraftKey, hasBlockDraft } from "./BlockEditor";
 import { CourseErrorMessage } from "./CourseErrorMessage";
+import { LessonPlayer } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
 import { PracticeContent, PracticeThread } from "./PracticeBlock";
 
@@ -111,8 +112,9 @@ function BlockItem({ scope, lesson, block, index }: { scope: Scope; lesson: Cour
   </li>;
 }
 
-function LessonSection({ scope, summary, number, preloaded, outline, dataUpdatedAt }: {
+function LessonSection({ scope, summary, number, preloaded, outline, dataUpdatedAt, completed, round, onStart }: {
   scope: Scope; summary: CourseLessonSummary; number: number; preloaded?: CourseLesson; outline: CourseLessonSummary[]; dataUpdatedAt: number;
+  completed: boolean; round: number; onStart: () => void;
 }) {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const lessonKey = lessonQueryOptions(scope.groupId, scope.courseId, summary.id).queryKey;
@@ -150,6 +152,12 @@ function LessonSection({ scope, summary, number, preloaded, outline, dataUpdated
       <p className={styles.lessonNumber}>{t("courses.lessons.number", { number })}</p>
       <h2 id={`${lessonAnchor(summary.id)}-title`}>{current.title}</h2>
       {current.goal && <p className={styles.goal}><PlainText>{current.goal}</PlainText></p>}
+      {!!data?.blocks.length && <div className={styles.start}>
+        <Button variant={completed ? "secondary" : "primary"} onClick={onStart} aria-label={t(completed ? "courses.player.againNamed" : "courses.player.startNamed", { number })}>
+          {completed ? t("courses.player.again") : t("courses.player.start")}
+        </Button>
+        {completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
+      </div>}
       {(scope.contribute || scope.removable) && <div className={styles.blockTools}>
         <DraftChip published={current.published} />
         {scope.contribute && <span className={styles.attribution}>{t("courses.blocks.updatedBy", { name: current.updatedBy.displayName })}</span>}
@@ -169,7 +177,8 @@ function LessonSection({ scope, summary, number, preloaded, outline, dataUpdated
     </header>
     {lesson.isPending ? <LoadingState label={t("courses.lessons.loading")} />
       : lesson.isError ? <ErrorState title={t("courses.lessons.unavailable")} />
-      : current.blocks.length ? <ol className={styles.blocks}>{current.blocks.map((block, index) => <BlockItem key={block.id} scope={scope} lesson={current} block={block} index={index} />)}</ol>
+      // The round changes after the lesson player closes, so answer composers reread drafts the player may have changed.
+      : current.blocks.length ? <ol className={styles.blocks} key={round}>{current.blocks.map((block, index) => <BlockItem key={block.id} scope={scope} lesson={current} block={block} index={index} />)}</ol>
       : <p className={styles.emptyLesson}>{t("courses.blocks.empty")}</p>}
     {scope.contribute && data && (adding
       ? <Surface tone="inset" className={styles.addBlock}><BlockEditor groupId={scope.groupId} courseId={scope.courseId} lessonId={summary.id} accountId={scope.accountId} canPublish={scope.owner} onClose={() => setAdding(false)} /></Surface>
@@ -194,6 +203,9 @@ export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdate
   // Lessons render progressively: the preloaded ones first, then one more each time the reader continues.
   const [shown, setShown] = useState(detail.lessons.length);
   const [addOpen, setAddOpen] = useState(false);
+  const [playing, setPlaying] = useState<string | null>(null); const [round, setRound] = useState(0);
+  const progress = useQuery(courseProgressQueryOptions(groupId, courseId));
+  const completed = new Set(progress.data?.completedLessonIds ?? []);
   const create = useMutation({
     mutationFn: (input: LessonInput) => apiRequest(lessonsPath(scope), lessonResponseSchema, { method: "POST", body: JSON.stringify(input) }),
     onSuccess: async (data) => {
@@ -213,7 +225,9 @@ export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdate
     <nav className={styles.outline} aria-label={t("courses.lessons.outline")}>
       <SectionHeader title={t("courses.lessons.outline")} />
       {outline.length ? <ol>{outline.map((lesson, index) => <li key={lesson.id}>
-        <button type="button" onClick={() => jumpTo(index)}><span className={styles.outlineNumber}>{index + 1}</span><span>{lesson.title}</span></button>
+        <button type="button" onClick={() => jumpTo(index)}>
+          <span className={styles.outlineNumber}>{completed.has(lesson.id) ? <span className={styles.check} role="img" aria-label={t("courses.progress.completed")}>✓</span> : index + 1}</span><span>{lesson.title}</span>
+        </button>
         <DraftChip published={lesson.published} />
       </li>)}</ol> : <p className={styles.emptyLesson}>{t("courses.lessons.outlineEmpty")}</p>}
       {addAction}
@@ -221,10 +235,14 @@ export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdate
     <div className={styles.lessons}>
       {outline.length
         ? visible.map((lesson, index) => <LessonSection key={lesson.id} scope={scope} summary={lesson} number={index + 1} outline={outline}
-          preloaded={detail.lessons.find((entry) => entry.id === lesson.id)} dataUpdatedAt={dataUpdatedAt} />)
+          preloaded={detail.lessons.find((entry) => entry.id === lesson.id)} dataUpdatedAt={dataUpdatedAt}
+          completed={completed.has(lesson.id)} round={round} onStart={() => setPlaying(lesson.id)} />)
         : <Surface tone="quiet"><EmptyState title={t("courses.noLessonsTitle")} action={addAction || undefined}>{t("courses.noLessonsBody")}</EmptyState></Surface>}
       {next && <Button variant="secondary" className={styles.continue} onClick={() => jumpTo(visible.length)}>{t("courses.lessons.continue", { number: visible.length + 1, title: next.title })}</Button>}
     </div>
+    <LessonPlayer scope={scope} lessonId={playing} outline={outline}
+      onChangeLesson={(lessonId) => { setPlaying(lessonId); setShown((value) => Math.max(value, outline.findIndex((entry) => entry.id === lessonId) + 1)); }}
+      onClose={() => { setPlaying(null); setRound((value) => value + 1); }} />
     <AdaptiveDialog opened={addOpen} onClose={() => setAddOpen(false)} title={t("courses.lessons.addTitle")}>
       {addOpen && <LessonForm submitLabel={t("courses.lessons.addSubmit")} pending={create.isPending} error={create.error} onSubmit={(input) => create.mutate(input)} onCancel={() => setAddOpen(false)} />}
     </AdaptiveDialog>

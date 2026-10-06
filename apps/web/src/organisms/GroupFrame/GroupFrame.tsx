@@ -1,15 +1,16 @@
-import { Menu } from "@mantine/core";
+import { Drawer, Menu } from "@mantine/core";
 import { okResponseSchema } from "@wordinator/contracts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import type { PropsWithChildren, ReactNode } from "react";
+import { type PropsWithChildren, type ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest } from "../../api";
-import { Avatar } from "../../ui";
+import { AdaptiveDialog, Avatar } from "../../ui";
+import { CreateGroupForm } from "../CreateGroupForm/CreateGroupForm";
 import type { SignedInSession } from "../types/auth";
 import styles from "./GroupFrame.module.css";
 
-type ShellIconName = "journal" | "courses" | "members" | "notifications" | "profile" | "settings" | "signOut" | "chevron";
+type ShellIconName = "journal" | "courses" | "members" | "notifications" | "profile" | "settings" | "signOut" | "chevron" | "more" | "plus" | "check";
 
 function ShellIcon({ name }: { name: ShellIconName }) {
   const paths: Record<ShellIconName, ReactNode> = {
@@ -21,6 +22,9 @@ function ShellIcon({ name }: { name: ShellIconName }) {
     settings: <><circle cx="10" cy="10" r="2.5" /><path d="M10 2.75v1.5m0 11.5v1.5M17.25 10h-1.5m-11.5 0h-1.5m12.38-5.13-1.06 1.06M5.93 14.07l-1.06 1.06m10.26 0-1.06-1.06M5.93 5.93 4.87 4.87" /></>,
     signOut: <><path d="M8.25 3.25H5.5a2 2 0 0 0-2 2v9.5a2 2 0 0 0 2 2h2.75M12.5 6.25 16.25 10l-3.75 3.75M7.25 10h9" /></>,
     chevron: <path d="m6.75 8.25 3.25 3.5 3.25-3.5" />,
+    more: <><circle cx="4.75" cy="10" r=".75" /><circle cx="10" cy="10" r=".75" /><circle cx="15.25" cy="10" r=".75" /></>,
+    plus: <path d="M10 4.25v11.5M4.25 10h11.5" />,
+    check: <path d="m4.75 10.25 3.5 3.5 7-7.5" />,
   };
   return <svg aria-hidden="true" className={styles.shellIcon} viewBox="0 0 20 20">{paths[name]}</svg>;
 }
@@ -34,52 +38,68 @@ export function GroupFrame({ children, groupId, session }: PropsWithChildren<{ g
   const navigate = useNavigate();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const queryClient = useQueryClient();
+  const [moreOpen, setMoreOpen] = useState(false);
+  const [creatingGroup, setCreatingGroup] = useState(false);
   const signOut = useMutation({
     mutationFn: () => apiRequest("/api/auth/sign-out", okResponseSchema, { method: "POST" }),
     onSuccess: async () => { queryClient.clear(); await navigate({ to: "/" }); },
   });
+  const currentGroup = session.groups.find((group) => group.id === groupId);
   const profileParams = { groupId, userId: session.user.id };
-  const journalActive = pathname === `/groups/${groupId}` || pathname.startsWith(`/groups/${groupId}/posts/`);
-  const coursesActive = pathname === `/groups/${groupId}/courses` || pathname.startsWith(`/groups/${groupId}/courses/`);
-  const primaryLinks = <>
-    <Link aria-current={journalActive ? "page" : undefined} activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId" params={{ groupId }}><NavLabel icon="journal">{t("nav.journal")}</NavLabel></Link>
-    <Link aria-current={coursesActive ? "page" : undefined} className={styles.navItem} to="/groups/$groupId/courses" params={{ groupId }}><NavLabel icon="courses">{t("nav.courses")}</NavLabel></Link>
-    <Link activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId/members" params={{ groupId }}><NavLabel icon="members">{t("nav.members")}</NavLabel></Link>
-    <Link activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId/notifications" params={{ groupId }}><NavLabel icon="notifications">{t("nav.notifications")}</NavLabel></Link>
-  </>;
+  const groupPath = `/groups/${groupId}`;
+  const journalActive = pathname === groupPath || pathname.startsWith(`${groupPath}/posts/`);
+  const coursesActive = pathname === `${groupPath}/courses` || pathname.startsWith(`${groupPath}/courses/`);
+  // More collects every destination that is not in the four-slot dock.
+  const moreActive = ["members", "settings"].some((section) => pathname === `${groupPath}/${section}` || pathname.startsWith(`${groupPath}/${section}/`));
+  const journalLink = <Link aria-current={journalActive ? "page" : undefined} activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId" params={{ groupId }}><NavLabel icon="journal">{t("nav.journal")}</NavLabel></Link>;
+  const coursesLink = <Link aria-current={coursesActive ? "page" : undefined} className={styles.navItem} to="/groups/$groupId/courses" params={{ groupId }}><NavLabel icon="courses">{t("nav.courses")}</NavLabel></Link>;
+  const notificationsLink = <Link activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId/notifications" params={{ groupId }}><NavLabel icon="notifications">{t("nav.notifications")}</NavLabel></Link>;
+  const closeMore = () => setMoreOpen(false);
 
   return <div className={styles.shell}>
     <header className={styles.topbar}>
       <div className={styles.navIsland}>
         <div className={styles.navCore}>
-          <Link className={styles.brand} to="/groups/$groupId" params={{ groupId }}><span aria-hidden="true" className={styles.brandMark}>W</span><span className={styles.brandName}>{t("brand")}</span></Link>
-          <nav className={styles.desktopNav} aria-label={t("nav.primary")}>{primaryLinks}</nav>
-          <Menu position="bottom-end" width={220} withinPortal>
+          <Link aria-label={t("brand")} className={styles.brand} to="/groups/$groupId" params={{ groupId }}><span aria-hidden="true" className={styles.brandMark}>W</span><span className={styles.brandName}>{t("brand")}</span></Link>
+          {currentGroup && <span className={styles.currentGroup}>{currentGroup.name}</span>}
+          <nav className={styles.desktopNav} aria-label={t("nav.primary")}>
+            {journalLink}
+            {coursesLink}
+            <Link activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId/members" params={{ groupId }}><NavLabel icon="members">{t("nav.members")}</NavLabel></Link>
+            {notificationsLink}
+          </nav>
+          <Menu position="bottom-end" width={260} withinPortal>
             <Menu.Target>
               <button aria-label={t("nav.accountMenu")} className={styles.accountTrigger} type="button">
                 <Avatar name={session.user.displayName} src={session.user.avatarUrl} />
                 <span className={styles.accountName}>{session.user.displayName}</span>
-                <ShellIcon name="chevron" />
+                <span className={styles.accountChevron}><ShellIcon name="chevron" /></span>
               </button>
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item onClick={() => void navigate({ to: "/groups/$groupId/members/$userId", params: profileParams })}>
-                <div className={styles.profile}>
-                  <Avatar className={styles.profileAvatar} size={88} name={session.user.displayName} src={session.user.avatarUrl} />
-                  <div className={styles.profileInfo}>
-                    <div className={styles.profileDisplayName}>{session.user.displayName}</div>
-                    {t("nav.profile")}
-                  </div>
-                </div>
+                <span className={styles.identity}>
+                  <Avatar size={40} name={session.user.displayName} src={session.user.avatarUrl} />
+                  <span className={styles.identityText}>
+                    <span className={styles.identityName}>{session.user.displayName}</span>
+                    <span className={styles.identityHint}>{t("nav.profile")}</span>
+                  </span>
+                </span>
               </Menu.Item>
-              <label className={styles.switcher}>
-                <span className={styles.srOnly}>{t("group.switcher")}</span>
-                <span aria-hidden="true" className={styles.switcherAccent} />
-                <select value={groupId} onChange={(event) => void navigate({ to: "/groups/$groupId", params: { groupId: event.currentTarget.value } })}>
-                  {session.groups.map((group) => <option key={group.id} value={group.id}>{group.icon} {group.name}</option>)}
-                </select>
-                <span aria-hidden="true" className={styles.switcherChevron}><ShellIcon name="chevron" /></span>
-              </label>
+              <Menu.Divider />
+              <div role="group" aria-label={t("group.switcher")}>
+                <Menu.Label>{t("group.switcher")}</Menu.Label>
+                {session.groups.map((group) => {
+                  const current = group.id === groupId;
+                  return <Menu.Item key={group.id} aria-current={current ? "true" : undefined}
+                    leftSection={group.iconUrl ? <Avatar size={24} name={group.name} src={group.iconUrl} /> : <span aria-hidden="true" className={styles.groupIcon}>{group.icon}</span>}
+                    rightSection={current ? <ShellIcon name="check" /> : undefined}
+                    onClick={() => { if (!current) void navigate({ to: "/groups/$groupId", params: { groupId: group.id } }); }}>
+                    <span className={styles.groupName}>{group.name}</span>
+                  </Menu.Item>;
+                })}
+                <Menu.Item leftSection={<ShellIcon name="plus" />} onClick={() => setCreatingGroup(true)}>{t("group.createAnother")}</Menu.Item>
+              </div>
               <Menu.Divider />
               <Menu.Item leftSection={<ShellIcon name="settings" />} onClick={() => void navigate({ to: "/groups/$groupId/settings", params: { groupId } })}>{t("nav.settings")}</Menu.Item>
               <Menu.Item color="var(--color-danger-text)" disabled={signOut.isPending} leftSection={<ShellIcon name="signOut" />} onClick={() => signOut.mutate()}>{t("auth.signOut")}</Menu.Item>
@@ -89,12 +109,25 @@ export function GroupFrame({ children, groupId, session }: PropsWithChildren<{ g
       </div>
     </header>
     <main className={styles.shellMain}>{children}</main>
-    <nav className={styles.mobileDock} aria-label={t("nav.mobile") }>
+    <nav className={styles.mobileDock} aria-label={t("nav.mobile")}>
       <div className={styles.mobileNav}>
-        {primaryLinks}
-        <Link activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId/members/$userId" params={profileParams}><NavLabel icon="profile">{t("nav.profile")}</NavLabel></Link>
-        <Link activeOptions={{ exact: false }} className={styles.navItem} to="/groups/$groupId/settings" params={{ groupId }}><NavLabel icon="settings">{t("nav.settings")}</NavLabel></Link>
+        {journalLink}
+        {coursesLink}
+        {notificationsLink}
+        <button aria-current={moreActive ? "page" : undefined} aria-expanded={moreOpen} aria-haspopup="dialog" className={styles.navItem} type="button" onClick={() => setMoreOpen(true)}><NavLabel icon="more">{t("nav.more")}</NavLabel></button>
       </div>
     </nav>
+    <Drawer classNames={{ content: styles.sheet, header: styles.sheetHeader, title: styles.sheetTitle, body: styles.sheetBody }} opened={moreOpen} onClose={closeMore} position="bottom" title={t("nav.more")}>
+      <div className={styles.sheetList}>
+        <Link activeOptions={{ exact: true }} className={styles.sheetItem} to="/groups/$groupId/members" params={{ groupId }} onClick={closeMore}><ShellIcon name="members" />{t("nav.members")}</Link>
+        <Link activeOptions={{ exact: true }} className={styles.sheetItem} to="/groups/$groupId/members/$userId" params={profileParams} onClick={closeMore}><ShellIcon name="profile" />{t("nav.profile")}</Link>
+        <Link className={styles.sheetItem} to="/groups/$groupId/settings" params={{ groupId }} onClick={closeMore}><ShellIcon name="settings" />{t("nav.settings")}</Link>
+        <button className={styles.sheetItem} type="button" onClick={() => { closeMore(); setCreatingGroup(true); }}><ShellIcon name="plus" />{t("group.createAnother")}</button>
+        <button className={`${styles.sheetItem} ${styles.sheetDanger}`} disabled={signOut.isPending} type="button" onClick={() => signOut.mutate()}><ShellIcon name="signOut" />{t("auth.signOut")}</button>
+      </div>
+    </Drawer>
+    <AdaptiveDialog opened={creatingGroup} onClose={() => setCreatingGroup(false)} title={t("group.createTitle")}>
+      {creatingGroup && <CreateGroupForm onClose={() => setCreatingGroup(false)} />}
+    </AdaptiveDialog>
   </div>;
 }

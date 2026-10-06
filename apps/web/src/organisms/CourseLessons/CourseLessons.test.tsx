@@ -27,7 +27,15 @@ const dialogue: CourseBlock = {
   id: "50000000-0000-4000-8000-000000000002", lessonId: lessonId(1), position: 1, published: false, version: 1, updatedBy: editor, updatedAt: 1,
   kind: "dialogue", payload: { turns: [{ speaker: "A", text: "Is er een tuin?" }, { speaker: "B", text: "Nee." }] },
 };
+const practice: CourseBlock = {
+  id: "50000000-0000-4000-8000-000000000003", lessonId: lessonId(1), position: 2, published: true, version: 1, updatedBy: editor, updatedAt: 1,
+  kind: "practice", payload: { instruction: "Translate.", passage: null, items: [{ prompt: "There is a garden." }, { prompt: "No." }] }, reference: null, answerCount: 0,
+};
 const lesson = (n: number, blocks: CourseBlock[] = []): CourseLesson => ({ ...summary(n), blocks });
+const progress = (completedLessonIds: string[]) => ({
+  publishedLessons: 4, completedLessonIds,
+  participants: [{ user: { id: accountId, displayName: "Ada", avatarUrl: null }, completedLessons: completedLessonIds.length, percent: completedLessonIds.length * 25 }],
+});
 
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
 function renderLessons(detail: CourseDetailResponse) {
@@ -44,6 +52,8 @@ beforeEach(() => {
   blockPatch = (init) => response({ block: { ...example, ...JSON.parse(String(init.body)), version: 4 } });
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
+    if (path.endsWith("/progress")) return response(progress([]));
+    if (path.endsWith("/completion") && init?.method === "PUT") return response(progress([lessonId(1)]));
     if (path.endsWith(`/lessons/${lessonId(4)}`)) return response({ lesson: lessonFour });
     if (path.endsWith(`/lessons/${lessonId(1)}`)) return response({ lesson: lesson(1, [{ ...example, version: 5, payload: { ...example.payload, sentence: "Hun versie." } }]) });
     if (path.includes(`/blocks/${blockId}`) && init?.method === "PATCH") return blockPatch(init);
@@ -63,7 +73,8 @@ describe("Course lessons", () => {
     expect(screen.getByText("Is er een tuin?")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Edit/ })).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Lesson title 4" })).not.toBeInTheDocument();
-    expect(fetch).not.toHaveBeenCalled();
+    // Preloaded lessons are not fetched again; only the viewer's progress loads.
+    expect(vi.mocked(fetch).mock.calls.map(([path]) => String(path))).toEqual([`/api/groups/${groupId}/courses/${courseId}/progress`]);
     fireEvent.click(screen.getByRole("button", { name: "Continue with lesson 4: Lesson title 4" }));
     expect(await screen.findByText("Ik stap over.")).toBeInTheDocument();
     expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(4)}`, expect.anything());
@@ -140,5 +151,63 @@ describe("Course lessons", () => {
       const bodies = vi.mocked(fetch).mock.calls.filter(([path, init]) => String(path).includes(`/blocks/${blockId}`) && init?.method === "PATCH").map(([, init]) => JSON.parse(String(init!.body)));
       expect(bodies.map((body) => body.version)).toEqual([3, 5]);
     });
+  });
+
+  it("steps through a lesson one sentence and question at a time and records completion", async () => {
+    let shared: unknown = null;
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    vi.mocked(fetch).mockImplementation(async (input, init) => {
+      if (String(input).endsWith(`/blocks/${practice.id}/comments`) && init?.method === "POST") {
+        shared = JSON.parse(String(init.body));
+        return response({ item: { id: "60000000-0000-4000-8000-000000000001", parentId: null, kind: "practice_response", author: { id: accountId, displayName: "Ada", avatarUrl: null }, body: null, createdAt: 1, updatedAt: 1, edited: false, pinned: false, responseItems: [], reactions: [], replies: [], permissions: { reply: true, edit: true, delete: true, pin: false } } }, 201);
+      }
+      return original(input, init);
+    });
+    renderLessons({ course: course(false), outline: [1, 2, 3, 4].map((n) => summary(n)), lessons: [lesson(1, [{ ...example, position: 0 }, { ...dialogue, published: true }, practice]), lesson(2), lesson(3)] });
+    fireEvent.click(await screen.findByRole("button", { name: "Start lesson 1" }));
+    const dialog = await screen.findByRole("dialog");
+    const meter = () => within(dialog).getByRole("progressbar", { name: "Lesson progress" });
+    expect(within(dialog).getByText("Step 1 of 5")).toBeInTheDocument();
+    expect(meter()).toHaveAttribute("aria-valuenow", "0");
+    expect(within(dialog).getByText("Er is een balkon.")).toBeInTheDocument();
+    expect(within(dialog).queryByText("There is a balcony.")).not.toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole("button", { name: "Show translation" }));
+    expect(within(dialog).getByText("There is a balcony.")).toBeInTheDocument();
+
+    // Dialogue lines arrive one after another.
+    fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
+    expect(within(dialog).getByText("Is er een tuin?")).toBeInTheDocument();
+    expect(within(dialog).queryByText("Nee.")).not.toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
+    expect(within(dialog).getByText("Nee.")).toBeInTheDocument();
+    expect(meter()).toHaveAttribute("aria-valuenow", "40");
+
+    // Practice items are asked one by one and share the practice draft.
+    fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
+    expect(within(dialog).getByText("Question 1 of 2")).toBeInTheDocument();
+    expect(within(dialog).getByText("There is a garden.")).toBeInTheDocument();
+    fireEvent.change(within(dialog).getByLabelText("Your answer"), { target: { value: "Er is een tuin." } });
+    expect(JSON.parse(localStorage.getItem(`wordinator:draft:v1:${accountId}:${groupId}:practice-answer:${practice.id}`)!)).toEqual({ version: 1, answers: ["Er is een tuin.", ""] });
+    fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
+    expect(within(dialog).getByText("Question 2 of 2")).toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole("button", { name: "Share my answers" }));
+    expect(await within(dialog).findByText("Shared with the group.")).toBeInTheDocument();
+    expect(shared).toEqual({ kind: "practice_response", answers: ["Er is een tuin.", ""] });
+
+    fireEvent.click(within(dialog).getByRole("button", { name: "Finish lesson" }));
+    expect(await within(dialog).findByText("You have finished 1 of 4 lessons (25%).")).toBeInTheDocument();
+    expect(meter()).toHaveAttribute("aria-valuenow", "100");
+    expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/completion`, expect.objectContaining({ method: "PUT" }));
+    expect(within(dialog).getByRole("button", { name: "Next: Lesson title 2" })).toBeInTheDocument();
+    await waitFor(() => expect(screen.getAllByRole("img", { name: "Finished" }).length).toBeGreaterThan(0));
+  });
+
+  it("does not record progress for an unpublished lesson preview", async () => {
+    renderLessons({ course: course(true), outline: [summary(1, false)], lessons: [{ ...lesson(1, [example]), published: false }] });
+    fireEvent.click(await screen.findByRole("button", { name: "Start lesson 1" }));
+    const dialog = await screen.findByRole("dialog");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Finish lesson" }));
+    expect(await within(dialog).findByText("This lesson is unpublished, so finishing it does not count toward progress.")).toBeInTheDocument();
+    expect(vi.mocked(fetch).mock.calls.some(([path]) => String(path).endsWith("/completion"))).toBe(false);
   });
 });

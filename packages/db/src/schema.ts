@@ -289,3 +289,19 @@ export const courseContributors = sqliteTable(
     check("course_contributors_state_check", sql`${table.state} in ('pending', 'active', 'rejected', 'left', 'removed')`),
   ],
 );
+
+// A member's finished lessons; course progress is derived from these rows over the currently published lessons.
+export const courseLessonCompletions = sqliteTable(
+  "course_lesson_completions",
+  {
+    groupId: text("group_id").notNull().references(() => groups.id),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    userId: text("user_id").notNull().references(() => users.id),
+    completedAt: integer("completed_at").notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.lessonId, table.userId] }),
+    index("course_lesson_completions_course_idx").on(table.groupId, table.courseId, table.userId),
+  ],
+);

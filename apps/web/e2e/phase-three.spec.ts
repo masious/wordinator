@@ -10,7 +10,7 @@ test("a member publishes, browses, edits, and deletes every Phase 3 post shape",
   await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
 
   const openComposer = async () => {
-    await page.getByRole("button", { name: "Create post" }).first().click();
+    await page.getByRole("button", { name: "Write something…" }).click();
     await expect(page.getByRole("dialog")).toBeVisible();
   };
 
@@ -22,8 +22,11 @@ test("a member publishes, browses, edits, and deletes every Phase 3 post shape",
   const sentenceCard = page.locator("article").filter({ hasText: sentence });
   await expect(sentenceCard).toBeVisible();
   await expect(sentenceCard.getByText(`${prefix} hidden note`)).toBeHidden();
-  await sentenceCard.getByRole("button", { name: "Show notes" }).click();
-  await expect(sentenceCard.getByText(`${prefix} hidden note`)).toBeVisible();
+  // Feed cards are one link, so notes are revealed on the post page.
+  await sentenceCard.getByRole("link").first().click();
+  await page.getByRole("button", { name: "Show notes" }).click();
+  await expect(page.getByText(`${prefix} hidden note`)).toBeVisible();
+  await page.goBack();
 
   const question = `${prefix} hoe gaat het?`;
   await openComposer();
@@ -55,12 +58,12 @@ test("a member publishes, browses, edits, and deletes every Phase 3 post shape",
   const fillCard = page.locator("article").filter({ hasText: fill });
   await expect(fillCard).toBeVisible();
 
-  await fillCard.getByRole("button", { name: "Edit" }).click();
+  await fillCard.getByRole("button", { name: "More Actions" }).click(); await page.getByRole("menuitem", { name: "Edit" }).click();
   await page.getByLabel("Prompt").fill(`${prefix} wij … hier`);
   await page.getByRole("button", { name: "Save changes" }).click();
   await expect(page.getByText(`${prefix} wij … hier`)).toBeVisible();
   const editedCard = page.locator("article").filter({ hasText: `${prefix} wij … hier` });
-  await editedCard.getByRole("button", { name: "Delete" }).click();
+  await editedCard.getByRole("button", { name: "More Actions" }).click(); await page.getByRole("menuitem", { name: "Delete" }).click();
   await page.getByRole("dialog").getByRole("button", { name: "Delete" }).click();
   await expect(page.getByText(`${prefix} wij … hier`)).toBeHidden();
 

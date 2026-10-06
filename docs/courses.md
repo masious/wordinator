@@ -1,6 +1,6 @@
 # Courses
 
-Status: delivered. C1 (course shell), C2 (lessons and content blocks), C3 (practice blocks and answer threads), C4 (feed presence), and C5 (contributors) are complete. Delivery phases live in the [roadmap](roadmap.md#course-phases).
+Status: delivered. C1 (course shell), C2 (lessons and content blocks), C3 (practice blocks and answer threads), C4 (feed presence), C5 (contributors), and C6 (lesson player and progress) are complete. C7 (lesson editor) is approved and in progress; see [lesson documents](#lesson-documents). Delivery phases live in the [roadmap](roadmap.md#course-phases).
 
 ## Purpose
 
@@ -55,6 +55,8 @@ A practice item has a prompt, an optional author's version, and an optional note
 
 All block text is plain text under the [global content rules](product-requirements.md#global-content-rules). Highlighting is expressed by block kind, never by inline markup.
 
+> C7 replaces this block model, the per-block published flag, and the per-block editing model with [lesson documents](#lesson-documents). The rules in this section stay authoritative for the running code until C7b ships.
+
 ### Limits
 
 Limits are safeguards, not learning constraints. They live in the shared contracts.
@@ -73,6 +75,49 @@ Limits are safeguards, not learning constraints. They live in the shared contrac
 | Blocks per lesson | 200 |
 | Lessons per course | 200 |
 
+## Lesson documents
+
+Approved product change (C7), in progress. It replaces per-row blocks with one rich document per lesson, edited in a Notion-style block editor. Until C7b ships, the [blocks](#blocks) and [editing model](#editing-model) sections describe the running code.
+
+### Editor and format
+
+- Lessons are edited with [BlockNote](https://www.blocknotejs.org) (`@blocknote/core`, `@blocknote/react`, `@blocknote/mantine`, MPL-2.0) and columns come from `@blocknote/xl-multi-column`, licensed GPL-3.0 for this private, non-distributed application. The editor is loaded only on editing surfaces.
+- A lesson document is `{ schemaVersion: 2, blocks }` and every block follows BlockNote's own JSON convention: `{ id, type, props, content, children }`. Block IDs are stable and identify practice threads and merge units.
+- The shared contracts own a strict Zod schema of the subset Wordinator accepts. The editor's output is never trusted; the API rejects anything outside the schema.
+
+### Block types
+
+| Type | Source | Content and props |
+| --- | --- | --- |
+| `paragraph` | built-in | inline content |
+| `heading` | built-in | inline content, `level` 1–3 |
+| `bulletListItem`, `numberedListItem` | built-in | inline content, nesting up to 3 levels |
+| `divider` | built-in | none |
+| `image` | built-in | `url` (stored as an R2 key), `caption`, `previewWidth`; alt text required |
+| `columnList` → `column` | xl-multi-column | 2–3 columns, `width`; top level only, never nested |
+| `callout` | custom | inline content, `variant`, optional `icon` |
+| `example` | custom | inline content for the sentence, plain-text `translation` and `note` |
+| `dialogue` | custom | turns, as today |
+| `practice` | custom | instruction, passage, and items, as today, kept plain text so fill-in tokens and answer snapshots work |
+
+Callout variants are `hint`, `important`, `warning`, `grammar`, `culture`, `false-friend`, and `pronunciation`. Each variant sets a tone token and a default icon; `icon` may override the icon from a fixed list in the contracts. Any block, including practice and dialogue, may sit inside a column. Columns stack on narrow screens.
+
+### Inline content
+
+Inline content is restricted rich text: bold, italic, `textColor`, and `backgroundColor`, and links. Colours come from the fixed palette `default`, `gray`, `brown`, `red`, `orange`, `yellow`, `green`, `blue`, `purple`, and `pink`, mapped to [design tokens](design-system.md). Links accept only `http` and `https`. Underline, strike, code, and arbitrary HTML are rejected. The reader renders documents with Wordinator's own renderer, which escapes all text.
+
+### Drafts and publishing
+
+- Each lesson stores a draft document and a published document. A lesson with no published document is unpublished.
+- The owner and active contributors edit the draft of any lesson, published or not. The draft autosaves with an integer draft version; a stale save returns a conflict and the editor merges by block ID, asking only when both sides changed the same block.
+- Only the owner publishes (copies the draft to the published document), discards the draft (resets it to the published document), and unpublishes.
+- Publishing deletes practice threads whose practice is in neither document, after the editor warns the owner, and deletes R2 images referenced by neither document.
+- Learners only ever receive the published document, with authors' versions and item notes stripped.
+
+### Images
+
+Lesson images reuse the [public R2 image pipeline](architecture.md#images) under `courses/{courseId}/lessons/{lessonId}/` keys. Uploads are tracked per lesson; the API accepts only image keys uploaded to that lesson and turns keys into URLs on read. Like every R2 image, lesson images, including draft-only ones, are public to anyone with the URL.
+
 ## Practice answers
 
 Answers are collaborative, not graded. Participants decide together whether an answer works, because a sentence can have several valid translations.
@@ -81,10 +126,36 @@ Answers are collaborative, not graded. Participants decide together whether an a
 - A top-level answer is one ordered answer set covering every item, like a reading answer set. Blank entries are allowed.
 - Answers begin concealed and are revealed only by explicit consent, exactly like post answers.
 - The author's version and item notes are delivered only with the revealed thread. They are a reference for discussion, never a verdict.
-- There is no automatic matching, no positive-match signal, no pinning, and no score or completion tracking.
+- There is no automatic matching, no positive-match signal, no pinning, and no score. Answering is never required to finish a lesson; [progress](#lesson-player-and-progress) counts finished lessons, not answers.
 - Answer sets snapshot each item prompt so they stay understandable after the practice is edited. Editing an answer set keeps those snapshotted prompts; a new answer set follows the current items.
 - Unsent answer sets are local drafts with draft kind `practice-answer` and the block ID as target.
 - Practice-thread activity creates no notifications.
+
+## Lesson player and progress
+
+Approved product change (C6): a light, non-competitive layer of progress on top of courses. It is the one deliberate exception to the [no-gamification non-goal](what_is_it.md#explicit-non-goals); points, streaks, badges, rankings, and leaderboards remain out of scope.
+
+### Lesson player
+
+Every lesson with content has a Start lesson action (Practise again once finished) that opens a focused, step-by-step player with a progress bar and a step counter.
+
+- Blocks become steps in lesson order. A `heading` is not a step; it labels the steps that follow it.
+- A `text` block and an `example` block are one step each. An example's translation starts hidden behind Show translation, and its note appears with the translation (or immediately when there is no translation).
+- Each `dialogue` turn is a step: lines appear one after another, earlier lines stay visible and muted, and the newest line is emphasized.
+- Each `practice` item is a step that asks one question with one answer field. The instruction stays visible, and a passage is collapsible and open on the first item. Answers use the same local `practice-answer` draft as the lesson view, so either surface can continue a set. On the last item, a learner with at least one answer may share the set to the practice thread; otherwise it stays a private draft. Sharing follows the ordinary [practice answer](#practice-answers) rules and does not reveal the thread inside the player.
+- Steps are fixed when a run starts; a refetch during the run never moves the learner. Back and Next move freely. There is no timer and nothing is marked right or wrong.
+- After the last step the player shows a completion screen with the learner's course percentage and offers the next lesson or a return to the course.
+- Owners and contributors can run unpublished lessons as a preview. Previews never count toward progress, and the completion screen says so.
+
+### Progress
+
+- Finishing a published lesson in the player records one completion per member and lesson. Repeating the lesson keeps the first completion. Reading the lesson page alone does not record anything.
+- A member's course progress is the number of finished lessons among the currently published lessons, as a whole percentage rounded down. Unpublishing a lesson removes it from both counts; republishing restores it. Editing a finished lesson does not reset it. Deleting a lesson deletes its completions.
+- The course page shows a Progress panel, visible to everyone who can see the course, listing every active group member with their percentage and `completed of total` lessons. Members are listed by name, never ranked. The panel is hidden while the course has no published lessons or is archived.
+- The outline marks the viewer's finished lessons with a check.
+- Former members disappear from the panel; their completions stay stored and reappear if they rejoin.
+- Archived courses refuse new completions (`409 COURSE_ARCHIVED`), and unpublished lessons refuse them (`409 LESSON_UNPUBLISHED`).
+- Progress creates no notifications and no feed posts.
 
 ## Contributors and publishing
 
@@ -129,7 +200,7 @@ Authors save small pieces, so they can return to a course at any time.
 
 ## Feed presence
 
-The first time the owner publishes a course, the API creates one post of type `course` linked to it, authored by the owner. The post carries reactions and ordinary visible comments, appears in strict chronological order at its creation time, and links to the course. It is not edited through the composer and cannot be pinned. Unpublishing, republishing, archiving, and restoring never create another post, and a deleted course post is not recreated. Archiving the course leaves the post in place, and the post then shows that the course is unavailable; a course returned to draft is likewise unavailable to everyone but its owner. Comments on the post notify its author like any post response. The [post type rules](posts-and-feed.md#course) own the card.
+The first time the owner publishes a course, the API creates one post of type `course` linked to it, authored by the owner. The post carries reactions and ordinary visible comments, appears in strict chronological order at its creation time, and leads to the course from its post page. It is not edited through the composer and cannot be pinned. Unpublishing, republishing, archiving, and restoring never create another post, and a deleted course post is not recreated. Archiving the course leaves the post in place, and the post then shows that the course is unavailable; a course returned to draft is likewise unavailable to everyone but its owner. Comments on the post notify its author like any post response. The [post type rules](posts-and-feed.md#course) own the card.
 
 Courses published before C4 shipped count as already announced and have no course post.
 
@@ -137,7 +208,7 @@ Feed posts about later course changes are future work and will be derived from a
 
 ## Media
 
-The cover image reuses the [public R2 image pipeline](architecture.md#images) with the [interactive](settings-and-administration.md#image-cropper) wide crop and keys under `courses/`. Replacement and removal clean up superseded objects. Images inside blocks are future work.
+The cover image reuses the [public R2 image pipeline](architecture.md#images) with the [interactive](settings-and-administration.md#image-cropper) wide crop and keys under `courses/`. Replacement and removal clean up superseded objects. Lesson images are described in [lesson documents](#images).
 
 ## Deletion and retention
 
@@ -149,5 +220,4 @@ Courses are archived, not hard-deleted. The owner or group creator may archive a
 - Text-to-speech playback and interactive role-play dialogues
 - Feed posts for course updates
 - Course-specific notifications beyond contributor requests
-- Images inside blocks
-- Progress tracking of any kind
+- Images inside blocks (approved; arrives in C7e, see [lesson documents](#lesson-documents))

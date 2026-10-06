@@ -24,7 +24,7 @@ Members may also build shared, member-authored [courses](courses.md) for their g
 
 ## Product character
 
-Wordinator should feel like a cozy shared study journal: modern, warm, tactile, quietly playful, and personal. It favors thoughtful participation over points, streaks, rankings, and attention-maximizing mechanics.
+Wordinator should feel like a cozy shared study journal: modern, warm, tactile, quietly playful, and personal. It favors thoughtful participation over points, streaks, rankings, and attention-maximizing mechanics. The only progress signal is a course's non-competitive lesson progress (see [courses](courses.md#lesson-player-and-progress)).
 
 ## Why build it
 
@@ -40,8 +40,8 @@ The expected load is small—about ten users and up to one hundred new posts per
 
 - Public discovery, public profiles, followers, or direct messages
 - Platform-provided lessons or a fixed curriculum, translation, dictionaries, grammar correction, pronunciation, or AI generation
-- Scores, streaks, badges, leaderboards, or other gamification
+- Scores, streaks, badges, leaderboards, or other gamification. Course lesson progress is a deliberate, non-competitive exception owned by [courses](courses.md#lesson-player-and-progress)
 - Automated language detection or enforcement
-- Rich text, media posts, audio, or file attachments
+- Rich text, media posts, audio, or file attachments. Course lessons are a deliberate exception for restricted rich text and images, owned by [courses](courses.md#lesson-documents)
 - Monetization, advertising, or product analytics
 

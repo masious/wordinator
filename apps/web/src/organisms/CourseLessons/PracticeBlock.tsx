@@ -15,12 +15,16 @@ type AnswerDraft = { version: 1; answers: string[] };
 
 // Answer and reply drafts follow the shared draft-key rules: account, group, draft kind, and target.
 export const practiceDraftKey = (accountId: string, groupId: string, kind: "practice-answer" | "reply", targetId: string) => `wordinator:draft:v1:${accountId}:${groupId}:${kind}:${targetId}`;
-function readAnswers(key: string, count: number): string[] {
+export function readAnswers(key: string, count: number): string[] {
   try {
     const value = JSON.parse(localStorage.getItem(key) ?? "null") as AnswerDraft | null;
     if (value?.version === 1 && Array.isArray(value.answers)) return Array.from({ length: count }, (_, index) => String(value.answers[index] ?? ""));
   } catch { /* discard incompatible local data */ }
   return Array.from({ length: count }, () => "");
+}
+export function storeAnswers(key: string, answers: string[]) {
+  if (answers.some(Boolean)) localStorage.setItem(key, JSON.stringify({ version: 1, answers } satisfies AnswerDraft));
+  else localStorage.removeItem(key);
 }
 function useStoredText(key: string) {
   const [value, setValue] = useState(() => { try { return localStorage.getItem(key) ?? ""; } catch { return ""; } });
@@ -28,7 +32,7 @@ function useStoredText(key: string) {
   return [value, setValue] as const;
 }
 
-const blockPath = (scope: PracticeScope, blockId: string) => `/api/groups/${encodeURIComponent(scope.groupId)}/courses/${encodeURIComponent(scope.courseId)}/lessons/${encodeURIComponent(scope.lessonId)}/blocks/${encodeURIComponent(blockId)}`;
+export const blockPath = (scope: PracticeScope, blockId: string) => `/api/groups/${encodeURIComponent(scope.groupId)}/courses/${encodeURIComponent(scope.courseId)}/lessons/${encodeURIComponent(scope.lessonId)}/blocks/${encodeURIComponent(blockId)}`;
 
 // Learners see the instruction, optional passage, and prompts. Authors' versions arrive only with the revealed thread.
 export function PracticeContent({ block }: { block: Practice }) {
@@ -50,10 +54,7 @@ function AnswerSetComposer({ scope, block, onDone }: { scope: PracticeScope; blo
   const key = practiceDraftKey(scope.accountId, scope.groupId, "practice-answer", block.id);
   const prompts = block.payload.items.map((item) => item.prompt);
   const [answers, setAnswers] = useState(() => readAnswers(key, prompts.length));
-  useEffect(() => {
-    if (answers.some(Boolean)) localStorage.setItem(key, JSON.stringify({ version: 1, answers } satisfies AnswerDraft));
-    else localStorage.removeItem(key);
-  }, [answers, key]);
+  useEffect(() => storeAnswers(key, answers), [answers, key]);
   const publish = useMutation({
     mutationFn: () => apiRequest(`${blockPath(scope, block.id)}/comments`, commentResponseSchema, { method: "POST", body: JSON.stringify({ kind: "practice_response", answers }) }),
     onSuccess: () => { localStorage.removeItem(key); setAnswers(prompts.map(() => "")); onDone(); },

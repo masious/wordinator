@@ -1,4 +1,4 @@
-import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseDetailResponseSchema, coursePageSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, lessonResponseSchema, memberDirectoryResponseSchema, practiceDiscussionResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
+import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseDetailResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, lessonResponseSchema, memberDirectoryResponseSchema, practiceDiscussionResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 export class ApiError extends Error {
@@ -109,6 +109,13 @@ export const courseQueryOptions = (groupId: string, courseId: string) => queryOp
 export const courseContributorsQueryOptions = (groupId: string, courseId: string) => queryOptions({
   queryKey: ["course-contributors", groupId, courseId] as const,
   queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/contributors`, courseContributorsResponseSchema),
+  retry: false,
+});
+
+// Nested under the course key so every course refresh also refreshes progress.
+export const courseProgressQueryOptions = (groupId: string, courseId: string) => queryOptions({
+  queryKey: ["course", groupId, courseId, "progress"] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/progress`, courseProgressResponseSchema),
   retry: false,
 });
 

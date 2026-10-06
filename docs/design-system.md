@@ -10,7 +10,7 @@ The premium visual refresh uses **Editorial Luxury** as its texture archetype an
 
 Wide page introductions may split context and actions asymmetrically. The feed itself remains a single ordered reading column so strict reverse chronology is always obvious. Supporting pages may use asymmetric grouped panels, but generic equal-column dashboard grids are not part of the visual language. Below `48em`, asymmetric compositions collapse to a single full-width column, decorative overlap or rotation disappears, and page gutters remain practical for touch use.
 
-The examples in the visual-design skill are conceptual. Wordinator continues to use Mantine and CSS Modules; Tailwind is prohibited. The documented mobile bottom navigation, always-available group switcher, accessible focus treatment, plain-text content, and reduced-motion behavior take precedence over generic archetype examples.
+The examples in the visual-design skill are conceptual. Wordinator continues to use Mantine and CSS Modules; Tailwind is prohibited. The documented mobile bottom navigation, always-available group switcher, accessible focus treatment, plain-text content (course lessons excepted, see [courses](courses.md#lesson-documents)), and reduced-motion behavior take precedence over generic archetype examples.
 
 The refresh was delivered through [the visual redesign plan](../VISUAL-REDESIGN-PLAN.md). Batches 2 through 7 established and migrated the editorial foundation, shared components, application shell, production page families, and stable light-theme gate. Batch 8 completed the dark mapping and dual-theme release gate without page-specific redesign. The following rules govern the shipped system:
 
@@ -23,11 +23,13 @@ The refresh was delivered through [the visual redesign plan](../VISUAL-REDESIGN-
 - Backdrop blur is limited to fixed or sticky navigation and overlays. Paper grain is rendered as a single fixed, pointer-free layer and is disabled for print and forced-colors mode.
 - Icons use a consistent ultra-light line vocabulary. Thick Lucide, FontAwesome, and Material icon styles are excluded.
 - Authenticated desktop navigation uses a detached sticky island with a tonal bezel and glass core. Profile, settings, and sign-out live in a secondary account utility; primary destinations remain visually quiet and show an icon plus exact active-route state.
-- Below `48em`, the primary navigation becomes an inset six-destination dock (journal, courses, members, notices, profile, settings). Its height, offset, safe-area inset, page padding, and floating-action clearance derive from shared shell tokens so content and controls remain reachable in short or keyboard-constrained viewports.
+- Below `48em`, the header becomes a slim `56px` bar (brand mark, current group name, account avatar) and the primary navigation becomes a four-slot dock: Journal, Courses, Notices, and More. More opens a bottom sheet with Members, My profile, Settings, Create a group, and Sign out, and is marked current when the route belongs to it. The dock height, offset, safe-area inset, page padding, and floating-action clearance derive from shared shell tokens so content and controls remain reachable in short or keyboard-constrained viewports.
 - Authentication and invitation routes use an editorial split above `48em` and a direct single-column composition below it. Supporting authenticated pages use asymmetric identity, settings, and directory compositions on wide screens, collapse to one column on narrow screens, and keep notifications as quiet separated rows rather than independent elevated cards.
 - Destructive membership and group-lifecycle operations use the shared adaptive confirmation dialog. Native browser confirmation is not part of the application interaction language.
-- The journal header uses the editorial page-header contract. Its create prompt, feed cards, composition forms, concealed-answer state, response composers, and top-level discussion items use concentric surfaces; nested replies and authored-content rows remain quieter. Feed metadata uses the mono role, authored text uses the reading role, and reactions use hairline pill controls rather than strong system borders.
-- The floating journal create action is driven by an `IntersectionObserver` attached to the persistent prompt, not a scroll listener. Mobile composition and reading surfaces occupy the full viewport after their transform-based entry transition settles.
+- The journal header uses the editorial page-header contract above `48em`. Below `48em` the journal hero (group title, intro, Create a group) is dropped: the group name is shown in the header and kept as a visually hidden `h1`, and Create a group lives in the account menu and the More sheet.
+- The journal opens with a one-line create prompt row at every size: a pill-shaped `--color-core` button with the member's avatar and the muted "Write something…" placeholder in the `--type-post-body` role, at least `--touch-target` tall. It replaces the former featured create card.
+- Feed cards, composition forms, concealed-answer state, response composers, and top-level discussion items use concentric surfaces; nested replies and authored-content rows remain quieter. Feed metadata uses the mono role, authored text uses the reading role, and reactions use hairline pill controls rather than strong system borders.
+- The floating journal create action is driven by an `IntersectionObserver` attached to the prompt row, not a scroll listener; it appears only after the prompt row scrolls away. Mobile composition and reading surfaces occupy the full viewport after their transform-based entry transition settles.
 
 ## Token architecture
 
@@ -95,9 +97,17 @@ Manrope, Newsreader, and DM Mono are distributed under the SIL Open Font License
 
 The base scale runs from `0.75rem` through `3rem`. Semantic roles are `--text-display`, `--type-page-title`, `--type-section-title`, `--type-card-title`, `--type-body`, `--type-authored`, `--type-metadata`, `--type-eyebrow`, and `--type-control-label`. Display text reaches `clamp(3.25rem, 8vw, 6.75rem)` only in rare expressive moments; page and section headings use smaller responsive clamps. Body line height is `1.65`, compact labels use `1.25`, and headings use `1.04–1.12`. Avoid long all-caps text; mono eyebrow labels may use uppercase with `--tracking-eyebrow`.
 
+Posts have their own roles so every post kind reads the same: `--type-post-author` (`0.9375rem`, sans, semibold), `--type-post-meta` (`0.8125rem`, mono), `--type-post-body` (the authored role), and `--line-post-body` (`1.65`, `1.55` below `48em`).
+
+Below `48em`, the type roles step down instead of each component overriding sizes: `--type-page-title` is `1.75rem`, `--type-section-title` is `1.375rem`, and `--type-card-title` is `--text-lg`. Components must not add their own mobile font-size clamps for these roles.
+
 ## Spacing and sizing
 
-Spacing scale: `4`, `8`, `12`, `16`, `20`, `24`, `32`, `40`, `48`, `64`, `80`, `96`, `128`, and `160px`. Semantic layout roles define fluid page gutters, `80–160px` wide-screen section rhythm, card inset, shell clearance, and navigation offset. Below `48em`, page gutters become `16px`, section rhythm becomes `40px`, and card inset becomes `20px`. Touch targets remain at least `44px`.
+Spacing scale: `4`, `8`, `12`, `16`, `20`, `24`, `32`, `40`, `48`, `64`, `80`, `96`, `128`, and `160px`. Semantic layout roles define fluid page gutters, `80–160px` wide-screen section rhythm, card inset, shell clearance, and navigation offset. Below `48em`, page gutters become `16px`, section rhythm becomes `40px`, card inset becomes `16px`, `--navigation-height` becomes `56px`, and `--mobile-dock-height` becomes `64px`. Touch targets remain at least `44px`.
+
+Phones get one frame per surface: below `48em` the `Surface` bezel shell dissolves (no padding, background, border, or shadow) and the core carries the card with `--radius-lg` and the card shadow. Do not nest a bezel shell inside another framed surface on mobile.
+
+Page-level grid containers that hold content columns declare `grid-template-columns: minmax(0, 1fr)`. An implicit `auto` column grows to its widest child's min-content, which widens the page beyond the viewport and makes mobile browsers zoom the whole page out.
 
 Content widths:
 
@@ -111,6 +121,8 @@ Course covers use `--aspect-course-cover` (`2 / 1`) in library cards and on the 
 On the course page, lessons use an editorial split above `48em`: a sticky outline panel (bezel surface, mono lesson numbers, at least `14rem` wide) beside a lesson column capped at `--width-reading`; below `48em` the outline stacks above the lessons and stops sticking. Lesson titles use the section-title role with a mono eyebrow for the derived lesson number. Block kinds carry the highlighting: headings use the display serif, text uses the authored role, examples sit on a `--color-support-soft` panel with the sentence emphasized and translation and note muted, and dialogues sit on a `--color-wash` panel with mono speaker labels. Editor tools are quiet buttons below each block, and version conflicts use the danger surface. No new tokens were added.
 
 The course page's Contributors panel sits on a quiet surface between course management and the lessons. Requests and current contributors are hairline-separated rows with an avatar and name, and actions on the right; below `36em` rows and actions stack and buttons fill the width. Owner decisions use the secondary (decline) and primary (accept) buttons, and removal uses the danger button behind a confirmation. Lessons and blocks show a muted "Last edited by" line to the owner and contributors. No new tokens were added.
+
+Progress uses one shared `ProgressMeter` molecule: an `8px` (or `5px` compact) pill track on `--color-wash-strong` whose fill uses `--color-action` and turns `--color-success` at 100%, animated with `--motion-standard` and `--ease-physical`, and exposed as an ARIA `progressbar`. The lesson player opens in the adaptive dialog (full screen below `48em`) with a mono step counter above the meter. Each step enters with a short rise-and-fade; example sentences and practice prompts use the display serif at `--text-2xl`; dialogue lines stay visible and muted while the newest is emphasized; the share prompt sits on `--color-concealed`; and the completion screen uses a round success badge that pops in. All entry motion is removed under reduced motion. The course page's Progress panel sits between course management and contributors as rows with avatar, name, mono percentage, compact meter, and a muted lesson count; the viewer's row has a `--color-wash` background. Finished lessons show a success check in the outline and a "Finished" label beside Practise again. No new tokens were added.
 
 Layer order uses `--z-content: 10`, `--z-grain: 50`, `--z-navigation: 100`, `--z-floating-action: 200`, `--z-overlay: 300`, and `--z-transient: 400`. Components must use the named layer appropriate to their role rather than introduce arbitrary z-index values. The grain layer is pointer-free and contains no interactive content.
 
@@ -143,8 +155,8 @@ Durations are `140ms` for press feedback, `360ms` for ordinary transitions, `520
 Use Mantine-aligned breakpoints near `36em`, `48em`, `62em`, and `75em`; components should respond to available space rather than device names.
 
 - Desktop/tablet: detached navigation island, centered feed, modal composer
-- Mobile: compact floating utility island, inset six-destination dock, full-screen composer and reading wizard
-- The top-left group switcher remains available at every size
+- Mobile: slim header bar, four-slot dock with More sheet, no journal hero, full-screen composer and reading wizard
+- The group switcher lives in the account menu at every size
 - Avoid horizontal scrolling for authored content
 
 ## Component character
@@ -155,7 +167,7 @@ Use Mantine-aligned breakpoints near `36em`, `48em`, `62em`, and `75em`; compone
 - Dialogs: editorial heading, restrained overlay, clear primary/secondary actions
 - Post-type labels: compact DM Mono chips using gentle accent backgrounds
 - Empty/error states: plain-language copy and one obvious recovery action
-- Reactions: pill chips that expose count and identities; do not color dislike as a destructive system error
+- Reactions: hairline chips that expose count and identities, with the selected state on the selected/highlight roles; feed cards stack them in a vertical rail beside the card link. Do not color dislike as a destructive system error
 
 ## Reusable component contract
 

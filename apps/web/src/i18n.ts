@@ -85,7 +85,7 @@ export const resources = {
         unavailable: "This group is not available.",
         iconOptional: "Group icon (optional)"
       },
-      nav: { primary: "Main navigation", mobile: "Mobile navigation", accountMenu: "Account menu", journal: "Journal", courses: "Courses", members: "Members", notifications: "Notices", profile: "My profile", settings: "Settings" },
+      nav: { primary: "Main navigation", mobile: "Mobile navigation", accountMenu: "Account menu", journal: "Journal", courses: "Courses", members: "Members", notifications: "Notices", profile: "My profile", settings: "Settings", more: "More" },
       notifications: {
         eyebrow: "Group activity",
         title: "Notifications",
@@ -295,6 +295,37 @@ export const resources = {
           referenceHelp: "A reference for discussion, not a verdict. Other answers can work too.",
           noReference: "No author’s version"
         },
+        player: {
+          start: "Start lesson",
+          startNamed: "Start lesson {{number}}",
+          again: "Practise again",
+          againNamed: "Practise lesson {{number}} again",
+          progressLabel: "Lesson progress",
+          step: "Step {{current}} of {{total}}",
+          done: "Lesson complete",
+          finish: "Finish lesson",
+          showTranslation: "Show translation",
+          question: "Question {{current}} of {{total}}",
+          yourAnswer: "Your answer",
+          share: "Share my answers",
+          shareHelp: "Post this answer set to the practice thread, or keep it as a private draft.",
+          shared: "Shared with the group.",
+          completeTitle: "Lesson complete",
+          courseProgress: "You have finished {{completed}} of {{total}} lessons ({{percent}}%).",
+          previewHelp: "This lesson is unpublished, so finishing it does not count toward progress.",
+          backToCourse: "Back to the course",
+          nextLesson: "Next: {{title}}"
+        },
+        progress: {
+          title: "Progress",
+          help: "Lessons each member has finished in the lesson player.",
+          you: "{{name}} (you)",
+          percent: "{{percent}}%",
+          lessons: "{{completed}} of {{total}} lessons",
+          memberLabel: "Course progress for {{name}}",
+          yourLabel: "Your course progress",
+          completed: "Finished"
+        },
         conflict: {
           body: "Someone saved a newer version of this block. Your changes are still here.",
           keepMine: "Keep my changes",
@@ -340,8 +371,7 @@ export const resources = {
         publish: "Publish post",
         saveEdit: "Save changes",
         composerTitle: "Create a post",
-        composerIntro: "Add a sentence, ask a question, or make something to practise.",
-        journalPrompt: "A new journal entry",
+        writePrompt: "Write something…",
         create: "Create post",
         edited: "Edited",
         showNotes: "Show notes",

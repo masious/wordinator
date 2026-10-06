@@ -40,6 +40,7 @@ import {
   COURSE_LESSONS_MAX,
   COURSE_PRELOADED_LESSONS,
   courseDetailResponseSchema,
+  courseProgressResponseSchema,
   createBlockRequestSchema,
   createLessonRequestSchema,
   lessonResponseSchema,
@@ -1622,6 +1623,52 @@ app.get("/api/groups/:groupId/courses/:courseId/lessons/:lessonId", requireGroup
   return lessonResponse(context, found.row, lesson.lesson.id);
 });
 
+// Progress counts finished lessons among the currently published ones, for every active member of the course's group.
+// Members are listed by name, never ranked by progress.
+async function progressResponse(context: Context<AppEnvironment>, course: CourseRow) {
+  const db = context.env.DB; const viewerId = context.get("user")!.id;
+  const [published, mine, members] = await Promise.all([
+    db.prepare("SELECT COUNT(*) AS total FROM course_lessons WHERE group_id = ? AND course_id = ? AND published = 1").bind(course.groupId, course.id).first<{ total: number }>(),
+    db.prepare("SELECT lesson_id AS lessonId FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND user_id = ? ORDER BY completed_at")
+      .bind(course.groupId, course.id, viewerId).all<{ lessonId: string }>(),
+    db.prepare(
+      `SELECT u.id, u.display_name AS displayName, u.avatar_key AS avatarKey,
+        (SELECT COUNT(*) FROM course_lesson_completions clc JOIN course_lessons l ON l.id = clc.lesson_id AND l.group_id = clc.group_id AND l.published = 1
+          WHERE clc.group_id = m.group_id AND clc.course_id = ? AND clc.user_id = m.user_id) AS completed
+       FROM memberships m JOIN users u ON u.id = m.user_id
+       WHERE m.group_id = ? AND m.state = 'active'
+       ORDER BY u.display_name COLLATE NOCASE ASC, u.id ASC`,
+    ).bind(course.id, course.groupId).all<{ id: string; displayName: string; avatarKey: string | null; completed: number }>(),
+  ]);
+  const total = published?.total ?? 0;
+  return context.json(courseProgressResponseSchema.parse({
+    publishedLessons: total,
+    completedLessonIds: mine.results.map((row) => row.lessonId),
+    participants: members.results.map((row) => ({
+      user: { id: row.id, displayName: row.displayName, avatarUrl: mediaUrl(context.env, row.avatarKey) },
+      completedLessons: row.completed, percent: total ? Math.floor((row.completed / total) * 100) : 0,
+    })),
+  }));
+}
+
+app.get("/api/groups/:groupId/courses/:courseId/progress", requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  return progressResponse(context, found.row);
+});
+
+// Finishing a published lesson in the lesson player records it once; repeating the lesson keeps the first completion time.
+app.put("/api/groups/:groupId/courses/:courseId/lessons/:lessonId/completion", requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  if (found.row.status === "archived") return apiError(context, 409, "COURSE_ARCHIVED", "Restore this course before changing it.");
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  if (!lesson.lesson.published) return apiError(context, 409, "LESSON_UNPUBLISHED", "Only published lessons count toward progress.");
+  await context.env.DB.prepare(
+    `INSERT INTO course_lesson_completions (group_id, course_id, lesson_id, user_id, completed_at) VALUES (?, ?, ?, ?, ?)
+     ON CONFLICT (lesson_id, user_id) DO NOTHING`,
+  ).bind(found.row.groupId, found.row.id, lesson.lesson.id, context.get("user")!.id, Date.now()).run();
+  return progressResponse(context, found.row);
+});
+
 app.patch("/api/groups/:groupId/courses/:courseId/lessons/:lessonId", requireGroupAccess, async (context) => {
   const found = await contributableCourse(context); if ("error" in found) return found.error;
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
@@ -1643,6 +1690,7 @@ app.delete("/api/groups/:groupId/courses/:courseId/lessons/:lessonId", requireGr
     context.env.DB.prepare(`DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND target_id IN (SELECT id FROM comments WHERE group_id = ? AND block_id IN (${lessonBlocks}))`)
       .bind(found.row.groupId, found.row.groupId, found.row.groupId, found.row.id, lesson.lesson.id),
     context.env.DB.prepare(`DELETE FROM comments WHERE group_id = ? AND block_id IN (${lessonBlocks})`).bind(found.row.groupId, found.row.groupId, found.row.id, lesson.lesson.id),
+    context.env.DB.prepare("DELETE FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(found.row.groupId, found.row.id, lesson.lesson.id),
     context.env.DB.prepare("DELETE FROM course_blocks WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(found.row.groupId, found.row.id, lesson.lesson.id),
     context.env.DB.prepare("DELETE FROM course_lessons WHERE group_id = ? AND course_id = ? AND id = ?").bind(found.row.groupId, found.row.id, lesson.lesson.id),
   ]);

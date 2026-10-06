@@ -1,22 +1,18 @@
 import {
-  createGroupResponseSchema,
-  imageResponseSchema,
   okResponseSchema,
   type SessionResponse,
 } from "@wordinator/contracts";
-import { FileInput } from "@mantine/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, type ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiError, apiRequest, groupQueryOptions, invitationQueryOptions, sessionQueryOptions } from "../api";
-import { Avatar, Button, ErrorState, LabelChip, LoadingState, PageHeader, PasswordField, SelectField, SplitLayout, StatusPanel, Surface, TextField } from "../ui";
+import { Avatar, Button, ErrorState, LabelChip, LoadingState, PageHeader, PasswordField, SplitLayout, StatusPanel, Surface, TextField } from "../ui";
 import styles from "./PhaseOnePages.module.css";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { Feed } from "./PhaseThreePages";
-import { ImageCropper } from "../organisms/ImageCropper/ImageCropper";
-import { SQUARE_OUTPUT } from "../organisms/ImageCropper/crop";
 import { RestrictedNotices } from "./PhaseSixPages";
+import { CreateGroupForm } from "../organisms/CreateGroupForm/CreateGroupForm";
 
 const json = (value: unknown) => JSON.stringify(value);
 
@@ -149,27 +145,6 @@ export function InvitationPage({ token }: { token: string }) {
   </AuthCard>;
 }
 
-function CreateGroupForm({ onClose }: { onClose: () => void }) {
-  const { t } = useTranslation(); const queryClient = useQueryClient(); const navigate = useNavigate();
-  const [name, setName] = useState(""); const [language, setLanguage] = useState<"nl" | "de">("nl");
-  // `picked` is the person's original file; `icon` is the cropped output that will be uploaded after creation.
-  const [picked, setPicked] = useState<File | null>(null); const [icon, setIcon] = useState<File | null>(null);
-  const mutation = useMutation({
-    mutationFn: () => apiRequest("/api/groups", createGroupResponseSchema, { method: "POST", body: json({ name, language }) }),
-    onSuccess: async (data) => {
-      if (icon) { const form = new FormData(); form.set("image", icon); await apiRequest(`/api/groups/${data.group.id}/icon`, imageResponseSchema, { method: "POST", body: form }); }
-      await queryClient.invalidateQueries({ queryKey: ["session"] }); onClose(); await navigate({ to: "/groups/$groupId", params: { groupId: data.group.id } });
-    },
-  });
-  return <form className={styles.form} onSubmit={(event) => { event.preventDefault(); mutation.mutate(); }}>
-    <TextField label={t("group.name")} value={name} onChange={(event) => setName(event.currentTarget.value)} required />
-    <SelectField label={t("group.language")} value={language} onChange={(value) => setLanguage(value as "nl" | "de")} data={[{ value: "nl", label: t("languages.nl") }, { value: "de", label: t("languages.de") }]} />
-    <FileInput label={t("group.iconOptional")} accept="image/png,image/jpeg,image/webp" value={picked} onChange={(file) => { setPicked(file); setIcon(null); }} clearable />
-    <ImageCropper file={picked && !icon ? picked : null} output={SQUARE_OUTPUT} onCancel={() => setPicked(null)} onConfirm={setIcon} />
-    <MutationError error={mutation.error} /><div className={styles.actions}><Button variant="secondary" onClick={onClose}>{t("common.cancel")}</Button><Button loading={mutation.isPending} type="submit">{t("group.create")}</Button></div>
-  </form>;
-}
-
 export function GroupPage({ groupId }: { groupId: string }) {
   const { t } = useTranslation(); const navigate = useNavigate();
   const [creating, setCreating] = useState(false);
@@ -183,7 +158,8 @@ export function GroupPage({ groupId }: { groupId: string }) {
   if (shell.isError) return <main className={styles.center}><ErrorState title={t("group.unavailable")}><Link to="/">{t("common.goHome")}</Link></ErrorState></main>;
   return <GroupFrame groupId={groupId} session={session.data}>
     <div className={styles.journal} id="journal">
-      <PageHeader eyebrow={shell.data.group.iconUrl ? <Avatar name={shell.data.group.name} src={shell.data.group.iconUrl} /> : <LabelChip>{shell.data.group.icon} {shell.data.group.language.toUpperCase()}</LabelChip>} title={shell.data.group.name} intro={t("group.shellIntro")} actions={<Button variant="secondary" onClick={() => setCreating((value) => !value)}>{t("group.createAnother")}</Button>} />
+      <h1 className={styles.mobileTitle}>{shell.data.group.name}</h1>
+      <PageHeader className={styles.journalHero} eyebrow={shell.data.group.iconUrl ? <Avatar name={shell.data.group.name} src={shell.data.group.iconUrl} /> : <LabelChip>{shell.data.group.icon} {shell.data.group.language.toUpperCase()}</LabelChip>} title={shell.data.group.name} intro={t("group.shellIntro")} actions={<Button variant="secondary" onClick={() => setCreating((value) => !value)}>{t("group.createAnother")}</Button>} />
       {shell.data.pendingRequestCount > 0 && <p className={styles.requestNotice}><Link to="/groups/$groupId/settings/members" params={{ groupId }}>{t("group.requestsWaiting", { count: shell.data.pendingRequestCount })}</Link></p>}
       {creating && <Surface><h2>{t("group.createTitle")}</h2><CreateGroupForm onClose={() => setCreating(false)} /></Surface>}
       <Feed groupId={groupId} session={session.data} />

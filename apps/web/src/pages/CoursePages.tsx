@@ -8,6 +8,7 @@ import { PlainText } from "../molecules/PlainText";
 import { CourseContributors } from "../organisms/CourseContributors/CourseContributors";
 import { CourseErrorMessage as ErrorMessage } from "../organisms/CourseLessons/CourseErrorMessage";
 import { CourseLessons } from "../organisms/CourseLessons/CourseLessons";
+import { CourseProgress } from "../organisms/CourseProgress/CourseProgress";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, MetadataRow, PageHeader, SectionHeader, Surface, TextAreaField, TextField } from "../ui";
 import { ImageUpload } from "./PhaseFivePages";
@@ -137,6 +138,7 @@ export function CoursePage({ groupId, courseId }: { groupId: string; courseId: s
       <ErrorMessage error={visibility.error ?? restore.error} />
       {data.permissions.edit && <div className={styles.coverTools}><h3>{t("courses.coverTitle")}</h3><ImageUpload shape="wide" currentUrl={data.coverUrl} name={data.title} uploadPath={`${coursePath(groupId, courseId)}/cover`} removePath={`${coursePath(groupId, courseId)}/cover`} onChanged={refresh} /></div>}
     </Surface>}
+    {!archived && <CourseProgress groupId={groupId} courseId={courseId} accountId={session.data.user.id} />}
     {!archived && <CourseContributors groupId={groupId} course={data} />}
     <CourseLessons groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} dataUpdatedAt={course.dataUpdatedAt} />
     <AdaptiveDialog opened={editOpen} onClose={() => setEditOpen(false)} title={t("courses.editTitle")}>

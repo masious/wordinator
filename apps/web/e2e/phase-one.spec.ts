@@ -48,7 +48,8 @@ test("an invited person is approved and enters an isolated group", async ({ page
   await page.getByRole("link", { name: "Journal" }).click();
   await expect(page.getByRole("heading", { name: renamedSecondGroup })).toBeVisible();
   await page.getByRole("button", { name: "Account menu" }).click();
-  await page.getByLabel("Active group").selectOption({ label: "🇳🇱 Alpha Journal" });
+  await expect(page.getByRole("group", { name: "Active group" }).getByRole("menuitem", { name: renamedSecondGroup })).toHaveAttribute("aria-current", "true");
+  await page.getByRole("menuitem", { name: "Alpha Journal" }).click();
   await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
 
   await page.getByRole("link", { name: /join requests? waiting/ }).click();
@@ -69,8 +70,7 @@ test("an invited person is approved and enters an isolated group", async ({ page
   await expect(desktopNavigation).toBeVisible();
   await expect(mobileNavigation).toBeHidden();
   await expect(desktopNavigation.getByRole("link", { name: "Journal" })).toHaveAttribute("aria-current", "page");
-  await expect(page.getByLabel("Active group")).toBeVisible();
-  await expect(desktopNavigation.locator("svg")).toHaveCount(3);
+  await expect(desktopNavigation.locator("svg")).toHaveCount(4);
   const islandBox = await page.getByRole("banner").locator(":scope > div").boundingBox();
   const desktopViewport = page.viewportSize();
   expect(islandBox).not.toBeNull();
@@ -83,7 +83,8 @@ test("an invited person is approved and enters an isolated group", async ({ page
   await expect(desktopNavigation).toBeHidden();
   await expect(mobileNavigation).toBeVisible();
   await expect(mobileNavigation.getByRole("link", { name: "Journal" })).toHaveAttribute("aria-current", "page");
-  await expect(mobileNavigation.getByRole("link")).toHaveCount(5);
+  await expect(mobileNavigation.getByRole("link")).toHaveCount(3);
+  await expect(page.getByRole("banner").getByText("Alpha Journal")).toBeVisible();
   const dockBox = await mobileNavigation.boundingBox();
   expect(dockBox).not.toBeNull();
   expect(dockBox!.x).toBeGreaterThan(0);

@@ -62,6 +62,10 @@ Every content edit increments `version`; reordering rewrites only `position`. Up
 
 Group ID, course ID, user ID, state (`pending`, `active`, `rejected`, `left`, or `removed`), requested timestamp, nullable decided timestamp, and updated timestamp. The primary key is `(course_id, user_id)`: like a membership, each member has one row per course whose state changes, so there is at most one pending request. A new request reuses a `rejected`, `left`, or `removed` row. A check constraint limits the states. Rows cascade from their course, and leaving or being removed from the group moves that member's `pending` and `active` rows in the group to `left` or `removed`. Contributor display uses the live or group snapshot profile at read time. Migration `0013_course_contributors.sql` adds the table and its `(group_id, course_id, state)` index.
 
+### `course_lesson_completions`
+
+Group ID, course ID, lesson ID, user ID, and completed timestamp. The primary key is `(lesson_id, user_id)`: a member finishes a lesson once, and repeating it keeps the first timestamp. Rows cascade from their course and lesson, and lesson deletion also removes them explicitly in its batch. No percentage is stored; [course progress](courses.md#lesson-player-and-progress) is derived at read time over the currently published lessons. Rows stay when a member leaves the group. Migration `0014_course_lesson_completions.sql` adds the table and its `(group_id, course_id, user_id)` index.
+
 A practice payload stores the instruction, an optional passage, and ordered items with a prompt, an author's version list (empty when there is none), and an optional note. Authors' versions and notes are stored in the payload but removed from every learner read; see [courses](courses.md#practice-answers).
 
 ## Discussion
@@ -106,12 +110,13 @@ Opaque ID, group ID, recipient ID, actor ID, event type, optional post ID, optio
 - Notifications survive target deletion.
 - Courses are never hard-deleted. Archiving sets status `archived`; restoring returns the course to `draft` so the owner chooses again when to publish. Archived courses keep their cover image. A course post stays when its course is archived and is deleted like any other post.
 - Lessons and blocks are hard-deleted. Deleting a lesson deletes its blocks in the same batch. Deleting a block, or a lesson containing it, also deletes its practice answers, replies, response items, and the reactions on them. Comments cascade from their block, and the API deletes the reactions and comments explicitly in the same batch because reaction targets have no foreign key.
-- Member departure never deletes authored content or reactions. Contributor departure or removal keeps their lessons, blocks, and updated-by attribution.
+- Member departure never deletes authored content or reactions. Contributor departure or removal keeps their lessons, blocks, and updated-by attribution. Lesson completions also stay and are hidden while the member is not active.
+- Deleting a lesson deletes its completions.
 - Records and images otherwise remain indefinitely.
 - Replaced/removed R2 images are deleted after database state safely points away from them.
 
 ## Indexing and isolation
 
-Index the feed by `(group_id, created_at, id)`, memberships by user and state, pending membership requests by group/state, profile posts by `(group_id, author_id, created_at, id)`, comments by post/parent/order and by block/parent/order, reactions by target, the course library by `(group_id, created_at, id)`, lessons by `(group_id, course_id, position)`, blocks by `(group_id, lesson_id, position)`, course contributors by `(group_id, course_id, state)`, and notifications by `(recipient_id, group_id, created_at)` plus `(recipient_id, created_at)` for restricted status lookup.
+Index the feed by `(group_id, created_at, id)`, memberships by user and state, pending membership requests by group/state, profile posts by `(group_id, author_id, created_at, id)`, comments by post/parent/order and by block/parent/order, reactions by target, the course library by `(group_id, created_at, id)`, lessons by `(group_id, course_id, position)`, blocks by `(group_id, lesson_id, position)`, course contributors by `(group_id, course_id, state)`, lesson completions by `(group_id, course_id, user_id)`, and notifications by `(recipient_id, group_id, created_at)` plus `(recipient_id, created_at)` for restricted status lookup.
 
 Every tenant-owned table includes or can unambiguously derive `group_id`. Favor explicit `group_id` when it makes authorization and indexes safer, even if technically redundant.

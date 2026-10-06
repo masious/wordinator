@@ -113,7 +113,22 @@ The [courses blueprint](courses.md) owns every course rule. Each phase is comple
 
   C5 adds migration `0013_course_contributors.sql`. It adds `course_contributors`, which follows the membership states, and rebuilds `notifications` with a course link and the `contributor_requested`, `contributor_accepted`, and `contributor_rejected` kinds. Members ask to contribute from the course page, owners decide pending requests there, and contributors can withdraw, leave, or be removed. Contributors add lessons and blocks and edit only unpublished ones; publishing, reordering, deleting, and course settings stay with the owner. Leaving the group ends contributor roles. Workers, React Testing Library, and Chromium/WebKit tests cover the lifecycle, negative permissions, former contributors, notifications, and tenant isolation.
 
-  With C5 the planned course feature is delivered. Later course work is listed in the [courses blueprint](courses.md#deferred).
+- **C6 — Lesson player and progress** (completed 2026-10-06): a step-by-step lesson player with a progress bar, dialogue lines and practice questions presented one at a time, and per-member course progress.
+
+  C6 is an explicit product change requested by the group: it is the one exception to the no-gamification non-goal and stays non-competitive. It adds migration `0014_course_lesson_completions.sql` with `course_lesson_completions`, `GET .../courses/:courseId/progress`, and `PUT .../lessons/:lessonId/completion`. Progress is derived over currently published lessons and listed by name for every active member. The player shares the practice answer draft with the lesson view and can share an answer set to the practice thread. Workers, React Testing Library, and Chromium/WebKit tests cover completion rules, published-only counting, deletion, former members, unauthenticated access, tenant isolation, the stepping flow, and the progress panel.
+
+  With C6 the planned course feature is delivered. Later course work is listed in the [courses blueprint](courses.md#deferred).
+
+- **C7 — Lesson editor** (approved 2026-10-06, in progress): a Notion-style BlockNote editor with headings, restricted rich text, callouts, images, and 2–3 column layouts; one draft and one published document per lesson. The [lesson documents](courses.md#lesson-documents) rules own the design. Steps 3–6 ship together because the migration removes the per-block routes.
+  - **C7.0 — Docs and decisions** (completed 2026-10-06): invariants, content rules, and the lesson document design recorded.
+  - **C7.1 — Spike**: BlockNote with Mantine 9 and React 19, theming, CSS isolation, lazy loading and chunk size, iOS and Android input, a custom callout block, and column dragging. A gate before C7a.
+  - **C7a — Contracts**: Zod schemas for the lesson document, inline content, and custom blocks; walkers, step flattening, learner stripping, image key handling, and the v1 upgrade.
+  - **C7b — Migration and lesson API**: migration `0015` (draft and published documents, practice anchors, lesson media, comment rebuild, block table removal) and draft, publish, discard, unpublish, and image routes.
+  - **C7c — Renderer and player**: the read-only document renderer and document-based player steps.
+  - **C7d — Editor core**: the BlockNote editor, custom blocks, autosave, conflicts, and the publish bar.
+  - **C7e — Images**: upload, crop, alt text, and cleanup.
+  - **C7f — Columns**: column creation, widths, limits, and mobile stacking.
+  - **C7g — Merge and polish**: block-level three-way merge and paste sanitizing.
 
 ## Settings split
 
@@ -133,7 +148,7 @@ No ordering is implied.
 - Group ownership transfer
 - Notification aggregation, badges, and preferences
 - Direct messages, friends/follows, blocking, muting, and reporting if the social model expands
-- Gamification or progress signals only if real users request them
+- Further gamification or progress signals beyond course lesson progress, only if real users request them
 - More target languages and intentional RTL support
 - Contextual sentence rendering for fill-in responses
 - Automated backups and CI/CD
@@ -142,5 +157,4 @@ No ordering is implied.
 - Feed posts for course updates
 - Course-specific notifications beyond contributor requests
 - Images inside course blocks
-- Course progress tracking of any kind
 - Stronger abuse protection and a global operator interface if deployment scope expands

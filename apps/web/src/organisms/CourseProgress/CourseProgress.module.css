@@ -1,0 +1,9 @@
+.panel{display:grid;gap:var(--space-5);padding:var(--card-inset)}
+.rows{display:grid;gap:var(--space-1);margin:0;padding:0;list-style:none}
+.row{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-3);border-radius:var(--radius-md)}
+.row[data-viewer]{background:var(--color-wash)}
+.detail{display:grid;flex:1;gap:var(--space-1);min-width:0}
+.line{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-3)}
+.line strong{overflow-wrap:anywhere}
+.percent{font-family:var(--font-mono);font-size:var(--type-metadata);font-weight:var(--weight-semibold)}
+.count{font-size:var(--type-metadata);color:var(--color-foreground-muted)}

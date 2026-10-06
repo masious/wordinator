@@ -3,15 +3,33 @@
   width: min(100%, var(--width-reading));
   margin-inline: auto;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-8);
   animation: wordinator-enter var(--motion-reveal) var(--ease-physical) both;
 }
 
 .detail { padding-top: var(--space-4); }
 .promptAnchor { scroll-margin-top: calc(var(--navigation-height) + var(--space-8)); }
-.composerPrompt { display: flex; align-items: center; justify-content: space-between; gap: var(--space-8); }
-.composerPrompt h2 { margin: var(--space-3) 0 var(--space-2); font-size: var(--type-section-title); letter-spacing: var(--tracking-title); }
-.composerPrompt p { max-width: 42ch; margin: 0; color: var(--color-foreground-muted); line-height: var(--line-body); }
+.composerPrompt {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  min-height: var(--touch-target);
+  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
+  color: var(--color-foreground-muted);
+  background: var(--color-core);
+  border: var(--ring-hairline);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-card);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: transform var(--motion-press) var(--ease-physical), background-color var(--motion-standard) var(--ease-physical);
+}
+.composerPrompt:hover { background: var(--color-highlight-soft); }
+.composerPrompt:active { transform: scale(0.99); }
+.composerPromptText { flex: 1; min-width: 0; overflow: hidden; font-size: var(--type-post-body); text-overflow: ellipsis; white-space: nowrap; }
 
 .fieldRow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-3); align-items: end; }
 .actions { display: flex; justify-content: flex-end; gap: var(--space-3); flex-wrap: wrap; padding-top: var(--space-2); }
@@ -54,9 +72,7 @@
 
 @media (max-width: 48em) {
   .feed, .detail { gap: var(--space-6); }
-  .composerPrompt, .postHeader { align-items: stretch; flex-direction: column; }
-  .composerPrompt { gap: var(--space-5); }
-  .composerPrompt h2 { font-size: clamp(2rem, 10vw, 2.75rem); }
+  .postHeader { align-items: stretch; flex-direction: column; }
   .meta { justify-content: flex-start; }
   .postShell { border-radius: var(--radius-xl); }
   .fieldRow { grid-template-columns: 1fr; }
@@ -66,6 +82,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .feed, .detail { animation: none; }
-  .openPost, .openPost svg { transition-duration: 1ms; }
+  .openPost, .openPost svg, .composerPrompt { transition-duration: 1ms; }
+  .composerPrompt:active { transform: none; }
   .openPost:hover, .openPost:hover svg { transform: none; }
 }

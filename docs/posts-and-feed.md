@@ -42,17 +42,17 @@ Expected-answer feedback occurs only after submission. Trim surrounding whitespa
 
 - System-created: the API creates one when a course is first published; see [courses](courses.md#feed-presence)
 - Author: the course owner
-- Content: a link to the course; the card shows the live course title, level, summary, and cover
+- Content: the course; the card shows the live course title, level, summary, and cover
 - Editing: never offered by the composer and refused by the API (`409 POST_NOT_EDITABLE`)
 - Discussion: visible ordinary comments
 - Pinning: unavailable
 - Deletion: the author or group creator may delete it like any post; it is not recreated when the course is published again
 
-The card links to the course only while the viewer can open it: the course is published, or it is the viewer's own draft. Otherwise, including after archiving, the card says the course is unavailable and the post carries no course title, summary, level, or cover.
+In the feed, the course card is part of the card's link to the post. On the post page, the course preview links to the course only while the viewer can open it: the course is published, or it is the viewer's own draft. Otherwise, including after archiving, the card says the course is unavailable and the post carries no course title, summary, level, or cover.
 
 ## Composer and drafts
 
-The feed begins with a persistent composer. When it leaves the viewport, show a floating create action that opens the same flow. Use a centered modal on larger screens and a full-screen mobile composition surface.
+The feed begins with a one-line create prompt row (the member's avatar and "Write something…"). When it leaves the viewport, show a floating create action that opens the same flow. Use a centered modal on larger screens and a full-screen mobile composition surface.
 
 The post-type chooser is at the top. Maintain independent field state for each type during the session and map compatible values, such as notes and primary text, without erasing prior type state. Clear composer state only after successful publication or explicit discard.
 
@@ -70,7 +70,9 @@ Phase 4 implements the remaining writing drafts with `wordinator:draft:v1:<accou
 - Stable cursor pagination; do not use offset pagination for the growing feed
 - Infinite loading for older pages
 - No ranking, search, filtering, or feed pinning
-- Cards show author, type, timestamp, suitable content preview, reaction summary, and comment/answer count
+- Cards show a byline sentence naming author, type, and relative time (for example “Ada asked a question 20 minutes ago.”), a suitable content preview, and a vertical reaction rail
+- The byline and preview form one link to the post's detail page; the actions menu and reaction rail sit beside that link, never inside it. Authored URLs are not linked inside feed cards, and notes are revealed on the detail page
+- Comment/answer and reaction counts live in the card's actions menu; cards have no footer
 - Long content uses “Read more” to navigate to the canonical detail page; it does not expand inline
 - Comments and answers never expand inside the feed
 

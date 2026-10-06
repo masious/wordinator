@@ -23,7 +23,7 @@ The first usable release is an installable, connectivity-required responsive web
 ## Global content rules
 
 - All learning content is socially expected to use the active group’s target language. The application does not detect or enforce it.
-- User-generated content is plain text. Preserve line breaks and auto-link only `http`/`https` URLs.
+- User-generated content is plain text. Preserve line breaks and auto-link only `http`/`https` URLs. The one exception is course lessons, which use a restricted rich-text document owned by [courses](courses.md#lesson-documents): bold, italic, a fixed text palette, and `http`/`https` links only.
 - Optional notes exist on every post type, are hidden by default, and return to hidden on each visit.
 - Content limits are generous safeguards rather than learning constraints.
 - Activity is attributed; there is no anonymous mode.

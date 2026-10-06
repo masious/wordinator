@@ -12,7 +12,7 @@ test("concealed answers, reading sets, replies, pins, and reactions work end to 
     await expect(page.getByLabel("Email")).toBeVisible();
   };
   await signIn(E2E_CREATOR_EMAIL, E2E_PASSWORD);
-  const createPost = async (type: string, bodyLabel: string, body: string) => { await page.getByRole("button", { name: "Create post" }).first().click(); await page.getByRole("combobox", { name: "Post type" }).click(); await page.getByRole("option", { name: type }).click(); await page.getByLabel(bodyLabel).fill(body); };
+  const createPost = async (type: string, bodyLabel: string, body: string) => { await page.getByRole("button", { name: "Write something…" }).click(); await page.getByRole("combobox", { name: "Post type" }).click(); await page.getByRole("option", { name: type }).click(); await page.getByLabel(bodyLabel).fill(body); };
   const question = `${suffix} waarom?`; await createPost("Question", "Question", question); await page.getByRole("button", { name: "Publish post" }).click();
   const questionCard = page.locator("article").filter({ hasText: question }); const questionHref = await questionCard.getByRole("link").first().getAttribute("href");
   const reading = `${suffix} verhaal`; await createPost("Reading", "Paragraph", reading); await page.getByLabel("Question 1").fill("Wie?"); await page.getByRole("button", { name: "Add question" }).click(); await page.getByLabel("Question 2").fill("Waar?"); await page.getByRole("button", { name: "Publish post" }).click();

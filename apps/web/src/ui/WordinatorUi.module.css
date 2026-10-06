@@ -81,8 +81,9 @@
 .dialogBody :where(p) { margin: 0; color: var(--color-foreground-muted); }
 .dialogActions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-3); padding-top: var(--space-2); }
 @media (max-width: 48em) {
-  .surfaceShell { border-radius: var(--radius-xl); }
-  .surfaceCore { border-radius: calc(var(--radius-xl) - var(--space-2)); }
+  /* One frame per surface on phones: the bezel shell dissolves and the core carries the card. */
+  .surfaceShell.surfaceShell { padding: 0; background: none; border: 0; border-radius: 0; box-shadow: none; }
+  .surfaceCore { border-radius: var(--radius-lg); box-shadow: var(--shadow-card), var(--shadow-inset-highlight); }
   .pageHeader { grid-template-columns: 1fr; gap: var(--space-6); padding-block: var(--space-8) var(--space-10); }
   .pageHeaderActions { justify-content: flex-start; }
   .sectionHeader { align-items: start; flex-direction: column; gap: var(--space-4); }

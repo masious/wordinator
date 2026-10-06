@@ -21,12 +21,11 @@ import {
 import {
   AdaptiveDialog,
   ArrowIcon,
+  Avatar,
   Button,
   EmptyState,
   ErrorState,
-  LabelChip,
   LoadingState,
-  Surface,
 } from "../ui";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import shellStyles from "./PhaseOnePages.module.css";
@@ -125,16 +124,10 @@ export function Feed({
   return (
     <div className={styles.feed}>
       <div className={styles.promptAnchor} ref={promptRef}>
-        <Surface className={styles.composerPrompt} tone="featured">
-          <div>
-            <LabelChip>{t("posts.journalPrompt")}</LabelChip>
-            <h2>{t("posts.composerTitle")}</h2>
-            <p>{t("posts.composerIntro")}</p>
-          </div>
-          <Button onClick={openComposer} trailingIcon={<ArrowIcon />}>
-            {t("posts.create")}
-          </Button>
-        </Surface>
+        <button className={styles.composerPrompt} type="button" onClick={openComposer}>
+          <Avatar name={session.user.displayName} src={session.user.avatarUrl} size={36} />
+          <span className={styles.composerPromptText}>{t("posts.writePrompt")}</span>
+        </button>
       </div>
       {!!newer.data?.items.length && (
         <Button className={styles.newPosts} onClick={prepend}>

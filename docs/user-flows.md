@@ -41,7 +41,7 @@
 
 ## Create a post
 
-1. The member opens the persistent feed composer or the floating button shown after it scrolls away.
+1. The member taps the feed's "Write something…" prompt row or the floating create button shown after it scrolls away.
 2. A centered desktop modal or full-screen mobile composer opens.
 3. The post-type chooser appears at the top.
 4. Switching type preserves each type’s fields and maps compatible values where sensible; nothing is cleared merely by switching.
@@ -122,3 +122,13 @@ If a deleted group is a person’s only group, status appears in the restricted 
 4. Publishing the answer set, or choosing to reveal without answering, shows the author's version and item notes as a reference, plus everyone's answer sets in order. Nothing is marked right or wrong.
 5. Members reply to an answer set and react to answers and replies. Authors can edit or delete their own answers; the group creator can delete any.
 6. Returning to the lesson later starts concealed again.
+
+## Work through a lesson step by step
+
+1. On the course page, a member chooses Start lesson on any lesson with content. A focused player opens with a progress bar and a step counter.
+2. Text and example sentences arrive one step at a time. An example hides its translation until the learner chooses Show translation.
+3. Dialogue lines arrive one after another; earlier lines stay visible.
+4. Practice questions are asked one by one with a single answer field. Answers are saved as the same browser draft the lesson view uses. On the last question the learner may share the answer set with the group or keep it private.
+5. Back and Next move freely. After the last step the player shows that the lesson is complete, the learner's course percentage, and a link to the next lesson or back to the course.
+6. The finished lesson shows a check in the outline and offers Practise again. The course's Progress panel shows every member's percentage, listed by name.
+7. Owners and contributors can run an unpublished lesson as a preview; it does not count toward progress.

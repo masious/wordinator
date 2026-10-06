@@ -43,7 +43,7 @@ Reactions are available on posts, top-level items, and replies.
 - Every rendered emoji chip shows its count; activating it exposes the members who used it.
 - Any valid emoji used through the custom control appears alongside quick reactions.
 
-Each account has exactly three unique quick-reaction preferences. Their defaults are owned by [profiles and settings](profiles-and-settings.md) and are currently 👍, ❤️, and 😂. A fourth control opens a compact text input. Validate exactly one displayed emoji grapheme, including composed sequences such as flags, skin-tone variants, and families; reject text, punctuation, and multiple emoji.
+Each account has exactly three unique quick-reaction preferences. Their defaults are owned by [profiles and settings](profiles-and-settings.md) and are currently 👍, ❤️, and 😂. A fourth control is a compact text input; it will later open an emoji picker, which is not yet implemented. Feed post cards show the controls as a vertical rail that names a chip's members in a tooltip and submits the custom input with Enter; discussions keep a horizontal row with an Add button and an identity line. Validate exactly one displayed emoji grapheme, including composed sequences such as flags, skin-tone variants, and families; reject text, punctuation, and multiple emoji.
 
 ## Implemented Phase 4 behavior
 

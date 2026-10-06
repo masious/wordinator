@@ -26,6 +26,7 @@ DELETE FROM comments;
 DELETE FROM reading_questions;
 DELETE FROM fill_expected_answers;
 DELETE FROM posts;
+DELETE FROM course_lesson_completions;
 DELETE FROM course_contributors;
 DELETE FROM course_blocks;
 DELETE FROM course_lessons;
