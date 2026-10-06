@@ -1,6 +1,5 @@
 import "@blocknote/mantine/style.css";
 import { filterSuggestionItems, insertOrUpdateBlockForSlashMenu, type PartialBlock } from "@blocknote/core";
-import { en } from "@blocknote/core/locales";
 import { BlockNoteView, type Theme } from "@blocknote/mantine";
 import {
   BasicTextStyleButton, BlockTypeSelect, ColorStyleButton, CreateLinkButton, FormattingToolbar, FormattingToolbarController, getDefaultReactSlashMenuItems,
@@ -18,6 +17,7 @@ import { useTranslation } from "react-i18next";
 import { ApiError, courseProgressQueryOptions, courseQueryOptions, lessonQueryOptions } from "../../api";
 import { EmojiPicker } from "../../molecules/EmojiPicker";
 import { Button, ConfirmDialog } from "../../ui";
+import { lessonEditorDictionary } from "./editorDictionary";
 import { DEFAULT_PRACTICE, DEFAULT_TURNS, lessonEditorSchema, type LessonEditorInstance } from "./editorSchema";
 import {
   clearLocalLessonDraft, lessonDocumentDraftKey, readLocalLessonDraft, sameDocument, toLessonDocument, type EditorBlock,
@@ -94,7 +94,7 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
   const editor = useCreateBlockNote({
     schema: lessonEditorSchema,
     initialContent: toEditorBlocks(start.document),
-    dictionary: { ...en, placeholders: { ...en.placeholders, default: t("courses.editor.placeholder"), emptyDocument: t("courses.editor.placeholder"), heading: t("courses.editor.headingPlaceholder") } },
+    dictionary: lessonEditorDictionary(t),
     tabBehavior: "prefer-navigate-ui",
   }) as LessonEditorInstance;
 

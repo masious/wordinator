@@ -1,37 +1,40 @@
 import { MantineProvider } from "@mantine/core";
-import type { CourseBlock, CourseDetailResponse, CourseLesson } from "@wordinator/contracts";
+import { LESSON_DOCUMENT_SCHEMA_VERSION, type CourseDetailResponse, type CourseLesson, type LessonDocument, type LessonTopBlock } from "@wordinator/contracts/lesson-document";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
-import { courseBlockDraftKey } from "./BlockEditor";
 import { CourseLessons } from "./CourseLessons";
 
 const groupId = "20000000-0000-4000-8000-000000000001";
 const accountId = "10000000-0000-4000-8000-000000000001";
 const courseId = "30000000-0000-4000-8000-000000000001";
 const lessonId = (n: number) => `40000000-0000-4000-8000-00000000000${n}`;
-const blockId = "50000000-0000-4000-8000-000000000001";
 const editor = { id: accountId, displayName: "Ada" };
 const course = (edit: boolean, contribute = edit) => ({
   id: courseId, groupId, title: "Dutch Foundations", summary: "Home", level: null, intendedLearner: null, coverUrl: null, status: "published" as const,
   owner: { id: accountId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, contribution: !edit && contribute ? "active" as const : null,
   permissions: { edit, publish: edit, archive: edit, removeContent: edit, contribute, requestContribution: false, leaveContribution: !edit && contribute, manageContributors: edit },
 });
-const summary = (n: number, published = true) => ({ id: lessonId(n), position: n - 1, title: `Lesson title ${n}`, goal: null, published, version: 1, updatedBy: editor, updatedAt: 1 });
-const example: CourseBlock = {
-  id: blockId, lessonId: lessonId(1), position: 0, published: true, version: 3, updatedBy: editor, updatedAt: 1,
-  kind: "example", payload: { sentence: "Er is een balkon.", translation: "There is a balcony.", note: null },
+const summary = (n: number, published = true) => ({
+  id: lessonId(n), position: n - 1, title: `Lesson title ${n}`, goal: null, published, publishedAt: published ? 1 : null, changed: false, updatedBy: editor, updatedAt: 1,
+});
+const text = (value: string) => [{ type: "text" as const, text: value, styles: {} }];
+const example = (id: string, sentence: string, translation = ""): LessonTopBlock =>
+  ({ id, type: "example", props: { translation, note: "" }, content: text(sentence), children: [] });
+const dialogue: LessonTopBlock = {
+  id: "50000000-0000-4000-8000-000000000002", type: "dialogue", props: { turns: JSON.stringify([{ speaker: "A", text: "Is er een tuin?" }, { speaker: "B", text: "Nee." }]) }, children: [],
 };
-const dialogue: CourseBlock = {
-  id: "50000000-0000-4000-8000-000000000002", lessonId: lessonId(1), position: 1, published: false, version: 1, updatedBy: editor, updatedAt: 1,
-  kind: "dialogue", payload: { turns: [{ speaker: "A", text: "Is er een tuin?" }, { speaker: "B", text: "Nee." }] },
+const practice: LessonTopBlock = {
+  id: "50000000-0000-4000-8000-000000000003", type: "practice",
+  props: { data: JSON.stringify({ instruction: "Translate.", passage: null, items: [{ prompt: "There is a garden.", authorsVersion: [], note: null }, { prompt: "No.", authorsVersion: [], note: null }] }) },
+  children: [],
 };
-const practice: CourseBlock = {
-  id: "50000000-0000-4000-8000-000000000003", lessonId: lessonId(1), position: 2, published: true, version: 1, updatedBy: editor, updatedAt: 1,
-  kind: "practice", payload: { instruction: "Translate.", passage: null, items: [{ prompt: "There is a garden." }, { prompt: "No." }] }, reference: null, answerCount: 0,
-};
-const lesson = (n: number, blocks: CourseBlock[] = []): CourseLesson => ({ ...summary(n), blocks });
+const doc = (blocks: LessonTopBlock[]): LessonDocument => ({ schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks });
+// Readers receive the published document only; editors also receive the draft.
+const lesson = (n: number, blocks: LessonTopBlock[] = [], { published = true, editing = false } = {}): CourseLesson => ({
+  ...summary(n, published), document: published ? doc(blocks) : null, answerCounts: {}, draft: editing ? { document: doc(blocks), version: 1 } : null,
+});
 const progress = (completedLessonIds: string[]) => ({
   publishedLessons: 4, completedLessonIds,
   participants: [{ user: { id: accountId, displayName: "Ada", avatarUrl: null }, completedLessons: completedLessonIds.length, percent: completedLessonIds.length * 25 }],
@@ -44,28 +47,23 @@ function renderLessons(detail: CourseDetailResponse) {
   return render(<MantineProvider><QueryClientProvider client={queryClient}><CourseLessons groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} dataUpdatedAt={Date.now()} /></QueryClientProvider></MantineProvider>);
 }
 
-let lessonFour = lesson(4, [{ ...example, id: "50000000-0000-4000-8000-000000000004", lessonId: lessonId(4), payload: { sentence: "Ik stap over.", translation: null, note: null } }]);
-let blockPatch: (init: RequestInit) => Response;
+const lessonFour = lesson(4, [example("50000000-0000-4000-8000-000000000004", "Ik stap over.")]);
 
 beforeEach(() => {
   localStorage.clear();
-  blockPatch = (init) => response({ block: { ...example, ...JSON.parse(String(init.body)), version: 4 } });
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
     if (path.endsWith("/progress")) return response(progress([]));
     if (path.endsWith("/completion") && init?.method === "PUT") return response(progress([lessonId(1)]));
     if (path.endsWith(`/lessons/${lessonId(4)}`)) return response({ lesson: lessonFour });
-    if (path.endsWith(`/lessons/${lessonId(1)}`)) return response({ lesson: lesson(1, [{ ...example, version: 5, payload: { ...example.payload, sentence: "Hun versie." } }]) });
-    if (path.includes(`/blocks/${blockId}`) && init?.method === "PATCH") return blockPatch(init);
-    if (path.endsWith("/blocks") && init?.method === "POST") return response({ block: { ...example, id: "50000000-0000-4000-8000-000000000009", ...JSON.parse(String(init.body)), version: 1 } }, 201);
     return response({ ok: true });
   }));
 });
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 
 describe("Course lessons", () => {
-  it("renders blocks by kind for readers and loads later lessons by ID", async () => {
-    const detail = { course: course(false), outline: [1, 2, 3, 4].map((n) => summary(n)), lessons: [lesson(1, [example, dialogue]), lesson(2), lesson(3)] };
+  it("renders the published document for readers and loads later lessons by ID", async () => {
+    const detail = { course: course(false), outline: [1, 2, 3, 4].map((n) => summary(n)), lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.", "There is a balcony."), dialogue]), lesson(2), lesson(3)] };
     renderLessons(detail);
     expect(screen.getByRole("heading", { name: "Lesson title 1", level: 2 })).toBeInTheDocument();
     expect(screen.getByText("Er is een balkon.")).toBeInTheDocument();
@@ -80,77 +78,19 @@ describe("Course lessons", () => {
     expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(4)}`, expect.anything());
   });
 
-  it("keeps an unsaved new block as a local draft and posts it on save", async () => {
-    renderLessons({ course: course(true), outline: [summary(1, false)], lessons: [lesson(1)] });
-    expect(screen.getByText("Unpublished")).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Add block to lesson 1" }));
-    const form = screen.getByRole("form", { name: "New block" });
-    fireEvent.change(within(form).getByLabelText(/^Text/), { target: { value: "Gebruik er is." } });
-    const key = courseBlockDraftKey(accountId, groupId, lessonId(1));
-    await waitFor(() => expect(JSON.parse(localStorage.getItem(key)!)).toMatchObject({ version: 1, kind: "text", fields: { content: "Gebruik er is." } }));
-    // Reopening after a reload restores the unsaved block.
-    cleanup();
-    renderLessons({ course: course(true), outline: [summary(1, false)], lessons: [lesson(1)] });
-    expect(await screen.findByText("Restored your unsaved changes.")).toBeInTheDocument();
-    expect(screen.getByLabelText(/^Text/)).toHaveValue("Gebruik er is.");
-    fireEvent.click(screen.getByRole("button", { name: "Add block" }));
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/blocks`, expect.objectContaining({
-      method: "POST", body: JSON.stringify({ kind: "text", payload: { content: "Gebruik er is." }, published: false }),
-    })));
-    await waitFor(() => expect(localStorage.getItem(key)).toBeNull());
+  it("shows editors the draft of an unpublished lesson as a preview", () => {
+    renderLessons({ course: course(true), outline: [summary(1, false)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Een concept.")], { published: false, editing: true })] });
+    expect(screen.getAllByText("Unpublished").length).toBeGreaterThan(0);
+    expect(screen.getByText("Een concept.")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Edit lesson 1" })).toBeInTheDocument();
   });
 
-  it("edits a dialogue block and sends the version it was based on", async () => {
-    renderLessons({ course: course(true), outline: [summary(1)], lessons: [lesson(1, [example, dialogue])] });
-    fireEvent.click(screen.getByRole("button", { name: "Edit Dialogue block 2" }));
-    fireEvent.click(screen.getByRole("button", { name: "Add turn" }));
-    fireEvent.change(screen.getByLabelText(/^Speaker 3/), { target: { value: "A" } });
-    fireEvent.change(screen.getByLabelText(/^Line 3/), { target: { value: "Jammer." } });
-    blockPatch = (init) => response({ block: { ...dialogue, ...JSON.parse(String(init.body)), version: 2 } });
-    fireEvent.click(screen.getByRole("button", { name: "Save block" }));
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith(expect.stringContaining(`/blocks/${dialogue.id}`), expect.objectContaining({ method: "PATCH" })));
-    const call = vi.mocked(fetch).mock.calls.find(([path]) => String(path).includes(`/blocks/${dialogue.id}`))!;
-    expect(JSON.parse(String(call[1]!.body))).toEqual({
-      kind: "dialogue", payload: { turns: [{ speaker: "A", text: "Is er een tuin?" }, { speaker: "B", text: "Nee." }, { speaker: "A", text: "Jammer." }] }, published: false, version: 1,
-    });
-  });
-
-  it("lets a contributor edit only unpublished content and never publish", async () => {
-    renderLessons({ course: course(false, true), outline: [summary(1)], lessons: [lesson(1, [example, dialogue])] });
-    expect(screen.queryByRole("button", { name: "Edit Example block 1" })).not.toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Edit Dialogue block 2" })).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Edit lesson" })).not.toBeInTheDocument();
+  it("lets a contributor edit content but not reorder or change details of a published lesson", () => {
+    renderLessons({ course: course(false, true), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")], { editing: true })] });
+    expect(screen.getByRole("button", { name: "Edit lesson 1" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Edit details" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Move lesson 1/ })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /^Publish/ })).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: /Move .* up/ })).not.toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Add block to lesson 1" }));
-    const form = screen.getByRole("form", { name: "New block" });
-    expect(within(form).queryByRole("checkbox")).not.toBeInTheDocument();
-    fireEvent.change(within(form).getByLabelText(/^Text/), { target: { value: "Een voorstel." } });
-    fireEvent.click(within(form).getByRole("button", { name: "Add block" }));
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/blocks`, expect.objectContaining({
-      method: "POST", body: JSON.stringify({ kind: "text", payload: { content: "Een voorstel." }, published: false }),
-    })));
-  });
-
-  it("shows a conflict message and lets the author keep their edit on top of the newer version", async () => {
-    blockPatch = () => response({ error: { code: "VERSION_CONFLICT", message: "Someone saved a newer version first." } }, 409);
-    renderLessons({ course: course(true), outline: [summary(1)], lessons: [lesson(1, [example])] });
-    fireEvent.click(screen.getByRole("button", { name: "Edit Example block 1" }));
-    fireEvent.change(screen.getByLabelText(/^Example sentence/), { target: { value: "Mijn versie." } });
-    fireEvent.click(screen.getByRole("button", { name: "Save block" }));
-    expect(await screen.findByText("Someone saved a newer version of this block. Your changes are still here.")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Save block" })).toBeDisabled();
-    expect(localStorage.getItem(courseBlockDraftKey(accountId, groupId, blockId))).toContain("Mijn versie.");
-
-    blockPatch = (init) => response({ block: { ...example, ...JSON.parse(String(init.body)), version: 6 } });
-    fireEvent.click(screen.getByRole("button", { name: "Keep my changes" }));
-    await waitFor(() => expect(screen.getByRole("button", { name: "Save block" })).toBeEnabled());
-    expect(screen.getByLabelText(/^Example sentence/)).toHaveValue("Mijn versie.");
-    fireEvent.click(screen.getByRole("button", { name: "Save block" }));
-    await waitFor(() => {
-      const bodies = vi.mocked(fetch).mock.calls.filter(([path, init]) => String(path).includes(`/blocks/${blockId}`) && init?.method === "PATCH").map(([, init]) => JSON.parse(String(init!.body)));
-      expect(bodies.map((body) => body.version)).toEqual([3, 5]);
-    });
   });
 
   it("steps through a lesson one sentence and question at a time and records completion", async () => {
@@ -163,7 +103,10 @@ describe("Course lessons", () => {
       }
       return original(input, init);
     });
-    renderLessons({ course: course(false), outline: [1, 2, 3, 4].map((n) => summary(n)), lessons: [lesson(1, [{ ...example, position: 0 }, { ...dialogue, published: true }, practice]), lesson(2), lesson(3)] });
+    const first = lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.", "There is a balcony."), dialogue, practice]);
+    const withAnswers = vi.mocked(fetch).getMockImplementation()!;
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith(`/lessons/${lessonId(1)}`) ? response({ lesson: first }) : withAnswers(input, init));
+    renderLessons({ course: course(false), outline: [1, 2, 3, 4].map((n) => summary(n)), lessons: [first, lesson(2), lesson(3)] });
     fireEvent.click(await screen.findByRole("button", { name: "Start lesson 1" }));
     const dialog = await screen.findByRole("dialog");
     const meter = () => within(dialog).getByRole("progressbar", { name: "Lesson progress" });
@@ -202,8 +145,27 @@ describe("Course lessons", () => {
     await waitFor(() => expect(screen.getAllByRole("img", { name: "Finished" }).length).toBeGreaterThan(0));
   });
 
+  it("groups prose under a heading into one step and labels later steps with it", async () => {
+    const blocks: LessonTopBlock[] = [
+      { id: "50000000-0000-4000-8000-000000000005", type: "heading", props: { textColor: "default", backgroundColor: "default", level: 1 }, content: text("Wonen"), children: [] },
+      { id: "50000000-0000-4000-8000-000000000006", type: "paragraph", props: { textColor: "default", backgroundColor: "default" }, content: text("Eerste alinea."), children: [] },
+      { id: "50000000-0000-4000-8000-000000000007", type: "paragraph", props: { textColor: "default", backgroundColor: "default" }, content: text("Tweede alinea."), children: [] },
+      { id: "50000000-0000-4000-8000-000000000008", type: "callout", props: { variant: "grammar", icon: "auto" }, content: text("Let op de volgorde."), children: [] },
+    ];
+    renderLessons({ course: course(false), outline: [summary(1)], lessons: [lesson(1, blocks)] });
+    fireEvent.click(await screen.findByRole("button", { name: "Start lesson 1" }));
+    const dialog = await screen.findByRole("dialog");
+    expect(within(dialog).getByText("Step 1 of 2")).toBeInTheDocument();
+    expect(within(dialog).getByText("Eerste alinea.")).toBeInTheDocument();
+    expect(within(dialog).getByText("Tweede alinea.")).toBeInTheDocument();
+    expect(within(dialog).getByText("Wonen")).toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
+    expect(within(dialog).getByRole("complementary", { name: "Grammar" })).toHaveTextContent("Let op de volgorde.");
+    expect(within(dialog).getByText("Wonen")).toBeInTheDocument();
+  });
+
   it("does not record progress for an unpublished lesson preview", async () => {
-    renderLessons({ course: course(true), outline: [summary(1, false)], lessons: [{ ...lesson(1, [example]), published: false }] });
+    renderLessons({ course: course(true), outline: [summary(1, false)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")], { published: false, editing: true })] });
     fireEvent.click(await screen.findByRole("button", { name: "Start lesson 1" }));
     const dialog = await screen.findByRole("dialog");
     fireEvent.click(within(dialog).getByRole("button", { name: "Finish lesson" }));
