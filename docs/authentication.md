@@ -31,6 +31,10 @@ Do not create a session table while this model remains in force. Changing the pa
 
 Phase 2 uses the same password-change endpoint for forced and ordinary changes. An ordinary signed-in change must include and successfully verify the current password; a forced change may omit it because the temporary credential was already used to establish the session. Both paths enforce the shared password contract, replace the PBKDF2 hash, clear `must_change_password`, and leave existing stateless cookies valid by design.
 
+## Operator-set password
+
+For account recovery in this private deployment, an operator may use the explicit-target CLI documented in [operations.md](operations.md) to set an existing user's password by normalized email. The tool accepts the password only through a hidden interactive prompt, stores a fresh PBKDF2 hash, clears `must_change_password`, and does not invalidate existing stateless sessions. This is a trusted operational capability: an operator with D1 access can gain access to the account.
+
 ## Creator-generated password
 
 A creator may regenerate a password for any current member of their group. This means a creator can gain access to the member’s entire account, including other groups; the product knowingly accepts this risk temporarily.

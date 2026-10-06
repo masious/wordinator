@@ -24,6 +24,7 @@ Run these commands from the repository root:
 - `pnpm db:migrate:local` — apply committed migrations to local D1
 - `pnpm db:migrate:remote` — apply committed migrations to production D1 explicitly
 - `pnpm bootstrap --local` or `pnpm bootstrap --remote` — create the first account, group, and creator membership against one explicit target
+- `pnpm set-password --local <email>` or `pnpm set-password --remote <email>` — replace an existing account password against one explicit target
 
 Do not implement an ambiguous `deploy` or `migrate` command that silently chooses production.
 
@@ -84,6 +85,10 @@ The interactive bootstrap tool requires exactly one of `--local` or `--remote`. 
 It validates that bootstrap has not already created equivalent records, hashes the password, creates the user/group/active creator membership atomically where possible, and never echoes the password after input.
 
 Run it from the workspace root as `pnpm bootstrap --local` or `pnpm bootstrap --remote`. Supplying both targets, neither target, or any extra argument fails before database access. The tool checks that the target has no user records, writes the three records in one Wrangler invocation, removes its mode-`0600` temporary SQL file, and prints the initial reusable invitation path after success. Wrangler's local D1 executor does not accept explicit transaction statements; if any bootstrap statement fails, the tool makes a scoped cleanup pass using the newly generated user and group IDs.
+
+## Operator password setting
+
+Run `pnpm set-password --local <email>` or `pnpm set-password --remote <email>` from the workspace root. The target and email are required; the new password is requested through a hidden interactive prompt so it is not stored in shell history. The tool looks up the normalized email, rejects unknown accounts and passwords shorter than six characters, writes a fresh PBKDF2 hash through a mode-`0600` temporary SQL file, clears `must_change_password`, and removes the temporary file after the D1 command finishes. Existing stateless sessions remain valid, as described in [authentication.md](authentication.md).
 
 ## Manual deployment
 

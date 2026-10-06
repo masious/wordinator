@@ -33,7 +33,7 @@ Batch 1 established the governing direction, reconciled the existing Phase 0 des
 
 **Exit:** the first creator can bootstrap; another person can register only through an invite, be approved, and switch between isolated groups.
 
-Completed on 2026-09-30. Phase 1 now includes the credential and membership migration, PBKDF2 password storage, signed sliding cookies, D1 login throttling, forced password changes, explicit local/remote bootstrap CLI, invitation registration and repeat requests, creator approval/rejection, active-membership tenant middleware, group creation, and the responsive group shell. Migrated Workers tests cover negative tenant access, and the Chromium/WebKit flow covers invite registration through approval plus group creation, switching, and mobile navigation.
+Completed on 2026-09-30. Phase 1 now includes the credential and membership migration, PBKDF2 password storage, signed sliding cookies, D1 login throttling, forced password changes, explicit local/remote bootstrap and operator password-setting CLIs, invitation registration and repeat requests, creator approval/rejection, active-membership tenant middleware, group creation, and the responsive group shell. Migrated Workers tests cover negative tenant access, and the Chromium/WebKit flow covers invite registration through approval plus group creation, switching, and mobile navigation.
 
 ## Phase 2 — Profiles and settings
 
