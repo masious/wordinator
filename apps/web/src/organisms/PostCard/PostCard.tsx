@@ -13,11 +13,11 @@ import {
   ConfirmDialog,
 } from "../../ui";
 import { Menu } from "@mantine/core";
+import { useMediaQuery } from "@mantine/hooks";
 import { Trans, useTranslation } from "react-i18next";
 import ErrorMessage from "../../molecules/ErrorMessage";
 import {
   EllipsisVertical,
-  Eye,
   Heart,
   MessagesSquare,
   PencilLine,
@@ -58,6 +58,8 @@ export default function PostCard({
   const [deleting, setDeleting] = useState(false);
   const session = useQuery(sessionQueryOptions());
   const settings = useQuery(settingsQueryOptions());
+  // Phones trade the vertical rail for a footer row so the body can use the card's full width.
+  const narrow = useMediaQuery("(max-width: 48em)");
   const deletion = useMutation({
     mutationFn: () =>
       apiRequest(
@@ -84,6 +86,7 @@ export default function PostCard({
       <Avatar
         name={post.author.displayName}
         src={post.author.avatarUrl || undefined}
+        size={32}
       />
       <p className={styles.byline}>
         <Trans
@@ -121,6 +124,24 @@ export default function PostCard({
       )}
     </>
   );
+  const reactionBar = (orientation: "horizontal" | "vertical") =>
+    settings.data && (
+      <ReactionBar
+        orientation={orientation}
+        compact
+        reactions={post.reactions}
+        quickReactions={settings.data.quickReactions}
+        path={`/api/groups/${encodeURIComponent(groupId)}/posts/${encodeURIComponent(post.id)}/reactions`}
+        onChanged={() => {
+          void queryClient.invalidateQueries({
+            queryKey: ["posts", groupId],
+          });
+          void queryClient.invalidateQueries({
+            queryKey: ["post", groupId, post.id],
+          });
+        }}
+      />
+    );
   return (
     <article className={styles.postShell}>
       <div className={styles.postCard}>
@@ -213,33 +234,20 @@ export default function PostCard({
               >
                 {t("posts.reactionCount", { count: post.reactionCount })}
               </Menu.Item>
-               <Menu.Item
-                color="var(--color-danger-text)"
-                disabled
-                leftSection={<Eye size={20} />}
-              >
-                {t("posts.seen", { count: 7 })}
-              </Menu.Item>
             </Menu.Dropdown>
           </Menu>
         </div>
-        {settings.data && (
-          <aside className={styles.reactionRail}>
-            <ReactionBar
-              orientation="vertical"
-              reactions={post.reactions}
-              quickReactions={settings.data.quickReactions}
-              path={`/api/groups/${encodeURIComponent(groupId)}/posts/${encodeURIComponent(post.id)}/reactions`}
-              onChanged={() => {
-                void queryClient.invalidateQueries({
-                  queryKey: ["posts", groupId],
-                });
-                void queryClient.invalidateQueries({
-                  queryKey: ["post", groupId, post.id],
-                });
-              }}
-            />
-          </aside>
+        {settings.data && !narrow && (
+          <aside className={styles.reactionRail}>{reactionBar("vertical")}</aside>
+        )}
+        {narrow && (
+          <footer className={styles.footer}>
+            <span className={styles.responses}>
+              <MessagesSquare size={16} aria-hidden="true" />
+              {t("posts.responseCount", { count: post.commentCount })}
+            </span>
+            {settings.data && reactionBar("horizontal")}
+          </footer>
         )}
         <AdaptiveDialog
           opened={editing}

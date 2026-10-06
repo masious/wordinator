@@ -59,7 +59,7 @@ a.preview:hover {
 .eyebrow,
 .level {
   color: var(--color-foreground-muted);
-  font: var(--type-metadata)/var(--line-compact) var(--font-mono);
+  font: var(--type-post-meta)/var(--line-compact) var(--font-mono);
   overflow-wrap: anywhere;
 }
 .summary {

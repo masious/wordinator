@@ -28,17 +28,20 @@ Symptom: content renders ~1.5× wider than the viewport while the header and doc
 
 ## Phase 2 — Header, dock, and account menu
 
-- [ ] Mobile header: slim 56px bar — brand mark, current group name, avatar. No floating island below 48em.
-- [ ] Account menu (all sizes): compact identity row (≈40px avatar, name, "My profile"), group switcher as a clean menu section listing groups with icon and a check on the current one (replaces the pill `<select>` with accent dot), Create a group, Settings, Sign out.
-- [ ] Dock: Journal · Courses · Notices · More. More opens a bottom `Drawer` with Members, My profile, Settings, Create a group, Sign out. More is marked current when the route belongs to it.
-- [ ] Hide the account name on mobile inside GroupFrame's own styles.
-- [ ] Update `docs/design-system.md` (replace "six-destination dock").
+- [x] Mobile header: slim 56px bar — brand mark, current group name, avatar. No floating island below 48em.
+- [x] Account menu (all sizes): compact identity row (≈40px avatar, name, "My profile"), group switcher as a clean menu section listing groups with icon and a check on the current one (replaces the pill `<select>` with accent dot), Create a group, Settings, Sign out.
+- [x] Dock: Journal · Courses · Notices · More. More opens a bottom `Drawer` with Members, My profile, Settings, Create a group, Sign out. More is marked current when the route belongs to it.
+- [x] Hide the account name on mobile inside GroupFrame's own styles.
+- [x] Update `docs/design-system.md` (replace "six-destination dock").
+- [x] Restore the dock's inner glass core (`.mobileNav`), lost in the Phase 0 dedupe.
+- [x] Move `CreateGroupForm` to `organisms/CreateGroupForm` so the shell can open it from any route.
 
 ## Phase 3 — Feed
 
-- [ ] Drop the page hero (group title, intro, Create a group) below 48em; title moves to the header, Create a group to the account menu / More sheet.
-- [ ] Replace the featured "Create a post" card with a one-line prompt row (avatar + "Write something…").
-- [ ] Keep the floating create action only after the prompt row scrolls away.
+- [x] Drop the page hero (group title, intro, Create a group) below 48em; title moves to the header, Create a group to the account menu / More sheet.
+- [x] Replace the featured "Create a post" card with a one-line prompt row (avatar + "Write something…").
+- [x] Keep the floating create action only after the prompt row scrolls away (fixed: the observer now attaches when the prompt mounts after the feed loads, not only on first render).
+- [x] Add a mobile Playwright check for the hidden hero, prompt row, and floating action.
 
 ## Phase 4 — Post card
 
@@ -52,9 +55,10 @@ Symptom: content renders ~1.5× wider than the viewport while the header and doc
 
 ## Phase 5 — Post detail and discussion
 
-- [ ] Flatten comment/reply shells below 48em.
-- [ ] Reply indent 8px with a hairline rule.
-- [ ] Compact comment composer; apply Phase 1 type roles.
+- [x] Flatten comment/reply shells below 48em (one frame per top-level comment; nested composers and replies go flat).
+- [x] Reply indent 8px with a hairline rule.
+- [x] Compact comment composer (tighter gaps, right-aligned submit, 2-row reply field); apply Phase 1 type roles (avatar + author/meta byline, post body role).
+- [x] Add a mobile Playwright check for the flattened discussion and reply indent.
 
 ## Phase 6 — Full-screen composer
 

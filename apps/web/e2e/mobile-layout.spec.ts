@@ -122,3 +122,32 @@ test("mobile journal drops the hero and opens with a one-line prompt row", async
   await expect(page.getByRole("button", { name: "Create post" })).toHaveCount(0);
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-journal-prompt.png` });
 });
+
+test("mobile discussion uses one frame per comment and an 8px reply indent", async ({ page }) => {
+  const created = await page.request.post(`/api/groups/${E2E_GROUP_ID}/posts`, { data: { type: "shared_sentence", body: "Wij wonen in een klein huis.", notes: null } });
+  expect(created.ok()).toBe(true);
+  const { post } = await created.json() as { post: { id: string } };
+  const comments = `/api/groups/${E2E_GROUP_ID}/posts/${post.id}/comments`;
+  const comment = await page.request.post(comments, { data: { kind: "text", body: "Mooie zin!", parentId: null } });
+  expect(comment.ok()).toBe(true);
+  const { item } = await comment.json() as { item: { id: string } };
+  const reply = await page.request.post(comments, { data: { kind: "text", body: "Dank je wel.", parentId: item.id } });
+  expect(reply.ok()).toBe(true);
+  const { item: replyItem } = await reply.json() as { item: { id: string } };
+
+  await page.goto(`${group}/posts/${post.id}`, { waitUntil: "networkidle" });
+  const top = page.locator(`#comment-${item.id}`);
+  const nested = page.locator(`#comment-${replyItem.id}`);
+  await expect(nested).toBeVisible();
+  // The outer bezel dissolves; the reply has no frame of its own.
+  await expect(top).toHaveCSS("padding-top", "0px");
+  await expect(top).toHaveCSS("box-shadow", "none");
+  await expect(nested.locator("> div")).toHaveCSS("box-shadow", "none");
+  await expect(nested.locator("> div")).toHaveCSS("padding-top", "0px");
+  const replies = nested.locator("..");
+  await expect(replies).toHaveCSS("padding-left", "8px");
+  await expect(replies).toHaveCSS("margin-left", "0px");
+  await expect(replies).toHaveCSS("border-left-width", "1px");
+  await expectNoHorizontalOverflow(page, "discussion");
+  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-discussion.png`, fullPage: true });
+});

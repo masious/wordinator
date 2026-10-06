@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./lesson-document": "./src/lessonDocument.ts"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

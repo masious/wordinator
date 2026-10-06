@@ -50,10 +50,11 @@
 .responseItem dt { font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-semibold); }
 .responseItem dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
 .match { color: var(--color-success); font-weight: var(--weight-semibold); }
-.itemHeader { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; justify-content: initial; }
-.author { display: flex; align-items: center; gap: var(--space-2); min-width: 0; font-weight: var(--weight-semibold); }
-.meta { color: var(--color-foreground-muted); font: var(--type-metadata)/var(--line-compact) var(--font-mono); }
-.body { max-width: 64ch; white-space: pre-wrap; overflow-wrap: anywhere; font-size: var(--type-authored); line-height: var(--line-body); }
+.itemHeader { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; justify-content: initial; }
+.byline { display: grid; gap: var(--space-1); min-width: 0; }
+.author { min-width: 0; color: var(--color-foreground); font: var(--weight-semibold) var(--type-post-author)/var(--line-compact) var(--font-sans); overflow-wrap: anywhere; }
+.meta { color: var(--color-foreground-muted); font: var(--type-post-meta)/var(--line-compact) var(--font-mono); }
+.body { max-width: 64ch; white-space: pre-wrap; overflow-wrap: anywhere; font-size: var(--type-post-body); line-height: var(--line-post-body); }
 .body a { color: var(--color-foreground); text-decoration-color: var(--color-action); text-underline-offset: 3px; }
 .replies { margin-left: var(--space-8); padding-left: var(--space-5); border-left: 1px solid var(--color-separator); }
 .replyShell { box-shadow: none; }
@@ -75,11 +76,19 @@
 .wizardTrack span { display: block; width: 100%; height: 100%; background: var(--color-action); border-radius: inherit; transform-origin: left; transition: transform var(--motion-standard) var(--ease-physical); }
 .wizardNav { justify-content: space-between; }
 
+/* Phones get one frame per top-level surface: bezel shells dissolve, composers nested in a framed
+   surface go flat, and replies become unframed rows behind an 8px hairline indent. */
 @media (max-width: 48em) {
   .discussion { gap: var(--space-6); padding-block: var(--space-6) var(--space-10); }
-  .composer, .item, .concealed { padding: var(--space-4); }
-  .itemHeader { grid-template-columns: 1fr; align-items: start; }
-  .replies { margin-left: var(--space-2); padding-left: var(--space-3); }
+  .thread { gap: var(--space-4); }
+  .composerShell, .itemShell, .concealedShell { padding: 0; background: none; border: 0; box-shadow: none; }
+  .composer, .item, .concealed { gap: var(--space-4); padding: var(--card-inset); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+  .composer { gap: var(--space-3); }
+  .composerActions { justify-content: flex-end; }
+  .item .composer, .concealed .composer, .reply { padding: 0; background: none; border: 0; border-radius: 0; box-shadow: none; }
+  .reply { gap: var(--space-3); }
+  .replies { gap: var(--space-5); margin-left: 0; padding-left: var(--space-2); border-left: 1px solid var(--color-hairline); }
+  .itemActions { padding-top: var(--space-2); }
   .custom { width: 100%; }
   .custom > :first-child { flex: 1; width: auto; }
 }

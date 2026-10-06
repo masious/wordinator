@@ -10,7 +10,7 @@ import {
   type InfiniteData,
 } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
   apiRequest,
@@ -50,7 +50,8 @@ export function Feed({
   const queryClient = useQueryClient();
   const [composing, setComposing] = useState(false);
   const [showFloating, setShowFloating] = useState(false);
-  const promptRef = useRef<HTMLDivElement>(null);
+  // A state-held ref so the observer attaches once the prompt mounts after the feed loads.
+  const [prompt, setPrompt] = useState<HTMLDivElement | null>(null);
   const feed = useInfiniteQuery(feedQueryOptions(groupId));
   const posts = feed.data?.pages.flatMap((page) => page.items) ?? [];
   const cursor = newestCursor(posts[0]);
@@ -65,7 +66,6 @@ export function Feed({
       ),
   });
   useEffect(() => {
-    const prompt = promptRef.current;
     if (!prompt || typeof IntersectionObserver === "undefined") return;
     const observer = new IntersectionObserver(
       ([entry]) => setShowFloating(!entry?.isIntersecting),
@@ -73,7 +73,7 @@ export function Feed({
     );
     observer.observe(prompt);
     return () => observer.disconnect();
-  }, []);
+  }, [prompt]);
   const prepend = () => {
     if (!newer.data?.items.length) return;
     const previousHeight = document.documentElement.scrollHeight;
@@ -123,7 +123,7 @@ export function Feed({
   const openComposer = () => setComposing(true);
   return (
     <div className={styles.feed}>
-      <div className={styles.promptAnchor} ref={promptRef}>
+      <div className={styles.promptAnchor} ref={setPrompt}>
         <button className={styles.composerPrompt} type="button" onClick={openComposer}>
           <Avatar name={session.user.displayName} src={session.user.avatarUrl} size={36} />
           <span className={styles.composerPromptText}>{t("posts.writePrompt")}</span>

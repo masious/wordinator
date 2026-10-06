@@ -18,12 +18,15 @@ export default function ReactionBar({
   path,
   onChanged,
   orientation = "horizontal",
+  compact = false,
 }: {
   reactions: ReactionSummary[];
   quickReactions: string[];
   path: string;
   onChanged: () => void;
   orientation?: "horizontal" | "vertical";
+  // Compact rows drop the Add button and identity line: Enter submits and each chip names its members in a tooltip.
+  compact?: boolean;
 }) {
   const { t } = useTranslation();
   const [custom, setCustom] = useState("");
@@ -45,6 +48,7 @@ export default function ReactionBar({
   if (session.data?.status !== "signedIn") return null;
 
   const vertical = orientation === "vertical";
+  const dense = vertical || compact;
   const choices = [...new Set([...quickReactions, ...reactions.map((reaction) => reaction.emoji)])];
   const toggle = (emoji: string) =>
     mutation.mutate({ emoji, active: !reactions.find((reaction) => reaction.emoji === emoji)?.reacted });
@@ -75,9 +79,9 @@ export default function ReactionBar({
               <span className={styles.count}>{summary?.count ?? 0}</span>
             </button>
           );
-          // The vertical rail has no room for the identity line, so it names the members beside each chip instead.
-          return vertical ? (
-            <Tooltip key={emoji} label={names} disabled={!names} position="left" withArrow events={{ hover: true, focus: true, touch: true }}>
+          // The rail and compact rows have no room for the identity line, so they name the members beside each chip instead.
+          return dense ? (
+            <Tooltip key={emoji} label={names} disabled={!names} position={vertical ? "left" : "top"} withArrow events={{ hover: true, focus: true, touch: true }}>
               {chip}
             </Tooltip>
           ) : chip;
@@ -108,14 +112,14 @@ export default function ReactionBar({
             />
             {!custom && <StarPlus className={styles.customIcon} size={16} aria-hidden="true" />}
           </label>
-          {!vertical && (
+          {!dense && (
             <Button type="submit" variant="secondary">
               {t("discussion.addReaction")}
             </Button>
           )}
         </form>
       </div>
-      {!vertical && open && identities(open) && (
+      {!dense && open && identities(open) && (
         <div className={styles.identities} role="status">
           {identities(open)}
         </div>

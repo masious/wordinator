@@ -21,7 +21,7 @@
 
 1. A valid cookie opens the last group stored in that browser when it remains accessible.
 2. Otherwise the app chooses an accessible group deterministically.
-3. The top-left switcher lists active groups alphabetically.
+3. The group switcher in the account menu lists active groups alphabetically and marks the current one.
 4. Switching changes the complete tenant context. No content or profile data from another group may remain visible.
 
 ## Create a group

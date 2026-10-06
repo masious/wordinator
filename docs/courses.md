@@ -90,7 +90,7 @@ Approved product change (C7), in progress. It replaces per-row blocks with one r
 | Type | Source | Content and props |
 | --- | --- | --- |
 | `paragraph` | built-in | inline content |
-| `heading` | built-in | inline content, `level` 1–3 |
+| `heading` | built-in | inline content, `level` 1–3; toggle headings are disabled |
 | `bulletListItem`, `numberedListItem` | built-in | inline content, nesting up to 3 levels |
 | `divider` | built-in | none |
 | `image` | built-in | `url` (stored as an R2 key), `caption`, `previewWidth`; alt text required |
@@ -100,19 +100,26 @@ Approved product change (C7), in progress. It replaces per-row blocks with one r
 | `dialogue` | custom | turns, as today |
 | `practice` | custom | instruction, passage, and items, as today, kept plain text so fill-in tokens and answer snapshots work |
 
+Every block is left-aligned; text alignment is not offered. Paragraphs, headings, and list items may carry a block `textColor` and `backgroundColor` from the same palette as inline colours; callouts take their colour from their variant. Only list items nest, up to 3 levels; no other block has children except `columnList` and `column`.
+
 Callout variants are `hint`, `important`, `warning`, `grammar`, `culture`, `false-friend`, and `pronunciation`. Each variant sets a tone token and a default icon; `icon` may override the icon from a fixed list in the contracts. Any block, including practice and dialogue, may sit inside a column. Columns stack on narrow screens.
 
 ### Inline content
 
-Inline content is restricted rich text: bold, italic, `textColor`, and `backgroundColor`, and links. Colours come from the fixed palette `default`, `gray`, `brown`, `red`, `orange`, `yellow`, `green`, `blue`, `purple`, and `pink`, mapped to [design tokens](design-system.md). Links accept only `http` and `https`. Underline, strike, code, and arbitrary HTML are rejected. The reader renders documents with Wordinator's own renderer, which escapes all text.
+Inline content is restricted rich text: bold, italic, `textColor`, and `backgroundColor`, and links. Emoji are ordinary text, inserted through the shared [emoji picker](#emoji-picker). Colours come from the fixed palette `default`, `gray`, `brown`, `red`, `orange`, `yellow`, `green`, `blue`, `purple`, and `pink`, mapped to [design tokens](design-system.md). Links accept only `http` and `https`. Underline, strike, code, and arbitrary HTML are rejected. The reader renders documents with Wordinator's own renderer, which escapes all text.
 
 ### Drafts and publishing
 
 - Each lesson stores a draft document and a published document. A lesson with no published document is unpublished.
 - The owner and active contributors edit the draft of any lesson, published or not. The draft autosaves with an integer draft version; a stale save returns a conflict and the editor merges by block ID, asking only when both sides changed the same block.
+- Drafts may hold unfinished work, such as an image whose upload has not finished. Publishing requires a finished document: every image has an uploaded file and alt text, and every example has a sentence.
 - Only the owner publishes (copies the draft to the published document), discards the draft (resets it to the published document), and unpublishes.
 - Publishing deletes practice threads whose practice is in neither document, after the editor warns the owner, and deletes R2 images referenced by neither document.
 - Learners only ever receive the published document, with authors' versions and item notes stripped.
+
+### Emoji picker
+
+The editor's emoji insertion uses Wordinator's shared `EmojiPicker` molecule instead of BlockNote's built-in emoji menu, so lessons and [reactions](discussions-and-reactions.md) use one picker. The molecule wraps [Frimousse](https://frimousse.liveblocks.io) (MIT, unstyled) and is styled with CSS Modules and design tokens. Emoji data comes from `emojibase-data` served from Wordinator's own origin; the picker never fetches from a third-party CDN.
 
 ### Images
 

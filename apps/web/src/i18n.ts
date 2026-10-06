@@ -394,8 +394,7 @@ export const resources = {
         newPosts_other: "{{count}} new posts",
         loadingPost: "Opening this post",
         postUnavailable: "This post is not available.",
-        moreActions: "More Actions",
-        seen: "Seen By"
+        moreActions: "More Actions"
       },
       discussion: {
         loading: "Opening the discussion",

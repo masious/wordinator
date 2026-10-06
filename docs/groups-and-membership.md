@@ -48,7 +48,7 @@ Phase 5 adds the group-private directory at `/groups/:groupId/members`. It separ
 
 ## Application shell
 
-The signed-in shell uses the opaque group ID in its route, lists active non-deleted groups alphabetically, and stores the last visited accessible group in browser local storage under the account ID. If that group is no longer accessible, the first alphabetical group is selected. The switcher remains in the top bar at every width; wide layouts use top navigation and narrow layouts add fixed bottom navigation.
+The signed-in shell uses the opaque group ID in its route, lists active non-deleted groups alphabetically, and stores the last visited accessible group in browser local storage under the account ID. If that group is no longer accessible, the first alphabetical group is selected. The switcher lives in the account menu at every width, where Create a group is also available; the narrow header shows the current group name. Wide layouts use top navigation and narrow layouts add fixed bottom navigation.
 
 ## Membership lifecycle
 

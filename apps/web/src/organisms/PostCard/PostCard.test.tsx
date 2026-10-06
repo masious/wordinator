@@ -61,6 +61,12 @@ describe("PostCard actions menu", () => {
     expect(screen.getByRole("menuitem", { name: "Delete" })).toBeInTheDocument();
   });
 
+  it("does not show a seen count", async () => {
+    renderCard({ edit: true, delete: true });
+    await openMenu();
+    expect(screen.queryByRole("menuitem", { name: /Seen/ })).not.toBeInTheDocument();
+  });
+
   it("opens the delete confirmation from the menu", async () => {
     renderCard({ edit: true, delete: true });
     await openMenu();
@@ -73,13 +79,31 @@ describe("PostCard feed card", () => {
   beforeEach(() => { vi.stubGlobal("fetch", vi.fn(() => new Promise<Response>(() => {}))); });
   afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 
-  it("makes the byline and body one link to the post, with the menu outside it and no footer", async () => {
+  it("makes the byline and body one link to the post, with the menu outside it and no footer on wide screens", async () => {
     renderCard({ edit: true, delete: true });
     const link = await screen.findByRole("link");
     expect(link).toHaveAttribute("href", `/groups/${groupId}/posts/${post.id}`);
     expect(link).toHaveTextContent(/Ada shared a sentence .+\.Goedemorgen$/);
     expect(link).not.toContainElement(screen.getByRole("button", { name: "More Actions" }));
     expect(screen.queryByText("2 responses")).not.toBeInTheDocument();
+  });
+
+  it("moves the response count to a footer outside the link below 48em", async () => {
+    vi.mocked(window.matchMedia).mockImplementation((query: string) => ({
+      matches: query === "(max-width: 48em)", media: query, onchange: null,
+      addEventListener: vi.fn(), removeEventListener: vi.fn(), addListener: vi.fn(), removeListener: vi.fn(), dispatchEvent: vi.fn(),
+    }));
+    try {
+      renderCard({ edit: true, delete: true });
+      const responses = await screen.findByText("2 responses");
+      expect(responses.closest("footer")).not.toBeNull();
+      expect(screen.getByRole("link")).not.toContainElement(responses);
+    } finally {
+      vi.mocked(window.matchMedia).mockImplementation((query: string) => ({
+        matches: false, media: query, onchange: null,
+        addEventListener: vi.fn(), removeEventListener: vi.fn(), addListener: vi.fn(), removeListener: vi.fn(), dispatchEvent: vi.fn(),
+      }));
+    }
   });
 
   it("names the post type in the byline sentence", async () => {
