@@ -481,7 +481,7 @@ app.post("/api/auth/sign-in", async (context) => {
       "INSERT INTO login_attempts (key, failures, window_started_at, blocked_until) VALUES (?, ?, ?, ?) " +
       "ON CONFLICT(key) DO UPDATE SET failures = excluded.failures, window_started_at = excluded.window_started_at, blocked_until = excluded.blocked_until",
     ).bind(attemptKey, failures, windowStartedAt, blockedUntil).run();
-    return apiError(context, 401, "INVALID_CREDENTIALS", "Email or password is incorrect." + " " + account?.passwordHash);
+    return apiError(context, 401, "INVALID_CREDENTIALS", "Email or password is incorrect.");
   }
   await context.env.DB.prepare("DELETE FROM login_attempts WHERE key = ?").bind(attemptKey).run();
   await setSession(context, account.id, context.env.COOKIE_SIGNING_SECRET);

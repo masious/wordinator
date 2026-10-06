@@ -3,6 +3,7 @@ import type { Database } from "@wordinator/db";
 import { eq } from "drizzle-orm";
 import type { Context } from "hono";
 import { deleteCookie, getSignedCookie, setSignedCookie } from "hono/cookie";
+import { logError } from "./logger";
 
 const COOKIE_NAME = "wordinator_session";
 const SESSION_SECONDS = 60 * 60 * 24 * 30;
@@ -48,7 +49,9 @@ export async function hashPassword(password: string): Promise<string> {
 export async function verifyPassword(password: string, encoded: string): Promise<boolean> {
   const [algorithm, iterationsText, saltText, hashText] = encoded.split("$");
   const iterations = Number(iterationsText);
+  logError("verifying password")
   if (algorithm !== "pbkdf2_sha256" || !Number.isInteger(iterations) || !saltText || !hashText) return false;
+  logError("verification validation passed")
   try {
     const actual = await derivePassword(password, base64UrlToBytes(saltText), iterations);
     const expected = base64UrlToBytes(hashText);
