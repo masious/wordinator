@@ -70,9 +70,9 @@ Phase 4 implements the remaining writing drafts with `wordinator:draft:v1:<accou
 - Stable cursor pagination; do not use offset pagination for the growing feed
 - Infinite loading for older pages
 - No ranking, search, filtering, or feed pinning
-- Cards show a byline sentence naming author, type, and relative time (for example “Ada asked a question 20 minutes ago.”), a suitable content preview, and a vertical reaction rail
+- Cards show a byline sentence naming author, type, and relative time (for example “Ada asked a question 20 minutes ago.”), a suitable content preview, and reactions: a vertical rail beside the card at `48em` and wider, a footer row below it on narrower screens
 - The byline and preview form one link to the post's detail page; the actions menu and reaction rail sit beside that link, never inside it. Authored URLs are not linked inside feed cards, and notes are revealed on the detail page
-- Comment/answer and reaction counts live in the card's actions menu; cards have no footer
+- Comment/answer and reaction counts live in the card's actions menu. At `48em` and wider cards have no footer; below `48em` a footer shows the comment/answer count beside the reaction row. The menu shows no view count
 - Long content uses “Read more” to navigate to the canonical detail page; it does not expand inline
 - Comments and answers never expand inside the feed
 

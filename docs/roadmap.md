@@ -119,7 +119,7 @@ The [courses blueprint](courses.md) owns every course rule. Each phase is comple
 
   With C6 the planned course feature is delivered. Later course work is listed in the [courses blueprint](courses.md#deferred).
 
-- **C7 — Lesson editor** (approved 2026-10-06, in progress): a Notion-style BlockNote editor with headings, restricted rich text, callouts, images, and 2–3 column layouts; one draft and one published document per lesson. The [lesson documents](courses.md#lesson-documents) rules own the design. Steps 3–6 ship together because the migration removes the per-block routes.
+- **C7 — Lesson editor** (approved 2026-10-06, in progress): a Notion-style BlockNote editor with headings, restricted rich text, callouts, images, and 2–3 column layouts; one draft and one published document per lesson. The [lesson documents](courses.md#lesson-documents) rules own the design and [LESSON_EDITOR_PLAN.md](../LESSON_EDITOR_PLAN.md) holds the step-by-step delivery checklist. C7b, C7c, and C7d ship together because the migration removes the per-block routes.
   - **C7.0 — Docs and decisions** (completed 2026-10-06): invariants, content rules, and the lesson document design recorded.
   - **C7.1 — Spike** (completed 2026-10-06, real-device input check pending): BlockNote 0.55 works with Mantine 9.7 and React 19.3; a custom callout block, restricted styles, the slash menu, and two-column layouts work in Chromium and emulated iPhone WebKit. Findings that C7d must apply:
     - The editor chunk is about 232 KB gzipped and must stay lazy-loaded; the main bundle is unaffected.

@@ -142,7 +142,7 @@ export const theme = createTheme({
         },
         title: {
           fontFamily: "var(--font-display)",
-          fontSize: "var(--text-2xl)",
+          fontSize: "var(--type-dialog-title)",
           fontWeight: "var(--weight-medium)",
         },
       },

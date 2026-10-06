@@ -108,6 +108,8 @@
   --type-metadata: var(--text-sm);
   --type-eyebrow: 0.6875rem;
   --type-control-label: var(--text-sm);
+  --type-dialog-title: var(--text-2xl);
+  --type-fieldset-legend: var(--type-card-title);
   --type-post-author: 0.9375rem;
   --type-post-meta: 0.8125rem;
   --type-post-body: var(--type-authored);
@@ -309,6 +311,8 @@
     --type-page-title: 1.75rem;
     --type-section-title: 1.375rem;
     --type-card-title: var(--text-lg);
+    --type-dialog-title: var(--text-xl);
+    --type-fieldset-legend: var(--text-md);
     --line-post-body: 1.55;
   }
 }

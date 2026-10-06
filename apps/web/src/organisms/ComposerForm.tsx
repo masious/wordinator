@@ -1,4 +1,4 @@
-import { useState, useEffect, FormEvent  } from 'react';
+import { useState, useEffect, FormEvent, type CSSProperties } from 'react';
 import { createPostResponseSchema, postResponseSchema, type Post, type PostInput, type PostType  } from '@wordinator/contracts';
 import { useMutation  } from '@tanstack/react-query';
 import { useTranslation } from 'react-i18next';
@@ -78,6 +78,25 @@ function inputFromDraft(draft: ComposerDraft): PostInput {
   return { type: draft.activeType, ...shared };
 }
 
+// How far the on-screen keyboard covers the layout viewport, so the sticky action bar can stay above it.
+function useKeyboardInset() {
+  const [inset, setInset] = useState(0);
+  useEffect(() => {
+    const viewport = window.visualViewport;
+    if (!viewport) return;
+    const measure = () =>
+      setInset(Math.max(0, Math.round(window.innerHeight - viewport.height - viewport.offsetTop)));
+    measure();
+    viewport.addEventListener("resize", measure);
+    viewport.addEventListener("scroll", measure);
+    return () => {
+      viewport.removeEventListener("resize", measure);
+      viewport.removeEventListener("scroll", measure);
+    };
+  }, []);
+  return inset;
+}
+
 export default function ComposerForm({
   groupId,
   session,
@@ -92,6 +111,7 @@ export default function ComposerForm({
   onDiscard: () => void;
 }) {
   const { t } = useTranslation();
+  const keyboardInset = useKeyboardInset();
   const key = composerDraftKey(session.user.id, groupId);
   const [draft, setDraft] = useState<ComposerDraft>(() =>
     initialPost ? draftFromPost(initialPost) : readDraft(key),
@@ -160,6 +180,7 @@ export default function ComposerForm({
   return (
     <form
       className={styles.composerForm}
+      style={{ "--keyboard-inset": `${keyboardInset}px` } as CSSProperties}
       onSubmit={(event: FormEvent) => {
         event.preventDefault();
         mutation.mutate();

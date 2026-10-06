@@ -34,20 +34,12 @@ import {
   updateCommentRequestSchema,
   updateCourseRequestSchema,
   paginationQuerySchema,
-  blockResponseSchema,
-  COURSE_BLOCK_PAYLOAD_VERSION,
-  COURSE_BLOCKS_MAX,
   COURSE_LESSONS_MAX,
   COURSE_PRELOADED_LESSONS,
-  courseDetailResponseSchema,
   courseProgressResponseSchema,
-  createBlockRequestSchema,
   createLessonRequestSchema,
-  lessonResponseSchema,
   outlineResponseSchema,
-  parseStoredBlockPayload,
   reorderRequestSchema,
-  updateBlockRequestSchema,
   updateLessonRequestSchema,
   createPracticeCommentRequestSchema,
   practiceDiscussionResponseSchema,
@@ -56,14 +48,17 @@ import {
   contributorDecisionRequestSchema,
   courseContributorsResponseSchema,
   type Course,
-  type CourseBlock,
-  type CourseLesson,
   type CourseLessonSummary,
   type DiscussionItem,
   type Notification,
   type Post,
   type PostInput,
 } from "@wordinator/contracts";
+import {
+  collectImageUrls, collectPracticeIds, courseDetailResponseSchema, findPublishProblems, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
+  lessonResponseSchema, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
+  toLearnerDocument, walkLessonBlocks, type CourseLesson, type LessonBlockOf, type LessonDocument,
+} from "@wordinator/contracts/lesson-document";
 import { createDatabase, groups, memberships, users } from "@wordinator/db";
 import { and, asc, count, eq, inArray, isNull } from "drizzle-orm";
 import { Hono, type Context } from "hono";
@@ -82,6 +77,8 @@ const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 const LOGIN_LIMIT = 5;
 const FALLBACK_HASH = "pbkdf2_sha256$40000$AAAAAAAAAAAAAAAAAAAAAA$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 const IMAGE_MAX_BYTES = 1_048_576;
+// A full lesson document is up to 256 KB, so draft saves get a larger body limit than other JSON requests.
+const LESSON_REQUEST_BYTES_MAX = 300_000;
 
 const mediaUrlFromBase = (base: string, key: string | null) => key
   ? `${base.replace(/\/$/, "")}/${key.split("/").map(encodeURIComponent).join("/")}`
@@ -115,18 +112,50 @@ function imageType(bytes: Uint8Array): "image/png" | "image/jpeg" | "image/webp"
   return null;
 }
 
-async function uploadedImage(context: Context<AppEnvironment>, prefix: "avatars" | "groups" | "courses") {
+// Reads the pixel size from the image header; null when the header is truncated.
+function imageSize(bytes: Uint8Array, type: "image/png" | "image/jpeg" | "image/webp"): { width: number; height: number } | null {
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  const size = (width: number, height: number) => width > 0 && height > 0 ? { width, height } : null;
+  if (type === "image/png") return bytes.length >= 24 ? size(view.getUint32(16), view.getUint32(20)) : null;
+  if (type === "image/jpeg") {
+    for (let offset = 2; offset + 9 <= bytes.length;) {
+      if (bytes[offset] !== 0xff) return null;
+      const marker = bytes[offset + 1]!;
+      if (marker === 0xff) { offset += 1; continue; }
+      if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd9)) { offset += 2; continue; }
+      if (marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc) return size(view.getUint16(offset + 7), view.getUint16(offset + 5));
+      offset += 2 + view.getUint16(offset + 2);
+    }
+    return null;
+  }
+  const chunk = new TextDecoder("latin1").decode(bytes.slice(12, 16));
+  if (chunk === "VP8 " && bytes.length >= 30) return size(view.getUint16(26, true) & 0x3fff, view.getUint16(28, true) & 0x3fff);
+  if (chunk === "VP8L" && bytes.length >= 25) {
+    const [b0, b1, b2, b3] = [bytes[21]!, bytes[22]!, bytes[23]!, bytes[24]!];
+    return size(1 + (((b1 & 0x3f) << 8) | b0), 1 + (((b3 & 0x0f) << 10) | (b2 << 2) | ((b1 & 0xc0) >> 6)));
+  }
+  if (chunk === "VP8X" && bytes.length >= 30) {
+    const read24 = (at: number) => bytes[at]! | (bytes[at + 1]! << 8) | (bytes[at + 2]! << 16);
+    return size(1 + read24(24), 1 + read24(27));
+  }
+  return null;
+}
+
+async function uploadedImage(context: Context<AppEnvironment>, prefix: "avatars" | "groups" | "courses" | `courses/${string}/lessons/${string}`) {
   const form = await context.req.formData();
   const value = form.get("image");
   if (!(value instanceof File)) return { error: apiError(context, 400, "IMAGE_REQUIRED", "Choose an image to upload.") };
   if (value.size < 1 || value.size > IMAGE_MAX_BYTES) return { error: apiError(context, 400, "IMAGE_SIZE_INVALID", "Images must be no larger than 1 MB.") };
   const buffer = await value.arrayBuffer();
-  const type = imageType(new Uint8Array(buffer));
+  const bytes = new Uint8Array(buffer);
+  const type = imageType(bytes);
   if (!type) return { error: apiError(context, 400, "IMAGE_TYPE_INVALID", "Choose a static PNG, JPEG, or WebP image.") };
   const extension = type === "image/png" ? "png" : type === "image/jpeg" ? "jpg" : "webp";
   const key = `${prefix}/${crypto.randomUUID()}.${extension}`;
   await context.env.MEDIA.put(key, buffer, { httpMetadata: { contentType: type, cacheControl: "public, max-age=31536000, immutable" } });
-  return { key };
+  // Covers and avatars ignore the size; lesson images report it so the editor can reserve space. Unknown sizes fall back to 1×1.
+  const measured = imageSize(bytes, type);
+  return { key, width: measured?.width ?? 1, height: measured?.height ?? 1 };
 }
 
 function temporaryPassword() {
@@ -477,12 +506,10 @@ async function contributableCourse(context: Context<AppEnvironment>) {
   return found;
 }
 
-// Contributors work on drafts only: they may not publish, and published lessons and blocks belong to the owner.
-function contributorEditError(context: Context<AppEnvironment>, course: CourseRow, current: { published: number } | null, published: boolean) {
-  if (course.ownerId === context.get("user")!.id) return null;
-  if (current?.published) return apiError(context, 403, "COURSE_CONTENT_PUBLISHED", "Only the course owner can change published content.");
-  if (published) return apiError(context, 403, "COURSE_PUBLISH_FORBIDDEN", "Only the course owner can publish course content.");
-  return null;
+// Lesson details are not drafted, so contributors change them only while the lesson is unpublished.
+function contributorDetailsError(context: Context<AppEnvironment>, course: CourseRow, lesson: { published: number }) {
+  if (course.ownerId === context.get("user")!.id || !lesson.published) return null;
+  return apiError(context, 403, "COURSE_CONTENT_PUBLISHED", "Only the course owner can change published content.");
 }
 
 // Leaving or being removed from the group ends every contributor request and role in it.
@@ -499,90 +526,87 @@ async function courseResponse(context: Context<AppEnvironment>, courseId: string
 }
 
 type LessonRow = {
-  id: string; courseId: string; title: string; goal: string | null; position: number; published: number; version: number;
+  id: string; courseId: string; title: string; goal: string | null; position: number; published: number; publishedAt: number | null; changed: number;
   updatedById: string; updatedByName: string; updatedAt: number;
 };
-type BlockRow = {
-  id: string; lessonId: string; position: number; kind: string; payload: string; payloadVersion: number; published: number; version: number;
-  updatedById: string; updatedByName: string; updatedAt: number;
-};
+type LessonDocumentRow = LessonRow & { draftDoc: string; draftVersion: number; publishedDoc: string | null };
 // Attributes the last editor, falling back to their group profile snapshot once they are no longer active.
 const editorColumns = (table: string, alias: string) => `CASE WHEN em.state = 'active' THEN eu.display_name ELSE COALESCE(em.profile_display_name, 'Former member') END AS updatedByName
    FROM ${table} ${alias} JOIN users eu ON eu.id = ${alias}.updated_by
    LEFT JOIN memberships em ON em.group_id = ${alias}.group_id AND em.user_id = ${alias}.updated_by`;
-const LESSON_SELECT = `SELECT l.id, l.course_id AS courseId, l.title, l.goal, l.position, l.published, l.version, l.updated_by AS updatedById,
-    l.updated_at AS updatedAt, ${editorColumns("course_lessons", "l")}`;
-const BLOCK_SELECT = `SELECT b.id, b.lesson_id AS lessonId, b.position, b.kind, b.payload, b.payload_version AS payloadVersion, b.published, b.version,
-    b.updated_by AS updatedById, b.updated_at AS updatedAt, ${editorColumns("course_blocks", "b")}`;
+// A lesson is published while it has a published document; `changed` tells editors the draft differs from it.
+const LESSON_COLUMNS = `l.id, l.course_id AS courseId, l.title, l.goal, l.position, l.published_doc IS NOT NULL AS published, l.published_at AS publishedAt,
+    (l.published_doc IS NOT NULL AND l.draft_doc != l.published_doc) AS changed, l.updated_by AS updatedById, l.updated_at AS updatedAt`;
+const LESSON_SELECT = `SELECT ${LESSON_COLUMNS}, ${editorColumns("course_lessons", "l")}`;
+const LESSON_DOCUMENT_SELECT = `SELECT ${LESSON_COLUMNS}, l.draft_doc AS draftDoc, l.draft_version AS draftVersion, l.published_doc AS publishedDoc,
+    ${editorColumns("course_lessons", "l")}`;
 
-// The course owner and active contributors see unpublished lessons and blocks; everyone else sees published content only.
+// The course owner and active contributors see unpublished lessons and drafts; everyone else sees published documents only.
 const seesCourseDrafts = (course: CourseRow, viewerId: string) => course.ownerId === viewerId || course.contributorState === "active";
 
-const presentLessonSummary = (row: LessonRow): CourseLessonSummary => ({
-  id: row.id, position: row.position, title: row.title, goal: row.goal, published: Boolean(row.published), version: row.version,
-  updatedBy: { id: row.updatedById, displayName: row.updatedByName }, updatedAt: row.updatedAt,
+const presentLessonSummary = (row: LessonRow, editor: boolean): CourseLessonSummary => ({
+  id: row.id, position: row.position, title: row.title, goal: row.goal, published: Boolean(row.published), publishedAt: row.publishedAt,
+  changed: editor && Boolean(row.changed), updatedBy: { id: row.updatedById, displayName: row.updatedByName }, updatedAt: row.updatedAt,
 });
 
-function storedBlockContent(row: Pick<BlockRow, "id" | "kind" | "payloadVersion" | "payload">) {
-  const content = parseStoredBlockPayload(row.kind, row.payloadVersion, JSON.parse(row.payload));
-  if (!content) throw new Error(`Course block ${row.id} has an unreadable payload.`);
-  return content;
+function storedDocument(raw: string, lessonId: string) {
+  const document = parseStoredLessonDocument(JSON.parse(raw));
+  if (!document) throw new Error(`Course lesson ${lessonId} has an unreadable document.`);
+  return document;
+}
+const storedDocuments = (row: LessonDocumentRow) => ({
+  draft: storedDocument(row.draftDoc, row.id), published: row.publishedDoc === null ? null : storedDocument(row.publishedDoc, row.id),
+});
+
+// Documents store R2 keys; readers receive public URLs, so a media base URL change never breaks stored lessons.
+const expandImages = (document: LessonDocument, mediaBase: string) => mapImageUrls(document, (key) => mediaUrlFromBase(mediaBase, key)!);
+
+// Large ID lists travel as one JSON parameter because D1 limits bound parameters per statement.
+const jsonList = (values: readonly string[]) => JSON.stringify([...new Set(values)]);
+
+async function threadCounts(binding: D1Database, groupId: string, practiceIds: string[]) {
+  if (!practiceIds.length) return {};
+  const rows = await binding.prepare("SELECT block_id AS blockId, COUNT(*) AS total FROM comments WHERE group_id = ? AND block_id IN (SELECT value FROM json_each(?)) GROUP BY block_id")
+    .bind(groupId, jsonList(practiceIds)).all<{ blockId: string; total: number }>();
+  return Object.fromEntries(rows.results.map((row) => [row.blockId, row.total]));
 }
 
-// Learner payloads never carry authors' versions or item notes; editors get them back as the reference so they can edit.
-function presentBlock(row: BlockRow, editor: boolean, answerCounts: Map<string, number>): CourseBlock {
-  const content = storedBlockContent(row);
-  const base = {
-    id: row.id, lessonId: row.lessonId, position: row.position, published: Boolean(row.published), version: row.version,
-    updatedBy: { id: row.updatedById, displayName: row.updatedByName }, updatedAt: row.updatedAt,
-  };
-  if (content.kind !== "practice") return { ...base, ...content };
-  const split = splitPracticePayload(content.payload);
-  return { ...base, kind: "practice", payload: split.payload, reference: editor ? split.reference : null, answerCount: answerCounts.get(row.id) ?? 0 };
-}
-
-async function threadCounts(binding: D1Database, groupId: string, blockIds: string[]) {
-  if (!blockIds.length) return new Map<string, number>();
-  const rows = await binding.prepare(`SELECT block_id AS blockId, COUNT(*) AS total FROM comments WHERE group_id = ? AND block_id IN (${blockIds.map(() => "?").join(", ")}) GROUP BY block_id`)
-    .bind(groupId, ...blockIds).all<{ blockId: string; total: number }>();
-  return new Map(rows.results.map((row) => [row.blockId, row.total]));
+// Learners receive the published document with practice prompts only. Editors also receive the full draft and its version.
+async function presentLessons(binding: D1Database, course: CourseRow, viewerId: string, rows: LessonDocumentRow[], mediaBase: string): Promise<CourseLesson[]> {
+  const editor = seesCourseDrafts(course, viewerId);
+  const documents = rows.map((row) => ({ row, ...storedDocuments(row) }));
+  const practiceIds = documents.flatMap(({ draft, published }) => [...(published ? collectPracticeIds(published) : []), ...(editor ? collectPracticeIds(draft) : [])]);
+  const counts = await threadCounts(binding, course.groupId, practiceIds);
+  return documents.map(({ row, draft, published }) => {
+    const ids = new Set([...(published ? collectPracticeIds(published) : []), ...(editor ? collectPracticeIds(draft) : [])]);
+    return {
+      ...presentLessonSummary(row, editor),
+      document: published && expandImages(toLearnerDocument(published).document, mediaBase),
+      answerCounts: Object.fromEntries([...ids].map((id) => [id, counts[id] ?? 0])),
+      draft: editor ? { document: expandImages(draft, mediaBase), version: row.draftVersion } : null,
+    };
+  });
 }
 
 async function readOutline(binding: D1Database, course: CourseRow, viewerId: string) {
   const drafts = seesCourseDrafts(course, viewerId);
-  const rows = await binding.prepare(`${LESSON_SELECT} WHERE l.group_id = ? AND l.course_id = ?${drafts ? "" : " AND l.published = 1"} ORDER BY l.position, l.created_at, l.id`)
+  const rows = await binding.prepare(`${LESSON_SELECT} WHERE l.group_id = ? AND l.course_id = ?${drafts ? "" : " AND l.published_doc IS NOT NULL"} ORDER BY l.position, l.created_at, l.id`)
     .bind(course.groupId, course.id).all<LessonRow>();
   return rows.results;
 }
 
-async function lessonsWithBlocks(binding: D1Database, course: CourseRow, viewerId: string, lessons: LessonRow[]): Promise<CourseLesson[]> {
-  if (!lessons.length) return [];
-  const drafts = seesCourseDrafts(course, viewerId);
-  const rows = await binding.prepare(`${BLOCK_SELECT} WHERE b.group_id = ? AND b.course_id = ? AND b.lesson_id IN (${lessons.map(() => "?").join(", ")})${drafts ? "" : " AND b.published = 1"}
-    ORDER BY b.position, b.created_at, b.id`).bind(course.groupId, course.id, ...lessons.map((lesson) => lesson.id)).all<BlockRow>();
-  const counts = await threadCounts(binding, course.groupId, rows.results.filter((block) => block.kind === "practice").map((block) => block.id));
-  return lessons.map((lesson) => ({ ...presentLessonSummary(lesson), blocks: rows.results.filter((block) => block.lessonId === lesson.id).map((block) => presentBlock(block, drafts, counts)) }));
-}
-
-async function readLessonRow(binding: D1Database, course: CourseRow, lessonId: string) {
-  return binding.prepare(`${LESSON_SELECT} WHERE l.group_id = ? AND l.course_id = ? AND l.id = ?`).bind(course.groupId, course.id, lessonId).first<LessonRow>();
-}
-
-async function readBlockRow(binding: D1Database, course: CourseRow, lessonId: string, blockId: string) {
-  return binding.prepare(`${BLOCK_SELECT} WHERE b.group_id = ? AND b.course_id = ? AND b.lesson_id = ? AND b.id = ?`).bind(course.groupId, course.id, lessonId, blockId).first<BlockRow>();
+async function readLessonRows(binding: D1Database, course: CourseRow, lessonIds: string[]) {
+  if (!lessonIds.length) return [];
+  const rows = await binding.prepare(`${LESSON_DOCUMENT_SELECT} WHERE l.group_id = ? AND l.course_id = ? AND l.id IN (SELECT value FROM json_each(?))`)
+    .bind(course.groupId, course.id, jsonList(lessonIds)).all<LessonDocumentRow>();
+  return lessonIds.flatMap((id) => rows.results.filter((row) => row.id === id));
 }
 
 // Resolves a lesson nested under an already-authorized course. Hidden lessons are indistinguishable from missing ones.
 async function visibleLesson(context: Context<AppEnvironment>, course: CourseRow) {
-  const lesson = await readLessonRow(context.env.DB, course, context.req.param("lessonId") ?? "");
+  const [lesson] = await readLessonRows(context.env.DB, course, [context.req.param("lessonId") ?? ""]);
   if (!lesson || (!lesson.published && !seesCourseDrafts(course, context.get("user")!.id))) return { error: apiError(context, 404, "LESSON_NOT_FOUND", "This lesson is not available.") };
   return { lesson };
-}
-
-async function visibleBlock(context: Context<AppEnvironment>, course: CourseRow, lesson: LessonRow) {
-  const block = await readBlockRow(context.env.DB, course, lesson.id, context.req.param("blockId") ?? "");
-  if (!block || (!block.published && !seesCourseDrafts(course, context.get("user")!.id))) return { error: apiError(context, 404, "BLOCK_NOT_FOUND", "This block is not available.") };
-  return { block };
 }
 
 // Deleting is open to the course owner and, as moderation, the group creator; archived courses stay frozen for both.
@@ -595,30 +619,81 @@ async function deletableCourseContent(context: Context<AppEnvironment>) {
   return found;
 }
 
-const versionConflict = (context: Context<AppEnvironment>) => apiError(context, 409, "VERSION_CONFLICT", "Someone saved a newer version first. Reload it before saving again.");
+// Publishing, discarding, and unpublishing a lesson belong to the course owner; contributors are told so explicitly.
+async function publishableCourse(context: Context<AppEnvironment>) {
+  const found = await contributableCourse(context);
+  if ("error" in found) return found;
+  if (found.row.ownerId !== context.get("user")!.id) return { error: apiError(context, 403, "COURSE_PUBLISH_FORBIDDEN", "Only the course owner can publish course content.") };
+  return found;
+}
 
 async function lessonResponse(context: Context<AppEnvironment>, course: CourseRow, lessonId: string, status: 200 | 201 = 200) {
-  const lesson = await readLessonRow(context.env.DB, course, lessonId);
-  const [present] = await lessonsWithBlocks(context.env.DB, course, context.get("user")!.id, [lesson!]);
-  return context.json(lessonResponseSchema.parse({ lesson: present }), status);
+  const rows = await readLessonRows(context.env.DB, course, [lessonId]);
+  const [lesson] = await presentLessons(context.env.DB, course, context.get("user")!.id, rows, context.env.PUBLIC_MEDIA_BASE_URL);
+  return context.json(lessonResponseSchema.parse({ lesson }), status);
 }
 
-async function blockResponse(context: Context<AppEnvironment>, course: CourseRow, lessonId: string, blockId: string, status: 200 | 201 = 200) {
-  const block = await readBlockRow(context.env.DB, course, lessonId, blockId);
-  const counts = await threadCounts(context.env.DB, course.groupId, [blockId]);
-  return context.json(blockResponseSchema.parse({ block: presentBlock(block!, seesCourseDrafts(course, context.get("user")!.id), counts) }), status);
+// A stale draft version is refused with the current draft, so the editor can recover without another request.
+function draftConflict(context: Context<AppEnvironment>, lesson: LessonDocumentRow) {
+  return context.json({
+    error: { code: "VERSION_CONFLICT", message: "Someone saved a newer version first. Reload it before saving again.", requestId: context.get("requestId") },
+    draft: { document: expandImages(storedDocuments(lesson).draft, context.env.PUBLIC_MEDIA_BASE_URL), version: lesson.draftVersion },
+  }, 409);
 }
 
-// Rewrites positions for one parent in a single batch. The client must send exactly the current children.
-async function reorderChildren(context: Context<AppEnvironment>, table: "course_lessons" | "course_blocks", parentColumn: "course_id" | "lesson_id", parentId: string, groupId: string) {
+// Turns every image URL back into its R2 key and accepts only keys uploaded to this lesson. An empty URL is an unfinished upload.
+async function canonicalDocument(context: Context<AppEnvironment>, course: CourseRow, lessonId: string, document: LessonDocument) {
+  const base = `${context.env.PUBLIC_MEDIA_BASE_URL.replace(/\/$/, "")}/`;
+  let invalid = false;
+  const keyed = mapImageUrls(document, (url) => {
+    try {
+      if (url.startsWith(base)) return url.slice(base.length).split("/").map(decodeURIComponent).join("/");
+    } catch { /* a malformed escape is an invalid image */ }
+    invalid = true;
+    return url;
+  });
+  const keys = [...new Set(collectImageUrls(keyed))];
+  if (!invalid && keys.length) {
+    const known = await context.env.DB.prepare("SELECT COUNT(*) AS total FROM course_media WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND key IN (SELECT value FROM json_each(?))")
+      .bind(course.groupId, course.id, lessonId, jsonList(keys)).first<{ total: number }>();
+    invalid = known?.total !== keys.length;
+  }
+  if (invalid) return { error: apiError(context, 400, "LESSON_IMAGE_INVALID", "Upload images to this lesson before adding them.") };
+  return { document: keyed };
+}
+
+// After publishing or discarding, both documents equal `kept`. Practices outside it lose their threads (reactions have no
+// foreign key, so they go first), and media rows outside it that are old enough to be no in-flight upload are removed.
+// Every statement repeats `guard` so nothing is cleaned up when the version check of the same batch failed.
+const MEDIA_GRACE_MS = 24 * 60 * 60 * 1000;
+async function lessonCleanup(binding: D1Database, course: CourseRow, lessonId: string, kept: LessonDocument, guard: { sql: string; values: Array<string | number> }) {
+  const practices = jsonList(collectPracticeIds(kept));
+  const media = await binding.prepare("SELECT key FROM course_media WHERE group_id = ? AND lesson_id = ? AND created_at < ? AND key NOT IN (SELECT value FROM json_each(?))")
+    .bind(course.groupId, lessonId, Date.now() - MEDIA_GRACE_MS, jsonList(collectImageUrls(kept))).all<{ key: string }>();
+  const mediaKeys = media.results.map((row) => row.key);
+  const doomed = "SELECT id FROM course_practices WHERE group_id = ? AND lesson_id = ? AND id NOT IN (SELECT value FROM json_each(?))";
+  return {
+    mediaKeys,
+    statements: [
+      binding.prepare(`DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND target_id IN (SELECT id FROM comments WHERE group_id = ? AND block_id IN (${doomed})) AND ${guard.sql}`)
+        .bind(course.groupId, course.groupId, course.groupId, lessonId, practices, ...guard.values),
+      binding.prepare(`DELETE FROM course_practices WHERE id IN (${doomed}) AND ${guard.sql}`).bind(course.groupId, lessonId, practices, ...guard.values),
+      binding.prepare(`DELETE FROM course_media WHERE group_id = ? AND lesson_id = ? AND key IN (SELECT value FROM json_each(?)) AND ${guard.sql}`)
+        .bind(course.groupId, lessonId, jsonList(mediaKeys), ...guard.values),
+    ],
+  };
+}
+
+// Rewrites lesson positions for one course in a single batch. The client must send exactly the current lessons.
+async function reorderLessons(context: Context<AppEnvironment>, course: CourseRow) {
   const parsed = await parseJson(context, reorderRequestSchema); if ("response" in parsed) return { error: parsed.response };
-  const current = await context.env.DB.prepare(`SELECT id FROM ${table} WHERE group_id = ? AND ${parentColumn} = ?`).bind(groupId, parentId).all<{ id: string }>();
+  const current = await context.env.DB.prepare("SELECT id FROM course_lessons WHERE group_id = ? AND course_id = ?").bind(course.groupId, course.id).all<{ id: string }>();
   const known = new Set(current.results.map((row) => row.id));
   if (parsed.data.ids.length !== known.size || new Set(parsed.data.ids).size !== known.size || parsed.data.ids.some((id) => !known.has(id))) {
     return { error: apiError(context, 409, "ORDER_STALE", "The list changed since it was loaded. Reload it and try again.") };
   }
   if (parsed.data.ids.length) {
-    await context.env.DB.batch(parsed.data.ids.map((id, position) => context.env.DB.prepare(`UPDATE ${table} SET position = ? WHERE group_id = ? AND ${parentColumn} = ? AND id = ?`).bind(position, groupId, parentId, id)));
+    await context.env.DB.batch(parsed.data.ids.map((id, position) => context.env.DB.prepare("UPDATE course_lessons SET position = ? WHERE group_id = ? AND course_id = ? AND id = ?").bind(position, course.groupId, course.id, id)));
   }
   return { ok: true as const };
 }
@@ -1440,11 +1515,13 @@ app.post("/api/groups/:groupId/courses", requireGroupAccess, async (context) => 
 app.get("/api/groups/:groupId/courses/:courseId", requireGroupAccess, async (context) => {
   const found = await visibleCourse(context); if ("error" in found) return found.error;
   const group = context.get("groupAccess"); const user = context.get("user")!;
-  // The outline is complete; blocks come only for the first few visible lessons, and later lessons load by ID.
+  // The outline is complete; documents come only for the first few visible lessons, and later lessons load by ID.
   const outline = await readOutline(context.env.DB, found.row, user.id);
-  const lessons = await lessonsWithBlocks(context.env.DB, found.row, user.id, outline.slice(0, COURSE_PRELOADED_LESSONS));
+  const preloaded = await readLessonRows(context.env.DB, found.row, outline.slice(0, COURSE_PRELOADED_LESSONS).map((lesson) => lesson.id));
+  const lessons = await presentLessons(context.env.DB, found.row, user.id, preloaded, context.env.PUBLIC_MEDIA_BASE_URL);
   return context.json(courseDetailResponseSchema.parse({
-    course: presentCourse(found.row, user.id, group.creatorUserId, context.env.PUBLIC_MEDIA_BASE_URL), outline: outline.map(presentLessonSummary), lessons,
+    course: presentCourse(found.row, user.id, group.creatorUserId, context.env.PUBLIC_MEDIA_BASE_URL),
+    outline: outline.map((row) => presentLessonSummary(row, seesCourseDrafts(found.row, user.id))), lessons,
   }));
 });
 
@@ -1600,10 +1677,11 @@ app.post("/api/groups/:groupId/courses/:courseId/lessons", requireGroupAccess, a
   const found = await contributableCourse(context); if ("error" in found) return found.error;
   const parsed = await parseJson(context, createLessonRequestSchema); if ("response" in parsed) return parsed.response;
   const user = context.get("user")!; const course = found.row; const lessonId = crypto.randomUUID(); const now = Date.now();
-  // Position and the lesson limit are evaluated inside the insert so concurrent saves cannot exceed the limit.
+  // Position and the lesson limit are evaluated inside the insert so concurrent saves cannot exceed the limit. New lessons
+  // start unpublished with an empty draft.
   const inserted = await context.env.DB.prepare(
-    `INSERT INTO course_lessons (id, group_id, course_id, title, goal, position, published, version, created_by, updated_by, created_at, updated_at)
-     SELECT ?, ?, ?, ?, ?, (SELECT COALESCE(MAX(position) + 1, 0) FROM course_lessons WHERE group_id = ? AND course_id = ?), 0, 1, ?, ?, ?, ?
+    `INSERT INTO course_lessons (id, group_id, course_id, title, goal, position, created_by, updated_by, created_at, updated_at)
+     SELECT ?, ?, ?, ?, ?, (SELECT COALESCE(MAX(position) + 1, 0) FROM course_lessons WHERE group_id = ? AND course_id = ?), ?, ?, ?, ?
      WHERE (SELECT COUNT(*) FROM course_lessons WHERE group_id = ? AND course_id = ?) < ?`,
   ).bind(lessonId, course.groupId, course.id, parsed.data.title, parsed.data.goal, course.groupId, course.id, user.id, user.id, now, now, course.groupId, course.id, COURSE_LESSONS_MAX).run();
   if (!inserted.meta.changes) return apiError(context, 409, "LESSON_LIMIT_REACHED", "This course already has the maximum number of lessons.");
@@ -1612,12 +1690,15 @@ app.post("/api/groups/:groupId/courses/:courseId/lessons", requireGroupAccess, a
 
 app.put("/api/groups/:groupId/courses/:courseId/lessons/order", requireGroupAccess, async (context) => {
   const found = await editableCourse(context); if ("error" in found) return found.error;
-  const reordered = await reorderChildren(context, "course_lessons", "course_id", found.row.id, found.row.groupId); if ("error" in reordered) return reordered.error;
-  const outline = await readOutline(context.env.DB, found.row, context.get("user")!.id);
-  return context.json(outlineResponseSchema.parse({ outline: outline.map(presentLessonSummary) }));
+  const reordered = await reorderLessons(context, found.row); if ("error" in reordered) return reordered.error;
+  const user = context.get("user")!;
+  const outline = await readOutline(context.env.DB, found.row, user.id);
+  return context.json(outlineResponseSchema.parse({ outline: outline.map((row) => presentLessonSummary(row, seesCourseDrafts(found.row, user.id))) }));
 });
 
-app.get("/api/groups/:groupId/courses/:courseId/lessons/:lessonId", requireGroupAccess, async (context) => {
+const lessonPath = "/api/groups/:groupId/courses/:courseId/lessons/:lessonId";
+
+app.get(lessonPath, requireGroupAccess, async (context) => {
   const found = await visibleCourse(context); if ("error" in found) return found.error;
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
   return lessonResponse(context, found.row, lesson.lesson.id);
@@ -1628,12 +1709,12 @@ app.get("/api/groups/:groupId/courses/:courseId/lessons/:lessonId", requireGroup
 async function progressResponse(context: Context<AppEnvironment>, course: CourseRow) {
   const db = context.env.DB; const viewerId = context.get("user")!.id;
   const [published, mine, members] = await Promise.all([
-    db.prepare("SELECT COUNT(*) AS total FROM course_lessons WHERE group_id = ? AND course_id = ? AND published = 1").bind(course.groupId, course.id).first<{ total: number }>(),
+    db.prepare("SELECT COUNT(*) AS total FROM course_lessons WHERE group_id = ? AND course_id = ? AND published_doc IS NOT NULL").bind(course.groupId, course.id).first<{ total: number }>(),
     db.prepare("SELECT lesson_id AS lessonId FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND user_id = ? ORDER BY completed_at")
       .bind(course.groupId, course.id, viewerId).all<{ lessonId: string }>(),
     db.prepare(
       `SELECT u.id, u.display_name AS displayName, u.avatar_key AS avatarKey,
-        (SELECT COUNT(*) FROM course_lesson_completions clc JOIN course_lessons l ON l.id = clc.lesson_id AND l.group_id = clc.group_id AND l.published = 1
+        (SELECT COUNT(*) FROM course_lesson_completions clc JOIN course_lessons l ON l.id = clc.lesson_id AND l.group_id = clc.group_id AND l.published_doc IS NOT NULL
           WHERE clc.group_id = m.group_id AND clc.course_id = ? AND clc.user_id = m.user_id) AS completed
        FROM memberships m JOIN users u ON u.id = m.user_id
        WHERE m.group_id = ? AND m.state = 'active'
@@ -1657,7 +1738,7 @@ app.get("/api/groups/:groupId/courses/:courseId/progress", requireGroupAccess, a
 });
 
 // Finishing a published lesson in the lesson player records it once; repeating the lesson keeps the first completion time.
-app.put("/api/groups/:groupId/courses/:courseId/lessons/:lessonId/completion", requireGroupAccess, async (context) => {
+app.put(`${lessonPath}/completion`, requireGroupAccess, async (context) => {
   const found = await visibleCourse(context); if ("error" in found) return found.error;
   if (found.row.status === "archived") return apiError(context, 409, "COURSE_ARCHIVED", "Restore this course before changing it.");
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
@@ -1669,100 +1750,153 @@ app.put("/api/groups/:groupId/courses/:courseId/lessons/:lessonId/completion", r
   return progressResponse(context, found.row);
 });
 
-app.patch("/api/groups/:groupId/courses/:courseId/lessons/:lessonId", requireGroupAccess, async (context) => {
+app.patch(lessonPath, requireGroupAccess, async (context) => {
   const found = await contributableCourse(context); if ("error" in found) return found.error;
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
   const parsed = await parseJson(context, updateLessonRequestSchema); if ("response" in parsed) return parsed.response;
-  const forbidden = contributorEditError(context, found.row, lesson.lesson, parsed.data.published); if (forbidden) return forbidden;
-  const updated = await context.env.DB.prepare(
-    "UPDATE course_lessons SET title = ?, goal = ?, published = ?, version = version + 1, updated_by = ?, updated_at = ? WHERE group_id = ? AND course_id = ? AND id = ? AND version = ?",
-  ).bind(parsed.data.title, parsed.data.goal, parsed.data.published ? 1 : 0, context.get("user")!.id, Date.now(), found.row.groupId, found.row.id, lesson.lesson.id, parsed.data.version).run();
-  if (!updated.meta.changes) return versionConflict(context);
+  const forbidden = contributorDetailsError(context, found.row, lesson.lesson); if (forbidden) return forbidden;
+  await context.env.DB.prepare("UPDATE course_lessons SET title = ?, goal = ?, updated_by = ?, updated_at = ? WHERE group_id = ? AND course_id = ? AND id = ?")
+    .bind(parsed.data.title, parsed.data.goal, context.get("user")!.id, Date.now(), found.row.groupId, found.row.id, lesson.lesson.id).run();
   return lessonResponse(context, found.row, lesson.lesson.id);
 });
 
-app.delete("/api/groups/:groupId/courses/:courseId/lessons/:lessonId", requireGroupAccess, async (context) => {
+app.delete(lessonPath, requireGroupAccess, async (context) => {
   const found = await deletableCourseContent(context); if ("error" in found) return found.error;
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
-  // Lessons and blocks are hard-deleted together with their practice threads; reactions have no foreign key, so they go first.
-  const lessonBlocks = "SELECT id FROM course_blocks WHERE group_id = ? AND course_id = ? AND lesson_id = ?";
-  await context.env.DB.batch([
-    context.env.DB.prepare(`DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND target_id IN (SELECT id FROM comments WHERE group_id = ? AND block_id IN (${lessonBlocks}))`)
-      .bind(found.row.groupId, found.row.groupId, found.row.groupId, found.row.id, lesson.lesson.id),
-    context.env.DB.prepare(`DELETE FROM comments WHERE group_id = ? AND block_id IN (${lessonBlocks})`).bind(found.row.groupId, found.row.groupId, found.row.id, lesson.lesson.id),
-    context.env.DB.prepare("DELETE FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(found.row.groupId, found.row.id, lesson.lesson.id),
-    context.env.DB.prepare("DELETE FROM course_blocks WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(found.row.groupId, found.row.id, lesson.lesson.id),
-    context.env.DB.prepare("DELETE FROM course_lessons WHERE group_id = ? AND course_id = ? AND id = ?").bind(found.row.groupId, found.row.id, lesson.lesson.id),
+  const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id; const db = context.env.DB;
+  const media = await db.prepare("SELECT key FROM course_media WHERE group_id = ? AND lesson_id = ?").bind(groupId, lessonId).all<{ key: string }>();
+  // Lessons are hard-deleted with their practice threads, completions, and images; reactions have no foreign key, so they go first.
+  const practices = "SELECT id FROM course_practices WHERE group_id = ? AND course_id = ? AND lesson_id = ?";
+  await db.batch([
+    db.prepare(`DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND target_id IN (SELECT id FROM comments WHERE group_id = ? AND block_id IN (${practices}))`)
+      .bind(groupId, groupId, groupId, courseId, lessonId),
+    db.prepare(`DELETE FROM comments WHERE group_id = ? AND block_id IN (${practices})`).bind(groupId, groupId, courseId, lessonId),
+    db.prepare("DELETE FROM course_practices WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
+    db.prepare("DELETE FROM course_media WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
+    db.prepare("DELETE FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
+    db.prepare("DELETE FROM course_lessons WHERE group_id = ? AND course_id = ? AND id = ?").bind(groupId, courseId, lessonId),
   ]);
+  if (media.results.length) await context.env.MEDIA.delete(media.results.map((row) => row.key));
   return context.json({ ok: true } as const);
 });
 
-app.post("/api/groups/:groupId/courses/:courseId/lessons/:lessonId/blocks", requireGroupAccess, async (context) => {
+// The owner and active contributors autosave the draft of any lesson. A stale version is refused with the current draft.
+app.put(`${lessonPath}/draft`, requireGroupAccess, async (context) => {
   const found = await contributableCourse(context); if ("error" in found) return found.error;
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
-  const parsed = await parseJson(context, createBlockRequestSchema); if ("response" in parsed) return parsed.response;
-  // Contributors may add unpublished blocks to any lesson they can see, including a published one.
-  const forbidden = contributorEditError(context, found.row, null, parsed.data.published); if (forbidden) return forbidden;
-  const user = context.get("user")!; const course = found.row; const blockId = crypto.randomUUID(); const now = Date.now();
-  const inserted = await context.env.DB.prepare(
-    `INSERT INTO course_blocks (id, group_id, course_id, lesson_id, position, kind, payload, payload_version, published, version, created_by, updated_by, created_at, updated_at)
-     SELECT ?, ?, ?, ?, (SELECT COALESCE(MAX(position) + 1, 0) FROM course_blocks WHERE group_id = ? AND lesson_id = ?), ?, ?, ?, ?, 1, ?, ?, ?, ?
-     WHERE (SELECT COUNT(*) FROM course_blocks WHERE group_id = ? AND lesson_id = ?) < ?`,
-  ).bind(
-    blockId, course.groupId, course.id, lesson.lesson.id, course.groupId, lesson.lesson.id, parsed.data.kind, JSON.stringify(parsed.data.payload), COURSE_BLOCK_PAYLOAD_VERSION,
-    parsed.data.published ? 1 : 0, user.id, user.id, now, now, course.groupId, lesson.lesson.id, COURSE_BLOCKS_MAX,
-  ).run();
-  if (!inserted.meta.changes) return apiError(context, 409, "BLOCK_LIMIT_REACHED", "This lesson already has the maximum number of blocks.");
-  return blockResponse(context, course, lesson.lesson.id, blockId, 201);
+  const parsed = await parseJson(context, saveLessonDraftRequestSchema, LESSON_REQUEST_BYTES_MAX); if ("response" in parsed) return parsed.response;
+  if (parsed.data.draftVersion !== lesson.lesson.draftVersion) return draftConflict(context, lesson.lesson);
+  const canonical = await canonicalDocument(context, found.row, lesson.lesson.id, parsed.data.document); if ("error" in canonical) return canonical.error;
+  const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id; const user = context.get("user")!; const now = Date.now(); const db = context.env.DB;
+  const practiceIds = collectPracticeIds(canonical.document);
+  // New practice IDs get an anchor row. The draft is saved only if every practice ID belongs to this lesson, so an ID taken
+  // from another lesson can never borrow its thread.
+  const [, saved] = await db.batch([
+    db.prepare("INSERT INTO course_practices (id, group_id, course_id, lesson_id, created_at) SELECT value, ?, ?, ?, ? FROM json_each(?) WHERE true ON CONFLICT(id) DO NOTHING")
+      .bind(groupId, courseId, lessonId, now, jsonList(practiceIds)),
+    db.prepare(
+      `UPDATE course_lessons SET draft_doc = ?, draft_version = draft_version + 1, updated_by = ?, updated_at = ?
+       WHERE group_id = ? AND course_id = ? AND id = ? AND draft_version = ?
+       AND (SELECT COUNT(*) FROM course_practices WHERE group_id = ? AND lesson_id = ? AND id IN (SELECT value FROM json_each(?))) = ?`,
+    ).bind(JSON.stringify(canonical.document), user.id, now, groupId, courseId, lessonId, parsed.data.draftVersion, groupId, lessonId, jsonList(practiceIds), new Set(practiceIds).size),
+  ]);
+  if (!saved!.meta.changes) {
+    const [current] = await readLessonRows(db, found.row, [lessonId]);
+    if (current && current.draftVersion !== parsed.data.draftVersion) return draftConflict(context, current);
+    return apiError(context, 409, "PRACTICE_ID_TAKEN", "A practice in this lesson uses an ID that belongs to another lesson.");
+  }
+  const [current] = await readLessonRows(db, found.row, [lessonId]);
+  return context.json(lessonDraftSavedResponseSchema.parse({
+    draftVersion: current!.draftVersion, changed: Boolean(current!.changed), updatedBy: { id: current!.updatedById, displayName: current!.updatedByName }, updatedAt: current!.updatedAt,
+  }));
 });
 
-app.put("/api/groups/:groupId/courses/:courseId/lessons/:lessonId/blocks/order", requireGroupAccess, async (context) => {
-  const found = await editableCourse(context); if ("error" in found) return found.error;
+// Publishing copies the draft the owner reviewed (by version) to the published document and cleans up what neither keeps.
+app.post(`${lessonPath}/publish`, requireGroupAccess, async (context) => {
+  const found = await publishableCourse(context); if ("error" in found) return found.error;
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
-  const reordered = await reorderChildren(context, "course_blocks", "lesson_id", lesson.lesson.id, found.row.groupId); if ("error" in reordered) return reordered.error;
+  const parsed = await parseJson(context, publishLessonRequestSchema); if ("response" in parsed) return parsed.response;
+  if (parsed.data.draftVersion !== lesson.lesson.draftVersion) return draftConflict(context, lesson.lesson);
+  const { draft } = storedDocuments(lesson.lesson);
+  const problems = findPublishProblems(draft);
+  if (problems.length) return context.json({ error: { code: "LESSON_NOT_READY", message: "Finish the highlighted blocks before publishing.", requestId: context.get("requestId") }, problems }, 422);
+  const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id; const db = context.env.DB;
+  const guard = { sql: "EXISTS (SELECT 1 FROM course_lessons WHERE group_id = ? AND id = ? AND draft_version = ?)", values: [groupId, lessonId, parsed.data.draftVersion] };
+  const cleanup = await lessonCleanup(db, found.row, lessonId, draft, guard);
+  const [published] = await db.batch([
+    db.prepare("UPDATE course_lessons SET published_doc = draft_doc, published_at = ? WHERE group_id = ? AND course_id = ? AND id = ? AND draft_version = ?")
+      .bind(Date.now(), groupId, courseId, lessonId, parsed.data.draftVersion),
+    ...cleanup.statements,
+  ]);
+  if (!published!.meta.changes) {
+    const [current] = await readLessonRows(db, found.row, [lessonId]);
+    return draftConflict(context, current!);
+  }
+  if (cleanup.mediaKeys.length) await context.env.MEDIA.delete(cleanup.mediaKeys);
+  return lessonResponse(context, found.row, lessonId);
+});
+
+app.post(`${lessonPath}/unpublish`, requireGroupAccess, async (context) => {
+  const found = await publishableCourse(context); if ("error" in found) return found.error;
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  await context.env.DB.prepare("UPDATE course_lessons SET published_doc = NULL, published_at = NULL WHERE group_id = ? AND course_id = ? AND id = ?")
+    .bind(found.row.groupId, found.row.id, lesson.lesson.id).run();
   return lessonResponse(context, found.row, lesson.lesson.id);
 });
 
-app.patch("/api/groups/:groupId/courses/:courseId/lessons/:lessonId/blocks/:blockId", requireGroupAccess, async (context) => {
+// Discarding resets the draft to the published document; editors with the old draft open get a conflict on their next save.
+app.post(`${lessonPath}/discard`, requireGroupAccess, async (context) => {
+  const found = await publishableCourse(context); if ("error" in found) return found.error;
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  const { published } = storedDocuments(lesson.lesson);
+  if (!published) return apiError(context, 409, "LESSON_UNPUBLISHED", "An unpublished lesson has no published version to return to.");
+  const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id; const db = context.env.DB; const version = lesson.lesson.draftVersion;
+  const guard = { sql: "EXISTS (SELECT 1 FROM course_lessons WHERE group_id = ? AND id = ? AND draft_version = ? AND draft_doc = published_doc)", values: [groupId, lessonId, version + 1] };
+  const cleanup = await lessonCleanup(db, found.row, lessonId, published, guard);
+  const [discarded] = await db.batch([
+    db.prepare("UPDATE course_lessons SET draft_doc = published_doc, draft_version = draft_version + 1, updated_by = ?, updated_at = ? WHERE group_id = ? AND course_id = ? AND id = ? AND draft_version = ?")
+      .bind(context.get("user")!.id, Date.now(), groupId, courseId, lessonId, version),
+    ...cleanup.statements,
+  ]);
+  if (!discarded!.meta.changes) {
+    const [current] = await readLessonRows(db, found.row, [lessonId]);
+    return draftConflict(context, current!);
+  }
+  if (cleanup.mediaKeys.length) await context.env.MEDIA.delete(cleanup.mediaKeys);
+  return lessonResponse(context, found.row, lessonId);
+});
+
+// Lesson images reuse the public image pipeline. Each upload is recorded so drafts can only reference this lesson's images.
+app.post(`${lessonPath}/images`, requireGroupAccess, async (context) => {
   const found = await contributableCourse(context); if ("error" in found) return found.error;
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
-  const block = await visibleBlock(context, found.row, lesson.lesson); if ("error" in block) return block.error;
-  const parsed = await parseJson(context, updateBlockRequestSchema); if ("response" in parsed) return parsed.response;
-  const forbidden = contributorEditError(context, found.row, block.block, parsed.data.published); if (forbidden) return forbidden;
-  if (parsed.data.kind !== block.block.kind) return apiError(context, 400, "BLOCK_KIND_IMMUTABLE", "A block keeps its kind. Add a new block instead.");
-  const updated = await context.env.DB.prepare(
-    `UPDATE course_blocks SET payload = ?, payload_version = ?, published = ?, version = version + 1, updated_by = ?, updated_at = ?
-     WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND id = ? AND version = ?`,
-  ).bind(
-    JSON.stringify(parsed.data.payload), COURSE_BLOCK_PAYLOAD_VERSION, parsed.data.published ? 1 : 0, context.get("user")!.id, Date.now(),
-    found.row.groupId, found.row.id, lesson.lesson.id, block.block.id, parsed.data.version,
-  ).run();
-  if (!updated.meta.changes) return versionConflict(context);
-  return blockResponse(context, found.row, lesson.lesson.id, block.block.id);
+  const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id;
+  const uploaded = await uploadedImage(context, `courses/${courseId}/lessons/${lessonId}`);
+  if ("error" in uploaded) return uploaded.error;
+  try {
+    await context.env.DB.prepare("INSERT INTO course_media (key, group_id, course_id, lesson_id, created_by, created_at) VALUES (?, ?, ?, ?, ?, ?)")
+      .bind(uploaded.key, groupId, courseId, lessonId, context.get("user")!.id, Date.now()).run();
+  } catch (error) {
+    await context.env.MEDIA.delete(uploaded.key);
+    throw error;
+  }
+  return context.json(lessonImageUploadResponseSchema.parse({ key: uploaded.key, url: mediaUrl(context.env, uploaded.key), width: uploaded.width, height: uploaded.height }), 201);
 });
 
-app.delete("/api/groups/:groupId/courses/:courseId/lessons/:lessonId/blocks/:blockId", requireGroupAccess, async (context) => {
-  const found = await deletableCourseContent(context); if ("error" in found) return found.error;
-  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
-  const block = await visibleBlock(context, found.row, lesson.lesson); if ("error" in block) return block.error;
-  await context.env.DB.batch([
-    context.env.DB.prepare("DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND target_id IN (SELECT id FROM comments WHERE group_id = ? AND block_id = ?)")
-      .bind(found.row.groupId, found.row.groupId, block.block.id),
-    context.env.DB.prepare("DELETE FROM comments WHERE group_id = ? AND block_id = ?").bind(found.row.groupId, block.block.id),
-    context.env.DB.prepare("DELETE FROM course_blocks WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND id = ?").bind(found.row.groupId, found.row.id, lesson.lesson.id, block.block.id),
-  ]);
-  return context.json({ ok: true } as const);
-});
-
-// Resolves a visible practice block for its answer thread. Writes are refused while the course is archived.
+// Resolves a practice for its answer thread from the published document by block ID. Editors may also answer a practice
+// that so far exists only in the draft, for example while previewing an unpublished lesson. Writes are refused while the
+// course is archived.
 async function practiceBlock(context: Context<AppEnvironment>, write: boolean) {
   const found = await visibleCourse(context); if ("error" in found) return { error: found.error };
   if (write && found.row.status === "archived") return { error: apiError(context, 409, "COURSE_ARCHIVED", "Restore this course before changing it.") };
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return { error: lesson.error };
-  const block = await visibleBlock(context, found.row, lesson.lesson); if ("error" in block) return { error: block.error };
-  const content = storedBlockContent(block.block);
-  if (content.kind !== "practice") return { error: apiError(context, 404, "PRACTICE_NOT_FOUND", "This practice is not available.") };
-  return { course: found.row, block: block.block, practice: content.payload, target: { column: "block_id", id: block.block.id } satisfies DiscussionTarget };
+  const blockId = context.req.param("blockId") ?? "";
+  const { draft, published } = storedDocuments(lesson.lesson);
+  const find = (document: LessonDocument | null) => document && [...walkLessonBlocks(document.blocks)].map(({ block }) => block)
+    .find((block): block is LessonBlockOf<"practice"> => block.type === "practice" && block.id === blockId);
+  const block = find(published) ?? (seesCourseDrafts(found.row, context.get("user")!.id) ? find(draft) : undefined);
+  if (!block) return { error: apiError(context, 404, "PRACTICE_NOT_FOUND", "This practice is not available.") };
+  return { course: found.row, block, practice: readPracticeBlock(block), target: { column: "block_id", id: block.id } satisfies DiscussionTarget };
 }
 
 async function practiceThreadItem(context: Context<AppEnvironment>, target: DiscussionTarget, commentId: string) {
@@ -1781,7 +1915,7 @@ function practiceResponseStatements(binding: D1Database, commentId: string, prom
   });
 }
 
-const practicePath = "/api/groups/:groupId/courses/:courseId/lessons/:lessonId/blocks/:blockId";
+const practicePath = `${lessonPath}/blocks/:blockId`;
 
 // The thread, together with the author's version and item notes, is fetched only when the reader reveals it.
 app.get(`${practicePath}/discussion`, requireGroupAccess, async (context) => {

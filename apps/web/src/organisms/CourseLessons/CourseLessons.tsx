@@ -2,6 +2,7 @@ import {
   COURSE_TEXT_MAX, COURSE_TITLE_MAX, lessonResponseSchema, okResponseSchema, outlineResponseSchema, blockResponseSchema,
   type CourseBlock, type CourseDetailResponse, type CourseLesson, type CourseLessonSummary, type LessonInput,
 } from "@wordinator/contracts";
+import { useMediaQuery } from "@mantine/hooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -204,6 +205,8 @@ export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdate
   const [shown, setShown] = useState(detail.lessons.length);
   const [addOpen, setAddOpen] = useState(false);
   const [playing, setPlaying] = useState<string | null>(null); const [round, setRound] = useState(0);
+  // Below 48em the outline collapses behind a toggle so the first lesson stays above the fold.
+  const narrow = useMediaQuery("(max-width: 48em)"); const [outlineOpen, setOutlineOpen] = useState(false);
   const progress = useQuery(courseProgressQueryOptions(groupId, courseId));
   const completed = new Set(progress.data?.completedLessonIds ?? []);
   const create = useMutation({
@@ -218,19 +221,28 @@ export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdate
   const next = outline[visible.length];
   const jumpTo = (index: number) => {
     setShown((value) => Math.max(value, index + 1));
+    setOutlineOpen(false);
     requestAnimationFrame(() => document.getElementById(lessonAnchor(outline[index]!.id))?.scrollIntoView?.({ behavior: "smooth", block: "start" }));
   };
   const addAction = scope.contribute && <Button onClick={() => { create.reset(); setAddOpen(true); }}>{t("courses.lessons.add")}</Button>;
   return <div className={styles.layout}>
     <nav className={styles.outline} aria-label={t("courses.lessons.outline")}>
-      <SectionHeader title={t("courses.lessons.outline")} />
-      {outline.length ? <ol>{outline.map((lesson, index) => <li key={lesson.id}>
-        <button type="button" onClick={() => jumpTo(index)}>
-          <span className={styles.outlineNumber}>{completed.has(lesson.id) ? <span className={styles.check} role="img" aria-label={t("courses.progress.completed")}>✓</span> : index + 1}</span><span>{lesson.title}</span>
+      {narrow
+        ? <button type="button" className={styles.outlineToggle} aria-expanded={outlineOpen} aria-controls="course-outline" onClick={() => setOutlineOpen((open) => !open)}>
+          <span className={styles.outlineTitle}>{t("courses.lessons.outline")}</span>
+          <span className={styles.outlineCount}>{t("courses.lessons.outlineCount", { count: outline.length })}</span>
+          <span aria-hidden="true" className={styles.chevron} />
         </button>
-        <DraftChip published={lesson.published} />
-      </li>)}</ol> : <p className={styles.emptyLesson}>{t("courses.lessons.outlineEmpty")}</p>}
-      {addAction}
+        : <SectionHeader title={t("courses.lessons.outline")} />}
+      <div className={styles.outlineBody} id="course-outline" hidden={narrow && !outlineOpen}>
+        {outline.length ? <ol>{outline.map((lesson, index) => <li key={lesson.id}>
+          <button type="button" onClick={() => jumpTo(index)}>
+            <span className={styles.outlineNumber}>{completed.has(lesson.id) ? <span className={styles.check} role="img" aria-label={t("courses.progress.completed")}>✓</span> : index + 1}</span><span>{lesson.title}</span>
+          </button>
+          <DraftChip published={lesson.published} />
+        </li>)}</ol> : <p className={styles.emptyLesson}>{t("courses.lessons.outlineEmpty")}</p>}
+        {addAction}
+      </div>
     </nav>
     <div className={styles.lessons}>
       {outline.length

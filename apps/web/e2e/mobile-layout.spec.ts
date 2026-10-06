@@ -151,3 +151,35 @@ test("mobile discussion uses one frame per comment and an 8px reply indent", asy
   await expectNoHorizontalOverflow(page, "discussion");
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-discussion.png`, fullPage: true });
 });
+
+test("mobile composer is a full-screen sheet with sticky title and action bars", async ({ page }) => {
+  await page.goto(group, { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: "Write something…" }).click();
+  const dialog = page.getByRole("dialog", { name: "Create a post" });
+  await expect(dialog).toBeVisible();
+  await page.getByRole("combobox", { name: "Post type" }).click();
+  await page.getByRole("option", { name: "Reading" }).click();
+  // Enough questions that the sheet has to scroll.
+  for (let index = 0; index < 6; index += 1) await dialog.getByRole("button", { name: "Add question" }).click();
+
+  const viewport = page.viewportSize()!;
+  const title = dialog.getByRole("heading", { name: "Create a post" });
+  const actions = dialog.getByRole("button", { name: "Publish post" }).locator("..");
+  await expect(actions).toHaveCSS("position", "sticky");
+  const actionsBox = await actions.boundingBox();
+  expect(Math.round(actionsBox!.y + actionsBox!.height)).toBe(viewport.height);
+
+  // Flat fieldset: no nested card below 48em.
+  const fieldset = dialog.locator("fieldset");
+  await expect(fieldset).toHaveCSS("box-shadow", "none");
+  await expect(fieldset).toHaveCSS("padding-left", "0px");
+
+  await page.getByLabel("Notes or hint").scrollIntoViewIfNeeded();
+  const titleBox = await title.boundingBox();
+  expect(titleBox!.y).toBeGreaterThanOrEqual(0);
+  expect(titleBox!.y).toBeLessThan(56);
+  const scrolledActions = await actions.boundingBox();
+  expect(Math.round(scrolledActions!.y + scrolledActions!.height)).toBe(viewport.height);
+  await expectNoHorizontalOverflow(page, "composer sheet");
+  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-composer.png` });
+});

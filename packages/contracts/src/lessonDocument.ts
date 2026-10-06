@@ -1,7 +1,8 @@
 import { z } from "zod";
 import {
-  COURSE_BLOCK_TEXT_MAX, COURSE_BLOCKS_MAX, COURSE_HEADING_MAX, COURSE_NOTE_MAX, COURSE_SENTENCE_MAX, dialoguePayloadSchema,
-  opaqueIdSchema, practicePayloadSchema, splitPracticePayload, type PracticePayload, type PracticeReference,
+  COURSE_BLOCK_TEXT_MAX, COURSE_BLOCKS_MAX, COURSE_HEADING_MAX, COURSE_NOTE_MAX, COURSE_PRELOADED_LESSONS, COURSE_SENTENCE_MAX, courseLessonSummarySchema,
+  courseSchema, dialoguePayloadSchema, editorRefSchema, opaqueIdSchema, practicePayloadSchema, splitPracticePayload, type PracticePayload,
+  type PracticeReference,
 } from "./index";
 
 // A lesson document is the subset of BlockNote's JSON (`{ id, type, props, content, children }`) that Wordinator accepts.
@@ -325,3 +326,32 @@ export const lessonImageUploadResponseSchema = z.object({
   key: z.string(), url: z.url(), width: z.number().int().positive(), height: z.number().int().positive(),
 });
 export type LessonImageUploadResponse = z.infer<typeof lessonImageUploadResponseSchema>;
+
+// The lesson as one reader sees it. Learners receive the published document with practice prompts only; the owner and
+// active contributors also receive the full draft, including authors' versions and item notes, and its version.
+export const lessonDraftSchema = z.object({ document: lessonDocumentSchema, version: draftVersionSchema });
+export type LessonDraft = z.infer<typeof lessonDraftSchema>;
+export const courseLessonSchema = courseLessonSummarySchema.extend({
+  document: lessonDocumentSchema.nullable(),
+  answerCounts: z.record(z.string(), z.number().int().nonnegative()),
+  draft: lessonDraftSchema.nullable(),
+});
+export type CourseLesson = z.infer<typeof courseLessonSchema>;
+export const lessonResponseSchema = z.object({ lesson: courseLessonSchema });
+export const courseDetailResponseSchema = z.object({
+  course: courseSchema, outline: z.array(courseLessonSummarySchema), lessons: z.array(courseLessonSchema).max(COURSE_PRELOADED_LESSONS),
+});
+export type CourseDetailResponse = z.infer<typeof courseDetailResponseSchema>;
+export const lessonDraftSavedResponseSchema = z.object({
+  draftVersion: draftVersionSchema, changed: z.boolean(), updatedBy: editorRefSchema, updatedAt: z.number().int(),
+});
+export type LessonDraftSavedResponse = z.infer<typeof lessonDraftSavedResponseSchema>;
+// A stale save is refused with the current draft so the editor can merge or reload without another request.
+export const lessonDraftConflictSchema = z.object({
+  error: z.object({ code: z.literal("VERSION_CONFLICT"), message: z.string() }), draft: lessonDraftSchema,
+});
+export const lessonPublishProblemSchema = z.object({ blockId: z.string(), problem: z.enum(["image-missing", "image-alt-missing", "example-empty"]) });
+export const lessonNotReadySchema = z.object({
+  error: z.object({ code: z.literal("LESSON_NOT_READY"), message: z.string() }), problems: z.array(lessonPublishProblemSchema),
+});
+

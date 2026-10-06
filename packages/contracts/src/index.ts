@@ -318,7 +318,7 @@ export const courseSchema = z.object({
   contribution: z.enum(["pending", "active"]).nullable(),
   permissions: z.object({
     edit: z.boolean(), publish: z.boolean(), archive: z.boolean(), removeContent: z.boolean(),
-    // Adding lessons and blocks and editing unpublished ones: the owner and active contributors.
+    // Adding lessons and editing lesson drafts: the owner and active contributors.
     contribute: z.boolean(), requestContribution: z.boolean(), leaveContribution: z.boolean(), manageContributors: z.boolean(),
   }),
 });
@@ -343,9 +343,9 @@ export const COURSE_SPEAKER_MAX = 40;
 export const COURSE_DIALOGUE_TURNS_MAX = 50;
 export const COURSE_LESSONS_MAX = 200;
 export const COURSE_BLOCKS_MAX = 200;
-// Bump when a payload shape changes, and teach parseStoredBlockPayload to upgrade the older version.
-export const COURSE_BLOCK_PAYLOAD_VERSION = 1;
 
+// Block payloads of the v1 per-row model. They remain the shape of practice and dialogue data inside lesson documents
+// and of the course fixture; `upgradeLegacyBlocks` in ./lessonDocument turns them into documents.
 const requiredBlockText = (max: number) => z.string().trim().min(1).max(max);
 const optionalBlockText = (max: number) => z.string().trim().max(max).nullable().optional().transform((value) => value || null);
 export const headingPayloadSchema = z.object({ title: requiredBlockText(COURSE_HEADING_MAX) });
@@ -398,33 +398,17 @@ export const courseBlockContentSchema = z.discriminatedUnion("kind", [
 export type CourseBlockContent = z.output<typeof courseBlockContentSchema>;
 export type CourseBlockContentInput = z.input<typeof courseBlockContentSchema>;
 
-// Reads a stored payload of any known payload version and returns it in the current shape, or null when it is unreadable.
-export function parseStoredBlockPayload(kind: string, payloadVersion: number, raw: unknown): CourseBlockContent | null {
-  if (payloadVersion !== COURSE_BLOCK_PAYLOAD_VERSION) return null;
-  const parsed = courseBlockContentSchema.safeParse({ kind, payload: raw });
-  return parsed.success ? parsed.data : null;
-}
-
-const versionSchema = z.number().int().positive();
+// Lesson details are edited without a version; the lesson document has its own draft version.
 export const lessonInputSchema = z.object({ title: requiredBlockText(COURSE_TITLE_MAX), goal: optionalBlockText(COURSE_TEXT_MAX) });
 export const createLessonRequestSchema = lessonInputSchema;
-export const updateLessonRequestSchema = lessonInputSchema.extend({ published: z.boolean(), version: versionSchema });
+export const updateLessonRequestSchema = lessonInputSchema;
 export type LessonInput = z.input<typeof lessonInputSchema>;
-export type UpdateLessonRequest = z.input<typeof updateLessonRequestSchema>;
-export const createBlockRequestSchema = z.intersection(courseBlockContentSchema, z.object({ published: z.boolean().default(false) }));
-export const updateBlockRequestSchema = z.intersection(courseBlockContentSchema, z.object({ published: z.boolean(), version: versionSchema }));
-export type CreateBlockRequest = z.input<typeof createBlockRequestSchema>;
-export type UpdateBlockRequest = z.input<typeof updateBlockRequestSchema>;
-// Reordering sends the complete ordered child list of one parent; anything else is a stale order.
-export const reorderRequestSchema = z.object({ ids: z.array(opaqueIdSchema).max(Math.max(COURSE_LESSONS_MAX, COURSE_BLOCKS_MAX)) });
+// Reordering sends the complete ordered lesson list of one course; anything else is a stale order.
+export const reorderRequestSchema = z.object({ ids: z.array(opaqueIdSchema).max(COURSE_LESSONS_MAX) });
 
-const editorRefSchema = z.object({ id: opaqueIdSchema, displayName: z.string() });
-const courseBlockBaseSchema = z.object({
-  id: opaqueIdSchema, lessonId: opaqueIdSchema, position: z.number().int().nonnegative(), published: z.boolean(),
-  version: versionSchema, updatedBy: editorRefSchema, updatedAt: z.number().int(),
-});
+export const editorRefSchema = z.object({ id: opaqueIdSchema, displayName: z.string() });
 // Learners receive practice prompts only. Authors' versions and item notes travel separately as the reference, which editors
-// receive with the block and everyone else receives only with the revealed answer thread.
+// receive with the draft and everyone else receives only with the revealed answer thread.
 export const learnerPracticePayloadSchema = z.object({
   instruction: z.string(), passage: z.object({ title: z.string().nullable(), content: z.string() }).nullable(), items: z.array(z.object({ prompt: z.string() })),
 });
@@ -439,30 +423,14 @@ export function splitPracticePayload(payload: PracticePayload): { payload: Learn
     reference: { items: payload.items.map((item) => ({ prompt: item.prompt, authorsVersion: item.authorsVersion, note: item.note })) },
   };
 }
-export const courseBlockViewContentSchema = z.discriminatedUnion("kind", [
-  z.object({ kind: z.literal("heading"), payload: headingPayloadSchema }),
-  z.object({ kind: z.literal("text"), payload: textPayloadSchema }),
-  z.object({ kind: z.literal("example"), payload: examplePayloadSchema }),
-  z.object({ kind: z.literal("dialogue"), payload: dialoguePayloadSchema }),
-  z.object({ kind: z.literal("practice"), payload: learnerPracticePayloadSchema, reference: practiceReferenceSchema.nullable(), answerCount: z.number().int().nonnegative() }),
-]);
-export const courseBlockSchema = z.intersection(courseBlockBaseSchema, courseBlockViewContentSchema);
-export type CourseBlock = z.output<typeof courseBlockSchema>;
+// The outline entry of a lesson. `changed` tells editors that the draft differs from the published document.
 export const courseLessonSummarySchema = z.object({
   id: opaqueIdSchema, position: z.number().int().nonnegative(), title: z.string(), goal: z.string().nullable(),
-  published: z.boolean(), version: versionSchema, updatedBy: editorRefSchema, updatedAt: z.number().int(),
+  published: z.boolean(), publishedAt: z.number().int().nullable(), changed: z.boolean(), updatedBy: editorRefSchema, updatedAt: z.number().int(),
 });
 export type CourseLessonSummary = z.infer<typeof courseLessonSummarySchema>;
-export const courseLessonSchema = courseLessonSummarySchema.extend({ blocks: z.array(courseBlockSchema) });
-export type CourseLesson = z.output<typeof courseLessonSchema>;
 export const COURSE_PRELOADED_LESSONS = 3;
-export const courseDetailResponseSchema = z.object({
-  course: courseSchema, outline: z.array(courseLessonSummarySchema), lessons: z.array(courseLessonSchema).max(COURSE_PRELOADED_LESSONS),
-});
-export type CourseDetailResponse = z.output<typeof courseDetailResponseSchema>;
-export const lessonResponseSchema = z.object({ lesson: courseLessonSchema });
 export const outlineResponseSchema = z.object({ outline: z.array(courseLessonSummarySchema) });
-export const blockResponseSchema = z.object({ block: courseBlockSchema });
 
 export const practiceResponseInputSchema = z.object({ kind: z.literal("practice_response"), answers: z.array(z.string().max(RESPONSE_ANSWER_MAX)).min(1).max(COURSE_PRACTICE_ITEMS_MAX) });
 export const createPracticeCommentRequestSchema = z.discriminatedUnion("kind", [textCommentInputSchema, practiceResponseInputSchema]);

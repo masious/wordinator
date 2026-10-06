@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 import fixture from "../../../test/fixtures/courses/dutch-foundations-part-iii.json";
 import {
-  COURSE_BLOCK_PAYLOAD_VERSION, COURSE_DIALOGUE_TURNS_MAX, COURSE_PRACTICE_ITEMS_MAX, COURSE_SPEAKER_MAX, courseBlockContentSchema, courseBlockKindSchema,
-  courseBlockSchema, courseInputSchema, createBlockRequestSchema, createPracticeCommentRequestSchema, lessonInputSchema, parseStoredBlockPayload,
-  practicePayloadSchema, reorderRequestSchema, splitPracticePayload, updateBlockRequestSchema, updatePracticeCommentRequestSchema,
+  COURSE_DIALOGUE_TURNS_MAX, COURSE_PRACTICE_ITEMS_MAX, COURSE_SPEAKER_MAX, courseBlockContentSchema, courseBlockKindSchema, courseInputSchema,
+  createPracticeCommentRequestSchema, lessonInputSchema, practicePayloadSchema, reorderRequestSchema, splitPracticePayload, updateLessonRequestSchema,
+  updatePracticeCommentRequestSchema,
 } from ".";
 
 const fixtureBlocks = fixture.lessons.flatMap((lesson) => lesson.blocks);
@@ -21,20 +21,11 @@ describe("course block contracts", () => {
     expect(() => courseBlockContentSchema.parse({ kind: "practice", payload: { instruction: "x", items: [] } })).toThrow();
   });
 
-  it("requires a version for updates and defaults new blocks to unpublished", () => {
-    expect(createBlockRequestSchema.parse({ kind: "text", payload: { content: "Hallo" } })).toMatchObject({ published: false });
-    expect(() => updateBlockRequestSchema.parse({ kind: "text", payload: { content: "Hallo" }, published: true })).toThrow();
-    expect(() => updateBlockRequestSchema.parse({ kind: "text", payload: { content: "Hallo" }, published: true, version: 0 })).toThrow();
+  it("normalizes lesson details and rejects malformed reorder lists", () => {
     expect(lessonInputSchema.parse({ title: "Mijn huis", goal: "" })).toEqual({ title: "Mijn huis", goal: null });
+    // Publishing is its own endpoint now, so lesson details carry neither a published flag nor a version.
+    expect(updateLessonRequestSchema.parse({ title: "Mijn huis", goal: null, published: true, version: 2 })).toEqual({ title: "Mijn huis", goal: null });
     expect(() => reorderRequestSchema.parse({ ids: ["not-an-id"] })).toThrow();
-  });
-
-  it("parses stored payloads by payload version and rejects unknown versions", () => {
-    const stored = { sentence: "Is er een tuin?", translation: "Is there a garden?", note: null };
-    expect(parseStoredBlockPayload("example", COURSE_BLOCK_PAYLOAD_VERSION, stored)).toEqual({ kind: "example", payload: stored });
-    expect(parseStoredBlockPayload("example", COURSE_BLOCK_PAYLOAD_VERSION + 1, stored)).toBeNull();
-    expect(parseStoredBlockPayload("example", COURSE_BLOCK_PAYLOAD_VERSION, { title: "wrong shape" })).toBeNull();
-    expect(parseStoredBlockPayload("unknown", COURSE_BLOCK_PAYLOAD_VERSION, stored)).toBeNull();
   });
 
   it("accepts the normalized acceptance fixture", () => {
@@ -69,8 +60,6 @@ describe("course block contracts", () => {
     expect(split.payload).toEqual({ instruction: "Vertaal.", passage: null, items: [{ prompt: "There is a garden." }] });
     expect(JSON.stringify(split.payload)).not.toContain("Er is een tuin.");
     expect(split.reference.items[0]).toEqual({ prompt: "There is a garden.", authorsVersion: ["Er is een tuin."], note: "Word order" });
-    const block = { id: crypto.randomUUID(), lessonId: crypto.randomUUID(), position: 0, published: true, version: 1, updatedBy: { id: crypto.randomUUID(), displayName: "A" }, updatedAt: 1 };
-    expect(courseBlockSchema.safeParse({ ...block, kind: "practice", ...split, reference: null, answerCount: 0 }).success).toBe(true);
   });
 
   it("accepts practice answer sets and plain-text replies only", () => {

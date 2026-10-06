@@ -13,7 +13,7 @@ export default defineWorkersConfig({
         main: "./src/index.ts",
         miniflare: {
           compatibilityDate: "2025-09-06",
-          d1Databases: ["DB"],
+          d1Databases: ["DB", "MIGRATION_DB"],
           r2Buckets: ["MEDIA"],
           bindings: { COOKIE_SIGNING_SECRET: "test-only-cookie-signing-secret-with-32-characters", PUBLIC_MEDIA_BASE_URL: "https://wordinator.test/api/media" },
         },

@@ -1,14 +1,14 @@
 import type { output, ZodType } from "zod";
 import type { Context } from "hono";
 
-export function apiError(context: Context, status: 400 | 401 | 403 | 404 | 409 | 413 | 429, code: string, message: string) {
+export function apiError(context: Context, status: 400 | 401 | 403 | 404 | 409 | 413 | 422 | 429, code: string, message: string) {
   return context.json({ error: { code, message, requestId: context.get("requestId") } }, status);
 }
 
-export async function parseJson<S extends ZodType>(context: Context, schema: S): Promise<{ data: output<S> } | { response: Response }> {
+export async function parseJson<S extends ZodType>(context: Context, schema: S, maxBytes = 131_072): Promise<{ data: output<S> } | { response: Response }> {
   try {
     const raw = await context.req.text();
-    if (new TextEncoder().encode(raw).byteLength > 131_072) {
+    if (new TextEncoder().encode(raw).byteLength > maxBytes) {
       return { response: apiError(context, 413, "REQUEST_TOO_LARGE", "The request is too large.") };
     }
     const result = schema.safeParse(JSON.parse(raw));

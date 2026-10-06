@@ -45,13 +45,13 @@ Symptom: content renders ~1.5× wider than the viewport while the header and doc
 
 ## Phase 4 — Post card
 
-- [ ] Single flat surface below 48em (no bezel shell).
-- [ ] Header row: 32px avatar · author + kind + time (post meta role) · inline ⋯ menu (no absolute positioning or reserved right padding).
-- [ ] Full-width body using `--type-post-body`.
-- [ ] Reactions move to a horizontal footer row (`ReactionBar` horizontal) next to the comment count.
-- [ ] Course post preview uses the same header/meta treatment.
-- [ ] Replace raw `background-color: white` on `.postActions:hover` with a token.
-- [ ] Remove the hard-coded `seen` count of `7` in the post actions menu.
+- [x] Single flat surface below 48em (no bezel shell).
+- [x] Header row: 32px avatar · author + kind + time (post meta role) · inline ⋯ menu (no absolute positioning or reserved right padding).
+- [x] Full-width body using `--type-post-body`.
+- [x] Reactions move to a horizontal footer row (`ReactionBar` horizontal) next to the comment count.
+- [x] Course post preview uses the same header/meta treatment.
+- [x] Replace raw `background-color: white` on `.postActions:hover` with a token.
+- [x] Remove the hard-coded `seen` count of `7` in the post actions menu.
 
 ## Phase 5 — Post detail and discussion
 

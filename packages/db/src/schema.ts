@@ -123,14 +123,14 @@ export const fillExpectedAnswers = sqliteTable(
   (table) => [uniqueIndex("fill_expected_answers_post_position_unique").on(table.postId, table.position)],
 );
 
-// A comment belongs to exactly one discussion target: a post or a course practice block.
+// A comment belongs to exactly one discussion target: a post or a course practice, identified by its practice block ID.
 export const comments = sqliteTable(
   "comments",
   {
     id: text("id").primaryKey(),
     groupId: text("group_id").notNull().references(() => groups.id),
     postId: text("post_id").references(() => posts.id, { onDelete: "cascade" }),
-    blockId: text("block_id").references(() => courseBlocks.id, { onDelete: "cascade" }),
+    blockId: text("block_id").references(() => coursePractices.id, { onDelete: "cascade" }),
     authorId: text("author_id").notNull().references(() => users.id),
     parentCommentId: text("parent_comment_id"),
     kind: text("kind", { enum: ["text", "reading_response", "fill_response", "practice_response"] }).notNull(),
@@ -227,6 +227,8 @@ export const courses = sqliteTable(
   ],
 );
 
+// A lesson stores one draft and one published lesson document (`@wordinator/contracts/lesson-document`) as JSON text.
+// A lesson without a published document is unpublished.
 export const courseLessons = sqliteTable(
   "course_lessons",
   {
@@ -236,39 +238,47 @@ export const courseLessons = sqliteTable(
     title: text("title").notNull(),
     goal: text("goal"),
     position: integer("position").notNull(),
-    published: integer("published", { mode: "boolean" }).notNull().default(false),
-    version: integer("version").notNull().default(1),
-    createdBy: text("created_by").notNull().references(() => users.id),
-    updatedBy: text("updated_by").notNull().references(() => users.id),
-    createdAt: integer("created_at").notNull(),
-    updatedAt: integer("updated_at").notNull(),
-  },
-  (table) => [index("course_lessons_course_position_idx").on(table.groupId, table.courseId, table.position)],
-);
-
-export const courseBlocks = sqliteTable(
-  "course_blocks",
-  {
-    id: text("id").primaryKey(),
-    groupId: text("group_id").notNull().references(() => groups.id),
-    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
-    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
-    position: integer("position").notNull(),
-    kind: text("kind", { enum: ["heading", "text", "example", "dialogue", "practice"] }).notNull(),
-    payload: text("payload").notNull(),
-    payloadVersion: integer("payload_version").notNull(),
-    published: integer("published", { mode: "boolean" }).notNull().default(false),
-    version: integer("version").notNull().default(1),
+    draftDoc: text("draft_doc").notNull().default('{"schemaVersion":2,"blocks":[]}'),
+    draftVersion: integer("draft_version").notNull().default(1),
+    publishedDoc: text("published_doc"),
+    publishedAt: integer("published_at"),
     createdBy: text("created_by").notNull().references(() => users.id),
     updatedBy: text("updated_by").notNull().references(() => users.id),
     createdAt: integer("created_at").notNull(),
     updatedAt: integer("updated_at").notNull(),
   },
   (table) => [
-    index("course_blocks_lesson_position_idx").on(table.groupId, table.lessonId, table.position),
-    check("course_blocks_kind_check", sql`${table.kind} in ('heading', 'text', 'example', 'dialogue', 'practice')`),
-    check("course_blocks_payload_check", sql`json_valid(${table.payload})`),
+    index("course_lessons_course_position_idx").on(table.groupId, table.courseId, table.position),
+    check("course_lessons_draft_doc_check", sql`json_valid(${table.draftDoc})`),
+    check("course_lessons_published_doc_check", sql`${table.publishedDoc} IS NULL OR json_valid(${table.publishedDoc})`),
   ],
+);
+
+// One anchor per practice block ID in either document of a lesson, so practice answer threads keep a foreign key.
+export const coursePractices = sqliteTable(
+  "course_practices",
+  {
+    id: text("id").primaryKey(),
+    groupId: text("group_id").notNull().references(() => groups.id),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    createdAt: integer("created_at").notNull(),
+  },
+  (table) => [index("course_practices_lesson_idx").on(table.groupId, table.lessonId)],
+);
+
+// Every uploaded lesson image. Documents store the R2 key; rows unreferenced by both documents are cleaned up.
+export const courseMedia = sqliteTable(
+  "course_media",
+  {
+    key: text("key").primaryKey(),
+    groupId: text("group_id").notNull().references(() => groups.id),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    createdBy: text("created_by").notNull().references(() => users.id),
+    createdAt: integer("created_at").notNull(),
+  },
+  (table) => [index("course_media_lesson_idx").on(table.groupId, table.lessonId, table.createdAt)],
 );
 
 // Per-course contributor roles mirror the membership lifecycle; one row per member and course.

@@ -230,9 +230,6 @@
   padding: var(--space-8) 0 var(--space-10);
   animation: wordinator-enter var(--motion-reveal) var(--ease-physical) both;
 }
-.shellMain section {
-  padding: var(--space-6);
-}
 .shellMain h2 {
   margin-top: 0;
 }

@@ -1,22 +1,16 @@
-
-@media (max-width: 48em) {
-    .fieldRow { grid-template-columns: 1fr; }
-    .composerForm,
-    .fieldList { display: grid; gap: var(--space-5); }
-}
-
-
+.composerForm { display: grid; gap: var(--space-5); }
 .composerForm fieldset {
   display: grid;
   gap: var(--space-4);
   min-width: 0;
+  margin: 0;
   padding: var(--space-5);
   background: var(--color-wash-subtle);
   border: var(--ring-hairline);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-inset-highlight);
 }
-.composerForm legend { padding-inline: var(--space-2); font-family: var(--font-display); font-size: var(--type-card-title); font-weight: var(--weight-semibold); }
+.composerForm legend { padding-inline: var(--space-2); font-family: var(--font-display); font-size: var(--type-fieldset-legend); font-weight: var(--weight-semibold); }
 
 .fieldList { display: grid; gap: var(--space-5); }
 
@@ -26,16 +20,27 @@
 .error { margin: 0; color: var(--color-danger-text); font-weight: var(--weight-semibold); }
 .muted { margin: 0; color: var(--color-foreground-muted); line-height: var(--line-body); }
 
+@media (max-width: 48em) {
+  /* The form fills the full-screen sheet so the action bar can sit on its bottom edge. */
+  .composerForm { display: flex; flex: 1 0 auto; flex-direction: column; gap: var(--space-5); }
+  .fieldRow { grid-template-columns: 1fr; }
 
-.composerForm { display: grid; gap: var(--space-5); }
-.composerForm fieldset {
-  display: grid;
-  gap: var(--space-4);
-  min-width: 0;
-  padding: var(--space-5);
-  background: var(--color-wash-subtle);
-  border: var(--ring-hairline);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-inset-highlight);
+  /* Flat fieldsets: a hairline rule and a sans legend instead of a nested card. */
+  .composerForm fieldset { gap: var(--space-3); padding: var(--space-4) 0 0; background: none; border: 0; border-top: var(--ring-hairline); border-radius: 0; box-shadow: none; }
+  .composerForm legend { padding: 0 var(--space-2) 0 0; font-family: var(--font-sans); }
+
+  /* Sticky action bar: bleeds to the sheet edges, clears the home indicator, and rides above the on-screen keyboard. */
+  .actions {
+    position: sticky;
+    bottom: var(--keyboard-inset, 0px);
+    z-index: 1;
+    flex-wrap: nowrap;
+    margin: auto calc(-1 * var(--space-4)) calc(-1 * var(--space-8));
+    padding: var(--space-3) var(--space-4) calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
+    background: var(--color-overlay-glass);
+    border-top: var(--ring-hairline);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+  .actions > * { flex: 1 1 0; }
 }
-.composerForm legend { padding-inline: var(--space-2); font-family: var(--font-display); font-size: var(--type-card-title); font-weight: var(--weight-semibold); }

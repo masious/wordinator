@@ -90,9 +90,11 @@
   .split, .splitReverse { grid-template-columns: 1fr; gap: var(--space-6); }
   .splitReverse > :first-child { order: initial; }
   .dialogInner.dialogInner { padding: 0; }
-  .dialogShell.dialogShell { width: 100vw; max-width: none; min-height: 100dvh; margin: 0; padding: 0; border: 0; border-radius: 0; }
-  .dialogHeader { padding: var(--space-5); border: 0; border-radius: 0; }
-  .dialogContent { padding: 0 var(--space-5) var(--space-8); border: 0; border-radius: 0; }
+  /* Full-screen sheet: sticky title bar, body grows so a form's action bar can pin to the bottom edge. */
+  .dialogShell.dialogShell { display: flex; flex-direction: column; width: 100vw; max-width: none; min-height: 100dvh; margin: 0; padding: 0; border: 0; border-radius: 0; }
+  .dialogHeader { min-height: var(--navigation-height); padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); border: 0; border-bottom: var(--ring-hairline); border-radius: 0; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
+  .dialogContent { display: flex; flex: 1 0 auto; flex-direction: column; padding: var(--space-5) var(--space-4) var(--space-8); border: 0; border-radius: 0; }
+  .dialogBody { display: flex; flex: 1 0 auto; flex-direction: column; }
 }
 @media (prefers-reduced-motion: reduce) {
   .surfaceShell, .reveal, .stagger > * { opacity: 1; transform: none; animation: none; }

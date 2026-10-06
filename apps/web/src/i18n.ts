@@ -216,6 +216,8 @@ export const resources = {
         lessons: {
           outline: "Lessons",
           outlineEmpty: "No lessons yet.",
+          outlineCount_one: "{{count}} lesson",
+          outlineCount_other: "{{count}} lessons",
           number: "Lesson {{number}}",
           unpublished: "Unpublished",
           loading: "Opening this lesson",
