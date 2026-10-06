@@ -1,4 +1,7 @@
-import { COMMENT_BODY_MAX, commentResponseSchema, okResponseSchema, RESPONSE_ANSWER_MAX, type CourseBlock, type DiscussionItem, type PracticeReference } from "@wordinator/contracts";
+import {
+  COMMENT_BODY_MAX, commentResponseSchema, okResponseSchema, RESPONSE_ANSWER_MAX, splitPracticePayload, type DiscussionItem, type LearnerPracticePayload, type PracticeReference,
+} from "@wordinator/contracts";
+import { readPracticeBlock, type LessonBlockOf } from "@wordinator/contracts/lesson-document";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type FormEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -9,7 +12,11 @@ import ReactionBar from "../ReactionBar/ReactionBar";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import styles from "./PracticeBlock.module.css";
 
-type Practice = Extract<CourseBlock, { kind: "practice" }>;
+// A practice as readers see it: its block ID (the thread target), the prompts without authors' versions, and the answer count.
+export type Practice = { id: string; payload: LearnerPracticePayload; answerCount: number };
+export const practiceFromBlock = (block: LessonBlockOf<"practice">, answerCounts: Record<string, number>): Practice => ({
+  id: block.id, payload: splitPracticePayload(readPracticeBlock(block)).payload, answerCount: answerCounts[block.id] ?? 0,
+});
 export type PracticeScope = { groupId: string; courseId: string; lessonId: string; accountId: string };
 type AnswerDraft = { version: 1; answers: string[] };
 

@@ -1,23 +1,23 @@
-import {
-  COURSE_TEXT_MAX, COURSE_TITLE_MAX, lessonResponseSchema, okResponseSchema, outlineResponseSchema, blockResponseSchema,
-  type CourseBlock, type CourseDetailResponse, type CourseLesson, type CourseLessonSummary, type LessonInput,
-} from "@wordinator/contracts";
+import { COURSE_TEXT_MAX, COURSE_TITLE_MAX, okResponseSchema, outlineResponseSchema, type CourseLessonSummary, type LessonInput } from "@wordinator/contracts";
+import { lessonResponseSchema, type CourseDetailResponse, type CourseLesson } from "@wordinator/contracts/lesson-document";
 import { useMediaQuery } from "@mantine/hooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { type FormEvent, useState } from "react";
+import { type FormEvent, lazy, Suspense, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ApiError, apiRequest, courseProgressQueryOptions, courseQueryOptions, lessonQueryOptions } from "../../api";
+import { apiRequest, courseProgressQueryOptions, courseQueryOptions, lessonQueryOptions } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
 import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, SectionHeader, Surface, TextAreaField, TextField } from "../../ui";
-import { BlockEditor, blockContent, courseBlockDraftKey, hasBlockDraft } from "./BlockEditor";
+import { LessonDocument } from "../LessonDocument/LessonDocument";
 import { CourseErrorMessage } from "./CourseErrorMessage";
-import { LessonPlayer } from "./LessonPlayer";
+import { LessonPlayer, lessonSteps, playableDocument } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
-import { PracticeContent, PracticeThread } from "./PracticeBlock";
+import { PracticeContent, practiceFromBlock, PracticeThread } from "./PracticeBlock";
 
-// The owner edits and publishes everything; contributors add content and edit only what is still unpublished.
+// The editor and BlockNote load only when someone opens a lesson for editing.
+const LessonEditor = lazy(() => import("../LessonEditor/LessonEditor"));
+
+// The owner publishes; contributors edit every lesson draft and the details of unpublished lessons.
 type Scope = { groupId: string; courseId: string; accountId: string; owner: boolean; contribute: boolean; removable: boolean };
-type LessonData = { lesson: CourseLesson };
 
 const lessonsPath = ({ groupId, courseId }: Scope) => `/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/lessons`;
 const swap = (ids: string[], index: number, offset: -1 | 1) => {
@@ -26,31 +26,31 @@ const swap = (ids: string[], index: number, offset: -1 | 1) => {
   return next;
 };
 const lessonAnchor = (lessonId: string) => `lesson-${lessonId}`;
-const canEdit = (scope: Scope, item: { published: boolean }) => scope.owner || (scope.contribute && !item.published);
+const canEditDetails = (scope: Scope, lesson: { published: boolean }) => scope.owner || (scope.contribute && !lesson.published);
 
-function DraftChip({ published }: { published: boolean }) {
+function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" | "changed"> }) {
   const { t } = useTranslation();
-  return published ? null : <LabelChip>{t("courses.lessons.unpublished")}</LabelChip>;
+  return <>
+    {!lesson.published && <LabelChip>{t("courses.lessons.unpublished")}</LabelChip>}
+    {lesson.changed && <LabelChip>{t("courses.lessons.changed")}</LabelChip>}
+  </>;
 }
 
-// Readers see blocks as plain text; highlighting comes from the block kind, never from inline markup.
-function BlockContent({ scope, block }: { scope: Scope; block: CourseBlock }) {
-  switch (block.kind) {
-    case "heading": return <h3 className={styles.heading}>{block.payload.title}</h3>;
-    case "text": return <p className={styles.text}><PlainText>{block.payload.content}</PlainText></p>;
-    case "example": return <figure className={styles.example}>
-      <blockquote className={styles.sentence}><PlainText>{block.payload.sentence}</PlainText></blockquote>
-      {block.payload.translation && <figcaption className={styles.translation}><PlainText>{block.payload.translation}</PlainText></figcaption>}
-      {block.payload.note && <p className={styles.note}><PlainText>{block.payload.note}</PlainText></p>}
-    </figure>;
-    case "dialogue": return <ol className={styles.dialogue}>
-      {block.payload.turns.map((turn, index) => <li key={index}><span className={styles.speaker}>{turn.speaker}</span><span className={styles.line}><PlainText>{turn.text}</PlainText></span></li>)}
-    </ol>;
-    case "practice": return <>
-      <PracticeContent block={block} />
-      <PracticeThread scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: block.lessonId, accountId: scope.accountId }} block={block} />
-    </>;
-  }
+// Readers see the published document. Editors of a lesson that is not published yet see its draft, marked as a preview.
+function LessonBody({ scope, lesson }: { scope: Scope; lesson: CourseLesson }) {
+  const { t } = useTranslation();
+  const document = playableDocument(lesson);
+  if (!document || !lessonSteps(lesson).length) return <p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p>;
+  return <>
+    {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
+    <LessonDocument document={document} renderPractice={(block) => {
+      const practice = practiceFromBlock(block, lesson.answerCounts);
+      return <div className={styles.practice}>
+        <PracticeContent block={practice} />
+        <PracticeThread scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practice} />
+      </div>;
+    }} />
+  </>;
 }
 
 function LessonForm({ initial, submitLabel, pending, error, onSubmit, onCancel }: {
@@ -62,55 +62,9 @@ function LessonForm({ initial, submitLabel, pending, error, onSubmit, onCancel }
   return <form className={styles.form} onSubmit={submit}>
     <TextField label={t("courses.lessons.fields.title")} value={title} maxLength={COURSE_TITLE_MAX} required onChange={(event) => setTitle(event.currentTarget.value)} />
     <TextAreaField label={t("courses.lessons.fields.goal")} value={goal} maxLength={COURSE_TEXT_MAX} autosize minRows={2} onChange={(event) => setGoal(event.currentTarget.value)} />
-    {error instanceof ApiError && error.code === "VERSION_CONFLICT" ? <p className={styles.error} role="alert">{t("courses.conflict.lesson")}</p> : <CourseErrorMessage error={error} />}
+    <CourseErrorMessage error={error} />
     <div className={styles.actions}><Button variant="quiet" onClick={onCancel}>{t("common.cancel")}</Button><Button type="submit" loading={pending} disabled={!title.trim()}>{submitLabel}</Button></div>
   </form>;
-}
-
-function BlockItem({ scope, lesson, block, index }: { scope: Scope; lesson: CourseLesson; block: CourseBlock; index: number }) {
-  const { t } = useTranslation(); const queryClient = useQueryClient();
-  const [editing, setEditing] = useState(() => canEdit(scope, block) && hasBlockDraft(courseBlockDraftKey(scope.accountId, scope.groupId, block.id)));
-  const [deleting, setDeleting] = useState(false);
-  const lessonKey = lessonQueryOptions(scope.groupId, scope.courseId, lesson.id).queryKey;
-  const blockPath = `${lessonsPath(scope)}/${encodeURIComponent(lesson.id)}/blocks/${encodeURIComponent(block.id)}`;
-  const setLesson = (update: (value: CourseLesson) => CourseLesson) => queryClient.setQueryData(lessonKey, (current: LessonData | undefined) => current && { lesson: update(current.lesson) });
-  const publish = useMutation({
-    mutationFn: () => apiRequest(blockPath, blockResponseSchema, { method: "PATCH", body: JSON.stringify({ ...blockContent(block), published: !block.published, version: block.version }) }),
-    onSuccess: ({ block: saved }) => setLesson((value) => ({ ...value, blocks: value.blocks.map((entry) => entry.id === saved.id ? saved : entry) })),
-    onError: () => void queryClient.invalidateQueries({ queryKey: lessonKey }),
-  });
-  const move = useMutation({
-    mutationFn: (offset: -1 | 1) => apiRequest(`${lessonsPath(scope)}/${encodeURIComponent(lesson.id)}/blocks/order`, lessonResponseSchema, { method: "PUT", body: JSON.stringify({ ids: swap(lesson.blocks.map((entry) => entry.id), index, offset) }) }),
-    onSuccess: (data) => queryClient.setQueryData(lessonKey, data),
-    onError: () => void queryClient.invalidateQueries({ queryKey: lessonKey }),
-  });
-  const remove = useMutation({
-    mutationFn: () => apiRequest(blockPath, okResponseSchema, { method: "DELETE" }),
-    onSuccess: () => { setDeleting(false); setLesson((value) => ({ ...value, blocks: value.blocks.filter((entry) => entry.id !== block.id) })); },
-  });
-  const label = t(`courses.blocks.kinds.${block.kind}`);
-  return <li className={styles.block}>
-    {editing
-      ? <BlockEditor groupId={scope.groupId} courseId={scope.courseId} lessonId={lesson.id} accountId={scope.accountId} block={block} canPublish={scope.owner} onClose={() => setEditing(false)} />
-      : <BlockContent scope={scope} block={block} />}
-    {(scope.contribute || scope.removable) && !editing && <div className={styles.blockTools}>
-      <DraftChip published={block.published} />
-      {scope.contribute && <span className={styles.attribution}>{t("courses.blocks.updatedBy", { name: block.updatedBy.displayName })}</span>}
-      <div className={styles.toolButtons}>
-        {canEdit(scope, block) && <Button variant="quiet" onClick={() => setEditing(true)} aria-label={t("courses.blocks.editNamed", { kind: label, number: index + 1 })}>{t("courses.blocks.edit")}</Button>}
-        {scope.owner && <>
-          <Button variant="quiet" loading={publish.isPending} onClick={() => publish.mutate()}>{block.published ? t("courses.blocks.unpublish") : t("courses.blocks.publish")}</Button>
-          <Button variant="quiet" disabled={index === 0} loading={move.isPending && move.variables === -1} onClick={() => move.mutate(-1)} aria-label={t("courses.blocks.moveUpNamed", { kind: label, number: index + 1 })}>{t("courses.moveUp")}</Button>
-          <Button variant="quiet" disabled={index === lesson.blocks.length - 1} loading={move.isPending && move.variables === 1} onClick={() => move.mutate(1)} aria-label={t("courses.blocks.moveDownNamed", { kind: label, number: index + 1 })}>{t("courses.moveDown")}</Button>
-        </>}
-        {scope.removable && <Button variant="quiet" onClick={() => setDeleting(true)} aria-label={t("courses.blocks.deleteNamed", { kind: label, number: index + 1 })}>{t("courses.delete")}</Button>}
-      </div>
-      <CourseErrorMessage error={publish.error ?? move.error} />
-    </div>}
-    <ConfirmDialog opened={deleting} onClose={() => setDeleting(false)} title={t("courses.blocks.deleteTitle")} confirmLabel={t("courses.delete")} cancelLabel={t("common.cancel")} confirmLoading={remove.isPending} onConfirm={() => remove.mutate()}>
-      {t("courses.blocks.deleteConfirm")}<CourseErrorMessage error={remove.error} />
-    </ConfirmDialog>
-  </li>;
 }
 
 function LessonSection({ scope, summary, number, preloaded, outline, dataUpdatedAt, completed, round, onStart }: {
@@ -120,22 +74,13 @@ function LessonSection({ scope, summary, number, preloaded, outline, dataUpdated
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const lessonKey = lessonQueryOptions(scope.groupId, scope.courseId, summary.id).queryKey;
   const lesson = useQuery({ ...lessonQueryOptions(scope.groupId, scope.courseId, summary.id), initialData: preloaded && { lesson: preloaded }, initialDataUpdatedAt: dataUpdatedAt });
-  const [adding, setAdding] = useState(() => scope.contribute && hasBlockDraft(courseBlockDraftKey(scope.accountId, scope.groupId, summary.id)));
-  const [editOpen, setEditOpen] = useState(false); const [deleting, setDeleting] = useState(false);
-  // An edit is based on the version seen when the form opened, so a collaborator's newer save is never silently overwritten.
-  const [editVersion, setEditVersion] = useState(summary.version);
+  const [editing, setEditing] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false); const [deleting, setDeleting] = useState(false);
   const courseKey = courseQueryOptions(scope.groupId, scope.courseId).queryKey;
   const lessonPath = `${lessonsPath(scope)}/${encodeURIComponent(summary.id)}`;
-  const applied = async (data: LessonData) => { queryClient.setQueryData(lessonKey, data); await queryClient.invalidateQueries({ queryKey: courseKey }); };
   const update = useMutation({
-    mutationFn: (input: LessonInput & { published: boolean; version: number }) => apiRequest(lessonPath, lessonResponseSchema, { method: "PATCH", body: JSON.stringify(input) }),
-    onSuccess: async (data) => { await applied(data); setEditOpen(false); },
-    onError: async (error) => {
-      if (!(error instanceof ApiError && error.code === "VERSION_CONFLICT")) return;
-      const latest = await queryClient.fetchQuery({ ...lessonQueryOptions(scope.groupId, scope.courseId, summary.id), staleTime: 0 });
-      await queryClient.invalidateQueries({ queryKey: courseKey });
-      setEditVersion(latest.lesson.version);
-    },
+    mutationFn: (input: LessonInput) => apiRequest(lessonPath, lessonResponseSchema, { method: "PATCH", body: JSON.stringify(input) }),
+    onSuccess: async (data) => { queryClient.setQueryData(lessonKey, data); await queryClient.invalidateQueries({ queryKey: courseKey }); setDetailsOpen(false); },
   });
   const move = useMutation({
     mutationFn: (offset: -1 | 1) => apiRequest(`${lessonsPath(scope)}/order`, outlineResponseSchema, { method: "PUT", body: JSON.stringify({ ids: swap(outline.map((entry) => entry.id), number - 1, offset) }) }),
@@ -146,47 +91,46 @@ function LessonSection({ scope, summary, number, preloaded, outline, dataUpdated
     mutationFn: () => apiRequest(lessonPath, okResponseSchema, { method: "DELETE" }),
     onSuccess: async () => { setDeleting(false); queryClient.removeQueries({ queryKey: lessonKey }); await queryClient.invalidateQueries({ queryKey: courseKey }); },
   });
-  const data = lesson.data?.lesson; const current = data ?? { ...summary, blocks: [] };
-  const openEdit = () => { update.reset(); setEditVersion(current.version); setEditOpen(true); };
+  const data = lesson.data?.lesson;
+  // The outline summary is fresher after a publish elsewhere; the loaded lesson is fresher after this viewer's own edits.
+  const current = data ?? summary;
+  const playable = data ? lessonSteps(data).length > 0 : false;
   return <section className={styles.lesson} id={lessonAnchor(summary.id)} aria-labelledby={`${lessonAnchor(summary.id)}-title`}>
     <header className={styles.lessonHeader}>
       <p className={styles.lessonNumber}>{t("courses.lessons.number", { number })}</p>
       <h2 id={`${lessonAnchor(summary.id)}-title`}>{current.title}</h2>
       {current.goal && <p className={styles.goal}><PlainText>{current.goal}</PlainText></p>}
-      {!!data?.blocks.length && <div className={styles.start}>
+      {playable && !editing && <div className={styles.start}>
         <Button variant={completed ? "secondary" : "primary"} onClick={onStart} aria-label={t(completed ? "courses.player.againNamed" : "courses.player.startNamed", { number })}>
           {completed ? t("courses.player.again") : t("courses.player.start")}
         </Button>
         {completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
       </div>}
       {(scope.contribute || scope.removable) && <div className={styles.blockTools}>
-        <DraftChip published={current.published} />
-        {scope.contribute && <span className={styles.attribution}>{t("courses.blocks.updatedBy", { name: current.updatedBy.displayName })}</span>}
+        <StateChips lesson={current} />
+        {scope.contribute && <span className={styles.attribution}>{t("courses.lessons.updatedBy", { name: current.updatedBy.displayName })}</span>}
         <div className={styles.toolButtons}>
-          {canEdit(scope, current) && <Button variant="secondary" onClick={openEdit}>{t("courses.lessons.edit")}</Button>}
+          {scope.contribute && data && !editing && <Button variant="secondary" onClick={() => setEditing(true)} aria-label={t("courses.lessons.editContentNamed", { number })}>{t("courses.lessons.editContent")}</Button>}
+          {canEditDetails(scope, current) && <Button variant="quiet" onClick={() => { update.reset(); setDetailsOpen(true); }}>{t("courses.lessons.editDetails")}</Button>}
           {scope.owner && <>
-            <Button variant="quiet" loading={update.isPending && !editOpen} onClick={() => update.mutate({ title: current.title, goal: current.goal, published: !current.published, version: current.version })}>
-              {current.published ? t("courses.lessons.unpublish") : t("courses.lessons.publish")}
-            </Button>
             <Button variant="quiet" disabled={number === 1} onClick={() => move.mutate(-1)} aria-label={t("courses.lessons.moveUpNamed", { number })}>{t("courses.moveUp")}</Button>
             <Button variant="quiet" disabled={number === outline.length} onClick={() => move.mutate(1)} aria-label={t("courses.lessons.moveDownNamed", { number })}>{t("courses.moveDown")}</Button>
           </>}
           {scope.removable && <Button variant="quiet" onClick={() => setDeleting(true)} aria-label={t("courses.lessons.deleteNamed", { number })}>{t("courses.delete")}</Button>}
         </div>
-        {!editOpen && <CourseErrorMessage error={update.error ?? move.error} />}
+        <CourseErrorMessage error={move.error} />
       </div>}
     </header>
     {lesson.isPending ? <LoadingState label={t("courses.lessons.loading")} />
-      : lesson.isError ? <ErrorState title={t("courses.lessons.unavailable")} />
+      : lesson.isError || !data ? <ErrorState title={t("courses.lessons.unavailable")} />
+      : editing ? <Suspense fallback={<LoadingState label={t("courses.editor.loading")} />}>
+        <LessonEditor groupId={scope.groupId} courseId={scope.courseId} accountId={scope.accountId} owner={scope.owner} lesson={data} onClose={() => setEditing(false)} />
+      </Suspense>
       // The round changes after the lesson player closes, so answer composers reread drafts the player may have changed.
-      : current.blocks.length ? <ol className={styles.blocks} key={round}>{current.blocks.map((block, index) => <BlockItem key={block.id} scope={scope} lesson={current} block={block} index={index} />)}</ol>
-      : <p className={styles.emptyLesson}>{t("courses.blocks.empty")}</p>}
-    {scope.contribute && data && (adding
-      ? <Surface tone="inset" className={styles.addBlock}><BlockEditor groupId={scope.groupId} courseId={scope.courseId} lessonId={summary.id} accountId={scope.accountId} canPublish={scope.owner} onClose={() => setAdding(false)} /></Surface>
-      : <Button variant="secondary" className={styles.addButton} onClick={() => setAdding(true)}>{t("courses.blocks.addTo", { number })}</Button>)}
-    <AdaptiveDialog opened={editOpen} onClose={() => setEditOpen(false)} title={t("courses.lessons.editTitle")}>
-      {editOpen && <LessonForm initial={current} submitLabel={t("common.save")} pending={update.isPending} error={update.error}
-        onSubmit={(input) => update.mutate({ ...input, published: current.published, version: editVersion })} onCancel={() => setEditOpen(false)} />}
+      : <div className={styles.body} key={round}><LessonBody scope={scope} lesson={data} /></div>}
+    <AdaptiveDialog opened={detailsOpen} onClose={() => setDetailsOpen(false)} title={t("courses.lessons.editTitle")}>
+      {detailsOpen && <LessonForm initial={current} submitLabel={t("common.save")} pending={update.isPending} error={update.error}
+        onSubmit={(input) => update.mutate(input)} onCancel={() => setDetailsOpen(false)} />}
     </AdaptiveDialog>
     <ConfirmDialog opened={deleting} onClose={() => setDeleting(false)} title={t("courses.lessons.deleteTitle")} confirmLabel={t("courses.delete")} cancelLabel={t("common.cancel")} confirmLoading={remove.isPending} onConfirm={() => remove.mutate()}>
       {t("courses.lessons.deleteConfirm", { title: current.title })}<CourseErrorMessage error={remove.error} />
@@ -239,7 +183,7 @@ export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdate
           <button type="button" onClick={() => jumpTo(index)}>
             <span className={styles.outlineNumber}>{completed.has(lesson.id) ? <span className={styles.check} role="img" aria-label={t("courses.progress.completed")}>✓</span> : index + 1}</span><span>{lesson.title}</span>
           </button>
-          <DraftChip published={lesson.published} />
+          <StateChips lesson={lesson} />
         </li>)}</ol> : <p className={styles.emptyLesson}>{t("courses.lessons.outlineEmpty")}</p>}
         {addAction}
       </div>

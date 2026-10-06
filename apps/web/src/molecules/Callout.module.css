@@ -1,0 +1,9 @@
+.callout{display:flex;gap:var(--space-3);align-items:flex-start;width:100%;margin:0;padding:var(--space-3) var(--space-4);color:var(--color-foreground);background:var(--color-callout-hint);border-radius:var(--radius-md)}
+.callout[data-variant="important"]{background:var(--color-callout-important)}
+.callout[data-variant="warning"]{background:var(--color-callout-warning)}
+.callout[data-variant="grammar"]{background:var(--color-callout-grammar)}
+.callout[data-variant="culture"]{background:var(--color-callout-culture)}
+.callout[data-variant="false-friend"]{background:var(--color-callout-false-friend)}
+.callout[data-variant="pronunciation"]{background:var(--color-callout-pronunciation)}
+.icon{flex:none;width:var(--lesson-callout-icon);height:var(--lesson-callout-icon);margin-top:0.2em}
+.body{flex:1;min-width:0;font-size:var(--type-authored);line-height:var(--line-body);white-space:pre-wrap;overflow-wrap:anywhere}

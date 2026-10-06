@@ -1,0 +1,1 @@
+/* BlockNote's @blocknote/mantine/style.css imports every Mantine stylesheet unscoped; the app already loads Mantine's styles, so Vite aliases that import here. */

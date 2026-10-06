@@ -62,9 +62,12 @@ Symptom: content renders ~1.5× wider than the viewport while the header and doc
 
 ## Phase 6 — Full-screen composer
 
-- [ ] Sticky top bar (title + close).
-- [ ] Sticky bottom action bar (Discard / Publish) respecting `env(safe-area-inset-bottom)` and `dvh`, stays above the keyboard.
-- [ ] Flatten fieldsets; smaller legends.
+- [x] Sticky top bar (title + close).
+- [x] Sticky bottom action bar (Discard / Publish) respecting `env(safe-area-inset-bottom)` and `dvh`, stays above the keyboard (`visualViewport` inset).
+- [x] Flatten fieldsets; smaller legends.
+- [x] Drop the theme's inline content border/shadow on the full-screen sheet (it lifted the sticky bar 1px off the bottom edge).
+- [x] Add a mobile Playwright check for the sticky title and action bars and flat fieldsets.
+- [x] Document the full-screen sheet and composer in `docs/design-system.md`.
 
 ## Phase 7 — Remaining pages
 

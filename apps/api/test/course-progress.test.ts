@@ -1,55 +1,7 @@
 import { env, SELF } from "cloudflare:test";
-import { courseProgressResponseSchema, courseResponseSchema, lessonResponseSchema } from "@wordinator/contracts";
-import { beforeAll, beforeEach, describe, expect, it } from "vitest";
-import { hashPassword } from "../src/auth";
-
-const PASSWORD = "course-progress-password";
-let passwordHash: string;
-
-async function seedUser(label: string) {
-  const userId = crypto.randomUUID(); const now = Date.now();
-  await env.DB.prepare("INSERT INTO users (id, email, normalized_email, password_hash, display_name, must_change_password, created_at, updated_at) VALUES (?, ?, ?, ?, ?, 0, ?, ?)")
-    .bind(userId, `${label}@example.test`, `${label}@example.test`, passwordHash, label, now, now).run();
-  return userId;
-}
-
-async function seedGroup(label: string, creatorId: string) {
-  const groupId = crypto.randomUUID(); const now = Date.now();
-  await env.DB.prepare("INSERT INTO groups (id, creator_user_id, name, language, invitation_token, created_at, updated_at) VALUES (?, ?, ?, 'nl', ?, ?, ?)")
-    .bind(groupId, creatorId, `${label} group`, `${label}-${"x".repeat(40)}`, now, now).run();
-  await join(groupId, creatorId);
-  return groupId;
-}
-
-async function join(groupId: string, userId: string) {
-  const now = Date.now();
-  await env.DB.prepare("INSERT INTO memberships (group_id, user_id, state, requested_at, decided_at, profile_display_name, updated_at) VALUES (?, ?, 'active', ?, ?, 'Member', ?)")
-    .bind(groupId, userId, now, now, now).run();
-}
-
-async function signIn(label: string) {
-  const response = await SELF.fetch("https://wordinator.test/api/auth/sign-in", {
-    method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email: `${label}@example.test`, password: PASSWORD }),
-  });
-  return response.headers.get("set-cookie")!.split(";", 1)[0]!;
-}
-
-async function request(path: string, cookie: string, body?: unknown, method = body === undefined ? "GET" : "POST") {
-  return SELF.fetch(`https://wordinator.test${path}`, {
-    method, headers: { cookie, ...(body === undefined ? {} : { "content-type": "application/json" }) },
-    body: body === undefined ? undefined : JSON.stringify(body),
-  });
-}
-
-const coursePath = (groupId: string, courseId: string) => `/api/groups/${groupId}/courses/${courseId}`;
-
-async function addLesson(path: string, cookie: string, title: string, published: boolean) {
-  const created = await request(`${path}/lessons`, cookie, { title, goal: null });
-  const lesson = lessonResponseSchema.parse(await created.json()).lesson;
-  if (!published) return lesson;
-  const updated = await request(`${path}/lessons/${lesson.id}`, cookie, { title, goal: null, published: true, version: lesson.version }, "PATCH");
-  return lessonResponseSchema.parse(await updated.json()).lesson;
-}
+import { courseProgressResponseSchema } from "@wordinator/contracts";
+import { beforeEach, describe, expect, it } from "vitest";
+import { addLesson as createLesson, coursePath, createCourse, join, request, resetDatabase, seedGroup, seedUser, signIn } from "./courseApi";
 
 const complete = (path: string, lessonId: string, cookie: string) => request(`${path}/lessons/${lessonId}/completion`, cookie, undefined, "PUT");
 const progress = async (path: string, cookie: string) => courseProgressResponseSchema.parse(await (await request(`${path}/progress`, cookie)).json());
@@ -58,25 +10,15 @@ async function setup() {
   const ownerId = await seedUser("owner"); const readerId = await seedUser("reader");
   const groupId = await seedGroup("alpha", ownerId); await join(groupId, readerId);
   const owner = await signIn("owner"); const reader = await signIn("reader");
-  const created = await request(`/api/groups/${groupId}/courses`, owner, { title: "Dutch foundations", summary: "Built together." });
-  const course = courseResponseSchema.parse(await created.json()).course;
+  const course = await createCourse(groupId, owner);
   const path = coursePath(groupId, course.id);
-  await request(`${path}/visibility`, owner, { status: "published" });
-  const first = await addLesson(path, owner, "Greetings", true);
-  const second = await addLesson(path, owner, "Numbers", true);
-  const draft = await addLesson(path, owner, "Later", false);
+  const first = (await createLesson(groupId, course.id, owner, "Greetings")).lesson;
+  const second = (await createLesson(groupId, course.id, owner, "Numbers")).lesson;
+  const draft = (await createLesson(groupId, course.id, owner, "Later", { published: false })).lesson;
   return { ownerId, readerId, groupId, owner, reader, course, path, first, second, draft };
 }
 
-beforeAll(async () => { passwordHash = await hashPassword(PASSWORD); });
-beforeEach(async () => {
-  await env.DB.batch([
-    env.DB.prepare("DELETE FROM course_lesson_completions"), env.DB.prepare("DELETE FROM posts"), env.DB.prepare("DELETE FROM course_contributors"),
-    env.DB.prepare("DELETE FROM course_blocks"), env.DB.prepare("DELETE FROM course_lessons"), env.DB.prepare("DELETE FROM courses"),
-    env.DB.prepare("DELETE FROM login_attempts"), env.DB.prepare("DELETE FROM notifications"), env.DB.prepare("DELETE FROM memberships"),
-    env.DB.prepare("DELETE FROM groups"), env.DB.prepare("DELETE FROM users"),
-  ]);
-});
+beforeEach(resetDatabase);
 
 describe("Course progress API", () => {
   it("records finished published lessons once and reports each member's percentage", async () => {
@@ -103,8 +45,7 @@ describe("Course progress API", () => {
   it("counts only currently published lessons and forgets deleted ones", async () => {
     const { readerId, owner, reader, path, first, second } = await setup();
     await complete(path, first.id, reader); await complete(path, second.id, reader);
-    const current = lessonResponseSchema.parse(await (await request(`${path}/lessons/${second.id}`, owner)).json()).lesson;
-    await request(`${path}/lessons/${second.id}`, owner, { title: current.title, goal: null, published: false, version: current.version }, "PATCH");
+    expect((await request(`${path}/lessons/${second.id}/unpublish`, owner, {})).status).toBe(200);
     const unpublished = await progress(path, reader);
     expect(unpublished.publishedLessons).toBe(1);
     expect(unpublished.participants.find((entry) => entry.user.id === readerId)).toMatchObject({ completedLessons: 1, percent: 100 });

@@ -1,63 +1,41 @@
-import { commentResponseSchema, courseProgressResponseSchema, RESPONSE_ANSWER_MAX, type CourseBlock, type CourseLesson, type CourseLessonSummary } from "@wordinator/contracts";
+import { commentResponseSchema, courseProgressResponseSchema, RESPONSE_ANSWER_MAX, type CourseLessonSummary } from "@wordinator/contracts";
+import { flattenToSteps, type CourseLesson, type LessonBlockOf, type LessonStep } from "@wordinator/contracts/lesson-document";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, lessonQueryOptions, practiceDiscussionQueryOptions } from "../../api";
+import { Callout } from "../../molecules/Callout";
 import { PlainText } from "../../molecules/PlainText";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { AdaptiveDialog, Button, ErrorState, LoadingState, TextAreaField } from "../../ui";
+import { DialogueBlock, ExampleBlock, InlineText, LessonBlocks } from "../LessonDocument/LessonDocument";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import styles from "./LessonPlayer.module.css";
-import { blockPath, practiceDraftKey, readAnswers, storeAnswers } from "./PracticeBlock";
+import { blockPath, practiceDraftKey, practiceFromBlock, readAnswers, storeAnswers, type Practice } from "./PracticeBlock";
 
-type Block<K extends CourseBlock["kind"]> = Extract<CourseBlock, { kind: K }>;
-// Headings title the steps that follow them instead of being steps of their own.
-export type LessonStep =
-  | { kind: "text"; section: string | null; block: Block<"text"> }
-  | { kind: "example"; section: string | null; block: Block<"example"> }
-  | { kind: "dialogue"; section: string | null; block: Block<"dialogue">; turn: number }
-  | { kind: "question"; section: string | null; block: Block<"practice">; item: number };
-
-// Sentences arrive one after another: every dialogue line and every practice item is its own step.
-export function lessonSteps(blocks: CourseBlock[]): LessonStep[] {
-  const steps: LessonStep[] = []; let section: string | null = null;
-  for (const block of blocks) {
-    switch (block.kind) {
-      case "heading": section = block.payload.title; break;
-      case "text": steps.push({ kind: "text", section, block }); break;
-      case "example": steps.push({ kind: "example", section, block }); break;
-      case "dialogue": block.payload.turns.forEach((_, turn) => steps.push({ kind: "dialogue", section, block, turn })); break;
-      case "practice": block.payload.items.forEach((_, item) => steps.push({ kind: "question", section, block, item })); break;
-    }
-  }
-  return steps;
-}
+// Readers play the published document. Editors preview the draft of a lesson that is not published yet; previews never count.
+export const playableDocument = (lesson: CourseLesson) => lesson.document ?? lesson.draft?.document ?? null;
+export const lessonSteps = (lesson: CourseLesson): LessonStep[] => {
+  const document = playableDocument(lesson);
+  return document ? flattenToSteps(document) : [];
+};
 
 export type PlayerScope = { groupId: string; courseId: string; accountId: string };
 
-function ExampleStep({ block }: { block: Block<"example"> }) {
+function ExampleStep({ block }: { block: LessonBlockOf<"example"> }) {
   const { t } = useTranslation(); const [shown, setShown] = useState(false);
-  const { sentence, translation, note } = block.payload;
-  return <figure className={styles.example}>
-    <blockquote className={styles.sentence}><PlainText>{sentence}</PlainText></blockquote>
+  const { translation, note } = block.props;
+  return <ExampleBlock block={block} details={<>
     {translation && (shown
-      ? <figcaption className={styles.translation}><PlainText>{translation}</PlainText></figcaption>
+      ? <figcaption className={styles.translation}>{translation}</figcaption>
       : <Button variant="quiet" className={styles.revealButton} onClick={() => setShown(true)}>{t("courses.player.showTranslation")}</Button>)}
-    {note && (shown || !translation) && <p className={styles.note}><PlainText>{note}</PlainText></p>}
-  </figure>;
-}
-
-function DialogueStep({ block, turn }: { block: Block<"dialogue">; turn: number }) {
-  return <ol className={styles.dialogue}>
-    {block.payload.turns.slice(0, turn + 1).map((entry, index) => <li key={index} className={index === turn ? styles.newest : undefined}>
-      <span className={styles.speaker}>{entry.speaker}</span><span className={styles.line}><PlainText>{entry.text}</PlainText></span>
-    </li>)}
-  </ol>;
+    {note && (shown || !translation) && <p className={styles.note}>{note}</p>}
+  </>} />;
 }
 
 // Answers share the practice block's local draft, so a set started here can be finished in the lesson view and the reverse.
 function QuestionStep({ scope, lessonId, block, item, answers, onAnswer, shared, onShared }: {
-  scope: PlayerScope; lessonId: string; block: Block<"practice">; item: number; answers: string[]; onAnswer: (value: string) => void; shared: boolean; onShared: () => void;
+  scope: PlayerScope; lessonId: string; block: Practice; item: number; answers: string[]; onAnswer: (value: string) => void; shared: boolean; onShared: () => void;
 }) {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const { payload } = block; const last = item === payload.items.length - 1;
@@ -121,25 +99,44 @@ function FinishStep({ scope, lesson, next, onNext, onClose }: {
   </div>;
 }
 
+function StepContent({ scope, lesson, step, answersFor, answer, shared, markShared }: {
+  scope: PlayerScope; lesson: CourseLesson; step: LessonStep; answersFor: (practice: Practice) => string[];
+  answer: (practice: Practice, item: number, value: string) => void; shared: Record<string, boolean>; markShared: (practice: Practice) => void;
+}) {
+  switch (step.kind) {
+    case "content": return <div className={styles.content}><LessonBlocks blocks={step.blocks} /></div>;
+    case "columns": return <div className={styles.content}><LessonBlocks blocks={[step.block]} /></div>;
+    case "callout": return <Callout variant={step.block.props.variant} icon={step.block.props.icon}><InlineText content={step.block.content} /></Callout>;
+    case "example": return <ExampleStep block={step.block} />;
+    case "dialogueTurn": return <DialogueBlock block={step.block} upTo={step.turnIndex} />;
+    case "practiceItem": {
+      const practice = practiceFromBlock(step.block, lesson.answerCounts);
+      return <QuestionStep scope={scope} lessonId={lesson.id} block={practice} item={step.itemIndex} answers={answersFor(practice)}
+        onAnswer={(value) => answer(practice, step.itemIndex, value)} shared={shared[practice.id] ?? false} onShared={() => markShared(practice)} />;
+    }
+  }
+}
+
 function Player({ scope, lesson, next, onNext, onClose }: {
   scope: PlayerScope; lesson: CourseLesson; next: CourseLessonSummary | undefined; onNext: (lessonId: string) => void; onClose: () => void;
 }) {
   const { t } = useTranslation();
   // Steps are fixed when the run starts, so a refetch (for example after sharing answers) never moves the reader.
-  const [steps] = useState(() => lessonSteps(lesson.blocks));
+  const [steps] = useState(() => lessonSteps(lesson));
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
   const [shared, setShared] = useState<Record<string, boolean>>({});
   const finished = index >= steps.length; const step = steps[index];
-  const answersFor = (block: Block<"practice">) => answers[block.id] ?? readAnswers(practiceDraftKey(scope.accountId, scope.groupId, "practice-answer", block.id), block.payload.items.length);
-  const answer = (block: Block<"practice">, item: number, value: string) => {
-    const nextAnswers = answersFor(block).map((entry, position) => position === item ? value : entry);
-    storeAnswers(practiceDraftKey(scope.accountId, scope.groupId, "practice-answer", block.id), nextAnswers);
-    setAnswers((current) => ({ ...current, [block.id]: nextAnswers }));
+  const draftKey = (practice: Practice) => practiceDraftKey(scope.accountId, scope.groupId, "practice-answer", practice.id);
+  const answersFor = (practice: Practice) => answers[practice.id] ?? readAnswers(draftKey(practice), practice.payload.items.length);
+  const answer = (practice: Practice, item: number, value: string) => {
+    const nextAnswers = answersFor(practice).map((entry, position) => position === item ? value : entry);
+    storeAnswers(draftKey(practice), nextAnswers);
+    setAnswers((current) => ({ ...current, [practice.id]: nextAnswers }));
   };
-  const markShared = (block: Block<"practice">) => {
-    storeAnswers(practiceDraftKey(scope.accountId, scope.groupId, "practice-answer", block.id), []);
-    setShared((current) => ({ ...current, [block.id]: true }));
+  const markShared = (practice: Practice) => {
+    storeAnswers(draftKey(practice), []);
+    setShared((current) => ({ ...current, [practice.id]: true }));
   };
   const percent = steps.length ? (Math.min(index, steps.length) / steps.length) * 100 : 100;
   return <div className={styles.player}>
@@ -150,13 +147,9 @@ function Player({ scope, lesson, next, onNext, onClose }: {
     {finished || !step
       ? <FinishStep scope={scope} lesson={lesson} next={next} onNext={onNext} onClose={onClose} />
       // A dialogue keeps one stage while its lines arrive, so only the newest line animates in.
-      : <div className={styles.stage} key={step.kind === "dialogue" ? step.block.id : index}>
-        {step.section && <p className={styles.section}>{step.section}</p>}
-        {step.kind === "text" && <p className={styles.text}><PlainText>{step.block.payload.content}</PlainText></p>}
-        {step.kind === "example" && <ExampleStep block={step.block} />}
-        {step.kind === "dialogue" && <DialogueStep block={step.block} turn={step.turn} />}
-        {step.kind === "question" && <QuestionStep scope={scope} lessonId={lesson.id} block={step.block} item={step.item} answers={answersFor(step.block)}
-          onAnswer={(value) => answer(step.block, step.item, value)} shared={shared[step.block.id] ?? false} onShared={() => markShared(step.block)} />}
+      : <div className={styles.stage} key={step.kind === "dialogueTurn" ? step.block.id : index}>
+        {step.heading && <p className={styles.section}>{step.heading}</p>}
+        <StepContent scope={scope} lesson={lesson} step={step} answersFor={answersFor} answer={answer} shared={shared} markShared={markShared} />
       </div>}
     {!finished && <div className={styles.nav}>
       <Button variant="quiet" disabled={index === 0} onClick={() => setIndex((value) => value - 1)}>{t("common.back")}</Button>

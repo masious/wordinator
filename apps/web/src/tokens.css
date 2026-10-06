@@ -24,6 +24,25 @@
   --palette-focus: #315f8a;
   --palette-page-glow: rgb(255 253 248 / 72%);
   --palette-page-accent: rgb(169 200 180 / 14%);
+  /* Lesson text palette: ink and surface for each colour authors may apply in lesson documents. */
+  --palette-lesson-gray: #6f6259;
+  --palette-lesson-gray-soft: #eee5d8;
+  --palette-lesson-brown: #7a5034;
+  --palette-lesson-brown-soft: #efe0d1;
+  --palette-lesson-red: #b9534c;
+  --palette-lesson-red-soft: #f5d7d1;
+  --palette-lesson-orange: #b4602b;
+  --palette-lesson-orange-soft: #f8dcc4;
+  --palette-lesson-yellow: #8a6a12;
+  --palette-lesson-yellow-soft: #f6e6b9;
+  --palette-lesson-green: #3f775a;
+  --palette-lesson-green-soft: #dceade;
+  --palette-lesson-blue: #315f8a;
+  --palette-lesson-blue-soft: #dce9f1;
+  --palette-lesson-purple: #6e4f8e;
+  --palette-lesson-purple-soft: #e7ddf0;
+  --palette-lesson-pink: #a2477a;
+  --palette-lesson-pink-soft: #f4d9e6;
 
   /* Semantic color roles */
   --color-page: var(--palette-paper);
@@ -73,6 +92,32 @@
   --color-wash-strong: rgb(45 38 34 / 8%);
   --color-page-glow: var(--palette-page-glow);
   --color-page-accent: var(--palette-page-accent);
+  --color-lesson-gray-text: var(--palette-lesson-gray);
+  --color-lesson-gray-surface: var(--palette-lesson-gray-soft);
+  --color-lesson-brown-text: var(--palette-lesson-brown);
+  --color-lesson-brown-surface: var(--palette-lesson-brown-soft);
+  --color-lesson-red-text: var(--palette-lesson-red);
+  --color-lesson-red-surface: var(--palette-lesson-red-soft);
+  --color-lesson-orange-text: var(--palette-lesson-orange);
+  --color-lesson-orange-surface: var(--palette-lesson-orange-soft);
+  --color-lesson-yellow-text: var(--palette-lesson-yellow);
+  --color-lesson-yellow-surface: var(--palette-lesson-yellow-soft);
+  --color-lesson-green-text: var(--palette-lesson-green);
+  --color-lesson-green-surface: var(--palette-lesson-green-soft);
+  --color-lesson-blue-text: var(--palette-lesson-blue);
+  --color-lesson-blue-surface: var(--palette-lesson-blue-soft);
+  --color-lesson-purple-text: var(--palette-lesson-purple);
+  --color-lesson-purple-surface: var(--palette-lesson-purple-soft);
+  --color-lesson-pink-text: var(--palette-lesson-pink);
+  --color-lesson-pink-surface: var(--palette-lesson-pink-soft);
+  /* Callout tones: one lesson surface per callout variant. */
+  --color-callout-hint: var(--color-lesson-yellow-surface);
+  --color-callout-important: var(--color-lesson-blue-surface);
+  --color-callout-warning: var(--color-lesson-red-surface);
+  --color-callout-grammar: var(--color-lesson-green-surface);
+  --color-callout-culture: var(--color-lesson-purple-surface);
+  --color-callout-false-friend: var(--color-lesson-orange-surface);
+  --color-callout-pronunciation: var(--color-lesson-pink-surface);
   --grain-opacity: 0.026;
   --grain-blend-mode: multiply;
 
@@ -167,6 +212,8 @@
   --width-modal-reading: 760px;
   --aspect-course-cover: 2 / 1;
   --width-course-card-min: 17rem;
+  --lesson-column-gap: var(--space-6);
+  --lesson-callout-icon: 1.25rem;
   --page-gutter: clamp(var(--space-4), 4vw, var(--space-10));
   --section-rhythm: clamp(var(--space-20), 10vw, var(--space-40));
   --card-inset: clamp(var(--space-5), 3vw, var(--space-8));
@@ -229,6 +276,24 @@
   --palette-focus: #9bcdf4;
   --palette-page-glow: rgb(103 75 62 / 22%);
   --palette-page-accent: rgb(91 128 104 / 13%);
+  --palette-lesson-gray: #c6b5a8;
+  --palette-lesson-gray-soft: #38302b;
+  --palette-lesson-brown: #d8b394;
+  --palette-lesson-brown-soft: #3d2f25;
+  --palette-lesson-red: #ef938b;
+  --palette-lesson-red-soft: #512c29;
+  --palette-lesson-orange: #f0ac7c;
+  --palette-lesson-orange-soft: #4f3423;
+  --palette-lesson-yellow: #e3c06d;
+  --palette-lesson-yellow-soft: #493b25;
+  --palette-lesson-green: #86c79e;
+  --palette-lesson-green-soft: #294435;
+  --palette-lesson-blue: #9bcdf4;
+  --palette-lesson-blue-soft: #293d49;
+  --palette-lesson-purple: #c6a8e6;
+  --palette-lesson-purple-soft: #3b2f4a;
+  --palette-lesson-pink: #eea3c8;
+  --palette-lesson-pink-soft: #4b2a3b;
 
   --color-bezel: rgb(246 234 220 / 5%);
   --color-action-text: #2d1c18;
@@ -277,6 +342,25 @@
   --palette-focus: #315f8a;
   --palette-page-glow: rgb(255 253 248 / 72%);
   --palette-page-accent: rgb(169 200 180 / 14%);
+  /* Lesson text palette: ink and surface for each colour authors may apply in lesson documents. */
+  --palette-lesson-gray: #6f6259;
+  --palette-lesson-gray-soft: #eee5d8;
+  --palette-lesson-brown: #7a5034;
+  --palette-lesson-brown-soft: #efe0d1;
+  --palette-lesson-red: #b9534c;
+  --palette-lesson-red-soft: #f5d7d1;
+  --palette-lesson-orange: #b4602b;
+  --palette-lesson-orange-soft: #f8dcc4;
+  --palette-lesson-yellow: #8a6a12;
+  --palette-lesson-yellow-soft: #f6e6b9;
+  --palette-lesson-green: #3f775a;
+  --palette-lesson-green-soft: #dceade;
+  --palette-lesson-blue: #315f8a;
+  --palette-lesson-blue-soft: #dce9f1;
+  --palette-lesson-purple: #6e4f8e;
+  --palette-lesson-purple-soft: #e7ddf0;
+  --palette-lesson-pink: #a2477a;
+  --palette-lesson-pink-soft: #f4d9e6;
 
   --color-bezel: rgb(45 38 34 / 5%);
   --color-hairline: rgb(45 38 34 / 13%);

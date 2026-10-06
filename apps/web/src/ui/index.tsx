@@ -175,7 +175,8 @@ export function Dialog(props: ModalProps) {
 
 export function AdaptiveDialog(props: ModalProps) {
   const narrow = useMediaQuery("(max-width: 48em)");
-  return <Dialog centered={!narrow} fullScreen={narrow} radius={narrow ? 0 : "xl"} size="var(--width-modal)" {...props} />;
+  // The theme's content border and shadow are inline styles, so only a styles prop can drop them from the full-screen sheet.
+  return <Dialog centered={!narrow} fullScreen={narrow} radius={narrow ? 0 : "xl"} size="var(--width-modal)" styles={narrow ? { content: { border: 0, boxShadow: "none" } } : undefined} {...props} />;
 }
 
 export function ConfirmDialog({ confirmLabel, cancelLabel, onConfirm, onClose, children, confirmLoading = false, ...props }: ModalProps & { confirmLabel: string; cancelLabel?: string; onConfirm: () => void; confirmLoading?: boolean }) {

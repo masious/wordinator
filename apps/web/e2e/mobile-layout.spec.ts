@@ -183,3 +183,29 @@ test("mobile composer is a full-screen sheet with sticky title and action bars",
   await expectNoHorizontalOverflow(page, "composer sheet");
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-composer.png` });
 });
+
+test("mobile course page collapses the lesson outline behind a toggle", async ({ page }) => {
+  const course = await page.request.post(`/api/groups/${E2E_GROUP_ID}/courses`, { data: { title: "Outline course", summary: "Two lessons.", level: null, intendedLearner: null } });
+  expect(course.ok()).toBe(true);
+  const { course: { id: courseId } } = await course.json() as { course: { id: string } };
+  for (const title of ["Er is een huis", "Waar is de kat?"]) {
+    const lesson = await page.request.post(`/api/groups/${E2E_GROUP_ID}/courses/${courseId}/lessons`, { data: { title, goal: null } });
+    expect(lesson.ok()).toBe(true);
+  }
+
+  await page.goto(`${group}/courses/${courseId}`, { waitUntil: "networkidle" });
+  const outline = page.getByRole("navigation", { name: "Lessons" });
+  const toggle = outline.getByRole("button", { name: /Lessons\s*2 lessons/ });
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(outline.getByRole("list")).toBeHidden();
+  await expectNoHorizontalOverflow(page, "course with collapsed outline");
+  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-course-outline.png` });
+
+  await toggle.click();
+  await expect(toggle).toHaveAttribute("aria-expanded", "true");
+  await expect(outline.getByRole("list")).toBeVisible();
+  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-course-outline-open.png` });
+  await outline.getByRole("button", { name: "Waar is de kat?" }).click();
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(page.getByRole("heading", { level: 2, name: "Waar is de kat?" })).toBeInViewport();
+});
