@@ -7,7 +7,7 @@
     "not_found_handling": "single-page-application"
   },
   "vars": {
-    "WORDINATOR_API_ORIGIN": "https://w-api.choobshoor.workers.dev/"
+    "WORDINATOR_API_ORIGIN": "https://taalk.masious.ir/"
   },
   "observability": {
     "logs": {
