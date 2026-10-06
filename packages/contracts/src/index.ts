@@ -81,6 +81,9 @@ export const READING_QUESTION_COUNT_MAX = 50;
 export const FILL_EXPECTED_ANSWER_MAX = 500;
 export const postTypeSchema = z.enum(["shared_sentence", "question", "reading", "fill_in"]);
 export type PostType = z.infer<typeof postTypeSchema>;
+// Feed posts also include the system-created `course` type, which the composer never offers.
+export const feedPostTypeSchema = z.enum([...postTypeSchema.options, "course"]);
+export type FeedPostType = z.infer<typeof feedPostTypeSchema>;
 export const postBodySchema = z.string().trim().min(1).max(POST_BODY_MAX);
 export const postNotesSchema = z.string().trim().max(POST_NOTES_MAX).nullable().optional();
 export const readingQuestionInputSchema = z.object({ id: opaqueIdSchema.optional(), text: z.string().trim().min(1).max(READING_QUESTION_MAX) });
@@ -107,8 +110,15 @@ export const updatePostRequestSchema = postInputSchema;
 export type PostInput = z.infer<typeof postInputSchema>;
 
 export const postAuthorSchema = z.object({ id: opaqueIdSchema, displayName: z.string(), avatarUrl: z.string().url().nullable() });
+// Course details are present only while the viewer may open the course; otherwise the post shows it as unavailable.
+export const postCourseSchema = z.object({
+  id: opaqueIdSchema, available: z.boolean(), title: z.string().nullable(), summary: z.string().nullable(),
+  level: z.string().nullable(), coverUrl: z.string().url().nullable(),
+});
+export type PostCourse = z.infer<typeof postCourseSchema>;
 export const postSchema = z.object({
-  id: opaqueIdSchema, groupId: opaqueIdSchema, type: postTypeSchema, body: z.string(), notes: z.string().nullable(),
+  id: opaqueIdSchema, groupId: opaqueIdSchema, type: feedPostTypeSchema, body: z.string(), notes: z.string().nullable(),
+  course: postCourseSchema.nullable(),
   author: postAuthorSchema, createdAt: z.number().int(), updatedAt: z.number().int(), edited: z.boolean(),
   questions: z.array(z.object({ id: opaqueIdSchema, position: z.number().int().nonnegative(), text: z.string() })),
   expectedAnswers: z.array(z.object({ position: z.number().int().nonnegative(), text: z.string().nullable() })),
@@ -160,11 +170,10 @@ export const sessionResponseSchema = z.discriminatedUnion("status", [
 export type SessionResponse = z.infer<typeof sessionResponseSchema>;
 
 export const invitationResponseSchema = z.object({ groupId: opaqueIdSchema, groupName: z.string(), language: languageSchema });
-export const pendingMemberSchema = z.object({ userId: opaqueIdSchema, displayName: z.string(), requestedAt: z.number().int() });
 export const groupShellResponseSchema = z.object({
   group: groupSummarySchema,
   invitationToken: z.string().min(32),
-  pendingMembers: z.array(pendingMemberSchema),
+  pendingRequestCount: z.number().int().nonnegative(),
 });
 export type GroupShellResponse = z.infer<typeof groupShellResponseSchema>;
 
@@ -203,13 +212,33 @@ export const memberDirectoryItemSchema = z.object({
 export const memberDirectoryResponseSchema = z.object({
   active: z.array(memberDirectoryItemSchema),
   former: z.array(memberDirectoryItemSchema),
-  permissions: z.object({ manageMembers: z.boolean(), leave: z.boolean() }),
+  permissions: z.object({ leave: z.boolean() }),
 });
 export type MemberDirectoryResponse = z.infer<typeof memberDirectoryResponseSchema>;
+export const membershipAdminItemSchema = z.object({
+  id: opaqueIdSchema,
+  displayName: z.string(),
+  avatarUrl: z.string().url().nullable(),
+  state: z.enum(["pending", "active", "rejected", "left", "removed"]),
+  isCreator: z.boolean(),
+  requestedAt: z.number().int(),
+  decidedAt: z.number().int().nullable(),
+});
+export const membershipAdminResponseSchema = z.object({
+  pending: z.array(membershipAdminItemSchema),
+  active: z.array(membershipAdminItemSchema),
+  rejected: z.array(membershipAdminItemSchema),
+  former: z.array(membershipAdminItemSchema),
+});
+export type MembershipAdminItem = z.infer<typeof membershipAdminItemSchema>;
+export type MembershipAdminResponse = z.infer<typeof membershipAdminResponseSchema>;
 export const temporaryPasswordResponseSchema = z.object({ password: z.string().min(16) });
 export const imageResponseSchema = z.object({ url: z.string().url() });
 
-export const notificationKindSchema = z.enum(["join_requested", "join_accepted", "join_rejected", "member_removed", "post_response", "reply", "answer_pinned", "reaction"]);
+export const notificationKindSchema = z.enum([
+  "join_requested", "join_accepted", "join_rejected", "member_removed", "post_response", "reply", "answer_pinned", "reaction",
+  "contributor_requested", "contributor_accepted", "contributor_rejected",
+]);
 export const notificationSchema = z.object({
   id: opaqueIdSchema,
   groupId: opaqueIdSchema,
@@ -218,6 +247,8 @@ export const notificationSchema = z.object({
   kind: notificationKindSchema,
   postId: opaqueIdSchema.nullable(),
   commentId: opaqueIdSchema.nullable(),
+  // Contributor notifications link to the course instead of a post.
+  courseId: opaqueIdSchema.nullable(),
   targetAvailable: z.boolean(),
   createdAt: z.number().int(),
   readAt: z.number().int().nullable(),
@@ -228,7 +259,7 @@ export type Notification = z.infer<typeof notificationSchema>;
 
 export const COMMENT_BODY_MAX = 10_000;
 export const RESPONSE_ANSWER_MAX = 4_000;
-export const commentKindSchema = z.enum(["text", "reading_response", "fill_response"]);
+export const commentKindSchema = z.enum(["text", "reading_response", "fill_response", "practice_response"]);
 export const textCommentInputSchema = z.object({ kind: z.literal("text"), body: z.string().trim().min(1).max(COMMENT_BODY_MAX), parentId: opaqueIdSchema.nullable().optional() });
 export const readingResponseInputSchema = z.object({ kind: z.literal("reading_response"), answers: z.array(z.string().max(RESPONSE_ANSWER_MAX)).min(1).max(READING_QUESTION_COUNT_MAX) });
 export const fillResponseInputSchema = z.object({ kind: z.literal("fill_response"), answers: z.array(z.string().max(FILL_EXPECTED_ANSWER_MAX)).min(1).max(READING_QUESTION_COUNT_MAX) });
@@ -243,7 +274,7 @@ export const reactionSummarySchema = z.object({
 export type ReactionSummary = z.infer<typeof reactionSummarySchema>;
 export const responseItemSchema = z.object({ position: z.number().int().nonnegative(), prompt: z.string().nullable(), answer: z.string(), skipped: z.boolean(), matched: z.boolean().nullable() });
 export type DiscussionItem = {
-  id: string; parentId: string | null; kind: "text" | "reading_response" | "fill_response"; body: string | null;
+  id: string; parentId: string | null; kind: z.infer<typeof commentKindSchema>; body: string | null;
   author: z.infer<typeof postAuthorSchema>; createdAt: number; updatedAt: number; edited: boolean; pinned: boolean;
   responseItems: z.infer<typeof responseItemSchema>[]; reactions: ReactionSummary[];
   permissions: { edit: boolean; delete: boolean; reply: boolean; pin: boolean }; replies: DiscussionItem[];
@@ -283,12 +314,26 @@ export const courseSchema = z.object({
   id: opaqueIdSchema, groupId: opaqueIdSchema, title: z.string(), summary: z.string(),
   level: z.string().nullable(), intendedLearner: z.string().nullable(), coverUrl: z.string().url().nullable(),
   status: courseStatusSchema, owner: postAuthorSchema, createdAt: z.number().int(), updatedAt: z.number().int(),
-  permissions: z.object({ edit: z.boolean(), publish: z.boolean(), archive: z.boolean() }),
+  // The viewer's own contributor request or role; null when they have neither.
+  contribution: z.enum(["pending", "active"]).nullable(),
+  permissions: z.object({
+    edit: z.boolean(), publish: z.boolean(), archive: z.boolean(), removeContent: z.boolean(),
+    // Adding lessons and blocks and editing unpublished ones: the owner and active contributors.
+    contribute: z.boolean(), requestContribution: z.boolean(), leaveContribution: z.boolean(), manageContributors: z.boolean(),
+  }),
 });
 export type Course = z.infer<typeof courseSchema>;
 export const coursePageSchema = z.object({ items: z.array(courseSchema), nextCursor: z.string().nullable() });
 export type CoursePage = z.infer<typeof coursePageSchema>;
 export const courseResponseSchema = z.object({ course: courseSchema });
+export const courseContributorSchema = z.object({
+  user: postAuthorSchema, state: z.enum(["pending", "active"]), requestedAt: z.number().int(), decidedAt: z.number().int().nullable(),
+});
+export type CourseContributor = z.infer<typeof courseContributorSchema>;
+// Pending requests are listed only for the course owner.
+export const courseContributorsResponseSchema = z.object({ active: z.array(courseContributorSchema), pending: z.array(courseContributorSchema) });
+export type CourseContributorsResponse = z.infer<typeof courseContributorsResponseSchema>;
+export const contributorDecisionRequestSchema = z.object({ decision: z.enum(["accept", "reject"]) });
 
 export const COURSE_HEADING_MAX = 200;
 export const COURSE_BLOCK_TEXT_MAX = 10_000;
@@ -313,10 +358,34 @@ export const examplePayloadSchema = z.object({
 export const dialoguePayloadSchema = z.object({
   turns: z.array(z.object({ speaker: requiredBlockText(COURSE_SPEAKER_MAX), text: requiredBlockText(COURSE_SENTENCE_MAX) })).min(1).max(COURSE_DIALOGUE_TURNS_MAX),
 });
-export const courseBlockKindSchema = z.enum(["heading", "text", "example", "dialogue"]);
+export const COURSE_INSTRUCTION_MAX = 2_000;
+export const COURSE_PRACTICE_ITEMS_MAX = 50;
+export const COURSE_AUTHORS_VERSION_MAX = 1_000;
+export const countBlanks = (value: string) => [...value].filter((character) => character === "…").length;
+const authorsVersionEntrySchema = z.string().trim().max(COURSE_AUTHORS_VERSION_MAX).nullable().transform((value) => value || null);
+// A prompt with … blanks is a fill-in item whose author's version has one nullable entry per blank; any other prompt is open
+// and has at most one entry. A version with no filled entry is stored as an empty list, meaning there is no author's version.
+export const practiceItemSchema = z.object({
+  prompt: requiredBlockText(COURSE_SENTENCE_MAX),
+  authorsVersion: z.array(authorsVersionEntrySchema).max(COURSE_PRACTICE_ITEMS_MAX).optional().transform((value) => value?.some((entry) => entry !== null) ? value : []),
+  note: optionalBlockText(COURSE_NOTE_MAX),
+}).superRefine((item, context) => {
+  const blanks = countBlanks(item.prompt);
+  if (blanks > 0 && item.authorsVersion.length > 0 && item.authorsVersion.length !== blanks) {
+    context.addIssue({ code: "custom", path: ["authorsVersion"], message: "Provide one author's version entry per blank." });
+  }
+  if (blanks === 0 && item.authorsVersion.length > 1) context.addIssue({ code: "custom", path: ["authorsVersion"], message: "An open item has at most one author's version." });
+});
+export const practicePayloadSchema = z.object({
+  instruction: requiredBlockText(COURSE_INSTRUCTION_MAX),
+  passage: z.object({ title: optionalBlockText(COURSE_HEADING_MAX), content: requiredBlockText(COURSE_BLOCK_TEXT_MAX) }).nullable().optional().transform((value) => value ?? null),
+  items: z.array(practiceItemSchema).min(1).max(COURSE_PRACTICE_ITEMS_MAX),
+});
+export type PracticePayload = z.output<typeof practicePayloadSchema>;
+export const courseBlockKindSchema = z.enum(["heading", "text", "example", "dialogue", "practice"]);
 export type CourseBlockKind = z.infer<typeof courseBlockKindSchema>;
 export const courseBlockPayloadSchemas = {
-  heading: headingPayloadSchema, text: textPayloadSchema, example: examplePayloadSchema, dialogue: dialoguePayloadSchema,
+  heading: headingPayloadSchema, text: textPayloadSchema, example: examplePayloadSchema, dialogue: dialoguePayloadSchema, practice: practicePayloadSchema,
 } as const satisfies Record<CourseBlockKind, z.ZodType>;
 export type CourseBlockPayloads = { [K in CourseBlockKind]: z.output<(typeof courseBlockPayloadSchemas)[K]> };
 export const courseBlockContentSchema = z.discriminatedUnion("kind", [
@@ -324,6 +393,7 @@ export const courseBlockContentSchema = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("text"), payload: textPayloadSchema }),
   z.object({ kind: z.literal("example"), payload: examplePayloadSchema }),
   z.object({ kind: z.literal("dialogue"), payload: dialoguePayloadSchema }),
+  z.object({ kind: z.literal("practice"), payload: practicePayloadSchema }),
 ]);
 export type CourseBlockContent = z.output<typeof courseBlockContentSchema>;
 export type CourseBlockContentInput = z.input<typeof courseBlockContentSchema>;
@@ -353,7 +423,30 @@ const courseBlockBaseSchema = z.object({
   id: opaqueIdSchema, lessonId: opaqueIdSchema, position: z.number().int().nonnegative(), published: z.boolean(),
   version: versionSchema, updatedBy: editorRefSchema, updatedAt: z.number().int(),
 });
-export const courseBlockSchema = z.intersection(courseBlockBaseSchema, courseBlockContentSchema);
+// Learners receive practice prompts only. Authors' versions and item notes travel separately as the reference, which editors
+// receive with the block and everyone else receives only with the revealed answer thread.
+export const learnerPracticePayloadSchema = z.object({
+  instruction: z.string(), passage: z.object({ title: z.string().nullable(), content: z.string() }).nullable(), items: z.array(z.object({ prompt: z.string() })),
+});
+export type LearnerPracticePayload = z.infer<typeof learnerPracticePayloadSchema>;
+export const practiceReferenceSchema = z.object({
+  items: z.array(z.object({ prompt: z.string(), authorsVersion: z.array(z.string().nullable()), note: z.string().nullable() })),
+});
+export type PracticeReference = z.infer<typeof practiceReferenceSchema>;
+export function splitPracticePayload(payload: PracticePayload): { payload: LearnerPracticePayload; reference: PracticeReference } {
+  return {
+    payload: { instruction: payload.instruction, passage: payload.passage, items: payload.items.map((item) => ({ prompt: item.prompt })) },
+    reference: { items: payload.items.map((item) => ({ prompt: item.prompt, authorsVersion: item.authorsVersion, note: item.note })) },
+  };
+}
+export const courseBlockViewContentSchema = z.discriminatedUnion("kind", [
+  z.object({ kind: z.literal("heading"), payload: headingPayloadSchema }),
+  z.object({ kind: z.literal("text"), payload: textPayloadSchema }),
+  z.object({ kind: z.literal("example"), payload: examplePayloadSchema }),
+  z.object({ kind: z.literal("dialogue"), payload: dialoguePayloadSchema }),
+  z.object({ kind: z.literal("practice"), payload: learnerPracticePayloadSchema, reference: practiceReferenceSchema.nullable(), answerCount: z.number().int().nonnegative() }),
+]);
+export const courseBlockSchema = z.intersection(courseBlockBaseSchema, courseBlockViewContentSchema);
 export type CourseBlock = z.output<typeof courseBlockSchema>;
 export const courseLessonSummarySchema = z.object({
   id: opaqueIdSchema, position: z.number().int().nonnegative(), title: z.string(), goal: z.string().nullable(),
@@ -370,3 +463,12 @@ export type CourseDetailResponse = z.output<typeof courseDetailResponseSchema>;
 export const lessonResponseSchema = z.object({ lesson: courseLessonSchema });
 export const outlineResponseSchema = z.object({ outline: z.array(courseLessonSummarySchema) });
 export const blockResponseSchema = z.object({ block: courseBlockSchema });
+
+export const practiceResponseInputSchema = z.object({ kind: z.literal("practice_response"), answers: z.array(z.string().max(RESPONSE_ANSWER_MAX)).min(1).max(COURSE_PRACTICE_ITEMS_MAX) });
+export const createPracticeCommentRequestSchema = z.discriminatedUnion("kind", [textCommentInputSchema, practiceResponseInputSchema]);
+export const updatePracticeCommentRequestSchema = z.discriminatedUnion("kind", [textCommentInputSchema.omit({ parentId: true }), practiceResponseInputSchema]);
+export type CreatePracticeCommentRequest = z.input<typeof createPracticeCommentRequestSchema>;
+export const practiceDiscussionResponseSchema = z.object({
+  items: z.array(discussionItemSchema), count: z.number().int().nonnegative(), quickReactions: quickReactionsSchema, reference: practiceReferenceSchema,
+});
+export type PracticeDiscussionResponse = z.infer<typeof practiceDiscussionResponseSchema>;

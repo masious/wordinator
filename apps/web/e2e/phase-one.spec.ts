@@ -36,6 +36,8 @@ test("an invited person is approved and enters an isolated group", async ({ page
   await page.getByRole("button", { name: "Save profile" }).click();
   await expect(page.getByText("Saved.").first()).toBeVisible();
   const renamedSecondGroup = `${secondGroup} Renamed`;
+  await page.getByRole("navigation", { name: "Settings sections" }).getByRole("link", { name: "Group" }).click();
+  await expect(page).toHaveURL(/\/settings\/group$/);
   await page.getByLabel("Group name").fill(renamedSecondGroup);
   await page.getByRole("button", { name: "Rename group" }).click();
   await page.getByRole("button", { name: "Account menu" }).click();
@@ -45,12 +47,15 @@ test("an invited person is approved and enters an isolated group", async ({ page
   await expect(page.getByRole("heading", { name: "No posts to show yet" })).toBeVisible();
   await page.getByRole("link", { name: "Journal" }).click();
   await expect(page.getByRole("heading", { name: renamedSecondGroup })).toBeVisible();
+  await page.getByRole("button", { name: "Account menu" }).click();
   await page.getByLabel("Active group").selectOption({ label: "🇳🇱 Alpha Journal" });
   await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
 
-  const request = page.getByText(memberName, { exact: true }).locator("..");
+  await page.getByRole("link", { name: /join requests? waiting/ }).click();
+  await expect(page).toHaveURL(/\/settings\/members$/);
+  const request = page.getByText(memberName, { exact: true }).locator("../../..");
   await request.getByRole("button", { name: "Accept" }).click();
-  await expect(page.getByText(memberName, { exact: true })).toBeHidden();
+  await expect(page.getByRole("button", { name: "Accept" })).toBeHidden();
   await page.getByRole("button", { name: "Account menu" }).click();
   await page.getByRole("menuitem", { name: "Sign out" }).click();
 

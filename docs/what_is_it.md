@@ -18,7 +18,7 @@ Each group focuses on exactly one target language. The initial choices are Dutch
 4. The group discusses, reacts, and optionally highlights one useful answer.
 5. Everyone returns as new material is shared.
 
-Posts are shared sentences, standalone questions, readings with questions, or fill-in-the-blank prompts. Content comes from members; the platform does not teach a curriculum or judge people’s learning.
+Posts are shared sentences, standalone questions, readings with questions, or fill-in-the-blank prompts. A course also appears in the feed once, when its owner first publishes it. Content comes from members; the platform does not teach a curriculum or judge people’s learning.
 
 Members may also build shared, member-authored [courses](courses.md) for their group.
 

@@ -10,12 +10,16 @@ const groupId = "20000000-0000-4000-8000-000000000001";
 const ownerId = "10000000-0000-4000-8000-000000000001";
 const courseId = "30000000-0000-4000-8000-000000000001";
 const session = { status: "signedIn", user: { id: ownerId, displayName: "Ada", avatarUrl: null, mustChangePassword: false }, groups: [{ id: groupId, name: "Study", language: "de", role: "member", icon: "🇩🇪", iconUrl: null }], requests: [], deletedGroups: [] };
+const helper = { id: "10000000-0000-4000-8000-000000000002", displayName: "Bo", avatarUrl: null };
+const ownerPermissions = { edit: true, publish: true, archive: true, removeContent: true, contribute: true, requestContribution: false, leaveContribution: false, manageContributors: true };
+const readerPermissions = { edit: false, publish: false, archive: false, removeContent: false, contribute: false, requestContribution: true, leaveContribution: false, manageContributors: false };
 const course = (overrides: Record<string, unknown> = {}) => ({
   id: courseId, groupId, title: "Deutsch für Anfänger", summary: "Erste Schritte\nmit Freunden", level: "A1 → early A2", intendedLearner: null, coverUrl: null,
-  status: "draft", owner: { id: ownerId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1,
-  permissions: { edit: true, publish: true, archive: true }, ...overrides,
+  status: "draft", owner: { id: ownerId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, contribution: null,
+  permissions: ownerPermissions, ...overrides,
 });
 let current = course();
+let contributors = { active: [] as unknown[], pending: [] as unknown[] };
 
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
 function renderPage(page: "library" | "course") {
@@ -27,15 +31,20 @@ function renderPage(page: "library" | "course") {
 }
 
 beforeEach(() => {
-  current = course();
+  current = course(); contributors = { active: [], pending: [] };
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
     if (path === "/api/session") return response(session);
     if (path === `/api/groups/${groupId}/courses` && init?.method === "POST") return response({ course: { ...current, ...JSON.parse(String(init.body)) } }, 201);
     if (path.startsWith(`/api/groups/${groupId}/courses?`) || path === `/api/groups/${groupId}/courses`) return response({ items: [current], nextCursor: null });
     if (path.endsWith("/visibility")) { current = course({ status: JSON.parse(String(init?.body)).status }); return response({ course: current }); }
-    if (path.endsWith("/archive")) { current = course({ status: "archived", permissions: { edit: false, publish: false, archive: true } }); return response({ course: current }); }
-    if (path === `/api/groups/${groupId}/courses/${courseId}`) return response({ course: current });
+    if (path.endsWith("/archive")) { current = course({ status: "archived", permissions: { ...readerPermissions, archive: true, requestContribution: false } }); return response({ course: current }); }
+    if (path.endsWith("/contributors") && init?.method === "POST") {
+      current = course({ ...current, contribution: "pending", permissions: { ...readerPermissions, requestContribution: false, leaveContribution: true } });
+      return response({ course: current }, 201);
+    }
+    if (path.endsWith("/contributors")) return response(contributors);
+    if (path === `/api/groups/${groupId}/courses/${courseId}`) return response({ course: current, outline: [], lessons: [] });
     return response({ ok: true });
   }));
 });
@@ -73,9 +82,31 @@ describe("Course shell pages", () => {
   });
 
   it("hides management controls from readers", async () => {
-    current = course({ status: "published", owner: { id: "10000000-0000-4000-8000-000000000009", displayName: "Lin", avatarUrl: null }, permissions: { edit: false, publish: false, archive: false } });
+    current = course({ status: "published", owner: { id: "10000000-0000-4000-8000-000000000009", displayName: "Lin", avatarUrl: null }, permissions: readerPermissions });
     renderPage("course");
     expect(await screen.findByText("By Lin")).toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Manage course" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Requests" })).not.toBeInTheDocument();
+  });
+
+  it("lets a reader ask to contribute and then withdraw the pending request", async () => {
+    current = course({ status: "published", owner: { id: "10000000-0000-4000-8000-000000000009", displayName: "Lin", avatarUrl: null }, permissions: readerPermissions });
+    renderPage("course");
+    fireEvent.click(await screen.findByRole("button", { name: "Ask to contribute" }));
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/contributors`, expect.objectContaining({ method: "POST" })));
+    expect(await screen.findByText("Your request is waiting for the course owner.")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Withdraw request" }));
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/contributors/leave`, expect.objectContaining({ method: "POST" })));
+  });
+
+  it("shows the owner pending contributor requests to accept and current contributors to remove", async () => {
+    contributors = { active: [{ user: helper, state: "active", requestedAt: 1, decidedAt: 2 }], pending: [{ user: { ...helper, id: "10000000-0000-4000-8000-000000000003", displayName: "Cy" }, state: "pending", requestedAt: 3, decidedAt: null }] };
+    renderPage("course");
+    fireEvent.click(await screen.findByRole("button", { name: "Accept Cy as a contributor" }));
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/contributors/10000000-0000-4000-8000-000000000003`, expect.objectContaining({ method: "PATCH", body: JSON.stringify({ decision: "accept" }) })));
+    fireEvent.click(screen.getByRole("button", { name: "Remove Bo as a contributor" }));
+    const dialog = await screen.findByRole("dialog", { name: "Remove this contributor?" });
+    fireEvent.click(within(dialog).getByRole("button", { name: "Remove" }));
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/contributors/${helper.id}`, expect.objectContaining({ method: "DELETE" })));
   });
 });

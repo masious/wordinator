@@ -2,8 +2,21 @@
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
     "composite": true,
-    "lib": ["ES2022", "WebWorker"],
-    "types": ["@cloudflare/workers-types", "@cloudflare/vitest-pool-workers"]
+    "lib": [
+      "ES2022",
+      "WebWorker"
+    ],
+    "types": [
+      "@cloudflare/workers-types",
+      "@cloudflare/vitest-pool-workers"
+    ],
+    "resolveJsonModule": true
   },
-  "include": ["src/**/*.ts", "test/**/*.ts", "vitest.config.ts", "worker-configuration.d.ts"]
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts",
+    "vitest.config.ts",
+    "worker-configuration.d.ts",
+    "../../test/fixtures/**/*.json"
+  ]
 }

@@ -57,6 +57,8 @@ test("production routes, previews, media, and overlays remain contained in both 
     `/groups/${E2E_GROUP_ID}/members/${userId}`,
     `/groups/${E2E_GROUP_ID}/notifications`,
     `/groups/${E2E_GROUP_ID}/settings`,
+    `/groups/${E2E_GROUP_ID}/settings/group`,
+    `/groups/${E2E_GROUP_ID}/settings/members`,
     "/ui",
   ];
 

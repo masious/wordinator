@@ -24,6 +24,8 @@ Only active group members can read a group, its directory, profiles, posts, disc
 
 Former-member profile fields come from the membership’s last group-visible snapshot rather than the account’s current fields. Active profile changes refresh snapshots only for active memberships, preventing former groups from learning later display-name, bio, or avatar changes.
 
+Answer concealment, for posts and for course practice threads, is spoiler protection, not authorization. Practice authors' versions and item notes are left out of learner block payloads and are delivered with the practice thread to any member who can read the practice and reveals it. Their concealment never protects them from a member.
+
 R2 objects are an explicit exception: images are public-by-URL. Unguessable keys reduce discovery but are not access control. Document this to users/operators and do not claim image confidentiality.
 
 ## Known accepted limitations

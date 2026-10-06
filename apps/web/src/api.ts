@@ -1,4 +1,4 @@
-import { accountSettingsResponseSchema, apiErrorSchema, coursePageSchema, courseResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
+import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseDetailResponseSchema, coursePageSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, lessonResponseSchema, memberDirectoryResponseSchema, practiceDiscussionResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 export class ApiError extends Error {
@@ -52,6 +52,11 @@ export const membersQueryOptions = (groupId: string) => queryOptions({
   queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/members`, memberDirectoryResponseSchema),
 });
 
+export const membershipsQueryOptions = (groupId: string) => queryOptions({
+  queryKey: ["memberships", groupId] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/memberships`, membershipAdminResponseSchema),
+});
+
 export const feedQueryOptions = (groupId: string) => infiniteQueryOptions({
   queryKey: ["posts", groupId] as const,
   initialPageParam: undefined as string | undefined,
@@ -97,6 +102,24 @@ export const coursesQueryOptions = (groupId: string) => infiniteQueryOptions({
 
 export const courseQueryOptions = (groupId: string, courseId: string) => queryOptions({
   queryKey: ["course", groupId, courseId] as const,
-  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}`, courseResponseSchema),
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}`, courseDetailResponseSchema),
+  retry: false,
+});
+
+export const courseContributorsQueryOptions = (groupId: string, courseId: string) => queryOptions({
+  queryKey: ["course-contributors", groupId, courseId] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/contributors`, courseContributorsResponseSchema),
+  retry: false,
+});
+
+export const lessonQueryOptions = (groupId: string, courseId: string, lessonId: string) => queryOptions({
+  queryKey: ["course-lesson", groupId, courseId, lessonId] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}`, lessonResponseSchema),
+  retry: false,
+});
+
+export const practiceDiscussionQueryOptions = (groupId: string, courseId: string, lessonId: string, blockId: string) => queryOptions({
+  queryKey: ["practice-discussion", groupId, blockId] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}/blocks/${encodeURIComponent(blockId)}/discussion`, practiceDiscussionResponseSchema),
   retry: false,
 });

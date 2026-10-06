@@ -11,8 +11,9 @@ const userId = "10000000-0000-4000-8000-000000000001";
 const actorId = "10000000-0000-4000-8000-000000000002";
 const session = { status: "signedIn", user: { id: userId, displayName: "Ada", avatarUrl: null, mustChangePassword: false }, groups: [{ id: groupId, name: "Study", language: "nl", role: "member", icon: "🇳🇱", iconUrl: null }], requests: [], deletedGroups: [] };
 const notices = { items: [
-  { id: "60000000-0000-4000-8000-000000000001", groupId, groupName: "Study", actor: { id: actorId, displayName: "Lin" }, kind: "reply", postId: "30000000-0000-4000-8000-000000000001", commentId: "50000000-0000-4000-8000-000000000001", targetAvailable: true, createdAt: 1, readAt: null },
-  { id: "60000000-0000-4000-8000-000000000002", groupId, groupName: "Study", actor: { id: actorId, displayName: "Lin" }, kind: "reaction", postId: "30000000-0000-4000-8000-000000000002", commentId: null, targetAvailable: false, createdAt: 2, readAt: 3 },
+  { id: "60000000-0000-4000-8000-000000000001", groupId, groupName: "Study", actor: { id: actorId, displayName: "Lin" }, kind: "reply", postId: "30000000-0000-4000-8000-000000000001", commentId: "50000000-0000-4000-8000-000000000001", courseId: null, targetAvailable: true, createdAt: 1, readAt: null },
+  { id: "60000000-0000-4000-8000-000000000002", groupId, groupName: "Study", actor: { id: actorId, displayName: "Lin" }, kind: "reaction", postId: "30000000-0000-4000-8000-000000000002", commentId: null, courseId: null, targetAvailable: false, createdAt: 2, readAt: 3 },
+  { id: "60000000-0000-4000-8000-000000000003", groupId, groupName: "Study", actor: { id: actorId, displayName: "Lin" }, kind: "contributor_requested", postId: null, commentId: null, courseId: "70000000-0000-4000-8000-000000000001", targetAvailable: true, createdAt: 3, readAt: null },
 ] };
 
 function response(body: unknown) { return new Response(JSON.stringify(body), { headers: { "content-type": "application/json" } }); }
@@ -38,6 +39,7 @@ describe("Phase 6 notifications UI", () => {
     expect(await screen.findByRole("heading", { name: "Notifications" })).toBeInTheDocument();
     expect(screen.getByText("Lin replied to you.")).toBeVisible();
     expect(screen.getByText("Content no longer available.")).toBeVisible();
+    expect(screen.getByRole("link", { name: /Lin asked to contribute to your course/ })).toHaveAttribute("href", `/groups/${groupId}/courses/70000000-0000-4000-8000-000000000001`);
     fireEvent.click(screen.getByRole("button", { name: "Mark all as read" }));
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/notifications/read-all`, expect.objectContaining({ method: "POST" })));
   });

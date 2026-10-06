@@ -5,11 +5,15 @@ import { useTranslation } from "react-i18next";
 import { apiRequest, discussionQueryOptions } from "../api";
 import { Avatar, Button, EmptyState, ErrorState, LabelChip, LoadingState, TextAreaField, TextField } from "../ui";
 import styles from "./PhaseFourPages.module.css";
-import ReactionBar from "../organisms/PostCard/ReactionBar";
+import ReactionBar from "../organisms/ReactionBar/ReactionBar";
+import { PlainText } from "../molecules/PlainText";
+import type { SignedInSession } from "../organisms/types/auth";
 
-type SignedInSession = Extract<SessionResponse, { status: "signedIn" }>;
 type AnswerKind = "text" | "reading_response" | "fill_response";
 type Draft = { version: 1; kind: AnswerKind; body: string; answers: string[]; step: number };
+
+// Shared sentences and course posts carry visible ordinary comments; every other post conceals its answers.
+const openDiscussion = (post: Post) => post.type === "shared_sentence" || post.type === "course";
 
 export const discussionDraftKey = (accountId: string, groupId: string, kind: string, targetId: string) => `wordinator:draft:v1:${accountId}:${groupId}:${kind}:${targetId}`;
 function readDraft(key: string, kind: AnswerKind, count: number): Draft {
@@ -19,15 +23,12 @@ function readDraft(key: string, kind: AnswerKind, count: number): Draft {
   } catch { /* discard incompatible local data */ }
   return { version: 1, kind, body: "", answers: Array.from({ length: count }, () => ""), step: 0 };
 }
-function PlainText({ children }: { children: string }) {
-  return <>{children.split(/(https?:\/\/[^\s]+)/g).map((part, index) => /^https?:\/\//.test(part) ? <a key={index} href={part} target="_blank" rel="noreferrer">{part}</a> : part)}</>;
-}
 
 function ResponseComposer({ post, groupId, session, parentId, onDone }: { post: Post; groupId: string; session: SignedInSession; parentId?: string; onDone: () => void }) {
   const { t } = useTranslation();
-  const kind: AnswerKind = parentId || post.type === "shared_sentence" || post.type === "question" ? "text" : post.type === "reading" ? "reading_response" : "fill_response";
+  const kind: AnswerKind = parentId || openDiscussion(post) || post.type === "question" ? "text" : post.type === "reading" ? "reading_response" : "fill_response";
   const prompts = kind === "reading_response" ? post.questions.map((question) => question.text) : kind === "fill_response" ? Array.from({ length: [...post.body].filter((character) => character === "…").length }, (_, index) => t("discussion.blankNumber", { number: index + 1 })) : [];
-  const draftKind = parentId ? "reply" : kind === "text" ? (post.type === "shared_sentence" ? "comment" : "answer") : kind;
+  const draftKind = parentId ? "reply" : kind === "text" ? (openDiscussion(post) ? "comment" : "answer") : kind;
   const key = discussionDraftKey(session.user.id, groupId, draftKind, parentId ?? post.id);
   const [draft, setDraft] = useState(() => readDraft(key, kind, prompts.length));
   useEffect(() => {
@@ -50,7 +51,7 @@ function ResponseComposer({ post, groupId, session, parentId, onDone }: { post: 
     </div></form>;
   }
   return <form className={styles.composerShell} onSubmit={(event: FormEvent) => { event.preventDefault(); mutation.mutate(); }}><div className={styles.composer}>
-    {kind === "fill_response" ? prompts.map((prompt, index) => <TextField key={index} label={prompt} value={draft.answers[index]} maxLength={500} onChange={(event) => { const answerText = event.currentTarget.value; setDraft((value) => ({ ...value, answers: value.answers.map((answer, current) => current === index ? answerText : answer) })); }} />) : <TextAreaField label={parentId ? t("discussion.reply") : post.type === "shared_sentence" ? t("discussion.comment") : t("discussion.yourAnswer")} value={draft.body} maxLength={10_000} minRows={3} required onChange={(event) => { const body = event.currentTarget.value; setDraft((value) => ({ ...value, body })); }} />}
+    {kind === "fill_response" ? prompts.map((prompt, index) => <TextField key={index} label={prompt} value={draft.answers[index]} maxLength={500} onChange={(event) => { const answerText = event.currentTarget.value; setDraft((value) => ({ ...value, answers: value.answers.map((answer, current) => current === index ? answerText : answer) })); }} />) : <TextAreaField label={parentId ? t("discussion.reply") : openDiscussion(post) ? t("discussion.comment") : t("discussion.yourAnswer")} value={draft.body} maxLength={10_000} minRows={3} required onChange={(event) => { const body = event.currentTarget.value; setDraft((value) => ({ ...value, body })); }} />}
     <div className={styles.composerActions}><Button type="submit" loading={mutation.isPending}>{parentId ? t("discussion.publishReply") : t("discussion.publishAnswer")}</Button></div>{mutation.error && <p className={styles.error}>{t("errors.generic")}</p>}
   </div></form>;
 }
@@ -78,12 +79,12 @@ function DiscussionEntry({ item, post, groupId, session, quickReactions, refresh
 export function DiscussionPanel({ post, groupId, session }: { post: Post; groupId: string; session: SignedInSession }) {
   const { t } = useTranslation(); const queryClient = useQueryClient(); const discussion = useQuery(discussionQueryOptions(groupId, post.id));
   const directTarget = useMemo(() => new URLSearchParams(window.location.search).get("comment"), []);
-  const [revealed, setRevealed] = useState(post.type === "shared_sentence" || Boolean(directTarget));
+  const [revealed, setRevealed] = useState(openDiscussion(post) || Boolean(directTarget));
   const refresh = () => { void queryClient.invalidateQueries({ queryKey: ["discussion", groupId, post.id] }); void queryClient.invalidateQueries({ queryKey: ["post", groupId, post.id] }); void queryClient.invalidateQueries({ queryKey: ["posts", groupId] }); };
   useEffect(() => { if (directTarget && discussion.data && revealed) document.getElementById(`comment-${directTarget}`)?.scrollIntoView({ block: "center" }); }, [directTarget, discussion.data, revealed]);
   if (discussion.isPending) return <LoadingState label={t("discussion.loading")} />;
   if (discussion.isError) return <ErrorState title={t("discussion.unavailable")} action={<Button onClick={() => void discussion.refetch()}>{t("common.retry")}</Button>} />;
   const composer = <ResponseComposer post={post} groupId={groupId} session={session} onDone={() => { setRevealed(true); refresh(); }} />;
   if (!revealed) return <section className={styles.discussion}><div className={styles.concealedShell}><div className={styles.concealed}><LabelChip>{t("discussion.spoilerLabel")}</LabelChip><h2>{t("discussion.answersHidden", { count: discussion.data.count })}</h2><p>{t("discussion.hiddenHelp")}</p>{composer}<Button variant="secondary" onClick={() => setRevealed(true)}>{t("discussion.reveal")}</Button></div></div></section>;
-  return <section className={styles.discussion}><div className={styles.discussionHeader}><div><span className={styles.sectionEyebrow}>{t("discussion.conversation")}</span><h2>{post.type === "shared_sentence" ? t("discussion.comments") : t("discussion.answers")}</h2></div>{post.type !== "shared_sentence" && <Button variant="quiet" onClick={() => setRevealed(false)}>{t("discussion.conceal")}</Button>}</div>{composer}{discussion.data.items.length ? <div className={styles.thread}>{discussion.data.items.map((item) => <DiscussionEntry key={item.id} item={item} post={post} groupId={groupId} session={session} quickReactions={discussion.data.quickReactions} refresh={refresh} />)}</div> : <EmptyState title={t("discussion.emptyTitle")}>{t("discussion.emptyBody")}</EmptyState>}</section>;
+  return <section className={styles.discussion}><div className={styles.discussionHeader}><div><span className={styles.sectionEyebrow}>{t("discussion.conversation")}</span><h2>{openDiscussion(post) ? t("discussion.comments") : t("discussion.answers")}</h2></div>{!openDiscussion(post) && <Button variant="quiet" onClick={() => setRevealed(false)}>{t("discussion.conceal")}</Button>}</div>{composer}{discussion.data.items.length ? <div className={styles.thread}>{discussion.data.items.map((item) => <DiscussionEntry key={item.id} item={item} post={post} groupId={groupId} session={session} quickReactions={discussion.data.quickReactions} refresh={refresh} />)}</div> : <EmptyState title={t("discussion.emptyTitle")}>{t("discussion.emptyBody")}</EmptyState>}</section>;
 }

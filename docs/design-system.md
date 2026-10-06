@@ -106,7 +106,11 @@ Content widths:
 - Standard modal: approximately `640px`
 - Reading/composition modal: approximately `760px`
 
-Course covers use `--aspect-course-cover` (`2 / 1`) in library cards and on the course page, and the library grid fills columns no narrower than `--width-course-card-min` (`17rem`). A course without a cover shows the first letter of its title on a muted panel.
+Course covers use `--aspect-course-cover` (`2 / 1`) in library cards and on the course page, and the library grid fills columns no narrower than `--width-course-card-min` (`17rem`). A course without a cover shows the first letter of its title on a muted panel. The feed's course post shows the same cover treatment beside a mono eyebrow, the display-serif title, level, and a three-line summary on a bezel panel; below `48em` the cover stacks above the copy. An unavailable course is a muted note. No new tokens were added.
+
+On the course page, lessons use an editorial split above `48em`: a sticky outline panel (bezel surface, mono lesson numbers, at least `14rem` wide) beside a lesson column capped at `--width-reading`; below `48em` the outline stacks above the lessons and stops sticking. Lesson titles use the section-title role with a mono eyebrow for the derived lesson number. Block kinds carry the highlighting: headings use the display serif, text uses the authored role, examples sit on a `--color-support-soft` panel with the sentence emphasized and translation and note muted, and dialogues sit on a `--color-wash` panel with mono speaker labels. Editor tools are quiet buttons below each block, and version conflicts use the danger surface. No new tokens were added.
+
+The course page's Contributors panel sits on a quiet surface between course management and the lessons. Requests and current contributors are hairline-separated rows with an avatar and name, and actions on the right; below `36em` rows and actions stack and buttons fill the width. Owner decisions use the secondary (decline) and primary (accept) buttons, and removal uses the danger button behind a confirmation. Lessons and blocks show a muted "Last edited by" line to the owner and contributors. No new tokens were added.
 
 Layer order uses `--z-content: 10`, `--z-grain: 50`, `--z-navigation: 100`, `--z-floating-action: 200`, `--z-overlay: 300`, and `--z-transient: 400`. Components must use the named layer appropriate to their role rather than introduce arbitrary z-index values. The grain layer is pointer-free and contains no interactive content.
 

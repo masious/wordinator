@@ -26,6 +26,10 @@ The creator can rename the group, replace/remove its icon, review join requests,
 
 A member can view and participate in the group, view its member directory, copy its invitation link, invite people socially, and leave. Every accepted user, including creators, may create additional groups.
 
+### Course roles
+
+Courses have per-course owner and contributor roles, described in the [courses blueprint](courses.md#contributors-and-publishing). They add no group roles and grant nothing outside their course. The group creator keeps moderation over course content: they may delete any lesson, block, or practice answer and archive or restore any course, but they do not edit another member's course or decide its contributors. Leaving or being removed from the group ends a member's contributor requests and roles in it.
+
 ## Invitations and requests
 
 - The invitation URL contains an unguessable token and does not itself grant membership.
@@ -40,7 +44,7 @@ Phase 1 exposes invitations at `/invite/:token`. Registration creates the accoun
 
 Phase 2 adds creator-only group rename through the same group-scoped middleware. The target language and creator remain immutable. Accepting a request records the account’s current group-visible profile snapshot; active profile edits keep that snapshot current until a later leave or removal freezes it.
 
-Phase 5 adds the group-private directory at `/groups/:groupId/members`. It separates active and former members and exposes creator actions only for active non-creators. Ordinary members can leave after confirmation; creators can remove an active member or generate a 24-character temporary password that is returned once. Leaving and removal freeze the profile snapshot and preserve authored content. Reusing the invitation moves a non-active membership back through pending approval.
+Phase 5 adds the group-private directory at `/groups/:groupId/members`. It separates active and former members, links profiles, and lets ordinary members leave after confirmation. It is a social view only: the creator reviews requests, removes active members, and generates a 24-character temporary password (returned once) on the creator-only [Members settings page](settings-and-administration.md#members), which lists pending, active, rejected, and former memberships from `GET /api/groups/:groupId/memberships`. Leaving and removal freeze the profile snapshot and preserve authored content. Reusing the invitation moves a non-active membership back through pending approval.
 
 ## Application shell
 

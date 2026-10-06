@@ -2,14 +2,14 @@
 
 ## Discussion structure
 
-Every discussion is two levels deep:
+A discussion belongs to exactly one target: a post or a course practice block. Every discussion is two levels deep:
 
 - Top-level comments or answers
 - Direct replies to a top-level item
 
 Replies cannot themselves receive replies. Multiple top-level submissions by the same person are allowed. Order top-level items oldest-first and replies oldest-first, except for the pinned item rule below.
 
-Shared-sentence comments are visible immediately. Question, reading, and fill-in top-level items are answers and begin concealed on each visit. The visible answer count is not a spoiler.
+Shared-sentence and [course post](posts-and-feed.md#course) comments are visible immediately. Question, reading, and fill-in top-level items are answers and begin concealed on each visit. The visible answer count is not a spoiler.
 
 ## Concealment
 
@@ -27,7 +27,7 @@ The reading wizard shows one question at a time and displays progress. It permit
 
 ## Pinning
 
-Question, reading, and fill-in posts permit exactly one pinned top-level answer. The post author or group creator may pin, replace, or remove it. If the author leaves, the creator retains control. The pinned answer renders before all other answers regardless of age. Shared-sentence comments cannot be pinned.
+Question, reading, and fill-in posts permit exactly one pinned top-level answer. The post author or group creator may pin, replace, or remove it. If the author leaves, the creator retains control. The pinned answer renders before all other answers regardless of age. Shared-sentence and course post comments cannot be pinned.
 
 ## Comment lifecycle
 
@@ -54,3 +54,15 @@ Question answers and shared-sentence comments use plain text. Reading and fill s
 The post author and group creator may set or replace one pin through `PUT /api/groups/:groupId/posts/:postId/pin`; changing a post to a shared sentence removes any existing pin. Authors may edit and delete their own discussion items, while the creator may delete any item. Deleting a top-level item removes replies and all attached reactions.
 
 Reaction toggles use an explicit desired `active` state, making retries idempotent. Post and comment payloads group reactions by normalized emoji and include the count, the current member’s state, and group-visible member identities. The three quick reactions come from account settings; valid custom emoji join the same summary.
+
+## Course practice threads
+
+Each published practice block in a [course](courses.md#practice-answers) has its own answer thread built on the same comments, replies, and reactions.
+
+- Concealment is identical to posts: the thread starts concealed on every visit, shows its count, and is revealed by submitting or by explicit consent. Revealed state is not stored.
+- A top-level answer is one ordered answer set covering every practice item, like a reading answer set. Blank entries render as “No answer”. Each entry snapshots its item prompt, so answers stay understandable after the practice is edited, and edits keep the snapshotted prompts.
+- Replies are plain text, one level deep. Reactions work on answers and replies.
+- There are no pins and no matching: nothing is marked as correct.
+- The author's version and item notes are delivered only with the revealed thread, as a reference for discussion.
+- Authors edit their own items; authors and the group creator delete them. Deleting a practice block or its lesson deletes the thread, response items, and reactions. Threads in archived courses cannot change.
+- Practice-thread activity creates no notifications yet; course notifications beyond contributor requests are deferred.

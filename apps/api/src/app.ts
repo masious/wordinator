@@ -13,6 +13,7 @@ import {
   healthResponseSchema,
   imageResponseSchema,
   memberDirectoryResponseSchema,
+  membershipAdminResponseSchema,
   memberLifecycleRequestSchema,
   membershipDecisionRequestSchema,
   notificationPageSchema,
@@ -33,13 +34,37 @@ import {
   updateCommentRequestSchema,
   updateCourseRequestSchema,
   paginationQuerySchema,
+  blockResponseSchema,
+  COURSE_BLOCK_PAYLOAD_VERSION,
+  COURSE_BLOCKS_MAX,
+  COURSE_LESSONS_MAX,
+  COURSE_PRELOADED_LESSONS,
+  courseDetailResponseSchema,
+  createBlockRequestSchema,
+  createLessonRequestSchema,
+  lessonResponseSchema,
+  outlineResponseSchema,
+  parseStoredBlockPayload,
+  reorderRequestSchema,
+  updateBlockRequestSchema,
+  updateLessonRequestSchema,
+  createPracticeCommentRequestSchema,
+  practiceDiscussionResponseSchema,
+  splitPracticePayload,
+  updatePracticeCommentRequestSchema,
+  contributorDecisionRequestSchema,
+  courseContributorsResponseSchema,
   type Course,
+  type CourseBlock,
+  type CourseLesson,
+  type CourseLessonSummary,
   type DiscussionItem,
+  type Notification,
   type Post,
   type PostInput,
 } from "@wordinator/contracts";
 import { createDatabase, groups, memberships, users } from "@wordinator/db";
-import { and, asc, eq, inArray, isNull } from "drizzle-orm";
+import { and, asc, count, eq, inArray, isNull } from "drizzle-orm";
 import { Hono, type Context } from "hono";
 import { createMiddleware } from "hono/factory";
 import { requestId } from "hono/request-id";
@@ -113,16 +138,37 @@ type Cursor = { createdAt: number; id: string };
 type PostRow = {
   id: string; groupId: string; authorId: string; type: Post["type"]; body: string; notes: string | null;
   createdAt: number; updatedAt: number; displayName: string; avatarKey: string | null;
+  courseId: string | null; courseOwnerId: string | null; courseStatus: Course["status"] | null; courseTitle: string | null;
+  courseSummary: string | null; courseLevel: string | null; courseCoverKey: string | null;
 };
+const NO_POST_COURSE = { courseId: null, courseOwnerId: null, courseStatus: null, courseTitle: null, courseSummary: null, courseLevel: null, courseCoverKey: null } as const;
+const POST_SELECT = `SELECT p.id, p.group_id AS groupId, p.author_id AS authorId, p.type, p.body, p.notes,
+      p.created_at AS createdAt, p.updated_at AS updatedAt,
+      CASE WHEN m.state = 'active' THEN u.display_name ELSE COALESCE(m.profile_display_name, 'Former member') END AS displayName,
+      CASE WHEN m.state = 'active' THEN u.avatar_key ELSE m.profile_avatar_key END AS avatarKey,
+      p.course_id AS courseId, co.owner_id AS courseOwnerId, co.status AS courseStatus, co.title AS courseTitle,
+      co.summary AS courseSummary, co.level AS courseLevel, co.cover_key AS courseCoverKey
+     FROM posts p JOIN users u ON u.id = p.author_id
+     LEFT JOIN memberships m ON m.group_id = p.group_id AND m.user_id = p.author_id
+     LEFT JOIN courses co ON co.id = p.course_id AND co.group_id = p.group_id`;
+
+// A course post links to its course while the viewer may open it: published, or the owner's own draft. Archived courses are unavailable.
+function presentPostCourse(row: PostRow, viewerId: string, mediaBase: string): Post["course"] {
+  if (!row.courseId) return null;
+  const available = row.courseStatus === "published" || (row.courseStatus === "draft" && row.courseOwnerId === viewerId);
+  return available
+    ? { id: row.courseId, available, title: row.courseTitle, summary: row.courseSummary, level: row.courseLevel, coverUrl: mediaUrlFromBase(mediaBase, row.courseCoverKey) }
+    : { id: row.courseId, available, title: null, summary: null, level: null, coverUrl: null };
+}
 type ReactionRow = { targetId: string; emoji: string; userId: string; displayName: string };
-type NotificationKind = "join_requested" | "join_accepted" | "join_rejected" | "member_removed" | "post_response" | "reply" | "answer_pinned" | "reaction";
+type NotificationKind = Notification["kind"];
 
 function notificationStatement(binding: D1Database, input: {
-  groupId: string; recipientUserId: string; actorUserId: string; kind: NotificationKind; postId?: string | null; commentId?: string | null; createdAt?: number;
+  groupId: string; recipientUserId: string; actorUserId: string; kind: NotificationKind; postId?: string | null; commentId?: string | null; courseId?: string | null; createdAt?: number;
 }) {
   return binding.prepare(
-    "INSERT INTO notifications (id, group_id, recipient_user_id, actor_user_id, kind, post_id, comment_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-  ).bind(crypto.randomUUID(), input.groupId, input.recipientUserId, input.actorUserId, input.kind, input.postId ?? null, input.commentId ?? null, input.createdAt ?? Date.now());
+    "INSERT INTO notifications (id, group_id, recipient_user_id, actor_user_id, kind, post_id, comment_id, course_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+  ).bind(crypto.randomUUID(), input.groupId, input.recipientUserId, input.actorUserId, input.kind, input.postId ?? null, input.commentId ?? null, input.courseId ?? null, input.createdAt ?? Date.now());
 }
 
 async function createNotification(binding: D1Database, input: Parameters<typeof notificationStatement>[1]) {
@@ -138,18 +184,19 @@ async function notificationItems(binding: D1Database, recipientUserId: string, g
   const rows = await binding.prepare(
     `SELECT n.id, n.group_id AS groupId, g.name AS groupName, n.actor_user_id AS actorId,
       CASE WHEN am.state = 'active' THEN actor.display_name ELSE COALESCE(am.profile_display_name, actor.display_name) END AS actorDisplayName,
-      n.kind, n.post_id AS postId, n.comment_id AS commentId, n.created_at AS createdAt, n.read_at AS readAt,
-      CASE WHEN n.post_id IS NULL THEN 1 WHEN p.id IS NULL THEN 0 WHEN n.comment_id IS NOT NULL AND c.id IS NULL THEN 0 ELSE 1 END AS targetAvailable
+      n.kind, n.post_id AS postId, n.comment_id AS commentId, n.course_id AS courseId, n.created_at AS createdAt, n.read_at AS readAt,
+      CASE WHEN n.course_id IS NOT NULL THEN co.id IS NOT NULL AND co.status != 'archived' WHEN n.post_id IS NULL THEN 1 WHEN p.id IS NULL THEN 0 WHEN n.comment_id IS NOT NULL AND c.id IS NULL THEN 0 ELSE 1 END AS targetAvailable
      FROM notifications n JOIN groups g ON g.id = n.group_id JOIN users actor ON actor.id = n.actor_user_id
      LEFT JOIN memberships am ON am.group_id = n.group_id AND am.user_id = n.actor_user_id
      LEFT JOIN posts p ON p.group_id = n.group_id AND p.id = n.post_id
      LEFT JOIN comments c ON c.group_id = n.group_id AND c.post_id = n.post_id AND c.id = n.comment_id
+     LEFT JOIN courses co ON co.group_id = n.group_id AND co.id = n.course_id
      WHERE ${filters.join(" AND ")} ORDER BY n.created_at DESC, n.id DESC`,
-  ).bind(...values).all<{ id: string; groupId: string; groupName: string; actorId: string; actorDisplayName: string; kind: NotificationKind; postId: string | null; commentId: string | null; createdAt: number; readAt: number | null; targetAvailable: number }>();
+  ).bind(...values).all<{ id: string; groupId: string; groupName: string; actorId: string; actorDisplayName: string; kind: NotificationKind; postId: string | null; commentId: string | null; courseId: string | null; createdAt: number; readAt: number | null; targetAvailable: number }>();
   return rows.results.map((row) => ({
     id: row.id, groupId: row.groupId, groupName: row.groupName,
     actor: { id: row.actorId, displayName: row.actorDisplayName }, kind: row.kind,
-    postId: row.postId, commentId: row.commentId, targetAvailable: Boolean(row.targetAvailable),
+    postId: row.postId, commentId: row.commentId, courseId: row.courseId, targetAvailable: Boolean(row.targetAvailable),
     createdAt: row.createdAt, readAt: row.readAt,
   }));
 }
@@ -197,7 +244,7 @@ async function hydratePosts(binding: D1Database, rows: PostRow[], userId: string
     `SELECT post_id AS postId, COUNT(*) AS count FROM comments WHERE post_id IN (${placeholders}) GROUP BY post_id`,
   ).bind(...ids).all<{ postId: string; count: number }>();
   return rows.map((row) => ({
-    id: row.id, groupId: row.groupId, type: row.type, body: row.body, notes: row.notes,
+    id: row.id, groupId: row.groupId, type: row.type, body: row.body, notes: row.notes, course: presentPostCourse(row, userId, mediaBase),
     author: { id: row.authorId, displayName: row.displayName, avatarUrl: mediaUrlFromBase(mediaBase, row.avatarKey) },
     createdAt: row.createdAt, updatedAt: row.updatedAt, edited: row.updatedAt > row.createdAt,
     questions: questions.results.filter((question) => question.postId === row.id).map(({ id, position, text }) => ({ id, position, text })),
@@ -207,7 +254,7 @@ async function hydratePosts(binding: D1Database, rows: PostRow[], userId: string
     commentCount: commentCounts.results.find((count) => count.postId === row.id)?.count ?? 0,
     reactionCount: reactions.results.filter((reaction) => reaction.targetId === row.id).length,
     reactions: groupReactions(reactions.results, row.id, userId),
-    permissions: { edit: row.authorId === userId, delete: row.authorId === userId || creatorUserId === userId },
+    permissions: { edit: row.authorId === userId && row.type !== "course", delete: row.authorId === userId || creatorUserId === userId },
   }));
 }
 
@@ -224,12 +271,7 @@ async function queryPosts(binding: D1Database, options: {
     bindings.push(options.cursor.createdAt, options.cursor.createdAt, options.cursor.id);
   }
   const result = await binding.prepare(
-    `SELECT p.id, p.group_id AS groupId, p.author_id AS authorId, p.type, p.body, p.notes,
-      p.created_at AS createdAt, p.updated_at AS updatedAt,
-      CASE WHEN m.state = 'active' THEN u.display_name ELSE COALESCE(m.profile_display_name, 'Former member') END AS displayName,
-      CASE WHEN m.state = 'active' THEN u.avatar_key ELSE m.profile_avatar_key END AS avatarKey
-     FROM posts p JOIN users u ON u.id = p.author_id
-     LEFT JOIN memberships m ON m.group_id = p.group_id AND m.user_id = p.author_id
+    `${POST_SELECT}
      WHERE ${clauses.join(" AND ")} ORDER BY p.created_at DESC, p.id DESC LIMIT ?`,
   ).bind(...bindings, options.limit + 1).all<PostRow>();
   const hasMore = result.results.length > options.limit;
@@ -241,12 +283,7 @@ async function queryPosts(binding: D1Database, options: {
 
 async function readPost(binding: D1Database, groupId: string, postId: string, userId: string, creatorUserId: string, mediaBase: string) {
   const row = await binding.prepare(
-    `SELECT p.id, p.group_id AS groupId, p.author_id AS authorId, p.type, p.body, p.notes,
-      p.created_at AS createdAt, p.updated_at AS updatedAt,
-      CASE WHEN m.state = 'active' THEN u.display_name ELSE COALESCE(m.profile_display_name, 'Former member') END AS displayName,
-      CASE WHEN m.state = 'active' THEN u.avatar_key ELSE m.profile_avatar_key END AS avatarKey
-     FROM posts p JOIN users u ON u.id = p.author_id
-     LEFT JOIN memberships m ON m.group_id = p.group_id AND m.user_id = p.author_id
+    `${POST_SELECT}
      WHERE p.group_id = ? AND p.id = ?`,
   ).bind(groupId, postId).first<PostRow>();
   if (!row) return null;
@@ -264,22 +301,25 @@ function postChildren(binding: D1Database, postId: string, input: PostInput): D1
 }
 
 type CommentRow = {
-  id: string; postId: string; authorId: string; parentId: string | null; kind: DiscussionItem["kind"];
+  id: string; authorId: string; parentId: string | null; kind: DiscussionItem["kind"];
   body: string | null; createdAt: number; updatedAt: number; displayName: string; pinned: number;
 };
 
-async function readDiscussion(binding: D1Database, groupId: string, postId: string, viewerId: string, creatorUserId: string, postAuthorId: string) {
+// A discussion hangs off exactly one target. Only post discussions can have pins, so practice threads pass no pin owner.
+type DiscussionTarget = { column: "post_id" | "block_id"; id: string };
+
+async function readDiscussion(binding: D1Database, groupId: string, target: DiscussionTarget, viewerId: string, creatorUserId: string, pinOwnerId: string | null) {
   const rows = await binding.prepare(
-    `SELECT c.id, c.post_id AS postId, c.author_id AS authorId, c.parent_comment_id AS parentId, c.kind, c.body,
+    `SELECT c.id, c.author_id AS authorId, c.parent_comment_id AS parentId, c.kind, c.body,
       c.created_at AS createdAt, c.updated_at AS updatedAt,
       CASE WHEN m.state = 'active' THEN u.display_name ELSE COALESCE(m.profile_display_name, 'Former member') END AS displayName,
       CASE WHEN pin.comment_id = c.id THEN 1 ELSE 0 END AS pinned
      FROM comments c JOIN users u ON u.id = c.author_id
      LEFT JOIN memberships m ON m.group_id = c.group_id AND m.user_id = c.author_id
      LEFT JOIN post_pins pin ON pin.post_id = c.post_id
-     WHERE c.group_id = ? AND c.post_id = ?
+     WHERE c.group_id = ? AND c.${target.column} = ?
      ORDER BY CASE WHEN c.parent_comment_id IS NULL AND pin.comment_id = c.id THEN 0 ELSE 1 END, c.created_at ASC, c.id ASC`,
-  ).bind(groupId, postId).all<CommentRow>();
+  ).bind(groupId, target.id).all<CommentRow>();
   const ids = rows.results.map((row) => row.id);
   const responseItems = ids.length ? await binding.prepare(
     `SELECT comment_id AS commentId, position, prompt, answer, skipped, matched FROM comment_response_items
@@ -301,7 +341,7 @@ async function readDiscussion(binding: D1Database, groupId: string, postId: stri
       position: item.position, prompt: item.prompt, answer: item.answer, skipped: Boolean(item.skipped), matched: item.matched === null ? null : Boolean(item.matched),
     })),
     reactions: groupReactions(reactions.results, row.id, viewerId),
-    permissions: { edit: row.authorId === viewerId, delete: row.authorId === viewerId || creatorUserId === viewerId, reply: row.parentId === null, pin: row.parentId === null && (postAuthorId === viewerId || creatorUserId === viewerId) },
+    permissions: { edit: row.authorId === viewerId, delete: row.authorId === viewerId || creatorUserId === viewerId, reply: row.parentId === null, pin: pinOwnerId !== null && row.parentId === null && (pinOwnerId === viewerId || creatorUserId === viewerId) },
     replies: [],
   });
   const top = rows.results.filter((row) => row.parentId === null).map(makeItem);
@@ -339,18 +379,20 @@ async function responseStatements(binding: D1Database, commentId: string, postId
   });
 }
 
-async function toggleReaction(context: Context<AppEnvironment>, targetKind: "post" | "comment", targetId: string, postId?: string) {
+// A comment reaction is scoped to the comment's discussion target. Practice-thread reactions create no notifications.
+async function toggleReaction(context: Context<AppEnvironment>, targetKind: "post" | "comment", targetId: string, scope?: DiscussionTarget) {
   const parsed = await parseJson(context, toggleReactionRequestSchema); if ("response" in parsed) return parsed.response;
   const group = context.get("groupAccess"); const user = context.get("user")!;
+  const postId = scope?.column === "post_id" ? scope.id : undefined;
   const target = targetKind === "post"
     ? await context.env.DB.prepare("SELECT id, author_id AS authorId FROM posts WHERE group_id = ? AND id = ?").bind(group.id, targetId).first<{ id: string; authorId: string }>()
-    : await context.env.DB.prepare("SELECT id, author_id AS authorId FROM comments WHERE group_id = ? AND post_id = ? AND id = ?").bind(group.id, postId, targetId).first<{ id: string; authorId: string }>();
+    : await context.env.DB.prepare(`SELECT id, author_id AS authorId FROM comments WHERE group_id = ? AND ${scope!.column} = ? AND id = ?`).bind(group.id, scope!.id, targetId).first<{ id: string; authorId: string }>();
   if (!target) return apiError(context, 404, targetKind === "post" ? "POST_NOT_FOUND" : "COMMENT_NOT_FOUND", "This content is not available.");
   if (parsed.data.active) {
     const result = await context.env.DB.prepare(
     "INSERT INTO reactions (group_id, user_id, target_kind, target_id, emoji, created_at) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT(user_id, target_kind, target_id, emoji) DO NOTHING",
     ).bind(group.id, user.id, targetKind, targetId, parsed.data.emoji.normalize("NFC"), Date.now()).run();
-    if (result.meta.changes) await createNotification(context.env.DB, { groupId: group.id, recipientUserId: target.authorId, actorUserId: user.id, kind: "reaction", postId: targetKind === "post" ? targetId : postId, commentId: targetKind === "comment" ? targetId : null });
+    if (result.meta.changes && scope?.column !== "block_id") await createNotification(context.env.DB, { groupId: group.id, recipientUserId: target.authorId, actorUserId: user.id, kind: "reaction", postId: targetKind === "post" ? targetId : postId, commentId: targetKind === "comment" ? targetId : null });
   }
   else await context.env.DB.prepare("DELETE FROM reactions WHERE group_id = ? AND user_id = ? AND target_kind = ? AND target_id = ? AND emoji = ?")
     .bind(group.id, user.id, targetKind, targetId, parsed.data.emoji.normalize("NFC")).run();
@@ -367,40 +409,52 @@ async function toggleReaction(context: Context<AppEnvironment>, targetKind: "pos
 
 type CourseRow = {
   id: string; groupId: string; ownerId: string; title: string; summary: string; level: string | null; intendedLearner: string | null;
-  coverKey: string | null; status: Course["status"]; createdAt: number; updatedAt: number; displayName: string; avatarKey: string | null;
+  coverKey: string | null; status: Course["status"]; firstPublishedAt: number | null; createdAt: number; updatedAt: number; displayName: string; avatarKey: string | null;
+  contributorState: ContributorState | null;
 };
+type ContributorState = "pending" | "active" | "rejected" | "left" | "removed";
 
+// The first bound parameter is the viewer, whose own contributor state travels with the course row.
 const COURSE_SELECT = `SELECT c.id, c.group_id AS groupId, c.owner_id AS ownerId, c.title, c.summary, c.level,
-    c.intended_learner AS intendedLearner, c.cover_key AS coverKey, c.status, c.created_at AS createdAt, c.updated_at AS updatedAt,
+    c.intended_learner AS intendedLearner, c.cover_key AS coverKey, c.status, c.first_published_at AS firstPublishedAt, c.created_at AS createdAt, c.updated_at AS updatedAt,
     CASE WHEN m.state = 'active' THEN u.display_name ELSE COALESCE(m.profile_display_name, 'Former member') END AS displayName,
-    CASE WHEN m.state = 'active' THEN u.avatar_key ELSE m.profile_avatar_key END AS avatarKey
+    CASE WHEN m.state = 'active' THEN u.avatar_key ELSE m.profile_avatar_key END AS avatarKey,
+    (SELECT cc.state FROM course_contributors cc WHERE cc.course_id = c.id AND cc.user_id = ?) AS contributorState
    FROM courses c JOIN users u ON u.id = c.owner_id
    LEFT JOIN memberships m ON m.group_id = c.group_id AND m.user_id = c.owner_id`;
 
-// Published courses are visible to every member; drafts only to the owner; archived courses to the owner and group creator.
-const courseVisible = (row: Pick<CourseRow, "ownerId" | "status">, viewerId: string, creatorUserId: string) =>
-  row.status === "published" || row.ownerId === viewerId || (row.status === "archived" && creatorUserId === viewerId);
+// Published courses are visible to every member; drafts only to the owner and active contributors; archived courses to the
+// owner and group creator.
+const courseVisible = (row: Pick<CourseRow, "ownerId" | "status" | "contributorState">, viewerId: string, creatorUserId: string) =>
+  row.status === "published" || row.ownerId === viewerId || (row.status === "archived" && creatorUserId === viewerId)
+  || (row.status === "draft" && row.contributorState === "active");
 
 function presentCourse(row: CourseRow, viewerId: string, creatorUserId: string, mediaBase: string): Course {
   const owner = row.ownerId === viewerId;
   const active = row.status !== "archived";
+  const contribution = row.contributorState === "pending" || row.contributorState === "active" ? row.contributorState : null;
   return {
     id: row.id, groupId: row.groupId, title: row.title, summary: row.summary, level: row.level, intendedLearner: row.intendedLearner,
     coverUrl: mediaUrlFromBase(mediaBase, row.coverKey), status: row.status,
     owner: { id: row.ownerId, displayName: row.displayName, avatarUrl: mediaUrlFromBase(mediaBase, row.avatarKey) },
-    createdAt: row.createdAt, updatedAt: row.updatedAt,
-    permissions: { edit: owner && active, publish: owner && active, archive: owner || creatorUserId === viewerId },
+    createdAt: row.createdAt, updatedAt: row.updatedAt, contribution,
+    permissions: {
+      edit: owner && active, publish: owner && active, archive: owner || creatorUserId === viewerId, removeContent: (owner || creatorUserId === viewerId) && active,
+      contribute: (owner || contribution === "active") && active,
+      requestContribution: !owner && row.status === "published" && contribution === null,
+      leaveContribution: contribution !== null, manageContributors: owner && active,
+    },
   };
 }
 
-async function readCourseRow(binding: D1Database, groupId: string, courseId: string) {
-  return binding.prepare(`${COURSE_SELECT} WHERE c.group_id = ? AND c.id = ?`).bind(groupId, courseId).first<CourseRow>();
+async function readCourseRow(binding: D1Database, viewerId: string, groupId: string, courseId: string) {
+  return binding.prepare(`${COURSE_SELECT} WHERE c.group_id = ? AND c.id = ?`).bind(viewerId, groupId, courseId).first<CourseRow>();
 }
 
 // Loads a course the viewer may see, or returns the error response. Invisible courses are indistinguishable from missing ones.
 async function visibleCourse(context: Context<AppEnvironment>) {
   const group = context.get("groupAccess"); const user = context.get("user")!;
-  const row = await readCourseRow(context.env.DB, group.id, context.req.param("courseId") ?? "");
+  const row = await readCourseRow(context.env.DB, user.id, group.id, context.req.param("courseId") ?? "");
   if (!row || !courseVisible(row, user.id, group.creatorUserId)) return { error: apiError(context, 404, "COURSE_NOT_FOUND", "This course is not available.") };
   return { row };
 }
@@ -413,10 +467,159 @@ async function editableCourse(context: Context<AppEnvironment>) {
   return found;
 }
 
+// The owner and active contributors add lessons and blocks; what a contributor may change beyond that is checked per item.
+async function contributableCourse(context: Context<AppEnvironment>) {
+  const found = await visibleCourse(context);
+  if ("error" in found) return found;
+  if (found.row.ownerId !== context.get("user")!.id && found.row.contributorState !== "active") return { error: apiError(context, 403, "COURSE_EDIT_FORBIDDEN", "Only the course owner and contributors can change this course.") };
+  if (found.row.status === "archived") return { error: apiError(context, 409, "COURSE_ARCHIVED", "Restore this course before changing it.") };
+  return found;
+}
+
+// Contributors work on drafts only: they may not publish, and published lessons and blocks belong to the owner.
+function contributorEditError(context: Context<AppEnvironment>, course: CourseRow, current: { published: number } | null, published: boolean) {
+  if (course.ownerId === context.get("user")!.id) return null;
+  if (current?.published) return apiError(context, 403, "COURSE_CONTENT_PUBLISHED", "Only the course owner can change published content.");
+  if (published) return apiError(context, 403, "COURSE_PUBLISH_FORBIDDEN", "Only the course owner can publish course content.");
+  return null;
+}
+
+// Leaving or being removed from the group ends every contributor request and role in it.
+async function endContributions(binding: D1Database, groupId: string, userId: string, state: "left" | "removed") {
+  const now = Date.now();
+  await binding.prepare("UPDATE course_contributors SET state = ?, decided_at = ?, updated_at = ? WHERE group_id = ? AND user_id = ? AND state IN ('pending', 'active')")
+    .bind(state, now, now, groupId, userId).run();
+}
+
 async function courseResponse(context: Context<AppEnvironment>, courseId: string, status: 200 | 201 = 200) {
   const group = context.get("groupAccess"); const user = context.get("user")!;
-  const row = await readCourseRow(context.env.DB, group.id, courseId);
+  const row = await readCourseRow(context.env.DB, user.id, group.id, courseId);
   return context.json(courseResponseSchema.parse({ course: presentCourse(row!, user.id, group.creatorUserId, context.env.PUBLIC_MEDIA_BASE_URL) }), status);
+}
+
+type LessonRow = {
+  id: string; courseId: string; title: string; goal: string | null; position: number; published: number; version: number;
+  updatedById: string; updatedByName: string; updatedAt: number;
+};
+type BlockRow = {
+  id: string; lessonId: string; position: number; kind: string; payload: string; payloadVersion: number; published: number; version: number;
+  updatedById: string; updatedByName: string; updatedAt: number;
+};
+// Attributes the last editor, falling back to their group profile snapshot once they are no longer active.
+const editorColumns = (table: string, alias: string) => `CASE WHEN em.state = 'active' THEN eu.display_name ELSE COALESCE(em.profile_display_name, 'Former member') END AS updatedByName
+   FROM ${table} ${alias} JOIN users eu ON eu.id = ${alias}.updated_by
+   LEFT JOIN memberships em ON em.group_id = ${alias}.group_id AND em.user_id = ${alias}.updated_by`;
+const LESSON_SELECT = `SELECT l.id, l.course_id AS courseId, l.title, l.goal, l.position, l.published, l.version, l.updated_by AS updatedById,
+    l.updated_at AS updatedAt, ${editorColumns("course_lessons", "l")}`;
+const BLOCK_SELECT = `SELECT b.id, b.lesson_id AS lessonId, b.position, b.kind, b.payload, b.payload_version AS payloadVersion, b.published, b.version,
+    b.updated_by AS updatedById, b.updated_at AS updatedAt, ${editorColumns("course_blocks", "b")}`;
+
+// The course owner and active contributors see unpublished lessons and blocks; everyone else sees published content only.
+const seesCourseDrafts = (course: CourseRow, viewerId: string) => course.ownerId === viewerId || course.contributorState === "active";
+
+const presentLessonSummary = (row: LessonRow): CourseLessonSummary => ({
+  id: row.id, position: row.position, title: row.title, goal: row.goal, published: Boolean(row.published), version: row.version,
+  updatedBy: { id: row.updatedById, displayName: row.updatedByName }, updatedAt: row.updatedAt,
+});
+
+function storedBlockContent(row: Pick<BlockRow, "id" | "kind" | "payloadVersion" | "payload">) {
+  const content = parseStoredBlockPayload(row.kind, row.payloadVersion, JSON.parse(row.payload));
+  if (!content) throw new Error(`Course block ${row.id} has an unreadable payload.`);
+  return content;
+}
+
+// Learner payloads never carry authors' versions or item notes; editors get them back as the reference so they can edit.
+function presentBlock(row: BlockRow, editor: boolean, answerCounts: Map<string, number>): CourseBlock {
+  const content = storedBlockContent(row);
+  const base = {
+    id: row.id, lessonId: row.lessonId, position: row.position, published: Boolean(row.published), version: row.version,
+    updatedBy: { id: row.updatedById, displayName: row.updatedByName }, updatedAt: row.updatedAt,
+  };
+  if (content.kind !== "practice") return { ...base, ...content };
+  const split = splitPracticePayload(content.payload);
+  return { ...base, kind: "practice", payload: split.payload, reference: editor ? split.reference : null, answerCount: answerCounts.get(row.id) ?? 0 };
+}
+
+async function threadCounts(binding: D1Database, groupId: string, blockIds: string[]) {
+  if (!blockIds.length) return new Map<string, number>();
+  const rows = await binding.prepare(`SELECT block_id AS blockId, COUNT(*) AS total FROM comments WHERE group_id = ? AND block_id IN (${blockIds.map(() => "?").join(", ")}) GROUP BY block_id`)
+    .bind(groupId, ...blockIds).all<{ blockId: string; total: number }>();
+  return new Map(rows.results.map((row) => [row.blockId, row.total]));
+}
+
+async function readOutline(binding: D1Database, course: CourseRow, viewerId: string) {
+  const drafts = seesCourseDrafts(course, viewerId);
+  const rows = await binding.prepare(`${LESSON_SELECT} WHERE l.group_id = ? AND l.course_id = ?${drafts ? "" : " AND l.published = 1"} ORDER BY l.position, l.created_at, l.id`)
+    .bind(course.groupId, course.id).all<LessonRow>();
+  return rows.results;
+}
+
+async function lessonsWithBlocks(binding: D1Database, course: CourseRow, viewerId: string, lessons: LessonRow[]): Promise<CourseLesson[]> {
+  if (!lessons.length) return [];
+  const drafts = seesCourseDrafts(course, viewerId);
+  const rows = await binding.prepare(`${BLOCK_SELECT} WHERE b.group_id = ? AND b.course_id = ? AND b.lesson_id IN (${lessons.map(() => "?").join(", ")})${drafts ? "" : " AND b.published = 1"}
+    ORDER BY b.position, b.created_at, b.id`).bind(course.groupId, course.id, ...lessons.map((lesson) => lesson.id)).all<BlockRow>();
+  const counts = await threadCounts(binding, course.groupId, rows.results.filter((block) => block.kind === "practice").map((block) => block.id));
+  return lessons.map((lesson) => ({ ...presentLessonSummary(lesson), blocks: rows.results.filter((block) => block.lessonId === lesson.id).map((block) => presentBlock(block, drafts, counts)) }));
+}
+
+async function readLessonRow(binding: D1Database, course: CourseRow, lessonId: string) {
+  return binding.prepare(`${LESSON_SELECT} WHERE l.group_id = ? AND l.course_id = ? AND l.id = ?`).bind(course.groupId, course.id, lessonId).first<LessonRow>();
+}
+
+async function readBlockRow(binding: D1Database, course: CourseRow, lessonId: string, blockId: string) {
+  return binding.prepare(`${BLOCK_SELECT} WHERE b.group_id = ? AND b.course_id = ? AND b.lesson_id = ? AND b.id = ?`).bind(course.groupId, course.id, lessonId, blockId).first<BlockRow>();
+}
+
+// Resolves a lesson nested under an already-authorized course. Hidden lessons are indistinguishable from missing ones.
+async function visibleLesson(context: Context<AppEnvironment>, course: CourseRow) {
+  const lesson = await readLessonRow(context.env.DB, course, context.req.param("lessonId") ?? "");
+  if (!lesson || (!lesson.published && !seesCourseDrafts(course, context.get("user")!.id))) return { error: apiError(context, 404, "LESSON_NOT_FOUND", "This lesson is not available.") };
+  return { lesson };
+}
+
+async function visibleBlock(context: Context<AppEnvironment>, course: CourseRow, lesson: LessonRow) {
+  const block = await readBlockRow(context.env.DB, course, lesson.id, context.req.param("blockId") ?? "");
+  if (!block || (!block.published && !seesCourseDrafts(course, context.get("user")!.id))) return { error: apiError(context, 404, "BLOCK_NOT_FOUND", "This block is not available.") };
+  return { block };
+}
+
+// Deleting is open to the course owner and, as moderation, the group creator; archived courses stay frozen for both.
+async function deletableCourseContent(context: Context<AppEnvironment>) {
+  const found = await visibleCourse(context);
+  if ("error" in found) return found;
+  const user = context.get("user")!; const group = context.get("groupAccess");
+  if (found.row.ownerId !== user.id && group.creatorUserId !== user.id) return { error: apiError(context, 403, "COURSE_EDIT_FORBIDDEN", "Only the course owner can change this course.") };
+  if (found.row.status === "archived") return { error: apiError(context, 409, "COURSE_ARCHIVED", "Restore this course before changing it.") };
+  return found;
+}
+
+const versionConflict = (context: Context<AppEnvironment>) => apiError(context, 409, "VERSION_CONFLICT", "Someone saved a newer version first. Reload it before saving again.");
+
+async function lessonResponse(context: Context<AppEnvironment>, course: CourseRow, lessonId: string, status: 200 | 201 = 200) {
+  const lesson = await readLessonRow(context.env.DB, course, lessonId);
+  const [present] = await lessonsWithBlocks(context.env.DB, course, context.get("user")!.id, [lesson!]);
+  return context.json(lessonResponseSchema.parse({ lesson: present }), status);
+}
+
+async function blockResponse(context: Context<AppEnvironment>, course: CourseRow, lessonId: string, blockId: string, status: 200 | 201 = 200) {
+  const block = await readBlockRow(context.env.DB, course, lessonId, blockId);
+  const counts = await threadCounts(context.env.DB, course.groupId, [blockId]);
+  return context.json(blockResponseSchema.parse({ block: presentBlock(block!, seesCourseDrafts(course, context.get("user")!.id), counts) }), status);
+}
+
+// Rewrites positions for one parent in a single batch. The client must send exactly the current children.
+async function reorderChildren(context: Context<AppEnvironment>, table: "course_lessons" | "course_blocks", parentColumn: "course_id" | "lesson_id", parentId: string, groupId: string) {
+  const parsed = await parseJson(context, reorderRequestSchema); if ("response" in parsed) return { error: parsed.response };
+  const current = await context.env.DB.prepare(`SELECT id FROM ${table} WHERE group_id = ? AND ${parentColumn} = ?`).bind(groupId, parentId).all<{ id: string }>();
+  const known = new Set(current.results.map((row) => row.id));
+  if (parsed.data.ids.length !== known.size || new Set(parsed.data.ids).size !== known.size || parsed.data.ids.some((id) => !known.has(id))) {
+    return { error: apiError(context, 409, "ORDER_STALE", "The list changed since it was loaded. Reload it and try again.") };
+  }
+  if (parsed.data.ids.length) {
+    await context.env.DB.batch(parsed.data.ids.map((id, position) => context.env.DB.prepare(`UPDATE ${table} SET position = ? WHERE group_id = ? AND ${parentColumn} = ? AND id = ?`).bind(position, groupId, parentId, id)));
+  }
+  return { ok: true as const };
 }
 
 export const app = new Hono<AppEnvironment>();
@@ -739,11 +942,10 @@ app.get("/api/groups/:groupId", requireGroupAccess, async (context) => {
   const groupId = context.req.param("groupId");
   const database = createDatabase(context.env.DB);
   const group = context.get("groupAccess");
-  const pendingMembers = group.creatorUserId === user.id
-    ? await database.select({ userId: users.id, displayName: users.displayName, requestedAt: memberships.requestedAt })
-      .from(memberships).innerJoin(users, eq(users.id, memberships.userId))
-      .where(and(eq(memberships.groupId, groupId), eq(memberships.state, "pending"))).orderBy(asc(memberships.requestedAt))
-    : [];
+  const pendingRequestCount = group.creatorUserId === user.id
+    ? (await database.select({ count: count() }).from(memberships)
+      .where(and(eq(memberships.groupId, groupId), eq(memberships.state, "pending"))))[0]?.count ?? 0
+    : 0;
   return context.json({
     group: {
       id: group.id, name: group.name, language: group.language,
@@ -752,7 +954,7 @@ app.get("/api/groups/:groupId", requireGroupAccess, async (context) => {
       iconUrl: mediaUrl(context.env, group.iconKey),
     },
     invitationToken: group.invitationToken,
-    pendingMembers,
+    pendingRequestCount,
   });
 });
 
@@ -843,7 +1045,7 @@ app.post("/api/groups/:groupId/posts", requireGroupAccess, async (context) => {
   const [post] = await hydratePosts(context.env.DB, [{
     id: postId, groupId: group.id, authorId: user.id, type: parsed.data.type,
     body: parsed.data.body.trim(), notes: parsed.data.notes?.trim() || null,
-    createdAt: now, updatedAt: now, displayName: user.displayName, avatarKey: accountMedia?.avatarKey ?? null,
+    createdAt: now, updatedAt: now, displayName: user.displayName, avatarKey: accountMedia?.avatarKey ?? null, ...NO_POST_COURSE,
   }], user.id, group.creatorUserId, context.env.PUBLIC_MEDIA_BASE_URL);
   return context.json({ post: post! }, 201);
 });
@@ -860,10 +1062,11 @@ app.patch("/api/groups/:groupId/posts/:postId", requireGroupAccess, async (conte
   const user = context.get("user")!;
   const group = context.get("groupAccess");
   const existing = await context.env.DB.prepare(
-    "SELECT author_id AS authorId, created_at AS createdAt FROM posts WHERE group_id = ? AND id = ?",
-  ).bind(group.id, context.req.param("postId")).first<{ authorId: string; createdAt: number }>();
+    "SELECT author_id AS authorId, type, created_at AS createdAt FROM posts WHERE group_id = ? AND id = ?",
+  ).bind(group.id, context.req.param("postId")).first<{ authorId: string; type: Post["type"]; createdAt: number }>();
   if (!existing) return apiError(context, 404, "POST_NOT_FOUND", "This post is not available.");
   if (existing.authorId !== user.id) return apiError(context, 403, "POST_EDIT_FORBIDDEN", "Only the author can edit this post.");
+  if (existing.type === "course") return apiError(context, 409, "POST_NOT_EDITABLE", "Course posts are created by the course and cannot be edited.");
   const parsed = await parseJson(context, updatePostRequestSchema);
   if ("response" in parsed) return parsed.response;
   const postId = context.req.param("postId");
@@ -903,13 +1106,13 @@ app.get("/api/groups/:groupId/posts/:postId/discussion", requireGroupAccess, asy
   const post = await getPostFacts(context.env.DB, group.id, context.req.param("postId"));
   if (!post) return apiError(context, 404, "POST_NOT_FOUND", "This post is not available.");
   const [items, account] = await Promise.all([
-    readDiscussion(context.env.DB, group.id, post.id, user.id, group.creatorUserId, post.authorId),
+    readDiscussion(context.env.DB, group.id, { column: "post_id", id: post.id }, user.id, group.creatorUserId, post.authorId),
     context.env.DB.prepare("SELECT quick_reaction_one AS one, quick_reaction_two AS two, quick_reaction_three AS three FROM users WHERE id = ?")
       .bind(user.id).first<{ one: string; two: string; three: string }>(),
   ]);
   return context.json(discussionResponseSchema.parse({
     items, count: items.reduce((count, item) => count + 1 + item.replies.length, 0),
-    concealed: post.type !== "shared_sentence", quickReactions: [account!.one, account!.two, account!.three],
+    concealed: post.type !== "shared_sentence" && post.type !== "course", quickReactions: [account!.one, account!.two, account!.three],
   }));
 });
 
@@ -945,7 +1148,7 @@ app.post("/api/groups/:groupId/posts/:postId/comments", requireGroupAccess, asyn
       kind: parentId ? "reply" : "post_response", postId, commentId, createdAt: now,
     })]),
   ]);
-  const item = (await readDiscussion(context.env.DB, group.id, postId, user.id, group.creatorUserId, post.authorId))
+  const item = (await readDiscussion(context.env.DB, group.id, { column: "post_id", id: postId }, user.id, group.creatorUserId, post.authorId))
     .flatMap((entry) => [entry, ...entry.replies]).find((entry) => entry.id === commentId)!;
   return context.json(commentResponseSchema.parse({ item }), 201);
 });
@@ -968,7 +1171,7 @@ app.patch("/api/groups/:groupId/posts/:postId/comments/:commentId", requireGroup
       .bind(parsed.data.kind === "text" ? parsed.data.body.trim() : null, Math.max(Date.now(), existing.createdAt + 1), group.id, postId, context.req.param("commentId")),
     ...children,
   ]);
-  const item = (await readDiscussion(context.env.DB, group.id, postId, user.id, group.creatorUserId, existing.postAuthorId))
+  const item = (await readDiscussion(context.env.DB, group.id, { column: "post_id", id: postId }, user.id, group.creatorUserId, existing.postAuthorId))
     .flatMap((entry) => [entry, ...entry.replies]).find((entry) => entry.id === context.req.param("commentId"))!;
   return context.json(commentResponseSchema.parse({ item }));
 });
@@ -991,7 +1194,7 @@ app.put("/api/groups/:groupId/posts/:postId/pin", requireGroupAccess, async (con
   const group = context.get("groupAccess"); const user = context.get("user")!; const postId = context.req.param("postId");
   const post = await getPostFacts(context.env.DB, group.id, postId);
   if (!post) return apiError(context, 404, "POST_NOT_FOUND", "This post is not available.");
-  if (post.type === "shared_sentence") return apiError(context, 400, "PIN_UNAVAILABLE", "Comments on shared sentences cannot be pinned.");
+  if (post.type === "shared_sentence" || post.type === "course") return apiError(context, 400, "PIN_UNAVAILABLE", "Comments on this post cannot be pinned.");
   if (post.authorId !== user.id && group.creatorUserId !== user.id) return apiError(context, 403, "PIN_FORBIDDEN", "Only the post author or group creator can pin an answer.");
   const previousPin = await context.env.DB.prepare("SELECT comment_id AS commentId FROM post_pins WHERE post_id = ?").bind(postId).first<{ commentId: string }>();
   if (!parsed.data.commentId) await context.env.DB.prepare("DELETE FROM post_pins WHERE post_id = ?").bind(postId).run();
@@ -1011,7 +1214,7 @@ app.put("/api/groups/:groupId/posts/:postId/reactions", requireGroupAccess, asyn
 });
 
 app.put("/api/groups/:groupId/posts/:postId/comments/:commentId/reactions", requireGroupAccess, async (context) => {
-  return toggleReaction(context, "comment", context.req.param("commentId"), context.req.param("postId"));
+  return toggleReaction(context, "comment", context.req.param("commentId"), { column: "post_id", id: context.req.param("postId") });
 });
 
 app.get("/api/groups/:groupId/notifications", requireGroupAccess, async (context) => {
@@ -1068,7 +1271,32 @@ app.get("/api/groups/:groupId/members", requireGroupAccess, async (context) => {
   return context.json(memberDirectoryResponseSchema.parse({
     active: items.filter((member) => member.membership === "active"),
     former: items.filter((member) => member.membership === "former"),
-    permissions: { manageMembers: viewer.id === group.creatorUserId, leave: viewer.id !== group.creatorUserId },
+    permissions: { leave: viewer.id !== group.creatorUserId },
+  }));
+});
+
+app.get("/api/groups/:groupId/memberships", requireGroupAccess, async (context) => {
+  const group = context.get("groupAccess"); const viewer = context.get("user")!;
+  if (group.creatorUserId !== viewer.id) return apiError(context, 403, "CREATOR_REQUIRED", "Only the group creator can manage members.");
+  // Active, pending, and rejected rows show current account fields; departed rows keep their frozen snapshot.
+  const rows = await context.env.DB.prepare(
+    `SELECT u.id, m.state, m.requested_at AS requestedAt, m.decided_at AS decidedAt,
+      CASE WHEN m.state IN ('left', 'removed') THEN COALESCE(m.profile_display_name, 'Former member') ELSE u.display_name END AS displayName,
+      CASE WHEN m.state IN ('left', 'removed') THEN m.profile_avatar_key ELSE u.avatar_key END AS avatarKey
+     FROM memberships m JOIN users u ON u.id = m.user_id
+     WHERE m.group_id = ?`,
+  ).bind(group.id).all<{ id: string; state: "pending" | "active" | "rejected" | "left" | "removed"; requestedAt: number; decidedAt: number | null; displayName: string; avatarKey: string | null }>();
+  const items = rows.results.map((row) => ({
+    id: row.id, displayName: row.displayName, avatarUrl: mediaUrl(context.env, row.avatarKey), state: row.state,
+    isCreator: row.id === group.creatorUserId, requestedAt: row.requestedAt, decidedAt: row.decidedAt,
+  }));
+  const byName = (a: { displayName: string }, b: { displayName: string }) => a.displayName.localeCompare(b.displayName, undefined, { sensitivity: "base" });
+  const byRecentDecision = (a: { decidedAt: number | null }, b: { decidedAt: number | null }) => (b.decidedAt ?? 0) - (a.decidedAt ?? 0);
+  return context.json(membershipAdminResponseSchema.parse({
+    pending: items.filter((item) => item.state === "pending").sort((a, b) => a.requestedAt - b.requestedAt),
+    active: items.filter((item) => item.state === "active").sort(byName),
+    rejected: items.filter((item) => item.state === "rejected").sort(byRecentDecision),
+    former: items.filter((item) => item.state === "left" || item.state === "removed").sort(byRecentDecision),
   }));
 });
 
@@ -1080,6 +1308,7 @@ app.post("/api/groups/:groupId/memberships/leave", requireGroupAccess, async (co
   const result = await context.env.DB.prepare("UPDATE memberships SET state = 'left', decided_at = ?, updated_at = ? WHERE group_id = ? AND user_id = ? AND state = 'active'")
     .bind(Date.now(), Date.now(), group.id, user.id).run();
   if (!result.meta.changes) return apiError(context, 404, "MEMBERSHIP_NOT_FOUND", "This membership is not active.");
+  await endContributions(context.env.DB, group.id, user.id, "left");
   return context.json({ ok: true } as const);
 });
 
@@ -1092,6 +1321,7 @@ app.delete("/api/groups/:groupId/memberships/:userId", requireGroupAccess, async
   const result = await context.env.DB.prepare("UPDATE memberships SET state = 'removed', decided_at = ?, updated_at = ? WHERE group_id = ? AND user_id = ? AND state = 'active'")
     .bind(Date.now(), Date.now(), group.id, targetId).run();
   if (!result.meta.changes) return apiError(context, 404, "MEMBERSHIP_NOT_FOUND", "This active member was not found.");
+  await endContributions(context.env.DB, group.id, targetId, "removed");
   await createNotification(context.env.DB, { groupId: group.id, recipientUserId: targetId, actorUserId: user.id, kind: "member_removed" });
   return context.json({ ok: true } as const);
 });
@@ -1183,8 +1413,9 @@ app.get("/api/groups/:groupId/courses", requireGroupAccess, async (context) => {
   const cursor = decodeCursor(parsed.success ? parsed.data.cursor : undefined);
   if (!parsed.success || (parsed.data.cursor && !cursor)) return apiError(context, 400, "INVALID_CURSOR", "The course list cursor is invalid.");
   const group = context.get("groupAccess"); const user = context.get("user")!;
-  const clauses = ["c.group_id = ?", "(c.status = 'published' OR c.owner_id = ? OR (c.status = 'archived' AND ? = ?))"];
-  const values: Array<string | number> = [group.id, user.id, group.creatorUserId, user.id];
+  const clauses = ["c.group_id = ?", `(c.status = 'published' OR c.owner_id = ? OR (c.status = 'archived' AND ? = ?)
+    OR (c.status = 'draft' AND EXISTS (SELECT 1 FROM course_contributors cc WHERE cc.course_id = c.id AND cc.user_id = ? AND cc.state = 'active')))`];
+  const values: Array<string | number> = [user.id, group.id, user.id, group.creatorUserId, user.id, user.id];
   if (cursor) { clauses.push("(c.created_at < ? OR (c.created_at = ? AND c.id < ?))"); values.push(cursor.createdAt, cursor.createdAt, cursor.id); }
   const rows = await context.env.DB.prepare(`${COURSE_SELECT} WHERE ${clauses.join(" AND ")} ORDER BY c.created_at DESC, c.id DESC LIMIT ?`)
     .bind(...values, parsed.data.limit + 1).all<CourseRow>();
@@ -1207,7 +1438,13 @@ app.post("/api/groups/:groupId/courses", requireGroupAccess, async (context) => 
 
 app.get("/api/groups/:groupId/courses/:courseId", requireGroupAccess, async (context) => {
   const found = await visibleCourse(context); if ("error" in found) return found.error;
-  return courseResponse(context, found.row.id);
+  const group = context.get("groupAccess"); const user = context.get("user")!;
+  // The outline is complete; blocks come only for the first few visible lessons, and later lessons load by ID.
+  const outline = await readOutline(context.env.DB, found.row, user.id);
+  const lessons = await lessonsWithBlocks(context.env.DB, found.row, user.id, outline.slice(0, COURSE_PRELOADED_LESSONS));
+  return context.json(courseDetailResponseSchema.parse({
+    course: presentCourse(found.row, user.id, group.creatorUserId, context.env.PUBLIC_MEDIA_BASE_URL), outline: outline.map(presentLessonSummary), lessons,
+  }));
 });
 
 app.patch("/api/groups/:groupId/courses/:courseId", requireGroupAccess, async (context) => {
@@ -1221,8 +1458,28 @@ app.patch("/api/groups/:groupId/courses/:courseId", requireGroupAccess, async (c
 app.post("/api/groups/:groupId/courses/:courseId/visibility", requireGroupAccess, async (context) => {
   const found = await editableCourse(context); if ("error" in found) return found.error;
   const parsed = await parseJson(context, courseVisibilityRequestSchema); if ("response" in parsed) return parsed.response;
-  await context.env.DB.prepare("UPDATE courses SET status = ?, updated_at = ? WHERE group_id = ? AND id = ? AND status != 'archived'")
-    .bind(parsed.data.status, Date.now(), found.row.groupId, found.row.id).run();
+  const now = Date.now();
+  const update = context.env.DB.prepare("UPDATE courses SET status = ?, updated_at = ? WHERE group_id = ? AND id = ? AND status != 'archived'")
+    .bind(parsed.data.status, now, found.row.groupId, found.row.id);
+  if (parsed.data.status !== "published" || found.row.firstPublishedAt !== null) {
+    await update.run();
+    return courseResponse(context, found.row.id);
+  }
+  // The first publication announces the course once in the feed. The unique course link and the
+  // first_published_at guard keep a concurrent or repeated publish from adding a second post.
+  const latest = await context.env.DB.prepare("SELECT MAX(created_at) AS createdAt FROM posts WHERE group_id = ?")
+    .bind(found.row.groupId).first<{ createdAt: number | null }>();
+  const createdAt = Math.max(now, (latest?.createdAt ?? 0) + 1);
+  await context.env.DB.batch([
+    context.env.DB.prepare(
+      `INSERT INTO posts (id, group_id, author_id, type, body, notes, course_id, created_at, updated_at)
+       SELECT ?, ?, ?, 'course', '', NULL, ?, ?, ? WHERE EXISTS (SELECT 1 FROM courses WHERE group_id = ? AND id = ? AND first_published_at IS NULL)
+       ON CONFLICT(course_id) DO NOTHING`,
+    ).bind(crypto.randomUUID(), found.row.groupId, found.row.ownerId, found.row.id, createdAt, createdAt, found.row.groupId, found.row.id),
+    context.env.DB.prepare("UPDATE courses SET first_published_at = ? WHERE group_id = ? AND id = ? AND first_published_at IS NULL")
+      .bind(now, found.row.groupId, found.row.id),
+    update,
+  ]);
   return courseResponse(context, found.row.id);
 });
 
@@ -1265,6 +1522,301 @@ app.delete("/api/groups/:groupId/courses/:courseId/cover", requireGroupAccess, a
   await context.env.DB.prepare("UPDATE courses SET cover_key = NULL, updated_at = ? WHERE group_id = ? AND id = ?").bind(Date.now(), found.row.groupId, found.row.id).run();
   if (found.row.coverKey) await context.env.MEDIA.delete(found.row.coverKey);
   return context.json({ ok: true } as const);
+});
+
+// Contributors are listed with their group profile, falling back to the snapshot once they are no longer active members.
+app.get("/api/groups/:groupId/courses/:courseId/contributors", requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  const owner = found.row.ownerId === context.get("user")!.id;
+  const rows = await context.env.DB.prepare(
+    `SELECT cc.user_id AS id, cc.state, cc.requested_at AS requestedAt, cc.decided_at AS decidedAt,
+      CASE WHEN m.state = 'active' THEN u.display_name ELSE COALESCE(m.profile_display_name, 'Former member') END AS displayName,
+      CASE WHEN m.state = 'active' THEN u.avatar_key ELSE m.profile_avatar_key END AS avatarKey
+     FROM course_contributors cc JOIN users u ON u.id = cc.user_id
+     LEFT JOIN memberships m ON m.group_id = cc.group_id AND m.user_id = cc.user_id
+     WHERE cc.group_id = ? AND cc.course_id = ? AND cc.state IN (${owner ? "'active', 'pending'" : "'active'"})
+     ORDER BY COALESCE(cc.decided_at, cc.requested_at) ASC, cc.user_id ASC`,
+  ).bind(found.row.groupId, found.row.id).all<{ id: string; state: "pending" | "active"; requestedAt: number; decidedAt: number | null; displayName: string; avatarKey: string | null }>();
+  const items = rows.results.map((row) => ({
+    user: { id: row.id, displayName: row.displayName, avatarUrl: mediaUrl(context.env, row.avatarKey) }, state: row.state, requestedAt: row.requestedAt, decidedAt: row.decidedAt,
+  }));
+  return context.json(courseContributorsResponseSchema.parse({ active: items.filter((item) => item.state === "active"), pending: items.filter((item) => item.state === "pending") }));
+});
+
+// Any member who can read a published course may ask to contribute; rejected, departed, and removed members may ask again.
+app.post("/api/groups/:groupId/courses/:courseId/contributors", requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  const user = context.get("user")!; const course = found.row; const now = Date.now();
+  if (course.ownerId === user.id) return apiError(context, 400, "OWNER_CANNOT_CONTRIBUTE", "The course owner already edits this course.");
+  if (course.status === "archived") return apiError(context, 409, "COURSE_ARCHIVED", "Restore this course before changing it.");
+  const requested = await context.env.DB.prepare(
+    `INSERT INTO course_contributors (group_id, course_id, user_id, state, requested_at, decided_at, updated_at) VALUES (?, ?, ?, 'pending', ?, NULL, ?)
+     ON CONFLICT(course_id, user_id) DO UPDATE SET state = 'pending', requested_at = excluded.requested_at, decided_at = NULL, updated_at = excluded.updated_at
+     WHERE course_contributors.state IN ('rejected', 'left', 'removed')`,
+  ).bind(course.groupId, course.id, user.id, now, now).run();
+  if (!requested.meta.changes) return apiError(context, 409, "CONTRIBUTION_EXISTS", "You already contribute to this course or have a pending request.");
+  await createNotification(context.env.DB, { groupId: course.groupId, recipientUserId: course.ownerId, actorUserId: user.id, kind: "contributor_requested", courseId: course.id, createdAt: now });
+  return courseResponse(context, course.id, 201);
+});
+
+// Withdrawing a pending request and leaving an active role both end as `left`. This works even once the course is hidden.
+app.post("/api/groups/:groupId/courses/:courseId/contributors/leave", requireGroupAccess, async (context) => {
+  const group = context.get("groupAccess"); const user = context.get("user")!; const now = Date.now();
+  const left = await context.env.DB.prepare("UPDATE course_contributors SET state = 'left', decided_at = ?, updated_at = ? WHERE group_id = ? AND course_id = ? AND user_id = ? AND state IN ('pending', 'active')")
+    .bind(now, now, group.id, context.req.param("courseId"), user.id).run();
+  if (!left.meta.changes) return apiError(context, 404, "CONTRIBUTION_NOT_FOUND", "You have no contributor role or request for this course.");
+  return context.json({ ok: true } as const);
+});
+
+app.patch("/api/groups/:groupId/courses/:courseId/contributors/:userId", requireGroupAccess, async (context) => {
+  const found = await editableCourse(context); if ("error" in found) return found.error;
+  const parsed = await parseJson(context, contributorDecisionRequestSchema); if ("response" in parsed) return parsed.response;
+  const user = context.get("user")!; const course = found.row; const targetId = context.req.param("userId"); const now = Date.now();
+  const accepted = parsed.data.decision === "accept";
+  // Only a requester who is still an active group member can be accepted.
+  const decided = await context.env.DB.prepare(
+    `UPDATE course_contributors SET state = ?, decided_at = ?, updated_at = ? WHERE group_id = ? AND course_id = ? AND user_id = ? AND state = 'pending'
+     AND (? = 'rejected' OR EXISTS (SELECT 1 FROM memberships WHERE group_id = ? AND user_id = ? AND state = 'active'))`,
+  ).bind(accepted ? "active" : "rejected", now, now, course.groupId, course.id, targetId, accepted ? "active" : "rejected", course.groupId, targetId).run();
+  if (!decided.meta.changes) return apiError(context, 404, "CONTRIBUTOR_REQUEST_NOT_FOUND", "This pending request was not found.");
+  await createNotification(context.env.DB, {
+    groupId: course.groupId, recipientUserId: targetId, actorUserId: user.id, kind: accepted ? "contributor_accepted" : "contributor_rejected", courseId: course.id, createdAt: now,
+  });
+  return context.json({ ok: true } as const);
+});
+
+// Removing a contributor keeps everything they wrote.
+app.delete("/api/groups/:groupId/courses/:courseId/contributors/:userId", requireGroupAccess, async (context) => {
+  const found = await editableCourse(context); if ("error" in found) return found.error;
+  const now = Date.now();
+  const removed = await context.env.DB.prepare("UPDATE course_contributors SET state = 'removed', decided_at = ?, updated_at = ? WHERE group_id = ? AND course_id = ? AND user_id = ? AND state = 'active'")
+    .bind(now, now, found.row.groupId, found.row.id, context.req.param("userId")).run();
+  if (!removed.meta.changes) return apiError(context, 404, "CONTRIBUTOR_NOT_FOUND", "This contributor was not found.");
+  return context.json({ ok: true } as const);
+});
+
+app.post("/api/groups/:groupId/courses/:courseId/lessons", requireGroupAccess, async (context) => {
+  const found = await contributableCourse(context); if ("error" in found) return found.error;
+  const parsed = await parseJson(context, createLessonRequestSchema); if ("response" in parsed) return parsed.response;
+  const user = context.get("user")!; const course = found.row; const lessonId = crypto.randomUUID(); const now = Date.now();
+  // Position and the lesson limit are evaluated inside the insert so concurrent saves cannot exceed the limit.
+  const inserted = await context.env.DB.prepare(
+    `INSERT INTO course_lessons (id, group_id, course_id, title, goal, position, published, version, created_by, updated_by, created_at, updated_at)
+     SELECT ?, ?, ?, ?, ?, (SELECT COALESCE(MAX(position) + 1, 0) FROM course_lessons WHERE group_id = ? AND course_id = ?), 0, 1, ?, ?, ?, ?
+     WHERE (SELECT COUNT(*) FROM course_lessons WHERE group_id = ? AND course_id = ?) < ?`,
+  ).bind(lessonId, course.groupId, course.id, parsed.data.title, parsed.data.goal, course.groupId, course.id, user.id, user.id, now, now, course.groupId, course.id, COURSE_LESSONS_MAX).run();
+  if (!inserted.meta.changes) return apiError(context, 409, "LESSON_LIMIT_REACHED", "This course already has the maximum number of lessons.");
+  return lessonResponse(context, course, lessonId, 201);
+});
+
+app.put("/api/groups/:groupId/courses/:courseId/lessons/order", requireGroupAccess, async (context) => {
+  const found = await editableCourse(context); if ("error" in found) return found.error;
+  const reordered = await reorderChildren(context, "course_lessons", "course_id", found.row.id, found.row.groupId); if ("error" in reordered) return reordered.error;
+  const outline = await readOutline(context.env.DB, found.row, context.get("user")!.id);
+  return context.json(outlineResponseSchema.parse({ outline: outline.map(presentLessonSummary) }));
+});
+
+app.get("/api/groups/:groupId/courses/:courseId/lessons/:lessonId", requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  return lessonResponse(context, found.row, lesson.lesson.id);
+});
+
+app.patch("/api/groups/:groupId/courses/:courseId/lessons/:lessonId", requireGroupAccess, async (context) => {
+  const found = await contributableCourse(context); if ("error" in found) return found.error;
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  const parsed = await parseJson(context, updateLessonRequestSchema); if ("response" in parsed) return parsed.response;
+  const forbidden = contributorEditError(context, found.row, lesson.lesson, parsed.data.published); if (forbidden) return forbidden;
+  const updated = await context.env.DB.prepare(
+    "UPDATE course_lessons SET title = ?, goal = ?, published = ?, version = version + 1, updated_by = ?, updated_at = ? WHERE group_id = ? AND course_id = ? AND id = ? AND version = ?",
+  ).bind(parsed.data.title, parsed.data.goal, parsed.data.published ? 1 : 0, context.get("user")!.id, Date.now(), found.row.groupId, found.row.id, lesson.lesson.id, parsed.data.version).run();
+  if (!updated.meta.changes) return versionConflict(context);
+  return lessonResponse(context, found.row, lesson.lesson.id);
+});
+
+app.delete("/api/groups/:groupId/courses/:courseId/lessons/:lessonId", requireGroupAccess, async (context) => {
+  const found = await deletableCourseContent(context); if ("error" in found) return found.error;
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  // Lessons and blocks are hard-deleted together with their practice threads; reactions have no foreign key, so they go first.
+  const lessonBlocks = "SELECT id FROM course_blocks WHERE group_id = ? AND course_id = ? AND lesson_id = ?";
+  await context.env.DB.batch([
+    context.env.DB.prepare(`DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND target_id IN (SELECT id FROM comments WHERE group_id = ? AND block_id IN (${lessonBlocks}))`)
+      .bind(found.row.groupId, found.row.groupId, found.row.groupId, found.row.id, lesson.lesson.id),
+    context.env.DB.prepare(`DELETE FROM comments WHERE group_id = ? AND block_id IN (${lessonBlocks})`).bind(found.row.groupId, found.row.groupId, found.row.id, lesson.lesson.id),
+    context.env.DB.prepare("DELETE FROM course_blocks WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(found.row.groupId, found.row.id, lesson.lesson.id),
+    context.env.DB.prepare("DELETE FROM course_lessons WHERE group_id = ? AND course_id = ? AND id = ?").bind(found.row.groupId, found.row.id, lesson.lesson.id),
+  ]);
+  return context.json({ ok: true } as const);
+});
+
+app.post("/api/groups/:groupId/courses/:courseId/lessons/:lessonId/blocks", requireGroupAccess, async (context) => {
+  const found = await contributableCourse(context); if ("error" in found) return found.error;
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  const parsed = await parseJson(context, createBlockRequestSchema); if ("response" in parsed) return parsed.response;
+  // Contributors may add unpublished blocks to any lesson they can see, including a published one.
+  const forbidden = contributorEditError(context, found.row, null, parsed.data.published); if (forbidden) return forbidden;
+  const user = context.get("user")!; const course = found.row; const blockId = crypto.randomUUID(); const now = Date.now();
+  const inserted = await context.env.DB.prepare(
+    `INSERT INTO course_blocks (id, group_id, course_id, lesson_id, position, kind, payload, payload_version, published, version, created_by, updated_by, created_at, updated_at)
+     SELECT ?, ?, ?, ?, (SELECT COALESCE(MAX(position) + 1, 0) FROM course_blocks WHERE group_id = ? AND lesson_id = ?), ?, ?, ?, ?, 1, ?, ?, ?, ?
+     WHERE (SELECT COUNT(*) FROM course_blocks WHERE group_id = ? AND lesson_id = ?) < ?`,
+  ).bind(
+    blockId, course.groupId, course.id, lesson.lesson.id, course.groupId, lesson.lesson.id, parsed.data.kind, JSON.stringify(parsed.data.payload), COURSE_BLOCK_PAYLOAD_VERSION,
+    parsed.data.published ? 1 : 0, user.id, user.id, now, now, course.groupId, lesson.lesson.id, COURSE_BLOCKS_MAX,
+  ).run();
+  if (!inserted.meta.changes) return apiError(context, 409, "BLOCK_LIMIT_REACHED", "This lesson already has the maximum number of blocks.");
+  return blockResponse(context, course, lesson.lesson.id, blockId, 201);
+});
+
+app.put("/api/groups/:groupId/courses/:courseId/lessons/:lessonId/blocks/order", requireGroupAccess, async (context) => {
+  const found = await editableCourse(context); if ("error" in found) return found.error;
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  const reordered = await reorderChildren(context, "course_blocks", "lesson_id", lesson.lesson.id, found.row.groupId); if ("error" in reordered) return reordered.error;
+  return lessonResponse(context, found.row, lesson.lesson.id);
+});
+
+app.patch("/api/groups/:groupId/courses/:courseId/lessons/:lessonId/blocks/:blockId", requireGroupAccess, async (context) => {
+  const found = await contributableCourse(context); if ("error" in found) return found.error;
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  const block = await visibleBlock(context, found.row, lesson.lesson); if ("error" in block) return block.error;
+  const parsed = await parseJson(context, updateBlockRequestSchema); if ("response" in parsed) return parsed.response;
+  const forbidden = contributorEditError(context, found.row, block.block, parsed.data.published); if (forbidden) return forbidden;
+  if (parsed.data.kind !== block.block.kind) return apiError(context, 400, "BLOCK_KIND_IMMUTABLE", "A block keeps its kind. Add a new block instead.");
+  const updated = await context.env.DB.prepare(
+    `UPDATE course_blocks SET payload = ?, payload_version = ?, published = ?, version = version + 1, updated_by = ?, updated_at = ?
+     WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND id = ? AND version = ?`,
+  ).bind(
+    JSON.stringify(parsed.data.payload), COURSE_BLOCK_PAYLOAD_VERSION, parsed.data.published ? 1 : 0, context.get("user")!.id, Date.now(),
+    found.row.groupId, found.row.id, lesson.lesson.id, block.block.id, parsed.data.version,
+  ).run();
+  if (!updated.meta.changes) return versionConflict(context);
+  return blockResponse(context, found.row, lesson.lesson.id, block.block.id);
+});
+
+app.delete("/api/groups/:groupId/courses/:courseId/lessons/:lessonId/blocks/:blockId", requireGroupAccess, async (context) => {
+  const found = await deletableCourseContent(context); if ("error" in found) return found.error;
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  const block = await visibleBlock(context, found.row, lesson.lesson); if ("error" in block) return block.error;
+  await context.env.DB.batch([
+    context.env.DB.prepare("DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND target_id IN (SELECT id FROM comments WHERE group_id = ? AND block_id = ?)")
+      .bind(found.row.groupId, found.row.groupId, block.block.id),
+    context.env.DB.prepare("DELETE FROM comments WHERE group_id = ? AND block_id = ?").bind(found.row.groupId, block.block.id),
+    context.env.DB.prepare("DELETE FROM course_blocks WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND id = ?").bind(found.row.groupId, found.row.id, lesson.lesson.id, block.block.id),
+  ]);
+  return context.json({ ok: true } as const);
+});
+
+// Resolves a visible practice block for its answer thread. Writes are refused while the course is archived.
+async function practiceBlock(context: Context<AppEnvironment>, write: boolean) {
+  const found = await visibleCourse(context); if ("error" in found) return { error: found.error };
+  if (write && found.row.status === "archived") return { error: apiError(context, 409, "COURSE_ARCHIVED", "Restore this course before changing it.") };
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return { error: lesson.error };
+  const block = await visibleBlock(context, found.row, lesson.lesson); if ("error" in block) return { error: block.error };
+  const content = storedBlockContent(block.block);
+  if (content.kind !== "practice") return { error: apiError(context, 404, "PRACTICE_NOT_FOUND", "This practice is not available.") };
+  return { course: found.row, block: block.block, practice: content.payload, target: { column: "block_id", id: block.block.id } satisfies DiscussionTarget };
+}
+
+async function practiceThreadItem(context: Context<AppEnvironment>, target: DiscussionTarget, commentId: string) {
+  const user = context.get("user")!; const group = context.get("groupAccess");
+  return (await readDiscussion(context.env.DB, group.id, target, user.id, group.creatorUserId, null))
+    .flatMap((entry) => [entry, ...entry.replies]).find((entry) => entry.id === commentId)!;
+}
+
+// Each response item snapshots its prompt so the answer set stays readable after the practice is edited. Nothing is matched.
+function practiceResponseStatements(binding: D1Database, commentId: string, prompts: string[], answers: string[]) {
+  if (answers.length !== prompts.length) return null;
+  return prompts.map((prompt, position) => {
+    const answer = answers[position]?.trim() ?? "";
+    return binding.prepare("INSERT INTO comment_response_items (comment_id, position, prompt, answer, skipped, matched) VALUES (?, ?, ?, ?, ?, NULL)")
+      .bind(commentId, position, prompt, answer, answer ? 0 : 1);
+  });
+}
+
+const practicePath = "/api/groups/:groupId/courses/:courseId/lessons/:lessonId/blocks/:blockId";
+
+// The thread, together with the author's version and item notes, is fetched only when the reader reveals it.
+app.get(`${practicePath}/discussion`, requireGroupAccess, async (context) => {
+  const found = await practiceBlock(context, false); if ("error" in found) return found.error;
+  const group = context.get("groupAccess"); const user = context.get("user")!;
+  const [items, account] = await Promise.all([
+    readDiscussion(context.env.DB, group.id, found.target, user.id, group.creatorUserId, null),
+    context.env.DB.prepare("SELECT quick_reaction_one AS one, quick_reaction_two AS two, quick_reaction_three AS three FROM users WHERE id = ?")
+      .bind(user.id).first<{ one: string; two: string; three: string }>(),
+  ]);
+  return context.json(practiceDiscussionResponseSchema.parse({
+    items, count: items.reduce((total, item) => total + 1 + item.replies.length, 0),
+    quickReactions: [account!.one, account!.two, account!.three], reference: splitPracticePayload(found.practice).reference,
+  }));
+});
+
+app.post(`${practicePath}/comments`, requireGroupAccess, async (context) => {
+  const found = await practiceBlock(context, true); if ("error" in found) return found.error;
+  const parsed = await parseJson(context, createPracticeCommentRequestSchema); if ("response" in parsed) return parsed.response;
+  const group = context.get("groupAccess"); const user = context.get("user")!;
+  let parentId: string | null = null;
+  if (parsed.data.kind === "text") {
+    if (!parsed.data.parentId) return apiError(context, 400, "INVALID_RESPONSE_KIND", "Answer every item in one answer set.");
+    const parent = await context.env.DB.prepare("SELECT id, parent_comment_id AS parentId FROM comments WHERE group_id = ? AND block_id = ? AND id = ?")
+      .bind(group.id, found.block.id, parsed.data.parentId).first<{ id: string; parentId: string | null }>();
+    if (!parent || parent.parentId) return apiError(context, 400, "INVALID_PARENT", "Replies can only be added to a top-level answer in this practice.");
+    parentId = parent.id;
+  }
+  const commentId = crypto.randomUUID(); const now = Date.now();
+  const children = parsed.data.kind === "practice_response"
+    ? practiceResponseStatements(context.env.DB, commentId, found.practice.items.map((item) => item.prompt), parsed.data.answers) : [];
+  if (children === null) return apiError(context, 400, "ANSWER_COUNT_MISMATCH", "Answer every prompt, leaving a blank response when needed.");
+  await context.env.DB.batch([
+    context.env.DB.prepare("INSERT INTO comments (id, group_id, post_id, block_id, author_id, parent_comment_id, kind, body, created_at, updated_at) VALUES (?, ?, NULL, ?, ?, ?, ?, ?, ?, ?)")
+      .bind(commentId, group.id, found.block.id, user.id, parentId, parsed.data.kind, parsed.data.kind === "text" ? parsed.data.body.trim() : null, now, now),
+    ...children,
+  ]);
+  return context.json(commentResponseSchema.parse({ item: await practiceThreadItem(context, found.target, commentId) }), 201);
+});
+
+app.patch(`${practicePath}/comments/:commentId`, requireGroupAccess, async (context) => {
+  const found = await practiceBlock(context, true); if ("error" in found) return found.error;
+  const parsed = await parseJson(context, updatePracticeCommentRequestSchema); if ("response" in parsed) return parsed.response;
+  const group = context.get("groupAccess"); const user = context.get("user")!; const commentId = context.req.param("commentId");
+  const existing = await context.env.DB.prepare("SELECT author_id AS authorId, kind, created_at AS createdAt FROM comments WHERE group_id = ? AND block_id = ? AND id = ?")
+    .bind(group.id, found.block.id, commentId).first<{ authorId: string; kind: DiscussionItem["kind"]; createdAt: number }>();
+  if (!existing) return apiError(context, 404, "COMMENT_NOT_FOUND", "This response is not available.");
+  if (existing.authorId !== user.id) return apiError(context, 403, "COMMENT_EDIT_FORBIDDEN", "Only the author can edit this response.");
+  if (existing.kind !== parsed.data.kind) return apiError(context, 400, "INVALID_RESPONSE_KIND", "The response type cannot be changed.");
+  let children: D1PreparedStatement[] | null = [];
+  if (parsed.data.kind === "practice_response") {
+    // Edits keep the prompts the answer set was written against, even if the practice has changed since.
+    const snapshots = await context.env.DB.prepare("SELECT prompt FROM comment_response_items WHERE comment_id = ? ORDER BY position ASC").bind(commentId).all<{ prompt: string | null }>();
+    children = practiceResponseStatements(context.env.DB, commentId, snapshots.results.map((row) => row.prompt ?? ""), parsed.data.answers);
+  }
+  if (children === null) return apiError(context, 400, "ANSWER_COUNT_MISMATCH", "Answer every prompt, leaving a blank response when needed.");
+  await context.env.DB.batch([
+    context.env.DB.prepare("DELETE FROM comment_response_items WHERE comment_id = ?").bind(commentId),
+    context.env.DB.prepare("UPDATE comments SET body = ?, updated_at = ? WHERE group_id = ? AND block_id = ? AND id = ?")
+      .bind(parsed.data.kind === "text" ? parsed.data.body.trim() : null, Math.max(Date.now(), existing.createdAt + 1), group.id, found.block.id, commentId),
+    ...children,
+  ]);
+  return context.json(commentResponseSchema.parse({ item: await practiceThreadItem(context, found.target, commentId) }));
+});
+
+app.delete(`${practicePath}/comments/:commentId`, requireGroupAccess, async (context) => {
+  const found = await practiceBlock(context, true); if ("error" in found) return found.error;
+  const group = context.get("groupAccess"); const user = context.get("user")!; const commentId = context.req.param("commentId");
+  const existing = await context.env.DB.prepare("SELECT author_id AS authorId FROM comments WHERE group_id = ? AND block_id = ? AND id = ?")
+    .bind(group.id, found.block.id, commentId).first<{ authorId: string }>();
+  if (!existing) return apiError(context, 404, "COMMENT_NOT_FOUND", "This response is not available.");
+  if (existing.authorId !== user.id && group.creatorUserId !== user.id) return apiError(context, 403, "COMMENT_DELETE_FORBIDDEN", "You cannot delete this response.");
+  await context.env.DB.batch([
+    context.env.DB.prepare("DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND (target_id = ? OR target_id IN (SELECT id FROM comments WHERE group_id = ? AND parent_comment_id = ?))")
+      .bind(group.id, commentId, group.id, commentId),
+    context.env.DB.prepare("DELETE FROM comments WHERE group_id = ? AND block_id = ? AND (id = ? OR parent_comment_id = ?)").bind(group.id, found.block.id, commentId, commentId),
+  ]);
+  return context.json({ ok: true } as const);
+});
+
+app.put(`${practicePath}/comments/:commentId/reactions`, requireGroupAccess, async (context) => {
+  const found = await practiceBlock(context, true); if ("error" in found) return found.error;
+  return toggleReaction(context, "comment", context.req.param("commentId"), found.target);
 });
 
 app.notFound((context) => apiError(context, 404, "NOT_FOUND", "The requested resource was not found."));

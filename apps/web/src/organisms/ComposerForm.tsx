@@ -46,6 +46,8 @@ function readDraft(key: string): ComposerDraft {
 
 function draftFromPost(post: Post): ComposerDraft {
   const draft = emptyDraft();
+  // Course posts are system-created and never offer editing, so they have no composer state.
+  if (post.type === "course") return draft;
   draft.activeType = post.type;
   draft.byType[post.type] = {
     body: post.body,

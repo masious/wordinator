@@ -16,6 +16,8 @@ Cover pure validation and domain behavior:
 - Notification trigger decisions
 - Cursor encoding/ordering
 - Permission predicates
+- Course block payload schemas per kind, their limits, and versioned stored-payload parsing
+- Practice item rules (one author's version entry per blank, at most one for open prompts) and the split of learner payload from reference
 
 ### API integration tests — Vitest and Workers test pool
 
@@ -23,7 +25,17 @@ Run Hono against isolated local D1 state using the Cloudflare Workers test envir
 
 Every group-owned endpoint needs at least one negative test using a valid member of a different group. Test nested-ID attacks where a valid group ID is paired with another group’s post/comment ID.
 
+Settings administration adds these cases: ordinary members receive `403 CREATOR_REQUIRED` from the memberships read; pending requesters and another group's creator receive the tenant `404`; responses contain only the addressed group's rows, never email; decisions affect only pending rows in the addressed group; and `pendingRequestCount` is `0` for members.
+
 Course routes add these cases: another group's course ID under the attacker's own valid group ID on every course route; former members; drafts hidden from non-owners in both the library and direct reads; owner-only editing, publishing, and cover changes, including attempts by the group creator; owner-or-creator archive and restore; archived courses hidden from other members; and `409` responses when an archived course is changed.
+
+Lesson and block routes add: another group's lesson or block ID under the attacker's own valid group, course, and lesson; a block under the wrong lesson and a lesson under the wrong course within one group; unpublished lessons and blocks hidden from readers; owner-only creation, editing, publishing, and reordering, including attempts by the group creator; creator-only moderation deletes; stale versions, stale reorder lists, kind changes, and limits; and frozen archived courses.
+
+Course posts add: exactly one post on first publication and none after unpublishing, republishing, archiving, restoring, or deleting the post; the unique course link rejecting a second post; course details hidden once the course is archived or returned to draft for non-owners; visible comments with no pins and no editing; and the composer refusing the `course` type; and another group's member reaching the post, its comments, or its reactions through their own group.
+
+Course contributors add negative permission tests: a contributor editing a published lesson or block, publishing their own lesson or block, adding a published block, reordering, deleting, or changing course details, visibility, or contributors; a non-contributor and a pending requester adding or editing content; former contributors who left or were removed adding, editing, or reading unpublished content; the group creator deciding requests for another member's course; accepting a requester who has left the group; contributor roles ended by group departure; duplicate pending requests; and another group's member or course ID on every contributor route.
+
+Practice threads add: learner course and lesson reads that never contain authors' versions or notes while editors receive the reference; the reference delivered only by the thread endpoint; answer sets with blanks, wrong cardinality, and wrong kinds; one-level replies, reactions, and no pins, matching, or notifications; prompt snapshots that survive practice edits and constrain later edits; block and lesson deletion cascading to answers, replies, response items, and reactions; author-only edit and author-or-creator delete; frozen threads in archived courses; and another group's or another practice's block, lesson, course, and comment IDs under valid paths, including post comment routes.
 
 ### Component tests — React Testing Library
 
@@ -36,6 +48,9 @@ Cover visible behavior rather than implementation details:
 - Responsive navigation states
 - Pending/rejected and internet-required screens
 - Notification links to deleted or concealed content
+- Course block editor fields per kind, local block drafts, and the version-conflict message
+- Contributor panel requests, withdrawal, owner decisions, and confirmed removal; contributor editing limited to unpublished content without publish or reorder controls; contributor notification links
+- Practice prompts rendered concealed, the local answer-set draft, publishing and revealing the thread with the author's version, and per-blank author's version fields in the editor
 
 ### End-to-end tests — Playwright
 
@@ -50,10 +65,15 @@ Maintain a small critical suite for current Chromium and WebKit:
 7. Leaving/removal preserves content and shows the correct status.
 8. Soft-deleting/restoring a group restores access and membership.
 9. A creator-generated password forces change without pretending to revoke existing sessions.
+10. A learner answers a course practice, sees the thread and author's version revealed, replies, and finds the practice concealed again on the next visit.
+11. Publishing a course shows its card in the feed; members comment openly on it and follow it to the course.
+12. A member asks to contribute, the owner accepts, the contributor adds an unpublished block without a publish option, and the owner publishes it, after which the contributor can no longer edit it.
 
 ## Fixtures
 
 Use deterministic factories for at least two unrelated groups, multiple users, former/pending members, every post type, deleted targets, and a soft-deleted group. Never make tenant isolation tests depend on coincidentally sequential IDs.
+
+`test/fixtures/courses/dutch-foundations-part-iii.json` is the normalized course acceptance fixture: sections became `heading` blocks, blanks use `…`, authors' versions are per-blank lists, the reading follow-up is its own practice block, and deferred placeholders and planning metadata are removed. Contract and API tests import all of its blocks, including its six practice blocks.
 
 ## Release gates
 
@@ -92,3 +112,13 @@ Phase 5 adds Workers integration coverage for directory/former snapshots, leave/
 Phase 6 adds Workers integration coverage for notification creation, recipient/group isolation, restricted removal status, read state, and deleted destinations. React Testing Library covers unread presentation, deleted-target copy, and group mark-all. The Chromium/WebKit discussion flow opens the on-demand notification page, marks a group read, and follows pin/reply delivery to the other member. Release verification must run `pnpm typecheck`, `pnpm test`, `pnpm build`, and `pnpm test:e2e`; a real production smoke test remains an operator-recorded gate rather than an automated claim.
 
 Course phase C1 adds Workers integration coverage for the course shell in `course-shell.test.ts` and an R2 cover suite in `course-media.test.ts`. The R2 suite runs in the same single-worker media config as the Phase 5 media suite. React Testing Library covers the library listing, the create form, owner publishing, confirmed archiving, and hidden controls for readers.
+
+Course phase C2 adds `courses.test.ts` for the block contracts and fixture, `course-content.test.ts` for the lesson and block API, and `CourseLessons.test.tsx` for reader rendering, later-lesson loading, draft restore, dialogue editing, and keeping an edit through a version conflict.
+
+Course phase C3 adds practice cases to `courses.test.ts`, `course-practice.test.ts` for practice threads, `PracticeBlock.test.tsx` for the practice reader and editor, and the Chromium/WebKit path `course-practice.spec.ts`. The Playwright fixture reset also clears course tables.
+
+Course phase C4 adds `course-feed.test.ts` for course posts, course-post cases in `PostCard.test.tsx` and `PhaseFourPages.test.tsx`, and the Chromium/WebKit path `course-feed.spec.ts`. The Playwright fixture reset now clears posts before courses because course posts reference them.
+
+Course phase C5 adds `course-contributors.test.ts` for the contributor lifecycle, permissions, notifications, and tenant isolation; `CourseContributors` cases in `CoursePages.test.tsx`; a contributor case in `CourseLessons.test.tsx`; a contributor notification link in `PhaseSixPages.test.tsx`; and the Chromium/WebKit path `course-contributors.spec.ts`. The Playwright fixture reset also clears `course_contributors`.
+
+The settings split adds `settings-administration.test.ts` for the creator-only memberships read, pending counts, and scoped decisions; `SettingsPages.test.tsx` for the creator section navigation, member redirects, each Members section and empty state, accept, one-time passwords, and confirmed removal; `crop.test.ts` for crop geometry and zoom limits; and `ImageCropper.test.tsx` for cancel, output size for both frames, keyboard zoom and reset, and the upload-error retry state. `settings-split.spec.ts` covers the `/settings` redirect, an Account save, and an avatar upload through the cropper at desktop and phone widths in Chromium and WebKit, and the dual-theme containment gate includes the Group and Members settings pages.

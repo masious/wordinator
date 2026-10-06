@@ -1,10 +1,13 @@
-import { COURSE_LEVEL_MAX, COURSE_TEXT_MAX, COURSE_TITLE_MAX, courseResponseSchema, type Course, type CourseInput } from "@wordinator/contracts";
+import { COURSE_LEVEL_MAX, COURSE_TEXT_MAX, COURSE_TITLE_MAX, courseResponseSchema, type Course, type CourseDetailResponse, type CourseInput } from "@wordinator/contracts";
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ApiError, apiRequest, courseQueryOptions, coursesQueryOptions, sessionQueryOptions } from "../api";
+import { apiRequest, courseQueryOptions, coursesQueryOptions, sessionQueryOptions } from "../api";
 import { PlainText } from "../molecules/PlainText";
+import { CourseContributors } from "../organisms/CourseContributors/CourseContributors";
+import { CourseErrorMessage as ErrorMessage } from "../organisms/CourseLessons/CourseErrorMessage";
+import { CourseLessons } from "../organisms/CourseLessons/CourseLessons";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, MetadataRow, PageHeader, SectionHeader, Surface, TextAreaField, TextField } from "../ui";
 import { ImageUpload } from "./PhaseFivePages";
@@ -13,13 +16,6 @@ import styles from "./CoursePages.module.css";
 
 const json = (value: unknown) => JSON.stringify(value);
 const coursePath = (groupId: string, courseId: string) => `/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}`;
-
-function ErrorMessage({ error }: { error: Error | null }) {
-  const { t } = useTranslation();
-  if (!error) return null;
-  const code = error instanceof ApiError ? error.code : "generic";
-  return <p className={styles.error} role="alert">{t(`errors.${code}`, { defaultValue: t("errors.generic") })}</p>;
-}
 
 function StatusChip({ status }: { status: Course["status"] }) {
   const { t } = useTranslation();
@@ -70,7 +66,6 @@ export function CourseLibraryPage({ groupId }: { groupId: string }) {
   const create = useMutation({
     mutationFn: (input: CourseInput) => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses`, courseResponseSchema, { method: "POST", body: json(input) }),
     onSuccess: async ({ course }) => {
-      queryClient.setQueryData(courseQueryOptions(groupId, course.id).queryKey, { course });
       await queryClient.invalidateQueries({ queryKey: ["courses", groupId] });
       await navigate({ to: "/groups/$groupId/courses/$courseId", params: { groupId, courseId: course.id } });
     },
@@ -96,7 +91,10 @@ export function CoursePage({ groupId, courseId }: { groupId: string; courseId: s
   const session = useQuery(sessionQueryOptions());
   const course = useQuery(courseQueryOptions(groupId, courseId));
   const refresh = async () => { await Promise.all([queryClient.invalidateQueries({ queryKey: ["course", groupId, courseId] }), queryClient.invalidateQueries({ queryKey: ["courses", groupId] })]); };
-  const applied = async ({ course: next }: { course: Course }) => { queryClient.setQueryData(courseQueryOptions(groupId, courseId).queryKey, { course: next }); await queryClient.invalidateQueries({ queryKey: ["courses", groupId] }); };
+  const applied = async ({ course: next }: { course: Course }) => {
+    queryClient.setQueryData(courseQueryOptions(groupId, courseId).queryKey, (current: CourseDetailResponse | undefined) => current && { ...current, course: next });
+    await Promise.all([queryClient.invalidateQueries({ queryKey: ["course", groupId, courseId] }), queryClient.invalidateQueries({ queryKey: ["courses", groupId] })]);
+  };
   const edit = useMutation({
     mutationFn: (input: CourseInput) => apiRequest(coursePath(groupId, courseId), courseResponseSchema, { method: "PATCH", body: json(input) }),
     onSuccess: async (data) => { await applied(data); setEditOpen(false); },
@@ -139,7 +137,8 @@ export function CoursePage({ groupId, courseId }: { groupId: string; courseId: s
       <ErrorMessage error={visibility.error ?? restore.error} />
       {data.permissions.edit && <div className={styles.coverTools}><h3>{t("courses.coverTitle")}</h3><ImageUpload shape="wide" currentUrl={data.coverUrl} name={data.title} uploadPath={`${coursePath(groupId, courseId)}/cover`} removePath={`${coursePath(groupId, courseId)}/cover`} onChanged={refresh} /></div>}
     </Surface>}
-    {!archived && <Surface tone="quiet"><EmptyState title={t("courses.noLessonsTitle")}>{t("courses.noLessonsBody")}</EmptyState></Surface>}
+    {!archived && <CourseContributors groupId={groupId} course={data} />}
+    <CourseLessons groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} dataUpdatedAt={course.dataUpdatedAt} />
     <AdaptiveDialog opened={editOpen} onClose={() => setEditOpen(false)} title={t("courses.editTitle")}>
       {editOpen && <CourseForm initial={data} submitLabel={t("common.save")} pending={edit.isPending} error={edit.error} onSubmit={(input) => edit.mutate(input)} onCancel={() => setEditOpen(false)} />}
     </AdaptiveDialog>

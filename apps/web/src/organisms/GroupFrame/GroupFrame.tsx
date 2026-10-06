@@ -1,14 +1,14 @@
 import { Menu } from "@mantine/core";
-import { okResponseSchema, type SessionResponse } from "@wordinator/contracts";
+import { okResponseSchema } from "@wordinator/contracts";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import type { PropsWithChildren, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest } from "../../api";
 import { Avatar } from "../../ui";
+import type { SignedInSession } from "../types/auth";
 import styles from "./GroupFrame.module.css";
 
-type SignedInSession = Extract<SessionResponse, { status: "signedIn" }>;
 type ShellIconName = "journal" | "courses" | "members" | "notifications" | "profile" | "settings" | "signOut" | "chevron";
 
 function ShellIcon({ name }: { name: ShellIconName }) {
@@ -93,7 +93,7 @@ export function GroupFrame({ children, groupId, session }: PropsWithChildren<{ g
       <div className={styles.mobileNav}>
         {primaryLinks}
         <Link activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId/members/$userId" params={profileParams}><NavLabel icon="profile">{t("nav.profile")}</NavLabel></Link>
-        <Link activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId/settings" params={{ groupId }}><NavLabel icon="settings">{t("nav.settings")}</NavLabel></Link>
+        <Link activeOptions={{ exact: false }} className={styles.navItem} to="/groups/$groupId/settings" params={{ groupId }}><NavLabel icon="settings">{t("nav.settings")}</NavLabel></Link>
       </div>
     </nav>
   </div>;

@@ -9,7 +9,7 @@ The first usable release is an installable, connectivity-required responsive web
 - Invitation-originated email/password registration and group approval
 - Multiple isolated groups per account, one immutable language per group
 - Group creation by any user with at least one accepted membership
-- Strict reverse-chronological feed with four post types
+- Strict reverse-chronological feed with five post types, one of which (course) is system-created
 - Dedicated post pages, spoiler-safe answers, comments, one-level replies, pins, and emoji reactions
 - Group-private member directory and profiles
 - Member-authored group courses (see [roadmap course phases](roadmap.md#course-phases))

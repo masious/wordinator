@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { check, index, integer, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { check, index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 export const platformMetadata = sqliteTable("platform_metadata", {
   key: text("key").primaryKey(),
@@ -85,16 +85,20 @@ export const posts = sqliteTable(
     id: text("id").primaryKey(),
     groupId: text("group_id").notNull().references(() => groups.id),
     authorId: text("author_id").notNull().references(() => users.id),
-    type: text("type", { enum: ["shared_sentence", "question", "reading", "fill_in"] }).notNull(),
+    type: text("type", { enum: ["shared_sentence", "question", "reading", "fill_in", "course"] }).notNull(),
     body: text("body").notNull(),
     notes: text("notes"),
+    // Set only on the system-created post announcing a course's first publication.
+    courseId: text("course_id").references(() => courses.id),
     createdAt: integer("created_at").notNull(),
     updatedAt: integer("updated_at").notNull(),
   },
   (table) => [
     index("posts_group_feed_idx").on(table.groupId, table.createdAt, table.id),
     index("posts_group_author_idx").on(table.groupId, table.authorId, table.createdAt, table.id),
-    check("posts_type_check", sql`${table.type} in ('shared_sentence', 'question', 'reading', 'fill_in')`),
+    uniqueIndex("posts_course_unique").on(table.courseId),
+    check("posts_type_check", sql`${table.type} in ('shared_sentence', 'question', 'reading', 'fill_in', 'course')`),
+    check("posts_course_link_check", sql`(${table.type} = 'course') = (${table.courseId} IS NOT NULL)`),
   ],
 );
 
@@ -119,22 +123,26 @@ export const fillExpectedAnswers = sqliteTable(
   (table) => [uniqueIndex("fill_expected_answers_post_position_unique").on(table.postId, table.position)],
 );
 
+// A comment belongs to exactly one discussion target: a post or a course practice block.
 export const comments = sqliteTable(
   "comments",
   {
     id: text("id").primaryKey(),
     groupId: text("group_id").notNull().references(() => groups.id),
-    postId: text("post_id").notNull().references(() => posts.id, { onDelete: "cascade" }),
+    postId: text("post_id").references(() => posts.id, { onDelete: "cascade" }),
+    blockId: text("block_id").references(() => courseBlocks.id, { onDelete: "cascade" }),
     authorId: text("author_id").notNull().references(() => users.id),
     parentCommentId: text("parent_comment_id"),
-    kind: text("kind", { enum: ["text", "reading_response", "fill_response"] }).notNull(),
+    kind: text("kind", { enum: ["text", "reading_response", "fill_response", "practice_response"] }).notNull(),
     body: text("body"),
     createdAt: integer("created_at").notNull(),
     updatedAt: integer("updated_at").notNull(),
   },
   (table) => [
     index("comments_group_post_parent_idx").on(table.groupId, table.postId, table.parentCommentId, table.createdAt, table.id),
-    check("comments_kind_check", sql`${table.kind} in ('text', 'reading_response', 'fill_response')`),
+    index("comments_group_block_parent_idx").on(table.groupId, table.blockId, table.parentCommentId, table.createdAt, table.id),
+    check("comments_kind_check", sql`${table.kind} in ('text', 'reading_response', 'fill_response', 'practice_response')`),
+    check("comments_target_check", sql`(${table.postId} IS NULL) <> (${table.blockId} IS NULL)`),
   ],
 );
 
@@ -182,16 +190,18 @@ export const notifications = sqliteTable(
     groupId: text("group_id").notNull().references(() => groups.id),
     recipientUserId: text("recipient_user_id").notNull().references(() => users.id),
     actorUserId: text("actor_user_id").notNull().references(() => users.id),
-    kind: text("kind", { enum: ["join_requested", "join_accepted", "join_rejected", "member_removed", "post_response", "reply", "answer_pinned", "reaction"] }).notNull(),
+    kind: text("kind", { enum: ["join_requested", "join_accepted", "join_rejected", "member_removed", "post_response", "reply", "answer_pinned", "reaction", "contributor_requested", "contributor_accepted", "contributor_rejected"] }).notNull(),
     postId: text("post_id"),
     commentId: text("comment_id"),
+    // Set only on contributor notifications, which link to the course rather than a post.
+    courseId: text("course_id"),
     createdAt: integer("created_at").notNull(),
     readAt: integer("read_at"),
   },
   (table) => [
     index("notifications_recipient_group_created_idx").on(table.recipientUserId, table.groupId, table.createdAt),
     index("notifications_recipient_created_idx").on(table.recipientUserId, table.createdAt),
-    check("notifications_kind_check", sql`${table.kind} in ('join_requested', 'join_accepted', 'join_rejected', 'member_removed', 'post_response', 'reply', 'answer_pinned', 'reaction')`),
+    check("notifications_kind_check", sql`${table.kind} in ('join_requested', 'join_accepted', 'join_rejected', 'member_removed', 'post_response', 'reply', 'answer_pinned', 'reaction', 'contributor_requested', 'contributor_accepted', 'contributor_rejected')`),
   ],
 );
 
@@ -207,11 +217,75 @@ export const courses = sqliteTable(
     intendedLearner: text("intended_learner"),
     coverKey: text("cover_key"),
     status: text("status", { enum: ["draft", "published", "archived"] }).notNull(),
+    firstPublishedAt: integer("first_published_at"),
     createdAt: integer("created_at").notNull(),
     updatedAt: integer("updated_at").notNull(),
   },
   (table) => [
     index("courses_group_library_idx").on(table.groupId, table.createdAt, table.id),
     check("courses_status_check", sql`${table.status} in ('draft', 'published', 'archived')`),
+  ],
+);
+
+export const courseLessons = sqliteTable(
+  "course_lessons",
+  {
+    id: text("id").primaryKey(),
+    groupId: text("group_id").notNull().references(() => groups.id),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    goal: text("goal"),
+    position: integer("position").notNull(),
+    published: integer("published", { mode: "boolean" }).notNull().default(false),
+    version: integer("version").notNull().default(1),
+    createdBy: text("created_by").notNull().references(() => users.id),
+    updatedBy: text("updated_by").notNull().references(() => users.id),
+    createdAt: integer("created_at").notNull(),
+    updatedAt: integer("updated_at").notNull(),
+  },
+  (table) => [index("course_lessons_course_position_idx").on(table.groupId, table.courseId, table.position)],
+);
+
+export const courseBlocks = sqliteTable(
+  "course_blocks",
+  {
+    id: text("id").primaryKey(),
+    groupId: text("group_id").notNull().references(() => groups.id),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    position: integer("position").notNull(),
+    kind: text("kind", { enum: ["heading", "text", "example", "dialogue", "practice"] }).notNull(),
+    payload: text("payload").notNull(),
+    payloadVersion: integer("payload_version").notNull(),
+    published: integer("published", { mode: "boolean" }).notNull().default(false),
+    version: integer("version").notNull().default(1),
+    createdBy: text("created_by").notNull().references(() => users.id),
+    updatedBy: text("updated_by").notNull().references(() => users.id),
+    createdAt: integer("created_at").notNull(),
+    updatedAt: integer("updated_at").notNull(),
+  },
+  (table) => [
+    index("course_blocks_lesson_position_idx").on(table.groupId, table.lessonId, table.position),
+    check("course_blocks_kind_check", sql`${table.kind} in ('heading', 'text', 'example', 'dialogue', 'practice')`),
+    check("course_blocks_payload_check", sql`json_valid(${table.payload})`),
+  ],
+);
+
+// Per-course contributor roles mirror the membership lifecycle; one row per member and course.
+export const courseContributors = sqliteTable(
+  "course_contributors",
+  {
+    groupId: text("group_id").notNull().references(() => groups.id),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    userId: text("user_id").notNull().references(() => users.id),
+    state: text("state", { enum: ["pending", "active", "rejected", "left", "removed"] }).notNull(),
+    requestedAt: integer("requested_at").notNull(),
+    decidedAt: integer("decided_at"),
+    updatedAt: integer("updated_at").notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.courseId, table.userId] }),
+    index("course_contributors_course_state_idx").on(table.groupId, table.courseId, table.state),
+    check("course_contributors_state_check", sql`${table.state} in ('pending', 'active', 'rejected', 'left', 'removed')`),
   ],
 );

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { okResponseSchema, type Post } from "@wordinator/contracts";
 import ComposerForm from "../ComposerForm";
 import { Link, useNavigate } from "@tanstack/react-router";
-import ReactionBar from "./ReactionBar";
+import ReactionBar from "../ReactionBar/ReactionBar";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest, sessionQueryOptions, settingsQueryOptions } from "../../api";
 import {
@@ -23,24 +23,9 @@ import {
   PencilLine,
   Trash,
 } from "lucide-react";
+import { PlainText } from "../../molecules/PlainText";
+import CoursePostPreview from "./CoursePostPreview";
 import styles from "./PostCard.module.css";
-
-function PlainText({ children }: { children: string }) {
-  const parts = children.split(/(https?:\/\/[^\s]+)/g);
-  return (
-    <>
-      {parts.map((part, index) =>
-        /^https?:\/\//.test(part) ? (
-          <a key={index} href={part} target="_blank" rel="noreferrer">
-            {part}
-          </a>
-        ) : (
-          part
-        ),
-      )}
-    </>
-  );
-}
 
 function RelativeTime({ value }: { value: number }) {
   const seconds = Math.round((value - Date.now()) / 1_000);
@@ -131,22 +116,22 @@ export default function PostCard({
             <Menu.Target>
               <Button
                 variant="quiet"
-                aria-label={t("post.moreActions")}
+                aria-label={t("posts.moreActions")}
                 className={styles.postActions}
               >
                 <EllipsisVertical />
               </Button>
             </Menu.Target>
             <Menu.Dropdown className={styles.actionsDropdown}>
-              <Menu.Item
+              {post.permissions.edit && <Menu.Item
                 leftSection={<PencilLine size={20} />}
                 onClick={() => {
                   setEditing(true);
                 }}
               >
                 {t("common.edit")}
-              </Menu.Item>
-              <Menu.Item
+              </Menu.Item>}
+              {post.permissions.delete && <Menu.Item
                 color="var(--color-danger-text)"
                 leftSection={<Trash size={20} />}
                 onClick={() => {
@@ -154,7 +139,7 @@ export default function PostCard({
                 }}
               >
                 {t("common.delete")}
-              </Menu.Item>
+              </Menu.Item>}
               <Menu.Divider />
               <Menu.Item
                 color="var(--color-danger-text)"
@@ -182,9 +167,13 @@ export default function PostCard({
             </Menu.Dropdown>
           </Menu>
         </header>
-        <div className={styles.postBody}>
-          <PlainText>{body}</PlainText>
-        </div>
+        {post.course ? (
+          <CoursePostPreview course={post.course} groupId={groupId} />
+        ) : (
+          <div className={styles.postBody}>
+            <PlainText>{body}</PlainText>
+          </div>
+        )}
         {!compact && post.type === "reading" && (
           <ol className={styles.questions}>
             {post.questions.map((question) => (

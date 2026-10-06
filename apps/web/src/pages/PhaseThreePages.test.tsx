@@ -44,7 +44,7 @@ describe("Phase 3 composer", () => {
     const post = {
       id: "30000000-0000-4000-8000-000000000001", groupId, type: "shared_sentence", body: "Goedemorgen", notes: null,
       author: { id: userId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, edited: false,
-      questions: [], expectedAnswers: [], commentCount: 0, reactionCount: 0, reactions: [], permissions: { edit: true, delete: true },
+      questions: [], expectedAnswers: [], course: null, commentCount: 0, reactionCount: 0, reactions: [], permissions: { edit: true, delete: true },
     };
     vi.stubGlobal("fetch", vi.fn().mockResolvedValue(new Response(JSON.stringify({ post }), { status: 201, headers: { "content-type": "application/json" } })));
     const done = vi.fn(); renderComposer(done);

@@ -1,0 +1,98 @@
+import { createTheme, MantineProvider } from "@mantine/core";
+import type { Post } from "@wordinator/contracts";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { createMemoryHistory, createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import "../../i18n";
+import PostCard from "./PostCard";
+
+const groupId = "20000000-0000-4000-8000-000000000001";
+const userId = "10000000-0000-4000-8000-000000000001";
+
+// jsdom has no layout, so Mantine would treat the dropdown as detached from its trigger and hide it.
+const theme = createTheme({ components: { Menu: { defaultProps: { hideDetached: false, transitionProps: { duration: 0 } } } } });
+
+const post: Post = {
+  id: "30000000-0000-4000-8000-000000000001", groupId, type: "shared_sentence", body: "Goedemorgen", notes: null,
+  author: { id: userId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, edited: false,
+  questions: [], expectedAnswers: [], course: null, commentCount: 2, reactionCount: 3, reactions: [], permissions: { edit: true, delete: true },
+};
+
+function renderCard(permissions: Post["permissions"]) {
+  const root = createRootRoute();
+  const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <PostCard post={{ ...post, permissions }} groupId={groupId} /> });
+  const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: ["/"] }) });
+  const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  return render(<MantineProvider theme={theme}><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
+}
+
+async function openMenu() {
+  fireEvent.click(await screen.findByRole("button", { name: "More Actions" }));
+  return screen.findByRole("menu");
+}
+
+describe("PostCard actions menu", () => {
+  beforeEach(() => {
+    // Session and settings are not needed to render the menu; leave them unresolved.
+    vi.stubGlobal("fetch", vi.fn(() => new Promise<Response>(() => {})));
+  });
+  afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
+
+  it("offers edit and delete when the viewer may change the post", async () => {
+    renderCard({ edit: true, delete: true });
+    await openMenu();
+    expect(screen.getByRole("menuitem", { name: "Edit" })).toBeInTheDocument();
+    expect(screen.getByRole("menuitem", { name: "Delete" })).toBeInTheDocument();
+  });
+
+  it("hides edit and delete without permission but keeps the post statistics", async () => {
+    renderCard({ edit: false, delete: false });
+    await openMenu();
+    expect(screen.queryByRole("menuitem", { name: "Edit" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("menuitem", { name: "Delete" })).not.toBeInTheDocument();
+    expect(screen.getByRole("menuitem", { name: /2 responses/ })).toBeInTheDocument();
+  });
+
+  it("shows only the actions the viewer is allowed to take", async () => {
+    renderCard({ edit: false, delete: true });
+    await openMenu();
+    expect(screen.queryByRole("menuitem", { name: "Edit" })).not.toBeInTheDocument();
+    expect(screen.getByRole("menuitem", { name: "Delete" })).toBeInTheDocument();
+  });
+
+  it("opens the delete confirmation from the menu", async () => {
+    renderCard({ edit: true, delete: true });
+    await openMenu();
+    fireEvent.click(screen.getByRole("menuitem", { name: "Delete" }));
+    expect(await screen.findByRole("dialog", { name: "Delete this post?" })).toBeInTheDocument();
+  });
+});
+
+describe("PostCard course posts", () => {
+  beforeEach(() => { vi.stubGlobal("fetch", vi.fn(() => new Promise<Response>(() => {}))); });
+  afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
+  const course = { id: "60000000-0000-4000-8000-000000000001", available: true, title: "Deutsch für Anfänger", summary: "Erste Schritte", level: "A1", coverUrl: null };
+
+  function renderCourse(value: Post["course"]) {
+    const root = createRootRoute();
+    const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <PostCard post={{ ...post, type: "course", body: "", course: value, permissions: { edit: false, delete: false } }} groupId={groupId} /> });
+    const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: ["/"] }) });
+    return render(<MantineProvider theme={theme}><QueryClientProvider client={new QueryClient()}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
+  }
+
+  it("links to the course with its title, level, and summary", async () => {
+    renderCourse(course);
+    const link = await screen.findByRole("link", { name: /Deutsch für Anfänger/ });
+    expect(link).toHaveAttribute("href", `/groups/${groupId}/courses/${course.id}`);
+    expect(screen.getByText("Published a new course")).toBeInTheDocument();
+    expect(screen.getByText("A1")).toBeInTheDocument();
+    expect(screen.getByText("Erste Schritte")).toBeInTheDocument();
+  });
+
+  it("shows an unavailable course without a link", async () => {
+    renderCourse({ ...course, available: false, title: null, summary: null, level: null });
+    expect(await screen.findByText("This course is no longer available.")).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /Open course/ })).not.toBeInTheDocument();
+  });
+});

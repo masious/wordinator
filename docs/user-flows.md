@@ -13,7 +13,7 @@
 2. A signed-out visitor registers with email, password, and display name. An existing user signs in.
 3. The application creates one pending request for that user and group.
 4. A user with no active memberships sees only the pending/rejected status experience.
-5. The creator accepts or rejects the request.
+5. The creator sees a join-request notice and a line on the group home, opens Settings → Members, and accepts or rejects the request.
 6. Acceptance makes the group the new user’s landing destination. Rejection leaves the account able to sign in, inspect status, and follow another invitation.
 7. Rejected, removed, or departed users may request again later. There is no ban list.
 
@@ -26,17 +26,17 @@
 
 ## Create a group
 
-1. An accepted user supplies a name, chooses Dutch or German, and optionally uploads/crops a square icon.
+1. An accepted user supplies a name, chooses Dutch or German, and optionally chooses an icon, moving and zooming it into a square in the cropper.
 2. The creator becomes the first member immediately.
 3. The language is immutable. The name and custom icon may change.
 4. The group exposes one reusable invitation link to every member.
 
 ## Manage a profile and settings
 
-1. A member opens Settings from an active group. Account fields remain account-wide even though the route keeps the current group shell visible.
-2. They may update their display name, optional bio, and three distinct quick-reaction emoji. Active group attribution reflects the change immediately.
+1. A member opens Settings from an active group and lands on the Account page, which states that its fields apply in every group. The creator also sees Group and Members sections; ordinary members see only Account.
+2. They may update their display name, optional bio, avatar (chosen through the cropper), and three distinct quick-reaction emoji. Active group attribution reflects the change immediately.
 3. They may change their password after entering the current password. A forced password change remains a separate entry flow that does not ask for the current temporary password again.
-4. A creator may rename the active group; ordinary members do not receive that control and the API rejects direct attempts.
+4. A creator may rename the active group or change its icon on Settings → Group; ordinary members are sent back to Account and the API rejects direct attempts.
 5. Any current member may follow a group-scoped profile link. The page shows fallback initials, the group-visible bio, and the post-list area without exposing email or other groups.
 
 ## Create a post
@@ -71,7 +71,7 @@
 - The creator may remove a member; that person receives an out-of-group status notice.
 - The creator cannot leave in the initial release.
 
-The Members page shows active and former members. Creator removal requires confirmation. Password regeneration shows one temporary password once for out-of-band sharing; the member must replace it on their next authenticated interaction.
+The Members directory shows active and former members to everyone. The creator removes members and regenerates passwords on Settings → Members, which also lists pending and rejected requests. Removal requires confirmation. Password regeneration shows one temporary password once for out-of-band sharing; the member must replace it on their next authenticated interaction.
 
 ## Review notifications
 
@@ -83,9 +83,9 @@ The Members page shows active and former members. Creator removal requires confi
 
 ## Delete and restore a group
 
-1. The creator confirms a destructive-looking but recoverable delete action.
+1. On Settings → Group, the creator confirms a destructive-looking but recoverable delete action.
 2. The group becomes inaccessible and inactive; members see that it was deleted.
-3. The creator sees it under Deleted groups in account settings.
+3. The creator sees it under Deleted groups on the Account settings page.
 4. Restoration reactivates the group, its content, and all prior memberships.
 
 If a deleted group is a person’s only group, status appears in the restricted landing experience. If another active group remains, deleted status appears in Settings. Only creator-owned deleted groups show Restore.
@@ -94,9 +94,31 @@ If a deleted group is a person’s only group, status appears in the restricted 
 
 1. A member opens Courses from the main navigation and chooses New course.
 2. They enter a title and summary, plus an optional free-text level and intended learner, and create a draft.
-3. The draft opens on its course page. Only the owner can see it; it does not appear in other members' libraries.
+3. The draft opens on its course page. Only the owner and accepted contributors can see it; it does not appear in other members' libraries.
 4. The owner can edit the details and upload, replace, or remove a wide cover image.
-5. Publishing makes the course visible to every active member in the newest-first library. The owner can return it to draft at any time.
-6. The owner or group creator can archive the course after confirming. Other members no longer see it. The owner and creator still see it in the library and can restore it, which returns it as a draft.
+5. Publishing makes the course visible to every active member in the newest-first library. The first publication also adds a course card to the top of the feed, where members can react, comment, and follow the link to the course. The owner can return it to draft at any time.
+6. The owner or group creator can archive the course after confirming. Other members no longer see it, and its feed card says the course is unavailable. The owner and creator still see it in the library and can restore it, which returns it as a draft.
 
-Lessons and blocks are not part of this flow yet; see the [course phases](roadmap.md#course-phases).
+7. The owner adds lessons with a title and optional goal. New lessons are unpublished and appear in the outline with an Unpublished label.
+8. Inside a lesson, the owner adds heading, text, example, dialogue, and practice blocks one at a time, and can move lessons and blocks up or down. Each lesson and block is published separately; readers see only published lessons and published blocks.
+9. The owner can stop at any time. An unsaved block edit stays in the browser and reopens with a restored notice on the next visit. Saved but unpublished content is the durable draft on the server.
+10. If someone saved a newer version first, saving shows a conflict message. The owner can keep their edit and save it over the newer version, or discard it and see the saved one.
+11. Readers see the outline and the first three lessons, and continue to later lessons one at a time.
+
+## Contribute to a course
+
+1. A member reading a published course chooses Ask to contribute in the Contributors panel. The panel then says the request is waiting, and they can withdraw it.
+2. The owner gets a notification that links to the course. The Contributors panel lists pending requests, and the owner accepts or declines each one. The requester is notified of the decision.
+3. An accepted contributor sees unpublished lessons and blocks, and the draft course itself if the owner returns it to draft. They add lessons, and add blocks to any lesson, including a published one. Everything they add is unpublished, and the block editor has no publish option for them.
+4. Contributors can edit only unpublished lessons and blocks. Published content shows no edit control for them, and reordering, deleting, and publishing are left to the owner.
+5. The owner sees who last edited each lesson and block, reviews contributor drafts, and publishes them. Once published, they can only be changed by the owner, who can unpublish them to let a contributor rework them.
+6. A contributor can stop contributing at any time, and the owner can remove a contributor after confirming. Either way their content stays, and they may ask again later. Leaving the group also ends their contributor role.
+
+## Practise a lesson
+
+1. A member reads a published lesson. A practice block shows its instruction, an optional reading passage, and its numbered prompts. Fill-in prompts show `…` for each blank. Authors' versions and notes are not shown.
+2. Below the prompts, the answer thread is concealed and shows only how many answers and replies it holds.
+3. The learner fills in one answer set covering every item, leaving any item blank. Unsent answers stay in the browser across visits and sign-out.
+4. Publishing the answer set, or choosing to reveal without answering, shows the author's version and item notes as a reference, plus everyone's answer sets in order. Nothing is marked right or wrong.
+5. Members reply to an answer set and react to answers and replies. Authors can edit or delete their own answers; the group creator can delete any.
+6. Returning to the lesson later starts concealed again.

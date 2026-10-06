@@ -1,15 +1,16 @@
 import {
   isSingleEmojiGrapheme,
+  reactionSummarySchema,
   reactionTargetResponseSchema,
   type ReactionSummary,
 } from "@wordinator/contracts";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, TextField } from "../../ui/index";
+import { Button } from "../../ui/index";
 import styles from "./ReactionBar.module.css";
 import { StarPlus } from "lucide-react";
-import { apiRequest } from "../../api";
+import { apiRequest, sessionQueryOptions } from "../../api";
 import { Pill, PillsInput } from "@mantine/core";
 
 export default function ReactionBar({
@@ -27,6 +28,7 @@ export default function ReactionBar({
   const [custom, setCustom] = useState("");
   const [error, setError] = useState("");
   const [open, setOpen] = useState<string | null>(null);
+    const session = useQuery(sessionQueryOptions());
   const mutation = useMutation({
     mutationFn: ({ emoji, active }: { emoji: string; active: boolean }) =>
       apiRequest(path, reactionTargetResponseSchema, {
@@ -51,10 +53,13 @@ export default function ReactionBar({
       active: !reactions.find((reaction) => reaction.emoji === emoji)?.reacted,
     });
 
+    if (session.data?.status !== 'signedIn') return null;
+  const viewerId = session.data.user.id;
+
   return (
     <>
       <PillsInput
-        label="Your Reaction"
+        label={reactions.find(reaction => reaction.members.some((m) => m.id === viewerId))?.emoji}
         variant="filled"
         classNames={{ root: styles.reactionBarRoot, input: styles.reactionBarInput }}
       >
@@ -72,8 +77,8 @@ export default function ReactionBar({
                 aria-pressed={summary?.reacted ?? false}
                 aria-label={t("discussion.reactWith", { emoji })}
                 onClick={(e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
+                  e.stopPropagation();
+                  e.preventDefault();
                   setOpen(emoji);
                   toggle(emoji);
                 }}

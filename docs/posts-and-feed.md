@@ -38,6 +38,18 @@ All posts have an author, group, type, optional notes, creation/update timestamp
 
 Expected-answer feedback occurs only after submission. Trim surrounding whitespace and compare case-insensitively. Show a small positive match signal and no negative or “incorrect” judgment.
 
+### Course
+
+- System-created: the API creates one when a course is first published; see [courses](courses.md#feed-presence)
+- Author: the course owner
+- Content: a link to the course; the card shows the live course title, level, summary, and cover
+- Editing: never offered by the composer and refused by the API (`409 POST_NOT_EDITABLE`)
+- Discussion: visible ordinary comments
+- Pinning: unavailable
+- Deletion: the author or group creator may delete it like any post; it is not recreated when the course is published again
+
+The card links to the course only while the viewer can open it: the course is published, or it is the viewer's own draft. Otherwise, including after archiving, the card says the course is unavailable and the post carries no course title, summary, level, or cover.
+
 ## Composer and drafts
 
 The feed begins with a persistent composer. When it leaves the viewport, show a floating create action that opens the same flow. Use a centered modal on larger screens and a full-screen mobile composition surface.
@@ -46,9 +58,11 @@ The post-type chooser is at the top. Maintain independent field state for each t
 
 Persist drafts in local storage for posts, comments, replies, standalone answers, fill-in responses, and reading-wizard responses. Keys must include account, group, target content where applicable, draft kind, and a schema version. A newer deployment may discard incompatible drafts. Drafts survive navigation and sign-out on the same browser.
 
-Phase 3 implements post-composer drafts with schema version `v1` and the key shape `wordinator:draft:v1:<account-id>:<group-id>:post:new`. One stored document contains independent state for all four post types. Switching to a type with no primary text or notes yet maps those compatible values from the current type without overwriting state already entered for the destination type. Publication and explicit discard remove the draft; closing the composer, navigation, and sign-out do not. Later writing flows use the same identity/version principles when their phases ship.
+Phase 3 implements post-composer drafts with schema version `v1` and the key shape `wordinator:draft:v1:<account-id>:<group-id>:post:new`. One stored document contains independent state for all four composer post types; the system-created course type has no composer state. Switching to a type with no primary text or notes yet maps those compatible values from the current type without overwriting state already entered for the destination type. Publication and explicit discard remove the draft; closing the composer, navigation, and sign-out do not. Later writing flows use the same identity/version principles when their phases ship.
 
 Phase 4 implements the remaining writing drafts with `wordinator:draft:v1:<account-id>:<group-id>:<draft-kind>:<target-id>`. Draft kinds distinguish comments, replies, standalone answers, fill responses, and reading responses; reply targets are the parent comment and all other targets are the post. Reading drafts include the current wizard step. Empty drafts are not retained, and successful publication clears only the submitted draft.
+
+[Courses](courses.md#editing-model) add the draft kind `course-block`, using the same key shape with the block ID as target, or the lesson ID for a block not yet created. Only edits that differ from the saved block are retained. A successful save or an explicit discard removes the draft. Practice answer sets use the draft kind `practice-answer` with the block ID as target, and practice replies use `reply` with the parent comment as target. Empty answer sets are not retained, and publishing clears the draft.
 
 ## Feed
 

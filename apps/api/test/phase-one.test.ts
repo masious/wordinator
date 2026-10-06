@@ -90,9 +90,11 @@ describe("Phase 1 API", () => {
 
     const creatorCookie = await signIn("alpha@example.test");
     const shell = await SELF.fetch(`https://wordinator.test/api/groups/${creator.groupId}`, { headers: { cookie: creatorCookie } });
-    const shellBody = await shell.json<{ pendingMembers: Array<{ userId: string }> }>();
-    expect(shellBody.pendingMembers).toHaveLength(1);
-    const approval = await jsonRequest(`/api/groups/${creator.groupId}/memberships/${shellBody.pendingMembers[0]!.userId}`, { decision: "accept" }, creatorCookie, "PATCH");
+    const shellBody = await shell.json<{ pendingRequestCount: number }>();
+    expect(shellBody.pendingRequestCount).toBe(1);
+    const admin = await SELF.fetch(`https://wordinator.test/api/groups/${creator.groupId}/memberships`, { headers: { cookie: creatorCookie } });
+    const adminBody = await admin.json<{ pending: Array<{ id: string }> }>();
+    const approval = await jsonRequest(`/api/groups/${creator.groupId}/memberships/${adminBody.pending[0]!.id}`, { decision: "accept" }, creatorCookie, "PATCH");
     expect(approval.status).toBe(200);
     const acceptedSession = await SELF.fetch("https://wordinator.test/api/session", { headers: { cookie: memberCookie } });
     const accepted = sessionResponseSchema.parse(await acceptedSession.json());

@@ -5,11 +5,11 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { DiscussionItem, Post } from "@wordinator/contracts";
 import "../i18n";
 import { DiscussionPanel, discussionDraftKey } from "./PhaseFourPages";
-import ReactionBar from "../organisms/PostCard/ReactionBar";
+import ReactionBar from "../organisms/ReactionBar/ReactionBar";
 
 const groupId = "20000000-0000-4000-8000-000000000001"; const userId = "10000000-0000-4000-8000-000000000001";
 const session = { status: "signedIn" as const, user: { id: userId, displayName: "Ada", avatarUrl: null, mustChangePassword: false }, groups: [{ id: groupId, name: "Study", language: "nl" as const, role: "member" as const, icon: "🇳🇱", iconUrl: null }], requests: [], deletedGroups: [] };
-const basePost: Post = { id: "30000000-0000-4000-8000-000000000001", groupId, type: "question", body: "Waarom?", notes: null, author: { id: "40000000-0000-4000-8000-000000000001", displayName: "Lin", avatarUrl: null }, createdAt: 1, updatedAt: 1, edited: false, questions: [], expectedAnswers: [], commentCount: 1, reactionCount: 0, reactions: [], permissions: { edit: false, delete: false } };
+const basePost: Post = { id: "30000000-0000-4000-8000-000000000001", groupId, type: "question", body: "Waarom?", notes: null, author: { id: "40000000-0000-4000-8000-000000000001", displayName: "Lin", avatarUrl: null }, createdAt: 1, updatedAt: 1, edited: false, questions: [], expectedAnswers: [], course: null, commentCount: 1, reactionCount: 0, reactions: [], permissions: { edit: false, delete: false } };
 const hiddenAnswer: DiscussionItem = { id: "50000000-0000-4000-8000-000000000001", parentId: null, kind: "text", body: "Omdat het mooi is.", author: { id: userId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, edited: false, pinned: false, responseItems: [], reactions: [], permissions: { edit: true, delete: true, reply: true, pin: false }, replies: [] };
 
 function json(value: unknown, status = 200) { return Promise.resolve(new Response(JSON.stringify(value), { status, headers: { "content-type": "application/json" } })); }
@@ -25,6 +25,17 @@ describe("Phase 4 discussion UI", () => {
     expect(await screen.findByText("1 answer is concealed")).toBeVisible(); expect(screen.queryByText("Omdat het mooi is.")).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Reveal answers" }));
     expect(await screen.findByText("Omdat het mooi is.")).toBeVisible();
+  });
+
+  it("shows course post comments openly with a plain comment composer", async () => {
+    const coursePost: Post = { ...basePost, type: "course", body: "", course: { id: "60000000-0000-4000-8000-000000000001", available: true, title: "Deutsch", summary: null, level: null, coverUrl: null } };
+    vi.stubGlobal("fetch", vi.fn().mockImplementation(() => json({ items: [hiddenAnswer], count: 1, concealed: false, quickReactions: ["❤️", "💡", "👎"] })));
+    renderWithClient(<DiscussionPanel post={coursePost} groupId={groupId} session={session} />);
+    expect(await screen.findByText("Omdat het mooi is.")).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Reveal answers" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Conceal" })).not.toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText(/Comment/), { target: { value: "Toll!" } });
+    expect(localStorage.getItem(discussionDraftKey(userId, groupId, "comment", coursePost.id))).toContain("Toll!");
   });
 
   it("reveals and targets a directly linked answer", async () => {

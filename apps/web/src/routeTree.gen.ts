@@ -16,10 +16,13 @@ import { Route as InviteTokenRouteImport } from './routes/invite.$token'
 import { Route as GroupsGroupIdCoursesRouteImport } from './routes/groups.$groupId_.courses'
 import { Route as GroupsGroupIdMembersRouteImport } from './routes/groups.$groupId_.members'
 import { Route as GroupsGroupIdNotificationsRouteImport } from './routes/groups.$groupId_.notifications'
-import { Route as GroupsGroupIdSettingsRouteImport } from './routes/groups.$groupId_.settings'
 import { Route as GroupsGroupIdCoursesCourseIdRouteImport } from './routes/groups.$groupId_.courses_.$courseId'
 import { Route as GroupsGroupIdMembersUserIdRouteImport } from './routes/groups.$groupId_.members_.$userId'
 import { Route as GroupsGroupIdPostsPostIdRouteImport } from './routes/groups.$groupId_.posts.$postId'
+import { Route as GroupsGroupIdSettingsIndexRouteImport } from './routes/groups.$groupId_.settings.index'
+import { Route as GroupsGroupIdSettingsAccountRouteImport } from './routes/groups.$groupId_.settings.account'
+import { Route as GroupsGroupIdSettingsGroupRouteImport } from './routes/groups.$groupId_.settings.group'
+import { Route as GroupsGroupIdSettingsMembersRouteImport } from './routes/groups.$groupId_.settings.members'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -57,11 +60,6 @@ const GroupsGroupIdNotificationsRoute =
     path: '/groups/$groupId/notifications',
     getParentRoute: () => rootRouteImport,
   } as any)
-const GroupsGroupIdSettingsRoute = GroupsGroupIdSettingsRouteImport.update({
-  id: '/groups/$groupId_/settings',
-  path: '/groups/$groupId/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const GroupsGroupIdCoursesCourseIdRoute =
   GroupsGroupIdCoursesCourseIdRouteImport.update({
     id: '/groups/$groupId_/courses_/$courseId',
@@ -80,6 +78,30 @@ const GroupsGroupIdPostsPostIdRoute =
     path: '/groups/$groupId/posts/$postId',
     getParentRoute: () => rootRouteImport,
   } as any)
+const GroupsGroupIdSettingsIndexRoute =
+  GroupsGroupIdSettingsIndexRouteImport.update({
+    id: '/groups/$groupId_/settings/',
+    path: '/groups/$groupId/settings/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const GroupsGroupIdSettingsAccountRoute =
+  GroupsGroupIdSettingsAccountRouteImport.update({
+    id: '/groups/$groupId_/settings/account',
+    path: '/groups/$groupId/settings/account',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const GroupsGroupIdSettingsGroupRoute =
+  GroupsGroupIdSettingsGroupRouteImport.update({
+    id: '/groups/$groupId_/settings/group',
+    path: '/groups/$groupId/settings/group',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const GroupsGroupIdSettingsMembersRoute =
+  GroupsGroupIdSettingsMembersRouteImport.update({
+    id: '/groups/$groupId_/settings/members',
+    path: '/groups/$groupId/settings/members',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -89,10 +111,13 @@ export interface FileRoutesByFullPath {
   '/groups/$groupId/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId/notifications': typeof GroupsGroupIdNotificationsRoute
-  '/groups/$groupId/settings': typeof GroupsGroupIdSettingsRoute
   '/groups/$groupId/courses/$courseId': typeof GroupsGroupIdCoursesCourseIdRoute
   '/groups/$groupId/members/$userId': typeof GroupsGroupIdMembersUserIdRoute
   '/groups/$groupId/posts/$postId': typeof GroupsGroupIdPostsPostIdRoute
+  '/groups/$groupId/settings/account': typeof GroupsGroupIdSettingsAccountRoute
+  '/groups/$groupId/settings/group': typeof GroupsGroupIdSettingsGroupRoute
+  '/groups/$groupId/settings/members': typeof GroupsGroupIdSettingsMembersRoute
+  '/groups/$groupId/settings/': typeof GroupsGroupIdSettingsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -102,10 +127,13 @@ export interface FileRoutesByTo {
   '/groups/$groupId/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId/notifications': typeof GroupsGroupIdNotificationsRoute
-  '/groups/$groupId/settings': typeof GroupsGroupIdSettingsRoute
   '/groups/$groupId/courses/$courseId': typeof GroupsGroupIdCoursesCourseIdRoute
   '/groups/$groupId/members/$userId': typeof GroupsGroupIdMembersUserIdRoute
   '/groups/$groupId/posts/$postId': typeof GroupsGroupIdPostsPostIdRoute
+  '/groups/$groupId/settings/account': typeof GroupsGroupIdSettingsAccountRoute
+  '/groups/$groupId/settings/group': typeof GroupsGroupIdSettingsGroupRoute
+  '/groups/$groupId/settings/members': typeof GroupsGroupIdSettingsMembersRoute
+  '/groups/$groupId/settings': typeof GroupsGroupIdSettingsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -116,10 +144,13 @@ export interface FileRoutesById {
   '/groups/$groupId_/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId_/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId_/notifications': typeof GroupsGroupIdNotificationsRoute
-  '/groups/$groupId_/settings': typeof GroupsGroupIdSettingsRoute
   '/groups/$groupId_/courses_/$courseId': typeof GroupsGroupIdCoursesCourseIdRoute
   '/groups/$groupId_/members_/$userId': typeof GroupsGroupIdMembersUserIdRoute
   '/groups/$groupId_/posts/$postId': typeof GroupsGroupIdPostsPostIdRoute
+  '/groups/$groupId_/settings/account': typeof GroupsGroupIdSettingsAccountRoute
+  '/groups/$groupId_/settings/group': typeof GroupsGroupIdSettingsGroupRoute
+  '/groups/$groupId_/settings/members': typeof GroupsGroupIdSettingsMembersRoute
+  '/groups/$groupId_/settings/': typeof GroupsGroupIdSettingsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -131,10 +162,13 @@ export interface FileRouteTypes {
     | '/groups/$groupId/courses'
     | '/groups/$groupId/members'
     | '/groups/$groupId/notifications'
-    | '/groups/$groupId/settings'
     | '/groups/$groupId/courses/$courseId'
     | '/groups/$groupId/members/$userId'
     | '/groups/$groupId/posts/$postId'
+    | '/groups/$groupId/settings/account'
+    | '/groups/$groupId/settings/group'
+    | '/groups/$groupId/settings/members'
+    | '/groups/$groupId/settings/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -144,10 +178,13 @@ export interface FileRouteTypes {
     | '/groups/$groupId/courses'
     | '/groups/$groupId/members'
     | '/groups/$groupId/notifications'
-    | '/groups/$groupId/settings'
     | '/groups/$groupId/courses/$courseId'
     | '/groups/$groupId/members/$userId'
     | '/groups/$groupId/posts/$postId'
+    | '/groups/$groupId/settings/account'
+    | '/groups/$groupId/settings/group'
+    | '/groups/$groupId/settings/members'
+    | '/groups/$groupId/settings'
   id:
     | '__root__'
     | '/'
@@ -157,10 +194,13 @@ export interface FileRouteTypes {
     | '/groups/$groupId_/courses'
     | '/groups/$groupId_/members'
     | '/groups/$groupId_/notifications'
-    | '/groups/$groupId_/settings'
     | '/groups/$groupId_/courses_/$courseId'
     | '/groups/$groupId_/members_/$userId'
     | '/groups/$groupId_/posts/$postId'
+    | '/groups/$groupId_/settings/account'
+    | '/groups/$groupId_/settings/group'
+    | '/groups/$groupId_/settings/members'
+    | '/groups/$groupId_/settings/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -171,10 +211,13 @@ export interface RootRouteChildren {
   GroupsGroupIdCoursesRoute: typeof GroupsGroupIdCoursesRoute
   GroupsGroupIdMembersRoute: typeof GroupsGroupIdMembersRoute
   GroupsGroupIdNotificationsRoute: typeof GroupsGroupIdNotificationsRoute
-  GroupsGroupIdSettingsRoute: typeof GroupsGroupIdSettingsRoute
   GroupsGroupIdCoursesCourseIdRoute: typeof GroupsGroupIdCoursesCourseIdRoute
   GroupsGroupIdMembersUserIdRoute: typeof GroupsGroupIdMembersUserIdRoute
   GroupsGroupIdPostsPostIdRoute: typeof GroupsGroupIdPostsPostIdRoute
+  GroupsGroupIdSettingsAccountRoute: typeof GroupsGroupIdSettingsAccountRoute
+  GroupsGroupIdSettingsGroupRoute: typeof GroupsGroupIdSettingsGroupRoute
+  GroupsGroupIdSettingsMembersRoute: typeof GroupsGroupIdSettingsMembersRoute
+  GroupsGroupIdSettingsIndexRoute: typeof GroupsGroupIdSettingsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -228,13 +271,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GroupsGroupIdNotificationsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/groups/$groupId_/settings': {
-      id: '/groups/$groupId_/settings'
-      path: '/groups/$groupId/settings'
-      fullPath: '/groups/$groupId/settings'
-      preLoaderRoute: typeof GroupsGroupIdSettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/groups/$groupId_/courses_/$courseId': {
       id: '/groups/$groupId_/courses_/$courseId'
       path: '/groups/$groupId/courses/$courseId'
@@ -256,6 +292,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GroupsGroupIdPostsPostIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/groups/$groupId_/settings/': {
+      id: '/groups/$groupId_/settings/'
+      path: '/groups/$groupId/settings'
+      fullPath: '/groups/$groupId/settings/'
+      preLoaderRoute: typeof GroupsGroupIdSettingsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/groups/$groupId_/settings/account': {
+      id: '/groups/$groupId_/settings/account'
+      path: '/groups/$groupId/settings/account'
+      fullPath: '/groups/$groupId/settings/account'
+      preLoaderRoute: typeof GroupsGroupIdSettingsAccountRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/groups/$groupId_/settings/group': {
+      id: '/groups/$groupId_/settings/group'
+      path: '/groups/$groupId/settings/group'
+      fullPath: '/groups/$groupId/settings/group'
+      preLoaderRoute: typeof GroupsGroupIdSettingsGroupRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/groups/$groupId_/settings/members': {
+      id: '/groups/$groupId_/settings/members'
+      path: '/groups/$groupId/settings/members'
+      fullPath: '/groups/$groupId/settings/members'
+      preLoaderRoute: typeof GroupsGroupIdSettingsMembersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -267,10 +331,13 @@ const rootRouteChildren: RootRouteChildren = {
   GroupsGroupIdCoursesRoute: GroupsGroupIdCoursesRoute,
   GroupsGroupIdMembersRoute: GroupsGroupIdMembersRoute,
   GroupsGroupIdNotificationsRoute: GroupsGroupIdNotificationsRoute,
-  GroupsGroupIdSettingsRoute: GroupsGroupIdSettingsRoute,
   GroupsGroupIdCoursesCourseIdRoute: GroupsGroupIdCoursesCourseIdRoute,
   GroupsGroupIdMembersUserIdRoute: GroupsGroupIdMembersUserIdRoute,
   GroupsGroupIdPostsPostIdRoute: GroupsGroupIdPostsPostIdRoute,
+  GroupsGroupIdSettingsAccountRoute: GroupsGroupIdSettingsAccountRoute,
+  GroupsGroupIdSettingsGroupRoute: GroupsGroupIdSettingsGroupRoute,
+  GroupsGroupIdSettingsMembersRoute: GroupsGroupIdSettingsMembersRoute,
+  GroupsGroupIdSettingsIndexRoute: GroupsGroupIdSettingsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

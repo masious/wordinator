@@ -51,7 +51,7 @@ Build: `course_lessons` and `course_blocks` tables; lesson and block create/edit
 | `docs/user-flows.md` | Extend the course flow with adding lessons and blocks over several sessions. |
 | `docs/roadmap.md` | Mark C2 complete. |
 
-**Acceptance fixture:** normalize `course-example-part-iii.json` and `lesson-13.json` into a fixture under the test fixtures directory: drop sections in favor of `heading` blocks, convert `_____` to `…`, store author's versions as per-blank lists, flatten the reading follow-up into its own practice block, and drop speaking placeholders, `grammar`, `topicVocabulary`, `connectsFrom`, `preparesFor`, `references`, and `futureReferences`. Content-only blocks are used here; practice blocks join in C3. Delete the two root JSON files once the fixture exists.
+**Acceptance fixture:** normalize `course-example-part-iii.json` and `lesson-13.json` into a fixture under the test fixtures directory: drop sections in favor of `heading` blocks, convert `_____` to `…`, store author's versions as per-blank lists, flatten the reading follow-up into its own practice block, and drop speaking placeholders, `grammar`, `topicVocabulary`, `connectsFrom`, `preparesFor`, `references`, and `futureReferences`. Content-only blocks are used here; practice blocks join in C3. Delete the two root JSON files once the fixture exists. Done in C2: the fixture is `test/fixtures/courses/dutch-foundations-part-iii.json` and the root files are removed.
 
 ## Phase C3 — Practice blocks and answer threads
 
@@ -67,6 +67,8 @@ Build: `practice` kind; learner payloads without authors' versions or notes; com
 | `docs/user-flows.md` | Add "Practise a lesson". |
 | `docs/roadmap.md` | Mark C3 complete. |
 
+Done in C3: migration `0011_course_practice_threads.sql` rebuilds `course_blocks` and `comments`. The thread endpoints live under `.../blocks/:blockId/` (`discussion`, `comments`), and editors receive authors' versions as a separate `reference`. Practice drafts use the draft kind `practice-answer`, and practice threads create no notifications; `docs/courses.md` records these decisions and the instruction and answer-entry limits.
+
 ## Phase C4 — Feed presence
 
 Build: post type `course` with a nullable course link, created once on first course publication; feed card linking to the course; visible comments and reactions; unavailable state for archived courses; composer never offers the type.
@@ -78,6 +80,8 @@ Build: post type `course` with a nullable course link, created once on first cou
 | `docs/data-model.md` | Add the `posts` course link and the `course` type to the type constraint. |
 | `docs/what_is_it.md` | Update the post-type sentence in the core loop. |
 | `docs/roadmap.md` | Mark C4 complete. |
+
+Done in C4: migration `0012_course_feed_posts.sql` rebuilds `posts` and adds `courses.first_published_at`, which guards single creation even after the post is deleted. Courses published before C4 get no retroactive post. A course returned to draft is unavailable on the card to everyone but its owner. `docs/courses.md` records these decisions.
 
 ## Phase C5 — Contributors
 
@@ -91,6 +95,8 @@ Build: `course_contributors` table mirroring membership states; request, accept,
 | `docs/testing.md` | Add negative permission tests: contributor editing published content, contributor publishing, non-contributor editing, and former contributors. |
 | `docs/user-flows.md` | Add "Contribute to a course". |
 | `docs/roadmap.md` | Mark C5 complete and record the course feature as delivered. |
+
+Done in C5: migration `0013_course_contributors.sql` adds `course_contributors` and rebuilds `notifications` with a course link. Contributors may add unpublished blocks to published lessons; reordering and deletion stay with the owner (and the creator for deletion); withdrawing a request and leaving both end as `left`; group departure ends contributor roles; and the group creator does not decide contributors for another member's course. `docs/courses.md` records these decisions.
 
 ## Later, not planned
 

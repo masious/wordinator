@@ -27,7 +27,6 @@
 .coverTools{display:grid;gap:var(--space-3)}
 .coverTools h3{margin:0;font-size:var(--text-md)}
 .form{display:grid;gap:var(--space-4)}
-.error{margin:0;color:var(--color-danger);font-weight:var(--weight-semibold)}
 @media(max-width:48em){.hero{grid-template-columns:1fr;gap:var(--space-6)}}
 @media(max-width:40em){.toolActions>*,.formActions>*{flex:1}}
 @media(prefers-reduced-motion:reduce){.stack{animation:none}.card{transition-duration:1ms}.card:hover{transform:none}}

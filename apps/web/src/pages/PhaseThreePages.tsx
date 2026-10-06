@@ -34,26 +34,7 @@ import styles from "./PhaseThreePages.module.css";
 import { DiscussionPanel } from "./PhaseFourPages";
 import PostCard from '../organisms/PostCard/PostCard';
 import ComposerForm from "../organisms/ComposerForm";
-import type { TypeDraft, ComposerDraft, SignedInSession } from '../organisms/types/auth'
-
-const emptyType = (): TypeDraft => ({
-  body: "",
-  notes: "",
-  questions: [""],
-  expectedAnswers: [],
-});
-const emptyDraft = (): ComposerDraft => ({
-  version: 1,
-  activeType: "shared_sentence",
-  byType: {
-    shared_sentence: emptyType(),
-    question: emptyType(),
-    reading: emptyType(),
-    fill_in: emptyType(),
-  },
-});
-export const composerDraftKey = (accountId: string, groupId: string) =>
-  `wordinator:draft:v1:${accountId}:${groupId}:post:new`;
+import type { SignedInSession } from '../organisms/types/auth'
 
 function newestCursor(post: Post | undefined) {
   return post ? btoa(JSON.stringify([post.createdAt, post.id])) : null;

@@ -27,9 +27,9 @@ Users may change:
 - Password, after providing the current password unless in the forced-change flow
 - Three unique account-wide quick reactions
 
-Email cannot be changed. There is no account deletion, notification preference, session/device management, dark mode, or manual interface-language setting initially.
+Email cannot be changed. There is no account deletion, notification preference, session/device management, or manual interface-language setting initially.
 
-Phase 2 exposes account and current-group controls at `/groups/:groupId/settings`. Display names are 1–80 trimmed characters and bios are optional plain text up to 500 trimmed characters. A profile update also refreshes the snapshot in every active membership, so current attribution changes immediately while a later departure can preserve the last visible values.
+Account controls live on the Account settings page at `/groups/:groupId/settings/account`; `/groups/:groupId/settings` redirects there. [Settings and administration](settings-and-administration.md) owns how Settings is divided and who sees each page. Display names are 1–80 trimmed characters and bios are optional plain text up to 500 trimmed characters. A profile update also refreshes the snapshot in every active membership, so current attribution changes immediately while a later departure can preserve the last visible values.
 
 Quick reactions must be three distinct, single Unicode emoji graphemes. The initial defaults are 👍, ❤️, and 😂. Settings accept emoji sequences such as skin-tone or joined emoji and reject ordinary text, multiple graphemes, and duplicates.
 
@@ -37,10 +37,10 @@ An ordinary password change requires the current password and a new password of 
 
 ## Local preferences
 
-The browser stores the last visited accessible group and account/group-scoped drafts. Group switcher order remains alphabetical to avoid additional recency state. Future localization follows the active group language immediately rather than a personal preference.
+The browser stores the last visited accessible group, account/group-scoped drafts, and the `system` / `light` / `dark` theme preference chosen on the Account settings page. The theme is per browser, not an account setting; the [theme preference contract](design-system.md#theme-preference-contract) owns its behavior. Group switcher order remains alphabetical to avoid additional recency state. Future localization follows the active group language immediately rather than a personal preference.
 
 ## Images
 
-Crop avatar and group-icon uploads to a square. Accept static PNG, JPEG, and WebP up to 1 MB; reject animated formats. Store images in a publicly readable R2 bucket. A person with an object URL can access it without application membership. Delete superseded objects after a successful replacement and delete explicitly removed images.
+Crop avatar and group-icon uploads to a square chosen by the person in the [interactive cropper](settings-and-administration.md#image-cropper). Accept static PNG, JPEG, and WebP up to 1 MB; reject animated formats. Store images in a publicly readable R2 bucket. A person with an object URL can access it without application membership. Delete superseded objects after a successful replacement and delete explicitly removed images.
 
-Phase 5 performs a centered square crop to a 512-pixel JPEG in the browser, while the API independently caps the received file at 1 MB and detects PNG, JPEG, or WebP from bytes. Animated PNG/WebP payloads are rejected. Avatar changes update snapshots only for active memberships. Replacements store the new object, update D1, then delete the superseded object; explicit removal clears D1 before object deletion. `/api/media/*` is unauthenticated by design and serves the public R2 object.
+The browser renders the chosen square to a 512-pixel JPEG (a centered square until the person moves or zooms), while the API independently caps the received file at 1 MB and detects PNG, JPEG, or WebP from bytes. Animated PNG/WebP payloads are rejected. Avatar changes update snapshots only for active memberships. Replacements store the new object, update D1, then delete the superseded object; explicit removal clears D1 before object deletion. `/api/media/*` is unauthenticated by design and serves the public R2 object.

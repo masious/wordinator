@@ -13,6 +13,8 @@ Create a notification for the relevant recipient when another person:
 - Replies to their top-level item
 - Pins their answer
 - Reacts to their post, top-level item, or reply
+- Asks to contribute to a course they own
+- Accepts or rejects their request to contribute to a course
 
 Do not create notifications for new posts. Do not notify the actor about their own action.
 
@@ -25,12 +27,12 @@ Do not create notifications for new posts. Do not notify the actor about their o
 - Store events individually. Grouped display is future work.
 - Retain records indefinitely.
 
-The implemented page is `/groups/:groupId/notifications`. It is queried only when that route opens; neither the application shell nor the service worker polls it. Each row carries the group, recipient, actor, event kind, optional post/comment destination, creation time, and nullable read time. Mark-one updates require both the current recipient and active group; mark-all affects only unread rows for that recipient in that group.
+The implemented page is `/groups/:groupId/notifications`. It is queried only when that route opens; neither the application shell nor the service worker polls it. Each row carries the group, recipient, actor, event kind, optional post/comment destination, optional course destination, creation time, and nullable read time. Mark-one updates require both the current recipient and active group; mark-all affects only unread rows for that recipient in that group.
 
 Acceptance, rejection, and removal records are also available from the authenticated restricted-status endpoint. The restricted landing experience loads that endpoint only when it is shown. This lets a rejected or removed person see the decision without granting access to normal group notifications.
 
 ## Navigation and deleted targets
 
-A notification links to the most specific available target. Direct navigation to an answer or reply reveals a concealed thread and scrolls to the item. If the content was deleted, keep the notification and show “Content no longer available.” A soft-deleted or inaccessible group instead shows its appropriate membership/group status.
+A notification links to the most specific available target. A join request links the creator to the [Members settings page](settings-and-administration.md#members). Contributor notifications link to the course page, where the owner decides pending requests; they show “Content no longer available.” once the course is archived. Direct navigation to an answer or reply reveals a concealed thread and scrolls to the item. If the content was deleted, keep the notification and show “Content no longer available.” A soft-deleted or inaccessible group instead shows its appropriate membership/group status.
 
-Notifications store target IDs without foreign keys to posts/comments, so post/comment deletion cannot erase history. Availability is resolved at read time inside the recipient and group scope. No authored body, invitation token, email, or credential is copied into a notification.
+Notifications store target IDs without foreign keys to posts, comments, or courses, so target deletion cannot erase history. Availability is resolved at read time inside the recipient and group scope. No authored body, invitation token, email, or credential is copied into a notification.

@@ -52,7 +52,7 @@ const library = async (groupId: string, cookie: string) => coursePageSchema.pars
 beforeAll(async () => { passwordHash = await hashPassword(PASSWORD); });
 beforeEach(async () => {
   await env.DB.batch([
-    env.DB.prepare("DELETE FROM courses"), env.DB.prepare("DELETE FROM login_attempts"), env.DB.prepare("DELETE FROM notifications"),
+    env.DB.prepare("DELETE FROM posts"), env.DB.prepare("DELETE FROM courses"), env.DB.prepare("DELETE FROM login_attempts"), env.DB.prepare("DELETE FROM notifications"),
     env.DB.prepare("DELETE FROM memberships"), env.DB.prepare("DELETE FROM groups"), env.DB.prepare("DELETE FROM users"),
   ]);
 });
@@ -63,14 +63,16 @@ describe("Course shell API", () => {
     const groupId = await seedGroup("alpha", ownerId); await join(groupId, memberId);
     const owner = await signIn("owner"); const member = await signIn("member");
     const course = await createCourse(groupId, owner);
-    expect(course).toMatchObject({ status: "draft", level: "A1 → early A2", intendedLearner: null, coverUrl: null, permissions: { edit: true, publish: true, archive: true } });
+    expect(course).toMatchObject({ status: "draft", level: "A1 → early A2", intendedLearner: null, coverUrl: null, permissions: { edit: true, publish: true, archive: true, removeContent: true } });
     expect((await library(groupId, member)).items).toHaveLength(0);
     expect((await request(`/api/groups/${groupId}/courses/${course.id}`, member)).status).toBe(404);
 
     const published = await request(`/api/groups/${groupId}/courses/${course.id}/visibility`, owner, { status: "published" });
     expect(courseResponseSchema.parse(await published.json()).course.status).toBe("published");
     const seen = courseResponseSchema.parse(await (await request(`/api/groups/${groupId}/courses/${course.id}`, member)).json()).course;
-    expect(seen.permissions).toEqual({ edit: false, publish: false, archive: false });
+    expect(seen.permissions).toEqual({
+      edit: false, publish: false, archive: false, removeContent: false, contribute: false, requestContribution: true, leaveContribution: false, manageContributors: false,
+    });
 
     const second = await createCourse(groupId, owner, "Second");
     const first = coursePageSchema.parse(await (await request(`/api/groups/${groupId}/courses?limit=1`, owner)).json());

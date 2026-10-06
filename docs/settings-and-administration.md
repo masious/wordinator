@@ -1,6 +1,6 @@
 # Settings and administration
 
-Status: blueprint, not started. See the [roadmap](roadmap.md#settings-split). Until this ships, [profiles-and-settings.md](profiles-and-settings.md), [groups-and-membership.md](groups-and-membership.md), and [user-flows.md](user-flows.md) describe the current single Settings page and must not be changed ahead of the work.
+Status: shipped on 2026-10-06. See the [roadmap](roadmap.md#settings-split).
 
 This document owns how Settings is divided into pages, who sees each page, the creator's membership administration page, and the interactive image cropper. Field rules stay with their current owners: account fields in [profiles-and-settings.md](profiles-and-settings.md), membership states and creator powers in [groups-and-membership.md](groups-and-membership.md), credentials in [authentication.md](authentication.md).
 
@@ -71,7 +71,7 @@ Today the browser center-crops every upload automatically, so people cannot choo
 - Cancel discards the selection and leaves the current image unchanged. An upload error keeps the dialog open with the selection intact, so the person can retry.
 - No API, size-limit, type-check, or R2 cleanup change. The server checks stay as they are.
 
-Library choice is an implementation decision. A small, maintained cropper with touch and keyboard support, such as `react-easy-crop`, is preferred over writing gesture handling by hand. Verify its current API and accessibility before adopting it. It must be styled with CSS Modules and design tokens.
+The cropper uses `react-easy-crop`, styled with its static stylesheet (automatic style injection is disabled) followed by CSS Modules and design tokens. The group-creation form uses the same cropper for its optional icon and uploads the cropped output after the group exists.
 
 ## API
 
@@ -89,21 +89,6 @@ Library choice is an implementation decision. A small, maintained cropper with t
 - React Testing Library: choosing a file opens the cropper; Cancel uploads nothing; Save uploads one file of the expected size; keyboard moving and zooming work; an upload error keeps the dialog open.
 - Playwright (Chromium and WebKit): an avatar upload goes through the cropper on desktop and mobile widths. An invited user's request is accepted from Settings → Members; the creator renames the group from Settings → Group; a member edits their profile from Settings → Account; the `/settings` redirect works.
 - Type-checking and web plus API production builds.
-
-## Documentation to update when this ships
-
-| Doc | Change |
-| --- | --- |
-| `profiles-and-settings.md` | Settings is now three pages; account controls live at `/settings/account`. Link here for the page structure. In Images, replace "centered square crop" with the person-chosen crop. |
-| `courses.md` | The cover image uses the interactive wide crop. |
-| `user-flows.md` (create a group) | Icon upload uses the cropper. |
-| `groups-and-membership.md` | Creator review, removal, and password regeneration happen on the Members settings page; the directory is social only. |
-| `user-flows.md` | "Manage a profile and settings", "New user joins a group" step 5, "Moderate and leave", and "Delete and restore a group" use the new pages. |
-| `notifications.md` | Join-request notifications link to the Members settings page. |
-| `architecture.md` | Route list and the memberships read endpoint. |
-| `testing.md` | The cases above. |
-| `roadmap.md` | Mark the settings split completed with its date. |
-| This document | Change its status to shipped and drop the "not started" note. |
 
 ## Out of scope
 

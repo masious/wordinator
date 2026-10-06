@@ -14,7 +14,8 @@ import { Avatar, Button, ErrorState, LabelChip, LoadingState, PageHeader, Passwo
 import styles from "./PhaseOnePages.module.css";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { Feed } from "./PhaseThreePages";
-import { prepareSquareImage } from "./PhaseFivePages";
+import { ImageCropper } from "../organisms/ImageCropper/ImageCropper";
+import { SQUARE_OUTPUT } from "../organisms/ImageCropper/crop";
 import { RestrictedNotices } from "./PhaseSixPages";
 
 const json = (value: unknown) => JSON.stringify(value);
@@ -151,31 +152,29 @@ export function InvitationPage({ token }: { token: string }) {
 function CreateGroupForm({ onClose }: { onClose: () => void }) {
   const { t } = useTranslation(); const queryClient = useQueryClient(); const navigate = useNavigate();
   const [name, setName] = useState(""); const [language, setLanguage] = useState<"nl" | "de">("nl");
-  const [icon, setIcon] = useState<File | null>(null);
+  // `picked` is the person's original file; `icon` is the cropped output that will be uploaded after creation.
+  const [picked, setPicked] = useState<File | null>(null); const [icon, setIcon] = useState<File | null>(null);
   const mutation = useMutation({
     mutationFn: () => apiRequest("/api/groups", createGroupResponseSchema, { method: "POST", body: json({ name, language }) }),
     onSuccess: async (data) => {
-      if (icon) { const form = new FormData(); form.set("image", await prepareSquareImage(icon)); await apiRequest(`/api/groups/${data.group.id}/icon`, imageResponseSchema, { method: "POST", body: form }); }
+      if (icon) { const form = new FormData(); form.set("image", icon); await apiRequest(`/api/groups/${data.group.id}/icon`, imageResponseSchema, { method: "POST", body: form }); }
       await queryClient.invalidateQueries({ queryKey: ["session"] }); onClose(); await navigate({ to: "/groups/$groupId", params: { groupId: data.group.id } });
     },
   });
   return <form className={styles.form} onSubmit={(event) => { event.preventDefault(); mutation.mutate(); }}>
     <TextField label={t("group.name")} value={name} onChange={(event) => setName(event.currentTarget.value)} required />
     <SelectField label={t("group.language")} value={language} onChange={(value) => setLanguage(value as "nl" | "de")} data={[{ value: "nl", label: t("languages.nl") }, { value: "de", label: t("languages.de") }]} />
-    <FileInput label={t("group.iconOptional")} accept="image/png,image/jpeg,image/webp" value={icon} onChange={setIcon} clearable />
+    <FileInput label={t("group.iconOptional")} accept="image/png,image/jpeg,image/webp" value={picked} onChange={(file) => { setPicked(file); setIcon(null); }} clearable />
+    <ImageCropper file={picked && !icon ? picked : null} output={SQUARE_OUTPUT} onCancel={() => setPicked(null)} onConfirm={setIcon} />
     <MutationError error={mutation.error} /><div className={styles.actions}><Button variant="secondary" onClick={onClose}>{t("common.cancel")}</Button><Button loading={mutation.isPending} type="submit">{t("group.create")}</Button></div>
   </form>;
 }
 
 export function GroupPage({ groupId }: { groupId: string }) {
-  const { t } = useTranslation(); const navigate = useNavigate(); const queryClient = useQueryClient();
+  const { t } = useTranslation(); const navigate = useNavigate();
   const [creating, setCreating] = useState(false);
   const session = useQuery(sessionQueryOptions());
   const shell = useQuery({ ...groupQueryOptions(groupId), enabled: session.data?.status === "signedIn" });
-  const decision = useMutation({
-    mutationFn: ({ userId, choice }: { userId: string; choice: "accept" | "reject" }) => apiRequest(`/api/groups/${groupId}/memberships/${userId}`, okResponseSchema, { method: "PATCH", body: json({ decision: choice }) }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["group", groupId] }),
-  });
   useEffect(() => { if (session.data?.status === "signedOut") void navigate({ to: "/", replace: true }); }, [navigate, session.data]);
   useEffect(() => { if (session.data?.status === "signedIn") localStorage.setItem(`wordinator:last-group:${session.data.user.id}`, groupId); }, [groupId, session.data]);
   if (session.isPending || shell.isPending) return <main className={styles.center}><LoadingState label={t("common.loadingGroup")} /></main>;
@@ -185,13 +184,10 @@ export function GroupPage({ groupId }: { groupId: string }) {
   return <GroupFrame groupId={groupId} session={session.data}>
     <div className={styles.journal} id="journal">
       <PageHeader eyebrow={shell.data.group.iconUrl ? <Avatar name={shell.data.group.name} src={shell.data.group.iconUrl} /> : <LabelChip>{shell.data.group.icon} {shell.data.group.language.toUpperCase()}</LabelChip>} title={shell.data.group.name} intro={t("group.shellIntro")} actions={<Button variant="secondary" onClick={() => setCreating((value) => !value)}>{t("group.createAnother")}</Button>} />
+      {shell.data.pendingRequestCount > 0 && <p className={styles.requestNotice}><Link to="/groups/$groupId/settings/members" params={{ groupId }}>{t("group.requestsWaiting", { count: shell.data.pendingRequestCount })}</Link></p>}
       {creating && <Surface><h2>{t("group.createTitle")}</h2><CreateGroupForm onClose={() => setCreating(false)} /></Surface>}
       <Feed groupId={groupId} session={session.data} />
       <Surface><h2>{t("group.invitation")}</h2><p>{t("group.invitationHelp")}</p><code className={styles.invitePath}>{`${location.origin}/invite/${shell.data.invitationToken}`}</code></Surface>
-      {shell.data.group.role === "creator" && <Surface className={styles.requests}>
-        <h2>{t("group.joinRequests")}</h2>
-        {!shell.data.pendingMembers.length ? <p>{t("group.noRequests")}</p> : shell.data.pendingMembers.map((member) => <div className={styles.request} key={member.userId}><span>{member.displayName}</span><div className={styles.actions}><Button variant="secondary" onClick={() => decision.mutate({ userId: member.userId, choice: "reject" })}>{t("group.reject")}</Button><Button onClick={() => decision.mutate({ userId: member.userId, choice: "accept" })}>{t("group.accept")}</Button></div></div>)}
-      </Surface>}
     </div>
   </GroupFrame>;
 }
