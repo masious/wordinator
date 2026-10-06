@@ -49,9 +49,7 @@ export async function hashPassword(password: string): Promise<string> {
 export async function verifyPassword(password: string, encoded: string): Promise<boolean> {
   const [algorithm, iterationsText, saltText, hashText] = encoded.split("$");
   const iterations = Number(iterationsText);
-  logError("verifying password")
   if (algorithm !== "pbkdf2_sha256" || !Number.isInteger(iterations) || !saltText || !hashText) return false;
-  logError("verification validation passed")
   try {
     const actual = await derivePassword(password, base64UrlToBytes(saltText), iterations);
     const expected = base64UrlToBytes(hashText);
