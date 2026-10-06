@@ -41,7 +41,7 @@ test("a member publishes, browses, edits, and deletes every Phase 3 post shape",
   await page.getByLabel("Question 1").fill("Wat gebeurt er?");
   await page.getByRole("button", { name: "Publish post" }).click();
   const readingCard = page.locator("article").filter({ hasText: reading });
-  await readingCard.getByRole("link", { name: "Open" }).click();
+  await readingCard.getByRole("link").first().click();
   await expect(page.getByRole("listitem").filter({ hasText: "Wat gebeurt er?" })).toBeVisible();
   await page.getByRole("link", { name: "Back to the journal" }).click();
 

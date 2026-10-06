@@ -1,34 +1,35 @@
 import {
   isSingleEmojiGrapheme,
-  reactionSummarySchema,
   reactionTargetResponseSchema,
   type ReactionSummary,
 } from "@wordinator/contracts";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button } from "../../ui/index";
-import styles from "./ReactionBar.module.css";
+import { Tooltip } from "@mantine/core";
 import { StarPlus } from "lucide-react";
+import { Button } from "../../ui/index";
 import { apiRequest, sessionQueryOptions } from "../../api";
-import { Pill, PillsInput } from "@mantine/core";
+import styles from "./ReactionBar.module.css";
 
 export default function ReactionBar({
   reactions,
   quickReactions,
   path,
   onChanged,
+  orientation = "horizontal",
 }: {
   reactions: ReactionSummary[];
   quickReactions: string[];
   path: string;
   onChanged: () => void;
+  orientation?: "horizontal" | "vertical";
 }) {
   const { t } = useTranslation();
   const [custom, setCustom] = useState("");
   const [error, setError] = useState("");
   const [open, setOpen] = useState<string | null>(null);
-    const session = useQuery(sessionQueryOptions());
+  const session = useQuery(sessionQueryOptions());
   const mutation = useMutation({
     mutationFn: ({ emoji, active }: { emoji: string; active: boolean }) =>
       apiRequest(path, reactionTargetResponseSchema, {
@@ -41,107 +42,89 @@ export default function ReactionBar({
       onChanged();
     },
   });
-  const choices = [
-    ...new Set([
-      ...quickReactions,
-      ...reactions.map((reaction) => reaction.emoji),
-    ]),
-  ];
-  const toggle = (emoji: string) =>
-    mutation.mutate({
-      emoji,
-      active: !reactions.find((reaction) => reaction.emoji === emoji)?.reacted,
-    });
+  if (session.data?.status !== "signedIn") return null;
 
-    if (session.data?.status !== 'signedIn') return null;
-  const viewerId = session.data.user.id;
+  const vertical = orientation === "vertical";
+  const choices = [...new Set([...quickReactions, ...reactions.map((reaction) => reaction.emoji)])];
+  const toggle = (emoji: string) =>
+    mutation.mutate({ emoji, active: !reactions.find((reaction) => reaction.emoji === emoji)?.reacted });
+  const identities = (emoji: string) =>
+    reactions.find((reaction) => reaction.emoji === emoji)?.members.map((member) => member.displayName).join(", ") ?? "";
+  const message = error || (mutation.error ? t("errors.generic") : "");
 
   return (
-    <>
-      <PillsInput
-        label={reactions.find(reaction => reaction.members.some((m) => m.id === viewerId))?.emoji}
-        variant="filled"
-        classNames={{ root: styles.reactionBarRoot, input: styles.reactionBarInput }}
-      >
-        <Pill.Group>
-          {choices.map((emoji) => {
-            const summary = reactions.find(
-              (reaction) => reaction.emoji === emoji,
-            );
-            return (
-              <Pill
-                // component="button"
-                key={emoji}
-                className={summary?.reacted ? styles.activeReaction : styles.reaction}
-                data-active={summary?.reacted ?? false}
-                aria-pressed={summary?.reacted ?? false}
-                aria-label={t("discussion.reactWith", { emoji })}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  setOpen(emoji);
-                  toggle(emoji);
-                }}
-              >
-                {" "}
-                {emoji} {summary?.count ?? 0}
-              </Pill>
-            );
-          })}
-          <form
-            className={styles.custom}
-            onSubmit={(event) => {
-              event.preventDefault();
-              const emoji = custom.trim();
-              if (!isSingleEmojiGrapheme(emoji)) {
-                setError(t("discussion.emojiError"));
-                return;
-              }
-              toggle(emoji);
-            }}
-          >
-            <div className={styles.customReactionWrapper}>
-              <PillsInput.Field
-                aria-label={t("discussion.customEmoji")}
-                value={custom}
-                onChange={(event) => setCustom(event.currentTarget.value)}
-              />
-              {/* <input
-            className={styles.customReactionInput}
-            
-          /> */}
-              <StarPlus
-                className={styles.customReactionPlaceholder}
-                size={16}
-              />
-            </div>
-            {/* <TextField
-          aria-label={t("discussion.customEmoji")}
-          value={custom}
-          onChange={(event) => setCustom(event.currentTarget.value)}
-          maxLength={16}
-        /> */}
-
+    <div className={vertical ? styles.vertical : styles.horizontal}>
+      <div className={styles.chips}>
+        {choices.map((emoji) => {
+          const summary = reactions.find((reaction) => reaction.emoji === emoji);
+          const names = identities(emoji);
+          const chip = (
+            <button
+              key={emoji}
+              type="button"
+              className={styles.chip}
+              data-active={summary?.reacted ?? false}
+              aria-pressed={summary?.reacted ?? false}
+              aria-label={t("discussion.reactWith", { emoji })}
+              onClick={() => {
+                setOpen(emoji);
+                toggle(emoji);
+              }}
+            >
+              <span className={styles.emoji} aria-hidden="true">{emoji}</span>
+              <span className={styles.count}>{summary?.count ?? 0}</span>
+            </button>
+          );
+          // The vertical rail has no room for the identity line, so it names the members beside each chip instead.
+          return vertical ? (
+            <Tooltip key={emoji} label={names} disabled={!names} position="left" withArrow events={{ hover: true, focus: true, touch: true }}>
+              {chip}
+            </Tooltip>
+          ) : chip;
+        })}
+        <form
+          className={styles.custom}
+          onSubmit={(event) => {
+            event.preventDefault();
+            const emoji = custom.trim();
+            if (!isSingleEmojiGrapheme(emoji)) {
+              setError(t("discussion.emojiError"));
+              return;
+            }
+            toggle(emoji);
+          }}
+        >
+          {/* The emoji picker will open from this slot; until then it is a plain single-emoji input. */}
+          <label className={styles.customField}>
+            <input
+              className={styles.customInput}
+              aria-label={t("discussion.customEmoji")}
+              aria-invalid={Boolean(error)}
+              value={custom}
+              onChange={(event) => {
+                setCustom(event.currentTarget.value);
+                setError("");
+              }}
+            />
+            {!custom && <StarPlus className={styles.customIcon} size={16} aria-hidden="true" />}
+          </label>
+          {!vertical && (
             <Button type="submit" variant="secondary">
               {t("discussion.addReaction")}
             </Button>
-          </form>
-        </Pill.Group>
-      </PillsInput>
-
-      {open && (
+          )}
+        </form>
+      </div>
+      {!vertical && open && identities(open) && (
         <div className={styles.identities} role="status">
-          {reactions
-            .find((reaction) => reaction.emoji === open)
-            ?.members.map((member) => member.displayName)
-            .join(", ")}
+          {identities(open)}
         </div>
       )}
-      {(error || mutation.error) && (
+      {message && (
         <p className={styles.error} role="alert">
-          {error || t("errors.generic")}
+          {message}
         </p>
       )}
-    </>
+    </div>
   );
 }

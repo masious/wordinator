@@ -1,18 +1,101 @@
-.preview { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); align-items: center; gap: var(--space-5); overflow: hidden; color: var(--color-foreground); text-decoration: none; background: var(--color-bezel); border: var(--ring-hairline); border-radius: var(--radius-lg); transition: transform var(--motion-standard) var(--ease-physical), box-shadow var(--motion-standard) var(--ease-physical); }
-.preview:hover { transform: translateY(-2px); box-shadow: var(--shadow-raised); }
-.preview:focus-visible { outline: var(--border-strong); outline-offset: 3px; }
-.cover { display: grid; place-items: center; height: 100%; aspect-ratio: var(--aspect-course-cover); overflow: hidden; background: var(--color-muted); }
-.cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.cover span { font-family: var(--font-display); font-size: var(--text-4xl); font-style: italic; color: var(--color-foreground-muted); }
-.copy { display: grid; align-content: start; justify-items: start; gap: var(--space-2); min-width: 0; padding: var(--space-5) var(--space-5) var(--space-5) 0; }
-.copy h3 { margin: 0; font-family: var(--font-display); font-size: var(--text-xl); font-weight: var(--weight-medium); letter-spacing: var(--tracking-title); overflow-wrap: anywhere; }
-.eyebrow, .level { color: var(--color-foreground-muted); font: var(--type-metadata)/var(--line-compact) var(--font-mono); overflow-wrap: anywhere; }
-.summary { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; margin: 0; overflow: hidden; color: var(--color-foreground-muted); white-space: pre-wrap; overflow-wrap: anywhere; }
-.open { display: inline-flex; align-items: center; gap: var(--space-2); font-weight: var(--weight-semibold); }
-.unavailable { padding: var(--space-5); color: var(--color-foreground-muted); background: var(--color-muted); border: var(--ring-hairline); border-radius: var(--radius-lg); }
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  overflow: hidden;
+  color: var(--color-foreground);
+  text-decoration: none;
+  background: var(--color-bezel);
+  border: var(--ring-hairline);
+  border-radius: var(--radius-lg);
+  transition:
+    transform var(--motion-standard) var(--ease-physical),
+    box-shadow var(--motion-standard) var(--ease-physical);
+}
+a.preview:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-raised);
+}
+.preview:focus-visible {
+  outline: var(--border-strong);
+  outline-offset: 3px;
+}
+.cover {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  aspect-ratio: var(--aspect-course-cover);
+  overflow: hidden;
+  background: var(--color-muted);
+}
+.cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.cover span {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  font-style: italic;
+  color: var(--color-foreground-muted);
+}
+.copy {
+  display: grid;
+  align-content: start;
+  justify-items: start;
+  gap: var(--space-2);
+  min-width: 0;
+  padding: var(--space-5) var(--space-5);
+}
+.copy h3 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-title);
+  overflow-wrap: anywhere;
+}
+.eyebrow,
+.level {
+  color: var(--color-foreground-muted);
+  font: var(--type-metadata)/var(--line-compact) var(--font-mono);
+  overflow-wrap: anywhere;
+}
+.summary {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  margin: 0;
+  overflow: hidden;
+  color: var(--color-foreground-muted);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.open {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: var(--weight-semibold);
+}
+.unavailable {
+  padding: var(--space-5);
+  color: var(--color-foreground-muted);
+  background: var(--color-muted);
+  border: var(--ring-hairline);
+  border-radius: var(--radius-lg);
+}
 
 @media (max-width: 48em) {
-  .preview { grid-template-columns: 1fr; gap: 0; }
-  .cover { height: auto; }
-  .copy { padding: var(--space-5); }
+  .preview {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .cover {
+    height: auto;
+  }
+  .copy {
+    padding: var(--space-5);
+  }
 }

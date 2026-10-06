@@ -13,7 +13,7 @@ import {
   ConfirmDialog,
 } from "../../ui";
 import { Menu } from "@mantine/core";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import ErrorMessage from "../../molecules/ErrorMessage";
 import {
   EllipsisVertical,
@@ -27,7 +27,7 @@ import { PlainText } from "../../molecules/PlainText";
 import CoursePostPreview from "./CoursePostPreview";
 import styles from "./PostCard.module.css";
 
-function RelativeTime({ value }: { value: number }) {
+function relativeTime(value: number) {
   const seconds = Math.round((value - Date.now()) / 1_000);
   const formatter = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
   const [amount, unit]: [number, Intl.RelativeTimeFormatUnit] =
@@ -38,14 +38,7 @@ function RelativeTime({ value }: { value: number }) {
         : Math.abs(seconds) < 86_400
           ? [Math.round(seconds / 3_600), "hour"]
           : [Math.round(seconds / 86_400), "day"];
-  return (
-    <time
-      dateTime={new Date(value).toISOString()}
-      title={new Date(value).toLocaleString()}
-    >
-      {formatter.format(amount, unit)}
-    </time>
-  );
+  return formatter.format(amount, unit);
 }
 
 export default function PostCard({
@@ -86,27 +79,90 @@ export default function PostCard({
     compact && post.body.length > 360
       ? `${post.body.slice(0, 360)}…`
       : post.body;
+  const byline = (
+    <header className={styles.postHeader}>
+      <Avatar
+        name={post.author.displayName}
+        src={post.author.avatarUrl || undefined}
+      />
+      <p className={styles.byline}>
+        <Trans
+          i18nKey={`posts.byline.${post.type}`}
+          values={{ name: post.author.displayName, time: relativeTime(post.createdAt) }}
+          components={{
+            name: <strong className={styles.author} />,
+            time: (
+              <time
+                dateTime={new Date(post.createdAt).toISOString()}
+                title={new Date(post.createdAt).toLocaleString()}
+              />
+            ),
+          }}
+        />
+        {post.edited && <span className={styles.edited}>{t("posts.edited")}</span>}
+      </p>
+    </header>
+  );
+  const content = (
+    <>
+      {byline}
+      {post.course ? (
+        <CoursePostPreview course={post.course} groupId={groupId} linked={!compact} />
+      ) : (
+        <div className={styles.postBody}>
+          <PlainText linkify={!compact}>{body}</PlainText>
+        </div>
+      )}
+      {compact && post.body.length > 360 && (
+        <span className={styles.readMore}>
+          {t("posts.readMore")}
+          <ArrowIcon />
+        </span>
+      )}
+    </>
+  );
   return (
     <article className={styles.postShell}>
       <div className={styles.postCard}>
-        <header className={styles.postHeader}>
-          <Link
-            to="/groups/$groupId/members/$userId"
-            params={{ groupId, userId: post.author.id }}
-            className={styles.author}
-          >
-            <Avatar
-              name={post.author.displayName}
-              src={post.author.avatarUrl || undefined}
-            />
-            <span>{post.author.displayName}</span>
-          </Link>
-          <div className={styles.meta}>
-            {/* <LabelChip>{t(`posts.types.${post.type}`)}</LabelChip> */}
-            <RelativeTime value={post.createdAt} />
-            {/* TODO: move inside dropdown */}
-            {post.edited && <span>{t("posts.edited")}</span>}
-          </div>
+        <div className={styles.main}>
+          {/* In the feed the whole card body is one link; the actions menu sits beside it so controls never nest inside it. */}
+          {compact ? (
+            <Link
+              className={styles.cardLink}
+              to="/groups/$groupId/posts/$postId"
+              params={{ groupId, postId: post.id }}
+            >
+              {content}
+            </Link>
+          ) : (
+            <div className={styles.cardContent}>
+              {content}
+              {post.type === "reading" && (
+                <ol className={styles.questions}>
+                  {post.questions.map((question) => (
+                    <li key={question.id}>
+                      <PlainText>{question.text}</PlainText>
+                    </li>
+                  ))}
+                </ol>
+              )}
+              {post.notes && (
+                <div>
+                  <Button
+                    variant="quiet"
+                    onClick={() => setNotesVisible((value) => !value)}
+                  >
+                    {notesVisible ? t("posts.hideNotes") : t("posts.showNotes")}
+                  </Button>
+                  {notesVisible && (
+                    <div className={styles.notes}>
+                      <PlainText>{post.notes}</PlainText>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
           <Menu
             position="bottom-end"
             width={220}
@@ -166,78 +222,25 @@ export default function PostCard({
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
-        </header>
-        {post.course ? (
-          <CoursePostPreview course={post.course} groupId={groupId} />
-        ) : (
-          <div className={styles.postBody}>
-            <PlainText>{body}</PlainText>
-          </div>
-        )}
-        {!compact && post.type === "reading" && (
-          <ol className={styles.questions}>
-            {post.questions.map((question) => (
-              <li key={question.id}>
-                <PlainText>{question.text}</PlainText>
-              </li>
-            ))}
-          </ol>
-        )}
-        {post.notes && (
-          <div>
-            <Button
-              variant="quiet"
-              onClick={() => setNotesVisible((value) => !value)}
-            >
-              {notesVisible ? t("posts.hideNotes") : t("posts.showNotes")}
-            </Button>
-            {notesVisible && (
-              <div className={styles.notes}>
-                <PlainText>{post.notes}</PlainText>
-              </div>
-            )}
-          </div>
-        )}
+        </div>
         {settings.data && (
-          <ReactionBar
-            reactions={post.reactions}
-            quickReactions={settings.data.quickReactions}
-            path={`/api/groups/${encodeURIComponent(groupId)}/posts/${encodeURIComponent(post.id)}/reactions`}
-            onChanged={() => {
-              void queryClient.invalidateQueries({
-                queryKey: ["posts", groupId],
-              });
-              void queryClient.invalidateQueries({
-                queryKey: ["post", groupId, post.id],
-              });
-            }}
-          />
+          <aside className={styles.reactionRail}>
+            <ReactionBar
+              orientation="vertical"
+              reactions={post.reactions}
+              quickReactions={settings.data.quickReactions}
+              path={`/api/groups/${encodeURIComponent(groupId)}/posts/${encodeURIComponent(post.id)}/reactions`}
+              onChanged={() => {
+                void queryClient.invalidateQueries({
+                  queryKey: ["posts", groupId],
+                });
+                void queryClient.invalidateQueries({
+                  queryKey: ["post", groupId, post.id],
+                });
+              }}
+            />
+          </aside>
         )}
-        <footer className={styles.postFooter}>
-          <span>{t("posts.responseCount", { count: post.commentCount })}</span>
-          <span>{t("posts.reactionCount", { count: post.reactionCount })}</span>
-          <span className={styles.grow} />
-          {compact && (
-            <Link
-              className={styles.openPost}
-              to="/groups/$groupId/posts/$postId"
-              params={{ groupId, postId: post.id }}
-            >
-              {t(post.body.length > 360 ? "posts.readMore" : "posts.open")}
-              <ArrowIcon />
-            </Link>
-          )}
-          {/* {post.permissions.edit && (
-            <Button variant="quiet" onClick={() => setEditing(true)}>
-              {t("common.edit")}
-            </Button>
-          )}
-          {post.permissions.delete && (
-            <Button variant="quiet" onClick={() => setDeleting(true)}>
-              {t("common.delete")}
-            </Button>
-          )} */}
-        </footer>
         <AdaptiveDialog
           opened={editing}
           onClose={() => setEditing(false)}

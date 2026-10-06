@@ -69,19 +69,57 @@ describe("PostCard actions menu", () => {
   });
 });
 
+describe("PostCard feed card", () => {
+  beforeEach(() => { vi.stubGlobal("fetch", vi.fn(() => new Promise<Response>(() => {}))); });
+  afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
+
+  it("makes the byline and body one link to the post, with the menu outside it and no footer", async () => {
+    renderCard({ edit: true, delete: true });
+    const link = await screen.findByRole("link");
+    expect(link).toHaveAttribute("href", `/groups/${groupId}/posts/${post.id}`);
+    expect(link).toHaveTextContent(/Ada shared a sentence .+\.Goedemorgen$/);
+    expect(link).not.toContainElement(screen.getByRole("button", { name: "More Actions" }));
+    expect(screen.queryByText("2 responses")).not.toBeInTheDocument();
+  });
+
+  it("names the post type in the byline sentence", async () => {
+    const root = createRootRoute();
+    const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <PostCard post={{ ...post, type: "question", body: "Waarom?", edited: true }} groupId={groupId} /> });
+    const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: ["/"] }) });
+    render(<MantineProvider theme={theme}><QueryClientProvider client={new QueryClient()}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
+    expect(await screen.findByText(/asked a question/)).toHaveTextContent(/Ada asked a question .+\.Edited$/);
+  });
+
+  it("does not nest authored URLs inside the card link", async () => {
+    const root = createRootRoute();
+    const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <PostCard post={{ ...post, body: "Zie https://example.com" }} groupId={groupId} /> });
+    const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: ["/"] }) });
+    render(<MantineProvider theme={theme}><QueryClientProvider client={new QueryClient()}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
+    expect(await screen.findByText(/https:\/\/example.com/)).toBeInTheDocument();
+    expect(screen.getAllByRole("link")).toHaveLength(1);
+  });
+});
+
 describe("PostCard course posts", () => {
   beforeEach(() => { vi.stubGlobal("fetch", vi.fn(() => new Promise<Response>(() => {}))); });
   afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
   const course = { id: "60000000-0000-4000-8000-000000000001", available: true, title: "Deutsch für Anfänger", summary: "Erste Schritte", level: "A1", coverUrl: null };
 
-  function renderCourse(value: Post["course"]) {
+  function renderCourse(value: Post["course"], compact = false) {
     const root = createRootRoute();
-    const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <PostCard post={{ ...post, type: "course", body: "", course: value, permissions: { edit: false, delete: false } }} groupId={groupId} /> });
+    const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <PostCard post={{ ...post, type: "course", body: "", course: value, permissions: { edit: false, delete: false } }} groupId={groupId} compact={compact} /> });
     const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: ["/"] }) });
     return render(<MantineProvider theme={theme}><QueryClientProvider client={new QueryClient()}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
   }
 
-  it("links to the course with its title, level, and summary", async () => {
+  it("links the feed card to the post rather than nesting a course link", async () => {
+    renderCourse(course, true);
+    const link = await screen.findByRole("link", { name: /Deutsch für Anfänger/ });
+    expect(link).toHaveAttribute("href", `/groups/${groupId}/posts/${post.id}`);
+    expect(screen.getAllByRole("link")).toHaveLength(1);
+  });
+
+  it("links to the course with its title, level, and summary on the post page", async () => {
     renderCourse(course);
     const link = await screen.findByRole("link", { name: /Deutsch für Anfänger/ });
     expect(link).toHaveAttribute("href", `/groups/${groupId}/courses/${course.id}`);

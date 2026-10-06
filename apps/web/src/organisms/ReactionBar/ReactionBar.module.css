@@ -1,25 +1,107 @@
-.reactionBarRoot {
-  display: flex;
-  flex-direction: column;
-  gap: .5rem;
+.horizontal {
+  display: grid;
+  gap: var(--space-2);
 }
 
-.reactionBarInput {
-    padding: 0;
-    padding-inline: .5rem;
+.vertical {
+  position: relative;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.vertical .chips {
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+  color: var(--color-foreground-muted);
+  font: var(--type-metadata)/var(--line-compact) var(--font-mono);
+  background: var(--color-core);
+  border: var(--ring-hairline);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition:
+    transform var(--motion-press) var(--ease-physical),
+    background-color var(--motion-standard) var(--ease-physical);
+}
+.chip:hover { background: var(--color-wash); }
+.chip:active { transform: scale(0.96); }
+.chip:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.chip[data-active="true"] {
+  color: var(--color-foreground);
+  background: var(--color-selected);
+  border-color: var(--color-highlight);
+}
+
+.vertical .chip {
+  flex-direction: column;
+  gap: 0;
+  width: var(--touch-target);
+  min-height: var(--touch-target);
+  padding: var(--space-1) 0;
+  border-radius: var(--radius-lg);
+}
+
+.emoji {
+  font-family: var(--font-sans);
+  font-size: var(--text-md);
+  line-height: 1;
 }
 
 .custom {
   display: flex;
   gap: var(--space-2);
-  align-items: flex-start;
+  align-items: center;
 }
-.custom > :first-child {
+
+.customField {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+}
+
+.customInput {
   width: 5rem;
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+  color: var(--color-foreground);
+  font: inherit;
+  text-align: center;
+  background: transparent;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-pill);
+  transition: border-color var(--motion-standard) var(--ease-physical);
+}
+.customInput:hover { border-color: var(--color-foreground-muted); }
+.customInput:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; border-style: solid; }
+.customInput[aria-invalid="true"] { border-color: var(--color-danger-text); }
+
+.vertical .customInput {
+  width: var(--touch-target);
+  height: var(--touch-target);
+  padding: 0;
+  border-radius: var(--radius-lg);
+}
+
+.customIcon {
+  position: absolute;
+  color: var(--color-foreground-muted);
+  pointer-events: none;
 }
 
 .identities {
-  width: 100%;
   color: var(--color-foreground-muted);
   font-size: var(--text-sm);
 }
@@ -30,24 +112,19 @@
   font-weight: var(--weight-semibold);
 }
 
-.customReactionWrapper {
-  position: relative;
-}
-
-.customReactionInput {
-  outline: none;
-}
-
-.customReactionPlaceholder {
+/* The rail is too narrow for the message, so it floats beside the input. */
+.vertical .error {
   position: absolute;
-  z-index: 5;
-  inset: .75rem;
-}
-
-.reaction {
-    border: 1px solid transparent;
-}
-
-.activeReaction {
-    border: 1px solid red;
+  top: 100%;
+  right: 0;
+  z-index: var(--z-transient);
+  width: max-content;
+  max-width: 12rem;
+  margin-top: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--text-sm);
+  background: var(--color-surface-raised);
+  border: var(--ring-hairline);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-floating);
 }

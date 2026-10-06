@@ -317,6 +317,13 @@ export const resources = {
         type: "Post type",
         types: { shared_sentence: "Sentence", question: "Question", reading: "Reading", fill_in: "Fill in the blanks", course: "Course" },
         coursePublished: "Published a new course",
+        byline: {
+          shared_sentence: "<name>{{name}}</name> shared a sentence <time>{{time}}</time>.",
+          question: "<name>{{name}}</name> asked a question <time>{{time}}</time>.",
+          reading: "<name>{{name}}</name> shared a reading <time>{{time}}</time>.",
+          fill_in: "<name>{{name}}</name> made a fill-in-the-blanks <time>{{time}}</time>.",
+          course: "<name>{{name}}</name> published a course <time>{{time}}</time>."
+        },
         openCourse: "Open course",
         courseUnavailable: "This course is no longer available.",
         bodyLabels: { shared_sentence: "Sentence", question: "Question", reading: "Paragraph", fill_in: "Prompt" },
@@ -344,7 +351,6 @@ export const resources = {
         reactionCount_one: "{{count}} reaction",
         reactionCount_other: "{{count}} reactions",
         readMore: "Read more",
-        open: "Open",
         editTitle: "Edit post",
         deleteTitle: "Delete this post?",
         deleteBody: "The post and its future discussion will be permanently removed.",

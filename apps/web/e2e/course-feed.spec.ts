@@ -18,7 +18,7 @@ test("publishing a course announces it in the feed with visible comments", async
   await page.goto(`/groups/${E2E_GROUP_ID}`);
   const card = page.locator("article").filter({ hasText: title }).first();
   await expect(card.getByText("Published a new course")).toBeVisible();
-  await card.getByRole("link", { name: "Open", exact: true }).click();
+  await card.getByRole("link").first().click();
   await page.getByLabel("Comment").fill("Ik doe mee!");
   await page.getByRole("button", { name: /Publish/ }).click();
   await expect(page.getByText("Ik doe mee!")).toBeVisible();

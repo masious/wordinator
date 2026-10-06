@@ -2,12 +2,13 @@
 @media (max-width: 48em) {
   .postShell { border-radius: var(--radius-xl); }
   .postCard { padding: var(--space-5); border-radius: calc(var(--radius-xl) - var(--space-2)); }
-  .meta { justify-content: flex-start; }
-  .postHeader { align-items: stretch; flex-direction: column; }
+  .postCard { gap: var(--space-3); }
 }
 
 .postCard {
   display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
   gap: var(--space-5);
   min-width: 0;
   padding: clamp(var(--space-5), 4vw, var(--space-8));
@@ -17,7 +18,28 @@
   box-shadow: var(--shadow-inset-highlight);
 }
 
-.postHeader { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); }
+.main { position: relative; min-width: 0; }
+
+.cardLink,
+.cardContent { display: grid; gap: var(--space-5); min-width: 0; padding-right: calc(var(--touch-target) + var(--space-2)); }
+
+.cardLink { margin: calc(-1 * var(--space-2)); padding-block: var(--space-2); padding-left: var(--space-2); color: var(--color-foreground); text-decoration: none; border-radius: var(--radius-lg); transition: background-color var(--motion-standard) var(--ease-physical); }
+.cardLink:hover { background: var(--color-wash-subtle); }
+.cardLink:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+.author { color: var(--color-foreground); font-weight: var(--weight-semibold); }
+
+.postHeader { display: flex; align-items: center; gap: var(--space-3); min-width: 0; }
+
+.byline { margin: 0; min-width: 0; color: var(--color-foreground-muted); line-height: var(--line-compact); overflow-wrap: anywhere; }
+.byline time { white-space: nowrap; }
+.edited { margin-left: var(--space-2); font: var(--type-metadata)/var(--line-compact) var(--font-mono); }
+
+.readMore { display: inline-flex; align-items: center; gap: var(--space-2); justify-self: start; font-weight: var(--weight-semibold); }
+.readMore svg { transition: transform var(--motion-standard) var(--ease-physical); }
+.cardLink:hover .readMore svg { transform: translate(3px, -1px); }
+
+.reactionRail { padding-left: var(--space-4); border-left: 1px solid var(--color-separator); }
 
 .postShell {
   min-width: 0;
@@ -28,9 +50,6 @@
   box-shadow: var(--shadow-card);
 }
 
-.author { display: flex; align-items: center; gap: var(--space-3); min-width: 0; color: var(--color-foreground); font-weight: var(--weight-semibold); text-decoration: none; }
-.author:hover { text-decoration: underline; text-decoration-color: var(--color-action); text-underline-offset: 4px; }
-.meta { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-2); color: var(--color-foreground-muted); font: var(--type-metadata)/var(--line-compact) var(--font-mono); flex-wrap: wrap; }
 
 .postBody { max-width: 64ch; font-size: var(--type-authored); }
 .postBody a { color: var(--color-foreground); text-decoration-color: var(--color-action); text-underline-offset: 3px; }
@@ -41,6 +60,9 @@
 white-space: pre-wrap; overflow-wrap: anywhere; line-height: var(--line-body); }
 
 .postActions {
+  position: absolute;
+  top: 0;
+  right: 0;
   padding-inline: var(--space-2);
 }
 
@@ -69,11 +91,5 @@ white-space: pre-wrap; overflow-wrap: anywhere; line-height: var(--line-body); }
   white-space: nowrap;
 }
 
-.postFooter { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; padding-top: var(--space-4); color: var(--color-foreground-muted); border-top: 1px solid var(--color-separator); font: var(--type-metadata)/var(--line-compact) var(--font-mono); }
 
-.openPost { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--touch-target); padding-inline: var(--space-3); color: var(--color-foreground); border-radius: var(--radius-pill); font-family: var(--font-sans); font-weight: var(--weight-semibold); text-decoration: none; transition: transform var(--motion-press) var(--ease-physical); }
-.openPost svg { transition: transform var(--motion-standard) var(--ease-physical); }
-.openPost:hover { background: var(--color-highlight-soft); transform: translateY(-1px); }
-.openPost:hover svg { transform: translate(3px, -1px); }
 
-.grow { flex: 1; }

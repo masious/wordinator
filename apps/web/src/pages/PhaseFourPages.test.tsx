@@ -6,6 +6,7 @@ import type { DiscussionItem, Post } from "@wordinator/contracts";
 import "../i18n";
 import { DiscussionPanel, discussionDraftKey } from "./PhaseFourPages";
 import ReactionBar from "../organisms/ReactionBar/ReactionBar";
+import { sessionQueryOptions } from "../api";
 
 const groupId = "20000000-0000-4000-8000-000000000001"; const userId = "10000000-0000-4000-8000-000000000001";
 const session = { status: "signedIn" as const, user: { id: userId, displayName: "Ada", avatarUrl: null, mustChangePassword: false }, groups: [{ id: groupId, name: "Study", language: "nl" as const, role: "member" as const, icon: "🇳🇱", iconUrl: null }], requests: [], deletedGroups: [] };
@@ -13,7 +14,7 @@ const basePost: Post = { id: "30000000-0000-4000-8000-000000000001", groupId, ty
 const hiddenAnswer: DiscussionItem = { id: "50000000-0000-4000-8000-000000000001", parentId: null, kind: "text", body: "Omdat het mooi is.", author: { id: userId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, edited: false, pinned: false, responseItems: [], reactions: [], permissions: { edit: true, delete: true, reply: true, pin: false }, replies: [] };
 
 function json(value: unknown, status = 200) { return Promise.resolve(new Response(JSON.stringify(value), { status, headers: { "content-type": "application/json" } })); }
-function renderWithClient(node: React.ReactNode) { const client = new QueryClient({ defaultOptions: { queries: { retry: false } } }); return render(<MantineProvider><QueryClientProvider client={client}>{node}</QueryClientProvider></MantineProvider>); }
+function renderWithClient(node: React.ReactNode, signedIn = false) { const client = new QueryClient({ defaultOptions: { queries: { retry: false } } }); if (signedIn) client.setQueryData(sessionQueryOptions().queryKey, session); return render(<MantineProvider><QueryClientProvider client={client}>{node}</QueryClientProvider></MantineProvider>); }
 
 describe("Phase 4 discussion UI", () => {
   beforeEach(() => { localStorage.clear(); vi.restoreAllMocks(); window.history.replaceState({}, "", "/"); });
@@ -60,9 +61,20 @@ describe("Phase 4 discussion UI", () => {
     await waitFor(() => expect(localStorage.getItem(discussionDraftKey(userId, groupId, "reading_response", reading.id))).toBeNull());
   });
 
+  it("renders the vertical reaction rail with an input in place of the Add button", async () => {
+    const fetchMock = vi.fn().mockImplementation(() => json({ reactions: [] })); vi.stubGlobal("fetch", fetchMock);
+    renderWithClient(<ReactionBar orientation="vertical" reactions={[{ emoji: "❤️", count: 2, reacted: true, members: [{ id: userId, displayName: "Ada" }] }]} quickReactions={["❤️", "💡", "👎"]} path="/reaction" onChanged={vi.fn()} />, true);
+    expect(await screen.findByRole("button", { name: "React with ❤️" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getAllByRole("button", { name: /React with/ })).toHaveLength(3);
+    expect(screen.queryByRole("button", { name: "Add" })).not.toBeInTheDocument();
+    const input = screen.getByLabelText("Custom emoji");
+    fireEvent.change(input, { target: { value: "word" } }); fireEvent.submit(input.closest("form")!);
+    expect(screen.getByRole("alert")).toHaveTextContent("Choose exactly one emoji.");
+  });
+
   it("rejects text in the custom reaction control and accepts a composed emoji", async () => {
     const fetchMock = vi.fn().mockImplementation(() => json({ reactions: [{ emoji: "👩🏽‍💻", count: 1, reacted: true, members: [{ id: userId, displayName: "Ada" }] }] })); vi.stubGlobal("fetch", fetchMock);
-    renderWithClient(<ReactionBar reactions={[]} quickReactions={["❤️", "💡", "👎"]} path="/reaction" onChanged={vi.fn()} />);
+    renderWithClient(<ReactionBar reactions={[]} quickReactions={["❤️", "💡", "👎"]} path="/reaction" onChanged={vi.fn()} />, true);
     fireEvent.change(screen.getByLabelText("Custom emoji"), { target: { value: "word" } }); fireEvent.click(screen.getByRole("button", { name: "Add" })); expect(screen.getByRole("alert")).toHaveTextContent("Choose exactly one emoji.");
     fireEvent.change(screen.getByLabelText("Custom emoji"), { target: { value: "👩🏽‍💻" } }); fireEvent.click(screen.getByRole("button", { name: "Add" }));
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
