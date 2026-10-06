@@ -47,7 +47,7 @@ type AppEnvironment = { Bindings: Bindings; Variables: { user: AuthUser | null; 
 
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 const LOGIN_LIMIT = 5;
-const FALLBACK_HASH = "pbkdf2_sha256$210000$AAAAAAAAAAAAAAAAAAAAAA$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+const FALLBACK_HASH = "pbkdf2_sha256$40000$AAAAAAAAAAAAAAAAAAAAAA$AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 const IMAGE_MAX_BYTES = 1_048_576;
 
 const mediaUrlFromBase = (base: string, key: string | null) => key
@@ -414,10 +414,8 @@ app.get("/api/media/*", async (context) => {
 app.get("/api/session", async (context) => {
   const user = context.get("user");
   if (!user) {
-    logError('user not found in context')
     return context.json({ status: "signedOut" } as const);
   }
-  logError('user found!')
   const database = createDatabase(context.env.DB);
   const activeGroups = await database
     .select({ id: groups.id, name: groups.name, language: groups.language, creatorUserId: groups.creatorUserId, iconKey: groups.iconKey })
@@ -481,7 +479,7 @@ app.post("/api/auth/sign-in", async (context) => {
       "INSERT INTO login_attempts (key, failures, window_started_at, blocked_until) VALUES (?, ?, ?, ?) " +
       "ON CONFLICT(key) DO UPDATE SET failures = excluded.failures, window_started_at = excluded.window_started_at, blocked_until = excluded.blocked_until",
     ).bind(attemptKey, failures, windowStartedAt, blockedUntil).run();
-    return apiError(context, 401, "INVALID_CREDENTIALS", "Email or password is incorrect." + account?.email);
+    return apiError(context, 401, "INVALID_CREDENTIALS", "Email or password is incorrect.");
   }
   await context.env.DB.prepare("DELETE FROM login_attempts WHERE key = ?").bind(attemptKey).run();
   await setSession(context, account.id, context.env.COOKIE_SIGNING_SECRET);

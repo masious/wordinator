@@ -89,7 +89,7 @@ if (!/^\S+@\S+\.\S+$/.test(email) || !displayName || !groupName || !language || 
 }
 
 const salt = randomBytes(16);
-const passwordHash = `pbkdf2_sha256$210000$${salt.toString("base64url")}$${pbkdf2Sync(password, salt, 210_000, 32, "sha256").toString("base64url")}`;
+const passwordHash = `pbkdf2_sha256$40000$${salt.toString("base64url")}$${pbkdf2Sync(password, salt, 210_000, 32, "sha256").toString("base64url")}`;
 const userId = randomUUID();
 const groupId = randomUUID();
 const invitationToken = randomBytes(32).toString("base64url");
