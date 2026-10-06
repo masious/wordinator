@@ -1,13 +1,13 @@
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
-  "name": "wordinator-api",
+  "name": "w-api",
   "main": "src/index.ts",
   "compatibility_date": "2025-09-06",
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "wordinator",
-      "database_id": "54b9600b-9df6-4742-a0c7-0a8679176aeb",
+      "database_id": "121db9bb-accd-41d3-a242-c49029170802",
       "migrations_dir": "../../packages/db/migrations"
     }
   ],
@@ -21,6 +21,13 @@
     "PUBLIC_MEDIA_BASE_URL": "http://localhost:8787/api/media"
   },
   "observability": {
+	"logs": {
+      "enabled": true,
+      "invocation_logs": true
+    },
+    "traces": {
+      "enabled": false
+    },
     "enabled": true,
 	"invocation_logs": true,
 	"persist": true
