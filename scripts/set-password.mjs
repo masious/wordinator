@@ -102,7 +102,7 @@ if (password.length < 6) {
 }
 
 const salt = randomBytes(16);
-const passwordHash = `pbkdf2_sha256$40000$${salt.toString("base64url")}$${pbkdf2Sync(password, salt, 210_000, 32, "sha256").toString("base64url")}`;
+const passwordHash = `pbkdf2_sha256$40000$${salt.toString("base64url")}$${pbkdf2Sync(password, salt, 40_000, 32, "sha256").toString("base64url")}`;
 const statements = `UPDATE users
 SET password_hash = ${sql(passwordHash)}, must_change_password = 0, updated_at = ${Date.now()}
 WHERE id = ${sql(rows[0].id)};`;

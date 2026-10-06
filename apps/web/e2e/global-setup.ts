@@ -15,7 +15,7 @@ export default function globalSetup() {
   const persistencePath = "../../.wrangler/e2e";
   execFileSync("pnpm", ["exec", "wrangler", "d1", "migrations", "apply", "wordinator", "--local", "--persist-to", persistencePath], { cwd: api, stdio: "inherit" });
   const salt = Buffer.alloc(16, 7);
-  const passwordHash = `pbkdf2_sha256$40000$${salt.toString("base64url")}$${pbkdf2Sync(E2E_PASSWORD, salt, 210_000, 32, "sha256").toString("base64url")}`;
+  const passwordHash = `pbkdf2_sha256$40000$${salt.toString("base64url")}$${pbkdf2Sync(E2E_PASSWORD, salt, 40_000, 32, "sha256").toString("base64url")}`;
   const userId = "10000000-0000-4000-8000-000000000001";
   const groupId = E2E_GROUP_ID;
   const now = Date.now();
