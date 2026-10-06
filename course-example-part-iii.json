@@ -1,0 +1,640 @@
+{
+  "type": "course",
+  "title": "Dutch Foundations — Part III: Home and Surroundings",
+  "summary": "Learn to describe where things are, talk about your home and neighborhood, give directions, use transport, and describe everyday surroundings.",
+  "level": "A1 → early A2",
+  "intendedLearner": "Adult learners who already know basic present tense, de/het, simple adjective use, time expressions, and basic Dutch word order.",
+  "coverIdea": "A simple illustrated Dutch neighborhood showing an apartment, street, bicycle, bus stop, supermarket, park, and changing weather.",
+  "designNotes": {
+    "scope": "Topic vocabulary is introduced only when needed by the lesson. Dedicated vocabulary memorization is outside the scope.",
+    "continuity": "Exercises should reuse grammar from earlier lessons and deliberately prepare structures needed by later lessons.",
+    "previousKnowledge": [
+      "basic SVO word order",
+      "present tense",
+      "de and het",
+      "basic adjective use",
+      "question words",
+      "time expressions",
+      "basic inversion after a time expression",
+      "willen and mogen"
+    ],
+    "futureHooks": [
+      "modal verbs followed by infinitives",
+      "more complex separable verbs",
+      "aan het + infinitive",
+      "subordinate clauses",
+      "past tense",
+      "comparatives"
+    ]
+  },
+  "children": [
+    {
+      "type": "lesson",
+      "id": "lesson-13",
+      "title": "Mijn huis",
+      "goal": "Describe a home, its rooms, and what is present in them.",
+      "grammar": [
+        "er is / er zijn",
+        "indefinite vs definite noun references",
+        "basic review of de/het"
+      ],
+      "topicVocabulary": [
+        "rooms",
+        "furniture",
+        "parts of a home"
+      ],
+      "connectsFrom": [
+        "de/het",
+        "basic adjective use",
+        "numbers and quantities"
+      ],
+      "preparesFor": [
+        "lesson-14-location",
+        "lesson-14-position-verbs"
+      ],
+      "children": [
+        {
+          "type": "section",
+          "id": "lesson-13-er-is",
+          "title": "Er is en er zijn",
+          "purpose": "Introduce existence before teaching precise location.",
+          "blocks": [
+            {
+              "type": "text",
+              "content": "Use 'er is' for one thing and 'er zijn' for more than one thing when saying that something exists or is present."
+            },
+            {
+              "type": "example",
+              "sentence": "Er is een balkon.",
+              "translation": "There is a balcony.",
+              "note": "The balcony is being introduced for the first time."
+            },
+            {
+              "type": "example",
+              "sentence": "Er zijn twee slaapkamers.",
+              "translation": "There are two bedrooms.",
+              "note": "Use 'zijn' because the noun is plural."
+            },
+            {
+              "type": "dialogue",
+              "turns": [
+                {
+                  "speaker": "A",
+                  "text": "Is er een tuin?"
+                },
+                {
+                  "speaker": "B",
+                  "text": "Nee, maar er is wel een balkon."
+                }
+              ]
+            },
+            {
+              "type": "practice",
+              "practiceType": "fill-in",
+              "instruction": "Complete each sentence with 'er is' or 'er zijn'.",
+              "items": "deferred"
+            },
+            {
+              "type": "practice",
+              "practiceType": "translate",
+              "instruction": "Translate short descriptions of what a home contains.",
+              "items": "deferred"
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "id": "lesson-13-describing-home",
+          "title": "Een huis beschrijven",
+          "purpose": "Combine existing adjective and noun knowledge with the new existential structure.",
+          "blocks": [
+            {
+              "type": "text",
+              "content": "Combine 'er is/er zijn' with familiar descriptions to give a simple picture of a home."
+            },
+            {
+              "type": "example",
+              "sentence": "Er is een kleine keuken en er zijn twee grote slaapkamers.",
+              "translation": "There is a small kitchen and there are two large bedrooms.",
+              "note": "This deliberately recycles adjective endings from an earlier lesson."
+            },
+            {
+              "type": "practice",
+              "practiceType": "reading",
+              "instruction": "Read a short apartment listing and answer questions about what the apartment has.",
+              "passage": "deferred",
+              "questions": "deferred",
+              "references": [
+                "lesson-13-er-is"
+              ]
+            },
+            {
+              "type": "practice",
+              "practiceType": "speaking",
+              "status": "deferred",
+              "goal": "Describe your home."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "lesson",
+      "id": "lesson-14",
+      "title": "Waar is het?",
+      "goal": "Describe the location and physical position of objects.",
+      "grammar": [
+        "prepositions of place",
+        "staan / liggen / zitten",
+        "waar questions"
+      ],
+      "topicVocabulary": [
+        "position",
+        "furniture",
+        "common household objects"
+      ],
+      "connectsFrom": [
+        "lesson-13-er-is",
+        "lesson-13-describing-home"
+      ],
+      "preparesFor": [
+        "lesson-15-directions",
+        "later use of Dutch position verbs",
+        "later use of er"
+      ],
+      "children": [
+        {
+          "type": "section",
+          "id": "lesson-14-location",
+          "title": "Waar is het?",
+          "purpose": "Move from saying that something exists to saying where it is.",
+          "blocks": [
+            {
+              "type": "text",
+              "content": "Use prepositions such as 'op', 'in', 'naast', 'onder', 'voor', 'achter' and 'tussen' to describe location."
+            },
+            {
+              "type": "example",
+              "sentence": "De tafel staat naast het raam.",
+              "translation": "The table is next to the window.",
+              "note": "The learner will soon examine why Dutch uses 'staat' here instead of a generic verb meaning 'is'."
+            },
+            {
+              "type": "practice",
+              "practiceType": "fill-in",
+              "instruction": "Choose the correct location preposition.",
+              "items": "deferred"
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "id": "lesson-14-position-verbs",
+          "title": "Staan, liggen en zitten",
+          "purpose": "Introduce a characteristic Dutch distinction that will recur throughout later lessons.",
+          "blocks": [
+            {
+              "type": "text",
+              "content": "Dutch often describes location using 'staan', 'liggen' or 'zitten' instead of simply using 'zijn'. The choice depends on how something is positioned or conceptualized."
+            },
+            {
+              "type": "example",
+              "sentence": "Het boek ligt op tafel.",
+              "translation": "The book is on the table.",
+              "note": "The book is lying horizontally."
+            },
+            {
+              "type": "example",
+              "sentence": "De melk staat in de koelkast.",
+              "translation": "The milk is in the fridge.",
+              "note": "Containers and upright objects commonly use 'staan'."
+            },
+            {
+              "type": "practice",
+              "practiceType": "fill-in",
+              "instruction": "Choose between a form of 'staan', 'liggen' and 'zitten'.",
+              "items": "deferred"
+            },
+            {
+              "type": "practice",
+              "practiceType": "translate",
+              "instruction": "Translate location sentences where English uses 'is' but Dutch requires a more specific position verb.",
+              "items": "deferred"
+            },
+            {
+              "type": "practice",
+              "practiceType": "reading",
+              "instruction": "Read a description of a room and reconstruct where its objects are located.",
+              "passage": "deferred",
+              "questions": "deferred",
+              "references": [
+                "lesson-13-er-is",
+                "lesson-14-location",
+                "lesson-14-position-verbs"
+              ]
+            },
+            {
+              "type": "practice",
+              "practiceType": "speaking",
+              "status": "deferred",
+              "goal": "Describe where objects in a room are located."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "lesson",
+      "id": "lesson-15",
+      "title": "In mijn buurt",
+      "goal": "Talk about places in a neighborhood and understand or give simple directions.",
+      "grammar": [
+        "imperative",
+        "kunnen for possibility and requests",
+        "directional prepositions and adverbs",
+        "review of inversion"
+      ],
+      "topicVocabulary": [
+        "neighborhood places",
+        "streets",
+        "directions"
+      ],
+      "connectsFrom": [
+        "lesson-14-location",
+        "earlier question forms",
+        "earlier inversion"
+      ],
+      "preparesFor": [
+        "lesson-16-transport",
+        "modal verb + infinitive patterns"
+      ],
+      "children": [
+        {
+          "type": "section",
+          "id": "lesson-15-neighborhood",
+          "title": "Wat is er in de buurt?",
+          "purpose": "Transfer 'er is/er zijn' from the home to the neighborhood.",
+          "blocks": [
+            {
+              "type": "text",
+              "content": "The same structures used to describe a home can describe a street, neighborhood or city."
+            },
+            {
+              "type": "example",
+              "sentence": "Er is een supermarkt naast het station.",
+              "translation": "There is a supermarket next to the station.",
+              "note": "This combines Lesson 13 existence with Lesson 14 location."
+            },
+            {
+              "type": "practice",
+              "practiceType": "reading",
+              "instruction": "Read a neighborhood description and answer location questions.",
+              "passage": "deferred",
+              "questions": "deferred",
+              "references": [
+                "lesson-13-er-is",
+                "lesson-14-location"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "id": "lesson-15-directions",
+          "title": "De weg vragen en uitleggen",
+          "purpose": "Introduce simple commands and functional use of 'kunnen'.",
+          "blocks": [
+            {
+              "type": "example",
+              "sentence": "Ga rechtdoor en sla dan linksaf.",
+              "translation": "Go straight ahead and then turn left.",
+              "note": "Introduces the imperative and previews separable verbs."
+            },
+            {
+              "type": "dialogue",
+              "turns": [
+                {
+                  "speaker": "A",
+                  "text": "Kunt u mij helpen? Waar is het station?"
+                },
+                {
+                  "speaker": "B",
+                  "text": "Ga hier rechtdoor en sla bij het stoplicht rechtsaf."
+                }
+              ]
+            },
+            {
+              "type": "practice",
+              "practiceType": "translate",
+              "instruction": "Translate short directions.",
+              "items": "deferred"
+            },
+            {
+              "type": "practice",
+              "practiceType": "speaking",
+              "status": "deferred",
+              "goal": "Ask for and give directions."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "lesson",
+      "id": "lesson-16",
+      "title": "Onderweg",
+      "goal": "Talk about transportation, destinations and simple travel plans.",
+      "grammar": [
+        "separable verbs",
+        "gaan + infinitive",
+        "inversion with sentence-initial time/place expressions"
+      ],
+      "topicVocabulary": [
+        "transport",
+        "stations",
+        "tickets",
+        "travel"
+      ],
+      "connectsFrom": [
+        "lesson-15-directions",
+        "earlier time expressions",
+        "earlier inversion"
+      ],
+      "preparesFor": [
+        "future modal + infinitive constructions",
+        "making plans",
+        "more complex separable verbs"
+      ],
+      "children": [
+        {
+          "type": "section",
+          "id": "lesson-16-separable-verbs",
+          "title": "Instappen, uitstappen en overstappen",
+          "purpose": "Turn the separable verbs encountered in directions into an explicit grammar concept.",
+          "blocks": [
+            {
+              "type": "text",
+              "content": "Some Dutch verbs contain a prefix that separates from the verb in a main clause."
+            },
+            {
+              "type": "example",
+              "sentence": "Ik stap bij Amsterdam Centraal uit.",
+              "translation": "I get off at Amsterdam Centraal.",
+              "note": "'uitstappen' becomes 'stap ... uit' in this main clause."
+            },
+            {
+              "type": "practice",
+              "practiceType": "fill-in",
+              "instruction": "Complete sentences by placing both parts of a separable verb correctly.",
+              "items": "deferred"
+            },
+            {
+              "type": "practice",
+              "practiceType": "translate",
+              "instruction": "Translate transport sentences containing separable verbs.",
+              "items": "deferred"
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "id": "lesson-16-going-to",
+          "title": "Wat ga je doen?",
+          "purpose": "Introduce 'gaan + infinitive' while preparing the learner for later infinitive-final constructions.",
+          "blocks": [
+            {
+              "type": "example",
+              "sentence": "Morgen ga ik met de trein naar Utrecht.",
+              "translation": "Tomorrow I'm going to Utrecht by train.",
+              "note": "Reviews inversion after 'morgen'."
+            },
+            {
+              "type": "example",
+              "sentence": "Ik ga morgen de trein nemen.",
+              "translation": "I'm going to take the train tomorrow.",
+              "note": "The infinitive moves to the end. This pattern will matter again with modal verbs."
+            },
+            {
+              "type": "practice",
+              "practiceType": "fill-in",
+              "instruction": "Reconstruct sentences from shuffled components.",
+              "items": "deferred",
+              "references": [
+                "lesson-16-separable-verbs"
+              ]
+            },
+            {
+              "type": "practice",
+              "practiceType": "reading",
+              "instruction": "Read a short journey plan and answer questions about time, transport, transfers and destination.",
+              "passage": "deferred",
+              "questions": "deferred",
+              "references": [
+                "lesson-15-directions",
+                "lesson-16-separable-verbs",
+                "lesson-16-going-to"
+              ]
+            },
+            {
+              "type": "practice",
+              "practiceType": "speaking",
+              "status": "deferred",
+              "goal": "Explain how you are going somewhere."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "lesson",
+      "id": "lesson-17",
+      "title": "Het weer",
+      "goal": "Describe weather, seasons and how weather affects everyday plans.",
+      "grammar": [
+        "impersonal het",
+        "adjectives vs adverbs",
+        "recycling gaan + infinitive",
+        "recycling inversion"
+      ],
+      "topicVocabulary": [
+        "weather",
+        "temperature",
+        "seasons"
+      ],
+      "connectsFrom": [
+        "lesson-16-going-to",
+        "earlier adjective use"
+      ],
+      "preparesFor": [
+        "comparatives",
+        "making plans",
+        "giving reasons"
+      ],
+      "children": [
+        {
+          "type": "section",
+          "id": "lesson-17-weather",
+          "title": "Het regent",
+          "purpose": "Introduce impersonal weather constructions.",
+          "blocks": [
+            {
+              "type": "example",
+              "sentence": "Het regent vandaag.",
+              "translation": "It is raining today.",
+              "note": "'Het' does not refer to a specific object."
+            },
+            {
+              "type": "example",
+              "sentence": "Morgen wordt het koud.",
+              "translation": "Tomorrow it will get cold.",
+              "note": "Useful exposure to 'worden' without requiring full mastery yet."
+            },
+            {
+              "type": "practice",
+              "practiceType": "fill-in",
+              "instruction": "Complete simple weather descriptions.",
+              "items": "deferred"
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "id": "lesson-17-plans",
+          "title": "Weer en plannen",
+          "purpose": "Make weather grammar useful by connecting it to travel and plans from the previous lesson.",
+          "blocks": [
+            {
+              "type": "example",
+              "sentence": "Morgen regent het, dus ik ga met de bus.",
+              "translation": "Tomorrow it will rain, so I'm going by bus.",
+              "note": "Recycles transport and 'gaan'. 'Dus' gives early exposure to connecting ideas."
+            },
+            {
+              "type": "practice",
+              "practiceType": "reading",
+              "instruction": "Compare a weather forecast with someone's plans and determine what they are going to do.",
+              "passage": "deferred",
+              "questions": "deferred",
+              "references": [
+                "lesson-16-going-to",
+                "lesson-17-weather"
+              ]
+            },
+            {
+              "type": "practice",
+              "practiceType": "speaking",
+              "status": "deferred",
+              "goal": "Describe today's weather and tomorrow's plans."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "lesson",
+      "id": "lesson-18",
+      "title": "Wat trek je aan?",
+      "goal": "Describe clothing and choose what to wear based on situation and weather.",
+      "grammar": [
+        "adjective endings",
+        "demonstratives review",
+        "separable verb aantrekken",
+        "introduction to comparative forms"
+      ],
+      "topicVocabulary": [
+        "clothes",
+        "colors",
+        "materials",
+        "appearance"
+      ],
+      "connectsFrom": [
+        "lesson-17-weather",
+        "earlier demonstratives",
+        "earlier adjective endings",
+        "lesson-16-separable-verbs"
+      ],
+      "preparesFor": [
+        "comparatives and superlatives",
+        "preferences and opinions",
+        "modal verbs"
+      ],
+      "children": [
+        {
+          "type": "section",
+          "id": "lesson-18-describing-clothes",
+          "title": "Deze jas en dat shirt",
+          "purpose": "Consolidate adjective and demonstrative grammar through a concrete topic.",
+          "blocks": [
+            {
+              "type": "example",
+              "sentence": "Deze warme jas is duur.",
+              "translation": "This warm coat is expensive.",
+              "note": "Reviews demonstratives and adjective endings together."
+            },
+            {
+              "type": "practice",
+              "practiceType": "fill-in",
+              "instruction": "Choose the correct demonstrative and adjective form.",
+              "items": "deferred"
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "id": "lesson-18-aantrekken",
+          "title": "Ik trek mijn jas aan",
+          "purpose": "Reuse separable-verb grammar outside the transport context.",
+          "blocks": [
+            {
+              "type": "example",
+              "sentence": "Ik trek mijn warme jas aan.",
+              "translation": "I put on my warm coat.",
+              "note": "Shows that separable verbs are a general grammatical pattern, not transport-specific vocabulary."
+            },
+            {
+              "type": "practice",
+              "practiceType": "translate",
+              "instruction": "Translate sentences combining clothing, weather and separable verbs.",
+              "items": "deferred",
+              "references": [
+                "lesson-16-separable-verbs",
+                "lesson-17-weather"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "id": "lesson-18-integration",
+          "title": "Een dag buitenshuis",
+          "purpose": "Close Part III with a cumulative task rather than an isolated grammar test.",
+          "blocks": [
+            {
+              "type": "practice",
+              "practiceType": "reading",
+              "instruction": "Read about someone leaving home, checking the weather, choosing clothes, traveling across town and finding a destination.",
+              "passage": "deferred",
+              "questions": "deferred",
+              "references": [
+                "lesson-13-er-is",
+                "lesson-14-location",
+                "lesson-14-position-verbs",
+                "lesson-15-directions",
+                "lesson-16-separable-verbs",
+                "lesson-16-going-to",
+                "lesson-17-weather",
+                "lesson-18-describing-clothes"
+              ]
+            },
+            {
+              "type": "practice",
+              "practiceType": "speaking",
+              "status": "deferred",
+              "goal": "Describe a complete trip from home to a destination, including weather and clothing."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

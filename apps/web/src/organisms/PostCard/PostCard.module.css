@@ -1,0 +1,70 @@
+
+@media (max-width: 48em) {
+  .postShell { border-radius: var(--radius-xl); }
+  .postCard { padding: var(--space-5); border-radius: calc(var(--radius-xl) - var(--space-2)); }
+  .meta { justify-content: flex-start; }
+  .postHeader { align-items: stretch; flex-direction: column; }
+}
+
+.postCard {
+  display: grid;
+  gap: var(--space-5);
+  min-width: 0;
+  padding: clamp(var(--space-5), 4vw, var(--space-8));
+  background: var(--color-core);
+  border: var(--ring-hairline);
+  border-radius: var(--radius-core);
+  box-shadow: var(--shadow-inset-highlight);
+}
+
+.postHeader { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); }
+
+.postShell {
+  min-width: 0;
+  padding: var(--space-2);
+  background: var(--color-bezel);
+  border: var(--ring-hairline);
+  border-radius: var(--radius-shell);
+  box-shadow: var(--shadow-card);
+}
+
+.author { display: flex; align-items: center; gap: var(--space-3); min-width: 0; color: var(--color-foreground); font-weight: var(--weight-semibold); text-decoration: none; }
+.author:hover { text-decoration: underline; text-decoration-color: var(--color-action); text-underline-offset: 4px; }
+.meta { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-2); color: var(--color-foreground-muted); font: var(--type-metadata)/var(--line-compact) var(--font-mono); flex-wrap: wrap; }
+
+.postBody { max-width: 64ch; font-size: var(--type-authored); }
+.postBody a { color: var(--color-foreground); text-decoration-color: var(--color-action); text-underline-offset: 3px; }
+.questions { display: grid; gap: var(--space-3); margin: 0; padding: var(--space-5) var(--space-5) var(--space-5) var(--space-10); background: var(--color-info-soft); border-radius: var(--radius-lg); }
+
+.notes a { color: var(--color-foreground); text-decoration-color: var(--color-action); text-underline-offset: 3px; }
+.notes { padding: var(--space-5); background: var(--color-concealed); border: var(--ring-hairline); border-radius: var(--radius-lg); box-shadow: var(--shadow-inset-highlight);
+white-space: pre-wrap; overflow-wrap: anywhere; line-height: var(--line-body); }
+
+.postActions {
+  padding-inline: var(--space-2);
+}
+
+.postActions:hover {
+    background-color: white;
+  }
+
+ .actionsDropdown {
+  max-width: 9rem;
+  padding-block: 1rem;
+}
+
+/* .actionsDropdown > * {
+  margin-bottom: .5rem;
+  margin-inline: 1rem;
+} */
+
+.actionsDropdownItem {
+  padding: .5rem;
+  overflow: hidden;
+}
+
+.actionsDropdownItem > :global(.mantine-Menu-itemLabel) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

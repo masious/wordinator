@@ -39,13 +39,11 @@ Dependencies flow inward: apps may depend on packages; shared packages must not 
 
 Route loaders ensure authentication and critical route data. TanStack Query owns cache lifetime, pagination, refetching, and mutations. Do not maintain parallel hand-written server caches.
 
-The implemented product routes are `/`, `/invite/$token`, `/groups/$groupId`, `/groups/$groupId/posts/$postId`, `/groups/$groupId/members/$userId`, and `/groups/$groupId/settings`. Invitation, group, post-detail, profile, and settings loaders prime TanStack Query, while protected loaders redirect signed-out or forced-password-change sessions before private content renders. The production-safe `/ui` route remains outside authenticated product flows.
-
-Suggested group routes use opaque IDs, for example `/groups/$groupId`, `/groups/$groupId/posts/$postId`, `/groups/$groupId/members/$userId`, and `/groups/$groupId/notifications`.
+The implemented product routes are `/`, `/invite/$token`, `/groups/$groupId`, `/groups/$groupId/posts/$postId`, `/groups/$groupId/members`, `/groups/$groupId/members/$userId`, `/groups/$groupId/notifications`, `/groups/$groupId/courses`, `/groups/$groupId/courses/$courseId`, and `/groups/$groupId/settings`. Every group route uses the opaque group ID. Their loaders prime TanStack Query, while protected loaders redirect signed-out or forced-password-change sessions before private content renders. The notifications route queries only when it opens, as [notifications.md](notifications.md) requires. The production-safe `/ui` route remains outside authenticated product flows.
 
 ## API application
 
-Use Hono on the Cloudflare Workers runtime and Web-standard APIs. “Node.js” describes the toolchain; production code must use Workers-compatible APIs. Keep route modules aligned to domains: auth, groups, membership, posts, discussions, reactions, notifications, profiles, and media.
+Use Hono on the Cloudflare Workers runtime and Web-standard APIs. “Node.js” describes the toolchain; production code must use Workers-compatible APIs. Keep route modules aligned to domains: auth, groups, membership, posts, discussions, reactions, notifications, profiles, courses, and media.
 
 API conventions:
 
@@ -70,6 +68,8 @@ Phase 5 adds member-directory, leave, remove, password-regeneration, avatar, gro
 
 Phase 6 adds on-demand group notification list/read-one/read-all endpoints and a narrowly scoped authenticated status-notification endpoint for accepted, rejected, and removed membership events. Normal notification operations use the same active-membership tenant middleware as other group data. Notification destinations keep opaque post/comment IDs after target deletion and resolve availability at read time.
 
+The course shell phase adds `GET/POST /api/groups/:groupId/courses` (newest-first `(created_at, id)` cursor pages) and `GET/PATCH /api/groups/:groupId/courses/:courseId`, plus `POST .../visibility` (owner publish/unpublish), `POST .../archive` and `POST .../restore` (owner or group creator), and `POST/DELETE .../cover` (owner). Every route scopes the course ID by `group_id` after the group middleware. Courses the viewer may not see return the same `404` as missing ones. Changes to an archived course return `409 COURSE_ARCHIVED`. The web routes are `/groups/$groupId/courses` and `/groups/$groupId/courses/$courseId`, and the shell navigation links to the library.
+
 ## Database
 
 Cloudflare D1 is the relational system of record. Drizzle provides typed schema/query access through the D1 binding. Drizzle Kit generates committed SQL migrations; Wrangler applies the same migration directory to explicit local or remote targets.
@@ -80,7 +80,7 @@ Migration `0005_phase_three_posts.sql` adds `posts`, `reading_questions`, and `f
 
 ## Images
 
-The API validates type and size and coordinates image metadata. R2 stores static PNG/JPEG/WebP objects under unguessable `avatars/` and `groups/` keys. Objects are publicly readable by URL by product decision. Client-side square cropping improves UX; server-side validation remains authoritative. `MEDIA` is the R2 binding and `PUBLIC_MEDIA_BASE_URL` is the public URL prefix returned in contracts.
+The API validates type and size and coordinates image metadata. R2 stores static PNG/JPEG/WebP objects under unguessable `avatars/`, `groups/`, and `courses/` keys. Objects are publicly readable by URL by product decision. Client-side cropping (square for avatars and icons, 2:1 at 1200×600 for course covers) improves UX; server-side validation remains authoritative. `MEDIA` is the R2 binding and `PUBLIC_MEDIA_BASE_URL` is the public URL prefix returned in contracts.
 
 ## PWA behavior
 

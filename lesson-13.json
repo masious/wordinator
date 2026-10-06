@@ -1,0 +1,337 @@
+{
+  "type": "lesson",
+  "id": "lesson-13",
+  "title": "Mijn huis",
+  "goal": "Describe a home, its rooms, and what is present in them.",
+  "grammar": [
+    "er is / er zijn",
+    "indefinite vs definite noun references",
+    "basic review of de/het"
+  ],
+  "topicVocabulary": [
+    "rooms",
+    "furniture",
+    "parts of a home"
+  ],
+  "connectsFrom": [
+    "de/het",
+    "basic adjective use",
+    "numbers and quantities"
+  ],
+  "preparesFor": [
+    "lesson-14-location",
+    "lesson-14-position-verbs"
+  ],
+  "children": [
+    {
+      "type": "section",
+      "id": "lesson-13-er-is",
+      "title": "Er is en er zijn",
+      "purpose": "Introduce existence before teaching precise location.",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "Use 'er is' for one thing and 'er zijn' for more than one thing when saying that something exists or is present. Questions use 'is er' and 'zijn er'."
+        },
+        {
+          "type": "example",
+          "sentence": "Er is een balkon.",
+          "translation": "There is a balcony.",
+          "note": "The balcony is being introduced for the first time."
+        },
+        {
+          "type": "example",
+          "sentence": "Er zijn twee slaapkamers.",
+          "translation": "There are two bedrooms.",
+          "note": "Use 'zijn' because 'twee slaapkamers' is plural."
+        },
+        {
+          "type": "example",
+          "sentence": "Is er een tuin?",
+          "translation": "Is there a garden?",
+          "note": "In a question, 'is' comes before 'er'."
+        },
+        {
+          "type": "example",
+          "sentence": "Zijn er winkels in de buurt?",
+          "translation": "Are there shops nearby?",
+          "note": "The same inversion happens with plural 'zijn er'. This also previews the neighborhood lesson."
+        },
+        {
+          "type": "dialogue",
+          "turns": [
+            {
+              "speaker": "A",
+              "text": "Is er een tuin?"
+            },
+            {
+              "speaker": "B",
+              "text": "Nee, maar er is wel een balkon."
+            },
+            {
+              "speaker": "A",
+              "text": "Zijn er twee slaapkamers?"
+            },
+            {
+              "speaker": "B",
+              "text": "Ja, er zijn twee slaapkamers."
+            }
+          ]
+        },
+        {
+          "type": "practice",
+          "practiceType": "fill-in",
+          "instruction": "Complete each sentence with 'er is', 'er zijn', 'is er' or 'zijn er'.",
+          "items": [
+            {
+              "prompt": "_____ een kleine keuken.",
+              "answer": "Er is"
+            },
+            {
+              "prompt": "_____ drie slaapkamers.",
+              "answer": "Er zijn"
+            },
+            {
+              "prompt": "_____ een balkon?",
+              "answer": "Is er"
+            },
+            {
+              "prompt": "_____ twee badkamers?",
+              "answer": "Zijn er"
+            },
+            {
+              "prompt": "In mijn appartement _____ een grote woonkamer.",
+              "answer": "is er",
+              "note": "The sentence begins with a place expression, so 'er is' becomes 'is er'."
+            },
+            {
+              "prompt": "In het huis _____ vier kamers.",
+              "answer": "zijn er",
+              "note": "This reinforces inversion after a sentence-initial place expression."
+            },
+            {
+              "prompt": "_____ geen lift in het gebouw.",
+              "answer": "Er is"
+            },
+            {
+              "prompt": "_____ ook een garage?",
+              "answer": "Is er"
+            }
+          ]
+        },
+        {
+          "type": "practice",
+          "practiceType": "translate",
+          "instruction": "Translate the sentences into Dutch. Pay attention to singular, plural and word order.",
+          "items": [
+            {
+              "prompt": "There is a bathroom.",
+              "answer": "Er is een badkamer."
+            },
+            {
+              "prompt": "There are two bedrooms.",
+              "answer": "Er zijn twee slaapkamers."
+            },
+            {
+              "prompt": "Is there a garden?",
+              "answer": "Is er een tuin?"
+            },
+            {
+              "prompt": "Are there three rooms?",
+              "answer": "Zijn er drie kamers?"
+            },
+            {
+              "prompt": "There is no elevator.",
+              "answer": "Er is geen lift."
+            },
+            {
+              "prompt": "In the apartment there is a small kitchen.",
+              "answer": "In het appartement is er een kleine keuken.",
+              "note": "Recycles inversion after a sentence-initial place expression."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "id": "lesson-13-describing-home",
+      "title": "Een huis beschrijven",
+      "purpose": "Combine existing adjective and noun knowledge with the new existential structure.",
+      "blocks": [
+        {
+          "type": "text",
+          "content": "You can combine 'er is' and 'er zijn' with numbers, adjectives and room names to describe a home. Once something has been introduced, you can refer to it again with 'de' or 'het'."
+        },
+        {
+          "type": "example",
+          "sentence": "Er is een kleine keuken en er zijn twee grote slaapkamers.",
+          "translation": "There is a small kitchen and there are two large bedrooms.",
+          "note": "This deliberately recycles adjective endings from an earlier lesson."
+        },
+        {
+          "type": "example",
+          "sentence": "Er is een balkon. Het balkon is klein.",
+          "translation": "There is a balcony. The balcony is small.",
+          "note": "First the balcony is introduced with 'een'. The second sentence refers to the same balcony with 'het'."
+        },
+        {
+          "type": "example",
+          "sentence": "Er zijn twee slaapkamers. De slaapkamers zijn licht.",
+          "translation": "There are two bedrooms. The bedrooms are bright.",
+          "note": "After introducing the bedrooms, 'de' refers back to them."
+        },
+        {
+          "type": "practice",
+          "practiceType": "fill-in",
+          "instruction": "Complete each sentence with 'een', 'de' or 'het'.",
+          "items": [
+            {
+              "prompt": "Er is _____ balkon. _____ balkon is groot.",
+              "answer": [
+                "een",
+                "Het"
+              ]
+            },
+            {
+              "prompt": "Er is _____ keuken. _____ keuken is klein.",
+              "answer": [
+                "een",
+                "De"
+              ]
+            },
+            {
+              "prompt": "Er is _____ badkamer. _____ badkamer heeft een douche.",
+              "answer": [
+                "een",
+                "De"
+              ]
+            },
+            {
+              "prompt": "Er is _____ appartement op de tweede verdieping. _____ appartement heeft twee slaapkamers.",
+              "answer": [
+                "een",
+                "Het"
+              ]
+            },
+            {
+              "prompt": "Er is _____ tuin. _____ tuin is groot.",
+              "answer": [
+                "een",
+                "De"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "practice",
+          "practiceType": "translate",
+          "instruction": "Translate the descriptions into Dutch.",
+          "items": [
+            {
+              "prompt": "There is a large living room and a small kitchen.",
+              "answer": "Er is een grote woonkamer en een kleine keuken."
+            },
+            {
+              "prompt": "There are two small bedrooms.",
+              "answer": "Er zijn twee kleine slaapkamers."
+            },
+            {
+              "prompt": "There is a balcony. The balcony is large.",
+              "answer": "Er is een balkon. Het balkon is groot."
+            },
+            {
+              "prompt": "There is a bathroom. The bathroom is small.",
+              "answer": "Er is een badkamer. De badkamer is klein."
+            }
+          ]
+        },
+        {
+          "type": "practice",
+          "practiceType": "reading",
+          "id": "lesson-13-apartment-listing",
+          "instruction": "Read the apartment listing and answer the questions in Dutch where possible.",
+          "context": "You are looking for an apartment and find this listing online.",
+          "passage": {
+            "title": "Licht appartement met balkon",
+            "content": "Te huur: een licht appartement op de tweede verdieping. Het appartement heeft een grote woonkamer, een kleine keuken, twee slaapkamers en een badkamer met douche. Er is ook een balkon. Het balkon is klein, maar zonnig. Er is geen tuin en er is geen garage. In het gebouw is er wel een lift. Het appartement is 72 m² en ligt dicht bij het centrum."
+          },
+          "questions": [
+            {
+              "prompt": "Op welke verdieping is het appartement?",
+              "answer": "Op de tweede verdieping."
+            },
+            {
+              "prompt": "Hoeveel slaapkamers zijn er?",
+              "answer": "Er zijn twee slaapkamers."
+            },
+            {
+              "prompt": "Is de keuken groot?",
+              "answer": "Nee, de keuken is klein."
+            },
+            {
+              "prompt": "Is er een balkon?",
+              "answer": "Ja, er is een balkon."
+            },
+            {
+              "prompt": "Hoe is het balkon?",
+              "answer": "Het balkon is klein maar zonnig."
+            },
+            {
+              "prompt": "Is er een tuin?",
+              "answer": "Nee, er is geen tuin."
+            },
+            {
+              "prompt": "Is er een lift in het gebouw?",
+              "answer": "Ja, er is een lift."
+            },
+            {
+              "prompt": "Hoe groot is het appartement?",
+              "answer": "Het appartement is 72 m²."
+            }
+          ],
+          "followUp": {
+            "type": "practice",
+            "practiceType": "transform",
+            "instruction": "Rewrite information from the listing using 'er is' or 'er zijn'.",
+            "items": [
+              {
+                "prompt": "Het appartement heeft twee slaapkamers.",
+                "answer": "Er zijn twee slaapkamers."
+              },
+              {
+                "prompt": "Het appartement heeft een balkon.",
+                "answer": "Er is een balkon."
+              },
+              {
+                "prompt": "Het gebouw heeft een lift.",
+                "answer": "Er is een lift in het gebouw."
+              }
+            ],
+            "note": "This makes the reading passage part of the grammar practice rather than an isolated comprehension exercise."
+          },
+          "futureReferences": [
+            {
+              "target": "lesson-14-location",
+              "use": "Reuse this apartment and ask where objects are located inside it."
+            },
+            {
+              "target": "lesson-14-position-verbs",
+              "use": "Add furniture to the same apartment and introduce sentences such as 'De bank staat bij het raam' and 'Het kleed ligt onder de tafel'."
+            },
+            {
+              "target": "lesson-15-neighborhood",
+              "use": "Extend the same listing with information about the station, supermarket, park and other places in the neighborhood."
+            }
+          ]
+        },
+        {
+          "type": "practice",
+          "practiceType": "speaking",
+          "status": "deferred",
+          "goal": "Describe your home or an imaginary apartment using 'er is' and 'er zijn'."
+        }
+      ]
+    }
+  ]
+}

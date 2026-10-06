@@ -6,7 +6,7 @@ The working title **Wordinator** may change.
 
 ## Who it is for
 
-The initial community is roughly ten existing friends. It is not a public network, professional course, tutoring marketplace, or native-speaker matching service. Trust comes from real relationships and invite-only groups.
+The initial community is roughly ten existing friends. It is not a public network, professional course provider, tutoring marketplace, or native-speaker matching service. Trust comes from real relationships and invite-only groups.
 
 Each group focuses on exactly one target language. The initial choices are Dutch and German. A person may belong to several groups, but each group is a separate social and data boundary.
 
@@ -19,6 +19,8 @@ Each group focuses on exactly one target language. The initial choices are Dutch
 5. Everyone returns as new material is shared.
 
 Posts are shared sentences, standalone questions, readings with questions, or fill-in-the-blank prompts. Content comes from members; the platform does not teach a curriculum or judge people’s learning.
+
+Members may also build shared, member-authored [courses](courses.md) for their group.
 
 ## Product character
 
@@ -37,7 +39,7 @@ The expected load is small—about ten users and up to one hundred new posts per
 ## Explicit non-goals
 
 - Public discovery, public profiles, followers, or direct messages
-- Lessons, a fixed curriculum, translation, dictionaries, grammar correction, pronunciation, or AI generation
+- Platform-provided lessons or a fixed curriculum, translation, dictionaries, grammar correction, pronunciation, or AI generation
 - Scores, streaks, badges, leaderboards, or other gamification
 - Automated language detection or enforcement
 - Rich text, media posts, audio, or file attachments

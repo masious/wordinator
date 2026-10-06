@@ -3,7 +3,6 @@ import type { Database } from "@wordinator/db";
 import { eq } from "drizzle-orm";
 import type { Context } from "hono";
 import { deleteCookie, getSignedCookie, setSignedCookie } from "hono/cookie";
-import { logError } from "./logger";
 
 const COOKIE_NAME = "wordinator_session";
 const SESSION_SECONDS = 60 * 60 * 24 * 30;
@@ -12,6 +11,7 @@ const encoder = new TextEncoder();
 
 export type AuthUser = {
   id: string;
+  avatarKey: string | null;
   displayName: string;
   mustChangePassword: boolean;
 };
@@ -99,7 +99,7 @@ export async function readSession(context: Context, database: Database, secret: 
   const payload = decodeSession(signed);
   if (!payload || payload.expiresAt <= Date.now()) return null;
   const [user] = await database
-    .select({ id: users.id, displayName: users.displayName, mustChangePassword: users.mustChangePassword })
+    .select({ id: users.id, displayName: users.displayName, avatarKey: users.avatarKey, mustChangePassword: users.mustChangePassword })
     .from(users)
     .where(eq(users.id, payload.userId))
     .limit(1);

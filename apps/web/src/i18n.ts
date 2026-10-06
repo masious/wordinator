@@ -83,7 +83,7 @@ export const resources = {
         unavailable: "This group is not available.",
         iconOptional: "Group icon (optional)"
       },
-      nav: { primary: "Main navigation", mobile: "Mobile navigation", accountMenu: "Account menu", journal: "Journal", members: "Members", notifications: "Notices", profile: "My profile", settings: "Settings" },
+      nav: { primary: "Main navigation", mobile: "Mobile navigation", accountMenu: "Account menu", journal: "Journal", courses: "Courses", members: "Members", notifications: "Notices", profile: "My profile", settings: "Settings" },
       notifications: {
         eyebrow: "Group activity",
         title: "Notifications",
@@ -139,6 +139,47 @@ export const resources = {
         leaveHelp: "Your posts and profile snapshot will remain for current members.",
         leaveConfirm: "Leave this group? You will lose access until you request to join again.",
         leave: "Leave group"
+      },
+      courses: {
+        loading: "Opening the course library",
+        loadingCourse: "Opening this course",
+        unavailable: "The course library is unavailable.",
+        courseUnavailable: "This course is not available.",
+        eyebrow: "Shared courses",
+        title: "Courses",
+        intro: "Long-lived learning journals your group builds together, lesson by lesson.",
+        create: "New course",
+        createTitle: "Start a course",
+        createSubmit: "Create draft",
+        editTitle: "Edit course",
+        emptyTitle: "No courses yet",
+        emptyBody: "Start a course to gather lessons and practice for your group.",
+        loadMore: "Show more courses",
+        backToLibrary: "Back to courses",
+        levelLabel: "Level: {{level}}",
+        ownerLabel: "By {{name}}",
+        manageTitle: "Manage course",
+        draftHelp: "Drafts are visible only to you until you publish them.",
+        edit: "Edit details",
+        publish: "Publish course",
+        unpublish: "Return to draft",
+        archive: "Archive course",
+        archiveTitle: "Archive this course?",
+        archiveConfirm: "Archive “{{title}}”? It disappears from the library for other members and can be restored later as a draft.",
+        restore: "Restore as draft",
+        archivedTitle: "This course is archived",
+        archivedBody: "Only its owner and the group creator can see it. Restoring returns it as a draft.",
+        coverTitle: "Cover image",
+        noLessonsTitle: "No lessons yet",
+        noLessonsBody: "Lessons and practice will appear here as the course grows.",
+        status: { draft: "Draft", published: "Published", archived: "Archived" },
+        fields: {
+          title: "Title",
+          summary: "Summary",
+          level: "Level",
+          levelHelp: "Optional free text, for example A1 → early A2.",
+          intendedLearner: "Intended learner"
+        }
       },
       media: {
         publicNotice: "Images are public to anyone who has their URL.",
@@ -282,7 +323,12 @@ export const resources = {
         IMAGE_SIZE_INVALID: "Choose an image no larger than 1 MB.",
         IMAGE_TYPE_INVALID: "Choose a static PNG, JPEG, or WebP image.",
         CREATOR_CANNOT_LEAVE: "The group creator cannot leave.",
-        MEMBERSHIP_NOT_FOUND: "This membership is no longer active."
+        MEMBERSHIP_NOT_FOUND: "This membership is no longer active.",
+        COURSE_NOT_FOUND: "This course is not available.",
+        COURSE_EDIT_FORBIDDEN: "Only the course owner can change this course.",
+        COURSE_ARCHIVE_FORBIDDEN: "Only the course owner or group creator can archive or restore this course.",
+        COURSE_ARCHIVED: "Restore this course before changing it.",
+        COURSE_NOT_ARCHIVED: "This course is not archived."
       },
       ui: {
         eyebrow: "Living component inventory",

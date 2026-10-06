@@ -82,9 +82,9 @@ export function LabelChip({ children }: PropsWithChildren) {
   return <span className={styles.chip}>{children}</span>;
 }
 
-export function Avatar({ name, src }: { name: string; src?: string }) {
+export function Avatar({ name, className, src, size }: { name: string; className?: string, src?: string | null, size?: number }) {
   const initials = name.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase();
-  return <MantineAvatar alt={name} name={name} src={src}>{initials}</MantineAvatar>;
+  return <MantineAvatar className={className} size={size} alt={name} name={name} src={src}>{initials}</MantineAvatar>;
 }
 
 export function StatusPanel({ title, children, tone = "info" }: PropsWithChildren<{ title: string; tone?: "info" | "success" | "error" }>) {

@@ -1,0 +1,616 @@
+{
+  "course": {
+    "title": "Dutch Foundations — Part III: Home and Surroundings",
+    "summary": "Learn to describe where things are, talk about your home and neighborhood, give directions, use transport, and describe everyday surroundings.",
+    "level": "A1 → early A2",
+    "intendedLearner": "Adult learners who already know basic present tense, de/het, simple adjective use, time expressions, and basic Dutch word order."
+  },
+  "lessons": [
+    {
+      "title": "Mijn huis",
+      "goal": "Describe a home, its rooms, and what is present in them.",
+      "blocks": [
+        {
+          "kind": "heading",
+          "payload": {
+            "title": "Er is en er zijn"
+          }
+        },
+        {
+          "kind": "text",
+          "payload": {
+            "content": "Use 'er is' for one thing and 'er zijn' for more than one thing when saying that something exists or is present. Questions use 'is er' and 'zijn er'."
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Er is een balkon.",
+            "translation": "There is a balcony.",
+            "note": "The balcony is being introduced for the first time."
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Er zijn twee slaapkamers.",
+            "translation": "There are two bedrooms.",
+            "note": "Use 'zijn' because 'twee slaapkamers' is plural."
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Is er een tuin?",
+            "translation": "Is there a garden?",
+            "note": "In a question, 'is' comes before 'er'."
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Zijn er winkels in de buurt?",
+            "translation": "Are there shops nearby?",
+            "note": "The same inversion happens with plural 'zijn er'. This also previews the neighborhood lesson."
+          }
+        },
+        {
+          "kind": "dialogue",
+          "payload": {
+            "turns": [
+              {
+                "speaker": "A",
+                "text": "Is er een tuin?"
+              },
+              {
+                "speaker": "B",
+                "text": "Nee, maar er is wel een balkon."
+              },
+              {
+                "speaker": "A",
+                "text": "Zijn er twee slaapkamers?"
+              },
+              {
+                "speaker": "B",
+                "text": "Ja, er zijn twee slaapkamers."
+              }
+            ]
+          }
+        },
+        {
+          "kind": "practice",
+          "payload": {
+            "instruction": "Complete each sentence with 'er is', 'er zijn', 'is er' or 'zijn er'.",
+            "items": [
+              {
+                "prompt": "… een kleine keuken.",
+                "authorsVersion": [
+                  "Er is"
+                ]
+              },
+              {
+                "prompt": "… drie slaapkamers.",
+                "authorsVersion": [
+                  "Er zijn"
+                ]
+              },
+              {
+                "prompt": "… een balkon?",
+                "authorsVersion": [
+                  "Is er"
+                ]
+              },
+              {
+                "prompt": "… twee badkamers?",
+                "authorsVersion": [
+                  "Zijn er"
+                ]
+              },
+              {
+                "prompt": "In mijn appartement … een grote woonkamer.",
+                "authorsVersion": [
+                  "is er"
+                ],
+                "note": "The sentence begins with a place expression, so 'er is' becomes 'is er'."
+              },
+              {
+                "prompt": "In het huis … vier kamers.",
+                "authorsVersion": [
+                  "zijn er"
+                ],
+                "note": "This reinforces inversion after a sentence-initial place expression."
+              },
+              {
+                "prompt": "… geen lift in het gebouw.",
+                "authorsVersion": [
+                  "Er is"
+                ]
+              },
+              {
+                "prompt": "… ook een garage?",
+                "authorsVersion": [
+                  "Is er"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "kind": "practice",
+          "payload": {
+            "instruction": "Translate the sentences into Dutch. Pay attention to singular, plural and word order.",
+            "items": [
+              {
+                "prompt": "There is a bathroom.",
+                "authorsVersion": [
+                  "Er is een badkamer."
+                ]
+              },
+              {
+                "prompt": "There are two bedrooms.",
+                "authorsVersion": [
+                  "Er zijn twee slaapkamers."
+                ]
+              },
+              {
+                "prompt": "Is there a garden?",
+                "authorsVersion": [
+                  "Is er een tuin?"
+                ]
+              },
+              {
+                "prompt": "Are there three rooms?",
+                "authorsVersion": [
+                  "Zijn er drie kamers?"
+                ]
+              },
+              {
+                "prompt": "There is no elevator.",
+                "authorsVersion": [
+                  "Er is geen lift."
+                ]
+              },
+              {
+                "prompt": "In the apartment there is a small kitchen.",
+                "authorsVersion": [
+                  "In het appartement is er een kleine keuken."
+                ],
+                "note": "Recycles inversion after a sentence-initial place expression."
+              }
+            ]
+          }
+        },
+        {
+          "kind": "heading",
+          "payload": {
+            "title": "Een huis beschrijven"
+          }
+        },
+        {
+          "kind": "text",
+          "payload": {
+            "content": "You can combine 'er is' and 'er zijn' with numbers, adjectives and room names to describe a home. Once something has been introduced, you can refer to it again with 'de' or 'het'."
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Er is een kleine keuken en er zijn twee grote slaapkamers.",
+            "translation": "There is a small kitchen and there are two large bedrooms.",
+            "note": "This deliberately recycles adjective endings from an earlier lesson."
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Er is een balkon. Het balkon is klein.",
+            "translation": "There is a balcony. The balcony is small.",
+            "note": "First the balcony is introduced with 'een'. The second sentence refers to the same balcony with 'het'."
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Er zijn twee slaapkamers. De slaapkamers zijn licht.",
+            "translation": "There are two bedrooms. The bedrooms are bright.",
+            "note": "After introducing the bedrooms, 'de' refers back to them."
+          }
+        },
+        {
+          "kind": "practice",
+          "payload": {
+            "instruction": "Complete each sentence with 'een', 'de' or 'het'.",
+            "items": [
+              {
+                "prompt": "Er is … balkon. … balkon is groot.",
+                "authorsVersion": [
+                  "een",
+                  "Het"
+                ]
+              },
+              {
+                "prompt": "Er is … keuken. … keuken is klein.",
+                "authorsVersion": [
+                  "een",
+                  "De"
+                ]
+              },
+              {
+                "prompt": "Er is … badkamer. … badkamer heeft een douche.",
+                "authorsVersion": [
+                  "een",
+                  "De"
+                ]
+              },
+              {
+                "prompt": "Er is … appartement op de tweede verdieping. … appartement heeft twee slaapkamers.",
+                "authorsVersion": [
+                  "een",
+                  "Het"
+                ]
+              },
+              {
+                "prompt": "Er is … tuin. … tuin is groot.",
+                "authorsVersion": [
+                  "een",
+                  "De"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "kind": "practice",
+          "payload": {
+            "instruction": "Translate the descriptions into Dutch.",
+            "items": [
+              {
+                "prompt": "There is a large living room and a small kitchen.",
+                "authorsVersion": [
+                  "Er is een grote woonkamer en een kleine keuken."
+                ]
+              },
+              {
+                "prompt": "There are two small bedrooms.",
+                "authorsVersion": [
+                  "Er zijn twee kleine slaapkamers."
+                ]
+              },
+              {
+                "prompt": "There is a balcony. The balcony is large.",
+                "authorsVersion": [
+                  "Er is een balkon. Het balkon is groot."
+                ]
+              },
+              {
+                "prompt": "There is a bathroom. The bathroom is small.",
+                "authorsVersion": [
+                  "Er is een badkamer. De badkamer is klein."
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "kind": "practice",
+          "payload": {
+            "instruction": "Read the apartment listing and answer the questions in Dutch where possible.\n\nYou are looking for an apartment and find this listing online.",
+            "passage": {
+              "title": "Licht appartement met balkon",
+              "content": "Te huur: een licht appartement op de tweede verdieping. Het appartement heeft een grote woonkamer, een kleine keuken, twee slaapkamers en een badkamer met douche. Er is ook een balkon. Het balkon is klein, maar zonnig. Er is geen tuin en er is geen garage. In het gebouw is er wel een lift. Het appartement is 72 m² en ligt dicht bij het centrum."
+            },
+            "items": [
+              {
+                "prompt": "Op welke verdieping is het appartement?",
+                "authorsVersion": [
+                  "Op de tweede verdieping."
+                ]
+              },
+              {
+                "prompt": "Hoeveel slaapkamers zijn er?",
+                "authorsVersion": [
+                  "Er zijn twee slaapkamers."
+                ]
+              },
+              {
+                "prompt": "Is de keuken groot?",
+                "authorsVersion": [
+                  "Nee, de keuken is klein."
+                ]
+              },
+              {
+                "prompt": "Is er een balkon?",
+                "authorsVersion": [
+                  "Ja, er is een balkon."
+                ]
+              },
+              {
+                "prompt": "Hoe is het balkon?",
+                "authorsVersion": [
+                  "Het balkon is klein maar zonnig."
+                ]
+              },
+              {
+                "prompt": "Is er een tuin?",
+                "authorsVersion": [
+                  "Nee, er is geen tuin."
+                ]
+              },
+              {
+                "prompt": "Is er een lift in het gebouw?",
+                "authorsVersion": [
+                  "Ja, er is een lift."
+                ]
+              },
+              {
+                "prompt": "Hoe groot is het appartement?",
+                "authorsVersion": [
+                  "Het appartement is 72 m²."
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "kind": "practice",
+          "payload": {
+            "instruction": "Rewrite information from the listing using 'er is' or 'er zijn'.",
+            "items": [
+              {
+                "prompt": "Het appartement heeft twee slaapkamers.",
+                "authorsVersion": [
+                  "Er zijn twee slaapkamers."
+                ]
+              },
+              {
+                "prompt": "Het appartement heeft een balkon.",
+                "authorsVersion": [
+                  "Er is een balkon."
+                ]
+              },
+              {
+                "prompt": "Het gebouw heeft een lift.",
+                "authorsVersion": [
+                  "Er is een lift in het gebouw."
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Waar is het?",
+      "goal": "Describe the location and physical position of objects.",
+      "blocks": [
+        {
+          "kind": "heading",
+          "payload": {
+            "title": "Waar is het?"
+          }
+        },
+        {
+          "kind": "text",
+          "payload": {
+            "content": "Use prepositions such as 'op', 'in', 'naast', 'onder', 'voor', 'achter' and 'tussen' to describe location."
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "De tafel staat naast het raam.",
+            "translation": "The table is next to the window.",
+            "note": "The learner will soon examine why Dutch uses 'staat' here instead of a generic verb meaning 'is'."
+          }
+        },
+        {
+          "kind": "heading",
+          "payload": {
+            "title": "Staan, liggen en zitten"
+          }
+        },
+        {
+          "kind": "text",
+          "payload": {
+            "content": "Dutch often describes location using 'staan', 'liggen' or 'zitten' instead of simply using 'zijn'. The choice depends on how something is positioned or conceptualized."
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Het boek ligt op tafel.",
+            "translation": "The book is on the table.",
+            "note": "The book is lying horizontally."
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "De melk staat in de koelkast.",
+            "translation": "The milk is in the fridge.",
+            "note": "Containers and upright objects commonly use 'staan'."
+          }
+        }
+      ]
+    },
+    {
+      "title": "In mijn buurt",
+      "goal": "Talk about places in a neighborhood and understand or give simple directions.",
+      "blocks": [
+        {
+          "kind": "heading",
+          "payload": {
+            "title": "Wat is er in de buurt?"
+          }
+        },
+        {
+          "kind": "text",
+          "payload": {
+            "content": "The same structures used to describe a home can describe a street, neighborhood or city."
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Er is een supermarkt naast het station.",
+            "translation": "There is a supermarket next to the station.",
+            "note": "This combines Lesson 13 existence with Lesson 14 location."
+          }
+        },
+        {
+          "kind": "heading",
+          "payload": {
+            "title": "De weg vragen en uitleggen"
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Ga rechtdoor en sla dan linksaf.",
+            "translation": "Go straight ahead and then turn left.",
+            "note": "Introduces the imperative and previews separable verbs."
+          }
+        },
+        {
+          "kind": "dialogue",
+          "payload": {
+            "turns": [
+              {
+                "speaker": "A",
+                "text": "Kunt u mij helpen? Waar is het station?"
+              },
+              {
+                "speaker": "B",
+                "text": "Ga hier rechtdoor en sla bij het stoplicht rechtsaf."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "title": "Onderweg",
+      "goal": "Talk about transportation, destinations and simple travel plans.",
+      "blocks": [
+        {
+          "kind": "heading",
+          "payload": {
+            "title": "Instappen, uitstappen en overstappen"
+          }
+        },
+        {
+          "kind": "text",
+          "payload": {
+            "content": "Some Dutch verbs contain a prefix that separates from the verb in a main clause."
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Ik stap bij Amsterdam Centraal uit.",
+            "translation": "I get off at Amsterdam Centraal.",
+            "note": "'uitstappen' becomes 'stap ... uit' in this main clause."
+          }
+        },
+        {
+          "kind": "heading",
+          "payload": {
+            "title": "Wat ga je doen?"
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Morgen ga ik met de trein naar Utrecht.",
+            "translation": "Tomorrow I'm going to Utrecht by train.",
+            "note": "Reviews inversion after 'morgen'."
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Ik ga morgen de trein nemen.",
+            "translation": "I'm going to take the train tomorrow.",
+            "note": "The infinitive moves to the end. This pattern will matter again with modal verbs."
+          }
+        }
+      ]
+    },
+    {
+      "title": "Het weer",
+      "goal": "Describe weather, seasons and how weather affects everyday plans.",
+      "blocks": [
+        {
+          "kind": "heading",
+          "payload": {
+            "title": "Het regent"
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Het regent vandaag.",
+            "translation": "It is raining today.",
+            "note": "'Het' does not refer to a specific object."
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Morgen wordt het koud.",
+            "translation": "Tomorrow it will get cold.",
+            "note": "Useful exposure to 'worden' without requiring full mastery yet."
+          }
+        },
+        {
+          "kind": "heading",
+          "payload": {
+            "title": "Weer en plannen"
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Morgen regent het, dus ik ga met de bus.",
+            "translation": "Tomorrow it will rain, so I'm going by bus.",
+            "note": "Recycles transport and 'gaan'. 'Dus' gives early exposure to connecting ideas."
+          }
+        }
+      ]
+    },
+    {
+      "title": "Wat trek je aan?",
+      "goal": "Describe clothing and choose what to wear based on situation and weather.",
+      "blocks": [
+        {
+          "kind": "heading",
+          "payload": {
+            "title": "Deze jas en dat shirt"
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Deze warme jas is duur.",
+            "translation": "This warm coat is expensive.",
+            "note": "Reviews demonstratives and adjective endings together."
+          }
+        },
+        {
+          "kind": "heading",
+          "payload": {
+            "title": "Ik trek mijn jas aan"
+          }
+        },
+        {
+          "kind": "example",
+          "payload": {
+            "sentence": "Ik trek mijn warme jas aan.",
+            "translation": "I put on my warm coat.",
+            "note": "Shows that separable verbs are a general grammatical pattern, not transport-specific vocabulary."
+          }
+        }
+      ]
+    }
+  ]
+}

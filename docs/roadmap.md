@@ -93,6 +93,22 @@ Completed on 2026-10-03. Phase 5 now includes the active/former directory; snaps
 
 Repository implementation completed on 2026-10-03: group-scoped on-demand notification records and read controls, restricted membership status notices, retained deleted-target destinations, localized empty/loading/failure states, responsive five-destination navigation, a connectivity-required fallback, a notification migration, and API/component/Chromium/WebKit coverage are present. The manual production runbook below is now command-specific. Phase 6 remains open until an operator supplies the real Cloudflare IDs/routes/credentials, completes the production deployment plus D1/R2 restore drill, records current Chrome/Safari checks, and conducts the initial friend-group smoke test; those external facts cannot be truthfully completed from the repository alone.
 
+## Course phases
+
+The [courses blueprint](courses.md) owns every course rule. Each phase is complete only when its code, migrations, tests, and documentation changes are done.
+
+- **C1 — Course shell** (completed 2026-10-06): course create, edit, archive/restore, owner-only editing, draft/published status, wide cover image, library and course routes, and library navigation.
+
+  C1 adds migration `0009_course_shell.sql` and the `courses` table. Members can create, edit, publish, unpublish, archive, and restore courses through owner-only and owner-or-creator endpoints. Covers use a 2:1 crop under `courses/` in R2, and superseded covers are cleaned up. The library at `/groups/$groupId/courses` is a newest-first cursor list, and each course has a page at `/groups/$groupId/courses/$courseId`. The main navigation now links to Courses. Workers tests cover tenant, nested-ID, visibility, permission, and cover-cleanup cases; React Testing Library covers the library and course pages.
+- **C2 — Lessons and content blocks** (not started): lessons and `heading`, `text`, `example`, and `dialogue` blocks; reordering; published flags; versioned conflict handling; paged course loading; local block drafts.
+- **C3 — Practice blocks and answer threads** (not started): `practice` blocks, concealed practice answer threads with replies and reactions, and authors' versions revealed only with the thread.
+- **C4 — Feed presence** (not started): a system-created `course` post on first publication linking to the course.
+- **C5 — Contributors** (not started): contributor requests and decisions, contributor editing of unpublished content, owner-only publishing, attribution, and contributor notifications.
+
+## Settings split
+
+Not started. The [settings and administration blueprint](settings-and-administration.md) owns the rules: Settings becomes Account, Group (creator only), and Members (creator only) pages. Membership decisions, removal, and password regeneration move to the Members page, the member directory becomes a social view, and image uploads gain an interactive move-and-zoom cropper.
+
 ## Unprioritized future backlog
 
 No ordering is implied.
@@ -111,4 +127,10 @@ No ordering is implied.
 - More target languages and intentional RTL support
 - Contextual sentence rendering for fill-in responses
 - Automated backups and CI/CD
+- Course speaking practice, speak-and-repeat, and spoken answers (needs a product exception and privacy review)
+- Course text-to-speech playback and interactive role-play dialogues
+- Feed posts for course updates
+- Course-specific notifications beyond contributor requests
+- Images inside course blocks
+- Course progress tracking of any kind
 - Stronger abuse protection and a global operator interface if deployment scope expands

@@ -4,16 +4,17 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import type { PropsWithChildren, ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import { apiRequest } from "../api";
-import { Avatar } from "../ui";
-import styles from "./PhaseOnePages.module.css";
+import { apiRequest } from "../../api";
+import { Avatar } from "../../ui";
+import styles from "./GroupFrame.module.css";
 
 type SignedInSession = Extract<SessionResponse, { status: "signedIn" }>;
-type ShellIconName = "journal" | "members" | "notifications" | "profile" | "settings" | "signOut" | "chevron";
+type ShellIconName = "journal" | "courses" | "members" | "notifications" | "profile" | "settings" | "signOut" | "chevron";
 
 function ShellIcon({ name }: { name: ShellIconName }) {
   const paths: Record<ShellIconName, ReactNode> = {
     journal: <><path d="M4.25 3.5h7.5A2.25 2.25 0 0 1 14 5.75v10.5H6.5A2.25 2.25 0 0 1 4.25 14V3.5Z" /><path d="M14 5.75a2.25 2.25 0 0 1 2.25-2.25h.5v10.75a2 2 0 0 1-2 2H14V5.75Z" /></>,
+    courses: <><path d="M3.25 4.75c2.35-.6 4.6-.35 6.75 1.25v10.25c-2.15-1.6-4.4-1.85-6.75-1.25V4.75Z" /><path d="M16.75 4.75c-2.35-.6-4.6-.35-6.75 1.25v10.25c2.15-1.6 4.4-1.85 6.75-1.25V4.75Z" /></>,
     members: <><circle cx="7.25" cy="7" r="2.75" /><path d="M2.75 16.25c.35-3 1.85-4.5 4.5-4.5s4.15 1.5 4.5 4.5M12.25 4.75a2.75 2.75 0 0 1 0 5.25M13.75 12c2.05.37 3.22 1.78 3.5 4.25" /></>,
     notifications: <><path d="M4.25 14.25h11.5l-1.5-2V8a4.25 4.25 0 0 0-8.5 0v4.25l-1.5 2Z" /><path d="M8.25 16.5c.45.67 1.03 1 1.75 1s1.3-.33 1.75-1" /></>,
     profile: <><circle cx="10" cy="6.75" r="3.25" /><path d="M3.75 17c.45-3.67 2.53-5.5 6.25-5.5s5.8 1.83 6.25 5.5" /></>,
@@ -39,8 +40,10 @@ export function GroupFrame({ children, groupId, session }: PropsWithChildren<{ g
   });
   const profileParams = { groupId, userId: session.user.id };
   const journalActive = pathname === `/groups/${groupId}` || pathname.startsWith(`/groups/${groupId}/posts/`);
+  const coursesActive = pathname === `/groups/${groupId}/courses` || pathname.startsWith(`/groups/${groupId}/courses/`);
   const primaryLinks = <>
     <Link aria-current={journalActive ? "page" : undefined} activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId" params={{ groupId }}><NavLabel icon="journal">{t("nav.journal")}</NavLabel></Link>
+    <Link aria-current={coursesActive ? "page" : undefined} className={styles.navItem} to="/groups/$groupId/courses" params={{ groupId }}><NavLabel icon="courses">{t("nav.courses")}</NavLabel></Link>
     <Link activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId/members" params={{ groupId }}><NavLabel icon="members">{t("nav.members")}</NavLabel></Link>
     <Link activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId/notifications" params={{ groupId }}><NavLabel icon="notifications">{t("nav.notifications")}</NavLabel></Link>
   </>;
@@ -50,28 +53,35 @@ export function GroupFrame({ children, groupId, session }: PropsWithChildren<{ g
       <div className={styles.navIsland}>
         <div className={styles.navCore}>
           <Link className={styles.brand} to="/groups/$groupId" params={{ groupId }}><span aria-hidden="true" className={styles.brandMark}>W</span><span className={styles.brandName}>{t("brand")}</span></Link>
-          <label className={styles.switcher}>
-            <span className={styles.srOnly}>{t("group.switcher")}</span>
-            <span aria-hidden="true" className={styles.switcherAccent} />
-            <select value={groupId} onChange={(event) => void navigate({ to: "/groups/$groupId", params: { groupId: event.currentTarget.value } })}>
-              {session.groups.map((group) => <option key={group.id} value={group.id}>{group.icon} {group.name}</option>)}
-            </select>
-            <span aria-hidden="true" className={styles.switcherChevron}><ShellIcon name="chevron" /></span>
-          </label>
           <nav className={styles.desktopNav} aria-label={t("nav.primary")}>{primaryLinks}</nav>
           <Menu position="bottom-end" width={220} withinPortal>
             <Menu.Target>
               <button aria-label={t("nav.accountMenu")} className={styles.accountTrigger} type="button">
-                <Avatar name={session.user.displayName} />
+                <Avatar name={session.user.displayName} src={session.user.avatarUrl} />
                 <span className={styles.accountName}>{session.user.displayName}</span>
                 <ShellIcon name="chevron" />
               </button>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Label>{session.user.displayName}</Menu.Label>
-              <Menu.Item leftSection={<ShellIcon name="profile" />} onClick={() => void navigate({ to: "/groups/$groupId/members/$userId", params: profileParams })}>{t("nav.profile")}</Menu.Item>
-              <Menu.Item leftSection={<ShellIcon name="settings" />} onClick={() => void navigate({ to: "/groups/$groupId/settings", params: { groupId } })}>{t("nav.settings")}</Menu.Item>
+              <Menu.Item onClick={() => void navigate({ to: "/groups/$groupId/members/$userId", params: profileParams })}>
+                <div className={styles.profile}>
+                  <Avatar className={styles.profileAvatar} size={88} name={session.user.displayName} src={session.user.avatarUrl} />
+                  <div className={styles.profileInfo}>
+                    <div className={styles.profileDisplayName}>{session.user.displayName}</div>
+                    {t("nav.profile")}
+                  </div>
+                </div>
+              </Menu.Item>
+              <label className={styles.switcher}>
+                <span className={styles.srOnly}>{t("group.switcher")}</span>
+                <span aria-hidden="true" className={styles.switcherAccent} />
+                <select value={groupId} onChange={(event) => void navigate({ to: "/groups/$groupId", params: { groupId: event.currentTarget.value } })}>
+                  {session.groups.map((group) => <option key={group.id} value={group.id}>{group.icon} {group.name}</option>)}
+                </select>
+                <span aria-hidden="true" className={styles.switcherChevron}><ShellIcon name="chevron" /></span>
+              </label>
               <Menu.Divider />
+              <Menu.Item leftSection={<ShellIcon name="settings" />} onClick={() => void navigate({ to: "/groups/$groupId/settings", params: { groupId } })}>{t("nav.settings")}</Menu.Item>
               <Menu.Item color="var(--color-danger-text)" disabled={signOut.isPending} leftSection={<ShellIcon name="signOut" />} onClick={() => signOut.mutate()}>{t("auth.signOut")}</Menu.Item>
             </Menu.Dropdown>
           </Menu>

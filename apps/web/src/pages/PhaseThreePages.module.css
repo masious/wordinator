@@ -13,19 +13,6 @@
 .composerPrompt h2 { margin: var(--space-3) 0 var(--space-2); font-size: var(--type-section-title); letter-spacing: var(--tracking-title); }
 .composerPrompt p { max-width: 42ch; margin: 0; color: var(--color-foreground-muted); line-height: var(--line-body); }
 
-.composerForm,
-.fieldList { display: grid; gap: var(--space-5); }
-.composerForm fieldset {
-  display: grid;
-  gap: var(--space-4);
-  min-width: 0;
-  padding: var(--space-5);
-  background: var(--color-wash-subtle);
-  border: var(--ring-hairline);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-inset-highlight);
-}
-.composerForm legend { padding-inline: var(--space-2); font-family: var(--font-display); font-size: var(--type-card-title); font-weight: var(--weight-semibold); }
 .fieldRow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-3); align-items: end; }
 .actions { display: flex; justify-content: flex-end; gap: var(--space-3); flex-wrap: wrap; padding-top: var(--space-2); }
 .error { margin: 0; color: var(--color-danger-text); font-weight: var(--weight-semibold); }
@@ -50,16 +37,10 @@
   box-shadow: var(--shadow-inset-highlight);
 }
 .postHeader { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); }
-.author { display: flex; align-items: center; gap: var(--space-3); min-width: 0; color: var(--color-foreground); font-weight: var(--weight-semibold); text-decoration: none; }
-.author:hover { text-decoration: underline; text-decoration-color: var(--color-action); text-underline-offset: 4px; }
-.meta { display: flex; align-items: center; justify-content: flex-end; gap: var(--space-2); color: var(--color-foreground-muted); font: var(--type-metadata)/var(--line-compact) var(--font-mono); flex-wrap: wrap; }
 .postBody,
 .notes { white-space: pre-wrap; overflow-wrap: anywhere; line-height: var(--line-body); }
 .postBody { max-width: 64ch; font-size: var(--type-authored); }
-.postBody a,
-.notes a { color: var(--color-foreground); text-decoration-color: var(--color-action); text-underline-offset: 3px; }
-.notes { padding: var(--space-5); background: var(--color-concealed); border: var(--ring-hairline); border-radius: var(--radius-lg); box-shadow: var(--shadow-inset-highlight); }
-.questions { display: grid; gap: var(--space-3); margin: 0; padding: var(--space-5) var(--space-5) var(--space-5) var(--space-10); background: var(--color-info-soft); border-radius: var(--radius-lg); }
+.postBody a { color: var(--color-foreground); text-decoration-color: var(--color-action); text-underline-offset: 3px; }
 .postFooter { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; padding-top: var(--space-4); color: var(--color-foreground-muted); border-top: 1px solid var(--color-separator); font: var(--type-metadata)/var(--line-compact) var(--font-mono); }
 .grow { flex: 1; }
 .openPost { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--touch-target); padding-inline: var(--space-3); color: var(--color-foreground); border-radius: var(--radius-pill); font-family: var(--font-sans); font-weight: var(--weight-semibold); text-decoration: none; transition: transform var(--motion-press) var(--ease-physical); }
@@ -78,7 +59,6 @@
   .composerPrompt h2 { font-size: clamp(2rem, 10vw, 2.75rem); }
   .meta { justify-content: flex-start; }
   .postShell { border-radius: var(--radius-xl); }
-  .postCard { padding: var(--space-5); border-radius: calc(var(--radius-xl) - var(--space-2)); }
   .fieldRow { grid-template-columns: 1fr; }
   .pagination { align-items: flex-start; flex-direction: column; }
   .floating { right: var(--space-3); }

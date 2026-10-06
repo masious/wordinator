@@ -194,3 +194,24 @@ export const notifications = sqliteTable(
     check("notifications_kind_check", sql`${table.kind} in ('join_requested', 'join_accepted', 'join_rejected', 'member_removed', 'post_response', 'reply', 'answer_pinned', 'reaction')`),
   ],
 );
+
+export const courses = sqliteTable(
+  "courses",
+  {
+    id: text("id").primaryKey(),
+    groupId: text("group_id").notNull().references(() => groups.id),
+    ownerId: text("owner_id").notNull().references(() => users.id),
+    title: text("title").notNull(),
+    summary: text("summary").notNull(),
+    level: text("level"),
+    intendedLearner: text("intended_learner"),
+    coverKey: text("cover_key"),
+    status: text("status", { enum: ["draft", "published", "archived"] }).notNull(),
+    createdAt: integer("created_at").notNull(),
+    updatedAt: integer("updated_at").notNull(),
+  },
+  (table) => [
+    index("courses_group_library_idx").on(table.groupId, table.createdAt, table.id),
+    check("courses_status_check", sql`${table.status} in ('draft', 'published', 'archived')`),
+  ],
+);

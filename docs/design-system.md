@@ -23,7 +23,7 @@ The refresh was delivered through [the visual redesign plan](../VISUAL-REDESIGN-
 - Backdrop blur is limited to fixed or sticky navigation and overlays. Paper grain is rendered as a single fixed, pointer-free layer and is disabled for print and forced-colors mode.
 - Icons use a consistent ultra-light line vocabulary. Thick Lucide, FontAwesome, and Material icon styles are excluded.
 - Authenticated desktop navigation uses a detached sticky island with a tonal bezel and glass core. Profile, settings, and sign-out live in a secondary account utility; primary destinations remain visually quiet and show an icon plus exact active-route state.
-- Below `48em`, the primary navigation becomes an inset five-destination dock. Its height, offset, safe-area inset, page padding, and floating-action clearance derive from shared shell tokens so content and controls remain reachable in short or keyboard-constrained viewports.
+- Below `48em`, the primary navigation becomes an inset six-destination dock (journal, courses, members, notices, profile, settings). Its height, offset, safe-area inset, page padding, and floating-action clearance derive from shared shell tokens so content and controls remain reachable in short or keyboard-constrained viewports.
 - Authentication and invitation routes use an editorial split above `48em` and a direct single-column composition below it. Supporting authenticated pages use asymmetric identity, settings, and directory compositions on wide screens, collapse to one column on narrow screens, and keep notifications as quiet separated rows rather than independent elevated cards.
 - Destructive membership and group-lifecycle operations use the shared adaptive confirmation dialog. Native browser confirmation is not part of the application interaction language.
 - The journal header uses the editorial page-header contract. Its create prompt, feed cards, composition forms, concealed-answer state, response composers, and top-level discussion items use concentric surfaces; nested replies and authored-content rows remain quieter. Feed metadata uses the mono role, authored text uses the reading role, and reactions use hairline pill controls rather than strong system borders.
@@ -106,6 +106,8 @@ Content widths:
 - Standard modal: approximately `640px`
 - Reading/composition modal: approximately `760px`
 
+Course covers use `--aspect-course-cover` (`2 / 1`) in library cards and on the course page, and the library grid fills columns no narrower than `--width-course-card-min` (`17rem`). A course without a cover shows the first letter of its title on a muted panel.
+
 Layer order uses `--z-content: 10`, `--z-grain: 50`, `--z-navigation: 100`, `--z-floating-action: 200`, `--z-overlay: 300`, and `--z-transient: 400`. Components must use the named layer appropriate to their role rather than introduce arbitrary z-index values. The grain layer is pointer-free and contains no interactive content.
 
 ## Shape, border, and shadow
@@ -137,7 +139,7 @@ Durations are `140ms` for press feedback, `360ms` for ordinary transitions, `520
 Use Mantine-aligned breakpoints near `36em`, `48em`, `62em`, and `75em`; components should respond to available space rather than device names.
 
 - Desktop/tablet: detached navigation island, centered feed, modal composer
-- Mobile: compact floating utility island, inset five-destination dock, full-screen composer and reading wizard
+- Mobile: compact floating utility island, inset six-destination dock, full-screen composer and reading wizard
 - The top-left group switcher remains available at every size
 - Avoid horizontal scrolling for authored content
 

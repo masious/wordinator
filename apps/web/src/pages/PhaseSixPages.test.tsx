@@ -9,7 +9,7 @@ import { NotificationsPage } from "./PhaseSixPages";
 const groupId = "20000000-0000-4000-8000-000000000001";
 const userId = "10000000-0000-4000-8000-000000000001";
 const actorId = "10000000-0000-4000-8000-000000000002";
-const session = { status: "signedIn", user: { id: userId, displayName: "Ada", mustChangePassword: false }, groups: [{ id: groupId, name: "Study", language: "nl", role: "member", icon: "🇳🇱", iconUrl: null }], requests: [], deletedGroups: [] };
+const session = { status: "signedIn", user: { id: userId, displayName: "Ada", avatarUrl: null, mustChangePassword: false }, groups: [{ id: groupId, name: "Study", language: "nl", role: "member", icon: "🇳🇱", iconUrl: null }], requests: [], deletedGroups: [] };
 const notices = { items: [
   { id: "60000000-0000-4000-8000-000000000001", groupId, groupName: "Study", actor: { id: actorId, displayName: "Lin" }, kind: "reply", postId: "30000000-0000-4000-8000-000000000001", commentId: "50000000-0000-4000-8000-000000000001", targetAvailable: true, createdAt: 1, readAt: null },
   { id: "60000000-0000-4000-8000-000000000002", groupId, groupName: "Study", actor: { id: actorId, displayName: "Lin" }, kind: "reaction", postId: "30000000-0000-4000-8000-000000000002", commentId: null, targetAvailable: false, createdAt: 2, readAt: 3 },

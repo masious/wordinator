@@ -147,7 +147,11 @@ export const sessionResponseSchema = z.discriminatedUnion("status", [
   z.object({ status: z.literal("signedOut") }),
   z.object({
     status: z.literal("signedIn"),
-    user: z.object({ id: opaqueIdSchema, displayName: z.string(), mustChangePassword: z.boolean() }),
+    user: z.object({ 
+      id: opaqueIdSchema, 
+      displayName: z.string(), 
+      avatarUrl: z.string().nullable(), 
+      mustChangePassword: z.boolean() }),
     groups: z.array(groupSummarySchema),
     requests: z.array(membershipRequestSummarySchema),
     deletedGroups: z.array(deletedGroupSummarySchema),
@@ -258,3 +262,111 @@ export const commentResponseSchema = z.object({ item: discussionItemSchema });
 export const toggleReactionRequestSchema = z.object({ emoji: quickReactionSchema, active: z.boolean() });
 export const reactionTargetResponseSchema = z.object({ reactions: z.array(reactionSummarySchema) });
 export const pinRequestSchema = z.object({ commentId: opaqueIdSchema.nullable() });
+
+export const COURSE_TITLE_MAX = 200;
+export const COURSE_TEXT_MAX = 2_000;
+export const COURSE_LEVEL_MAX = 200;
+export const courseStatusSchema = z.enum(["draft", "published", "archived"]);
+export type CourseStatus = z.infer<typeof courseStatusSchema>;
+const optionalCourseTextSchema = (max: number) => z.string().trim().max(max).nullable().optional();
+export const courseInputSchema = z.object({
+  title: z.string().trim().min(1).max(COURSE_TITLE_MAX),
+  summary: z.string().trim().min(1).max(COURSE_TEXT_MAX),
+  level: optionalCourseTextSchema(COURSE_LEVEL_MAX),
+  intendedLearner: optionalCourseTextSchema(COURSE_TEXT_MAX),
+});
+export const createCourseRequestSchema = courseInputSchema;
+export const updateCourseRequestSchema = courseInputSchema;
+export type CourseInput = z.infer<typeof courseInputSchema>;
+export const courseVisibilityRequestSchema = z.object({ status: z.enum(["draft", "published"]) });
+export const courseSchema = z.object({
+  id: opaqueIdSchema, groupId: opaqueIdSchema, title: z.string(), summary: z.string(),
+  level: z.string().nullable(), intendedLearner: z.string().nullable(), coverUrl: z.string().url().nullable(),
+  status: courseStatusSchema, owner: postAuthorSchema, createdAt: z.number().int(), updatedAt: z.number().int(),
+  permissions: z.object({ edit: z.boolean(), publish: z.boolean(), archive: z.boolean() }),
+});
+export type Course = z.infer<typeof courseSchema>;
+export const coursePageSchema = z.object({ items: z.array(courseSchema), nextCursor: z.string().nullable() });
+export type CoursePage = z.infer<typeof coursePageSchema>;
+export const courseResponseSchema = z.object({ course: courseSchema });
+
+export const COURSE_HEADING_MAX = 200;
+export const COURSE_BLOCK_TEXT_MAX = 10_000;
+export const COURSE_SENTENCE_MAX = 1_000;
+export const COURSE_NOTE_MAX = 2_000;
+export const COURSE_SPEAKER_MAX = 40;
+export const COURSE_DIALOGUE_TURNS_MAX = 50;
+export const COURSE_LESSONS_MAX = 200;
+export const COURSE_BLOCKS_MAX = 200;
+// Bump when a payload shape changes, and teach parseStoredBlockPayload to upgrade the older version.
+export const COURSE_BLOCK_PAYLOAD_VERSION = 1;
+
+const requiredBlockText = (max: number) => z.string().trim().min(1).max(max);
+const optionalBlockText = (max: number) => z.string().trim().max(max).nullable().optional().transform((value) => value || null);
+export const headingPayloadSchema = z.object({ title: requiredBlockText(COURSE_HEADING_MAX) });
+export const textPayloadSchema = z.object({ content: requiredBlockText(COURSE_BLOCK_TEXT_MAX) });
+export const examplePayloadSchema = z.object({
+  sentence: requiredBlockText(COURSE_SENTENCE_MAX),
+  translation: optionalBlockText(COURSE_SENTENCE_MAX),
+  note: optionalBlockText(COURSE_NOTE_MAX),
+});
+export const dialoguePayloadSchema = z.object({
+  turns: z.array(z.object({ speaker: requiredBlockText(COURSE_SPEAKER_MAX), text: requiredBlockText(COURSE_SENTENCE_MAX) })).min(1).max(COURSE_DIALOGUE_TURNS_MAX),
+});
+export const courseBlockKindSchema = z.enum(["heading", "text", "example", "dialogue"]);
+export type CourseBlockKind = z.infer<typeof courseBlockKindSchema>;
+export const courseBlockPayloadSchemas = {
+  heading: headingPayloadSchema, text: textPayloadSchema, example: examplePayloadSchema, dialogue: dialoguePayloadSchema,
+} as const satisfies Record<CourseBlockKind, z.ZodType>;
+export type CourseBlockPayloads = { [K in CourseBlockKind]: z.output<(typeof courseBlockPayloadSchemas)[K]> };
+export const courseBlockContentSchema = z.discriminatedUnion("kind", [
+  z.object({ kind: z.literal("heading"), payload: headingPayloadSchema }),
+  z.object({ kind: z.literal("text"), payload: textPayloadSchema }),
+  z.object({ kind: z.literal("example"), payload: examplePayloadSchema }),
+  z.object({ kind: z.literal("dialogue"), payload: dialoguePayloadSchema }),
+]);
+export type CourseBlockContent = z.output<typeof courseBlockContentSchema>;
+export type CourseBlockContentInput = z.input<typeof courseBlockContentSchema>;
+
+// Reads a stored payload of any known payload version and returns it in the current shape, or null when it is unreadable.
+export function parseStoredBlockPayload(kind: string, payloadVersion: number, raw: unknown): CourseBlockContent | null {
+  if (payloadVersion !== COURSE_BLOCK_PAYLOAD_VERSION) return null;
+  const parsed = courseBlockContentSchema.safeParse({ kind, payload: raw });
+  return parsed.success ? parsed.data : null;
+}
+
+const versionSchema = z.number().int().positive();
+export const lessonInputSchema = z.object({ title: requiredBlockText(COURSE_TITLE_MAX), goal: optionalBlockText(COURSE_TEXT_MAX) });
+export const createLessonRequestSchema = lessonInputSchema;
+export const updateLessonRequestSchema = lessonInputSchema.extend({ published: z.boolean(), version: versionSchema });
+export type LessonInput = z.input<typeof lessonInputSchema>;
+export type UpdateLessonRequest = z.input<typeof updateLessonRequestSchema>;
+export const createBlockRequestSchema = z.intersection(courseBlockContentSchema, z.object({ published: z.boolean().default(false) }));
+export const updateBlockRequestSchema = z.intersection(courseBlockContentSchema, z.object({ published: z.boolean(), version: versionSchema }));
+export type CreateBlockRequest = z.input<typeof createBlockRequestSchema>;
+export type UpdateBlockRequest = z.input<typeof updateBlockRequestSchema>;
+// Reordering sends the complete ordered child list of one parent; anything else is a stale order.
+export const reorderRequestSchema = z.object({ ids: z.array(opaqueIdSchema).max(Math.max(COURSE_LESSONS_MAX, COURSE_BLOCKS_MAX)) });
+
+const editorRefSchema = z.object({ id: opaqueIdSchema, displayName: z.string() });
+const courseBlockBaseSchema = z.object({
+  id: opaqueIdSchema, lessonId: opaqueIdSchema, position: z.number().int().nonnegative(), published: z.boolean(),
+  version: versionSchema, updatedBy: editorRefSchema, updatedAt: z.number().int(),
+});
+export const courseBlockSchema = z.intersection(courseBlockBaseSchema, courseBlockContentSchema);
+export type CourseBlock = z.output<typeof courseBlockSchema>;
+export const courseLessonSummarySchema = z.object({
+  id: opaqueIdSchema, position: z.number().int().nonnegative(), title: z.string(), goal: z.string().nullable(),
+  published: z.boolean(), version: versionSchema, updatedBy: editorRefSchema, updatedAt: z.number().int(),
+});
+export type CourseLessonSummary = z.infer<typeof courseLessonSummarySchema>;
+export const courseLessonSchema = courseLessonSummarySchema.extend({ blocks: z.array(courseBlockSchema) });
+export type CourseLesson = z.output<typeof courseLessonSchema>;
+export const COURSE_PRELOADED_LESSONS = 3;
+export const courseDetailResponseSchema = z.object({
+  course: courseSchema, outline: z.array(courseLessonSummarySchema), lessons: z.array(courseLessonSchema).max(COURSE_PRELOADED_LESSONS),
+});
+export type CourseDetailResponse = z.output<typeof courseDetailResponseSchema>;
+export const lessonResponseSchema = z.object({ lesson: courseLessonSchema });
+export const outlineResponseSchema = z.object({ outline: z.array(courseLessonSummarySchema) });
+export const blockResponseSchema = z.object({ block: courseBlockSchema });

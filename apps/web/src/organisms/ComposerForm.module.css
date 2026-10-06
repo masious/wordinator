@@ -1,0 +1,41 @@
+
+@media (max-width: 48em) {
+    .fieldRow { grid-template-columns: 1fr; }
+    .composerForm,
+    .fieldList { display: grid; gap: var(--space-5); }
+}
+
+
+.composerForm fieldset {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+  padding: var(--space-5);
+  background: var(--color-wash-subtle);
+  border: var(--ring-hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-inset-highlight);
+}
+.composerForm legend { padding-inline: var(--space-2); font-family: var(--font-display); font-size: var(--type-card-title); font-weight: var(--weight-semibold); }
+
+.fieldList { display: grid; gap: var(--space-5); }
+
+.fieldRow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-3); align-items: end; }
+
+.actions { display: flex; justify-content: flex-end; gap: var(--space-3); flex-wrap: wrap; padding-top: var(--space-2); }
+.error { margin: 0; color: var(--color-danger-text); font-weight: var(--weight-semibold); }
+.muted { margin: 0; color: var(--color-foreground-muted); line-height: var(--line-body); }
+
+
+.composerForm { display: grid; gap: var(--space-5); }
+.composerForm fieldset {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+  padding: var(--space-5);
+  background: var(--color-wash-subtle);
+  border: var(--ring-hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-inset-highlight);
+}
+.composerForm legend { padding-inline: var(--space-2); font-family: var(--font-display); font-size: var(--type-card-title); font-weight: var(--weight-semibold); }

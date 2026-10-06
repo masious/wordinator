@@ -36,6 +36,16 @@ Post ID, blank position, and nullable/optional expected text. The number of reco
 
 Phase 3 persists these tables in migration `0005_phase_three_posts.sql`. Expected-answer rows are sent back only to their post author for editing; later answer matching remains server-side so ordinary post reads do not disclose them.
 
+## Courses
+
+The [courses blueprint](courses.md) owns course behavior.
+
+### `courses`
+
+Opaque ID, group ID, owner ID, title, summary, optional level, optional intended learner, optional cover key, status (`draft`, `published`, or `archived`), and created/updated timestamps. A check constraint limits status to those three values. Owner display uses the live or group snapshot profile at read time, like post authors.
+
+Migration `0009_course_shell.sql` adds the table and its library index.
+
 ## Discussion
 
 ### `comments`
@@ -74,12 +84,13 @@ Opaque ID, group ID, recipient ID, actor ID, event type, optional post ID, optio
 - Posts are hard-deleted with questions, expected answers, comments, response items, reactions, and pins.
 - Comments are hard-deleted with replies, response items, and reactions.
 - Notifications survive target deletion.
+- Courses are never hard-deleted. Archiving sets status `archived`; restoring returns the course to `draft` so the owner chooses again when to publish. Archived courses keep their cover image.
 - Member departure never deletes authored content or reactions.
 - Records and images otherwise remain indefinitely.
 - Replaced/removed R2 images are deleted after database state safely points away from them.
 
 ## Indexing and isolation
 
-Index the feed by `(group_id, created_at, id)`, memberships by user and state, pending membership requests by group/state, profile posts by `(group_id, author_id, created_at, id)`, comments by post/parent/order, reactions by target, and notifications by `(recipient_id, group_id, created_at)` plus `(recipient_id, created_at)` for restricted status lookup.
+Index the feed by `(group_id, created_at, id)`, memberships by user and state, pending membership requests by group/state, profile posts by `(group_id, author_id, created_at, id)`, comments by post/parent/order, reactions by target, the course library by `(group_id, created_at, id)`, and notifications by `(recipient_id, group_id, created_at)` plus `(recipient_id, created_at)` for restricted status lookup.
 
 Every tenant-owned table includes or can unambiguously derive `group_id`. Favor explicit `group_id` when it makes authorization and indexes safer, even if technically redundant.

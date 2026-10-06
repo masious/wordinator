@@ -159,6 +159,8 @@
   --width-shell: 1200px;
   --width-modal: 640px;
   --width-modal-reading: 760px;
+  --aspect-course-cover: 2 / 1;
+  --width-course-card-min: 17rem;
   --page-gutter: clamp(var(--space-4), 4vw, var(--space-10));
   --section-rhythm: clamp(var(--space-20), 10vw, var(--space-40));
   --card-inset: clamp(var(--space-5), 3vw, var(--space-8));

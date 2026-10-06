@@ -13,9 +13,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as UiRouteImport } from './routes/ui'
 import { Route as GroupsGroupIdRouteImport } from './routes/groups.$groupId'
 import { Route as InviteTokenRouteImport } from './routes/invite.$token'
+import { Route as GroupsGroupIdCoursesRouteImport } from './routes/groups.$groupId_.courses'
 import { Route as GroupsGroupIdMembersRouteImport } from './routes/groups.$groupId_.members'
 import { Route as GroupsGroupIdNotificationsRouteImport } from './routes/groups.$groupId_.notifications'
 import { Route as GroupsGroupIdSettingsRouteImport } from './routes/groups.$groupId_.settings'
+import { Route as GroupsGroupIdCoursesCourseIdRouteImport } from './routes/groups.$groupId_.courses_.$courseId'
 import { Route as GroupsGroupIdMembersUserIdRouteImport } from './routes/groups.$groupId_.members_.$userId'
 import { Route as GroupsGroupIdPostsPostIdRouteImport } from './routes/groups.$groupId_.posts.$postId'
 
@@ -39,6 +41,11 @@ const InviteTokenRoute = InviteTokenRouteImport.update({
   path: '/invite/$token',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GroupsGroupIdCoursesRoute = GroupsGroupIdCoursesRouteImport.update({
+  id: '/groups/$groupId_/courses',
+  path: '/groups/$groupId/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GroupsGroupIdMembersRoute = GroupsGroupIdMembersRouteImport.update({
   id: '/groups/$groupId_/members',
   path: '/groups/$groupId/members',
@@ -55,6 +62,12 @@ const GroupsGroupIdSettingsRoute = GroupsGroupIdSettingsRouteImport.update({
   path: '/groups/$groupId/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const GroupsGroupIdCoursesCourseIdRoute =
+  GroupsGroupIdCoursesCourseIdRouteImport.update({
+    id: '/groups/$groupId_/courses_/$courseId',
+    path: '/groups/$groupId/courses/$courseId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const GroupsGroupIdMembersUserIdRoute =
   GroupsGroupIdMembersUserIdRouteImport.update({
     id: '/groups/$groupId_/members_/$userId',
@@ -73,9 +86,11 @@ export interface FileRoutesByFullPath {
   '/ui': typeof UiRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/groups/$groupId/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId/notifications': typeof GroupsGroupIdNotificationsRoute
   '/groups/$groupId/settings': typeof GroupsGroupIdSettingsRoute
+  '/groups/$groupId/courses/$courseId': typeof GroupsGroupIdCoursesCourseIdRoute
   '/groups/$groupId/members/$userId': typeof GroupsGroupIdMembersUserIdRoute
   '/groups/$groupId/posts/$postId': typeof GroupsGroupIdPostsPostIdRoute
 }
@@ -84,9 +99,11 @@ export interface FileRoutesByTo {
   '/ui': typeof UiRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/groups/$groupId/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId/notifications': typeof GroupsGroupIdNotificationsRoute
   '/groups/$groupId/settings': typeof GroupsGroupIdSettingsRoute
+  '/groups/$groupId/courses/$courseId': typeof GroupsGroupIdCoursesCourseIdRoute
   '/groups/$groupId/members/$userId': typeof GroupsGroupIdMembersUserIdRoute
   '/groups/$groupId/posts/$postId': typeof GroupsGroupIdPostsPostIdRoute
 }
@@ -96,9 +113,11 @@ export interface FileRoutesById {
   '/ui': typeof UiRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/groups/$groupId_/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId_/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId_/notifications': typeof GroupsGroupIdNotificationsRoute
   '/groups/$groupId_/settings': typeof GroupsGroupIdSettingsRoute
+  '/groups/$groupId_/courses_/$courseId': typeof GroupsGroupIdCoursesCourseIdRoute
   '/groups/$groupId_/members_/$userId': typeof GroupsGroupIdMembersUserIdRoute
   '/groups/$groupId_/posts/$postId': typeof GroupsGroupIdPostsPostIdRoute
 }
@@ -109,9 +128,11 @@ export interface FileRouteTypes {
     | '/ui'
     | '/groups/$groupId'
     | '/invite/$token'
+    | '/groups/$groupId/courses'
     | '/groups/$groupId/members'
     | '/groups/$groupId/notifications'
     | '/groups/$groupId/settings'
+    | '/groups/$groupId/courses/$courseId'
     | '/groups/$groupId/members/$userId'
     | '/groups/$groupId/posts/$postId'
   fileRoutesByTo: FileRoutesByTo
@@ -120,9 +141,11 @@ export interface FileRouteTypes {
     | '/ui'
     | '/groups/$groupId'
     | '/invite/$token'
+    | '/groups/$groupId/courses'
     | '/groups/$groupId/members'
     | '/groups/$groupId/notifications'
     | '/groups/$groupId/settings'
+    | '/groups/$groupId/courses/$courseId'
     | '/groups/$groupId/members/$userId'
     | '/groups/$groupId/posts/$postId'
   id:
@@ -131,9 +154,11 @@ export interface FileRouteTypes {
     | '/ui'
     | '/groups/$groupId'
     | '/invite/$token'
+    | '/groups/$groupId_/courses'
     | '/groups/$groupId_/members'
     | '/groups/$groupId_/notifications'
     | '/groups/$groupId_/settings'
+    | '/groups/$groupId_/courses_/$courseId'
     | '/groups/$groupId_/members_/$userId'
     | '/groups/$groupId_/posts/$postId'
   fileRoutesById: FileRoutesById
@@ -143,9 +168,11 @@ export interface RootRouteChildren {
   UiRoute: typeof UiRoute
   GroupsGroupIdRoute: typeof GroupsGroupIdRoute
   InviteTokenRoute: typeof InviteTokenRoute
+  GroupsGroupIdCoursesRoute: typeof GroupsGroupIdCoursesRoute
   GroupsGroupIdMembersRoute: typeof GroupsGroupIdMembersRoute
   GroupsGroupIdNotificationsRoute: typeof GroupsGroupIdNotificationsRoute
   GroupsGroupIdSettingsRoute: typeof GroupsGroupIdSettingsRoute
+  GroupsGroupIdCoursesCourseIdRoute: typeof GroupsGroupIdCoursesCourseIdRoute
   GroupsGroupIdMembersUserIdRoute: typeof GroupsGroupIdMembersUserIdRoute
   GroupsGroupIdPostsPostIdRoute: typeof GroupsGroupIdPostsPostIdRoute
 }
@@ -180,6 +207,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InviteTokenRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/groups/$groupId_/courses': {
+      id: '/groups/$groupId_/courses'
+      path: '/groups/$groupId/courses'
+      fullPath: '/groups/$groupId/courses'
+      preLoaderRoute: typeof GroupsGroupIdCoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/groups/$groupId_/members': {
       id: '/groups/$groupId_/members'
       path: '/groups/$groupId/members'
@@ -199,6 +233,13 @@ declare module '@tanstack/react-router' {
       path: '/groups/$groupId/settings'
       fullPath: '/groups/$groupId/settings'
       preLoaderRoute: typeof GroupsGroupIdSettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/groups/$groupId_/courses_/$courseId': {
+      id: '/groups/$groupId_/courses_/$courseId'
+      path: '/groups/$groupId/courses/$courseId'
+      fullPath: '/groups/$groupId/courses/$courseId'
+      preLoaderRoute: typeof GroupsGroupIdCoursesCourseIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/groups/$groupId_/members_/$userId': {
@@ -223,9 +264,11 @@ const rootRouteChildren: RootRouteChildren = {
   UiRoute: UiRoute,
   GroupsGroupIdRoute: GroupsGroupIdRoute,
   InviteTokenRoute: InviteTokenRoute,
+  GroupsGroupIdCoursesRoute: GroupsGroupIdCoursesRoute,
   GroupsGroupIdMembersRoute: GroupsGroupIdMembersRoute,
   GroupsGroupIdNotificationsRoute: GroupsGroupIdNotificationsRoute,
   GroupsGroupIdSettingsRoute: GroupsGroupIdSettingsRoute,
+  GroupsGroupIdCoursesCourseIdRoute: GroupsGroupIdCoursesCourseIdRoute,
   GroupsGroupIdMembersUserIdRoute: GroupsGroupIdMembersUserIdRoute,
   GroupsGroupIdPostsPostIdRoute: GroupsGroupIdPostsPostIdRoute,
 }

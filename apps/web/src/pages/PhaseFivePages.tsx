@@ -6,34 +6,39 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, groupQueryOptions, membersQueryOptions, sessionQueryOptions } from "../api";
 import { Avatar, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, PageHeader, SectionHeader, Surface } from "../ui";
-import { GroupFrame } from "./GroupFrame";
+import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import shellStyles from "./PhaseOnePages.module.css";
 import styles from "./PhaseFivePages.module.css";
 
 const json = (value: unknown) => JSON.stringify(value);
 
-export async function prepareSquareImage(file: File): Promise<File> {
+// Center-crops to the target aspect ratio and re-encodes so uploads never carry the original file's metadata.
+export async function prepareCroppedImage(file: File, width: number, height: number): Promise<File> {
   if (file.size > 1_048_576) throw new Error("IMAGE_SIZE_INVALID");
   const bitmap = await createImageBitmap(file);
-  const side = Math.min(bitmap.width, bitmap.height);
-  const canvas = document.createElement("canvas"); canvas.width = 512; canvas.height = 512;
+  const scale = Math.min(bitmap.width / width, bitmap.height / height);
+  const sourceWidth = width * scale; const sourceHeight = height * scale;
+  const canvas = document.createElement("canvas"); canvas.width = width; canvas.height = height;
   const context = canvas.getContext("2d");
   if (!context) throw new Error("IMAGE_PROCESSING_FAILED");
-  context.drawImage(bitmap, (bitmap.width - side) / 2, (bitmap.height - side) / 2, side, side, 0, 0, 512, 512);
+  context.drawImage(bitmap, (bitmap.width - sourceWidth) / 2, (bitmap.height - sourceHeight) / 2, sourceWidth, sourceHeight, 0, 0, width, height);
   bitmap.close();
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.9));
   if (!blob) throw new Error("IMAGE_PROCESSING_FAILED");
-  return new File([blob], "square.jpg", { type: "image/jpeg" });
+  return new File([blob], "cropped.jpg", { type: "image/jpeg" });
 }
 
-export function ImageUpload({ currentUrl, name, uploadPath, removePath, onChanged }: {
-  currentUrl: string | null; name: string; uploadPath: string; removePath: string; onChanged: () => Promise<unknown>;
+export const prepareSquareImage = (file: File) => prepareCroppedImage(file, 512, 512);
+export const prepareWideImage = (file: File) => prepareCroppedImage(file, 1200, 600);
+
+export function ImageUpload({ currentUrl, name, uploadPath, removePath, onChanged, shape = "square" }: {
+  currentUrl: string | null; name: string; uploadPath: string; removePath: string; onChanged: () => Promise<unknown>; shape?: "square" | "wide";
 }) {
   const { t } = useTranslation(); const [file, setFile] = useState<File | null>(null); const [localError, setLocalError] = useState("");
   const upload = useMutation({
     mutationFn: async () => {
       if (!file) throw new Error("IMAGE_REQUIRED");
-      const form = new FormData(); form.set("image", await prepareSquareImage(file));
+      const form = new FormData(); form.set("image", await (shape === "wide" ? prepareWideImage : prepareSquareImage)(file));
       return apiRequest(uploadPath, imageResponseSchema, { method: "POST", body: form });
     },
     onSuccess: async () => { setFile(null); setLocalError(""); await onChanged(); },
@@ -41,7 +46,9 @@ export function ImageUpload({ currentUrl, name, uploadPath, removePath, onChange
   });
   const remove = useMutation({ mutationFn: () => apiRequest(removePath, okResponseSchema, { method: "DELETE" }), onSuccess: onChanged });
   return <div className={styles.upload}>
-    <div className={styles.preview}><Avatar name={name} src={currentUrl ?? undefined} /><span>{t("media.publicNotice")}</span></div>
+    <div className={styles.preview}>{shape === "wide"
+      ? <div className={styles.widePreview}>{currentUrl && <img alt="" src={currentUrl} />}</div>
+      : <Avatar name={name} src={currentUrl ?? undefined} />}<span>{t("media.publicNotice")}</span></div>
     <FileInput label={t("media.chooseImage")} accept="image/png,image/jpeg,image/webp" value={file} onChange={setFile} clearable />
     <div className={styles.actions}><Button loading={upload.isPending} disabled={!file} onClick={() => upload.mutate()}>{t("media.upload")}</Button>{currentUrl && <Button variant="secondary" loading={remove.isPending} onClick={() => remove.mutate()}>{t("media.remove")}</Button>}</div>
     {(localError || remove.error) && <p role="alert">{t(`errors.${localError || "generic"}`, { defaultValue: t("errors.generic") })}</p>}

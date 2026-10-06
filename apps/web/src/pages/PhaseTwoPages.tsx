@@ -5,10 +5,10 @@ import { type FormEvent, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiError, apiRequest, groupQueryOptions, profilePostsQueryOptions, profileQueryOptions, sessionQueryOptions, settingsQueryOptions } from "../api";
 import { Avatar, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, PageHeader, PasswordField, SectionHeader, Surface, TextAreaField, TextField, ThemePreferenceControl } from "../ui";
-import { GroupFrame } from "./GroupFrame";
+import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import shellStyles from "./PhaseOnePages.module.css";
 import styles from "./PhaseTwoPages.module.css";
-import { PostCard } from "./PhaseThreePages";
+import PostCard from "../organisms/PostCard/PostCard";
 import { ImageUpload } from "./PhaseFivePages";
 
 const json = (value: unknown) => JSON.stringify(value);
@@ -19,7 +19,7 @@ function Message({ error, success }: { error: Error | null; success: boolean }) 
     const code = error instanceof ApiError ? error.code : "generic";
     return <p className={styles.error} role="alert">{t(`errors.${code}`, { defaultValue: t("errors.generic") })}</p>;
   }
-  return success ? <p className={styles.success} role="status">{t("settings.saved")}</p> : null;
+  return success ? <p className={styles.success}>{t("settings.saved")}</p> : null;
 }
 
 export function ProfilePage({ groupId, userId }: { groupId: string; userId: string }) {

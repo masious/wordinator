@@ -12,7 +12,7 @@ import { useTranslation } from "react-i18next";
 import { ApiError, apiRequest, groupQueryOptions, invitationQueryOptions, sessionQueryOptions } from "../api";
 import { Avatar, Button, ErrorState, LabelChip, LoadingState, PageHeader, PasswordField, SelectField, SplitLayout, StatusPanel, Surface, TextField } from "../ui";
 import styles from "./PhaseOnePages.module.css";
-import { GroupFrame } from "./GroupFrame";
+import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { Feed } from "./PhaseThreePages";
 import { prepareSquareImage } from "./PhaseFivePages";
 import { RestrictedNotices } from "./PhaseSixPages";

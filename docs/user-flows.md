@@ -89,3 +89,14 @@ The Members page shows active and former members. Creator removal requires confi
 4. Restoration reactivates the group, its content, and all prior memberships.
 
 If a deleted group is a person’s only group, status appears in the restricted landing experience. If another active group remains, deleted status appears in Settings. Only creator-owned deleted groups show Restore.
+
+## Create and publish a course
+
+1. A member opens Courses from the main navigation and chooses New course.
+2. They enter a title and summary, plus an optional free-text level and intended learner, and create a draft.
+3. The draft opens on its course page. Only the owner can see it; it does not appear in other members' libraries.
+4. The owner can edit the details and upload, replace, or remove a wide cover image.
+5. Publishing makes the course visible to every active member in the newest-first library. The owner can return it to draft at any time.
+6. The owner or group creator can archive the course after confirming. Other members no longer see it. The owner and creator still see it in the library and can restore it, which returns it as a draft.
+
+Lessons and blocks are not part of this flow yet; see the [course phases](roadmap.md#course-phases).

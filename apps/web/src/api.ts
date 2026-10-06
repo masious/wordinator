@@ -1,4 +1,4 @@
-import { accountSettingsResponseSchema, apiErrorSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
+import { accountSettingsResponseSchema, apiErrorSchema, coursePageSchema, courseResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 export class ApiError extends Error {
@@ -86,4 +86,17 @@ export const notificationsQueryOptions = (groupId: string) => queryOptions({
 export const restrictedNotificationsQueryOptions = () => queryOptions({
   queryKey: ["restricted-notifications"] as const,
   queryFn: () => apiRequest("/api/notifications/status", restrictedNotificationPageSchema),
+});
+
+export const coursesQueryOptions = (groupId: string) => infiniteQueryOptions({
+  queryKey: ["courses", groupId] as const,
+  initialPageParam: undefined as string | undefined,
+  queryFn: ({ pageParam }) => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses${pageParam ? `?cursor=${encodeURIComponent(pageParam)}` : ""}`, coursePageSchema),
+  getNextPageParam: (page) => page.nextCursor ?? undefined,
+});
+
+export const courseQueryOptions = (groupId: string, courseId: string) => queryOptions({
+  queryKey: ["course", groupId, courseId] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}`, courseResponseSchema),
+  retry: false,
 });

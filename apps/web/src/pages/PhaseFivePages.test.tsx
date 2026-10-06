@@ -9,7 +9,7 @@ import { MembersPage } from "./PhaseFivePages";
 const groupId = "20000000-0000-4000-8000-000000000001";
 const creatorId = "10000000-0000-4000-8000-000000000001";
 const memberId = "10000000-0000-4000-8000-000000000002";
-const session = { status: "signedIn", user: { id: creatorId, displayName: "Ada", mustChangePassword: false }, groups: [{ id: groupId, name: "Study", language: "nl", role: "creator", icon: "🇳🇱", iconUrl: null }], requests: [], deletedGroups: [] };
+const session = { status: "signedIn", user: { id: creatorId, displayName: "Ada", avatarUrl: null, mustChangePassword: false }, groups: [{ id: groupId, name: "Study", language: "nl", role: "creator", icon: "🇳🇱", iconUrl: null }], requests: [], deletedGroups: [] };
 const shell = { group: session.groups[0], invitationToken: "x".repeat(40), pendingMembers: [] };
 const directory = {
   active: [{ id: creatorId, displayName: "Ada", bio: null, avatarUrl: null, membership: "active", isCreator: true, joinedAt: 1 }, { id: memberId, displayName: "Lin", bio: "Learner", avatarUrl: null, membership: "active", isCreator: false, joinedAt: 2 }],

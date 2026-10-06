@@ -4,10 +4,11 @@ import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/re
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import type { DiscussionItem, Post } from "@wordinator/contracts";
 import "../i18n";
-import { DiscussionPanel, ReactionBar, discussionDraftKey } from "./PhaseFourPages";
+import { DiscussionPanel, discussionDraftKey } from "./PhaseFourPages";
+import ReactionBar from "../organisms/PostCard/ReactionBar";
 
 const groupId = "20000000-0000-4000-8000-000000000001"; const userId = "10000000-0000-4000-8000-000000000001";
-const session = { status: "signedIn" as const, user: { id: userId, displayName: "Ada", mustChangePassword: false }, groups: [{ id: groupId, name: "Study", language: "nl" as const, role: "member" as const, icon: "🇳🇱", iconUrl: null }], requests: [], deletedGroups: [] };
+const session = { status: "signedIn" as const, user: { id: userId, displayName: "Ada", avatarUrl: null, mustChangePassword: false }, groups: [{ id: groupId, name: "Study", language: "nl" as const, role: "member" as const, icon: "🇳🇱", iconUrl: null }], requests: [], deletedGroups: [] };
 const basePost: Post = { id: "30000000-0000-4000-8000-000000000001", groupId, type: "question", body: "Waarom?", notes: null, author: { id: "40000000-0000-4000-8000-000000000001", displayName: "Lin", avatarUrl: null }, createdAt: 1, updatedAt: 1, edited: false, questions: [], expectedAnswers: [], commentCount: 1, reactionCount: 0, reactions: [], permissions: { edit: false, delete: false } };
 const hiddenAnswer: DiscussionItem = { id: "50000000-0000-4000-8000-000000000001", parentId: null, kind: "text", body: "Omdat het mooi is.", author: { id: userId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, edited: false, pinned: false, responseItems: [], reactions: [], permissions: { edit: true, delete: true, reply: true, pin: false }, replies: [] };
 

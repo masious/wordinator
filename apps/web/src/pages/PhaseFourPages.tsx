@@ -1,10 +1,11 @@
-import { commentResponseSchema, isSingleEmojiGrapheme, okResponseSchema, pinRequestSchema, reactionTargetResponseSchema, type DiscussionItem, type Post, type ReactionSummary, type SessionResponse } from "@wordinator/contracts";
+import { commentResponseSchema, okResponseSchema, pinRequestSchema, type DiscussionItem, type Post, type SessionResponse } from "@wordinator/contracts";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type FormEvent, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, discussionQueryOptions } from "../api";
 import { Avatar, Button, EmptyState, ErrorState, LabelChip, LoadingState, TextAreaField, TextField } from "../ui";
 import styles from "./PhaseFourPages.module.css";
+import ReactionBar from "../organisms/PostCard/ReactionBar";
 
 type SignedInSession = Extract<SessionResponse, { status: "signedIn" }>;
 type AnswerKind = "text" | "reading_response" | "fill_response";
@@ -20,22 +21,6 @@ function readDraft(key: string, kind: AnswerKind, count: number): Draft {
 }
 function PlainText({ children }: { children: string }) {
   return <>{children.split(/(https?:\/\/[^\s]+)/g).map((part, index) => /^https?:\/\//.test(part) ? <a key={index} href={part} target="_blank" rel="noreferrer">{part}</a> : part)}</>;
-}
-
-export function ReactionBar({ reactions, quickReactions, path, onChanged }: { reactions: ReactionSummary[]; quickReactions: string[]; path: string; onChanged: () => void }) {
-  const { t } = useTranslation(); const [custom, setCustom] = useState(""); const [error, setError] = useState(""); const [open, setOpen] = useState<string | null>(null);
-  const mutation = useMutation({
-    mutationFn: ({ emoji, active }: { emoji: string; active: boolean }) => apiRequest(path, reactionTargetResponseSchema, { method: "PUT", body: JSON.stringify({ emoji, active }) }),
-    onSuccess: () => { setCustom(""); setError(""); onChanged(); },
-  });
-  const choices = [...new Set([...quickReactions, ...reactions.map((reaction) => reaction.emoji)])];
-  const toggle = (emoji: string) => mutation.mutate({ emoji, active: !reactions.find((reaction) => reaction.emoji === emoji)?.reacted });
-  return <div className={styles.reactionBar}>
-    {choices.map((emoji) => { const summary = reactions.find((reaction) => reaction.emoji === emoji); return <button key={emoji} type="button" className={styles.reactionChip} data-active={summary?.reacted ?? false} aria-pressed={summary?.reacted ?? false} aria-label={t("discussion.reactWith", { emoji })} onClick={() => { setOpen(emoji); toggle(emoji); }}>{emoji} {summary?.count ?? 0}</button>; })}
-    <form className={styles.custom} onSubmit={(event) => { event.preventDefault(); const emoji = custom.trim(); if (!isSingleEmojiGrapheme(emoji)) { setError(t("discussion.emojiError")); return; } toggle(emoji); }}><TextField aria-label={t("discussion.customEmoji")} value={custom} onChange={(event) => setCustom(event.currentTarget.value)} maxLength={16} /><Button type="submit" variant="secondary">{t("discussion.addReaction")}</Button></form>
-    {open && <div className={styles.identities} role="status">{reactions.find((reaction) => reaction.emoji === open)?.members.map((member) => member.displayName).join(", ")}</div>}
-    {(error || mutation.error) && <p className={styles.error} role="alert">{error || t("errors.generic")}</p>}
-  </div>;
 }
 
 function ResponseComposer({ post, groupId, session, parentId, onDone }: { post: Post; groupId: string; session: SignedInSession; parentId?: string; onDone: () => void }) {

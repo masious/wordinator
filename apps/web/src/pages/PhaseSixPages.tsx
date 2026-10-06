@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { apiRequest, notificationsQueryOptions, restrictedNotificationsQueryOptions, sessionQueryOptions } from "../api";
 import { Button, EmptyState, ErrorState, LabelChip, LoadingState, MetadataRow, PageHeader, Surface } from "../ui";
-import { GroupFrame } from "./GroupFrame";
+import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import styles from "./PhaseSixPages.module.css";
 
 const notificationKey = (kind: Notification["kind"]) => `notifications.kinds.${kind}` as const;

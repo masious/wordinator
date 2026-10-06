@@ -3,13 +3,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../i18n";
-import { ComposerForm, composerDraftKey } from "./PhaseThreePages";
+import ComposerForm, { composerDraftKey } from "../organisms/ComposerForm";
 
 const groupId = "20000000-0000-4000-8000-000000000001";
 const userId = "10000000-0000-4000-8000-000000000001";
 const session = {
   status: "signedIn" as const,
-  user: { id: userId, displayName: "Ada", mustChangePassword: false },
+  user: { id: userId, displayName: "Ada", avatarUrl: null, mustChangePassword: false },
   groups: [{ id: groupId, name: "Study room", language: "nl" as const, role: "creator" as const, icon: "🇳🇱", iconUrl: null }],
   deletedGroups: [],
   requests: [],

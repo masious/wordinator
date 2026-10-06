@@ -65,10 +65,10 @@ importers:
         version: 5.3.0
       '@mantine/core':
         specifier: latest
-        version: 9.6.3(@mantine/hooks@9.6.3(react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        version: 9.7.0(@mantine/hooks@9.7.0(react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       '@mantine/hooks':
         specifier: latest
-        version: 9.6.3(react@19.3.0)
+        version: 9.7.0(react@19.3.0)
       '@tanstack/react-query':
         specifier: ^5.104.0
         version: 5.104.0(react@19.3.0)
@@ -81,6 +81,9 @@ importers:
       i18next:
         specifier: latest
         version: 26.4.2(typescript@7.0.2)
+      lucide-react:
+        specifier: ^1.52.0
+        version: 1.52.0(@types/react@19.3.0)(react@19.3.0)
       react:
         specifier: latest
         version: 19.3.0
@@ -1624,15 +1627,15 @@ packages:
   '@jridgewell/trace-mapping@0.3.9':
     resolution: {integrity: sha512-3Belt6tdc8bPgAtbcmdtNJlirVoTmEb5e2gC94PnkwEW9jI6CAHUeoG85tjWP5WquqfavoMtMwiG4P926ZKKuQ==}
 
-  '@mantine/core@9.6.3':
-    resolution: {integrity: sha512-o9xzpkma6RiLbENNU4VoxKnCU4VaFlB6Yh6wAjAUiU329ypPV6tBY7VkVeQQ5Z+e12D3I+NTPrUw43onlYCqTg==}
+  '@mantine/core@9.7.0':
+    resolution: {integrity: sha512-WhCvfXXpYMKV6py05wt0Vlxthtxe4YOzQiVhrrCvWKYDmvhKXgOTDzRdjkGHNji4r+7f7d3nz2XpwbzaZ47R/w==}
     peerDependencies:
-      '@mantine/hooks': 9.6.3
+      '@mantine/hooks': 9.7.0
       react: ^19.2.0
       react-dom: ^19.2.0
 
-  '@mantine/hooks@9.6.3':
-    resolution: {integrity: sha512-b3uJx1p5vlXOmLEgp4OqzC3FUxSIc5bmqPPxPLHsgR6S0aBiqn9psaihJP7u/v//mr3qeCmyMeIwSw9ROu4pXg==}
+  '@mantine/hooks@9.7.0':
+    resolution: {integrity: sha512-3a1w90f1OliaClGRlnPiviJtKxyMiKdVyM8Pd2h6se+LOm9/bgGI+pgoGw/tgv++BSQ4frqv+X7NBlqcY/S7KQ==}
     peerDependencies:
       react: ^19.2.0
 
@@ -3092,6 +3095,15 @@ packages:
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
+
+  lucide-react@1.52.0:
+    resolution: {integrity: sha512-TUgPtl5ZI9WgxOcbu4ckaC5B3l1qxPQrCMgb6OfUB9owx/OvSJfcf93SMgUWAxRw5/1XDfh9uI5F5iNGXCcGDQ==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
 
   lz-string@1.5.0:
     resolution: {integrity: sha512-h5bgJWpxJNswbU7qCrV0tIKQCaS3blPDrqKWx+QxzuzL1zGUzij9XCWLrSLsJPu5t+eWA/ycetzYAO5IOMcWAQ==}
@@ -5337,10 +5349,10 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@mantine/core@9.6.3(@mantine/hooks@9.6.3(react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@mantine/core@9.7.0(@mantine/hooks@9.7.0(react@19.3.0))(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
       '@floating-ui/react': 0.27.20(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@mantine/hooks': 9.6.3(react@19.3.0)
+      '@mantine/hooks': 9.7.0(react@19.3.0)
       clsx: 2.1.1
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
@@ -5350,7 +5362,7 @@ snapshots:
     transitivePeerDependencies:
       - '@types/react'
 
-  '@mantine/hooks@9.6.3(react@19.3.0)':
+  '@mantine/hooks@9.7.0(react@19.3.0)':
     dependencies:
       react: 19.3.0
 
@@ -6780,6 +6792,12 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
+
+  lucide-react@1.52.0(@types/react@19.3.0)(react@19.3.0):
+    dependencies:
+      react: 19.3.0
+    optionalDependencies:
+      '@types/react': 19.3.0
 
   lz-string@1.5.0: {}
 

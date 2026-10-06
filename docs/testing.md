@@ -23,6 +23,8 @@ Run Hono against isolated local D1 state using the Cloudflare Workers test envir
 
 Every group-owned endpoint needs at least one negative test using a valid member of a different group. Test nested-ID attacks where a valid group ID is paired with another group’s post/comment ID.
 
+Course routes add these cases: another group's course ID under the attacker's own valid group ID on every course route; former members; drafts hidden from non-owners in both the library and direct reads; owner-only editing, publishing, and cover changes, including attempts by the group creator; owner-or-creator archive and restore; archived courses hidden from other members; and `409` responses when an archived course is changed.
+
 ### Component tests — React Testing Library
 
 Cover visible behavior rather than implementation details:
@@ -88,3 +90,5 @@ Phase 4 adds shared-contract coverage for discussion discriminators and composed
 Phase 5 adds Workers integration coverage for directory/former snapshots, leave/remove permissions, cross-tenant IDs, one-time password regeneration, forced change, deleted-group status/restore, image validation, public reads, icon permissions, snapshot refresh, and replacement cleanup. React Testing Library covers active/former presentation and the one-time password result. Chromium/WebKit cover approval into the directory, forced password change, leaving, former attribution, and delete/restore. Because the pinned Workers pool has a macOS R2 isolated-storage sidecar defect, the single R2 suite runs in its own non-isolated single-worker config; D1 suites retain normal isolation.
 
 Phase 6 adds Workers integration coverage for notification creation, recipient/group isolation, restricted removal status, read state, and deleted destinations. React Testing Library covers unread presentation, deleted-target copy, and group mark-all. The Chromium/WebKit discussion flow opens the on-demand notification page, marks a group read, and follows pin/reply delivery to the other member. Release verification must run `pnpm typecheck`, `pnpm test`, `pnpm build`, and `pnpm test:e2e`; a real production smoke test remains an operator-recorded gate rather than an automated claim.
+
+Course phase C1 adds Workers integration coverage for the course shell in `course-shell.test.ts` and an R2 cover suite in `course-media.test.ts`. The R2 suite runs in the same single-worker media config as the Phase 5 media suite. React Testing Library covers the library listing, the create form, owner publishing, confirmed archiving, and hidden controls for readers.

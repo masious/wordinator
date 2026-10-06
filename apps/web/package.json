@@ -37,6 +37,7 @@
     "@tanstack/react-router": "^1.170.40",
     "@wordinator/contracts": "workspace:*",
     "i18next": "latest",
+    "lucide-react": "^1.52.0",
     "react": "latest",
     "react-dom": "latest",
     "react-i18next": "latest",

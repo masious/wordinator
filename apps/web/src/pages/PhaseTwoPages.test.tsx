@@ -11,7 +11,7 @@ const userId = "10000000-0000-4000-8000-000000000001";
 
 const session = {
   status: "signedIn",
-  user: { id: userId, displayName: "Ada", mustChangePassword: false },
+  user: { id: userId, displayName: "Ada", avatarUrl: null, mustChangePassword: false },
   groups: [{ id: groupId, name: "Study room", language: "nl", role: "creator", icon: "🇳🇱", iconUrl: null }],
   deletedGroups: [],
   requests: [],

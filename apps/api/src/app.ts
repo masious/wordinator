@@ -2,7 +2,11 @@ import {
   accountSettingsResponseSchema,
   changePasswordRequestSchema,
   commentResponseSchema,
+  coursePageSchema,
+  courseResponseSchema,
+  courseVisibilityRequestSchema,
   createCommentRequestSchema,
+  createCourseRequestSchema,
   createPostRequestSchema,
   feedQuerySchema,
   createGroupRequestSchema,
@@ -27,6 +31,9 @@ import {
   updateAccountSettingsRequestSchema,
   updatePostRequestSchema,
   updateCommentRequestSchema,
+  updateCourseRequestSchema,
+  paginationQuerySchema,
+  type Course,
   type DiscussionItem,
   type Post,
   type PostInput,
@@ -82,7 +89,7 @@ function imageType(bytes: Uint8Array): "image/png" | "image/jpeg" | "image/webp"
   return null;
 }
 
-async function uploadedImage(context: Context<AppEnvironment>, prefix: "avatars" | "groups") {
+async function uploadedImage(context: Context<AppEnvironment>, prefix: "avatars" | "groups" | "courses") {
   const form = await context.req.formData();
   const value = form.get("image");
   if (!(value instanceof File)) return { error: apiError(context, 400, "IMAGE_REQUIRED", "Choose an image to upload.") };
@@ -357,6 +364,61 @@ async function toggleReaction(context: Context<AppEnvironment>, targetKind: "pos
   return context.json(reactionTargetResponseSchema.parse({ reactions: groupReactions(rows.results, targetId, user.id) }));
 }
 
+
+type CourseRow = {
+  id: string; groupId: string; ownerId: string; title: string; summary: string; level: string | null; intendedLearner: string | null;
+  coverKey: string | null; status: Course["status"]; createdAt: number; updatedAt: number; displayName: string; avatarKey: string | null;
+};
+
+const COURSE_SELECT = `SELECT c.id, c.group_id AS groupId, c.owner_id AS ownerId, c.title, c.summary, c.level,
+    c.intended_learner AS intendedLearner, c.cover_key AS coverKey, c.status, c.created_at AS createdAt, c.updated_at AS updatedAt,
+    CASE WHEN m.state = 'active' THEN u.display_name ELSE COALESCE(m.profile_display_name, 'Former member') END AS displayName,
+    CASE WHEN m.state = 'active' THEN u.avatar_key ELSE m.profile_avatar_key END AS avatarKey
+   FROM courses c JOIN users u ON u.id = c.owner_id
+   LEFT JOIN memberships m ON m.group_id = c.group_id AND m.user_id = c.owner_id`;
+
+// Published courses are visible to every member; drafts only to the owner; archived courses to the owner and group creator.
+const courseVisible = (row: Pick<CourseRow, "ownerId" | "status">, viewerId: string, creatorUserId: string) =>
+  row.status === "published" || row.ownerId === viewerId || (row.status === "archived" && creatorUserId === viewerId);
+
+function presentCourse(row: CourseRow, viewerId: string, creatorUserId: string, mediaBase: string): Course {
+  const owner = row.ownerId === viewerId;
+  const active = row.status !== "archived";
+  return {
+    id: row.id, groupId: row.groupId, title: row.title, summary: row.summary, level: row.level, intendedLearner: row.intendedLearner,
+    coverUrl: mediaUrlFromBase(mediaBase, row.coverKey), status: row.status,
+    owner: { id: row.ownerId, displayName: row.displayName, avatarUrl: mediaUrlFromBase(mediaBase, row.avatarKey) },
+    createdAt: row.createdAt, updatedAt: row.updatedAt,
+    permissions: { edit: owner && active, publish: owner && active, archive: owner || creatorUserId === viewerId },
+  };
+}
+
+async function readCourseRow(binding: D1Database, groupId: string, courseId: string) {
+  return binding.prepare(`${COURSE_SELECT} WHERE c.group_id = ? AND c.id = ?`).bind(groupId, courseId).first<CourseRow>();
+}
+
+// Loads a course the viewer may see, or returns the error response. Invisible courses are indistinguishable from missing ones.
+async function visibleCourse(context: Context<AppEnvironment>) {
+  const group = context.get("groupAccess"); const user = context.get("user")!;
+  const row = await readCourseRow(context.env.DB, group.id, context.req.param("courseId") ?? "");
+  if (!row || !courseVisible(row, user.id, group.creatorUserId)) return { error: apiError(context, 404, "COURSE_NOT_FOUND", "This course is not available.") };
+  return { row };
+}
+
+async function editableCourse(context: Context<AppEnvironment>) {
+  const found = await visibleCourse(context);
+  if ("error" in found) return found;
+  if (found.row.ownerId !== context.get("user")!.id) return { error: apiError(context, 403, "COURSE_EDIT_FORBIDDEN", "Only the course owner can change this course.") };
+  if (found.row.status === "archived") return { error: apiError(context, 409, "COURSE_ARCHIVED", "Restore this course before changing it.") };
+  return found;
+}
+
+async function courseResponse(context: Context<AppEnvironment>, courseId: string, status: 200 | 201 = 200) {
+  const group = context.get("groupAccess"); const user = context.get("user")!;
+  const row = await readCourseRow(context.env.DB, group.id, courseId);
+  return context.json(courseResponseSchema.parse({ course: presentCourse(row!, user.id, group.creatorUserId, context.env.PUBLIC_MEDIA_BASE_URL) }), status);
+}
+
 export const app = new Hono<AppEnvironment>();
 
 const requireGroupAccess = createMiddleware<AppEnvironment>(async (context, next) => {
@@ -402,7 +464,7 @@ app.get("/api/health", (context) => context.json(healthResponseSchema.parse({ st
 
 app.get("/api/media/*", async (context) => {
   const key = context.req.path.slice("/api/media/".length).split("/").map(decodeURIComponent).join("/");
-  if (!key || (!key.startsWith("avatars/") && !key.startsWith("groups/"))) return apiError(context, 404, "IMAGE_NOT_FOUND", "This image is not available.");
+  if (!key || !["avatars/", "groups/", "courses/"].some((prefix) => key.startsWith(prefix))) return apiError(context, 404, "IMAGE_NOT_FOUND", "This image is not available.");
   const object = await context.env.MEDIA.get(key);
   if (!object) return apiError(context, 404, "IMAGE_NOT_FOUND", "This image is not available.");
   const headers = new Headers();
@@ -418,12 +480,17 @@ app.get("/api/session", async (context) => {
   }
   const database = createDatabase(context.env.DB);
   const activeGroups = await database
-    .select({ id: groups.id, name: groups.name, language: groups.language, creatorUserId: groups.creatorUserId, iconKey: groups.iconKey })
+    .select({ 
+      id: groups.id, 
+      name: groups.name, 
+      language: groups.language, 
+      creatorUserId: groups.creatorUserId, 
+      iconKey: groups.iconKey,
+    })
     .from(memberships)
     .innerJoin(groups, eq(groups.id, memberships.groupId))
     .where(and(eq(memberships.userId, user.id), eq(memberships.state, "active"), isNull(groups.deletedAt)))
     .orderBy(asc(groups.name));
-    logError("active groups fi")
   const requests = await database
     .select({ groupId: groups.id, groupName: groups.name, state: memberships.state })
     .from(memberships)
@@ -437,12 +504,16 @@ app.get("/api/session", async (context) => {
   ).bind(user.id).all<{ id: string; name: string; language: "nl" | "de"; creatorUserId: string; deletedAt: number }>();
   return context.json({
     status: "signedIn" as const,
-    user,
+    user: {
+      ...user,
+      avatarUrl: mediaUrl(context.env, user.avatarKey)
+    },
     groups: activeGroups.map((group) => ({
       id: group.id, name: group.name, language: group.language,
       role: group.creatorUserId === user.id ? "creator" as const : "member" as const,
       icon: group.language === "nl" ? "🇳🇱" : "🇩🇪",
       iconUrl: mediaUrl(context.env, group.iconKey),
+      members: 16
     })),
     requests: requests.filter((request) => request.state !== "active")
       .map(({ groupId, groupName, state }) => ({ groupId, groupName, state })),
@@ -1104,6 +1175,95 @@ app.patch("/api/groups/:groupId/memberships/:userId", requireGroupAccess, async 
     groupId, recipientUserId: context.req.param("userId"), actorUserId: user.id,
     kind: parsed.data.decision === "accept" ? "join_accepted" : "join_rejected", createdAt: now,
   });
+  return context.json({ ok: true } as const);
+});
+
+app.get("/api/groups/:groupId/courses", requireGroupAccess, async (context) => {
+  const parsed = paginationQuerySchema.safeParse(context.req.query());
+  const cursor = decodeCursor(parsed.success ? parsed.data.cursor : undefined);
+  if (!parsed.success || (parsed.data.cursor && !cursor)) return apiError(context, 400, "INVALID_CURSOR", "The course list cursor is invalid.");
+  const group = context.get("groupAccess"); const user = context.get("user")!;
+  const clauses = ["c.group_id = ?", "(c.status = 'published' OR c.owner_id = ? OR (c.status = 'archived' AND ? = ?))"];
+  const values: Array<string | number> = [group.id, user.id, group.creatorUserId, user.id];
+  if (cursor) { clauses.push("(c.created_at < ? OR (c.created_at = ? AND c.id < ?))"); values.push(cursor.createdAt, cursor.createdAt, cursor.id); }
+  const rows = await context.env.DB.prepare(`${COURSE_SELECT} WHERE ${clauses.join(" AND ")} ORDER BY c.created_at DESC, c.id DESC LIMIT ?`)
+    .bind(...values, parsed.data.limit + 1).all<CourseRow>();
+  const page = rows.results.slice(0, parsed.data.limit); const tail = page.at(-1);
+  return context.json(coursePageSchema.parse({
+    items: page.map((row) => presentCourse(row, user.id, group.creatorUserId, context.env.PUBLIC_MEDIA_BASE_URL)),
+    nextCursor: rows.results.length > parsed.data.limit && tail ? encodeCursor({ createdAt: tail.createdAt, id: tail.id }) : null,
+  }));
+});
+
+app.post("/api/groups/:groupId/courses", requireGroupAccess, async (context) => {
+  const parsed = await parseJson(context, createCourseRequestSchema); if ("response" in parsed) return parsed.response;
+  const group = context.get("groupAccess"); const user = context.get("user")!;
+  const courseId = crypto.randomUUID(); const now = Date.now();
+  await context.env.DB.prepare(
+    "INSERT INTO courses (id, group_id, owner_id, title, summary, level, intended_learner, cover_key, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, 'draft', ?, ?)",
+  ).bind(courseId, group.id, user.id, parsed.data.title, parsed.data.summary, parsed.data.level || null, parsed.data.intendedLearner || null, now, now).run();
+  return courseResponse(context, courseId, 201);
+});
+
+app.get("/api/groups/:groupId/courses/:courseId", requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  return courseResponse(context, found.row.id);
+});
+
+app.patch("/api/groups/:groupId/courses/:courseId", requireGroupAccess, async (context) => {
+  const found = await editableCourse(context); if ("error" in found) return found.error;
+  const parsed = await parseJson(context, updateCourseRequestSchema); if ("response" in parsed) return parsed.response;
+  await context.env.DB.prepare("UPDATE courses SET title = ?, summary = ?, level = ?, intended_learner = ?, updated_at = ? WHERE group_id = ? AND id = ?")
+    .bind(parsed.data.title, parsed.data.summary, parsed.data.level || null, parsed.data.intendedLearner || null, Date.now(), found.row.groupId, found.row.id).run();
+  return courseResponse(context, found.row.id);
+});
+
+app.post("/api/groups/:groupId/courses/:courseId/visibility", requireGroupAccess, async (context) => {
+  const found = await editableCourse(context); if ("error" in found) return found.error;
+  const parsed = await parseJson(context, courseVisibilityRequestSchema); if ("response" in parsed) return parsed.response;
+  await context.env.DB.prepare("UPDATE courses SET status = ?, updated_at = ? WHERE group_id = ? AND id = ? AND status != 'archived'")
+    .bind(parsed.data.status, Date.now(), found.row.groupId, found.row.id).run();
+  return courseResponse(context, found.row.id);
+});
+
+app.post("/api/groups/:groupId/courses/:courseId/archive", requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  const group = context.get("groupAccess"); const user = context.get("user")!;
+  if (found.row.ownerId !== user.id && group.creatorUserId !== user.id) return apiError(context, 403, "COURSE_ARCHIVE_FORBIDDEN", "Only the course owner or group creator can archive this course.");
+  await context.env.DB.prepare("UPDATE courses SET status = 'archived', updated_at = ? WHERE group_id = ? AND id = ? AND status != 'archived'")
+    .bind(Date.now(), group.id, found.row.id).run();
+  return courseResponse(context, found.row.id);
+});
+
+app.post("/api/groups/:groupId/courses/:courseId/restore", requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  const group = context.get("groupAccess"); const user = context.get("user")!;
+  if (found.row.ownerId !== user.id && group.creatorUserId !== user.id) return apiError(context, 403, "COURSE_ARCHIVE_FORBIDDEN", "Only the course owner or group creator can restore this course.");
+  if (found.row.status !== "archived") return apiError(context, 409, "COURSE_NOT_ARCHIVED", "This course is not archived.");
+  // Restored courses return as drafts so the owner decides again when they are visible.
+  await context.env.DB.prepare("UPDATE courses SET status = 'draft', updated_at = ? WHERE group_id = ? AND id = ? AND status = 'archived'")
+    .bind(Date.now(), group.id, found.row.id).run();
+  return courseResponse(context, found.row.id);
+});
+
+app.post("/api/groups/:groupId/courses/:courseId/cover", requireGroupAccess, async (context) => {
+  const found = await editableCourse(context); if ("error" in found) return found.error;
+  const uploaded = await uploadedImage(context, "courses");
+  if ("error" in uploaded) return uploaded.error;
+  try {
+    await context.env.DB.prepare("UPDATE courses SET cover_key = ?, updated_at = ? WHERE group_id = ? AND id = ?").bind(uploaded.key, Date.now(), found.row.groupId, found.row.id).run();
+  } catch (error) {
+    await context.env.MEDIA.delete(uploaded.key);
+    throw error;
+  }
+  if (found.row.coverKey) await context.env.MEDIA.delete(found.row.coverKey);
+  return context.json(imageResponseSchema.parse({ url: mediaUrl(context.env, uploaded.key) }));
+});
+
+app.delete("/api/groups/:groupId/courses/:courseId/cover", requireGroupAccess, async (context) => {
+  const found = await editableCourse(context); if ("error" in found) return found.error;
+  await context.env.DB.prepare("UPDATE courses SET cover_key = NULL, updated_at = ? WHERE group_id = ? AND id = ?").bind(Date.now(), found.row.groupId, found.row.id).run();
+  if (found.row.coverKey) await context.env.MEDIA.delete(found.row.coverKey);
   return context.json({ ok: true } as const);
 });
 

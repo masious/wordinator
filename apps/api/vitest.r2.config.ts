@@ -4,7 +4,7 @@ const migrations = await readD1Migrations("../../packages/db/migrations");
 
 export default defineWorkersConfig({
   test: {
-    include: ["test/phase-five-media.test.ts"],
+    include: ["test/phase-five-media.test.ts", "test/course-media.test.ts"],
     setupFiles: ["./test/setup.ts"],
     provide: { migrations },
     poolOptions: {

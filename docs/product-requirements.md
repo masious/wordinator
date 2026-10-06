@@ -12,6 +12,7 @@ The first usable release is an installable, connectivity-required responsive web
 - Strict reverse-chronological feed with four post types
 - Dedicated post pages, spoiler-safe answers, comments, one-level replies, pins, and emoji reactions
 - Group-private member directory and profiles
+- Member-authored group courses (see [roadmap course phases](roadmap.md#course-phases))
 - Group-scoped, on-demand in-app notifications
 - Local browser drafts for every writing flow
 - Creator moderation, membership management, password regeneration, and recoverable group deletion
