@@ -411,7 +411,19 @@ export const resources = {
           courseProgress: "You have finished {{completed}} of {{total}} lessons ({{percent}}%).",
           previewHelp: "This lesson is unpublished, so finishing it does not count toward progress.",
           backToCourse: "Back to the course",
-          nextLesson: "Next: {{title}}"
+          nextLesson: "Next: {{title}}",
+          reviewWords: "Review words",
+          backToSummary: "Back to the summary"
+        },
+        words: {
+          title: "New words",
+          review: "Review words",
+          recapTitle: "Review words",
+          courseHelp_one: "{{count}} word from the lessons you have finished.",
+          courseHelp_other: "{{count}} words from the lessons you have finished.",
+          counter: "Word {{current}} of {{total}}",
+          showMeaning: "Show meaning",
+          backToCourse: "Back to the course"
         },
         progress: {
           title: "Progress",

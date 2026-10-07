@@ -12,7 +12,8 @@ import { Callout } from "../../molecules/Callout";
 import { PlainText } from "../../molecules/PlainText";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { AdaptiveDialog, Button, ErrorState, LoadingState, TextAreaField } from "../../ui";
-import { DialogueBlock, ExampleBlock, InlineText, LessonBlocks } from "../LessonDocument/LessonDocument";
+import { DialogueBlock, ExampleBlock, InlineText, LessonBlocks, NewWords } from "../LessonDocument/LessonDocument";
+import { runWords, WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import styles from "./LessonPlayer.module.css";
 import { blockPath, practiceDraftKey, practiceFromBlock, readAnswers, storeAnswers, type Practice } from "./PracticeBlock";
@@ -75,8 +76,8 @@ function QuestionStep({ scope, lessonId, block, item, answers, onAnswer, shared,
   </div>;
 }
 
-function FinishStep({ scope, lesson, next, onNext, onClose }: {
-  scope: PlayerScope; lesson: CourseLesson; next: CourseLessonSummary | undefined; onNext: (lessonId: string) => void; onClose: () => void;
+function FinishStep({ scope, lesson, next, onNext, onClose, onReview }: {
+  scope: PlayerScope; lesson: CourseLesson; next: CourseLessonSummary | undefined; onNext: (lessonId: string) => void; onClose: () => void; onReview?: () => void;
 }) {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const progressKey = courseProgressQueryOptions(scope.groupId, scope.courseId).queryKey;
@@ -98,6 +99,7 @@ function FinishStep({ scope, lesson, next, onNext, onClose }: {
       </div>
       : <p className={styles.help}>{t("courses.player.previewHelp")}</p>}
     <CourseErrorMessage error={complete.error} />
+    {onReview && <Button variant="secondary" onClick={onReview}>{t("courses.player.reviewWords")}</Button>}
     <div className={styles.finishActions}>
       <Button variant={next ? "quiet" : "primary"} onClick={onClose}>{t("courses.player.backToCourse")}</Button>
       {next && <Button onClick={() => onNext(next.id)}>{t("courses.player.nextLesson", { title: next.title })}</Button>}
@@ -120,8 +122,13 @@ function StepContent({ scope, lesson, step, answersFor, answer, shared, markShar
       return <QuestionStep scope={scope} lessonId={lesson.id} block={practice} item={step.itemIndex} answers={answersFor(practice)}
         onAnswer={(value) => answer(practice, step.itemIndex, value)} shared={shared[practice.id] ?? false} onShared={() => markShared(practice)} />;
     }
+    case "words": return <NewWords words={step.words} />;
   }
 }
+
+// A step's words show in a New words panel below it. A words-only step is the list itself, and a column list read as one step
+// already shows its words in place.
+const hasWordsPanel = (step: LessonStep) => step.words.length > 0 && step.kind !== "words" && step.kind !== "columns";
 
 function Player({ scope, lesson, position, next, onNext, onClose }: {
   scope: PlayerScope; lesson: CourseLesson; position: LessonPosition | undefined; next: CourseLessonSummary | undefined; onNext: (lessonId: string) => void; onClose: () => void;
@@ -129,6 +136,7 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
   const { t } = useTranslation();
   // Steps are fixed when the run starts, so a refetch (for example after sharing answers) never moves the reader.
   const [steps] = useState(() => lessonSteps(lesson));
+  const [words] = useState(() => runWords(steps)); const [reviewing, setReviewing] = useState(false);
   // A published lesson resumes at the reader's saved step; previews always start at the beginning.
   const [start] = useState(() => lesson.published && position && steps.length ? resolveStepIndex(steps, position.stepKey, position.stepIndex) : 0);
   const [index, setIndex] = useState(start); const [resumed, setResumed] = useState(start > 0);
@@ -169,11 +177,18 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
       <Button variant="quiet" onClick={() => setIndex(0)}>{t("courses.player.startOver")}</Button>
     </div>}
     {finished || !step
-      ? <FinishStep scope={scope} lesson={lesson} next={next} onNext={onNext} onClose={onClose} />
+      // The lesson recap covers the completion screen, which stays mounted so its completion is recorded once.
+      ? <>
+        <div hidden={reviewing}>
+          <FinishStep scope={scope} lesson={lesson} next={next} onNext={onNext} onClose={onClose} onReview={words.length ? () => setReviewing(true) : undefined} />
+        </div>
+        {reviewing && <WordRecap words={words} doneLabel={t("courses.player.backToSummary")} onDone={() => setReviewing(false)} />}
+      </>
       // A dialogue keeps one stage while its lines arrive, so only the newest line animates in.
       : <div className={styles.stage} key={step.kind === "dialogueTurn" ? step.block.id : index}>
         {step.heading && <p className={styles.section}>{step.heading}</p>}
         <StepContent scope={scope} lesson={lesson} step={step} answersFor={answersFor} answer={answer} shared={shared} markShared={markShared} />
+        {hasWordsPanel(step) && <NewWords words={step.words} />}
       </div>}
     {!finished && <div className={styles.nav}>
       <Button variant="quiet" disabled={index === 0} onClick={() => setIndex((value) => value - 1)}>{t("common.back")}</Button>

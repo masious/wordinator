@@ -1,12 +1,13 @@
 import { randomUUID } from "node:crypto";
 import { describe, expect, it } from "vitest";
 import fixture from "../../../test/fixtures/courses/dutch-foundations-part-iii.json";
-import { COURSE_BLOCKS_MAX, practicePayloadSchema } from ".";
+import { COURSE_BLOCKS_MAX, COURSE_WORDS_PER_BLOCK_MAX, practicePayloadSchema } from ".";
 import {
-  collectImageUrls, collectPracticeIds, findPublishProblems, flattenToSteps, inlineText, LESSON_DOCUMENT_SCHEMA_VERSION, lessonDocumentSchema,
-  lessonPositionRequestSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, readPracticeBlock, resolveStepIndex, saveLessonDraftRequestSchema,
-  toLearnerDocument, upgradeLegacyBlocks,
-  type LessonDocument,
+  collectImageUrls, collectLessonWords, collectPracticeIds, courseWordsResponseSchema, findPublishProblems, flattenToSteps, inlineText,
+  LESSON_DOCUMENT_SCHEMA_VERSION, lessonDocumentSchema, lessonNotReadySchema, lessonPositionRequestSchema, lessonStepKey, mapImageUrls,
+  parseStoredLessonDocument, readPracticeBlock, readVocabularyBlock, resolveStepIndex, saveLessonDraftRequestSchema, toLearnerDocument,
+  upgradeLegacyBlocks, vocabularyPayloadSchema,
+  type LessonDocument, type LessonStep,
 } from "./lessonDocument";
 
 const textProps = { backgroundColor: "default", textColor: "default", textAlignment: "left" };
@@ -25,6 +26,8 @@ const practicePayload = {
 };
 const practice = () => ({ id: randomUUID(), type: "practice", props: { data: JSON.stringify(practicePayload) }, children: [] });
 const dialogue = () => ({ id: randomUUID(), type: "dialogue", props: { turns: JSON.stringify([{ speaker: "A", text: "Hoi" }, { speaker: "B", text: "Hallo" }]) }, children: [] });
+const word = (term: string, extra: Record<string, unknown> = {}) => ({ id: randomUUID(), term, meaning: `meaning of ${term}`, ...extra });
+const vocabulary = (...words: unknown[]) => ({ id: randomUUID(), type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [] });
 const column = (...children: unknown[]) => ({ id: randomUUID(), type: "column", props: { width: 1 }, children });
 const columns = (...children: unknown[]) => ({ id: randomUUID(), type: "columnList", props: {}, children });
 const doc = (...blocks: unknown[]) => ({ schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks });
@@ -89,6 +92,34 @@ describe("lesson document schema", () => {
     rejects({ ...dialogue(), props: { turns: JSON.stringify([{ speaker: "A" }]) } });
   });
 
+  it("validates vocabulary words and their limits", () => {
+    const accepted = (payload: unknown) => vocabularyPayloadSchema.safeParse(payload).success;
+    expect(accepted({ words: [word("der Hund", { forms: "die Hunde", example: "Der Hund bellt.", note: "Masculine." })] })).toBe(true);
+    expect(accepted({ words: [word("", { meaning: "" })] })).toBe(true);
+    expect(accepted({ words: Array.from({ length: COURSE_WORDS_PER_BLOCK_MAX }, () => word("x")) })).toBe(true);
+    expect(accepted({ words: [] })).toBe(false);
+    expect(accepted({ words: Array.from({ length: COURSE_WORDS_PER_BLOCK_MAX + 1 }, () => word("x")) })).toBe(false);
+    expect(accepted({ words: [{ term: "der Hund", meaning: "the dog" }] })).toBe(false);
+    expect(accepted({ words: [word("x", { id: "word-1" })] })).toBe(false);
+    expect(accepted({ words: [word("x".repeat(201))] })).toBe(false);
+    expect(accepted({ words: [word("x", { meaning: "x".repeat(501) })] })).toBe(false);
+    expect(accepted({ words: [word("x", { forms: "x".repeat(201) })] })).toBe(false);
+    expect(accepted({ words: [word("x", { example: "x".repeat(1_001) })] })).toBe(false);
+    expect(accepted({ words: [word("x", { note: "x".repeat(2_001) })] })).toBe(false);
+    expect(accepted({ words: [word("x", { gender: "m" })] })).toBe(false);
+    const twice = word("x");
+    expect(accepted({ words: [twice, twice] })).toBe(false);
+    const block = vocabulary(word("het huis"));
+    expect(parse(block, columns(column(vocabulary(word("de kat"))), column(paragraph("x")))).blocks).toHaveLength(2);
+    expect(readVocabularyBlock(parse(block).blocks[0] as never).words[0]!.term).toBe("het huis");
+    rejects({ ...block, props: { data: "{" } });
+    rejects({ ...block, content: [text("x")] });
+    // Word IDs share the document's ID space, so they may not repeat across blocks or collide with a block ID.
+    const shared = word("x");
+    rejects(vocabulary(shared), vocabulary(shared));
+    rejects(paragraph("x", { id: shared.id }), vocabulary(shared));
+  });
+
   it("requires a positive draft version and a version-2 document on save", () => {
     expect(saveLessonDraftRequestSchema.safeParse({ document: doc(paragraph("x")), draftVersion: 1 }).success).toBe(true);
     expect(saveLessonDraftRequestSchema.safeParse({ document: doc(paragraph("x")), draftVersion: 0 }).success).toBe(false);
@@ -120,6 +151,30 @@ describe("lesson document helpers", () => {
     expect(references[block.id]!.items[0]).toEqual({ prompt: "Ik zie … hond.", authorsVersion: ["de"], note: "Hond is a de-word." });
   });
 
+  it("keeps vocabulary words, notes included, intact in learner documents", () => {
+    const block = vocabulary(word("der Hund", { note: "Masculine." }));
+    const { document } = toLearnerDocument(parse(block, practice()));
+    expect(document.blocks[0]).toEqual(block);
+  });
+
+  it("collects lesson words in reading order with lesson-wide positions", () => {
+    const first = word(" der Hund ", { forms: "die Hunde", example: " ", note: "" });
+    const second = word("die Katze"); const third = word("das Haus");
+    const document = parse(vocabulary(first), columns(column(vocabulary(second)), column(paragraph("x"))), vocabulary(third));
+    const words = collectLessonWords(document);
+    expect(words.map((entry) => [entry.id, entry.position, entry.blockId])).toEqual([
+      [first.id, 0, document.blocks[0]!.id], [second.id, 1, document.blocks[1]!.children[0]!.children[0]!.id], [third.id, 2, document.blocks[2]!.id],
+    ]);
+    expect(words[0]).toMatchObject({ term: "der Hund", meaning: "meaning of  der Hund ".trim(), forms: "die Hunde", example: null, note: null });
+    expect(collectLessonWords(parse(paragraph("x")))).toEqual([]);
+  });
+
+  it("validates the course words response", () => {
+    const entry = { id: randomUUID(), lessonId: randomUUID(), term: "der Hund", meaning: "the dog", forms: null, example: null, note: null };
+    expect(courseWordsResponseSchema.safeParse({ words: [entry] }).success).toBe(true);
+    expect(courseWordsResponseSchema.safeParse({ words: [{ ...entry, lessonId: undefined }] }).success).toBe(false);
+  });
+
   it("reports unfinished work that blocks publishing", () => {
     const missing = image("");
     const noAlt = image("media:courses/a.png", " ");
@@ -129,6 +184,14 @@ describe("lesson document helpers", () => {
       { blockId: noAlt.id, problem: "image-alt-missing" },
       { blockId: empty.id, problem: "example-empty" },
     ]);
+    const noTerm = word(" "); const noMeaning = word("der Hund", { meaning: "" });
+    const words = vocabulary(word("die Katze"), noTerm, noMeaning);
+    const problems = findPublishProblems(parse(columns(column(words), column(paragraph("x")))));
+    expect(problems).toEqual([
+      { blockId: words.id, wordId: noTerm.id, problem: "word-empty" },
+      { blockId: words.id, wordId: noMeaning.id, problem: "word-empty" },
+    ]);
+    expect(lessonNotReadySchema.safeParse({ error: { code: "LESSON_NOT_READY", message: "x" }, problems }).success).toBe(true);
   });
 
   it("flattens a document into player steps", () => {
@@ -176,6 +239,78 @@ describe("lesson document helpers", () => {
     // A removed step falls back to its old index, clamped to the lesson.
     expect(resolveStepIndex(edited, `${randomUUID()}:0`, 2)).toBe(2);
     expect(resolveStepIndex(edited, `${randomUUID()}:0`, 40)).toBe(edited.length - 1);
+  });
+});
+
+describe("new words in player steps", () => {
+  const terms = (step: LessonStep) => step.words.map((entry) => entry.term);
+  const summary = (steps: LessonStep[]) => steps.map((step) => [step.kind, terms(step)]);
+
+  it("ends a prose step and attaches to it; following prose starts a new step", () => {
+    const a = paragraph("Prose A"); const b = paragraph("Prose B"); const words = vocabulary(word("der Hund"));
+    const steps = flattenToSteps(parse(a, words, b));
+    expect(summary(steps)).toEqual([["content", ["der Hund"]], ["content", []]]);
+    expect(steps.map(lessonStepKey)).toEqual([a.id, b.id]);
+  });
+
+  it("attaches to a preceding example or callout", () => {
+    const steps = flattenToSteps(parse(example("Ich sehe den Hund."), vocabulary(word("sehen")), callout("Hint"), vocabulary(word("der Tipp"))));
+    expect(summary(steps)).toEqual([["example", ["sehen"]], ["callout", ["der Tipp"]]]);
+  });
+
+  it("spreads over every turn of a dialogue and every item of a practice", () => {
+    const steps = flattenToSteps(parse(dialogue(), vocabulary(word("hoi")), practice(), vocabulary(word("zien"))));
+    expect(summary(steps)).toEqual([
+      ["dialogueTurn", ["hoi"]], ["dialogueTurn", ["hoi"]], ["practiceItem", ["zien"]], ["practiceItem", ["zien"]],
+    ]);
+    // Each step owns its list, so later words never leak between blocks.
+    expect(steps[0]!.words).not.toBe(steps[1]!.words);
+  });
+
+  it("falls back to the next block's steps when nothing precedes it in the section", () => {
+    const steps = flattenToSteps(parse(
+      vocabulary(word("eins")), example("Eins."),
+      heading("Part two"), vocabulary(word("zwei")), paragraph(""), dialogue(),
+      example("Drei."), heading("Part three"), vocabulary(word("vier")), paragraph("Vier."),
+    ));
+    expect(summary(steps)).toEqual([
+      ["example", ["eins"]], ["dialogueTurn", ["zwei"]], ["dialogueTurn", ["zwei"]], ["example", []], ["content", ["vier"]],
+    ]);
+  });
+
+  it("combines consecutive blocks into one list in document order", () => {
+    const steps = flattenToSteps(parse(
+      vocabulary(word("vorher")), vocabulary(word("davor")), paragraph("Text"), vocabulary(word("eins")), vocabulary(word("zwei"), word("drei")),
+    ));
+    expect(summary(steps)).toEqual([["content", ["vorher", "davor", "eins", "zwei", "drei"]]]);
+  });
+
+  it("turns a words-only section into a words step keyed by its first block", () => {
+    const first = vocabulary(word("eins")); const second = vocabulary(word("zwei")); const last = vocabulary(word("drei"));
+    const steps = flattenToSteps(parse(heading("Words"), first, paragraph(""), second, heading("Text"), paragraph("x"), heading("More"), last));
+    expect(steps.map((step) => [step.kind, step.heading, terms(step)])).toEqual([
+      ["words", "Words", ["eins", "zwei"]], ["content", "Text", []], ["words", "More", ["drei"]],
+    ]);
+    expect(steps.map(lessonStepKey)).toEqual([first.id, expect.any(String), last.id]);
+    expect(lessonPositionRequestSchema.safeParse({ stepKey: lessonStepKey(steps[0]!) }).success).toBe(true);
+  });
+
+  it("keeps columns read as one step whole and reads interactive columns in leaf order", () => {
+    const steps = flattenToSteps(parse(
+      columns(column(paragraph("Links"), vocabulary(word("links"))), column(paragraph("Rechts"))), vocabulary(word("danach")),
+      columns(column(paragraph("Read"), vocabulary(word("lesen"))), column(dialogue(), vocabulary(word("sprechen")))),
+    ));
+    expect(summary(steps)).toEqual([
+      ["columns", ["links", "danach"]], ["content", ["lesen"]], ["dialogueTurn", ["sprechen"]], ["dialogueTurn", ["sprechen"]],
+    ]);
+  });
+
+  it("never keys a step by a vocabulary block, so adding words keeps saved positions", () => {
+    const intro = paragraph("Intro"); const talk = dialogue(); const quiz = practice(); const hint = callout("Hint");
+    const keys = flattenToSteps(parse(intro, talk, hint, quiz)).map(lessonStepKey);
+    const withWords = flattenToSteps(parse(vocabulary(word("a")), intro, vocabulary(word("b")), talk, vocabulary(word("c")), hint, vocabulary(word("d")), quiz));
+    expect(withWords.map(lessonStepKey)).toEqual(keys);
+    expect(flattenToSteps(parse(intro, talk)).every((step) => step.words.length === 0)).toBe(true);
   });
 });
 

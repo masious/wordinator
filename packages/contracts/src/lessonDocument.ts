@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
-  COURSE_BLOCK_TEXT_MAX, COURSE_BLOCKS_MAX, COURSE_HEADING_MAX, COURSE_NOTE_MAX, COURSE_PRELOADED_LESSONS, COURSE_SENTENCE_MAX, courseLessonSummarySchema,
-  courseSchema, dialoguePayloadSchema, editorRefSchema, opaqueIdSchema, practicePayloadSchema, splitPracticePayload, type PracticePayload,
+  COURSE_BLOCK_TEXT_MAX, COURSE_BLOCKS_MAX, COURSE_HEADING_MAX, COURSE_NOTE_MAX, COURSE_PRELOADED_LESSONS, COURSE_RECAP_WORDS_MAX, COURSE_SENTENCE_MAX,
+  COURSE_WORD_FORMS_MAX, COURSE_WORD_MEANING_MAX, COURSE_WORD_TERM_MAX, COURSE_WORDS_PER_BLOCK_MAX, courseLessonSummarySchema, courseSchema, dialoguePayloadSchema, editorRefSchema, opaqueIdSchema, practicePayloadSchema, splitPracticePayload, type PracticePayload,
   type PracticeReference,
 } from "./index";
 
@@ -18,6 +18,7 @@ export const LESSON_IMAGE_ALT_MAX = 200;
 export const LESSON_IMAGE_CAPTION_MAX = 1_000;
 const PRACTICE_DATA_MAX = 200_000;
 const DIALOGUE_DATA_MAX = 100_000;
+const VOCABULARY_DATA_MAX = LESSON_DOCUMENT_BYTES_MAX;
 
 export const lessonColorSchema = z.enum(["default", "gray", "brown", "red", "orange", "yellow", "green", "blue", "purple", "pink"]);
 export type LessonColor = z.infer<typeof lessonColorSchema>;
@@ -128,10 +129,31 @@ const practiceSchema = z.strictObject({
   props: z.strictObject({ data: z.string().max(PRACTICE_DATA_MAX).refine(parsesAs(practicePayloadSchema), "Invalid practice.") }),
   content: noContent, children: noChildren,
 });
+// Words are plain text. Drafts may hold a word with an empty term or meaning; publishing requires both (`word-empty`).
+// Optional fields are absent or empty when there is none. Word IDs are unique within the whole document.
+export const vocabularyWordSchema = z.strictObject({
+  id: opaqueIdSchema,
+  term: z.string().max(COURSE_WORD_TERM_MAX),
+  meaning: z.string().max(COURSE_WORD_MEANING_MAX),
+  forms: z.string().max(COURSE_WORD_FORMS_MAX).optional(),
+  example: z.string().max(COURSE_SENTENCE_MAX).optional(),
+  note: z.string().max(COURSE_NOTE_MAX).optional(),
+});
+export type VocabularyWord = z.infer<typeof vocabularyWordSchema>;
+export const vocabularyPayloadSchema = z.strictObject({
+  words: z.array(vocabularyWordSchema).min(1).max(COURSE_WORDS_PER_BLOCK_MAX)
+    .refine((words) => new Set(words.map((word) => word.id)).size === words.length, "Duplicate word ID."),
+});
+export type VocabularyPayload = z.infer<typeof vocabularyPayloadSchema>;
+const vocabularySchema = z.strictObject({
+  id: blockId, type: z.literal("vocabulary"),
+  props: z.strictObject({ data: z.string().max(VOCABULARY_DATA_MAX).refine(parsesAs(vocabularyPayloadSchema), "Invalid vocabulary.") }),
+  content: noContent, children: noChildren,
+});
 
 const leafBlockSchema = z.discriminatedUnion("type", [
   paragraphSchema, headingSchema, bulletListItemSchema, numberedListItemSchema, dividerSchema, imageSchema, calloutSchema, exampleSchema, dialogueSchema,
-  practiceSchema,
+  practiceSchema, vocabularySchema,
 ]);
 // Columns sit only at the top level and never contain other columns.
 const columnSchema = z.strictObject({
@@ -162,16 +184,29 @@ export function* walkLessonBlocks(blocks: readonly LessonBlock[], depth = 0): Ge
 const listDepth = (block: LessonBlock): number =>
   block.type === "bulletListItem" || block.type === "numberedListItem" ? 1 + Math.max(0, ...block.children.map(listDepth)) : 0;
 
+const safeVocabularyWords = (block: LessonBlockOf<"vocabulary">) => {
+  try {
+    return vocabularyPayloadSchema.safeParse(JSON.parse(block.props.data)).data?.words ?? [];
+  } catch {
+    return [];
+  }
+};
+
 export const lessonDocumentSchema = z.strictObject({
   schemaVersion: z.literal(LESSON_DOCUMENT_SCHEMA_VERSION),
   blocks: z.array(topBlockSchema).max(COURSE_BLOCKS_MAX),
 }).superRefine((document, context) => {
   const ids = new Set<string>();
   let count = 0;
+  const claim = (id: string) => {
+    if (ids.has(id)) context.addIssue({ code: "custom", path: ["blocks"], message: `Duplicate block or word ID ${id}.` });
+    ids.add(id);
+  };
   for (const { block } of walkLessonBlocks(document.blocks)) {
     count += 1;
-    if (ids.has(block.id)) context.addIssue({ code: "custom", path: ["blocks"], message: `Duplicate block ID ${block.id}.` });
-    ids.add(block.id);
+    claim(block.id);
+    // Refinements run even when a block failed its own schema, so an invalid payload is skipped here.
+    if (block.type === "vocabulary") safeVocabularyWords(block).forEach((word) => claim(word.id));
     if (listDepth(block) > LESSON_LIST_DEPTH_MAX) context.addIssue({ code: "custom", path: ["blocks"], message: `Lists nest at most ${LESSON_LIST_DEPTH_MAX} levels.` });
   }
   if (count > COURSE_BLOCKS_MAX) context.addIssue({ code: "custom", path: ["blocks"], message: `A lesson holds at most ${COURSE_BLOCKS_MAX} blocks.` });
@@ -184,6 +219,9 @@ export const emptyLessonDocument = (): LessonDocument => ({ schemaVersion: LESSO
 
 export const readPracticeBlock = (block: LessonBlockOf<"practice">): PracticePayload => practicePayloadSchema.parse(JSON.parse(block.props.data));
 export const readDialogueTurns = (block: LessonBlockOf<"dialogue">) => dialoguePayloadSchema.shape.turns.parse(JSON.parse(block.props.turns));
+export function readVocabularyBlock(block: LessonBlockOf<"vocabulary">): VocabularyPayload {
+  return vocabularyPayloadSchema.parse(JSON.parse(block.props.data));
+}
 
 export const collectPracticeIds = (document: LessonDocument) =>
   [...walkLessonBlocks(document.blocks)].filter(({ block }) => block.type === "practice").map(({ block }) => block.id);
@@ -211,42 +249,87 @@ export function toLearnerDocument(document: LessonDocument): { document: LessonD
   return { document: learner, references };
 }
 
-export type LessonPublishProblem = { blockId: string; problem: "image-missing" | "image-alt-missing" | "example-empty" };
+export const lessonPublishProblemKindSchema = z.enum(["image-missing", "image-alt-missing", "example-empty", "word-empty"]);
+// `wordId` names the word of a `word-empty` problem.
+export type LessonPublishProblem = { blockId: string; wordId?: string; problem: z.infer<typeof lessonPublishProblemKindSchema> };
 // Drafts may hold unfinished work; publishing requires none of these.
 export function findPublishProblems(document: LessonDocument): LessonPublishProblem[] {
   return [...walkLessonBlocks(document.blocks)].flatMap(({ block }): LessonPublishProblem[] => {
     if (block.type === "image" && !block.props.url) return [{ blockId: block.id, problem: "image-missing" }];
     if (block.type === "image" && !block.props.name.trim()) return [{ blockId: block.id, problem: "image-alt-missing" }];
     if (block.type === "example" && !inlineText(block.content).trim()) return [{ blockId: block.id, problem: "example-empty" }];
+    if (block.type === "vocabulary") {
+      return readVocabularyBlock(block).words
+        .filter((word) => !word.term.trim() || !word.meaning.trim())
+        .map((word) => ({ blockId: block.id, wordId: word.id, problem: "word-empty" }));
+    }
     return [];
   });
 }
 
+// The words of a document in reading order, trimmed, with absent optional fields as null. `position` numbers the words
+// across the whole lesson; the API's course word index and the lesson recap both read this.
+export type LessonWord = {
+  blockId: string; position: number; id: string; term: string; meaning: string; forms: string | null; example: string | null; note: string | null;
+};
+export function collectLessonWords(document: LessonDocument): LessonWord[] {
+  const optional = (value: string | undefined) => value?.trim() || null;
+  return [...walkLessonBlocks(document.blocks)]
+    .flatMap(({ block }) => block.type === "vocabulary" ? readVocabularyBlock(block).words.map((word) => ({ blockId: block.id, word })) : [])
+    .map(({ blockId, word }, position) => ({
+      blockId, position, id: word.id, term: word.term.trim(), meaning: word.meaning.trim(),
+      forms: optional(word.forms), example: optional(word.example), note: optional(word.note),
+    }));
+}
+
 // Player steps. A heading is not a step; it labels the steps that follow. Consecutive prose (paragraphs, lists, images,
 // dividers) under one heading is one step. Columns without interactive blocks are one step; otherwise they are read column by column.
-export type LessonStep =
-  | { kind: "content"; heading: string | null; blocks: LessonLeafBlock[] }
-  | { kind: "callout"; heading: string | null; block: LessonBlockOf<"callout"> }
-  | { kind: "example"; heading: string | null; block: LessonBlockOf<"example"> }
-  | { kind: "columns"; heading: string | null; block: LessonColumnListBlock }
-  | { kind: "dialogueTurn"; heading: string | null; block: LessonBlockOf<"dialogue">; turnIndex: number }
-  | { kind: "practiceItem"; heading: string | null; block: LessonBlockOf<"practice">; itemIndex: number };
+// Every step carries the new words it introduces (see `flattenToSteps`); a heading section holding only words is a `words` step.
+type StepBase = { heading: string | null; words: VocabularyWord[] };
+export type LessonStep = StepBase & (
+  | { kind: "content"; blocks: LessonLeafBlock[] }
+  | { kind: "callout"; block: LessonBlockOf<"callout"> }
+  | { kind: "example"; block: LessonBlockOf<"example"> }
+  | { kind: "columns"; block: LessonColumnListBlock }
+  | { kind: "dialogueTurn"; block: LessonBlockOf<"dialogue">; turnIndex: number }
+  | { kind: "practiceItem"; block: LessonBlockOf<"practice">; itemIndex: number }
+  | { kind: "words"; blocks: LessonBlockOf<"vocabulary">[] }
+);
+type StepShape = LessonStep extends infer S ? S extends LessonStep ? Omit<S, keyof StepBase> : never : never;
 
 const isInteractive = (block: LessonLeafBlock) => block.type === "dialogue" || block.type === "practice";
 const isBlankParagraph = (block: LessonLeafBlock) => block.type === "paragraph" && !inlineText(block.content).trim();
 
+// A vocabulary block is never a step. Its words join the steps built from the block directly before it in the same heading
+// section: the prose step it ends, an example or callout, or every turn or item of a dialogue or practice. Words with no step
+// before them in their section join the next block's steps; a section with no other step shows them as a `words` step keyed
+// by its first vocabulary block. A columns step read as one carries the words inside it, which the player shows in place.
 export function flattenToSteps(document: LessonDocument): LessonStep[] {
   const steps: LessonStep[] = [];
   let heading: string | null = null;
   let prose: LessonLeafBlock[] = [];
+  // The steps the next vocabulary block joins, and words still waiting for the section's first step.
+  let previous: LessonStep[] = [];
+  let pending: { blocks: LessonBlockOf<"vocabulary">[]; words: VocabularyWord[] } = { blocks: [], words: [] };
+  const push = (shapes: StepShape[]) => {
+    const added = shapes.map((shape) => ({ ...shape, heading, words: [...pending.words] }) as LessonStep);
+    steps.push(...added);
+    previous = added;
+    pending = { blocks: [], words: [] };
+  };
   const flush = () => {
-    if (prose.some((block) => !isBlankParagraph(block))) steps.push({ kind: "content", heading, blocks: prose });
+    if (prose.some((block) => !isBlankParagraph(block))) push([{ kind: "content", blocks: prose }]);
     prose = [];
+  };
+  const endSection = () => {
+    flush();
+    if (pending.blocks.length) push([{ kind: "words", blocks: pending.blocks }]);
+    previous = [];
   };
   const visit = (block: LessonLeafBlock) => {
     switch (block.type) {
       case "heading":
-        flush();
+        endSection();
         heading = inlineText(block.content).trim() || heading;
         return;
       case "paragraph": case "bulletListItem": case "numberedListItem": case "image": case "divider":
@@ -254,16 +337,23 @@ export function flattenToSteps(document: LessonDocument): LessonStep[] {
         return;
       case "callout": case "example":
         flush();
-        steps.push(block.type === "callout" ? { kind: "callout", heading, block } : { kind: "example", heading, block });
+        push([block.type === "callout" ? { kind: "callout", block } : { kind: "example", block }]);
         return;
       case "dialogue":
         flush();
-        readDialogueTurns(block).forEach((_, turnIndex) => steps.push({ kind: "dialogueTurn", heading, block, turnIndex }));
+        push(readDialogueTurns(block).map((_, turnIndex) => ({ kind: "dialogueTurn", block, turnIndex })));
         return;
       case "practice":
         flush();
-        readPracticeBlock(block).items.forEach((_, itemIndex) => steps.push({ kind: "practiceItem", heading, block, itemIndex }));
+        push(readPracticeBlock(block).items.map((_, itemIndex) => ({ kind: "practiceItem", block, itemIndex })));
         return;
+      case "vocabulary": {
+        flush();
+        const { words } = readVocabularyBlock(block);
+        if (previous.length) previous.forEach((step) => step.words.push(...words));
+        else pending = { blocks: [...pending.blocks, block], words: [...pending.words, ...words] };
+        return;
+      }
     }
   };
   for (const block of document.blocks) {
@@ -276,17 +366,19 @@ export function flattenToSteps(document: LessonDocument): LessonStep[] {
       leaves.forEach(visit);
     } else {
       flush();
-      steps.push({ kind: "columns", heading, block });
+      push([{ kind: "columns", block }]);
+      const inside = leaves.flatMap((leaf) => leaf.type === "vocabulary" ? readVocabularyBlock(leaf).words : []);
+      previous.forEach((step) => step.words.push(...inside));
     }
   }
-  flush();
+  endSection();
   return steps;
 }
 
 // A step's key survives edits that do not touch its own block: the block ID, plus the line or item number inside it.
 export function lessonStepKey(step: LessonStep): string {
   switch (step.kind) {
-    case "content": return step.blocks[0]!.id;
+    case "content": case "words": return step.blocks[0]!.id;
     case "dialogueTurn": return `${step.block.id}:${step.turnIndex}`;
     case "practiceItem": return `${step.block.id}:${step.itemIndex}`;
     default: return step.block.id;
@@ -369,8 +461,17 @@ export type LessonDraftSavedResponse = z.infer<typeof lessonDraftSavedResponseSc
 export const lessonDraftConflictSchema = z.object({
   error: z.object({ code: z.literal("VERSION_CONFLICT"), message: z.string() }), draft: lessonDraftSchema,
 });
-export const lessonPublishProblemSchema = z.object({ blockId: z.string(), problem: z.enum(["image-missing", "image-alt-missing", "example-empty"]) });
+export const lessonPublishProblemSchema = z.object({ blockId: z.string(), wordId: z.string().optional(), problem: lessonPublishProblemKindSchema });
 export const lessonNotReadySchema = z.object({
   error: z.object({ code: z.literal("LESSON_NOT_READY"), message: z.string() }), problems: z.array(lessonPublishProblemSchema),
 });
 
+// The course word recap: the words of the currently published lessons the viewer has finished, in lesson order and then
+// document order, with repeated terms (trimmed, case-insensitive) kept at their first occurrence.
+export const courseWordSchema = z.object({
+  id: opaqueIdSchema, lessonId: opaqueIdSchema, term: z.string(), meaning: z.string(),
+  forms: z.string().nullable(), example: z.string().nullable(), note: z.string().nullable(),
+});
+export type CourseWord = z.infer<typeof courseWordSchema>;
+export const courseWordsResponseSchema = z.object({ words: z.array(courseWordSchema).max(COURSE_RECAP_WORDS_MAX) });
+export type CourseWordsResponse = z.infer<typeof courseWordsResponseSchema>;

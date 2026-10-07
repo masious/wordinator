@@ -35,6 +35,7 @@ import {
   updateCourseRequestSchema,
   paginationQuerySchema,
   COURSE_LESSONS_MAX,
+  COURSE_RECAP_WORDS_MAX,
   COURSE_PRELOADED_LESSONS,
   courseProgressResponseSchema,
   lessonPositionResponseSchema,
@@ -56,9 +57,9 @@ import {
   type PostInput,
 } from "@wordinator/contracts";
 import {
-  collectImageUrls, collectPracticeIds, courseDetailResponseSchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
+  collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
   lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
-  toLearnerDocument, walkLessonBlocks, type CourseLesson, type LessonBlockOf, type LessonDocument,
+  toLearnerDocument, walkLessonBlocks, type CourseLesson, type CourseWord, type LessonBlockOf, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
 import { createDatabase, groups, memberships, users } from "@wordinator/db";
 import { and, asc, count, eq, inArray, isNull } from "drizzle-orm";
@@ -683,6 +684,19 @@ async function lessonCleanup(binding: D1Database, course: CourseRow, lessonId: s
         .bind(course.groupId, lessonId, jsonList(mediaKeys), ...guard.values),
     ],
   };
+}
+
+// Publishing replaces the lesson's rows in the course word index with the words of the new published document, guarded
+// like the cleanup so a failed version check leaves the index untouched.
+function lessonWordStatements(binding: D1Database, course: CourseRow, lessonId: string, published: LessonDocument, guard: { sql: string; values: Array<string | number> }) {
+  const word = (field: string) => `json_extract(value, '$.${field}')`;
+  return [
+    binding.prepare(`DELETE FROM course_lesson_words WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND ${guard.sql}`).bind(course.groupId, course.id, lessonId, ...guard.values),
+    binding.prepare(
+      `INSERT INTO course_lesson_words (group_id, course_id, lesson_id, block_id, word_id, position, term, meaning, forms, example, note)
+       SELECT ?, ?, ?, ${["blockId", "id", "position", "term", "meaning", "forms", "example", "note"].map(word).join(", ")} FROM json_each(?) WHERE ${guard.sql}`,
+    ).bind(course.groupId, course.id, lessonId, JSON.stringify(collectLessonWords(published)), ...guard.values),
+  ];
 }
 
 // The daily sweep removes lesson images that neither the draft nor the published document of their lesson references
@@ -1768,6 +1782,28 @@ app.get("/api/groups/:groupId/courses/:courseId/progress", requireGroupAccess, a
   return progressResponse(context, found.row);
 });
 
+// The course word recap: words of the currently published lessons the viewer has finished, in lesson order and then document
+// order. A term repeated across lessons (trimmed, case-insensitive) is kept at its first occurrence. Course visibility applies.
+app.get("/api/groups/:groupId/courses/:courseId/words", requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  const rows = await context.env.DB.prepare(
+    `SELECT w.word_id AS id, w.lesson_id AS lessonId, w.term, w.meaning, w.forms, w.example, w.note
+     FROM course_lesson_words w
+     JOIN course_lessons l ON l.id = w.lesson_id AND l.group_id = w.group_id AND l.course_id = w.course_id AND l.published_doc IS NOT NULL
+     JOIN course_lesson_completions c ON c.lesson_id = w.lesson_id AND c.group_id = w.group_id AND c.user_id = ?
+     WHERE w.group_id = ? AND w.course_id = ?
+     ORDER BY l.position ASC, w.position ASC`,
+  ).bind(context.get("user")!.id, found.row.groupId, found.row.id).all<CourseWord>();
+  const seen = new Set<string>();
+  const words = rows.results.filter((row) => {
+    const term = row.term.trim().toLowerCase();
+    if (seen.has(term)) return false;
+    seen.add(term);
+    return true;
+  });
+  return context.json(courseWordsResponseSchema.parse({ words: words.slice(0, COURSE_RECAP_WORDS_MAX) }));
+});
+
 // Finishing a published lesson in the lesson player records it once; repeating the lesson keeps the first completion time.
 app.put(`${lessonPath}/completion`, requireGroupAccess, async (context) => {
   const found = await visibleCourse(context); if ("error" in found) return found.error;
@@ -1823,7 +1859,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
   const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id; const db = context.env.DB;
   const media = await db.prepare("SELECT key FROM course_media WHERE group_id = ? AND lesson_id = ?").bind(groupId, lessonId).all<{ key: string }>();
-  // Lessons are hard-deleted with their practice threads, completions, positions, and images; reactions have no foreign key, so they go first.
+  // Lessons are hard-deleted with their practice threads, completions, positions, word index rows, and images; reactions have no foreign key, so they go first.
   const practices = "SELECT id FROM course_practices WHERE group_id = ? AND course_id = ? AND lesson_id = ?";
   await db.batch([
     db.prepare(`DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND target_id IN (SELECT id FROM comments WHERE group_id = ? AND block_id IN (${practices}))`)
@@ -1833,6 +1869,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
     db.prepare("DELETE FROM course_media WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lesson_positions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
+    db.prepare("DELETE FROM course_lesson_words WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lessons WHERE group_id = ? AND course_id = ? AND id = ?").bind(groupId, courseId, lessonId),
   ]);
   if (media.results.length) await context.env.MEDIA.delete(media.results.map((row) => row.key));
@@ -1870,7 +1907,8 @@ app.put(`${lessonPath}/draft`, requireGroupAccess, async (context) => {
   }));
 });
 
-// Publishing copies the draft the owner reviewed (by version) to the published document and cleans up what neither keeps.
+// Publishing copies the draft the owner reviewed (by version) to the published document, refreshes the lesson's word index,
+// and cleans up what neither document keeps.
 app.post(`${lessonPath}/publish`, requireGroupAccess, async (context) => {
   const found = await publishableCourse(context); if ("error" in found) return found.error;
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
@@ -1885,6 +1923,7 @@ app.post(`${lessonPath}/publish`, requireGroupAccess, async (context) => {
   const [published] = await db.batch([
     db.prepare("UPDATE course_lessons SET published_doc = draft_doc, published_at = ? WHERE group_id = ? AND course_id = ? AND id = ? AND draft_version = ?")
       .bind(Date.now(), groupId, courseId, lessonId, parsed.data.draftVersion),
+    ...lessonWordStatements(db, found.row, lessonId, draft, guard),
     ...cleanup.statements,
   ]);
   if (!published!.meta.changes) {
@@ -1898,8 +1937,11 @@ app.post(`${lessonPath}/publish`, requireGroupAccess, async (context) => {
 app.post(`${lessonPath}/unpublish`, requireGroupAccess, async (context) => {
   const found = await publishableCourse(context); if ("error" in found) return found.error;
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
-  await context.env.DB.prepare("UPDATE course_lessons SET published_doc = NULL, published_at = NULL WHERE group_id = ? AND course_id = ? AND id = ?")
-    .bind(found.row.groupId, found.row.id, lesson.lesson.id).run();
+  const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id; const db = context.env.DB;
+  await db.batch([
+    db.prepare("UPDATE course_lessons SET published_doc = NULL, published_at = NULL WHERE group_id = ? AND course_id = ? AND id = ?").bind(groupId, courseId, lessonId),
+    db.prepare("DELETE FROM course_lesson_words WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
+  ]);
   return lessonResponse(context, found.row, lesson.lesson.id);
 });
 

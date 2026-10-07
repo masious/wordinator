@@ -1,5 +1,5 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, practiceDiscussionResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
-import { courseDetailResponseSchema, lessonResponseSchema } from "@wordinator/contracts/lesson-document";
+import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema } from "@wordinator/contracts/lesson-document";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 export class ApiError extends Error {
@@ -117,6 +117,13 @@ export const courseContributorsQueryOptions = (groupId: string, courseId: string
 export const courseProgressQueryOptions = (groupId: string, courseId: string) => queryOptions({
   queryKey: ["course", groupId, courseId, "progress"] as const,
   queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/progress`, courseProgressResponseSchema),
+  retry: false,
+});
+
+// The viewer's course word recap; nested under the course key so course refreshes also refresh it.
+export const courseWordsQueryOptions = (groupId: string, courseId: string) => queryOptions({
+  queryKey: ["course", groupId, courseId, "words"] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/words`, courseWordsResponseSchema),
   retry: false,
 });
 

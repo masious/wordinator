@@ -68,7 +68,7 @@ R2 key (primary key), group ID, course ID, lesson ID, created-by user ID, and cr
 
 ### `course_lesson_words`
 
-Added in C8. A derived index of the words in each lesson's published document, so the [course word recap](courses.md#word-recap) never parses documents at read time. Group ID, course ID, lesson ID, block ID, word ID, position (document order within the lesson), term, meaning, and optional forms, example, and note. The primary key is `(lesson_id, word_id)`. The published document stays the source of truth: publishing replaces the lesson's rows from the new published document in the same D1 batch, unpublishing deletes them, and rows cascade from their course and lesson. Indexed by `(group_id, course_id, lesson_id, position)`.
+Added in C8. A derived index of the words in each lesson's published document, so the [course word recap](courses.md#word-recap) never parses documents at read time. Group ID, course ID, lesson ID, block ID, word ID, position (document order within the lesson), term, meaning, and optional forms, example, and note. The primary key is `(lesson_id, word_id)`. The published document stays the source of truth: publishing replaces the lesson's rows from the new published document in the same D1 batch, unpublishing deletes them, lesson deletion also removes them explicitly in its batch, and rows cascade from their course and lesson. Text is stored trimmed, with empty optional fields as null. Indexed by `(group_id, course_id, lesson_id, position)`. Migration `0017_course_lesson_words.sql` adds the table empty, since no published document held vocabulary before it.
 
 ### `course_contributors`
 

@@ -24,7 +24,7 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 
 - [x] BlockNote 0.55 with Mantine 9.7 and React 19.3 in a throwaway worktree (`spike/blocknote`): custom callout, restricted styles, slash menu, two columns, lazy route.
 - [x] Findings recorded in `docs/roadmap.md` (C7.1): editor chunk ≈ 232 KB gzipped, BlockNote's unscoped Mantine CSS must be aliased away, default UI features to disable, typography and mobile gutter fixes.
-- [ ] Remove the `spike/blocknote` worktree and branch after C7d lands.
+- [x] Remove the `spike/blocknote` worktree and branch after C7d lands (removed 2026-10-07).
 
 ## C7a — Contracts
 
@@ -127,9 +127,11 @@ Progress notes (2026-10-07, C7g):
 
 ## Release (after C7d, again after later phases)
 
-- [ ] On the release branch: type-check, Vitest, RTL, Playwright, production builds for web and API.
-- [ ] Back up or export production D1.
-- [ ] Apply migration `0015` with an explicit `--remote`.
-- [ ] Deploy the API, then the web app.
-- [ ] Smoke test: an existing lesson reads correctly, an existing practice thread still opens, progress counts are unchanged.
-- [~] Final docs pass: `docs/data-model.md`, `docs/architecture.md`, `docs/courses.md`, `docs/design-system.md`, `docs/testing.md`, `docs/user-flows.md`, and `docs/posts-and-feed.md` updated 2026-10-07; mark C7 completed in `docs/roadmap.md` and `docs/courses.md` after the release.
+Released manually by the user on 2026-10-07.
+
+- [x] On the release branch: type-check, Vitest, RTL, Playwright, production builds for web and API.
+- [x] Back up or export production D1.
+- [x] Apply migration `0015` with an explicit `--remote`.
+- [x] Deploy the API, then the web app.
+- [x] Smoke test: an existing lesson reads correctly, an existing practice thread still opens, progress counts are unchanged.
+- [x] Final docs pass: `docs/data-model.md`, `docs/architecture.md`, `docs/courses.md`, `docs/design-system.md`, `docs/testing.md`, `docs/user-flows.md`, and `docs/posts-and-feed.md` updated 2026-10-07; C7 marked completed in `docs/roadmap.md` and `docs/courses.md`.

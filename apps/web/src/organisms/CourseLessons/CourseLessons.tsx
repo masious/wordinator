@@ -6,10 +6,11 @@ import { useMediaQuery } from "@mantine/hooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type FormEvent, lazy, Suspense, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { apiRequest, courseProgressQueryOptions, courseQueryOptions, lessonQueryOptions } from "../../api";
+import { apiRequest, courseProgressQueryOptions, courseQueryOptions, courseWordsQueryOptions, lessonQueryOptions } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
 import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, SectionHeader, Surface, TextAreaField, TextField } from "../../ui";
 import { LessonDocument } from "../LessonDocument/LessonDocument";
+import { WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import { LessonPlayer, lessonSteps, playableDocument } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
@@ -163,6 +164,9 @@ export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdate
   const completed = new Set(progress.data?.completedLessonIds ?? []);
   // Saved steps of unfinished lessons, most recent first; the first one in the outline is offered as the place to pick up.
   const positions = (progress.data?.positions ?? []).filter((entry) => !completed.has(entry.lessonId));
+  // The course recap covers the published lessons the viewer has finished; it is offered only when they carried words.
+  const words = useQuery(courseWordsQueryOptions(groupId, courseId)).data?.words ?? [];
+  const [reviewing, setReviewing] = useState(false);
   const resume = positions.map((entry) => ({ entry, index: outline.findIndex((lesson) => lesson.id === entry.lessonId) })).find(({ index }) => index >= 0);
   const create = useMutation({
     mutationFn: (input: LessonInput) => apiRequest(lessonsPath(scope), lessonResponseSchema, { method: "POST", body: JSON.stringify(input) }),
@@ -204,6 +208,10 @@ export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdate
         <p>{t("courses.player.resumeHelp", { number: resume.index + 1, title: outline[resume.index]!.title, current: resume.entry.stepIndex + 1, total: resume.entry.totalSteps })}</p>
         <Button onClick={() => setPlaying(resume.entry.lessonId)}>{t("courses.player.continue")}</Button>
       </Surface>}
+      {words.length > 0 && <Surface tone="quiet" className={styles.recap}>
+        <p>{t("courses.words.courseHelp", { count: words.length })}</p>
+        <Button variant="secondary" onClick={() => setReviewing(true)}>{t("courses.words.review")}</Button>
+      </Surface>}
       {outline.length
         ? visible.map((lesson, index) => <LessonSection key={lesson.id} scope={scope} summary={lesson} number={index + 1} outline={outline}
           preloaded={detail.lessons.find((entry) => entry.id === lesson.id)} dataUpdatedAt={dataUpdatedAt}
@@ -215,9 +223,14 @@ export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdate
       onChangeLesson={(lessonId) => { setPlaying(lessonId); setShown((value) => Math.max(value, outline.findIndex((entry) => entry.id === lessonId) + 1)); }}
       onClose={() => {
         setPlaying(null); setRound((value) => value + 1);
-        // The player saved the reader's steps while it was open; refresh the positions and percentages it changed.
+        // The player saved the reader's steps while it was open; refresh the positions and percentages it changed, and the
+        // course recap, which a finished lesson may extend.
         void queryClient.invalidateQueries({ queryKey: courseProgressQueryOptions(groupId, courseId).queryKey });
+        void queryClient.invalidateQueries({ queryKey: courseWordsQueryOptions(groupId, courseId).queryKey });
       }} />
+    <AdaptiveDialog opened={reviewing && words.length > 0} onClose={() => setReviewing(false)} title={t("courses.words.recapTitle")}>
+      {reviewing && <WordRecap words={words} doneLabel={t("courses.words.backToCourse")} onDone={() => setReviewing(false)} />}
+    </AdaptiveDialog>
     <AdaptiveDialog opened={addOpen} onClose={() => setAddOpen(false)} title={t("courses.lessons.addTitle")}>
       {addOpen && <LessonForm submitLabel={t("courses.lessons.addSubmit")} pending={create.isPending} error={create.error} onSubmit={(input) => create.mutate(input)} onCancel={() => setAddOpen(false)} />}
     </AdaptiveDialog>

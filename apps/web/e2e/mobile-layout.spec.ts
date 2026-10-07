@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
-import { courseApi, dialogue, example, paragraph, practice, seedLesson } from "./lessonSeed";
+import { courseApi, dialogue, example, paragraph, practice, seedLesson, vocabulary } from "./lessonSeed";
 
 const userId = "10000000-0000-4000-8000-000000000001";
 const group = `/groups/${E2E_GROUP_ID}`;
@@ -241,6 +241,35 @@ test("mobile lesson player stays within the viewport at every step", async ({ pa
   await expect(player.getByRole("heading", { name: "Lesson complete" })).toBeVisible();
   await expectNoHorizontalOverflow(page, "lesson player finish");
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-player-finish.png` });
+});
+
+test("mobile new words panel and word recap stay within the viewport", async ({ page }) => {
+  const api = courseApi(page);
+  const { course } = await api<{ course: { id: string } }>("/courses", { title: "Words course", summary: "Nieuwe woorden" });
+  await api(`/courses/${course.id}/visibility`, { status: "published" });
+  await seedLesson(page, course.id, "Op het station", [
+    example("Het perron is aan de overkant van het spoor.", "The platform is across the track."),
+    vocabulary(
+      { term: "het perron", meaning: "the platform", forms: "de perrons", example: "Het perron is vol.", note: "A het-word: het perron, die perrons." },
+      { term: "de overstapmogelijkheid", meaning: "the possibility to change trains", forms: "de overstapmogelijkheden" },
+    ),
+  ]);
+
+  await page.goto(`${group}/courses/${course.id}`, { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: "Start lesson 1" }).click();
+  const player = page.getByRole("dialog");
+  await expect(player.getByRole("region", { name: "New words" })).toContainText("de overstapmogelijkheid");
+  await expectNoHorizontalOverflow(page, "lesson player new words panel");
+  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-player-words.png` });
+  await player.getByRole("button", { name: "Finish lesson" }).click();
+  await player.getByRole("button", { name: "Review words" }).click();
+  await player.getByRole("button", { name: "Show meaning" }).click();
+  await expect(player.getByText("the platform", { exact: true })).toBeVisible();
+  await expectNoHorizontalOverflow(page, "lesson word recap");
+  await player.getByRole("button", { name: "Next" }).click();
+  await expect(player.getByRole("article", { name: "de overstapmogelijkheid" })).toBeVisible();
+  await expectNoHorizontalOverflow(page, "lesson word recap long term");
+  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-word-recap.png` });
 });
 
 test("mobile lesson reader stacks columns", async ({ page }) => {

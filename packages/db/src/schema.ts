@@ -336,3 +336,25 @@ export const courseLessonPositions = sqliteTable(
     check("course_lesson_positions_steps_check", sql`${table.totalSteps} > 0 AND ${table.passedSteps} BETWEEN 0 AND ${table.totalSteps} - 1 AND ${table.stepIndex} BETWEEN 0 AND ${table.totalSteps} - 1`),
   ],
 );
+
+// Derived from the published lesson document on publish; see docs/data-model.md#course_lesson_words.
+export const courseLessonWords = sqliteTable(
+  "course_lesson_words",
+  {
+    groupId: text("group_id").notNull().references(() => groups.id),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    blockId: text("block_id").notNull(),
+    wordId: text("word_id").notNull(),
+    position: integer("position").notNull(),
+    term: text("term").notNull(),
+    meaning: text("meaning").notNull(),
+    forms: text("forms"),
+    example: text("example"),
+    note: text("note"),
+  },
+  (table) => [
+    primaryKey({ columns: [table.lessonId, table.wordId] }),
+    index("course_lesson_words_lesson_idx").on(table.groupId, table.courseId, table.lessonId, table.position),
+  ],
+);

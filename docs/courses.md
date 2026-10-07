@@ -1,6 +1,6 @@
 # Courses
 
-Status: delivered. C1 (course shell), C2 (lessons and content blocks), C3 (practice blocks and answer threads), C4 (feed presence), C5 (contributors), C6 (lesson player and progress), and C6b (lesson positions) are complete. C7 (lesson editor) is approved and in progress; see [lesson documents](#lesson-documents). C8 (new words and recap) is approved and not started; see [new words](#new-words-and-recap). Delivery phases live in the [roadmap](roadmap.md#course-phases).
+Status: delivered. C1 (course shell), C2 (lessons and content blocks), C3 (practice blocks and answer threads), C4 (feed presence), C5 (contributors), C6 (lesson player and progress), C6b (lesson positions), and C7 (lesson editor; see [lesson documents](#lesson-documents)) are complete. C8 (new words and recap) is approved and in progress; see [new words](#new-words-and-recap). Delivery phases live in the [roadmap](roadmap.md#course-phases).
 
 ## Purpose
 
@@ -133,7 +133,7 @@ Lesson images reuse the [public R2 image pipeline](architecture.md#images) under
 
 ## New words and recap
 
-Approved product change (C8), not started. Lessons introduce vocabulary explicitly, each player step shows the words it introduces, and a learner can review every word from the lessons they have finished in one slideshow. C8 builds on [lesson documents](#lesson-documents) and ships after the C7 release.
+Approved product change (C8), in progress. Lessons introduce vocabulary explicitly, each player step shows the words it introduces, and a learner can review every word from the lessons they have finished in one slideshow. C8 builds on [lesson documents](#lesson-documents) and ships after the C7 release.
 
 ### Vocabulary block
 
@@ -149,7 +149,7 @@ A `vocabulary` block (shown to authors as "New words") holds an ordered list of 
 | `note` | no | 2,000 | |
 
 - All fields are plain text. Gender, word class, and grammar are written into `term`, `forms`, or `note`; they are not separate fields.
-- A block holds 1–50 words. Drafts may hold words with an empty term or meaning; publishing requires both (a `word-empty` publish problem).
+- A block holds 1–50 words. Drafts may hold words with an empty term or meaning; publishing requires both (a `word-empty` publish problem that names the block and the word).
 - The block is top level or inside a column, like any other leaf block. Adding the block type does not change the document schema version.
 - Learners receive the whole word, including the note; nothing in a vocabulary block is concealed.
 - The lesson reader renders the block as a compact word list in place.
@@ -161,9 +161,9 @@ A vocabulary block is not a step of its own. Its words appear in a New words pan
 - After paragraphs, lists, images, or dividers, it ends that prose step and attaches to it. Prose that follows starts a new step.
 - After an example or a callout, it attaches to that step.
 - After a dialogue or practice, it attaches to every turn or item of that block, so the words stay visible throughout.
-- With no preceding step in the section (first after a heading or at the start of the lesson), it attaches to the next step. A section with no other step shows the words as a step of their own.
+- With no preceding step in the section (first after a heading or at the start of the lesson), it attaches to the next step, or to every turn or item when that step comes from a dialogue or practice. A section with no other step shows the words as a step of their own, identified by its first vocabulary block. Blank paragraphs are not steps and do not break these rules.
 - Consecutive vocabulary blocks combine into one panel in document order.
-- Inside a column list read as one step, the words show in place. A column list read block by block applies these rules in leaf order.
+- Inside a column list read as one step, the words show in place; that step still carries them for the lesson recap. A column list read block by block applies these rules in leaf order.
 
 ### Word recap
 

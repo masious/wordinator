@@ -51,7 +51,7 @@ export const errorCode = async (response: Response) => ((await response.json()) 
 export async function resetDatabase() {
   await env.DB.batch([
     env.DB.prepare("DELETE FROM reactions"), env.DB.prepare("DELETE FROM comment_response_items"), env.DB.prepare("DELETE FROM comments"),
-    env.DB.prepare("DELETE FROM course_lesson_completions"), env.DB.prepare("DELETE FROM course_lesson_positions"), env.DB.prepare("DELETE FROM course_practices"), env.DB.prepare("DELETE FROM course_media"),
+    env.DB.prepare("DELETE FROM course_lesson_completions"), env.DB.prepare("DELETE FROM course_lesson_positions"), env.DB.prepare("DELETE FROM course_lesson_words"), env.DB.prepare("DELETE FROM course_practices"), env.DB.prepare("DELETE FROM course_media"),
     env.DB.prepare("DELETE FROM posts"), env.DB.prepare("DELETE FROM course_contributors"), env.DB.prepare("DELETE FROM course_lessons"),
     env.DB.prepare("DELETE FROM courses"), env.DB.prepare("DELETE FROM login_attempts"), env.DB.prepare("DELETE FROM notifications"),
     env.DB.prepare("DELETE FROM memberships"), env.DB.prepare("DELETE FROM groups"), env.DB.prepare("DELETE FROM users"),
@@ -79,7 +79,9 @@ export const blocks = {
     id: crypto.randomUUID(), type: "image" as const,
     props: { textAlignment: "left" as const, backgroundColor: "default" as const, name, url, caption: "", showPreview: true, previewWidth: 512 }, children: [],
   }),
+  vocabulary: (...words: unknown[]) => ({ id: crypto.randomUUID(), type: "vocabulary" as const, props: { data: JSON.stringify({ words }) }, children: [] }),
 };
+export const word = (term: string, extra: Record<string, unknown> = {}) => ({ id: crypto.randomUUID(), term, meaning: `meaning of ${term}`, ...extra });
 export const documentOf = (...items: unknown[]) => ({ schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks: items }) as LessonDocument;
 
 export const lessonPath = (groupId: string, courseId: string, lessonId: string) => `${coursePath(groupId, courseId)}/lessons/${lessonId}`;

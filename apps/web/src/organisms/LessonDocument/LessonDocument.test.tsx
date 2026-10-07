@@ -14,6 +14,26 @@ const renderDocument = (document: LessonDocumentData) => render(<MantineProvider
 afterEach(cleanup);
 
 describe("Lesson document renderer", () => {
+  it("renders a vocabulary block as an escaped word list", () => {
+    const words = [
+      { id: id(41), term: "der Hund", meaning: "the dog", forms: "die Hunde", example: "Der Hund bellt.", note: "Masculine.\nPlural with -e." },
+      { id: id(42), term: "<b>das Haus</b>", meaning: "<img src=x onerror=alert(1)>", forms: "", example: " " },
+    ];
+    const { container } = renderDocument(doc([{ id: id(40), type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [] }]));
+    const list = screen.getByRole("region", { name: "New words" });
+    expect(list).toHaveTextContent("der Hund");
+    expect(screen.getByText("die Hunde")).toBeInTheDocument();
+    expect(screen.getByText("the dog")).toBeInTheDocument();
+    expect(screen.getByText("Der Hund bellt.")).toBeInTheDocument();
+    expect(screen.getByText(/Plural with -e\./)).toBeInTheDocument();
+    expect(screen.getAllByRole("listitem")).toHaveLength(2);
+    // Authored markup stays text, and empty optional fields render nothing.
+    expect(screen.getByText("<b>das Haus</b>")).toBeInTheDocument();
+    expect(screen.getByText("<img src=x onerror=alert(1)>")).toBeInTheDocument();
+    expect(container.querySelector("img, b")).toBeNull();
+    expect(screen.getAllByRole("listitem")[1]!.querySelectorAll("p")).toHaveLength(2);
+  });
+
   it("renders every block type with headings below the lesson title", () => {
     const blocks: LessonTopBlock[] = [
       { id: id(1), type: "heading", props: { ...plain, level: 1 }, content: [text("Wonen")], children: [] },

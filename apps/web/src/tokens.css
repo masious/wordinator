@@ -87,6 +87,9 @@
   --color-selected: var(--palette-ochre-soft);
   --color-concealed: var(--palette-blue-soft);
   --color-pinned: var(--palette-sage-soft);
+  /* New words (C8): the word list and panel surface, and the recap card face. */
+  --color-words-surface: var(--palette-ochre-soft);
+  --color-words-card: var(--palette-surface-raised);
   --color-wash-subtle: rgb(45 38 34 / 3%);
   --color-wash: rgb(45 38 34 / 5%);
   --color-wash-strong: rgb(45 38 34 / 8%);

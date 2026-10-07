@@ -343,6 +343,13 @@ export const COURSE_SPEAKER_MAX = 40;
 export const COURSE_DIALOGUE_TURNS_MAX = 50;
 export const COURSE_LESSONS_MAX = 200;
 export const COURSE_BLOCKS_MAX = 200;
+// New words (C8): a vocabulary block holds 1–50 words; examples and notes share the sentence and note limits.
+export const COURSE_WORDS_PER_BLOCK_MAX = 50;
+export const COURSE_WORD_TERM_MAX = 200;
+export const COURSE_WORD_MEANING_MAX = 500;
+export const COURSE_WORD_FORMS_MAX = 200;
+// The course recap is bounded by the lesson and block limits; the response is capped defensively instead of paginated.
+export const COURSE_RECAP_WORDS_MAX = 10_000;
 
 // Block payloads of the v1 per-row model. They remain the shape of practice and dialogue data inside lesson documents
 // and of the course fixture; `upgradeLegacyBlocks` in ./lessonDocument turns them into documents.

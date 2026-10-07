@@ -24,6 +24,16 @@
 .speaker{font-family:var(--font-mono);font-size:var(--type-metadata);font-weight:var(--weight-semibold);overflow-wrap:anywhere}
 .line{font-size:var(--type-authored);white-space:pre-wrap;overflow-wrap:anywhere}
 .newest .line{font-weight:var(--weight-semibold)}
+.words{display:grid;gap:var(--space-3);padding:var(--space-4) var(--space-5);background:var(--color-words-surface);border-radius:var(--radius-md);min-width:0}
+.wordsTitle{margin:0;font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
+.wordList{display:grid;gap:var(--space-3);margin:0;padding:0;list-style:none}
+.word{display:grid;gap:var(--space-1);min-width:0}
+.word+.word{padding-top:var(--space-3);border-top:var(--ring-hairline)}
+.wordHead{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-1) var(--space-3);margin:0}
+.term{font-size:var(--type-authored);font-weight:var(--weight-semibold);overflow-wrap:anywhere}
+.forms{font-size:var(--type-metadata);color:var(--color-foreground-muted);overflow-wrap:anywhere}
+.meaning,.wordExample{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.wordExample{font-style:italic}
 .columns{display:grid;grid-template-columns:var(--lesson-columns);gap:var(--lesson-column-gap);align-items:start;min-width:0}
 .column{display:grid;gap:var(--space-4);min-width:0}
 .text-gray{color:var(--color-lesson-gray-text)}.surface-gray{background:var(--color-lesson-gray-surface)}

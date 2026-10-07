@@ -54,6 +54,7 @@ beforeEach(() => {
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
     if (path.endsWith("/progress")) return response(progress([]));
+    if (path.endsWith("/words")) return response({ words: [] });
     if (path.endsWith("/completion") && init?.method === "PUT") return response(progress([lessonId(1)]));
     if (path.endsWith("/position") && init?.method === "PUT") {
       return response({ position: { lessonId: lessonId(1), stepKey: JSON.parse(String(init.body)).stepKey, stepIndex: 0, passedSteps: 0, totalSteps: 1, updatedAt: 1 } });
@@ -74,8 +75,11 @@ describe("Course lessons", () => {
     expect(screen.getByText("Is er een tuin?")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Edit/ })).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Lesson title 4" })).not.toBeInTheDocument();
-    // Preloaded lessons are not fetched again; only the viewer's progress loads.
-    expect(vi.mocked(fetch).mock.calls.map(([path]) => String(path))).toEqual([`/api/groups/${groupId}/courses/${courseId}/progress`]);
+    // Preloaded lessons are not fetched again; only the viewer's progress and course recap load.
+    expect(vi.mocked(fetch).mock.calls.map(([path]) => String(path)).sort()).toEqual([`/api/groups/${groupId}/courses/${courseId}/progress`, `/api/groups/${groupId}/courses/${courseId}/words`]);
+    // A viewer with no finished words is not offered a recap.
+    await waitFor(() => expect(vi.mocked(fetch).mock.results).toHaveLength(2));
+    expect(screen.queryByRole("button", { name: "Review words" })).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Continue with lesson 4: Lesson title 4" }));
     expect(await screen.findByText("Ik stap over.")).toBeInTheDocument();
     expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(4)}`, expect.anything());
@@ -116,9 +120,9 @@ describe("Course lessons", () => {
     expect(within(dialog).getByText("Step 1 of 5")).toBeInTheDocument();
     expect(meter()).toHaveAttribute("aria-valuenow", "0");
     expect(within(dialog).getByText("Er is een balkon.")).toBeInTheDocument();
-    expect(within(dialog).queryByText("There is a balcony.")).not.toBeInTheDocument();
-    fireEvent.click(within(dialog).getByRole("button", { name: "Show translation" }));
+    // The translation shows with the sentence.
     expect(within(dialog).getByText("There is a balcony.")).toBeInTheDocument();
+    expect(within(dialog).queryByRole("region", { name: "New words" })).not.toBeInTheDocument();
 
     // Dialogue lines arrive one after another.
     fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
@@ -148,7 +152,69 @@ describe("Course lessons", () => {
     expect(meter()).toHaveAttribute("aria-valuenow", "100");
     expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/completion`, expect.objectContaining({ method: "PUT" }));
     expect(within(dialog).getByRole("button", { name: "Next: Lesson title 2" })).toBeInTheDocument();
+    // A run without words offers no recap.
+    expect(within(dialog).queryByRole("button", { name: "Review words" })).not.toBeInTheDocument();
     await waitFor(() => expect(screen.getAllByRole("img", { name: "Finished" }).length).toBeGreaterThan(0));
+  });
+
+  it("shows each step's new words in a panel and reviews the run's words after finishing", async () => {
+    const word = (n: number, term: string) => ({ id: `70000000-0000-4000-8000-00000000000${n}`, term, meaning: `meaning of ${term}` });
+    const vocabulary = (n: number, ...words: unknown[]): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000002${n}`, type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [] });
+    const blocks: LessonTopBlock[] = [
+      { id: "50000000-0000-4000-8000-000000000010", type: "paragraph", props: { textColor: "default", backgroundColor: "default" }, content: text("Dieren."), children: [] },
+      vocabulary(1, word(1, "de hond")),
+      example("50000000-0000-4000-8000-000000000011", "De kat slaapt."), vocabulary(2, word(2, "de kat")),
+      dialogue, vocabulary(3, word(3, "de tuin")),
+      practice, vocabulary(4, word(4, "vertalen")),
+      { id: "50000000-0000-4000-8000-000000000012", type: "heading", props: { textColor: "default", backgroundColor: "default", level: 2 }, content: text("Woorden"), children: [] },
+      vocabulary(5, word(5, "het huis")),
+    ];
+    const first = lesson(1, blocks);
+    renderLessons({ course: course(false), outline: [summary(1)], lessons: [first] });
+    fireEvent.click(await screen.findByRole("button", { name: "Start lesson 1" }));
+    const dialog = await screen.findByRole("dialog");
+    const panel = () => within(dialog).getByRole("region", { name: "New words" });
+    const next = () => fireEvent.click(within(dialog).getByRole("button", { name: /^(Next|Finish lesson)$/ }));
+    // Prose, example, both dialogue lines, both practice items, and a words-only section.
+    const expected = ["de hond", "de kat", "de tuin", "de tuin", "vertalen", "vertalen", "het huis"];
+    for (const [index, term] of expected.entries()) {
+      expect(within(dialog).getByText(`Step ${index + 1} of 7`)).toBeInTheDocument();
+      expect(panel()).toHaveTextContent(term);
+      expect(panel()).toHaveTextContent(`meaning of ${term}`);
+      expect(within(dialog).getAllByRole("region", { name: "New words" })).toHaveLength(1);
+      next();
+    }
+    expect(await within(dialog).findByText("You have finished 1 of 4 lessons (25%).")).toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole("button", { name: "Review words" }));
+    expect(within(dialog).getByText("Word 1 of 5")).toBeInTheDocument();
+    expect(within(dialog).getByRole("article", { name: "de hond" })).toBeInTheDocument();
+    expect(within(dialog).queryByText("You have finished 1 of 4 lessons (25%).")).not.toBeVisible();
+    fireEvent.click(within(dialog).getByRole("button", { name: "Show meaning" }));
+    expect(within(dialog).getByText("meaning of de hond")).toBeVisible();
+    for (let card = 1; card < 5; card += 1) fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
+    expect(within(dialog).getByRole("article", { name: "het huis" })).toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole("button", { name: "Back to the summary" }));
+    expect(within(dialog).getByText("You have finished 1 of 4 lessons (25%).")).toBeVisible();
+    // The completion screen stayed mounted, so the lesson was recorded once.
+    expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith("/completion"))).toHaveLength(1);
+  });
+
+  it("offers the course recap when the viewer has finished lessons with words", async () => {
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    const words = [
+      { id: "70000000-0000-4000-8000-000000000001", lessonId: lessonId(1), term: "de hond", meaning: "the dog", forms: "de honden", example: null, note: null },
+      { id: "70000000-0000-4000-8000-000000000002", lessonId: lessonId(1), term: "de kat", meaning: "the cat", forms: null, example: null, note: null },
+    ];
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/words") ? response({ words }) : original(input, init));
+    renderLessons({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")])] });
+    expect(await screen.findByText("2 words from the lessons you have finished.")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Review words" }));
+    const dialog = await screen.findByRole("dialog", { name: "Review words" });
+    expect(within(dialog).getByText("Word 1 of 2")).toBeInTheDocument();
+    expect(within(dialog).getByRole("article", { name: "de hond" })).toHaveTextContent("de honden");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
+    fireEvent.click(within(dialog).getByRole("button", { name: "Back to the course" }));
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
   });
 
   it("groups prose under a heading into one step and labels later steps with it", async () => {

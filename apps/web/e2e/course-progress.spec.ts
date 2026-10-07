@@ -25,7 +25,7 @@ test("a learner steps through a lesson, resumes it, and the course shows their p
 
   const player = page.getByRole("dialog");
   await expect(player.getByText("Step 1 of 4")).toBeVisible();
-  await player.getByRole("button", { name: "Show translation" }).click();
+  // The translation shows with the sentence.
   await expect(player.getByText("Where is the station?")).toBeVisible();
   await player.getByRole("button", { name: "Next" }).click();
   await expect(player.getByText("Rechtdoor.")).toBeVisible();

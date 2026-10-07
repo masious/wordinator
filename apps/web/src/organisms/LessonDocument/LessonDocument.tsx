@@ -1,9 +1,11 @@
 import {
-  inlineText, isSafeLessonHref, readDialogueTurns, type InlineContent, type LessonBlock, type LessonBlockOf, type LessonColor, type LessonDocument as LessonDocumentData,
-  type ListItemBlock, type StyledText,
+  inlineText, isSafeLessonHref, readDialogueTurns, readVocabularyBlock, type InlineContent, type LessonBlock, type LessonBlockOf, type LessonColor,
+  type LessonDocument as LessonDocumentData, type ListItemBlock, type StyledText, type VocabularyWord,
 } from "@wordinator/contracts/lesson-document";
 import { Fragment, type CSSProperties, type ReactNode } from "react";
+import { useTranslation } from "react-i18next";
 import { Callout } from "../../molecules/Callout";
+import { PlainText } from "../../molecules/PlainText";
 import styles from "./LessonDocument.module.css";
 
 // Wordinator's own lesson renderer. Every piece of authored text becomes a React text node, so nothing is parsed as HTML;
@@ -57,6 +59,21 @@ export function DialogueBlock({ block, upTo }: { block: LessonBlockOf<"dialogue"
   </ol>;
 }
 
+// New words as a compact list: the term with its forms, the meaning, then the example and note. Every field is plain text,
+// and nothing is concealed. The reader shows a vocabulary block this way in place; the player shows a step's words as a panel.
+export function NewWords({ words }: { words: readonly VocabularyWord[] }) {
+  const { t } = useTranslation();
+  return <section className={styles.words} aria-label={t("courses.words.title")}>
+    <p className={styles.wordsTitle} aria-hidden="true">{t("courses.words.title")}</p>
+    <ul className={styles.wordList}>{words.map((word) => <li key={word.id} className={styles.word}>
+      <p className={styles.wordHead}><span className={styles.term}>{word.term}</span>{word.forms?.trim() && <span className={styles.forms}>{word.forms}</span>}</p>
+      <p className={styles.meaning}><PlainText>{word.meaning}</PlainText></p>
+      {word.example?.trim() && <p className={styles.wordExample}><PlainText>{word.example}</PlainText></p>}
+      {word.note?.trim() && <p className={styles.note}><PlainText>{word.note}</PlainText></p>}
+    </li>)}</ul>
+  </section>;
+}
+
 // Document headings sit below the lesson title (an h2), so levels 1–3 render as h3–h5.
 const headingTags = { 1: "h3", 2: "h4", 3: "h5" } as const;
 
@@ -94,6 +111,7 @@ function Block({ block, renderPractice }: { block: Exclude<LessonBlock, ListItem
     case "example": return <ExampleBlock block={block} />;
     case "dialogue": return <DialogueBlock block={block} />;
     case "practice": return <>{renderPractice?.(block)}</>;
+    case "vocabulary": return <NewWords words={readVocabularyBlock(block).words} />;
     case "column": return <div className={styles.column}><LessonBlocks blocks={block.children} renderPractice={renderPractice} /></div>;
     case "columnList": {
       const total = block.children.reduce((sum, column) => sum + column.props.width, 0);
