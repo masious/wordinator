@@ -23,7 +23,7 @@ export const lessonSteps = (lesson: CourseLesson): LessonStep[] => {
 export type PlayerScope = { groupId: string; courseId: string; accountId: string };
 
 function ExampleStep({ block }: { block: LessonBlockOf<"example"> }) {
-  const { t } = useTranslation(); const [shown, setShown] = useState(false);
+  const { t } = useTranslation(); const [shown, setShown] = useState(true);
   const { translation, note } = block.props;
   return <ExampleBlock block={block} details={<>
     {translation && (shown

@@ -283,6 +283,25 @@ export function flattenToSteps(document: LessonDocument): LessonStep[] {
   return steps;
 }
 
+// A step's key survives edits that do not touch its own block: the block ID, plus the line or item number inside it.
+export function lessonStepKey(step: LessonStep): string {
+  switch (step.kind) {
+    case "content": return step.blocks[0]!.id;
+    case "dialogueTurn": return `${step.block.id}:${step.turnIndex}`;
+    case "practiceItem": return `${step.block.id}:${step.itemIndex}`;
+    default: return step.block.id;
+  }
+}
+export const lessonStepKeySchema = z.string().max(64).regex(/^[0-9a-f-]{36}(:\d{1,4})?$/i);
+export const lessonPositionRequestSchema = z.strictObject({ stepKey: lessonStepKeySchema });
+export type LessonPositionRequest = z.infer<typeof lessonPositionRequestSchema>;
+
+// Resolves a saved position against the current steps; a step that no longer exists falls back to its old index.
+export function resolveStepIndex(steps: readonly LessonStep[], stepKey: string, fallbackIndex: number) {
+  const found = steps.findIndex((step) => lessonStepKey(step) === stepKey);
+  return found >= 0 ? found : Math.max(0, Math.min(fallbackIndex, steps.length - 1));
+}
+
 // Upgrades v1 per-row blocks into a document. Migration 0015 performs the same mapping in SQL; tests keep them in step.
 export type LegacyLessonBlock = { id: string; kind: string; payload: unknown };
 const plain = (text: string): InlineContent => text ? [{ type: "text", text, styles: {} }] : [];

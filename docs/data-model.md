@@ -58,6 +58,10 @@ Opaque ID, group ID, course ID, lesson ID, position, kind, JSON payload, payload
 
 Every content edit increments `version`; reordering rewrites only `position`. Updated-by display uses the live or group snapshot profile at read time and is shown to the owner and contributors as editor attribution. Migration `0010_course_lessons_blocks.sql` adds both tables, which carry an explicit `group_id` and cascade from their course and lesson. Migration `0011_course_practice_threads.sql` rebuilds `course_blocks` to add `practice` to the kind constraint.
 
+### `course_lesson_words`
+
+Added in C8. A derived index of the words in each lesson's published document, so the [course word recap](courses.md#word-recap) never parses documents at read time. Group ID, course ID, lesson ID, block ID, word ID, position (document order within the lesson), term, meaning, and optional forms, example, and note. The primary key is `(lesson_id, word_id)`. The published document stays the source of truth: publishing replaces the lesson's rows from the new published document in the same D1 batch, unpublishing deletes them, and rows cascade from their course and lesson. Indexed by `(group_id, course_id, lesson_id, position)`.
+
 ### `course_contributors`
 
 Group ID, course ID, user ID, state (`pending`, `active`, `rejected`, `left`, or `removed`), requested timestamp, nullable decided timestamp, and updated timestamp. The primary key is `(course_id, user_id)`: like a membership, each member has one row per course whose state changes, so there is at most one pending request. A new request reuses a `rejected`, `left`, or `removed` row. A check constraint limits the states. Rows cascade from their course, and leaving or being removed from the group moves that member's `pending` and `active` rows in the group to `left` or `removed`. Contributor display uses the live or group snapshot profile at read time. Migration `0013_course_contributors.sql` adds the table and its `(group_id, course_id, state)` index.

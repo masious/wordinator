@@ -11,7 +11,7 @@ Course: "Dutch Foundations — Part III" (`content/dutch-foundations/part-iii/`,
 | existing/13-1.json | Mijn huis | existing (in the app; not edited) |
 | existing/13-2.json | Een huis beschrijven | existing (in the app; not edited) |
 | 14-a-waar-is-het.json | Waar is het? | planned |
-| 14-b-staan-liggen-zitten.json | Staan, liggen, zitten | planned |
+| 14-b-staan-liggen-zitten.json | Leggen of zetten? | published in production as a standalone mini-course |
 | 15-a-mijn-buurt.json | Mijn buurt | planned |
 | 15-b-rechtdoor-en-dan-links.json | Rechtdoor en dan links | planned |
 | 16-a-met-de-tram-en-de-trein.json | Met de tram en de trein | planned |
@@ -44,3 +44,16 @@ Course: "Dutch Foundations — Part III" (`content/dutch-foundations/part-iii/`,
 - **Known defects (not edited)**: reading answer "a, er is een lift." (missing J); fill-in "Er is …balkon." lacks a space before the blank word; the last block is an empty paragraph.
 
 <!-- Per-lesson entries for 14-a … 18-b are added below as lessons are accepted, in the format used in ledger-part-ii.md. -->
+
+## 14-b Leggen of zetten?
+
+- **Grammar**:
+  - **Positional states** — basic — staan for upright/on a base, liggen for flat or lying, zitten for sitting or enclosed contents, and hangen for suspended objects.
+  - **Action → state pairs** — basic — leggen → liggen; zetten → staan; zetten → zitten when seating someone; steken → zitten for putting a small object into a pocket or bag; hangen → hangen.
+  - **Orientation changes meaning** — basic — "Ik zet de fles op tafel" leaves it upright; "Ik leg de fles op tafel" leaves it on its side.
+  - **er + positional verb** — basic — "Er staat een bank …", "Er ligt een vloerkleed …"; fronted place and question forms are recognised and practised.
+  - **Present tense** — reinforcement — ik leg/zet/steek/hang; singular forms ligt/staat/zit/hangt; plural forms leggen/zetten/zitten/hangen.
+- **Vocabulary**: de vensterbank, het schilderij, het kussen, het vloerkleed, de handdoek, de la, de kapstok, de jas, de fles, het glas, de plant, de plank, de zak, het pak, de melk; leggen, zetten, steken, staan, liggen, zitten, hangen, ophangen.
+- **Story facts**: Sunday 18 October; Henk brings Sofia a plant; Tijger explores a box, a cushion and the rug while Sofia finishes the living room; Noor calls and asks where household items are.
+- **Practice**: 9 progressively harder blocks, 51 items: state recognition, action selection, paired action/result fill-ins, word order, EN→NL, NL→EN, transformations, a 7-question reading, and free production.
+- **Status note**: the source file passes `lesson.ts check` and is published in production as a standalone one-lesson mini-course.

@@ -1,6 +1,6 @@
 # Courses
 
-Status: delivered. C1 (course shell), C2 (lessons and content blocks), C3 (practice blocks and answer threads), C4 (feed presence), C5 (contributors), and C6 (lesson player and progress) are complete. C7 (lesson editor) is approved and in progress; see [lesson documents](#lesson-documents). Delivery phases live in the [roadmap](roadmap.md#course-phases).
+Status: delivered. C1 (course shell), C2 (lessons and content blocks), C3 (practice blocks and answer threads), C4 (feed presence), C5 (contributors), and C6 (lesson player and progress) are complete. C7 (lesson editor) is approved and in progress; see [lesson documents](#lesson-documents). C8 (new words and recap) is approved and not started; see [new words](#new-words-and-recap). Delivery phases live in the [roadmap](roadmap.md#course-phases).
 
 ## Purpose
 
@@ -99,6 +99,7 @@ Approved product change (C7), in progress. It replaces per-row blocks with one r
 | `example` | custom | inline content for the sentence, plain-text `translation` and `note` |
 | `dialogue` | custom | turns, as today |
 | `practice` | custom | instruction, passage, and items, as today, kept plain text so fill-in tokens and answer snapshots work |
+| `vocabulary` | custom (C8) | ordered words, JSON-encoded like practice; see [new words](#new-words-and-recap) |
 
 Every block is left-aligned; text alignment is not offered. Paragraphs, headings, and list items may carry a block `textColor` and `backgroundColor` from the same palette as inline colours; callouts take their colour from their variant. Only list items nest, up to 3 levels; no other block has children except `columnList` and `column`.
 
@@ -137,6 +138,48 @@ Lesson images reuse the [public R2 image pipeline](architecture.md#images) under
 - The browser re-encodes every image as JPEG before upload: original metadata (such as location) is dropped, the longest edge is capped at 1600 px, and quality steps down until the file fits the 1 MB server limit. Any image the browser can decode may be chosen, with sources up to 20 MB; the server still accepts only static PNG, JPEG, and WebP.
 - Alt text is stored in the image's `name`, starts empty (a file name is not a description), and is edited from the image toolbar. Publishing requires it. The toolbar also edits the caption, replaces, and deletes the image; resize handles set the preview width, stored in whole pixels.
 - Images referenced by neither the draft nor the published document are deleted with their R2 objects once they are older than 24 hours: at publish and discard, and by a daily sweep that also covers drafts that are never published. The 24-hour grace keeps uploads that an unsaved edit may still reference. Deleting a lesson deletes all its images.
+
+## New words and recap
+
+Approved product change (C8), not started. Lessons introduce vocabulary explicitly, each player step shows the words it introduces, and a learner can review every word from the lessons they have finished in one slideshow. C8 builds on [lesson documents](#lesson-documents) and ships after the C7 release.
+
+### Vocabulary block
+
+A `vocabulary` block (shown to authors as "New words") holds an ordered list of words. Like practice, its payload travels as a JSON string prop checked by a shared schema. Each word has:
+
+| Field | Required | Limit | Notes |
+| --- | --- | --- | --- |
+| `id` | yes | — | Stable UUID, unique within the document; identifies the word for the recap and later review |
+| `term` | yes | 200 | Dictionary form in the target language, with its article where relevant (`der Hund`, `het huis`) |
+| `meaning` | yes | 500 | |
+| `forms` | no | 200 | Plural or principal parts (`die Hunde`, `lopen – liep – gelopen`) |
+| `example` | no | 1,000 | One example sentence |
+| `note` | no | 2,000 | |
+
+- All fields are plain text. Gender, word class, and grammar are written into `term`, `forms`, or `note`; they are not separate fields.
+- A block holds 1–50 words. Drafts may hold words with an empty term or meaning; publishing requires both (a `word-empty` publish problem).
+- The block is top level or inside a column, like any other leaf block. Adding the block type does not change the document schema version.
+- Learners receive the whole word, including the note; nothing in a vocabulary block is concealed.
+- The lesson reader renders the block as a compact word list in place.
+
+### Words in the player
+
+A vocabulary block is not a step of its own. Its words appear in a New words panel on the step built from the block directly before it in the same heading section:
+
+- After paragraphs, lists, images, or dividers, it ends that prose step and attaches to it. Prose that follows starts a new step.
+- After an example or a callout, it attaches to that step.
+- After a dialogue or practice, it attaches to every turn or item of that block, so the words stay visible throughout.
+- With no preceding step in the section (first after a heading or at the start of the lesson), it attaches to the next step. A section with no other step shows the words as a step of their own.
+- Consecutive vocabulary blocks combine into one panel in document order.
+- Inside a column list read as one step, the words show in place. A column list read block by block applies these rules in leaf order.
+
+### Word recap
+
+- Recap is a slideshow in the player shell: one card per word showing the term and forms, with Show meaning revealing the meaning, example, and note. Back and Next move freely. Nothing is graded, recorded, or counted.
+- **Lesson recap:** the player's completion screen offers Review words when the run had words. It uses the words of that run, so previews work too.
+- **Course recap:** the course page offers Review words to a member who has finished at least one published lesson with words. It covers the currently published lessons the viewer has [finished](#progress), in lesson order and then document order. A term repeated across lessons (compared trimmed and case-insensitively) shows once, at its first occurrence.
+- The course recap follows course visibility: archived courses offer no recap except to those who can still see them.
+- The course recap reads the [`course_lesson_words`](data-model.md#course_lesson_words) index through `GET /groups/:groupId/courses/:courseId/words`, which proves membership and scopes by `group_id`.
 
 ## Practice answers
 
@@ -240,3 +283,4 @@ Courses are archived, not hard-deleted. The owner or group creator may archive a
 - Text-to-speech playback and interactive role-play dialogues
 - Feed posts for course updates
 - Course-specific notifications beyond contributor requests
+- A Words tab in the main navigation for practising recently learnt words across courses. Per-member review scheduling would be progress tracking and needs its own product exception under the [no-gamification rule](what_is_it.md#explicit-non-goals); "Practice" is not used as its name because it already means practice blocks.

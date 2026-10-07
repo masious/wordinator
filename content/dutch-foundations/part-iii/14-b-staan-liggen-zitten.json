@@ -1,0 +1,1425 @@
+{
+  "title": "Leggen of zetten?",
+  "goal": "Describe where things are and choose the right Dutch verb when putting them somewhere: liggen/leggen, staan/zetten, zitten/zetten or steken, and hangen.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Leggen of zetten?",
+      "id": "0a2814f1-a789-4ed4-a211-990e0c62ae8f"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Sunday 18 October. Sofia is unpacking in her new apartment when Henk arrives with his cat Tijger and a plant. In this lesson you will describe where things are and choose the Dutch action verb that creates that position.",
+      "id": "641b54cf-cfd0-4ce9-920c-130f8dd67869"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "State verbs and action verbs are ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ". Places are ",
+        {
+          "text": "purple",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". The new target form is ",
+        {
+          "text": "bold",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "cd9ef386-6cd8-4276-b453-137c5f076f74"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: a plant and a curious cat",
+      "id": "b14ccda3-f03f-4266-b680-e4bbe04e7d4e"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Henk",
+            "text": "Zo! Hier is een plant voor je nieuwe huis."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wat leuk! Waar zet ik de plant?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Ik zet hem op de vensterbank. Daar staat hij in de zon."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Prima. En waar is Tijger?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Hij zit in die doos naast de bank."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Tijger, kijk! Ik leg dit kussen op de bank."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Nu ligt Tijger op het kussen. Gezellig hier!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Mooi. Nu hang ik alleen het schilderij nog aan de muur."
+          }
+        ]
+      },
+      "id": "c30a20e9-9405-40fb-a99c-566ad9c0bb66"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "New words in the dialogue: de vensterbank = windowsill; de doos = box; het kussen = cushion; het schilderij = painting; de muur = wall; gezellig = cosy/pleasant.",
+      "id": "2cceece9-fc32-410c-b0a3-a46946650b74"
+    },
+    {
+      "type": "divider",
+      "id": "15e8e866-983b-4202-8afa-90ec5a90c05f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "One system: action first, state afterward",
+      "id": "ebd6c5eb-d7ce-42ad-a43f-b44216f4383d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "Do not learn both ",
+        {
+          "text": "leggen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " and ",
+        {
+          "text": "zetten",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " as simply “put”. Ask: what position is the object in afterward?"
+      ],
+      "id": "a6db5c5e-2491-4554-8e34-b472687063ab"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Flat or lying",
+              "id": "352028aa-7671-4418-96dc-07fe55ac0e34"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "action: leggen",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "state: liggen",
+                  "id": "e84b06f7-384e-424b-a149-ce55b64c8d23"
+                }
+              ],
+              "id": "67137c2c-cf40-4789-9045-d6b8cccd778b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "book, phone, towel, rug",
+              "id": "401d6bf4-3604-40a1-9292-81d5ffba8c23"
+            }
+          ],
+          "id": "5083714b-07fa-4ced-ae66-9d1f5e66f738"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Upright or on a base",
+              "id": "93d56e06-bfb8-47f2-8851-93e9cba935a6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "action: zetten",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "state: staan",
+                  "id": "2699879b-68dd-4465-abd5-ead1efa95edd"
+                }
+              ],
+              "id": "5fff1c80-b867-44d7-9058-77fb7e1e6099"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "bottle, plant, chair, plate",
+              "id": "396db182-3036-44fe-994e-100e93fe50cb"
+            }
+          ],
+          "id": "f2204038-4115-4123-95eb-0d23b7eec0b4"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Inside or sitting",
+              "id": "8d97c8ac-33ba-493c-a354-9267d100792b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "action: zetten or steken",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "state: zitten",
+                  "id": "ef373c81-f938-440d-8a09-6e5c77a52af6"
+                }
+              ],
+              "id": "17fde406-bb65-4d83-a5c8-d9d00e55788e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "child, cat, key, milk",
+              "id": "81b98593-f62c-412d-b53a-2d15447d9f1a"
+            }
+          ],
+          "id": "45be2efa-f144-49de-a97b-81363ad43995"
+        }
+      ],
+      "id": "a5207b37-a3ac-4fb4-ae85-78000b577f70"
+    },
+    {
+      "type": "paragraph",
+      "content": "Hangen is the convenient fourth pattern: the action and the state use the same verb, hangen.",
+      "id": "7711c008-f795-4df3-9d49-5a05fcbd0cff"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Liggen and leggen",
+      "id": "575b1925-7708-4796-9d4f-83a5fab81f41"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use liggen for a thing that is flat, horizontal, or naturally spread out. Use leggen when someone causes that position.",
+      "id": "1b52c478-fb5e-418e-ae8c-1245033750c1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I put the book on the table. The book is lying on the table.",
+        "note": "New words: het boek = book; de tafel = table. Action: leggen. Resulting state: liggen."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "leg",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " het boek ",
+        {
+          "text": "op de tafel",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". Het boek ",
+        {
+          "text": "ligt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " op de tafel."
+      ],
+      "id": "5785cd53-e824-49fd-8204-416529f4533d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia puts the towels in the cupboard. The towels are lying in the cupboard.",
+        "note": "New words: de handdoek = towel; de kast = cupboard. Soft items stored flat commonly liggen."
+      },
+      "content": [
+        "Sofia ",
+        {
+          "text": "legt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " de handdoeken ",
+        {
+          "text": "in de kast",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". De handdoeken ",
+        {
+          "text": "liggen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " in de kast."
+      ],
+      "id": "1ca21649-7d34-4dcd-92d5-05837cc39a71"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I put my phone next to the lamp. My phone is lying next to the lamp.",
+        "note": "New words: de telefoon = phone; de lamp = lamp; naast = next to. A phone normally lies flat."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "leg",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " mijn telefoon ",
+        {
+          "text": "naast de lamp",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". Mijn telefoon ",
+        {
+          "text": "ligt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " naast de lamp."
+      ],
+      "id": "d7d1f1a8-362b-4933-9a9e-a586c04d7422"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Staan and zetten",
+      "id": "1cbd7247-887e-4065-b492-9274bd00af40"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use staan for something upright, on legs, or resting on its normal base. Use zetten to place it in that position.",
+      "id": "92b59b49-8e3e-414b-9a37-061e9e973120"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I put the bottle on the table. The bottle is standing on the table.",
+        "note": "New word: de fles = bottle. Zetten means the bottle ends upright; afterward it staat."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "zet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " de fles ",
+        {
+          "text": "op de tafel",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". De fles ",
+        {
+          "text": "staat",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " op de tafel."
+      ],
+      "id": "85449259-881a-45ab-9cdc-559a80b750c4"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I lay the bottle on the table. The bottle is lying on the table.",
+        "note": "No new words. Leggen changes the meaning: the bottle is on its side, so it ligt rather than staat."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "leg",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " de fles ",
+        {
+          "text": "op de tafel",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". De fles ",
+        {
+          "text": "ligt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " op de tafel."
+      ],
+      "id": "fcff1448-942b-4024-8644-547be4269d15"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Henk puts the plant on the windowsill. The plant is standing on the windowsill.",
+        "note": "New words: de plant = plant; de vensterbank = windowsill. A potted plant rests on its base, so it staat."
+      },
+      "content": [
+        "Henk ",
+        {
+          "text": "zet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " de plant ",
+        {
+          "text": "op de vensterbank",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". De plant ",
+        {
+          "text": "staat",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " op de vensterbank."
+      ],
+      "id": "a0980f08-7b16-4c65-a1c0-1be926c220ce"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia puts the plates in the cupboard. The plates stand in the cupboard.",
+        "note": "New word: het bord = plate. In this course, plates in a cupboard use staan, including a neat stack."
+      },
+      "content": [
+        "Sofia ",
+        {
+          "text": "zet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " de borden ",
+        {
+          "text": "in de kast",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". De borden ",
+        {
+          "text": "staan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " in de kast."
+      ],
+      "id": "5948f15f-53fb-4179-939c-cbd2c9b5465f"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "The same object can change the verb. An upright bottle ",
+        {
+          "text": "staat",
+          "styles": {
+            "bold": true
+          }
+        },
+        "; a bottle on its side ",
+        {
+          "text": "ligt",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". The verb carries information about orientation."
+      ],
+      "id": "99c0d3f4-dd0f-49e6-9ce7-00d772e2c248"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Zitten, zetten and steken",
+      "id": "eaad8030-ea87-4c71-a4a1-21085deca2c1"
+    },
+    {
+      "type": "paragraph",
+      "content": "Zitten is broader than English “sit”. It also describes something inside a closed or tight space. Zetten can seat a person or animal; steken often means putting or sticking something into a pocket, bag, or opening.",
+      "id": "8e71bfe1-8c3c-4e75-97dd-90df7d4d9a75"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I seat the child on the chair. The child is sitting on the chair.",
+        "note": "New words: het kind = child; de stoel = chair. For yourself, say Ik ga zitten = I sit down."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "zet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " het kind ",
+        {
+          "text": "op de stoel",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". Het kind ",
+        {
+          "text": "zit",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " op de stoel."
+      ],
+      "id": "596a0cc2-7698-4d43-94e7-c49f7f916a6a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I put the key in my pocket. The key is in my pocket.",
+        "note": "New words: de sleutel = key; de zak = pocket; steken = put/stick into. A key enclosed in a pocket zit there."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "steek",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " de sleutel ",
+        {
+          "text": "in mijn zak",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". De sleutel ",
+        {
+          "text": "zit",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " in mijn zak."
+      ],
+      "id": "b075ece2-c9b2-48f4-9ded-8675a80e7ec0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The milk is in the carton.",
+        "note": "New words: de melk = milk; het pak = carton. Dutch uses zitten for contents inside a container."
+      },
+      "content": [
+        "De melk ",
+        {
+          "text": "zit",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in het pak",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "c0782670-c823-4ddf-9a8c-73bdb767fd9b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "State verbs answer where something is now. Action verbs answer what someone does to move it there: leggen → liggen, zetten → staan or zitten, steken → zitten.",
+      "id": "e1ae9cf4-c304-47b0-b8f5-d137146d821e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Hangen",
+      "id": "5b178b7a-a232-4878-8901-c086bf5a1327"
+    },
+    {
+      "type": "paragraph",
+      "content": "Hangen uses the same verb for the action and the state. Context and the sentence structure show which meaning is intended.",
+      "id": "c81ec384-f4df-4357-967c-467efc7b2bef"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I hang the coat on the coat rack. The coat is hanging on the coat rack.",
+        "note": "New words: de jas = coat; de kapstok = coat rack. The first hang is an action; hangt describes the result."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "hang",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " de jas ",
+        {
+          "text": "aan de kapstok",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". De jas ",
+        {
+          "text": "hangt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " aan de kapstok."
+      ],
+      "id": "9881a455-5896-4817-af16-a19e8aeba030"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia hangs the painting on the wall. The painting is hanging above the sofa.",
+        "note": "New words: ophangen = hang up; het schilderij = painting; de muur = wall; boven = above. Ophangen is separable: Sofia hangt ... op."
+      },
+      "content": [
+        "Sofia ",
+        {
+          "text": "hangt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " het schilderij ",
+        {
+          "text": "aan de muur",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "op",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        ". Het schilderij ",
+        {
+          "text": "hangt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "boven de bank",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "62fab6a0-5904-448e-b8af-4160f42aee82"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": "Liggen and zitten have a short i, like the vowel in English “sit”. The double consonants gg and tt keep the vowel short.",
+      "id": "ef52434d-9bd6-4de1-b406-5ea8120768e3"
+    },
+    {
+      "type": "divider",
+      "id": "ff650cc3-cd83-40b5-a751-f7f2d53c5427"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Noor calls",
+      "id": "c850484a-f685-4604-990f-f082ae6aba6e"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Hoi Sofia! Waar liggen de handdoeken?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ze liggen in de kast in de badkamer."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En waar staat de koffie?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Het pak staat naast de koelkast."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Waar zit je sleutel?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Die zit in mijn jas. Wacht even, ik leg hem op de tafel."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En het schilderij? Hangt het al aan de muur?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja! Het hangt boven de bank. Kom binnen!"
+          }
+        ]
+      },
+      "id": "3352fe85-97c7-4531-adff-92075d15c4dd"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "New words in the dialogue: de handdoek = towel; de koffie = coffee; de koelkast = refrigerator; al = already; Kom binnen! = Come in!",
+      "id": "0b10cf95-8cfd-4af7-87c2-f3e07d1cbbe1"
+    },
+    {
+      "type": "divider",
+      "id": "afa3ecd0-0b8e-496d-be39-191bc1bd5523"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "2ae5d96d-6e0a-4ee5-acab-227d883c6d9c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "1. Choose the state",
+      "id": "275dd8fa-a874-497a-8d46-6f4448fdced2"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in staat, ligt, zit or hangt. Start with the object's position now.",
+          "items": [
+            {
+              "prompt": "Het boek … op de tafel.",
+              "authorsVersion": [
+                "ligt"
+              ],
+              "note": "A book is flat: liggen. New words: het boek = book; de tafel = table."
+            },
+            {
+              "prompt": "De fles … op de vensterbank.",
+              "authorsVersion": [
+                "staat"
+              ],
+              "note": "An upright bottle rests on its base: staan. New words: de fles = bottle; de vensterbank = windowsill."
+            },
+            {
+              "prompt": "De sleutel … in mijn zak.",
+              "authorsVersion": [
+                "zit"
+              ],
+              "note": "Something enclosed in a pocket uses zitten. New words: de sleutel = key; de zak = pocket."
+            },
+            {
+              "prompt": "De jas … aan de kapstok.",
+              "authorsVersion": [
+                "hangt"
+              ],
+              "note": "A coat suspended from a rack uses hangen. New words: de jas = coat; de kapstok = coat rack."
+            },
+            {
+              "prompt": "Tijger … op de bank.",
+              "authorsVersion": [
+                "ligt"
+              ],
+              "note": "Tijger is lying down: liggen. New word: de bank = sofa."
+            },
+            {
+              "prompt": "De borden … in de kast.",
+              "authorsVersion": [
+                "staan"
+              ],
+              "note": "This course uses staan for plates stored in a cupboard. New words: het bord = plate; de kast = cupboard."
+            },
+            {
+              "prompt": "De melk … in het pak.",
+              "authorsVersion": [
+                "zit"
+              ],
+              "note": "Contents inside a container use zitten. New words: de melk = milk; het pak = carton."
+            },
+            {
+              "prompt": "Het schilderij … boven de bank.",
+              "authorsVersion": [
+                "hangt"
+              ],
+              "note": "A painting suspended on a wall uses hangen. New words: het schilderij = painting; boven = above."
+            }
+          ]
+        }
+      },
+      "id": "737f7f0e-213c-483d-982f-5759ce9684bb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "2. Choose the action",
+      "id": "6017d2ee-999f-4f65-b1fe-3980cb31fda7"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct present-tense form of leggen, zetten, steken or hangen.",
+          "items": [
+            {
+              "prompt": "Ik … het boek op de tafel.",
+              "authorsVersion": [
+                "leg"
+              ],
+              "note": "The book will lie flat: leggen. New words: het boek = book; de tafel = table."
+            },
+            {
+              "prompt": "Sofia … de plant op de vensterbank.",
+              "authorsVersion": [
+                "zet"
+              ],
+              "note": "The plant will stand on its base: zetten. New words: de plant = plant; de vensterbank = windowsill."
+            },
+            {
+              "prompt": "Ik … de sleutel in mijn zak.",
+              "authorsVersion": [
+                "steek"
+              ],
+              "note": "Putting something into a pocket uses steken. New words: de sleutel = key; de zak = pocket."
+            },
+            {
+              "prompt": "Henk … zijn jas aan de kapstok.",
+              "authorsVersion": [
+                "hangt"
+              ],
+              "note": "Hangen is both action and state. New words: de jas = coat; de kapstok = coat rack."
+            },
+            {
+              "prompt": "Noor … de handdoeken in de kast.",
+              "authorsVersion": [
+                "legt"
+              ],
+              "note": "The towels will lie folded in the cupboard: leggen. New words: de handdoek = towel; de kast = cupboard."
+            },
+            {
+              "prompt": "Wij … de stoelen bij de tafel.",
+              "authorsVersion": [
+                "zetten"
+              ],
+              "note": "Chairs rest upright on their legs: zetten. New words: de stoel = chair; bij = by/near."
+            }
+          ]
+        }
+      },
+      "id": "f10a08df-82ec-4bca-97bb-56d2066234f9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "3. Action and result",
+      "id": "0a9a91fe-33d2-41cd-a3ac-0611cea4368d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete both blanks: first the action, then the resulting state.",
+          "items": [
+            {
+              "prompt": "Ik … de telefoon op tafel. Nu … de telefoon op tafel.",
+              "authorsVersion": [
+                "leg",
+                "ligt"
+              ],
+              "note": "leggen → liggen. New words: de telefoon = phone; nu = now."
+            },
+            {
+              "prompt": "Sofia … de fles naast het glas. Nu … de fles naast het glas.",
+              "authorsVersion": [
+                "zet",
+                "staat"
+              ],
+              "note": "zetten → staan. New words: de fles = bottle; het glas = glass; naast = next to."
+            },
+            {
+              "prompt": "Ik … de sleutel in mijn tas. Nu … de sleutel in mijn tas.",
+              "authorsVersion": [
+                "steek",
+                "zit"
+              ],
+              "note": "steken → zitten. New words: de sleutel = key; de tas = bag."
+            },
+            {
+              "prompt": "Henk … het schilderij aan de muur. Nu … het schilderij aan de muur.",
+              "authorsVersion": [
+                "hangt",
+                "hangt"
+              ],
+              "note": "hangen → hangen. New words: het schilderij = painting; de muur = wall."
+            },
+            {
+              "prompt": "Wij … het vloerkleed onder de tafel. Nu … het vloerkleed onder de tafel.",
+              "authorsVersion": [
+                "leggen",
+                "ligt"
+              ],
+              "note": "leggen → liggen. New words: het vloerkleed = rug; onder = under."
+            },
+            {
+              "prompt": "Noor … het kind op de stoel. Nu … het kind op de stoel.",
+              "authorsVersion": [
+                "zet",
+                "zit"
+              ],
+              "note": "zetten → zitten for seating someone. New words: het kind = child; de stoel = chair."
+            }
+          ]
+        }
+      },
+      "id": "f2a6141b-b8ce-4179-98f0-6494a1efb1ce"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "4. Build the sentence",
+      "id": "93e54d79-5494-47ec-b496-c0fef715695d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the chunks in order. Remember: the finite verb is in position 2.",
+          "items": [
+            {
+              "prompt": "Put in order: het boek / Sofia / op de plank / legt",
+              "authorsVersion": [
+                "Sofia legt het boek op de plank."
+              ],
+              "note": "Subject + verb + object + place. New word: de plank = shelf."
+            },
+            {
+              "prompt": "Put in order: op de tafel / de fles / staat",
+              "authorsVersion": [
+                "De fles staat op de tafel."
+              ],
+              "note": "Subject + positional verb + place. New word: de fles = bottle."
+            },
+            {
+              "prompt": "Put in order: in mijn tas / de sleutel / zit",
+              "authorsVersion": [
+                "De sleutel zit in mijn tas."
+              ],
+              "note": "Use zitten for something enclosed in a bag. New word: de tas = bag."
+            },
+            {
+              "prompt": "Put in order: aan de muur / hangt / het schilderij",
+              "authorsVersion": [
+                "Het schilderij hangt aan de muur."
+              ],
+              "note": "Use hangen for something suspended. New words: het schilderij = painting; de muur = wall."
+            },
+            {
+              "prompt": "Put in order: op de vensterbank / Henk / de plant / zet",
+              "authorsVersion": [
+                "Henk zet de plant op de vensterbank."
+              ],
+              "note": "Use zetten because the plant will stand. New word: de vensterbank = windowsill."
+            },
+            {
+              "prompt": "Put in order: in de woonkamer / er / een bank / staat",
+              "authorsVersion": [
+                "Er staat een bank in de woonkamer."
+              ],
+              "note": "Er + positional verb introduces new information. New word: de woonkamer = living room."
+            }
+          ]
+        }
+      },
+      "id": "1767f2b3-29b3-497e-a2e8-f1f6b2c6c517"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "5. Translate into Dutch",
+      "id": "0b1a0455-aeaa-41cf-a2c3-e28143eb2665"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Choose the verb from the resulting position, not from English “put”.",
+          "items": [
+            {
+              "prompt": "I put the book on the table.",
+              "authorsVersion": [
+                "Ik leg het boek op de tafel."
+              ],
+              "note": "The book ends flat: leggen. New words: het boek = book; de tafel = table."
+            },
+            {
+              "prompt": "She puts the bottle next to the glass.",
+              "authorsVersion": [
+                "Zij zet de fles naast het glas."
+              ],
+              "note": "The bottle ends upright: zetten. New words: de fles = bottle; het glas = glass; naast = next to."
+            },
+            {
+              "prompt": "The keys are in my bag.",
+              "authorsVersion": [
+                "De sleutels zitten in mijn tas."
+              ],
+              "note": "Enclosed contents use zitten. New words: de sleutel = key; de tas = bag."
+            },
+            {
+              "prompt": "The painting is hanging above the sofa.",
+              "authorsVersion": [
+                "Het schilderij hangt boven de bank."
+              ],
+              "note": "Suspended objects use hangen. New words: het schilderij = painting; boven = above; de bank = sofa."
+            },
+            {
+              "prompt": "We put the towels in the cupboard.",
+              "authorsVersion": [
+                "Wij leggen de handdoeken in de kast."
+              ],
+              "note": "The towels end lying folded: leggen. New words: de handdoek = towel; de kast = cupboard."
+            },
+            {
+              "prompt": "I put the key in my pocket.",
+              "authorsVersion": [
+                "Ik steek de sleutel in mijn zak."
+              ],
+              "note": "Putting a small object into a pocket uses steken. New words: de sleutel = key; de zak = pocket."
+            }
+          ]
+        }
+      },
+      "id": "ddc30055-d96c-4484-931d-ebde5e8cff08"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "6. Translate into English",
+      "id": "4d1f3b0c-f02d-45cb-a827-b846049c517d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English. Keep the orientation when it matters.",
+          "items": [
+            {
+              "prompt": "Ik leg de fles op de tafel.",
+              "authorsVersion": [
+                "I lay the bottle on the table."
+              ],
+              "note": "Leggen tells us the bottle is put on its side. New words: de fles = bottle; de tafel = table."
+            },
+            {
+              "prompt": "De plant staat op de vensterbank.",
+              "authorsVersion": [
+                "The plant is standing on the windowsill."
+              ],
+              "note": "Natural English may also say “The plant is on the windowsill.” New word: de vensterbank = windowsill."
+            },
+            {
+              "prompt": "De melk zit in het pak.",
+              "authorsVersion": [
+                "The milk is in the carton."
+              ],
+              "note": "Do not translate zitten literally here. New words: de melk = milk; het pak = carton."
+            },
+            {
+              "prompt": "Henk hangt zijn jas aan de kapstok.",
+              "authorsVersion": [
+                "Henk hangs his coat on the coat rack."
+              ],
+              "note": "This is the action meaning of hangen. New words: de jas = coat; de kapstok = coat rack."
+            },
+            {
+              "prompt": "Er ligt een vloerkleed onder de tafel.",
+              "authorsVersion": [
+                "There is a rug under the table."
+              ],
+              "note": "Er ligt introduces a flat object. New words: het vloerkleed = rug; onder = under."
+            }
+          ]
+        }
+      },
+      "id": "cb63ace5-a80e-494d-b367-fb8f3269bd68"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "7. Change the viewpoint",
+      "id": "9037d894-6a14-41bc-b4db-ad1518588cef"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence as requested. This connects an action with its result or replaces generic is with a positional verb.",
+          "items": [
+            {
+              "prompt": "Rewrite as the result: Ik leg het boek op tafel.",
+              "authorsVersion": [
+                "Het boek ligt op tafel."
+              ],
+              "note": "leggen → liggen. New word: het boek = book."
+            },
+            {
+              "prompt": "Rewrite as the action with ik: De fles staat op tafel.",
+              "authorsVersion": [
+                "Ik zet de fles op tafel."
+              ],
+              "note": "staan → zetten. New word: de fles = bottle."
+            },
+            {
+              "prompt": "Use a positional verb: Er is een bank in de woonkamer.",
+              "authorsVersion": [
+                "Er staat een bank in de woonkamer."
+              ],
+              "note": "A sofa stands on its base and legs. New words: de bank = sofa; de woonkamer = living room."
+            },
+            {
+              "prompt": "Use a positional verb: De sleutel is in mijn tas.",
+              "authorsVersion": [
+                "De sleutel zit in mijn tas."
+              ],
+              "note": "An enclosed object uses zitten. New words: de sleutel = key; de tas = bag."
+            },
+            {
+              "prompt": "Make it plural: De handdoek ligt in de kast.",
+              "authorsVersion": [
+                "De handdoeken liggen in de kast."
+              ],
+              "note": "Plural: de handdoeken liggen. New words: de handdoek = towel; de kast = cupboard."
+            },
+            {
+              "prompt": "Put the bottle on its side: De fles staat op tafel.",
+              "authorsVersion": [
+                "Ik leg de fles op tafel. De fles ligt op tafel."
+              ],
+              "note": "Changing orientation changes staan/zetten to liggen/leggen. New word: op zijn kant = on its side; the prompt expresses this in English to avoid adding the chunk."
+            }
+          ]
+        }
+      },
+      "id": "2c8d26e3-3427-4d1f-a6d0-2b05ece386c3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Sofia's finished living room",
+      "id": "451e6988-016b-442d-b7c7-44656b5ea01e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's message and answer in Dutch where possible.",
+          "passage": {
+            "title": "Mijn woonkamer is klaar",
+            "content": "Hoi mam! Mijn woonkamer is nu bijna klaar. Er staat een grote bank bij het raam. Op de bank liggen drie kussens. Voor de bank ligt een klein vloerkleed. De plant van Henk staat op de vensterbank. Boven de bank hangt mijn schilderij. Mijn boeken staan in de boekenkast en mijn sleutels zitten in de la. Tijger is ook hier. Eerst zit hij in een doos. Nu ligt hij op het vloerkleed. Ik leg mijn telefoon op tafel en ik zet een glas water naast de bank. Gezellig, hè?"
+          },
+          "items": [
+            {
+              "prompt": "Waar staat de bank?",
+              "authorsVersion": [
+                "De bank staat bij het raam."
+              ],
+              "note": "New words: bij = near/by; het raam = window."
+            },
+            {
+              "prompt": "Wat ligt er op de bank?",
+              "authorsVersion": [
+                "Er liggen drie kussens op de bank."
+              ],
+              "note": "New word: het kussen = cushion. Plural subject takes liggen."
+            },
+            {
+              "prompt": "Waar staat de plant van Henk?",
+              "authorsVersion": [
+                "De plant staat op de vensterbank."
+              ],
+              "note": "New word: de vensterbank = windowsill."
+            },
+            {
+              "prompt": "Wat hangt er boven de bank?",
+              "authorsVersion": [
+                "Het schilderij hangt boven de bank."
+              ],
+              "note": "New word: het schilderij = painting."
+            },
+            {
+              "prompt": "Waar zitten Sofia's sleutels?",
+              "authorsVersion": [
+                "Ze zitten in de la."
+              ],
+              "note": "New word: de la = drawer. Enclosed contents use zitten."
+            },
+            {
+              "prompt": "Waar zit Tijger eerst en waar ligt hij nu?",
+              "authorsVersion": [
+                "Eerst zit Tijger in een doos. Nu ligt hij op het vloerkleed."
+              ],
+              "note": "New words: eerst = first; de doos = box; het vloerkleed = rug."
+            },
+            {
+              "prompt": "Wat legt Sofia op tafel en wat zet zij naast de bank?",
+              "authorsVersion": [
+                "Zij legt haar telefoon op tafel en zet een glas water naast de bank."
+              ],
+              "note": "A phone ends flat: leggen. A glass ends upright: zetten. New words: de telefoon = phone; het glas = glass."
+            }
+          ]
+        }
+      },
+      "id": "62b08c80-0a32-4720-8d46-fe661731ed14"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "e10c0fb1-e7b4-44ee-8a29-463c4dd5deb9"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 4–6 sentences about one room. Say where at least three things are and describe putting one thing somewhere. Use at least three verbs from liggen, leggen, staan, zetten, zitten and hangen.",
+          "items": [
+            {
+              "prompt": "Describe your room with position and action verbs.",
+              "authorsVersion": [
+                "In mijn woonkamer staat een bank bij het raam. Op de bank liggen twee kussens. Mijn boeken staan in de kast en mijn sleutel zit in mijn tas. Ik leg mijn telefoon op tafel en ik zet een glas water naast de bank."
+              ],
+              "note": "Model only; many answers are possible. New words in the model: de woonkamer = living room; het kussen = cushion; de sleutel = key; de tas = bag."
+            }
+          ]
+        }
+      },
+      "id": "d96e5aa5-3add-4788-921d-a2f8607d601f"
+    },
+    {
+      "type": "divider",
+      "id": "b17918c2-b30c-4429-b6c3-c8836df472b0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "feae962d-6448-4c0c-ab03-c35aef75b4d5"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Ask what position the object has afterward.",
+      "id": "fd8374d1-5040-4127-b793-cca0f3e09722"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Flat: leggen → liggen. Upright or on a base: zetten → staan.",
+      "id": "a403bcd6-736c-465e-a7f6-609c085c3da2"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Seated: zetten → zitten. Into a pocket or bag: steken → zitten.",
+      "id": "90c4ead6-4ac9-419c-b2a5-590857994945"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Suspended: hangen → hangen.",
+      "id": "8f5965f2-4bf6-48ed-9037-99571704ddac"
+    },
+    {
+      "type": "paragraph",
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "content": "The best memory question is not “Which Dutch word means put?” It is “How will the thing be positioned afterward?”",
+      "id": "bfea4148-427d-43a0-b115-9d279a088cbe"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "One system: action first, state afterward",
+      "description": "A clean four-panel illustration: a book lying flat, a bottle standing upright, a key inside a pocket, and a coat hanging from a rack.",
+      "alt": "Four objects showing lying, standing, enclosed and hanging positions"
+    },
+    {
+      "afterHeading": "Reading: Sofia's finished living room",
+      "description": "Sofia's cosy living room with a sofa by the window, cushions, a rug, a plant on the windowsill, a painting above the sofa and Tijger the cat on the rug.",
+      "alt": "Sofia's living room with furniture and objects in clearly visible positions"
+    }
+  ],
+  "id": "e2b961ef-9449-4112-8b32-53fd8cec3135"
+}

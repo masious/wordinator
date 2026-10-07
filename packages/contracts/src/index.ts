@@ -441,15 +441,24 @@ export const practiceDiscussionResponseSchema = z.object({
 });
 export type PracticeDiscussionResponse = z.infer<typeof practiceDiscussionResponseSchema>;
 
-// Course progress counts the lessons a member finished in the lesson player among the currently published lessons.
+// Course progress counts the lessons a member finished in the lesson player among the currently published lessons,
+// plus the passed share of each published lesson they have started but not finished.
 export const courseParticipantProgressSchema = z.object({
   user: postAuthorSchema, completedLessons: z.number().int().nonnegative(), percent: z.number().int().min(0).max(100),
 });
 export type CourseParticipantProgress = z.infer<typeof courseParticipantProgressSchema>;
+// The viewer's last step in a lesson. Positions are private to their member and never listed for others.
+export const lessonPositionSchema = z.object({
+  lessonId: opaqueIdSchema, stepKey: z.string().max(64), stepIndex: z.number().int().nonnegative(),
+  passedSteps: z.number().int().nonnegative(), totalSteps: z.number().int().positive(), updatedAt: z.number().int(),
+});
+export type LessonPosition = z.infer<typeof lessonPositionSchema>;
 export const courseProgressResponseSchema = z.object({
   publishedLessons: z.number().int().nonnegative(),
   // The viewer's own finished lessons, including ones currently unpublished, so the outline can mark them.
   completedLessonIds: z.array(opaqueIdSchema),
+  // The viewer's unfinished positions in currently published lessons, most recent first.
+  positions: z.array(lessonPositionSchema),
   participants: z.array(courseParticipantProgressSchema),
 });
 export type CourseProgressResponse = z.infer<typeof courseProgressResponseSchema>;

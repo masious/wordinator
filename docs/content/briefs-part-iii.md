@@ -30,9 +30,9 @@ Row 13 is covered by the two existing lessons in `content/dutch-foundations/part
 ## Brief 14-b
 
 - **File**: `part-iii/14-b-staan-liggen-zitten.json`
-- **Title**: Staan, liggen, zitten
-- **Goal**: Describe where things are the Dutch way with staan, liggen, zitten and hangen, including er staat / er ligt.
-- **Communicative goal**: describe a room precisely; tell someone where to find things.
+- **Title**: Leggen of zetten?
+- **Goal**: Describe where things are and choose the right Dutch verb when putting them somewhere: liggen/leggen, staan/zetten, zitten/zetten or steken, and hangen.
+- **Communicative goal**: describe a room precisely; tell someone where to find things; choose an action verb from the object's resulting position.
 - **Story beat**: Sunday 18 October. Sofia unpacks. Henk comes up with his cat Tijger and a plant as a welcome gift. Dialogue 1: Henk and Sofia: "Waar staat de bank?" "Het schilderij hangt nog niet." Tijger lies on the sofa / sits in a box. Dialogue 2: Noor phones: "Waar liggen de handdoeken?" "Ze liggen in de kast in de badkamer." Reading: Sofia's description of her finished living room and kitchen.
 - **Grammar**:
   1. **staan**: upright, or on legs/base: de bank staat, de kast staat, de fles staat, de boeken staan in de boekenkast (upright), het bord staat in de kast, de plant staat op de vensterbank, de schoenen staan bij de deur. Also text on paper: "Het staat in de brief."
@@ -42,13 +42,14 @@ Row 13 is covered by the two existing lessons in `content/dutch-foundations/part
   5. **er + positional verb** for new information (instead of er is): "Er staat een bank in de woonkamer." "Er ligt een kleed op de vloer." "Er hangt een lamp boven de tafel." Question: "Staat er een tafel in de keuken?" Inversion after place: "In de woonkamer staat een bank."
   6. Conjugation: ik sta/lig/zit/hang, jij staat/ligt/zit/hangt, wij staan/liggen/zitten/hangen.
   7. "Waar is…?" is understood, but Dutch speakers prefer the positional verb in answers.
-  - Common mistakes: using "is" for everything (understood, but not natural); books upright on a shelf "liggen" → staan; plates in the cupboard "liggen" → staan (when stacked, both are heard; give staan); *het schilderij staat aan de muur* → hangt; *de sleutel ligt in mijn tas* → zit.
-- **Vocabulary**: staan, liggen, zitten, hangen, de vensterbank, het schilderij, de foto, het kleed, het vloerkleed, het gordijn, de handdoek, de la (laden), de kapstok, de jas, de schoen(en), de fles, het glas, de pan, het bestek, de kat, de mand, de brief, het cadeau, de plank, uitpakken (separable), ophangen (separable).
+  8. **Action → state pairs**: leggen → liggen for a flat or horizontal result; zetten → staan for an upright object or one on its normal base; zetten → zitten when seating a person or animal; steken → zitten when putting a small object into a pocket, bag or opening; hangen → hangen for both action and state. The same object can select a different pair when its orientation changes: "Ik zet de fles op tafel" (upright) versus "Ik leg de fles op tafel" (on its side).
+  - Common mistakes: using "is" for everything (understood, but not natural); translating English "put" before deciding the resulting position; books upright on a shelf "liggen" → staan; plates in the cupboard "liggen" → staan (when stacked, both are heard; give staan); *het schilderij staat aan de muur* → hangt; *de sleutel ligt in mijn tas* → zit.
+- **Vocabulary**: staan, liggen, zitten, hangen, leggen, zetten, steken, de vensterbank, het schilderij, de foto, het kleed, het vloerkleed, het gordijn, de handdoek, de la (laden), de kapstok, de jas, de schoen(en), de fles, het glas, de pan, het bestek, de kat, de mand, de brief, het cadeau, de plank, de zak, uitpakken (separable), ophangen (separable).
 - **Recycle**: prepositions and hij/het/ze (14-a), er is/er zijn (13), rooms and furniture (13, 14-a), separable verbs (opruimen, uitpakken, ophangen), demonstratives, willen/mogen ("Mag ik helpen?" "Wil je koffie?"), plurals.
 - **Off-limits here**: kunnen; imperatives beyond chunks ("Kijk!", "Ga zitten." ok); gaan + infinitive; comparatives; past ("Het schilderij hing…").
 - **Required callouts**: grammar, important (the four positional verbs summary), warning (books stand on a shelf, keys sit in a bag), pronunciation (short i in "liggen", "zitten" vs long "ie"; double consonant = short vowel).
 - **columnList**: three columns staan | liggen | zitten (+ hangen in one of them or as a fourth row below) with objects listed.
-- **Practice specifics**: P1 fill staat/ligt/zit/hangt (≥8 items); P2 dialogue completion (Noor's phone call) multi-blank; P3 word order with er + positional verb; P4 transformation: "is" → positional verb ("Er is een bank in de woonkamer." → "Er staat een bank in de woonkamer.") and singular → plural; P5/P6 translations; P7 reading (Sofia's room description, 6+ questions); P8 "Describe your living room in 3–4 sentences with staan, liggen, hangen."
+- **Practice specifics**: sequence difficulty from recognising state verbs to selecting action verbs, pairing action with result, sentence building, translations, and transformations; include fill staat/ligt/zit/hangt (≥8 items), choose leggen/zetten/steken/hangen, multi-blank action → state pairs, word order with er + positional verb, transformation between action and state plus "is" → positional verb, P5/P6 translations, reading (Sofia's room description, 6+ questions), and free production using at least three verbs from the family.
 
 ## Brief 15-a
 

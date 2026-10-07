@@ -36,7 +36,7 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | 12 | Demonstratives deze/die/dit/dat | — | — | missing (planned: 12-a, 12-b) | |
 | 13 | er is / er zijn; location vocabulary | 13-1 | 13-2 | partial | Existing lessons are thin (14 + 20 items). Reinforced in 14-a/14-b (planned). |
 | 14 | Prepositions of place | — | — | missing (planned: 14-a) | |
-| 14 | staan/liggen/zitten (+ hangen) | — | — | missing (planned: 14-b) | |
+| 14 | staan/liggen/zitten (+ hangen); leggen/zetten/steken action pairs | 14-b | — | covered | Published as the standalone mini-course "Leggen of zetten?". |
 | 15 | kunnen | — | — | missing (planned: 15-a) | |
 | 15 | Directions; imperative | — | — | missing (planned: 15-b) | |
 | 16 | Separable verbs in depth | — | — | missing (planned: 16-a) | |
@@ -85,7 +85,8 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | Prices, euros and cents | — | — | missing (planned: 12-b) | |
 | te + adjective (too) | — | — | missing (planned: 12-b) | |
 | hij/het/ze for things | — | — | missing (planned: 14-a) | |
-| er + positional verb | — | — | missing (planned: 14-b) | |
+| er + positional verb | 14-b | — | covered | |
+| Action → state position pairs (leggen→liggen, zetten→staan/zitten, steken→zitten, hangen→hangen) | 14-b | — | covered | Published as the standalone mini-course "Leggen of zetten?". |
 | weten (vocabulary) | — | — | missing (planned: 15-b) | |
 | worden ("het wordt koud") | — | — | missing (planned: 17-a) | |
 | Intensifiers heel, erg, best, een beetje, te | — | — | missing (planned: 17-b) | |
