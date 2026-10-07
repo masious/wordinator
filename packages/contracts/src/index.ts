@@ -453,6 +453,7 @@ export const lessonPositionSchema = z.object({
   passedSteps: z.number().int().nonnegative(), totalSteps: z.number().int().positive(), updatedAt: z.number().int(),
 });
 export type LessonPosition = z.infer<typeof lessonPositionSchema>;
+export const lessonPositionResponseSchema = z.object({ position: lessonPositionSchema });
 export const courseProgressResponseSchema = z.object({
   publishedLessons: z.number().int().nonnegative(),
   // The viewer's own finished lessons, including ones currently unpublished, so the outline can mark them.

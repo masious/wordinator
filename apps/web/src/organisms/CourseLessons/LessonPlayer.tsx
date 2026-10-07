@@ -1,7 +1,11 @@
-import { commentResponseSchema, courseProgressResponseSchema, RESPONSE_ANSWER_MAX, type CourseLessonSummary } from "@wordinator/contracts";
-import { flattenToSteps, type CourseLesson, type LessonBlockOf, type LessonStep } from "@wordinator/contracts/lesson-document";
+import {
+  commentResponseSchema, courseProgressResponseSchema, lessonPositionResponseSchema, RESPONSE_ANSWER_MAX, type CourseLessonSummary, type LessonPosition,
+} from "@wordinator/contracts";
+import {
+  flattenToSteps, lessonStepKey, resolveStepIndex, type CourseLesson, type LessonBlockOf, type LessonStep,
+} from "@wordinator/contracts/lesson-document";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, lessonQueryOptions, practiceDiscussionQueryOptions } from "../../api";
 import { Callout } from "../../molecules/Callout";
@@ -21,6 +25,8 @@ export const lessonSteps = (lesson: CourseLesson): LessonStep[] => {
 };
 
 export type PlayerScope = { groupId: string; courseId: string; accountId: string };
+const lessonApiPath = (scope: PlayerScope, lessonId: string) =>
+  `/api/groups/${encodeURIComponent(scope.groupId)}/courses/${encodeURIComponent(scope.courseId)}/lessons/${encodeURIComponent(lessonId)}`;
 
 function ExampleStep({ block }: { block: LessonBlockOf<"example"> }) {
   const { t } = useTranslation(); const [shown, setShown] = useState(true);
@@ -75,7 +81,7 @@ function FinishStep({ scope, lesson, next, onNext, onClose }: {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const progressKey = courseProgressQueryOptions(scope.groupId, scope.courseId).queryKey;
   const complete = useMutation({
-    mutationFn: () => apiRequest(`/api/groups/${encodeURIComponent(scope.groupId)}/courses/${encodeURIComponent(scope.courseId)}/lessons/${encodeURIComponent(lesson.id)}/completion`, courseProgressResponseSchema, { method: "PUT" }),
+    mutationFn: () => apiRequest(`${lessonApiPath(scope, lesson.id)}/completion`, courseProgressResponseSchema, { method: "PUT" }),
     onSuccess: (data) => queryClient.setQueryData(progressKey, data),
   });
   const { mutate } = complete;
@@ -117,13 +123,27 @@ function StepContent({ scope, lesson, step, answersFor, answer, shared, markShar
   }
 }
 
-function Player({ scope, lesson, next, onNext, onClose }: {
-  scope: PlayerScope; lesson: CourseLesson; next: CourseLessonSummary | undefined; onNext: (lessonId: string) => void; onClose: () => void;
+function Player({ scope, lesson, position, next, onNext, onClose }: {
+  scope: PlayerScope; lesson: CourseLesson; position: LessonPosition | undefined; next: CourseLessonSummary | undefined; onNext: (lessonId: string) => void; onClose: () => void;
 }) {
   const { t } = useTranslation();
   // Steps are fixed when the run starts, so a refetch (for example after sharing answers) never moves the reader.
   const [steps] = useState(() => lessonSteps(lesson));
-  const [index, setIndex] = useState(0);
+  // A published lesson resumes at the reader's saved step; previews always start at the beginning.
+  const [start] = useState(() => lesson.published && position && steps.length ? resolveStepIndex(steps, position.stepKey, position.stepIndex) : 0);
+  const [index, setIndex] = useState(start); const [resumed, setResumed] = useState(start > 0);
+  const save = useMutation({
+    mutationFn: (stepKey: string) => apiRequest(`${lessonApiPath(scope, lesson.id)}/position`, lessonPositionResponseSchema, { method: "PUT", body: JSON.stringify({ stepKey }) }),
+  });
+  const { mutate: savePosition } = save;
+  // Each move saves the step now shown. The resumed step is already saved, so opening the player alone records nothing.
+  const shown = useRef(start);
+  useEffect(() => {
+    if (shown.current === index) return;
+    shown.current = index; setResumed(false);
+    const current = steps[index];
+    if (lesson.published && current) savePosition(lessonStepKey(current));
+  }, [index, lesson.published, savePosition, steps]);
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
   const [shared, setShared] = useState<Record<string, boolean>>({});
   const finished = index >= steps.length; const step = steps[index];
@@ -144,6 +164,10 @@ function Player({ scope, lesson, next, onNext, onClose }: {
       <span className={styles.stepLabel}>{finished ? t("courses.player.done") : t("courses.player.step", { current: index + 1, total: steps.length })}</span>
       <ProgressMeter value={percent} label={t("courses.player.progressLabel")} />
     </div>
+    {resumed && <div className={styles.resumed} role="status">
+      <span>{t("courses.player.resumed")}</span>
+      <Button variant="quiet" onClick={() => setIndex(0)}>{t("courses.player.startOver")}</Button>
+    </div>}
     {finished || !step
       ? <FinishStep scope={scope} lesson={lesson} next={next} onNext={onNext} onClose={onClose} />
       // A dialogue keeps one stage while its lines arrive, so only the newest line animates in.
@@ -158,9 +182,11 @@ function Player({ scope, lesson, next, onNext, onClose }: {
   </div>;
 }
 
-// A focused, step-by-step run through one lesson. Finishing a published lesson records it toward the viewer's course progress.
-export function LessonPlayer({ scope, lessonId, outline, onChangeLesson, onClose }: {
-  scope: PlayerScope; lessonId: string | null; outline: CourseLessonSummary[]; onChangeLesson: (lessonId: string) => void; onClose: () => void;
+// A focused, step-by-step run through one lesson. Each step of a published lesson is saved as the viewer's position, and finishing
+// records the lesson toward the viewer's course progress.
+export function LessonPlayer({ scope, lessonId, outline, positions, onChangeLesson, onClose }: {
+  scope: PlayerScope; lessonId: string | null; outline: CourseLessonSummary[]; positions: readonly LessonPosition[];
+  onChangeLesson: (lessonId: string) => void; onClose: () => void;
 }) {
   const { t } = useTranslation();
   const lesson = useQuery({ ...lessonQueryOptions(scope.groupId, scope.courseId, lessonId ?? ""), enabled: lessonId !== null });
@@ -170,6 +196,6 @@ export function LessonPlayer({ scope, lessonId, outline, onChangeLesson, onClose
   return <AdaptiveDialog opened={lessonId !== null} onClose={onClose} title={title}>
     {lessonId !== null && (lesson.isPending ? <LoadingState label={t("courses.lessons.loading")} />
       : lesson.isError ? <ErrorState title={t("courses.lessons.unavailable")} />
-      : <Player key={lessonId} scope={scope} lesson={lesson.data.lesson} next={next} onNext={onChangeLesson} onClose={onClose} />)}
+      : <Player key={lessonId} scope={scope} lesson={lesson.data.lesson} position={positions.find((entry) => entry.lessonId === lessonId)} next={next} onNext={onChangeLesson} onClose={onClose} />)}
   </AdaptiveDialog>;
 }

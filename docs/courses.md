@@ -1,6 +1,6 @@
 # Courses
 
-Status: delivered. C1 (course shell), C2 (lessons and content blocks), C3 (practice blocks and answer threads), C4 (feed presence), C5 (contributors), and C6 (lesson player and progress) are complete. C7 (lesson editor) is approved and in progress; see [lesson documents](#lesson-documents). C8 (new words and recap) is approved and not started; see [new words](#new-words-and-recap). Delivery phases live in the [roadmap](roadmap.md#course-phases).
+Status: delivered. C1 (course shell), C2 (lessons and content blocks), C3 (practice blocks and answer threads), C4 (feed presence), C5 (contributors), C6 (lesson player and progress), and C6b (lesson positions) are complete. C7 (lesson editor) is approved and in progress; see [lesson documents](#lesson-documents). C8 (new words and recap) is approved and not started; see [new words](#new-words-and-recap). Delivery phases live in the [roadmap](roadmap.md#course-phases).
 
 ## Purpose
 
@@ -11,10 +11,11 @@ A course is a long-lived, member-authored learning journal that belongs to one g
 ```text
 course
   └─ lesson (ordered)
-       └─ block (ordered)
+       └─ lesson document (draft and published)
+            └─ block (ordered)
 ```
 
-There is no separate section level. A `heading` block titles a part of a lesson, so moving content between parts is an ordinary reorder.
+There is no separate section level. A `heading` block titles a part of a lesson, so moving content between parts is an ordinary move inside the document.
 
 ### Course
 
@@ -30,32 +31,20 @@ Any active member may create a course. Draft courses are visible only to their o
 - Required: title
 - Optional: goal
 - Ordered by position within the course
-- Published flag; unpublished lessons are visible only to the owner and contributors
+- Content: one draft and one published [lesson document](#lesson-documents); a lesson without a published document is unpublished and visible only to the owner and contributors
 
 Lesson numbers shown to readers are derived from position, never stored.
 
 ### Blocks
 
-Every block has an ordered position, a published flag, a kind, and a kind-specific payload. Payloads are validated by one shared Zod schema per kind and carry a payload version so stored content survives later shape changes.
+A lesson's blocks live in its [lesson document](#lesson-documents), which owns the block types, inline content, and publishing. Dialogue and practice blocks keep plain-text payloads so fill-in tokens and answer snapshots work.
 
-| Kind | Payload |
-| --- | --- |
-| `heading` | title |
-| `text` | content |
-| `example` | sentence, optional translation, optional note |
-| `dialogue` | ordered turns, each with a short speaker label and text |
-| `practice` | instruction, optional passage (optional title, content), ordered items |
-
-A practice item has a prompt, an optional author's version, and an optional note. Practice blocks have no mode field:
+A practice block has an instruction, an optional passage (optional title, content), and ordered items. A practice item has a prompt, an optional author's version, and an optional note. Practice blocks have no mode field:
 
 - A prompt containing one or more single-character `…` tokens is a fill-in item. Its author's version has exactly one nullable entry per blank, mapped left to right, matching the [fill-in post rule](posts-and-feed.md#fill-in-the-blanks).
 - Any other prompt is open: translate, rewrite, or answer a question. Its author's version has at most one entry.
 - An author's version with no filled entry is stored as an empty list, meaning the item has no author's version.
 - A passage turns the block into a reading exercise whose items are its questions.
-
-All block text is plain text under the [global content rules](product-requirements.md#global-content-rules). Highlighting is expressed by block kind, never by inline markup.
-
-> C7 replaces this block model, the per-block published flag, and the per-block editing model with [lesson documents](#lesson-documents). The rules in this section stay authoritative for the running code until C7b ships.
 
 ### Limits
 
@@ -63,21 +52,24 @@ Limits are safeguards, not learning constraints. They live in the shared contrac
 
 | Field | Limit |
 | --- | --- |
-| Course title / lesson title / heading / course level | 200 characters |
+| Course title / lesson title / heading / course level / image alt text | 200 characters |
 | Course summary, intended learner, lesson goal | 2,000 characters |
-| Text content, passage content | 10,000 characters |
+| Paragraph, list item, and callout text; passage content | 10,000 characters |
+| Image caption | 1,000 characters |
+| Link address | 2,048 characters |
 | Example sentence, translation, item prompt | 1,000 characters each |
 | Practice instruction | 2,000 characters |
 | Notes, author's version entry | 2,000 / 1,000 characters |
 | Practice answer entry | 4,000 characters |
 | Dialogue turns | 50 per block, speaker label 40 characters, line 1,000 characters |
 | Practice items | 50 per block |
-| Blocks per lesson | 200 |
+| Blocks per lesson document | 200 |
+| Lesson document size | 256 KB |
 | Lessons per course | 200 |
 
 ## Lesson documents
 
-Approved product change (C7), in progress. It replaces per-row blocks with one rich document per lesson, edited in a Notion-style block editor. Until C7b ships, the [blocks](#blocks) and [editing model](#editing-model) sections describe the running code.
+Approved product change (C7). It replaced per-row blocks with one rich document per lesson, edited in a Notion-style block editor. Lessons created before C7 were converted by migration `0015`: each old block became the matching document block, and only previously published blocks of published lessons entered the published document.
 
 ### Editor and format
 
@@ -202,62 +194,76 @@ Approved product change (C6): a light, non-competitive layer of progress on top 
 
 Every lesson with content has a Start lesson action (Practise again once finished) that opens a focused, step-by-step player with a progress bar and a step counter. Below `48em` the player is a full-screen sheet, and the course page's lesson outline collapses behind a Lessons toggle that closes again once a lesson is chosen.
 
-- Blocks become steps in lesson order. A `heading` is not a step; it labels the steps that follow it.
-- A `text` block and an `example` block are one step each. An example's translation starts hidden behind Show translation, and its note appears with the translation (or immediately when there is no translation).
+- Steps come from the published document in order (`flattenToSteps` in the contracts). A `heading` is not a step; it labels the steps that follow it.
+- Consecutive prose under one heading (paragraphs, list items, images, and dividers) is one step; blank paragraphs alone make no step. A `callout` and an `example` are one step each. An example shows its translation and note with the sentence.
+- A column list without dialogue or practice is one step, laid out as in the reader. A column list containing dialogue or practice is read column by column, block by block, with the rules above.
 - Each `dialogue` turn is a step: lines appear one after another, earlier lines stay visible and muted, and the newest line is emphasized.
 - Each `practice` item is a step that asks one question with one answer field. The instruction stays visible, and a passage is collapsible and open on the first item. Answers use the same local `practice-answer` draft as the lesson view, so either surface can continue a set. On the last item, a learner with at least one answer may share the set to the practice thread; otherwise it stays a private draft. Sharing follows the ordinary [practice answer](#practice-answers) rules and does not reveal the thread inside the player.
 - Steps are fixed when a run starts; a refetch during the run never moves the learner. Back and Next move freely. There is no timer and nothing is marked right or wrong.
+- A published lesson the learner has started opens at their [saved step](#lesson-positions) with a Picked up where you left off note and a Start over action. Previews always start at the first step.
 - After the last step the player shows a completion screen with the learner's course percentage and offers the next lesson or a return to the course.
 - Owners and contributors can run unpublished lessons as a preview. Previews never count toward progress, and the completion screen says so.
 
 ### Progress
 
 - Finishing a published lesson in the player records one completion per member and lesson. Repeating the lesson keeps the first completion. Reading the lesson page alone does not record anything.
-- A member's course progress is the number of finished lessons among the currently published lessons, as a whole percentage rounded down. Unpublishing a lesson removes it from both counts; republishing restores it. Editing a finished lesson does not reset it. Deleting a lesson deletes its completions.
-- The course page shows a Progress panel, visible to everyone who can see the course, listing every active group member with their percentage and `completed of total` lessons. Members are listed by name, never ranked. The panel is hidden while the course has no published lessons or is archived.
+- A member's course progress is the share of the currently published lessons they have worked through, as a whole percentage rounded down. Every published lesson weighs the same: a finished lesson counts whole, a started lesson counts as the furthest share of its steps the member has passed (see [lesson positions](#lesson-positions)), and an untouched lesson counts nothing. Unpublishing a lesson removes it from every count; republishing restores it. Editing a finished lesson does not reset it. Deleting a lesson deletes its completions and positions.
+- The course page shows a Progress panel, visible to everyone who can see the course, listing every active group member with their percentage and `completed of total` finished lessons. Members are listed by name, never ranked. The panel is hidden while the course has no published lessons or is archived.
 - The outline marks the viewer's finished lessons with a check.
 - Former members disappear from the panel; their completions stay stored and reappear if they rejoin.
 - Archived courses refuse new completions (`409 COURSE_ARCHIVED`), and unpublished lessons refuse them (`409 LESSON_UNPUBLISHED`).
 - Progress creates no notifications and no feed posts.
 
+### Lesson positions
+
+Approved product change (C6b): the player remembers where a member stopped, so they can resume and so a started lesson counts in part toward progress. It stays inside the C6 progress exception and adds nothing competitive.
+
+- Each move in the player of a published lesson saves the step now shown as the member's position in that lesson; opening the player alone saves nothing. Previews never save positions.
+- A step is identified by its block ID, plus the dialogue line or practice item number inside it. Edits elsewhere in the lesson move the step's number but not its identity. When the step's block is gone, the player falls back to the saved step number, clamped to the lesson. The API resolves the key against the published document and refuses a key it cannot find (`409 LESSON_STEP_NOT_FOUND`); the player ignores that refusal.
+- The passed share is the number of steps before the step shown, of the lesson's current step count, so the last step shown is still short of finishing. It never shrinks when the member steps back; when an edit shortens the lesson it is capped below the new count. Only Finish lesson counts the lesson whole.
+- Finishing a lesson deletes its position. Practising a finished lesson again saves a new position for resuming, which never adds progress.
+- The course page offers Pick up where you left off for the member's most recently moved unfinished lesson, labels each started lesson's action Continue lesson with its saved step, and refreshes progress when the player closes.
+- A position is private to its member. Other members see only the resulting percentage in the Progress panel.
+- Archived courses refuse positions (`409 COURSE_ARCHIVED`), unpublished lessons refuse them (`409 LESSON_UNPUBLISHED` for editors; `404` for readers, who cannot see them). Positions in unpublished lessons stay stored but do not count or show until the lesson is published again.
+- New step kinds (such as C8's `words` step) must give their steps a stable key in `lessonStepKey`.
+
 ## Contributors and publishing
 
 Course roles are per course and do not add group roles.
 
-- **Owner:** edits everything, decides contributor requests, publishes and unpublishes the course, lessons, and blocks, and archives the course.
-- **Contributor:** an accepted member who may add lessons and blocks and edit any unpublished lesson or block. Contributor work stays a draft until the owner publishes it.
+- **Owner:** edits everything, decides contributor requests, publishes, discards, and unpublishes the course and its lessons, and archives the course.
+- **Contributor:** an accepted member who may add lessons and edit the draft document of any lesson, published or not. Contributor work stays in the draft until the owner publishes it.
 - **Participant:** every active group member may read published content and answer practices.
 
 Any active member may request to contribute. Requests follow the membership pattern: states are `pending`, `active`, `rejected`, `left`, and `removed`; there is at most one pending request per member and course; rejected, departed, and removed members may request again.
 
-Published lessons and blocks are edited only by the owner. To let a contributor rework published content, the owner unpublishes it first. This keeps the owner's publishing decision meaningful without storing parallel revisions.
+Because every lesson has a separate draft, contributors rework published lessons in the draft while learners keep the published version, and the owner's publish decision stays meaningful. A published lesson's title and goal are edited only by the owner.
 
-The group creator keeps the moderation powers described in [groups and membership](groups-and-membership.md#creator): they may remove any block, lesson, or answer and archive any course.
+The group creator keeps the moderation powers described in [groups and membership](groups-and-membership.md#creator): they may delete any lesson or answer and archive any course.
 
 Contributor rules settled in C5:
 
 - A member asks to contribute from the course page of a published course they can read; the owner cannot. The owner sees pending requests on the course page and accepts or rejects them. Only a requester who is still an active group member can be accepted.
 - Requests and decisions notify: the owner on a request, and the requester on acceptance or rejection. Removal and leaving create no notification.
 - A contributor may withdraw a pending request or leave an active role; both end as `left`. Only the owner removes an active contributor. The group creator does not decide contributor requests for another member's course.
-- Contributors add lessons and blocks, including unpublished blocks inside a published lesson, and edit unpublished lessons and blocks. They cannot publish (`403 COURSE_PUBLISH_FORBIDDEN`) or change published content (`403 COURSE_CONTENT_PUBLISHED`).
-- Reordering, deleting lessons and blocks, course details, the cover, course visibility, and contributor decisions stay with the owner, and deletion also with the group creator as moderation.
-- Active contributors see a draft course and its unpublished lessons and blocks, receive practice references as editors, and see who last edited each lesson and block. Archived courses stay hidden from them.
+- Contributors add lessons and edit any lesson's draft. They cannot publish, discard, or unpublish (`403 COURSE_PUBLISH_FORBIDDEN`), or change a published lesson's title and goal (`403 COURSE_CONTENT_PUBLISHED`).
+- Reordering and deleting lessons, course details, the cover, course visibility, and contributor decisions stay with the owner, and deletion also with the group creator as moderation.
+- Active contributors see a draft course, unpublished lessons, and every lesson's draft, receive practice references as editors, and see who last edited each lesson. Archived courses stay hidden from them.
 - Leaving or being removed from the group ends every pending request and active contributor role in that group. Rejoining does not restore them.
 
 ## Editing model
 
 Authors save small pieces, so they can return to a course at any time.
 
-- Every course, lesson, and block is saved through its own endpoint. There is no whole-course save.
-- Lessons and blocks carry an integer version. An update must send the version it was based on; a stale version returns a conflict instead of overwriting a collaborator's work. After a conflict the editor keeps the author's unsaved edit and lets them either rebase it on the newer version and save again, or discard it.
-- An update carries the item's full editable state, including its published flag, so publishing is also a versioned edit. A block keeps its kind; changing kind means adding a new block.
-- Reordering sends the complete ordered ID list for one parent, and the server rewrites positions in one D1 batch. A list that no longer matches the parent's children is rejected. Reordering does not change versions.
-- Server-side unpublished content is the durable draft. Local storage keeps only an unsaved block edit, under the [draft-key rules](posts-and-feed.md#composer-and-drafts) with draft kind `course-block` and the block or lesson ID as target.
+- Course details and lessons are saved through their own endpoints. There is no whole-course save.
+- A lesson's content is saved as its whole draft document, autosaved by the editor under the [drafts and publishing](#drafts-and-publishing) rules. Lesson title and goal are saved separately and carry no version.
+- Reordering lessons sends the complete ordered ID list for the course, and the server rewrites positions in one D1 batch. A list that no longer matches the course's lessons is rejected. Blocks move inside the document.
+- The server-side draft is the durable draft. Local storage keeps only an unsaved edit of a lesson document, under the [draft-key rules](posts-and-feed.md#composer-and-drafts) with draft kind `course-lesson-doc` and the lesson ID as target.
 
 ## Reading and loading
 
 - The course library lists the group's courses that the viewer may see, newest first. Library filtering by level is permitted because the library is not the feed.
-- A course read returns the full outline (lesson IDs, titles, goals, positions, published state) plus the blocks of the first three visible lessons.
+- A course read returns the full outline (lesson IDs, titles, goals, positions, published state) plus the documents of the first three visible lessons.
 - Further lessons load by ID as the reader advances.
 - Learner payloads never include authors' versions or item notes. Editors receive them for editing.
 
@@ -275,7 +281,7 @@ The cover image reuses the [public R2 image pipeline](architecture.md#images) wi
 
 ## Deletion and retention
 
-Courses are archived, not hard-deleted. The owner or group creator may archive and restore a course; archived courses are hidden from the library except to the owner and group creator. Restoring returns the course to draft, and archived courses cannot be edited until they are restored. Deleting a lesson or block is hard deletion and removes its answer threads, replies, and reactions. Contributor departure keeps their authored content.
+Courses are archived, not hard-deleted. The owner or group creator may archive and restore a course; archived courses are hidden from the library except to the owner and group creator. Restoring returns the course to draft, and archived courses cannot be edited until they are restored. Deleting a lesson is hard deletion and removes its answer threads, replies, reactions, and images. Removing a practice block from a lesson removes its thread at the next publish or discard, after the editor warns the owner. Contributor departure keeps their authored content.
 
 ## Deferred
 

@@ -62,7 +62,7 @@ Phase 3 implements post-composer drafts with schema version `v1` and the key sha
 
 Phase 4 implements the remaining writing drafts with `wordinator:draft:v1:<account-id>:<group-id>:<draft-kind>:<target-id>`. Draft kinds distinguish comments, replies, standalone answers, fill responses, and reading responses; reply targets are the parent comment and all other targets are the post. Reading drafts include the current wizard step. Empty drafts are not retained, and successful publication clears only the submitted draft.
 
-[Courses](courses.md#editing-model) add the draft kind `course-block`, using the same key shape with the block ID as target, or the lesson ID for a block not yet created. Only edits that differ from the saved block are retained. A successful save or an explicit discard removes the draft. Practice answer sets use the draft kind `practice-answer` with the block ID as target, and practice replies use `reply` with the parent comment as target. Empty answer sets are not retained, and publishing clears the draft.
+[Courses](courses.md#editing-model) add the draft kind `course-lesson-doc`, using the same key shape with the lesson ID as target, for an unsaved edit of a lesson document. A successful autosave or an explicit discard removes the draft. Practice answer sets use the draft kind `practice-answer` with the block ID as target, and practice replies use `reply` with the parent comment as target. Empty answer sets are not retained, and publishing clears the draft.
 
 ## Feed
 

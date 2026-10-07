@@ -37,6 +37,7 @@ import {
   COURSE_LESSONS_MAX,
   COURSE_PRELOADED_LESSONS,
   courseProgressResponseSchema,
+  lessonPositionResponseSchema,
   createLessonRequestSchema,
   outlineResponseSchema,
   reorderRequestSchema,
@@ -55,8 +56,8 @@ import {
   type PostInput,
 } from "@wordinator/contracts";
 import {
-  collectImageUrls, collectPracticeIds, courseDetailResponseSchema, findPublishProblems, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
-  lessonResponseSchema, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
+  collectImageUrls, collectPracticeIds, courseDetailResponseSchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
+  lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
   toLearnerDocument, walkLessonBlocks, type CourseLesson, type LessonBlockOf, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
 import { createDatabase, groups, memberships, users } from "@wordinator/db";
@@ -1722,30 +1723,42 @@ app.get(lessonPath, requireGroupAccess, async (context) => {
   return lessonResponse(context, found.row, lesson.lesson.id);
 });
 
-// Progress counts finished lessons among the currently published ones, for every active member of the course's group.
-// Members are listed by name, never ranked by progress.
+// Progress counts finished lessons among the currently published ones, plus the passed share of each published lesson a member
+// has started but not finished, for every active member of the course's group. Members are listed by name, never ranked by progress.
+const PUBLISHED_POSITION_JOIN = "JOIN course_lessons l ON l.id = p.lesson_id AND l.group_id = p.group_id AND l.published_doc IS NOT NULL";
 async function progressResponse(context: Context<AppEnvironment>, course: CourseRow) {
   const db = context.env.DB; const viewerId = context.get("user")!.id;
-  const [published, mine, members] = await Promise.all([
+  const [published, mine, positions, members] = await Promise.all([
     db.prepare("SELECT COUNT(*) AS total FROM course_lessons WHERE group_id = ? AND course_id = ? AND published_doc IS NOT NULL").bind(course.groupId, course.id).first<{ total: number }>(),
     db.prepare("SELECT lesson_id AS lessonId FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND user_id = ? ORDER BY completed_at")
       .bind(course.groupId, course.id, viewerId).all<{ lessonId: string }>(),
     db.prepare(
+      `SELECT p.lesson_id AS lessonId, p.step_key AS stepKey, p.step_index AS stepIndex, p.passed_steps AS passedSteps, p.total_steps AS totalSteps, p.updated_at AS updatedAt
+       FROM course_lesson_positions p ${PUBLISHED_POSITION_JOIN}
+       WHERE p.group_id = ? AND p.course_id = ? AND p.user_id = ? ORDER BY p.updated_at DESC, p.lesson_id ASC`,
+    ).bind(course.groupId, course.id, viewerId).all(),
+    db.prepare(
       `SELECT u.id, u.display_name AS displayName, u.avatar_key AS avatarKey,
         (SELECT COUNT(*) FROM course_lesson_completions clc JOIN course_lessons l ON l.id = clc.lesson_id AND l.group_id = clc.group_id AND l.published_doc IS NOT NULL
-          WHERE clc.group_id = m.group_id AND clc.course_id = ? AND clc.user_id = m.user_id) AS completed
+          WHERE clc.group_id = m.group_id AND clc.course_id = ? AND clc.user_id = m.user_id) AS completed,
+        (SELECT COALESCE(SUM(CAST(p.passed_steps AS REAL) / p.total_steps), 0) FROM course_lesson_positions p ${PUBLISHED_POSITION_JOIN}
+          WHERE p.group_id = m.group_id AND p.course_id = ? AND p.user_id = m.user_id
+            AND NOT EXISTS (SELECT 1 FROM course_lesson_completions clc WHERE clc.lesson_id = p.lesson_id AND clc.user_id = p.user_id)) AS started
        FROM memberships m JOIN users u ON u.id = m.user_id
        WHERE m.group_id = ? AND m.state = 'active'
        ORDER BY u.display_name COLLATE NOCASE ASC, u.id ASC`,
-    ).bind(course.id, course.groupId).all<{ id: string; displayName: string; avatarKey: string | null; completed: number }>(),
+    ).bind(course.id, course.id, course.groupId).all<{ id: string; displayName: string; avatarKey: string | null; completed: number; started: number }>(),
   ]);
   const total = published?.total ?? 0;
+  // The small epsilon keeps sums such as 1/3 + 2/3 from rounding down a whole lesson.
+  const percent = (lessons: number) => total ? Math.min(100, Math.floor((lessons / total) * 100 + 1e-9)) : 0;
   return context.json(courseProgressResponseSchema.parse({
     publishedLessons: total,
     completedLessonIds: mine.results.map((row) => row.lessonId),
+    positions: positions.results,
     participants: members.results.map((row) => ({
       user: { id: row.id, displayName: row.displayName, avatarUrl: mediaUrl(context.env, row.avatarKey) },
-      completedLessons: row.completed, percent: total ? Math.floor((row.completed / total) * 100) : 0,
+      completedLessons: row.completed, percent: percent(row.completed + row.started),
     })),
   }));
 }
@@ -1761,11 +1774,38 @@ app.put(`${lessonPath}/completion`, requireGroupAccess, async (context) => {
   if (found.row.status === "archived") return apiError(context, 409, "COURSE_ARCHIVED", "Restore this course before changing it.");
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
   if (!lesson.lesson.published) return apiError(context, 409, "LESSON_UNPUBLISHED", "Only published lessons count toward progress.");
-  await context.env.DB.prepare(
-    `INSERT INTO course_lesson_completions (group_id, course_id, lesson_id, user_id, completed_at) VALUES (?, ?, ?, ?, ?)
-     ON CONFLICT (lesson_id, user_id) DO NOTHING`,
-  ).bind(found.row.groupId, found.row.id, lesson.lesson.id, context.get("user")!.id, Date.now()).run();
+  const db = context.env.DB; const userId = context.get("user")!.id;
+  // The finished lesson now counts whole, so its saved position is no longer needed.
+  await db.batch([
+    db.prepare(
+      `INSERT INTO course_lesson_completions (group_id, course_id, lesson_id, user_id, completed_at) VALUES (?, ?, ?, ?, ?)
+       ON CONFLICT (lesson_id, user_id) DO NOTHING`,
+    ).bind(found.row.groupId, found.row.id, lesson.lesson.id, userId, Date.now()),
+    db.prepare("DELETE FROM course_lesson_positions WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND user_id = ?").bind(found.row.groupId, found.row.id, lesson.lesson.id, userId),
+  ]);
   return progressResponse(context, found.row);
+});
+
+// The lesson player saves the step a member is on, so they can resume and so a started lesson counts in part toward progress.
+// The key is resolved against the published document; the furthest share passed never shrinks, even when the reader steps back.
+app.put(`${lessonPath}/position`, requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  if (found.row.status === "archived") return apiError(context, 409, "COURSE_ARCHIVED", "Restore this course before changing it.");
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  if (lesson.lesson.publishedDoc === null) return apiError(context, 409, "LESSON_UNPUBLISHED", "Only published lessons count toward progress.");
+  const parsed = await parseJson(context, lessonPositionRequestSchema); if ("response" in parsed) return parsed.response;
+  const steps = flattenToSteps(storedDocument(lesson.lesson.publishedDoc, lesson.lesson.id));
+  const stepIndex = steps.findIndex((step) => lessonStepKey(step) === parsed.data.stepKey);
+  if (stepIndex < 0) return apiError(context, 409, "LESSON_STEP_NOT_FOUND", "This lesson has changed. Reopen it to continue.");
+  const position = await context.env.DB.prepare(
+    `INSERT INTO course_lesson_positions (group_id, course_id, lesson_id, user_id, step_key, step_index, passed_steps, total_steps, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+     ON CONFLICT (lesson_id, user_id) DO UPDATE SET step_key = excluded.step_key, step_index = excluded.step_index,
+       passed_steps = MAX(excluded.passed_steps, MIN(course_lesson_positions.passed_steps, excluded.total_steps - 1)),
+       total_steps = excluded.total_steps, updated_at = excluded.updated_at
+     RETURNING lesson_id AS lessonId, step_key AS stepKey, step_index AS stepIndex, passed_steps AS passedSteps, total_steps AS totalSteps, updated_at AS updatedAt`,
+  ).bind(found.row.groupId, found.row.id, lesson.lesson.id, context.get("user")!.id, parsed.data.stepKey, stepIndex, stepIndex, steps.length, Date.now()).first();
+  return context.json(lessonPositionResponseSchema.parse({ position }));
 });
 
 app.patch(lessonPath, requireGroupAccess, async (context) => {
@@ -1783,7 +1823,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
   const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id; const db = context.env.DB;
   const media = await db.prepare("SELECT key FROM course_media WHERE group_id = ? AND lesson_id = ?").bind(groupId, lessonId).all<{ key: string }>();
-  // Lessons are hard-deleted with their practice threads, completions, and images; reactions have no foreign key, so they go first.
+  // Lessons are hard-deleted with their practice threads, completions, positions, and images; reactions have no foreign key, so they go first.
   const practices = "SELECT id FROM course_practices WHERE group_id = ? AND course_id = ? AND lesson_id = ?";
   await db.batch([
     db.prepare(`DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND target_id IN (SELECT id FROM comments WHERE group_id = ? AND block_id IN (${practices}))`)
@@ -1792,6 +1832,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
     db.prepare("DELETE FROM course_practices WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_media WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
+    db.prepare("DELETE FROM course_lesson_positions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lessons WHERE group_id = ? AND course_id = ? AND id = ?").bind(groupId, courseId, lessonId),
   ]);
   if (media.results.length) await context.env.MEDIA.delete(media.results.map((row) => row.key));

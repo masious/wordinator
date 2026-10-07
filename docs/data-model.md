@@ -50,13 +50,21 @@ Migration `0009_course_shell.sql` adds the table and its library index.
 
 ### `course_lessons`
 
-Opaque ID, group ID, course ID, title, optional goal, position, published flag, integer version (starting at 1), created-by and updated-by user IDs, and created/updated timestamps. Lesson numbers shown to readers are derived from position among the visible lessons and are never stored.
+Opaque ID, group ID, course ID, title, optional goal, position, draft document (JSON text, not null), integer draft version (starting at 1), nullable published document (JSON text), nullable published timestamp, created-by and updated-by user IDs, and created/updated timestamps. Check constraints require both documents to be valid JSON. A lesson is published exactly when its published document is not null. Lesson numbers shown to readers are derived from position among the visible lessons and are never stored.
 
-### `course_blocks`
+The shared contracts own the [lesson document](courses.md#lesson-documents) shape, and the API reads stored documents through the contracts' parser. Every draft save increments the draft version. Publishing copies the draft to the published document, discarding copies the published document back into the draft (also incrementing the draft version, so open editors see a conflict), and unpublishing clears the published document. Title and goal edits and reordering do not change the draft version. Updated-by display uses the live or group snapshot profile at read time and is shown to the owner and contributors as editor attribution.
 
-Opaque ID, group ID, course ID, lesson ID, position, kind, JSON payload, payload version, published flag, integer version, created-by and updated-by user IDs, and created/updated timestamps. A check constraint limits kind to `heading`, `text`, `example`, `dialogue`, and `practice`, and another requires the payload to be valid JSON. The shared contracts own each kind's payload shape; the API stores the current payload version and reads stored payloads through the contracts' versioned parser.
+A practice block in a document carries its payload as a JSON string: the instruction, an optional passage, and ordered items with a prompt, an author's version list (empty when there is none), and an optional note. Authors' versions and notes are stored in the documents but removed from every learner read; see [courses](courses.md#practice-answers).
 
-Every content edit increments `version`; reordering rewrites only `position`. Updated-by display uses the live or group snapshot profile at read time and is shown to the owner and contributors as editor attribution. Migration `0010_course_lessons_blocks.sql` adds both tables, which carry an explicit `group_id` and cascade from their course and lesson. Migration `0011_course_practice_threads.sql` rebuilds `course_blocks` to add `practice` to the kind constraint.
+Migration `0010_course_lessons_blocks.sql` added lessons with per-row `course_blocks`, and `0011_course_practice_threads.sql` added the practice kind. Migration `0015_lesson_documents.sql` alters `course_lessons` in place (it is never rebuilt, because completions, practices, and media cascade from it), maps each lesson's blocks into a draft document and its published blocks into a published document exactly as the contracts' `upgradeLegacyBlocks` does, and drops `course_blocks` together with the old published flag and version columns.
+
+### `course_practices`
+
+Opaque ID (the practice block's ID in the document), group ID, course ID, lesson ID, and created timestamp. One anchor row per practice block ID found in either document of a lesson, so practice answer threads keep a real foreign key while the practice itself lives in JSON. Draft saves add anchors for new practice IDs and refuse IDs that belong to another lesson; publishing and discarding delete anchors, with their threads, whose practice is in neither document. Rows cascade from their course and lesson. Migration `0015_lesson_documents.sql` adds the table, its `(group_id, lesson_id)` index, and an anchor for every existing practice block.
+
+### `course_media`
+
+R2 key (primary key), group ID, course ID, lesson ID, created-by user ID, and created timestamp. Every uploaded [lesson image](courses.md#images) has a row, so the API accepts only image keys uploaded to that lesson. Rows referenced by neither document and older than 24 hours are deleted with their R2 objects at publish and discard and by the daily sweep. Rows cascade from their course and lesson. Migration `0015_lesson_documents.sql` adds the table and its `(group_id, lesson_id, created_at)` index.
 
 ### `course_lesson_words`
 
@@ -70,15 +78,17 @@ Group ID, course ID, user ID, state (`pending`, `active`, `rejected`, `left`, or
 
 Group ID, course ID, lesson ID, user ID, and completed timestamp. The primary key is `(lesson_id, user_id)`: a member finishes a lesson once, and repeating it keeps the first timestamp. Rows cascade from their course and lesson, and lesson deletion also removes them explicitly in its batch. No percentage is stored; [course progress](courses.md#lesson-player-and-progress) is derived at read time over the currently published lessons. Rows stay when a member leaves the group. Migration `0014_course_lesson_completions.sql` adds the table and its `(group_id, course_id, user_id)` index.
 
-A practice payload stores the instruction, an optional passage, and ordered items with a prompt, an author's version list (empty when there is none), and an optional note. Authors' versions and notes are stored in the payload but removed from every learner read; see [courses](courses.md#practice-answers).
+### `course_lesson_positions`
+
+Added in C6b. Group ID, course ID, lesson ID, user ID, step key, step index, passed steps, total steps, and updated timestamp; the primary key is `(lesson_id, user_id)`. The step key and index are the last [player step](courses.md#lesson-positions) shown, for resuming. Passed steps of total steps is the furthest share of the lesson passed, which counts toward course progress while the lesson is unfinished; a check keeps `total_steps > 0` and both the index and passed steps below it. Finishing the lesson deletes the row. Rows cascade from their course and lesson, lesson deletion also removes them explicitly in its batch, and they stay when a member leaves the group. Indexed by `(group_id, course_id, user_id)`. Migration `0016_course_lesson_positions.sql` adds the table.
 
 ## Discussion
 
 ### `comments`
 
-Opaque ID, group ID, nullable post ID, nullable course block ID, author ID, nullable parent comment ID, plain body where applicable, created/updated timestamps, and a kind: `text`, `reading_response`, `fill_response`, or `practice_response`. A check constraint requires exactly one of post ID and block ID, so every comment belongs to one discussion target: a post or a practice block. Parent comments must belong to the same target and themselves have no parent. Comments are indexed by `(group_id, post_id, parent_comment_id, created_at, id)` and `(group_id, block_id, parent_comment_id, created_at, id)`.
+Opaque ID, group ID, nullable post ID, nullable practice block ID, author ID, nullable parent comment ID, plain body where applicable, created/updated timestamps, and a kind: `text`, `reading_response`, `fill_response`, or `practice_response`. A check constraint requires exactly one of post ID and block ID, so every comment belongs to one discussion target: a post or a practice block. Since migration `0015_lesson_documents.sql`, the block ID references `course_practices` and cascades from it. Parent comments must belong to the same target and themselves have no parent. Comments are indexed by `(group_id, post_id, parent_comment_id, created_at, id)` and `(group_id, block_id, parent_comment_id, created_at, id)`.
 
-Migration `0011_course_practice_threads.sql` rebuilds `comments` with the block target and the new kind. Because dropping a parent table can fire cascades, the migration restores comments, response items, and pins from constraint-free copies after the rebuild.
+Migration `0011_course_practice_threads.sql` rebuilds `comments` with the block target and the new kind, and `0015_lesson_documents.sql` rebuilds it again to point the block target at `course_practices`. Because dropping a parent table can fire cascades, both migrations restore comments, response items, and pins from constraint-free copies after the rebuild.
 
 ### `comment_response_items`
 
@@ -113,14 +123,15 @@ Opaque ID, group ID, recipient ID, actor ID, event type, optional post ID, optio
 - Comments are hard-deleted with replies, response items, and reactions.
 - Notifications survive target deletion.
 - Courses are never hard-deleted. Archiving sets status `archived`; restoring returns the course to `draft` so the owner chooses again when to publish. Archived courses keep their cover image. A course post stays when its course is archived and is deleted like any other post.
-- Lessons and blocks are hard-deleted. Deleting a lesson deletes its blocks in the same batch. Deleting a block, or a lesson containing it, also deletes its practice answers, replies, response items, and the reactions on them. Comments cascade from their block, and the API deletes the reactions and comments explicitly in the same batch because reaction targets have no foreign key.
-- Member departure never deletes authored content or reactions. Contributor departure or removal keeps their lessons, blocks, and updated-by attribution. Lesson completions also stay and are hidden while the member is not active.
-- Deleting a lesson deletes its completions.
+- Lessons are hard-deleted with their documents, practice anchors, practice answers, replies, response items, the reactions on them, and their lesson images (rows and R2 objects). The API deletes the reactions and comments explicitly in the same batch because reaction targets have no foreign key, and deletes the R2 objects after the batch.
+- Removing a block from a lesson is an ordinary draft edit. A practice removed from both documents loses its anchor and thread at the next publish or discard, after the editor warns the owner; images referenced by neither document are cleaned up as described under `course_media`.
+- Member departure never deletes authored content or reactions. Contributor departure or removal keeps their lessons and updated-by attribution. Lesson completions and positions also stay and are hidden while the member is not active.
+- Deleting a lesson deletes its completions and positions.
 - Records and images otherwise remain indefinitely.
 - Replaced/removed R2 images are deleted after database state safely points away from them.
 
 ## Indexing and isolation
 
-Index the feed by `(group_id, created_at, id)`, memberships by user and state, pending membership requests by group/state, profile posts by `(group_id, author_id, created_at, id)`, comments by post/parent/order and by block/parent/order, reactions by target, the course library by `(group_id, created_at, id)`, lessons by `(group_id, course_id, position)`, blocks by `(group_id, lesson_id, position)`, course contributors by `(group_id, course_id, state)`, lesson completions by `(group_id, course_id, user_id)`, and notifications by `(recipient_id, group_id, created_at)` plus `(recipient_id, created_at)` for restricted status lookup.
+Index the feed by `(group_id, created_at, id)`, memberships by user and state, pending membership requests by group/state, profile posts by `(group_id, author_id, created_at, id)`, comments by post/parent/order and by block/parent/order, reactions by target, the course library by `(group_id, created_at, id)`, lessons by `(group_id, course_id, position)`, practice anchors by `(group_id, lesson_id)`, lesson media by `(group_id, lesson_id, created_at)`, course contributors by `(group_id, course_id, state)`, lesson completions by `(group_id, course_id, user_id)`, and notifications by `(recipient_id, group_id, created_at)` plus `(recipient_id, created_at)` for restricted status lookup.
 
 Every tenant-owned table includes or can unambiguously derive `group_id`. Favor explicit `group_id` when it makes authorization and indexes safer, even if technically redundant.

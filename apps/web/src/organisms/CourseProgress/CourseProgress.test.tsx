@@ -21,7 +21,7 @@ afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 describe("Course progress", () => {
   it("shows every participant's percentage and marks the viewer", async () => {
     renderProgress({
-      publishedLessons: 4, completedLessonIds: [],
+      publishedLessons: 4, completedLessonIds: [], positions: [],
       participants: [{ user: bo, completedLessons: 3, percent: 75 }, { user: ada, completedLessons: 0, percent: 0 }],
     });
     expect(await screen.findByRole("heading", { name: "Progress" })).toBeInTheDocument();
@@ -32,7 +32,7 @@ describe("Course progress", () => {
   });
 
   it("stays hidden while the course has no published lessons", async () => {
-    renderProgress({ publishedLessons: 0, completedLessonIds: [], participants: [{ user: ada, completedLessons: 0, percent: 0 }] });
+    renderProgress({ publishedLessons: 0, completedLessonIds: [], positions: [], participants: [{ user: ada, completedLessons: 0, percent: 0 }] });
     await vi.waitFor(() => expect(fetch).toHaveBeenCalled());
     await new Promise((resolve) => setTimeout(resolve, 0));
     expect(screen.queryByRole("heading", { name: "Progress" })).not.toBeInTheDocument();

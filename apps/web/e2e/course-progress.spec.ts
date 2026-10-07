@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
 import { courseApi, dialogue, example, practice, seedLesson } from "./lessonSeed";
 
-test("a learner steps through a lesson and the course shows their progress", async ({ page }, testInfo) => {
+test("a learner steps through a lesson, resumes it, and the course shows their progress", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
   const suffix = `progress-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
   await page.goto("/"); await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL); await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD); await page.getByRole("button", { name: "Sign in" }).click();
@@ -32,6 +32,14 @@ test("a learner steps through a lesson and the course shows their progress", asy
   await expect(player.getByText("Dank je wel.")).toHaveCount(0);
   await player.getByRole("button", { name: "Next" }).click();
   await expect(player.getByText("Dank je wel.")).toBeVisible();
+
+  // Leaving mid-lesson keeps the step: two of four steps passed in one of two lessons is a quarter of the course.
+  await page.keyboard.press("Escape");
+  await expect(page.getByText("Pick up where you left off: lesson 1", { exact: false })).toBeVisible();
+  await expect(progress).toHaveAttribute("aria-valuenow", "25");
+  await page.getByRole("button", { name: "Continue lesson 1" }).click();
+  await expect(player.getByText("Step 3 of 4")).toBeVisible();
+  await expect(player.getByText("Picked up where you left off.")).toBeVisible();
   await player.getByRole("button", { name: "Next" }).click();
   await expect(player.getByText("Question 1 of 1")).toBeVisible();
   await player.getByLabel("Your answer").fill("Ga linksaf.");

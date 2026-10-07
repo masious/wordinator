@@ -20,6 +20,9 @@
 .lessonHeader h2{margin:0;font-family:var(--font-display);font-size:var(--type-section-title);font-weight:var(--weight-medium);letter-spacing:var(--tracking-title);line-height:var(--line-title);overflow-wrap:anywhere}
 .lessonNumber{margin:0;font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
 .start{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3);margin-top:var(--space-2)}
+.position{font:var(--type-metadata)/1 var(--font-mono);color:var(--color-foreground-muted)}
+.resume{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3)}
+.resume p{margin:0}
 .completed{font-size:var(--type-metadata);font-weight:var(--weight-semibold);color:var(--color-success)}
 .check{color:var(--color-success);font-weight:var(--weight-semibold)}
 .goal{margin:0;color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}

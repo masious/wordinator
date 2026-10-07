@@ -27,7 +27,7 @@ Only active group members can read a group, its directory, profiles, posts, disc
 
 Former-member profile fields come from the membership’s last group-visible snapshot rather than the account’s current fields. Active profile changes refresh snapshots only for active memberships, preventing former groups from learning later display-name, bio, or avatar changes.
 
-Course progress is visible to every member who can see the course: each active member's finished-lesson count and percentage are shown by name. It reveals only which published lessons were finished, never answers or timing. Former members are not listed.
+Course progress is visible to every member who can see the course: each active member's finished-lesson count and percentage are shown by name. The percentage includes the share of started lessons a member has passed, so it reveals roughly how far they are, but never which step they are on, their answers, or timing; saved lesson positions are returned only to their own member. Former members are not listed.
 
 Answer concealment, for posts and for course practice threads, is spoiler protection, not authorization. Practice authors' versions and item notes are left out of learner block payloads and are delivered with the practice thread to any member who can read the practice and reveals it. Their concealment never protects them from a member.
 

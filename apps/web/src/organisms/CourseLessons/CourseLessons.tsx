@@ -1,4 +1,6 @@
-import { COURSE_TEXT_MAX, COURSE_TITLE_MAX, okResponseSchema, outlineResponseSchema, type CourseLessonSummary, type LessonInput } from "@wordinator/contracts";
+import {
+  COURSE_TEXT_MAX, COURSE_TITLE_MAX, okResponseSchema, outlineResponseSchema, type CourseLessonSummary, type LessonInput, type LessonPosition,
+} from "@wordinator/contracts";
 import { lessonResponseSchema, type CourseDetailResponse, type CourseLesson } from "@wordinator/contracts/lesson-document";
 import { useMediaQuery } from "@mantine/hooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -67,9 +69,15 @@ function LessonForm({ initial, submitLabel, pending, error, onSubmit, onCancel }
   </form>;
 }
 
-function LessonSection({ scope, summary, number, preloaded, outline, dataUpdatedAt, completed, round, onStart }: {
+// Unfinished lessons with a saved step say where the reader stopped; finished ones offer another run.
+const startLabels = (completed: boolean, position: LessonPosition | undefined) =>
+  completed ? ["courses.player.again", "courses.player.againNamed"] as const
+  : position ? ["courses.player.continue", "courses.player.continueNamed"] as const
+  : ["courses.player.start", "courses.player.startNamed"] as const;
+
+function LessonSection({ scope, summary, number, preloaded, outline, dataUpdatedAt, completed, position, round, onStart }: {
   scope: Scope; summary: CourseLessonSummary; number: number; preloaded?: CourseLesson; outline: CourseLessonSummary[]; dataUpdatedAt: number;
-  completed: boolean; round: number; onStart: () => void;
+  completed: boolean; position: LessonPosition | undefined; round: number; onStart: () => void;
 }) {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const lessonKey = lessonQueryOptions(scope.groupId, scope.courseId, summary.id).queryKey;
@@ -95,16 +103,16 @@ function LessonSection({ scope, summary, number, preloaded, outline, dataUpdated
   // The outline summary is fresher after a publish elsewhere; the loaded lesson is fresher after this viewer's own edits.
   const current = data ?? summary;
   const playable = data ? lessonSteps(data).length > 0 : false;
+  const [label, namedLabel] = startLabels(completed, position);
   return <section className={styles.lesson} id={lessonAnchor(summary.id)} aria-labelledby={`${lessonAnchor(summary.id)}-title`}>
     <header className={styles.lessonHeader}>
       <p className={styles.lessonNumber}>{t("courses.lessons.number", { number })}</p>
       <h2 id={`${lessonAnchor(summary.id)}-title`}>{current.title}</h2>
       {current.goal && <p className={styles.goal}><PlainText>{current.goal}</PlainText></p>}
       {playable && !editing && <div className={styles.start}>
-        <Button variant={completed ? "secondary" : "primary"} onClick={onStart} aria-label={t(completed ? "courses.player.againNamed" : "courses.player.startNamed", { number })}>
-          {completed ? t("courses.player.again") : t("courses.player.start")}
-        </Button>
+        <Button variant={completed ? "secondary" : "primary"} onClick={onStart} aria-label={t(namedLabel, { number })}>{t(label)}</Button>
         {completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
+        {!completed && position && <span className={styles.position}>{t("courses.player.step", { current: position.stepIndex + 1, total: position.totalSteps })}</span>}
       </div>}
       {(scope.contribute || scope.removable) && <div className={styles.blockTools}>
         <StateChips lesson={current} />
@@ -153,6 +161,9 @@ export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdate
   const narrow = useMediaQuery("(max-width: 48em)"); const [outlineOpen, setOutlineOpen] = useState(false);
   const progress = useQuery(courseProgressQueryOptions(groupId, courseId));
   const completed = new Set(progress.data?.completedLessonIds ?? []);
+  // Saved steps of unfinished lessons, most recent first; the first one in the outline is offered as the place to pick up.
+  const positions = (progress.data?.positions ?? []).filter((entry) => !completed.has(entry.lessonId));
+  const resume = positions.map((entry) => ({ entry, index: outline.findIndex((lesson) => lesson.id === entry.lessonId) })).find(({ index }) => index >= 0);
   const create = useMutation({
     mutationFn: (input: LessonInput) => apiRequest(lessonsPath(scope), lessonResponseSchema, { method: "POST", body: JSON.stringify(input) }),
     onSuccess: async (data) => {
@@ -189,16 +200,24 @@ export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdate
       </div>
     </nav>
     <div className={styles.lessons}>
+      {resume && <Surface tone="quiet" className={styles.resume}>
+        <p>{t("courses.player.resumeHelp", { number: resume.index + 1, title: outline[resume.index]!.title, current: resume.entry.stepIndex + 1, total: resume.entry.totalSteps })}</p>
+        <Button onClick={() => setPlaying(resume.entry.lessonId)}>{t("courses.player.continue")}</Button>
+      </Surface>}
       {outline.length
         ? visible.map((lesson, index) => <LessonSection key={lesson.id} scope={scope} summary={lesson} number={index + 1} outline={outline}
           preloaded={detail.lessons.find((entry) => entry.id === lesson.id)} dataUpdatedAt={dataUpdatedAt}
-          completed={completed.has(lesson.id)} round={round} onStart={() => setPlaying(lesson.id)} />)
+          completed={completed.has(lesson.id)} position={positions.find((entry) => entry.lessonId === lesson.id)} round={round} onStart={() => setPlaying(lesson.id)} />)
         : <Surface tone="quiet"><EmptyState title={t("courses.noLessonsTitle")} action={addAction || undefined}>{t("courses.noLessonsBody")}</EmptyState></Surface>}
       {next && <Button variant="secondary" className={styles.continue} onClick={() => jumpTo(visible.length)}>{t("courses.lessons.continue", { number: visible.length + 1, title: next.title })}</Button>}
     </div>
-    <LessonPlayer scope={scope} lessonId={playing} outline={outline}
+    <LessonPlayer scope={scope} lessonId={playing} outline={outline} positions={progress.data?.positions ?? []}
       onChangeLesson={(lessonId) => { setPlaying(lessonId); setShown((value) => Math.max(value, outline.findIndex((entry) => entry.id === lessonId) + 1)); }}
-      onClose={() => { setPlaying(null); setRound((value) => value + 1); }} />
+      onClose={() => {
+        setPlaying(null); setRound((value) => value + 1);
+        // The player saved the reader's steps while it was open; refresh the positions and percentages it changed.
+        void queryClient.invalidateQueries({ queryKey: courseProgressQueryOptions(groupId, courseId).queryKey });
+      }} />
     <AdaptiveDialog opened={addOpen} onClose={() => setAddOpen(false)} title={t("courses.lessons.addTitle")}>
       {addOpen && <LessonForm submitLabel={t("courses.lessons.addSubmit")} pending={create.isPending} error={create.error} onSubmit={(input) => create.mutate(input)} onCancel={() => setAddOpen(false)} />}
     </AdaptiveDialog>

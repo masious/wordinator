@@ -4,7 +4,8 @@ import fixture from "../../../test/fixtures/courses/dutch-foundations-part-iii.j
 import { COURSE_BLOCKS_MAX, practicePayloadSchema } from ".";
 import {
   collectImageUrls, collectPracticeIds, findPublishProblems, flattenToSteps, inlineText, LESSON_DOCUMENT_SCHEMA_VERSION, lessonDocumentSchema,
-  mapImageUrls, parseStoredLessonDocument, readPracticeBlock, saveLessonDraftRequestSchema, toLearnerDocument, upgradeLegacyBlocks,
+  lessonPositionRequestSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, readPracticeBlock, resolveStepIndex, saveLessonDraftRequestSchema,
+  toLearnerDocument, upgradeLegacyBlocks,
   type LessonDocument,
 } from "./lessonDocument";
 
@@ -160,6 +161,21 @@ describe("lesson document helpers", () => {
     ]);
     const prose = steps[1]!;
     expect(prose.kind === "content" && prose.blocks.map((block) => block.type)).toEqual(["paragraph", "bulletListItem", "image"]);
+  });
+
+  it("keys steps by block so a saved position survives unrelated edits", () => {
+    const intro = paragraph("Intro"); const talk = dialogue(); const quiz = practice();
+    const steps = flattenToSteps(parse(intro, talk, quiz));
+    const keys = steps.map(lessonStepKey);
+    expect(keys).toEqual([intro.id, `${talk.id}:0`, `${talk.id}:1`, `${quiz.id}:0`, `${quiz.id}:1`]);
+    keys.forEach((key) => expect(lessonPositionRequestSchema.safeParse({ stepKey: key }).success).toBe(true));
+    expect(lessonPositionRequestSchema.safeParse({ stepKey: "step-1" }).success).toBe(false);
+    // A step inserted earlier moves the index but not the key.
+    const edited = flattenToSteps(parse(intro, callout("New hint"), talk, quiz));
+    expect(resolveStepIndex(edited, `${quiz.id}:0`, 3)).toBe(4);
+    // A removed step falls back to its old index, clamped to the lesson.
+    expect(resolveStepIndex(edited, `${randomUUID()}:0`, 2)).toBe(2);
+    expect(resolveStepIndex(edited, `${randomUUID()}:0`, 40)).toBe(edited.length - 1);
   });
 });
 

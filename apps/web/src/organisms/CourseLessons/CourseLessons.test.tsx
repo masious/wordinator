@@ -35,8 +35,8 @@ const doc = (blocks: LessonTopBlock[]): LessonDocument => ({ schemaVersion: LESS
 const lesson = (n: number, blocks: LessonTopBlock[] = [], { published = true, editing = false } = {}): CourseLesson => ({
   ...summary(n, published), document: published ? doc(blocks) : null, answerCounts: {}, draft: editing ? { document: doc(blocks), version: 1 } : null,
 });
-const progress = (completedLessonIds: string[]) => ({
-  publishedLessons: 4, completedLessonIds,
+const progress = (completedLessonIds: string[], positions: unknown[] = []) => ({
+  publishedLessons: 4, completedLessonIds, positions,
   participants: [{ user: { id: accountId, displayName: "Ada", avatarUrl: null }, completedLessons: completedLessonIds.length, percent: completedLessonIds.length * 25 }],
 });
 
@@ -55,6 +55,9 @@ beforeEach(() => {
     const path = String(input);
     if (path.endsWith("/progress")) return response(progress([]));
     if (path.endsWith("/completion") && init?.method === "PUT") return response(progress([lessonId(1)]));
+    if (path.endsWith("/position") && init?.method === "PUT") {
+      return response({ position: { lessonId: lessonId(1), stepKey: JSON.parse(String(init.body)).stepKey, stepIndex: 0, passedSteps: 0, totalSteps: 1, updatedAt: 1 } });
+    }
     if (path.endsWith(`/lessons/${lessonId(4)}`)) return response({ lesson: lessonFour });
     return response({ ok: true });
   }));
@@ -124,6 +127,9 @@ describe("Course lessons", () => {
     fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
     expect(within(dialog).getByText("Nee.")).toBeInTheDocument();
     expect(meter()).toHaveAttribute("aria-valuenow", "40");
+    // Each move saves the step now shown, keyed by its block and line.
+    const saved = () => vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith("/position")).map(([, init]) => JSON.parse(String(init?.body)).stepKey);
+    await waitFor(() => expect(saved()).toEqual([`${dialogue.id}:0`, `${dialogue.id}:1`]));
 
     // Practice items are asked one by one and share the practice draft.
     fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
@@ -170,6 +176,29 @@ describe("Course lessons", () => {
     const dialog = await screen.findByRole("dialog");
     fireEvent.click(within(dialog).getByRole("button", { name: "Finish lesson" }));
     expect(await within(dialog).findByText("This lesson is unpublished, so finishing it does not count toward progress.")).toBeInTheDocument();
-    expect(vi.mocked(fetch).mock.calls.some(([path]) => String(path).endsWith("/completion"))).toBe(false);
+    expect(vi.mocked(fetch).mock.calls.some(([path]) => String(path).endsWith("/completion") || String(path).endsWith("/position"))).toBe(false);
+  });
+
+  it("resumes an unfinished lesson at the saved step and can start over", async () => {
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    const saved = { lessonId: lessonId(1), stepKey: `${practice.id}:0`, stepIndex: 3, passedSteps: 3, totalSteps: 5, updatedAt: 1 };
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") ? response(progress([], [saved])) : original(input, init));
+    // The example moved one step later since the position was saved; the key still finds the same question.
+    const first = lesson(1, [example("50000000-0000-4000-8000-000000000009", "Nieuw."), example("50000000-0000-4000-8000-000000000001", "Er is een balkon."), dialogue, practice]);
+    renderLessons({ course: course(false), outline: [1, 2].map((n) => summary(n)), lessons: [first, lesson(2)] });
+    expect(await screen.findByText("Pick up where you left off: lesson 1, Lesson title 1, step 4 of 5.")).toBeInTheDocument();
+    expect(screen.getByText("Step 4 of 5")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Continue lesson 1" }));
+    const dialog = await screen.findByRole("dialog");
+    expect(within(dialog).getByText("Step 5 of 6")).toBeInTheDocument();
+    expect(within(dialog).getByText("There is a garden.")).toBeInTheDocument();
+    expect(within(dialog).getByText("Picked up where you left off.")).toBeInTheDocument();
+    // Opening the player alone saves nothing.
+    expect(vi.mocked(fetch).mock.calls.some(([path]) => String(path).endsWith("/position"))).toBe(false);
+    fireEvent.click(within(dialog).getByRole("button", { name: "Start over" }));
+    expect(within(dialog).getByText("Step 1 of 6")).toBeInTheDocument();
+    expect(within(dialog).queryByText("Picked up where you left off.")).not.toBeInTheDocument();
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/position`,
+      expect.objectContaining({ method: "PUT", body: JSON.stringify({ stepKey: "50000000-0000-4000-8000-000000000009" }) })));
   });
 });

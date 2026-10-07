@@ -100,8 +100,8 @@ If a deleted group is a person’s only group, status appears in the restricted 
 6. The owner or group creator can archive the course after confirming. Other members no longer see it, and its feed card says the course is unavailable. The owner and creator still see it in the library and can restore it, which returns it as a draft.
 
 7. The owner adds lessons with a title and optional goal. New lessons are unpublished and appear in the outline with an Unpublished label.
-8. Inside a lesson, the owner adds heading, text, example, dialogue, and practice blocks one at a time, and can move lessons and blocks up or down. Each lesson and block is published separately; readers see only published lessons and published blocks.
-9. The owner can stop at any time. An unsaved block edit stays in the browser and reopens with a restored notice on the next visit. Saved but unpublished content is the durable draft on the server.
+8. Inside a lesson, the owner writes in a block editor: headings, paragraphs, lists, callouts, images, columns, examples, dialogues, and practices, added from the slash menu and moved by dragging. The owner can also move lessons up or down.
+9. The editor autosaves the lesson's draft. Readers see only the published version until the owner chooses Publish; Discard returns the draft to the published version, and Unpublish hides the lesson. An edit that has not reached the server yet stays in the browser and reopens on the next visit.
 10. If someone saved a newer version first, the editor merges the two by block and says so. Blocks both people changed are shown side by side, and the author keeps the newer version or their own edit for each. See [drafts and publishing](courses.md#drafts-and-publishing).
 11. Readers see the outline and the first three lessons, and continue to later lessons one at a time.
 
@@ -109,9 +109,9 @@ If a deleted group is a person’s only group, status appears in the restricted 
 
 1. A member reading a published course chooses Ask to contribute in the Contributors panel. The panel then says the request is waiting, and they can withdraw it.
 2. The owner gets a notification that links to the course. The Contributors panel lists pending requests, and the owner accepts or declines each one. The requester is notified of the decision.
-3. An accepted contributor sees unpublished lessons and blocks, and the draft course itself if the owner returns it to draft. They add lessons, and add blocks to any lesson, including a published one. Everything they add is unpublished, and the block editor has no publish option for them.
-4. Contributors can edit only unpublished lessons and blocks. Published content shows no edit control for them, and reordering, deleting, and publishing are left to the owner.
-5. The owner sees who last edited each lesson and block, reviews contributor drafts, and publishes them. Once published, they can only be changed by the owner, who can unpublish them to let a contributor rework them.
+3. An accepted contributor sees unpublished lessons, every lesson's draft, and the draft course itself if the owner returns it to draft. They add lessons and edit the draft of any lesson, including a published one, while readers keep seeing the published version. The editor has no Publish, Discard, or Unpublish for them.
+4. Reordering, deleting, publishing, and a published lesson's title and goal are left to the owner.
+5. The owner sees who last edited each lesson, reviews the draft, and publishes it.
 6. A contributor can stop contributing at any time, and the owner can remove a contributor after confirming. Either way their content stays, and they may ask again later. Leaving the group also ends their contributor role.
 
 ## Practise a lesson
@@ -126,9 +126,9 @@ If a deleted group is a person’s only group, status appears in the restricted 
 ## Work through a lesson step by step
 
 1. On the course page, a member chooses Start lesson on any lesson with content. A focused player opens with a progress bar and a step counter.
-2. Text and example sentences arrive one step at a time. An example hides its translation until the learner chooses Show translation.
+2. Text, callouts, and example sentences arrive one step at a time; an example shows its translation and note.
 3. Dialogue lines arrive one after another; earlier lines stay visible.
 4. Practice questions are asked one by one with a single answer field. Answers are saved as the same browser draft the lesson view uses. On the last question the learner may share the answer set with the group or keep it private.
-5. Back and Next move freely. After the last step the player shows that the lesson is complete, the learner's course percentage, and a link to the next lesson or back to the course.
-6. The finished lesson shows a check in the outline and offers Practise again. The course's Progress panel shows every member's percentage, listed by name.
+5. Back and Next move freely, and each move is saved. If the learner leaves mid-lesson, the course page offers Pick up where you left off and the lesson's action reads Continue lesson; the player reopens at the saved step and offers Start over. After the last step the player shows that the lesson is complete, the learner's course percentage, and a link to the next lesson or back to the course.
+6. The finished lesson shows a check in the outline and offers Practise again. The course's Progress panel shows every member's percentage, listed by name; a started lesson counts for the share of its steps already passed.
 7. Owners and contributors can run an unpublished lesson as a preview; it does not count toward progress.

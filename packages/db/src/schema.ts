@@ -315,3 +315,24 @@ export const courseLessonCompletions = sqliteTable(
     index("course_lesson_completions_course_idx").on(table.groupId, table.courseId, table.userId),
   ],
 );
+
+// A member's last step in a lesson they have not finished. The furthest share passed feeds course progress; finishing clears the row.
+export const courseLessonPositions = sqliteTable(
+  "course_lesson_positions",
+  {
+    groupId: text("group_id").notNull().references(() => groups.id),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    userId: text("user_id").notNull().references(() => users.id),
+    stepKey: text("step_key").notNull(),
+    stepIndex: integer("step_index").notNull(),
+    passedSteps: integer("passed_steps").notNull(),
+    totalSteps: integer("total_steps").notNull(),
+    updatedAt: integer("updated_at").notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.lessonId, table.userId] }),
+    index("course_lesson_positions_course_idx").on(table.groupId, table.courseId, table.userId),
+    check("course_lesson_positions_steps_check", sql`${table.totalSteps} > 0 AND ${table.passedSteps} BETWEEN 0 AND ${table.totalSteps} - 1 AND ${table.stepIndex} BETWEEN 0 AND ${table.totalSteps} - 1`),
+  ],
+);

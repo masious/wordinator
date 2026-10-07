@@ -25,6 +25,7 @@
 .emojiDropdown{padding:var(--space-2);background:var(--color-surface-raised);border:var(--ring-hairline);border-radius:var(--radius-md);box-shadow:var(--shadow-floating)}
 .editor{min-width:0;margin-inline:calc(-1 * var(--space-12));font-size:var(--type-authored);line-height:var(--line-body)}
 .editor :global(.bn-editor){padding-inline:var(--space-12);background:transparent}
+.editor :global(.bn-default-styles){font-family:var(--font-sans);font-size:var(--type-authored)}
 .editor :global(.bn-inline-content){font-size:var(--type-authored);line-height:var(--line-body)}
 .editor :global([data-content-type="heading"] .bn-inline-content){font-family:var(--font-display);font-weight:var(--weight-medium);letter-spacing:var(--tracking-title);line-height:var(--line-title)}
 .editor :global([data-content-type="heading"][data-level="1"] .bn-inline-content){font-size:var(--text-3xl)}

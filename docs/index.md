@@ -20,6 +20,7 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [design-system-plan.md](design-system-plan.md) | Phase 0 design-system implementation tasks, sequencing, and completion criteria |
 | [VISUAL-REDESIGN-PLAN.md](../VISUAL-REDESIGN-PLAN.md) | Cross-phase premium visual refresh audit, migration batches, verification, and completion criteria |
 | [LESSON_EDITOR_PLAN.md](../LESSON_EDITOR_PLAN.md) | Course lesson editor (C7) delivery steps, status, and release procedure |
+| [NEW_WORDS_PLAN.md](../NEW_WORDS_PLAN.md) | New words and recap (C8) delivery steps, status, and release procedure |
 | [architecture.md](architecture.md) | Runtime topology, monorepo boundaries, client/server responsibilities, and API conventions |
 | [data-model.md](data-model.md) | Conceptual entities, relationships, constraints, retention, and deletion semantics |
 | [security-and-privacy.md](security-and-privacy.md) | Security baseline, privacy boundaries, tradeoffs, and deferred work |
