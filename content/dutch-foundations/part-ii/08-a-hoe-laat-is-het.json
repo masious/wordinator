@@ -1,0 +1,2983 @@
+{
+  "title": "Hoe laat is het?",
+  "goal": "Tell the time in Dutch, including half, quarter and minutes around the half hour, and ask what time something starts.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Hoe laat is het?",
+      "id": "bb88df86-f201-412b-ad94-56824d3c8228"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Monday morning, 14 September. A new work week begins, and the team has breakfast together at ",
+        {
+          "text": "half negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        ". Sofia thinks she knows what that means. She is wrong. In this lesson you will ask and tell the time, learn the Dutch ",
+        {
+          "text": "half",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", quarters and minutes, and say when something starts."
+      ],
+      "id": "8a1129ff-5fb4-4342-b2c2-986b028a4f1f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: subjects are ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", verbs are ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", time expressions are ",
+        {
+          "text": "orange",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ", prefixes that go to the end are ",
+        {
+          "text": "red",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ". In word lists, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " is pink and ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " is brown. The new form is ",
+        {
+          "text": "bold",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "53b46901-69ab-4302-8ed2-7d3e8b720192"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: half negen of half tien?",
+      "id": "d746bd20-165d-461a-898b-78f7f7e747d3"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "On Friday Daan sends the team a message: ",
+        {
+          "text": "Maandag: ontbijt met het team, om half negen!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Sofia reads ",
+        {
+          "text": "half negen",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and thinks: half past nine. No problem, work starts at nine anyway."
+      ],
+      "id": "1820cf3f-b9c1-4a17-91db-ddb9e935970c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "On Monday at 8:20 Sofia is at the bus stop. At 8:30, on the bus, she gets a new message from Daan: ",
+        {
+          "text": "Waar ben je? Het is half negen!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Sofia gets off at Utrecht Centraal and runs through the station to the office. At the coffee machine she finds Daan."
+      ],
+      "id": "bf73818d-4f0b-4c68-b934-453baa865e0d"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Goedemorgen, Sofia. Je bent te laat!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Sorry! Hoe laat is het?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Het is tien over half negen. Het ontbijt begint om half negen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Half negen? Dat is negen uur dertig, toch?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Nee, half negen is acht uur dertig. Een half uur voor negen uur."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Echt? \"Half nine\" is negen uur dertig in het Engels."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ja, maar het Nederlands is anders. Half negen is acht uur dertig."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Oké. Ik ben tien minuten te laat."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Precies. Maar we hebben nog koffie."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Lekker! Hoe laat ben jij meestal op kantoor?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ik ben altijd om tien voor half negen op kantoor. Altijd een beetje vroeg."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Tien voor half negen. Dat is acht uur twintig. Ik ben morgen ook op tijd!"
+          }
+        ]
+      },
+      "id": "a2354394-43b6-4b41-83ba-137d6e0e072b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        "Sofia hears ",
+        {
+          "text": "half negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " and thinks of British English ",
+        {
+          "text": "half nine",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (9:30). But Dutch ",
+        {
+          "text": "half negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " is ",
+        {
+          "text": "8:30",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": half an hour before nine. Daan repeats the correct time in the next line."
+      ],
+      "id": "df007c6a-11eb-4eff-af01-6444b673357c"
+    },
+    {
+      "type": "divider",
+      "id": "bdb205e5-7466-4669-b25b-3bb6a3f85769"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Hoe laat is het? Whole hours",
+      "id": "8cf394f8-0e09-4024-b27b-037edb0f706f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "To ask the time, say ",
+        {
+          "text": "Hoe laat is het?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "What time is it?",
+          "styles": {
+            "italic": true
+          }
+        },
+        "). The answer starts with ",
+        {
+          "text": "Het is",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". For a whole hour, add ",
+        {
+          "text": "uur",
+          "styles": {
+            "bold": true
+          }
+        },
+        " after the number."
+      ],
+      "id": "8ad94837-1ef3-4291-9ba7-02c523b5173e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What time is it? It's eight o'clock."
+      },
+      "content": [
+        "Hoe laat ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " het? Het ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "acht uur",
+          "styles": {
+            "bold": true,
+            "textColor": "orange",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "16becb6d-e789-46be-b275-b7f22626d063"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's exactly nine o'clock.",
+        "note": "precies = exactly. Daan's favourite word."
+      },
+      "content": [
+        "Het ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "precies",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "negen uur",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "999c702c-7959-49bd-8796-bd55ba628c66"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "After a number, ",
+        {
+          "text": "uur",
+          "styles": {
+            "bold": true
+          }
+        },
+        " stays singular: ",
+        {
+          "text": "drie uren",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "drie uur",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        ". You only hear uren without a number: ",
+        {
+          "text": "uren wachten",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (to wait for hours)."
+      ],
+      "id": "3f21d285-ce5d-467c-9546-decb5118aa79"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Een uur or één uur?",
+      "id": "bf71ac11-1f57-4cbd-a790-a609d665530c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "een uur",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "an hour",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (a length of time). ",
+        {
+          "text": "één uur",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " = ",
+        {
+          "text": "one o'clock",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". In writing, the accents show the difference when it is not clear."
+      ],
+      "id": "3dd3c111-19d4-4db9-8082-b9e68a42f72d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's one o'clock."
+      },
+      "content": [
+        "Het ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "één uur",
+          "styles": {
+            "bold": true,
+            "textColor": "orange",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "5fe0ce2c-efac-45b0-9168-c4799c59d80b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We have an hour's break.",
+        "note": "Recycles the plural we hebben from 07-a."
+      },
+      "content": [
+        {
+          "text": "We",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "hebben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "een uur",
+          "styles": {
+            "bold": true
+          }
+        },
+        " pauze."
+      ],
+      "id": "592a45a8-7d73-4aa4-b921-161d35ed729b"
+    },
+    {
+      "type": "divider",
+      "id": "12aabcd8-c4c1-4644-b661-c33e16046f06"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Half, kwart en minuten",
+      "id": "6430a29c-e571-4ea6-85f6-415ba1eae584"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Half: on the way to the next hour",
+      "id": "3813870d-bd57-486c-b93b-cd7577804861"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "half + next hour",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = 30 minutes before that hour. ",
+        {
+          "text": "half negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " = 8:30, ",
+        {
+          "text": "half een",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " = 12:30."
+      ],
+      "id": "0269d273-e37b-4e97-80dd-719c052557c9"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "Memory trick: think ",
+        {
+          "text": "half on the way to nine",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". At ",
+        {
+          "text": "half negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " you are halfway to nine o'clock, so it is 8:30."
+      ],
+      "id": "57567bd3-6e42-49f4-9715-9517153593b7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's half past eight.",
+        "note": "Not half past nine! Half always points to the next hour."
+      },
+      "content": [
+        "Het ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "half negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "d542f236-c90c-4f88-a443-67e4f6910e44"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The breakfast starts at half past eight."
+      },
+      "content": [
+        {
+          "text": "Het ontbijt",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "begint",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "om half negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "300d4e9e-a4c5-482c-b1ab-210f8dafca3f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Kwart over, kwart voor",
+      "id": "1aa42fef-57d7-4335-ac77-aa82ac5ba86a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "kwart",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = a quarter (15 minutes). ",
+        {
+          "text": "over",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = past, ",
+        {
+          "text": "voor",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = to. ",
+        {
+          "text": "Het kwartier",
+          "styles": {
+            "italic": true
+          }
+        },
+        " is the noun: ",
+        {
+          "text": "een kwartier",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = a quarter of an hour."
+      ],
+      "id": "4454102c-e400-4605-836b-afad4a8ed2ff"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's a quarter past eight. (8:15)"
+      },
+      "content": [
+        "Het ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "kwart over acht",
+          "styles": {
+            "bold": true,
+            "textColor": "orange",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "568c0852-ccac-42ad-9c0f-5cc6faf5ad2c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's a quarter to nine. (8:45)"
+      },
+      "content": [
+        "Het ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "kwart voor negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "e8edfa90-a79c-4ae0-8915-2add27abc439"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Dutch uses ",
+        {
+          "text": "over",
+          "styles": {
+            "bold": true
+          }
+        },
+        " for 'past', never ",
+        {
+          "text": "na",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": ",
+        {
+          "text": "kwart na acht",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "kwart over acht",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "332ecc7b-b870-43bf-a590-0e794730a485"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Minutes around the half hour",
+      "id": "f2e181b9-7ea8-454b-bbe2-45c74f9bd8b5"
+    },
+    {
+      "type": "paragraph",
+      "content": "Dutch counts minutes from the nearest anchor: the whole hour or the half hour. Go round the clock in five steps:",
+      "id": "4d79d7ff-8156-473c-bff3-ad76a8afa40b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": ":05 – :15",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " count from the hour with ",
+        {
+          "text": "over",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": vijf over acht, tien over acht, kwart over acht."
+      ],
+      "id": "599a2f27-90fa-4cfc-a8f5-b3242c484cf2"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": ":20 – :25",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " count back from the half hour with ",
+        {
+          "text": "voor half",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": tien voor half negen, vijf voor half negen."
+      ],
+      "id": "07d72a20-ab7a-484a-9d7b-060cb80faa33"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": ":30",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " just ",
+        {
+          "text": "half",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + next hour: half negen."
+      ],
+      "id": "93e0410f-344a-49ab-9d8d-43aca74397b5"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": ":35 – :40",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " count on from the half hour with ",
+        {
+          "text": "over half",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": vijf over half negen, tien over half negen."
+      ],
+      "id": "28b49e2b-f492-4a33-a822-60e2a56f7241"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": ":45 – :55",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " count back from the next hour with ",
+        {
+          "text": "voor",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": kwart voor negen, tien voor negen, vijf voor negen."
+      ],
+      "id": "3d90496a-a23f-4316-85ae-c238c5a305c2"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "props": {
+            "width": 0.6
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Klok",
+              "id": "3ed3db44-83fe-4ea3-a2dd-8378bf132e97"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "8:00",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "6fcb00f4-819e-4dc2-8d80-39d29c741c34"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "8:05",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "7ca3387a-7f1c-42e6-a25e-9a12c9178823"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "8:10",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "dfc855c2-39a2-4adf-817a-c3dbef6ec9eb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "8:15",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "dc65824d-164e-46b9-b0f1-b8615f0e8aee"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "8:20",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "cbe93082-b31b-4bf8-a4ce-bce60ad42930"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "8:25",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "880d14cc-f94d-44b0-b251-d6f5fe26ac78"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "8:30",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "7499ff79-8092-4ca5-87e4-1bfbfd507de3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "8:35",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "0a43bbed-877b-4a59-a3ec-5912abc069ed"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "8:40",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "56d87889-e492-4966-b9bc-ab883e1cab52"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "8:45",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "a9a82467-f806-4b1c-a0ee-a743ebc1d525"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "8:50",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "3e7204a9-5a48-4b0a-881d-9c237e51d337"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "8:55",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "43b1d8e7-be7b-4e78-99bb-2c10904e3744"
+            }
+          ],
+          "id": "4b196fcb-1d2e-41fe-ba7f-872521f452b6"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1.2
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Nederlands",
+              "id": "650fb8ef-ff36-485f-8ccd-7317cd97c657"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "acht uur",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "03cb3109-2e11-4a06-8a87-bfdc3b21eae5"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "vijf over acht",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "8c284322-220a-4432-b4cc-efdb7c36a83c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "tien over acht",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "103e8ee7-56e9-480f-8ff6-df6ed0c41148"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "kwart over acht",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "ecb672b6-b06c-4bf8-951e-2fb46a70f37e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "tien voor half negen",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "4a0c3bbb-7ffd-4ea2-9e29-4fe733e7522c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "vijf voor half negen",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "3192decc-bb40-4ed3-9860-c75969fe3690"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "half negen",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "7f1c4fc2-9d5f-47ef-a18f-6e9891ada6ec"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "vijf over half negen",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "434437b8-a590-4230-a247-331a67d045c7"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "tien over half negen",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "5ba05929-09f8-4347-9419-f88845032497"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "kwart voor negen",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "44f53220-9b1e-4b9d-bd3c-e7fec5a0d97d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "tien voor negen",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "bc3f0b7b-56b7-45a1-91f0-6c18c2047dc0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "vijf voor negen",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "c2e04985-d321-4557-98c2-3f52db2cf9ab"
+            }
+          ],
+          "id": "978d0bd5-a7e5-4b06-bb4e-622cd0e10a0d"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1.2
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "English",
+              "id": "8eb7b97b-cb54-4e17-8217-d5e0801bcf59"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "eight o'clock",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "23003392-0177-4ea6-a8ca-08025ed2a4e8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "five past eight",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "f2a4ce60-f64b-4848-b7e3-39b864f056e7"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ten past eight",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "f12e303d-7cd0-44ed-b370-ba0c5084ed71"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "quarter past eight",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "85146583-8061-471b-a67f-6a3355f73078"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "twenty past eight",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "56e554b2-a339-48a9-812d-7a229a65e97c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "twenty-five past eight",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "1a3022c6-5523-4b2a-9a61-efb919c6bcfe"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "half past eight",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "d8f81627-fbb5-4ecf-a52a-dd23aecaeb90"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "twenty-five to nine",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "65196f1f-67af-479d-b547-c5f3904f9972"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "twenty to nine",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "4c9448c9-2917-43a7-9cb2-0ba4368dc444"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "quarter to nine",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "a8b8d25a-6bbe-4314-a33d-600f3a81b155"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ten to nine",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "02c80933-62df-4148-84c9-8946348cc4f6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "five to nine",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "0c499836-24bf-435e-88b9-f680ebfff799"
+            }
+          ],
+          "id": "458a9722-a5ee-45cd-a179-527b0eaad51f"
+        }
+      ],
+      "id": "f0cfd475-5269-48f1-9b16-e0714124606e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's twenty past eight. (8:20)",
+        "note": "You also hear twintig over acht, but tien voor half negen is the usual way to say it."
+      },
+      "content": [
+        "Het ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "tien voor half negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "963cf141-0f40-4cf1-9f79-1719ce390619"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's twenty-five to nine. (8:35)"
+      },
+      "content": [
+        "Het ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "vijf over half negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "f5e30931-ef1d-4d19-a0c6-85b6442d093e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "Between ",
+        {
+          "text": ":20",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " and ",
+        {
+          "text": ":40",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ", the half hour is the anchor: ",
+        {
+          "text": "voor half",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " or ",
+        {
+          "text": "over half",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        ". Find the half first, then count five or ten minutes."
+      ],
+      "id": "f408e175-9800-4bcd-8833-17b6e9c113ac"
+    },
+    {
+      "type": "divider",
+      "id": "c36111a5-6d45-4137-9bfc-6c55db5d665d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Ochtend, middag, avond: 12 or 24 hours",
+      "id": "c7769faf-5d48-46ef-b10d-1a8065691ae6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Speaking: the 12-hour clock",
+      "id": "49ad8057-a9cb-47f3-876f-520b8ff50a6f"
+    },
+    {
+      "type": "paragraph",
+      "content": "In normal speech the Dutch use the 12-hour clock. When it is not clear, they add the part of the day:",
+      "id": "1dea753b-06db-41b5-8975-6b1e9a20758f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "'s ochtends",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (in the morning)"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "om zeven uur 's ochtends",
+              "styles": {
+                "textColor": "orange"
+              }
+            },
+            " = 7:00"
+          ],
+          "id": "8b9f2636-413d-411c-a968-188d6ec88416"
+        }
+      ],
+      "id": "36044ac7-1d98-4de7-a9a3-2f42086a991f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "'s middags",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (in the afternoon)"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "om drie uur 's middags",
+              "styles": {
+                "textColor": "orange"
+              }
+            },
+            " = 15:00"
+          ],
+          "id": "fba983ad-9700-4d87-a1ac-751ca59866de"
+        }
+      ],
+      "id": "ef982712-bcbc-4451-a8df-4d4a107ff61a"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "'s avonds",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (in the evening)"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "om half zeven 's avonds",
+              "styles": {
+                "textColor": "orange"
+              }
+            },
+            " = 18:30"
+          ],
+          "id": "855c8c85-0768-413a-8591-75b1416952b7"
+        }
+      ],
+      "id": "ff50dda9-32cf-44a3-8e3a-1085184a1741"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "'s nachts",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (at night)"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "om twee uur 's nachts",
+              "styles": {
+                "textColor": "orange"
+              }
+            },
+            " = 2:00"
+          ],
+          "id": "51c5c13e-dae2-4255-a608-c1da95b93b83"
+        }
+      ],
+      "id": "2fc91e60-7f01-4ff3-ae4e-4f5eefbc70da"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        "The ",
+        {
+          "text": "'s",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is just an s-sound joined to the next word: ",
+        {
+          "text": "'s ochtends",
+          "styles": {
+            "italic": true
+          }
+        },
+        " sounds like ",
+        {
+          "text": "sochtends",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "'s avonds",
+          "styles": {
+            "italic": true
+          }
+        },
+        " like ",
+        {
+          "text": "savonds",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "6f7dff98-8d70-4cac-b3f7-c18bf229443d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I get up at seven in the morning.",
+        "note": "Recycles the separable verb opstaan from 07-b: the prefix op goes to the very end."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "sta",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "om zeven uur 's ochtends",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "op",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "578baaf3-3d49-45e3-b6d1-69d5d519ae45"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Timetables: the 24-hour clock",
+      "id": "e20ba3c4-2a4b-4f73-8eb5-df7ce653b145"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Train timetables, announcements and schedules use 24 hours. You read the hours and then the minutes: ",
+        {
+          "text": "18.30",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " = ",
+        {
+          "text": "achttien uur dertig",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". In writing, Dutch uses a dot or a colon: 8.30 or 8:30. See the times on ",
+        {
+          "type": "link",
+          "href": "https://www.ns.nl",
+          "content": [
+            {
+              "text": "ns.nl",
+              "styles": {}
+            }
+          ]
+        },
+        "."
+      ],
+      "id": "e8666cc0-5764-4ff9-9649-85572db6cb3c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The train leaves at 17:35.",
+        "note": "Read: zeventien uur vijfendertig. In normal speech: vijf over half zes."
+      },
+      "content": [
+        {
+          "text": "De trein",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "vertrekt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "om 17.35 uur",
+          "styles": {
+            "bold": true,
+            "textColor": "orange",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "274c5273-9404-4c74-a8f4-5e176ee9c33c"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "In everyday speech, don't read the digits: ",
+        {
+          "text": "Het is acht uur dertig",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Het is half negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        ". Digits are for timetables and announcements."
+      ],
+      "id": "9c762caa-049e-49ff-b073-69e84eb58444"
+    },
+    {
+      "type": "divider",
+      "id": "6cd44d9c-1276-450f-98de-97287072d668"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Hoe laat begint de vergadering?",
+      "id": "2a938716-22b0-429d-b2f1-3fb2b933a27a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Om + time",
+      "id": "ead66208-e28e-40ad-9928-d2a9e0d4d888"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "To ask when something happens, use ",
+        {
+          "text": "Hoe laat",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + verb + subject. To answer, use ",
+        {
+          "text": "om",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + time. A short answer is often just ",
+        {
+          "text": "Om tien uur.",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        }
+      ],
+      "id": "371d2c46-8e5b-4642-80e2-7df109d92d6b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "Subject + verb + ",
+        {
+          "text": "om",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + time (+ prefix): ",
+        {
+          "text": "De les",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "begint",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "om negen uur",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        ". In this lesson, always start with the subject."
+      ],
+      "id": "8c0246c5-6490-495f-a4bc-24d183a06504"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What time does the meeting start? At ten o'clock."
+      },
+      "content": [
+        "Hoe laat ",
+        {
+          "text": "begint",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "de vergadering",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "? ",
+        {
+          "text": "Om tien uur",
+          "styles": {
+            "bold": true,
+            "textColor": "orange",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "b21783dd-ef22-4a1a-a794-2b21d6c3bdc6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The train arrives at twenty past nine.",
+        "note": "aankomen is separable, like opstaan: aan goes to the end. vertrekken is inseparable: De trein vertrekt."
+      },
+      "content": [
+        {
+          "text": "De trein",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "om tien voor half tien",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "aan",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "6541b231-75ab-42a4-a7cc-e4c4fd4e3cb9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Precies, ongeveer, op tijd, te laat",
+      "id": "fd75817b-d766-4ac8-b024-2128c7e1ca80"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "precies",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = exactly"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "precies negen uur",
+              "styles": {
+                "textColor": "orange"
+              }
+            }
+          ],
+          "id": "fef0f7d9-8f79-40b9-8eea-8a7e6fc535bf"
+        }
+      ],
+      "id": "975530d8-7e67-4639-98da-b9669e59bc58"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "ongeveer",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "rond",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = about"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "ongeveer half zes",
+              "styles": {
+                "textColor": "orange"
+              }
+            },
+            ", ",
+            {
+              "text": "rond zes uur",
+              "styles": {
+                "textColor": "orange"
+              }
+            }
+          ],
+          "id": "e5dd4ed2-1017-4ae3-b9a1-182e4a416896"
+        }
+      ],
+      "id": "76c3f154-aea5-4e14-8a0a-46c382a745d5"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "op tijd",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = on time; ",
+        {
+          "text": "te laat",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = late; ",
+        {
+          "text": "vroeg",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = early"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "Daan is altijd op tijd. Sofia is vaak te laat."
+          ],
+          "id": "7ff33ba7-834e-4025-afe4-a05bb9395185"
+        }
+      ],
+      "id": "f235455b-0893-48bd-9098-7d67beb8c91c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Words for time",
+      "id": "a712bd5b-678e-4a37-ab82-a239d53caf67"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " klok (clock), ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " horloge (watch), ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " tijd (time)"
+      ],
+      "id": "6c4f77c4-da50-4634-b42a-d58623a2dcac"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " uur, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " kwartier, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " minuut (",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " minuten)"
+      ],
+      "id": "933967bc-f5e6-4347-bbad-3555f05173c3"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " trein, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " station, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " vergadering (meeting), ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " pauze (break), ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " klant (client)"
+      ],
+      "id": "bcb9b619-4551-42ed-a465-11750449237f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "beginnen, stoppen, vertrekken (to leave), aankomen (to arrive), wachten (op) (to wait for), rennen (to run)"
+      ],
+      "id": "7f75aaa6-e22b-4b3c-9564-8555d7ddc621"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "The Dutch are punctual: ",
+        {
+          "text": "om negen uur",
+          "styles": {
+            "italic": true
+          }
+        },
+        " means nine, not ten past. Lunch is early and short, often around ",
+        {
+          "text": "12.30",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ", and many families eat dinner around ",
+        {
+          "text": "18.00",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "b4a1cf40-dc93-4dcd-9bca-1b2157f9af15"
+    },
+    {
+      "type": "divider",
+      "id": "4243df98-feb5-4c1e-9ee6-285e31714403"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: de planning van vandaag",
+      "id": "57a17ea6-5d46-408a-94ef-9eeed3307fc3"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Breakfast is over. Daan opens the team schedule (",
+        {
+          "text": "de planning",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "the schedule",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") on the big screen and reads out the day."
+      ],
+      "id": "a8725865-be7b-4dd0-8aea-bf9c3c437b6d"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Goed, Sofia. Dit is de planning van vandaag."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hoe laat begint de vergadering?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "De vergadering begint om tien uur. De klant komt met de trein uit Amsterdam."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hoe laat komt de trein aan?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "De trein komt om tien voor half tien aan. Ik wacht op het station op de klant."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En hoe laat stopt de vergadering?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Om kwart voor twaalf. We lunchen om half een."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Half een. Dat is twaalf uur dertig, toch?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Precies! We hebben om drie uur een pauze van een kwartier."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Prima. En hoe laat gaat de klant weg?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Om vijf uur. Zijn trein naar Amsterdam vertrekt om vijf over half zes."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Vijf over half zes. Dat is zeventien uur vijfendertig. Ik ben vandaag de hele dag op tijd!"
+          }
+        ]
+      },
+      "id": "e0fa5cba-6b95-46de-9a48-58a5bdefa8e7"
+    },
+    {
+      "type": "divider",
+      "id": "2258401d-93b7-4c99-82df-eacc5b49074f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "bd96bf95-6ceb-4023-abaa-7c234f62e433"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Write the time in words",
+      "id": "4778feee-617e-4e30-b6a4-607830764692"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write the time in Dutch words, the way people say it. Where there is a blank, fill in the missing word.",
+          "items": [
+            {
+              "prompt": "8:30",
+              "authorsVersion": [
+                "half negen"
+              ],
+              "note": "Half points to the next hour: 8:30 is half on the way to nine. Not half acht."
+            },
+            {
+              "prompt": "8:15 = … over acht",
+              "authorsVersion": [
+                "kwart"
+              ],
+              "note": "kwart over = a quarter past. Not kwart na acht."
+            },
+            {
+              "prompt": "8:45 = kwart … negen",
+              "authorsVersion": [
+                "voor"
+              ],
+              "note": "voor = to: a quarter to nine."
+            },
+            {
+              "prompt": "7:00",
+              "authorsVersion": [
+                "zeven uur"
+              ],
+              "note": "uur stays singular after a number. Also fine: Het is zeven uur."
+            },
+            {
+              "prompt": "8:20 = tien voor … negen",
+              "authorsVersion": [
+                "half"
+              ],
+              "note": "From :20 the half hour is the anchor: ten minutes before half negen (8:30). Also heard: twintig over acht."
+            },
+            {
+              "prompt": "8:35",
+              "authorsVersion": [
+                "vijf over half negen"
+              ],
+              "note": "Five minutes after half negen (8:30)."
+            },
+            {
+              "prompt": "8:50 = … voor negen",
+              "authorsVersion": [
+                "tien"
+              ],
+              "note": "From :45 count back from the next hour."
+            },
+            {
+              "prompt": "12:30",
+              "authorsVersion": [
+                "half een"
+              ],
+              "note": "Half on the way to one. Also written: half één."
+            }
+          ]
+        }
+      },
+      "id": "1e056401-3170-475f-900c-5963164d0026"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the dialogues",
+      "id": "de3b9f19-dae2-4d07-8670-75061d8370f6"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the short dialogues. The clue in brackets helps you.",
+          "items": [
+            {
+              "prompt": "Sofia: Hoe … is het? / Daan: Het is negen … . (9:00)",
+              "authorsVersion": [
+                "laat",
+                "uur"
+              ],
+              "note": "Hoe laat is het? asks for the time. uur, not uren."
+            },
+            {
+              "prompt": "Sofia: Hoe laat … de vergadering? / Daan: … tien uur. (beginnen)",
+              "authorsVersion": [
+                "begint",
+                "Om"
+              ],
+              "note": "de vergadering = hij: begint with -t. A short answer starts with Om."
+            },
+            {
+              "prompt": "Sofia: Hoe laat komt de trein … ? / Daan: De trein komt om kwart … negen aan. (8:45)",
+              "authorsVersion": [
+                "aan",
+                "voor"
+              ],
+              "note": "aankomen is separable: aan goes to the end, also in questions."
+            },
+            {
+              "prompt": "Daan: Je bent te … ! / Sofia: Sorry! Ik ben tien … te laat.",
+              "authorsVersion": [
+                "laat",
+                "minuten"
+              ],
+              "note": "minuut becomes minuten after tien. Only uur stays singular."
+            },
+            {
+              "prompt": "Sofia: Hoe laat vertrekt de trein van de klant? / Daan: De trein … om vijf … half zes. (17:35)",
+              "authorsVersion": [
+                "vertrekt",
+                "over"
+              ],
+              "note": "vertrekken is inseparable: no prefix at the end. 17:35 = vijf over half zes."
+            },
+            {
+              "prompt": "Sofia: Hoe laat lunchen jullie? / Daan: We … om half een. Het is nu … twaalf uur. (exactly)",
+              "authorsVersion": [
+                "lunchen",
+                "precies"
+              ],
+              "note": "we + infinitive form: we lunchen (07-a). precies = exactly."
+            }
+          ]
+        }
+      },
+      "id": "4439636a-25d4-4176-bf42-7e10510402f8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "253c7b33-9b80-43b8-82b4-ca4f353cddfb"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Start with the subject or with the question word.",
+          "items": [
+            {
+              "prompt": "Put in order: om / begint / de vergadering / tien uur",
+              "authorsVersion": [
+                "De vergadering begint om tien uur."
+              ],
+              "note": "Subject + verb + om + time."
+            },
+            {
+              "prompt": "Put in order: op / ik / om zeven uur / sta",
+              "authorsVersion": [
+                "Ik sta om zeven uur op."
+              ],
+              "note": "opstaan is separable: the prefix op goes to the very end."
+            },
+            {
+              "prompt": "Put in order: vertrekt / de trein / om vijf over half zes",
+              "authorsVersion": [
+                "De trein vertrekt om vijf over half zes."
+              ],
+              "note": "vertrekken is inseparable, so nothing goes to the end."
+            },
+            {
+              "prompt": "Put in order: aan / de trein / om tien voor half tien / komt",
+              "authorsVersion": [
+                "De trein komt om tien voor half tien aan."
+              ],
+              "note": "aankomen: komt in second place, aan at the end."
+            },
+            {
+              "prompt": "Put in order: laat / hoe / de les / begint",
+              "authorsVersion": [
+                "Hoe laat begint de les?"
+              ],
+              "note": "Question word (hoe laat) + verb + subject."
+            },
+            {
+              "prompt": "Put in order: altijd / Daan / op tijd / is",
+              "authorsVersion": [
+                "Daan is altijd op tijd."
+              ],
+              "note": "Frequency adverbs come right after the verb (07-a)."
+            },
+            {
+              "prompt": "Put in order: thuis / om zes uur / wij / komen",
+              "authorsVersion": [
+                "Wij komen om zes uur thuis."
+              ],
+              "note": "thuiskomen is separable: thuis goes to the end. Also fine: We komen om zes uur thuis."
+            }
+          ]
+        }
+      },
+      "id": "e0c3b966-7615-4eeb-b46f-d53708beb0e9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "From 24 hours to speech",
+      "id": "4338bb07-3aa2-4a75-93a0-f81a37046948"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Timetables use 24 hours. Write the time the way people say it: 12-hour clock plus 's ochtends, 's middags, 's avonds or 's nachts.",
+          "items": [
+            {
+              "prompt": "18:30",
+              "authorsVersion": [
+                "half zeven 's avonds"
+              ],
+              "note": "Half on the way to seven. Also fine without 's avonds when the context is clear."
+            },
+            {
+              "prompt": "14:15",
+              "authorsVersion": [
+                "kwart over twee 's middags"
+              ],
+              "note": "14 - 12 = 2."
+            },
+            {
+              "prompt": "07:45",
+              "authorsVersion": [
+                "kwart voor acht 's ochtends"
+              ],
+              "note": "Count back from the next hour: a quarter to eight."
+            },
+            {
+              "prompt": "21:20",
+              "authorsVersion": [
+                "tien voor half tien 's avonds"
+              ],
+              "note": "21:20 is ten minutes before 21:30 (half tien). Also heard: twintig over negen 's avonds."
+            },
+            {
+              "prompt": "23:00",
+              "authorsVersion": [
+                "elf uur 's avonds"
+              ],
+              "note": "Whole hour: number + uur."
+            },
+            {
+              "prompt": "03:10",
+              "authorsVersion": [
+                "tien over drie 's nachts"
+              ],
+              "note": "Between midnight and about six: 's nachts."
+            },
+            {
+              "prompt": "12:30",
+              "authorsVersion": [
+                "half een 's middags"
+              ],
+              "note": "Half on the way to one."
+            }
+          ]
+        }
+      },
+      "id": "bfeec943-e97f-4c9f-bfa4-d0793718082e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "2d29c822-32a3-4650-b858-d5164cfd3039"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "What time is it?",
+              "authorsVersion": [
+                "Hoe laat is het?"
+              ],
+              "note": "Not Wat tijd is het? Use hoe laat."
+            },
+            {
+              "prompt": "It's half past eight.",
+              "authorsVersion": [
+                "Het is half negen."
+              ],
+              "note": "The big trap: half past eight = half negen, not half acht."
+            },
+            {
+              "prompt": "The meeting starts at ten o'clock.",
+              "authorsVersion": [
+                "De vergadering begint om tien uur."
+              ],
+              "note": "om + time after the verb."
+            },
+            {
+              "prompt": "You're late!",
+              "authorsVersion": [
+                "Je bent te laat!"
+              ],
+              "note": "Also fine: Jij bent te laat! / U bent te laat!"
+            },
+            {
+              "prompt": "The train arrives at a quarter to nine.",
+              "authorsVersion": [
+                "De trein komt om kwart voor negen aan."
+              ],
+              "note": "aankomen is separable: aan at the end."
+            },
+            {
+              "prompt": "I get up at seven o'clock.",
+              "authorsVersion": [
+                "Ik sta om zeven uur op."
+              ],
+              "note": "opstaan: op at the end. uur, not uren."
+            },
+            {
+              "prompt": "Daan is always on time.",
+              "authorsVersion": [
+                "Daan is altijd op tijd."
+              ],
+              "note": "altijd right after the verb."
+            }
+          ]
+        }
+      },
+      "id": "fd41f4de-6f0d-4451-bd05-ff66bb4f030a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "66e6c88e-5e46-4781-8309-9e88cc58751d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Het is vijf voor half negen.",
+              "authorsVersion": [
+                "It's twenty-five past eight."
+              ],
+              "note": "Five minutes before half negen (8:30) = 8:25."
+            },
+            {
+              "prompt": "De trein vertrekt om half zes.",
+              "authorsVersion": [
+                "The train leaves at half past five."
+              ],
+              "note": "half zes = 5:30, not 6:30."
+            },
+            {
+              "prompt": "Hoe laat begint de les?",
+              "authorsVersion": [
+                "What time does the lesson start?"
+              ],
+              "note": "Also fine: When does the class start?"
+            },
+            {
+              "prompt": "We hebben een uur pauze.",
+              "authorsVersion": [
+                "We have an hour's break."
+              ],
+              "note": "een uur = an hour. één uur = one o'clock. Also fine: We have a one-hour break."
+            },
+            {
+              "prompt": "Sofia komt ongeveer om zes uur thuis.",
+              "authorsVersion": [
+                "Sofia gets home at about six o'clock."
+              ],
+              "note": "ongeveer = about. thuiskomen = to get home."
+            },
+            {
+              "prompt": "Het is precies kwart over drie.",
+              "authorsVersion": [
+                "It's exactly a quarter past three."
+              ],
+              "note": "precies = exactly."
+            }
+          ]
+        }
+      },
+      "id": "1963ae00-3fdd-418d-a427-8c186500aadc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: de maandag van Sofia",
+      "id": "726c5138-e2a4-4a2e-bd9e-3f8ca4e579db"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's Monday and answer the questions in Dutch. Short answers are fine.",
+          "passage": {
+            "title": "De maandag van Sofia",
+            "content": "Sofia staat meestal om kwart over zeven op. Ze staat vandaag om half acht op.\nZe drinkt om acht uur koffie. Ze denkt: het ontbijt met het team begint om half tien. Maar dat klopt niet. Het ontbijt begint om half negen!\nSofia wacht om tien voor half negen op de bus. Ze komt om vijf over half negen op het station aan. Ze rent naar het kantoor.\nZe is om tien over half negen op kantoor. Ze is tien minuten te laat. Daan is altijd op tijd.\nDe vergadering begint om tien uur en stopt om kwart voor twaalf. Sofia en Daan lunchen om half een.\nDe klant gaat om vijf uur weg. Zijn trein naar Amsterdam vertrekt om vijf over half zes. Sofia gaat om kwart over vijf weg. Ze komt om zes uur thuis.\nNoor kookt. Noor en Sofia eten om half zeven. Sofia gaat om elf uur naar bed. Ze denkt: half negen is acht uur dertig. Ik ben morgen op tijd!"
+          },
+          "items": [
+            {
+              "prompt": "Hoe laat staat Sofia meestal op?",
+              "authorsVersion": [
+                "Om kwart over zeven."
+              ],
+              "note": "Also fine: Ze staat meestal om kwart over zeven op."
+            },
+            {
+              "prompt": "Hoe laat staat ze vandaag op?",
+              "authorsVersion": [
+                "Om half acht."
+              ],
+              "note": "half acht = 7:30."
+            },
+            {
+              "prompt": "Hoe laat begint het ontbijt met het team?",
+              "authorsVersion": [
+                "Om half negen."
+              ],
+              "note": "8:30. Sofia thinks it is half tien (9:30)."
+            },
+            {
+              "prompt": "Hoe laat is Sofia op kantoor?",
+              "authorsVersion": [
+                "Om tien over half negen."
+              ],
+              "note": "8:40. Also fine: Ze is om tien over half negen op kantoor."
+            },
+            {
+              "prompt": "Klopt dit? Sofia is op tijd.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Ze is tien minuten te laat."
+              ],
+              "note": "She arrives at 8:40; breakfast starts at 8:30."
+            },
+            {
+              "prompt": "Hoe laat begint de vergadering?",
+              "authorsVersion": [
+                "Om tien uur."
+              ],
+              "note": "Also fine: De vergadering begint om tien uur."
+            },
+            {
+              "prompt": "Hoe laat vertrekt de trein van de klant?",
+              "authorsVersion": [
+                "Om vijf over half zes."
+              ],
+              "note": "17:35. Also fine: Zijn trein vertrekt om vijf over half zes."
+            }
+          ]
+        }
+      },
+      "id": "388c2e5d-c2fa-40c3-bf11-031fc77be0e6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "fc2d0578-0257-428a-a72e-445356e90c25"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about your Monday with times. Start each sentence with the subject and put the time after the verb.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about your Monday with times.",
+              "authorsVersion": [
+                "Ik sta om kwart over zeven op. Ik ontbijt om half acht. Mijn werk begint om negen uur. Ik kom om half zes thuis en ik eet om zes uur."
+              ],
+              "note": "Model answer. Check: uur after whole hours, half + next hour, separable prefixes (op, thuis) at the end."
+            }
+          ]
+        }
+      },
+      "id": "78ff4255-74b8-46d9-a34b-75335e4b4935"
+    },
+    {
+      "type": "divider",
+      "id": "68d5e887-7400-49c9-994f-94611b12f32c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "b7e5a6f2-873f-4661-8232-3f364ff98794"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Hoe laat is het?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Het is ",
+        {
+          "text": "acht uur",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        ". After a number, uur stays singular."
+      ],
+      "id": "0b07ad31-edf6-4fb6-afea-fd3dc36123f6"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "half",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " + next hour: ",
+        {
+          "text": "half negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " = 8:30."
+      ],
+      "id": "eef8684c-e0b4-4e0f-90d5-98171e1eb59e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "kwart over acht",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " = 8:15, ",
+        {
+          "text": "kwart voor negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " = 8:45."
+      ],
+      "id": "266a05e6-0261-48e1-b8cf-005817cf7843"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "From :20 to :40, count from the half: ",
+        {
+          "text": "tien voor half negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " (8:20), ",
+        {
+          "text": "vijf over half negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " (8:35)."
+      ],
+      "id": "e9aebe67-2acd-4121-bdbf-c3bf4e3dd163"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Speech uses 12 hours with 's ochtends, 's middags, 's avonds, 's nachts. Timetables use 24 hours."
+      ],
+      "id": "772b36e9-769f-4502-a498-7b75b860ff27"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "To say when: subject + verb + ",
+        {
+          "text": "om",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + time: De les begint ",
+        {
+          "text": "om negen uur",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "789afa8a-70da-4076-86a9-93b6371ba299"
+    },
+    {
+      "type": "paragraph",
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "content": [
+        "Remember: ",
+        {
+          "text": "half negen",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " is ",
+        {
+          "text": "8:30",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Think: half on the way to nine."
+      ],
+      "id": "b1db5686-73c5-4315-95e3-4af43ae68f8a"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: half negen of half tien?",
+      "description": "Sofia runs through the busy hall of Utrecht Centraal station; a big station clock shows 8:35. She holds her phone with a message from Daan.",
+      "alt": "Sofia running through Utrecht Centraal under a station clock showing 8:35"
+    },
+    {
+      "afterHeading": "Minutes around the half hour",
+      "description": "A simple clock face divided into zones: 'over' (:05–:15), 'voor half' (:20–:25), 'half' (:30), 'over half' (:35–:40), 'voor' (:45–:55), with the hand on 8:30 labelled 'half negen'.",
+      "alt": "Clock face showing the Dutch time zones over, voor half, half, over half and voor"
+    }
+  ],
+  "id": "7f4e7353-6cc8-423e-9963-779e94c1ffda"
+}

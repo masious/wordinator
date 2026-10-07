@@ -5,8 +5,7 @@ Content workspace for the "Dutch Foundations" courses. Lessons are authored as J
 | Path | Owner | Purpose |
 | --- | --- | --- |
 | `outline.md` | user | The 40-lesson curriculum. Part II = rows 7–12, Part III = rows 13–18. |
-| `bible.md` | coordinator | Storyline, characters, style rules, per-lesson briefs. |
-| `ledger.md` | coordinator | What each lesson has actually taught (grammar, vocabulary, expressions). Updated after each lesson is accepted. |
+| [`docs/content/`](../../docs/content/index.md) | coordinator | Curriculum docs: storyline and cast, style guide, per-lesson briefs, ledgers of what each lesson actually taught, topic map, and gaps. Start at `docs/content/index.md`. |
 | `part-ii/`, `part-iii/` | workers | One file per lesson: `NN-a-slug.json` (`NN` = outline row; `a`, `b` when a row is split). File-name order = lesson order. |
 | `part-iii/existing/` | reference | The two lessons already in the course for row 13. Do not edit; do not re-cover them. |
 | `*/course.json` | — | Import manifest (course ID, local group/owner, position offset). |
@@ -58,7 +57,7 @@ Inline styles: `bold`, `italic`, `textColor`, `backgroundColor` with palette `de
 ## House style
 
 - Instruction and explanation language: **English**. Target language: Dutch at the level in the outline (A1 → early A2). Every Dutch sentence must be natural, correct Netherlands Dutch.
-- Do not use grammar that the ledger has not introduced yet, except as a fixed, glossed chunk.
+- Do not use grammar that the ledgers (`docs/content/ledger-part-*.md`) have not introduced yet, except as a fixed, glossed chunk.
 - One rule per callout; keep paragraphs short. Bold the target form in examples; use one consistent colour per grammatical role within a lesson (e.g. verb = blue, subject = green, time = orange).
 - Each lesson stands alone inside the course storyline; recycle vocabulary and grammar from earlier lessons on purpose and say so in notes.
 - The plain-text, no-gamification rules of `docs/courses.md` apply: no points, scores, streaks.

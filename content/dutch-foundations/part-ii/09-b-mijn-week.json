@@ -1,0 +1,2642 @@
+{
+  "title": "Mijn week",
+  "goal": "Describe a weekly schedule with several time and place expressions in the right order (time – manner – place) and with inversion.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Mijn week",
+      "id": "c202b813-87c1-48d3-b3f4-7c2e994372e8"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Thursday 17 September. Sofia's agenda is full: a Dutch lesson every Tuesday, sports with Noor, and on Saturday Daan's birthday party. In this lesson you will describe your week: ",
+        {
+          "text": "when",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "how",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and ",
+        {
+          "text": "where",
+          "styles": {
+            "italic": true
+          }
+        },
+        " you go, in the right Dutch order."
+      ],
+      "id": "385be67a-e4f7-4e23-a31b-9660f786e7c2"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: time is ",
+        {
+          "text": "orange",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ", manner (how) is ",
+        {
+          "text": "gray",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        ", place is ",
+        {
+          "text": "purple",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ", verbs are ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", subjects are ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " and prefixes that move to the end are ",
+        {
+          "text": "red",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "d25cb444-2517-4e7b-aa4e-da326f3edc47"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Een drukke week",
+      "id": "26f9c578-4ae2-4ac6-b63c-f4cefb457ebd"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Thursday evening in Noor's kitchen. Noor and Sofia look at their agendas (",
+        {
+          "text": "een drukke week",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = a busy week)."
+      ],
+      "id": "45a03648-5121-4b82-b4a4-dc7b990422cf"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Joh, Sofia, jouw agenda is vol! Wat doe je deze week?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Veel! Ik ga naar de bibliotheek elke dinsdag."
+          },
+          {
+            "speaker": "Noor",
+            "text": "O, je gaat elke dinsdag naar de bibliotheek? Waarom?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik heb daar Nederlandse les. De les is van zeven tot negen uur."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Super! Hoe ga je naar de bibliotheek? Lopend?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik ga om half zeven met de bus. De bibliotheek is in het centrum."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En ik sport elke donderdag in de sportschool. Vanavond ook! Kom je mee?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Vanavond niet, ik ben moe. Maar volgende week kom ik mee!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Leuk! Dan gaan we volgende week samen naar de sportschool."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En zaterdag is het feest van Daan!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja! Op zaterdag werk ik van tien tot vier in het café. Daarna koken we samen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En om acht uur gaan we samen met de tram naar Daan. Gezellig!"
+          }
+        ]
+      },
+      "id": "7013a519-d9d4-44f4-bc8f-e3dccf48330a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Did you notice? Sofia says ",
+        {
+          "text": "Ik ga naar de bibliotheek elke dinsdag",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " (English order). Noor repeats it the Dutch way: je gaat ",
+        {
+          "text": "elke dinsdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "naar de bibliotheek",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". Time comes before place."
+      ],
+      "id": "fb31869e-8d3d-4849-a530-407ce893688b"
+    },
+    {
+      "type": "divider",
+      "id": "34f6583f-d6c3-4c36-95ed-05d171f4b90c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Tijd – manier – plaats",
+      "id": "1f8a6e74-0d44-4603-bcca-2477d500c852"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Time before place",
+      "id": "e02c6045-4696-466a-bb91-fee97a169277"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In English the place usually comes before the time: ",
+        {
+          "text": "I'm going to Amsterdam tomorrow",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". Dutch does it the other way round."
+      ],
+      "id": "2696a854-49c3-4b0a-92e3-96da25b04e83"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm going to Amsterdam tomorrow.",
+        "note": "Time (morgen) before place (naar Amsterdam). The present tense often talks about the future: ga = am going."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "morgen",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "naar Amsterdam",
+          "styles": {
+            "textColor": "purple",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "1545d2e4-a878-4741-94f2-f6be21a5470a"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik ga naar de bibliotheek op dinsdag.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik ga ",
+        {
+          "text": "op dinsdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "naar de bibliotheek",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "db24e996-667e-4fe6-a21e-c9c4751d67b1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Adding manner: how you go",
+      "id": "7534f498-a45b-4c14-9863-7d92e23d383b"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Manner",
+          "styles": {
+            "italic": true
+          }
+        },
+        " answers the question ",
+        {
+          "text": "Hoe?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (How?). It sits between the time and the place."
+      ],
+      "id": "029310a5-c369-4ae2-9eda-6ae952fe89a1"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "After the verb: ",
+        {
+          "text": "time",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " – ",
+        {
+          "text": "manner",
+          "styles": {
+            "textColor": "gray",
+            "bold": true
+          }
+        },
+        " – ",
+        {
+          "text": "place",
+          "styles": {
+            "textColor": "purple",
+            "bold": true
+          }
+        },
+        ". Ik ga ",
+        {
+          "text": "morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "met de trein",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        " ",
+        {
+          "text": "naar Amsterdam",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "019790d4-12b4-4e40-8f4e-6a8f0d128f9a"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "met",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + transport:"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "met de bus",
+              "styles": {
+                "textColor": "gray"
+              }
+            },
+            " – by bus"
+          ],
+          "id": "e332cfaa-6a10-4bc9-8a7f-09d084617abc"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "met de trein",
+              "styles": {
+                "textColor": "gray"
+              }
+            },
+            " – by train"
+          ],
+          "id": "669182ca-8c14-401b-8bc6-a23ebd4450e0"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "met de tram",
+              "styles": {
+                "textColor": "gray"
+              }
+            },
+            " – by tram"
+          ],
+          "id": "db9ca3b0-e4dd-4118-9171-33d512fae909"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "met de fiets",
+              "styles": {
+                "textColor": "gray"
+              }
+            },
+            " – by bike"
+          ],
+          "id": "69f1adcb-e121-4668-be1e-1f545c072fb0"
+        }
+      ],
+      "id": "f4a47ccc-c780-4a56-b017-d3d50180aad6"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "without ",
+        {
+          "text": "met",
+          "styles": {
+            "bold": true
+          }
+        },
+        ":"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "lopend",
+              "styles": {
+                "textColor": "gray"
+              }
+            },
+            " – on foot, walking"
+          ],
+          "id": "2ba97678-eafe-44ac-8bf3-afbbfaf83f35"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "samen",
+              "styles": {
+                "textColor": "gray"
+              }
+            },
+            " – together"
+          ],
+          "id": "dd222f2e-1758-458e-b5ed-d49458d470c5"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "alleen",
+              "styles": {
+                "textColor": "gray"
+              }
+            },
+            " – alone"
+          ],
+          "id": "9350e228-a774-4687-b6e0-f933f1a7d881"
+        }
+      ],
+      "id": "1cbde7f6-00ab-4c2f-bd3f-89d1f8ed1d58"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan goes to the office by bike every day.",
+        "note": "Naar kantoor (no article) is the usual way to say 'to the office'."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "elke dag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "met de fiets",
+          "styles": {
+            "textColor": "gray",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "naar kantoor",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "5d291a16-0f9a-46f6-9210-aa990ab91b04"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia walks to the office at half past eight.",
+        "note": "Sofia has no bike yet. Lopend = on foot."
+      },
+      "content": [
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "om half negen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "lopend",
+          "styles": {
+            "textColor": "gray",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "naar kantoor",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "4a81af80-6123-45c0-b716-5de244717647"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We're going to the party together by tram on Saturday.",
+        "note": "Two manner words: samen comes before met de tram. Zaterdag without op = this Saturday."
+      },
+      "content": [
+        {
+          "text": "Wij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "gaan",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "zaterdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "samen",
+          "styles": {
+            "textColor": "gray",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "met de tram",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        " ",
+        {
+          "text": "naar het feest",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "7b1a86df-e004-4b8c-9b3c-6bf52aba6964"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I come home by bus at ten o'clock.",
+        "note": "Recycles thuiskomen (07-b): time – manner, and the prefix thuis stays at the very end."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "kom",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "om tien uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "met de bus",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        " ",
+        {
+          "text": "thuis",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "c43a1bc2-ed5a-49d8-bffe-45ef787f518e"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Tijd",
+              "id": "65456816-2981-4672-a7ab-2e2982ab698a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "morgen",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "a6229019-449b-4182-a873-d69244e8f01a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "vanavond",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "765e75a0-40ad-4253-b72f-339509b920e6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "op dinsdag",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "451560d9-e877-4fff-a9a3-e91e1af82250"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "elke donderdag",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "57d78b9e-1e34-41d6-8526-be49becc07a6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "volgende week",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                }
+              ],
+              "id": "491eaaff-fa01-4530-ba5c-5fd27b67e91a"
+            }
+          ],
+          "id": "b6433162-f39a-4ac7-9d01-b3dc918c504d"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Manier",
+              "id": "67d26072-0bfe-44ab-84e4-c9b4b83e7519"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "met de bus",
+                  "styles": {
+                    "textColor": "gray"
+                  }
+                }
+              ],
+              "id": "c3cbdc49-2afc-4b72-8601-3347ef9784cd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "met de trein",
+                  "styles": {
+                    "textColor": "gray"
+                  }
+                }
+              ],
+              "id": "5c4d9ce2-b3c5-45f1-9214-2987c5e978c1"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "met de fiets",
+                  "styles": {
+                    "textColor": "gray"
+                  }
+                }
+              ],
+              "id": "17f24cac-8972-4253-acb5-1eae7ef6e2ae"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "lopend",
+                  "styles": {
+                    "textColor": "gray"
+                  }
+                }
+              ],
+              "id": "e91d0b5f-99ed-4618-8aa4-db3070b6dd1a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "samen",
+                  "styles": {
+                    "textColor": "gray"
+                  }
+                },
+                " / ",
+                {
+                  "text": "alleen",
+                  "styles": {
+                    "textColor": "gray"
+                  }
+                }
+              ],
+              "id": "6d58cf8e-0a68-4969-bc53-f694a76f46bb"
+            }
+          ],
+          "id": "e6cd75f7-dafd-48b0-8d95-d7d20b5d2dd6"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Plaats",
+              "id": "5d4fc32a-594f-488e-8727-4390ff43eb46"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "naar de bibliotheek",
+                  "styles": {
+                    "textColor": "purple"
+                  }
+                }
+              ],
+              "id": "613dae78-a57c-465a-98a3-b00ed65a0c97"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "naar de sportschool",
+                  "styles": {
+                    "textColor": "purple"
+                  }
+                }
+              ],
+              "id": "23681686-cec4-4e5c-a232-46badec576ba"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "naar het zwembad",
+                  "styles": {
+                    "textColor": "purple"
+                  }
+                }
+              ],
+              "id": "9c004601-760d-4d67-90f9-bb7a452066a8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "in het café",
+                  "styles": {
+                    "textColor": "purple"
+                  }
+                }
+              ],
+              "id": "bc0e46ec-3e75-452e-b793-0b0fbfa1930c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "naar Daan",
+                  "styles": {
+                    "textColor": "purple"
+                  }
+                }
+              ],
+              "id": "5f8e2595-898c-4e91-9422-70d6b060d0dd"
+            }
+          ],
+          "id": "54652d3d-2e65-4913-8171-283137be7af5"
+        }
+      ],
+      "id": "3485aafc-91cd-4fde-82ea-bc18353e2b5f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "English often uses the mirror order: ",
+        {
+          "text": "I go",
+          "styles": {
+            "italic": true
+          }
+        },
+        " ",
+        {
+          "text": "to the library",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "by bus",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        " ",
+        {
+          "text": "on Tuesday",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " (place – manner – time). Dutch: Ik ga ",
+        {
+          "text": "op dinsdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "met de bus",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        " ",
+        {
+          "text": "naar de bibliotheek",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "f33d5af9-28ad-46ba-a7a1-ae915a027999"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "T",
+          "styles": {
+            "bold": true
+          }
+        },
+        "ijd – ",
+        {
+          "text": "M",
+          "styles": {
+            "bold": true
+          }
+        },
+        "anier – ",
+        {
+          "text": "P",
+          "styles": {
+            "bold": true
+          }
+        },
+        "laats: T, M, P is alphabetical order. Time, then how, then where."
+      ],
+      "id": "c6873656-1a72-4002-beae-b4da3cdaea88"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Two time expressions",
+      "id": "2aa3d16a-4bbc-403d-9239-995c903f4b64"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Sometimes you say the day ",
+        {
+          "text": "and",
+          "styles": {
+            "italic": true
+          }
+        },
+        " the hour. Then the general time comes first, the specific time second."
+      ],
+      "id": "e97607f0-f79f-4b48-b06c-e81d161830da"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "General before specific: ",
+        {
+          "text": "op dinsdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " → ",
+        {
+          "text": "om zeven uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ". Day first, then the hour."
+      ],
+      "id": "d535f33a-43a7-471b-81ef-f2635bc1dff0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I have a lesson on Tuesday at seven o'clock."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "op dinsdag om zeven uur",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " les."
+      ],
+      "id": "11f50e6a-a2bf-4eaf-9624-916cdd968edd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan is at the office tomorrow at half past eight.",
+        "note": "Recycles om + time and half (08-a)."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "morgen om half negen",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "op kantoor",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "96132e5e-e365-460e-aa48-48483b8cb29d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Elke week, deze week, volgende week",
+      "id": "d53e4b6a-a33e-47b6-8a83-c2a004e16888"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "elke maandag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " – every Monday"
+      ],
+      "id": "ecb597ea-b2f4-4ca6-bea9-2247e11e9ebb"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "op maandag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " – on Monday, or on Mondays (habit)"
+      ],
+      "id": "be6cecaa-5b68-4355-8b1f-a498a6256aa4"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "deze week",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " – this week; ",
+        {
+          "text": "volgende week",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " – next week"
+      ],
+      "id": "1dab3293-8bd0-4622-b037-2146552d16fd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia swims at the swimming pool every week on Wednesday.",
+        "note": "General (elke week) before specific (op woensdag)."
+      },
+      "content": [
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "zwemt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "elke week op woensdag",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "in het zwembad",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "34eb2496-76c9-43db-abea-18b4ba372061"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Starting with the time",
+      "id": "89bccef0-a05e-4cd1-aec4-2c3c45249342"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You know this from 08-b: when a time expression comes first, the verb stays in second place and the subject comes ",
+        {
+          "text": "after",
+          "styles": {
+            "italic": true
+          }
+        },
+        " the verb."
+      ],
+      "id": "5130509a-e164-4d63-9e01-e1aa61c2251b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "Time",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " + ",
+        {
+          "text": "verb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " + ",
+        {
+          "text": "subject",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " + the rest. Op dinsdag ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " Nederlandse les."
+      ],
+      "id": "5b453771-31c2-4756-8b04-ea8dcfe8ee41"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "On Tuesdays I have a Dutch lesson."
+      },
+      "content": [
+        {
+          "text": "Op dinsdag",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " Nederlandse les."
+      ],
+      "id": "fa5fe7df-8e11-4c96-9911-b1a5081b2aeb"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Every Thursday Noor does sports at the gym."
+      },
+      "content": [
+        {
+          "text": "Elke donderdag",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "sport",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "in de sportschool",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "7d516e8c-8991-4f0c-aea0-aaad9046fabd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Next week I'll come along.",
+        "note": "Recycles meekomen: the prefix mee still goes to the end."
+      },
+      "content": [
+        {
+          "text": "Volgende week",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "kom",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "mee",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "81f2de0b-9c6d-4570-a6b2-c43ee7b1315f"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "Only ",
+        {
+          "text": "one",
+          "styles": {
+            "bold": true
+          }
+        },
+        " element before the verb. ",
+        {
+          "text": "Op dinsdag om zeven uur in de bibliotheek ik heb les.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Op dinsdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "om zeven uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " les ",
+        {
+          "text": "in de bibliotheek",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "89500f11-e541-4055-9e4f-1a3a0f7d032d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Build a Dutch sentence in five steps:"
+      ],
+      "id": "48af84bd-43cf-4783-81d6-0860f9b4e501"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Choose the first element: the subject or one time expression."
+      ],
+      "id": "11a9ca82-c0f0-4b47-b68b-7e610fa3553f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Put the ",
+        {
+          "text": "verb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in second place."
+      ],
+      "id": "823b1560-e1d9-4453-a3d7-b56f1d1887d1"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "If the time is first, the ",
+        {
+          "text": "subject",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " comes straight after the verb."
+      ],
+      "id": "7cee4635-c962-4b3b-b7f9-3b6cc71a4520"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Then the rest in the order ",
+        {
+          "text": "time",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " – ",
+        {
+          "text": "manner",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        " – ",
+        {
+          "text": "place",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "4a4cfd96-f3f0-4030-b991-dae70d913b4f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "A separable prefix goes to the very end: ",
+        {
+          "text": "thuis",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ", ",
+        {
+          "text": "mee",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ", ",
+        {
+          "text": "af",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "3b274385-1cb2-4aa9-a344-a88866226b8c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Tomorrow I'm meeting Daan at twelve.",
+        "note": "Recycles afspreken (08-b). One time expression in front, the other after the verb."
+      },
+      "content": [
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "spreek",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "om twaalf uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " met Daan ",
+        {
+          "text": "af",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "8d740b17-9f2c-41a6-9f85-19341deccab4"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Don't forget the inversion: ",
+        {
+          "text": "Op zaterdag ik werk in het café.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Op zaterdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "werk",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "in het café",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "f35eb984-8c43-4dc6-8f73-39a7f649c164"
+    },
+    {
+      "type": "divider",
+      "id": "5a8804cc-ab2a-4a69-a379-22997d581a1d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Het feest van Daan",
+      "id": "373c8a01-1a8a-4a23-b219-5085698586cc"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Saturday 19 September, eight o'clock in the evening. Daan is ",
+        {
+          "text": "jarig",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": he turns 33. Sofia and Noor arrive at his party."
+      ],
+      "id": "682d2010-28f7-4c89-80a0-91323646a71d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "At a Dutch birthday party the guests often sit in a ",
+        {
+          "text": "kring",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (circle) in the living room. You congratulate the birthday person ",
+        {
+          "text": "and",
+          "styles": {
+            "italic": true
+          }
+        },
+        " the family and friends: \"Gefeliciteerd met Daan!\" First there is ",
+        {
+          "text": "koffie met taart",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (coffee and cake); drinks and snacks come later."
+      ],
+      "id": "a39e1752-09c4-429f-975a-1c09595e68df"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Party words:"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "het feest",
+              "styles": {
+                "bold": true
+              }
+            },
+            " – the party; ",
+            {
+              "text": "de taart",
+              "styles": {
+                "bold": true
+              }
+            },
+            " – the cake; ",
+            {
+              "text": "het cadeau",
+              "styles": {
+                "bold": true
+              }
+            },
+            " – the present"
+          ],
+          "id": "ec07fb0b-7929-4ada-a3c0-a1b9b10aa4a4"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "geven",
+              "styles": {
+                "bold": true
+              }
+            },
+            " – to give; ",
+            {
+              "text": "krijgen",
+              "styles": {
+                "bold": true
+              }
+            },
+            " – to get, receive"
+          ],
+          "id": "664d74c1-cd4a-42c6-bf40-7a1646131e94"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de familie",
+              "styles": {
+                "bold": true
+              }
+            },
+            " – the family; ",
+            {
+              "text": "de collega",
+              "styles": {
+                "bold": true
+              }
+            },
+            " – the colleague; ",
+            {
+              "text": "de kring",
+              "styles": {
+                "bold": true
+              }
+            },
+            " – the circle"
+          ],
+          "id": "a937fac9-7099-4677-9b58-2bba3d0b4329"
+        }
+      ],
+      "id": "dc44e950-7c1d-4617-8906-753f89e996df"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        {
+          "text": "Gefeliciteerd",
+          "styles": {
+            "bold": true
+          }
+        },
+        " has five syllables and the stress at the end: ge-fe-li-ci-",
+        {
+          "text": "TEERD",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "a8a775b5-429c-444d-8fe3-a7479554aaea"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Daan! Gefeliciteerd met je verjaardag!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Dank je wel, Sofia! Kom binnen!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Alsjeblieft, een cadeau!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Een boek! Wat leuk, dank je wel!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Lotte! Gefeliciteerd met Daan!"
+          },
+          {
+            "speaker": "Lotte",
+            "text": "Dank je! Kijk, daar is de moeder van Daan."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dag mevrouw! Gefeliciteerd met Daan!"
+          },
+          {
+            "speaker": "Daans moeder",
+            "text": "Dank u wel! Ga zitten. Koffie? Taart?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, graag! Lotte, wat doe jij volgende week?"
+          },
+          {
+            "speaker": "Lotte",
+            "text": "Ik werk elke dag op school. Op woensdag ga ik 's middags met de trein naar Amersfoort."
+          },
+          {
+            "speaker": "Daan",
+            "text": "En ik ga elke dag om acht uur met de fiets naar kantoor."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Om acht uur? Ik ga om half negen lopend naar kantoor. Ik ben vaak een beetje te laat!"
+          }
+        ]
+      },
+      "id": "36ec4230-b532-418e-923c-16bbf4b15678"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "On Wednesday I'm taking the train to Amersfoort in the afternoon.",
+        "note": "One time expression in front, the second one after the verb, then manner, then place."
+      },
+      "content": [
+        {
+          "text": "Op woensdag",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "'s middags",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "met de trein",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        " ",
+        {
+          "text": "naar Amersfoort",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "c7a6c684-b02f-4683-b24c-35ce7f1f3f77"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan gets a book from Sofia.",
+        "note": "krijgen = to get; geven = to give: Sofia geeft Daan een boek."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "krijgt",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " een boek van Sofia."
+      ],
+      "id": "2ffbf214-6961-4a33-964d-68d29d5a002e"
+    },
+    {
+      "type": "divider",
+      "id": "aa25b880-432b-4163-915a-8ba3aa37eee6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "84e72cfe-407f-46c0-b9b6-e5657e4ba6f1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in: time and manner",
+      "id": "92567416-4036-446e-9414-553af8542bef"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the chunks in brackets into the blanks in the right order (time – manner – place). Each blank is one chunk.",
+          "items": [
+            {
+              "prompt": "Ik ga … … naar de bibliotheek. (met de bus / morgen)",
+              "authorsVersion": [
+                "morgen",
+                "met de bus"
+              ],
+              "note": "Time before manner."
+            },
+            {
+              "prompt": "Noor gaat … … naar de sportschool. (alleen / vanavond)",
+              "authorsVersion": [
+                "vanavond",
+                "alleen"
+              ],
+              "note": "Time (vanavond) before manner (alleen)."
+            },
+            {
+              "prompt": "Daan gaat … … naar kantoor. (met de fiets / elke dag)",
+              "authorsVersion": [
+                "elke dag",
+                "met de fiets"
+              ],
+              "note": "Time – manner – place."
+            },
+            {
+              "prompt": "Wij gaan … … … . (naar het feest / samen / zaterdag)",
+              "authorsVersion": [
+                "zaterdag",
+                "samen",
+                "naar het feest"
+              ],
+              "note": "T – M – P: zaterdag – samen – naar het feest."
+            },
+            {
+              "prompt": "Sofia gaat … … naar het zwembad. (lopend / op woensdag)",
+              "authorsVersion": [
+                "op woensdag",
+                "lopend"
+              ],
+              "note": "Time before manner."
+            },
+            {
+              "prompt": "Ik kom … … thuis. (met de bus / om half tien)",
+              "authorsVersion": [
+                "om half tien",
+                "met de bus"
+              ],
+              "note": "Thuiskomen: the prefix thuis stays at the end; time and manner come before it."
+            },
+            {
+              "prompt": "Lotte gaat … … … . (met de trein / naar Amersfoort / op woensdag)",
+              "authorsVersion": [
+                "op woensdag",
+                "met de trein",
+                "naar Amersfoort"
+              ],
+              "note": "T – M – P."
+            },
+            {
+              "prompt": "Ik heb … … les. (om zeven uur / op dinsdag)",
+              "authorsVersion": [
+                "op dinsdag",
+                "om zeven uur"
+              ],
+              "note": "Two time expressions: general (the day) before specific (the hour)."
+            }
+          ]
+        }
+      },
+      "id": "ef5592e4-3071-4023-a86b-f14353440172"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "At the party",
+      "id": "7a19585d-3d0a-45f9-9e3f-f528f22986dd"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the conversations at Daan's party. Each blank is one word.",
+          "items": [
+            {
+              "prompt": "Sofia: Hoi Daan! … met je …! / Daan: Dank je wel, Sofia!",
+              "authorsVersion": [
+                "Gefeliciteerd",
+                "verjaardag"
+              ],
+              "note": "Gefeliciteerd met je verjaardag! = Happy birthday!"
+            },
+            {
+              "prompt": "Sofia: Hoi Lotte! Gefeliciteerd … Daan! / Lotte: Dank je! …? / Sofia: Ja, graag!",
+              "authorsVersion": [
+                "met",
+                "Koffie"
+              ],
+              "note": "Gefeliciteerd met + the birthday person. Offer with one word: Koffie? Taart?"
+            },
+            {
+              "prompt": "Lotte: Wat doe jij volgende week, Sofia? / Sofia: Op dinsdag … … Nederlandse les.",
+              "authorsVersion": [
+                "heb",
+                "ik"
+              ],
+              "note": "Op dinsdag comes first, so the verb comes before the subject."
+            },
+            {
+              "prompt": "Daan: Hoe ga je naar kantoor, Sofia? / Sofia: Ik ga elke dag … naar kantoor. Ik heb geen fiets.",
+              "authorsVersion": [
+                "lopend"
+              ],
+              "note": "Lopend = on foot. Sofia has no bike yet."
+            },
+            {
+              "prompt": "Daans moeder: Hoe … jullie naar huis? / Noor: Om twaalf uur gaan we samen … de tram naar huis.",
+              "authorsVersion": [
+                "gaan",
+                "met"
+              ],
+              "note": "Jullie gaan (plural). Met de tram = by tram."
+            },
+            {
+              "prompt": "Sofia: Wat … jij Daan, Lotte? / Lotte: Ik … Daan een nieuwe agenda. / Daan: En ik … een boek van Sofia!",
+              "authorsVersion": [
+                "geef",
+                "geef",
+                "krijg"
+              ],
+              "note": "Geven = to give, krijgen = to get. Ik geef, jij geeft, but in a question: geef jij."
+            }
+          ]
+        }
+      },
+      "id": "f4c3a306-10ba-4606-b527-6c6822a384a0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "fa7e4696-ab9f-410b-9686-eb7965a7c16d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put in order. Start with the subject.",
+          "items": [
+            {
+              "prompt": "Put in order: naar de bibliotheek / ik / met de bus / ga / op dinsdag",
+              "authorsVersion": [
+                "Ik ga op dinsdag met de bus naar de bibliotheek."
+              ],
+              "note": "T – M – P. Also fine (starting with the time): Op dinsdag ga ik met de bus naar de bibliotheek."
+            },
+            {
+              "prompt": "Put in order: met de fiets / Daan / naar kantoor / gaat / elke dag",
+              "authorsVersion": [
+                "Daan gaat elke dag met de fiets naar kantoor."
+              ],
+              "note": "Typical mistake: Daan gaat naar kantoor met de fiets elke dag (English order)."
+            },
+            {
+              "prompt": "Put in order: samen / naar de sportschool / volgende week / gaan / Noor en Sofia",
+              "authorsVersion": [
+                "Noor en Sofia gaan volgende week samen naar de sportschool."
+              ],
+              "note": "Plural subject: gaan. T – M – P."
+            },
+            {
+              "prompt": "Put in order: naar het zwembad / alleen / op woensdag / Sofia / gaat",
+              "authorsVersion": [
+                "Sofia gaat op woensdag alleen naar het zwembad."
+              ],
+              "note": "Time – manner – place."
+            },
+            {
+              "prompt": "Put in order: lopend / ik / morgen / naar het station / ga",
+              "authorsVersion": [
+                "Ik ga morgen lopend naar het station."
+              ],
+              "note": "Morgen before lopend before naar het station."
+            },
+            {
+              "prompt": "Put in order: met de trein / naar Amersfoort / Lotte / vandaag / gaat",
+              "authorsVersion": [
+                "Lotte gaat vandaag met de trein naar Amersfoort."
+              ],
+              "note": "Also fine: Vandaag gaat Lotte met de trein naar Amersfoort."
+            },
+            {
+              "prompt": "Put in order: om acht uur / zaterdag / naar het feest / wij / met de tram / gaan",
+              "authorsVersion": [
+                "Wij gaan zaterdag om acht uur met de tram naar het feest."
+              ],
+              "note": "Two time expressions: general (zaterdag) before specific (om acht uur), then manner, then place."
+            },
+            {
+              "prompt": "Put in order: met de bus / kom / thuis / ik / om tien uur",
+              "authorsVersion": [
+                "Ik kom om tien uur met de bus thuis."
+              ],
+              "note": "Thuiskomen: thuis goes to the very end."
+            }
+          ]
+        }
+      },
+      "id": "5cc784d6-b552-444b-bf86-e552aeaa2566"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Start with the time",
+      "id": "e2626218-48f3-4ad5-aeb7-23e0dc61f6d5"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence. Start with the time expression (if there are two, start with the first one) and change the word order.",
+          "items": [
+            {
+              "prompt": "Ik heb op dinsdag Nederlandse les.",
+              "authorsVersion": [
+                "Op dinsdag heb ik Nederlandse les."
+              ],
+              "note": "Time + verb + subject."
+            },
+            {
+              "prompt": "Noor sport elke donderdag.",
+              "authorsVersion": [
+                "Elke donderdag sport Noor."
+              ],
+              "note": "The verb stays in second place; Noor moves after it."
+            },
+            {
+              "prompt": "Wij gaan zaterdag samen naar het feest.",
+              "authorsVersion": [
+                "Zaterdag gaan wij samen naar het feest."
+              ],
+              "note": "Also fine: Zaterdag gaan we samen naar het feest."
+            },
+            {
+              "prompt": "Sofia gaat morgen met de bus naar de bibliotheek.",
+              "authorsVersion": [
+                "Morgen gaat Sofia met de bus naar de bibliotheek."
+              ],
+              "note": "Manner and place keep their order after the subject."
+            },
+            {
+              "prompt": "Ik zwem op woensdag om zeven uur in het zwembad.",
+              "authorsVersion": [
+                "Op woensdag zwem ik om zeven uur in het zwembad."
+              ],
+              "note": "Only one element before the verb: om zeven uur stays after the subject. Typical mistake: Op woensdag om zeven uur ik zwem."
+            },
+            {
+              "prompt": "Wij spreken volgende week met Lotte af.",
+              "authorsVersion": [
+                "Volgende week spreken wij met Lotte af."
+              ],
+              "note": "Afspreken: the prefix af stays at the end. Also fine: spreken we."
+            },
+            {
+              "prompt": "Jij werkt deze week thuis.",
+              "authorsVersion": [
+                "Deze week werk jij thuis."
+              ],
+              "note": "Inversion with jij: the verb loses its t (werk jij)."
+            }
+          ]
+        }
+      },
+      "id": "de737117-2251-409f-8822-c1286c34c9c9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "59ae80a7-7033-4552-aa83-fec257b6d891"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Use the order time – manner – place.",
+          "items": [
+            {
+              "prompt": "I go to the library by bus on Tuesday.",
+              "authorsVersion": [
+                "Ik ga op dinsdag met de bus naar de bibliotheek."
+              ],
+              "note": "Also fine: Op dinsdag ga ik met de bus naar de bibliotheek. English order is the mirror: place – manner – time."
+            },
+            {
+              "prompt": "Every Thursday Noor goes to the gym.",
+              "authorsVersion": [
+                "Elke donderdag gaat Noor naar de sportschool."
+              ],
+              "note": "Time first, so verb before subject. Also fine: Noor gaat elke donderdag naar de sportschool."
+            },
+            {
+              "prompt": "We're going to the party together on Saturday.",
+              "authorsVersion": [
+                "Wij gaan zaterdag samen naar het feest."
+              ],
+              "note": "Use the present tense for the future. Also fine: We gaan op zaterdag samen naar het feest."
+            },
+            {
+              "prompt": "Daan goes to the office by bike every day.",
+              "authorsVersion": [
+                "Daan gaat elke dag met de fiets naar kantoor."
+              ],
+              "note": "Also fine: Daan fietst elke dag naar kantoor."
+            },
+            {
+              "prompt": "On Tuesday I have a Dutch lesson at seven.",
+              "authorsVersion": [
+                "Op dinsdag heb ik om zeven uur Nederlandse les."
+              ],
+              "note": "One time expression in front, the hour after the subject. Also fine: Ik heb op dinsdag om zeven uur Nederlandse les."
+            },
+            {
+              "prompt": "Happy birthday, Daan!",
+              "authorsVersion": [
+                "Gefeliciteerd met je verjaardag, Daan!"
+              ],
+              "note": "Also fine: Gefeliciteerd, Daan!"
+            },
+            {
+              "prompt": "I come home by tram at ten o'clock.",
+              "authorsVersion": [
+                "Ik kom om tien uur met de tram thuis."
+              ],
+              "note": "Thuiskomen: thuis at the end, time before manner."
+            }
+          ]
+        }
+      },
+      "id": "107ca21d-8836-453b-bf01-843e2aea1df0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "1b442160-c1db-411e-b312-b78c7afb6d32"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Elke woensdag zwemt Sofia in het zwembad.",
+              "authorsVersion": [
+                "Sofia swims at the swimming pool every Wednesday."
+              ],
+              "note": "English puts the time at the end."
+            },
+            {
+              "prompt": "Op dinsdag gaat Sofia om half zeven met de bus naar de bibliotheek.",
+              "authorsVersion": [
+                "On Tuesdays Sofia takes the bus to the library at half past six."
+              ],
+              "note": "Om half zeven = at half past six (half before seven)."
+            },
+            {
+              "prompt": "Deze week werkt Daan thuis.",
+              "authorsVersion": [
+                "Daan is working from home this week."
+              ]
+            },
+            {
+              "prompt": "Gefeliciteerd met Daan!",
+              "authorsVersion": [
+                "Congratulations on Daan's birthday!"
+              ],
+              "note": "Said to Daan's family and friends at his party. English has no exact equivalent."
+            },
+            {
+              "prompt": "Op het feest zit iedereen in een kring.",
+              "authorsVersion": [
+                "At the party everyone sits in a circle."
+              ],
+              "note": "iedereen = everyone."
+            },
+            {
+              "prompt": "Daan krijgt een boek van Sofia.",
+              "authorsVersion": [
+                "Daan gets a book from Sofia."
+              ],
+              "note": "Krijgen = to get, receive."
+            }
+          ]
+        }
+      },
+      "id": "9008f195-2f01-4e8c-8b98-eed7e911abb1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Een e-mail naar Valencia",
+      "id": "40b93b0d-9b21-4ca6-bef2-8d8db17ccb40"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's email to her mother. Answer the questions in Dutch.",
+          "passage": {
+            "title": "Lieve mama",
+            "content": "Lieve mama,\n\nHoe gaat het in Valencia? Hier in Utrecht is het druk!\n\nVan maandag tot vrijdag werk ik op kantoor. Ik ga elke dag om half negen lopend naar kantoor. Daan gaat altijd met de fiets. Hij is altijd op tijd en ik ben vaak een beetje te laat!\n\nOp dinsdag heb ik Nederlandse les. Ik ga om half zeven met de bus naar de bibliotheek in het centrum. De les is van zeven tot negen uur. De cursus is leuk, maar moeilijk.\n\nOp woensdag zwem ik 's ochtends om zeven uur in het zwembad. Ik zwem alleen. Het water is koud! Elke donderdag sport Noor in de sportschool. Volgende week ga ik samen met Noor.\n\nMorgen is Daan jarig. Het feest is om acht uur bij Daan thuis. Noor en ik gaan samen met de tram. Wij nemen een Spaanse tortilla mee!\n\nZondag bellen we, goed?\n\nVeel liefs,\nSofia"
+          },
+          "items": [
+            {
+              "prompt": "Hoe gaat Sofia naar kantoor?",
+              "authorsVersion": [
+                "Lopend. Ze gaat lopend naar kantoor."
+              ]
+            },
+            {
+              "prompt": "Hoe laat gaat Sofia naar kantoor?",
+              "authorsVersion": [
+                "Om half negen."
+              ]
+            },
+            {
+              "prompt": "Wanneer heeft Sofia Nederlandse les?",
+              "authorsVersion": [
+                "Op dinsdag, van zeven tot negen uur."
+              ],
+              "note": "Also fine: Elke dinsdag."
+            },
+            {
+              "prompt": "Waar is de Nederlandse les?",
+              "authorsVersion": [
+                "In de bibliotheek in het centrum."
+              ]
+            },
+            {
+              "prompt": "Wat doet Sofia op woensdag om zeven uur?",
+              "authorsVersion": [
+                "Ze zwemt in het zwembad."
+              ]
+            },
+            {
+              "prompt": "Klopt dit? Sofia zwemt samen met Noor.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Sofia zwemt alleen."
+              ],
+              "note": "Also fine: Nee, ze zwemt alleen."
+            },
+            {
+              "prompt": "Wanneer is het feest van Daan?",
+              "authorsVersion": [
+                "Morgen, op zaterdag 19 september, om acht uur."
+              ]
+            },
+            {
+              "prompt": "Hoe gaan Sofia en Noor naar het feest?",
+              "authorsVersion": [
+                "Samen met de tram."
+              ],
+              "note": "Full sentence: Ze gaan samen met de tram naar het feest."
+            }
+          ]
+        }
+      },
+      "id": "156c3567-0a88-43ca-ae62-44b6a22437b3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "11c35ae0-bbcc-49c4-acf5-c01c5bd6a193"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about your week: when, how and where. Use time – manner – place, and start at least one sentence with a time expression.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about your week: when, how and where.",
+              "authorsVersion": [
+                "Van maandag tot vrijdag werk ik op kantoor. Ik ga elke dag om half negen lopend naar kantoor. Op dinsdag ga ik om half zeven met de bus naar de bibliotheek. Zaterdag ga ik samen met Noor naar het feest van Daan."
+              ],
+              "note": "Model answer by Sofia. Check: time before manner before place; after a time expression at the start, the verb comes before the subject."
+            }
+          ]
+        }
+      },
+      "id": "dfe4abf9-6973-4ddc-8f1a-01d00a4ae9aa"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "5f991874-4444-4afb-bbdb-073652d9a235"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "After the verb: ",
+        {
+          "text": "time",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " – ",
+        {
+          "text": "manner",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        " – ",
+        {
+          "text": "place",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". Ik ga ",
+        {
+          "text": "morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "met de trein",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        " ",
+        {
+          "text": "naar Amsterdam",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "35c38d07-a5ae-473f-bff8-86fc8564025e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Two time expressions: general before specific: ",
+        {
+          "text": "op dinsdag om zeven uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "a9410126-aeb1-4b27-a91e-31efde890cc8"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "A time expression at the start: ",
+        {
+          "text": "Op dinsdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " les."
+      ],
+      "id": "23465bc9-8885-4c9d-8a24-0e38c3a4d665"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Only one element before the verb; a separable prefix stays at the end."
+      ],
+      "id": "5a166c68-ae06-46e6-b6d5-d81b10b305db"
+    },
+    {
+      "type": "paragraph",
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "content": [
+        "Remember: ",
+        {
+          "text": "T",
+          "styles": {
+            "bold": true
+          }
+        },
+        "ijd – ",
+        {
+          "text": "M",
+          "styles": {
+            "bold": true
+          }
+        },
+        "anier – ",
+        {
+          "text": "P",
+          "styles": {
+            "bold": true
+          }
+        },
+        "laats. Congratulate everyone at a party: Gefeliciteerd met Daan!"
+      ],
+      "id": "61df423a-bc8b-45f0-854d-51bed27c0afe"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Een drukke week",
+      "description": "Sofia and Noor at a small kitchen table, each with an open paper agenda; Tuesday shows 'Nederlandse les 19.00'.",
+      "alt": "Two young women comparing their agendas at a kitchen table."
+    },
+    {
+      "afterHeading": "Story: Het feest van Daan",
+      "description": "A Dutch living room with chairs in a circle, guests holding coffee cups and plates with cake, a birthday garland.",
+      "alt": "Guests sitting in a circle at a birthday party with coffee and cake."
+    }
+  ],
+  "id": "15e1890a-0f7c-4df8-b1b0-7f42a7ec711f"
+}

@@ -1,0 +1,2858 @@
+{
+  "title": "Een afspraak maken",
+  "goal": "Make and change appointments with om, van … tot and tot, and put the verb before the subject when a sentence starts with a time.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Een afspraak maken",
+      "id": "476bd384-c594-4cd9-a276-cb1981050ac5"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Tuesday 15 September. Sofia wants to have lunch with her colleague Daan, but Daan lives by his agenda. Later she phones a hairdresser. In this lesson you will suggest, accept and change times, and learn what happens to Dutch word order when a sentence starts with a time."
+      ],
+      "id": "3417b506-24d7-405f-a74a-9e09afafa9e5"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: subjects are ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", verbs are ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", time expressions are ",
+        {
+          "text": "orange",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ", and prefixes that move to the end are ",
+        {
+          "text": "red",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ". A wrong form has a ",
+        {
+          "text": "grey background",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        "."
+      ],
+      "id": "34ee6b21-1249-4ed3-804f-2a1020b6494b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Heb je morgen tijd?",
+      "id": "bf5bc992-b224-4824-9f97-f8f5b9abf026"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Daan! Heb je morgen tijd? Lunchen we samen?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Morgen? Ik kijk even in mijn agenda."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Om half een?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Morgen om half een? Nee, om één uur heb ik een vergadering. Morgen heb ik het druk."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Jammer. En overmorgen? Ben je overmorgen vrij?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Overmorgen… ja. Tussen twaalf en twee heb ik tijd."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Is half een goed?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Prima, dat past. Overmorgen om half een."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Leuk! En morgen om tien uur hebben we de teamvergadering, toch?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Nee, om half tien! De teamvergadering is van half tien tot half elf."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "O ja. Morgen ik sta vroeg op!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ja, morgen sta je vroeg op! Tot morgen, Sofia."
+          }
+        ]
+      },
+      "id": "89014b86-4b76-4bc8-811c-f1fb3248b99b"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Useful words from the dialogue:"
+      ],
+      "id": "568dade6-8cbc-40f2-83ad-d58abc0180d5"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "tijd hebben",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "to have time",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "Heb je morgen tijd? ",
+            {
+              "text": "Are you free tomorrow?",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "9246e5f1-63e8-4d83-92c1-daf1ce64b69e"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "Tussen twaalf en twee heb ik tijd. ",
+            {
+              "text": "I'm free between twelve and two.",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "c9b73888-0e79-40a8-b5c1-4aec2768d156"
+        }
+      ],
+      "id": "93acc359-dc9b-46ca-b40a-8b43c9bcf3a2"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Ik heb het druk.",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "I'm busy.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " A fixed chunk: learn it as a whole."
+      ],
+      "id": "e4fac03b-dc33-430c-b119-db815e9552be"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Ik kijk even in mijn agenda.",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "I'll just check my diary.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "580623bc-541b-41df-8521-16d0d7a14aa3"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Jammer.",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "Pity. / Too bad.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "7410e8ce-9729-433b-bf30-2366957d1e33"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "overmorgen",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "the day after tomorrow",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "2b769a60-d7d0-4843-94e0-a3f9417ee6d0"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "The Dutch live by their agenda. Friends often plan a dinner or a drink weeks ahead, and a surprise visit is rare. So you hear ",
+        {
+          "text": "Ik kijk even in mijn agenda",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "I'll just check my diary",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") all the time, even between friends."
+      ],
+      "id": "0807480e-0c1b-45e5-818e-26a69972680a"
+    },
+    {
+      "type": "divider",
+      "id": "054ab9cd-8652-4fb5-9eef-974b43fe742d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Om, van … tot, tot and tussen",
+      "id": "b09ee9cd-fe76-4d38-b760-fc078bdc5cab"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "om: at what time",
+      "id": "cb48808e-889a-4ab1-95b1-cdc36896b436"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The meeting starts at nine o'clock.",
+        "note": "Recycles om + clock time from 08-a."
+      },
+      "content": [
+        {
+          "text": "De vergadering",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "begint",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "om",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "negen uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "c73a4a0b-7479-4def-a92d-6148fd4620a0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "van … tot: from … till",
+      "id": "09392904-c9c6-4dfb-83f1-8a1b258d250d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I work from nine to five.",
+        "note": "Dutch uses van … tot for a period of time. You can leave out uur: van negen tot vijf (uur)."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "werk",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "van",
+          "styles": {
+            "textColor": "orange",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "negen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "tot",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "vijf",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "55549acd-5804-47be-bc93-f0ef6754ec41"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The team meeting is from half past nine till half past ten.",
+        "note": "Remember: half tien = 9:30, half on the way to ten."
+      },
+      "content": [
+        {
+          "text": "De teamvergadering",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "van",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "half tien",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "tot",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "half elf",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "65db1271-5dc2-4eb4-bc3e-9109a2aa87fe"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "For time, the partner of van is always tot, never naar: ",
+        {
+          "text": "van negen naar vijf",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "van negen tot vijf",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Naar is for places: naar het kantoor."
+      ],
+      "id": "b87f119a-c43e-4536-a645-8513a0e0d13f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "tot: until, and see you",
+      "id": "435e6789-133e-4afd-b25d-8582cfd1a9e9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan works until four o'clock today."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "werkt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "vandaag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "tot",
+          "styles": {
+            "textColor": "orange",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "vier uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "623bf23f-6f16-4654-8ddd-a452c037581e"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Tot",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + a time word is also how you say goodbye:"
+      ],
+      "id": "1103f9fe-bfab-4261-a5a7-e64dadd395e6"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Tot …!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "See you …!",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "Tot morgen!",
+              "styles": {
+                "bold": true
+              }
+            },
+            ": ",
+            {
+              "text": "See you tomorrow!",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "e4011b28-2c79-4f19-939f-0fe71be0207e"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "Tot dan!",
+              "styles": {
+                "bold": true
+              }
+            },
+            ": ",
+            {
+              "text": "See you then!",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "6f42ea50-a4eb-449e-88b8-adac2b118192"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "Tot straks!",
+              "styles": {
+                "bold": true
+              }
+            },
+            ": ",
+            {
+              "text": "See you later (today)!",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "3f483855-5fda-4604-9782-8d29fc3eef72"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "Tot donderdag!",
+              "styles": {
+                "bold": true
+              }
+            },
+            ": ",
+            {
+              "text": "See you on Thursday!",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "4a362c94-de1a-4b34-9e83-67e110948d05"
+        }
+      ],
+      "id": "37a4dd97-fe92-48b5-9548-b47b2dd57ddd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "tussen … en …: between",
+      "id": "4b168e02-9ebb-47e0-b044-9f4f3c00b5b9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm free between twelve and one.",
+        "note": "tussen … en … works for clock times and for places."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " tijd ",
+        {
+          "text": "tussen",
+          "styles": {
+            "textColor": "orange",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "twaalf",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "en",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "één",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "b2dc8756-555f-44df-853c-156ad598fd64"
+    },
+    {
+      "type": "divider",
+      "id": "8682ecc5-33dc-49ef-98db-bb6b43ca0f30"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Time first: verb second",
+      "id": "2b80af9d-e6ef-4dcc-8811-22de7fcba10d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In a Dutch main clause the verb is always the ",
+        {
+          "text": "second",
+          "styles": {
+            "bold": true
+          }
+        },
+        " element. Usually the subject comes first. But you can also start with a time. The verb stays in second place, so the subject moves to the spot ",
+        {
+          "text": "after",
+          "styles": {
+            "bold": true
+          }
+        },
+        " the verb."
+      ],
+      "id": "f7ee40cf-12b7-4479-ad2f-37b4f835d431"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Normal order",
+              "id": "100d9b4f-297d-4916-ade6-2e41b42a651f"
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "text": "Ik",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "begin",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "om acht uur",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                },
+                "."
+              ],
+              "id": "5201118f-6d45-483b-974a-f38b4846fc7f"
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "text": "Daan",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "heeft",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "morgen",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                },
+                " tijd."
+              ],
+              "id": "1c6334f9-5e81-473f-ad3c-439f7bd3e94b"
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "text": "Noor",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "gaat",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "vanavond",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                },
+                " ",
+                {
+                  "text": "uit",
+                  "styles": {
+                    "textColor": "red"
+                  }
+                },
+                "."
+              ],
+              "id": "396a8c38-9667-40af-a579-1da87e97fc4e"
+            }
+          ],
+          "id": "fe0d7961-e441-47b1-ab5d-c20958cbbe4f"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Inverted order",
+              "id": "34037268-c8c7-4d38-bf3b-62b392970ad9"
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "text": "Om acht uur",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                },
+                " ",
+                {
+                  "text": "begin",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "ik",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                "."
+              ],
+              "id": "7a5e1d96-03e2-49e4-b6f0-da1f08315fa6"
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "text": "Morgen",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                },
+                " ",
+                {
+                  "text": "heeft",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "Daan",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " tijd."
+              ],
+              "id": "6e2b0178-17f9-4c73-a20b-14a02e6b21a6"
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "text": "Vanavond",
+                  "styles": {
+                    "textColor": "orange"
+                  }
+                },
+                " ",
+                {
+                  "text": "gaat",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "Noor",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "uit",
+                  "styles": {
+                    "textColor": "red"
+                  }
+                },
+                "."
+              ],
+              "id": "3b26e363-90b4-4dba-97fd-caffae554b3f"
+            }
+          ],
+          "id": "ee67adbf-a2d4-488f-ae97-c4bcafe8117d"
+        }
+      ],
+      "id": "c017f7b3-42b0-4a91-9918-9e8dda28955f"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "Starting with a time? Use: ",
+        {
+          "text": "time",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " + ",
+        {
+          "text": "verb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " + ",
+        {
+          "text": "subject",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " + rest. ",
+        {
+          "text": "Om acht uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "begin",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "."
+      ],
+      "id": "ff21ba9c-3f3f-4bea-96e9-e00e3454040a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Examples with inversion",
+      "id": "d3341100-9bc2-4fff-88a5-81e6a18ebcd5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm free tomorrow.",
+        "note": "Morgen is element 1, heb is element 2, ik comes after the verb."
+      },
+      "content": [
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " tijd."
+      ],
+      "id": "1608f177-aada-4f0c-9242-388ba810857a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I have a meeting at one o'clock.",
+        "note": "Daan says this in the dialogue."
+      },
+      "content": [
+        {
+          "text": "Om één uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een vergadering."
+      ],
+      "id": "faacf2f3-beb6-4f66-91ab-9f90494ae82d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "English keeps the subject before the verb: ",
+        {
+          "text": "Tomorrow I have time.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " Dutch does not: ",
+        {
+          "text": "Morgen ik heb tijd",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Morgen heb ik tijd",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Sofia makes this mistake in the dialogue (",
+        {
+          "text": "Morgen ik sta vroeg op",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        "), and Daan answers with the correct order: Morgen sta je vroeg op."
+      ],
+      "id": "d8d86472-8dea-45ea-8645-afe0a012bf17"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "je after the verb: no -t",
+      "id": "d7214e00-d446-4931-84f4-627a6b1a7009"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You know this from questions: ",
+        {
+          "text": "Werk je thuis?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " When je or jij comes ",
+        {
+          "text": "after",
+          "styles": {
+            "bold": true
+          }
+        },
+        " the verb, the verb loses its -t. This also happens after a time at the start."
+      ],
+      "id": "61e465a7-2a97-46bd-b9d4-f1a71206c66b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You're working from home tomorrow.",
+        "note": "Not: Morgen werkt je thuis. With hij, zij or a name the -t stays: Morgen werkt Daan thuis."
+      },
+      "content": [
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "werk",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " thuis."
+      ],
+      "id": "64f24fd6-dc18-4843-b51d-69db5ad83006"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Om acht uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "begin",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " is possible when you stress ",
+        {
+          "text": "jij",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (",
+        {
+          "text": "you, not me",
+          "styles": {
+            "italic": true
+          }
+        },
+        "). Usually people say: ",
+        {
+          "text": "Om acht uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "begin",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "."
+      ],
+      "id": "dd889897-a980-495a-8675-8a2c222ab782"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Separable verbs: the prefix stays at the end",
+      "id": "a52b8f02-85f6-490e-91a8-741ec8173c3c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I get up at seven o'clock.",
+        "note": "Recycles opstaan from 07-b. The verb moves to second place; the prefix op stays at the very end."
+      },
+      "content": [
+        {
+          "text": "Om zeven uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "sta",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "op",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "1f31ec9b-c482-4abd-a1c0-5c2ff94f9a58"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm meeting up with Noor tonight.",
+        "note": "afspreken = to arrange to meet. Stress on the prefix: AFspreken."
+      },
+      "content": [
+        {
+          "text": "Vanavond",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "spreek",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " met Noor ",
+        {
+          "text": "af",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "1eab3c99-b301-4497-9463-2adc0f6891b7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Other words at the start: dan, daarna, vandaag",
+      "id": "71c3c0e2-5ac4-4343-9af5-b32009f693f3"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "The same rule works after ",
+        {
+          "text": "dan",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "then",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "daarna",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "after that",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "vandaag",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "morgen",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "vanmiddag",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "vanavond",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "78cff417-0250-462a-88fe-c59400fa35b0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Then I'll come at three o'clock.",
+        "note": "Dutch often uses the present tense for the near future."
+      },
+      "content": [
+        {
+          "text": "Dan",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "kom",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "om drie uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "4ca53a88-0a16-4634-b0e2-e2f8eeca10ca"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "After that we have coffee."
+      },
+      "content": [
+        {
+          "text": "Daarna",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "drinken",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "we",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " koffie."
+      ],
+      "id": "81a8dabb-209e-474c-bfc8-56cc3e8ba4ca"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "How to build a sentence that starts with a time:"
+      ],
+      "id": "3f7167bc-ec06-4337-8cec-f44e1fd8138e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Put the time first: ",
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " …"
+      ],
+      "id": "3dae613b-7284-4b33-8801-63e6d6d67d12"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Put the verb in second place: ",
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "sta",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " …"
+      ],
+      "id": "ac00391b-5ce8-4192-b140-31d0b6c2af66"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Put the subject right after the verb: ",
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "sta",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " …"
+      ],
+      "id": "df9314b7-ae71-4b69-b8d1-93451d6d5e9d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Add the rest. A separable prefix goes to the very end: ",
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "sta",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " vroeg ",
+        {
+          "text": "op",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "308f52fe-b538-4457-88f5-7830fb8a69d1"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "The verb is always element number two in a Dutch main clause. Whatever comes first, the subject, a time or dan, the verb follows it directly."
+      ],
+      "id": "c11f8e6e-3047-4a68-ba88-de9180c0ca24"
+    },
+    {
+      "type": "divider",
+      "id": "7a92f5dc-5c40-4874-96cf-e31479668780"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Words for appointments",
+      "id": "69146a84-3b51-4942-9393-0a089d8de857"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Appointments",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "de afspraak: ",
+            {
+              "text": "appointment",
+              "styles": {
+                "italic": true
+              }
+            },
+            "; afspreken: ",
+            {
+              "text": "to arrange to meet",
+              "styles": {
+                "italic": true
+              }
+            },
+            " (separable)"
+          ],
+          "id": "ffe74623-1df5-4afd-ac4f-1969ba932381"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "de kapper: ",
+            {
+              "text": "hairdresser",
+              "styles": {
+                "italic": true
+              }
+            },
+            "; de tandarts: ",
+            {
+              "text": "dentist",
+              "styles": {
+                "italic": true
+              }
+            },
+            "; de huisarts: ",
+            {
+              "text": "GP, family doctor",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "b447bef3-cd2a-48c8-a421-512e1606001a"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "de vergadering: ",
+            {
+              "text": "meeting",
+              "styles": {
+                "italic": true
+              }
+            },
+            "; de lunch: ",
+            {
+              "text": "lunch",
+              "styles": {
+                "italic": true
+              }
+            },
+            "; de klant: ",
+            {
+              "text": "client",
+              "styles": {
+                "italic": true
+              }
+            },
+            " (you know it from 08-a)"
+          ],
+          "id": "fcb43123-adb9-433a-ba46-b2b03529fbcd"
+        }
+      ],
+      "id": "193edcd5-ee90-4f91-9c52-f6aa7cb84b93"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Free or busy?",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "tijd hebben: ",
+            {
+              "text": "to have time",
+              "styles": {
+                "italic": true
+              }
+            },
+            "; vrij: ",
+            {
+              "text": "free",
+              "styles": {
+                "italic": true
+              }
+            },
+            " (Ben je morgen vrij?)"
+          ],
+          "id": "d7ea6d6a-7794-43b1-9916-2d8e28666db9"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "Ik heb het druk. ",
+            {
+              "text": "I'm busy.",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "958a5c81-d1fc-4d9e-9fd1-a71aed06b005"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "Hebt u plaats? ",
+            {
+              "text": "Do you have a free slot?",
+              "styles": {
+                "italic": true
+              }
+            },
+            " (formal)"
+          ],
+          "id": "ac009226-c9e8-498a-b7d2-609461508bd3"
+        }
+      ],
+      "id": "eff7347e-48a6-4aa0-9d7b-c5ee775789cb"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Yes or no",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "Prima. / Goed. / Dat is goed. ",
+            {
+              "text": "Fine. / OK.",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "96fc3b4c-6387-4e2b-82e3-8d44a3d2dfba"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "Past dat? ",
+            {
+              "text": "Does that work for you?",
+              "styles": {
+                "italic": true
+              }
+            },
+            "; Dat past (niet). ",
+            {
+              "text": "That works (doesn't work).",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "8f626d95-03e4-47a1-a506-c21f52633434"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "helaas: ",
+            {
+              "text": "unfortunately",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "748fba09-d3e3-4fb0-96df-20645c3ea0b6"
+        }
+      ],
+      "id": "cc30a3ac-4d48-4199-ae95-ee4f356fbced"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "When?",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "vandaag, morgen, overmorgen: ",
+            {
+              "text": "today, tomorrow, the day after tomorrow",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "b91754f9-c902-40ff-ab4f-d7ce84ae067c"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "vanmiddag, vanavond: ",
+            {
+              "text": "this afternoon, this evening",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "0299407f-5f61-4de6-a599-6cdc16abb42d"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "straks, later, eerder: ",
+            {
+              "text": "in a bit, later, earlier",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "1cb361ba-68e0-40a8-968b-45246fcdf50e"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "dan, daarna: ",
+            {
+              "text": "then, after that",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "1565440b-4d21-4b2b-b0c4-722269fb6c68"
+        }
+      ],
+      "id": "480273f9-fbee-4f65-a04a-3e83bc119e6d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "Dutch uses ",
+        {
+          "text": "passen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "to fit",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") for times: a time fits in your agenda or it does not. ",
+        {
+          "text": "Past half een?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "Does half past twelve work?",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "5a037aba-2215-4d0e-9d26-0caa3b4f8ccc"
+    },
+    {
+      "type": "divider",
+      "id": "e33eaf39-4f1b-4bfc-9209-d4c52b2ec9da"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Sofia belt de kapper",
+      "id": "c3b345ea-7f5e-419f-9019-301396be6a50"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Sofia's hair is too long. She phones a hairdresser near the office. The hairdresser is a stranger, so Sofia uses ",
+        {
+          "text": "u",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". On the phone you start with ",
+        {
+          "text": "Met",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + your name (",
+        {
+          "text": "This is …",
+          "styles": {
+            "italic": true
+          }
+        },
+        "). ",
+        {
+          "text": "Knippen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means ",
+        {
+          "text": "to cut (hair)",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". ",
+        {
+          "text": "Alleen knippen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means ",
+        {
+          "text": "just a cut",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "87f2c60d-50c9-4eb2-9503-4785c369a1ae"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Kapper",
+            "text": "Kapsalon Knip, goedemiddag!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goedemiddag, met Sofia Moreno. Ik bel voor een afspraak."
+          },
+          {
+            "speaker": "Kapper",
+            "text": "Prima. Wanneer?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hebt u donderdag om vier uur plaats?"
+          },
+          {
+            "speaker": "Kapper",
+            "text": "Donderdag om vier uur? Nee, helaas. Om vier uur heb ik geen plaats."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hm. Hebt u later plaats? Om vijf uur?"
+          },
+          {
+            "speaker": "Kapper",
+            "text": "Om vijf uur ook niet. Om half zes heb ik plaats. Past dat?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, dat past. Alleen knippen, alstublieft."
+          },
+          {
+            "speaker": "Kapper",
+            "text": "Dat is goed. Donderdag om half zes, voor mevrouw Moreno."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Prima. Dank u wel!"
+          },
+          {
+            "speaker": "Kapper",
+            "text": "Graag gedaan. Tot donderdag!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Tot dan!"
+          }
+        ]
+      },
+      "id": "9386117a-e113-49d3-9b6d-c88ecd8c5c3d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you have a free slot on Thursday at four?",
+        "note": "With u, both hebt u and heeft u are correct. A bare day name is fine here: donderdag."
+      },
+      "content": [
+        {
+          "text": "Hebt",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "donderdag om vier uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " plaats?"
+      ],
+      "id": "ac1a3c00-c611-459f-975c-f3305cf458a1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I have a free slot at half past five.",
+        "note": "Time first, so the verb heb comes before ik."
+      },
+      "content": [
+        {
+          "text": "Om half zes",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " plaats."
+      ],
+      "id": "faf49ac9-0c2a-48cb-93f3-7cf5a518d3db"
+    },
+    {
+      "type": "divider",
+      "id": "23d811fb-91a6-495c-86af-0873471bc5dc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "4ac5e466-cd3a-450f-9471-d7de213d850b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in: om, van, tot or tussen",
+      "id": "d526f9c4-8941-44f7-8506-a18ea7b7c1df"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in om, van, tot or tussen.",
+          "items": [
+            {
+              "prompt": "De les begint … negen uur.",
+              "authorsVersion": [
+                "om"
+              ],
+              "note": "om + clock time = at what time."
+            },
+            {
+              "prompt": "Daan werkt … negen tot vijf.",
+              "authorsVersion": [
+                "van"
+              ],
+              "note": "van … tot = from … till."
+            },
+            {
+              "prompt": "Ik werk van negen … vijf.",
+              "authorsVersion": [
+                "tot"
+              ],
+              "note": "Not naar: naar is for places."
+            },
+            {
+              "prompt": "Ik heb tijd … twaalf en één.",
+              "authorsVersion": [
+                "tussen"
+              ],
+              "note": "tussen … en … = between."
+            },
+            {
+              "prompt": "… half een heb ik een vergadering.",
+              "authorsVersion": [
+                "Om"
+              ],
+              "note": "Capital O: it starts the sentence. Note the inversion: heb ik."
+            },
+            {
+              "prompt": "Dag Daan! … morgen!",
+              "authorsVersion": [
+                "Tot"
+              ],
+              "note": "Tot morgen! = See you tomorrow!"
+            },
+            {
+              "prompt": "De kapper is open … negen tot zes.",
+              "authorsVersion": [
+                "van"
+              ],
+              "note": "van … tot = from … till: opening hours."
+            },
+            {
+              "prompt": "De teamvergadering is van half tien … half elf.",
+              "authorsVersion": [
+                "tot"
+              ],
+              "note": "The partner of van is always tot. half tien = 9:30, half elf = 10:30."
+            }
+          ]
+        }
+      },
+      "id": "0cfe0ec6-eb61-46aa-878f-76fbac65bddf"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the dialogue",
+      "id": "05753740-14c8-42c5-be4f-46b54b240d7d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Sofia and Daan plan a lunch. Fill in the missing words.",
+          "items": [
+            {
+              "prompt": "Sofia: … je morgen tijd? / Daan: Ja, morgen … ik tijd.",
+              "authorsVersion": [
+                "Heb",
+                "heb"
+              ],
+              "note": "Question: verb first, and the verb loses -t before je. Morgen + verb + subject."
+            },
+            {
+              "prompt": "Sofia: Om half een? / Daan: Nee, … één uur … ik een vergadering.",
+              "authorsVersion": [
+                "om",
+                "heb"
+              ],
+              "note": "Time first, so heb comes before ik."
+            },
+            {
+              "prompt": "Sofia: Ben je overmorgen …? / Daan: Ja, overmorgen … ik vrij.",
+              "authorsVersion": [
+                "vrij",
+                "ben"
+              ],
+              "note": "vrij = free. Overmorgen comes first, so the verb ben comes before ik."
+            },
+            {
+              "prompt": "Daan: Is half een goed? / Sofia: Ja, dat … goed. Tot …!",
+              "authorsVersion": [
+                "is",
+                "dan"
+              ],
+              "note": "Also fine: Tot overmorgen!"
+            },
+            {
+              "prompt": "Sofia: Hoe laat begint de teamvergadering? / Daan: … half tien. Om één uur … de klant.",
+              "authorsVersion": [
+                "Om",
+                "komt"
+              ],
+              "note": "A short answer starts with Om. After a time at the start the verb comes before the subject: komt de klant."
+            },
+            {
+              "prompt": "Sofia: Heb je vanmiddag tijd? / Daan: Nee, helaas. Vanmiddag … ik het druk. Overmorgen heb ik tijd tussen twaalf … twee.",
+              "authorsVersion": [
+                "heb",
+                "en"
+              ],
+              "note": "Ik heb het druk is a fixed chunk. tussen … en …"
+            }
+          ]
+        }
+      },
+      "id": "d9565531-24aa-4fa6-ad9a-f6ffc9718d9b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order: start with the time",
+      "id": "85ea510a-c6d1-4aeb-ae82-56dc8f915d4e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Build a sentence. Start with the word or phrase given, then put the verb in second place.",
+          "items": [
+            {
+              "prompt": "Start with 'morgen': heb / ik / tijd / morgen",
+              "authorsVersion": [
+                "Morgen heb ik tijd."
+              ],
+              "note": "Not: Morgen ik heb tijd."
+            },
+            {
+              "prompt": "Start with 'om acht uur': begin / ik / om acht uur",
+              "authorsVersion": [
+                "Om acht uur begin ik."
+              ],
+              "note": "The time is element 1, begin is element 2, ik follows the verb."
+            },
+            {
+              "prompt": "Start with 'vanavond': uit / Noor / gaat / vanavond",
+              "authorsVersion": [
+                "Vanavond gaat Noor uit."
+              ],
+              "note": "The prefix uit stays at the end."
+            },
+            {
+              "prompt": "Start with 'om één uur': een vergadering / heeft / Daan / om één uur",
+              "authorsVersion": [
+                "Om één uur heeft Daan een vergadering."
+              ],
+              "note": "With a name after the verb, the -t stays: heeft Daan."
+            },
+            {
+              "prompt": "Start with 'morgen': thuis / werk / je / morgen",
+              "authorsVersion": [
+                "Morgen werk je thuis."
+              ],
+              "note": "je after the verb: werk, not werkt."
+            },
+            {
+              "prompt": "Start with 'om zeven uur': op / sta / ik / om zeven uur",
+              "authorsVersion": [
+                "Om zeven uur sta ik op."
+              ],
+              "note": "Recycles opstaan from 07-b."
+            },
+            {
+              "prompt": "Start with 'dan': ik / om drie uur / kom / dan",
+              "authorsVersion": [
+                "Dan kom ik om drie uur."
+              ],
+              "note": "dan also triggers inversion."
+            }
+          ]
+        }
+      },
+      "id": "cd5b0050-3c4b-445e-9499-9d04640fffec"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Move the time to the front",
+      "id": "d22bbcd2-b910-4798-80b5-3530f770c0b6"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence. Start with the time expression and put the verb in second place.",
+          "items": [
+            {
+              "prompt": "Ik begin om negen uur.",
+              "authorsVersion": [
+                "Om negen uur begin ik."
+              ],
+              "note": "Time first, verb second, subject third: begin ik."
+            },
+            {
+              "prompt": "Sofia heeft morgen tijd.",
+              "authorsVersion": [
+                "Morgen heeft Sofia tijd."
+              ],
+              "note": "With a name after the verb the verb keeps its ending: heeft Sofia."
+            },
+            {
+              "prompt": "We lunchen om half een.",
+              "authorsVersion": [
+                "Om half een lunchen we."
+              ],
+              "note": "we follows the verb; the plural form lunchen does not change."
+            },
+            {
+              "prompt": "Je werkt vandaag thuis.",
+              "authorsVersion": [
+                "Vandaag werk je thuis."
+              ],
+              "note": "je after the verb: the -t drops. Not: Vandaag werkt je thuis."
+            },
+            {
+              "prompt": "Daan komt om vijf uur thuis.",
+              "authorsVersion": [
+                "Om vijf uur komt Daan thuis."
+              ],
+              "note": "thuiskomen is separable: thuis stays at the end."
+            },
+            {
+              "prompt": "Ik heb vanmiddag een afspraak bij de tandarts.",
+              "authorsVersion": [
+                "Vanmiddag heb ik een afspraak bij de tandarts."
+              ],
+              "note": "Vanmiddag moves to the front; heb ik follows. The rest stays in place."
+            },
+            {
+              "prompt": "Noor en Sofia koken vanavond samen.",
+              "authorsVersion": [
+                "Vanavond koken Noor en Sofia samen."
+              ],
+              "note": "The subject Noor en Sofia moves behind the verb as one block."
+            },
+            {
+              "prompt": "Je staat morgen vroeg op.",
+              "authorsVersion": [
+                "Morgen sta je vroeg op."
+              ],
+              "note": "Two rules at once: -t drops before je, and op stays at the end."
+            }
+          ]
+        }
+      },
+      "id": "8b4cf15a-f370-4983-99a5-cd201239e2c9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "e831898f-e7fa-4517-8b6f-516893e38515"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "Do you have time tomorrow? (informal)",
+              "authorsVersion": [
+                "Heb je morgen tijd?"
+              ],
+              "note": "Also fine: Heb jij morgen tijd? / Ben je morgen vrij?"
+            },
+            {
+              "prompt": "I work from nine to five.",
+              "authorsVersion": [
+                "Ik werk van negen tot vijf."
+              ],
+              "note": "Not: van negen naar vijf."
+            },
+            {
+              "prompt": "Tomorrow I have a meeting at one o'clock.",
+              "authorsVersion": [
+                "Morgen heb ik om één uur een vergadering."
+              ],
+              "note": "Also fine: Ik heb morgen om één uur een vergadering."
+            },
+            {
+              "prompt": "I'm busy this afternoon.",
+              "authorsVersion": [
+                "Vanmiddag heb ik het druk."
+              ],
+              "note": "Also fine: Ik heb het vanmiddag druk."
+            },
+            {
+              "prompt": "Do you have a free slot on Thursday at four o'clock? (formal)",
+              "authorsVersion": [
+                "Hebt u donderdag om vier uur plaats?"
+              ],
+              "note": "Also fine: Heeft u donderdag om vier uur plaats?"
+            },
+            {
+              "prompt": "Then I'll come at half past two.",
+              "authorsVersion": [
+                "Dan kom ik om half drie."
+              ],
+              "note": "half drie = 2:30. After dan: verb, then subject."
+            },
+            {
+              "prompt": "Does half past twelve work?",
+              "authorsVersion": [
+                "Past half een?"
+              ],
+              "note": "Also fine: Is half een goed?"
+            }
+          ]
+        }
+      },
+      "id": "eee230d8-9c53-440d-abf4-fbb3f6780e0d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "334ffd64-8cd5-4330-a158-87c21b07e506"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into English.",
+          "items": [
+            {
+              "prompt": "Om één uur heb ik een vergadering.",
+              "authorsVersion": [
+                "I have a meeting at one o'clock."
+              ],
+              "note": "English keeps the subject first: I have …. Also fine: At one o'clock I have a meeting."
+            },
+            {
+              "prompt": "Ben je overmorgen vrij?",
+              "authorsVersion": [
+                "Are you free the day after tomorrow?"
+              ],
+              "note": "overmorgen = the day after tomorrow. vrij = free."
+            },
+            {
+              "prompt": "Helaas, dat past niet.",
+              "authorsVersion": [
+                "Unfortunately, that doesn't work for me."
+              ],
+              "note": "helaas = unfortunately. passen = to fit, to work (for a time). Also fine: Sorry, that time doesn't suit me."
+            },
+            {
+              "prompt": "Vanavond gaat Noor uit.",
+              "authorsVersion": [
+                "Noor is going out tonight."
+              ],
+              "note": "uitgaan = to go out."
+            },
+            {
+              "prompt": "Ik kijk even in mijn agenda.",
+              "authorsVersion": [
+                "I'll just check my diary."
+              ],
+              "note": "Also fine: I'll just check my calendar."
+            },
+            {
+              "prompt": "Daarna drinken we koffie.",
+              "authorsVersion": [
+                "After that we have coffee."
+              ],
+              "note": "The Dutch present tense often means the near future."
+            }
+          ]
+        }
+      },
+      "id": "52c07be2-a469-46f6-8a14-acf92070c55a"
+    },
+    {
+      "type": "divider",
+      "id": "7d55df06-7320-4434-92bd-acdb77febcb7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: De planning voor morgen",
+      "id": "9d6f5d6f-63a9-4dd6-9865-b55491b78b8c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Tuesday evening. Daan sends an email to the team about Wednesday."
+      ],
+      "id": "2ecb4ce8-be1f-4766-8158-98cafbb120fb"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Daan's email and answer the questions in Dutch. Short answers are fine.",
+          "passage": {
+            "title": "Planning voor morgen",
+            "content": "Van: Daan de Vries\nAan: het team\nOnderwerp: Planning voor morgen\n\nHoi allemaal,\n\nMorgen hebben we een drukke dag. Dit is de planning.\n\nOm half tien begint de teamvergadering. De vergadering is van half tien tot half elf in de kleine kamer. Daarna werken we aan het nieuwe project.\n\nTussen twaalf en één uur hebben we lunchpauze. Om één uur komt de klant. De vergadering met de klant is van één tot drie uur in de grote kamer. Daarna drinken we samen koffie.\n\nOm half vier ga ik weg. Om vier uur heb ik een afspraak bij de tandarts. Overmorgen ben ik de hele dag op kantoor.\n\nSofia: om half tien, niet om tien uur!\n\nTot morgen!\nDaan"
+          },
+          "items": [
+            {
+              "prompt": "Hoe laat begint de teamvergadering?",
+              "authorsVersion": [
+                "Om half tien."
+              ],
+              "note": "half tien = 9:30."
+            },
+            {
+              "prompt": "Van hoe laat tot hoe laat is de teamvergadering?",
+              "authorsVersion": [
+                "Van half tien tot half elf."
+              ],
+              "note": "van … tot = from … till."
+            },
+            {
+              "prompt": "Wat doet het team na de teamvergadering?",
+              "authorsVersion": [
+                "Ze werken aan het nieuwe project."
+              ],
+              "note": "Daarna werken we aan het nieuwe project."
+            },
+            {
+              "prompt": "Wanneer is de lunchpauze?",
+              "authorsVersion": [
+                "Tussen twaalf en één uur."
+              ],
+              "note": "Also fine: Van twaalf tot één uur."
+            },
+            {
+              "prompt": "Wie komt om één uur?",
+              "authorsVersion": [
+                "De klant."
+              ],
+              "note": "Om één uur komt de klant: time first, verb second."
+            },
+            {
+              "prompt": "Klopt dit? De vergadering met de klant is in de kleine kamer.",
+              "authorsVersion": [
+                "Nee, de vergadering met de klant is in de grote kamer."
+              ],
+              "note": "The team meeting is in the small room; the client meeting is in the big room."
+            },
+            {
+              "prompt": "Waar is Daan om vier uur?",
+              "authorsVersion": [
+                "Bij de tandarts."
+              ],
+              "note": "Om vier uur heb ik een afspraak bij de tandarts."
+            },
+            {
+              "prompt": "Klopt dit? Overmorgen werkt Daan thuis.",
+              "authorsVersion": [
+                "Nee, overmorgen is Daan de hele dag op kantoor."
+              ],
+              "note": "Overmorgen ben ik de hele dag op kantoor."
+            }
+          ]
+        }
+      },
+      "id": "76aad232-921d-4b6e-9c3d-f44cfa9403fd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "740acb40-068b-4d6b-b1bc-9e5c7d0ccfd8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write a short message to a friend to make an appointment (3–4 sentences). Suggest a time, and start at least one sentence with a time.",
+          "items": [
+            {
+              "prompt": "Write your message to a friend.",
+              "authorsVersion": [
+                "Hoi Noor! Heb je morgen tijd? Morgen werk ik tot vijf uur. Dus ben ik om zes uur thuis. Is half zeven goed? Dan koken we samen. Tot morgen! Sofia"
+              ],
+              "note": "Model answer by Sofia. dus = so. Check: does a sentence start with a time, and is the verb second (Morgen werk ik, Dus ben ik, Dan koken we)?"
+            }
+          ]
+        }
+      },
+      "id": "46f70c56-35d9-4934-ba23-2c3aba48d67e"
+    },
+    {
+      "type": "divider",
+      "id": "e83bb717-563d-4560-a577-2415cc6f9c18"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "d2a55039-d336-4d56-b622-e4af16874328"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "om",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + time = at: om acht uur."
+      ],
+      "id": "6d83dc0c-fe72-4f70-8ebe-9b47480eb56c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "van … tot",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = from … till: van negen tot vijf. Never naar."
+      ],
+      "id": "e71b5bef-7319-4a71-8ff8-db3e5e8992b6"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "tot",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = until, and see you: tot vijf uur, Tot morgen!"
+      ],
+      "id": "499c117f-cb44-47cd-aee7-7ae744714989"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "tussen … en …",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = between: tussen twaalf en één."
+      ],
+      "id": "850ec41d-51c7-4b6a-b8e4-956f7b0a9358"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "A time first? The verb comes second, the subject third: ",
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " tijd."
+      ],
+      "id": "5133f769-a206-41be-86a0-bac4531a90b7"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "je after the verb: no -t. ",
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "werk",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " thuis."
+      ],
+      "id": "87413079-52ad-45e2-acf6-1c2e275d877f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "A separable prefix stays at the end: ",
+        {
+          "text": "Om zeven uur",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "sta",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "op",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "4e7d232d-f823-43cb-9cb7-498e52ab7d98"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Remember",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "time",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " + ",
+        {
+          "text": "verb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " + ",
+        {
+          "text": "subject",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " + rest."
+      ],
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "id": "1185054e-3595-4f04-a217-15789a6c076b"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Heb je morgen tijd?",
+      "description": "Daan at his tidy office desk checking a paper agenda full of times, while Sofia leans over the desk with a smile.",
+      "alt": "Daan checks his agenda while Sofia waits"
+    },
+    {
+      "afterHeading": "Story: Sofia belt de kapper",
+      "description": "Sofia on the phone at her desk; a small hairdresser salon with an appointment book on the counter.",
+      "alt": "Sofia phones the hairdresser for an appointment"
+    }
+  ],
+  "id": "08313990-b69a-462f-a6ec-d7242c2f1379"
+}

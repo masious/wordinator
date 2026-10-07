@@ -1,0 +1,2699 @@
+{
+  "title": "De rekening, alstublieft",
+  "goal": "Ask for permission and make polite requests with mogen and willen in a restaurant, use u and alstublieft correctly, and pay.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "De rekening, alstublieft",
+      "id": "ae65e722-caf5-48d0-b00e-0dcab6d22ef3"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Friday 2 October 2026. Noor has her exam today, and she gets an 8! Sofia, Daan and Lotte take her out for dinner in a restaurant in the centre of Utrecht. In this lesson you will reserve a table, ask permission with ",
+        {
+          "text": "mogen",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", talk to a waiter with ",
+        {
+          "text": "u",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", use ",
+        {
+          "text": "alstublieft",
+          "styles": {
+            "bold": true
+          }
+        },
+        " in two ways, say no with ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", and pay."
+      ],
+      "id": "14c4d361-8204-4426-9fe3-e0c04860f0a7"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: subjects are ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", the conjugated verb is ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", and the infinitive that goes to the end is ",
+        {
+          "text": "red",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ". The new form is ",
+        {
+          "text": "bold",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Wrong forms look like ",
+        {
+          "text": "this",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ". Place is ",
+        {
+          "text": "purple",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ", de-words are ",
+        {
+          "text": "pink",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ", het-words ",
+        {
+          "text": "brown",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        "."
+      ],
+      "id": "c88ac310-bfe8-4f9c-8ab2-9cc0f5d2ea64"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Een tafel bij het raam",
+      "id": "ca40a56d-53df-40d4-9079-82c9e1bd597d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Daan has a reservation for four. The waiter (",
+        {
+          "text": "de ober",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") speaks formally and uses ",
+        {
+          "text": "u",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Listen for ",
+        {
+          "text": "Mogen wij …?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "Wat wilt u …?",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "b0783805-b027-4749-aad8-d50348a059d1"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Ober",
+            "text": "Goedenavond! Hebt u een reservering?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Goedenavond. Ja, voor vier personen, op naam van De Vries."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Mogen wij bij het raam zitten?"
+          },
+          {
+            "speaker": "Ober",
+            "text": "Natuurlijk. Alstublieft, de kaart. Wat wilt u drinken?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ik wil graag een glas witte wijn."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Voor mij een bier, alstublieft. En een fles rode wijn voor Sofia en Lotte."
+          },
+          {
+            "speaker": "Ober",
+            "text": "Prima. En wat wilt u eten?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Daan en ik willen graag de vis."
+          },
+          {
+            "speaker": "Lotte",
+            "text": "Ik ben vegetarisch. Ik wil geen vlees en geen vis. Is de pasta vegetarisch?"
+          },
+          {
+            "speaker": "Ober",
+            "text": "Ja, de pasta met groente is vegetarisch."
+          },
+          {
+            "speaker": "Lotte",
+            "text": "Dan neem ik de pasta, alstublieft."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En ik wil graag de kip met friet."
+          }
+        ]
+      },
+      "id": "3a95f476-cc32-4f99-b4cd-04bacbfa244d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Op naam van De Vries",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is a fixed phrase: ",
+        {
+          "text": "in the name of De Vries",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". ",
+        {
+          "text": "Voor mij een …",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "Ik neem …",
+          "styles": {
+            "bold": true
+          }
+        },
+        " come from the café lesson (11-a). New: ",
+        {
+          "text": "voor vier personen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "for four people",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "Natuurlijk",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "of course",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "7c38b44e-0201-4f18-b17a-b12cdf90ce75"
+    },
+    {
+      "type": "divider",
+      "id": "613d76f9-a536-44af-b74e-37d90136452e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Words: in het restaurant",
+      "id": "03860135-a334-4f4c-aea8-441f8526bf7a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Eten en drinken",
+      "id": "305cf5cd-67e8-49b2-be0f-448872d6bc17"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " voorgerecht ",
+        {
+          "text": "(starter)",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " soep, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " salade"
+          ],
+          "id": "84618a71-e35f-49c7-a3f1-5a240682307d"
+        }
+      ],
+      "id": "ccc115e1-9c4c-45a6-9882-9ed0a4c754c8"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " hoofdgerecht ",
+        {
+          "text": "(main course)",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " vis, ",
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " vlees, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " kip"
+          ],
+          "id": "abbf7a8e-5ae9-45e8-84fe-ed66bcfcfbb6"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " groente, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " friet, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " pasta"
+          ],
+          "id": "1785556b-f5d1-4264-8590-52e496f10d53"
+        }
+      ],
+      "id": "3112cf57-c75d-41ea-99d9-394a76894700"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " nagerecht = ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " toetje ",
+        {
+          "text": "(dessert; toetje is more informal)",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " appeltaart met slagroom"
+          ],
+          "id": "92a642d0-9217-4b8e-89d4-2e69f4513dff"
+        }
+      ],
+      "id": "644c1f9a-808a-430d-8419-cbfa046f4a0a"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "drinken"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " wijn: ",
+            {
+              "text": "rode",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " wijn, ",
+            {
+              "text": "witte",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " wijn ",
+            {
+              "text": "(de-word, so the adjective gets -e)",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "523e1e03-5c7f-45a4-8fbf-e7cfaa08e48c"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " bier; een glas wijn, een fles water ",
+            {
+              "text": "(no \"van\")",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "a315bc04-43c9-4a57-9f2a-5b9f9663f3fc"
+        }
+      ],
+      "id": "733ea8f6-fac6-476a-9480-3c2034310520"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Lotte wants a vegetarian main course.",
+        "note": "het hoofdgerecht is a het-word, so after een the adjective has no -e: een vegetarisch hoofdgerecht. Compare: de vegetarische pasta."
+      },
+      "content": [
+        {
+          "text": "Lotte",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "wil",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " een ",
+        {
+          "text": "vegetarisch",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " hoofdgerecht."
+      ],
+      "id": "2ae68772-a0ab-49d1-b738-efa39b88a08b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Reserveren en betalen",
+      "id": "75c91d91-d798-490b-b78d-8e43da0c377f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "reserveren",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "(to reserve)",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " reservering, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " tafel, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " raam, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " ober"
+      ],
+      "id": "db5cfb5d-a3b9-4151-aaf2-a73e9c7abdb4"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " rekening ",
+        {
+          "text": "(the bill)",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", betalen, ",
+        {
+          "text": "pinnen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "(to pay by card)",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "contant",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "(cash)",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "10f7ab28-b78a-458a-a69c-9baaf4cde322"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "samen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "(together)",
+          "styles": {
+            "italic": true
+          }
+        },
+        " or ",
+        {
+          "text": "apart",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "(separately)",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " fooi ",
+        {
+          "text": "(the tip)",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "5f015a6c-25b3-4358-b891-7df4b8c2ac35"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Eet smakelijk!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Enjoy your meal!",
+          "styles": {
+            "italic": true
+          }
+        },
+        " ",
+        {
+          "text": "Proost!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Cheers!",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "130ac88a-5969-4d61-a1c6-e8e59fa7584e"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Is alles goed?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Is everything all right?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " ",
+        {
+          "text": "Heerlijk!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " / ",
+        {
+          "text": "Lekker!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Delicious!",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "a1995096-7c54-4895-9bad-6e1af172314f"
+    },
+    {
+      "type": "divider",
+      "id": "1563b811-8d9f-4dd0-aede-24c7517f2af6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Mogen: Mag ik …?",
+      "id": "58bc8520-27c9-477a-bf03-7d29692f3df5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Asking permission",
+      "id": "2074797d-4e2f-4b41-b56c-56362924d4b5"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Use ",
+        {
+          "text": "mag",
+          "styles": {
+            "bold": true
+          }
+        },
+        " / ",
+        {
+          "text": "mogen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " to ask if something is allowed. In a question, ",
+        {
+          "text": "mag",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " comes first, then the subject, and the infinitive goes to the end."
+      ],
+      "id": "1bd3ea09-a31f-470b-96e8-38bece73e1eb"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "Mag",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + subject + … + ",
+        {
+          "text": "infinitive",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        "? ",
+        {
+          "text": "Mag ik hier zitten?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " Forms: ik/jij/u/hij ",
+        {
+          "text": "mag",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", wij/jullie/zij ",
+        {
+          "text": "mogen",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". No -t."
+      ],
+      "id": "83790133-cd28-41db-87f4-f1c3616ac8d1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "May I sit here?",
+        "note": "Asking permission: Mag ik …? is polite and always correct."
+      },
+      "content": [
+        {
+          "text": "Mag",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " hier ",
+        {
+          "text": "zitten",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        "?"
+      ],
+      "id": "02274210-dee0-4705-9c04-8b3bbd5d98a1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Can we pay by card?",
+        "note": "we = wij. Plural: mogen."
+      },
+      "content": [
+        {
+          "text": "Mogen",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "we",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "pinnen",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        "?"
+      ],
+      "id": "d629f714-6797-48ba-9211-a4f663cb91fd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Can we sit by the window?",
+        "note": "From the story. Place (bij het raam) before the infinitive."
+      },
+      "content": [
+        {
+          "text": "Mogen",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "wij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "bij het raam",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "zitten",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        "?"
+      ],
+      "id": "69152da6-176e-44a2-9c43-aa2b0582ec0c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Asking for things",
+      "id": "012c24b6-4fa8-44c9-b77a-b3ca63f78617"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Mag ik …?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + a noun is a polite request: ",
+        {
+          "text": "Mag ik de kaart? Mogen we de rekening?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " You do not need a second verb."
+      ],
+      "id": "ef2a2d15-1a39-42ae-8673-4f5a836e7b6d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Could we have the bill, please?",
+        "note": "Short and polite. Also fine: Mag ik de rekening?"
+      },
+      "content": [
+        {
+          "text": "Mogen",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "we",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " rekening, alstublieft?"
+      ],
+      "id": "3b5d0db1-3ec2-40c4-a591-2320cd7e695d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Not allowed",
+      "id": "0d01e560-f504-4040-b7a9-bec11e6c5681"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You're not allowed to smoke here.",
+        "note": "niet comes before the infinitive at the end."
+      },
+      "content": [
+        {
+          "text": "Je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "mag",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " hier niet ",
+        {
+          "text": "roken",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "45c827a5-c223-4694-a25b-9eff23298066"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "In real restaurants you will also hear ",
+        {
+          "text": "Kan ik …?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (",
+        {
+          "text": "Can I …?",
+          "styles": {
+            "italic": true
+          }
+        },
+        "). You learn that verb later. For now, ",
+        {
+          "text": "Mag ik …?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is always right."
+      ],
+      "id": "e8fd8d96-3052-4097-a6d9-ca3d4daab395"
+    },
+    {
+      "type": "divider",
+      "id": "02fde685-29d6-4876-aaf2-7817e0ee385c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Willen and u",
+      "id": "f7556a61-4eee-49e2-9cb7-38af3b134473"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Waiters use ",
+        {
+          "text": "u",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". With u, willen is ",
+        {
+          "text": "wilt",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "Wat wilt u drinken?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " In a question, ",
+        {
+          "text": "wilt",
+          "styles": {
+            "bold": true
+          }
+        },
+        " keeps its -t, because there is no t-drop with u."
+      ],
+      "id": "2a8e89aa-4572-4a87-8c26-d9719ca232a3"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What would you like to drink?",
+        "note": "Question word + verb + subject + infinitive."
+      },
+      "content": [
+        "Wat ",
+        {
+          "text": "wilt",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "drinken",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        "?"
+      ],
+      "id": "d674e749-c83e-4ba4-bde2-5f336e0fb343"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Would you like anything else?",
+        "note": "nog iets = anything else. Recycles Verder nog iets? from 11-a."
+      },
+      "content": [
+        {
+          "text": "Wilt",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " nog iets?"
+      ],
+      "id": "4c330ba4-e9d9-4410-8411-eec2591d6c3d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "In speech you often hear ",
+        {
+          "text": "u wil",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ". In writing, use ",
+        {
+          "text": "u wilt",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "Wat wilt u eten?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " But hij/zij has no -t: ",
+        {
+          "text": "hij wilt",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "hij wil",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "b0a394ef-3c20-4d47-af5b-dd1c152f9d0c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "U or jij?",
+      "id": "4a2778e3-9df9-469f-ba0d-662f7973263e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Who gets u?",
+      "id": "84f654d2-12e8-49a4-b697-338f0d87fc3e"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "u",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (formal)"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "waiters, shop staff, strangers"
+          ],
+          "id": "93d4f9f3-6a36-4a4a-b4e6-579cc4f9d625"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "older people you do not know"
+          ],
+          "id": "2c857e3b-b06f-4c51-ad71-65d20503f75b"
+        }
+      ],
+      "id": "99a7745f-8b92-4bc4-8b6e-a95a92ac2029"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "jij / jullie",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (informal)"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "friends, family, colleagues"
+          ],
+          "id": "d904d6a8-7d28-4a7f-9b9f-515d2526edab"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "Noor, Daan and Lotte talk to Sofia with jij"
+          ],
+          "id": "05247468-f8cc-4a9e-8a40-5cc3a57b62ef"
+        }
+      ],
+      "id": "4deefe5b-5e50-4a24-a832-dd4f33f1ca59"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "u",
+          "styles": {
+            "bold": true
+          }
+        },
+        " takes the jij/hij verb form: ",
+        {
+          "text": "u wilt",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "u mag",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "u hebt",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (or ",
+        {
+          "text": "u heeft",
+          "styles": {
+            "bold": true
+          }
+        },
+        "), ",
+        {
+          "text": "u bent",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". The possessive is ",
+        {
+          "text": "uw",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "uw reservering",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "8332d5c7-dd6f-4e79-ad68-5b782a6d4a97"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "The same request, informal and formal",
+      "id": "e5e6e17d-f796-4752-99ac-917e19683ccf"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Jij (friends)",
+              "id": "a7f582b4-da9b-4271-9a3b-e75e79ee3e69"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Wil je iets drinken?"
+              ],
+              "id": "e9dbeebf-9be4-4ec4-8f36-460587109be0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Jij mag hier zitten."
+              ],
+              "id": "6797dea7-6d9e-4270-b92d-26e3afa76783"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Heb jij een reservering?"
+              ],
+              "id": "d01acf79-dd93-49c1-ab83-981c1ddd7f4e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Alsjeblieft!"
+              ],
+              "id": "025028de-257a-4851-8854-7eebcda96ccc"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Dank je wel."
+              ],
+              "id": "305643eb-4644-4ccb-9e4d-5352833c2ea0"
+            }
+          ],
+          "id": "230de82c-f5ef-4174-8d8c-c19a647a6998"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "U (waiter, strangers)",
+              "id": "c6b816d4-13e6-4a27-ae7c-8361575f9bde"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Wilt u",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " iets drinken?"
+              ],
+              "id": "510b56d0-542a-4277-b8dd-6d74cb1e9fe1"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "U mag",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " hier zitten."
+              ],
+              "id": "594edab0-e680-4beb-ac57-7e530dab8fdc"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Hebt u",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " een reservering?"
+              ],
+              "id": "de46f40b-8043-4703-8d1e-9c827430e478"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Alstublieft!",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "cc6b8f90-3407-4c68-8334-7628c85909a3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Dank u wel.",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "1c2c8be3-0e7d-40ad-9407-3717b7e32c09"
+            }
+          ],
+          "id": "c44e948a-f832-435e-a218-5b4fad3d3815"
+        }
+      ],
+      "id": "2d36ee9b-fe30-42e2-853d-f27c9e382f43"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you have a reservation?",
+        "note": "Also fine: Heeft u een reservering? Both are correct."
+      },
+      "content": [
+        {
+          "text": "Hebt",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een reservering?"
+      ],
+      "id": "273be4f8-5c92-4460-b17d-159c7ab23f10"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Alstublieft and alsjeblieft",
+      "id": "03627742-f261-400a-a1c2-7546eba4e587"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Two meanings",
+      "id": "905fe68e-2048-4006-be24-1573c0c2cc40"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        {
+          "text": "Alstublieft",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (u) / ",
+        {
+          "text": "alsjeblieft",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (jij) means (1) ",
+        {
+          "text": "please",
+          "styles": {
+            "italic": true
+          }
+        },
+        " when you ask for something, and (2) ",
+        {
+          "text": "here you are",
+          "styles": {
+            "italic": true
+          }
+        },
+        " when you hand something over."
+      ],
+      "id": "7d6046aa-3aa4-4073-8fb6-c942951d8a0c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "A bottle of water, please.",
+        "note": "Meaning 1: please. Quantities without van, as in 10-b."
+      },
+      "content": [
+        "Een fles water, ",
+        {
+          "text": "alstublieft",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "32a7f41b-7d9d-4b36-852f-7762c0e21250"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Here you are, the bill.",
+        "note": "Meaning 2: here you are. The waiter hands over the bill."
+      },
+      "content": [
+        {
+          "text": "Alstublieft",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ", ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " rekening."
+      ],
+      "id": "2ff2a8ea-6f2b-4025-be98-444b212ea410"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Dank u wel",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (formal) / ",
+        {
+          "text": "Dank je wel",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (informal) / ",
+        {
+          "text": "Dank jullie wel",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (to a group of friends)"
+      ],
+      "id": "e80d0a19-1ae5-4de5-85fd-499e003f7639"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Graag gedaan.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "You're welcome.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "cbfac8a5-3a74-4b58-abfd-fcbb4cde3d14"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Say ",
+        {
+          "text": "alstublieft",
+          "styles": {
+            "bold": true
+          }
+        },
+        " to the waiter in a restaurant, not ",
+        {
+          "text": "alsjeblieft",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ". Alsjeblieft is for friends."
+      ],
+      "id": "13680a3c-2554-4dfd-b977-72a94be8cca0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Niet or geen?",
+      "id": "3235939f-c0a2-4b77-ba0f-eb1a35c32aed"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Negation with a modal",
+      "id": "28391ff2-d7f1-44df-bb1e-6ce2a1a1b23f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Is there a noun with ",
+        {
+          "text": "een",
+          "styles": {
+            "italic": true
+          }
+        },
+        " or no article? Use ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " before the noun: ",
+        {
+          "text": "Ik wil geen vlees.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "5b6e16e8-30d4-4539-a6c2-85cbbaa76f0b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "No such noun? Put ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " before the infinitive at the end (and before a place like buiten): ",
+        {
+          "text": "Ik wil niet buiten zitten.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "69436dd0-c09b-40a4-a20a-1516ed43d872"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "The modal stays in position 2: ",
+        {
+          "text": "Lotte wil geen vis eten.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "066fb837-ab81-40e7-8bb6-9d490c42936d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I don't want to sit outside.",
+        "note": "niet before buiten and the infinitive."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "wil",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " buiten ",
+        {
+          "text": "zitten",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "ae30b154-3e0c-4827-9e86-25e84cbbd899"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I don't want any meat.",
+        "note": "geen + noun. Lotte is vegetarian."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "wil",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " vlees."
+      ],
+      "id": "5a05bb07-d608-448a-89e8-125e6157dd36"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik wil niet vlees.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Ik wil geen vlees.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Before a noun with een or no article, use geen, not niet."
+      ],
+      "id": "3eb64127-a566-4c65-b878-7148906d492f"
+    },
+    {
+      "type": "divider",
+      "id": "dc72674b-ce6c-4bb9-8674-41319afad4f8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Samen of apart?",
+      "id": "ede84a6f-2924-43d7-a231-dbff3e394a0f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Later that evening. Dessert, coffee, and then the bill. Who pays for what?"
+      ],
+      "id": "2257c152-9af5-4e70-9703-6bfd2319df82"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Ober",
+            "text": "Is alles goed? Wilt u nog een nagerecht?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja! Ik wil graag de appeltaart met slagroom."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ik wil geen toetje. Mag ik een koffie?"
+          },
+          {
+            "speaker": "Ober",
+            "text": "Natuurlijk."
+          },
+          {
+            "speaker": "Lotte",
+            "text": "Mogen we de rekening, alstublieft?"
+          },
+          {
+            "speaker": "Ober",
+            "text": "Alstublieft. Samen of apart?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Apart, alstublieft. Maar Noor betaalt vanavond niet. Wij betalen voor Noor."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Echt? Dank jullie wel!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Graag gedaan! Mag ik pinnen?"
+          },
+          {
+            "speaker": "Ober",
+            "text": "Ja, natuurlijk."
+          },
+          {
+            "speaker": "Lotte",
+            "text": "Ik wil graag contant betalen. Alstublieft. De rest is voor u."
+          },
+          {
+            "speaker": "Ober",
+            "text": "Dank u wel! Nog een fijne avond!"
+          }
+        ]
+      },
+      "id": "ffe17fb6-fe7f-48dc-ac34-a5b3c9a0965f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "De rest is voor u",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is a fixed phrase: ",
+        {
+          "text": "keep the change",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". It is a small tip (",
+        {
+          "text": "de fooi",
+          "styles": {
+            "italic": true
+          }
+        },
+        "). ",
+        {
+          "text": "Nog een fijne avond!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "Have a nice evening!",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "c54a7c4f-5026-48e5-afd6-1aa647ca9025"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "Paying separately is normal among Dutch friends; people jokingly call it ",
+        {
+          "text": "Nederlands betalen",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Often one person pays and the others send a payment request by app afterwards. A tip is optional: about 5–10% for good service."
+      ],
+      "id": "4cd2baf4-f27a-44a7-9110-05a936f71616"
+    },
+    {
+      "type": "divider",
+      "id": "9d5aaa22-23fc-47b1-8c16-241e6ede6d15"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "85da0212-2f9e-4b37-be20-f9993d720d54"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in: mag, mogen, wil, wilt or willen",
+      "id": "0e696f00-bd3d-4916-83cf-1857433f833c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct form of mogen (permission) or willen (want). The English cue in brackets tells you which verb.",
+          "items": [
+            {
+              "prompt": "… ik hier zitten? (may)",
+              "authorsVersion": [
+                "Mag"
+              ],
+              "note": "Question: modal first. ik mag, no -t."
+            },
+            {
+              "prompt": "Wat … u drinken? (want)",
+              "authorsVersion": [
+                "wilt"
+              ],
+              "note": "u takes the jij form: u wilt. Typical mistake: u wil (spoken only)."
+            },
+            {
+              "prompt": "Lotte … geen vlees. (want)",
+              "authorsVersion": [
+                "wil"
+              ],
+              "note": "hij/zij wil, no -t. Mistake: Lotte wilt."
+            },
+            {
+              "prompt": "… wij de rekening, alstublieft? (may)",
+              "authorsVersion": [
+                "Mogen"
+              ],
+              "note": "wij → plural mogen."
+            },
+            {
+              "prompt": "Daan en Sofia … graag de vis. (want)",
+              "authorsVersion": [
+                "willen"
+              ],
+              "note": "Two people = plural: willen."
+            },
+            {
+              "prompt": "Je … hier niet roken. (may)",
+              "authorsVersion": [
+                "mag"
+              ],
+              "note": "jij/je mag. Je mag niet = you are not allowed."
+            },
+            {
+              "prompt": "… u nog iets? (want)",
+              "authorsVersion": [
+                "Wilt"
+              ],
+              "note": "No t-drop with u: Wilt u …?"
+            },
+            {
+              "prompt": "Vanavond … Noor niet betalen. (may)",
+              "authorsVersion": [
+                "mag"
+              ],
+              "note": "Inversion after vanavond: mag Noor. Her friends pay."
+            }
+          ]
+        }
+      },
+      "id": "093d1846-9b72-4d93-84e3-ec93a24fb46d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Dialogue: paying",
+      "id": "5fa20484-bf9a-4caa-8f23-b8162b31120e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the dialogue at the end of the dinner. Fill in each blank.",
+          "items": [
+            {
+              "prompt": "Lotte: … we de rekening, alstublieft? / Ober: Natuurlijk. Samen of …?",
+              "authorsVersion": [
+                "Mogen",
+                "apart"
+              ],
+              "note": "Mogen we …? asks politely. samen = together, apart = separately."
+            },
+            {
+              "prompt": "Daan: Apart, … . / Ober: Prima. Wilt u pinnen of … betalen?",
+              "authorsVersion": [
+                "alstublieft",
+                "contant"
+              ],
+              "note": "To the waiter: alstublieft, not alsjeblieft. contant = cash."
+            },
+            {
+              "prompt": "Sofia: … ik pinnen? / Ober: Ja, natuurlijk. …, het pinapparaat.",
+              "authorsVersion": [
+                "Mag",
+                "Alstublieft"
+              ],
+              "note": "Second alstublieft = here you are. het pinapparaat = the card machine."
+            },
+            {
+              "prompt": "Ober: Dank u wel. … u nog iets? / Noor: Nee, … u wel.",
+              "authorsVersion": [
+                "Wilt",
+                "dank"
+              ],
+              "note": "Wilt u nog iets? = Would you like anything else? Noor uses dank u to the waiter."
+            },
+            {
+              "prompt": "Noor: Dank … wel, Sofia, Daan en Lotte! / Daan: Graag …, Noor. Gefeliciteerd!",
+              "authorsVersion": [
+                "jullie",
+                "gedaan"
+              ],
+              "note": "Three friends: dank jullie wel. Graag gedaan = you're welcome."
+            },
+            {
+              "prompt": "Lotte: Ik wil graag … betalen. Alstublieft. De … is voor u. / Ober: Dank u wel!",
+              "authorsVersion": [
+                "contant",
+                "rest"
+              ],
+              "note": "De rest is voor u = keep the change."
+            }
+          ]
+        }
+      },
+      "id": "0673aed3-167e-4989-9efe-5374ea36b6fd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "319993f1-18df-4c87-88ec-46da9fd08a9a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. The modal is the verb in position 2 (position 1 in a yes/no question); the infinitive goes to the end.",
+          "items": [
+            {
+              "prompt": "Put in order (question): ik / mag / hier / zitten",
+              "authorsVersion": [
+                "Mag ik hier zitten?"
+              ],
+              "note": "Yes/no question: Mag first, zitten last."
+            },
+            {
+              "prompt": "Put in order: wij / willen / bij het raam / zitten",
+              "authorsVersion": [
+                "Wij willen bij het raam zitten."
+              ],
+              "note": "Place before the infinitive."
+            },
+            {
+              "prompt": "Put in order: Lotte / wil / geen vlees / eten",
+              "authorsVersion": [
+                "Lotte wil geen vlees eten."
+              ],
+              "note": "geen + noun; the infinitive still goes to the end."
+            },
+            {
+              "prompt": "Put in order: ik / wil / buiten / niet / zitten",
+              "authorsVersion": [
+                "Ik wil niet buiten zitten."
+              ],
+              "note": "niet before buiten and the infinitive. Mistake: Ik wil buiten zitten niet."
+            },
+            {
+              "prompt": "Put in order: vanavond / mag / Noor / niet / betalen",
+              "authorsVersion": [
+                "Vanavond mag Noor niet betalen."
+              ],
+              "note": "Time first → inversion: mag Noor (08-b). Also fine: Noor mag vanavond niet betalen."
+            },
+            {
+              "prompt": "Put in order (question): u / wilt / iets / drinken",
+              "authorsVersion": [
+                "Wilt u iets drinken?"
+              ],
+              "note": "Wilt u keeps its -t."
+            },
+            {
+              "prompt": "Put in order: op vrijdag 2 oktober / willen / de vrienden / in een restaurant / eten",
+              "authorsVersion": [
+                "Op vrijdag 2 oktober willen de vrienden in een restaurant eten."
+              ],
+              "note": "Time first, inversion; place before the infinitive (TMP, 09-b). Also fine: De vrienden willen op vrijdag 2 oktober in een restaurant eten."
+            }
+          ]
+        }
+      },
+      "id": "15905853-2531-490f-86b5-1cc531840174"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Formal and negative",
+      "id": "1ef85ee5-771f-45ad-b748-89a63cae640c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite. Items 1–4: say it formally to a waiter or stranger (jij → u, alsjeblieft → alstublieft). Items 5–8: make the sentence negative with niet or geen.",
+          "items": [
+            {
+              "prompt": "Wil je iets drinken?",
+              "authorsVersion": [
+                "Wilt u iets drinken?"
+              ],
+              "note": "With u there is no t-drop: wilt u."
+            },
+            {
+              "prompt": "Heb jij een reservering?",
+              "authorsVersion": [
+                "Hebt u een reservering?"
+              ],
+              "note": "Also fine: Heeft u een reservering?"
+            },
+            {
+              "prompt": "Een glas water, alsjeblieft.",
+              "authorsVersion": [
+                "Een glas water, alstublieft."
+              ],
+              "note": "alsjeblieft (jij) → alstublieft (u)."
+            },
+            {
+              "prompt": "Jij mag hier zitten.",
+              "authorsVersion": [
+                "U mag hier zitten."
+              ],
+              "note": "mag stays the same: u mag."
+            },
+            {
+              "prompt": "Ik wil vlees.",
+              "authorsVersion": [
+                "Ik wil geen vlees."
+              ],
+              "note": "Noun without article → geen. Mistake: Ik wil niet vlees."
+            },
+            {
+              "prompt": "Wij willen buiten zitten.",
+              "authorsVersion": [
+                "Wij willen niet buiten zitten."
+              ],
+              "note": "niet before buiten and the infinitive."
+            },
+            {
+              "prompt": "Sofia wil een toetje.",
+              "authorsVersion": [
+                "Sofia wil geen toetje."
+              ],
+              "note": "een + noun → geen + noun."
+            },
+            {
+              "prompt": "Je mag hier roken.",
+              "authorsVersion": [
+                "Je mag hier niet roken."
+              ],
+              "note": "niet before the infinitive at the end."
+            }
+          ]
+        }
+      },
+      "id": "f4f1484c-03d0-455e-9d38-6f8ce78ab3a5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "71460f8f-cc3f-44db-ae19-184b151ca6c7"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Use u with the waiter.",
+          "items": [
+            {
+              "prompt": "May I sit by the window?",
+              "authorsVersion": [
+                "Mag ik bij het raam zitten?"
+              ],
+              "note": "Not Kan ik … (you learn kunnen later)."
+            },
+            {
+              "prompt": "What would you like to eat? (waiter to a guest)",
+              "authorsVersion": [
+                "Wat wilt u eten?"
+              ],
+              "note": "u wilt, with -t."
+            },
+            {
+              "prompt": "I would like the fish, please.",
+              "authorsVersion": [
+                "Ik wil graag de vis, alstublieft."
+              ],
+              "note": "Also fine: Ik wil graag de vis. / Ik neem de vis."
+            },
+            {
+              "prompt": "Lotte doesn't want any meat.",
+              "authorsVersion": [
+                "Lotte wil geen vlees."
+              ],
+              "note": "geen + noun; hij/zij wil without -t."
+            },
+            {
+              "prompt": "Could we have the bill, please?",
+              "authorsVersion": [
+                "Mogen we de rekening, alstublieft?"
+              ],
+              "note": "Also fine: Mag ik de rekening, alstublieft?"
+            },
+            {
+              "prompt": "Can I pay by card?",
+              "authorsVersion": [
+                "Mag ik pinnen?"
+              ],
+              "note": "pinnen = pay by card. Not Kan ik … here."
+            },
+            {
+              "prompt": "Together or separately? Separately, please.",
+              "authorsVersion": [
+                "Samen of apart? Apart, alstublieft."
+              ],
+              "note": "To the waiter: alstublieft."
+            }
+          ]
+        }
+      },
+      "id": "cd106253-a239-4042-bad4-76640f52bc37"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "8a2b5913-fce1-4a71-9173-12f6150860e9"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Wilt u nog iets?",
+              "authorsVersion": [
+                "Would you like anything else?"
+              ],
+              "note": "Also fine: Do you want anything else?"
+            },
+            {
+              "prompt": "Je mag hier niet roken.",
+              "authorsVersion": [
+                "You're not allowed to smoke here."
+              ],
+              "note": "Also fine: You may not smoke here."
+            },
+            {
+              "prompt": "Alstublieft, de kaart.",
+              "authorsVersion": [
+                "Here you are, the menu."
+              ],
+              "note": "alstublieft = here you are; de kaart = the menu (11-a)."
+            },
+            {
+              "prompt": "Mogen wij een fles rode wijn?",
+              "authorsVersion": [
+                "Could we have a bottle of red wine?"
+              ],
+              "note": "rode: de wijn is a de-word, adjective + -e."
+            },
+            {
+              "prompt": "Is alles goed? Ja, het is heerlijk!",
+              "authorsVersion": [
+                "Is everything all right? Yes, it's delicious!"
+              ],
+              "note": "Also fine: Is everything OK?"
+            }
+          ]
+        }
+      },
+      "id": "3dd04e40-6262-403a-a754-8332844a508e"
+    },
+    {
+      "type": "divider",
+      "id": "791b16db-d892-4fa9-9eda-45b4330c2299"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Een bericht aan Fleur",
+      "id": "9f0dbdc3-747d-472e-9643-fa277d992349"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Noor's message to her sister Fleur in Australia. Answer the questions in Dutch. New words: het tentamen = the exam (09-a), als toetje = as dessert, vragen om = to ask for, weer = again, back, Lief, hè? = Sweet, isn't it?, Liefs = Love.",
+          "passage": {
+            "title": "Een bericht aan Fleur",
+            "content": "Hoi Fleur!\nGroot nieuws: ik heb een 8 voor mijn tentamen! Het is vrijdag 2 oktober en ik ben heel blij.\nNu zit ik met Sofia, Daan en Lotte in een restaurant in het centrum. We zitten aan een tafel bij het raam.\nIk drink witte wijn en ik eet de kip met friet. Lotte is vegetarisch. Zij wil geen vlees en geen vis. Zij eet de pasta met groente. Sofia en Daan eten de vis. Het eten is heerlijk!\nAls toetje neem ik appeltaart met slagroom. Daan wil geen toetje. Hij drinkt een koffie.\nDan vraagt Lotte om de rekening. De ober vraagt: \"Samen of apart?\" Wij betalen apart, maar vanavond betaal ik niet: Sofia, Daan en Lotte betalen mijn eten! Lief, hè?\nSofia pint en Lotte betaalt contant. Ze geeft ook een fooi.\nOp 1 november ben jij weer in Nederland. Dan eten we samen in een restaurant, oké?\nLiefs, Noor"
+          },
+          "items": [
+            {
+              "prompt": "Welk cijfer heeft Noor voor haar tentamen?",
+              "authorsVersion": [
+                "Een 8 (acht)."
+              ],
+              "note": "het cijfer = the grade. Welk with a het-word (het cijfer), welke with a de-word (welke dag). In the Netherlands grades go from 1 to 10; an 8 is very good."
+            },
+            {
+              "prompt": "Waar zitten de vier vrienden?",
+              "authorsVersion": [
+                "In een restaurant in het centrum, aan een tafel bij het raam."
+              ],
+              "note": "Also fine: Bij het raam."
+            },
+            {
+              "prompt": "Wat drinkt Noor?",
+              "authorsVersion": [
+                "Witte wijn."
+              ],
+              "note": "Also fine: Noor drinkt witte wijn."
+            },
+            {
+              "prompt": "Wat eet Lotte? Eet zij vis?",
+              "authorsVersion": [
+                "De pasta met groente. Nee, zij is vegetarisch."
+              ],
+              "note": "Lotte wil geen vlees en geen vis. Also fine: Nee, zij eet geen vis."
+            },
+            {
+              "prompt": "Wil Daan een toetje?",
+              "authorsVersion": [
+                "Nee, hij wil geen toetje. Hij drinkt een koffie."
+              ],
+              "note": "geen + noun."
+            },
+            {
+              "prompt": "Klopt dit? Noor betaalt vanavond haar eten.",
+              "authorsVersion": [
+                "Nee. Sofia, Daan en Lotte betalen het eten van Noor."
+              ],
+              "note": "Noor writes: vanavond betaal ik niet."
+            },
+            {
+              "prompt": "Hoe betalen Sofia en Lotte?",
+              "authorsVersion": [
+                "Sofia pint en Lotte betaalt contant."
+              ],
+              "note": "pinnen = by card, contant = cash."
+            },
+            {
+              "prompt": "Wanneer is Fleur weer in Nederland?",
+              "authorsVersion": [
+                "Op 1 november."
+              ],
+              "note": "Dates with op (09-a)."
+            }
+          ]
+        }
+      },
+      "id": "fb29d53f-72a4-4a5c-888c-f919ac25a57b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "7b7c3a3d-d71e-4487-8297-198b5395aa64"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences in Dutch: what you order in a restaurant and how you ask for the bill. Use ik wil graag, mag ik and alstublieft.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences: what you order in a restaurant and how you ask for the bill.",
+              "authorsVersion": [
+                "Als voorgerecht neem ik de soep. Als hoofdgerecht wil ik graag de vis met groente, maar ik wil geen friet. Ik drink een glas witte wijn. Aan het eind vraag ik: \"Mogen we de rekening, alstublieft? Mag ik pinnen?\""
+              ],
+              "note": "Model answer by Sofia. Check: u-forms to the waiter, alstublieft, geen + noun, the infinitive at the end."
+            }
+          ]
+        }
+      },
+      "id": "9ea62aba-5fbc-4219-abb1-3a7282707f80"
+    },
+    {
+      "type": "divider",
+      "id": "6adc64d9-5158-4f7d-8c88-bc17c4bf945d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "7f944bbd-c071-4caf-8c18-ece9f5e3c220"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Mag ik …? / Mogen we …?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " asks permission or politely asks for something: ",
+        {
+          "text": "Mag ik pinnen? Mogen we de rekening?",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "69daf0e4-e0b0-48d4-b4b8-046971f7dd69"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "With ",
+        {
+          "text": "u",
+          "styles": {
+            "bold": true
+          }
+        },
+        " use the jij/hij form: ",
+        {
+          "text": "u wilt, u mag, u hebt/heeft",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". No t-drop: ",
+        {
+          "text": "Wilt u …?",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "ef65cc02-35cc-45be-bf1f-f082e19cd1d9"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Alstublieft",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = please and here you are (formal); ",
+        {
+          "text": "alsjeblieft",
+          "styles": {
+            "bold": true
+          }
+        },
+        " with friends. Thanks: dank u wel / dank je wel. Reply: graag gedaan."
+      ],
+      "id": "b0b9f6ed-02c2-45cc-980a-6c8af5e87f7a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + noun, ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " before the infinitive at the end: ",
+        {
+          "text": "Ik wil geen vlees. Ik wil niet buiten zitten.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "7d0fb939-ac4f-408a-be6f-5374cb852b75"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Remember: the modal is the verb in position 2 (or 1 in a question), and the infinitive goes to the very end."
+      ],
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "id": "156a1eaa-58bf-4321-a0b3-cc55909dafd9"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Een tafel bij het raam",
+      "description": "Four friends (Sofia, Noor, Daan, Lotte) at a restaurant table by a large window in the evening, a waiter in an apron handing over menus.",
+      "alt": "Four friends at a restaurant table by the window with a waiter"
+    },
+    {
+      "afterHeading": "Story: Samen of apart?",
+      "description": "Close-up of a restaurant table with dessert plates, a coffee cup, the bill on a small tray and a card payment terminal.",
+      "alt": "The bill and a card machine on a restaurant table"
+    }
+  ],
+  "id": "92d70c1f-828a-48e5-8b10-99eab73d725d"
+}

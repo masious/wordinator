@@ -1,0 +1,2824 @@
+{
+  "title": "Wat kost dat?",
+  "goal": "Ask and understand prices in euros and cents, pay at a market or in a shop, and choose items with demonstratives and adjectives.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Wat kost dat?",
+      "id": "4d24da59-bb85-4431-91c9-7220b1703884"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is still Saturday 3 October, later the same morning at the market on the Vredenburg. Sofia finds a second-hand stall with lamps, mugs and plates, and then she goes back to Henk's cheese stall to pay. Henk has some big news for her."
+      ],
+      "id": "3919cf50-dda8-4b96-98f4-f17c0592a4a7"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In this lesson you will ask and understand prices in euros and cents, say that something is ",
+        {
+          "text": "too expensive",
+          "styles": {
+            "italic": true
+          }
+        },
+        " or ",
+        {
+          "text": "cheap",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", and pay by card or in cash."
+      ],
+      "id": "acff57ab-822f-4648-abf6-cfd7e55fa0c1"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: verbs are ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", subjects ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", de-forms (deze, die) ",
+        {
+          "text": "pink",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " and het-forms (dit, dat) ",
+        {
+          "text": "brown",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        ". The new form is ",
+        {
+          "text": "bold",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "33817e74-726b-4230-91cf-068c6f961252"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: at the second-hand stall",
+      "id": "c2e4b75d-010f-4628-a73f-c591aee1edc5"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Sofia needs a lamp for her room. At a stall with ",
+        {
+          "text": "tweedehands",
+          "styles": {
+            "bold": true
+          }
+        },
+        " things (",
+        {
+          "text": "second-hand",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") she asks the price."
+      ],
+      "id": "66390c0a-2cbd-4810-ae09-e1728a69097f"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Goedemorgen! Wat kost deze witte lamp?"
+          },
+          {
+            "speaker": "Verkoper",
+            "text": "Die lamp? Die kost vijftien euro."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Vijftien euro? Dat is te duur. De lamp is tweedehands!"
+          },
+          {
+            "speaker": "Verkoper",
+            "text": "Hm. Voor u twaalf euro vijftig. Dat is goedkoop!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goed, ik neem de lamp. En wat kosten die zwarte mokken?"
+          },
+          {
+            "speaker": "Verkoper",
+            "text": "Die mokken kosten drie euro vijftig per stuk."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dan neem ik twee mokken."
+          },
+          {
+            "speaker": "Verkoper",
+            "text": "Prima. Anders nog iets?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, dank u, dat is alles. Mag ik pinnen?"
+          },
+          {
+            "speaker": "Verkoper",
+            "text": "Nee, sorry, hier niet. Alleen contant. Samen is dat negentien euro vijftig."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Negentien euros vijftig? Oké. Alstublieft, twintig euro."
+          },
+          {
+            "speaker": "Verkoper",
+            "text": "Ja, negentien euro vijftig. Hier is uw wisselgeld, vijftig cent. En hier is uw bon."
+          }
+        ]
+      },
+      "id": "3fd09900-47be-4bd6-9871-faca53501591"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Sofia says ",
+        {
+          "text": "negentien euros",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ". The seller answers with the correct form: ",
+        {
+          "text": "negentien euro",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". After a number, euro has no -s."
+      ],
+      "id": "77e1fb91-b336-4c57-aa0a-b8bf0afa58f9"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "alleen contant",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "cash only",
+          "styles": {
+            "italic": true
+          }
+        },
+        "; ",
+        {
+          "text": "voor u",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "for you",
+          "styles": {
+            "italic": true
+          }
+        },
+        "; ",
+        {
+          "text": "Anders nog iets?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "Anything else?",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "5caa786a-8127-40a6-8a57-11edebb79f3b"
+    },
+    {
+      "type": "divider",
+      "id": "e2ee1930-b2f6-48fc-bf9a-6198c2333d19"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Prices in euros and cents",
+      "id": "0af38899-fc46-4f9d-af4c-f5d9c881cbaf"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Dutch writes a ",
+        {
+          "text": "comma",
+          "styles": {
+            "bold": true
+          }
+        },
+        " between euros and cents: €2,50 (English: €2.50). When you say a price, you say the euros, the word ",
+        {
+          "text": "euro",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", and then the cents. You do not say ",
+        {
+          "text": "komma",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", and you do not say ",
+        {
+          "text": "cent",
+          "styles": {
+            "italic": true
+          }
+        },
+        " after the euros."
+      ],
+      "id": "bd2611a7-6020-4975-bc86-70a2fff3cc1a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Written and spoken",
+      "id": "5f57bd0d-6137-4696-9a49-829dbbeb7057"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Written",
+              "id": "d98f212b-98ac-4fbd-a179-331afa5b9e0b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "€1,00"
+              ],
+              "id": "aa27413d-e841-4aea-96fd-3a8c1aebd0a0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "€0,99"
+              ],
+              "id": "edfee2bd-a3ff-4987-8f05-f1d01a7c061b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "€2,50"
+              ],
+              "id": "b96793fc-fbff-4426-b100-37015fdc54f7"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "€12,95"
+              ],
+              "id": "a46ea52a-2731-4877-a092-eab8198f3964"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "€19,50"
+              ],
+              "id": "4f5cc9b2-381f-4de3-826a-1d013d7a20d9"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "€120,00"
+              ],
+              "id": "489d194e-6b22-40af-891b-23228e226307"
+            }
+          ],
+          "id": "5b8c8daa-41ff-4524-9c6f-8e8bc2b76456"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Spoken",
+              "id": "132dfdc3-b14c-40bb-a665-bbca8bbba528"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "een euro",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "c0be3f51-553e-40d7-9ddf-97bf0d420a52"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "negenennegentig cent",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "e7d7effc-da9c-463e-b5e6-4eb20f273359"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "twee euro vijftig",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "39443d7c-e97b-48dc-b8f0-2780177878fb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "twaalf euro vijfennegentig",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "18e1f0bf-21b0-4074-9adf-d2e9b884c9ff"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "negentien euro vijftig",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "63d3bffa-7153-40f9-8a5d-9653f9d12f98"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "honderdtwintig euro",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "fcc93d44-7f79-4816-b61c-96b23e19f9ef"
+            }
+          ],
+          "id": "377f04db-38bb-4319-a57c-1bcea81fc5ef"
+        }
+      ],
+      "id": "84b1640f-f222-4d12-8490-8767d081126a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This mug costs two euros fifty.",
+        "note": "In a shop people often drop the word euro: twee vijftig. Both are correct."
+      },
+      "content": [
+        "Deze mok kost ",
+        {
+          "text": "twee euro vijftig",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "6798d26f-8dc4-4086-b5f2-eb2f276301fb"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This big mirror costs a hundred and twenty euros.",
+        "note": "Numbers above 100: honderd, honderdtwintig, honderdvijftig. One word, no 'en' after honderd."
+      },
+      "content": [
+        "Deze grote spiegel kost ",
+        {
+          "text": "honderdtwintig euro",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "9f8ebcd8-2bcf-47a6-a7cc-9bb8175c60f2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "euro and cent stay singular",
+      "id": "6ea4fd30-5110-43dc-b0bb-7445da0406ca"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "After a number, ",
+        {
+          "text": "euro",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "cent",
+          "styles": {
+            "bold": true
+          }
+        },
+        " stay singular: twee ",
+        {
+          "text": "euro",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", vijftig ",
+        {
+          "text": "cent",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Never ",
+        {
+          "text": "twee euros",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " or ",
+        {
+          "text": "vijftig cents",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ". It works like twee kilo and drie liter."
+      ],
+      "id": "43813b55-9767-401e-a683-823a928645ec"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "twee komma vijftig",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " is only for maths. For money say ",
+        {
+          "text": "twee euro vijftig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "3d00510c-d82a-4bf7-9769-ee92552d4adb"
+    },
+    {
+      "type": "divider",
+      "id": "a5fcc175-cbfc-4f6d-bdc5-13ea5cbbc098"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "kost or kosten?",
+      "id": "52ddf77d-3f47-4448-9087-8a65ecd29b85"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "One thing: kost",
+      "id": "a3d80dd8-250f-4131-a733-97e15642bb7f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "The verb ",
+        {
+          "text": "kosten",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "to cost",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") is a regular verb. One thing: ",
+        {
+          "text": "kost",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ". More things: ",
+        {
+          "text": "kosten",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "9d0b0015-110b-4b66-99ae-1b2f829f631b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How much is this lamp?",
+        "note": "Also fine: Hoeveel kost deze lamp? Wat and hoeveel both work."
+      },
+      "content": [
+        "Wat ",
+        {
+          "text": "kost",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "deze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " lamp?"
+      ],
+      "id": "0c51ad43-63f8-4cf9-8f02-59f7853a8af7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "More things: kosten",
+      "id": "b417dd50-c9ab-426b-808d-1c4bdc8065cb"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How much are these mugs?",
+        "note": "Plural subject (deze mokken), so the plural verb kosten."
+      },
+      "content": [
+        "Wat ",
+        {
+          "text": "kosten",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "deze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " mokken?"
+      ],
+      "id": "5d90f285-3dad-4cfc-a070-e48f9ac0ab04"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "They cost three euros each.",
+        "note": "per stuk = each, per piece. Die on its own = those (ones)."
+      },
+      "content": [
+        {
+          "text": "Die",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " ",
+        {
+          "text": "kosten",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " drie euro ",
+        {
+          "text": "per stuk",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "a808ec6e-a787-4065-b24e-31c05351c838"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "one thing + kost",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "more things + kosten",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". The thing is the subject: ",
+        {
+          "text": "deze lamp",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "kost",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "deze mokken",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "kosten",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "9c2a53df-d283-4319-8db1-acc4c010cb9c"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Deze lamp kosten tien euro.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Deze lamp kost tien euro.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " One lamp, so kost."
+      ],
+      "id": "a2ff4795-3303-4971-aa06-dcc2331373fa"
+    },
+    {
+      "type": "divider",
+      "id": "0f586bd5-4aa8-4b3e-9bfd-b2e57af070de"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "This, that and adjectives",
+      "id": "ab1557d5-8eca-496b-a8a2-15b9a5f3703c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You know ",
+        {
+          "text": "deze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        "/",
+        {
+          "text": "die",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " and ",
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        "/",
+        {
+          "text": "dat",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " from 12-a. After them, the adjective always ends in ",
+        {
+          "text": "-e",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", also with het-words."
+      ],
+      "id": "9ac2c731-1181-40ff-bcaf-56faa20ccc48"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "deze, die, dit, dat + adjective",
+      "id": "0e862002-c566-43c2-ba21-53dea0fd7df1"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "de-words: ",
+        {
+          "text": "deze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " / ",
+        {
+          "text": "die",
+          "styles": {
+            "textColor": "pink"
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "deze",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " klein",
+            {
+              "text": "e",
+              "styles": {
+                "bold": true
+              }
+            },
+            " lamp (",
+            {
+              "text": "this small lamp",
+              "styles": {
+                "italic": true
+              }
+            },
+            ")"
+          ],
+          "id": "2159fa3c-4800-429b-bb8a-cb92da792579"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "die",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " zwart",
+            {
+              "text": "e",
+              "styles": {
+                "bold": true
+              }
+            },
+            " stoel (",
+            {
+              "text": "that black chair",
+              "styles": {
+                "italic": true
+              }
+            },
+            ")"
+          ],
+          "id": "9d296822-f9af-4bd0-b722-16bef5cf2a20"
+        }
+      ],
+      "id": "e7d48376-c5e8-491e-b723-386b3b562cda"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "het-words: ",
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " / ",
+        {
+          "text": "dat",
+          "styles": {
+            "textColor": "brown"
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "dit",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " mooi",
+            {
+              "text": "e",
+              "styles": {
+                "bold": true
+              }
+            },
+            " bord (",
+            {
+              "text": "this nice plate",
+              "styles": {
+                "italic": true
+              }
+            },
+            ")"
+          ],
+          "id": "5fec5ae5-5ebd-4ab3-bf9a-ec9d1f1d7a76"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "dat",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " wit",
+            {
+              "text": "t",
+              "styles": {
+                "bold": true
+              }
+            },
+            {
+              "text": "e",
+              "styles": {
+                "bold": true
+              }
+            },
+            " bord (",
+            {
+              "text": "that white plate",
+              "styles": {
+                "italic": true
+              }
+            },
+            ")"
+          ],
+          "id": "1b99c74a-ece8-447e-80a8-1fc66dc36c18"
+        }
+      ],
+      "id": "cc6a312a-ea86-4201-9c9d-faefaea89cee"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "plurals: ",
+        {
+          "text": "deze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " / ",
+        {
+          "text": "die",
+          "styles": {
+            "textColor": "pink"
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "die",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " witt",
+            {
+              "text": "e",
+              "styles": {
+                "bold": true
+              }
+            },
+            " mokken (",
+            {
+              "text": "those white mugs",
+              "styles": {
+                "italic": true
+              }
+            },
+            ")"
+          ],
+          "id": "f7951988-a696-4c37-ad0c-594753f081c4"
+        }
+      ],
+      "id": "27124405-8d02-412a-9543-8ad34248db02"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This small lamp costs twelve fifty.",
+        "note": "Recycles 12-a: demonstrative + adjective with -e."
+      },
+      "content": [
+        {
+          "text": "Deze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " ",
+        {
+          "text": "kleine",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " lamp ",
+        {
+          "text": "kost",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " twaalf euro vijftig."
+      ],
+      "id": "2073da11-6cc6-40e8-9682-1f1f41e78a02"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This nice plate costs four seventy-five.",
+        "note": "het bord, so dit. The adjective still takes -e after dit."
+      },
+      "content": [
+        {
+          "text": "Dit",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " ",
+        {
+          "text": "mooie",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " bord ",
+        {
+          "text": "kost",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " vier euro vijfenzeventig."
+      ],
+      "id": "7ffd7105-d220-4809-9087-574f57cadc92"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Those white mugs are three fifty each.",
+        "note": "wit + e = witte: double the t to keep the short i."
+      },
+      "content": [
+        {
+          "text": "Die",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " ",
+        {
+          "text": "witte",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " mokken ",
+        {
+          "text": "kosten",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " drie euro vijftig per stuk."
+      ],
+      "id": "d72d588a-dcb2-454d-90cf-08ba287734e0"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "deze / die / dit / dat + adjective + -e + noun",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". The -e is always there after a demonstrative: ",
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " mooi",
+        {
+          "text": "e",
+          "styles": {
+            "bold": true
+          }
+        },
+        " bord, ",
+        {
+          "text": "die",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " zwart",
+        {
+          "text": "e",
+          "styles": {
+            "bold": true
+          }
+        },
+        " stoel."
+      ],
+      "id": "1ae62aef-fc94-43b7-80eb-37b12f39bc4d"
+    },
+    {
+      "type": "divider",
+      "id": "01dfa8d8-5d7c-404a-a3cd-74e8093fb8ae"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Too expensive: te",
+      "id": "66c01a9e-a3dd-40c4-8b27-b5a22f1c2742"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "To say ",
+        {
+          "text": "too",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", put ",
+        {
+          "text": "te",
+          "styles": {
+            "bold": true
+          }
+        },
+        " before the adjective. Do not use ",
+        {
+          "text": "ook",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": ook means ",
+        {
+          "text": "also",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "1013b646-7429-48c0-afd4-382a3454b955"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "That's too expensive.",
+        "note": "Sofia's answer to fifteen euros."
+      },
+      "content": [
+        "Dat is ",
+        {
+          "text": "te duur",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "042b3a06-3c75-4e67-9a4a-54d6b5fed987"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This plate isn't expensive. It's cheap.",
+        "note": "goedkoop = cheap; duur = expensive."
+      },
+      "content": [
+        {
+          "text": "Dit",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " bord is niet duur. Het is ",
+        {
+          "text": "goedkoop",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "e664de32-a393-411c-892e-e08ac3b1f7a7"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Dat is ook duur.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " means ",
+        {
+          "text": "That is also expensive.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " For ",
+        {
+          "text": "too expensive",
+          "styles": {
+            "italic": true
+          }
+        },
+        " say ",
+        {
+          "text": "Dat is te duur.",
+          "styles": {
+            "bold": true
+          }
+        },
+        ""
+      ],
+      "id": "5c08e0f3-80fb-4fa7-a72c-351c2fd7e306"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "map-pin"
+      },
+      "content": [
+        "In Dutch shops and supermarkets you do not bargain: the price is the price. At a flea market or a second-hand stall you can ask a little, like Sofia: ",
+        {
+          "text": "Vijftien euro? Dat is te duur.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " Sometimes you get ",
+        {
+          "text": "korting",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "a discount",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")."
+      ],
+      "id": "13cfceaf-e875-4c47-979c-5be207de500e"
+    },
+    {
+      "type": "divider",
+      "id": "3cd8d61f-9b43-4100-8e24-201ef0485bde"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Paying",
+      "id": "c95061c6-aad8-4e22-82a8-4e7dd0d0edbc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Step by step",
+      "id": "1b2e95b2-ed51-4c2a-83dc-219df6bd0af1"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "You ask the price: ",
+        {
+          "text": "Wat kost dit?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " / ",
+        {
+          "text": "Hoeveel kost deze lamp?",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "b7551614-ec02-4ec0-8a4e-2d72abe33e09"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "You choose: ",
+        {
+          "text": "Ik neem deze.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " / ",
+        {
+          "text": "Ik wil graag twee mokken.",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "a1d8b3f6-11ae-4ba9-b867-6d4e3b98e64e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "The seller asks ",
+        {
+          "text": "Anders nog iets?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " You say ",
+        {
+          "text": "Nee, dat is alles.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or you take one more thing."
+      ],
+      "id": "87a4125b-6e86-432b-b48a-3779444e9a1a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "The seller gives the total: ",
+        {
+          "text": "Samen is dat … euro.",
+          "styles": {
+            "bold": true
+          }
+        },
+        ""
+      ],
+      "id": "8096bc27-d03e-40e3-aade-df0dfec5ef46"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "You pay: ",
+        {
+          "text": "Mag ik pinnen?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or the seller asks ",
+        {
+          "text": "Contant of pinnen?",
+          "styles": {
+            "bold": true
+          }
+        },
+        ""
+      ],
+      "id": "6c2812de-d8a3-40d3-928b-7febc244e034"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "You get ",
+        {
+          "text": "het wisselgeld",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "the change",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") and the receipt: ",
+        {
+          "text": "Hier is uw bon.",
+          "styles": {
+            "bold": true
+          }
+        },
+        ""
+      ],
+      "id": "5b1249ed-d08d-4e5b-b4c7-65d6621107e5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Words for paying",
+      "id": "c803406b-3f4b-4999-a5a3-4da90a156622"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "betalen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "to pay",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "pinnen",
+              "styles": {
+                "bold": true
+              }
+            },
+            " = ",
+            {
+              "text": "to pay by card",
+              "styles": {
+                "italic": true
+              }
+            },
+            "; ",
+            {
+              "text": "de pinpas",
+              "styles": {
+                "bold": true
+              }
+            },
+            " = ",
+            {
+              "text": "the debit card",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "6ef4ba66-b91d-468e-88ba-2f8269a56fe1"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "contant",
+              "styles": {
+                "bold": true
+              }
+            },
+            " = ",
+            {
+              "text": "in cash",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "288bdda9-17bc-437e-919a-54ddad7283cb"
+        }
+      ],
+      "id": "d413e33e-8810-48d3-b05f-499b637259b1"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "de prijs",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "the price",
+          "styles": {
+            "italic": true
+          }
+        },
+        "; ",
+        {
+          "text": "de korting",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "the discount",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "73951d8f-49bd-4f9e-98df-b088a423decd"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "de bon",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "the receipt",
+          "styles": {
+            "italic": true
+          }
+        },
+        "; ",
+        {
+          "text": "het wisselgeld",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "the change",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "e6ea8e9b-30f5-4255-ba0a-ab45e9afa4e4"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Can I pay by card?",
+        "note": "Recycles mogen from 11-a. Also fine: Mag ik met de pinpas betalen?"
+      },
+      "content": [
+        {
+          "text": "Mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ik pinnen?"
+      ],
+      "id": "b6a24a3f-28ee-429a-b638-402d88abbc9b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        {
+          "text": "de prijs",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is ",
+        {
+          "text": "the price",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (and also ",
+        {
+          "text": "the prize",
+          "styles": {
+            "italic": true
+          }
+        },
+        " in a competition). ",
+        {
+          "text": "de bon",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is not a bonus: in a shop it is ",
+        {
+          "text": "the receipt",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "7bb5fd66-5e13-4a8f-b1a6-21105334d7f1"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "In the Netherlands people pay by card almost everywhere, also for one coffee. Some market stalls and small second-hand stalls only take cash: ",
+        {
+          "text": "alleen contant",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "aa8f7c30-8bf8-46cc-80ea-70f65868becf"
+    },
+    {
+      "type": "divider",
+      "id": "48dcbdae-14eb-4a40-a521-1d72e66dbbab"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Henk's big news",
+      "id": "e3828399-fbf1-4b23-b552-55dd1504e1c9"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Sofia goes back to Henk's cheese stall. Her piece of old cheese is waiting for her."
+      ],
+      "id": "52aa14f9-5dfe-4941-bb08-e33efa4b682d"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Henk",
+            "text": "Zo! Daar bent u weer! Uw oude kaas, alstublieft."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank u wel, meneer Jansen. Wat kost de kaas?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Acht euro. Maar meneer Jansen? Nee, nee. Zeg maar Henk!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Oké, Henk! Mag ik pinnen?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Ja hoor. Zo, dat is goed. En waar woon je, Sofia?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "In Utrecht-Oost, bij mijn vriendin Noor. Maar mijn kamer is alleen tot 31 oktober vrij. En de appartementen in Utrecht zijn zo duur!"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Nou, nou! Boven mij is een appartement te huur. Met balkon!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Echt? Waar woon jij, Henk?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "In de Kastanjestraat, nummer 14, in Lombok. Ik woon op de eerste verdieping en het appartement is op de tweede."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wat kost het appartement per maand?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Dat weet ik niet. Maar de eigenaar is Ingrid Visser. Ik stuur straks het telefoonnummer van Ingrid."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je wel, Henk! Een appartement met balkon! Wat leuk!"
+          }
+        ]
+      },
+      "id": "85c4cd93-0636-4728-a731-24fb589016e8"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Daar bent u weer!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "There you are again!",
+          "styles": {
+            "italic": true
+          }
+        },
+        "; ",
+        {
+          "text": "Boven mij",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "above me",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (a fixed chunk); ",
+        {
+          "text": "te huur",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "for rent",
+          "styles": {
+            "italic": true
+          }
+        },
+        "; ",
+        {
+          "text": "de eigenaar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "the owner",
+          "styles": {
+            "italic": true
+          }
+        },
+        "; ",
+        {
+          "text": "straks",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "later today",
+          "styles": {
+            "italic": true
+          }
+        },
+        "; ",
+        {
+          "text": "de verdieping",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "the floor (storey)",
+          "styles": {
+            "italic": true
+          }
+        },
+        "; ",
+        {
+          "text": "Dat weet ik niet.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "I don't know.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "883a732b-4ce2-4b03-8f6d-70f18d7d56c0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "From u to jij",
+      "id": "3dd573fd-52ae-4ce6-bdec-19533a9eb9c2"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "At first Sofia says ",
+        {
+          "text": "u",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "meneer Jansen",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". Then Henk says ",
+        {
+          "text": "Zeg maar Henk!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "Just call me Henk!",
+          "styles": {
+            "italic": true
+          }
+        },
+        "). From now on they say ",
+        {
+          "text": "jij",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "je",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", and Sofia says ",
+        {
+          "text": "Dank je wel",
+          "styles": {
+            "italic": true
+          }
+        },
+        " instead of ",
+        {
+          "text": "Dank u wel",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "73a2b4cf-42d2-47cf-8fa3-b031eb7fbd0e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "Dutch people move from u to jij quickly. The older person or the person in charge usually offers it: ",
+        {
+          "text": "Zeg maar jij!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "Zeg maar Henk!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " After that, u sounds cold, so switch to jij."
+      ],
+      "id": "95233b10-fc67-4496-9b43-be6e2739638f"
+    },
+    {
+      "type": "divider",
+      "id": "a6ff2d12-139d-4cf5-99b5-1cfa1a9afd3b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "e3440455-c727-4e70-a021-3d2289c79709"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Prices in words",
+      "id": "f6dd39a2-0dcb-4a81-b472-14603779d5d7"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write the price in words, as you say it in a shop.",
+          "items": [
+            {
+              "prompt": "€2,50",
+              "authorsVersion": [
+                "twee euro vijftig"
+              ],
+              "note": "Euros + euro + cents. Also fine: twee vijftig."
+            },
+            {
+              "prompt": "€0,99",
+              "authorsVersion": [
+                "negenennegentig cent"
+              ],
+              "note": "Under one euro: only cents. Negen-en-negentig is one word."
+            },
+            {
+              "prompt": "€12,95",
+              "authorsVersion": [
+                "twaalf euro vijfennegentig"
+              ],
+              "note": "Not twaalf komma vijfennegentig: komma is for maths."
+            },
+            {
+              "prompt": "€1,00",
+              "authorsVersion": [
+                "een euro"
+              ],
+              "note": "Also written één euro, with accents, to stress 'one'."
+            },
+            {
+              "prompt": "€4,75",
+              "authorsVersion": [
+                "vier euro vijfenzeventig"
+              ],
+              "note": "vijf-en-zeventig: units first, then tens, as one word."
+            },
+            {
+              "prompt": "€19,50",
+              "authorsVersion": [
+                "negentien euro vijftig"
+              ],
+              "note": "Not negentien euros: euro stays singular."
+            },
+            {
+              "prompt": "€120,00",
+              "authorsVersion": [
+                "honderdtwintig euro"
+              ],
+              "note": "One word: honderdtwintig. No 'en' after honderd."
+            }
+          ]
+        }
+      },
+      "id": "6e1ae980-41fe-4fee-ab9f-4747a2daae5e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "kost or kosten?",
+      "id": "39d96e7a-52c0-4451-8853-fdfab911627b"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in kost or kosten. One thing: kost. More things: kosten.",
+          "items": [
+            {
+              "prompt": "Deze mokken … drie euro.",
+              "authorsVersion": [
+                "kosten"
+              ],
+              "note": "deze mokken = more things: kosten."
+            },
+            {
+              "prompt": "Deze lamp … twaalf euro vijftig.",
+              "authorsVersion": [
+                "kost"
+              ],
+              "note": "One lamp: kost."
+            },
+            {
+              "prompt": "Wat … dit mooie bord?",
+              "authorsVersion": [
+                "kost"
+              ],
+              "note": "dit + het-word singular = one thing: kost."
+            },
+            {
+              "prompt": "Wat … die zwarte stoelen?",
+              "authorsVersion": [
+                "kosten"
+              ],
+              "note": "Plural stoelen: kosten. Typical mistake: Wat kost die zwarte stoelen?"
+            },
+            {
+              "prompt": "Die … vier euro per stuk. (die = those mugs)",
+              "authorsVersion": [
+                "kosten"
+              ],
+              "note": "die on its own here means 'those (mugs)': more things, so kosten."
+            },
+            {
+              "prompt": "Een pond oude kaas … acht euro.",
+              "authorsVersion": [
+                "kost"
+              ],
+              "note": "The subject is een pond: one amount, so kost (recycles 10-b)."
+            },
+            {
+              "prompt": "Hoeveel … deze spiegel?",
+              "authorsVersion": [
+                "kost"
+              ],
+              "note": "de spiegel, one thing: kost. Hoeveel and wat both work."
+            },
+            {
+              "prompt": "Deze bos zonnebloemen … vijf euro.",
+              "authorsVersion": [
+                "kost"
+              ],
+              "note": "Careful: the subject is de bos (one bunch), not the flowers. So kost (recycles 12-a)."
+            }
+          ]
+        }
+      },
+      "id": "148f1625-83cf-4221-8e0d-5d5bb7caa4ac"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Paying: complete the dialogues",
+      "id": "0a0bfb09-61b3-46f7-b68e-4fe1088b1d52"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the dialogues. Fill in one word per blank.",
+          "items": [
+            {
+              "prompt": "Sofia: Wat … deze stoel? / Verkoper: Die stoel … twintig euro.",
+              "authorsVersion": [
+                "kost",
+                "kost"
+              ],
+              "note": "One chair: kost twice."
+            },
+            {
+              "prompt": "Verkoper: Anders … iets? / Sofia: Nee, dat is ….",
+              "authorsVersion": [
+                "nog",
+                "alles"
+              ],
+              "note": "Fixed chunks: Anders nog iets? Nee, dat is alles. Not: dat was het (past tense)."
+            },
+            {
+              "prompt": "Sofia: Mag ik …? / Verkoper: Ja hoor. En hier is uw ….",
+              "authorsVersion": [
+                "pinnen",
+                "bon"
+              ],
+              "note": "pinnen = pay by card; de bon = the receipt."
+            },
+            {
+              "prompt": "Verkoper: Dat is zes euro vijfennegentig. Contant of …? / Sofia: Contant. Alstublieft, tien euro. / Verkoper: En hier is uw …: drie euro vijf.",
+              "authorsVersion": [
+                "pinnen",
+                "wisselgeld"
+              ],
+              "note": "€10,00 − €6,95 = €3,05: drie euro vijf (five cents is just vijf). Het wisselgeld = the change. The seller says uw to a customer."
+            },
+            {
+              "prompt": "Sofia: Wat … die zwarte mokken? / Verkoper: Die … vier euro per stuk. / Sofia: Vier euro? Dat is te …!",
+              "authorsVersion": [
+                "kosten",
+                "kosten",
+                "duur"
+              ],
+              "note": "Plural mokken, so kosten. te duur = too expensive."
+            },
+            {
+              "prompt": "Verkoper: Deze lamp kost twaalf euro. / Sofia: Twaalf …? Dat is niet duur, dat is …!",
+              "authorsVersion": [
+                "euro",
+                "goedkoop"
+              ],
+              "note": "euro without -s. The opposite of duur is goedkoop."
+            }
+          ]
+        }
+      },
+      "id": "566dc406-8d19-4851-8ff8-a39a57b8bf42"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "83715720-5769-4736-8bce-69a1a8c2b0ec"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the correct order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: kost / wat / deze lamp / ?",
+              "authorsVersion": [
+                "Wat kost deze lamp?"
+              ],
+              "note": "Question word, then the verb, then the subject."
+            },
+            {
+              "prompt": "Put in order: kosten / die mokken / drie euro / per stuk",
+              "authorsVersion": [
+                "Die mokken kosten drie euro per stuk."
+              ],
+              "note": "Plural subject, so kosten."
+            },
+            {
+              "prompt": "Put in order: ik / pinnen / mag / ?",
+              "authorsVersion": [
+                "Mag ik pinnen?"
+              ],
+              "note": "Yes/no question: the verb comes first; the infinitive pinnen goes to the end."
+            },
+            {
+              "prompt": "Put in order: is / te duur / die grote spiegel",
+              "authorsVersion": [
+                "Die grote spiegel is te duur."
+              ]
+            },
+            {
+              "prompt": "Put in order: dat / samen / is / twaalf euro",
+              "authorsVersion": [
+                "Samen is dat twaalf euro."
+              ],
+              "note": "Samen at the start, then the verb (inversion). Also fine: Dat is samen twaalf euro."
+            },
+            {
+              "prompt": "Put in order: neem / dan / ik / dit witte bord",
+              "authorsVersion": [
+                "Dan neem ik dit witte bord."
+              ],
+              "note": "Dan at the start, then the verb, then ik."
+            }
+          ]
+        }
+      },
+      "id": "0d2dce0c-a061-4cf5-a6db-6855c0fb8390"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "One or more: kost and kosten",
+      "id": "6d303aea-f658-43f5-9314-5ecd15469efc"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite in the plural and add per stuk after the price. Change the demonstrative where needed.",
+          "items": [
+            {
+              "prompt": "Deze mok kost vier euro.",
+              "authorsVersion": [
+                "Deze mokken kosten vier euro per stuk."
+              ],
+              "note": "mok → mokken (double k). kost → kosten."
+            },
+            {
+              "prompt": "Dit bord kost twee euro vijftig.",
+              "authorsVersion": [
+                "Deze borden kosten twee euro vijftig per stuk."
+              ],
+              "note": "Plurals are de-forms: dit → deze. Typical mistake: dit borden."
+            },
+            {
+              "prompt": "Die lamp kost tien euro.",
+              "authorsVersion": [
+                "Die lampen kosten tien euro per stuk."
+              ],
+              "note": "die stays die in the plural."
+            },
+            {
+              "prompt": "Dat witte bord kost drie euro.",
+              "authorsVersion": [
+                "Die witte borden kosten drie euro per stuk."
+              ],
+              "note": "dat → die in the plural; witte keeps its -e."
+            },
+            {
+              "prompt": "Deze zwarte stoel kost vijfendertig euro.",
+              "authorsVersion": [
+                "Deze zwarte stoelen kosten vijfendertig euro per stuk."
+              ],
+              "note": "stoel → stoelen; euro stays singular."
+            }
+          ]
+        }
+      },
+      "id": "ac1abd66-221b-402b-b03a-6d30de9adf01"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Make it polite",
+      "id": "654b7689-1cc3-422d-8892-b82b40090c7b"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "These are too short and a bit rude. Make a polite sentence with 'Mag ik' or 'Ik wil graag'.",
+          "items": [
+            {
+              "prompt": "Pinnen!",
+              "authorsVersion": [
+                "Mag ik pinnen?"
+              ],
+              "note": "Also fine: Mag ik met de pinpas betalen?"
+            },
+            {
+              "prompt": "Twee mokken!",
+              "authorsVersion": [
+                "Ik wil graag twee mokken."
+              ],
+              "note": "Also fine: Mag ik twee mokken? Add alstublieft for extra politeness."
+            },
+            {
+              "prompt": "De bon!",
+              "authorsVersion": [
+                "Mag ik de bon?"
+              ],
+              "note": "Also fine: Mag ik de bon, alstublieft?"
+            }
+          ]
+        }
+      },
+      "id": "515c09b7-a613-41d3-b076-7285ac51d13f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "956fb459-8035-40be-bfc3-d6b8f9db2a92"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Use u with the seller.",
+          "items": [
+            {
+              "prompt": "How much does this mirror cost?",
+              "authorsVersion": [
+                "Hoeveel kost deze spiegel?"
+              ],
+              "note": "de spiegel, so deze. Also fine: Wat kost deze spiegel?"
+            },
+            {
+              "prompt": "That's too expensive.",
+              "authorsVersion": [
+                "Dat is te duur."
+              ],
+              "note": "te = too. Not: ook duur."
+            },
+            {
+              "prompt": "These white mugs cost two euros each.",
+              "authorsVersion": [
+                "Deze witte mokken kosten twee euro per stuk."
+              ],
+              "note": "Plural: kosten; twee euro without -s; witte with -e."
+            },
+            {
+              "prompt": "Can I pay by card?",
+              "authorsVersion": [
+                "Mag ik pinnen?"
+              ],
+              "note": "Use mag ik. Also fine: Mag ik met de pinpas betalen?"
+            },
+            {
+              "prompt": "No, that's all.",
+              "authorsVersion": [
+                "Nee, dat is alles."
+              ],
+              "note": "Not: dat was het (past tense)."
+            },
+            {
+              "prompt": "Here is your receipt and here is your change.",
+              "authorsVersion": [
+                "Hier is uw bon en hier is uw wisselgeld."
+              ],
+              "note": "Seller to customer: uw. With jij: je bon, je wisselgeld."
+            }
+          ]
+        }
+      },
+      "id": "aa990368-2319-462c-80e4-80e599837627"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "86f55203-b014-4073-b26e-d2aecae7f589"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Dit mooie bord kost vier euro vijfenzeventig.",
+              "authorsVersion": [
+                "This nice plate costs four euros seventy-five."
+              ],
+              "note": "Also fine: This beautiful plate is €4.75."
+            },
+            {
+              "prompt": "Samen is dat elf euro twintig.",
+              "authorsVersion": [
+                "That's eleven euros twenty altogether."
+              ],
+              "note": "Also fine: That comes to €11.20."
+            },
+            {
+              "prompt": "Boven mij is een appartement te huur.",
+              "authorsVersion": [
+                "The apartment above me is for rent."
+              ],
+              "note": "Also fine: There's an apartment for rent above me."
+            },
+            {
+              "prompt": "Zeg maar Henk!",
+              "authorsVersion": [
+                "Just call me Henk!"
+              ],
+              "note": "An invitation to use jij and the first name."
+            },
+            {
+              "prompt": "Die zwarte stoel is te duur, maar deze stoel is goedkoop.",
+              "authorsVersion": [
+                "That black chair is too expensive, but this chair is cheap."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "4c1dbf47-eaae-4ee6-857d-4880b35c9657"
+    },
+    {
+      "type": "divider",
+      "id": "e0a2a127-5c3f-4785-a8b5-7cabb0a23d8c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: a receipt and a text message",
+      "id": "7c892624-4541-48dc-b169-0cee752a4ff7"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Sofia has the receipt from the second-hand stall in her bag. At home she gets a text message from Henk."
+      ],
+      "id": "44b006e5-699c-4501-862a-a6912777db2a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the receipt and the message. Answer the questions in Dutch.",
+          "passage": {
+            "title": "De bon en een berichtje van Henk",
+            "content": "TWEEDEHANDS – Markt Vredenburg, Utrecht\nZaterdag 3 oktober 2026\n\n1 witte lamp: € 15,00\nkorting: − € 2,50\n2 zwarte mokken (€ 3,50 per stuk): € 7,00\nTotaal: € 19,50\nContant: € 20,00\nWisselgeld: € 0,50\nAlleen contant. Dank u wel en tot ziens!\n\nBerichtje van Henk, 13.15 uur:\nHoi Sofia! Hier is het telefoonnummer van Ingrid Visser: 06-12345678. Ingrid is de eigenaar van het appartement. Het appartement is op de tweede verdieping. Het balkon is klein, maar zonnig. Het gebouw heeft een lift. Ik woon op de eerste verdieping, met mijn kat Tijger. De prijs weet ik niet. Tot zaterdag op de markt! Groetjes, Henk"
+          },
+          "items": [
+            {
+              "prompt": "Hoeveel korting krijgt Sofia?",
+              "authorsVersion": [
+                "Twee euro vijftig."
+              ],
+              "note": "€2,50: twee euro vijftig."
+            },
+            {
+              "prompt": "Hoeveel kost één mok?",
+              "authorsVersion": [
+                "Drie euro vijftig."
+              ],
+              "note": "€3,50 per stuk."
+            },
+            {
+              "prompt": "Hoeveel betaalt Sofia samen?",
+              "authorsVersion": [
+                "Negentien euro vijftig."
+              ],
+              "note": "€19,50. Not negentien euros."
+            },
+            {
+              "prompt": "Betaalt Sofia contant of pint ze?",
+              "authorsVersion": [
+                "Ze betaalt contant."
+              ],
+              "note": "The stall takes only cash."
+            },
+            {
+              "prompt": "Hoeveel wisselgeld krijgt Sofia?",
+              "authorsVersion": [
+                "Vijftig cent."
+              ],
+              "note": "€20,00 − €19,50 = €0,50."
+            },
+            {
+              "prompt": "Wat is het telefoonnummer van Ingrid Visser?",
+              "authorsVersion": [
+                "Het telefoonnummer is 06-12345678."
+              ],
+              "note": "Say it as: nul zes, een twee drie vier vijf zes zeven acht."
+            },
+            {
+              "prompt": "Klopt dit? Het balkon is groot.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Het balkon is klein, maar zonnig."
+              ],
+              "note": "zonnig = sunny (de zon = the sun). Also fine: Nee, het balkon is klein."
+            },
+            {
+              "prompt": "Heeft het gebouw een lift?",
+              "authorsVersion": [
+                "Ja, het gebouw heeft een lift."
+              ],
+              "note": "het gebouw = the building. Also fine: Ja, het heeft een lift."
+            },
+            {
+              "prompt": "Klopt dit? Henk weet de prijs van het appartement.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Henk weet de prijs niet."
+              ],
+              "note": "Henk writes: De prijs weet ik niet."
+            }
+          ]
+        }
+      },
+      "id": "a0ad0a86-0610-42ee-b838-1518133d8390"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "f5145282-c6ad-44d7-987f-3911abd033fe"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about something you buy at a market and what it costs. Use kost or kosten, a price with cents, and say how you pay.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about something you buy at a market and what it costs.",
+              "authorsVersion": [
+                "Op de markt koop ik een stuk jonge kaas. Dat kost vijf euro vijftig. Ik neem ook deze mooie zonnebloemen: die kosten vier euro. Samen is dat negen euro vijftig. Ik pin."
+              ],
+              "note": "Model answer. Check: kost for one thing, kosten for more things; euro and cent without -s; adjective with -e after deze/die/dit/dat."
+            }
+          ]
+        }
+      },
+      "id": "51e9a00a-054d-48f8-b4e8-94d76ac4be36"
+    },
+    {
+      "type": "divider",
+      "id": "f7ebee19-06ff-440c-a694-4e05ea5c5cc3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "1f1fbbde-dc67-4684-87cd-b5765c76fdf4"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Remember:",
+          "styles": {
+            "bold": true
+          }
+        },
+        " one thing ",
+        {
+          "text": "kost",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", more things ",
+        {
+          "text": "kosten",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "; euro and cent never take -s after a number."
+      ],
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "id": "5e421876-1fb3-4e6c-9c88-131597f74117"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Prices: €2,50 = ",
+        {
+          "text": "twee euro vijftig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "; €0,99 = ",
+        {
+          "text": "negenennegentig cent",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "da268739-3364-4e6d-9e5e-641c528aecc3"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "euro and cent stay singular: twee ",
+        {
+          "text": "euro",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", vijftig ",
+        {
+          "text": "cent",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "cde89167-c4b8-4cd9-ac17-5825003ae9d1"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "deze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        "/",
+        {
+          "text": "die",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        "/",
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        "/",
+        {
+          "text": "dat",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " + adjective with -e: dit mooi",
+        {
+          "text": "e",
+          "styles": {
+            "bold": true
+          }
+        },
+        " bord."
+      ],
+      "id": "8e83cc36-315a-464e-993a-5ec230124b85"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "te",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + adjective = too: ",
+        {
+          "text": "Dat is te duur.",
+          "styles": {
+            "bold": true
+          }
+        },
+        ""
+      ],
+      "id": "23031e71-9432-4096-bff5-74e911e97a6d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Paying: ",
+        {
+          "text": "Mag ik pinnen? Contant of pinnen? Nee, dat is alles. Hier is uw bon.",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "1cbedd38-3d1d-4010-8811-d842510cd8eb"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Zeg maar Henk!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " From u to jij."
+      ],
+      "id": "1e8c8cb7-df42-4c14-a909-e1a45f6b3c78"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: at the second-hand stall",
+      "description": "A second-hand stall at the Vredenburg market in Utrecht: a small white lamp, black mugs and old plates with handwritten price cards (€15,00, €3,50 per stuk). Sofia holds a mug.",
+      "alt": "A second-hand market stall with a white lamp, black mugs and price cards."
+    },
+    {
+      "afterHeading": "Story: Henk's big news",
+      "description": "Henk, a cheerful 67-year-old cheese seller, hands Sofia a piece of old cheese at his stall; a card payment terminal on the counter; Sofia looks excited.",
+      "alt": "A cheese seller handing a customer a piece of cheese at a market stall."
+    }
+  ],
+  "id": "e3edee33-d1d4-4327-94fc-4ee5f37a055e"
+}

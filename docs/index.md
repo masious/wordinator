@@ -12,6 +12,7 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [posts-and-feed.md](posts-and-feed.md) | Post shapes, composer, drafts, feed ordering, pagination, and polling |
 | [discussions-and-reactions.md](discussions-and-reactions.md) | Answers, spoiler concealment, comments, replies, pins, and emoji reactions |
 | [courses.md](courses.md) | Course structure, blocks, contributors, publishing, practice threads, and loading |
+| [content/index.md](content/index.md) | Course curriculum, storyline, and taught-topic coverage for member-authored Dutch Foundations content |
 | [settings-and-administration.md](settings-and-administration.md) | Settings page structure, creator membership administration, and the interactive image cropper |
 | [notifications.md](notifications.md) | Notification triggers, scope, read state, retention, and links |
 | [profiles-and-settings.md](profiles-and-settings.md) | Group-private profiles and account preferences |

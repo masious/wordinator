@@ -1,0 +1,2763 @@
+{
+  "title": "Maandag, dinsdag…",
+  "goal": "Name the days, months and dates, use ordinal numbers, and say when something happens with op and in.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Maandag, dinsdag…",
+      "id": "a6bc45ae-4398-4a1c-a143-ca1f2b3596cf"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is ",
+        {
+          "text": "woensdag 16 september",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ". Sofia has a new paper agenda, and Noor helps her fill it in: a birthday, an exam and an important date for the room. In this lesson you will learn the days, the months and the ordinal numbers (",
+        {
+          "text": "first, second, third",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), and you will say when something happens with ",
+        {
+          "text": "op",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "in",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "f2c0a05d-a070-4a91-9d5e-c2ba1493b7e0"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours: time expressions are ",
+        {
+          "text": "orange",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ", verbs are ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", subjects are ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " and a prefix that moves to the end is ",
+        {
+          "text": "red",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ". The new form is ",
+        {
+          "text": "bold",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "545253bd-4549-4402-bf60-eb53626e1533"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Sofia's nieuwe agenda",
+      "id": "f343f80f-8a75-42e7-a78f-ae4063716067"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Wednesday evening in Noor's kitchen. Sofia opens her new agenda."
+      ],
+      "id": "717a9b2b-86ae-463f-b8f3-d52ee402b85e"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Kijk, Noor! Ik heb een nieuwe agenda."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Super! Een agenda van papier?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja. De hoeveelste is het vandaag?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Het is de zestiende. Woensdag 16 september."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je. En wanneer is Daan jarig?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Op zaterdag. Op zaterdag 19 september."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Is het feest ook in zaterdag?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, ook op zaterdag. En op vrijdag 2 oktober heb ik een tentamen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Succes! En Fleur? Wanneer komt je zus terug?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Fleur komt op 1 november terug. De kamer is vrij tot 31 oktober."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Tot 31 oktober. Dat is een zaterdag. Dus in oktober zoek ik een appartement!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja! Maar eerst het feest van Daan!"
+          }
+        ]
+      },
+      "id": "2cc60f29-f3d3-4762-9316-291c1fc2c5ef"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Did you notice? Sofia says ",
+        {
+          "text": "in zaterdag",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        "; Noor answers naturally with ",
+        {
+          "text": "op zaterdag",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "Succes!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means ",
+        {
+          "text": "good luck!",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and ",
+        {
+          "text": "jarig",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means ",
+        {
+          "text": "having your birthday",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". Fleur is Noor's sister; she is in Australia until the end of October."
+      ],
+      "id": "9f6a7f5e-217e-4314-bbfc-7807f8251593"
+    },
+    {
+      "type": "divider",
+      "id": "fa8edfd8-a4bd-43b6-b202-e0d8fa528974"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Days and months",
+      "id": "4e1d2f4b-bba5-4bbb-a4fc-978c379cd332"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "De dagen en de maanden",
+      "id": "6600384a-cbbc-4b5e-b19c-5cdfc300b721"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Dutch writes the days and the months with a ",
+        {
+          "text": "small letter",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", also in the middle of a sentence. In an agenda you often see the short forms of the days."
+      ],
+      "id": "13687d69-548f-42c4-b181-e1d500744b2d"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "De dagen",
+              "id": "280c204b-ea80-480d-8dd9-329ca2fb12df"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "maandag",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (ma)"
+              ],
+              "id": "2598a312-cd12-466b-980b-bca05fab7739"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "dinsdag",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (di)"
+              ],
+              "id": "497795ac-7aa5-4bef-b667-bd72d6c17823"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "woensdag",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (wo)"
+              ],
+              "id": "57e89cb7-4e3a-4d04-982f-57f60d38359d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "donderdag",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (do)"
+              ],
+              "id": "b2733efa-19d7-491f-ad90-125d20357aa2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "vrijdag",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (vr)"
+              ],
+              "id": "15a1811a-4b9f-4470-bfea-3ea10372a9bd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "zaterdag",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (za)"
+              ],
+              "id": "0ce5b48e-24d5-49bb-b2e3-71f731fac741"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "zondag",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (zo)"
+              ],
+              "id": "66aeb84b-47da-4f1c-9bed-f78cdbd7b956"
+            }
+          ],
+          "id": "fc1d8692-aefb-47b0-bbb5-afec5ce00998"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "januari – juni",
+              "id": "4fc71a69-7fe2-4778-b5c5-f365ea36f73b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "januari"
+              ],
+              "id": "98973e6d-f5b2-4528-afc7-e1e294a24f9d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "februari"
+              ],
+              "id": "26b563e4-1835-4aaa-b4f4-f31c26db3dd8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "maart"
+              ],
+              "id": "1432760a-47ba-4cde-97e9-250ebad1d70c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "april"
+              ],
+              "id": "c338082e-2400-4df9-b474-bef773e0fc81"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "mei"
+              ],
+              "id": "7dd450e5-36ab-4809-8c76-7758d0dfc141"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "juni"
+              ],
+              "id": "210bebf7-8b0a-4a13-8984-81362104b093"
+            }
+          ],
+          "id": "cc971d00-6aae-40f9-bd5a-40f0a33e08a8"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "juli – december",
+              "id": "c0d8c397-73d6-4be9-b2ea-af5dbbc56d51"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "juli"
+              ],
+              "id": "d4e467b7-eceb-4d2a-ac32-40191747cf0e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "augustus"
+              ],
+              "id": "8297a59d-331b-4f55-b715-ce8dc08ddc23"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "september"
+              ],
+              "id": "9c79ceb3-0df9-45f6-bfb6-35f22a49a11e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "oktober"
+              ],
+              "id": "e2cf858b-65a6-4367-80c5-bee749372cf6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "november"
+              ],
+              "id": "ed0b39f4-64e5-42d1-b2a4-119366f49d7c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "december"
+              ],
+              "id": "f6846ed9-33fc-4ef0-8bf9-c5f278bc541e"
+            }
+          ],
+          "id": "5126709c-81e3-4ec3-bbf9-cc768397c2d8"
+        }
+      ],
+      "id": "f27e5040-8a2b-4f35-89cb-541c2053007e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "No capitals: ",
+        {
+          "text": "Op Maandag heb ik les.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Op ",
+        {
+          "text": "maandag",
+          "styles": {
+            "bold": true
+          }
+        },
+        " heb ik les. ",
+        {
+          "text": "Daan is in September jarig.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Daan is in ",
+        {
+          "text": "september",
+          "styles": {
+            "bold": true
+          }
+        },
+        " jarig. A capital is only right at the very start of a sentence."
+      ],
+      "id": "439f46a9-4f54-4d19-bbb1-643ce41c6257"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        "Days are stressed on the first syllable: ",
+        {
+          "text": "MAAN",
+          "styles": {
+            "bold": true
+          }
+        },
+        "dag, ",
+        {
+          "text": "DINS",
+          "styles": {
+            "bold": true
+          }
+        },
+        "dag, ",
+        {
+          "text": "WOENS",
+          "styles": {
+            "bold": true
+          }
+        },
+        "dag. Months: ",
+        {
+          "text": "JA",
+          "styles": {
+            "bold": true
+          }
+        },
+        "nuari, ",
+        {
+          "text": "FE",
+          "styles": {
+            "bold": true
+          }
+        },
+        "bruari, au",
+        {
+          "text": "GUS",
+          "styles": {
+            "bold": true
+          }
+        },
+        "tus, sep",
+        {
+          "text": "TEM",
+          "styles": {
+            "bold": true
+          }
+        },
+        "ber. Juni and juli sound almost the same, so in speech people often stress the end: ju",
+        {
+          "text": "NI",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ju",
+        {
+          "text": "LI",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". You will hear both."
+      ],
+      "id": "7147ea5d-b576-40be-88a8-18485c1bcd98"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Today is Wednesday.",
+        "note": "No capital for woensdag, even in a full sentence."
+      },
+      "content": [
+        {
+          "text": "Vandaag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " het ",
+        {
+          "text": "woensdag",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "ff207244-2fc8-4ab5-879e-a20ee5aa1dbc"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor works in Café De Zwaluw on Saturdays.",
+        "note": "Recycles werken and the café from earlier lessons."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "werkt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "op",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "zaterdag",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " in Café De Zwaluw."
+      ],
+      "id": "5bc46c81-5a24-420f-a8c5-0921a2ecc57a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Words for time",
+      "id": "73e10980-ed20-4bc0-b50c-d78de4dce93a"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Words for time"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " dag, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " week, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " maand, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " datum, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " agenda, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " verjaardag"
+          ],
+          "id": "10aaebec-3382-4d74-8405-e30edaa96fb0"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " weekend, ",
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " jaar, ",
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " feest, ",
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " tentamen"
+          ],
+          "id": "0927b439-183e-46ef-8f4c-2cb4f183e658"
+        }
+      ],
+      "id": "8dff7671-ff88-40e9-a230-4f81ff7f0f31"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Time words without a preposition"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "vandaag",
+              "styles": {
+                "textColor": "orange"
+              }
+            },
+            " (",
+            {
+              "text": "today",
+              "styles": {
+                "italic": true
+              }
+            },
+            "), ",
+            {
+              "text": "morgen",
+              "styles": {
+                "textColor": "orange"
+              }
+            },
+            " (",
+            {
+              "text": "tomorrow",
+              "styles": {
+                "italic": true
+              }
+            },
+            "), ",
+            {
+              "text": "overmorgen",
+              "styles": {
+                "textColor": "orange"
+              }
+            },
+            " (",
+            {
+              "text": "the day after tomorrow",
+              "styles": {
+                "italic": true
+              }
+            },
+            ")"
+          ],
+          "id": "de1f3405-0fa2-4d0a-8584-c75097b38777"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "deze week",
+              "styles": {
+                "textColor": "orange"
+              }
+            },
+            " (",
+            {
+              "text": "this week",
+              "styles": {
+                "italic": true
+              }
+            },
+            "), ",
+            {
+              "text": "volgende week",
+              "styles": {
+                "textColor": "orange"
+              }
+            },
+            " (",
+            {
+              "text": "next week",
+              "styles": {
+                "italic": true
+              }
+            },
+            "), ",
+            {
+              "text": "elke week",
+              "styles": {
+                "textColor": "orange"
+              }
+            },
+            " (",
+            {
+              "text": "every week",
+              "styles": {
+                "italic": true
+              }
+            },
+            ")"
+          ],
+          "id": "6238acf4-510a-4c91-a103-a00ede103bde"
+        }
+      ],
+      "id": "c7b77a3d-98b1-4088-8d29-cb3b57eabcee"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor is busy next week.",
+        "note": "No op before volgende week, deze week or elke week. Recycles 'het druk hebben' from 08-b."
+      },
+      "content": [
+        {
+          "text": "Volgende week",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "heeft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " het druk."
+      ],
+      "id": "a17b350a-60ce-40b8-a234-221a16cec751"
+    },
+    {
+      "type": "divider",
+      "id": "9810af40-1c3d-4d93-8e58-726a7b5d6032"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Ordinal numbers",
+      "id": "4e18b839-d3a0-4301-9fb0-4671d8aaa0b3"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Ordinal numbers say the place in a row: ",
+        {
+          "text": "first, second, third",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". You need them for dates."
+      ],
+      "id": "17f69f26-8276-4a83-93d9-9ffa8d1c0eae"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "1–19: number + ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (vier → vier",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true
+          }
+        },
+        "). From 20: number + ",
+        {
+          "text": "ste",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (twintig → twintig",
+        {
+          "text": "ste",
+          "styles": {
+            "bold": true
+          }
+        },
+        "). Three are irregular: ",
+        {
+          "text": "eerste",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "derde",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "achtste",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "fdeb52b8-bd4e-48ac-b15b-04dee945d9c2"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "number + de",
+              "id": "bfe66c0b-dd68-464b-9fc8-640935a90578"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "1 → ",
+                {
+                  "text": "eerste",
+                  "styles": {
+                    "bold": true,
+                    "backgroundColor": "yellow"
+                  }
+                },
+                " (1e)"
+              ],
+              "id": "bffe6b0c-ed45-418f-93fe-57f98ff7f14f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "2 → tweede (2e)"
+              ],
+              "id": "58cca752-2392-4f09-97bd-243a75190702"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "3 → ",
+                {
+                  "text": "derde",
+                  "styles": {
+                    "bold": true,
+                    "backgroundColor": "yellow"
+                  }
+                },
+                " (3e)"
+              ],
+              "id": "b5df725b-f025-4452-bd33-c79f70dee633"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "4 → vierde (4e)"
+              ],
+              "id": "6c2e351c-8446-41fb-87e4-e30f613295a0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "5 → vijfde (5e)"
+              ],
+              "id": "c55081ae-f18c-46bf-beca-1cb627190e10"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "8 → ",
+                {
+                  "text": "achtste",
+                  "styles": {
+                    "bold": true,
+                    "backgroundColor": "yellow"
+                  }
+                },
+                " (8e)"
+              ],
+              "id": "de70c359-72d5-4456-8e0f-47d785c0739b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "12 → twaalfde (12e)"
+              ],
+              "id": "03b052ae-141f-470f-8116-6949e2645458"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "16 → zestiende (16e)"
+              ],
+              "id": "73869533-57ff-4ced-85f2-c56669eda36e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "19 → negentiende (19e)"
+              ],
+              "id": "7425f071-9d3f-471c-8c49-92bc6b521f4b"
+            }
+          ],
+          "id": "faeef9c5-98ec-4f00-a622-0bb9a3a20ddd"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "number + ste",
+              "id": "de23ba3a-fd68-4ff5-b839-1637183f825b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "20 → twintigste (20e)"
+              ],
+              "id": "c392a6a1-5172-4f9a-a665-818e6df3e1b0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "21 → eenentwintigste (21e)"
+              ],
+              "id": "97ee6cc9-9c43-474a-835a-8d49c74e8460"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "23 → drieëntwintigste (23e)"
+              ],
+              "id": "482b5d80-cc93-4f84-908b-23ac654620df"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "30 → dertigste (30e)"
+              ],
+              "id": "8a71be9d-71f4-4946-83ed-109e368346e9"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "31 → eenendertigste (31e)"
+              ],
+              "id": "82425c21-a33a-499b-a16a-268ca3aeb54a"
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                "Written: 1e, 2e, 20e. You also see 1ste, 8ste, 20ste."
+              ],
+              "id": "42fef5ec-52f9-4325-a158-6a5b175becd6"
+            }
+          ],
+          "id": "0db9f38a-195d-4e7d-a383-5acd264d1777"
+        }
+      ],
+      "id": "75667782-5602-4e72-aafa-00c4acc7ef44"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "tweeënde",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "tweede",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "drieste",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "derde",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "achtde",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "achtste",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "98f74cc6-8eb6-46df-89cd-eb348017b52c"
+    },
+    {
+      "type": "divider",
+      "id": "0ffcd94d-91c3-4c19-a428-8bfc23db77ea"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Dates",
+      "id": "0e826bf6-8702-47ce-99ff-5fe34b4fb18f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Asking and saying the date",
+      "id": "ecf81416-2058-4a38-be5f-046f817900c7"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "When you say a date with the month, use the ",
+        {
+          "text": "normal number",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "zestien september",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". When you leave the month out, use the ",
+        {
+          "text": "ordinal",
+          "styles": {
+            "bold": true
+          }
+        },
+        " with ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ": ",
+        {
+          "text": "de zestiende",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "75ead622-120c-488b-aaf1-a35a745aabf5"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Say the day as a normal number: ",
+        {
+          "text": "zestien",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "419d6a3f-2644-42bc-ba72-9615d4da7327"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Add the month, with a small letter: zestien ",
+        {
+          "text": "september",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "c9ed5a0c-64fd-4bb1-9e42-da340da8cd51"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Add the year if you need it: ",
+        {
+          "text": "tweeduizend zesentwintig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "5a84944c-9588-45aa-b824-eb2f04778b6d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's the 16th of September.",
+        "note": "Say: zestien september. A normal number, not zestiende."
+      },
+      "content": [
+        "Het ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "16 september",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "5fb2eca4-5831-4f9c-9595-f42e55e138b7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What's the date today? — It's the sixteenth.",
+        "note": "Without the month: de + ordinal. Also fine: Welke datum is het vandaag?"
+      },
+      "content": [
+        "De hoeveelste ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " het ",
+        {
+          "text": "vandaag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "? — Het is ",
+        {
+          "text": "de zestiende",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "5f2bbb6d-48ec-4da2-ac5c-6e19beb47fa3"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What day is it today? — It's Wednesday."
+      },
+      "content": [
+        "Welke dag ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " het ",
+        {
+          "text": "vandaag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "? — Het is ",
+        {
+          "text": "woensdag",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "ff543b8c-5536-441c-b550-47599f9bc825"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "In 2026 Sofia lives in Utrecht.",
+        "note": "Say the year: tweeduizend zesentwintig."
+      },
+      "content": [
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in ",
+        {
+          "text": "2026",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " in Utrecht."
+      ],
+      "id": "25d27771-fc01-4004-bd2b-980f7bc31c83"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Writing the date",
+      "id": "f9393ba6-424d-4f23-a5bb-4d1c4b052ed1"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "The day always comes first: ",
+        {
+          "text": "16-9-2026",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "16 september 2026",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". So 2-10 is ",
+        {
+          "text": "2 October",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", not February."
+      ],
+      "id": "d2dfc3aa-690b-445b-b824-ecf5e3c0c99e"
+    },
+    {
+      "type": "divider",
+      "id": "cde75926-abba-4481-bfc3-09b642c6614e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "When? op, in and om",
+      "id": "57c53162-ef64-46a4-8b42-b23d85f181e6"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "op",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + day or date (op zaterdag, op 19 september, op zaterdag 19 september). ",
+        {
+          "text": "in",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + month, year or het weekend (in oktober, in 2026, in het weekend). ",
+        {
+          "text": "om",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + clock time (om acht uur)."
+      ],
+      "id": "e012ba4c-c91c-4372-b40e-69e509a391bc"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's Daan's birthday on Saturday 19 September."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "op zaterdag 19 september",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " jarig."
+      ],
+      "id": "dc34185a-67a2-4ef7-9ef5-8073940b24d8"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "In October Sofia is looking for a flat.",
+        "note": "Time first, then the verb, then the subject (inversion from 08-b)."
+      },
+      "content": [
+        {
+          "text": "In oktober",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "zoekt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een appartement."
+      ],
+      "id": "a84e7fc0-aaaa-4d55-b0c8-fff59177e7c2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Fleur comes back on 1 November.",
+        "note": "terugkomen is separable: terug goes to the end (07-b)."
+      },
+      "content": [
+        {
+          "text": "Fleur",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "op 1 november",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "terug",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "2fcae8e9-0d17-40df-999f-5463a6c33f3a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia and Noor go out at the weekend.",
+        "note": "in het weekend, not op het weekend. Recycles uitgaan (07-b)."
+      },
+      "content": [
+        {
+          "text": "In het weekend",
+          "styles": {
+            "bold": true,
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "gaan",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Sofia en Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "uit",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "a17ca6b4-6fd3-4541-92aa-7128e22555cf"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "op zaterdag",
+          "styles": {
+            "bold": true
+          }
+        },
+        " can mean ",
+        {
+          "text": "this Saturday",
+          "styles": {
+            "italic": true
+          }
+        },
+        " or ",
+        {
+          "text": "every Saturday",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". In speech people also just say ",
+        {
+          "text": "zaterdag",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "Ik werk zaterdag.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "eeb5ac58-f32d-456e-9ba0-cffa638f439f"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "in maandag",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "op",
+          "styles": {
+            "bold": true
+          }
+        },
+        " maandag. ",
+        {
+          "text": "op september",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "in",
+          "styles": {
+            "bold": true
+          }
+        },
+        " september. ",
+        {
+          "text": "op het weekend",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "in",
+          "styles": {
+            "bold": true
+          }
+        },
+        " het weekend."
+      ],
+      "id": "86b87901-7224-4ca2-b07b-0136b7fd6622"
+    },
+    {
+      "type": "divider",
+      "id": "3f58e485-492d-4e5a-acb9-c25460907ad6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Birthdays: jarig zijn",
+      "id": "b346c907-0200-4062-bb91-fc2ca2cef187"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In Dutch you ",
+        {
+          "text": "are",
+          "styles": {
+            "bold": true
+          }
+        },
+        " your birthday: ",
+        {
+          "text": "jarig zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". The noun is ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " verjaardag."
+      ],
+      "id": "a762a442-2354-4206-8da5-1a50b566a372"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is it Daan's birthday today? — No, on Saturday.",
+        "note": "Today is Wednesday 16 September; Daan is jarig on Saturday 19 September."
+      },
+      "content": [
+        {
+          "text": "Is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "vandaag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "jarig",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "? — Nee, ",
+        {
+          "text": "op zaterdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "326948fe-b57b-47c9-a14f-d842ac19d6d9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "When is your birthday? — My birthday is on 23 April.",
+        "note": "Short answer: Op 23 april. Also fine: Mijn verjaardag is op 23 april."
+      },
+      "content": [
+        "Wanneer ",
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "jarig",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "? — ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "op 23 april",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " jarig."
+      ],
+      "id": "15290618-f1f4-401f-82ac-01476b2d6b19"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik heb verjaardag.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik ",
+        {
+          "text": "ben jarig",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "Ik heb op 23 april verjaardag.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik ",
+        {
+          "text": "ben",
+          "styles": {
+            "bold": true
+          }
+        },
+        " op 23 april ",
+        {
+          "text": "jarig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "45c36e9f-b553-4e88-88d3-929fa3e26983"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "At a Dutch birthday you congratulate everyone in the room, not only the birthday person: ",
+        {
+          "text": "Gefeliciteerd met Daan!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " And at work the birthday person brings cake or other treats for the colleagues: ",
+        {
+          "text": "trakteren",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "ca0b83ce-1e29-452c-a694-b2406dc8af24"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Story: Daan is jarig",
+      "id": "6628b2e5-45f4-4824-8f43-3cea4c991568"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Wednesday morning at the office. Daan sees Sofia's new agenda."
+      ],
+      "id": "4bbd48e4-6cf1-4923-9d0c-c961fc1344fd"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Goedemorgen, Sofia. Een nieuwe agenda?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja! Vandaag is het woensdag 16 september. En op zaterdag ben jij jarig!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Precies. Op zaterdag geef ik een feest."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Gezellig! Hoe laat begint het feest?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Om acht uur. Lotte komt ook, en Noor."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Leuk! Ik schrijf de datum in mijn agenda."
+          },
+          {
+            "speaker": "Daan",
+            "text": "En op vrijdag trakteer ik op taart, hier op kantoor."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Lekker! Op vrijdag? Niet op zaterdag?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Nee, op zaterdag werk ik niet. Wanneer ben jij jarig, Sofia?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik ben op 23 april jarig."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Op 23 april? Kijk, in 2027 is dat een vrijdag. Dan trakteer jij!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Prima! Tot zaterdag!"
+          }
+        ]
+      },
+      "id": "4315c350-be46-46d5-9b56-9df73d1f7516"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "trakteren op taart",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "to treat everyone to cake",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " taart = ",
+        {
+          "text": "the cake",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "6a9da97f-492d-487c-b6a3-90dbfd8da7cf"
+    },
+    {
+      "type": "divider",
+      "id": "384ba2f9-61db-433e-8390-9291c26d778f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "f000ef2d-339e-4393-843d-9baa135aeac1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in op, in or om",
+      "id": "5f808007-610c-4724-b13d-22471c4214b6"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in op, in or om.",
+          "items": [
+            {
+              "prompt": "Daan is … zaterdag jarig.",
+              "authorsVersion": [
+                "op"
+              ],
+              "note": "op + day."
+            },
+            {
+              "prompt": "Noor heeft … 2 oktober een tentamen.",
+              "authorsVersion": [
+                "op"
+              ],
+              "note": "op + date."
+            },
+            {
+              "prompt": "… zaterdag werkt Noor in Café De Zwaluw.",
+              "authorsVersion": [
+                "Op"
+              ],
+              "note": "op + day; capital because it starts the sentence. Note the inversion: werkt Noor."
+            },
+            {
+              "prompt": "Sofia is … april jarig.",
+              "authorsVersion": [
+                "in"
+              ],
+              "note": "Only the month: in. With the date it is op: op 23 april."
+            },
+            {
+              "prompt": "Sofia heeft … dinsdagavond Nederlandse les.",
+              "authorsVersion": [
+                "op"
+              ],
+              "note": "op + day, also with a part of the day: op dinsdagavond."
+            },
+            {
+              "prompt": "Sofia en Noor ruimen … het weekend op.",
+              "authorsVersion": [
+                "in"
+              ],
+              "note": "in het weekend, not op het weekend. opruimen is separable (07-b)."
+            },
+            {
+              "prompt": "De Nederlandse les begint … zeven uur.",
+              "authorsVersion": [
+                "om"
+              ],
+              "note": "om + clock time (08-a). op is for days and dates, in for months and years."
+            }
+          ]
+        }
+      },
+      "id": "ac9caafc-d2f2-4643-b356-84be689b018d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Dialogue completion",
+      "id": "cad360de-3ec2-4223-885e-b5c9be53e844"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the dialogues. Each … is one word.",
+          "items": [
+            {
+              "prompt": "Sofia: De … is het vandaag? / Noor: Het is de ….",
+              "authorsVersion": [
+                "hoeveelste",
+                "zestiende"
+              ],
+              "note": "Without the month you use de + ordinal: de zestiende."
+            },
+            {
+              "prompt": "Sofia: Welke … is het vandaag? / Noor: Het is ….",
+              "authorsVersion": [
+                "dag",
+                "woensdag"
+              ],
+              "note": "woensdag with a small letter."
+            },
+            {
+              "prompt": "Daan: Wanneer ben je …? / Sofia: … 23 april.",
+              "authorsVersion": [
+                "jarig",
+                "Op"
+              ],
+              "note": "jarig zijn = to have your birthday. op + date."
+            },
+            {
+              "prompt": "Sofia: Wanneer is je …? / Noor: Op vrijdag 2 ….",
+              "authorsVersion": [
+                "tentamen",
+                "oktober"
+              ],
+              "note": "het tentamen = the exam."
+            },
+            {
+              "prompt": "Noor: Fleur komt op 1 november …. / Sofia: Dus de kamer is vrij … 31 oktober?",
+              "authorsVersion": [
+                "terug",
+                "tot"
+              ],
+              "note": "terugkomen: terug goes to the end. tot = until (08-b)."
+            }
+          ]
+        }
+      },
+      "id": "3433d6e7-c8eb-4629-8b14-51201fce621f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "69886ed0-2eb8-4e6b-9340-67d9ef6319cc"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the right order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: op 19 september / jarig / is / Daan",
+              "authorsVersion": [
+                "Daan is op 19 september jarig."
+              ],
+              "note": "Also fine: Op 19 september is Daan jarig. (time first, then verb, then subject)"
+            },
+            {
+              "prompt": "Put in order: Op zaterdag / een feest / Daan / geeft",
+              "authorsVersion": [
+                "Op zaterdag geeft Daan een feest."
+              ],
+              "note": "Time first, so the verb comes second and the subject third."
+            },
+            {
+              "prompt": "Put in order: komt / Fleur / op 1 november / terug",
+              "authorsVersion": [
+                "Fleur komt op 1 november terug."
+              ],
+              "note": "terug goes to the very end."
+            },
+            {
+              "prompt": "Put in order: In oktober / Sofia / een appartement / zoekt",
+              "authorsVersion": [
+                "In oktober zoekt Sofia een appartement."
+              ],
+              "note": "Inversion after the time expression."
+            },
+            {
+              "prompt": "Put in order: jij / jarig / Wanneer / ben",
+              "authorsVersion": [
+                "Wanneer ben jij jarig?"
+              ],
+              "note": "Question word + verb + subject. With jij after the verb: ben, not bent."
+            },
+            {
+              "prompt": "Put in order: is / de kamer / tot 31 oktober / vrij",
+              "authorsVersion": [
+                "De kamer is tot 31 oktober vrij."
+              ],
+              "note": "Also fine: De kamer is vrij tot 31 oktober."
+            },
+            {
+              "prompt": "Put in order: de hoeveelste / het / is / vandaag",
+              "authorsVersion": [
+                "De hoeveelste is het vandaag?"
+              ],
+              "note": "A fixed question: learn it as a whole."
+            }
+          ]
+        }
+      },
+      "id": "69608ea0-25d6-4e93-994f-1eb9c6d5c52b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Dates in words",
+      "id": "d7c94bc0-1e37-4f1e-b4b1-6794226776f8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write the date or the answer in words, as you say it.",
+          "items": [
+            {
+              "prompt": "2/10 (write the date in words)",
+              "authorsVersion": [
+                "twee oktober"
+              ],
+              "note": "Day first, then the month. A normal number, not tweede."
+            },
+            {
+              "prompt": "19/9 (write the date in words)",
+              "authorsVersion": [
+                "negentien september"
+              ]
+            },
+            {
+              "prompt": "23/4 (write the date in words)",
+              "authorsVersion": [
+                "drieëntwintig april"
+              ],
+              "note": "Trema on the e: drieëntwintig."
+            },
+            {
+              "prompt": "De hoeveelste is het? (1/11)",
+              "authorsVersion": [
+                "Het is de eerste."
+              ],
+              "note": "eerste is irregular. Not *eende*."
+            },
+            {
+              "prompt": "De hoeveelste is het? (8/9)",
+              "authorsVersion": [
+                "Het is de achtste."
+              ],
+              "note": "achtste is irregular. Not *achtde*."
+            },
+            {
+              "prompt": "De hoeveelste is het? (23/4)",
+              "authorsVersion": [
+                "Het is de drieëntwintigste."
+              ],
+              "note": "From 20: + ste."
+            }
+          ]
+        }
+      },
+      "id": "896f6a58-9174-42f6-b21e-3927d38a2262"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Start with the time",
+      "id": "d1896dce-4144-4d00-821b-127521a22128"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence. Start with the time expression and change the word order.",
+          "items": [
+            {
+              "prompt": "Daan is op 19 september jarig.",
+              "authorsVersion": [
+                "Op 19 september is Daan jarig."
+              ],
+              "note": "Time + verb + subject (08-b)."
+            },
+            {
+              "prompt": "Noor heeft op vrijdag een tentamen.",
+              "authorsVersion": [
+                "Op vrijdag heeft Noor een tentamen."
+              ],
+              "note": "Typical mistake: *Op vrijdag Noor heeft*. Only one element before the verb."
+            },
+            {
+              "prompt": "Fleur komt op 1 november terug.",
+              "authorsVersion": [
+                "Op 1 november komt Fleur terug."
+              ],
+              "note": "terug stays at the end."
+            },
+            {
+              "prompt": "Sofia zoekt in oktober een appartement.",
+              "authorsVersion": [
+                "In oktober zoekt Sofia een appartement."
+              ]
+            },
+            {
+              "prompt": "Daan trakteert op vrijdag op taart.",
+              "authorsVersion": [
+                "Op vrijdag trakteert Daan op taart."
+              ],
+              "note": "The first op is time (op vrijdag); the second belongs to trakteren op."
+            },
+            {
+              "prompt": "Het is vandaag woensdag.",
+              "authorsVersion": [
+                "Vandaag is het woensdag."
+              ],
+              "note": "No preposition before vandaag."
+            }
+          ]
+        }
+      },
+      "id": "5ea75d6e-4bcd-4044-8bfd-99d53fd9f6f1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "2b3e6e36-446f-46f6-842d-3160bd3444a3"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "What's the date today?",
+              "authorsVersion": [
+                "De hoeveelste is het vandaag?"
+              ],
+              "note": "Also fine: Welke datum is het vandaag?"
+            },
+            {
+              "prompt": "It's Daan's birthday on Saturday.",
+              "authorsVersion": [
+                "Daan is op zaterdag jarig."
+              ],
+              "note": "Use jarig zijn. Also fine: Op zaterdag is Daan jarig."
+            },
+            {
+              "prompt": "When is your birthday?",
+              "authorsVersion": [
+                "Wanneer ben je jarig?"
+              ],
+              "note": "Also possible: Wanneer is je verjaardag? But jarig zijn is much more common."
+            },
+            {
+              "prompt": "My birthday is on 23 April.",
+              "authorsVersion": [
+                "Ik ben op 23 april jarig."
+              ],
+              "note": "Also fine: Mijn verjaardag is op 23 april."
+            },
+            {
+              "prompt": "Noor has an exam in October.",
+              "authorsVersion": [
+                "Noor heeft in oktober een tentamen."
+              ],
+              "note": "in + month. Also fine: In oktober heeft Noor een tentamen."
+            },
+            {
+              "prompt": "The room is free until 31 October.",
+              "authorsVersion": [
+                "De kamer is tot 31 oktober vrij."
+              ],
+              "note": "Also fine: De kamer is vrij tot 31 oktober."
+            }
+          ]
+        }
+      },
+      "id": "5c2c03c7-3ce0-43b8-be2a-9d5d1872580c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "420acdab-660f-481d-b82c-326aaca23785"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into English.",
+          "items": [
+            {
+              "prompt": "Overmorgen is het vrijdag.",
+              "authorsVersion": [
+                "The day after tomorrow is Friday."
+              ],
+              "note": "overmorgen = the day after tomorrow."
+            },
+            {
+              "prompt": "Volgende week heeft Sofia het druk.",
+              "authorsVersion": [
+                "Sofia is busy next week."
+              ],
+              "note": "het druk hebben = to be busy (08-b)."
+            },
+            {
+              "prompt": "Op zondag belt Sofia haar moeder op.",
+              "authorsVersion": [
+                "On Sundays Sofia calls her mother."
+              ],
+              "note": "op zondag can mean every Sunday. Also fine: On Sunday Sofia calls her mother."
+            },
+            {
+              "prompt": "Gefeliciteerd met Daan!",
+              "authorsVersion": [
+                "Happy birthday to Daan! (said to his family or friends)"
+              ],
+              "note": "You say this to Lotte or to Daan's family, not to Daan himself."
+            },
+            {
+              "prompt": "Sofia schrijft de datum in haar agenda.",
+              "authorsVersion": [
+                "Sofia writes the date in her diary."
+              ],
+              "note": "de agenda = diary or planner, not the agenda of a meeting."
+            }
+          ]
+        }
+      },
+      "id": "3a61806f-a132-4abe-8da4-f84e10f0529d"
+    },
+    {
+      "type": "divider",
+      "id": "e6ee73e7-8c39-4f87-ad93-e023c3c42c33"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Sofia's agenda",
+      "id": "c7a9b454-a5f2-491e-82ca-a2c1ac4f6719"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's agenda page and answer the questions in Dutch.",
+          "passage": {
+            "title": "Mijn agenda — september en oktober 2026",
+            "content": "Elke dinsdag: Nederlandse les, om 19.00 uur.\nElke zondag: ik bel mama op.\n\nwo 16-9: Nieuwe agenda! Vandaag is het de zestiende.\nvr 18-9: Daan trakteert op taart op kantoor.\nza 19-9: Daan is jarig! Het feest begint om 20.00 uur. Lotte en Noor komen ook.\nvr 2-10: Noor heeft een tentamen. Succes, Noor!\n\nIn oktober: ik zoek een appartement in Utrecht.\nza 31-10: De kamer bij Noor is tot vandaag vrij.\nzo 1-11: Fleur komt terug uit Australië."
+          },
+          "items": [
+            {
+              "prompt": "Wanneer is Daan jarig?",
+              "authorsVersion": [
+                "Op zaterdag 19 september."
+              ],
+              "note": "Also fine: Daan is op 19 september jarig."
+            },
+            {
+              "prompt": "Op welke dag heeft Sofia Nederlandse les?",
+              "authorsVersion": [
+                "Op dinsdag."
+              ],
+              "note": "Elke dinsdag, om zeven uur 's avonds."
+            },
+            {
+              "prompt": "Op welke dag is het tentamen van Noor?",
+              "authorsVersion": [
+                "Op vrijdag 2 oktober."
+              ]
+            },
+            {
+              "prompt": "Wat doet Sofia in oktober?",
+              "authorsVersion": [
+                "Ze zoekt een appartement."
+              ],
+              "note": "Also fine: Sofia zoekt een appartement."
+            },
+            {
+              "prompt": "Tot wanneer is de kamer vrij?",
+              "authorsVersion": [
+                "Tot zaterdag 31 oktober."
+              ]
+            },
+            {
+              "prompt": "Wanneer komt Fleur terug?",
+              "authorsVersion": [
+                "Op zondag 1 november."
+              ],
+              "note": "Also fine: Fleur komt op 1 november terug."
+            },
+            {
+              "prompt": "Klopt dit? Sofia belt op zaterdag haar moeder op.",
+              "authorsVersion": [
+                "Nee, ze belt op zondag haar moeder op."
+              ],
+              "note": "Also fine: Nee, op zondag."
+            }
+          ]
+        }
+      },
+      "id": "1a43f21c-0675-48bb-99ab-cd940960c7f7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "1002b1af-58b1-4dc1-8e22-e8e195bf43a4"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about important dates in your life this year. Use op, in and om.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about important dates in your life this year.",
+              "authorsVersion": [
+                "Ik ben op 23 april jarig. In 2026 woon ik in Utrecht. Op zaterdag 19 september is Daan jarig, en het feest begint om acht uur. In oktober zoek ik een appartement."
+              ],
+              "note": "Model answer by Sofia. Check: small letters for days and months; op + day or date; in + month; om + clock time; verb second after a time expression."
+            }
+          ]
+        }
+      },
+      "id": "0da8cbf3-8e83-4cdf-b2f4-5ef55acb0c4c"
+    },
+    {
+      "type": "divider",
+      "id": "72e666d9-fbf9-4642-bfbe-fed34c7a50d5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "26738fa3-105f-447d-bfd9-dcf96c2ccaf2"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Days and months have a small letter: ",
+        {
+          "text": "maandag",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "september",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "48868a94-3776-4737-ae9e-568a172c38b7"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Ordinals: number + ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (1–19), number + ",
+        {
+          "text": "ste",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (from 20). Irregular: eerste, derde, achtste."
+      ],
+      "id": "2cca8fe6-c950-4e55-9949-5d64128d5943"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Say ",
+        {
+          "text": "16 september",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", but ",
+        {
+          "text": "de zestiende",
+          "styles": {
+            "bold": true
+          }
+        },
+        " without the month. Write the day first: 16-9-2026."
+      ],
+      "id": "95ab7c79-f8ec-44ee-8dc6-2294d3aa9882"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "op",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " + day or date, ",
+        {
+          "text": "in",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " + month, year or het weekend, ",
+        {
+          "text": "om",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " + clock time."
+      ],
+      "id": "9bcf7993-678e-4ecc-b979-69b09e0a315e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Birthday: ",
+        {
+          "text": "Ik ben jarig.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " — Wanneer ben je jarig?"
+      ],
+      "id": "daf32774-1653-4b41-bc3d-9e83dda0d08c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Remember: time first? Then the verb comes second: ",
+        {
+          "text": "Op zaterdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "geeft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een feest."
+      ],
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "id": "82ad28a3-ef37-4ea4-bbda-853787fd3409"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Sofia's nieuwe agenda",
+      "description": "Sofia and Noor at the small kitchen table in Noor's flat, a new paper agenda open at September 2026, Noor pointing at Saturday 19.",
+      "alt": "Sofia and Noor filling in a paper agenda at the kitchen table."
+    },
+    {
+      "afterHeading": "Reading: Sofia's agenda",
+      "description": "A handwritten agenda page for September/October 2026 with short notes: 'za 19-9 Daan jarig!', 'vr 2-10 tentamen Noor', 'za 31-10 kamer'.",
+      "alt": "A handwritten agenda page with dates in September and October."
+    }
+  ],
+  "id": "d1e01e98-f7f9-4515-bf83-bb7539338584"
+}

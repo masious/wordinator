@@ -1,0 +1,3330 @@
+{
+  "title": "In het café",
+  "goal": "Order food and drink politely with willen and mogen, with a noun or a short infinitive at the end.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "In het café",
+      "id": "f05555c0-1daa-4df5-9555-72c94d803f64"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Saturday 26 September. Sofia and Daan have lunch in Café De Zwaluw, a small café ",
+        {
+          "text": "aan de Oudegracht",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (on the Oudegracht canal). Noor works there on Saturdays. In this lesson you will order food and drink politely with ",
+        {
+          "text": "willen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "to want",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") and ",
+        {
+          "text": "mogen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "may, to be allowed to",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")."
+      ],
+      "id": "fbe246cd-2bbd-472e-a98c-396fa004c297"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: the modal verb (",
+        {
+          "text": "wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ") is blue, the subject is ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", the infinitive that goes to the end is ",
+        {
+          "text": "red",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        ", time is ",
+        {
+          "text": "orange",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " and place is ",
+        {
+          "text": "purple",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". De-words are ",
+        {
+          "text": "pink",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ", het-words ",
+        {
+          "text": "brown",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        "."
+      ],
+      "id": "fc096fbd-d5b8-4294-b317-b283ac081989"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Lunch in De Zwaluw",
+      "id": "64397186-461c-434a-b50e-0f61a524b6e2"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Op zaterdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "werkt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "in het café",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". ",
+        {
+          "text": "Om half een",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "zitten",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Sofia en Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "op het terras",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". Noor comes to their table."
+      ],
+      "id": "c348fa78-6029-4350-a428-217322f78762"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Hoi! Gezellig! Wat willen jullie drinken?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Noor! Ik wil graag een cappuccino."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Een cappuccino. En jij, Daan?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Doe mij maar een thee."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Gewone thee of verse muntthee?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Verse muntthee, graag. En mag ik een glas water?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Kraanwater?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ja, prima."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wacht even! Mag ik ook een glas water?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja hoor! Een cappuccino, een verse muntthee en twee glazen water. Verder nog iets?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Nee, dank je. Prima."
+          }
+        ]
+      },
+      "id": "a1fb6569-e90e-4af8-b42c-6eb6790e60ad"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Look at the verbs: ",
+        {
+          "text": "wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " and ",
+        {
+          "text": "mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " come with a thing you want (",
+        {
+          "text": "een cappuccino, een glas water",
+          "styles": {
+            "italic": true
+          }
+        },
+        "). In ",
+        {
+          "text": "Wat ",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": "willen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " jullie ",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": "drinken",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        {
+          "text": "?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " a second verb goes to the end. ",
+        {
+          "text": "Twee glazen water",
+          "styles": {
+            "italic": true
+          }
+        },
+        " recycles 10-b: the container (",
+        {
+          "text": "het glas",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") takes the plural, the drink does not. New: ",
+        {
+          "text": "gewone thee",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = ",
+        {
+          "text": "regular tea",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "8b4e6d85-4b0f-4075-88ca-3741b00fbccb"
+    },
+    {
+      "type": "divider",
+      "id": "51480a0b-9185-4826-9912-a60bf0417ec1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "willen and mogen",
+      "id": "854e494b-8732-48bd-88f7-66b6e41361e7"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "willen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "to want",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". ",
+        {
+          "text": "mogen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "may, to be allowed to",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". In a café, ",
+        {
+          "text": "Mag ik …?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " is the polite way to ask for something: ",
+        {
+          "text": "Can I have …?",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "27e0fb5e-31b3-446c-8c24-a1e6d2e1f7ca"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "The forms",
+      "id": "8c86c10a-9712-4b78-af82-39127ced6573"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "text": "willen",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (",
+                {
+                  "text": "to want",
+                  "styles": {
+                    "italic": true
+                  }
+                },
+                ")"
+              ],
+              "id": "50fc9b8e-de84-4532-8231-2e097211f2ea"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ik",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "wil",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "8d3c8b98-a6ef-489b-ad37-b06b121312dd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "wilt",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " (also: jij wil)"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "Question: ",
+                    {
+                      "text": "Wil",
+                      "styles": {
+                        "bold": true,
+                        "textColor": "blue"
+                      }
+                    },
+                    " ",
+                    {
+                      "text": "je",
+                      "styles": {
+                        "textColor": "green"
+                      }
+                    },
+                    "? / ",
+                    {
+                      "text": "Wil",
+                      "styles": {
+                        "bold": true,
+                        "textColor": "blue"
+                      }
+                    },
+                    " ",
+                    {
+                      "text": "jij",
+                      "styles": {
+                        "textColor": "green"
+                      }
+                    },
+                    "?"
+                  ],
+                  "id": "fdd71a22-76c0-441f-8041-73a8588dc70b"
+                }
+              ],
+              "id": "b67f74c5-4e47-470d-b7ed-ed31ae24376a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "u",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "wilt",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "2142c3f6-552c-43ea-90d1-a1f77bfd2d9c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "hij/zij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "wil",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue",
+                    "backgroundColor": "yellow"
+                  }
+                }
+              ],
+              "id": "e46c5374-c060-4fb5-88be-7409279c3ed2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "wij / jullie / zij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "willen",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "2c87d93e-a733-44c3-bbdf-1badc9732b9f"
+            }
+          ],
+          "id": "b45bd48a-ea11-4ce3-b467-3888de5cfe66"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "text": "mogen",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (",
+                {
+                  "text": "may",
+                  "styles": {
+                    "italic": true
+                  }
+                },
+                ")"
+              ],
+              "id": "dc9de94c-3104-4c65-82d7-f2a6ef9f33c3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ik",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "mag",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "e7da3d06-5e89-4809-953e-d2a211af00c6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "mag",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "Question: ",
+                    {
+                      "text": "Mag",
+                      "styles": {
+                        "bold": true,
+                        "textColor": "blue"
+                      }
+                    },
+                    " ",
+                    {
+                      "text": "je",
+                      "styles": {
+                        "textColor": "green"
+                      }
+                    },
+                    "? / ",
+                    {
+                      "text": "Mag",
+                      "styles": {
+                        "bold": true,
+                        "textColor": "blue"
+                      }
+                    },
+                    " ",
+                    {
+                      "text": "jij",
+                      "styles": {
+                        "textColor": "green"
+                      }
+                    },
+                    "?"
+                  ],
+                  "id": "bdfcca0e-2e96-4d7a-bc67-5f4c8ae8c650"
+                }
+              ],
+              "id": "a7115f92-8223-4720-8675-c5935aea497e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "u",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "mag",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "28d7551b-9434-4f1d-9875-ab7eed24fd24"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "hij/zij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "mag",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue",
+                    "backgroundColor": "yellow"
+                  }
+                }
+              ],
+              "id": "71f256a5-2185-4baf-84bc-d4b1f46b4145"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "wij / jullie / zij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "mogen",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "11834c19-6b9d-4211-abad-7a647099210b"
+            }
+          ],
+          "id": "75a41e0a-6a02-4408-9e0f-d61ecfec8595"
+        }
+      ],
+      "id": "20e6af45-8902-4078-8f99-02af93a3f015"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "No -t after ",
+        {
+          "text": "hij/zij",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "zij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ". ",
+        {
+          "text": "mogen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " has no -t in any singular form. Only ",
+        {
+          "text": "willen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " has ",
+        {
+          "text": "jij wilt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " and ",
+        {
+          "text": "u wilt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "fb72f4f6-fbcd-4ed6-8b6a-b1e888414e77"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "hij wilt",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ". ",
+        {
+          "text": "zij magt",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "zij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ". ",
+        {
+          "text": "jij magt",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "af763ea0-f537-413b-aa53-72a8b6290bac"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "willen and mogen + a thing",
+      "id": "3068d493-17d8-424a-b8cf-ab945020a69d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "The simplest pattern: subject + ",
+        {
+          "text": "wil/mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " + a thing. In a question, the verb comes first."
+      ],
+      "id": "6a25277d-334d-48c4-bf20-680002094bab"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'd like a cappuccino.",
+        "note": "graag makes 'ik wil' polite."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " graag een cappuccino."
+      ],
+      "id": "c748a357-77d2-46e8-aefa-2c3ee2d24782"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan wants a glass of water.",
+        "note": "hij/zij wil: no -t."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " een glas water."
+      ],
+      "id": "d0581dd7-1935-4785-bbd3-400633f871c0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Would you like a cup of tea?",
+        "note": "jij wilt, but in a question the -t drops before je/jij: Wil je …? (Part I rule). Recycles het kopje from 10-b."
+      },
+      "content": [
+        {
+          "text": "Wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een kopje thee?"
+      ],
+      "id": "4c1e2501-5e1a-4e33-8d82-91cd595a789f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What would you like to drink?",
+        "note": "u wilt: with u, willen keeps the -t."
+      },
+      "content": [
+        "Wat ",
+        {
+          "text": "wilt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " drinken?"
+      ],
+      "id": "84d1577d-17b6-4ce9-9e3d-bd94b8d67cb8"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Can I have the menu?",
+        "note": "de kaart = the menu in a café."
+      },
+      "content": [
+        {
+          "text": "Mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " kaart?"
+      ],
+      "id": "d440c8af-181b-446f-98ec-712a337b6447"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Can Daan have a glass of water too?",
+        "note": "hij/zij mag: no -t."
+      },
+      "content": [
+        {
+          "text": "Mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ook een glas water?"
+      ],
+      "id": "c37c2cbe-8ad2-48fc-93ee-001447377f05"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        "Dutch ",
+        {
+          "text": "wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " means ",
+        {
+          "text": "want",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", not the English future ",
+        {
+          "text": "will",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " een thee = ",
+        {
+          "text": "I want a tea",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", not ",
+        {
+          "text": "I will (have) a tea",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "4f94f50e-0547-4141-8b00-e14b53271599"
+    },
+    {
+      "type": "divider",
+      "id": "2e0ad675-c511-4b98-8b7a-0ab59a2a4468"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Modal + infinitive at the end",
+      "id": "b570cf6d-1467-48ed-9111-13636f494e4b"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "After ",
+        {
+          "text": "willen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " or ",
+        {
+          "text": "mogen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " you can add a second verb. That verb is an infinitive and goes to the very end of the sentence."
+      ],
+      "id": "fd83e677-d010-4a01-b93b-22393b0c6299"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "subject",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " + ",
+        {
+          "text": "wil/mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " + … + ",
+        {
+          "text": "infinitive",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        ". In a question: ",
+        {
+          "text": "Mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " + ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " + … + ",
+        {
+          "text": "infinitive",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "16d23ea5-f15c-4b45-a6d8-58dbc7768812"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "How to build the sentence",
+      "id": "4046208f-4a08-463c-a8ca-b1be091b9352"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Put ",
+        {
+          "text": "wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " or ",
+        {
+          "text": "mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " in position 2 (in a yes/no question: position 1)."
+      ],
+      "id": "7f16fa9b-1ba8-4027-a388-a2ab437462ba"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Put the second verb as an ",
+        {
+          "text": "infinitive",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        " at the very end."
+      ],
+      "id": "67ec3088-8828-4662-a34b-42318b671ee4"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Put everything else (",
+        {
+          "text": "graag, buiten, een tosti, op het terras",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") in the middle."
+      ],
+      "id": "a1908167-f276-42d3-a1ca-3bf6b5c08d3d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'd like to order.",
+        "note": "graag stays next to wil; bestellen goes to the end."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " graag ",
+        {
+          "text": "bestellen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "5d96b0e5-ee67-494a-a604-bd866cdb245e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Can I pay?"
+      },
+      "content": [
+        {
+          "text": "Mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "betalen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "e2cb195d-c219-4dea-ba8e-20374359b729"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We want to sit outside.",
+        "note": "Also fine: We willen buiten zitten."
+      },
+      "content": [
+        {
+          "text": "Wij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "willen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "buiten",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "zitten",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "28b3d272-4d1a-409a-9dd7-cd8075b72c01"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Today Sofia wants to have lunch on the terrace.",
+        "note": "Recycles inversion after a time word (08-b) and TMP: time before place."
+      },
+      "content": [
+        {
+          "text": "Vandaag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "op het terras",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "lunchen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "fbc23a19-62b2-4bf1-96a0-aa375e6dd7ab"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Sofia says ",
+        {
+          "text": "Ik wil bestellen graag",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ". Noor answers ",
+        {
+          "text": "Je wilt graag bestellen?",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". Correct: ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " graag ",
+        {
+          "text": "bestellen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        ". The infinitive is always last."
+      ],
+      "id": "67696cc4-945e-4302-b8a0-ddb2bf82fcb2"
+    },
+    {
+      "type": "divider",
+      "id": "5cb3f718-255f-4fcd-8551-01e4c2cfbd05"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Ordering politely",
+      "id": "95adeeee-c829-4c1e-a234-4842f16a9292"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "What you say",
+      "id": "c14ad758-42d4-4b7a-a87b-2fe2dd5674de"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Ik wil graag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " + thing"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "Ik wil graag een thee.",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "0aeae830-f821-4d5e-b521-5b87762abb39"
+        }
+      ],
+      "id": "274515c1-b043-4fab-8df2-ce9b5469b5d5"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Mag ik",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " + thing?"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "Mag ik de kaart?",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "86d943de-5554-4bec-9a7c-1637fb473d50"
+        }
+      ],
+      "id": "e1f2727f-f481-4d1e-b832-68b83c695618"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Ik neem",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " + thing"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "Ik neem een tosti.",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "ed5a69a4-acdb-476b-8936-6f742c988a1c"
+        }
+      ],
+      "id": "6895f5e7-16bc-47eb-a4b7-52e348499b14"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Voor mij",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + thing"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "Voor mij een cola, alstublieft.",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "15a1f001-5470-4c94-8260-cac5db55de42"
+        }
+      ],
+      "id": "95f48d15-2933-452c-aa8c-ec2512893dd8"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Doe mij maar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + thing (fixed chunk: ",
+        {
+          "text": "I'll have",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "Doe mij maar een jus d'orange.",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "be2c586f-4a98-461f-bc65-1f622c4fc3b8"
+        }
+      ],
+      "id": "ce5e8a93-0cc2-4197-9a7b-618e41479ca9"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "Add ",
+        {
+          "text": "graag",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Plain ",
+        {
+          "text": "Ik wil een koffie.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " sounds blunt, like ",
+        {
+          "text": "I want a coffee",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "graag",
+          "styles": {
+            "bold": true
+          }
+        },
+        " een koffie. sounds friendly: ",
+        {
+          "text": "I'd like a coffee",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "5528f6eb-6ae1-49f8-aaef-266d850e4458"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Can I have a coffee?",
+        "note": "Mag ik een koffie hebben? is also correct, but Mag ik een koffie? is shorter and more natural."
+      },
+      "content": [
+        {
+          "text": "Mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een ",
+        {
+          "text": "koffie",
+          "styles": {
+            "bold": true
+          }
+        },
+        "?"
+      ],
+      "id": "ddff2186-7fbe-482e-831d-3c45df9e277b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "What the waiter says",
+      "id": "72869b3c-d8a1-4027-a38f-f5dfcda8ff5a"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Wat mag het zijn?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " – ",
+        {
+          "text": "What can I get you?",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "4be54218-f699-491f-9cc6-131ff72b9c95"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Wat wilt u drinken?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (formal) / ",
+        {
+          "text": "Wat willen jullie drinken?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (friends)"
+      ],
+      "id": "2445d4d7-6815-4bfd-8286-a804a0582dec"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Verder nog iets?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " – ",
+        {
+          "text": "Anything else?",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "023d018f-f3b8-46cb-b3dd-4dec78ce1441"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What can I get you? – A cola for me, please.",
+        "note": "Wat mag het zijn? is a fixed waiter phrase."
+      },
+      "content": [
+        "Wat ",
+        {
+          "text": "mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " het zijn? – Voor mij een ",
+        {
+          "text": "cola",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", alstublieft."
+      ],
+      "id": "84ffbfa1-4adb-405f-b67f-0148cab5c2e2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Two coffees, please.",
+        "note": "In cafés 'twee koffie' is normal; 'twee koffies' is also heard (plurals, 10-a)."
+      },
+      "content": [
+        "Twee ",
+        {
+          "text": "koffie",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", alstublieft."
+      ],
+      "id": "38583ddc-9fe6-453f-9f38-4e65a67c5e7d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Yes, no and here you are",
+      "id": "a21edda0-58ec-4831-9e60-bed59f3bd1c0"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Ja, graag.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " – ",
+        {
+          "text": "Yes, please.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "5c404d06-7835-4c63-8df7-ba806a53a829"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Nee, dank je.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " / ",
+        {
+          "text": "Nee, dank u.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " – ",
+        {
+          "text": "No, thank you.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "6c8cd380-e67a-433a-a3bd-f6fd5f1c5d0b"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Alsjeblieft.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " / ",
+        {
+          "text": "Alstublieft.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " – ",
+        {
+          "text": "Here you are.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (when you give something)"
+      ],
+      "id": "cda9cd22-7dcd-45e4-9c54-7cf0bdaae1d8"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        {
+          "text": "de kaart",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " = the menu card with everything on it. ",
+        {
+          "text": "het menu",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " = a set menu (for example three courses for one price). In a café you ask: ",
+        {
+          "text": "Mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " kaart?"
+      ],
+      "id": "9e4dec0d-286b-44f4-814d-69aa11e5f8ae"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "In a Dutch café, tap water (",
+        {
+          "text": "het kraanwater",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        ") is sometimes free and sometimes not. A coffee often comes with a small biscuit (",
+        {
+          "text": "een koekje",
+          "styles": {
+            "italic": true
+          }
+        },
+        "). You pay at the counter or at the table: ask ",
+        {
+          "text": "Mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "betalen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "b404881a-c4c6-443d-b7df-9dad041e266c"
+    },
+    {
+      "type": "divider",
+      "id": "ca374337-2c48-4712-9e6c-ba5a72ad97b2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Café words",
+      "id": "f4a773b2-722a-478e-95d9-c43f4c154ff9"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Drinken",
+              "id": "48d5ca5d-0fd7-4722-8060-8ff261286f46"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de koffie",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                ", ",
+                {
+                  "text": "de cappuccino",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                ", ",
+                {
+                  "text": "de thee",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                ", ",
+                {
+                  "text": "de verse muntthee",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                }
+              ],
+              "id": "86dd889f-913f-42af-b6a5-bf4a24b642d2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de jus d'orange",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " (",
+                {
+                  "text": "orange juice",
+                  "styles": {
+                    "italic": true
+                  }
+                },
+                "), ",
+                {
+                  "text": "de cola",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                }
+              ],
+              "id": "8bd66f2f-499b-4815-be8a-4f2e454ce5cc"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "het water",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                ", ",
+                {
+                  "text": "het kraanwater",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " (",
+                {
+                  "text": "tap water",
+                  "styles": {
+                    "italic": true
+                  }
+                },
+                ")"
+              ],
+              "id": "c8316d2a-da13-4741-85a2-b4a9e34ff545"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "het glas",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                ", ",
+                {
+                  "text": "het kopje",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                ", ",
+                {
+                  "text": "de suiker",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                ", ",
+                {
+                  "text": "de melk",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                }
+              ],
+              "id": "1f750505-f55e-40e8-8487-cedd488f4047"
+            }
+          ],
+          "id": "d5104f4a-c7bd-4827-a1f5-52b879946888"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Eten",
+              "id": "28fd01ce-0b78-4b78-81cd-fa94e3b72616"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de tosti",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " (",
+                {
+                  "text": "toasted sandwich",
+                  "styles": {
+                    "italic": true
+                  }
+                },
+                "), ",
+                {
+                  "text": "de soep",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                }
+              ],
+              "id": "73257446-4f1a-4af1-ac17-f8f555f5bc98"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "het broodje",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " kaas, ",
+                {
+                  "text": "het broodje",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " ham"
+              ],
+              "id": "3274cd60-10a9-46ac-98f7-c281d445bd16"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de appeltaart",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                ", ",
+                {
+                  "text": "de slagroom",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " (",
+                {
+                  "text": "whipped cream",
+                  "styles": {
+                    "italic": true
+                  }
+                },
+                ")"
+              ],
+              "id": "807bcaa3-6b18-43a1-aee0-487144323779"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "het café",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                ", ",
+                {
+                  "text": "het terras",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                ", ",
+                {
+                  "text": "de ober",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                ", ",
+                {
+                  "text": "de serveerster",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " (",
+                {
+                  "text": "waitress",
+                  "styles": {
+                    "italic": true
+                  }
+                },
+                ")"
+              ],
+              "id": "7e1cd9d0-a7b7-4efc-86fe-ff0d83c3eb71"
+            }
+          ],
+          "id": "5941de01-7d4d-4fbc-b62d-e0afc95ad485"
+        }
+      ],
+      "id": "1c96c124-2ab1-4862-a20e-7de07d5a465e"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Verbs: ",
+        {
+          "text": "bestellen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "to order",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "nemen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "to take, have",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "drinken",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "zitten",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Places: ",
+        {
+          "text": "buiten",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " (",
+        {
+          "text": "outside",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "binnen",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " (",
+        {
+          "text": "inside",
+          "styles": {
+            "italic": true
+          }
+        },
+        "). And: ",
+        {
+          "text": "lekker",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "tasty, nice",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")."
+      ],
+      "id": "913fa7a1-3713-4b78-8322-92bdf5ee3edf"
+    },
+    {
+      "type": "divider",
+      "id": "989ad2f3-b7ed-40fd-a413-22d519c7f137"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Een tosti en appeltaart",
+      "id": "38518828-77da-4acc-a010-b71f91fc7efa"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Sofia and Daan want to eat something too. Watch Sofia's mistake and Noor's answer."
+      ],
+      "id": "d332705b-0790-4643-980b-1bacee69c977"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Noor, mag ik de kaart?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Alsjeblieft."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Noor! Ik wil bestellen graag!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Je wilt graag bestellen? Super! Wat mag het zijn?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik neem een tosti ham-kaas."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En jij, Daan?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Voor mij een broodje kaas en een kop tomatensoep."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Lekker! Willen jullie ook appeltaart? Met slagroom?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Echt? Ja, graag! Met veel slagroom!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Nee, dank je. Mag ik nog een muntthee?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja hoor. Verder nog iets?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Nee, dat is alles. Dank je, Noor!"
+          }
+        ]
+      },
+      "id": "64c5ee9c-52e0-48dc-8b32-f036e66f6018"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Sofia says ",
+        {
+          "text": "Ik wil bestellen graag",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        "; Noor repeats it correctly: ",
+        {
+          "text": "Je ",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": "wilt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " graag ",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": "bestellen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        {
+          "text": "?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " Daan uses ",
+        {
+          "text": "nog een",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (",
+        {
+          "text": "another",
+          "styles": {
+            "italic": true
+          }
+        },
+        "): ",
+        {
+          "text": "nog een muntthee",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = ",
+        {
+          "text": "another mint tea",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". ",
+        {
+          "text": "Een tosti ham-kaas",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = ",
+        {
+          "text": "a ham and cheese toastie",
+          "styles": {
+            "italic": true
+          }
+        },
+        "; ",
+        {
+          "text": "een kop tomatensoep",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = ",
+        {
+          "text": "a bowl of tomato soup",
+          "styles": {
+            "italic": true
+          }
+        },
+        "; ",
+        {
+          "text": "Nee, dat is alles",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = ",
+        {
+          "text": "No, that's all",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "9d3c5069-051c-466d-9cbb-9922f3a342e4"
+    },
+    {
+      "type": "divider",
+      "id": "758042d1-2b12-4065-86e7-3e55e5092f29"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "698112c5-b55c-4c2f-8f70-6d0f09a650bb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in willen or mogen",
+      "id": "dbba9ecf-ada2-42e7-87cb-fd2cc0a0bfcb"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct form of the verb in brackets.",
+          "items": [
+            {
+              "prompt": "Ik … graag een cappuccino. (willen)",
+              "authorsVersion": [
+                "wil"
+              ],
+              "note": "ik wil: no -t with ik."
+            },
+            {
+              "prompt": "Daan … een glas water. (willen)",
+              "authorsVersion": [
+                "wil"
+              ],
+              "note": "hij/zij wil: no -t. Mistake: *Daan wilt*."
+            },
+            {
+              "prompt": "… jij een kopje thee? (willen)",
+              "authorsVersion": [
+                "Wil"
+              ],
+              "note": "jij wilt, but the -t drops when jij/je comes after the verb: Wil jij / Wil je."
+            },
+            {
+              "prompt": "Wat … u drinken? (willen)",
+              "authorsVersion": [
+                "wilt"
+              ],
+              "note": "u wilt: with u, willen keeps the -t."
+            },
+            {
+              "prompt": "… ik de kaart? (mogen)",
+              "authorsVersion": [
+                "Mag"
+              ],
+              "note": "Mag ik …? is the polite way to ask for something."
+            },
+            {
+              "prompt": "Sofia en Daan … buiten zitten. (willen)",
+              "authorsVersion": [
+                "willen"
+              ],
+              "note": "Plural: wij/jullie/zij willen."
+            },
+            {
+              "prompt": "… wij een glas water? (mogen)",
+              "authorsVersion": [
+                "Mogen"
+              ],
+              "note": "Plural: mogen. Also fine: Mogen we."
+            },
+            {
+              "prompt": "Jullie … binnen of buiten zitten. (mogen)",
+              "authorsVersion": [
+                "mogen"
+              ],
+              "note": "jullie mogen; the infinitive zitten stays at the end."
+            }
+          ]
+        }
+      },
+      "id": "95e88fa2-c5dc-4329-b65b-5672692e161c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "At the café",
+      "id": "cca6f70f-b14c-4f64-84d9-5c8ff7ae19e6"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the conversations. Each blank is one word.",
+          "items": [
+            {
+              "prompt": "Noor: Wat … jullie drinken? / Sofia: Ik … graag een thee.",
+              "authorsVersion": [
+                "willen",
+                "wil"
+              ],
+              "note": "jullie willen, ik wil. graag makes the order polite."
+            },
+            {
+              "prompt": "Ober: Wat mag het …? / Daan: Voor … een cola, alstublieft.",
+              "authorsVersion": [
+                "zijn",
+                "mij"
+              ],
+              "note": "Wat mag het zijn? and Voor mij een … are fixed café phrases."
+            },
+            {
+              "prompt": "Sofia: … ik de kaart? / Noor: …!",
+              "authorsVersion": [
+                "Mag",
+                "Alsjeblieft"
+              ],
+              "note": "Noor gives the menu: alsjeblieft = here you are. She is a friend, so alsjeblieft, not alstublieft."
+            },
+            {
+              "prompt": "Noor: Willen jullie appeltaart? / Sofia: Ja, …! / Daan: Nee, … je.",
+              "authorsVersion": [
+                "graag",
+                "dank"
+              ],
+              "note": "Ja, graag. / Nee, dank je."
+            },
+            {
+              "prompt": "Serveerster: Verder nog …? / Daan: Nee, dank u. … ik betalen?",
+              "authorsVersion": [
+                "iets",
+                "Mag"
+              ],
+              "note": "Verder nog iets? = Anything else? Mag ik betalen? puts betalen at the end."
+            },
+            {
+              "prompt": "Noor: … je een koekje bij de koffie? / Sofia: Ja, graag. En … ik een glas kraanwater?",
+              "authorsVersion": [
+                "Wil",
+                "mag"
+              ],
+              "note": "Wil je (no -t before je); mag ik."
+            }
+          ]
+        }
+      },
+      "id": "cd5ac378-0b42-4bf3-93cc-7e9286e72452"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "60d952d8-1cce-4437-b1b7-1ecefa2cb240"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. If it says (question), make a question. Start with the first word when it is a time word.",
+          "items": [
+            {
+              "prompt": "Put in order: graag / ik / bestellen / wil",
+              "authorsVersion": [
+                "Ik wil graag bestellen."
+              ],
+              "note": "The infinitive bestellen goes to the end. Mistake: *Ik wil bestellen graag*."
+            },
+            {
+              "prompt": "Put in order (question): mag / betalen / ik",
+              "authorsVersion": [
+                "Mag ik betalen?"
+              ],
+              "note": "In a yes/no question the modal comes first; the infinitive stays last."
+            },
+            {
+              "prompt": "Put in order: willen / wij / zitten / buiten",
+              "authorsVersion": [
+                "Wij willen buiten zitten."
+              ],
+              "note": "Also fine: We willen buiten zitten."
+            },
+            {
+              "prompt": "Put in order: op het terras / Sofia / wil / lunchen",
+              "authorsVersion": [
+                "Sofia wil op het terras lunchen."
+              ]
+            },
+            {
+              "prompt": "Put in order: vandaag / Daan / wil / binnen / zitten",
+              "authorsVersion": [
+                "Vandaag wil Daan binnen zitten."
+              ],
+              "note": "Time word first, then the verb (inversion, 08-b). Also fine: Daan wil vandaag binnen zitten."
+            },
+            {
+              "prompt": "Put in order (question): jullie / appeltaart / willen / eten",
+              "authorsVersion": [
+                "Willen jullie appeltaart eten?"
+              ],
+              "note": "Also fine and very common: Willen jullie appeltaart? (without eten)."
+            },
+            {
+              "prompt": "Put in order: om half een / Noor / wil / koffie / drinken",
+              "authorsVersion": [
+                "Om half een wil Noor koffie drinken."
+              ],
+              "note": "Time first, then wil, then the subject; drinken goes to the end."
+            }
+          ]
+        }
+      },
+      "id": "0dff3706-dc22-4aaf-a49c-e5f624b449de"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Make it polite",
+      "id": "2c9ae793-5bf7-481c-ab9b-a106c9ff5c19"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite. (graag): add graag. (mag ik): ask with Mag ik. (question): make a yes/no question.",
+          "items": [
+            {
+              "prompt": "Ik wil een koffie. (graag)",
+              "authorsVersion": [
+                "Ik wil graag een koffie."
+              ],
+              "note": "graag goes directly after wil."
+            },
+            {
+              "prompt": "Ik wil een glas water. (mag ik)",
+              "authorsVersion": [
+                "Mag ik een glas water?"
+              ],
+              "note": "Mag ik + thing? is polite and natural."
+            },
+            {
+              "prompt": "Ik wil bestellen. (graag)",
+              "authorsVersion": [
+                "Ik wil graag bestellen."
+              ],
+              "note": "graag before the infinitive; bestellen stays at the end."
+            },
+            {
+              "prompt": "Ik wil de kaart. (mag ik)",
+              "authorsVersion": [
+                "Mag ik de kaart?"
+              ],
+              "note": "de kaart = the menu."
+            },
+            {
+              "prompt": "Jij wilt een kopje thee. (question)",
+              "authorsVersion": [
+                "Wil je een kopje thee?"
+              ],
+              "note": "The -t drops: Wil je / Wil jij. Mistake: *Wilt je*."
+            },
+            {
+              "prompt": "Wij mogen buiten zitten. (question)",
+              "authorsVersion": [
+                "Mogen wij buiten zitten?"
+              ],
+              "note": "Also fine: Mogen we buiten zitten?"
+            },
+            {
+              "prompt": "U wilt een stuk appeltaart. (question)",
+              "authorsVersion": [
+                "Wilt u een stuk appeltaart?"
+              ],
+              "note": "With u, the -t stays: Wilt u. Recycles een stuk (10-b)."
+            }
+          ]
+        }
+      },
+      "id": "655153d0-d65d-437a-aca5-f62220d1e84f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "3dd82778-56a4-4766-92ad-9abc46fe4e83"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "I'd like a cappuccino.",
+              "authorsVersion": [
+                "Ik wil graag een cappuccino."
+              ],
+              "note": "Also fine: Mag ik een cappuccino?"
+            },
+            {
+              "prompt": "Can I have the menu?",
+              "authorsVersion": [
+                "Mag ik de kaart?"
+              ],
+              "note": "Use de kaart, not het menu (a set menu)."
+            },
+            {
+              "prompt": "What would you like to drink? (to two friends)",
+              "authorsVersion": [
+                "Wat willen jullie drinken?"
+              ],
+              "note": "jullie willen; drinken goes to the end."
+            },
+            {
+              "prompt": "Daan wants a cup of fresh mint tea.",
+              "authorsVersion": [
+                "Daan wil een kopje verse muntthee."
+              ],
+              "note": "hij wil: no -t. Een kopje without van (10-b)."
+            },
+            {
+              "prompt": "We want to sit outside.",
+              "authorsVersion": [
+                "Wij willen buiten zitten."
+              ],
+              "note": "Also fine: We willen buiten zitten."
+            },
+            {
+              "prompt": "I'll have a cheese roll.",
+              "authorsVersion": [
+                "Ik neem een broodje kaas."
+              ],
+              "note": "Also fine: Voor mij een broodje kaas. / Doe mij maar een broodje kaas."
+            },
+            {
+              "prompt": "Anything else? – No, thank you.",
+              "authorsVersion": [
+                "Verder nog iets? – Nee, dank je."
+              ],
+              "note": "To a waiter or a stranger: Nee, dank u."
+            },
+            {
+              "prompt": "On Saturdays Noor works in the café.",
+              "authorsVersion": [
+                "Op zaterdag werkt Noor in het café."
+              ],
+              "note": "Inversion after a time expression. Also fine: Noor werkt op zaterdag in het café."
+            }
+          ]
+        }
+      },
+      "id": "9b41c0c0-b1b8-411c-a05c-9eaca27941ed"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "d9a4d3d7-d1f8-464f-adc9-1ae58fb57e34"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into English.",
+          "items": [
+            {
+              "prompt": "Wat mag het zijn?",
+              "authorsVersion": [
+                "What can I get you?"
+              ],
+              "note": "A fixed waiter phrase. Also fine: What would you like?"
+            },
+            {
+              "prompt": "Doe mij maar een jus d'orange.",
+              "authorsVersion": [
+                "I'll have an orange juice."
+              ],
+              "note": "Doe mij maar is a fixed chunk for ordering."
+            },
+            {
+              "prompt": "Mag ik betalen?",
+              "authorsVersion": [
+                "Can I pay?"
+              ],
+              "note": "Also fine: May I pay? / Could I pay, please?"
+            },
+            {
+              "prompt": "Sofia wil graag appeltaart met slagroom.",
+              "authorsVersion": [
+                "Sofia would like apple pie with whipped cream."
+              ],
+              "note": "wil graag = would like."
+            },
+            {
+              "prompt": "Willen jullie binnen of buiten zitten?",
+              "authorsVersion": [
+                "Do you want to sit inside or outside?"
+              ],
+              "note": "Also fine: Would you like to sit inside or outside?"
+            },
+            {
+              "prompt": "Twee koffie, alstublieft.",
+              "authorsVersion": [
+                "Two coffees, please."
+              ],
+              "note": "Dutch cafés often say twee koffie without a plural."
+            }
+          ]
+        }
+      },
+      "id": "1ffc5a68-7a5d-4bc0-818e-e4fb6386f2a4"
+    },
+    {
+      "type": "divider",
+      "id": "9fe46d56-3f3b-4859-9296-f7aa82d5583d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: De kaart",
+      "id": "1055eb71-14d4-4af2-9a36-0fb1355ac351"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the menu card and the text. Answer in Dutch. New words: kosten = to cost (Hoeveel kost een koffie? = How much is a coffee?), gratis = free, zonder = without, aan de bar = at the counter, aan het water = by the water.",
+          "passage": {
+            "title": "Café De Zwaluw",
+            "content": "DE KAART\n\nDrinken\nkoffie – 3 euro\ncappuccino – 4 euro\nthee – 3 euro\nverse muntthee – 4 euro\njus d'orange – 4 euro\ncola – 3 euro\nkraanwater – gratis\n\nEten\ntosti kaas – 5 euro\ntosti ham-kaas – 6 euro\nbroodje kaas – 6 euro\nbroodje ham – 6 euro\ntomatensoep – 5 euro\nappeltaart – 4 euro\nslagroom – 1 euro\n\nCafé De Zwaluw is een klein café aan de Oudegracht in Utrecht. Het café is open van tien uur tot zes uur. Bij de koffie krijg je een koekje. Op zaterdag werkt Noor in het café. Veel mensen willen dan buiten zitten, op het terras aan het water. De appeltaart is heel lekker, met of zonder slagroom. Je betaalt aan de bar of aan tafel."
+          },
+          "items": [
+            {
+              "prompt": "Waar is Café De Zwaluw?",
+              "authorsVersion": [
+                "Aan de Oudegracht in Utrecht."
+              ]
+            },
+            {
+              "prompt": "Hoeveel kost een cappuccino?",
+              "authorsVersion": [
+                "Vier euro."
+              ]
+            },
+            {
+              "prompt": "Sofia neemt een tosti ham-kaas en een cappuccino. Hoeveel betaalt zij?",
+              "authorsVersion": [
+                "Tien euro."
+              ],
+              "note": "Zes euro + vier euro = tien euro."
+            },
+            {
+              "prompt": "Van hoe laat tot hoe laat is het café open?",
+              "authorsVersion": [
+                "Van tien uur tot zes uur."
+              ],
+              "note": "Recycles van … tot from 08-b."
+            },
+            {
+              "prompt": "Wat krijg je bij de koffie?",
+              "authorsVersion": [
+                "Een koekje."
+              ]
+            },
+            {
+              "prompt": "Klopt dit? Kraanwater kost twee euro.",
+              "authorsVersion": [
+                "Nee, kraanwater is gratis."
+              ]
+            },
+            {
+              "prompt": "Klopt dit? Op zaterdag werkt Noor in het café.",
+              "authorsVersion": [
+                "Ja, op zaterdag werkt Noor in het café."
+              ]
+            },
+            {
+              "prompt": "Waar betaal je in Café De Zwaluw?",
+              "authorsVersion": [
+                "Aan de bar of aan tafel."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "fa0775aa-3d69-4aac-8d8d-5650c04b8935"
+    },
+    {
+      "type": "divider",
+      "id": "569011e4-6f20-42b6-850e-e79362c48a4d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "9c7879b0-6c93-4071-8695-1f901d194ce8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write what you order in a café in 3–4 sentences. Use willen or mogen, and graag.",
+          "items": [
+            {
+              "prompt": "Write what you order in a café in 3–4 sentences.",
+              "authorsVersion": [
+                "Ik zit met een vriendin op het terras. Ik wil graag een cappuccino en een glas kraanwater. Mag ik ook de kaart? Ik neem een tosti kaas en een stuk appeltaart met slagroom."
+              ],
+              "note": "Model answer. Check: wil/mag in position 2 (or 1 in a question), graag after wil, an infinitive at the end."
+            }
+          ]
+        }
+      },
+      "id": "d8941702-4d28-4b95-a295-63d8a6418bd8"
+    },
+    {
+      "type": "divider",
+      "id": "9794c1aa-978a-4651-ad47-909167120c4f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "8f66dd2e-1463-4442-96fe-5fd551a3a773"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "ik/jij/hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "wil",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " (",
+        {
+          "text": "jij wilt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "u wilt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "), ",
+        {
+          "text": "wij/jullie/zij willen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ". No -t after hij/zij."
+      ],
+      "id": "c15ccec0-d27d-4873-bd09-07857e11b3f6"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "ik/jij/u/hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "wij/jullie/zij mogen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ". Never ",
+        {
+          "text": "magt",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        "."
+      ],
+      "id": "b3b40bf8-9065-4026-8b0e-2cb9a9b0785d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Modal + thing: ",
+        {
+          "text": "Mag ik de kaart?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " Modal + infinitive: the infinitive goes to the end: ",
+        {
+          "text": "Ik wil graag ",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": "bestellen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "446aaac6-d40b-4504-ae41-0ed85c62337f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Polite ordering: ",
+        {
+          "text": "Ik wil graag …",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "Mag ik …?",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "Ik neem …",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "Voor mij een …",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "Doe mij maar …",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "215263e3-1c9b-4597-9643-130b7b8e2f7b"
+    },
+    {
+      "type": "paragraph",
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "content": [
+        {
+          "text": "Remember: ",
+          "styles": {
+            "bold": true
+          }
+        },
+        "wil = want, not will. Add graag, and you sound friendly."
+      ],
+      "id": "003b0ccb-2feb-40a0-8c3f-259755f669b9"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Lunch in De Zwaluw",
+      "description": "A small café terrace on the wharf of the Oudegracht in Utrecht on a sunny September day. A young waitress takes the order of two friends at a table with a cappuccino and a glass of water.",
+      "alt": "Café terrace on the Oudegracht with a waitress taking an order"
+    },
+    {
+      "afterHeading": "Reading: De kaart",
+      "description": "A simple handwritten café menu card titled 'De kaart' with drinks and food and whole-euro prices, lying on a wooden café table next to a coffee with a small biscuit.",
+      "alt": "Handwritten café menu card next to a coffee with a biscuit"
+    }
+  ],
+  "id": "40c9dcda-ecfa-454d-8a7c-09e73a86f993"
+}

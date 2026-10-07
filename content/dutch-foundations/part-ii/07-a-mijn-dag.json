@@ -1,0 +1,3036 @@
+{
+  "title": "Mijn dag",
+  "goal": "Talk about your daily routine and other people's routines using the full present tense, including the plural forms, and say how often you do things.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Mijn dag",
+      "id": "1751d4fb-e23e-4919-bb2e-1b862b726aa4"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Monday 7 September, the start of Sofia's first full week at work. Sofia lives in Noor's flat in Utrecht-Oost and works at a small IT company near Utrecht Centraal. In this lesson you will describe a normal day, use the ",
+        {
+          "text": "plural",
+          "styles": {
+            "bold": true
+          }
+        },
+        " forms of the present tense (wij, jullie, zij) and say ",
+        {
+          "text": "how often",
+          "styles": {
+            "italic": true
+          }
+        },
+        " you do things."
+      ],
+      "id": "197056a5-2bc0-483c-9d1a-0fdb2efbf95b"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: subjects are ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", verbs are ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", time and frequency words are ",
+        {
+          "text": "orange",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ", places are ",
+        {
+          "text": "purple",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". The new form is ",
+        {
+          "text": "bold",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "ons",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " (with het-words) is brown, ",
+        {
+          "text": "onze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " (with de-words) is pink."
+      ],
+      "id": "501bdde7-e239-4cc1-972b-afb9897fc19c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Ontbijt in de keuken",
+      "id": "479727c5-a757-40e5-8de0-4e2b3bac3bf9"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Morning in Noor's small kitchen. Noor and Sofia have breakfast together (",
+        {
+          "text": "ontbijten",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") and compare their routines."
+      ],
+      "id": "bf231c77-c49d-4bf5-a396-83c38c34653b"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Goedemorgen! Koffie, Sofia? Jij drinkt altijd koffie."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, graag! En jij drinkt altijd thee, hè?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, ik drink nooit koffie. Thee is lekker!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wij ontbijten samen. Gezellig!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Super! Werk jij thuis of op kantoor?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik werk meestal op kantoor. En jij? Studeer jij thuis?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, ik studeer 's middags thuis. En ik kook 's avonds."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Jij kookt altijd lekker! Wij eet samen, toch?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, wij eten 's avonds samen. Joh, en jij gaat altijd laat naar bed!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, en ik ben elke ochtend moe!"
+          }
+        ]
+      },
+      "id": "6c08b061-2714-4bda-80b0-5a7ef6585d30"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Sofia says ",
+        {
+          "text": "Wij eet samen",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " and Noor answers with the correct form: ",
+        {
+          "text": "wij ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "eten",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        ". After wij, the verb is the infinitive: ",
+        {
+          "text": "eten",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", not the stem."
+      ],
+      "id": "e7bc87a0-45c8-4db8-ae21-cd1a1f5b7d4e"
+    },
+    {
+      "type": "divider",
+      "id": "7a3a81fa-740f-4cbd-8789-a4e82047cdfb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "The present tense: singular and plural",
+      "id": "aac69a49-b153-4322-9865-006265d8610b"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "From Part I you know the singular: ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " + stem (",
+        {
+          "text": "werk",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        "), ",
+        {
+          "text": "jij / u / hij / zij / het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " + stem + t (",
+        {
+          "text": "werkt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        "). New in this lesson: the ",
+        {
+          "text": "plural",
+          "styles": {
+            "bold": true
+          }
+        },
+        " with ",
+        {
+          "text": "wij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", ",
+        {
+          "text": "jullie",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " and ",
+        {
+          "text": "zij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " (",
+        {
+          "text": "they",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")."
+      ],
+      "id": "5d73faae-7f25-4e5a-8a51-28838347fb19"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "Plural = infinitive.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "wij / jullie / zij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " + stem + en: ",
+        {
+          "text": "werken",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        ". Every plural person has the same form."
+      ],
+      "id": "f92f2908-38d7-4aa4-a6eb-9376bb2b6176"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "werken",
+              "id": "a27ec2ce-645d-44c7-81de-9d3ce2c64fe7"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ik ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "werk",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "b201d837-45d0-43dd-b839-e944d68bb40f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jij / u ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "werkt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "568178f5-d6e3-4cad-b3b7-b4929d20f66a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "hij / zij / het ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "werkt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "012a7a66-56b2-47bc-84fe-6e38ce3c4351"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "wij ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "werken",
+                  "styles": {
+                    "textColor": "blue",
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "bd16fc1e-3c3d-4499-ac54-6ece26c9a286"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jullie ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "werken",
+                  "styles": {
+                    "textColor": "blue",
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "1a34d789-1ecb-470c-b294-5e807d96b136"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "zij ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "werken",
+                  "styles": {
+                    "textColor": "blue",
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "cd11f3ea-a0dd-4f3d-8e3d-150cc395020a"
+            }
+          ],
+          "id": "ba7e6357-9983-4842-a55c-a52cfae7edb6"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "zijn",
+              "id": "204f6ae7-3b56-4e38-a69a-b0937c092405"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ik ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "ben",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "dc0301b0-4d54-4cdc-8d88-31ad7efbc0fc"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jij / u ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "bent",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "6728c607-7bbd-472d-82b3-efbc97512670"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "hij / zij / het ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "is",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "81433e7b-d7e3-4ded-8a0b-3ebc4a0c68f8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "wij ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "zijn",
+                  "styles": {
+                    "textColor": "blue",
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "cc9c8b6a-f54e-4669-bad9-a26e3a3b7600"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jullie ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "zijn",
+                  "styles": {
+                    "textColor": "blue",
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "64d93908-0d96-4c34-85b4-1b624f91b9b9"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "zij ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "zijn",
+                  "styles": {
+                    "textColor": "blue",
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "0fa0eac8-1c2b-4ec1-a2ba-97a6c3f55c28"
+            }
+          ],
+          "id": "a2c48d7d-7a87-4ee7-b50b-bd579661f15d"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "hebben",
+              "id": "2136ee0a-ff60-4dd9-9ae6-6f6f478bbfc6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ik ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "heb",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "25c97b9f-a3e5-4afc-a8b3-618061a0c403"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jij / u ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "hebt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "6b05f436-ac8f-4def-a903-ace7e121bd75"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "hij / zij / het ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "heeft",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "8b5c8d06-27a9-4500-b121-669e7fd4d698"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "wij ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "hebben",
+                  "styles": {
+                    "textColor": "blue",
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "8948a0ff-e2ef-4dee-8f57-cdd737dccf80"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jullie ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "hebben",
+                  "styles": {
+                    "textColor": "blue",
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "f0bdedcf-c991-4fa3-a183-cb560f3e14e2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "zij ",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": "hebben",
+                  "styles": {
+                    "textColor": "blue",
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "27777508-e101-4234-b5be-70f20434bedd"
+            }
+          ],
+          "id": "6ce330c1-4325-487e-a0a2-2d887064ba0d"
+        }
+      ],
+      "id": "691d58fd-3261-4ff6-8db5-a58a6a721da0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "We and ze",
+      "id": "06d9c809-81be-4b79-9c3d-391580f9a435"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In speech you often hear the short, unstressed forms ",
+        {
+          "text": "we",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " (= wij) and ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " (= zij). ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " can mean ",
+        {
+          "text": "she",
+          "styles": {
+            "italic": true
+          }
+        },
+        " or ",
+        {
+          "text": "they",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "026a90a7-bf2a-42ca-b856-9a8d54c37d78"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We have breakfast together.",
+        "note": "We = unstressed wij. Ontbijten is one verb and never splits. The stem ends in t, so no extra t: ik ontbijt, jij ontbijt, hij ontbijt, wij ontbijten."
+      },
+      "content": [
+        {
+          "text": "We",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ontbijten",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " samen."
+      ],
+      "id": "5be998d8-bbeb-4f84-9105-d27faadc301d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "She works at home.",
+        "note": "Verb with -t: only one person, so ze = she."
+      },
+      "content": [
+        {
+          "text": "Ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "werkt",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "thuis",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "a810e0c0-887a-404d-b3a2-309c1fa81d95"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "They work at home.",
+        "note": "Verb with -en: more than one person, so ze = they."
+      },
+      "content": [
+        {
+          "text": "Ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "werken",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "thuis",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "dd5fb909-3f2c-482e-96ef-3984c2a99df5"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "Is ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "she",
+          "styles": {
+            "italic": true
+          }
+        },
+        " or ",
+        {
+          "text": "they",
+          "styles": {
+            "italic": true
+          }
+        },
+        "? Look at the verb: ",
+        {
+          "text": "ze ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "werkt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " = she, ",
+        {
+          "text": "ze ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "werken",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " = they."
+      ],
+      "id": "8c9b069e-748f-4b53-8db0-73b7fe9b451e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Jullie",
+      "id": "c5f9ab56-099a-4311-8d91-c8daf5fb6f37"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Jullie",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " is ",
+        {
+          "text": "you",
+          "styles": {
+            "italic": true
+          }
+        },
+        " for two or more people you say jij to. It always takes the plural form."
+      ],
+      "id": "a4369107-23c3-4234-820b-a6565246887c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What do you do in the evening?",
+        "note": "Question word + verb + subject. Doen is irregular: ik doe, jij doet, wij/jullie doen."
+      },
+      "content": [
+        "Wat ",
+        {
+          "text": "doen",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "jullie",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "'s avonds",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "?"
+      ],
+      "id": "71a86344-cc01-4b05-978c-7f5aa06c7fd2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you work at home?",
+        "note": "Compare: Werk jij thuis? Only jij drops the t in a question. The plural never changes."
+      },
+      "content": [
+        {
+          "text": "Werken",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "jullie",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "thuis",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "?"
+      ],
+      "id": "a8d9000a-3fdf-4779-bbde-de13f687f426"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        {
+          "text": "Jullie",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " always takes the plural form: ",
+        {
+          "text": "jullie ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "werken",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "jullie ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "jullie ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "hebben",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "jullie werkt",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " is a mistake → ",
+        {
+          "text": "jullie ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "werken",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "fae18f1f-fb23-4e18-b11c-32202b1b9f0d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Spelling: just use the infinitive",
+      "id": "d50d9f42-8fd4-4f9f-a396-493277e2e2d4"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In the singular you learned spelling rules (ik maak, ik zit, ik leef, ik lees). The plural is the infinitive, so those changes go back:"
+      ],
+      "id": "63db4952-ff2a-4645-ab11-636bfda8f74b"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Long vowel: double letter becomes single again"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "ik ",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            {
+              "text": "maak",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " → ",
+            {
+              "text": "wij ",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            {
+              "text": "maken",
+              "styles": {
+                "textColor": "blue",
+                "bold": true
+              }
+            }
+          ],
+          "id": "62fd97a0-54d0-4cf0-957b-0ee7ae6ce657"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "ik ",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            {
+              "text": "slaap",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " → ",
+            {
+              "text": "wij ",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            {
+              "text": "slapen",
+              "styles": {
+                "textColor": "blue",
+                "bold": true
+              }
+            }
+          ],
+          "id": "09abb12f-7610-4b87-be0b-ae069befcbac"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "ik ",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            {
+              "text": "eet",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " → ",
+            {
+              "text": "wij ",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            {
+              "text": "eten",
+              "styles": {
+                "textColor": "blue",
+                "bold": true
+              }
+            }
+          ],
+          "id": "a75c7a40-2553-421f-b3b7-7d3bc66f20c7"
+        }
+      ],
+      "id": "f15552f2-4590-4f81-a694-d61fca321104"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Short vowel: the double consonant comes back"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "ik ",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            {
+              "text": "zit",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " → ",
+            {
+              "text": "wij ",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            {
+              "text": "zitten",
+              "styles": {
+                "textColor": "blue",
+                "bold": true
+              }
+            }
+          ],
+          "id": "c4a9d218-19f3-48ce-b3e8-ef603e478c18"
+        }
+      ],
+      "id": "469d6b7d-a8d9-4531-8449-ef41995866a8"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "f becomes v, s becomes z"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "ik ",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            {
+              "text": "leef",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " → ",
+            {
+              "text": "wij ",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            {
+              "text": "leven",
+              "styles": {
+                "textColor": "blue",
+                "bold": true
+              }
+            }
+          ],
+          "id": "a196ec23-11c2-4ffc-9426-2ff2899ed1c6"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "ik ",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            {
+              "text": "lees",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " → ",
+            {
+              "text": "wij ",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            {
+              "text": "lezen",
+              "styles": {
+                "textColor": "blue",
+                "bold": true
+              }
+            }
+          ],
+          "id": "c29d5156-3ff5-4603-bc30-5a21ee69ff92"
+        }
+      ],
+      "id": "ddc26308-6262-4dff-be49-197ce3973703"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Irregular verbs",
+      "id": "0cffbf8c-a5cf-4ada-8ef6-d1ca7909a7ab"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "A few short verbs have an irregular singular. Their plural is still the infinitive:"
+      ],
+      "id": "374272a2-40c6-49db-a2e6-2dda05b6da9f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "gaan",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ik ga, jij gaat, hij gaat, ",
+        {
+          "text": "wij gaan",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "5551d6d8-7cfa-4ae4-aed4-371ec4a7be15"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "doen",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ik doe, jij doet, hij doet, ",
+        {
+          "text": "wij doen",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "8f305ba5-b2bd-4288-8161-e4446e02e5c0"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "staan",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ik sta, jij staat, hij staat, ",
+        {
+          "text": "wij staan",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "8610548a-5556-41c1-a963-9d872a33f603"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "zien",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ik zie, jij ziet, hij ziet, ",
+        {
+          "text": "wij zien",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "d05445ea-dea8-4a7f-bf5a-1825abe51815"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan and Lotte go to bed early.",
+        "note": "Two people = plural, like zij: Daan en Lotte gaan."
+      },
+      "content": [
+        {
+          "text": "Daan en Lotte",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "gaan",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "vroeg",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " naar bed."
+      ],
+      "id": "1f99591c-d1b2-41a8-9ece-a3c8e1ff7380"
+    },
+    {
+      "type": "divider",
+      "id": "33434cfe-98ec-48af-a828-652c8b64cee9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "How often?",
+      "id": "ed9911a6-d841-4e88-9151-90f5b87aadbc"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "These words say ",
+        {
+          "text": "how often",
+          "styles": {
+            "italic": true
+          }
+        },
+        " you do something:"
+      ],
+      "id": "87bce205-1034-47c7-a70f-743018b9c71e"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "altijd",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " (",
+        {
+          "text": "always",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") · ",
+        {
+          "text": "meestal",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " (",
+        {
+          "text": "usually",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") · ",
+        {
+          "text": "vaak",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " (",
+        {
+          "text": "often",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")"
+      ],
+      "id": "82809b54-a2bd-4e92-a547-4ca4b9a0c7b0"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "soms",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " (",
+        {
+          "text": "sometimes",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") · ",
+        {
+          "text": "nooit",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " (",
+        {
+          "text": "never",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")"
+      ],
+      "id": "cb3ffde3-8951-470d-9b64-c932ffc7bad3"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "elke dag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " (",
+        {
+          "text": "every day",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") · ",
+        {
+          "text": "elke ochtend",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " (",
+        {
+          "text": "every morning",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")"
+      ],
+      "id": "57d93d2f-c205-4e93-84ea-c9100be9d96c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Build the sentence in this order:"
+      ],
+      "id": "25192256-98d7-4268-b6d6-037259f59cd3"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Start with the subject: ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        }
+      ],
+      "id": "2e43fd55-fbc7-4f65-9e82-5890ae1f1999"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Then the verb: ",
+        {
+          "text": "drink",
+          "styles": {
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "253aed0c-0564-4384-b7ad-ab2a7c24afcf"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Then the frequency word: ",
+        {
+          "text": "altijd",
+          "styles": {
+            "textColor": "orange"
+          }
+        }
+      ],
+      "id": "d59068d9-5608-4c13-b8c5-e52da22ac2da"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Then the rest: koffie."
+      ],
+      "id": "a11e35b5-2656-4b41-b206-20716825b02b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "Subject + verb + ",
+        {
+          "text": "altijd / vaak / soms / nooit",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " + rest. The frequency word comes directly ",
+        {
+          "text": "after",
+          "styles": {
+            "bold": true
+          }
+        },
+        " the verb."
+      ],
+      "id": "f465df82-f44d-49f4-a998-bfec62439883"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I always drink coffee."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "drink",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "altijd",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " koffie."
+      ],
+      "id": "fc7a9cd6-adb7-42d0-944a-3a47c552483d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor often cooks."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "kookt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "vaak",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "bc64dbc3-c925-405d-9e4b-eb297d3415c2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan cycles to the office every day.",
+        "note": "Naar kantoor and op kantoor: no article."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "fietst",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "elke dag",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "naar kantoor",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "4a86763a-d53a-4b17-b876-1b2e55e3fb78"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "English puts ",
+        {
+          "text": "always",
+          "styles": {
+            "italic": true
+          }
+        },
+        " before the verb. Dutch does not: ",
+        {
+          "text": "Ik altijd ontbijt",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Ik ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "ontbijt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "altijd",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "88370f0b-acc4-41b6-b502-ec3e657124e7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "In the morning, afternoon, evening",
+      "id": "43d702aa-23ad-40d9-8369-8c009088021a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "'s ochtends",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " (",
+        {
+          "text": "in the morning",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "'s middags",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " (",
+        {
+          "text": "in the afternoon",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "'s avonds",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " (",
+        {
+          "text": "in the evening",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") are fixed chunks. For now, put them after the verb or at the end, and start your sentence with the subject."
+      ],
+      "id": "3b1b45ad-0f0c-4bf2-8a9c-df35add51d64"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I work at home in the afternoon.",
+        "note": "Time before place: 's middags thuis."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "werk",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "'s middags",
+          "styles": {
+            "textColor": "orange",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "thuis",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "062a48ca-b3f1-4177-a400-a57346f37e7f"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        {
+          "text": "'s ochtends",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " sounds like ",
+        {
+          "text": "sochtends",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": the 's is just an s joined to the word. The same goes for ",
+        {
+          "text": "'s middags",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " and ",
+        {
+          "text": "'s avonds",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "d852d8ce-65be-4478-a034-997857064018"
+    },
+    {
+      "type": "divider",
+      "id": "424e38e5-a6a3-426b-90cc-80752c10e270"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Op kantoor",
+      "id": "9872d27e-520a-4b4f-bebb-89ae91447bab"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "At the office near Utrecht Centraal. Daan is there early, as always. He talks to Sofia and a colleague."
+      ],
+      "id": "0ecf63a3-89db-43ee-93a9-f01d28084cef"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Goedemorgen, Daan! Jij bent altijd vroeg."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Precies. Ik ben elke dag vroeg op kantoor. En ik ga ook vroeg naar huis."
+          },
+          {
+            "speaker": "Collega",
+            "text": "Daan, fiets jij elke dag naar kantoor?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ja, elke dag. En jullie? Wat doen jullie 's avonds?"
+          },
+          {
+            "speaker": "Collega",
+            "text": "Ik sport vaak. En ik kijk soms tv."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Noor en ik eten 's avonds samen. Gezellig!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Lekker! Wie kookt? Jij?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, Noor kookt meestal. Ik kook soms."
+          },
+          {
+            "speaker": "Collega",
+            "text": "En jij, Daan? Wat doen jij en Lotte 's avonds?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Wij lezen vaak. Lotte leest de krant en ik luister naar muziek. En we gaan vroeg naar bed."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Vroeg naar bed? Ik ga nooit vroeg naar bed!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ja, en jij bent soms laat op kantoor!"
+          }
+        ]
+      },
+      "id": "f84ea039-2db7-49f8-89c9-3cd6074949bc"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "Lunch in the Netherlands is usually simple: ",
+        {
+          "text": "een boterham",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (a slice of bread or a sandwich) with cheese, often at your desk at the office (",
+        {
+          "text": "op kantoor",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "). The warm meal of the day is ",
+        {
+          "text": "het avondeten",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "0e920706-7946-4269-89e5-37563a901ba6"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "map-pin"
+      },
+      "content": [
+        "In Utrecht almost everyone cycles to work, like Daan. Sofia has no bike yet: she walks or takes the bus."
+      ],
+      "id": "f4c7dd52-f002-4862-af8c-415de5a86a9f"
+    },
+    {
+      "type": "divider",
+      "id": "156a9f53-d46a-491b-b870-2efd5902237d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Ons, onze, jullie, hun",
+      "id": "507c65db-1f8a-453e-a34a-b3d30a5b5aef"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You know ",
+        {
+          "text": "mijn, jouw, zijn, haar",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". Here are the plural possessives. For ",
+        {
+          "text": "our",
+          "styles": {
+            "italic": true
+          }
+        },
+        " Dutch has two forms:"
+      ],
+      "id": "8ac9b0ba-4fad-40a2-9e4e-0d1a62336e0a"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "ons + het-word",
+              "id": "70ccd9f2-93e4-474e-b565-3164a8e82387"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ons",
+                  "styles": {
+                    "textColor": "brown",
+                    "bold": true
+                  }
+                },
+                " appartement"
+              ],
+              "id": "0cebaaa5-3427-4035-b3f3-9603bb77537a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ons",
+                  "styles": {
+                    "textColor": "brown",
+                    "bold": true
+                  }
+                },
+                " ontbijt"
+              ],
+              "id": "d186f390-5a56-48d6-a4c2-6b546cdbd05d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ons",
+                  "styles": {
+                    "textColor": "brown",
+                    "bold": true
+                  }
+                },
+                " kantoor"
+              ],
+              "id": "fcdd75a7-6471-4b58-bedf-96798f396e43"
+            }
+          ],
+          "id": "a1dbe7d1-4da5-4680-a4d1-c7cfaef2eaa8"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "onze + de-word or plural",
+              "id": "8aeb77f1-0418-4d55-b7d7-f9f48a9d439e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "onze",
+                  "styles": {
+                    "textColor": "pink",
+                    "bold": true
+                  }
+                },
+                " keuken"
+              ],
+              "id": "30226202-ef86-422b-96c8-104167e93232"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "onze",
+                  "styles": {
+                    "textColor": "pink",
+                    "bold": true
+                  }
+                },
+                " huisgenoot"
+              ],
+              "id": "3d4a3b14-21d7-43ea-87b3-529da45393f3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "onze",
+                  "styles": {
+                    "textColor": "pink",
+                    "bold": true
+                  }
+                },
+                " kamers"
+              ],
+              "id": "6e71dc45-d656-486e-978a-281a02e67a18"
+            }
+          ],
+          "id": "e23429c2-819e-42cb-96fb-062aada3d18f"
+        }
+      ],
+      "id": "9fe596ce-a3ad-449b-b9c8-5fb9820af86a"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "ons",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " + het-word (singular). ",
+        {
+          "text": "onze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " + de-word and all plurals. ",
+        {
+          "text": "jullie",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "your",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") and ",
+        {
+          "text": "hun",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "their",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") never change."
+      ],
+      "id": "5b526d6c-4be7-473a-9644-01eab3b5ed4a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Our flat is small but cosy.",
+        "note": "Het appartement: het-word, so ons."
+      },
+      "content": [
+        {
+          "text": "Ons",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " appartement is klein, maar gezellig."
+      ],
+      "id": "8be664ca-7617-43ff-9707-3430742224c3"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Our kitchen is small too.",
+        "note": "De keuken: de-word, so onze."
+      },
+      "content": [
+        {
+          "text": "Onze",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " keuken is ook klein."
+      ],
+      "id": "cee1f627-afc9-4083-83d3-8b8b9b6872ab"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Their office is in the centre.",
+        "note": "Hun = their. Noor talks about Sofia and Daan: their office."
+      },
+      "content": [
+        {
+          "text": "Hun",
+          "styles": {
+            "bold": true
+          }
+        },
+        " kantoor is in het centrum."
+      ],
+      "id": "6ffb9de8-4932-4375-8469-821142fa18f7"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "onze huis",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "ons",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " huis. Het huis is a het-word."
+      ],
+      "id": "9b27e8d2-6564-41e5-8cf2-84cab926c213"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Not sure if a word is de or het? Check ",
+        {
+          "type": "link",
+          "href": "https://woordenlijst.org",
+          "content": [
+            {
+              "text": "woordenlijst.org",
+              "styles": {}
+            }
+          ]
+        },
+        "."
+      ],
+      "props": {
+        "backgroundColor": "gray"
+      },
+      "id": "4de4f47f-9e42-435e-bc70-5f6db2a8d163"
+    },
+    {
+      "type": "divider",
+      "id": "84a148dc-6ed3-4153-8d30-e4408c6b2198"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "84b86c8b-4663-4841-b761-72ce2244bb6b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in the verb",
+      "id": "7ec96767-ccf6-4fe2-809f-b5d765a87b64"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct form of the verb in brackets. Watch out: singular or plural?",
+          "items": [
+            {
+              "prompt": "Wij … samen. (ontbijten)",
+              "authorsVersion": [
+                "ontbijten"
+              ],
+              "note": "Wij = plural: the infinitive."
+            },
+            {
+              "prompt": "Noor … vaak. (koken)",
+              "authorsVersion": [
+                "kookt"
+              ],
+              "note": "Singular: stem kook + t. The plural would be koken."
+            },
+            {
+              "prompt": "Jullie … op kantoor. (werken)",
+              "authorsVersion": [
+                "werken"
+              ],
+              "note": "Jullie takes the plural form: werken. Not: jullie werkt."
+            },
+            {
+              "prompt": "Ik … 's avonds de krant. (lezen)",
+              "authorsVersion": [
+                "lees"
+              ],
+              "note": "Ik + stem: lees (long e, s not z)."
+            },
+            {
+              "prompt": "… jij thuis? (werken)",
+              "authorsVersion": [
+                "Werk"
+              ],
+              "note": "Jij after the verb: the t drops."
+            },
+            {
+              "prompt": "Sofia en ik … huisgenoten. (zijn)",
+              "authorsVersion": [
+                "zijn"
+              ],
+              "note": "Sofia en ik = wij."
+            },
+            {
+              "prompt": "Ze … altijd thee. (drinken; ze = they)",
+              "authorsVersion": [
+                "drinken"
+              ],
+              "note": "Ze = they, so -en."
+            },
+            {
+              "prompt": "Wij … een kleine keuken. (hebben)",
+              "authorsVersion": [
+                "hebben"
+              ],
+              "note": "Wij hebben. Een kleine keuken: de-word, so -e."
+            }
+          ]
+        }
+      },
+      "id": "9535de80-a7e3-4952-b451-72eac22c1bc4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "At breakfast",
+      "id": "b02c76dc-d5f5-4216-94df-b69d5e3176a8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the conversation in Noor's kitchen. Use the verbs in brackets, in this order.",
+          "items": [
+            {
+              "prompt": "Noor: Wat … jij 's ochtends? / Sofia: Ik … koffie en ik … de krant. (doen, drinken, lezen)",
+              "authorsVersion": [
+                "doe",
+                "drink",
+                "lees"
+              ],
+              "note": "Wat doe jij: jij after the verb, so no t."
+            },
+            {
+              "prompt": "Noor: Wij … samen, Sofia. Gezellig! / Sofia: Ja! En jij … altijd thee. (ontbijten, drinken)",
+              "authorsVersion": [
+                "ontbijten",
+                "drinkt"
+              ],
+              "note": "Wij ontbijten: plural = infinitive. Jij drinkt: jij before the verb, so stem + t."
+            },
+            {
+              "prompt": "Sofia: … jij vaak thuis? / Noor: Ja, ik … vaak thuis. (studeren)",
+              "authorsVersion": [
+                "Studeer",
+                "studeer"
+              ],
+              "note": "Studeer jij: t drops. Ik studeer: long e, ee in the stem."
+            },
+            {
+              "prompt": "Noor: Mijn zus en ik … uit Groningen. / Sofia: … jullie ook Engels? (komen, spreken)",
+              "authorsVersion": [
+                "komen",
+                "Spreken"
+              ],
+              "note": "Recycles komen and spreken from Part I, now in the plural. Yes/no question: the verb comes first; jullie keeps the -en form."
+            },
+            {
+              "prompt": "Sofia: Wij … 's avonds samen, toch? / Noor: Ja, ik … en wij … samen. (eten, koken, eten)",
+              "authorsVersion": [
+                "eten",
+                "kook",
+                "eten"
+              ],
+              "note": "Ik kook (oo), wij eten (single e)."
+            },
+            {
+              "prompt": "Noor: Jij … altijd laat naar bed. / Sofia: Ja, en ik … elke ochtend moe! (gaan, zijn)",
+              "authorsVersion": [
+                "gaat",
+                "ben"
+              ],
+              "note": "Jij gaat: irregular ga + t. Ik ben: zijn is irregular."
+            }
+          ]
+        }
+      },
+      "id": "267e6e16-9449-41e2-b475-ff0682b1c2f8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order: how often?",
+      "id": "4c13c349-d184-49e2-9c66-2a75fcf25ea9"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the right order. Start with the subject (or the verb in a yes/no question).",
+          "items": [
+            {
+              "prompt": "Put in order: koffie / ik / altijd / drink",
+              "authorsVersion": [
+                "Ik drink altijd koffie."
+              ],
+              "note": "Frequency word directly after the verb."
+            },
+            {
+              "prompt": "Put in order: Noor / vaak / kookt",
+              "authorsVersion": [
+                "Noor kookt vaak."
+              ],
+              "note": "Frequency word directly after the verb."
+            },
+            {
+              "prompt": "Put in order: wij / samen / altijd / ontbijten",
+              "authorsVersion": [
+                "Wij ontbijten altijd samen."
+              ],
+              "note": "Also fine: We ontbijten altijd samen."
+            },
+            {
+              "prompt": "Put in order: Daan / naar kantoor / elke dag / fietst",
+              "authorsVersion": [
+                "Daan fietst elke dag naar kantoor."
+              ]
+            },
+            {
+              "prompt": "Put in order: Sofia / op kantoor / meestal / luncht",
+              "authorsVersion": [
+                "Sofia luncht meestal op kantoor."
+              ]
+            },
+            {
+              "prompt": "Put in order: ze / tv / nooit / kijken",
+              "authorsVersion": [
+                "Ze kijken nooit tv."
+              ],
+              "note": "Kijken = plural, so ze = they."
+            },
+            {
+              "prompt": "Put in order (question): jullie / thuis / soms / werken",
+              "authorsVersion": [
+                "Werken jullie soms thuis?"
+              ],
+              "note": "Yes/no question: the verb comes first."
+            }
+          ]
+        }
+      },
+      "id": "08f64519-1653-4d30-9b43-a23a8c2b236c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "From singular to plural",
+      "id": "f75b1cfd-9f00-4a1f-a3b5-59f0891a2ee7"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence with the subject in brackets. Change the verb.",
+          "items": [
+            {
+              "prompt": "Ik werk thuis. (wij)",
+              "authorsVersion": [
+                "Wij werken thuis."
+              ],
+              "note": "Also fine: We werken thuis."
+            },
+            {
+              "prompt": "Hij leest de krant. (zij = they)",
+              "authorsVersion": [
+                "Zij lezen de krant."
+              ],
+              "note": "lees → lezen: s becomes z. Also fine: Ze lezen de krant."
+            },
+            {
+              "prompt": "Jij drinkt altijd koffie. (jullie)",
+              "authorsVersion": [
+                "Jullie drinken altijd koffie."
+              ]
+            },
+            {
+              "prompt": "Ik ga laat naar bed. (wij)",
+              "authorsVersion": [
+                "Wij gaan laat naar bed."
+              ],
+              "note": "ga → gaan."
+            },
+            {
+              "prompt": "Ze slaapt lang. (ze = they)",
+              "authorsVersion": [
+                "Ze slapen lang."
+              ],
+              "note": "slaap → slapen: aa becomes a."
+            },
+            {
+              "prompt": "Ik zit in de keuken. (wij)",
+              "authorsVersion": [
+                "Wij zitten in de keuken."
+              ],
+              "note": "zit → zitten: double t comes back."
+            },
+            {
+              "prompt": "Werk jij thuis? (jullie)",
+              "authorsVersion": [
+                "Werken jullie thuis?"
+              ],
+              "note": "In the plural the question form does not change."
+            }
+          ]
+        }
+      },
+      "id": "2896513a-b6ac-46a3-bd5b-d5c1cdebea89"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "30a57649-4ece-4829-946f-76edd6cb339e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "We always have breakfast together.",
+              "authorsVersion": [
+                "Wij ontbijten altijd samen."
+              ],
+              "note": "Also fine: We ontbijten altijd samen. Not: Wij altijd ontbijten."
+            },
+            {
+              "prompt": "Noor often cooks in the evening.",
+              "authorsVersion": [
+                "Noor kookt vaak 's avonds."
+              ],
+              "note": "Also fine: Noor kookt 's avonds vaak."
+            },
+            {
+              "prompt": "What do you (plural) do in the evening?",
+              "authorsVersion": [
+                "Wat doen jullie 's avonds?"
+              ]
+            },
+            {
+              "prompt": "They never watch TV.",
+              "authorsVersion": [
+                "Ze kijken nooit tv."
+              ],
+              "note": "Also fine: Zij kijken nooit tv."
+            },
+            {
+              "prompt": "Daan cycles to the office every day.",
+              "authorsVersion": [
+                "Daan fietst elke dag naar kantoor."
+              ]
+            },
+            {
+              "prompt": "Our flat is small but nice.",
+              "authorsVersion": [
+                "Ons appartement is klein, maar leuk."
+              ],
+              "note": "Het appartement: ons. Also fine: mooi or gezellig."
+            },
+            {
+              "prompt": "Do you (plural) work at home?",
+              "authorsVersion": [
+                "Werken jullie thuis?"
+              ]
+            }
+          ]
+        }
+      },
+      "id": "e1fb3e39-34a7-4fa6-9cba-61149630f026"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "03c4176e-8f7b-4ee8-ad3c-108b8ec137de"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into English.",
+          "items": [
+            {
+              "prompt": "Wij lunchen meestal op kantoor.",
+              "authorsVersion": [
+                "We usually have lunch at the office."
+              ]
+            },
+            {
+              "prompt": "Ze werkt 's middags thuis.",
+              "authorsVersion": [
+                "She works at home in the afternoon."
+              ],
+              "note": "Werkt = singular, so ze = she."
+            },
+            {
+              "prompt": "Ze werken 's middags thuis.",
+              "authorsVersion": [
+                "They work at home in the afternoon."
+              ],
+              "note": "Werken = plural, so ze = they."
+            },
+            {
+              "prompt": "Sofia gaat nooit vroeg naar bed.",
+              "authorsVersion": [
+                "Sofia never goes to bed early."
+              ]
+            },
+            {
+              "prompt": "Hun kantoor is klein.",
+              "authorsVersion": [
+                "Their office is small."
+              ]
+            },
+            {
+              "prompt": "Drinken jullie soms thee?",
+              "authorsVersion": [
+                "Do you sometimes drink tea?"
+              ],
+              "note": "Jullie = you (plural)."
+            }
+          ]
+        }
+      },
+      "id": "b78b8d93-8cd4-40e0-90f3-60efab8e79ee"
+    },
+    {
+      "type": "divider",
+      "id": "9d9da287-b30b-431c-a3a0-5fd10a050716"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Een dag bij Noor en Sofia",
+      "id": "99cce6a0-56bb-4022-a254-50b845e89862"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's text and answer the questions in Dutch. New words: lopen = to walk, nemen = to take, de fiets = the bike, de kaas = the cheese, de psychologie = psychology.",
+          "items": [
+            {
+              "prompt": "Waar woont Sofia?",
+              "authorsVersion": [
+                "In Utrecht, bij Noor."
+              ]
+            },
+            {
+              "prompt": "Wat drinkt Noor 's ochtends?",
+              "authorsVersion": [
+                "Thee."
+              ],
+              "note": "Also fine: Ze drinkt thee."
+            },
+            {
+              "prompt": "Hoe gaat Sofia naar kantoor?",
+              "authorsVersion": [
+                "Ze loopt of ze neemt de bus."
+              ],
+              "note": "Sofia has no bike yet."
+            },
+            {
+              "prompt": "Wie kookt vaak?",
+              "authorsVersion": [
+                "Noor."
+              ],
+              "note": "Also fine: Noor kookt vaak."
+            },
+            {
+              "prompt": "Wat eten Sofia en Daan op kantoor?",
+              "authorsVersion": [
+                "Een boterham met kaas."
+              ]
+            },
+            {
+              "prompt": "Klopt dit? Sofia gaat vroeg naar bed.",
+              "authorsVersion": [
+                "Nee, ze gaat altijd laat naar bed."
+              ]
+            },
+            {
+              "prompt": "Wat doen Noor en Sofia 's avonds?",
+              "authorsVersion": [
+                "Ze eten samen. Ze kijken soms tv of ze luisteren naar muziek."
+              ],
+              "note": "Ze + -en: they."
+            }
+          ],
+          "passage": {
+            "title": "Een dag bij Noor en Sofia",
+            "content": "Ik ben Sofia. Ik ben 28 en ik kom uit Spanje. Ik woon in Utrecht, bij Noor. Noor is mijn vriendin en mijn huisgenoot. Ons appartement is klein, maar gezellig. Ik heb een kamer en wij hebben samen een kleine keuken.\nWij ontbijten altijd samen in de keuken. Ik drink koffie en Noor drinkt thee. Noor leest vaak de krant.\nIk werk op kantoor. Ik heb geen fiets. Ik loop naar kantoor of ik neem de bus. Mijn collega Daan fietst elke dag. Hij is altijd vroeg op kantoor en ik ben soms laat! Wij lunchen meestal op kantoor: een boterham met kaas.\nNoor studeert psychologie. Ze studeert 's middags thuis. Noor kookt vaak en wij eten 's avonds samen. Ik kook soms. Wij kijken soms tv of wij luisteren naar muziek.\nNoor gaat vroeg naar bed. Ik ga altijd laat naar bed. Ik ben elke ochtend moe!"
+          }
+        }
+      },
+      "id": "717af40f-919c-43ac-96d1-23be4d9ee3ea"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "8774e40f-7c86-40cd-a2c9-382e41b0c62f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write about your own routine. Use at least one plural form (wij, jullie or zij) and one frequency word.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about your normal day.",
+              "authorsVersion": [
+                "Ik ontbijt elke dag samen met Noor. Ik werk op kantoor en ik lunch meestal met Daan. Noor en ik eten 's avonds samen. Ik ga altijd laat naar bed."
+              ],
+              "note": "Model answer by Sofia. Check: plural = infinitive (wij eten), frequency word after the verb (ik ga altijd)."
+            }
+          ]
+        }
+      },
+      "id": "3ac1becc-7f4f-425f-9335-0224c9d31ac3"
+    },
+    {
+      "type": "divider",
+      "id": "6dc6694b-3702-409a-90ff-fb5906b7d044"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "3f76cb61-3b8f-410c-a325-92fb0520110d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Singular: ",
+        {
+          "text": "ik ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "werk",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "jij / u / hij / zij ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "werkt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "e6e34947-dc76-40f8-9eff-401b5cccde86"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Plural = infinitive: ",
+        {
+          "text": "wij / jullie / zij ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "werken",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        ". Spelling follows the infinitive: wij lezen, wij zitten."
+      ],
+      "id": "440f068a-77df-46c8-bfe4-991e8ed1394f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "ze ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "werkt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " = she; ",
+        {
+          "text": "ze ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "werken",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " = they."
+      ],
+      "id": "63583ab9-31b5-4000-a20e-db3f63adae2e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Frequency word directly after the verb: ",
+        {
+          "text": "Ik ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "drink",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "altijd",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " koffie."
+      ],
+      "id": "a0367f7c-cab2-456e-a920-59675422823b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "ons",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " + het-word, ",
+        {
+          "text": "onze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " + de-word and plurals; jullie = your, hun = their."
+      ],
+      "id": "9c4b39ea-6e2b-4abc-867a-55430615f49b"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Remember:",
+          "styles": {
+            "bold": true
+          }
+        },
+        " not sure about the plural? Just use the infinitive."
+      ],
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "id": "2f677731-211d-4a8d-b208-cd2dd989928d"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Ontbijt in de keuken",
+      "description": "Noor and Sofia at breakfast in a small Dutch kitchen: Sofia with coffee, Noor with tea and a newspaper.",
+      "alt": "Two young women having breakfast together in a small kitchen."
+    },
+    {
+      "afterHeading": "Story: Op kantoor",
+      "description": "Daan arrives at a small office near Utrecht Centraal with his bike helmet; Sofia and a colleague at their desks with sandwiches.",
+      "alt": "Three colleagues talking in a small office."
+    }
+  ],
+  "id": "d2728460-5e91-4d40-8b09-73b987b1628e"
+}

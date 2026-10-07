@@ -1,0 +1,2133 @@
+{
+  "title": "Boodschappen",
+  "goal": "Form the plural of nouns (-en and -s, with spelling changes), and use een, de, het and geen correctly with singular and plural food words.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Boodschappen",
+      "id": "e613088f-d906-4326-b321-0685ec3581e4"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Friday 18 September. Tomorrow, ",
+        {
+          "text": "op zaterdag 19 september",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", Daan is jarig and there is a party. Sofia is making a Spanish tortilla, but the fridge is almost empty. In this lesson you will make plurals (",
+        {
+          "text": "één tomaat, twee tomaten",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), write a shopping list, and say what you have and don't have with ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "52edc4ec-6d3d-428c-9d78-4913344e2683"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: de-words are ",
+        {
+          "text": "pink",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ", het-words are ",
+        {
+          "text": "brown",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        ", verbs are ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", and the new plural ending is ",
+        {
+          "text": "bold on yellow",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "e1c68244-c492-42f2-b175-a8792975c4eb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: De koelkast is bijna leeg",
+      "id": "460b4d21-e83a-472d-90d2-400914297764"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Friday, just after five, in Noor's kitchen. Noor and Sofia look in ",
+        {
+          "text": "de koelkast",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " (",
+        {
+          "text": "the fridge",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") and make ",
+        {
+          "text": "een boodschappenlijstje",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " (",
+        {
+          "text": "a shopping list",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")."
+      ],
+      "id": "f3a3545e-6f3b-4fea-b54d-e91c1f247e0a"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Sofia, morgen is het feest van Daan. Jij maakt een tortilla, toch?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, een Spaanse tortilla! Hebben we eieren?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Nee, we hebben geen eieren. En we hebben ook geen melk."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Echt? Wacht even, ik kijk in de koelkast."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "We hebben een ui, twee tomaten, kaas en boter."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En aardappelen? Hebben we aardappelen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, geen aardappelen. Dan koop ik aardappelen en uien."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Goed. Ik maak een boodschappenlijstje: eieren, aardappelen, uien."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En chips en koekjes voor het feest!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Super! Om half zes doen we samen boodschappen."
+          }
+        ]
+      },
+      "id": "22e73d13-07b5-49e5-9c49-e1caaddbb4eb"
+    },
+    {
+      "type": "divider",
+      "id": "dd249df7-54be-45a6-afc0-6cdf56fb64d1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Plural with -en",
+      "id": "df4a1b61-276c-42f4-9833-d7afdb211207"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Most Dutch nouns make the plural with ",
+        {
+          "text": "-en",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". English adds ",
+        {
+          "text": "-s",
+          "styles": {
+            "italic": true
+          }
+        },
+        "; Dutch usually adds ",
+        {
+          "text": "-en",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "766b40df-42c8-47dd-bc09-0271cad1357e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "Most nouns: ",
+        {
+          "text": "noun + -en",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". het boek → de boek",
+        {
+          "text": "en",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ", de ui → de ui",
+        {
+          "text": "en",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ", de supermarkt → de supermarkt",
+        {
+          "text": "en",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "5cfdd901-3589-4e97-94eb-eb6c172aab00"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Two irregular plurals: eieren and kinderen",
+      "id": "e7491520-4e72-484e-96d1-2cf9d0f8e2f1"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Two words add ",
+        {
+          "text": "-eren",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "het ei",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " → ",
+        {
+          "text": "de eieren",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " and ",
+        {
+          "text": "het kind",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " → ",
+        {
+          "text": "de kinderen",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " (you know this one from Part I). Just learn them."
+      ],
+      "id": "c55a0380-7dd6-436b-bc3c-63e632b47827"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor buys twelve eggs.",
+        "note": "Not *eien*. The plural of ei is eieren."
+      },
+      "content": [
+        "Noor koopt twaalf ei",
+        {
+          "text": "eren",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "f4390a84-2636-4698-a749-05b618cb5e0e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        {
+          "text": "ei",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (eieren) and ",
+        {
+          "text": "ij",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (wij, vrijdag) sound exactly the same. ",
+        {
+          "text": "ui",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (uien, huis) has no English twin: say the ",
+        {
+          "text": "ow",
+          "styles": {
+            "italic": true
+          }
+        },
+        " of ",
+        {
+          "text": "house",
+          "styles": {
+            "italic": true
+          }
+        },
+        " with rounded, pushed-out lips."
+      ],
+      "id": "a1b61417-5acf-4615-a61d-9ee488e2c49c"
+    },
+    {
+      "type": "divider",
+      "id": "9f0731f2-20a7-49a1-9f89-acef05a03791"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Plural with -s",
+      "id": "10f474ac-b855-4390-b78b-9c4d55f0b2f6"
+    },
+    {
+      "type": "paragraph",
+      "content": "Some nouns take -s, like in English. Two groups:",
+      "id": "00f6aa55-d853-4ca4-96ba-94c355e1bef8"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Nouns ending in an unstressed ",
+        {
+          "text": "-el, -em, -en, -er",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "-je",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": add ",
+        {
+          "text": "-s",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "de appel → appels, de tafel → tafels, de wortel → wortels",
+          "id": "89c3b667-1fe0-4308-b9f7-3975d688e6e4"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "de komkommer → komkommers",
+          "id": "1de6eb2d-d503-4963-89f9-5947a3219b99"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "het broodje → broodjes, het koekje → koekjes",
+          "id": "4360d42f-b54c-443d-9ef5-e7368123a487"
+        }
+      ],
+      "id": "e7959dff-cc48-42cd-b862-3b465465410b"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Nouns ending in a long ",
+        {
+          "text": "a, o, u, i",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "y",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": add ",
+        {
+          "text": "'s",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (apostrophe + s)."
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "de paprika → paprika's, de pizza → pizza's",
+          "id": "a745cf3a-1c06-4130-b0c8-e3e53dbe7ed9"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "de foto → foto's, het menu → menu's",
+          "id": "b55d400e-c77d-4812-ae2b-0ec78d42ec3b"
+        }
+      ],
+      "id": "5e0fa644-83ad-407a-8444-82fa9dd3c6a6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia takes six apples.",
+        "note": "de appel → appels. The plural appelen also exists, but it is old-fashioned and formal. Say appels."
+      },
+      "content": [
+        "Sofia neemt zes appel",
+        {
+          "text": "s",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "fb04a91e-7746-402c-8410-326b44ebdeff"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do we have peppers?",
+        "note": "de paprika → paprika's: long a at the end, so 's."
+      },
+      "content": [
+        "Hebben we paprika",
+        {
+          "text": "'s",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "?"
+      ],
+      "id": "4257f42c-73b4-458f-b4f1-fd0dee4efff7"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "de aardappel",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " has two correct plurals: ",
+        {
+          "text": "aardappelen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "aardappels",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Both are fine."
+      ],
+      "id": "30447e58-6455-46fc-bd5c-4be7c2b6c965"
+    },
+    {
+      "type": "divider",
+      "id": "4175d55b-087a-4751-839b-50afbddb5038"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Spelling changes with -en",
+      "id": "924db727-6fd0-4ccf-89da-93a50d297409"
+    },
+    {
+      "type": "paragraph",
+      "content": "The sound of the vowel stays the same in the plural. Sometimes the spelling must change to keep that sound.",
+      "id": "a9abd19e-f2c4-4d5e-8e81-263e7854ab06"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Short vowel: double the consonant",
+      "id": "dde9dfaa-8d8b-4a7a-8446-19a1e449013f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Short vowel + one consonant: write the consonant twice. ",
+        {
+          "text": "de fles",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " → fle",
+        {
+          "text": "ss",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "en, de kop → ko",
+        {
+          "text": "pp",
+          "styles": {
+            "bold": true
+          }
+        },
+        "en, de pan → pa",
+        {
+          "text": "nn",
+          "styles": {
+            "bold": true
+          }
+        },
+        "en, de boodschap → boodscha",
+        {
+          "text": "pp",
+          "styles": {
+            "bold": true
+          }
+        },
+        "en."
+      ],
+      "id": "981558a4-8a12-400a-9288-c683b92f9332"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The bottles are empty.",
+        "note": "fles → flessen. With one s (*flesen*) you would read a long e."
+      },
+      "content": [
+        {
+          "text": "De",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " fle",
+        {
+          "text": "ssen",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " leeg."
+      ],
+      "id": "0d5d7822-f79d-4fcc-801c-6fd82e494cab"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Long vowel: one letter is enough",
+      "id": "d56dd993-a08a-40f4-a6da-378404cb982c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "A long vowel written double (",
+        {
+          "text": "aa, ee, oo, uu",
+          "styles": {
+            "bold": true
+          }
+        },
+        ") is written single in the plural. ",
+        {
+          "text": "de tomaat",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " → toma",
+        {
+          "text": "ten",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ", de peer → peren, ",
+        {
+          "text": "het brood",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " → broden, de boon → bonen, ",
+        {
+          "text": "het uur",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " → uren, de banaan → bananen."
+      ],
+      "id": "3ffe3bcf-307d-4399-af5b-c0e007b9de26"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The tomatoes are red.",
+        "note": "tomaat → tomaten. Not *tomaats* and not *tomaaten*."
+      },
+      "content": [
+        {
+          "text": "De",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " toma",
+        {
+          "text": "ten",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " rood."
+      ],
+      "id": "3b0dcae3-3b0c-4e12-96ce-ca6339f5bee0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "f becomes v, s becomes z",
+      "id": "31f0aeb2-f8d2-4af0-a3be-70ac5e78867b"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "After a long vowel or a vowel pair like ui, ",
+        {
+          "text": "f → v",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "s → z",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": de druif → drui",
+        {
+          "text": "v",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "en, de kaas → ka",
+        {
+          "text": "z",
+          "styles": {
+            "bold": true
+          }
+        },
+        "en, het huis → hui",
+        {
+          "text": "z",
+          "styles": {
+            "bold": true
+          }
+        },
+        "en."
+      ],
+      "id": "e654759b-ae9c-4375-bc50-78a764123f17"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The grapes are delicious.",
+        "note": "druif → druiven. You also hear the v: druiven."
+      },
+      "content": [
+        {
+          "text": "De",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " drui",
+        {
+          "text": "ven",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " lekker."
+      ],
+      "id": "e885a3aa-32e2-48cf-a1dd-d76467b47080"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "Kaas is usually uncountable: ",
+        {
+          "text": "we hebben kaas",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". The plural ",
+        {
+          "text": "kazen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means whole cheeses or kinds of cheese. Never ",
+        {
+          "text": "kaasen",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        "."
+      ],
+      "id": "a3388db6-ca2e-4473-997d-2eec83009f06"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Overview: three ways to make a plural",
+      "id": "fbbb2e5d-f470-4b3b-a541-86097e4e7f44"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "-en",
+              "id": "fa7b1893-6508-4512-ac47-ef2e6d593806"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "boek → boeken",
+              "id": "8c74404b-959c-4538-9ef4-05c921dc7592"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "ui → uien",
+              "id": "7e0f7230-ef7c-4ce7-bcdf-7b91ddd637c0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "koelkast → koelkasten",
+              "id": "7f121c17-43f1-4a9e-b3c8-60609f4fb89e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "ei → eieren (irregular)",
+              "id": "7a3983cd-3bb1-4e92-8f34-89d16a79df00"
+            }
+          ],
+          "id": "23238c5f-c13e-4872-a57a-487b0ff04146"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "-s",
+              "id": "52c07921-ed64-4c00-9ced-9a6a2f865dec"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "appel → appels",
+              "id": "c41a2cd1-304b-4530-8bf8-04f40eef9e54"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "komkommer → komkommers",
+              "id": "7afb0683-b181-4672-a318-c421589a93be"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "broodje → broodjes",
+              "id": "80329ca3-f7df-4ba5-92f5-000e916e7932"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "paprika → paprika's",
+              "id": "7242566b-ad89-4c0b-8661-93dd02859aea"
+            }
+          ],
+          "id": "56a9b23b-5f5d-4966-8b02-0240e945ed41"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "spelling change",
+              "id": "5efb2aa1-4774-46db-b546-21cd3efc2e19"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "fles → flessen",
+              "id": "5a4b5103-299c-4025-a999-6d6503c0bf8e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "tomaat → tomaten",
+              "id": "cf33a00f-72e7-422e-81f3-b233fb93a919"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "druif → druiven",
+              "id": "74e618a7-0b21-4804-8c90-db4975637f84"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "kaas → kazen",
+              "id": "2f360d54-32a2-4da7-86ca-3e87adebfe6f"
+            }
+          ],
+          "id": "ff468749-a03c-4131-9fe5-d0c16dd7af3e"
+        }
+      ],
+      "id": "178728e5-de8e-4c2f-b4fa-9528e077afe3"
+    },
+    {
+      "type": "paragraph",
+      "content": "Not sure? Make a plural in three steps:",
+      "id": "e80dab89-c0eb-483e-9b14-b93afbfdaac3"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Look at the end: -el, -em, -en, -er, -je → add -s; a long a, o, u, i, y → add 's.",
+      "id": "d9902484-c257-4b4a-b96e-025795abd63b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Otherwise add -en.",
+      "id": "7e587679-bb35-49af-b2ed-ef4724e5a361"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Say the singular aloud and keep that vowel sound: double the consonant after a short vowel, write aa/ee/oo/uu single, and change f → v, s → z.",
+      "id": "e7066874-e850-44c5-9128-337609d27af8"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "Learn every noun with its article and its plural: ",
+        {
+          "text": "de tomaat, tomaten",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". Not sure? Look it up on ",
+        {
+          "type": "link",
+          "href": "https://woordenlijst.org",
+          "content": [
+            {
+              "text": "woordenlijst.org",
+              "styles": {}
+            }
+          ]
+        },
+        ", the official Dutch word list. It shows the article and the plural."
+      ],
+      "id": "e20f1a25-3fed-4df9-860a-518a6b06d3e9"
+    },
+    {
+      "type": "divider",
+      "id": "4d7505ad-6e0a-4fe9-a4d5-345bef5d988f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "een, de, het and geen",
+      "id": "8494ec55-2957-49b9-baea-1be3ed9b4c14"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "All plurals take de",
+      "id": "211a808c-bb55-4350-887a-ba5bfbe5672c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In the singular a noun is a de-word or a het-word. In the plural, every noun takes ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        ": ",
+        {
+          "text": "het ei",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " → ",
+        {
+          "text": "de eieren",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ", ",
+        {
+          "text": "het brood",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " → ",
+        {
+          "text": "de broden",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ", ",
+        {
+          "text": "het koekje",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " → ",
+        {
+          "text": "de koekjes",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        "."
+      ],
+      "id": "e778623b-c8f1-49b4-a3d9-2093a7bc52ac"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "het eieren",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "de eieren",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        ". ",
+        {
+          "text": "het broodjes",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "de broodjes",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        ". All plurals take de."
+      ],
+      "id": "da472752-c03b-4fdb-9231-c259854aef12"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The rolls are for the party.",
+        "note": "het broodje, but de broodjes. het feest stays het: it is singular."
+      },
+      "content": [
+        {
+          "text": "De",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " broodjes zijn voor ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " feest."
+      ],
+      "id": "233bb104-362b-4dd7-8752-c19847d3a9fb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "een has no plural",
+      "id": "bf8549f9-b529-4cb6-b21c-894bb70edb49"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "een",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means ",
+        {
+          "text": "one / a",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", so it only goes with a singular noun. In the plural, use no article (or a number)."
+      ],
+      "id": "69dc2824-8992-4c2c-8849-ce8d9ab75ea1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I have an apple. Noor has apples.",
+        "note": "een appel, but appels without een. Not *een appels*."
+      },
+      "content": [
+        "Ik heb ",
+        {
+          "text": "een",
+          "styles": {
+            "bold": true
+          }
+        },
+        " appel. Noor heeft appel",
+        {
+          "text": "s",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "64d07af9-3149-40db-ae5a-38e6fb3b6e4d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "geen: not a, not any",
+      "id": "c6bbc4a4-6ea6-4dea-8160-d32887c85011"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = not a / not any, before singular, plural and uncountable nouns: ",
+        {
+          "text": "geen ei, geen eieren, geen melk",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "1e71147a-5e23-4149-944f-82e1b3e36702"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We don't have any milk and we don't have any butter.",
+        "note": "melk and boter have no plural. geen still works."
+      },
+      "content": [
+        "We hebben ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " melk en ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " boter."
+      ],
+      "id": "e8271fef-d16b-48db-b7a4-4d281f1d985c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Words without a plural",
+      "id": "20d55acf-8353-4136-863e-c0cfb1ae7da9"
+    },
+    {
+      "type": "paragraph",
+      "content": "Some food words are uncountable. In normal use they have no plural and no een:",
+      "id": "98c84c63-e0d3-43a3-9ec6-483fff0d35d3"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Drinks",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de melk",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            ", ",
+            {
+              "text": "het water",
+              "styles": {
+                "textColor": "brown"
+              }
+            }
+          ],
+          "id": "db36b91a-8519-463c-ba9b-17ad29851290"
+        }
+      ],
+      "id": "56b66eb1-6787-4064-8605-4774c5e0f0c4"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Food",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de rijst",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            ", ",
+            {
+              "text": "de boter",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            ", ",
+            {
+              "text": "de kaas",
+              "styles": {
+                "textColor": "pink"
+              }
+            }
+          ],
+          "id": "27ed3227-5ea5-412a-87a1-ff1af8208bd7"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "het fruit",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " (but: appels, peren, druiven)"
+          ],
+          "id": "c7f14780-ce4a-4001-90c1-ae151c0f5b98"
+        }
+      ],
+      "id": "3efc251b-cfe7-4dfb-9ee2-d0ca5af5c527"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Plural subject, plural verb",
+      "id": "485e91ef-05e0-451a-a874-2bef5ee29b92"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "A plural noun as subject takes the plural verb, just like ",
+        {
+          "text": "wij",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". An adjective before a plural noun always ends in ",
+        {
+          "text": "-e",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": grote tomaten."
+      ],
+      "id": "657849c9-16eb-4e7d-82dd-1311ec71202e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The apple is expensive. The apples are expensive.",
+        "note": "Singular is, plural zijn."
+      },
+      "content": [
+        "De appel ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " duur. De appels ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " duur."
+      ],
+      "id": "68611b59-91f2-4cf9-8ac6-55ea2c2fc6b5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia buys big tomatoes.",
+        "note": "Recycles adjectives: groot → grote before a plural noun."
+      },
+      "content": [
+        "Sofia ",
+        {
+          "text": "koopt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " grote toma",
+        {
+          "text": "ten",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "c5e11678-f821-406f-8f97-b3cd601d5740"
+    },
+    {
+      "type": "divider",
+      "id": "72252cfc-9643-4389-bae5-e16b6473610e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: In de supermarkt",
+      "id": "96eb84cb-7af1-4da5-8dbb-2f8061f50b6c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Half past five. Noor and Sofia are in ",
+        {
+          "text": "de supermarkt",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ". They look for the tomatoes and the bread."
+      ],
+      "id": "45dab44c-f873-44bf-965c-b4eed8a2bf69"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Noor, waar zijn de tomaats?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "De tomaten? Kijk, hier zijn de tomaten, bij de paprika's."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "O ja, tomaten. Ik neem zes grote tomaten voor het feest."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Super. En ik neem twee rode paprika's en een komkommer."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Eieren, aardappelen, uien en tomaten. Ja! Nu het brood nog."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Neem jij de broodjes?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja hoor. Kijk, een groot brood!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Nee, joh! Geen brood, broodjes! Kleine broodjes, voor het feest."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "O, sorry! Hoe zeg je 'rolls' in het Nederlands? Broodjes?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja! Een broodje is klein. Een brood is groot."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Oké, ik neem twintig broodjes. En het grote brood ook, voor het ontbijt!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Lekker! Nu nog chips en koekjes, en dan naar huis."
+          }
+        ]
+      },
+      "id": "25120ed6-c2aa-4e8c-81c7-d3952d9506cc"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Sofia says ",
+        {
+          "text": "tomaats",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ". Noor answers with the correct form: ",
+        {
+          "text": "tomaten",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". A noun ending in -aat takes -en, and aa becomes a."
+      ],
+      "id": "b324fc15-5c2f-428b-afd9-05fee4b3ca97"
+    },
+    {
+      "type": "divider",
+      "id": "13b57665-c7bf-4dea-aa3b-f6d273e261f9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "f907f6f0-74fb-45d0-aa41-aa016dd2a002"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Write the plural",
+      "id": "d77babe4-7c3b-40ed-b67f-7173242c4089"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write the plural. Example: één boek, twee boeken.",
+          "items": [
+            {
+              "prompt": "één tomaat, twee …",
+              "authorsVersion": [
+                "tomaten"
+              ],
+              "note": "-en; the long aa is written single: tomaten. Not tomaats."
+            },
+            {
+              "prompt": "één fles, twee …",
+              "authorsVersion": [
+                "flessen"
+              ],
+              "note": "Short e + one s: double the s. Not flesen."
+            },
+            {
+              "prompt": "één appel, twee …",
+              "authorsVersion": [
+                "appels"
+              ],
+              "note": "Ends in -el: add -s. appelen is old-fashioned."
+            },
+            {
+              "prompt": "één paprika, twee …",
+              "authorsVersion": [
+                "paprika's"
+              ],
+              "note": "Ends in a long a: add 's."
+            },
+            {
+              "prompt": "één ei, twee …",
+              "authorsVersion": [
+                "eieren"
+              ],
+              "note": "Irregular: ei → eieren."
+            },
+            {
+              "prompt": "één druif, drie …",
+              "authorsVersion": [
+                "druiven"
+              ],
+              "note": "f becomes v after ui: druiven."
+            },
+            {
+              "prompt": "één peer, drie …",
+              "authorsVersion": [
+                "peren"
+              ],
+              "note": "ee is written single in the plural: peren."
+            },
+            {
+              "prompt": "één broodje, drie …",
+              "authorsVersion": [
+                "broodjes"
+              ],
+              "note": "Ends in -je: add -s."
+            }
+          ]
+        }
+      },
+      "id": "19183ef6-da9d-47a3-82a8-7df3bbde4bf3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in een, de, het or geen",
+      "id": "2116483c-376b-40d2-b511-8a61ffefaaa7"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in een, de, het or geen. Use a capital letter at the start of a sentence.",
+          "items": [
+            {
+              "prompt": "Sofia: Hebben we … ei? / Noor: Nee, we hebben … eieren.",
+              "authorsVersion": [
+                "een",
+                "geen"
+              ],
+              "note": "een only with a singular noun. geen works with singular and plural."
+            },
+            {
+              "prompt": "… brood is lekker, en … broodjes zijn ook lekker.",
+              "authorsVersion": [
+                "Het",
+                "de"
+              ],
+              "note": "het brood, but every plural takes de: de broodjes."
+            },
+            {
+              "prompt": "Ik heb … appel, maar ik heb … peer.",
+              "authorsVersion": [
+                "een",
+                "geen"
+              ],
+              "note": "Not 'niet een peer': use geen."
+            },
+            {
+              "prompt": "… tomaten zijn duur, maar … komkommer is goedkoop.",
+              "authorsVersion": [
+                "De",
+                "de"
+              ],
+              "note": "Plural: de. de komkommer is a de-word. goedkoop = cheap, duur = expensive."
+            },
+            {
+              "prompt": "Noor: Hebben we melk? / Sofia: Nee, we hebben … melk. En we hebben ook … water.",
+              "authorsVersion": [
+                "geen",
+                "geen"
+              ],
+              "note": "Uncountable words also take geen."
+            },
+            {
+              "prompt": "Sofia neemt … broodje. … broodje is voor het ontbijt.",
+              "authorsVersion": [
+                "een",
+                "Het"
+              ],
+              "note": "First a broodje (new), then the broodje: het broodje."
+            },
+            {
+              "prompt": "… water is in … koelkast.",
+              "authorsVersion": [
+                "Het",
+                "de"
+              ],
+              "note": "het water, de koelkast."
+            }
+          ]
+        }
+      },
+      "id": "2df7deee-b5c1-4aeb-8587-00f34dc58aeb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "b6f83f2c-bcba-46fc-9bf6-a01cd901358c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the right order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: vandaag / doen / we / boodschappen",
+              "authorsVersion": [
+                "Vandaag doen we boodschappen."
+              ],
+              "note": "Time first, then the verb, then the subject. Also fine: We doen vandaag boodschappen."
+            },
+            {
+              "prompt": "Put in order: we / geen eieren / hebben",
+              "authorsVersion": [
+                "We hebben geen eieren."
+              ],
+              "note": "geen goes right before the noun."
+            },
+            {
+              "prompt": "Put in order: de tomaten / duur / zijn",
+              "authorsVersion": [
+                "De tomaten zijn duur."
+              ],
+              "note": "Plural subject, so zijn."
+            },
+            {
+              "prompt": "Put in order: om half zes / Noor / boodschappen / doet",
+              "authorsVersion": [
+                "Om half zes doet Noor boodschappen."
+              ],
+              "note": "Time at the start: verb second, then the subject. Also fine: Noor doet om half zes boodschappen."
+            },
+            {
+              "prompt": "Put in order (question): aardappelen / hebben / we",
+              "authorsVersion": [
+                "Hebben we aardappelen?"
+              ],
+              "note": "Yes/no question: the verb comes first."
+            },
+            {
+              "prompt": "Put in order: op zaterdag 19 september / is / Daan / jarig",
+              "authorsVersion": [
+                "Op zaterdag 19 september is Daan jarig."
+              ],
+              "note": "Recycles op + day and date. Also fine: Daan is op zaterdag 19 september jarig."
+            },
+            {
+              "prompt": "Put in order: Sofia / chips en koekjes / mee / neemt / naar het feest",
+              "authorsVersion": [
+                "Sofia neemt chips en koekjes mee naar het feest."
+              ],
+              "note": "meenemen is separable: mee goes towards the end. Also fine: Sofia neemt chips en koekjes naar het feest mee."
+            }
+          ]
+        }
+      },
+      "id": "6a33d8f5-23f4-4726-9905-8b3cf7dc1446"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Make it plural",
+      "id": "602d12d4-6d56-4f3a-8c01-ad9e44efd6ce"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Make it plural. For a word, write the plural with its article. For a sentence, use the number in brackets, or make the subject plural and change the verb.",
+          "items": [
+            {
+              "prompt": "het ei",
+              "authorsVersion": [
+                "de eieren"
+              ],
+              "note": "All plurals take de. Not het eieren."
+            },
+            {
+              "prompt": "het brood",
+              "authorsVersion": [
+                "de broden"
+              ],
+              "note": "oo is written single: broden. Article de."
+            },
+            {
+              "prompt": "het koekje",
+              "authorsVersion": [
+                "de koekjes"
+              ],
+              "note": "-je + s, and the plural takes de."
+            },
+            {
+              "prompt": "Ik heb een appel. (twee)",
+              "authorsVersion": [
+                "Ik heb twee appels."
+              ],
+              "note": "een disappears; appel → appels."
+            },
+            {
+              "prompt": "Noor koopt een paprika. (drie)",
+              "authorsVersion": [
+                "Noor koopt drie paprika's."
+              ],
+              "note": "Long a: 's."
+            },
+            {
+              "prompt": "De tomaat is groot.",
+              "authorsVersion": [
+                "De tomaten zijn groot."
+              ],
+              "note": "Plural subject: is → zijn."
+            },
+            {
+              "prompt": "Het broodje is lekker.",
+              "authorsVersion": [
+                "De broodjes zijn lekker."
+              ],
+              "note": "het → de, is → zijn."
+            }
+          ]
+        }
+      },
+      "id": "e7fc66ad-59a3-4566-b414-2aabd310861a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "33c44b5e-9261-40ac-b0a0-b9dda4dceb36"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "We don't have any eggs.",
+              "authorsVersion": [
+                "We hebben geen eieren."
+              ],
+              "note": "not any = geen. Also fine: Wij hebben geen eieren."
+            },
+            {
+              "prompt": "The apples are expensive.",
+              "authorsVersion": [
+                "De appels zijn duur."
+              ],
+              "note": "Plural: de appels, zijn."
+            },
+            {
+              "prompt": "Noor buys bananas and pears.",
+              "authorsVersion": [
+                "Noor koopt bananen en peren."
+              ],
+              "note": "banaan → bananen, peer → peren: the double vowel becomes single."
+            },
+            {
+              "prompt": "Do we have potatoes?",
+              "authorsVersion": [
+                "Hebben we aardappelen?"
+              ],
+              "note": "Also fine: Hebben we aardappels?"
+            },
+            {
+              "prompt": "We have no milk and no butter.",
+              "authorsVersion": [
+                "We hebben geen melk en geen boter."
+              ],
+              "note": "Uncountable nouns also take geen."
+            },
+            {
+              "prompt": "On Saturday Sofia makes a Spanish tortilla.",
+              "authorsVersion": [
+                "Op zaterdag maakt Sofia een Spaanse tortilla."
+              ],
+              "note": "Time at the start, then the verb. Also fine: Sofia maakt op zaterdag een Spaanse tortilla. zaterdag is lowercase."
+            }
+          ]
+        }
+      },
+      "id": "597813b3-6ce4-4796-ac61-f458670776e7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "37e56d80-bb4c-4070-819f-230455fb4d45"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into English.",
+          "items": [
+            {
+              "prompt": "We hebben geen koekjes.",
+              "authorsVersion": [
+                "We don't have any cookies."
+              ],
+              "note": "Also fine: We have no biscuits."
+            },
+            {
+              "prompt": "De druiven zijn lekker.",
+              "authorsVersion": [
+                "The grapes are delicious."
+              ],
+              "note": "Also fine: The grapes are tasty."
+            },
+            {
+              "prompt": "Sofia neemt drie paprika's.",
+              "authorsVersion": [
+                "Sofia takes three peppers."
+              ],
+              "note": "In a shop, ik neem means 'I'll have / I'll take'. Also fine: Sofia is getting three peppers."
+            },
+            {
+              "prompt": "De flessen zijn in de koelkast.",
+              "authorsVersion": [
+                "The bottles are in the fridge."
+              ],
+              "note": null
+            },
+            {
+              "prompt": "Vandaag doen Noor en Sofia boodschappen.",
+              "authorsVersion": [
+                "Today Noor and Sofia are doing the shopping."
+              ],
+              "note": "boodschappen doen = to do the shopping (groceries)."
+            }
+          ]
+        }
+      },
+      "id": "1c2bcc59-d629-4d14-9048-e6c3c3ae7eca"
+    },
+    {
+      "type": "divider",
+      "id": "3a993953-b097-4fab-a08d-8b6b5f37f2ef"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Het boodschappenlijstje",
+      "id": "89ac1121-6a1e-44dc-a4fe-f808701dfb60"
+    },
+    {
+      "type": "paragraph",
+      "content": "Friday morning, before she goes to the university, Noor leaves a shopping list and a note on the kitchen table for Sofia.",
+      "id": "133b71c2-e7d9-4413-8685-ff3111819a04"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Noor's shopping list and note. Answer the questions in Dutch.",
+          "passage": {
+            "title": "Boodschappen voor het feest",
+            "content": "BOODSCHAPPEN (vrijdag 18 september)\n- 12 eieren\n- aardappelen\n- 4 uien\n- 6 tomaten\n- 2 paprika's\n- 20 broodjes\n- druiven, peren en appels\n- chips en koekjes\n- sap\n\nHoi Sofia!\nIk ben vandaag tot vijf uur op de universiteit. Om half zes doe ik boodschappen in de supermarkt. Kom je mee?\nWe hebben geen eieren en geen aardappelen. We hebben ook geen melk, maar melk is niet voor het feest. In de koelkast hebben we nog kaas, boter en bier. We hebben geen wijn, maar Daan en Lotte hebben wijn voor het feest.\nJij maakt morgen de tortilla. Ik maak een grote fruitsalade met druiven, peren en appels. Lekker!\nTot straks!\nNoor"
+          },
+          "items": [
+            {
+              "prompt": "Tot hoe laat is Noor vandaag op de universiteit?",
+              "authorsVersion": [
+                "Tot vijf uur."
+              ],
+              "note": "Also fine: Ze is tot vijf uur op de universiteit."
+            },
+            {
+              "prompt": "Hoe laat doet Noor boodschappen?",
+              "authorsVersion": [
+                "Om half zes."
+              ],
+              "note": "half zes = 17:30."
+            },
+            {
+              "prompt": "Hebben Noor en Sofia eieren?",
+              "authorsVersion": [
+                "Nee, ze hebben geen eieren."
+              ],
+              "note": "geen + plural."
+            },
+            {
+              "prompt": "Wat hebben ze nog in de koelkast?",
+              "authorsVersion": [
+                "Kaas, boter en bier."
+              ],
+              "note": null
+            },
+            {
+              "prompt": "Wie heeft wijn voor het feest?",
+              "authorsVersion": [
+                "Daan en Lotte."
+              ],
+              "note": "wie takes a singular verb (Wie heeft …?), even when the answer is two people. Full sentence: Daan en Lotte hebben wijn."
+            },
+            {
+              "prompt": "Wat maakt Noor morgen?",
+              "authorsVersion": [
+                "Een grote fruitsalade met druiven, peren en appels."
+              ],
+              "note": null
+            },
+            {
+              "prompt": "Klopt dit? Noor koopt melk.",
+              "authorsVersion": [
+                "Nee, Noor koopt geen melk."
+              ],
+              "note": "Melk is niet voor het feest, and it is not on the list."
+            },
+            {
+              "prompt": "What is the singular of broodjes, tomaten and druiven? Give each word with de or het.",
+              "authorsVersion": [
+                "het broodje, de tomaat, de druif"
+              ],
+              "note": "Go back from the plural: -jes → -je, a → aa, v → f."
+            }
+          ]
+        }
+      },
+      "id": "54176e6c-ea0d-46de-a025-3681ebd1c6e1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "b872f7fc-174b-45cd-9670-2c6068204870"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write your own shopping list in sentences (3–4 sentences): what you have and what you don't have.",
+          "items": [
+            {
+              "prompt": "Look in your own kitchen. What do you have? What don't you have? What do you buy?",
+              "authorsVersion": [
+                "Ik heb brood, kaas en boter. Ik heb geen eieren en geen melk. Vandaag koop ik zes eieren, appels en twee komkommers. Op zaterdag doe ik boodschappen in de supermarkt."
+              ],
+              "note": "Model answer. Check: plurals with -en or -s, geen before the noun, no een before a plural, and inversion after a time word at the start."
+            }
+          ]
+        }
+      },
+      "id": "0e7a8970-28d5-43ce-b9f9-0e7c923d34ac"
+    },
+    {
+      "type": "divider",
+      "id": "2f66bd51-e57c-42a3-abd9-a406ef5709a5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "4719617b-b5f1-418a-95d9-75981fbc0eb1"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Most nouns add -en: boek → boeken, ui → uien. Irregular: eieren, kinderen.",
+      "id": "7b92a846-4e43-4c74-8b2b-ac2b73d9346e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "-el, -em, -en, -er, -je add -s: appels, komkommers, broodjes. A long a, o, u, i, y adds 's: paprika's, foto's.",
+      "id": "57fa9d6a-aedd-4120-aba1-af912930aa00"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Keep the vowel sound: flessen, tomaten, peren. f → v and s → z: druiven, kazen, huizen.",
+      "id": "203a9991-864b-4083-aaed-b4a51e0fa324"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "All plurals take de. een has no plural. geen = not a / not any.",
+      "id": "7d16a9de-6f2d-4920-a6e6-e112ab492386"
+    },
+    {
+      "type": "paragraph",
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "content": [
+        {
+          "text": "Remember: ",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "het ei",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        ", ",
+        {
+          "text": "de eieren",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ", geen eieren. ",
+        {
+          "text": "De tomaten zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " rood."
+      ],
+      "id": "6bf81a1e-26bb-43d2-bfee-9cccc9f6dd1e"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: De koelkast is bijna leeg",
+      "description": "An almost empty fridge in a small Utrecht kitchen: one onion, two tomatoes, a piece of cheese and butter. A handwritten shopping list on the door.",
+      "alt": "An almost empty fridge with one onion and two tomatoes"
+    },
+    {
+      "afterHeading": "Story: In de supermarkt",
+      "description": "Sofia holding up a big loaf of bread in a supermarket aisle while Noor laughs and points at a basket of small bread rolls.",
+      "alt": "Sofia holds a big loaf; Noor points at small rolls"
+    }
+  ],
+  "id": "5d6cab20-f1b4-4c4a-96c2-e7fa821411dd"
+}

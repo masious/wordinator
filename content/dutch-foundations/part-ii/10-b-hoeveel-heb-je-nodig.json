@@ -1,0 +1,2703 @@
+{
+  "title": "Hoeveel heb je nodig?",
+  "goal": "Talk about quantities with weights, containers and amounts, and say what you need with nodig hebben.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Hoeveel heb je nodig?",
+      "id": "0374d19d-d7d5-4d44-abe2-f7688c39630f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Saturday 19 September, the day of Daan's birthday party. In the kitchen of Noor's flat, Sofia teaches Noor to make a Spanish ",
+        {
+          "text": "tortilla",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", and Noor makes Dutch party snacks. In this lesson you will say how much and how many you need: ",
+        {
+          "text": "een kilo aardappelen",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "twee flessen water",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "een beetje zout",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", and the very useful verb ",
+        {
+          "text": "nodig hebben",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "to need",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")."
+      ],
+      "id": "7dc806d4-3769-4208-92a2-14ca5ef9ac0f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: the finite verb is ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "nodig",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        " (sent to the end) is red, the subject is ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " and time is ",
+        {
+          "text": "orange",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ". ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        "-words are pink and ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        "-words are brown."
+      ],
+      "id": "a8e25dc4-41a9-4e07-8302-876fda21db1d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Tortilla in de keuken",
+      "id": "2a81820a-28ae-4ce7-97a4-b479c136544a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Saturday morning. Sofia and Noor are in the kitchen with the shopping from yesterday."
+      ],
+      "id": "f72592b3-7a9e-46a0-b12b-451dd8dd63b5"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Zo, Sofia! Vandaag maken we een Spaanse tortilla. Hoeveel eieren heb je nodig?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Zes eieren en een kilo aardappelen."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Een kilo? Joh! Wat heb je nog meer nodig?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik heb nodig twee uien."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Je hebt twee uien nodig? Prima, we hebben vijf uien."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "O ja: ik heb twee uien nodig. En een beetje zout."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En olijfolie? We hebben een fles olijfolie. Is een fles genoeg?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, een fles is genoeg. Voor een tortilla gebruik ik een halve liter."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Super! Ik maak ook Nederlandse snacks klaar: kaasblokjes en bitterballen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Kaasblokjes? Lekker! Hoeveel kaas heb je nodig?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Een pond kaas. Een pond is vijfhonderd gram. En twee zakken chips!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Echt? Vijfhonderd gram? Oké!"
+          }
+        ]
+      },
+      "id": "9d532ee5-647d-4f7c-94a7-fb90208fc2ce"
+    },
+    {
+      "type": "divider",
+      "id": "121c811b-34ea-4621-a2c4-f7185b8cab87"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Units and containers",
+      "id": "162e296b-4f90-4cd6-9fbb-1d41bcb6a324"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Units stay singular",
+      "id": "03e69cce-ef53-4634-9365-2c35577a97d1"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "number + unit + noun",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": a unit of measure stays singular after a number. ",
+        "twee ",
+        {
+          "text": "kilo",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " aardappelen, drie ",
+        {
+          "text": "liter",
+          "styles": {
+            "bold": true
+          }
+        },
+        " melk, 200 ",
+        {
+          "text": "gram",
+          "styles": {
+            "bold": true
+          }
+        },
+        " kaas, vijf ",
+        {
+          "text": "euro",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", twee ",
+        {
+          "text": "uur",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "d161a524-6454-49bf-9a99-76ebdca8c955"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia buys two kilos of potatoes.",
+        "note": "Not *twee kilos*. The unit kilo stays singular; the noun aardappelen is plural."
+      },
+      "content": [
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "koopt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " twee ",
+        {
+          "text": "kilo",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " aardappelen."
+      ],
+      "id": "7d720fa6-cf39-45b1-b868-cfaf14bfe7b6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor has 200 grams of cheese.",
+        "note": "200 = tweehonderd. Gram stays singular."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "heeft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " 200 ",
+        {
+          "text": "gram",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " kaas."
+      ],
+      "id": "7ca67280-6fe1-45c1-884b-c94fdc3eb80a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The party lasts five hours.",
+        "note": "Recycles uur from the lessons on time: twee uur, vijf uur, never *uren* after a number."
+      },
+      "content": [
+        "Het feest ",
+        {
+          "text": "duurt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " vijf ",
+        {
+          "text": "uur",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "ef435b24-2c3a-46c9-a2e5-ec88eb8a86a9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Containers and pieces become plural",
+      "id": "078c6703-6c36-4e68-a4ca-38d3d0ca75a7"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Things you can hold in your hand (a bottle, a bag, a piece) are normal nouns. After a number they take the normal plural from the last lesson."
+      ],
+      "id": "0f7327ef-5276-4385-8d95-d782802a870a"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Unit: singular",
+              "id": "1655190d-dcca-4d46-ace9-c2cd7fac6d4f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "een kilo → twee ",
+                {
+                  "text": "kilo",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "b8edada8-f45f-4d7d-a4e8-311ce4f6dc6c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "een liter → drie ",
+                {
+                  "text": "liter",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "ff230ea4-12c3-4d17-81e3-5c63668c7e0b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "een gram → 200 ",
+                {
+                  "text": "gram",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "0f30f810-de45-486e-9c5c-a8e725af59f4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "een pond → twee ",
+                {
+                  "text": "pond",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "b95cae98-54a2-46fe-bbd6-151ad399a6f3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "een euro → vijf ",
+                {
+                  "text": "euro",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "be9d4ab9-0ff3-43c7-bed2-d778f32ce366"
+            }
+          ],
+          "id": "4b5aac53-69b0-4be8-b64a-be1b3fb50425"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Container or piece: plural",
+              "id": "6369cf16-e8c2-4c0a-854c-7154e5e02f7f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " fles → twee ",
+                {
+                  "text": "flessen",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "b0fa007e-38d6-46e4-95ba-671fd7908e56"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " pak → drie ",
+                {
+                  "text": "pakken",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "f9f196e6-43a9-4752-a953-1be0e15e9d56"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " zak → twee ",
+                {
+                  "text": "zakken",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "80aafb37-4d1d-4218-8144-d3c053f9d4b4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " stuk → vier ",
+                {
+                  "text": "stukken",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "7ae66bb7-027c-47a3-9cf1-99c3ce70bb2d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " blik → twee ",
+                {
+                  "text": "blikken",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "df6513b9-ebe7-4b77-8431-daa382d627d8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " doos → twee ",
+                {
+                  "text": "dozen",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "2cba9238-ba84-4daf-82d7-18f4d55f6c03"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " glas → twee ",
+                {
+                  "text": "glazen",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "f919d957-74ab-4c52-ba4b-f9fead07a5a2"
+            }
+          ],
+          "id": "4b2a98a1-c675-4ec6-9c0a-aaf28c0d1bfc"
+        }
+      ],
+      "id": "8fd87501-5101-4c13-b407-8c2caf7de3bd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We have three bottles of water.",
+        "note": "de fles → flessen: short vowel, so the s doubles (10-a)."
+      },
+      "content": [
+        {
+          "text": "We",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "hebben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " drie ",
+        {
+          "text": "flessen",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " water."
+      ],
+      "id": "db551eba-5f1e-44de-a40f-675297808611"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "One irregular plural to learn by heart: het glas → twee ",
+        {
+          "text": "glazen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (short a, but a long a in the plural). de kop → twee ",
+        {
+          "text": "koppen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is regular (10-a). In a café people often just say ",
+        {
+          "text": "twee koffie",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "292d1a95-daad-4ea9-9305-654968f4d7c4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "No \"of\" after a unit",
+      "id": "7756a02c-9e02-4d4a-b41b-990572627fc9"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "English says ",
+        {
+          "text": "a bottle of water",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". Dutch puts nothing between the unit and the noun: ",
+        {
+          "text": "een fles van water",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "een fles water",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "b66327e2-ae7e-4cd4-a39a-e1555846e613"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "een kilo appels",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "a kilo of apples",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")"
+      ],
+      "id": "49b89e05-568d-4887-9a62-8ce467948772"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "een pak melk",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "a carton of milk",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")"
+      ],
+      "id": "ff2dabcb-1fa7-4d68-9c4f-e1a356dde7e3"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "een kop koffie",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "a cup of coffee",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")"
+      ],
+      "id": "705174d9-90ef-4b2d-8685-e19f26d06196"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "een stuk kaas",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "a piece of cheese",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")"
+      ],
+      "id": "00132da1-5a41-42c1-9203-6484c21e333f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "een glas wijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "a glass of wine",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")"
+      ],
+      "id": "fe71b180-aa7d-4d7a-8754-8efbe4f9adbe"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "A pound and a half",
+      "id": "4702b84f-43d2-4a1b-b5ef-eedd1d6078ae"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        {
+          "text": "een pond",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is ",
+        {
+          "text": "500 gram",
+          "styles": {
+            "bold": true
+          }
+        },
+        " in the Netherlands, not a British pound of 454 grams. ",
+        "In a shop or at the market, ",
+        {
+          "text": "een pond kaas",
+          "styles": {
+            "italic": true
+          }
+        },
+        " is exactly half a kilo."
+      ],
+      "id": "c94aa00b-7691-408f-b086-6d1c66697c93"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "een pond",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = 500 gram = ",
+        {
+          "text": "een halve kilo",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "3bf8e532-3b53-49e4-ac39-00c6d7cfdbc5"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "een half pond",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = 250 gram"
+      ],
+      "id": "e1ebe12b-1670-4d84-b4c6-4fd7a573f79f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "een halve liter",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = 500 ml"
+      ],
+      "id": "9ea65b57-f7be-478a-a691-70ecc0b060a1"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Notice the small difference: ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " kilo → een ",
+        {
+          "text": "halve",
+          "styles": {
+            "bold": true
+          }
+        },
+        " kilo, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " pond → een ",
+        {
+          "text": "half",
+          "styles": {
+            "bold": true
+          }
+        },
+        " pond. It is the same rule as with adjectives: -e with de-words, no -e with a het-word after een."
+      ],
+      "id": "55b4529c-f7bd-4470-836f-09c3a624e73c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor buys half a kilo of cheese.",
+        "note": "een pond = 500 grams, so 'half a kilo' or '500 grams' is the best English."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "koopt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " een ",
+        {
+          "text": "pond",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " kaas."
+      ],
+      "id": "b36fe408-ee09-4c3d-b2d4-fd760fad2bbb"
+    },
+    {
+      "type": "divider",
+      "id": "d7742893-4650-41fc-8359-0741fb62e1af"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "How much? How many?",
+      "id": "e6363f75-a3dd-4d8a-b835-3954257a8a0f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Quantity words",
+      "id": "70536159-b523-4325-ad36-92333ee8166d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "These words go before the noun, just like a number:"
+      ],
+      "id": "ea2b6350-4cbd-43ae-a36d-c07d4565f604"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "veel",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "a lot of, many",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") and ",
+        {
+          "text": "weinig",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "not much, few",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "veel uien, veel olijfolie"
+          ],
+          "id": "b970cba5-9ea3-452a-b0d9-b867596fc362"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "weinig tijd, weinig eieren"
+          ],
+          "id": "1d3be8d9-c78a-456e-9b86-214f3008b20a"
+        }
+      ],
+      "id": "0276c6f2-ca88-4faf-a5c5-315cf604c112"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "genoeg",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "enough",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "genoeg brood, genoeg stoelen (chairs)"
+          ],
+          "id": "d6af1191-94fb-458c-9e01-b420c9878631"
+        }
+      ],
+      "id": "c6fca74e-4df0-4b82-b8c9-a8a27587b0f6"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "een beetje",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "a little",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") + uncountable"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een beetje zout, een beetje melk"
+          ],
+          "id": "58d62b8c-56a7-4b0b-9c81-09b7ad87e6bc"
+        }
+      ],
+      "id": "e3c86712-d3f2-445b-a156-94e22d2da586"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "een paar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "a few, a couple of",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") + plural"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een paar eieren, een paar koekjes"
+          ],
+          "id": "7dd952e8-d360-492b-af2c-5d39c8fb1447"
+        }
+      ],
+      "id": "db763591-ff28-4f87-9ab7-5d19814fb0bd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia uses a lot of olive oil.",
+        "note": "veel works for uncountables (olie) and plurals (uien)."
+      },
+      "content": [
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "gebruikt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "veel",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " olijfolie."
+      ],
+      "id": "308a6b11-e101-412d-acd2-fcfd059572eb"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor has a couple of onions.",
+        "note": "een paar + plural. Not *een paar ui*."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "heeft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "een paar",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " uien."
+      ],
+      "id": "39677ed8-a4e8-4d17-9b48-471b802fbbde"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Asking with hoeveel",
+      "id": "5dd74bf5-ea5d-4dc7-87df-dd29c7fc454b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "hoeveel + plural",
+          "styles": {
+            "bold": true
+          }
+        },
+        " for things you count, ",
+        {
+          "text": "hoeveel + uncountable",
+          "styles": {
+            "bold": true
+          }
+        },
+        " for things you measure. Then the verb comes second: Hoeveel eieren ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " je?"
+      ],
+      "id": "a2a51ca8-675c-4205-b005-cae6ab9c7ec8"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How many eggs do you use?",
+        "note": "jij → je after the verb: gebruik je, no t (Part I)."
+      },
+      "content": [
+        {
+          "text": "Hoeveel",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " eieren ",
+        {
+          "text": "gebruik",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "?"
+      ],
+      "id": "cc9abf76-c15e-4429-8480-22f97984edf1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How much milk do we have?",
+        "note": "Dutch has one word for both 'how much' and 'how many'."
+      },
+      "content": [
+        {
+          "text": "Hoeveel",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " melk ",
+        {
+          "text": "hebben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "we",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "?"
+      ],
+      "id": "3f599d72-5ca5-491e-a53e-b9422e1b8588"
+    },
+    {
+      "type": "divider",
+      "id": "b3f1c57c-a9ee-481f-8448-0dc79e7501c2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Nodig hebben",
+      "id": "d14b345b-ab39-4718-8238-76df360a4eb1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Nodig goes to the end",
+      "id": "02619ceb-7764-4cf1-a49a-0cf5803d492c"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "subject + hebben + what you need + nodig",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "nodig hebben",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means ",
+        {
+          "text": "to need",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". Only hebben changes; ",
+        {
+          "text": "nodig",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        " goes to the end of the sentence, like the prefix of a separable verb."
+      ],
+      "id": "3ec6a994-3942-418a-89b0-b8fcf0fede49"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "ik ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " … ",
+        {
+          "text": "nodig",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        " / jij ",
+        {
+          "text": "hebt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " … ",
+        {
+          "text": "nodig",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        " / hij, zij ",
+        {
+          "text": "heeft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " … ",
+        {
+          "text": "nodig",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        }
+      ],
+      "id": "156a2f7b-749f-4348-bff6-b7f8d99fda4e"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "wij, jullie, zij ",
+        {
+          "text": "hebben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " … ",
+        {
+          "text": "nodig",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        }
+      ],
+      "id": "23bffe44-9361-4d2f-acb2-ff004d52c5f3"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I need two onions.",
+        "note": "Compare a separable verb: Ik maak de snacks klaar. The red part goes to the end."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " twee uien ",
+        {
+          "text": "nodig",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "ae556b39-041c-4071-8bd9-46cf6827268f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "On Saturday 19 September we need a lot of bitterballen.",
+        "note": "Recycles inversion: time first, then the verb, then the subject. Nodig still goes to the end."
+      },
+      "content": [
+        {
+          "text": "Op zaterdag 19 september",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "hebben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "we",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " veel bitterballen ",
+        {
+          "text": "nodig",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "fbdab1d9-01f2-4879-abd6-c8aba50f04a1"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Sofia's mistake: ",
+        {
+          "text": "Ik heb nodig twee uien",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Ik heb twee uien nodig",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". English puts 'need' next to the subject; Dutch sends nodig to the end."
+      ],
+      "id": "4a22c113-afda-4d85-a9d1-8a22a877ceca"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Questions with nodig",
+      "id": "5ea513a1-804f-419d-93b0-b08e8443f9a5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you need salt?",
+        "note": "Yes/no question: the verb comes first. Nodig still goes to the end."
+      },
+      "content": [
+        {
+          "text": "Heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " zout ",
+        {
+          "text": "nodig",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "daeaf70a-667f-4e07-926f-22ec0898999c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How many eggs do you need?",
+        "note": "The title of this lesson."
+      },
+      "content": [
+        "Hoeveel eieren ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "nodig",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "c096f340-d308-48ce-8c94-e8a89bbcf53b"
+    },
+    {
+      "type": "divider",
+      "id": "4603aa19-18e2-436f-846c-231654c35c51"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Small things: het blokje, het kopje",
+      "id": "591627f2-eaa5-42fa-be0b-6932a0bdadd6"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "The ending ",
+        {
+          "text": "-je",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (sometimes ",
+        {
+          "text": "-tje",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "-pje",
+          "styles": {
+            "bold": true
+          }
+        },
+        ") makes something small. You see these words everywhere: ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " broodje, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " koekje, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " kaasblokje. The ending depends on the sound, so learn each word as you meet it."
+      ],
+      "id": "05054fc2-5c78-4ce7-be38-ba08b1447de7"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "A word with ",
+        {
+          "text": "-je, -tje, -pje",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is always a ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        "-word, even when the normal word is a de-word: ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " kop → ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " kopje. ",
+        {
+          "text": "de broodje",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "het broodje",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". The plural adds ",
+        {
+          "text": "-s",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": broodjes."
+      ],
+      "id": "a60e641b-2629-44f6-bfd3-e824ce321212"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " kop → ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " ",
+        {
+          "text": "kopje",
+          "styles": {
+            "bold": true
+          }
+        },
+        " → twee ",
+        {
+          "text": "kopjes",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "feb835d2-293f-410a-8444-5c6c6ba9b53c"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " blok → ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " ",
+        {
+          "text": "blokje",
+          "styles": {
+            "bold": true
+          }
+        },
+        " → ",
+        {
+          "text": "kaasblokjes",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "e6dd07b1-c056-4359-8521-f81a7da1d1f7"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " ei → ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " ",
+        {
+          "text": "eitje",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "5cb2ca80-5eb6-4263-9f04-50529e8a60ff"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia drinks a cup of coffee.",
+        "note": "een kopje koffie is the usual phrase in a café. Een kop koffie is a bigger cup."
+      },
+      "content": [
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "drinkt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " een ",
+        {
+          "text": "kopje",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " koffie."
+      ],
+      "id": "c76dd916-f904-442f-9d10-caea93325362"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "At a Dutch birthday party you often get ",
+        {
+          "text": "kaasblokjes",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (cheese cubes on a little stick) and hot ",
+        {
+          "text": "bitterballen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " with ",
+        {
+          "text": "mosterd",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "mustard",
+          "styles": {
+            "italic": true
+          }
+        },
+        "). At lunch most Dutch people eat bread: ",
+        {
+          "text": "boterhammen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "slices of bread",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") with cheese."
+      ],
+      "id": "0eb9a0ce-fcdf-4a7e-b1f2-09714213423d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Op het feest van Daan",
+      "id": "04387d3b-8ebf-4d19-8cfb-c38aade6c37a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Saturday evening. Twenty people are at Daan's party. Daan tries the tortilla."
+      ],
+      "id": "f34e2856-d158-4575-bca3-2017a08bafb9"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Sofia, de tortilla is heel lekker! Hoeveel eieren gebruik je?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je! Zes eieren voor een tortilla. Ik maak vandaag twee tortilla's."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Twaalf eieren dus! En hoeveel aardappelen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Een kilo voor een tortilla. Dus twee kilo aardappelen."
+          },
+          {
+            "speaker": "Lotte",
+            "text": "En olijfolie? In Spanje gebruiken jullie veel olijfolie, toch?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, veel olijfolie! En een beetje zout."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Daan, hier zijn de bitterballen. Heb je mosterd nodig?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ja, een beetje mosterd, alsjeblieft. Hoeveel bitterballen heb je, Noor?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Veertig. En twee zakken chips en veel kaasblokjes."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Twintig mensen en veertig bitterballen: twee bitterballen per persoon. Prima."
+          },
+          {
+            "speaker": "Lotte",
+            "text": "Daan, jij kookt op zondag. Heb jij het recept nodig?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Precies. Sofia, ik heb het recept nodig!"
+          }
+        ]
+      },
+      "id": "a23e07df-c70b-470b-9c3c-59e8075548c0"
+    },
+    {
+      "type": "divider",
+      "id": "f2300169-edc3-4cbf-9507-92e7e79e0c7d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "311f201c-b452-463b-b11f-19c6e48d27c1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in the quantity",
+      "id": "737bdcc8-7a39-42cb-8766-2e71a6e57a8a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in one word from this list. Use the plural where needed: kilo, gram, fles, zak, stuk, blik, kopje, beetje, paar.",
+          "items": [
+            {
+              "prompt": "Noor koopt een … chips.",
+              "authorsVersion": [
+                "zak"
+              ],
+              "note": "de zak chips: a bag of crisps. No van."
+            },
+            {
+              "prompt": "Sofia heeft een … aardappelen nodig. (1000 gram)",
+              "authorsVersion": [
+                "kilo"
+              ],
+              "note": "1000 gram = een kilo."
+            },
+            {
+              "prompt": "Lotte neemt twee … wijn mee. (bottles)",
+              "authorsVersion": [
+                "flessen"
+              ],
+              "note": "A container takes the plural: de fles → flessen. Recycles meenemen."
+            },
+            {
+              "prompt": "We hebben een … tomaten. (tin)",
+              "authorsVersion": [
+                "blik"
+              ],
+              "note": "het blik tomaten: a tin of tomatoes."
+            },
+            {
+              "prompt": "Noor snijdt een … kaas in blokjes.",
+              "authorsVersion": [
+                "stuk"
+              ],
+              "note": "een stuk kaas: a piece of cheese."
+            },
+            {
+              "prompt": "Heb je zout nodig? Ja, een … zout.",
+              "authorsVersion": [
+                "beetje"
+              ],
+              "note": "een beetje + uncountable: een beetje zout."
+            },
+            {
+              "prompt": "Ik heb een … uien nodig: twee of drie.",
+              "authorsVersion": [
+                "paar"
+              ],
+              "note": "een paar + plural: een paar uien."
+            },
+            {
+              "prompt": "Noor koopt 200 … kaas.",
+              "authorsVersion": [
+                "gram"
+              ],
+              "note": "A unit stays singular after a number: 200 gram, not *grammen*."
+            }
+          ]
+        }
+      },
+      "id": "fd39d62b-7ae9-4dd5-9925-1eed92f23e33"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the dialogues",
+      "id": "7a91aa57-6905-4945-8ffa-1475bbb8cb97"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete with the right form of hebben and nodig. Each blank is one word.",
+          "items": [
+            {
+              "prompt": "Noor: Wat … we voor de tortilla …? / Sofia: Zes eieren en een kilo aardappelen.",
+              "authorsVersion": [
+                "hebben",
+                "nodig"
+              ],
+              "note": "wij → hebben. Nodig goes to the end, before the question mark."
+            },
+            {
+              "prompt": "Sofia: Ik … twee uien … . / Noor: Prima, we hebben vijf uien.",
+              "authorsVersion": [
+                "heb",
+                "nodig"
+              ],
+              "note": "Not *Ik heb nodig twee uien*."
+            },
+            {
+              "prompt": "Noor: … je olijfolie …? / Sofia: Ja, veel olijfolie!",
+              "authorsVersion": [
+                "Heb",
+                "nodig"
+              ],
+              "note": "Yes/no question: the verb comes first. Heb je, no t (jij t-drop)."
+            },
+            {
+              "prompt": "Daan: Hoeveel bitterballen … Noor …? / Sofia: Veertig!",
+              "authorsVersion": [
+                "heeft",
+                "nodig"
+              ],
+              "note": "Noor = zij → heeft."
+            },
+            {
+              "prompt": "Daan: … jullie een mes …? / Sofia: Nee, we … geen mes … .",
+              "authorsVersion": [
+                "Hebben",
+                "nodig",
+                "hebben",
+                "nodig"
+              ],
+              "note": "geen + noun: we hebben geen mes nodig. Jullie hebben, wij hebben."
+            },
+            {
+              "prompt": "Sofia: Hoeveel kaas … jij …? / Noor: Ik … een pond kaas … .",
+              "authorsVersion": [
+                "heb",
+                "nodig",
+                "heb",
+                "nodig"
+              ],
+              "note": "Heb jij: the t drops after the verb in a question. Also fine: Hoeveel kaas heb je nodig?"
+            }
+          ]
+        }
+      },
+      "id": "4536ef82-b685-46b9-8e04-50265b23e67f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order with nodig",
+      "id": "8ce130fa-9edb-4238-9f96-42d2c8a025dd"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the right order. Start with the first chunk if it has a capital or is a time expression.",
+          "items": [
+            {
+              "prompt": "Put in order: ik / twee uien / heb / nodig",
+              "authorsVersion": [
+                "Ik heb twee uien nodig."
+              ],
+              "note": "Subject, verb, the thing you need, nodig."
+            },
+            {
+              "prompt": "Put in order: nodig / je / heb / zout / ?",
+              "authorsVersion": [
+                "Heb je zout nodig?"
+              ],
+              "note": "Yes/no question: the verb first."
+            },
+            {
+              "prompt": "Put in order: wat / we / nodig / hebben / ?",
+              "authorsVersion": [
+                "Wat hebben we nodig?"
+              ]
+            },
+            {
+              "prompt": "Put in order: vandaag / Sofia / zes eieren / nodig / heeft",
+              "authorsVersion": [
+                "Vandaag heeft Sofia zes eieren nodig."
+              ],
+              "note": "Time first, then the verb, then the subject (inversion). Also fine: Sofia heeft vandaag zes eieren nodig."
+            },
+            {
+              "prompt": "Put in order: op zaterdag / we / hebben / veel bitterballen / nodig",
+              "authorsVersion": [
+                "Op zaterdag hebben we veel bitterballen nodig."
+              ],
+              "note": "Also fine: We hebben op zaterdag veel bitterballen nodig."
+            },
+            {
+              "prompt": "Put in order: hoeveel melk / jullie / nodig / hebben / ?",
+              "authorsVersion": [
+                "Hoeveel melk hebben jullie nodig?"
+              ],
+              "note": "hoeveel + uncountable: hoeveel melk."
+            },
+            {
+              "prompt": "Put in order: Noor / geen mes / heeft / nodig",
+              "authorsVersion": [
+                "Noor heeft geen mes nodig."
+              ],
+              "note": "geen + noun, and nodig still at the end. Not *Noor heeft nodig geen mes*."
+            }
+          ]
+        }
+      },
+      "id": "b37d868e-3a89-4363-87d0-5f1abfcdc84f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "More than one",
+      "id": "c95f9277-5df3-46ce-aed8-d11d360b4e1b"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Change the number to the one in brackets and adjust. Units stay singular; containers and pieces become plural.",
+          "items": [
+            {
+              "prompt": "een fles water (3)",
+              "authorsVersion": [
+                "drie flessen water"
+              ],
+              "note": "de fles is a container: flessen."
+            },
+            {
+              "prompt": "een kilo appels (2)",
+              "authorsVersion": [
+                "twee kilo appels"
+              ],
+              "note": "kilo is a unit: it stays singular. Not *twee kilos*."
+            },
+            {
+              "prompt": "een pak melk (2)",
+              "authorsVersion": [
+                "twee pakken melk"
+              ],
+              "note": "het pak → pakken: short a, so the k doubles."
+            },
+            {
+              "prompt": "een zak chips (4)",
+              "authorsVersion": [
+                "vier zakken chips"
+              ],
+              "note": "de zak → zakken."
+            },
+            {
+              "prompt": "een liter melk (3)",
+              "authorsVersion": [
+                "drie liter melk"
+              ],
+              "note": "liter is a unit: it stays singular."
+            },
+            {
+              "prompt": "een kopje koffie (2)",
+              "authorsVersion": [
+                "twee kopjes koffie"
+              ],
+              "note": "Diminutives take -s: kopjes."
+            },
+            {
+              "prompt": "een doos koekjes (2)",
+              "authorsVersion": [
+                "twee dozen koekjes"
+              ],
+              "note": "de doos → dozen: oo → o and s → z, like kaas → kazen."
+            }
+          ]
+        }
+      },
+      "id": "70d51a52-d477-43f7-a1ca-cdb3d0791ba5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "a68c7aed-550a-43c1-9e90-50baf2046ce5"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "I need two onions.",
+              "authorsVersion": [
+                "Ik heb twee uien nodig."
+              ],
+              "note": "Nodig goes to the end."
+            },
+            {
+              "prompt": "Do you need salt?",
+              "authorsVersion": [
+                "Heb je zout nodig?"
+              ],
+              "note": "Also fine: Heb jij zout nodig?"
+            },
+            {
+              "prompt": "We need a kilo of potatoes.",
+              "authorsVersion": [
+                "We hebben een kilo aardappelen nodig."
+              ],
+              "note": "No van. Also fine: Wij hebben … and aardappels."
+            },
+            {
+              "prompt": "Noor buys two bags of crisps.",
+              "authorsVersion": [
+                "Noor koopt twee zakken chips."
+              ],
+              "note": "de zak → zakken. chips has no singular here."
+            },
+            {
+              "prompt": "How many eggs do you need?",
+              "authorsVersion": [
+                "Hoeveel eieren heb je nodig?"
+              ],
+              "note": "het ei → de eieren (10-a)."
+            },
+            {
+              "prompt": "A cup of coffee, please.",
+              "authorsVersion": [
+                "Een kopje koffie, alstublieft."
+              ],
+              "note": "Also fine: Een kop koffie, alsjeblieft."
+            },
+            {
+              "prompt": "On Saturday Daan needs a lot of cheese.",
+              "authorsVersion": [
+                "Op zaterdag heeft Daan veel kaas nodig."
+              ],
+              "note": "Time first, then the verb (inversion). Also fine: Daan heeft op zaterdag veel kaas nodig."
+            }
+          ]
+        }
+      },
+      "id": "2507ef51-bc04-4a6c-ac67-8323d5cb315e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "56f1f047-57c5-4d55-b241-a6f5b72bf2bc"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Hoeveel melk heb je nodig?",
+              "authorsVersion": [
+                "How much milk do you need?"
+              ],
+              "note": "hoeveel + uncountable = how much."
+            },
+            {
+              "prompt": "Ik heb een paar eieren.",
+              "authorsVersion": [
+                "I have a few eggs."
+              ],
+              "note": "Also fine: I have a couple of eggs."
+            },
+            {
+              "prompt": "We hebben weinig tijd.",
+              "authorsVersion": [
+                "We don't have much time."
+              ],
+              "note": "Also fine: We have little time."
+            },
+            {
+              "prompt": "Sofia koopt een half pond kaas.",
+              "authorsVersion": [
+                "Sofia buys 250 grams of cheese."
+              ],
+              "note": "een half pond = 250 grams, not half a British pound."
+            },
+            {
+              "prompt": "Noor maakt de kaasblokjes klaar.",
+              "authorsVersion": [
+                "Noor prepares the cheese cubes."
+              ],
+              "note": "Recycles the separable verb klaarmaken."
+            }
+          ]
+        }
+      },
+      "id": "5c7399b5-e05b-4682-a0d7-257036eb3f91"
+    },
+    {
+      "type": "divider",
+      "id": "c37f3fb8-9709-4a2e-8103-a3358f38b34d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Tortilla van Sofia",
+      "id": "642bdebf-b097-4495-a7ba-e350871a0db7"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Sofia writes her recipe in Dutch for Daan. New words: snijden (to cut), bakken (to fry), mengen (to mix), de kant (the side), alleen (here: only). She writes it with ",
+        {
+          "text": "je",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": Je ",
+        {
+          "text": "snijdt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " de aardappelen."
+      ],
+      "id": "ca7d280e-967f-41a3-b803-a24cf013bda0"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "Real Dutch recipes often use the infinitive or a command form instead of ",
+        {
+          "text": "je",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". You will see the command form later in the course. For now, ",
+        {
+          "text": "je",
+          "styles": {
+            "italic": true
+          }
+        },
+        " + verb works perfectly."
+      ],
+      "id": "8e81eac3-d53e-4142-a312-cb6ef238f2b7"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's recipe and answer the questions in Dutch.",
+          "passage": {
+            "title": "Tortilla van Sofia",
+            "content": "Tortilla van Sofia (voor zes personen)\n\nWat heb je nodig?\n- 6 eieren\n- 1 kilo aardappelen\n- 2 uien\n- een halve liter olijfolie\n- een beetje zout\n- een mes en een grote pan\n\nJe hebt een uur nodig.\n\nJe snijdt de aardappelen en de uien in kleine stukken. Je doet veel olijfolie in de pan. Je bakt de aardappelen en de uien twintig minuten. Je mengt de eieren met een beetje zout. Daarna doe je de aardappelen en de uien bij de eieren. Dan bak je de tortilla in een beetje olie: vijf minuten en dan nog vijf minuten aan de andere kant.\n\nTip van Sofia: je eet de tortilla warm of koud, met een glas wijn of een glas water. Lekker!"
+          },
+          "items": [
+            {
+              "prompt": "Hoeveel eieren heb je nodig?",
+              "authorsVersion": [
+                "Zes eieren."
+              ],
+              "note": "Also fine: Je hebt zes eieren nodig."
+            },
+            {
+              "prompt": "Hoeveel aardappelen heb je nodig?",
+              "authorsVersion": [
+                "Een kilo aardappelen."
+              ],
+              "note": "Also fine: aardappels."
+            },
+            {
+              "prompt": "Hoeveel uien heb je nodig?",
+              "authorsVersion": [
+                "Twee uien."
+              ]
+            },
+            {
+              "prompt": "Hoeveel zout heb je nodig?",
+              "authorsVersion": [
+                "Een beetje zout."
+              ],
+              "note": "een beetje + uncountable."
+            },
+            {
+              "prompt": "Hoeveel olijfolie heb je nodig?",
+              "authorsVersion": [
+                "Een halve liter olijfolie."
+              ],
+              "note": "de liter → een halve liter."
+            },
+            {
+              "prompt": "Voor hoeveel personen is de tortilla?",
+              "authorsVersion": [
+                "Voor zes personen."
+              ]
+            },
+            {
+              "prompt": "Hoeveel tijd heb je nodig?",
+              "authorsVersion": [
+                "Een uur."
+              ],
+              "note": "Also fine: Je hebt een uur nodig."
+            },
+            {
+              "prompt": "Klopt dit? Je eet de tortilla alleen warm.",
+              "authorsVersion": [
+                "Nee, je eet de tortilla warm of koud."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "53df4b1e-abea-4783-8561-f597235a4e5a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "ef236c5d-c65e-48f8-a71e-36a4f759ae6f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write the ingredients of a dish you like in 3–4 sentences with nodig hebben.",
+          "items": [
+            {
+              "prompt": "Which dish do you like? What do you need for it? Write 3–4 sentences with nodig hebben and quantities.",
+              "authorsVersion": [
+                "Ik maak pasta met tomaten. Ik heb vijfhonderd gram pasta nodig. Ik heb ook een blik tomaten en twee uien nodig. En ik heb een beetje olijfolie, zout en peper nodig."
+              ],
+              "note": "Model answer. Check: hebben in the second place, nodig at the end, units singular (vijfhonderd gram), containers plural, no van."
+            }
+          ]
+        }
+      },
+      "id": "024ed83d-9411-4853-a467-3ab7b6fbe09c"
+    },
+    {
+      "type": "divider",
+      "id": "1e70e98c-5244-4b0e-a473-03670cdf6417"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "26389857-80d7-450c-9319-be8271e8d2f4"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Units stay singular after a number: twee ",
+        {
+          "text": "kilo",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", drie ",
+        {
+          "text": "liter",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", 200 ",
+        {
+          "text": "gram",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "10a2b84b-e286-4f8f-923f-d935eee05ea3"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Containers and pieces become plural: twee ",
+        {
+          "text": "flessen",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", drie ",
+        {
+          "text": "pakken",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", vier ",
+        {
+          "text": "stukken",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "fb31c29a-c879-461f-8498-2ffb7654b7ed"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "No van after a unit: een fles water, een kilo appels."
+      ],
+      "id": "bd93ebd8-100a-4f63-a9b6-506ce8b6d386"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "veel, weinig, genoeg, een beetje, een paar, hoeveel",
+          "styles": {
+            "bold": true
+          }
+        },
+        " go before the noun."
+      ],
+      "id": "64a03c9a-88ab-42da-85ea-fec4d8c18ea6"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "nodig hebben",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": Ik ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " twee uien ",
+        {
+          "text": "nodig",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        ". Nodig goes to the end."
+      ],
+      "id": "0b2d137a-1e80-4927-9473-34dbb1b62d24"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Words with -je, -tje, -pje are het-words: ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " kopje, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " blokje."
+      ],
+      "id": "b69403c0-b645-487c-b12a-1a3a41b5162c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "een pond = 500 gram; een half pond = 250 gram."
+      ],
+      "id": "ea8c317f-cf9f-4a41-883e-05f9f56bd1c2"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Remember: Hoeveel eieren ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " je ",
+        {
+          "text": "nodig",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "? Zes eieren en een kilo aardappelen."
+      ],
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "id": "aa095e1d-d6b6-44e1-9156-1f57d55847fa"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Tortilla in de keuken",
+      "description": "Sofia and Noor in a small kitchen; on the table six eggs, a bag of potatoes, two onions, a bottle of olive oil and salt.",
+      "alt": "Two young women cooking in a small kitchen with eggs, potatoes, onions and olive oil on the table."
+    },
+    {
+      "afterHeading": "Small things: het blokje, het kopje",
+      "description": "A Dutch party table: a plate of cheese cubes on little sticks, hot bitterballen with a bowl of mustard, a bag of crisps.",
+      "alt": "Party snacks: cheese cubes on sticks, bitterballen with mustard and crisps."
+    }
+  ],
+  "id": "c4042c2b-0461-4dbf-84a4-3011454ea4a3"
+}

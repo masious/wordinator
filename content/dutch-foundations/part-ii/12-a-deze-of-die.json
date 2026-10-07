@@ -1,0 +1,2756 @@
+{
+  "title": "Deze of die?",
+  "goal": "Point at and choose things with deze, die, dit and dat, before nouns and on their own.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Deze of die?",
+      "id": "adf2ce87-268c-48eb-b84e-802677e3c753"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Saturday 3 October. Noor takes Sofia to the big Saturday market on the Vredenburg, in the centre of Utrecht. Sofia meets Henk, the cheese seller, tastes his cheese and buys a plant for her room. In this lesson you will learn to point at things and choose them with ",
+        {
+          "text": "deze",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "die",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "this, that, these, those",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")."
+      ],
+      "id": "709e2b98-4ab5-440b-a07e-2d81ececce9d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: de-forms (",
+        {
+          "text": "de, deze, die",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ") are pink and het-forms (",
+        {
+          "text": "het, dit, dat",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        ") are brown. Verbs are ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " where the verb matters."
+      ],
+      "id": "91621892-867a-42b1-b248-73b44eddc379"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Op de markt",
+      "id": "6bd8c1c6-839b-4bd6-8d33-6e016a7b2e91"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Noor and Sofia stop at Henk's cheese stall (",
+        {
+          "text": "de kaaskraam",
+          "styles": {
+            "italic": true
+          }
+        },
+        "). Henk is 67, he loves a joke, and he always talks about the weather. Sofia does not know him yet, so she says ",
+        {
+          "text": "u",
+          "styles": {
+            "bold": true
+          }
+        },
+        " to him."
+      ],
+      "id": "c63eb4d3-fade-4437-9a54-a833ece2c1e7"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Henk",
+            "text": "Zo! Goedemorgen, dames! Mooi weer vandaag, hè?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Hoi Henk! Ja, super! Dit is mijn vriendin Sofia. Ze komt uit Spanje."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Nou, nou! Uit Spanje! Welkom op de markt. Wat mag het zijn?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank u wel. Wat is dit?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Dit is jonge kaas en dat is oude kaas. Wilt u proeven?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, graag. Mmm, deze kaas is lekker! Mag ik die ook proeven?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Alstublieft! Die kaas is twee jaar oud."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Oh, dat is lekker! Ik wil graag een stuk oude kaas. Deze stuk, alstublieft."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Dit stuk? Prima! Dat is een pond."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wat kost dit?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Dat kost acht euro."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Super! De kaas van Henk is altijd lekker."
+          }
+        ]
+      },
+      "id": "a5ce4733-6e73-4f5e-88c0-5c69dd9870e2"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Wat mag het zijn?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "What would you like?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (what sellers say; recycles mogen from 11-a)"
+      ],
+      "id": "99a0b6c9-a158-42cc-a86f-01be1a001a79"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Wilt u proeven?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "Would you like to taste?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (proeven = to taste)"
+      ],
+      "id": "7c0c3db6-e6d4-4a1e-835f-363978ae6f87"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "een pond",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = 500 grams (from 10-b)"
+      ],
+      "id": "54b5058c-5ff4-48d9-a51a-d3441143b99a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Did you notice? Sofia says ",
+        {
+          "text": "Deze stuk",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ", and Henk repeats the correct form: ",
+        {
+          "text": "Dit stuk",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        "? You will see why below."
+      ],
+      "id": "0bb87b69-840c-4dee-bf2f-30e46709f842"
+    },
+    {
+      "type": "divider",
+      "id": "a1859ff9-4db7-4ec9-a67c-eaf36fa466be"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Deze, die, dit, dat",
+      "id": "ecbff8ad-58fb-4a3e-8166-ee48b148495a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Dutch has four words for ",
+        {
+          "text": "this, that, these, those",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". Which one you use depends on two things: is the thing ",
+        {
+          "text": "near",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "far",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", and is the noun a ",
+        {
+          "text": "de-word",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " or a ",
+        {
+          "text": "het-word",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        "?"
+      ],
+      "id": "17e8e2a7-4729-4dbb-bbfb-6d9bbf14166b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Before a noun",
+      "id": "42794023-e84f-4e91-b6d7-bdef895cf99c"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "de-word",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " and all plurals: ",
+        {
+          "text": "deze",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " (near), ",
+        {
+          "text": "die",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " (far). ",
+        {
+          "text": "het-word",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " singular: ",
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " (near), ",
+        {
+          "text": "dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " (far)."
+      ],
+      "id": "96ff5e4d-4fcb-4d39-b33a-c85b75c3e903"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "dichtbij (near)",
+              "id": "564ff6ef-ad79-4d9c-84e9-3bec91d50f6d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "de-words and plurals:"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    {
+                      "text": "deze",
+                      "styles": {
+                        "textColor": "pink",
+                        "bold": true
+                      }
+                    },
+                    " kaas"
+                  ],
+                  "id": "27ae58de-ca78-4f3c-82c1-3e06627c5c87"
+                },
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    {
+                      "text": "deze",
+                      "styles": {
+                        "textColor": "pink",
+                        "bold": true
+                      }
+                    },
+                    " bloemen"
+                  ],
+                  "id": "65511e65-7067-42b0-b66b-be0b452172b8"
+                }
+              ],
+              "id": "bab11ed4-b6d1-4dd7-b916-d61c6d6e00be"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "het-words:"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    {
+                      "text": "dit",
+                      "styles": {
+                        "textColor": "brown",
+                        "bold": true
+                      }
+                    },
+                    " stuk"
+                  ],
+                  "id": "a50f1d7d-99a2-4e61-9cee-544f9f37cddd"
+                },
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    {
+                      "text": "dit",
+                      "styles": {
+                        "textColor": "brown",
+                        "bold": true
+                      }
+                    },
+                    " boek"
+                  ],
+                  "id": "1c4a9e97-6b6a-487c-b7dc-9bbcf89b0ad1"
+                }
+              ],
+              "id": "64410a83-7d4c-4b86-9fda-4f1960938fda"
+            }
+          ],
+          "id": "a4fe4b4b-3573-46a6-9a0c-3aa3c9964209"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "ver weg (far)",
+              "id": "3a666bde-57f5-48dd-983e-7163d2840605"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "de-words and plurals:"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    {
+                      "text": "die",
+                      "styles": {
+                        "textColor": "pink",
+                        "bold": true
+                      }
+                    },
+                    " kaas"
+                  ],
+                  "id": "fa1e2387-f7a9-498d-aee9-78d3a346a257"
+                },
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    {
+                      "text": "die",
+                      "styles": {
+                        "textColor": "pink",
+                        "bold": true
+                      }
+                    },
+                    " bloemen"
+                  ],
+                  "id": "95ada63d-f6a6-4352-8791-721304fffc00"
+                }
+              ],
+              "id": "7bbff0ba-cb01-460d-a4c2-f4391e8b68b4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "het-words:"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    {
+                      "text": "dat",
+                      "styles": {
+                        "textColor": "brown",
+                        "bold": true
+                      }
+                    },
+                    " stuk"
+                  ],
+                  "id": "92229dde-6800-491c-bc61-a6fdfd9459d9"
+                },
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    {
+                      "text": "dat",
+                      "styles": {
+                        "textColor": "brown",
+                        "bold": true
+                      }
+                    },
+                    " boek"
+                  ],
+                  "id": "f5e9f729-5d42-423d-8c41-3afce97ae0a1"
+                }
+              ],
+              "id": "bc813d44-eaac-4962-b9de-78e7b4d0fd73"
+            }
+          ],
+          "id": "66a4e6f5-ee9d-4f09-b9da-dc493110e24a"
+        }
+      ],
+      "id": "86422a77-96af-4727-a549-a010028d64ae"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This cheese is young.",
+        "note": "de kaas is a de-word, and the cheese is near: deze."
+      },
+      "content": [
+        {
+          "text": "Deze",
+          "styles": {
+            "textColor": "pink",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " kaas is jong."
+      ],
+      "id": "044b1bd6-7309-4911-933e-a702b3ebe39e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "That cheese is old.",
+        "note": "Same de-word, but the cheese is further away: die."
+      },
+      "content": [
+        {
+          "text": "Die",
+          "styles": {
+            "textColor": "pink",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " kaas is oud."
+      ],
+      "id": "d5396c91-52f4-41be-a60c-f9b580d29d2c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This piece is big.",
+        "note": "het stuk is a het-word, near: dit."
+      },
+      "content": [
+        {
+          "text": "Dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " stuk is groot."
+      ],
+      "id": "0828f6b5-96d2-443e-aa0e-f806084696a4"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "That book is cheap.",
+        "note": "het boek is a het-word, far: dat."
+      },
+      "content": [
+        {
+          "text": "Dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " boek is goedkoop."
+      ],
+      "id": "182455a2-5840-450d-af9a-02e27ca0d88e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "These flowers are pretty, but those flowers are expensive.",
+        "note": "Plurals always take deze or die, also when the singular is a het-word: dit boek, deze boeken. Plurals are de-words (10-a)."
+      },
+      "content": [
+        {
+          "text": "Deze",
+          "styles": {
+            "textColor": "pink",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " bloemen zijn mooi, maar ",
+        {
+          "text": "die",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " bloemen zijn duur."
+      ],
+      "id": "88dd820c-f0cd-4a5a-9a3a-e7f20872ba28"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "The demonstrative must match the noun: ",
+        {
+          "text": "deze boek",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "dit boek",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "dit kaas",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "deze kaas",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "dit bloemen",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "deze bloemen",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ". Sofia's ",
+        {
+          "text": "deze stuk",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "dit stuk",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "2d84099b-ad41-4058-ab72-fa7f8d02d354"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "Die",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " point further away, like English ",
+        {
+          "text": "that",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". Memory trick: ",
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " end in -t, just like ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "2b174bdc-c524-47da-9b1a-f8f87bcb7f03"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "English has one word ",
+        {
+          "text": "that",
+          "styles": {
+            "italic": true
+          }
+        },
+        " for everything. Dutch does not: ",
+        {
+          "text": "that cheese",
+          "styles": {
+            "italic": true
+          }
+        },
+        " is ",
+        {
+          "text": "die kaas",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ", not ",
+        {
+          "text": "dat kaas",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        "; ",
+        {
+          "text": "that book",
+          "styles": {
+            "italic": true
+          }
+        },
+        " is ",
+        {
+          "text": "dat boek",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "a72954ab-417c-499f-8a7a-6359f493bd54"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "On their own",
+      "id": "a88f6902-9857-4e70-89db-cc14a3dec2c3"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "When it is clear what you mean, you can drop the noun. You still choose the form by the noun you are thinking of. In English you often add ",
+        {
+          "text": "one",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": ",
+        {
+          "text": "this one, that one",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "d7d509de-efc2-4f69-9fd0-4424adf0bb93"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'll take this one.",
+        "note": "About de plant: a de-word, near."
+      },
+      "content": [
+        "Ik neem ",
+        {
+          "text": "deze",
+          "styles": {
+            "textColor": "pink",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "abda2661-07d4-482b-9ea4-6609fd66bbfe"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'd like this one.",
+        "note": "About het bord: a het-word, near. Recycles 'Ik wil graag …' from 11-a."
+      },
+      "content": [
+        "Ik wil graag ",
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "b2749591-f0f5-498b-91c2-8801569e2fd2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "May I have those?",
+        "note": "About de zonnebloemen: a plural, far. Recycles mogen from 11-a."
+      },
+      "content": [
+        "Mag ik ",
+        {
+          "text": "die",
+          "styles": {
+            "textColor": "pink",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "?"
+      ],
+      "id": "0fb9c822-2835-4f32-acf9-e628f4f1e35f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Dit is …, dat zijn …",
+      "id": "db2da489-d9bf-4cdc-855c-570faa2cfc7c"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "To introduce or name something with ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " or ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", use ",
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " for everything: de-words, het-words, people and plurals. ",
+        {
+          "text": "Dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Henk. ",
+        {
+          "text": "Dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " zonnebloemen."
+      ],
+      "id": "c162f4af-7830-4f38-a0c4-d8af688549ad"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This is Henk. He is a cheese seller.",
+        "note": "Dit, although Henk is a man (de man). We only introduce him."
+      },
+      "content": [
+        {
+          "text": "Dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Henk. Hij is kaasboer."
+      ],
+      "id": "0c1ade44-f536-40fc-855b-5c8ad2f2fed2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Those are sunflowers.",
+        "note": "Not 'Die zijn zonnebloemen'. With zijn (plural) the verb is plural, but the word stays dat."
+      },
+      "content": [
+        {
+          "text": "Dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " zonnebloemen."
+      ],
+      "id": "4d9c8c25-7b18-4afb-93ae-53d339037710"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Compare: ",
+        {
+          "text": "Deze zonnebloemen",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " zijn mooi (",
+        {
+          "text": "these sunflowers are pretty",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") with ",
+        {
+          "text": "Dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " zijn zonnebloemen (",
+        {
+          "text": "these are sunflowers",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")."
+      ],
+      "id": "3a7e1ac5-0ee2-4f99-a64e-a3f02a843563"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Adjectives after deze, die, dit, dat",
+      "id": "f7915fcc-d5ed-4c2a-be20-2581e59c9b89"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "After a demonstrative, an adjective always ends in -e: ",
+        {
+          "text": "deze jonge kaas",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "dit oude boek",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "die mooie bloemen",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "dat grote stuk",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "d6e5ee6e-897f-404e-b18a-c7b5b342f1c7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'd like this young cheese.",
+        "note": "Like 'de jonge kaas' from Part I."
+      },
+      "content": [
+        "Ik wil graag ",
+        {
+          "text": "deze",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "jonge",
+          "styles": {
+            "bold": true
+          }
+        },
+        " kaas."
+      ],
+      "id": "050d2666-4efc-4ef2-9225-835ef7f1fc28"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This old book costs two euros.",
+        "note": "het boek, but still oude: dit works like het, not like een."
+      },
+      "content": [
+        {
+          "text": "Dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "oude",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " boek kost twee euro."
+      ],
+      "id": "67be77b6-5589-4e05-b216-bca1f66aafe8"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Those beautiful flowers are for Noor.",
+        "note": "de bloem → de bloemen: a plural, far, so die. mooie with -e after die."
+      },
+      "content": [
+        {
+          "text": "Die",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "mooie",
+          "styles": {
+            "bold": true
+          }
+        },
+        " bloemen zijn voor Noor."
+      ],
+      "id": "dfc3d83f-8651-4295-b67e-9db896c803db"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Only ",
+        {
+          "text": "een",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + het-word drops the -e. After ",
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "dit oud boek",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "dit oude boek",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "dat groot stuk",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "dat grote stuk",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "3a0cd88f-a4a5-4621-bd05-d2f18aeda2bb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Dat for a whole situation",
+      "id": "9d4a6b9e-cbd2-43c1-a3fc-4002a8f129fd"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "Dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " can point at a whole situation or at what someone just said, not at one noun. ",
+        {
+          "text": "Dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " is lekker! ",
+        {
+          "text": "Dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " is goed."
+      ],
+      "id": "312b6beb-d0f5-4f14-8ca1-b1424c9c3622"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Mmm, that's delicious!",
+        "note": "Sofia means the taste, not one noun. Even about cheese (de kaas) you say dat here."
+      },
+      "content": [
+        "Mmm, ",
+        {
+          "text": "dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " is lekker!"
+      ],
+      "id": "436222fb-7dae-49d1-aa10-95f909a9c689"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Say it right",
+      "id": "b9ae9484-e542-4520-be03-6bf4d9e22d23"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        "The Dutch g and ch are the same rough sound at the back of the throat, like the Spanish j in ",
+        {
+          "text": "jamón",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": ",
+        {
+          "text": "graag",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "goedkoop",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "mag",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". But ",
+        {
+          "text": "jonge",
+          "styles": {
+            "bold": true
+          }
+        },
+        " has no g sound: its ng sounds as in English ",
+        {
+          "text": "sing",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "4479e911-d0d4-4d40-91ee-15276dc3a7b5"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        {
+          "text": "deze",
+          "styles": {
+            "bold": true
+          }
+        },
+        " sounds like DAY-zuh: a long ee in the first syllable, and an unstressed e (",
+        {
+          "text": "uh",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") at the end. ",
+        {
+          "text": "die",
+          "styles": {
+            "bold": true
+          }
+        },
+        " sounds like English ",
+        {
+          "text": "dee",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "060b4462-a209-4381-8901-69dc5e2820f3"
+    },
+    {
+      "type": "divider",
+      "id": "a056f6af-8d0b-41e1-81d0-f74dd3c4ff13"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Vocabulary: op de markt",
+      "id": "f8a304dc-d80d-4e2d-9aee-6bc34b43b349"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "map-pin"
+      },
+      "content": [
+        "Every Saturday there is a big market on the Vredenburg, in the centre of Utrecht: cheese, fruit, flowers, plants, fish and many other stalls. Dutch cheese is sold by age: ",
+        {
+          "text": "jong",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (young, mild), ",
+        {
+          "text": "belegen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (matured) and ",
+        {
+          "text": "oud",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (old, strong)."
+      ],
+      "id": "a9c45302-beeb-4d91-84a9-47d72865bbb4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "At the stalls",
+      "id": "dd37c42d-6e31-46b0-8693-d59615fbd08e"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "de kaaskraam",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "the cheese stall",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " markt, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " kraam (kramen), ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " kaasboer"
+          ],
+          "id": "eda2b92f-2b89-4a0a-9467-5ca358fb4780"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " kaas: jonge, belegen, oude kaas; ",
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " stuk (stukken); proeven (",
+            {
+              "text": "to taste",
+              "styles": {
+                "italic": true
+              }
+            },
+            ")"
+          ],
+          "id": "e6a76fbf-d158-4075-936f-80912cf631cf"
+        }
+      ],
+      "id": "1fa35b6c-d532-4e74-bde7-977327847341"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "de bloemenkraam",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "the flower stall",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " bloem, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " zonnebloem (zonnebloemen), ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " bos bloemen (",
+            {
+              "text": "bunch of flowers",
+              "styles": {
+                "italic": true
+              }
+            },
+            ")"
+          ],
+          "id": "1a8491b3-3cec-4780-964f-2f8f1c057801"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " plant, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " pot, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " vaas (vazen)"
+          ],
+          "id": "072615a9-53bd-4e3d-8a81-a7f6f3c0cc11"
+        }
+      ],
+      "id": "c142b0c3-1031-4bdb-8624-0459f10c85c7"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "spullen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "things",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " bord (borden), ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " mok (mokken), ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " lamp, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " tas (tassen), ",
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " boek"
+          ],
+          "id": "c16f2041-e7a7-4ca3-9cab-6092f2e81b07"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " appel (appels), ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " peer (peren)"
+          ],
+          "id": "891e0368-dbb9-4c92-9995-84bab5a04e9c"
+        }
+      ],
+      "id": "b19bdcdb-f1cd-4b56-ae2f-dd5e1490ee3d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Describing and asking the price",
+      "id": "4673bc88-860f-410c-87de-f37fe266fe5f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "vers",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (fresh), ",
+        {
+          "text": "oud",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (old), ",
+        {
+          "text": "jong",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (young), ",
+        {
+          "text": "mooi",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (beautiful), ",
+        {
+          "text": "lekker",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (tasty), ",
+        {
+          "text": "duur",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (expensive), ",
+        {
+          "text": "goedkoop",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (cheap)."
+      ],
+      "id": "a176afb9-9fbb-4b64-adfa-fc6c22a4def8"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What does this cost? That's five euros.",
+        "note": "kosten = to cost. Whole euros only for now; prices with cents come in 12-b."
+      },
+      "content": [
+        "Wat ",
+        {
+          "text": "kost",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        "? ",
+        {
+          "text": "Dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "kost",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " vijf euro."
+      ],
+      "id": "7500a0e4-dae5-461d-b7fa-87878b5bc8fa"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Bij de bloemenkraam",
+      "id": "52075a00-bc4f-4227-8889-4106eff69ae7"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Next, Noor and Sofia go to the flower stall. Sofia wants a plant for her room at Noor's."
+      ],
+      "id": "33f5dfe7-a758-438f-911d-abb3ae40458d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "Tulips are the Dutch spring flower (March to May). In October the flower stalls sell autumn flowers, such as ",
+        {
+          "text": "zonnebloemen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "sunflowers",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), and many plants."
+      ],
+      "id": "f5c5eb9c-ccbf-4a41-8f29-1467a438085f"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Verkoopster",
+            "text": "Goedemorgen! Mooie bloemen vandaag. Wat mag het zijn?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goedemorgen. Ik wil graag een plant voor mijn kamer."
+          },
+          {
+            "speaker": "Verkoopster",
+            "text": "Kijk, dit zijn mooie planten. Deze plant is klein en die is groot."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Mijn kamer is niet groot. Ik neem deze. Wat kost deze plant?"
+          },
+          {
+            "speaker": "Verkoopster",
+            "text": "Deze kost zes euro, met de pot."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Joh, dat is goedkoop! En kijk, Sofia: zonnebloemen! Deze bloemen of die?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Die, daar. Die zonnebloemen zijn heel mooi!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Super! Een bos zonnebloemen voor onze tafel?"
+          },
+          {
+            "speaker": "Verkoopster",
+            "text": "Deze bos? Die kost vijf euro."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dat is goed. Deze bloemen zijn een cadeau, Noor!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Wat lief, Sofia! Dank je wel!"
+          }
+        ]
+      },
+      "id": "cf59c128-2643-4584-8c6b-7e05778d8b3d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Find the forms: ",
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " zijn mooie planten (naming), ",
+        {
+          "text": "deze",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " plant / ",
+        {
+          "text": "die",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " (de-word), ",
+        {
+          "text": "Deze bloemen of die?",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " (plural), ",
+        {
+          "text": "dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " is goedkoop (the situation)."
+      ],
+      "id": "2a3e6cc6-7167-4d14-a453-4f7cac1516f1"
+    },
+    {
+      "type": "divider",
+      "id": "c7e19763-b4b0-436a-a35b-d513c0a46146"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "250afee5-8d6d-4b15-b471-34664ddf06f7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in deze, die, dit or dat",
+      "id": "cc5983ad-5ff4-4204-8eb7-1f7d6cd52de4"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in deze, die, dit or dat. The word in brackets says near or far.",
+          "items": [
+            {
+              "prompt": "… kaas is jong. (near)",
+              "authorsVersion": [
+                "Deze"
+              ],
+              "note": "de kaas is a de-word, near: deze."
+            },
+            {
+              "prompt": "… boek is heel oud. (far)",
+              "authorsVersion": [
+                "Dat"
+              ],
+              "note": "het boek is a het-word, far: dat."
+            },
+            {
+              "prompt": "Ik wil graag … stuk. (near)",
+              "authorsVersion": [
+                "dit"
+              ],
+              "note": "het stuk, near: dit."
+            },
+            {
+              "prompt": "… bloemen zijn mooi. (far)",
+              "authorsVersion": [
+                "Die"
+              ],
+              "note": "Plural, far: die."
+            },
+            {
+              "prompt": "Wat kost … lamp? (near)",
+              "authorsVersion": [
+                "deze"
+              ],
+              "note": "de lamp, near: deze."
+            },
+            {
+              "prompt": "… bord is mooi. (near)",
+              "authorsVersion": [
+                "Dit"
+              ],
+              "note": "het bord, near: dit."
+            },
+            {
+              "prompt": "Mag ik … tas? (far)",
+              "authorsVersion": [
+                "die"
+              ],
+              "note": "de tas, far: die."
+            },
+            {
+              "prompt": "… is Henk. Hij is kaasboer. (near, introducing)",
+              "authorsVersion": [
+                "Dit"
+              ],
+              "note": "Introducing with is: dit, also for a person. Not 'Deze is Henk'."
+            },
+            {
+              "prompt": "… zijn zonnebloemen. (far, naming)",
+              "authorsVersion": [
+                "Dat"
+              ],
+              "note": "Naming with zijn: dat, also for plurals. Not 'Die zijn zonnebloemen'."
+            },
+            {
+              "prompt": "Mmm, … is lekker! (the taste)",
+              "authorsVersion": [
+                "dat"
+              ],
+              "note": "Dat for a whole situation or experience."
+            }
+          ]
+        }
+      },
+      "id": "fa2e9ac7-d906-4e59-8803-e72614d4e526"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "At the cheese stall",
+      "id": "89fc8f51-83b3-48a9-b8fe-65ecf1297c79"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the conversation at the market. Fill in deze, die, dit or dat. Think: who is near the thing?",
+          "items": [
+            {
+              "prompt": "Sofia: Goedemorgen! Wat is …? (near) / Henk: … is jonge kaas. Wilt u proeven?",
+              "authorsVersion": [
+                "dit",
+                "Dit"
+              ],
+              "note": "A question about something unknown and the answer that names it: dit."
+            },
+            {
+              "prompt": "Sofia: Mag ik … kaas ook proeven? (far) / Henk: Alstublieft! … oude kaas is heel lekker. (near Henk)",
+              "authorsVersion": [
+                "die",
+                "Deze"
+              ],
+              "note": "Sofia is far from the cheese, Henk is near it. Both de-words."
+            },
+            {
+              "prompt": "Henk: Een groot stuk of een klein stuk? / Sofia: … grote stuk, alstublieft. (far) / Henk: … grote stuk? Zo! (near Henk)",
+              "authorsVersion": [
+                "Dat",
+                "Dit"
+              ],
+              "note": "het stuk. Sofia says dat (far from her), Henk says dit (near him). Adjective: grote, always -e after a demonstrative."
+            },
+            {
+              "prompt": "Noor: … is mijn vriendin Sofia. / Henk: Nou, nou! … is leuk!",
+              "authorsVersion": [
+                "Dit",
+                "Dat"
+              ],
+              "note": "Dit to introduce a person; dat for the whole situation."
+            },
+            {
+              "prompt": "Sofia: … bloemen of …? (near, then far) / Noor: Ik neem …. (near)",
+              "authorsVersion": [
+                "Deze",
+                "die",
+                "deze"
+              ],
+              "note": "Plural: deze or die, also on their own."
+            },
+            {
+              "prompt": "Verkoopster: … plant kost zes euro en … pot kost twee euro. (near, far) / Sofia: … is goedkoop!",
+              "authorsVersion": [
+                "Deze",
+                "die",
+                "Dat"
+              ],
+              "note": "de plant, de pot; the last one is the situation (the prices): dat."
+            }
+          ]
+        }
+      },
+      "id": "3f167294-aa71-4ddc-b1ef-eeef4feacf66"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "fbb41975-2009-4d19-a912-031bdfd58270"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the right order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: kaas / is / deze / lekker / heel",
+              "authorsVersion": [
+                "Deze kaas is heel lekker."
+              ]
+            },
+            {
+              "prompt": "Put in order: ik / dat / graag / wil / stuk",
+              "authorsVersion": [
+                "Ik wil graag dat stuk."
+              ],
+              "note": "Recycles 'Ik wil graag …' from 11-a."
+            },
+            {
+              "prompt": "Put in order: proeven / ik / die / mag / kaas / ?",
+              "authorsVersion": [
+                "Mag ik die kaas proeven?"
+              ],
+              "note": "Yes/no question: verb first; the infinitive goes to the end (11-a)."
+            },
+            {
+              "prompt": "Put in order: neem / deze / ik / plant",
+              "authorsVersion": [
+                "Ik neem deze plant."
+              ]
+            },
+            {
+              "prompt": "Put in order: zijn / zonnebloemen / dat / mooie",
+              "authorsVersion": [
+                "Dat zijn mooie zonnebloemen."
+              ],
+              "note": "Naming with zijn: dat. mooie with -e before a plural."
+            },
+            {
+              "prompt": "Put in order: kost / wat / grote / dat / bord / ?",
+              "authorsVersion": [
+                "Wat kost dat grote bord?"
+              ],
+              "note": "het bord, far: dat; grote with -e after dat."
+            },
+            {
+              "prompt": "Put in order: op zaterdag / naar de markt / gaan / Noor en Sofia",
+              "authorsVersion": [
+                "Op zaterdag gaan Noor en Sofia naar de markt."
+              ],
+              "note": "Time at the start: the verb comes second, then the subject (08-b). Also fine: Noor en Sofia gaan op zaterdag naar de markt."
+            }
+          ]
+        }
+      },
+      "id": "6dc805b2-1c26-4af8-bdfe-13d26bef4dd9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Singular to plural, near and far",
+      "id": "77c5b46e-8e07-4a06-8066-df53fa4aca85"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite as the instruction says.",
+          "items": [
+            {
+              "prompt": "Make plural: dit bord",
+              "authorsVersion": [
+                "deze borden"
+              ],
+              "note": "Plurals are de-words: dit becomes deze (still near)."
+            },
+            {
+              "prompt": "Make plural: die tas",
+              "authorsVersion": [
+                "die tassen"
+              ],
+              "note": "de tas, far: die stays die. Spelling: tassen with ss (10-a)."
+            },
+            {
+              "prompt": "Make plural: dat boek",
+              "authorsVersion": [
+                "die boeken"
+              ],
+              "note": "dat becomes die in the plural (still far)."
+            },
+            {
+              "prompt": "Make plural: deze mok",
+              "authorsVersion": [
+                "deze mokken"
+              ],
+              "note": "deze stays deze; mokken with kk."
+            },
+            {
+              "prompt": "Make plural: Dit stuk is groot.",
+              "authorsVersion": [
+                "Deze stukken zijn groot."
+              ],
+              "note": "Also change the verb: is → zijn."
+            },
+            {
+              "prompt": "Change near to far: Deze kaas is jong.",
+              "authorsVersion": [
+                "Die kaas is jong."
+              ],
+              "note": "de-word: deze → die."
+            },
+            {
+              "prompt": "Change near to far: Ik wil dit mooie bord.",
+              "authorsVersion": [
+                "Ik wil dat mooie bord."
+              ],
+              "note": "het-word: dit → dat. mooie keeps the -e."
+            },
+            {
+              "prompt": "Change far to near: Dat oude boek is goedkoop.",
+              "authorsVersion": [
+                "Dit oude boek is goedkoop."
+              ],
+              "note": "het-word: dat → dit. Not 'dit oud boek'."
+            }
+          ]
+        }
+      },
+      "id": "6f7ecf77-7024-45d3-a6dc-16873a74a367"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "9c7ef453-e2e3-472d-9a03-65e899685f8b"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "This cheese is very tasty.",
+              "authorsVersion": [
+                "Deze kaas is heel lekker."
+              ],
+              "note": "Also fine: erg lekker."
+            },
+            {
+              "prompt": "I'll take that plant.",
+              "authorsVersion": [
+                "Ik neem die plant."
+              ],
+              "note": "de plant, far: die."
+            },
+            {
+              "prompt": "May I taste this cheese?",
+              "authorsVersion": [
+                "Mag ik deze kaas proeven?"
+              ],
+              "note": "Infinitive at the end. Also fine: Mag ik deze proeven?"
+            },
+            {
+              "prompt": "These are sunflowers.",
+              "authorsVersion": [
+                "Dit zijn zonnebloemen."
+              ],
+              "note": "Naming with zijn: dit, not deze."
+            },
+            {
+              "prompt": "That old book is cheap.",
+              "authorsVersion": [
+                "Dat oude boek is goedkoop."
+              ],
+              "note": "het boek: dat; oude with -e."
+            },
+            {
+              "prompt": "Those apples are fresh.",
+              "authorsVersion": [
+                "Die appels zijn vers."
+              ],
+              "note": "Plural, far: die."
+            },
+            {
+              "prompt": "That's fine!",
+              "authorsVersion": [
+                "Dat is goed!"
+              ],
+              "note": "Dat for a situation."
+            }
+          ]
+        }
+      },
+      "id": "a24aef8b-6743-4cb6-b144-12e7df251318"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "d5dd114d-cd5b-405a-80dc-09c1716bef40"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Dit is Henk. Hij is kaasboer.",
+              "authorsVersion": [
+                "This is Henk. He is a cheese seller."
+              ],
+              "note": "No article before a profession in Dutch; English needs 'a'."
+            },
+            {
+              "prompt": "Deze bloemen zijn mooi, maar die bloemen zijn duur.",
+              "authorsVersion": [
+                "These flowers are beautiful, but those flowers are expensive."
+              ]
+            },
+            {
+              "prompt": "Ik neem deze.",
+              "authorsVersion": [
+                "I'll take this one."
+              ],
+              "note": "English adds 'one'. Ik neem = I'll take (11-a)."
+            },
+            {
+              "prompt": "Mag ik dat grote stuk?",
+              "authorsVersion": [
+                "May I have that big piece?"
+              ],
+              "note": "Also fine: Can I have that big piece?"
+            },
+            {
+              "prompt": "Wat kost dit? Dat kost vier euro.",
+              "authorsVersion": [
+                "What does this cost? That's four euros."
+              ],
+              "note": "Also fine: It's four euros."
+            },
+            {
+              "prompt": "Mmm, dat is lekker!",
+              "authorsVersion": [
+                "Mmm, that's delicious!"
+              ],
+              "note": "Also fine: that's tasty / that's good."
+            }
+          ]
+        }
+      },
+      "id": "fa019505-9a18-4274-8f7d-ddeb474bfc21"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: De markt op het Vredenburg",
+      "id": "f3c30288-12bd-41b6-a1bc-82f6aba331f1"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the text and answer the questions in Dutch.",
+          "items": [
+            {
+              "prompt": "Waar zijn Sofia en Noor?",
+              "authorsVersion": [
+                "Op de markt op het Vredenburg, in Utrecht."
+              ],
+              "note": "Also fine: In het centrum van Utrecht."
+            },
+            {
+              "prompt": "Wie is Henk?",
+              "authorsVersion": [
+                "Henk is kaasboer."
+              ],
+              "note": "Also fine: Hij is de kaasboer. Hij is 67."
+            },
+            {
+              "prompt": "Wat kost een pond oude kaas?",
+              "authorsVersion": [
+                "Een pond oude kaas kost acht euro."
+              ],
+              "note": "Also fine: Acht euro."
+            },
+            {
+              "prompt": "Klopt dit? De appels en peren zijn duur.",
+              "authorsVersion": [
+                "Nee, ze zijn vers en goedkoop."
+              ],
+              "note": "Een kilo appels kost twee euro."
+            },
+            {
+              "prompt": "Wat kost een bos zonnebloemen?",
+              "authorsVersion": [
+                "Een bos zonnebloemen kost vijf euro."
+              ],
+              "note": "Also fine: Vijf euro."
+            },
+            {
+              "prompt": "Klopt dit? Die mooie lamp is goedkoop.",
+              "authorsVersion": [
+                "Nee, die lamp is duur. Hij kost veertig euro."
+              ],
+              "note": "Also fine: Nee, die is duur."
+            },
+            {
+              "prompt": "Wat koopt Sofia?",
+              "authorsVersion": [
+                "Een plant voor haar kamer en een bos zonnebloemen voor Noor."
+              ]
+            }
+          ],
+          "passage": {
+            "title": "De markt op het Vredenburg",
+            "content": "Het is zaterdag 3 oktober. Sofia en Noor zijn op de markt op het Vredenburg, in het centrum van Utrecht. De markt is groot en heel druk. De markt heeft veel kramen.\n\nDit is de kaaskraam van Henk. Henk is 67 en hij is kaasboer. Hij heeft jonge kaas, belegen kaas en oude kaas. De oude kaas is lekker, maar niet goedkoop: een pond kost acht euro.\n\nDaarna gaan Sofia en Noor naar de fruitkraam. De appels en peren zijn vers en goedkoop: een kilo appels kost twee euro.\n\nEn dat is de bloemenkraam. Die bloemen zijn mooi! Een bos zonnebloemen kost vijf euro. De planten zijn ook mooi.\n\nKijk, daar is een kraam met oude borden, mokken, lampen, tassen en boeken. Dit oude boek kost drie euro. Die mooie lamp kost veertig euro. Dat is duur!\n\nSofia koopt een plant voor haar kamer en een bos zonnebloemen voor Noor. De markt is gezellig!"
+          }
+        }
+      },
+      "id": "55aac4f0-574b-40e6-816d-a176dbfb5986"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "82a37086-3d66-4f58-906a-d17e995fb211"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about things in your room. Use dit, dat, deze and die.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about things in your room: use dit, dat, deze and die.",
+              "authorsVersion": [
+                "Dit is mijn kamer bij Noor. Deze plant is nieuw en heel mooi. Die oude lamp is van Noor. Dat boek is Nederlands en een beetje moeilijk."
+              ],
+              "note": "Model answer by Sofia. Check: de-words and plurals take deze/die, het-words take dit/dat, and an adjective after them ends in -e."
+            }
+          ]
+        }
+      },
+      "id": "fb914575-7c90-411b-90e9-f73ee9009119"
+    },
+    {
+      "type": "divider",
+      "id": "d4d517aa-1fdd-4a02-bbb8-060949d34aef"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "95ae1471-02cf-4846-b2c2-97ebc1046629"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "deze",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " / ",
+        {
+          "text": "die",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " + de-word or plural: ",
+        {
+          "text": "deze kaas",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "die bloemen",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "ef3d0e08-2d67-4e9d-8ead-fb0bfff8c499"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " / ",
+        {
+          "text": "dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " + het-word singular: ",
+        {
+          "text": "dit stuk",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "dat boek",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "d84700dc-144e-4979-9a5f-05740742f77d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Near = deze, dit. Far = die, dat."
+      ],
+      "id": "a0600b2c-66aa-406b-bc44-c20ff33dc14e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "On their own, choose by the noun you mean: Ik neem ",
+        {
+          "text": "deze",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ". Ik wil ",
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "a2c0b199-1b2c-4614-a23b-a657ab5fc6d0"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "To introduce or name with is/zijn: always ",
+        {
+          "text": "dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "Dit",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " is Henk. ",
+        {
+          "text": "Dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " zijn zonnebloemen."
+      ],
+      "id": "a9433dcb-49bc-4bc5-900a-8487df8acde4"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Adjective after a demonstrative: always -e: ",
+        {
+          "text": "dit oude boek",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "die mooie bloemen",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "b3ab7b28-9efc-4f8a-b634-172681267084"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Remember:",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " is lekker! ",
+        {
+          "text": "Dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " is goed! ",
+        {
+          "text": "Dat",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " can point at a whole situation."
+      ],
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "id": "37377682-ef8f-489c-98a4-c2a409115165"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Op de markt",
+      "description": "Henk, a cheerful man of 67 with a cap, behind his cheese stall at the Vredenburg market in Utrecht, holding out a small piece of cheese to taste; Sofia and Noor in front of the stall; big yellow wheels of young and old cheese.",
+      "alt": "Henk offers Sofia a piece of cheese at his market stall."
+    },
+    {
+      "afterHeading": "Story: Bij de bloemenkraam",
+      "description": "A colourful flower stall at the market with buckets of sunflowers and rows of small green plants in pots; Sofia holds a small plant, Noor points at a bunch of sunflowers.",
+      "alt": "Sofia and Noor choose a plant and sunflowers at a flower stall."
+    }
+  ],
+  "id": "97b0b235-85b8-451d-a28e-c64b18d2277b"
+}
