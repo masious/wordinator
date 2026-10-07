@@ -1,5 +1,6 @@
 import { BlockNoteSchema, createHeadingBlockSpec, defaultBlockSpecs, defaultStyleSpecs } from "@blocknote/core";
 import { createReactBlockSpec, type ReactCustomBlockRenderProps } from "@blocknote/react";
+import { withMultiColumn } from "@blocknote/xl-multi-column";
 import { Menu } from "@mantine/core";
 import { calloutIconSchema, calloutVariantSchema, type CalloutIcon, type CalloutVariant } from "@wordinator/contracts/lesson-document";
 import { COURSE_NOTE_MAX, COURSE_SENTENCE_MAX, practicePayloadSchema } from "@wordinator/contracts";
@@ -11,7 +12,8 @@ import { DialogueFields, dialogueTurnsFromFields, PracticeFields, practiceFields
 import styles from "./LessonEditor.module.css";
 
 // The editor's schema is limited to what the lesson document contracts accept: headings 1–3 without toggles, the text
-// blocks, and Wordinator's own callout, example, dialogue, and practice blocks; bold, italic, and palette colours only.
+// blocks, uploaded images, two or three top-level columns, and Wordinator's own callout, example, dialogue, and practice blocks;
+// bold, italic, and palette colours only.
 // Structured payloads live in string props, matching the contracts. New blocks start with valid placeholder data.
 export const DEFAULT_TURNS = JSON.stringify([{ speaker: "A", text: "…" }, { speaker: "B", text: "…" }]);
 export const DEFAULT_PRACTICE = JSON.stringify({ instruction: "…", passage: null, items: [{ prompt: "…", authorsVersion: [], note: null }] });
@@ -120,14 +122,14 @@ const createExample = createReactBlockSpec(exampleConfig, { render: (props) => <
 const createDialogue = createReactBlockSpec(dialogueConfig, { render: (props) => <DialogueEditorBlock {...props} /> });
 const createPractice = createReactBlockSpec(practiceConfig, { render: (props) => <PracticeEditorBlock {...props} /> });
 
-const { paragraph, bulletListItem, numberedListItem, divider } = defaultBlockSpecs;
+const { paragraph, bulletListItem, numberedListItem, divider, image } = defaultBlockSpecs;
 const { bold, italic, textColor, backgroundColor } = defaultStyleSpecs;
 
-export const lessonEditorSchema = BlockNoteSchema.create({
+export const lessonEditorSchema = withMultiColumn(BlockNoteSchema.create({
   blockSpecs: {
-    paragraph, heading: createHeadingBlockSpec({ levels: [1, 2, 3], allowToggleHeadings: false }), bulletListItem, numberedListItem, divider,
+    paragraph, heading: createHeadingBlockSpec({ levels: [1, 2, 3], allowToggleHeadings: false }), bulletListItem, numberedListItem, divider, image,
     callout: createCallout(), example: createExample(), dialogue: createDialogue(), practice: createPractice(),
   },
   styleSpecs: { bold, italic, textColor, backgroundColor },
-});
+}));
 export type LessonEditorInstance = typeof lessonEditorSchema.BlockNoteEditor;

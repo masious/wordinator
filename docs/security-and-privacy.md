@@ -15,9 +15,10 @@ Wordinator serves a known, small circle, but invitation links and the public int
 - Enforce server request-size and field/count limits.
 - Parse inputs with shared Zod contracts; never trust client validation.
 - Escape authored text. Linkify only validated `http` and `https` URLs and use safe external-link attributes.
-- Render course lesson documents with Wordinator's own renderer from contract-validated JSON, never with editor-produced HTML; the contracts reject any style, block, or link outside the [lesson document](courses.md#lesson-documents) subset.
+- Render course lesson documents with Wordinator's own renderer from contract-validated JSON, never with editor-produced HTML; the contracts reject any style, block, or link outside the [lesson document](courses.md#lesson-documents) subset. The editor repairs pasted content to that subset before saving; the API's contract and image-key checks remain the enforcement.
 - Serve client assets such as fonts and emoji data from Wordinator's own origin; the web app makes no third-party CDN requests.
 - Validate image type from content, not filename alone; cap source uploads at 1 MB and reject animation.
+- Re-encode every image in the browser before upload so original metadata, such as location, never reaches R2. Lesson images follow [lesson images](courses.md#images).
 - Avoid secrets and authored bodies in logs.
 
 ## Tenant and profile privacy

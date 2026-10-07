@@ -89,7 +89,9 @@ Migration `0005_phase_three_posts.sql` adds `posts`, `reading_questions`, and `f
 
 ## Images
 
-The API validates type and size and coordinates image metadata. R2 stores static PNG/JPEG/WebP objects under unguessable `avatars/`, `groups/`, and `courses/` keys. Objects are publicly readable by URL by product decision. Client-side cropping (square for avatars and icons, 2:1 at 1200×600 for course covers) improves UX; server-side validation remains authoritative. `MEDIA` is the R2 binding and `PUBLIC_MEDIA_BASE_URL` is the public URL prefix returned in contracts.
+The API validates type and size and coordinates image metadata. R2 stores static PNG/JPEG/WebP objects under unguessable `avatars/`, `groups/`, and `courses/` keys. Objects are publicly readable by URL by product decision. Client-side cropping (square for avatars and icons, 2:1 at 1200×600 for course covers) improves UX; server-side validation remains authoritative. Lesson images live under `courses/{courseId}/lessons/{lessonId}/`, are re-encoded in the browser (any aspect ratio, longest edge 1600 px, under 1 MB), and are tracked in `course_media`; see [lesson images](courses.md#images). `MEDIA` is the R2 binding and `PUBLIC_MEDIA_BASE_URL` is the public URL prefix returned in contracts.
+
+The API Worker also exports a `scheduled` handler. A daily cron trigger (`triggers.crons` in `apps/api/wrangler.jsonc`) runs `sweepLessonMedia`, which deletes `course_media` rows older than 24 hours that neither lesson document references and then their R2 objects.
 
 ## PWA behavior
 

@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
+import { courseApi, dialogue, example, practice, seedLesson } from "./lessonSeed";
 
 test("a learner steps through a lesson and the course shows their progress", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
@@ -7,22 +8,15 @@ test("a learner steps through a lesson and the course shows their progress", asy
   await page.goto("/"); await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL); await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD); await page.getByRole("button", { name: "Sign in" }).click();
   await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
 
-  const api = async <T,>(path: string, body: unknown, method = "POST"): Promise<T> => {
-    const response = await page.request.fetch(`/api/groups/${E2E_GROUP_ID}${path}`, { method, data: body });
-    expect(response.ok()).toBe(true);
-    return response.json() as Promise<T>;
-  };
+  const api = courseApi(page);
   const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Op reis" });
   await api(`/courses/${course.id}/visibility`, { status: "published" });
-  const lessons: string[] = [];
-  for (const title of [`${suffix} first`, `${suffix} second`]) {
-    const { lesson } = await api<{ lesson: { id: string; version: number } }>(`/courses/${course.id}/lessons`, { title });
-    await api(`/courses/${course.id}/lessons/${lesson.id}`, { title, goal: null, published: true, version: lesson.version }, "PATCH");
-    lessons.push(lesson.id);
-  }
-  await api(`/courses/${course.id}/lessons/${lessons[0]}/blocks`, { kind: "example", published: true, payload: { sentence: "Waar is het station?", translation: "Where is the station?" } });
-  await api(`/courses/${course.id}/lessons/${lessons[0]}/blocks`, { kind: "dialogue", published: true, payload: { turns: [{ speaker: "A", text: "Rechtdoor." }, { speaker: "B", text: "Dank je wel." }] } });
-  await api(`/courses/${course.id}/lessons/${lessons[0]}/blocks`, { kind: "practice", published: true, payload: { instruction: "Vertaal.", items: [{ prompt: "Turn left." }] } });
+  await seedLesson(page, course.id, `${suffix} first`, [
+    example("Waar is het station?", "Where is the station?"),
+    dialogue([{ speaker: "A", text: "Rechtdoor." }, { speaker: "B", text: "Dank je wel." }]),
+    practice("Vertaal.", [{ prompt: "Turn left." }]),
+  ]);
+  await seedLesson(page, course.id, `${suffix} second`, [example("Tot ziens.")]);
 
   await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
   const progress = page.getByRole("progressbar", { name: "Course progress for", exact: false }).first();

@@ -18,6 +18,11 @@ const doc = (words: string): LessonDocument => ({
   schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION,
   blocks: [{ id: exampleId, type: "paragraph", props: { textColor: "default", backgroundColor: "default", textAlignment: "left" }, content: [{ type: "text", text: words, styles: {} }], children: [] }],
 });
+const para = (id: string, text: string) => ({ id, type: "paragraph", props: { textColor: "default", backgroundColor: "default", textAlignment: "left" }, content: [{ type: "text", text, styles: {} }], children: [] }) as LessonDocument["blocks"][number];
+const secondId = "50000000-0000-4000-8000-000000000002";
+const twoDoc = (first: string, second: string): LessonDocument => ({ schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks: [para(exampleId, first), para(secondId, second)] });
+const conflict = (document: LessonDocument, version: number) => json({ error: { code: "VERSION_CONFLICT", message: "Newer." }, draft: { document, version } }, 409);
+const saved = (draftVersion: number) => json({ draftVersion, changed: true, updatedBy: editor, updatedAt: 2 });
 const lesson = (overrides: Partial<CourseLesson> = {}): CourseLesson => ({
   id: lessonId, position: 0, title: "Mijn huis", goal: null, published: false, publishedAt: null, changed: false, updatedBy: editor, updatedAt: 1,
   document: null, answerCounts: {}, draft: { document: doc("Het huis is groot."), version: 3 }, ...overrides,
@@ -86,5 +91,77 @@ describe("Lesson editor", () => {
     fireEvent.click(within(alert).getByRole("button", { name: "Use my edit instead" }));
     expect(await screen.findByText("Mijn versie.")).toBeInTheDocument();
     expect(screen.queryByText("Het huis is groot.")).not.toBeInTheDocument();
+  });
+
+  it("loads images and focuses an image that still needs alt text", async () => {
+    const imageId = "50000000-0000-4000-8000-000000000009";
+    const withImage: LessonDocument = { schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks: [{
+      id: imageId, type: "image", children: [],
+      props: { textAlignment: "left", backgroundColor: "default", name: "", url: `https://media.test/courses/${courseId}/lessons/${lessonId}/k.jpg`, caption: "De keuken", showPreview: true },
+    }] };
+    vi.mocked(fetch).mockResolvedValueOnce(json({ error: { code: "LESSON_NOT_READY", message: "Finish first." }, problems: [{ blockId: imageId, problem: "image-alt-missing" }] }, 422));
+    const { container } = renderEditor(true, lesson({ draft: { document: withImage, version: 3 } }));
+    await waitFor(() => expect(container.querySelector(`[data-id="${imageId}"] img`)).toHaveAttribute("src", `https://media.test/courses/${courseId}/lessons/${lessonId}/k.jpg`));
+    fireEvent.click(screen.getByRole("button", { name: "Publish lesson" }));
+    fireEvent.click(await screen.findByRole("button", { name: "An image needs alt text." }));
+    expect(screen.getByRole("alert")).toBeInTheDocument();
+  });
+
+  it("merges a conflicting save by block and saves the result against the newer version", async () => {
+    const key = lessonDocumentDraftKey(accountId, groupId, lessonId);
+    storeLocalLessonDraft(key, { baseVersion: 3, document: twoDoc("Mijn eerste zin.", "Tweede.") });
+    vi.mocked(fetch).mockResolvedValueOnce(conflict(twoDoc("Eerste.", "Hun tweede zin."), 4)).mockResolvedValueOnce(saved(5));
+    renderEditor(false, lesson({ draft: { document: twoDoc("Eerste.", "Tweede."), version: 3 } }));
+    expect(await screen.findByText("Someone saved a newer version. Your edits were merged into it.", { exact: false }, { timeout: 3_000 })).toBeInTheDocument();
+    expect(screen.getByText("Mijn eerste zin.")).toBeInTheDocument();
+    expect(screen.getByText("Hun tweede zin.")).toBeInTheDocument();
+    expect(screen.queryByTestId("merge-conflict")).not.toBeInTheDocument();
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(2), { timeout: 3_000 });
+    expect(JSON.parse(String(vi.mocked(fetch).mock.calls[1]![1]!.body))).toEqual({ document: twoDoc("Mijn eerste zin.", "Hun tweede zin."), draftVersion: 4 });
+  });
+
+  it("asks side by side when both edited the same block and applies the author's choice", async () => {
+    const key = lessonDocumentDraftKey(accountId, groupId, lessonId);
+    storeLocalLessonDraft(key, { baseVersion: 3, document: twoDoc("Mijn zin.", "Tweede.") });
+    vi.mocked(fetch).mockResolvedValueOnce(conflict(twoDoc("Hun zin.", "Tweede."), 4)).mockResolvedValue(saved(5));
+    const { container } = renderEditor(false, lesson({ draft: { document: twoDoc("Eerste.", "Tweede."), version: 3 } }));
+    const item = await screen.findByTestId("merge-conflict", {}, { timeout: 3_000 });
+    expect(screen.getByRole("alert", { name: "Choose a version" })).toHaveTextContent("1 block was changed by both of you.");
+    expect(within(item).getByText("Newer version").closest("figure")).toHaveTextContent("Hun zin.");
+    expect(within(item).getByText("Your edit").closest("figure")).toHaveTextContent("Mijn zin.");
+    const editorText = () => container.querySelector(".bn-editor")!.textContent;
+    expect(editorText()).toContain("Hun zin.");
+    fireEvent.click(within(item).getByRole("button", { name: "Keep my edit" }));
+    await waitFor(() => expect(editorText()).toContain("Mijn zin."));
+    expect(editorText()).not.toContain("Hun zin.");
+    expect(screen.queryByTestId("merge-conflict")).not.toBeInTheDocument();
+  });
+
+  it("strips pasted HTML to what lessons allow", async () => {
+    // ProseMirror builds a synthetic paste event, which jsdom does not provide.
+    vi.stubGlobal("ClipboardEvent", class extends Event { clipboardData = null; });
+    vi.mocked(fetch).mockResolvedValue(saved(4));
+    const { container } = renderEditor(false);
+    await screen.findByText("Het huis is groot.");
+    const html = '<p>Zie <a href="javascript:alert(1)">hier</a> en <u>dit</u>.</p><p style="text-align:center">Midden</p><img src="https://elsewhere.test/x.png" alt="x">';
+    const target = container.querySelector(".bn-editor")!;
+    fireEvent.paste(target, { clipboardData: { types: ["text/html", "text/plain"], files: [], getData: (type: string) => type === "text/html" ? html : "Zie hier en dit. Midden" } });
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${path}/draft`, expect.objectContaining({ method: "PUT" })), { timeout: 3_000 });
+    const sent = JSON.parse(String(vi.mocked(fetch).mock.calls.at(-1)![1]!.body)).document as LessonDocument;
+    const serialized = JSON.stringify(sent);
+    expect(serialized).toContain("Midden");
+    expect(serialized).not.toContain("javascript:");
+    expect(serialized).not.toContain("elsewhere.test");
+    expect(serialized).not.toContain("center");
+    expect(container.querySelector(".bn-editor a")).toBeNull();
+  });
+
+  it("sends a pasted image file through the upload dialog", async () => {
+    vi.stubGlobal("URL", Object.assign(URL, { createObjectURL: vi.fn(() => "blob:shot"), revokeObjectURL: vi.fn() }));
+    const { container } = renderEditor(false);
+    await screen.findByText("Het huis is groot.");
+    const file = new File([new Uint8Array([1, 2, 3])], "shot.png", { type: "image/png" });
+    fireEvent.paste(container.querySelector(".bn-editor")!, { clipboardData: { types: ["Files"], files: [file], getData: () => "" } });
+    expect(await screen.findByRole("dialog", { name: "Add an image" })).toBeInTheDocument();
   });
 });

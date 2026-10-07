@@ -21,3 +21,12 @@ describe("crop geometry", () => {
     expect(clampZoom(1.2345)).toBe(1.23);
   });
 });
+
+describe("lesson image size", () => {
+  it("caps the longest edge and never upscales", async () => {
+    const { fitWithin } = await import("./crop");
+    expect(fitWithin(3000, 2000, 1600)).toEqual({ width: 1600, height: 1067 });
+    expect(fitWithin(900, 4000, 1600)).toEqual({ width: 360, height: 1600 });
+    expect(fitWithin(800, 600, 1600)).toEqual({ width: 800, height: 600 });
+  });
+});

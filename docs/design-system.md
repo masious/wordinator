@@ -101,6 +101,8 @@ Posts have their own roles so every post kind reads the same: `--type-post-autho
 
 Below `48em`, the type roles step down instead of each component overriding sizes: `--type-page-title` is `1.75rem`, `--type-section-title` is `1.375rem`, and `--type-card-title` is `--text-lg`. Components must not add their own mobile font-size clamps for these roles.
 
+Page headers (`PageHeader`: members, notices, courses, settings) use page-header roles: `--type-page-intro` (`--text-lg`, `--text-md` below `48em`) for the intro, `--page-header-gap` (`16px`, `12px` below `48em`) between eyebrow, title, intro, and actions, and `--page-header-block-start` / `--page-header-block-end` (`64px` / `80px`, `0` / `8px` below `48em`) for the header's block padding, so on phones the shell's own top padding is the only space above the eyebrow. The profile identity card keeps its avatar beside the name on phones with a `64px` avatar instead of stacking.
+
 ## Spacing and sizing
 
 Spacing scale: `4`, `8`, `12`, `16`, `20`, `24`, `32`, `40`, `48`, `64`, `80`, `96`, `128`, and `160px`. Semantic layout roles define fluid page gutters, `80–160px` wide-screen section rhythm, card inset, shell clearance, and navigation offset. Below `48em`, page gutters become `16px`, section rhythm becomes `40px`, card inset becomes `16px`, `--navigation-height` becomes `56px`, and `--mobile-dock-height` becomes `64px`. Touch targets remain at least `44px`.
@@ -120,7 +122,7 @@ Content widths:
 
 Course covers use `--aspect-course-cover` (`2 / 1`) in library cards and on the course page, and the library grid fills columns no narrower than `--width-course-card-min` (`17rem`). A course without a cover shows the first letter of its title on a muted panel. The feed's course post shows the same cover treatment beside a mono eyebrow, the display-serif title, level, and a three-line summary on a bezel panel; below `48em` the cover stacks above the copy. An unavailable course is a muted note. No new tokens were added.
 
-On the course page, lessons use an editorial split above `48em`: a sticky outline panel (bezel surface, mono lesson numbers, at least `14rem` wide) beside a lesson column capped at `--width-reading`; below `48em` the outline stacks above the lessons and stops sticking. Lesson titles use the section-title role with a mono eyebrow for the derived lesson number. Block kinds carry the highlighting: headings use the display serif, text uses the authored role, examples sit on a `--color-support-soft` panel with the sentence emphasized and translation and note muted, and dialogues sit on a `--color-wash` panel with mono speaker labels. Editor tools are quiet buttons below each block, and version conflicts use the danger surface. No new tokens were added.
+On the course page, lessons use an editorial split above `48em`: a sticky outline panel (bezel surface, mono lesson numbers, at least `14rem` wide) beside a lesson column capped at `--width-reading`; below `48em` the outline stacks above the lessons, stops sticking, and collapses to a single toggle row (display-serif "Lessons" label, mono lesson count, chevron) that starts closed, expands the numbered list in place, and closes again after a lesson is chosen. Lesson titles use the section-title role with a mono eyebrow for the derived lesson number. Block kinds carry the highlighting: headings use the display serif, text uses the authored role, examples sit on a `--color-support-soft` panel with the sentence emphasized and translation and note muted, and dialogues sit on a `--color-wash` panel with mono speaker labels. Editor tools are quiet buttons below each block, and version conflicts use the danger surface. No new tokens were added.
 
 The course page's Contributors panel sits on a quiet surface between course management and the lessons. Requests and current contributors are hairline-separated rows with an avatar and name, and actions on the right; below `36em` rows and actions stack and buttons fill the width. Owner decisions use the secondary (decline) and primary (accept) buttons, and removal uses the danger button behind a confirmation. Lessons and blocks show a muted "Last edited by" line to the owner and contributors. No new tokens were added.
 
@@ -157,7 +159,7 @@ Durations are `140ms` for press feedback, `360ms` for ordinary transitions, `520
 Use Mantine-aligned breakpoints near `36em`, `48em`, `62em`, and `75em`; components should respond to available space rather than device names.
 
 - Desktop/tablet: detached navigation island, centered feed, modal composer
-- Mobile: slim header bar, four-slot dock with More sheet, no journal hero, full-screen composer and reading wizard
+- Mobile: slim header bar, four-slot dock with More sheet, no journal hero, compact page headers, one frame per surface, collapsed course outline, and full-screen composer, reading wizard, and lesson player
 - The group switcher lives in the account menu at every size
 - Avoid horizontal scrolling for authored content
 
@@ -181,7 +183,7 @@ Every applicable shared component defines default, hover, keyboard-focus, presse
 
 The production-safe `/ui` route is the canonical visual inventory. It uses only static fixtures and i18next-backed copy, displays real exported components rather than visual copies, and uses an asymmetric editorial composition with explicit wide and narrow preview contexts. Its dual-theme foundation includes the real preference control plus deterministic light and dark scopes rendering actual navigation, surfaces, action variants, validation, disabled/loading states, authored content, and feedback components regardless of the active application scheme.
 
-Redesign Batch 7 established release-blocking Chromium light-theme baselines for authentication, `/ui`, and the signed-in journal. Batch 8 adds stable full-inventory light/dark `/ui` and dark journal baselines. Its Chromium/WebKit gate verifies startup resolution, explicit persistence, live system changes, document and browser-chrome propagation, representative production routes at `390px` and `1440px`, overlays, deterministic previews, overflow, semantic contrast, forced colors, reduced motion, and unfiltered media.
+Redesign Batch 7 established release-blocking Chromium light-theme baselines for authentication, `/ui`, and the signed-in journal. Batch 8 adds stable full-inventory light/dark `/ui` and dark journal baselines. Its Chromium/WebKit gate verifies startup resolution, explicit persistence, live system changes, document and browser-chrome propagation, representative production routes at `390px` and `1440px`, overlays, deterministic previews, overflow, semantic contrast, forced colors, reduced motion, and unfiltered media. The mobile program refreshed every baseline on 2026-10-07. Journal baselines open a freshly created empty group ("Baseline Journal") with its invitation link masked, so they do not depend on what earlier specs seeded, and the motion audit inspects first-party stylesheets only because Mantine and BlockNote ship their own easing.
 
 ## Accessibility status
 

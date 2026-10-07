@@ -104,17 +104,24 @@ Every block is left-aligned; text alignment is not offered. Paragraphs, headings
 
 Callout variants are `hint`, `important`, `warning`, `grammar`, `culture`, `false-friend`, and `pronunciation`. Each variant sets a tone token and a default icon; `icon` may override the icon from a fixed list in the contracts. Any block, including practice and dialogue, may sit inside a column. Columns stack on narrow screens.
 
+Authors make columns with the two- and three-column slash items, which always add a new column list at the top level (below the current one when the cursor is in a column), or by dragging a block onto the left or right edge of another block. Column widths come from BlockNote's resize handles and are stored as relative ratios. The editor refuses edge drops that would make a fourth column, put columns inside a column or list, or drag a column list into another one, and shows no drop cursor for them. Any other change that still leaves such a structure (for example a regular drop or an undo) is reshaped in place before saving: columns beyond the third and nested column lists are unwrapped into the blocks that follow, so the server never rejects what the editor shows.
+
 ### Inline content
 
 Inline content is restricted rich text: bold, italic, `textColor`, and `backgroundColor`, and links. Emoji are ordinary text, inserted through the shared [emoji picker](#emoji-picker). Colours come from the fixed palette `default`, `gray`, `brown`, `red`, `orange`, `yellow`, `green`, `blue`, `purple`, and `pink`, mapped to [design tokens](design-system.md). Links accept only `http` and `https`. Underline, strike, code, and arbitrary HTML are rejected. The reader renders documents with Wordinator's own renderer, which escapes all text.
+
+Pasted and dropped content is brought into this subset in the editor before it is saved, so a paste never leaves an unsaveable draft. HTML and Markdown are parsed into the lesson schema, which drops underline, strike, code, and unknown block types; the editor then unwraps links that are not `http` or `https` (keeping their text), resets colours outside the palette and any alignment, and removes images that are not uploads of this lesson. A pasted image file, or a clipboard holding only an image (a copied picture or screenshot), goes through the [lesson image dialog](#images); a clipboard with text keeps its text, since office apps also put a picture of the copied text on the clipboard.
 
 ### Drafts and publishing
 
 - Each lesson stores a draft document and a published document. A lesson with no published document is unpublished.
 - The owner and active contributors edit the draft of any lesson, published or not. The draft autosaves with an integer draft version; a stale save returns a conflict and the editor merges by block ID, asking only when both sides changed the same block.
+- The merge is three-way: the draft the edit started from, the author's edit, and the newer draft. A block changed on one side takes that side's version, and deleting an unchanged block wins. Positions follow the newer draft, except blocks the author added or moved while the newer draft left them in place; a block whose parent was deleted takes the parent's place. A block's own type, props, and content are compared, not its children, so a move on one side and an edit on the other both apply.
+- A block changed differently on both sides, or deleted on one side and edited on the other, is shown side by side (newer version and the author's edit). Until the author chooses, the editor holds the newer version, or the edited one where the other side deleted the block. The merged draft is saved against the newer version straight away; unchosen alternatives last until the author leaves the editor.
+- When the merged draft would break the contracts, or a local edit restored on opening the editor was based on an older draft (only the edit is stored on the device, not the draft it started from), the editor loads the newer draft and keeps the author's whole edit aside to use instead or discard.
 - Drafts may hold unfinished work, such as an image whose upload has not finished. Publishing requires a finished document: every image has an uploaded file and alt text, and every example has a sentence.
 - Only the owner publishes (copies the draft to the published document), discards the draft (resets it to the published document), and unpublishes.
-- Publishing deletes practice threads whose practice is in neither document, after the editor warns the owner, and deletes R2 images referenced by neither document.
+- Publishing deletes practice threads whose practice is in neither document, after the editor warns the owner, and deletes R2 images referenced by neither document under the [image rules](#images).
 - Learners only ever receive the published document, with authors' versions and item notes stripped.
 
 ### Emoji picker
@@ -123,7 +130,13 @@ The editor's emoji insertion uses Wordinator's shared `EmojiPicker` molecule ins
 
 ### Images
 
-Lesson images reuse the [public R2 image pipeline](architecture.md#images) under `courses/{courseId}/lessons/{lessonId}/` keys. Uploads are tracked per lesson; the API accepts only image keys uploaded to that lesson and turns keys into URLs on read. Like every R2 image, lesson images, including draft-only ones, are public to anyone with the URL.
+Lesson images reuse the [public R2 image pipeline](architecture.md#images) under `courses/{courseId}/lessons/{lessonId}/` keys. Uploads are tracked per lesson; the API accepts only image keys uploaded to that lesson and turns keys into URLs on read. Like every R2 image, lesson images, including draft-only ones, are public to anyone with the URL, and the upload dialog says so.
+
+- An image enters a lesson only by upload: the image slash item, BlockNote's upload panel (which has no link tab), or pasting or dropping an image file. Links to images elsewhere are never accepted.
+- Every upload passes through the lesson image dialog. The author keeps the whole image (the default) or crops it to 4:3, 16:9, square, or 3:4 and zooms. The cropper library has no free-aspect mode, so these presets stand in for it.
+- The browser re-encodes every image as JPEG before upload: original metadata (such as location) is dropped, the longest edge is capped at 1600 px, and quality steps down until the file fits the 1 MB server limit. Any image the browser can decode may be chosen, with sources up to 20 MB; the server still accepts only static PNG, JPEG, and WebP.
+- Alt text is stored in the image's `name`, starts empty (a file name is not a description), and is edited from the image toolbar. Publishing requires it. The toolbar also edits the caption, replaces, and deletes the image; resize handles set the preview width, stored in whole pixels.
+- Images referenced by neither the draft nor the published document are deleted with their R2 objects once they are older than 24 hours: at publish and discard, and by a daily sweep that also covers drafts that are never published. The 24-hour grace keeps uploads that an unsaved edit may still reference. Deleting a lesson deletes all its images.
 
 ## Practice answers
 
@@ -144,7 +157,7 @@ Approved product change (C6): a light, non-competitive layer of progress on top 
 
 ### Lesson player
 
-Every lesson with content has a Start lesson action (Practise again once finished) that opens a focused, step-by-step player with a progress bar and a step counter.
+Every lesson with content has a Start lesson action (Practise again once finished) that opens a focused, step-by-step player with a progress bar and a step counter. Below `48em` the player is a full-screen sheet, and the course page's lesson outline collapses behind a Lessons toggle that closes again once a lesson is chosen.
 
 - Blocks become steps in lesson order. A `heading` is not a step; it labels the steps that follow it.
 - A `text` block and an `example` block are one step each. An example's translation starts hidden behind Show translation, and its note appears with the translation (or immediately when there is no translation).
@@ -227,4 +240,3 @@ Courses are archived, not hard-deleted. The owner or group creator may archive a
 - Text-to-speech playback and interactive role-play dialogues
 - Feed posts for course updates
 - Course-specific notifications beyond contributor requests
-- Images inside blocks (approved; arrives in C7e, see [lesson documents](#lesson-documents))

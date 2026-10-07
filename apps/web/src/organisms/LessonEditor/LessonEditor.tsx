@@ -1,9 +1,11 @@
 import "@blocknote/mantine/style.css";
 import { filterSuggestionItems, insertOrUpdateBlockForSlashMenu, type PartialBlock } from "@blocknote/core";
 import { BlockNoteView, type Theme } from "@blocknote/mantine";
+import { getMultiColumnSlashMenuItems } from "@blocknote/xl-multi-column";
 import {
-  BasicTextStyleButton, BlockTypeSelect, ColorStyleButton, CreateLinkButton, FormattingToolbar, FormattingToolbarController, getDefaultReactSlashMenuItems,
-  SuggestionMenuController, useCreateBlockNote, type DefaultReactSuggestionItem,
+  BasicTextStyleButton, BlockTypeSelect, ColorStyleButton, CreateLinkButton, FileCaptionButton, FileDeleteButton, FilePanel, FilePanelController, FileRenameButton,
+  FileReplaceButton, FormattingToolbar, FormattingToolbarController, getDefaultReactSlashMenuItems, SuggestionMenuController, UploadTab, useCreateBlockNote,
+  type DefaultReactSuggestionItem,
 } from "@blocknote/react";
 import { Popover } from "@mantine/core";
 import type { CourseDetailResponse } from "@wordinator/contracts/lesson-document";
@@ -11,17 +13,22 @@ import {
   collectPracticeIds, lessonNotReadySchema, lessonResponseSchema, type CourseLesson, type LessonDocument, type LessonDraft, type LessonPublishProblem,
 } from "@wordinator/contracts/lesson-document";
 import { useQueryClient } from "@tanstack/react-query";
-import { BookOpenText, Heading1, Heading2, Heading3, List, ListOrdered, Lightbulb, MessagesSquare, PencilLine, Pilcrow, Smile } from "lucide-react";
-import { type KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
+import { BookOpenText, Columns2, Columns3, Heading1, Heading2, Heading3, List, ListOrdered, Lightbulb, MessagesSquare, PencilLine, Pilcrow, Smile } from "lucide-react";
+import { type DragEvent, type KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiError, courseProgressQueryOptions, courseQueryOptions, lessonQueryOptions } from "../../api";
 import { EmojiPicker } from "../../molecules/EmojiPicker";
 import { Button, ConfirmDialog } from "../../ui";
+import { lessonDropCursor, refusesColumnDrop } from "./columnDrops";
 import { lessonEditorDictionary } from "./editorDictionary";
 import { DEFAULT_PRACTICE, DEFAULT_TURNS, lessonEditorSchema, type LessonEditorInstance } from "./editorSchema";
 import {
-  clearLocalLessonDraft, lessonDocumentDraftKey, readLocalLessonDraft, sameDocument, toLessonDocument, type EditorBlock,
+  breaksColumnRules, clearLocalLessonDraft, lessonDocumentDraftKey, lessonImagePath, normalizeEditorBlocks, readLocalLessonDraft, sameDocument, sanitizeEditorBlock,
+  toLessonDocument, type EditorBlock,
 } from "./lessonDraft";
+import { LessonImageDialog } from "./LessonImageDialog";
+import { LessonMergeConflicts, type MergeChoice } from "./LessonMergeConflicts";
+import { mergeLessonDocuments, type MergeConflict } from "./lessonMerge";
 import { LessonPublishBar } from "./LessonPublishBar";
 import { useLessonAutosave } from "./useLessonAutosave";
 import styles from "./LessonEditor.module.css";
@@ -46,7 +53,18 @@ const editorTheme: Theme = {
 const isListBlock = (type: string) => type === "bulletListItem" || type === "numberedListItem";
 const toEditorBlocks = (document: LessonDocument) => document.blocks.length ? document.blocks as unknown as PartialBlock<typeof lessonEditorSchema.blockSchema>[] : undefined;
 
+// A clipboard holding an image file and no text (a copied image, a screenshot) is pasted as an upload. Office apps also put
+// an image of the copied text on the clipboard, so anything with text goes through the HTML or text paste instead.
+const pastedImage = (data: DataTransfer | null) => {
+  const image = [...(data?.files ?? [])].find((file) => file.type.startsWith("image/"));
+  if (!data || !image || data.types.includes("blocknote/html")) return null;
+  const html = data.getData("text/html");
+  const text = html ? new DOMParser().parseFromString(html, "text/html").body.textContent : data.getData("text/plain");
+  return text?.trim() ? null : image;
+};
+
 type Props = { groupId: string; courseId: string; accountId: string; owner: boolean; lesson: CourseLesson; onClose: () => void };
+type ImageUpdate = { props?: { url: string; name: string } };
 type Busy = "publish" | "discard" | "unpublish" | "done" | null;
 
 class LessonNotReadyError extends ApiError {
@@ -89,6 +107,12 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
   const [problems, setProblems] = useState<LessonPublishProblem[]>([]);
   const [confirm, setConfirm] = useState<"discard" | "unpublish" | "removesAnswers" | null>(null);
   const [emojiOpen, setEmojiOpen] = useState(false);
+  // An image chosen in BlockNote's upload panel, or pasted or dropped, waits here until the author inserts or cancels it.
+  const [upload, setUpload] = useState<{ file: File; resolve: (update: ImageUpdate) => void } | null>(null);
+  const requestUpload = (file: File) => new Promise<ImageUpdate>((resolve) => setUpload({ file, resolve }));
+  // Blocks both sides changed in a merged conflict, until the author picks a version.
+  const [conflicts, setConflicts] = useState<MergeConflict[]>([]);
+  const [merged, setMerged] = useState(false);
   const [current, setCurrent] = useState({ published: lesson.published, changed: lesson.changed, editorName: lesson.updatedBy.displayName });
 
   const editor = useCreateBlockNote({
@@ -96,7 +120,27 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
     initialContent: toEditorBlocks(start.document),
     dictionary: lessonEditorDictionary(t),
     tabBehavior: "prefer-navigate-ui",
+    dropCursor: lessonDropCursor,
+    // Alt text starts empty on purpose: a file name is not a description, and publishing requires one.
+    uploadFile: requestUpload,
+    // Pasted HTML and Markdown are parsed into the lesson schema and then repaired in `onChange`; a pasted image file
+    // goes through the same upload dialog as a chosen one.
+    pasteHandler: ({ event, editor: target, defaultPasteHandler }) => {
+      const image = pastedImage(event.clipboardData);
+      if (!image) return defaultPasteHandler();
+      void insertPastedImage(target as unknown as LessonEditorInstance, image);
+      return true;
+    },
   }) as LessonEditorInstance;
+
+  async function insertPastedImage(target: LessonEditorInstance, file: File) {
+    const { block } = target.getTextCursorPosition();
+    const empty = block.type === "paragraph" && Array.isArray(block.content) && block.content.length === 0;
+    const placeholder = empty ? target.updateBlock(block, { type: "image" }) : target.insertBlocks([{ type: "image" }], block, "after")[0]!;
+    const update = await requestUpload(file);
+    if (!target.getBlock(placeholder.id)) return;
+    if (update.props) target.updateBlock(placeholder.id, update); else target.removeBlocks([placeholder.id]);
+  }
 
   const setLesson = (next: CourseLesson) => {
     queryClient.setQueryData(lessonKey, { lesson: next });
@@ -119,16 +163,48 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
         ...value, outline: value.outline.map((entry) => entry.id === lesson.id ? { ...entry, changed: saved.changed, updatedBy: saved.updatedBy, updatedAt: saved.updatedAt } : entry),
       });
     },
-    // For now a conflict loads the newer draft and keeps the local edit on this device until the author decides.
+    // A conflict merges the local edit into the newer draft by block ID and saves the result; blocks both sides changed
+    // wait for the author's choice. When the merge breaks the contracts, the newer draft loads and the local edit is kept
+    // on this device until the author decides.
     onConflict: (server: LessonDraft, local: LessonDocument) => {
-      replaceContent(server.document);
-      setKept(local);
+      const result = mergeLessonDocuments(baseline.current, local, server.document);
+      if (!result) { replaceContent(server.document); setKept(local); return; }
+      autosave.reset(server.version);
+      replaceContent(result.document);
+      baseline.current = server.document;
+      setConflicts((previous) => [...previous.filter((old) => !result.conflicts.some((next) => next.blockId === old.blockId)), ...result.conflicts]);
+      setMerged(true);
+      if (sameDocument(result.document, server.document)) clearLocalLessonDraft(localKey); else autosave.schedule(result.document);
     },
   });
   // A restored local edit is saved like any other change.
   useEffect(() => { if (start.restored) autosave.schedule(start.document); }, [autosave.schedule, start]);
 
   const onChange = () => {
+    // Pasted links, colours, alignment, and foreign images that the contracts refuse are repaired or removed first.
+    const imagePath = lessonImagePath(courseId, lesson.id);
+    const dirty = (editor.document as unknown as EditorBlock[]).flatMap((block) => {
+      const clean = sanitizeEditorBlock(block, imagePath);
+      return clean === block ? [] : [{ id: block.id, clean }];
+    });
+    // One transaction per repair, so the repair is a single change (and a single undo step).
+    if (dirty.length) {
+      editor.transact(() => {
+        for (const { id, clean } of dirty) {
+          if (clean) editor.replaceBlocks([id], [clean] as unknown as PartialBlock<typeof lessonEditorSchema.blockSchema>[]);
+          else editor.removeBlocks([id]);
+        }
+      });
+      return;
+    }
+    // A drop or paste that left too many columns, or columns inside columns or lists, is reshaped in place before saving.
+    const broken = (editor.document as unknown as EditorBlock[]).filter(breaksColumnRules);
+    if (broken.length) {
+      editor.transact(() => {
+        for (const block of broken) editor.replaceBlocks([block.id], normalizeEditorBlocks([block]) as unknown as PartialBlock<typeof lessonEditorSchema.blockSchema>[]);
+      });
+      return;
+    }
     const parsed = toLessonDocument(editor.document as unknown as EditorBlock[]);
     if (!parsed.success) { autosave.markInvalid(); return; }
     if (problems.length) setProblems([]);
@@ -143,6 +219,11 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
     let depth = 1;
     for (let parent = editor.getParentBlock(block); parent; parent = editor.getParentBlock(parent)) depth += 1;
     if (!isListBlock(block.type) || !prevBlock || !isListBlock(prevBlock.type) || depth >= 3) { event.preventDefault(); event.stopPropagation(); }
+  };
+
+  const onDropCapture = (event: DragEvent) => {
+    const view = editor.prosemirrorView;
+    if (view && refusesColumnDrop(view, event.nativeEvent)) { event.preventDefault(); event.stopPropagation(); }
   };
 
   const run = async (action: Exclude<Busy, null>, work: () => Promise<void>) => {
@@ -174,7 +255,7 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
   const requestPublish = () => { if (answeredRemovals() > 0) setConfirm("removesAnswers"); else void publish(); };
   const discard = () => run("discard", async () => {
     const next = await lessonAction(`${path}/discard`);
-    clearLocalLessonDraft(localKey); setKept(null);
+    clearLocalLessonDraft(localKey); setKept(null); setConflicts([]); setMerged(false);
     replaceContent(next.draft!.document);
     autosave.reset(next.draft!.version);
     await afterPublishChange(next);
@@ -187,11 +268,21 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
     document.querySelector(`[data-id="${CSS.escape(blockId)}"]`)?.scrollIntoView?.({ behavior: "smooth", block: "center" });
   };
 
+  // Applies the author's pick for a merge conflict: the chosen version replaces the block's own content, or the block goes.
+  const chooseVersion = (conflict: MergeConflict, choice: MergeChoice) => {
+    setConflicts((list) => list.filter((entry) => entry.blockId !== conflict.blockId));
+    const chosen = choice === "mine" ? conflict.local : conflict.server;
+    if (!editor.getBlock(conflict.blockId)) return;
+    if (!chosen) { editor.removeBlocks([conflict.blockId]); return; }
+    const { type, props, content } = chosen as EditorBlock;
+    editor.updateBlock(conflict.blockId, { type, props, ...(content === undefined ? {} : { content }) } as PartialBlock<typeof lessonEditorSchema.blockSchema>);
+  };
+
   const slashItems = useMemo((): DefaultReactSuggestionItem[] => {
-    const allowed = ["heading", "heading_2", "heading_3", "paragraph", "bullet_list", "numbered_list", "divider"] as const;
+    const allowed = ["heading", "heading_2", "heading_3", "paragraph", "bullet_list", "numbered_list", "divider", "image"] as const;
     const builtIn = getDefaultReactSlashMenuItems(editor).flatMap((item) => {
       const key = (item as { key?: string }).key as (typeof allowed)[number] | undefined;
-      return key && allowed.includes(key) ? [{ ...item, title: t(`courses.editor.slash.${key}`), subtext: undefined, group: t("courses.editor.slashGroups.text") }] : [];
+      return key && allowed.includes(key) ? [{ ...item, title: t(`courses.editor.slash.${key}`), subtext: undefined, group: t(key === "image" ? "courses.editor.slashGroups.media" : "courses.editor.slashGroups.text") }] : [];
     });
     const group = t("courses.editor.slashGroups.lesson");
     const custom: DefaultReactSuggestionItem[] = [
@@ -205,7 +296,9 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
         onItemClick: () => insertOrUpdateBlockForSlashMenu(editor, { type: "practice", props: { data: DEFAULT_PRACTICE } }) },
       { title: t("emojiPicker.title"), group, icon: <Smile size={18} />, aliases: ["emoji", "smiley"], onItemClick: () => setEmojiOpen(true) },
     ];
-    return [...builtIn, ...custom];
+    const columnIcons = [<Columns2 key="two" size={18} />, <Columns3 key="three" size={18} />];
+    const columns = getMultiColumnSlashMenuItems(editor).map((item, index) => ({ ...item, icon: columnIcons[index] }));
+    return [...builtIn, ...columns, ...custom];
   }, [editor, t]);
   const blockTypes = useMemo(() => [
     { name: t("courses.editor.slash.paragraph"), type: "paragraph", icon: Pilcrow },
@@ -229,6 +322,8 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
         <Button variant="quiet" onClick={() => { clearLocalLessonDraft(localKey); setKept(null); }}>{t("courses.editor.dropMine")}</Button>
       </div>
     </div>}
+    {merged && <p className={styles.notice} role="status">{t("courses.editor.merged")} <button type="button" onClick={() => setMerged(false)}>{t("common.dismiss")}</button></p>}
+    <LessonMergeConflicts conflicts={conflicts} onChoose={chooseVersion} onShow={focusBlock} />
     {autosave.status === "invalid" && <p className={styles.notice} role="alert">{t("courses.editor.invalid")}</p>}
     <div className={styles.toolRow}>
       <Popover opened={emojiOpen} onChange={setEmojiOpen} position="bottom-start" withinPortal trapFocus>
@@ -241,8 +336,8 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
       </Popover>
       <span className={styles.help}>{t("courses.editor.slashHelp")}</span>
     </div>
-    <div className={styles.editor} onKeyDownCapture={onKeyDownCapture}>
-      <BlockNoteView editor={editor} theme={editorTheme} slashMenu={false} emojiPicker={false} formattingToolbar={false} onChange={onChange}>
+    <div className={styles.editor} onKeyDownCapture={onKeyDownCapture} onDropCapture={onDropCapture}>
+      <BlockNoteView editor={editor} theme={editorTheme} slashMenu={false} emojiPicker={false} formattingToolbar={false} filePanel={false} onChange={onChange}>
         <SuggestionMenuController triggerCharacter="/" getItems={async (query) => filterSuggestionItems(slashItems, query)} />
         <FormattingToolbarController formattingToolbar={() => <FormattingToolbar>
           <BlockTypeSelect key="type" items={blockTypes} />
@@ -250,9 +345,18 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
           <BasicTextStyleButton key="italic" basicTextStyle="italic" />
           <ColorStyleButton key="color" />
           <CreateLinkButton key="link" />
+          <FileCaptionButton key="caption" />
+          <FileRenameButton key="alt" />
+          <FileReplaceButton key="replace" />
+          <FileDeleteButton key="delete" />
         </FormattingToolbar>} />
+        {/* Only uploads: the API accepts images uploaded to this lesson, never links to images elsewhere. */}
+        <FilePanelController filePanel={(props) => <FilePanel {...props} tabs={[{ name: t("courses.editor.ui.upload"), tabPanel: <UploadTab blockId={props.blockId} setLoading={() => undefined} /> }]} />} />
       </BlockNoteView>
     </div>
+    <LessonImageDialog path={path} file={upload?.file ?? null}
+      onUploaded={(image) => { upload?.resolve({ props: { url: image.url, name: "" } }); setUpload(null); }}
+      onCancel={() => { upload?.resolve({}); setUpload(null); }} />
     <ConfirmDialog opened={confirm === "discard"} onClose={() => setConfirm(null)} title={t("courses.editor.discardTitle")} confirmLabel={t("courses.editor.discard")} cancelLabel={t("common.cancel")}
       onConfirm={() => { setConfirm(null); void discard(); }}>{t("courses.editor.discardConfirm")}</ConfirmDialog>
     <ConfirmDialog opened={confirm === "unpublish"} onClose={() => setConfirm(null)} title={t("courses.editor.unpublishTitle")} confirmLabel={t("courses.editor.unpublish")} cancelLabel={t("common.cancel")}

@@ -7,6 +7,8 @@ A discussion belongs to exactly one target: a post or a course practice block. E
 - Top-level comments or answers
 - Direct replies to a top-level item
 
+Below `48em` each top-level item is one frame and replies are unframed rows behind a narrow indent; the [design system](design-system.md#spacing-and-sizing) owns the details.
+
 Replies cannot themselves receive replies. Multiple top-level submissions by the same person are allowed. Order top-level items oldest-first and replies oldest-first, except for the pinned item rule below.
 
 Shared-sentence and [course post](posts-and-feed.md#course) comments are visible immediately. Question, reading, and fill-in top-level items are answers and begin concealed on each visit. The visible answer count is not a spoiler.

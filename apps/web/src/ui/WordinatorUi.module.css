@@ -50,10 +50,10 @@
 .skeletonShort { width: 45%; }
 .skeletonWide::after, .skeletonShort::after { display: block; width: 42%; height: 100%; content: ""; background: linear-gradient(90deg, transparent, var(--color-support), transparent); animation: loading 1.4s var(--ease-physical) infinite; }
 @keyframes loading { from { transform: translateX(-110%); } to { transform: translateX(280%); } }
-.pageHeader { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(16rem, .55fr); align-items: end; gap: var(--space-12); padding-block: var(--space-16) var(--space-20); }
-.pageHeaderCopy { display: grid; justify-items: start; gap: var(--space-4); }
+.pageHeader { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(16rem, .55fr); align-items: end; gap: var(--space-12); padding-block: var(--page-header-block-start) var(--page-header-block-end); }
+.pageHeaderCopy { display: grid; justify-items: start; gap: var(--page-header-gap); }
 .pageHeader h1 { max-width: 13ch; margin: 0; font-size: var(--type-page-title); line-height: var(--line-heading); }
-.pageHeader p { max-width: 60ch; margin: 0; color: var(--color-foreground-muted); font-size: var(--text-lg); }
+.pageHeader p { max-width: 60ch; margin: 0; color: var(--color-foreground-muted); font-size: var(--type-page-intro); }
 .pageHeaderActions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-3); }
 .sectionHeader { display: flex; align-items: end; justify-content: space-between; gap: var(--space-8); }
 .sectionHeader h2 { margin: var(--space-2) 0 0; font-size: var(--type-section-title); }
@@ -84,7 +84,7 @@
   /* One frame per surface on phones: the bezel shell dissolves and the core carries the card. */
   .surfaceShell.surfaceShell { padding: 0; background: none; border: 0; border-radius: 0; box-shadow: none; }
   .surfaceCore { border-radius: var(--radius-lg); box-shadow: var(--shadow-card), var(--shadow-inset-highlight); }
-  .pageHeader { grid-template-columns: 1fr; gap: var(--space-6); padding-block: var(--space-8) var(--space-10); }
+  .pageHeader { grid-template-columns: 1fr; gap: var(--page-header-gap); }
   .pageHeaderActions { justify-content: flex-start; }
   .sectionHeader { align-items: start; flex-direction: column; gap: var(--space-4); }
   .split, .splitReverse { grid-template-columns: 1fr; gap: var(--space-6); }

@@ -114,7 +114,8 @@ Then:
 4. Run `pnpm bootstrap --remote` only for a clean installation. Never run bootstrap against an installation containing users.
 5. In current desktop Chrome, desktop Safari, Chrome on Android, and Safari on iOS, record date/version/pass-fail for sign-in, group switch, composer, notification destination, discussion reply, and mobile navigation.
 6. Verify the offline fallback says the internet is required and that reconnect/retry preserves a local draft.
-7. Run the friend-group smoke test with two accounts: invitation, approval, post, concealed answer, reaction, reply, notification/read state, image delivery, leave/removal status, and sign-out/sign-in.
+7. Confirm the API Worker shows its daily cron trigger (`wrangler deploy` prints it; the dashboard lists it under Triggers). Its `lesson_media.swept` log line records how many unreferenced lesson images were removed.
+8. Run the friend-group smoke test with two accounts: invitation, approval, post, concealed answer, reaction, reply, notification/read state, image delivery, leave/removal status, and sign-out/sign-in.
 
 The deploy scripts above invoke `wrangler deploy` from the appropriate app directory. Before the first production deploy, replace the placeholder D1 ID, provision the resources described above, and configure the two hostname routes. Production provisioning and route IDs are intentionally not invented in source control.
 

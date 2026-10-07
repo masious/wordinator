@@ -68,47 +68,62 @@ Progress notes (2026-10-06):
 - C7c/C7d web code is written and the production bundle builds (editor chunk ≈ 242 KB gzipped, lazy; Emojibase self-hosted under `/emojibase/en/`). Non-test web code type-checks. Not yet run or fixed: `CourseLessons.test.tsx` and `PracticeBlock.test.tsx` still use the removed block types; no new RTL tests; no Playwright run; the editor has not been exercised in a real browser. BlockNote's own control tooltips still come from its English dictionary; Wordinator's slash items, block types, placeholders, and custom blocks go through i18next.
 - Doc updates for C7b–C7d are still pending (see the Docs line above and C7c player rules).
 
+Progress notes (2026-10-07):
+
+- Web type-check clean; web Vitest 20 files / 77 tests before the new editor tests, then 13 editor tests added (all pass). BlockNote runs in jsdom, so editor flows are covered by RTL. API Vitest 65 tests and R2 suite 4 tests pass.
+- BlockNote warns that the viewport meta lacks `interactive-widget=resizes-content`; left unchanged because the post composer already rides above the keyboard with `visualViewport`, and the global switch would change that behaviour. Revisit with a real-device check.
+- C7e: react-easy-crop has no free-aspect mode, so the lesson image dialog offers aspect presets (whole image by default, 4:3, 16:9, 1:1, 3:4). Images are always re-encoded client-side (metadata stripped, longest edge capped, quality lowered until under the 1 MB server cap). The Embed tab is removed because the API accepts only this lesson's uploads.
+- C7e is code complete and documented (`docs/courses.md#images`, `architecture.md`, `security-and-privacy.md`, `operations.md`, `testing.md`, `roadmap.md`). Verified: workspace type-check; contracts 22, db 4, API 65, R2 4, web 23 files / 86+ tests; production builds (editor chunk ≈ 248 KB gzipped, lazy; it now includes `xl-multi-column` because the dictionary imports its locale). Course Playwright specs (contributors, practice, progress, images) pass in Chromium and WebKit.
+- The full Playwright suite could not be verified: another local session ran Playwright concurrently against the same ports and `.wrangler/e2e` database, which reset data and stopped the shared dev server mid-run. Re-run the whole suite when nothing else uses those ports; failures seen during the interference (visual baselines, mobile layout, phase specs) are unconfirmed.
+- Docs for C7b–C7d (data model, routes, legacy block sections in `courses.md`, C6 player rules) are still pending.
+
 ## C7c — Renderer and player
 
 - [x] `LessonDocument` organism: renders the JSON with React text nodes only; links get `rel="noopener noreferrer nofollow"` and open in a new tab; colours map to tokens; columns use CSS grid from `column.width` and stack below 48em.
 - [x] Callout molecule: variant → tone token and default icon; `icon` overrides from the contract list.
 - [x] Existing example, dialogue, and practice components render from the new block shapes.
-- [~] Replace the read view in `CourseLessons` and the steps in `LessonPlayer` with `flattenToSteps`; update the C6 player rules in `docs/courses.md`. Coordinate with `MOBILE_PLAN.md` Phase 7 (lesson player).
+- [~] Replace the read view in `CourseLessons` and the steps in `LessonPlayer` with `flattenToSteps` (code done and covered by RTL); update the C6 player rules in `docs/courses.md` (docs pending). Coordinate with `MOBILE_PLAN.md` Phase 7 (lesson player).
 - [x] Callout tones, text palette, and column layout tokens in `apps/web/src/tokens.css` and `docs/design-system.md`.
-- [~] Tests: RTL for each block type, escaping of hostile text, unsafe links, columns, and player stepping; existing player and progress Playwright specs pass.
+- [x] Tests: RTL for each block type, escaping of hostile text, unsafe links, columns, and player stepping (done: `LessonDocument.test.tsx`, `CourseLessons.test.tsx`, `PracticeBlock.test.tsx` rewritten); existing player and progress Playwright specs pass (`course-progress` and `course-practice` reseeded through draft and publish via `e2e/lessonSeed.ts`; both, and `course-feed`, pass in Chromium and WebKit).
 
 ## C7d — Editor core
 
 - [x] Install pinned BlockNote packages (do not re-resolve the app's `latest` specifiers); Vite alias for `@blocknote/mantine`'s `./mantineStyles.css`; no Inter font import.
 - [x] Lazy-loaded `LessonEditor` organism with the schema limited to the contract types: `createHeadingBlockSpec({ levels: [1, 2, 3], allowToggleHeadings: false })`, styles limited to bold, italic, and colours; hide alignment and nesting controls outside lists.
 - [x] Custom specs: `callout` (variant and icon menu), `example`, `dialogue`, `practice`; dialogue and practice editors reuse the existing `BlockEditor` form pieces inside the block.
-- [~] Slash menu and formatting toolbar limited to allowed items; all labels through i18next.
+- [x] Slash menu and formatting toolbar limited to allowed items; all labels through i18next, including BlockNote's own controls (`editorDictionary.ts`, tested).
 - [x] Shared `EmojiPicker` molecule (Frimousse, self-hosted `emojibase-data` via `emojibaseUrl`), wired in place of BlockNote's emoji menu.
 - [~] Editor typography from tokens; narrow-screen side menu gutter.
-- [~] Autosave about 1.5 s after the last change with `draftVersion`; Saved / Saving / Conflict indicator; local backup draft `course-lesson-doc` namespaced by account, group, lesson, and schema version.
-- [~] Publish bar: unpublished changes, last editor; owner sees Publish, Discard, Unpublish; publish problems listed and focusable; warning before publishing removes practices with answers.
+- [x] Autosave about 1.5 s after the last change with `draftVersion`; Saved / Saving / Conflict indicator; local backup draft `course-lesson-doc` namespaced by account, group, lesson, and schema version.
+- [x] Publish bar: unpublished changes, last editor; owner sees Publish, Discard, Unpublish; publish problems listed and focusable; warning before publishing removes practices with answers.
 - [x] Conflict handling for now: load the newer draft and keep a copy of the local edit.
-- [~] Remove `BlockEditor` flow, block reorder UI, and block mutations from `apps/web/src/api.ts`.
-- [~] Tests: RTL for autosave, conflict, and contributor without Publish; Playwright: author a lesson with headings, bold and coloured text, callout, and practice, publish, then read it as another member.
+- [x] Remove `BlockEditor` flow, block reorder UI, and block mutations from `apps/web/src/api.ts`.
+- [~] Tests: RTL for autosave, conflict, and contributor without Publish (done: `useLessonAutosave.test.tsx`, `LessonEditor.test.tsx`, `PracticeFields.test.tsx`); Playwright: `course-contributors.spec.ts` now drives the real editor (contributor edits and autosaves without Publish, owner publishes, reader sees it) and passes in Chromium and WebKit; still to write: author a lesson with headings, bold and coloured text, callout, and practice, publish, then read it as another member.
 
 ## C7e — Images
 
-- [ ] BlockNote `uploadFile` → lesson image endpoint; PNG, JPEG, WebP; size cap from the existing pipeline; optional free-aspect crop with `react-easy-crop`.
-- [ ] Alt text field (stored in `name`), caption, preview width.
-- [ ] Orphan sweep: `course_media` rows unreferenced by either document and older than 24 h are deleted with their R2 objects (at publish and discard, plus a scheduled sweep if needed).
-- [ ] Tests: upload validation, cleanup on publish and discard, rejection of foreign keys.
+- [x] BlockNote `uploadFile` → lesson image endpoint through `LessonImageDialog`; any browser-decodable image is re-encoded to JPEG under the existing 1 MB cap; optional crop with `react-easy-crop` using aspect presets (whole, 4:3, 16:9, square, 3:4) because the library has no free aspect. Upload-only file panel (no link tab).
+- [x] Alt text (stored in `name`, starts empty, required to publish), caption, replace, and delete from the image toolbar; preview width from resize handles, rounded to whole pixels.
+- [x] Orphan sweep: `course_media` rows unreferenced by either document and older than 24 h are deleted with their R2 objects at publish and discard, plus a daily cron sweep (`sweepLessonMedia`, `triggers.crons` in `apps/api/wrangler.jsonc`).
+- [x] Tests: upload validation, cleanup on publish and discard, rejection of foreign keys, scheduled sweep (R2 suite); `LessonImageDialog.test.tsx`, `lessonDraft.test.ts`, `crop.test.ts`, image cases in `LessonEditor.test.tsx`; Playwright `course-images.spec.ts` (slash item, upload, publish refused until alt text, reader sees the image) passes in Chromium and WebKit.
 
 ## C7f — Columns
 
-- [ ] Enable `xl-multi-column`: `multiColumnDropCursor`, `withMultiColumn`, 2- and 3-column slash items, width handles; dictionary merged under `multi_column`.
-- [ ] Clamp column count and nesting in the editor so the server never rejects what the editor allowed.
-- [ ] Tests: Playwright drag into a column, save, reload round-trip; mobile layout spec covers stacked columns.
+- [x] Enable `xl-multi-column`: `multiColumnDropCursor` (wrapped by `lessonDropCursor`), `withMultiColumn`, 2- and 3-column slash items (Lucide icons, labels from the catalog), width handles (built into the column node); dictionary merged under `multi_column`.
+- [x] Clamp column count and nesting in the editor so the server never rejects what the editor allowed: `columnDrops.ts` refuses edge drops that would make a fourth column or nest columns (no drop cursor, drop swallowed in capture); `breaksColumnRules` + `normalizeEditorBlocks` repair anything else in place on change.
+- [x] Tests: `lessonDraft.test.ts` column cases; Playwright `course-columns.spec.ts` (drag to edge, three-column slash item, reload round-trip, refused fourth column, reader side by side) passes in Chromium and WebKit, and the refusal case was confirmed to fail with refusal disabled; `mobile-layout.spec.ts` checks stacked columns in all three mobile projects.
 
 ## C7g — Merge and polish
 
-- [ ] Block-level three-way merge on `409`: base, local, and server documents compared by block ID; different blocks merge automatically, the same block asks side by side.
-- [ ] Paste: strip pasted HTML to allowed styles; pasted images go through the upload flow.
-- [ ] Tests: merge cases (move vs edit, delete vs edit, both edit), Playwright with two editors.
+- [x] Block-level three-way merge on `409` (`lessonMerge.ts`): base (last server draft the editor knew), local, and server documents compared by block ID on their own type, props, and content; different blocks merge automatically, positions follow the server except local additions and moves, and the same block (or delete against edit) is asked side by side in `LessonMergeConflicts`. The merged draft saves against the new version at once. Falls back to the C7d "keep my edit aside" banner when the merge breaks the contracts or a restored local edit has no known base.
+- [x] Paste: `pasteHandler` sends a clipboard holding only an image file through the lesson image dialog; everything else uses BlockNote's parser, then `sanitizeEditorBlock` in `onChange` unwraps non-http(s) links, resets off-palette colours and alignment, and removes images that are not this lesson's uploads (one transaction per repair).
+- [x] Tests: `lessonMerge.test.ts` (move vs edit both ways, delete vs edit both ways, both edit, same edit, additions, list and column orphans, editor defaults), `lessonDraft.test.ts` paste repair, `LessonEditor.test.tsx` (merged save, side-by-side choice, pasted HTML, pasted image file), Playwright `course-merge.spec.ts` with two editors (passes in Chromium and WebKit).
+
+Progress notes (2026-10-07, C7g):
+
+- Stored documents may omit editor defaults (`textAlignment: "left"`, `isToggleable: false`); the merge ignores them, otherwise every block of an API-seeded lesson looked edited on both sides. Found by the two-editor Playwright run.
+- Unchosen merge alternatives are held in memory only; leaving the editor keeps whatever the editor shows. Documented in `docs/courses.md#drafts-and-publishing`.
+- Verified: web type-check; web Vitest 24 files / 108 tests; production build (editor chunk ≈ 252 KB gzipped, lazy); all eight `course-*` Playwright specs pass in Chromium and WebKit. The full Playwright suite was not re-run.
 
 ## Release (after C7d, again after later phases)
 

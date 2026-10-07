@@ -147,6 +147,7 @@
   --text-hero: var(--text-display);
   --type-page-title: clamp(2.75rem, 6vw, 5.25rem);
   --type-section-title: clamp(1.9rem, 3.5vw, 3rem);
+  --type-page-intro: var(--text-lg);
   --type-card-title: var(--text-xl);
   --type-body: var(--text-md);
   --type-authored: clamp(1.0625rem, 1.5vw, 1.1875rem);
@@ -217,6 +218,9 @@
   --page-gutter: clamp(var(--space-4), 4vw, var(--space-10));
   --section-rhythm: clamp(var(--space-20), 10vw, var(--space-40));
   --card-inset: clamp(var(--space-5), 3vw, var(--space-8));
+  --page-header-block-start: var(--space-16);
+  --page-header-block-end: var(--space-20);
+  --page-header-gap: var(--space-4);
   --shell-clearance: var(--space-6);
   --navigation-offset: var(--space-6);
   --navigation-height: 72px;
@@ -394,6 +398,10 @@
     --mobile-dock-height: 64px;
     --type-page-title: 1.75rem;
     --type-section-title: 1.375rem;
+    --type-page-intro: var(--text-md);
+    --page-header-block-start: 0px;
+    --page-header-block-end: var(--space-2);
+    --page-header-gap: var(--space-3);
     --type-card-title: var(--text-lg);
     --type-dialog-title: var(--text-xl);
     --type-fieldset-legend: var(--text-md);

@@ -135,13 +135,17 @@ The [courses blueprint](courses.md) owns every course rule. Each phase is comple
   - **C7b — Migration and lesson API**: migration `0015` (draft and published documents, practice anchors, lesson media, comment rebuild, block table removal) and draft, publish, discard, unpublish, and image routes.
   - **C7c — Renderer and player**: the read-only document renderer and document-based player steps.
   - **C7d — Editor core**: the BlockNote editor, custom blocks, autosave, conflicts, and the publish bar.
-  - **C7e — Images**: upload, crop, alt text, and cleanup.
-  - **C7f — Columns**: column creation, widths, limits, and mobile stacking.
-  - **C7g — Merge and polish**: block-level three-way merge and paste sanitizing.
+  - **C7e — Images** (code complete 2026-10-07, ships with the C7 release; Playwright and real-browser check pending): uploads only through the lesson image dialog (whole image or 4:3, 16:9, square, and 3:4 crops, since react-easy-crop has no free aspect; browser re-encoding to JPEG under 1 MB with metadata dropped), alt text required for publishing, caption and preview width from BlockNote's image toolbar, and a daily cron sweep for images neither document references. See [lesson images](courses.md#images).
+  - **C7f — Columns** (code complete 2026-10-07, ships with the C7 release): two- and three-column slash items, edge-drop column creation with BlockNote's drop cursor, width handles, editor-side refusal of a fourth column or nested columns with in-place repair as a fallback, and stacked columns on narrow screens. See [block types](courses.md#block-types).
+  - **C7g — Merge and polish** (code complete 2026-10-07, ships with the C7 release): block-level three-way merge on `409` with side-by-side choices for blocks both sides changed, and paste sanitizing (pasted HTML and Markdown repaired to the lesson subset, foreign images removed, pasted image files through the upload dialog). See [drafts and publishing](courses.md#drafts-and-publishing) and [inline content](courses.md#inline-content).
 
 ## Settings split
 
 Completed on 2026-10-06. The [settings and administration blueprint](settings-and-administration.md) owns the rules: Settings becomes Account, Group (creator only), and Members (creator only) pages. Membership decisions, removal, and password regeneration move to the Members page, the member directory becomes a social view, and image uploads gain an interactive move-and-zoom cropper.
+
+## Mobile-friendly platform
+
+Completed on 2026-10-07. The [mobile plan](../MOBILE_PLAN.md) removed the horizontal overflow that made phones zoom out, added a mobile token layer (type, header, dock, card inset, and page-header roles), a slim header with a four-slot dock and More sheet, a group switcher in the account menu, a hero-free journal with a one-line create prompt, flat post cards with footer reactions, flattened discussions, a full-screen composer with sticky title and action bars, a collapsible course outline, and compact page headers. The [design system](design-system.md#responsive-behavior) owns the rules. `mobile-layout.spec.ts` covers every authenticated route, the shell, journal, discussion, composer, course outline, and lesson player in Pixel 7, 360px, and iPhone 13 projects.
 
 ## Unprioritized future backlog
 

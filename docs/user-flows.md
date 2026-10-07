@@ -102,7 +102,7 @@ If a deleted group is a person’s only group, status appears in the restricted 
 7. The owner adds lessons with a title and optional goal. New lessons are unpublished and appear in the outline with an Unpublished label.
 8. Inside a lesson, the owner adds heading, text, example, dialogue, and practice blocks one at a time, and can move lessons and blocks up or down. Each lesson and block is published separately; readers see only published lessons and published blocks.
 9. The owner can stop at any time. An unsaved block edit stays in the browser and reopens with a restored notice on the next visit. Saved but unpublished content is the durable draft on the server.
-10. If someone saved a newer version first, saving shows a conflict message. The owner can keep their edit and save it over the newer version, or discard it and see the saved one.
+10. If someone saved a newer version first, the editor merges the two by block and says so. Blocks both people changed are shown side by side, and the author keeps the newer version or their own edit for each. See [drafts and publishing](courses.md#drafts-and-publishing).
 11. Readers see the outline and the first three lessons, and continue to later lessons one at a time.
 
 ## Contribute to a course

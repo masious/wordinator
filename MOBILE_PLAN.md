@@ -71,14 +71,13 @@ Symptom: content renders ~1.5× wider than the viewport while the header and doc
 
 ## Phase 7 — Remaining pages
 
-- [ ] Add the lesson player to `mobile-layout.spec.ts`.
-- [ ] Remove the stray `.shellMain section { padding: 24px }` rule (it thickens every Surface bezel on desktop too) after checking discussion, lessons, and contributors sections.
-
-- [ ] Courses library and course page (collapsible lesson outline on mobile).
-- [ ] Members, profile, notices, settings with the new page-header roles.
+- [x] Add the lesson player to `mobile-layout.spec.ts` (example, dialogue, practice, and completion steps).
+- [x] Remove the stray `.shellMain section { padding: 24px }` rule (it thickens every Surface bezel on desktop too) after checking discussion, lessons, and contributors sections.
+- [x] Courses library and course page (collapsible lesson outline on mobile).
+- [x] Members, profile, notices, settings with the new page-header roles (`--type-page-intro`, `--page-header-gap`, `--page-header-block-start/end`; profile avatar stays beside the name at `64px`).
 
 ## Phase 8 — Close-out
 
-- [ ] Update `docs/design-system.md`, `docs/posts-and-feed.md`, `docs/discussions-and-reactions.md`, `docs/courses.md`, `docs/roadmap.md`.
-- [ ] Refresh visual baselines.
-- [ ] Run typecheck, Vitest, Playwright (desktop + mobile), and production web build.
+- [x] Update `docs/design-system.md`, `docs/posts-and-feed.md`, `docs/discussions-and-reactions.md`, `docs/courses.md`, `docs/roadmap.md`.
+- [x] Refresh visual baselines (journal baselines now use their own empty group so earlier specs cannot leak into them).
+- [x] Run typecheck, Vitest, Playwright (desktop + mobile), and production web build. Also fixed `phase-four.spec.ts` for the Settings split and scoped the motion audit to first-party CSS. Known pre-existing WebKit flake: `dual-theme-gate` route/contrast tests intermittently hit "Frame load interrupted".

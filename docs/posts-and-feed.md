@@ -52,7 +52,7 @@ In the feed, the course card is part of the card's link to the post. On the post
 
 ## Composer and drafts
 
-The feed begins with a one-line create prompt row (the member's avatar and "Write something…"). When it leaves the viewport, show a floating create action that opens the same flow. Use a centered modal on larger screens and a full-screen mobile composition surface.
+The feed begins with a one-line create prompt row (the member's avatar and "Write something…"). When it leaves the viewport, show a floating create action that opens the same flow. Use a centered modal on larger screens and a full-screen mobile composition surface with a sticky title bar and a sticky Discard/Publish bar that stays above the on-screen keyboard. Below `48em` the journal hero is dropped: the group name moves to the header and Create a group moves to the account menu and the More sheet. The [design system](design-system.md#responsive-behavior) owns the visual details.
 
 The post-type chooser is at the top. Maintain independent field state for each type during the session and map compatible values, such as notes and primary text, without erasing prior type state. Clear composer state only after successful publication or explicit discard.
 

@@ -8,5 +8,5 @@
 .history{display:grid;gap:var(--space-6)}
 .muted{color:var(--color-foreground-muted)}
 @media(max-width:48em){.profilePage{gap:var(--space-10)}.profileSurface{grid-template-columns:1fr;align-items:start;gap:var(--space-6)}}
-@media(max-width:36em){.profileHeader{align-items:flex-start;flex-direction:column}}
+@media(max-width:48em){.profileHeader{gap:var(--space-4)}.profileHeader h1{margin:var(--space-1) 0}.profileAvatar :global(.mantine-Avatar-root){width:var(--space-16);height:var(--space-16);font-size:var(--text-xl)}}
 @media(prefers-reduced-motion:reduce){.profilePage{animation:none}}

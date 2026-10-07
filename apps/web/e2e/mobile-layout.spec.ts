@@ -1,5 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
+import { courseApi, dialogue, example, paragraph, practice, seedLesson } from "./lessonSeed";
 
 const userId = "10000000-0000-4000-8000-000000000001";
 const group = `/groups/${E2E_GROUP_ID}`;
@@ -208,4 +209,54 @@ test("mobile course page collapses the lesson outline behind a toggle", async ({
   await outline.getByRole("button", { name: "Waar is de kat?" }).click();
   await expect(toggle).toHaveAttribute("aria-expanded", "false");
   await expect(page.getByRole("heading", { level: 2, name: "Waar is de kat?" })).toBeInViewport();
+});
+
+test("mobile lesson player stays within the viewport at every step", async ({ page }) => {
+  const api = courseApi(page);
+  const { course } = await api<{ course: { id: string } }>("/courses", { title: "Player course", summary: "Op reis" });
+  await api(`/courses/${course.id}/visibility`, { status: "published" });
+  await seedLesson(page, course.id, "Onderweg naar het station", [
+    example("Waar is het dichtstbijzijnde treinstation in deze buurt?", "Where is the nearest train station in this neighbourhood?", "Dichtstbijzijnde is een lange overtreffende trap."),
+    dialogue([{ speaker: "Reiziger", text: "Moet ik hier rechtdoor of linksaf?" }, { speaker: "Buurvrouw", text: "Rechtdoor, en dan de tweede straat rechts." }]),
+    practice("Vertaal.", [{ prompt: "Turn left at the traffic lights." }]),
+  ]);
+
+  await page.goto(`${group}/courses/${course.id}`, { waitUntil: "networkidle" });
+  await page.getByRole("button", { name: "Start lesson 1" }).click();
+  const player = page.getByRole("dialog");
+  const steps: Array<[string, () => Promise<void>]> = [
+    ["example", () => expect(player.getByText("Step 1 of 4")).toBeVisible()],
+    ["dialogue", () => expect(player.getByText("Moet ik hier rechtdoor of linksaf?")).toBeVisible()],
+    ["dialogue turn", () => expect(player.getByText("Rechtdoor, en dan de tweede straat rechts.")).toBeVisible()],
+    ["practice", () => expect(player.getByText("Question 1 of 1")).toBeVisible()],
+  ];
+  for (const [index, [label, ready]] of steps.entries()) {
+    if (index > 0) await player.getByRole("button", { name: "Next" }).click();
+    await ready();
+    await expectNoHorizontalOverflow(page, `lesson player ${label}`);
+    if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-player-${label.replace(/ /g, "-")}.png` });
+  }
+  await player.getByLabel("Your answer").fill("Ga linksaf bij het stoplicht.");
+  await player.getByRole("button", { name: "Finish lesson" }).click();
+  await expect(player.getByRole("heading", { name: "Lesson complete" })).toBeVisible();
+  await expectNoHorizontalOverflow(page, "lesson player finish");
+  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-player-finish.png` });
+});
+
+test("mobile lesson reader stacks columns", async ({ page }) => {
+  const api = courseApi(page);
+  const { course } = await api<{ course: { id: string } }>("/courses", { title: "Columns course", summary: "Naast elkaar" });
+  await api(`/courses/${course.id}/visibility`, { status: "published" });
+  const column = (text: string) => ({ id: crypto.randomUUID(), type: "column", props: { width: 1 }, children: [paragraph(text)] });
+  await seedLesson(page, course.id, "Links en rechts", [{ id: crypto.randomUUID(), type: "columnList", props: {}, children: [column("De linker kolom met een zin."), column("De rechter kolom met een zin.")] }]);
+
+  await page.goto(`${group}/courses/${course.id}`, { waitUntil: "networkidle" });
+  const left = page.getByText("De linker kolom met een zin.", { exact: true });
+  const right = page.getByText("De rechter kolom met een zin.", { exact: true });
+  await expect(right).toBeVisible();
+  const [leftBox, rightBox] = [(await left.boundingBox())!, (await right.boundingBox())!];
+  expect(Math.abs(rightBox.x - leftBox.x)).toBeLessThan(2);
+  expect(rightBox.y).toBeGreaterThanOrEqual(leftBox.y + leftBox.height);
+  await expectNoHorizontalOverflow(page, "lesson with columns");
+  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-lesson-columns.png` });
 });

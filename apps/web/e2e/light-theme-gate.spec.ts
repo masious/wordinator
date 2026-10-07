@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
+import { E2E_CREATOR_EMAIL, E2E_PASSWORD } from "./global-setup";
+import { openEmptyJournal } from "./emptyJournal";
 
 const viewports = [
   { name: "narrow", width: 390, height: 844 },
@@ -35,7 +36,9 @@ test("light-theme motion and decoration use the approved runtime contracts", asy
         if ("cssRules" in rule) visit((rule as CSSGroupingRule).cssRules);
       }
     };
-    for (const sheet of document.styleSheets) visit(sheet.cssRules);
+    // Audit first-party styles only: Mantine and BlockNote ship their own easing that the app does not author.
+    const vendor = (sheet: CSSStyleSheet) => /\/node_modules\//.test((sheet.ownerNode as Element | null)?.getAttribute?.("data-vite-dev-id") ?? sheet.href ?? "");
+    for (const sheet of document.styleSheets) if (!vendor(sheet)) visit(sheet.cssRules);
 
     const blurred = [...document.querySelectorAll<HTMLElement>("*")]
       .filter((element) => getComputedStyle(element).backdropFilter !== "none")
@@ -86,10 +89,11 @@ test("stable light-theme visual baselines", async ({ browserName, page }) => {
   }
 
   await page.request.post("/api/auth/sign-in", { data: { email: E2E_CREATOR_EMAIL, password: E2E_PASSWORD } });
+  const journal = await openEmptyJournal(page);
   for (const viewport of [viewports[0], viewports[2]]) {
     await page.setViewportSize(viewport);
-    await page.goto(`/groups/${E2E_GROUP_ID}`);
-    await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
-    await expect(page).toHaveScreenshot(`light-journal-${viewport.name}.png`, { animations: "disabled" });
+    await page.goto(journal.path);
+    await expect(page.getByRole("heading", { name: "Baseline Journal" })).toBeVisible();
+    await expect(page).toHaveScreenshot(`light-journal-${viewport.name}.png`, { animations: "disabled", mask: journal.mask });
   }
 });

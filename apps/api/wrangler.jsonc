@@ -17,6 +17,9 @@
       "bucket_name": "wordinator-media"
     }
   ],
+  "triggers": {
+    "crons": ["17 3 * * *"]
+  },
   "vars": {
     "PUBLIC_MEDIA_BASE_URL": "https://taalk-images.masious.ir/"
   },

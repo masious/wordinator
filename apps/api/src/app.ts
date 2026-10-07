@@ -684,6 +684,24 @@ async function lessonCleanup(binding: D1Database, course: CourseRow, lessonId: s
   };
 }
 
+// The daily sweep removes lesson images that neither the draft nor the published document of their lesson references
+// and that are older than the upload grace period, for example images removed from a draft that is never published.
+// The delete re-checks both documents, and only rows it actually removed lose their R2 objects.
+export async function sweepLessonMedia(env: Bindings, now = Date.now()) {
+  const unreferenced = `NOT EXISTS (
+    SELECT 1 FROM course_lessons l, json_tree(l.draft_doc) t
+    WHERE l.group_id = course_media.group_id AND l.id = course_media.lesson_id AND t.key = 'url' AND t.value = course_media.key
+  ) AND NOT EXISTS (
+    SELECT 1 FROM course_lessons l, json_tree(l.published_doc) t
+    WHERE l.group_id = course_media.group_id AND l.id = course_media.lesson_id AND t.key = 'url' AND t.value = course_media.key
+  )`;
+  const removed = await env.DB.prepare(`DELETE FROM course_media WHERE created_at < ? AND ${unreferenced} RETURNING key`).bind(now - MEDIA_GRACE_MS).all<{ key: string }>();
+  const keys = removed.results.map((row) => row.key);
+  for (let index = 0; index < keys.length; index += 1_000) await env.MEDIA.delete(keys.slice(index, index + 1_000));
+  logInfo("lesson_media.swept", { removed: keys.length });
+  return keys.length;
+}
+
 // Rewrites lesson positions for one course in a single batch. The client must send exactly the current lessons.
 async function reorderLessons(context: Context<AppEnvironment>, course: CourseRow) {
   const parsed = await parseJson(context, reorderRequestSchema); if ("response" in parsed) return { error: parsed.response };

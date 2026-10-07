@@ -1,7 +1,8 @@
 import { expect, test, type Page } from "@playwright/test";
 import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_INVITATION_TOKEN, E2E_PASSWORD } from "./global-setup";
+import { paragraph, seedLesson } from "./lessonSeed";
 
-test("a member asks to contribute, adds a draft block, and the owner publishes it", async ({ browser }, testInfo) => {
+test("a member asks to contribute, edits the lesson draft, and the owner publishes it", async ({ browser }, testInfo) => {
   test.setTimeout(90_000);
   const suffix = `contributor-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
   const helperName = `${testInfo.project.name} helper`;
@@ -22,8 +23,7 @@ test("a member asks to contribute, adds a draft block, and the owner publishes i
   };
   const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Samen bouwen" });
   await api(`/courses/${course.id}/visibility`, { status: "published" });
-  const { lesson } = await api<{ lesson: { id: string; version: number } }>(`/courses/${course.id}/lessons`, { title: `${suffix} lesson` });
-  await api(`/courses/${course.id}/lessons/${lesson.id}`, { title: `${suffix} lesson`, goal: null, published: true, version: lesson.version }, "PATCH");
+  await seedLesson(owner, course.id, `${suffix} lesson`, [paragraph("De eerste zin.")]);
 
   // The helper joins the group through the invitation, and the owner accepts them.
   await helper.goto(`/invite/${E2E_INVITATION_TOKEN}`);
@@ -36,7 +36,7 @@ test("a member asks to contribute, adds a draft block, and the owner publishes i
 
   const coursePage = `/groups/${E2E_GROUP_ID}/courses/${course.id}`;
   await helper.goto(coursePage);
-  await expect(helper.getByRole("button", { name: "Add block to lesson 1" })).toHaveCount(0);
+  await expect(helper.getByRole("button", { name: "Edit lesson 1" })).toHaveCount(0);
   await helper.getByRole("button", { name: "Ask to contribute" }).click();
   await expect(helper.getByText("Your request is waiting for the course owner.")).toBeVisible();
 
@@ -44,25 +44,31 @@ test("a member asks to contribute, adds a draft block, and the owner publishes i
   await owner.getByRole("button", { name: `Accept ${helperName} as a contributor` }).click();
   await expect(owner.getByRole("button", { name: `Remove ${helperName} as a contributor` })).toBeVisible();
 
+  // The contributor edits the published lesson's draft in the editor; it autosaves but readers still see the published text.
   await helper.reload();
-  await helper.getByRole("button", { name: "Add block to lesson 1" }).click();
-  const form = helper.getByRole("form", { name: "New block" });
-  await expect(form.getByLabel("Published to readers")).toHaveCount(0);
-  await form.getByLabel(/^Text/).fill("Een voorstel van de helper.");
-  await form.getByRole("button", { name: "Add block" }).click();
-  const block = helper.locator("li").filter({ hasText: "Een voorstel van de helper." });
-  await expect(block.getByText("Unpublished")).toBeVisible();
-  await expect(block.getByRole("button", { name: "Edit Text block 1" })).toBeVisible();
-  await expect(block.getByRole("button", { name: "Publish" })).toHaveCount(0);
+  await helper.getByRole("button", { name: "Edit lesson 1" }).click();
+  const editor = helper.getByRole("textbox").filter({ hasText: "De eerste zin." });
+  await editor.getByText("De eerste zin.").click();
+  await helper.keyboard.press("End");
+  await helper.keyboard.press("Enter");
+  await helper.keyboard.type("Een voorstel van de helper.");
+  const bar = helper.getByRole("region", { name: "Lesson saving and publishing" });
+  await expect(bar.getByRole("status").first()).toHaveText("Saved", { timeout: 10_000 });
+  await expect(bar.getByText("Unpublished changes")).toBeVisible();
+  await expect(bar.getByRole("button", { name: /Publish/ })).toHaveCount(0);
+  await bar.getByRole("button", { name: "Done editing" }).click();
+  await expect(helper.getByText("Een voorstel van de helper.")).toHaveCount(0);
 
+  // The owner reviews the draft and publishes it.
   await owner.reload();
-  const reviewed = owner.locator("li").filter({ hasText: "Een voorstel van de helper." });
-  await expect(reviewed.getByText(`Last edited by ${helperName}`)).toBeVisible();
-  await reviewed.getByRole("button", { name: "Publish" }).click();
-  await expect(reviewed.getByText("Unpublished")).toHaveCount(0);
+  await owner.getByRole("button", { name: "Edit lesson 1" }).click();
+  const ownerBar = owner.getByRole("region", { name: "Lesson saving and publishing" });
+  await expect(owner.getByText("Een voorstel van de helper.")).toBeVisible();
+  await expect(ownerBar.getByText(`Last edited by ${helperName}`)).toBeVisible();
+  await ownerBar.getByRole("button", { name: "Publish changes" }).click();
+  await expect(ownerBar.getByText("Unpublished changes")).toHaveCount(0);
+  await ownerBar.getByRole("button", { name: "Done editing" }).click();
 
-  // Published content belongs to the owner again.
   await helper.reload();
   await expect(helper.getByText("Een voorstel van de helper.")).toBeVisible();
-  await expect(helper.getByRole("button", { name: "Edit Text block 1" })).toHaveCount(0);
 });

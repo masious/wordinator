@@ -2,6 +2,7 @@ import { env, SELF } from "cloudflare:test";
 import { courseResponseSchema } from "@wordinator/contracts";
 import { lessonImageUploadResponseSchema, lessonResponseSchema } from "@wordinator/contracts/lesson-document";
 import { beforeAll, describe, expect, it } from "vitest";
+import { sweepLessonMedia } from "../src/app";
 import { hashPassword } from "../src/auth";
 
 const PASSWORD = "course-media-password"; let passwordHash: string;
@@ -102,5 +103,40 @@ describe("Course cover media", () => {
     // Deleting the lesson deletes its images.
     expect((await SELF.fetch(`https://wordinator.test${path}`, { method: "DELETE", headers: { cookie: owner } })).status).toBe(200);
     expect((await SELF.fetch(kept.url)).status).toBe(404);
+  });
+
+  it("sweeps old lesson images that neither document references", async () => {
+    const ownerId = crypto.randomUUID(); const groupId = crypto.randomUUID(); const courseId = crypto.randomUUID(); const lessonId = crypto.randomUUID(); const now = Date.now();
+    await env.DB.batch([
+      env.DB.prepare("INSERT INTO users (id, email, normalized_email, password_hash, display_name, must_change_password, created_at, updated_at) VALUES (?, 'sweep-owner@test.local', 'sweep-owner@test.local', ?, 'Sweep owner', 0, ?, ?)").bind(ownerId, passwordHash, now, now),
+      env.DB.prepare("INSERT INTO groups (id, creator_user_id, name, language, invitation_token, created_at, updated_at) VALUES (?, ?, 'Sweep group', 'nl', ?, ?, ?)").bind(groupId, ownerId, "s".repeat(40), now, now),
+      env.DB.prepare("INSERT INTO memberships (group_id, user_id, state, requested_at, decided_at, profile_display_name, updated_at) VALUES (?, ?, 'active', ?, ?, 'Sweep owner', ?)").bind(groupId, ownerId, now, now, now),
+      env.DB.prepare("INSERT INTO courses (id, group_id, owner_id, title, summary, status, created_at, updated_at) VALUES (?, ?, ?, 'Course', 'Summary', 'published', ?, ?)").bind(courseId, groupId, ownerId, now, now),
+      env.DB.prepare("INSERT INTO course_lessons (id, group_id, course_id, title, position, created_by, updated_by, created_at, updated_at) VALUES (?, ?, ?, 'Lesson', 0, ?, ?, ?, ?)").bind(lessonId, groupId, courseId, ownerId, ownerId, now, now),
+    ]);
+    const owner = await signIn("sweep-owner@test.local");
+    const path = `/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId}`;
+    const send = (url: string, body: unknown, method = "POST") => SELF.fetch(`https://wordinator.test${url}`, { method, headers: { cookie: owner, "content-type": "application/json" }, body: JSON.stringify(body) });
+    const png = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 3, 0, 0, 0, 2]);
+    const upload = async () => lessonImageUploadResponseSchema.parse(await (await coverRequest(`${path}/images`, owner, png)).json());
+    const published = await upload(); const drafted = await upload(); const removed = await upload(); const fresh = await upload();
+    const image = (url: string) => ({
+      id: crypto.randomUUID(), type: "image", props: { textAlignment: "left", backgroundColor: "default", name: "Alt", url, caption: "", showPreview: true }, children: [],
+    });
+    const document = (...urls: string[]) => ({ schemaVersion: 2, blocks: urls.map(image) });
+    // `published` is kept by the published document, `drafted` by the draft; `removed` was dropped from the draft.
+    expect((await send(`${path}/draft`, { document: document(published.url, removed.url), draftVersion: 1 }, "PUT")).status).toBe(200);
+    expect((await send(`${path}/publish`, { draftVersion: 2 })).status).toBe(200);
+    expect((await send(`${path}/draft`, { document: document(drafted.url), draftVersion: 2 }, "PUT")).status).toBe(200);
+    await env.DB.prepare("UPDATE course_media SET created_at = ? WHERE lesson_id = ? AND key != ?").bind(now - 2 * 24 * 60 * 60 * 1000, lessonId, fresh.key).run();
+    // Simulate a later published version that no longer shows `removed`, without the cleanup a real publish would run.
+    await env.DB.prepare("UPDATE course_lessons SET published_doc = json(?) WHERE id = ?").bind(JSON.stringify({ schemaVersion: 2, blocks: [{ ...image(published.key) }] }), lessonId).run();
+
+    expect(await sweepLessonMedia(env as never)).toBe(1);
+    expect((await SELF.fetch(removed.url)).status).toBe(404);
+    for (const kept of [published, drafted, fresh]) expect((await SELF.fetch(kept.url)).status).toBe(200);
+    const keys = await env.DB.prepare("SELECT key FROM course_media WHERE lesson_id = ? ORDER BY key").bind(lessonId).all<{ key: string }>();
+    expect(keys.results.map((row) => row.key)).toEqual([published.key, drafted.key, fresh.key].sort());
+    expect(await sweepLessonMedia(env as never)).toBe(0);
   });
 });

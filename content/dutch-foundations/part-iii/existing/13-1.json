@@ -1,0 +1,149 @@
+{
+  "id": "cbb04fbe-14f4-4b49-bd0a-94257186523d",
+  "title": "Mijn huis",
+  "goal": "Describe a home, its rooms, and what is present in them.",
+  "document": {
+    "schemaVersion": 2,
+    "blocks": [
+      {
+        "id": "eab73a77-fa0a-4552-96f3-17d12351e182",
+        "type": "paragraph",
+        "props": {
+          "textColor": "default",
+          "backgroundColor": "default",
+          "textAlignment": "left"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Grammer:\ner is / er zijn,\nindefinite vs definite noun references,\nbasic review of de/het\n\nTopic Vocabulary:\nrooms\nfurniture\nparts of a home",
+            "styles": {}
+          }
+        ],
+        "children": []
+      },
+      {
+        "id": "82ae1641-4a2f-4515-9aef-0a89aad3b0b6",
+        "type": "paragraph",
+        "props": {
+          "textColor": "default",
+          "backgroundColor": "default",
+          "textAlignment": "left"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Er is en er zijn\npurpose: Introduce existence before teaching precise location.",
+            "styles": {}
+          }
+        ],
+        "children": []
+      },
+      {
+        "id": "9eca63e8-df48-40ad-8e75-9865a194ad81",
+        "type": "paragraph",
+        "props": {
+          "textColor": "default",
+          "backgroundColor": "default",
+          "textAlignment": "left"
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Use 'er is' for one thing and 'er zijn' for more than one thing when saying that something exists or is present. Questions use 'is er' and 'zijn er'.",
+            "styles": {}
+          }
+        ],
+        "children": []
+      },
+      {
+        "id": "74e429d6-819f-48ca-98a8-b4591369908d",
+        "type": "example",
+        "props": {
+          "translation": "There is a balcony.",
+          "note": "The balcony is being introduced for the first time."
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Er is een balkon.",
+            "styles": {}
+          }
+        ],
+        "children": []
+      },
+      {
+        "id": "818b9f46-cec3-4bb3-a38e-f876ddccd0eb",
+        "type": "example",
+        "props": {
+          "translation": "There are two bedrooms.",
+          "note": "Use 'zijn' because 'twee slaapkamers' is plural."
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Er zijn twee slaapkamers.",
+            "styles": {}
+          }
+        ],
+        "children": []
+      },
+      {
+        "id": "a196817a-ad8e-42da-95f8-f7c15968ef6d",
+        "type": "example",
+        "props": {
+          "translation": "Is there a garden?",
+          "note": "In a question, 'is' comes before 'er'."
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Is er een tuin?",
+            "styles": {}
+          }
+        ],
+        "children": []
+      },
+      {
+        "id": "7d52c47b-a814-43fc-8c6e-20462e23b4e8",
+        "type": "example",
+        "props": {
+          "translation": "Are there shops nearby?",
+          "note": "The same inversion happens with plural 'zijn er'. This also previews the neighborhood lesson."
+        },
+        "content": [
+          {
+            "type": "text",
+            "text": "Zijn er winkels in de buurt?",
+            "styles": {}
+          }
+        ],
+        "children": []
+      },
+      {
+        "id": "5fe5228f-a3c3-49a5-a133-9f1e6f32b8eb",
+        "type": "dialogue",
+        "props": {
+          "turns": "[{\"speaker\":\"A\",\"text\":\"s er een tuin?\"},{\"speaker\":\"B\",\"text\":\"Nee, maar er is wel een balkon.\"},{\"speaker\":\"A\",\"text\":\"Zijn er twee slaapkamers?\"},{\"speaker\":\"B\",\"text\":\"Ja, er zijn twee slaapkamers.\"}]"
+        },
+        "children": []
+      },
+      {
+        "id": "67d210b8-45cf-4323-9ceb-b2a1a42902f1",
+        "type": "practice",
+        "props": {
+          "data": "{\"instruction\":\"Complete each sentence with 'er is', 'er zijn', 'is er' or 'zijn er'.\",\"passage\":null,\"items\":[{\"prompt\":\"… … een kleine keuken.\",\"authorsVersion\":[\"Er\",\"is\"],\"note\":null},{\"prompt\":\"… … drie slaapkamers.\",\"authorsVersion\":[\"Er\",\"zijn\"],\"note\":null},{\"prompt\":\"… … een balkon?\",\"authorsVersion\":[\"Is\",\"er\"],\"note\":null},{\"prompt\":\"… … twee badkamers?\",\"authorsVersion\":[\"Zijn\",\"er\"],\"note\":null},{\"prompt\":\"In mijn appartement … … een grote woonkamer.\",\"authorsVersion\":[\"is\",\"er\"],\"note\":\"The sentence begins with a place expression, so 'er is' becomes 'is er'.\"},{\"prompt\":\"In het huis … … vier kamers.\",\"authorsVersion\":[\"zijn\",\"er\"],\"note\":\"This reinforces inversion after a sentence-initial place expression.\"},{\"prompt\":\"… … geen lift in het gebouw.\",\"authorsVersion\":[\"Er\",\"is\"],\"note\":null},{\"prompt\":\"… … ook een garage?\",\"authorsVersion\":[\"is\",\"er\"],\"note\":null}]}"
+        },
+        "children": []
+      },
+      {
+        "id": "a4fbb4e1-1b39-460c-8949-73a5f2ad71bc",
+        "type": "practice",
+        "props": {
+          "data": "{\"instruction\":\"Translate the sentences into Dutch. Pay attention to singular, plural and word order.\",\"passage\":null,\"items\":[{\"prompt\":\"There is a bathroom.\",\"authorsVersion\":[\"Er is een badkamer.\"],\"note\":null},{\"prompt\":\"There are two bedrooms.\",\"authorsVersion\":[\"Er zijn twee slaapkamers.\"],\"note\":null},{\"prompt\":\"Is there a garden?\",\"authorsVersion\":[\"Is er een tuin?\"],\"note\":null},{\"prompt\":\"Are there three rooms?\",\"authorsVersion\":[\"Zijn er drie kamers?\"],\"note\":null},{\"prompt\":\"There is no elevator.\",\"authorsVersion\":[\"Er is geen lift.\"],\"note\":null},{\"prompt\":\"In the apartment there is a small kitchen.\",\"authorsVersion\":[\"In het appartement is er een kleine keuken.\"],\"note\":\"Recycles inversion after a sentence-initial place expression.\"}]}"
+        },
+        "children": []
+      }
+    ]
+  }
+}

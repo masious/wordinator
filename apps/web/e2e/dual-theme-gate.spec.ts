@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
+import { openEmptyJournal } from "./emptyJournal";
 
 const storageKey = "wordinator:color-scheme";
 const userId = "10000000-0000-4000-8000-000000000001";
@@ -160,10 +161,11 @@ test("stable dual-theme visual baselines", async ({ browserName, page }) => {
 
   await page.request.post("/api/auth/sign-in", { data: { email: E2E_CREATOR_EMAIL, password: E2E_PASSWORD } });
   await setPreference(page, "dark");
+  const journal = await openEmptyJournal(page);
   for (const viewport of viewports) {
     await page.setViewportSize(viewport);
-    await page.goto(`/groups/${E2E_GROUP_ID}`);
-    await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
-    await expect(page).toHaveScreenshot(`dark-journal-${viewport.name}.png`, { animations: "disabled" });
+    await page.goto(journal.path);
+    await expect(page.getByRole("heading", { name: "Baseline Journal" })).toBeVisible();
+    await expect(page).toHaveScreenshot(`dark-journal-${viewport.name}.png`, { animations: "disabled", mask: journal.mask });
   }
 });
