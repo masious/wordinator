@@ -1,0 +1,2792 @@
+{
+  "title": "Met de tram en de trein",
+  "goal": "Talk about getting around by public transport, using separable verbs in all positions and recognising inseparable ones.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Met de tram en de trein",
+      "id": "db2c5abe-a0b1-46fe-be43-1b2e7d8d447f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Monday 26 October. Sofia lives in Lombok now. On most days she walks to the office near Utrecht Centraal, but this morning she is a little late, so she takes the bus. Tomorrow she and Daan go to Amsterdam by train for a meeting with a client."
+      ],
+      "id": "e0d82b12-b665-420d-bfaa-0ff122148b9d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In this lesson you will say how you travel, check in, get on, change and get off, and understand simple travel information. You will use separable verbs in every position and learn which verbs never split."
+      ],
+      "id": "e6b51f12-18fa-4f12-8896-cfe54d27e076"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: the ",
+        {
+          "text": "subject",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " is green, the ",
+        {
+          "text": "conjugated verb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " is blue, a ",
+        {
+          "text": "prefix or infinitive at the end",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        " is red, ",
+        {
+          "text": "time",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " is orange, ",
+        {
+          "text": "place",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " is purple and ",
+        {
+          "text": "how you travel",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        " is gray. The new form is ",
+        {
+          "text": "bold",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "043b3354-9196-4094-81ba-ef6a1a7bbaa8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Op het perron",
+      "id": "cb15731f-e11c-4f88-86a9-6e96a661a7ff"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Tuesday 27 October, 8:12, Utrecht Centraal. Daan is on the platform early, as always. Sofia comes running from the bus."
+      ],
+      "id": "eee8e331-cf13-4f4b-ad12-78e2df984fd6"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Goedemorgen, Sofia! Je bent op tijd!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja! Ik ren van de bus naar het station. Is dit spoor 7?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ja. Onze trein vertrekt om 8.16 van spoor 7. Check je in met je bankpas?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ik check altijd in met mijn bankpas. Bij de poortjes."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Prima. O nee, kijk: vijf minuten vertraging."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Vertraging? Is dat een probleem? De vergadering begint om tien uur."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Nee hoor. We komen om ongeveer tien voor negen in Amsterdam aan."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En dan? Overstappen we in Amsterdam?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ja, in Amsterdam stappen we over op de tram. Met de tram zijn we in vijftien minuten bij de klant."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Kijk, daar komt de trein! Waar stappen we in?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Hier, bij deze deur. Kom op, stap in!"
+          }
+        ]
+      },
+      "id": "6e5649de-1260-499d-8788-0332e53e0523"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het perron",
+              "meaning": "platform (where you stand and wait)",
+              "forms": "de perrons",
+              "example": "Daan staat op het perron.",
+              "id": "fabeccc1-7517-44c7-bd40-36b2c3f7d678"
+            },
+            {
+              "term": "het spoor",
+              "meaning": "track; the platform number at a station",
+              "forms": "de sporen",
+              "example": "De trein vertrekt van spoor 7.",
+              "note": "False friend: not 'sport'. On signs and in announcements spoor 7 = platform 7.",
+              "id": "112d3d8d-4f21-4052-92c9-5cdf9ace4ce9"
+            },
+            {
+              "term": "inchecken",
+              "meaning": "to check in (with a card, at the start of a trip)",
+              "forms": "checkt in · checkte in · ingecheckt",
+              "example": "Ik check in met mijn bankpas.",
+              "note": "Separable: ik check … in.",
+              "id": "a98303c3-315f-466c-aa15-8112367b22ff"
+            },
+            {
+              "term": "de bankpas",
+              "meaning": "bank card, debit card",
+              "forms": "de bankpassen",
+              "example": "Sofia checkt in met haar bankpas.",
+              "id": "34003ea0-e59e-4203-a311-6fa4962969b6"
+            },
+            {
+              "term": "het poortje",
+              "meaning": "ticket gate (at a station)",
+              "forms": "de poortjes",
+              "example": "Check in bij de poortjes.",
+              "id": "735b09fb-bc86-4a0d-9ec0-c6a15b7c834e"
+            },
+            {
+              "term": "de vertraging",
+              "meaning": "delay",
+              "forms": "de vertragingen",
+              "example": "De trein heeft vijf minuten vertraging.",
+              "id": "80872048-2c1e-4003-85ca-1ffd9e7f47be"
+            },
+            {
+              "term": "overstappen",
+              "meaning": "to change (trains, to another bus or tram)",
+              "forms": "stapt over · stapte over · overgestapt",
+              "example": "In Amsterdam stappen we over op de tram.",
+              "note": "Separable. overstappen op de tram = change to the tram.",
+              "id": "ccce2c13-395a-43cf-ad59-9c76e437f097"
+            },
+            {
+              "term": "instappen",
+              "meaning": "to get on, to get in (a train, bus, tram)",
+              "forms": "stapt in · stapte in · ingestapt",
+              "example": "Kom op, stap in!",
+              "note": "Separable. The opposite of uitstappen (15-b).",
+              "id": "998f0083-c305-4055-828c-b14ac326797c"
+            }
+          ]
+        }
+      },
+      "id": "82ebf747-cce8-401c-8a9d-cd1aa77a8d66"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Sofia says ",
+        {
+          "text": "Overstappen we in Amsterdam?",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " Daan answers with the correct form: ",
+        {
+          "text": "Stappen",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " we in Amsterdam ",
+        {
+          "text": "over",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        "? A separable verb never stays in one piece in a statement or a question."
+      ],
+      "id": "18bd8e8b-2286-4ad6-a89a-5fa77d7f79d8"
+    },
+    {
+      "type": "divider",
+      "id": "6403a729-e6f6-4962-b48d-eadcff9a9ed7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Separable verbs: the full picture",
+      "id": "1e427d10-83b2-4034-9fe6-cc8cd08c065d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You know separable verbs from 07-b (",
+        {
+          "text": "opstaan → ik sta op",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") and the imperative from 15-b (",
+        {
+          "text": "Stap hier uit.",
+          "styles": {
+            "italic": true
+          }
+        },
+        "). Travel Dutch is full of them. Here they are in every position."
+      ],
+      "id": "892b49bb-ebd5-4ccd-b3a2-cf72f475b87b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Statement: prefix at the end",
+      "id": "c577977d-1472-4fb7-8ca1-c18f96eb3314"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We change in Amsterdam.",
+        "note": "overstappen → we stappen … over. Everything else stands between the two parts."
+      },
+      "content": [
+        {
+          "text": "We",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "stappen",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in Amsterdam ",
+        {
+          "text": "over",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "f11d46eb-cc21-4e72-a946-4290803dc003"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I check in with my bank card.",
+        "note": "Also fine: Ik check in met mijn bankpas. A phrase with met may come after the prefix."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "check",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " met mijn bankpas ",
+        {
+          "text": "in",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "c3455390-9ee0-45bd-8fc4-ee431d09c5d0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Question: verb first, prefix still at the end",
+      "id": "1b57b500-3e67-42cb-b983-81ad326fd9e6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you getting off here?",
+        "note": "Yes/no question: verb first. jij-inversion drops the t: stap je."
+      },
+      "content": [
+        {
+          "text": "Stap",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " hier ",
+        {
+          "text": "uit",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "?"
+      ],
+      "id": "3a0fa53d-ac83-4bcb-8496-b04825a27ac5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What time does the train arrive?",
+        "note": "Question word + verb + subject + … + prefix."
+      },
+      "content": [
+        "Hoe laat ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "de trein",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "aan",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "?"
+      ],
+      "id": "dd45377e-edee-4ea7-b2c6-864995bd25a2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Inversion: time first",
+      "id": "92090979-0de0-4c5d-b83e-06317700eddc"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The train arrives in Amsterdam at ten to nine.",
+        "note": "Time first, then verb, then subject (08-a). The prefix stays at the very end."
+      },
+      "content": [
+        {
+          "text": "Om tien voor negen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "de trein",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " in Amsterdam ",
+        {
+          "text": "aan",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "c52bb648-120d-4cd0-b241-613a00f5e701"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "After that we check out.",
+        "note": "Daarna at the start: inversion, as with dan (08-b)."
+      },
+      "content": [
+        {
+          "text": "Daarna",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "checken",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "we",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "uit",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "3a0b96d3-eeca-4724-a0bb-afef61855343"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "uitchecken",
+              "meaning": "to check out (with a card, at the end of a trip)",
+              "forms": "checkt uit · checkte uit · uitgecheckt",
+              "example": "Daarna checken we uit.",
+              "note": "Separable. Always check out at the end of your trip.",
+              "id": "ab4a230d-70c5-4c9e-b688-d73df5f24a73"
+            }
+          ]
+        }
+      },
+      "id": "abd79a43-562f-41df-bc86-060339ede719"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Imperative and modal verbs",
+      "id": "460de4d2-4138-4316-aa9e-f17d58a0ea06"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Check in here.",
+        "note": "Imperative (15-b): stem first, prefix last."
+      },
+      "content": [
+        {
+          "text": "Check",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " hier ",
+        {
+          "text": "in",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "dd149e0f-bad3-45d5-9ef3-95ad901648d9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You can change here.",
+        "note": "kunnen (15-a) + infinitive at the end. The infinitive stays one word."
+      },
+      "content": [
+        {
+          "text": "Je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "kunt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " hier ",
+        {
+          "text": "overstappen",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "f99ef189-1894-4ccf-9bfa-b3e090e5e8ea"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "May I get on here?",
+        "note": "mogen + infinitive at the end: instappen, not stap in."
+      },
+      "content": [
+        {
+          "text": "Mag",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " hier ",
+        {
+          "text": "instappen",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "?"
+      ],
+      "id": "d5d812ae-c439-44a3-a012-47df54e7f5e3"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "Conjugated verb in position 1 or 2, prefix at the very end: ",
+        {
+          "text": "Stap",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " je hier ",
+        {
+          "text": "uit",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "? With kunnen, mogen or willen the infinitive stays whole at the end: Je ",
+        {
+          "text": "kunt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " hier ",
+        {
+          "text": "uitstappen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "92f638ae-33fb-4bce-ae36-5923a7b1a84b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik overstap in Utrecht.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik ",
+        {
+          "text": "stap",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in Utrecht ",
+        {
+          "text": "over",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ". And ",
+        {
+          "text": "Je kunt hier stappen over.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Je ",
+        {
+          "text": "kunt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " hier ",
+        {
+          "text": "overstappen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "fc605721-e5f3-4be3-b224-75dbce830482"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "In speech you may hear ",
+        {
+          "text": "De trein komt aan om tien uur.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " That is possible, but learn the safe pattern with the prefix at the end: De trein ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " om tien uur ",
+        {
+          "text": "aan",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "c8794371-9b60-45eb-b4ee-aa4a2c8e32be"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Ten useful prefixes",
+      "id": "1c89d367-0c7b-4ca3-8159-1819925aa21f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Getting on and off"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "in-",
+              "styles": {
+                "bold": true
+              }
+            },
+            ": instappen, inchecken"
+          ],
+          "id": "41882f68-db45-4768-aacd-c5c2250e6a4b"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "uit-",
+              "styles": {
+                "bold": true
+              }
+            },
+            ": uitstappen, uitchecken"
+          ],
+          "id": "cf8ea969-a260-42dd-aa21-2e04630ba51d"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "over-",
+              "styles": {
+                "bold": true
+              }
+            },
+            ": overstappen"
+          ],
+          "id": "5c9301ef-4bc7-4d9c-99ad-ec8c9a7602a9"
+        }
+      ],
+      "id": "03aa05e6-946a-4f00-a73e-bc351fc1452c"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Arriving, leaving and coming back"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "aan-",
+              "styles": {
+                "bold": true
+              }
+            },
+            ": aankomen; ",
+            {
+              "text": "weg-",
+              "styles": {
+                "bold": true
+              }
+            },
+            ": weggaan, wegrijden"
+          ],
+          "id": "702f5822-3890-4174-9b71-e47676ee6ebc"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "terug-",
+              "styles": {
+                "bold": true
+              }
+            },
+            ": terugkomen; ",
+            {
+              "text": "door-",
+              "styles": {
+                "bold": true
+              }
+            },
+            ": doorrijden, doorlopen"
+          ],
+          "id": "b60a8452-9bca-4635-9c77-9c9afaba8756"
+        }
+      ],
+      "id": "573f4b00-bcd6-4128-9ee9-f063532901d8"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "From 07-b and 08-b"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "op-",
+              "styles": {
+                "bold": true
+              }
+            },
+            ": opstaan; ",
+            {
+              "text": "af-",
+              "styles": {
+                "bold": true
+              }
+            },
+            ": afspreken; ",
+            {
+              "text": "mee-",
+              "styles": {
+                "bold": true
+              }
+            },
+            ": meenemen"
+          ],
+          "id": "d3cc64af-e99f-434c-a1fd-be1f84d069da"
+        }
+      ],
+      "id": "6fb21671-f72b-4199-953e-a78011a2acf0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The train stops at Amsterdam Amstel and then continues to Amsterdam Centraal.",
+        "note": "doorrijden = to keep going, to ride on. door- often means 'on, further'."
+      },
+      "content": [
+        "De trein stopt in Amsterdam Amstel en ",
+        {
+          "text": "rijdt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " dan ",
+        {
+          "text": "door",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " naar Amsterdam Centraal."
+      ],
+      "id": "0e4c4eb3-d7ff-480c-bef6-80d1c7ae4019"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "There's the bus. It leaves at 8:02.",
+        "note": "wegrijden = to drive off (a bus, tram or car). The bus is a de-word: hij."
+      },
+      "content": [
+        "Daar ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " de bus. Hij ",
+        {
+          "text": "rijdt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " om 8.02 ",
+        {
+          "text": "weg",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "b442ccea-e518-4993-90f1-43c69300ad70"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "rijden",
+              "meaning": "to go, to run (a train, bus, car); to drive, to ride",
+              "forms": "rijdt · reed · gereden",
+              "example": "De trein rijdt naar Amsterdam.",
+              "note": "Vehicles rijden; people lopen (walk) or gaan met de trein.",
+              "id": "d0778172-7903-4e4e-9a5b-4064c2d0dce2"
+            },
+            {
+              "term": "doorrijden",
+              "meaning": "to keep going, to continue (a vehicle)",
+              "forms": "rijdt door · reed door · doorgereden",
+              "example": "De trein rijdt door naar Amsterdam Centraal.",
+              "note": "Separable.",
+              "id": "bc7d1fdd-9f2b-4a43-9a9d-2bb76c9cb749"
+            },
+            {
+              "term": "wegrijden",
+              "meaning": "to drive off, to pull away",
+              "forms": "rijdt weg · reed weg · weggereden",
+              "example": "De bus rijdt om 8.02 weg.",
+              "note": "Separable.",
+              "id": "199b1444-6499-4a94-aa27-ad06deaf8ddc"
+            }
+          ]
+        }
+      },
+      "id": "121a178c-4a91-491e-a237-8fd730703b1e"
+    },
+    {
+      "type": "divider",
+      "id": "dd27f88e-2595-45bb-b23b-db1f8135f07c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Split or not? Listen to the stress",
+      "id": "a6cf0e5f-88ea-4bc4-9568-49717a3ce9df"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Not every verb with a prefix splits. Say the verb aloud: if the ",
+        {
+          "text": "prefix",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is stressed, it splits. If the stress is on the verb part, it never splits."
+      ],
+      "id": "563bb6e0-b57e-4465-a5e2-5a1cd37daafc"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Separable: stress on the prefix",
+              "id": "11d8bd9e-aed9-4a0e-8076-9a62161d5118"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "IN",
+                  "styles": {
+                    "textColor": "red"
+                  }
+                },
+                "stappen → ik stap ",
+                {
+                  "text": "in",
+                  "styles": {
+                    "textColor": "red"
+                  }
+                }
+              ],
+              "id": "2fcc0b21-d4d7-4da7-8dc0-5fd44194dc90"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "OVER",
+                  "styles": {
+                    "textColor": "red"
+                  }
+                },
+                "stappen → we stappen ",
+                {
+                  "text": "over",
+                  "styles": {
+                    "textColor": "red"
+                  }
+                }
+              ],
+              "id": "f5787c4e-f2c8-47c4-99c6-e445890c7eb2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "AAN",
+                  "styles": {
+                    "textColor": "red"
+                  }
+                },
+                "komen → de trein komt ",
+                {
+                  "text": "aan",
+                  "styles": {
+                    "textColor": "red"
+                  }
+                }
+              ],
+              "id": "d46112d6-24bd-4f77-89fc-3ec40217ccbd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "UIT",
+                  "styles": {
+                    "textColor": "red"
+                  }
+                },
+                "checken → je checkt ",
+                {
+                  "text": "uit",
+                  "styles": {
+                    "textColor": "red"
+                  }
+                }
+              ],
+              "id": "566406e1-eab9-4ddc-b8e1-5f984317b7b1"
+            }
+          ],
+          "id": "bf899386-1826-4919-b708-e8dabe8156b4"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Inseparable: stress on the verb",
+              "id": "64c4a6d3-b4ee-4ca3-9d77-c7b24ef0aaec"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "ver",
+                {
+                  "text": "TREK",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                "ken → de trein ",
+                {
+                  "text": "vertrekt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "6bec68ad-dde0-43fe-a234-dafe61e6cc36"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "be",
+                {
+                  "text": "TA",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                "len → ik ",
+                {
+                  "text": "betaal",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "76237e22-5f3a-4853-95fa-38f5e884a2ea"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "be",
+                {
+                  "text": "GIN",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                "nen → de vergadering ",
+                {
+                  "text": "begint",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "78586dbd-250e-4be3-b1e3-1fb32c9710bd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "her",
+                {
+                  "text": "HA",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                "len → hij ",
+                {
+                  "text": "herhaalt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "93b6bb0b-0206-4a5e-a95f-cc72e81d66dd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "ont",
+                {
+                  "text": "BIJ",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                "ten → ik ",
+                {
+                  "text": "ontbijt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "f6e613c7-c8c4-4a15-8ef6-c092a3f810b9"
+            }
+          ],
+          "id": "e404a662-976a-4d69-9495-f260030aaf86"
+        }
+      ],
+      "id": "043fd9f2-1c7b-4fc4-b049-1628ea33e2dd"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        "The prefixes ",
+        {
+          "text": "be-, ge-, her-, ont-, ver-, er-",
+          "styles": {
+            "bold": true
+          }
+        },
+        " are never stressed and never split. Stressed prefixes like ",
+        {
+          "text": "IN-, UIT-, OVER-, AAN-",
+          "styles": {
+            "bold": true
+          }
+        },
+        " do split."
+      ],
+      "id": "cd167de1-b3e9-4bcb-bad9-98fa27df6260"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The train leaves at 8:16.",
+        "note": "vertrekken is inseparable (08-a): one word, stress on -TREK-."
+      },
+      "content": [
+        {
+          "text": "De trein",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "vertrekt",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " om 8.16."
+      ],
+      "id": "5d44bbc1-9139-4ac8-9b5b-fecc4b088e85"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia pays with her bank card.",
+        "note": "betalen: be- is never split."
+      },
+      "content": [
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "betaalt",
+          "styles": {
+            "textColor": "blue",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " met haar bankpas."
+      ],
+      "id": "ba6c5269-078f-47c1-be2f-b0189b781ba8"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Could you repeat that, please?",
+        "note": "herhalen = to repeat. A very useful sentence on a noisy platform."
+      },
+      "content": [
+        {
+          "text": "Kunt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " dat ",
+        {
+          "text": "herhalen",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ", alstublieft?"
+      ],
+      "id": "f833ac15-6d50-4260-900f-fda6f86bd0df"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "herhalen",
+              "meaning": "to repeat",
+              "forms": "herhaalt · herhaalde · herhaald",
+              "example": "Kunt u dat herhalen, alstublieft?",
+              "note": "Inseparable: her- is never split or stressed.",
+              "id": "a06e50e0-b954-483e-9935-8e1033486ef6"
+            }
+          ]
+        }
+      },
+      "id": "191f66e0-d14e-422f-94e4-d2bb455e1ad1"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik ver trek om acht uur.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik ",
+        {
+          "text": "vertrek",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " om acht uur. And ",
+        {
+          "text": "De vergadering gint om tien uur be.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → De vergadering ",
+        {
+          "text": "begint",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " om tien uur."
+      ],
+      "id": "37fa60c7-773e-4a11-ad5b-28c974ddd3ac"
+    },
+    {
+      "type": "divider",
+      "id": "e4b82171-6d38-4861-a410-20e9c978e641"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "How do you travel?",
+      "id": "c0cfff2b-17eb-4d98-ba97-b5cd7e0ca4b7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "met + transport",
+      "id": "651f4b38-2b10-4eee-985e-d75bb539d5c2"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "To say how you travel, use ",
+        {
+          "text": "met de",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        " + the vehicle: ",
+        {
+          "text": "met de trein, met de tram, met de bus, met de metro, met de fiets, met de auto",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        ". Walking has no met: ",
+        {
+          "text": "lopend",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        ", or the verb ",
+        {
+          "text": "lopen",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "54eebee4-0f5f-45be-ad88-397894958697"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "On Monday Sofia goes to the office by bus.",
+        "note": "Time, manner, place (09-b). The bus stop is in the Kanaalstraat, opposite the supermarket (15-a)."
+      },
+      "content": [
+        {
+          "text": "Op maandag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "met de bus",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        " ",
+        {
+          "text": "naar kantoor",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "d49768f9-28bc-44af-b053-2d9c477877a5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "She gets on in the Kanaalstraat and gets off at Utrecht Centraal.",
+        "note": "Two separable verbs, each with its prefix at the end of its own part."
+      },
+      "content": [
+        {
+          "text": "Ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "stapt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in de Kanaalstraat",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "in",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " en ",
+        {
+          "text": "stapt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "bij Utrecht Centraal",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "uit",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "0ea60679-e553-47bd-ba1c-4e34fb9d7048"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan always cycles.",
+        "note": "In Amsterdam many people go met de metro. Utrecht has no metro."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " altijd ",
+        {
+          "text": "met de fiets",
+          "styles": {
+            "textColor": "gray",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "86baddb3-1762-4374-b16e-f639b37906b2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm walking. I walk to the station.",
+        "note": "lopend = on foot. Not: met de voet."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "lopend",
+          "styles": {
+            "textColor": "gray",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ". ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "loop",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "naar het station",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "4793e4b8-0ea6-4d2d-bb0d-e9deccbc0d23"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de metro",
+              "meaning": "underground, metro",
+              "forms": "de metro's",
+              "example": "In Amsterdam kun je met de metro gaan.",
+              "id": "c173b52c-9767-4304-a9ba-fc1a560d90f7"
+            },
+            {
+              "term": "het openbaar vervoer",
+              "meaning": "public transport (often: het ov)",
+              "example": "Sofia gaat met het openbaar vervoer naar haar werk.",
+              "id": "807c63d5-1549-4cc0-84d4-73c145fbaac5"
+            }
+          ]
+        }
+      },
+      "id": "28041b8d-fde0-4945-bbe4-7c7991694e4f"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        {
+          "text": "lopen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = to walk, ",
+        {
+          "text": "rennen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = to run. ",
+        {
+          "text": "Ik loop naar de bus",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " does not mean I run to the bus: Ik ",
+        {
+          "text": "ren",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " naar de bus. And ",
+        {
+          "text": "het spoor",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is the track, not sport; spoor 7 = platform 7."
+      ],
+      "id": "0b6b8a2b-9b64-4375-8d2a-5ac885f1202c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Tickets and travel information",
+      "id": "3c250957-cbed-411c-9e8e-7b33bb5251ac"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In Dutch trains, trams and buses you rarely buy a paper ticket. You check in with your ",
+        {
+          "text": "bankpas",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or an ",
+        {
+          "text": "ov-chipkaart",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". For one trip you can also buy a ",
+        {
+          "text": "kaartje",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": an ",
+        {
+          "text": "enkele reis",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (one way) or a ",
+        {
+          "text": "retour",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (return)."
+      ],
+      "id": "bc32568e-cb4c-4526-ab85-3038ac1d4700"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "A return to Amsterdam, please.",
+        "note": "Also: Een enkele reis Amsterdam, alstublieft."
+      },
+      "content": [
+        "Een ",
+        {
+          "text": "retour",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " Amsterdam, alstublieft."
+      ],
+      "id": "aa43f013-19cc-4636-b1ed-c8ff8b16b2a9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Dear passengers, the train to Amsterdam Centraal has a five-minute delay.",
+        "note": "A typical announcement. heeft … vertraging = is … late."
+      },
+      "content": [
+        {
+          "text": "Beste reizigers",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", de trein naar Amsterdam Centraal heeft vijf minuten ",
+        {
+          "text": "vertraging",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "f7b14ab9-45ae-4442-9dfb-0746d777e663"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het kaartje",
+              "meaning": "ticket",
+              "forms": "de kaartjes",
+              "example": "Hebt u een kaartje?",
+              "id": "1f3837f1-df33-40db-8807-54a9b79e3ba3"
+            },
+            {
+              "term": "de ov-chipkaart",
+              "meaning": "public transport card",
+              "forms": "de ov-chipkaarten",
+              "example": "Daan heeft een ov-chipkaart.",
+              "note": "ov = openbaar vervoer.",
+              "id": "2d34070d-8761-48d5-bb65-9deae195a272"
+            },
+            {
+              "term": "enkele reis",
+              "meaning": "one-way (ticket)",
+              "example": "Een enkele reis Amsterdam, alstublieft.",
+              "id": "cd1195c9-c8b3-4996-b102-4bf6afe56f09"
+            },
+            {
+              "term": "retour",
+              "meaning": "return (ticket)",
+              "forms": "de retours",
+              "example": "Een retour Amsterdam, alstublieft.",
+              "id": "f15e815d-24b3-41dd-b4a8-343989e1bd23"
+            },
+            {
+              "term": "de reis",
+              "meaning": "trip, journey",
+              "forms": "de reizen",
+              "example": "De reis naar Amsterdam is ongeveer dertig minuten.",
+              "id": "7a613d85-734e-4025-a177-b9bf92816942"
+            },
+            {
+              "term": "Beste reizigers",
+              "meaning": "Dear passengers (announcements)",
+              "example": "Beste reizigers, de trein heeft vertraging.",
+              "id": "8da2a88c-0a28-435d-83b6-9589cfb265af"
+            },
+            {
+              "term": "de reiziger",
+              "meaning": "passenger, traveller",
+              "forms": "de reizigers",
+              "example": "Er zijn veel reizigers op het perron.",
+              "id": "4d96cfb1-afd4-46fc-9226-30171322ba3a"
+            }
+          ]
+        }
+      },
+      "id": "3a57ee9c-41f5-4f23-8f67-1d429088f1a8"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "map-pin"
+      },
+      "content": [
+        "Check in at the start and check out at the end of every trip, with your bank card (OVpay) or an ov-chipkaart, on the same card. Forget to check out and you pay a high fare."
+      ],
+      "id": "c7c14b9e-9e6e-483d-9581-0736036b724d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "In the ",
+        {
+          "text": "stiltecoupé",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (quiet carriage) people are quiet: no phone calls. You can take a bike on the train with a bike ticket, but not in the ",
+        {
+          "text": "spits",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (rush hour: on weekdays about 6:30–9:00 and 16:00–18:30)."
+      ],
+      "id": "e2010435-e226-4245-8bbf-861631113db5"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de stiltecoupé",
+              "meaning": "quiet carriage",
+              "forms": "de stiltecoupés",
+              "example": "Hier is de stiltecoupé.",
+              "note": "stil = quiet.",
+              "id": "52aaad5e-ab43-44cc-95c5-e4368b207868"
+            },
+            {
+              "term": "de spits",
+              "meaning": "rush hour",
+              "example": "In de spits is de trein vol.",
+              "id": "2f13944e-db8b-4023-8561-2692fc868dba"
+            }
+          ]
+        }
+      },
+      "id": "8d908ec8-cfdf-47bd-8fbb-4068aa075424"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Times, platforms and delays: the Dutch railways have a journey planner at ",
+        {
+          "type": "link",
+          "href": "https://www.ns.nl",
+          "content": [
+            {
+              "text": "ns.nl",
+              "styles": {}
+            }
+          ]
+        },
+        "."
+      ],
+      "id": "d8b5bac7-1bef-4f0f-91c2-f85bf5db5d2a"
+    },
+    {
+      "type": "divider",
+      "id": "871aad6d-4459-4301-a8fb-335711a1a740"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Hebt u een kaartje?",
+      "id": "f137cb70-e960-42a2-896c-c64d18993b14"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "The train is on its way to Amsterdam. Sofia and Daan sit in a quiet carriage, but they don't know it yet. A conductor comes and checks tickets."
+      ],
+      "id": "b318a94b-f5a6-4a23-86e3-6ccce9b8348d"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Conducteur",
+            "text": "Goedemorgen. Hebt u een kaartje?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Goedemorgen. Ik heb een ov-chipkaart. Alstublieft."
+          },
+          {
+            "speaker": "Conducteur",
+            "text": "Dank u. En u, mevrouw?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik heb geen kaartje. Ik check in met mijn bankpas."
+          },
+          {
+            "speaker": "Conducteur",
+            "text": "Prima. Mag ik de bankpas even zien?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Alstublieft. Is het goed?"
+          },
+          {
+            "speaker": "Conducteur",
+            "text": "Ja, dat is goed. Checkt u in Amsterdam ook uit, alstublieft."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Natuurlijk. Stappen we in Amsterdam Amstel uit?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Nee, niet in Amstel. De trein rijdt door naar Amsterdam Centraal. Daar stappen we uit."
+          },
+          {
+            "speaker": "Conducteur",
+            "text": "Precies. En dit is de stiltecoupé. Hier zijn de reizigers stil."
+          },
+          {
+            "speaker": "Daan",
+            "text": "O, sorry! Kom op, Sofia, we lopen even door."
+          },
+          {
+            "speaker": "Conducteur",
+            "text": "Goede reis!"
+          }
+        ]
+      },
+      "id": "c53cbb4d-8f82-4300-a7e2-79b2d211f8bb"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de conducteur",
+              "meaning": "conductor, ticket inspector (on a train)",
+              "forms": "de conducteurs",
+              "example": "De conducteur vraagt: Hebt u een kaartje?",
+              "note": "False friend: not the conductor of an orchestra (de dirigent).",
+              "id": "fb9a1bca-67b9-47fa-92f7-059979b8b1b8"
+            },
+            {
+              "term": "Hebt u een kaartje?",
+              "meaning": "Do you have a ticket? (formal)",
+              "example": "Goedemorgen. Hebt u een kaartje?",
+              "id": "28fbb204-e26d-407b-b0af-0bbda52735ef"
+            },
+            {
+              "term": "stil",
+              "meaning": "quiet, silent",
+              "example": "In de stiltecoupé zijn de reizigers stil.",
+              "id": "f04d177d-8744-432f-a86d-bf15b36c9497"
+            },
+            {
+              "term": "doorlopen",
+              "meaning": "to walk on, to keep walking",
+              "forms": "loopt door · liep door · doorgelopen",
+              "example": "Kom op, we lopen even door.",
+              "note": "Separable.",
+              "id": "d356c237-c64d-4cfc-beaf-39d3a307711e"
+            },
+            {
+              "term": "Goede reis!",
+              "meaning": "Have a good trip!",
+              "example": "Dank u wel. Goede reis!",
+              "id": "5bc09fca-8866-48ec-86b3-3f53db98e99b"
+            }
+          ]
+        }
+      },
+      "id": "178ec8ee-5cc1-4b31-b961-6b146cd4f88e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "Checkt u in Amsterdam ook uit: the polite imperative (15-b) with a separable verb. Stem + t + u, prefix at the very end."
+      ],
+      "id": "9e627be8-ef19-4e82-bb90-184b1b3beb28"
+    },
+    {
+      "type": "divider",
+      "id": "62e04e35-8d52-4d99-a05c-96296fa69fae"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "04564af9-f1ae-4edf-bfa2-1ca28ec20d7b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in both parts",
+      "id": "d31da21e-b349-4fd8-8ec8-7cdf763bae57"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the conjugated verb and the prefix. The infinitive is in brackets.",
+          "items": [
+            {
+              "prompt": "We … in Amsterdam …. (overstappen)",
+              "authorsVersion": [
+                "stappen",
+                "over"
+              ],
+              "note": "we stappen … over: prefix at the end. Not: we overstappen."
+            },
+            {
+              "prompt": "De trein … om tien voor negen …. (aankomen)",
+              "authorsVersion": [
+                "komt",
+                "aan"
+              ],
+              "note": "aankomen (07-b, 08-a): komt … aan."
+            },
+            {
+              "prompt": "Ik … met mijn bankpas …. (inchecken)",
+              "authorsVersion": [
+                "check",
+                "in"
+              ],
+              "note": "ik check: the stem. Also fine: Ik check in met mijn bankpas."
+            },
+            {
+              "prompt": "… je hier …? (uitstappen)",
+              "authorsVersion": [
+                "Stap",
+                "uit"
+              ],
+              "note": "Question: verb first, jij-inversion drops the t: Stap je."
+            },
+            {
+              "prompt": "Sofia … haar laptop …. (meenemen)",
+              "authorsVersion": [
+                "neemt",
+                "mee"
+              ],
+              "note": "meenemen from 07-b: neemt … mee."
+            },
+            {
+              "prompt": "Om half vier … we in Utrecht …. (terugkomen)",
+              "authorsVersion": [
+                "komen",
+                "terug"
+              ],
+              "note": "Time first: komen we (inversion). terug at the end."
+            },
+            {
+              "prompt": "De trein … naar Amsterdam Centraal …. (doorrijden)",
+              "authorsVersion": [
+                "rijdt",
+                "door"
+              ],
+              "note": "rijden: hij rijdt (stem rijd + t)."
+            }
+          ]
+        }
+      },
+      "id": "3f109925-0bdd-407a-b5b9-3f562648c82b"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de laptop",
+              "meaning": "laptop",
+              "forms": "de laptops",
+              "example": "Sofia neemt haar laptop mee.",
+              "id": "9c6aff5f-8671-4617-a9c9-3b22ae54c6d0"
+            }
+          ]
+        }
+      },
+      "id": "8d1ebc85-bf51-4fca-9de1-d51777445ae9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "On the platform",
+      "id": "b64ab79f-c40e-4858-b0ce-2c17dd747269"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the conversations on the platform. One word per blank.",
+          "items": [
+            {
+              "prompt": "Daan: Onze trein … om 8.16. / Sofia: Van welk …?",
+              "authorsVersion": [
+                "vertrekt",
+                "spoor"
+              ],
+              "note": "vertrekken never splits. Van welk spoor? = From which platform?"
+            },
+            {
+              "prompt": "Sofia: Is er …? / Daan: Ja, vijf minuten. We komen om tien voor negen in Amsterdam ….",
+              "authorsVersion": [
+                "vertraging",
+                "aan"
+              ],
+              "note": "er is from row 13. aankomen: aan at the end."
+            },
+            {
+              "prompt": "Sofia: … we in Amsterdam over? / Daan: Ja, we stappen … op de tram.",
+              "authorsVersion": [
+                "Stappen",
+                "over"
+              ],
+              "note": "Not: Overstappen we …? The verb part comes first, the prefix last."
+            },
+            {
+              "prompt": "Sofia: Hoe … je in? / Daan: Met mijn ….",
+              "authorsVersion": [
+                "check",
+                "ov-chipkaart"
+              ],
+              "note": "Check je in? The t drops before je. Also fine: Met mijn bankpas."
+            },
+            {
+              "prompt": "Sofia: Waar … we …? / Daan: Hier. Kom op, … in!",
+              "authorsVersion": [
+                "stappen",
+                "in",
+                "Stap"
+              ],
+              "note": "Question word + verb + subject, prefix at the end. Then the imperative: Stap in!"
+            },
+            {
+              "prompt": "Conducteur: Hebt u een …? / Sofia: Nee, ik check in met mijn ….",
+              "authorsVersion": [
+                "kaartje",
+                "bankpas"
+              ],
+              "note": "Hebt u een kaartje? is a fixed formal question."
+            }
+          ]
+        }
+      },
+      "id": "17a4bda8-ebf5-4aac-8489-f39a687f1119"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order: time first",
+      "id": "76f2b1fe-2071-4012-bc9d-a64002599c44"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Start with the first chunk. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: om 8.16 / vertrekt / de trein / van spoor 7",
+              "authorsVersion": [
+                "Om 8.16 vertrekt de trein van spoor 7."
+              ],
+              "note": "Time first: verb, then subject. vertrekt stays one word."
+            },
+            {
+              "prompt": "Put in order: in Amsterdam / stappen / over / we / op de tram",
+              "authorsVersion": [
+                "In Amsterdam stappen we over op de tram."
+              ],
+              "note": "op de tram may stand after the prefix. Also fine: In Amsterdam stappen we op de tram over."
+            },
+            {
+              "prompt": "Put in order: morgen / met de trein / ik / naar Amsterdam / ga",
+              "authorsVersion": [
+                "Morgen ga ik met de trein naar Amsterdam."
+              ],
+              "note": "Time, manner, place (09-b)."
+            },
+            {
+              "prompt": "Put in order: om tien voor negen / aan / komt / de trein / in Amsterdam",
+              "authorsVersion": [
+                "Om tien voor negen komt de trein in Amsterdam aan."
+              ],
+              "note": "aan goes to the very end."
+            },
+            {
+              "prompt": "Put in order: daarna / uit / we / checken",
+              "authorsVersion": [
+                "Daarna checken we uit."
+              ],
+              "note": "Daarna + verb + subject; prefix last."
+            },
+            {
+              "prompt": "Put in order: op maandag / Sofia / met de bus / gaat / naar kantoor",
+              "authorsVersion": [
+                "Op maandag gaat Sofia met de bus naar kantoor."
+              ],
+              "note": "Time first, then manner before place."
+            }
+          ]
+        }
+      },
+      "id": "d27ac273-754d-4b59-9886-a72b37593dd0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Question and modal",
+      "id": "2db1d76e-c9b0-4d06-b126-8348d524d179"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence as shown in brackets.",
+          "items": [
+            {
+              "prompt": "Je stapt hier over. (question)",
+              "authorsVersion": [
+                "Stap je hier over?"
+              ],
+              "note": "Verb first; the t drops before je; over stays at the end."
+            },
+            {
+              "prompt": "Je stapt hier over. (with kunnen)",
+              "authorsVersion": [
+                "Je kunt hier overstappen."
+              ],
+              "note": "The infinitive stays one word at the end."
+            },
+            {
+              "prompt": "Ik stap hier in. (question with mogen)",
+              "authorsVersion": [
+                "Mag ik hier instappen?"
+              ],
+              "note": "mogen + infinitive. Not: Mag ik hier stap in?"
+            },
+            {
+              "prompt": "De trein komt om negen uur aan. (question with hoe laat)",
+              "authorsVersion": [
+                "Hoe laat komt de trein aan?"
+              ],
+              "note": "Question word, verb, subject, prefix."
+            },
+            {
+              "prompt": "Je checkt met je bankpas in. (with kunnen)",
+              "authorsVersion": [
+                "Je kunt met je bankpas inchecken."
+              ],
+              "note": "Also fine: Je kunt inchecken met je bankpas."
+            },
+            {
+              "prompt": "U stapt in Amsterdam uit. (question)",
+              "authorsVersion": [
+                "Stapt u in Amsterdam uit?"
+              ],
+              "note": "With u the verb keeps the t: Stapt u."
+            }
+          ]
+        }
+      },
+      "id": "c5f21de0-a8be-45e3-89bc-1f3107eed615"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Split or not?",
+      "id": "750063ef-054b-4898-a62d-4510ffed69bb"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct form. Some verbs split, some never do.",
+          "items": [
+            {
+              "prompt": "De vergadering … om tien uur. (beginnen)",
+              "authorsVersion": [
+                "begint"
+              ],
+              "note": "be- is never split: begint."
+            },
+            {
+              "prompt": "Sofia … met haar bankpas. (betalen)",
+              "authorsVersion": [
+                "betaalt"
+              ],
+              "note": "betalen: one word, stress on -TA-."
+            },
+            {
+              "prompt": "De trein … om 8.43 …. (aankomen)",
+              "authorsVersion": [
+                "komt",
+                "aan"
+              ],
+              "note": "AANkomen: stressed prefix, so it splits."
+            },
+            {
+              "prompt": "Daan … om half zeven. (ontbijten)",
+              "authorsVersion": [
+                "ontbijt"
+              ],
+              "note": "ont- never splits: ik ontbijt, hij ontbijt (no extra t)."
+            },
+            {
+              "prompt": "De conducteur … de vraag. (herhalen)",
+              "authorsVersion": [
+                "herhaalt"
+              ],
+              "note": "her- never splits."
+            }
+          ]
+        }
+      },
+      "id": "df90c00f-866c-4571-adfb-69a502f189a2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "038e9120-c081-4b33-9c5f-fa584ca503a8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Use je for 'you'.",
+          "items": [
+            {
+              "prompt": "We change to the tram in Amsterdam.",
+              "authorsVersion": [
+                "In Amsterdam stappen we over op de tram."
+              ],
+              "note": "Also fine: We stappen in Amsterdam over op de tram."
+            },
+            {
+              "prompt": "The train leaves at ten past eight.",
+              "authorsVersion": [
+                "De trein vertrekt om tien over acht."
+              ],
+              "note": "Not: De trein vertrekt … weg. vertrekken is one word."
+            },
+            {
+              "prompt": "Are you getting off here?",
+              "authorsVersion": [
+                "Stap je hier uit?"
+              ],
+              "note": "Dutch uses the simple present: Stap je …?"
+            },
+            {
+              "prompt": "You can check in with your bank card.",
+              "authorsVersion": [
+                "Je kunt inchecken met je bankpas."
+              ],
+              "note": "Also fine: Je kunt met je bankpas inchecken."
+            },
+            {
+              "prompt": "I walk to the station.",
+              "authorsVersion": [
+                "Ik loop naar het station."
+              ],
+              "note": "Also fine: Ik ga lopend naar het station. Not: Ik ren (= I run)."
+            },
+            {
+              "prompt": "The train has a ten-minute delay.",
+              "authorsVersion": [
+                "De trein heeft tien minuten vertraging."
+              ],
+              "note": "Use minuten (plural) and no article before vertraging."
+            }
+          ]
+        }
+      },
+      "id": "6a271c36-183d-4738-8d39-3c66e49ae873"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "141059ec-6bbb-4f3b-b064-33726ffcf272"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Sofia gaat met de bus naar kantoor.",
+              "authorsVersion": [
+                "Sofia takes the bus to the office."
+              ],
+              "note": "Also fine: Sofia goes to the office by bus."
+            },
+            {
+              "prompt": "Kunt u dat herhalen, alstublieft?",
+              "authorsVersion": [
+                "Could you repeat that, please?"
+              ]
+            },
+            {
+              "prompt": "De trein rijdt door naar Amsterdam Centraal.",
+              "authorsVersion": [
+                "The train continues to Amsterdam Centraal."
+              ],
+              "note": "doorrijden = to keep going."
+            },
+            {
+              "prompt": "Daan gaat met de fiets en Sofia gaat lopend.",
+              "authorsVersion": [
+                "Daan cycles and Sofia walks."
+              ],
+              "note": "Also fine: Daan goes by bike and Sofia goes on foot."
+            },
+            {
+              "prompt": "Ik ben te laat. Ik ren naar de bus.",
+              "authorsVersion": [
+                "I'm late. I'm running to the bus."
+              ],
+              "note": "rennen = to run; lopen = to walk."
+            }
+          ]
+        }
+      },
+      "id": "d215e6d3-a161-40a2-8b1c-77454c36a402"
+    },
+    {
+      "type": "divider",
+      "id": "99a0b209-9efa-4c4f-8b8e-3602d857647f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Morgen naar Amsterdam",
+      "id": "c9b09914-89c0-4c58-ae03-f823e58a315c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Daan's message to Sofia (Monday 26 October, evening) and answer in Dutch.",
+          "items": [
+            {
+              "prompt": "Hoe gaan Daan en Sofia naar Amsterdam?",
+              "authorsVersion": [
+                "Met de trein."
+              ]
+            },
+            {
+              "prompt": "Hoe laat vertrekt de trein, en van welk spoor?",
+              "authorsVersion": [
+                "Om 8.16, van spoor 7."
+              ],
+              "note": "Also fine: Om zestien over acht."
+            },
+            {
+              "prompt": "Klopt dit? Sofia heeft een kaartje nodig.",
+              "authorsVersion": [
+                "Nee, ze checkt in met haar bankpas."
+              ],
+              "note": "Je hebt geen kaartje nodig."
+            },
+            {
+              "prompt": "Waar checken ze uit?",
+              "authorsVersion": [
+                "In Amsterdam Centraal."
+              ]
+            },
+            {
+              "prompt": "Waar stappen ze over op tram 2?",
+              "authorsVersion": [
+                "In Amsterdam, bij het station."
+              ],
+              "note": "Also fine: In Amsterdam Centraal."
+            },
+            {
+              "prompt": "Hoe laat begint de vergadering?",
+              "authorsVersion": [
+                "Om tien uur."
+              ]
+            },
+            {
+              "prompt": "Wat neemt Sofia mee?",
+              "authorsVersion": [
+                "Haar laptop."
+              ],
+              "note": "Neem je laptop mee! meenemen splits in the imperative."
+            }
+          ],
+          "passage": {
+            "title": "Morgen naar Amsterdam",
+            "content": "Hoi Sofia,\nMorgen gaan we met de trein naar Amsterdam. Hier is de planning.\n8.05: Ik sta op het perron, spoor 7. Check in bij de poortjes met je bankpas. Je hebt geen kaartje nodig.\n8.16: De trein vertrekt. In de trein kunnen we koffie drinken.\n8.43: De trein komt in Amsterdam Centraal aan. Daar checken we uit.\nDan stappen we over op tram 2. De halte is voor het station.\n9.00: We zijn bij de klant. De vergadering begint om tien uur.\n15.00: We nemen de trein terug naar Utrecht. Om half vier komen we in Utrecht aan.\nNeem je laptop mee! Ben je te laat? Bel me maar!\nTot morgen,\nDaan"
+          }
+        }
+      },
+      "id": "6a18534c-45e4-422f-8927-7f9c9fb567f0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "fc92d234-a81c-4950-b7d9-cbd14a517132"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about how you travel to work, school or the city centre. Use at least two separable verbs.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences: how do you travel to work, school or the city centre?",
+              "authorsVersion": [
+                "Ik ga meestal met de bus naar mijn werk. Ik stap in de Kanaalstraat in en ik check in met mijn bankpas. Bij Utrecht Centraal stap ik uit. Op vrijdag ga ik lopend."
+              ],
+              "note": "Model by Sofia. Check: met de bus / lopend, prefixes at the end (stap … in, stap … uit), and inversion after a time or place (Bij Utrecht Centraal stap ik uit)."
+            }
+          ]
+        }
+      },
+      "id": "d8b2acf8-5d7f-47b8-9d45-cc623464bd85"
+    },
+    {
+      "type": "divider",
+      "id": "5fc3a6d5-f2f6-48f0-a473-7bb392e404fe"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "cd8cf19b-af82-44d1-96ba-f8aa92fe80da"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Separable verbs: verb part in position 1 or 2, prefix at the very end: We ",
+        {
+          "text": "stappen",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in Amsterdam ",
+        {
+          "text": "over",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "03feb576-b055-4ce7-ab39-b3be64923d07"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Questions, inversion and the imperative keep the prefix at the end: ",
+        {
+          "text": "Stap",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " je hier ",
+        {
+          "text": "uit",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "? Om acht uur ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " de trein ",
+        {
+          "text": "aan",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ". ",
+        {
+          "text": "Check",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " hier ",
+        {
+          "text": "in",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "22291067-f195-4b7d-b648-3189c96ab782"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "After kunnen or mogen the infinitive stays whole at the end: Je kunt hier ",
+        {
+          "text": "overstappen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "241b12d7-2ca1-4365-a5d5-a2dd0d32dd72"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Stressed prefixes split (IN-, UIT-, OVER-, AAN-); be-, ge-, her-, ont-, ver-, er- never split: De trein ",
+        {
+          "text": "vertrekt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " om 8.16."
+      ],
+      "id": "4674addd-a161-44ed-8051-f4cdffade89b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "met de trein / de tram / de bus / de fiets; lopend. lopen = walk, rennen = run."
+      ],
+      "id": "66c388c1-4651-43d8-9084-6691553edd19"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Remember:",
+          "styles": {
+            "bold": true
+          }
+        },
+        " check in and check out, and listen for spoor and vertraging."
+      ],
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "id": "db683655-b72b-4df0-a088-1d3996bbfacf"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Op het perron",
+      "description": "Utrecht Centraal, platform 7 on a grey October morning: Daan in a coat with a laptop bag waits calmly while Sofia hurries towards him; a yellow-and-blue Dutch intercity train arrives; a departure board shows 8.16 Amsterdam Centraal +5.",
+      "alt": "Two colleagues meet on a train platform as a train arrives."
+    },
+    {
+      "afterHeading": "Story: Hebt u een kaartje?",
+      "description": "Inside a Dutch train: a conductor in uniform looks at Sofia's bank card; Daan holds an ov-chipkaart; a small 'stilte' sign on the window.",
+      "alt": "A train conductor checks a passenger's bank card."
+    }
+  ],
+  "id": "53a68c4d-4c97-4882-aca7-e17f9a23e674"
+}

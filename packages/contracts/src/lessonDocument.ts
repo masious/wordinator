@@ -304,6 +304,7 @@ const isBlankParagraph = (block: LessonLeafBlock) => block.type === "paragraph" 
 // section: the prose step it ends, an example or callout, or every turn or item of a dialogue or practice. Words with no step
 // before them in their section join the next block's steps; a section with no other step shows them as a `words` step keyed
 // by its first vocabulary block. A columns step read as one carries the words inside it, which the player shows in place.
+// A dialogue's words then move to the turns that use them (`spreadDialogueWords`).
 export function flattenToSteps(document: LessonDocument): LessonStep[] {
   const steps: LessonStep[] = [];
   let heading: string | null = null;
@@ -372,7 +373,58 @@ export function flattenToSteps(document: LessonDocument): LessonStep[] {
     }
   }
   endSection();
+  spreadDialogueWords(steps);
   return steps;
+}
+
+// Words attached to a dialogue move to the first turn that uses them, so each line shows only its own new words. Words no
+// turn uses stay on the last turn, so the whole list has appeared by the end of the dialogue.
+function spreadDialogueWords(steps: LessonStep[]) {
+  for (let start = 0; start < steps.length;) {
+    const first = steps[start]!;
+    let end = start + 1;
+    if (first.kind === "dialogueTurn") while (steps[end]?.kind === "dialogueTurn" && (steps[end] as typeof first).block === first.block) end += 1;
+    if (first.kind !== "dialogueTurn" || !first.words.length) {
+      start = end;
+      continue;
+    }
+    const words = first.words;
+    const turns = readDialogueTurns(first.block).map((turn) => sentenceTokens(turn.text));
+    const placed: VocabularyWord[][] = turns.map(() => []);
+    for (const word of words) {
+      const found = turns.findIndex((sentences) => usesWord(sentences, word));
+      placed[found >= 0 ? found : turns.length - 1]!.push(word);
+    }
+    for (let index = start; index < end; index += 1) steps[index]!.words = placed[index - start]!;
+    start = end;
+  }
+}
+
+// Articles and reflexive pronouns in a term are not needed to recognise the word in a line.
+const skippedTokens = new Set(["de", "het", "een", "der", "die", "das", "den", "dem", "des", "ein", "eine", "einen", "zich", "sich"]);
+const tokens = (text: string) => (text.toLowerCase().match(/[\p{L}\p{N}]+(?:['’-][\p{L}\p{N}]+)*/gu) ?? []);
+const sentenceTokens = (text: string) => text.split(/[.!?;:]+/).map(tokens).filter((sentence) => sentence.length);
+
+// Inflected forms share a stem: at least four letters in common with no more than three letters after it on either side
+// (check · checkt, stapt · stappen). Shorter words must match exactly.
+function sameWord(a: string, b: string) {
+  if (a === b) return true;
+  let common = 0;
+  while (common < a.length && a[common] === b[common]) common += 1;
+  return common >= 4 && a.length - common <= 3 && b.length - common <= 3;
+}
+
+// A word is used when one sentence of the line holds the tokens of its term or of one of its forms, in order. Order keeps a
+// separable verb's particle after its verb ("stappen we in"), so a preposition before it ("in Amsterdam stappen we over") does not count.
+function usesWord(sentences: string[][], word: VocabularyWord) {
+  const candidates = [word.term, ...(word.forms ?? "").split(/[·,;/]/)]
+    .map((text) => tokens(text).filter((token) => !skippedTokens.has(token)))
+    .filter((candidate) => candidate.length);
+  return candidates.some((candidate) => sentences.some((sentence) => {
+    let at = 0;
+    for (const token of sentence) if (at < candidate.length && sameWord(token, candidate[at]!)) at += 1;
+    return at === candidate.length;
+  }));
 }
 
 // A step's key survives edits that do not touch its own block: the block ID, plus the line or item number inside it.

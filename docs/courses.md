@@ -164,8 +164,9 @@ A vocabulary block is not a step of its own. Its words appear in a New words pan
 
 - After paragraphs, lists, images, or dividers, it ends that prose step and attaches to it. Prose that follows starts a new step.
 - After an example or a callout, it attaches to that step.
-- After a dialogue or practice, it attaches to every turn or item of that block, so the words stay visible throughout.
-- With no preceding step in the section (first after a heading or at the start of the lesson), it attaches to the next step, or to every turn or item when that step comes from a dialogue or practice. A section with no other step shows the words as a step of their own, identified by its first vocabulary block. Blank paragraphs are not steps and do not break these rules.
+- After a practice, it attaches to every item of that block, so the words stay visible throughout.
+- After a dialogue, each word shows only on the first turn that uses it, so lines do not reveal words before they are spoken. A turn uses a word when one of its sentences holds the tokens of the word's term or of one of its forms (split on `·`, `,`, `;`, `/`), in order, ignoring articles and reflexive pronouns. Tokens match exactly, or as inflections sharing a stem of at least four letters with at most three further letters on either side (`check`/`checkt`, `stappen`/`stapt`). Order keeps a separable verb's particle after its verb, so `in Amsterdam stappen we over` does not count as `stapt in`. Words no turn uses show on the last turn. The same applies to words that reach a dialogue from earlier in its section.
+- With no preceding step in the section (first after a heading or at the start of the lesson), it attaches to the next step: to every item when that step comes from a practice, or to a dialogue's turns as above. A section with no other step shows the words as a step of their own, identified by its first vocabulary block. Blank paragraphs are not steps and do not break these rules.
 - Consecutive vocabulary blocks combine into one panel in document order.
 - Inside a column list read as one step, the words show in place; that step still carries them for the lesson recap. A column list read block by block applies these rules in leaf order.
 

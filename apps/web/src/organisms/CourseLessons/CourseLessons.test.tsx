@@ -175,13 +175,17 @@ describe("Course lessons", () => {
     const dialog = await screen.findByRole("dialog");
     const panel = () => within(dialog).getByRole("region", { name: "New words" });
     const next = () => fireEvent.click(within(dialog).getByRole("button", { name: /^(Next|Finish lesson)$/ }));
-    // Prose, example, both dialogue lines, both practice items, and a words-only section.
-    const expected = ["de hond", "de kat", "de tuin", "de tuin", "vertalen", "vertalen", "het huis"];
+    // Prose, example, both dialogue lines (only the line that uses a word shows it), both practice items, and a words-only section.
+    const expected = ["de hond", "de kat", "de tuin", null, "vertalen", "vertalen", "het huis"];
     for (const [index, term] of expected.entries()) {
       expect(within(dialog).getByText(`Step ${index + 1} of 7`)).toBeInTheDocument();
-      expect(panel()).toHaveTextContent(term);
-      expect(panel()).toHaveTextContent(`meaning of ${term}`);
-      expect(within(dialog).getAllByRole("region", { name: "New words" })).toHaveLength(1);
+      if (term) {
+        expect(panel()).toHaveTextContent(term);
+        expect(panel()).toHaveTextContent(`meaning of ${term}`);
+        expect(within(dialog).getAllByRole("region", { name: "New words" })).toHaveLength(1);
+      } else {
+        expect(within(dialog).queryByRole("region", { name: "New words" })).not.toBeInTheDocument();
+      }
       next();
     }
     expect(await within(dialog).findByText("You have finished 1 of 4 lessons (25%).")).toBeInTheDocument();

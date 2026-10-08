@@ -1,0 +1,2776 @@
+{
+  "title": "Ik ga een fiets kopen",
+  "goal": "Talk about plans and the near future with gaan + infinitive, including separable infinitives, negation and time expressions.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Ik ga een fiets kopen",
+      "id": "3124e135-997a-4b30-988f-ef0fd67427b3"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Wednesday 28 October. Sofia lives in Lombok now, and she still goes everywhere on foot or by bus. At lunch Daan is shocked: no bike, in Utrecht? On Saturday 31 October Sofia goes to Ahmed's bike shop in the Kanaalstraat."
+      ],
+      "id": "e0d629ad-14ca-48b0-944b-d98fde86216c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In this lesson you will talk about plans with ",
+        {
+          "text": "gaan + infinitive",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": Ik ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " een fiets ",
+        {
+          "text": "kopen",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        ". You will ask about plans, say what you are ",
+        {
+          "text": "not",
+          "styles": {
+            "italic": true
+          }
+        },
+        " going to do, and buy a second-hand bike."
+      ],
+      "id": "343993c2-2507-4684-92ec-95a79425e597"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: the form of gaan is ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", the infinitive at the end is ",
+        {
+          "text": "red",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ", subjects are ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " and time words are ",
+        {
+          "text": "orange",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ". The new form is bold."
+      ],
+      "id": "02a351ef-47b3-4b9c-9564-31388752b5e0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Plans at lunch",
+      "id": "3a9aedbd-82e5-4bb3-bf9a-9d6fefce9ec7"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Wednesday, half past twelve, in the office kitchen. Sofia and Daan eat a boterham. Daan asks how Sofia gets to work."
+      ],
+      "id": "455d08c9-16a4-4abb-8c98-b58f0ddf7dd0"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Sofia, hoe kom jij elke dag naar kantoor?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Met de bus. Of ik loop naar het station. Dat is vijftien minuten lopen."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Je hebt geen fiets? In Utrecht? Je gaat een fiets kopen!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ja. Ik ga kopen een fiets. Zaterdag."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Goed plan! Je gaat zaterdag een fiets kopen. Waar ga je kijken?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Zaterdag ga ik naar de fietsenwinkel van Ahmed, in de Kanaalstraat."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Prima. Ga je een nieuwe fiets kopen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik ga geen nieuwe fiets kopen. Een nieuwe fiets is te duur. Ik ga een tweedehands fiets kopen."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Doe maar. En neem een goed slot! In Utrecht zijn veel fietsendieven."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Een goed slot. Oké! En wat ga jij dit weekend doen?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Zaterdag ga ik met Lotte fietsen. En zondag gaan we bij mijn moeder eten."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Gezellig! Veel plezier!"
+          }
+        ]
+      },
+      "id": "2f8670f2-b5ed-43e3-81df-fb505b53daff"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "gaan",
+              "meaning": "to be going to (+ infinitive: plans, near future)",
+              "forms": "gaat · ging · gegaan",
+              "example": "Ik ga een fiets kopen.",
+              "note": "New use. You know gaan as 'to go' (naar huis gaan, Part II). With an infinitive at the end it means 'be going to'.",
+              "id": "650e57b4-7116-450f-ad8a-c63cc5f32e78"
+            },
+            {
+              "term": "het plan",
+              "meaning": "plan",
+              "forms": "de plannen",
+              "example": "Goed plan!",
+              "id": "3b46fb65-ca51-4d51-b345-51a50671137c"
+            },
+            {
+              "term": "Wat ga je doen?",
+              "meaning": "What are you going to do?",
+              "example": "Wat ga je dit weekend doen?",
+              "id": "dc1ba930-4130-45f5-a220-3efda6efc012"
+            },
+            {
+              "term": "dit weekend",
+              "meaning": "this weekend",
+              "example": "Wat ga jij dit weekend doen?",
+              "note": "Like deze week and volgende week (09-a). het weekend is a het-word, so dit.",
+              "id": "b654099e-8bf2-458b-be76-24e07d3797a4"
+            },
+            {
+              "term": "het slot",
+              "meaning": "lock",
+              "forms": "de sloten",
+              "example": "Neem een goed slot!",
+              "id": "bbfffbe9-5d28-4310-8615-bc03fa81c294"
+            },
+            {
+              "term": "de fietsendief",
+              "meaning": "bike thief",
+              "forms": "de fietsendieven",
+              "example": "In Utrecht zijn veel fietsendieven.",
+              "note": "de fiets + de dief (thief). Plural: f becomes v: dieven.",
+              "id": "8f5d692b-69e5-4191-bf97-9f62dedc39a8"
+            },
+            {
+              "term": "Veel plezier!",
+              "meaning": "Have fun! Enjoy!",
+              "example": "Zaterdag ga je fietsen? Veel plezier!",
+              "id": "c894aec8-35a2-481d-8d8f-f901d0ae5367"
+            }
+          ]
+        }
+      },
+      "id": "9f3a3605-c20e-498b-99e1-e97c3931c779"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Hoe kom jij naar kantoor?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = How do you get to the office? (recycles 15-b); ",
+        {
+          "text": "Waar ga je kijken?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = Where are you going to look?; ",
+        {
+          "text": "Doe maar.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = Go for it."
+      ],
+      "id": "36b3b541-d817-40eb-8219-db67574b847d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Sofia says ",
+        {
+          "text": "Ik ga kopen een fiets.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " Daan repeats it correctly: Je ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " zaterdag een fiets ",
+        {
+          "text": "kopen",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        ". The infinitive goes to the very end of the sentence."
+      ],
+      "id": "6ba93d8c-d190-4983-83a2-ea164de0167c"
+    },
+    {
+      "type": "divider",
+      "id": "6841fc0e-45c6-4cd2-855b-300987b30ef9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "gaan + infinitive: plans",
+      "id": "29a67a40-5c7c-4fbe-ac2a-aa12cfdddd8f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Two verbs in one sentence",
+      "id": "7ab2378e-6514-47e9-9023-627cb862baa0"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "For plans and the near future, Dutch uses a form of ",
+        {
+          "text": "gaan",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in position 2 and an ",
+        {
+          "text": "infinitive",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        " at the very end. Everything else stands between the two verbs, like with kunnen, willen and mogen."
+      ],
+      "id": "679518c7-ce20-4e43-9115-4886e4425f2f"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "subject",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " + ",
+        {
+          "text": "gaan",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " (position 2) + rest + ",
+        {
+          "text": "infinitive",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        " (end). Ik ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " zaterdag een fiets ",
+        {
+          "text": "kopen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "fcf35ac6-d258-4b19-a39e-111549980662"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm going to buy a bike.",
+        "note": "gaan in position 2, the infinitive kopen at the end."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " een fiets ",
+        {
+          "text": "kopen",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "d55b6af3-9181-4dc0-9c32-7f2b1f020f88"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan is going cycling with Lotte on Saturday.",
+        "note": "Everything (zaterdag, met Lotte) stands between gaat and fietsen."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " zaterdag met Lotte ",
+        {
+          "text": "fietsen",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "87ef7914-d60f-4f60-b79c-140357720b0b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "gaan + infinitive is the Dutch 'going to': I'm ",
+        {
+          "text": "going to",
+          "styles": {
+            "italic": true
+          }
+        },
+        " buy = ik ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " … ",
+        {
+          "text": "kopen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ". But Dutch does not add ",
+        {
+          "text": "naar",
+          "styles": {
+            "italic": true
+          }
+        },
+        " or ",
+        {
+          "text": "te",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": never ",
+        {
+          "text": "Ik ga naar kopen",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " or ",
+        {
+          "text": "Ik ga te kopen",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        "."
+      ],
+      "id": "f01da466-9bbf-46c1-99dc-0d94767334b9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "gaan + place or gaan + infinitive?",
+      "id": "5cc05884-ec17-4890-b671-ec0157eb5bea"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "gaan + place",
+              "id": "a0e7baa4-a52b-4567-a649-a1a1ac090e59"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "movement: you go somewhere"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "Ik ",
+                    {
+                      "text": "ga",
+                      "styles": {
+                        "textColor": "blue"
+                      }
+                    },
+                    " ",
+                    {
+                      "text": "naar de fietsenwinkel",
+                      "styles": {
+                        "textColor": "purple"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "10363ba0-609d-4ea6-9e86-319704749254"
+                },
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "Sofia ",
+                    {
+                      "text": "gaat",
+                      "styles": {
+                        "textColor": "blue"
+                      }
+                    },
+                    " ",
+                    {
+                      "text": "naar kantoor",
+                      "styles": {
+                        "textColor": "purple"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "92796c3d-eb77-4360-9c16-25115b37ec7b"
+                }
+              ],
+              "id": "8ba2d4f7-2e34-4c52-b32c-378fdb7a3c24"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "no infinitive at the end"
+              ],
+              "id": "02435f5b-0fd3-4c4a-84a5-3766b4e8ebab"
+            }
+          ],
+          "id": "91bc6f66-e3cf-42ee-a515-0532bbeb30f6"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "gaan + infinitive",
+              "id": "1c604c41-3d81-4d25-9272-c69c2b988b43"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "a plan: you are going to do something"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "Ik ",
+                    {
+                      "text": "ga",
+                      "styles": {
+                        "textColor": "blue"
+                      }
+                    },
+                    " een fiets ",
+                    {
+                      "text": "kopen",
+                      "styles": {
+                        "textColor": "red"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "4fb5bc35-2dcb-4ebc-93c8-f5da3dbc8830"
+                },
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "Sofia ",
+                    {
+                      "text": "gaat",
+                      "styles": {
+                        "textColor": "blue"
+                      }
+                    },
+                    " morgen ",
+                    {
+                      "text": "fietsen",
+                      "styles": {
+                        "textColor": "red"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "7d13021d-e58a-4577-bda8-5b247c41a159"
+                }
+              ],
+              "id": "9e0ebbaf-344e-4a52-afcf-8536a7069c8d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "infinitive at the very end"
+              ],
+              "id": "e6fe897f-73a5-4592-b47e-40d3763a1662"
+            }
+          ],
+          "id": "24d1c48d-55b3-43f3-a253-a7d69497737a"
+        }
+      ],
+      "id": "5638ccb4-1c55-4a97-a172-0115064a25e4"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "The forms are the ones you know from Part II:"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "ik ",
+            {
+              "text": "ga",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            ", jij ",
+            {
+              "text": "gaat",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " (but: ",
+            {
+              "text": "ga",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " je …?), u ",
+            {
+              "text": "gaat",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            ", hij/zij ",
+            {
+              "text": "gaat",
+              "styles": {
+                "textColor": "blue"
+              }
+            }
+          ],
+          "id": "d576bd1f-2bef-4d2a-83ae-98125a8db0a6"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "wij / jullie / zij ",
+            {
+              "text": "gaan",
+              "styles": {
+                "textColor": "blue"
+              }
+            }
+          ],
+          "id": "f09d1da6-c656-4955-aeba-a31a421fc931"
+        }
+      ],
+      "id": "83a25d6d-5667-4f67-a390-e049e9e430c0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm going to walk to the bike shop.",
+        "note": "Both meanings together: a place (naar de fietsenwinkel) and a plan (lopen at the end)."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "naar de fietsenwinkel",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "lopen",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "b5497c12-e1b4-4c1c-9040-26c427bdbd6a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Now or later: the present also works",
+      "id": "a8927594-8dc9-4238-a4a9-0dc756a29564"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You know this from 08 and 09: with a time word, the normal present tense also talks about the future. Both are correct. gaan + infinitive sounds more like a plan."
+      ],
+      "id": "3f3791eb-538b-4c26-89be-4b4265c13328"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Tomorrow I'm buying a bike.",
+        "note": "Present tense + time word = future (recycles 08-b, 09-a). Also fine: Morgen ga ik een fiets kopen."
+      },
+      "content": [
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "koop",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een fiets."
+      ],
+      "id": "5c881957-9b3d-403e-abe0-5dc7b3eb014f"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik ga naar kopen een fiets.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " een fiets ",
+        {
+          "text": "kopen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ". No naar before an infinitive, and the infinitive goes last."
+      ],
+      "id": "3b2dde3d-2c6e-4976-90c9-77cc583a6f2d"
+    },
+    {
+      "type": "divider",
+      "id": "7b689116-4655-4e3a-bd24-94b6b2e56e89"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Separable verbs after gaan",
+      "id": "21f8ddef-5e29-47fc-8b59-a431a69532da"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You know separable verbs (opstaan, ophalen, meenemen) and their prefix at the end. After gaan, the separable verb is an infinitive, so it stays ",
+        {
+          "text": "one word",
+          "styles": {
+            "bold": true
+          }
+        },
+        " at the end: ",
+        {
+          "text": "ophalen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ", not ",
+        {
+          "text": "op … halen",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        "."
+      ],
+      "id": "91cb1182-fbee-4c84-a331-2b3d8a27f2db"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm going to pick up the bike tomorrow.",
+        "note": "ophalen stays whole (recycles 15-a: Je kunt hier je fiets ophalen)."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " morgen de fiets ",
+        {
+          "text": "ophalen",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "bc442664-8639-41f3-be50-264027df3b7d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia is going to try out the bike first.",
+        "note": "uitproberen = to try out. Without gaan: Sofia probeert de fiets uit."
+      },
+      "content": [
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " de fiets eerst ",
+        {
+          "text": "uitproberen",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "d2354624-391e-47b0-9749-28c6c43bf31a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "uitproberen",
+              "meaning": "to try out",
+              "forms": "probeert uit · probeerde uit · uitgeprobeerd",
+              "example": "Ik ga de fiets eerst uitproberen.",
+              "note": "Separable: Ik probeer de fiets uit. After gaan or kunnen: one word at the end.",
+              "id": "7c27d27d-84ef-4bcc-98ba-1e4667fc16b1"
+            }
+          ]
+        }
+      },
+      "id": "1ad67b0f-2154-4008-bc8d-0a704e6af8a3"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "On Sunday I'm going to take the empty boxes away.",
+        "note": "The moving boxes from 14-a. wegbrengen = to take away, drop off."
+      },
+      "content": [
+        {
+          "text": "Zondag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " de lege dozen ",
+        {
+          "text": "wegbrengen",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "30c88f64-e416-4689-8e97-4e7d758421d5"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "wegbrengen",
+              "meaning": "to take away, to drop off",
+              "forms": "brengt weg · bracht weg · weggebracht",
+              "example": "Zondag ga ik de lege dozen wegbrengen.",
+              "note": "Separable.",
+              "id": "74617508-cf1e-4226-ad79-c4d8db9fcade"
+            }
+          ]
+        }
+      },
+      "id": "dc8186cc-36f0-4293-9aa0-893f156a151e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm going to give back the key to my old room.",
+        "note": "terugbrengen = to bring back, return. Like terugkomen (09-a)."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " de sleutel van mijn oude kamer ",
+        {
+          "text": "terugbrengen",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "8038d7d7-a636-45fb-bfc5-c6be5b53cd2c"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "terugbrengen",
+              "meaning": "to bring back, to return",
+              "forms": "brengt terug · bracht terug · teruggebracht",
+              "example": "Ik ga de sleutel van mijn oude kamer terugbrengen.",
+              "note": "Separable, like terugkomen (09-a).",
+              "id": "90579068-d439-4fbb-ac53-cbedbd95a459"
+            }
+          ]
+        }
+      },
+      "id": "bcccda78-186c-42c3-b3d3-01998f005cb1"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik ga op halen.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " and ",
+        {
+          "text": "Ik ga haal op.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " de fiets ",
+        {
+          "text": "ophalen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ". After gaan, a separable verb is one word: the infinitive."
+      ],
+      "id": "60e72817-c5de-41c9-879e-a29a8b3c17c7"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        "In a separable verb the prefix is stressed: UITproberen, WEGbrengen, teRUGbrengen, OPhalen. Say the stressed part a little louder, then the rest."
+      ],
+      "id": "cdd1cecc-b829-4fb6-948b-0bbb67c5f36b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Remember: one rule for four verbs",
+      "id": "3215e62d-b353-46b1-bbbb-0dcae7a211dd"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Put ",
+        {
+          "text": "gaan",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "kunnen",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "willen",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " or ",
+        {
+          "text": "mogen",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in position 2."
+      ],
+      "id": "a6b9656b-8f2a-4f76-8a1e-f200dae6b100"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Put everything else in the middle: time, people, things, places."
+      ],
+      "id": "0441ef1a-1a3f-4603-85e9-1579204b3a26"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Put the ",
+        {
+          "text": "infinitive",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        " at the very end, as one word."
+      ],
+      "id": "1d6ca34a-b130-4b5a-b9d7-41bcce15da06"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " / ",
+        {
+          "text": "kan",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " / ",
+        {
+          "text": "wil",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " / ",
+        {
+          "text": "mag",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " de fiets morgen ",
+        {
+          "text": "ophalen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ". The second verb is always an infinitive and always at the end, also when it is separable."
+      ],
+      "id": "a68ff65a-ea8e-43fc-becc-8c22fbf5ea17"
+    },
+    {
+      "type": "divider",
+      "id": "4c699d0c-5caa-4a24-a9d9-e1aa4f8b7694"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Time first, questions and not",
+      "id": "a3d9cd09-d708-4fa2-86ac-c93ca9ba38f9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Time first: inversion",
+      "id": "a5329bc0-a92f-4695-82a7-ff2ff69d59fc"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Tomorrow I'm going to buy a bike.",
+        "note": "Time + verb + subject: inversion (recycles 08-b)."
+      },
+      "content": [
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een fiets ",
+        {
+          "text": "kopen",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "fb708865-2536-4559-ac2c-3491d2d799b6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "On Saturday we're going cycling.",
+        "note": "Plural: gaan. Also fine: Op zaterdag gaan we fietsen."
+      },
+      "content": [
+        {
+          "text": "Zaterdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "gaan",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "we",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "fietsen",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "452d52d3-b998-4387-9d87-9e5c62bdfa60"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Morgen ik ga een fiets kopen.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een fiets ",
+        {
+          "text": "kopen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ". The verb stays in position 2."
+      ],
+      "id": "f86d20bf-73e2-4852-bdfc-5da69097c15f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Questions",
+      "id": "34150429-02d8-4ef3-b545-c3f83e471d0b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you going cycling on Saturday?",
+        "note": "Yes/no question: gaan first. jij-form without t before je: Ga je …?"
+      },
+      "content": [
+        {
+          "text": "Ga",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " zaterdag ",
+        {
+          "text": "fietsen",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "?"
+      ],
+      "id": "b7083c00-cf95-47cd-816e-595df04fa63f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What are you going to do this weekend?",
+        "note": "Question word + gaan + subject + … + infinitive."
+      },
+      "content": [
+        "Wat ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "dit weekend",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "doen",
+          "styles": {
+            "textColor": "red",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "?"
+      ],
+      "id": "5c5a591a-8331-40d5-bff2-263540a410cb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "niet and geen",
+      "id": "a0396123-f74e-4491-bd0a-7c51a8f62f02"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " stands just before the infinitive: Ik ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " vanavond ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "koken",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ". With a noun use ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": Ik ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " nieuwe fiets ",
+        {
+          "text": "kopen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "016ca1f3-db27-4788-871a-c573ba4c2285"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm not going to cook tonight.",
+        "note": "niet goes right before the infinitive, as with kunnen (15-a)."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " vanavond ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "koken",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "f3840e1a-69e1-4e3d-9b57-be34ad463b45"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm not going to buy a new bike.",
+        "note": "een nieuwe fiets → geen nieuwe fiets."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " nieuwe fiets ",
+        {
+          "text": "kopen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "154f8d7e-0818-4abb-8d19-ed2ff1cf5fdf"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Remember",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": gaan in position 2, the infinitive at the end, niet just before the infinitive."
+      ],
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "id": "7137f529-a586-49f7-a37e-54ed83efd74d"
+    },
+    {
+      "type": "divider",
+      "id": "03e66b56-1357-4fdb-9ecb-ef4d2a777e02"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "At the bike shop",
+      "id": "94ebedb5-8173-42ce-bbc9-b24901cdb14a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Ahmed is ",
+        {
+          "text": "fietsenmaker",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": he sells bikes and repairs them. These are the parts of a bike you need in the shop."
+      ],
+      "id": "62e5122e-131a-4de2-99bd-5c5917e0bd6c"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Parts of the bike"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " band = the tyre; ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " rem = the brake; ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " bel = the bell"
+          ],
+          "children": [
+            {
+              "type": "bulletListItem",
+              "content": [
+                "een lekke band = a flat tyre; de band is lek"
+              ],
+              "id": "4c8bdbec-3f6d-451b-8d24-cf38028a8657"
+            }
+          ],
+          "id": "94bc68b8-d7bf-4f08-a7e0-61668489833f"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " zadel = the saddle; ",
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " licht = the light; ",
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " slot = the lock"
+          ],
+          "id": "971205ca-e5bb-4de3-9dd8-b0cf01154169"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " mand = the basket (on the front or the back); kapot = broken: De bel is kapot."
+          ],
+          "id": "3f61aff9-02f5-4d01-af98-7f7c7a92f63e"
+        }
+      ],
+      "id": "cf53a45d-1415-41df-aad4-62ab1daad00a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de fietsenmaker",
+              "meaning": "bike mechanic, bike repairer",
+              "forms": "de fietsenmakers",
+              "example": "Ahmed is fietsenmaker.",
+              "id": "a66988fb-e475-42df-a93b-23529fe8ad57"
+            },
+            {
+              "term": "de band",
+              "meaning": "tyre",
+              "forms": "de banden",
+              "example": "De band is lek.",
+              "id": "cbe88d26-b04e-4300-8ac2-de4d3d93e1be"
+            },
+            {
+              "term": "lek",
+              "meaning": "flat, punctured; leaking",
+              "example": "Ik heb een lekke band.",
+              "note": "Before a noun: een lekke band (k doubles).",
+              "id": "2957f7bb-e35f-4b06-96cd-8319edfc55fc"
+            },
+            {
+              "term": "de rem",
+              "meaning": "brake",
+              "forms": "de remmen",
+              "example": "De remmen zijn nieuw.",
+              "id": "2e8fa199-7761-49d3-9b26-27f4b8c90954"
+            },
+            {
+              "term": "de bel",
+              "meaning": "(bike) bell",
+              "forms": "de bellen",
+              "example": "De bel is kapot.",
+              "id": "946351cd-4413-42f5-8445-399953bc9e57"
+            },
+            {
+              "term": "het zadel",
+              "meaning": "saddle",
+              "forms": "de zadels",
+              "example": "Het zadel is nieuw.",
+              "id": "a79eb024-64d8-4c5a-a0dc-bc672a61ff40"
+            },
+            {
+              "term": "het licht",
+              "meaning": "light (on a bike, a lamp)",
+              "forms": "de lichten",
+              "example": "Het licht is nieuw.",
+              "note": "New meaning: in 13-2 licht was the adjective 'light, bright'.",
+              "id": "1d3cfdae-8d54-4dd7-8b21-20a337c6ab58"
+            },
+            {
+              "term": "de mand",
+              "meaning": "basket",
+              "forms": "de manden",
+              "example": "Ik wil een mand voor de boodschappen.",
+              "id": "343d4327-324a-4359-a8e6-050f6cf27ad0"
+            },
+            {
+              "term": "kapot",
+              "meaning": "broken",
+              "example": "De bel is kapot.",
+              "id": "bc8977d3-7a88-4a54-9f51-95abb4cbe642"
+            }
+          ]
+        }
+      },
+      "id": "658e66cf-639a-4379-a045-db1992866456"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "map-pin"
+      },
+      "content": [
+        "Utrecht is a bike city: at Utrecht Centraal is one of the biggest bicycle parking garages in the world, ",
+        {
+          "text": "de fietsenstalling",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Bike thieves are common, so always lock your bike: ",
+        {
+          "text": "Zet je fiets op slot!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Many people use two locks."
+      ],
+      "id": "0f94468a-25dc-4d6c-bf2e-ac8c2061701c"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de fietsenstalling",
+              "meaning": "bike park, bike shed",
+              "forms": "de fietsenstallingen",
+              "example": "Ik zet mijn fiets in de fietsenstalling.",
+              "id": "4caeb5f2-ffd8-4c47-860f-6cfc39f79447"
+            },
+            {
+              "term": "op slot zetten",
+              "meaning": "to lock",
+              "forms": "zet op slot · zette op slot · op slot gezet",
+              "example": "Zet je fiets altijd op slot!",
+              "note": "zetten from 14-b.",
+              "id": "a86ae998-3c74-4bb0-bcc5-b9e566829137"
+            }
+          ]
+        }
+      },
+      "id": "2f5bdc10-26cf-4fe3-9428-cfe5ed77fb8c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: At Ahmed's bike shop",
+      "id": "fccd6064-b934-4ff6-b0a5-41eafc0780e5"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Saturday 31 October, ten o'clock. Sofia walks to the Kanaalstraat. Today she is going to buy a bike."
+      ],
+      "id": "039069e4-a5b9-42a6-9993-2be01a38a619"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Ahmed",
+            "text": "Hé, Sofia! Welkom! Wat kan ik voor je doen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Ahmed! Ik ga vandaag een fiets kopen. Een tweedehands fiets."
+          },
+          {
+            "speaker": "Ahmed",
+            "text": "Kijk eens, deze zwarte fiets. Hij kost honderdvijftig euro. De remmen en het licht zijn nieuw."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Mooi! Mag ik deze fiets proberen?"
+          },
+          {
+            "speaker": "Ahmed",
+            "text": "Natuurlijk. Fiets maar een rondje."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Super, hij fietst lekker! Maar de bel is kapot."
+          },
+          {
+            "speaker": "Ahmed",
+            "text": "Geen probleem. Ik ga de bel even repareren. Ga je elke dag fietsen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja! Ik ga elke dag naar kantoor fietsen. Niet meer met de bus!"
+          },
+          {
+            "speaker": "Ahmed",
+            "text": "Dan heb je ook een goed slot nodig. Dit slot kost vijfentwintig euro."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik neem het slot. Is er garantie op de fiets?"
+          },
+          {
+            "speaker": "Ahmed",
+            "text": "Ja, drie maanden. Een lekke band? Dan repareer ik de band. En zet je fiets altijd op slot!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dat ga ik doen! Samen is dat honderdvijfenzeventig euro, toch? Mag ik pinnen?"
+          }
+        ]
+      },
+      "id": "e1fe170d-fbae-46ec-8556-331913f323ad"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "proberen",
+              "meaning": "to try",
+              "forms": "probeert · probeerde · geprobeerd",
+              "example": "Mag ik deze fiets proberen?",
+              "note": "Not separable. uitproberen (try out) is the separable partner.",
+              "id": "ff3f95bf-18ed-4d29-aaea-f3731758bf39"
+            },
+            {
+              "term": "een rondje fietsen",
+              "meaning": "to ride around the block, go for a short ride",
+              "example": "Fiets maar een rondje.",
+              "id": "3fffb42d-2cd7-48ad-923e-a5bafd7a87fd"
+            },
+            {
+              "term": "repareren",
+              "meaning": "to repair, to fix",
+              "forms": "repareert · repareerde · gerepareerd",
+              "example": "Ik ga de bel even repareren.",
+              "note": "maken (15-a) also means 'fix' in informal speech.",
+              "id": "c69f13bc-d947-4cff-8648-3f8293163b7c"
+            },
+            {
+              "term": "de garantie",
+              "meaning": "guarantee, warranty",
+              "example": "Is er garantie op de fiets?",
+              "note": "garantie op + thing.",
+              "id": "1572db29-bed9-446b-8546-a555f9e41e0d"
+            },
+            {
+              "term": "niet meer",
+              "meaning": "no longer, not any more",
+              "example": "Niet meer met de bus!",
+              "id": "cc233ff9-dca3-4813-9960-752cf5b7147e"
+            }
+          ]
+        }
+      },
+      "id": "31d12b67-2a17-4bf6-834a-a96bf2b09365"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Hij fietst lekker",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = it rides nicely (hij = de fiets, 14-a); ",
+        {
+          "text": "Dan heb je een slot nodig",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = then you need a lock (10-b); ",
+        {
+          "text": "Dat ga ik doen!",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = I'm going to do that! (dat first, so ga before ik)"
+      ],
+      "id": "e9860a02-592d-4d11-ad83-2227e1524034"
+    },
+    {
+      "type": "divider",
+      "id": "32f212d3-1df9-45f9-8cd6-69b7d2fb3ca8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "f321ea06-5524-46ae-996b-77e2b88e4975"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in gaan and the infinitive",
+      "id": "04965535-d351-4157-93cd-ebdd433278cf"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the right form of gaan and the infinitive. The verbs are in brackets.",
+          "items": [
+            {
+              "prompt": "Ik … morgen een fiets …. (gaan, kopen)",
+              "authorsVersion": [
+                "ga",
+                "kopen"
+              ],
+              "note": "ik ga; the infinitive kopen at the end."
+            },
+            {
+              "prompt": "Sofia … zaterdag naar de fietsenwinkel …. (gaan, lopen)",
+              "authorsVersion": [
+                "gaat",
+                "lopen"
+              ],
+              "note": "She has no bike yet, so she walks. gaan + place + infinitive."
+            },
+            {
+              "prompt": "… jij dit weekend …? (gaan, fietsen)",
+              "authorsVersion": [
+                "Ga",
+                "fietsen"
+              ],
+              "note": "In a question the verb comes first and the jij-form loses its t: Ga jij …? Typical mistake: Gaat jij …?"
+            },
+            {
+              "prompt": "Wij … vanavond niet …. (gaan, koken)",
+              "authorsVersion": [
+                "gaan",
+                "koken"
+              ],
+              "note": "niet just before the infinitive."
+            },
+            {
+              "prompt": "Ahmed … de rem …. (gaan, repareren)",
+              "authorsVersion": [
+                "gaat",
+                "repareren"
+              ],
+              "note": "hij/zij gaat."
+            },
+            {
+              "prompt": "Jullie … de fiets morgen …. (gaan, ophalen)",
+              "authorsVersion": [
+                "gaan",
+                "ophalen"
+              ],
+              "note": "jullie gaan (not jullie gaat). ophalen stays one word."
+            },
+            {
+              "prompt": "Wat … je zondag …? (gaan, doen)",
+              "authorsVersion": [
+                "ga",
+                "doen"
+              ],
+              "note": "Question word + ga je + … + infinitive."
+            },
+            {
+              "prompt": "Daan en Lotte … zaterdag …. (gaan, fietsen)",
+              "authorsVersion": [
+                "gaan",
+                "fietsen"
+              ],
+              "note": "Two people: plural gaan."
+            },
+            {
+              "prompt": "U … de fiets eerst …. (gaan, uitproberen)",
+              "authorsVersion": [
+                "gaat",
+                "uitproberen"
+              ],
+              "note": "u gaat. uitproberen is one word after gaan."
+            }
+          ]
+        }
+      },
+      "id": "b72263cb-daca-473f-8379-100d4454a0dd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the dialogues",
+      "id": "bc665518-2afd-41a0-88e3-e82d47e01c61"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the dialogues at Ahmed's shop. Fill in one word per blank.",
+          "items": [
+            {
+              "prompt": "Sofia: Mag ik deze fiets …? / Ahmed: Natuurlijk. Fiets maar een ….",
+              "authorsVersion": [
+                "proberen",
+                "rondje"
+              ],
+              "note": "Mag ik + infinitive at the end. Also fine: uitproberen."
+            },
+            {
+              "prompt": "Ahmed: … je elke dag fietsen? / Sofia: Ja, ik … elke dag naar kantoor fietsen.",
+              "authorsVersion": [
+                "Ga",
+                "ga"
+              ],
+              "note": "Question: Ga je … fietsen? Answer: ik ga … fietsen."
+            },
+            {
+              "prompt": "Sofia: De bel is …. / Ahmed: Geen probleem. Ik ga de bel even ….",
+              "authorsVersion": [
+                "kapot",
+                "repareren"
+              ],
+              "note": "kapot = broken. Also fine: maken (informal)."
+            },
+            {
+              "prompt": "Ahmed: Deze band is …. Ik ga de band morgen …. / Sofia: Dan ga ik de fiets overmorgen ….",
+              "authorsVersion": [
+                "lek",
+                "repareren",
+                "ophalen"
+              ],
+              "note": "de band is lek, but een lekke band. ophalen is one word at the end."
+            },
+            {
+              "prompt": "Ahmed: Dan heb je ook een goed … nodig. / Sofia: Ja. Ik … het slot.",
+              "authorsVersion": [
+                "slot",
+                "neem"
+              ],
+              "note": "het slot, so een goed slot (no -e after een with a het-word). Ik neem = I'll take (12-b)."
+            },
+            {
+              "prompt": "Sofia: Is er … op de fiets? / Ahmed: Ja, drie maanden. En zet je fiets altijd op …!",
+              "authorsVersion": [
+                "garantie",
+                "slot"
+              ],
+              "note": "garantie op = guarantee on. op slot zetten = to lock."
+            }
+          ]
+        }
+      },
+      "id": "d27f9fa3-8223-4023-aba3-74044dfb9c75"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "00c33688-8949-40e5-8dc2-2197d2575db8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the correct order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: ga / ik / een fiets / kopen",
+              "authorsVersion": [
+                "Ik ga een fiets kopen."
+              ],
+              "note": "Infinitive at the end. Not: Ik ga kopen een fiets."
+            },
+            {
+              "prompt": "Put in order: ophalen / morgen / ga / ik / de fiets",
+              "authorsVersion": [
+                "Morgen ga ik de fiets ophalen."
+              ],
+              "note": "Time first, then ga, then ik. Also fine: Ik ga morgen de fiets ophalen."
+            },
+            {
+              "prompt": "Put in order: gaat / de fiets / Sofia / uitproberen / eerst",
+              "authorsVersion": [
+                "Sofia gaat de fiets eerst uitproberen."
+              ],
+              "note": "Also fine: Eerst gaat Sofia de fiets uitproberen."
+            },
+            {
+              "prompt": "Put in order: je / ga / fietsen / zaterdag / ?",
+              "authorsVersion": [
+                "Ga je zaterdag fietsen?"
+              ],
+              "note": "Yes/no question: Ga first."
+            },
+            {
+              "prompt": "Put in order: wegbrengen / zondag / gaan / de dozen / we",
+              "authorsVersion": [
+                "Zondag gaan we de dozen wegbrengen."
+              ],
+              "note": "Inversion after zondag; wegbrengen stays whole at the end."
+            },
+            {
+              "prompt": "Put in order: niet / ik / vanavond / ga / koken",
+              "authorsVersion": [
+                "Ik ga vanavond niet koken."
+              ],
+              "note": "niet directly before the infinitive."
+            },
+            {
+              "prompt": "Put in order: wat / doen / ga / dit weekend / je / ?",
+              "authorsVersion": [
+                "Wat ga je dit weekend doen?"
+              ],
+              "note": "Question word, ga, je, time, infinitive."
+            }
+          ]
+        }
+      },
+      "id": "4ad0a464-f251-460d-983a-a5ed27d0c710"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Rewrite with gaan",
+      "id": "4b3ef5ff-6c2b-4a12-a55b-1425187001a0"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence with gaan + infinitive. If a word is given in brackets, start with it and invert.",
+          "items": [
+            {
+              "prompt": "Ik koop een fiets.",
+              "authorsVersion": [
+                "Ik ga een fiets kopen."
+              ],
+              "note": "koop becomes the infinitive kopen at the end."
+            },
+            {
+              "prompt": "Ahmed repareert de bel. (straks)",
+              "authorsVersion": [
+                "Straks gaat Ahmed de bel repareren."
+              ],
+              "note": "Time first: gaat before Ahmed."
+            },
+            {
+              "prompt": "Sofia haalt de fiets op.",
+              "authorsVersion": [
+                "Sofia gaat de fiets ophalen."
+              ],
+              "note": "The separable verb joins up: haalt … op → ophalen."
+            },
+            {
+              "prompt": "Wij fietsen naar Noor. (zaterdag)",
+              "authorsVersion": [
+                "Zaterdag gaan wij naar Noor fietsen."
+              ],
+              "note": "Also fine: Zaterdag gaan we naar Noor fietsen."
+            },
+            {
+              "prompt": "Probeer je de fiets uit?",
+              "authorsVersion": [
+                "Ga je de fiets uitproberen?"
+              ],
+              "note": "Ga je first, uitproberen whole at the end."
+            },
+            {
+              "prompt": "Ik kook vanavond niet.",
+              "authorsVersion": [
+                "Ik ga vanavond niet koken."
+              ],
+              "note": "niet moves to just before the infinitive."
+            },
+            {
+              "prompt": "Daan koopt geen nieuw slot. (morgen)",
+              "authorsVersion": [
+                "Morgen gaat Daan geen nieuw slot kopen."
+              ],
+              "note": "geen stays before the noun: geen nieuw slot."
+            }
+          ]
+        }
+      },
+      "id": "ccabf22a-f7c8-4a52-985a-8577ef689829"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "c5941699-03c8-438a-beba-49c6cf449791"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Use gaan + infinitive.",
+          "items": [
+            {
+              "prompt": "I'm going to buy a bike.",
+              "authorsVersion": [
+                "Ik ga een fiets kopen."
+              ]
+            },
+            {
+              "prompt": "Tomorrow we're going to cycle to the market.",
+              "authorsVersion": [
+                "Morgen gaan we naar de markt fietsen."
+              ],
+              "note": "Time first + inversion. Also fine: Morgen gaan wij naar de markt fietsen."
+            },
+            {
+              "prompt": "Are you going to try the bike?",
+              "authorsVersion": [
+                "Ga je de fiets proberen?"
+              ],
+              "note": "Also fine: Ga je de fiets uitproberen? (try out)"
+            },
+            {
+              "prompt": "Sofia is going to pick up the bike on Saturday.",
+              "authorsVersion": [
+                "Sofia gaat zaterdag de fiets ophalen."
+              ],
+              "note": "Also fine: Sofia gaat de fiets zaterdag ophalen. Zaterdag gaat Sofia de fiets ophalen."
+            },
+            {
+              "prompt": "I'm not going to cook tonight.",
+              "authorsVersion": [
+                "Ik ga vanavond niet koken."
+              ]
+            },
+            {
+              "prompt": "What are you going to do this weekend?",
+              "authorsVersion": [
+                "Wat ga je dit weekend doen?"
+              ],
+              "note": "Also fine: Wat ga jij dit weekend doen?"
+            },
+            {
+              "prompt": "Ahmed is going to repair the flat tyre.",
+              "authorsVersion": [
+                "Ahmed gaat de lekke band repareren."
+              ],
+              "note": "lek + e = lekke before a noun."
+            }
+          ]
+        }
+      },
+      "id": "4cb17129-946e-4100-9042-c595b7f8c8f7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "2f835ea6-ba0f-490b-b8f9-43015a3b52f1"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Overmorgen gaan we samen fietsen.",
+              "authorsVersion": [
+                "The day after tomorrow we're going cycling together."
+              ],
+              "note": "overmorgen = the day after tomorrow (09-a)."
+            },
+            {
+              "prompt": "Ik ga geen nieuwe fiets kopen.",
+              "authorsVersion": [
+                "I'm not going to buy a new bike."
+              ]
+            },
+            {
+              "prompt": "Gaat Daan zaterdag met Lotte fietsen?",
+              "authorsVersion": [
+                "Is Daan going cycling with Lotte on Saturday?"
+              ]
+            },
+            {
+              "prompt": "Zet je fiets altijd op slot!",
+              "authorsVersion": [
+                "Always lock your bike!"
+              ],
+              "note": "Imperative (15-b) with op slot zetten."
+            },
+            {
+              "prompt": "Straks ga ik de lege dozen wegbrengen.",
+              "authorsVersion": [
+                "Later I'm going to take the empty boxes away."
+              ],
+              "note": "straks = later (today), soon."
+            },
+            {
+              "prompt": "Morgen koop ik een slot.",
+              "authorsVersion": [
+                "Tomorrow I'm buying a lock."
+              ],
+              "note": "Present + time word = future. Also fine: I'll buy a lock tomorrow."
+            }
+          ]
+        }
+      },
+      "id": "1714c29c-7bd3-498e-bf2e-3de9d5d41fe4"
+    },
+    {
+      "type": "divider",
+      "id": "4a6534b5-1d78-44a7-86e0-472f68a5d9a3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Sofia's weekend plan",
+      "id": "076fe279-b28f-4635-a112-26b1438f9037"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "On Friday evening Sofia writes to her mother in Valencia. New here: ",
+        {
+          "text": "eindelijk",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (finally) and ",
+        {
+          "text": "de laatste dag",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (the last day)."
+      ],
+      "id": "61ac5d7d-7f25-4bac-a846-3bba9c7746a1"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's message. Answer the questions in Dutch.",
+          "items": [
+            {
+              "prompt": "Wat gaat Sofia zaterdag kopen?",
+              "authorsVersion": [
+                "Een tweedehands fiets."
+              ],
+              "note": "Also fine: Ze gaat een fiets kopen."
+            },
+            {
+              "prompt": "Hoe laat gaat Sofia naar de fietsenwinkel?",
+              "authorsVersion": [
+                "Om tien uur."
+              ]
+            },
+            {
+              "prompt": "Klopt dit? Sofia gaat een nieuwe fiets kopen.",
+              "authorsVersion": [
+                "Nee, ze gaat geen nieuwe fiets kopen. Een nieuwe fiets is te duur."
+              ],
+              "note": "geen nieuwe fiets: geen + noun."
+            },
+            {
+              "prompt": "Wat kost de zwarte fiets?",
+              "authorsVersion": [
+                "Honderdvijftig euro."
+              ],
+              "note": "Written €150,00."
+            },
+            {
+              "prompt": "Wat gaat Sofia bij Noor doen?",
+              "authorsVersion": [
+                "Ze gaat de sleutel van haar oude kamer terugbrengen en ze eet bij Noor."
+              ],
+              "note": "Also fine: De sleutel terugbrengen."
+            },
+            {
+              "prompt": "Wanneer komt Fleur terug?",
+              "authorsVersion": [
+                "Zondag 1 november."
+              ],
+              "note": "Also fine: Op zondag 1 november."
+            },
+            {
+              "prompt": "Wat gaat Sofia zondag doen?",
+              "authorsVersion": [
+                "Ze gaat de lege dozen wegbrengen en ze belt haar moeder."
+              ],
+              "note": "Two things: wegbrengen and bellen (om elf uur)."
+            },
+            {
+              "prompt": "Klopt dit? Volgende week gaat Sofia met de bus naar kantoor.",
+              "authorsVersion": [
+                "Nee, ze gaat elke dag naar kantoor fietsen."
+              ],
+              "note": "Niet meer met de bus!"
+            }
+          ],
+          "passage": {
+            "title": "Mijn weekend",
+            "content": "Vrijdag 30 oktober\n\nHoi mam!\n\nDit weekend ga ik veel doen. Morgen ga ik eindelijk een fiets kopen! Om tien uur ga ik naar de fietsenwinkel van Ahmed in de Kanaalstraat. Ik ga geen nieuwe fiets kopen. Een nieuwe fiets is te duur. Ahmed heeft een zwarte tweedehands fiets. Hij kost honderdvijftig euro. Ik ga de fiets eerst uitproberen.\n\nDaarna ga ik naar Noor fietsen. Zaterdag is de laatste dag van mijn oude kamer bij Noor. Ik ga de sleutel van de kamer terugbrengen. Zondag 1 november komt Fleur terug uit Australië. Noor gaat zaterdagavond koken en ik eet bij Noor. Gezellig!\n\nZondag ga ik niet fietsen. Ik ga de lege dozen wegbrengen. Om elf uur bellen we, oké?\n\nVolgende week ga ik elke dag naar kantoor fietsen. Niet meer met de bus!\n\nVeel liefs,\nSofia"
+          }
+        }
+      },
+      "id": "d0a91a60-92dc-450a-a84d-e0d77b16699e"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "eindelijk",
+              "meaning": "finally, at last",
+              "example": "Morgen ga ik eindelijk een fiets kopen!",
+              "id": "ca2f50b5-ecf4-457c-ac48-b34285fffb25"
+            },
+            {
+              "term": "laatste",
+              "meaning": "last",
+              "example": "Zaterdag is de laatste dag van mijn oude kamer.",
+              "note": "Always with -e before a noun: de laatste dag.",
+              "id": "8d0b8b85-1fda-416e-a5bc-dd463f0ec07d"
+            }
+          ]
+        }
+      },
+      "id": "77c77ac2-3be7-4c00-9907-0d0c37ee7f55"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "368353b9-9547-456e-8e57-f4c2da785861"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about your plans for this weekend with gaan + infinitive. Use at least one time word at the start and one sentence with niet or geen.",
+          "items": [
+            {
+              "prompt": "What are you going to do this weekend?",
+              "authorsVersion": [
+                "Dit weekend ga ik veel doen. Zaterdag ga ik een fiets kopen. Daarna ga ik naar Noor fietsen. Zondag ga ik niet fietsen. Ik ga de lege dozen wegbrengen en mijn moeder bellen."
+              ],
+              "note": "Model answer by Sofia. Check: gaan in position 2, the infinitive at the end, inversion after a time word, niet before the infinitive."
+            }
+          ]
+        }
+      },
+      "id": "18e29e82-bedc-4d33-8a50-6372efc71a65"
+    },
+    {
+      "type": "divider",
+      "id": "af8975c3-d9e4-4486-b715-7b8c41933b9d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "05a2c950-5a1b-4de0-b7bb-ebc43f69a14a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Plans and the near future: ",
+        {
+          "text": "gaan",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in position 2 + ",
+        {
+          "text": "infinitive",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        " at the end: Ik ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " een fiets ",
+        {
+          "text": "kopen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "71fac7f5-6932-407a-96a0-4dacdee1f8bf"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "A separable verb stays one word at the end: Ik ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " de fiets ",
+        {
+          "text": "ophalen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "c15fba1a-bbc7-4b17-8b44-c187c2ee9b3a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Time first: ",
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een fiets ",
+        {
+          "text": "kopen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "44d973b9-a18b-491b-aeb6-ba783583d0d9"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Questions: ",
+        {
+          "text": "Ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " je zaterdag ",
+        {
+          "text": "fietsen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "? Wat ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " je ",
+        {
+          "text": "doen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "4af3503c-f612-48c3-b4fd-e2ad4a2a5a66"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "niet just before the infinitive; geen + noun: Ik ga ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " nieuwe fiets kopen."
+      ],
+      "id": "a0385a9f-207d-4eed-b92f-72cea7c1002b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "gaan + place = movement; the present + a time word also means the future: Morgen koop ik een fiets."
+      ],
+      "id": "e25f752d-f42f-458d-a6de-59043824c9e6"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Plans at lunch",
+      "description": "Sofia and Daan eat sandwiches in a small office kitchen; Daan looks surprised and points at the many bikes outside the window, Sofia laughs.",
+      "alt": "Two colleagues talking at lunch in an office kitchen, a bike outside the window."
+    },
+    {
+      "afterHeading": "Story: At Ahmed's bike shop",
+      "description": "Inside a small bike shop in the Kanaalstraat in Lombok: Ahmed holds a black second-hand city bike while Sofia rings its bell; tools and tyres on the wall.",
+      "alt": "A bike shop owner showing a black second-hand bike to a young woman."
+    }
+  ],
+  "id": "ea07c13c-f572-4014-9cb6-eefdf769033f"
+}

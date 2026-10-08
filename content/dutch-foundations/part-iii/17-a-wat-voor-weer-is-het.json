@@ -1,0 +1,3189 @@
+{
+  "title": "Wat voor weer is het?",
+  "goal": "Talk about the weather and the seasons with impersonal het.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Wat voor weer is het?",
+      "id": "456cf929-bfc5-4606-88c5-d5ebf06e5020"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is early November in Utrecht. Sofia has her bike now, and every day there is rain and wind. Her neighbour Henk loves to talk about ",
+        {
+          "text": "het weer",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (the weather), and today Sofia comes home very wet."
+      ],
+      "id": "59aaa268-1772-4ed6-94a9-efa48b4c1ccc"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het weer",
+              "meaning": "the weather",
+              "example": "Wat voor weer is het?",
+              "note": "New meaning: in 07-b weer meant again. het weer (the weather) is a het-word.",
+              "id": "4465280d-4ac1-4bac-8578-b11ad812815d"
+            }
+          ]
+        }
+      },
+      "id": "cddceedd-90ce-4af3-9a96-23f3ad003354"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In this lesson you will describe the weather today and the forecast, make weather small talk, and talk about the four seasons. The key is a little word: ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", as in ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "regent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " (it is raining)."
+      ],
+      "id": "0f6c3519-1bba-43a6-b5ac-3ef7e303c7af"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: subjects are green (also the weather ",
+        {
+          "text": "het",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), verbs blue, an infinitive at the end red, time expressions orange and places purple. The new form is bold."
+      ],
+      "id": "29468b20-b091-4daf-ae86-04261e3d0db1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Wat een weer!",
+      "id": "a3c7ce75-1843-4611-bd00-d04929eda77c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Monday 2 November, six o'clock in the evening. Sofia cycles home from the office in the rain. In the hallway of Kastanjestraat 14 she meets Henk."
+      ],
+      "id": "780a16fb-3c76-4246-a358-7305a527a6ff"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Henk",
+            "text": "Nou, nou, wat een weer! Kom binnen, Sofia!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Henk! Brr, het regent en het waait. Ik ben zo nat!"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Ja, het regent weer. Fiets je in deze regen naar kantoor?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, met mijn nieuwe fiets. Maar ik heb geen regenjas."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Geen regenjas? In november? Dan word je elke dag nat!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wat voor weer is het morgen?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Morgen wordt het koud: acht graden. En het gaat weer regenen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Echt? In Valencia is het vandaag twintig graden en de zon schijnt. Ik mis de zon!"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Ach, in de zomer schijnt de zon hier ook. Soms!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dan ga ik morgen een paraplu kopen."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Een paraplu? Met deze wind? Nee hoor! Neem een regenjas."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Oké, een regenjas. Dank je wel, Henk. Fijne avond!"
+          }
+        ]
+      },
+      "id": "e9633920-dee2-45c4-94ce-0504c6d10dec"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Wat een weer!",
+              "meaning": "What (awful) weather!",
+              "example": "Nou, nou, wat een weer!",
+              "note": "An exclamation: Wat een + noun! Also Wat een rommel! (07-b). Usually about bad weather.",
+              "id": "4ca68413-6716-4f38-a43c-338c5853b1f9"
+            },
+            {
+              "term": "regenen",
+              "meaning": "to rain",
+              "forms": "regent · regende · geregend",
+              "example": "Het regent en het waait.",
+              "id": "74d141df-a7c9-46f2-94bf-a61623143809"
+            },
+            {
+              "term": "waaien",
+              "meaning": "to be windy, to blow",
+              "forms": "waait · waaide / woei · gewaaid",
+              "example": "In november waait het vaak.",
+              "note": "Always with het: het waait = it is windy.",
+              "id": "1b81624b-cbde-4fec-8c2a-7fe5eb33bbc1"
+            },
+            {
+              "term": "nat",
+              "meaning": "wet",
+              "example": "Ik ben zo nat!",
+              "id": "885059cc-e05a-4529-baf8-8573fe62b0f9"
+            },
+            {
+              "term": "de regen",
+              "meaning": "the rain",
+              "example": "Fiets je in deze regen naar kantoor?",
+              "note": "in de regen = in the rain",
+              "id": "54fd7110-d51e-4841-8ee8-00fa3eb4e6fd"
+            },
+            {
+              "term": "de regenjas",
+              "meaning": "the raincoat",
+              "forms": "de regenjassen",
+              "example": "Ik heb geen regenjas.",
+              "note": "de regen + de jas (14-b).",
+              "id": "1449fb34-8d08-4327-966d-3acb8a293dc8"
+            },
+            {
+              "term": "worden",
+              "meaning": "to become, to get, to be going to be",
+              "forms": "wordt · werd · geworden",
+              "example": "Morgen wordt het koud.",
+              "note": "ik word, jij wordt (word je?), hij wordt, wij/jullie/zij worden.",
+              "id": "02ed3f2b-5968-499e-977b-a6f59eac4ad8"
+            },
+            {
+              "term": "de graad",
+              "meaning": "the degree (temperature)",
+              "forms": "de graden",
+              "example": "Het is acht graden.",
+              "note": "After a number always the plural: tien graden. Unlike tien uur, tien euro.",
+              "id": "531baf89-bf23-4dbc-9498-c2e69d4acc88"
+            },
+            {
+              "term": "Wat voor weer is het?",
+              "meaning": "What is the weather like?",
+              "example": "Wat voor weer is het morgen?",
+              "note": "Also: Hoe is het weer?",
+              "id": "f32340f1-752a-47c7-be03-a662ecc7a494"
+            },
+            {
+              "term": "schijnen",
+              "meaning": "to shine",
+              "forms": "schijnt · scheen · geschenen",
+              "example": "De zon schijnt.",
+              "id": "045f5831-cebe-42f7-8f67-a4770bb63b1d"
+            },
+            {
+              "term": "de zon",
+              "meaning": "the sun",
+              "example": "In Valencia schijnt de zon.",
+              "id": "27931781-f9b1-4783-b33f-883dd4ef48cf"
+            },
+            {
+              "term": "missen",
+              "meaning": "to miss",
+              "forms": "mist · miste · gemist",
+              "example": "Ik mis de zon!",
+              "id": "d0801bf3-5052-4f49-af00-03bd8255650e"
+            },
+            {
+              "term": "de zomer",
+              "meaning": "the summer",
+              "forms": "de zomers",
+              "example": "In de zomer schijnt de zon hier ook.",
+              "id": "653a43cc-e3c8-499e-8447-c66b7862ad4e"
+            },
+            {
+              "term": "de paraplu",
+              "meaning": "the umbrella",
+              "forms": "de paraplu's",
+              "example": "Ik ga morgen een paraplu kopen.",
+              "note": "Plural with 's: paraplu's (like menu's, 10-a).",
+              "id": "7dc0932c-261c-4c26-b310-777a6b9094f5"
+            },
+            {
+              "term": "de wind",
+              "meaning": "the wind",
+              "example": "Een paraplu? Met deze wind?",
+              "id": "4e47fa05-13b3-4dbc-8f0f-f9678f09fc97"
+            }
+          ]
+        }
+      },
+      "id": "358a0560-b14e-409a-85ee-1a7a5b6102bd"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Henk uses ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true
+          }
+        },
+        " again and again: ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "regent",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "waait",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "wordt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " koud. In Dutch, weather always needs a subject, and that subject is ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "a0193da6-f6a2-456e-a238-10d22e8b32f5"
+    },
+    {
+      "type": "divider",
+      "id": "ac09acf3-7b45-4054-98b5-de9d327e50e0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Het regent: weather verbs with het",
+      "id": "6c5c8e24-c2d8-40eb-994c-6464f133e16b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "The six weather verbs",
+      "id": "262a51b6-432d-44a3-9cdd-b4971b51e104"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Dutch has verbs for the weather itself. In the present they have only one form: ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " + verb + ",
+        {
+          "text": "-t",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". There is no person who rains, so the subject is always ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", just like English ",
+        {
+          "text": "it",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "27b1a97d-2c48-46c1-8db9-e29b1c7c82dd"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "The six verbs: ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "regent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " (it rains), ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "sneeuwt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " (it snows), ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "waait",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " (it is windy), ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "vriest",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " (it freezes), ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "onweert",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " (there is a thunderstorm), ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "hagelt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " (it hails)."
+      ],
+      "id": "b434a420-2f48-46ba-856d-c9d62af620f9"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "sneeuwen",
+              "meaning": "to snow",
+              "forms": "sneeuwt · sneeuwde · gesneeuwd",
+              "example": "In Utrecht sneeuwt het niet vaak.",
+              "id": "3ad4812e-1bb9-4b5f-98fa-3c2a53ccdfee"
+            },
+            {
+              "term": "vriezen",
+              "meaning": "to freeze",
+              "forms": "vriest · vroor · gevroren",
+              "example": "Zondag vriest het een beetje.",
+              "id": "a0dfc03e-72c4-4e67-879f-251888c804ee"
+            },
+            {
+              "term": "onweren",
+              "meaning": "to thunder, to have a thunderstorm",
+              "forms": "onweert · onweerde · geonweerd",
+              "example": "Vanavond onweert het.",
+              "id": "81d4d88d-83a7-4ac7-8e1f-d885973d2945"
+            },
+            {
+              "term": "hagelen",
+              "meaning": "to hail",
+              "forms": "hagelt · hagelde · gehageld",
+              "example": "Au! Het hagelt!",
+              "id": "e6b26ef4-e466-4bfb-a14f-16f47e39caae"
+            }
+          ]
+        }
+      },
+      "id": "8b8e8406-a500-494f-ab7e-3c48c72674b4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Verbs and nouns",
+      "id": "70b97fc3-8943-4d78-beed-b1af8416de5c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Most weather verbs have a noun next to them. Learn them as pairs:"
+      ],
+      "id": "5e9dea70-a834-44c2-81f6-120ca5c7eadb"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Verb with het",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            " ",
+            {
+              "text": "regent",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " → ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " regen (the rain)"
+          ],
+          "id": "a45b9ed9-641d-4955-ae26-ad8ceaec64e9"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            " ",
+            {
+              "text": "sneeuwt",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " → ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " sneeuw (the snow)"
+          ],
+          "id": "65f87d6f-6480-41fd-a143-ebefb2de6b7d"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "het",
+              "styles": {
+                "textColor": "green"
+              }
+            },
+            " ",
+            {
+              "text": "waait",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " → ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " wind (the wind)"
+          ],
+          "id": "bc018aff-22d9-43f7-82a6-37d39e371d23"
+        }
+      ],
+      "id": "91065436-af9e-4add-a343-13b530d2cde5"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de sneeuw",
+              "meaning": "the snow",
+              "example": "In de winter is er soms sneeuw.",
+              "id": "79de1657-7ef3-43a0-98e3-0e1b6e061d5a"
+            }
+          ]
+        }
+      },
+      "id": "8761dd3c-9da7-48d9-bf46-ed81c0115850"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Nouns with a normal verb",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " zon: de zon ",
+            {
+              "text": "schijnt",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " (the sun is shining)"
+          ],
+          "id": "528acf95-5e09-4944-83b8-ea84cdff41d6"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " wolk, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " wolken (the cloud, the clouds)"
+          ],
+          "id": "8ce460b6-7831-4081-a623-802ee7ebb068"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " bui, ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " buien (the shower: a short, heavy fall of rain)"
+          ],
+          "id": "153dfe12-6751-4f3e-b5e8-416113d83348"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " storm (the storm, a gale)"
+          ],
+          "id": "d2b80f4c-2edb-4749-b71a-be456671f318"
+        }
+      ],
+      "id": "8806c035-58af-4a52-972e-66c9a28ff112"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de wolk",
+              "meaning": "the cloud",
+              "forms": "de wolken",
+              "example": "Er zijn veel wolken vandaag.",
+              "id": "b193c1b9-4904-4cd0-8586-b94340a498d9"
+            },
+            {
+              "term": "de bui",
+              "meaning": "the (rain) shower",
+              "forms": "de buien",
+              "example": "'s Middags komt er een bui.",
+              "note": "Also de regenbui. Short, often heavy rain, typical for Dutch weather.",
+              "id": "fc6831f4-7990-4e56-b995-0dfe2ae4309b"
+            },
+            {
+              "term": "de storm",
+              "meaning": "the storm, the gale",
+              "forms": "de stormen",
+              "example": "In de herfst is er soms storm.",
+              "id": "9fec2098-f2da-466c-9470-11753097c974"
+            }
+          ]
+        }
+      },
+      "id": "f2ba949d-e498-400d-9a70-072d221cf5c1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Examples",
+      "id": "a01d2bbb-3e27-4452-8b76-c36f5ad09eaf"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's raining.",
+        "note": "The Dutch present means both it rains and it is raining."
+      },
+      "content": [
+        {
+          "text": "Het",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "regent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "72af1f1a-6e4e-4f90-9a7b-770f6abf1249"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's raining today.",
+        "note": "Time first, then the verb, then het: normal inversion (recycles 08-b)."
+      },
+      "content": [
+        {
+          "text": "Vandaag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "regent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true,
+            "textColor": "green",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "58b8e867-af69-4689-ba55-e379d344e349"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is it raining in Lombok?",
+        "note": "Yes/no question: verb first, then het."
+      },
+      "content": [
+        {
+          "text": "Regent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true,
+            "textColor": "green",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "in Lombok",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "?"
+      ],
+      "id": "7d9797de-88c2-4ea1-8c32-0e0971da3805"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "In winter it sometimes freezes.",
+        "note": "in de winter = in winter. Soms after het, like in 07-a: Het vriest soms."
+      },
+      "content": [
+        {
+          "text": "In de winter",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "vriest",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true,
+            "textColor": "green",
+            "backgroundColor": "yellow"
+          }
+        },
+        " soms."
+      ],
+      "id": "a4859160-c54f-4184-9163-36a89dfd7baf"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de winter",
+              "meaning": "the winter",
+              "forms": "de winters",
+              "example": "In de winter vriest het soms.",
+              "id": "0c6cebc6-a8cf-4819-845e-8621faadf9eb"
+            }
+          ]
+        }
+      },
+      "id": "6c87da66-5fdb-4835-9665-e5e3396f555f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The sun is shining.",
+        "note": "Here the subject is de zon, not het. Do not say Het schijnt for sunny weather."
+      },
+      "content": [
+        {
+          "text": "De zon",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "schijnt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "6d19252a-381c-4201-a57f-0a459ccf28f6"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "Weather verb = het + verb-t.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " The subject is always ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": Het regent. Vandaag regent het. Regent het?"
+      ],
+      "id": "27755830-b09b-434f-ba20-8ca103bec1a0"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Er regent.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " and ",
+        {
+          "text": "Het is regenen.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Het regent.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Use het, not er, and use the verb itself, not het is + infinitive."
+      ],
+      "id": "9db4a0f2-b39c-41bc-a99e-6f2cc07a489f"
+    },
+    {
+      "type": "divider",
+      "id": "60d86b9a-c409-45ac-a784-298484326ead"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Het is koud: het is + adjective or number",
+      "id": "1498c2b7-a4a3-437b-a3ce-a41ced4d9cfa"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "For many weather words Dutch uses ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " + an adjective or a number, as in English ",
+        {
+          "text": "it is cold",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". You know koud, warm, mooi weer and zonnig already."
+      ],
+      "id": "ee5e974c-baf6-4a5d-8429-f01f828c8cbe"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Adjectives and numbers",
+      "id": "54112691-56d5-4e6a-9776-e8da0a0d39df"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's cloudy and foggy.",
+        "note": "bewolkt from de wolk; mistig from de mist (fog). After is: no -e."
+      },
+      "content": [
+        {
+          "text": "Het",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "bewolkt",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " en mistig."
+      ],
+      "id": "1bc98403-69ae-4242-83fc-7c67da60b40e"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "bewolkt",
+              "meaning": "cloudy",
+              "example": "Het is bewolkt en mistig.",
+              "id": "3526db1c-a23c-43e8-9cd3-a5e30a3b5e1c"
+            },
+            {
+              "term": "mistig",
+              "meaning": "foggy, misty",
+              "example": "'s Ochtends is het mistig.",
+              "id": "5fdd6a95-8420-4f75-86d5-3f645adc595a"
+            },
+            {
+              "term": "de mist",
+              "meaning": "the fog, the mist",
+              "example": "'s Ochtends is er mist.",
+              "note": "mistig = foggy.",
+              "id": "8c9fe5c3-2d44-4a63-99e8-6dec5cf169f2"
+            }
+          ]
+        }
+      },
+      "id": "068eb6f3-5b61-47a0-ba5d-efb8bb4cfa0e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's dry today.",
+        "note": "droog is the opposite of nat."
+      },
+      "content": [
+        {
+          "text": "Vandaag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "droog",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "cdd4e7f3-fe4b-445d-bcab-e9961a59d9f2"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "droog",
+              "meaning": "dry",
+              "example": "Vandaag is het droog.",
+              "id": "52af86ad-1482-4947-8216-bda4c83da72c"
+            }
+          ]
+        }
+      },
+      "id": "a7e01ced-85f1-4eae-9f8e-4d1570ed7faa"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's ten degrees.",
+        "note": "Dutch temperatures are in degrees Celsius. graad → graden."
+      },
+      "content": [
+        {
+          "text": "Het",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "tien graden",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "42e2420b-23f8-4458-8528-6091698d9e4d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What's the temperature? It's zero degrees.",
+        "note": "nul graden: then it freezes."
+      },
+      "content": [
+        "Wat ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " de ",
+        {
+          "text": "temperatuur",
+          "styles": {
+            "bold": true
+          }
+        },
+        "? ",
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "nul graden",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "7082454b-1f12-4bd7-852c-ad61632740a9"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de temperatuur",
+              "meaning": "the temperature",
+              "forms": "de temperaturen",
+              "example": "Wat is de temperatuur vandaag?",
+              "id": "0f6adf44-93dc-4da0-95dc-60a8aef0b169"
+            }
+          ]
+        }
+      },
+      "id": "d74ff851-6c06-454d-b859-969b8b4f460a"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        {
+          "text": "One degree, two degrees:",
+          "styles": {
+            "bold": true
+          }
+        },
+        " een graad, but twee ",
+        {
+          "text": "graden",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", tien ",
+        {
+          "text": "graden",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Unlike tien uur and tien euro, graad takes the plural after a number. ",
+        {
+          "text": "tien graad",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → tien graden."
+      ],
+      "id": "1b563b04-8b32-4f51-91d0-7397efe5c976"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Also for time and days",
+      "id": "0260abf0-375c-4b2d-9276-aa1ec7b2ba16"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You know this ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " from telling the time and the date (08 and 09). It works the same way."
+      ],
+      "id": "f7ec5287-c21d-468a-b3b2-b970e4b0c5d9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's Monday 2 November and it's late.",
+        "note": "Recycles 08-a and 09-a: Het is half zeven. Het is maandag."
+      },
+      "content": [
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " maandag 2 november en ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "laat",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "9e8b6d83-dd4b-42a3-98e6-ddf395339eed"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "There are a lot of clouds today.",
+        "note": "er zijn + plural for something that is there (recycles 13). For the weather verb itself: het, never er."
+      },
+      "content": [
+        "Er ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " veel wolken ",
+        {
+          "text": "vandaag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "033bd20c-8444-44f5-95e8-98ea201c9d34"
+    },
+    {
+      "type": "divider",
+      "id": "3186025d-3ace-4e0d-9f1e-f3754b4dbcab"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Het wordt koud: the weather is changing",
+      "id": "e8c52aec-3c36-44a6-903c-464f312893c0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "worden",
+      "id": "efc5d8b1-069a-4ee9-9572-00088dfa50d6"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Henk says ",
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "wordt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " koud. ",
+        {
+          "text": "worden",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means ",
+        {
+          "text": "to become, to get",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". With the weather it often means ",
+        {
+          "text": "it is going to be",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "701354ac-eb46-400a-80d3-5de941414473"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "worden: singular",
+              "id": "cb804ef8-fde2-4c41-8b2d-ce01eafd609a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ik",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "word",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "197b2b58-a4a6-466f-9577-7f74ef2ff595"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "wordt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " (",
+                {
+                  "text": "word",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " je?)"
+              ],
+              "id": "fbc4ead0-7891-410a-8d4c-b63cebe8c95f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "u",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "wordt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "859798c2-aa66-4f09-8eaf-2d0b35a7bae5"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "hij / zij / het",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "wordt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "1f723206-6108-4d30-b37a-8d5a0fe38b32"
+            }
+          ],
+          "id": "76e70aeb-905a-4e8b-9bf0-38df232000d1"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "worden: plural",
+              "id": "227e7e19-1e09-4ab8-a824-1e578b943808"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "wij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "worden",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "20f6c259-ff82-442c-b674-afbdb65835fd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jullie",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "worden",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "243db589-15ec-416b-bf93-24ac5b982517"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "zij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "worden",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "4dc376ed-7600-4248-a5f6-38fd532959e4"
+            }
+          ],
+          "id": "4c8389f3-5b08-4158-adbb-f806ce98b9e7"
+        }
+      ],
+      "id": "38959173-36ab-447c-b787-78380495e5e1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Tomorrow it's going to be warm.",
+        "note": "Stem word + t = wordt. The d and the t both stay in writing."
+      },
+      "content": [
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "wordt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " warm."
+      ],
+      "id": "f1fd6e09-972b-4db2-b761-b2576420f913"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Without a raincoat you get wet!",
+        "note": "Inversion with jij/je: the t drops (word je), like in 15-a: kun je."
+      },
+      "content": [
+        "Zonder regenjas ",
+        {
+          "text": "word",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " nat!"
+      ],
+      "id": "bc0bc67f-0cdb-4cf8-986b-32c20d538f47"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "gaan + infinitive for the forecast",
+      "id": "8bc78705-de53-4f1c-89e6-6ab55e02d5d3"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "For a weather verb, use ",
+        {
+          "text": "gaan + infinitive",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (16-b): ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " + verb at the end."
+      ],
+      "id": "d6d1a605-368b-4d5b-8190-0ff86a282e71"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's going to rain.",
+        "note": "gaat in second place, the infinitive regenen at the very end."
+      },
+      "content": [
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "gaat",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "regenen",
+          "styles": {
+            "bold": true,
+            "textColor": "red",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "98a316b0-edad-4ae8-9842-5b326e477f32"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is it going to snow on Saturday? No, not at all!",
+        "note": "Yes/no question: gaat first, then het, then the time; the infinitive stays at the very end. Statement: Zaterdag gaat het sneeuwen."
+      },
+      "content": [
+        {
+          "text": "Gaat",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "zaterdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "sneeuwen",
+          "styles": {
+            "bold": true,
+            "textColor": "red",
+            "backgroundColor": "yellow"
+          }
+        },
+        "? Nee hoor!"
+      ],
+      "id": "90a395e6-1527-4f03-ac62-55c3501a5ae9"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "het wordt",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + adjective or number: Het wordt koud. Het wordt tien graden. ",
+        {
+          "text": "het gaat",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + weather verb: Het gaat regenen. Do not mix them: ",
+        {
+          "text": "Het wordt regenen",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Het gaat regenen."
+      ],
+      "id": "d04da10e-d2c9-4f68-84a8-ff1291c46944"
+    },
+    {
+      "type": "divider",
+      "id": "493fe71f-4da5-4fae-a9b3-e49290f16229"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Seasons: in de lente, in de zomer",
+      "id": "ae9a5982-154c-4592-a6d3-012c1728f9b7"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Dutch has four ",
+        {
+          "text": "seizoenen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (seasons). They are all de-words. Use ",
+        {
+          "text": "in de",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + season, as in English ",
+        {
+          "text": "in (the) winter",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". Months have no article: in november, but ",
+        {
+          "text": "in de herfst",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "ee172eb3-cece-4f7d-b153-f7dc03dfd4e9"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het seizoen",
+              "meaning": "the season",
+              "forms": "de seizoenen",
+              "example": "Welk seizoen is mooi in Utrecht?",
+              "id": "ff5bd9c1-f880-46c5-bd4b-c728f4177913"
+            }
+          ]
+        }
+      },
+      "id": "e322cb8f-f88d-4c7d-a306-fa6b53eccc9c"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Seizoen",
+              "id": "a2de54e9-4e30-4d97-9b65-3d2e45265622"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de lente",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "d8f65556-0ced-4b50-bd10-baa6151e7f0e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de zomer",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "791163fb-240f-49e5-adfe-cbe469a64d2a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de herfst",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "7bc78934-dca2-4954-9342-b7a2540118ff"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de winter",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "a7d104ee-a5d8-4b8d-bf2e-129a626cd0b2"
+            }
+          ],
+          "id": "570570d6-64df-44b4-8e6e-d271424a91a7"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Maanden",
+              "id": "1693305e-7cf6-4e2a-9af8-b710a019705d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "maart, april, mei"
+              ],
+              "id": "db044c97-e620-49a7-af88-0f5aa0c37a58"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "juni, juli, augustus"
+              ],
+              "id": "ee733559-02ff-413c-89a5-98b6585e4bf8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "september, oktober, november"
+              ],
+              "id": "48ac851c-a27e-4a07-89bf-836aa5aa790f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "december, januari, februari"
+              ],
+              "id": "673be85e-bc8a-4f52-9d6a-9f45e5942f63"
+            }
+          ],
+          "id": "ac2ab003-fef6-4552-86f2-31e525364589"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Het weer",
+              "id": "7c6c5406-782d-4df5-9c5e-1388bf2e97db"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Het wordt warm. Soms regent het."
+              ],
+              "id": "84d08bde-1776-44c0-aa69-693a1c4de42d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Het is warm, soms 25 graden."
+              ],
+              "id": "92b2790d-d5bb-4839-b374-9b4c8c908cf7"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Het regent vaak en het waait."
+              ],
+              "id": "8da66d67-36ee-4db3-be22-e3be8e7b0f89"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Het is koud. Soms vriest het."
+              ],
+              "id": "f15ee717-eada-411f-ae58-e2874cacb807"
+            }
+          ],
+          "id": "ec8f7627-577d-4621-833c-646ebd4f9f08"
+        }
+      ],
+      "id": "3f116a18-6bd5-400c-aeae-a6af6532dc9c"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de lente",
+              "meaning": "the spring",
+              "example": "In de lente wordt het warm.",
+              "id": "9897cfdd-51a8-42e4-b314-ebdc63c5d693"
+            },
+            {
+              "term": "de herfst",
+              "meaning": "the autumn, the fall",
+              "example": "In de herfst regent het vaak.",
+              "id": "e46ab673-e299-4d4a-80da-130ebbc8a6b5"
+            }
+          ]
+        }
+      },
+      "id": "8ae11a3d-851c-436b-9523-2e06056e0cf7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "In autumn it's often windy.",
+        "note": "in de + season, then inversion."
+      },
+      "content": [
+        {
+          "text": "In de herfst",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "waait",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " vaak."
+      ],
+      "id": "216fa89a-e3e8-4266-88ee-9dfae84a2f88"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "in zomer",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "in de zomer",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Seasons need de. Months do not: in november, in mei."
+      ],
+      "id": "bc12d132-8347-4d6c-8c5d-48bdbdc86a28"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        {
+          "text": "ui",
+          "styles": {
+            "bold": true
+          }
+        },
+        " in bui and buien has no English twin: start from the vowel of ",
+        {
+          "text": "house",
+          "styles": {
+            "italic": true
+          }
+        },
+        " but round your lips. The ",
+        {
+          "text": "g",
+          "styles": {
+            "bold": true
+          }
+        },
+        " in regen is a rasp at the back of the throat, like ch in Scottish loch, never the English g of ",
+        {
+          "text": "go",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". ",
+        {
+          "text": "ij",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "ei",
+          "styles": {
+            "bold": true
+          }
+        },
+        " sound the same: schijnt, mei."
+      ],
+      "id": "1ed42e59-cf8e-41e5-a9c1-5d5ee2a32409"
+    },
+    {
+      "type": "divider",
+      "id": "603e72ed-ce6c-4ab9-8b1d-08a66d06c6a7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Zaterdag naar Zandvoort?",
+      "id": "31638ba7-0600-4786-b07d-8e4a07a50fc6"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Wednesday 4 November. Noor visits Sofia in Lombok. On Saturday they want to go to Zandvoort, a town by the sea, with Daan. Sofia checks the weather on her phone."
+      ],
+      "id": "b283ad63-67fa-4255-8b6f-cf33ffd24d2b"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Zaterdag gaan we met Daan naar Zandvoort! Wat voor weer wordt het?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wacht even, ik kijk naar de weersverwachting. Hmm… is het regenen zaterdag?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Regent het zaterdag? Nee, kijk: 's ochtends schijnt de zon!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "O ja! En het wordt twaalf graden. Lekker weer!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Maar 's middags is het bewolkt en dan komt er een bui."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Een bui? Dan worden we nat!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, en in Zandvoort waait het altijd."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dan neem ik mijn nieuwe regenjas mee."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Goed zo! Er is geen slecht weer, alleen slechte kleding!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Haha, dat zegt Henk ook altijd! En zaterdag kijken we om twaalf uur op de buienradar."
+          }
+        ]
+      },
+      "id": "76334df8-dfd4-4900-8e05-7cce1cdb5edd"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de weersverwachting",
+              "meaning": "the weather forecast",
+              "forms": "de weersverwachtingen",
+              "example": "Ik kijk naar de weersverwachting.",
+              "note": "het weer + de verwachting (expectation).",
+              "id": "752b0a74-795e-45f2-9d7b-84b85953a30c"
+            },
+            {
+              "term": "Er is geen slecht weer, alleen slechte kleding.",
+              "meaning": "There's no such thing as bad weather, only bad clothing.",
+              "note": "A Dutch saying. de kleding = clothing (more in 18-a).",
+              "id": "741f990b-fde0-4a8f-b380-92c660f7ff4c"
+            },
+            {
+              "term": "Goed zo!",
+              "meaning": "Well done! Good!",
+              "example": "Goed zo! Er is geen slecht weer, alleen slechte kleding!",
+              "note": "Praise when someone does or says the right thing.",
+              "id": "aa5e59fd-2aad-4159-9907-b1adc415c3c2"
+            },
+            {
+              "term": "de buienradar",
+              "meaning": "the rain radar (app)",
+              "example": "Zaterdag kijken we op de buienradar.",
+              "note": "A live map of showers for the next two hours. Many Dutch people check it before they cycle.",
+              "id": "af3b6f20-8ab9-485d-a904-3e5eff9ed56f"
+            }
+          ]
+        }
+      },
+      "id": "f4f363d2-3ddf-4d5f-b7cc-08b225a3a3d4"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Sofia says ",
+        {
+          "text": "is het regenen zaterdag?",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " Noor answers with the correct form: ",
+        {
+          "text": "Regent het zaterdag?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " The weather verb itself is the verb: no is."
+      ],
+      "id": "a7ae6a98-ee9e-4cd6-8f0f-06ef68b1ad3a"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "The weather is the classic Dutch small talk: with a neighbour, at the bakery, at the office. Before people cycle, many check ",
+        {
+          "text": "de buienradar",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": maybe you can wait ten minutes and stay dry. The national weather institute is the KNMI: ",
+        {
+          "type": "link",
+          "href": "https://www.knmi.nl",
+          "content": [
+            {
+              "text": "knmi.nl",
+              "styles": {}
+            }
+          ]
+        },
+        "."
+      ],
+      "id": "ed07fab7-c845-4f93-a145-daa349b336b0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Weather small talk in four steps",
+      "id": "eb321ae7-9890-4ac4-b178-94f5612584b1"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Start with an exclamation: ",
+        {
+          "text": "Wat een weer!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "Mooi weer, hè?",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "f1c59cbf-d64a-47ee-9381-c5f244df6be8"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Say what it is doing: ",
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "regent",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " / ",
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "waait",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " / ",
+        {
+          "text": "De zon",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "schijnt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "5983e614-e4b5-413c-a5b8-4b6bb7cd22cf"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Ask about tomorrow: ",
+        {
+          "text": "Wat voor weer is het morgen?",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "43838841-4ec5-49db-b4c4-d53b8b4d64be"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Answer with the forecast: ",
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "wordt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " koud. ",
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "regenen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "043845a5-de25-458f-9429-d3db63ec0950"
+    },
+    {
+      "type": "divider",
+      "id": "cb084113-33dc-4d20-aab6-1b6497089ed6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "79b44a20-3967-4bf1-85b7-29f420638294"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in the weather verb",
+      "id": "ac61a547-0f9a-4f25-a631-12d248ae1638"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct form of the verb in brackets. Weather verbs take het + verb-t.",
+          "items": [
+            {
+              "prompt": "Het … vandaag de hele dag. (regenen)",
+              "authorsVersion": [
+                "regent"
+              ],
+              "note": "Stem regen + t. Typical mistake: Er regent. Weather verbs always take het."
+            },
+            {
+              "prompt": "In de winter … het soms. (vriezen)",
+              "authorsVersion": [
+                "vriest"
+              ],
+              "note": "Stem vries + t. In de winter first, so the verb comes before het."
+            },
+            {
+              "prompt": "Kijk, de zon …! (schijnen)",
+              "authorsVersion": [
+                "schijnt"
+              ],
+              "note": "The subject is de zon here, not het."
+            },
+            {
+              "prompt": "In november … het vaak. (waaien)",
+              "authorsVersion": [
+                "waait"
+              ],
+              "note": "Stem waai + t: het waait = it is windy."
+            },
+            {
+              "prompt": "… het in Utrecht? (sneeuwen)",
+              "authorsVersion": [
+                "Sneeuwt"
+              ],
+              "note": "Yes/no question: verb first, with a capital."
+            },
+            {
+              "prompt": "Au! Het …! (hagelen)",
+              "authorsVersion": [
+                "hagelt"
+              ],
+              "note": "Stem hagel + t."
+            },
+            {
+              "prompt": "Morgen … het koud. (worden)",
+              "authorsVersion": [
+                "wordt"
+              ],
+              "note": "hij/zij/het wordt: stem word + t."
+            },
+            {
+              "prompt": "Zonder regenjas … jij nat. (worden)",
+              "authorsVersion": [
+                "word"
+              ],
+              "note": "jij after the verb: the t drops, word jij. Compare: Jij wordt nat."
+            }
+          ]
+        }
+      },
+      "id": "e81ed7c8-ba08-4cd0-ab73-f49b1cea9934"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Hallway small talk",
+      "id": "1930ae09-875a-4be1-899c-eabbcd4bcce6"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the small talk between Henk and Sofia. One word per blank.",
+          "items": [
+            {
+              "prompt": "Henk: Nou, nou, wat … weer! / Sofia: Ja, het … en het waait.",
+              "authorsVersion": [
+                "een",
+                "regent"
+              ],
+              "note": "Wat een weer! is a fixed exclamation. Also fine for the second blank: sneeuwt, hagelt."
+            },
+            {
+              "prompt": "Sofia: Wat … weer is het morgen? / Henk: Morgen … het koud.",
+              "authorsVersion": [
+                "voor",
+                "wordt"
+              ],
+              "note": "Wat voor weer …? asks what the weather is like. Also fine: is (Morgen is het koud)."
+            },
+            {
+              "prompt": "Sofia: Hoeveel … is het? / Henk: Het is acht ….",
+              "authorsVersion": [
+                "graden",
+                "graden"
+              ],
+              "note": "Always graden after a number, never graad."
+            },
+            {
+              "prompt": "Sofia: … het nog? / Henk: Nee, kijk: de zon …!",
+              "authorsVersion": [
+                "Regent",
+                "schijnt"
+              ],
+              "note": "Question with the weather verb first. The sun shines: schijnt."
+            },
+            {
+              "prompt": "Sofia: Ik neem een … mee. / Henk: Een paraplu? Met deze …? Nee hoor!",
+              "authorsVersion": [
+                "paraplu",
+                "wind"
+              ],
+              "note": "From the story: Henk thinks an umbrella is no good in the wind. Also fine for the second blank: storm."
+            },
+            {
+              "prompt": "Sofia: In Valencia schijnt de …. Ik … de zon!",
+              "authorsVersion": [
+                "zon",
+                "mis"
+              ],
+              "note": "missen: ik mis, jij/hij mist."
+            },
+            {
+              "prompt": "Henk: In de … sneeuwt het soms. / Sofia: Sneeuw? Brr, dan … het koud!",
+              "authorsVersion": [
+                "winter",
+                "wordt"
+              ],
+              "note": "Also fine: is. With dan first, the verb comes before het."
+            }
+          ]
+        }
+      },
+      "id": "47af6961-ab98-432f-b9e9-32eb73ff3be4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order: time first",
+      "id": "8215bd23-f59a-4b12-975e-2b4c2b5ba81e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the correct order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: vandaag / het / regent",
+              "authorsVersion": [
+                "Vandaag regent het."
+              ],
+              "note": "Time first, then the verb, then het. Also fine: Het regent vandaag."
+            },
+            {
+              "prompt": "Put in order: in de winter / vriest / het / soms",
+              "authorsVersion": [
+                "In de winter vriest het soms."
+              ],
+              "note": "Also fine: Het vriest soms in de winter."
+            },
+            {
+              "prompt": "Put in order: morgen / het / koud / wordt",
+              "authorsVersion": [
+                "Morgen wordt het koud."
+              ],
+              "note": "Not: Morgen het wordt koud. Only one element before the verb."
+            },
+            {
+              "prompt": "Put in order: zaterdag / gaat / het / regenen",
+              "authorsVersion": [
+                "Zaterdag gaat het regenen."
+              ],
+              "note": "gaat in second place, the infinitive at the end."
+            },
+            {
+              "prompt": "Put in order: 's ochtends / mistig / is / het",
+              "authorsVersion": [
+                "'s Ochtends is het mistig."
+              ],
+              "note": "At the start of a sentence: 's Ochtends with a capital O."
+            },
+            {
+              "prompt": "Put in order: het / ? / waait / buiten",
+              "authorsVersion": [
+                "Waait het buiten?"
+              ],
+              "note": "Yes/no question: the verb first."
+            },
+            {
+              "prompt": "Put in order: in de zomer / de zon / vaak / schijnt / in Valencia",
+              "authorsVersion": [
+                "In de zomer schijnt de zon vaak in Valencia."
+              ],
+              "note": "Season first, then the verb, then the subject de zon."
+            }
+          ]
+        }
+      },
+      "id": "00fda70c-2c6a-497d-9c81-edea6df12539"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Rewrite",
+      "id": "be45ec72-dad8-436c-a350-94eed3ff978a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence as the instruction in brackets says.",
+          "items": [
+            {
+              "prompt": "Het regent. (het gaat + infinitive)",
+              "authorsVersion": [
+                "Het gaat regenen."
+              ],
+              "note": "gaat in second place, regenen at the end."
+            },
+            {
+              "prompt": "Morgen sneeuwt het. (het gaat + infinitive)",
+              "authorsVersion": [
+                "Morgen gaat het sneeuwen."
+              ],
+              "note": "Keep morgen first: Morgen gaat het, and sneeuwen at the end."
+            },
+            {
+              "prompt": "Het onweert vanavond. (het gaat + infinitive)",
+              "authorsVersion": [
+                "Het gaat vanavond onweren."
+              ],
+              "note": "vanavond stays in the middle; the infinitive goes last. Het gaat onweren vanavond is also heard in speech."
+            },
+            {
+              "prompt": "Zaterdag waait het. (het gaat + infinitive)",
+              "authorsVersion": [
+                "Zaterdag gaat het waaien."
+              ],
+              "note": "Keep zaterdag first: then gaat, then het, and waaien at the end."
+            },
+            {
+              "prompt": "Het regent vandaag. (question)",
+              "authorsVersion": [
+                "Regent het vandaag?"
+              ],
+              "note": "Verb first, then het."
+            },
+            {
+              "prompt": "Het is koud. (question)",
+              "authorsVersion": [
+                "Is het koud?"
+              ]
+            },
+            {
+              "prompt": "Morgen wordt het warm. (question)",
+              "authorsVersion": [
+                "Wordt het morgen warm?"
+              ],
+              "note": "In the question the verb comes first; morgen moves after het."
+            }
+          ]
+        }
+      },
+      "id": "19a03b2b-da87-4b8c-aa4b-e5e04082e173"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "089f2199-b5e7-4ddf-898f-e569dd4986a1"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "It's raining.",
+              "authorsVersion": [
+                "Het regent."
+              ],
+              "note": "Not: Het is regenen. Not: Er regent."
+            },
+            {
+              "prompt": "It's cold today.",
+              "authorsVersion": [
+                "Het is vandaag koud."
+              ],
+              "note": "Also fine: Vandaag is het koud."
+            },
+            {
+              "prompt": "It's ten degrees.",
+              "authorsVersion": [
+                "Het is tien graden."
+              ],
+              "note": "graden, plural."
+            },
+            {
+              "prompt": "Tomorrow it's going to snow.",
+              "authorsVersion": [
+                "Morgen gaat het sneeuwen."
+              ],
+              "note": "Also fine: Morgen sneeuwt het."
+            },
+            {
+              "prompt": "In autumn it's often windy.",
+              "authorsVersion": [
+                "In de herfst waait het vaak."
+              ],
+              "note": "in de herfst with de; windy = het waait."
+            },
+            {
+              "prompt": "What's the weather like?",
+              "authorsVersion": [
+                "Wat voor weer is het?"
+              ],
+              "note": "Also fine: Hoe is het weer?"
+            },
+            {
+              "prompt": "It's getting warm.",
+              "authorsVersion": [
+                "Het wordt warm."
+              ],
+              "note": "getting + adjective = worden."
+            }
+          ]
+        }
+      },
+      "id": "1d8c47d0-98d8-4f28-a784-43f83b28f125"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "d92ba0f7-6b0d-4389-85f3-7a21588db2c4"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into English.",
+          "items": [
+            {
+              "prompt": "Het is mistig en bewolkt.",
+              "authorsVersion": [
+                "It's foggy and cloudy."
+              ]
+            },
+            {
+              "prompt": "Morgen wordt het droog.",
+              "authorsVersion": [
+                "Tomorrow it'll be dry."
+              ],
+              "note": "Also fine: It's going to be dry tomorrow."
+            },
+            {
+              "prompt": "De zon schijnt, maar het is koud.",
+              "authorsVersion": [
+                "The sun is shining, but it's cold."
+              ]
+            },
+            {
+              "prompt": "In de lente regent het soms.",
+              "authorsVersion": [
+                "In spring it sometimes rains."
+              ]
+            },
+            {
+              "prompt": "Ik mis de zon van Valencia.",
+              "authorsVersion": [
+                "I miss the sun in Valencia."
+              ],
+              "note": "Also fine: I miss the Valencian sun."
+            },
+            {
+              "prompt": "Er zijn veel wolken vandaag.",
+              "authorsVersion": [
+                "There are a lot of clouds today."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "eaa7ef4d-5020-4a88-b1af-d526b67ea720"
+    },
+    {
+      "type": "divider",
+      "id": "2faadfa3-3075-40ec-a55f-144b3692ea45"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Het weer deze week",
+      "id": "3b5ba1f0-a786-4c95-b428-1506c998eece"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the weather forecast for the week. Answer the questions in Dutch.",
+          "items": [
+            {
+              "prompt": "Wat voor weer is het donderdag 's ochtends?",
+              "authorsVersion": [
+                "Het is mistig."
+              ]
+            },
+            {
+              "prompt": "Hoeveel graden wordt het donderdag?",
+              "authorsVersion": [
+                "Negen graden."
+              ],
+              "note": "Also fine: Het wordt negen graden."
+            },
+            {
+              "prompt": "Regent het vrijdag?",
+              "authorsVersion": [
+                "Ja, het gaat de hele dag regenen."
+              ],
+              "note": "Also fine: Ja, de hele dag."
+            },
+            {
+              "prompt": "Wat voor weer is het vrijdag 's avonds?",
+              "authorsVersion": [
+                "Het onweert."
+              ],
+              "note": "Het onweert = there is a thunderstorm. Also fine: Het regent en het onweert."
+            },
+            {
+              "prompt": "Klopt dit? Zaterdag is het de hele dag droog.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. 's Middags komt er een bui."
+              ],
+              "note": "Only the morning is dry."
+            },
+            {
+              "prompt": "Wanneer vriest het?",
+              "authorsVersion": [
+                "Zondag 's ochtends."
+              ],
+              "note": "Also fine: Op zondag, 's ochtends."
+            },
+            {
+              "prompt": "Wat is de temperatuur op zondag?",
+              "authorsVersion": [
+                "'s Ochtends nul graden en 's middags zes graden."
+              ]
+            },
+            {
+              "prompt": "Wat neem je vrijdag mee?",
+              "authorsVersion": [
+                "Een paraplu of een regenjas."
+              ],
+              "note": "Also fine: Ik neem een regenjas mee."
+            }
+          ],
+          "passage": {
+            "title": "Het weer deze week",
+            "content": "Het weer in Utrecht\n\nDonderdag 5 november\n's Ochtends is het mistig. Daarna is het de hele dag bewolkt. Het wordt negen graden.\n\nVrijdag 6 november\nHet gaat de hele dag regenen. Het waait en er zijn veel buien. 's Avonds onweert het ook. Het wordt tien graden.\n\nZaterdag 7 november\n's Ochtends schijnt de zon en het is droog: lekker weer voor een dag buiten! Het wordt twaalf graden. 's Middags komen er wolken en dan komt er een bui.\n\nZondag 8 november\nHet wordt koud. 's Ochtends vriest het een beetje: nul graden. Daarna schijnt de zon. 's Middags is het zes graden.\n\nTip: neem vrijdag een paraplu of een regenjas mee!"
+          }
+        }
+      },
+      "id": "4d7d14bd-ae23-4d04-88ce-c70df0d78f15"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "7bc4ae91-3a5c-4304-a088-62f2b1bfd46a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about the weather today and the season you like best. Use het + a weather verb, het is or het wordt, and in de + season.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about the weather today and your favourite season.",
+              "authorsVersion": [
+                "Vandaag regent het in Utrecht en het waait. Het is acht graden. Morgen wordt het koud. In de lente is het heerlijk in Valencia: het is twintig graden en de zon schijnt."
+              ],
+              "note": "Sofia's model answer. Check: het + verb-t for rain and wind, graden in the plural, time first + inversion, in de + season."
+            }
+          ]
+        }
+      },
+      "id": "a61b1475-b38d-4aef-894a-dc62823c6fa3"
+    },
+    {
+      "type": "divider",
+      "id": "7faf4179-96a2-4459-ba21-239856606a73"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "51aa2374-ce24-4429-9ae2-e07246fdc6a6"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Weather verbs take ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": het regent, het sneeuwt, het waait, het vriest, het onweert, het hagelt. Never er."
+      ],
+      "id": "8cf41c51-2ce5-464d-ac84-31164c59e77b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Time first? Then verb + het: ",
+        {
+          "text": "Vandaag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "regent",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ". Question: ",
+        {
+          "text": "Regent",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "?"
+      ],
+      "id": "79c9fa57-2e82-43a3-bf0e-86e1d55f145d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "het is",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + adjective or number: het is koud, bewolkt, mistig, tien ",
+        {
+          "text": "graden",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "ed8bd110-8b8d-47f7-8f7a-698051d166e8"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "het wordt",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + adjective: Morgen wordt het warm. ",
+        {
+          "text": "het gaat",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + weather verb: Het gaat regenen."
+      ],
+      "id": "7d43ef93-b093-484d-a2ba-f943c5b6dd3f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "in de",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + season: in de lente, in de zomer, in de herfst, in de winter."
+      ],
+      "id": "fa7bbc97-1fcf-4074-8fd6-5002b35ba86a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Remember:",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Wat voor weer is het? Wat een weer! Er is geen slecht weer, alleen slechte kleding."
+      ],
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "id": "562ce1b4-88ee-4909-90fd-617e339d40e0"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Wat een weer!",
+      "description": "Sofia, soaking wet with dripping hair, stands in the narrow hallway of Kastanjestraat 14; Henk (67, cardigan, friendly grin) holds the door open, rain and wind visible through the glass.",
+      "alt": "A wet Sofia meets Henk in the hallway on a rainy evening"
+    },
+    {
+      "afterHeading": "Seasons: in de lente, in de zomer",
+      "description": "One Utrecht canal scene in four panels: spring blossom, summer sun on a terrace, autumn rain and leaves with cyclists in raincoats, winter frost on the bridge.",
+      "alt": "The same Utrecht canal in spring, summer, autumn and winter"
+    }
+  ],
+  "id": "94d458df-471e-4b8c-ba42-62f2d97a8312"
+}

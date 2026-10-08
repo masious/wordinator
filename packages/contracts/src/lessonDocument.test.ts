@@ -261,10 +261,28 @@ describe("new words in player steps", () => {
   it("spreads over every turn of a dialogue and every item of a practice", () => {
     const steps = flattenToSteps(parse(dialogue(), vocabulary(word("hoi")), practice(), vocabulary(word("zien"))));
     expect(summary(steps)).toEqual([
-      ["dialogueTurn", ["hoi"]], ["dialogueTurn", ["hoi"]], ["practiceItem", ["zien"]], ["practiceItem", ["zien"]],
+      ["dialogueTurn", ["hoi"]], ["dialogueTurn", []], ["practiceItem", ["zien"]], ["practiceItem", ["zien"]],
     ]);
     // Each step owns its list, so later words never leak between blocks.
-    expect(steps[0]!.words).not.toBe(steps[1]!.words);
+    expect(steps[2]!.words).not.toBe(steps[3]!.words);
+  });
+
+  it("shows a dialogue's words on the first turn that uses them and the rest on the last turn", () => {
+    const talk = { ...dialogue(), props: { turns: JSON.stringify([
+      { speaker: "A", text: "Check je in met je bankpas?" },
+      { speaker: "B", text: "Ja. In Amsterdam stappen we over. De bankpas is oud." },
+      { speaker: "A", text: "Kijk, de trein! Waar stappen we in?" },
+      { speaker: "B", text: "Hier." },
+    ]) } };
+    const steps = flattenToSteps(parse(talk, vocabulary(
+      word("de bankpas"), word("inchecken", { forms: "checkt in · checkte in · ingecheckt" }),
+      word("instappen", { forms: "stapt in · stapte in · ingestapt" }), word("overstappen", { forms: "stapt over · stapte over · overgestapt" }),
+      word("het perron"), word("stil"),
+    ), paragraph("Stiltecoupé.")));
+    expect(summary(steps)).toEqual([
+      ["dialogueTurn", ["de bankpas", "inchecken"]], ["dialogueTurn", ["overstappen"]], ["dialogueTurn", ["instappen"]],
+      ["dialogueTurn", ["het perron", "stil"]], ["content", []],
+    ]);
   });
 
   it("falls back to the next block's steps when nothing precedes it in the section", () => {
@@ -274,7 +292,7 @@ describe("new words in player steps", () => {
       example("Drei."), heading("Part three"), vocabulary(word("vier")), paragraph("Vier."),
     ));
     expect(summary(steps)).toEqual([
-      ["example", ["eins"]], ["dialogueTurn", ["zwei"]], ["dialogueTurn", ["zwei"]], ["example", []], ["content", ["vier"]],
+      ["example", ["eins"]], ["dialogueTurn", []], ["dialogueTurn", ["zwei"]], ["example", []], ["content", ["vier"]],
     ]);
   });
 
@@ -301,7 +319,7 @@ describe("new words in player steps", () => {
       columns(column(paragraph("Read"), vocabulary(word("lesen"))), column(dialogue(), vocabulary(word("sprechen")))),
     ));
     expect(summary(steps)).toEqual([
-      ["columns", ["links", "danach"]], ["content", ["lesen"]], ["dialogueTurn", ["sprechen"]], ["dialogueTurn", ["sprechen"]],
+      ["columns", ["links", "danach"]], ["content", ["lesen"]], ["dialogueTurn", []], ["dialogueTurn", ["sprechen"]],
     ]);
   });
 
