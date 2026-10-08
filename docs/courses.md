@@ -197,7 +197,15 @@ Approved product change (C6): a light, non-competitive layer of progress on top 
 
 ### Lesson player
 
-Every lesson with content has a Start lesson action (Practise again once finished) that opens a focused, step-by-step player with a progress bar and a step counter. Below `48em` the player is a full-screen sheet, and the course page's lesson outline collapses behind a Lessons toggle that closes again once a lesson is chosen.
+The course page has one player action, in a progress card at the top of the page, above Manage course. The card shows the viewer's own course percentage with a progress bar and a single button; lessons have no start actions of their own and only show Finished or their saved step. The button picks its lesson in this order:
+
+1. **Continue lesson** — the viewer's most recently moved unfinished lesson, reopened at its saved step (see [lesson positions](#lesson-positions)).
+2. **Start lesson** — otherwise the first lesson in the outline the viewer has not finished.
+3. **Practise again** — otherwise, when every lesson is finished, the first lesson.
+
+Only published lessons are chosen while the course has any; an editor's unpublished lesson is chosen only when nothing is published, and then plays as a preview, which the card says: it starts from the beginning and saves no place or progress. Editors still read unpublished drafts inline as previews.
+
+The player is focused and step-by-step, with a progress bar and a step counter. Below `48em` the player is a full-screen sheet, and the course page's lesson outline collapses behind a Lessons toggle that closes again once a lesson is chosen.
 
 - Steps come from the published document in order (`flattenToSteps` in the contracts). A `heading` is not a step; it labels the steps that follow it.
 - Consecutive prose under one heading (paragraphs, list items, images, and dividers) is one step; blank paragraphs alone make no step. A `callout` and an `example` are one step each. An example shows its translation and note with the sentence.
@@ -227,10 +235,19 @@ Approved product change (C6b): the player remembers where a member stopped, so t
 - A step is identified by its block ID, plus the dialogue line or practice item number inside it. Edits elsewhere in the lesson move the step's number but not its identity. When the step's block is gone, the player falls back to the saved step number, clamped to the lesson. The API resolves the key against the published document and refuses a key it cannot find (`409 LESSON_STEP_NOT_FOUND`); the player ignores that refusal.
 - The passed share is the number of steps before the step shown, of the lesson's current step count, so the last step shown is still short of finishing. It never shrinks when the member steps back; when an edit shortens the lesson it is capped below the new count. Only Finish lesson counts the lesson whole.
 - Finishing a lesson deletes its position. Practising a finished lesson again saves a new position for resuming, which never adds progress.
-- The course page offers Pick up where you left off for the member's most recently moved unfinished lesson, labels each started lesson's action Continue lesson with its saved step, and refreshes progress when the player closes.
+- The course page's progress card offers Pick up where you left off with Continue lesson for the member's most recently moved unfinished lesson, each started lesson shows its saved step, and progress refreshes when the player closes.
 - A position is private to its member. Other members see only the resulting percentage in the Progress panel.
 - Archived courses refuse positions (`409 COURSE_ARCHIVED`), unpublished lessons refuse them (`409 LESSON_UNPUBLISHED` for editors; `404` for readers, who cannot see them). Positions in unpublished lessons stay stored but do not count or show until the lesson is published again.
 - New step kinds (such as C8's `words` step) must give their steps a stable key in `lessonStepKey`.
+
+### Lesson overview (prototype)
+
+Experimental, not an approved product change. A design prototype at `/overview/<lesson-file-slug>` (for example `/overview/07-a-mijn-dag`) shows one lesson as a winding road of stops so a member can see how far they are and what remains before the lesson is finished. It is registered only in development builds: it reads authored lesson files straight from `content/` (normalized with `content/dutch-foundations/tools/normalize.ts` and validated with `lessonDocumentSchema`), and production builds bundle no lesson file and answer `404`.
+
+- **Stops.** One stop per heading section that has player steps. Level-3 headings are stops inside their level-1 or level-2 chapter, and a chapter with more than one stop gets a banner on the road. A stop is a Story (it has a dialogue), Practice, Reading (a practice with a passage), or Topic, and shows only its title, a one-line teaser (the instruction, the scene, or the section's grammar or important callout), its step, line, question, and new-word counts, and its first few terms.
+- **Progress.** Progress is a step index, the same unit as [lesson positions](#lesson-positions): stops before it are Completed, the stop that holds it is Up next or In progress (with a ring for its share of steps), and later stops are Ahead. The road is coloured up to the current stop and ends at a finish line. The page header shows the lesson percentage and covered sections, steps, new words, and questions.
+- **Slider.** Opening a stop shows the [lesson player](#lesson-player)'s stage (`StepStage`) for that stop's steps only. Moving past the furthest step advances progress; reviewing a finished stop or previewing one ahead changes nothing. Practice answers stay in the dialog and are never shared.
+- **Prototype only.** Progress is simulated through the `step` search parameter and a floating range control; nothing is saved. Before it ships it needs an approved product decision (including how it sits with the [no-gamification non-goal](what_is_it.md#explicit-non-goals): it adds no points, streaks, badges, or rankings), a lesson-scoped route, data from the lesson read and position APIs, and the usual tests.
 
 ## Contributors and publishing
 

@@ -5,7 +5,7 @@ import {
   flattenToSteps, lessonStepKey, resolveStepIndex, type CourseLesson, type LessonBlockOf, type LessonStep,
 } from "@wordinator/contracts/lesson-document";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, lessonQueryOptions, practiceDiscussionQueryOptions } from "../../api";
 import { Callout } from "../../molecules/Callout";
@@ -40,6 +40,20 @@ function ExampleStep({ block }: { block: LessonBlockOf<"example"> }) {
   </>} />;
 }
 
+// The instruction, reading passage, and prompt of one practice item, without the answer field.
+export function QuestionPrompt({ block, item }: { block: Practice; item: number }) {
+  const { t } = useTranslation(); const { payload } = block;
+  return <>
+    <p className={styles.instruction}><PlainText>{payload.instruction}</PlainText></p>
+    {payload.passage && <details className={styles.passage} open={item === 0}>
+      <summary>{payload.passage.title ?? t("courses.practice.passage")}</summary>
+      <p><PlainText>{payload.passage.content}</PlainText></p>
+    </details>}
+    <p className={styles.counter}>{t("courses.player.question", { current: item + 1, total: payload.items.length })}</p>
+    <p className={styles.prompt}><PlainText>{payload.items[item]!.prompt}</PlainText></p>
+  </>;
+}
+
 // Answers share the practice block's local draft, so a set started here can be finished in the lesson view and the reverse.
 function QuestionStep({ scope, lessonId, block, item, answers, onAnswer, shared, onShared }: {
   scope: PlayerScope; lessonId: string; block: Practice; item: number; answers: string[]; onAnswer: (value: string) => void; shared: boolean; onShared: () => void;
@@ -57,13 +71,7 @@ function QuestionStep({ scope, lessonId, block, item, answers, onAnswer, shared,
     },
   });
   return <div className={styles.question}>
-    <p className={styles.instruction}><PlainText>{payload.instruction}</PlainText></p>
-    {payload.passage && <details className={styles.passage} open={item === 0}>
-      <summary>{payload.passage.title ?? t("courses.practice.passage")}</summary>
-      <p><PlainText>{payload.passage.content}</PlainText></p>
-    </details>}
-    <p className={styles.counter}>{t("courses.player.question", { current: item + 1, total: payload.items.length })}</p>
-    <p className={styles.prompt}><PlainText>{payload.items[item]!.prompt}</PlainText></p>
+    <QuestionPrompt block={block} item={item} />
     {shared
       ? <p className={styles.shared} role="status">{t("courses.player.shared")}</p>
       : <TextAreaField key={item} label={t("courses.player.yourAnswer")} value={answers[item] ?? ""} maxLength={RESPONSE_ANSWER_MAX} autosize minRows={2}
@@ -107,21 +115,15 @@ function FinishStep({ scope, lesson, next, onNext, onClose, onReview }: {
   </div>;
 }
 
-function StepContent({ scope, lesson, step, answersFor, answer, shared, markShared }: {
-  scope: PlayerScope; lesson: CourseLesson; step: LessonStep; answersFor: (practice: Practice) => string[];
-  answer: (practice: Practice, item: number, value: string) => void; shared: Record<string, boolean>; markShared: (practice: Practice) => void;
-}) {
+type QuestionStepOf = Extract<LessonStep, { kind: "practiceItem" }>;
+function StepContent({ step, renderQuestion }: { step: LessonStep; renderQuestion: (step: QuestionStepOf) => ReactNode }) {
   switch (step.kind) {
     case "content": return <div className={styles.content}><LessonBlocks blocks={step.blocks} /></div>;
     case "columns": return <div className={styles.content}><LessonBlocks blocks={[step.block]} /></div>;
     case "callout": return <Callout variant={step.block.props.variant} icon={step.block.props.icon}><InlineText content={step.block.content} /></Callout>;
     case "example": return <ExampleStep block={step.block} />;
     case "dialogueTurn": return <DialogueBlock block={step.block} upTo={step.turnIndex} />;
-    case "practiceItem": {
-      const practice = practiceFromBlock(step.block, lesson.answerCounts);
-      return <QuestionStep scope={scope} lessonId={lesson.id} block={practice} item={step.itemIndex} answers={answersFor(practice)}
-        onAnswer={(value) => answer(practice, step.itemIndex, value)} shared={shared[practice.id] ?? false} onShared={() => markShared(practice)} />;
-    }
+    case "practiceItem": return renderQuestion(step);
     case "words": return <NewWords words={step.words} />;
   }
 }
@@ -129,6 +131,18 @@ function StepContent({ scope, lesson, step, answersFor, answer, shared, markShar
 // A step's words show in a New words panel below it. A words-only step is the list itself, and a column list read as one step
 // already shows its words in place.
 const hasWordsPanel = (step: LessonStep) => step.words.length > 0 && step.kind !== "words" && step.kind !== "columns";
+
+// Key a stage with `stageKey`: a dialogue keeps one stage while its lines arrive, so only the newest line animates in.
+export const stageKey = (step: LessonStep, index: number) => step.kind === "dialogueTurn" ? step.block.id : String(index);
+
+// One step on its stage. The caller supplies how a practice question is answered; everything else renders the same everywhere.
+export function StepStage({ step, renderQuestion }: { step: LessonStep; renderQuestion: (step: QuestionStepOf) => ReactNode }) {
+  return <div className={styles.stage}>
+    {step.heading && <p className={styles.section}>{step.heading}</p>}
+    <StepContent step={step} renderQuestion={renderQuestion} />
+    {hasWordsPanel(step) && <NewWords words={step.words} />}
+  </div>;
+}
 
 function Player({ scope, lesson, position, next, onNext, onClose }: {
   scope: PlayerScope; lesson: CourseLesson; position: LessonPosition | undefined; next: CourseLessonSummary | undefined; onNext: (lessonId: string) => void; onClose: () => void;
@@ -184,12 +198,11 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
         </div>
         {reviewing && <WordRecap words={words} doneLabel={t("courses.player.backToSummary")} onDone={() => setReviewing(false)} />}
       </>
-      // A dialogue keeps one stage while its lines arrive, so only the newest line animates in.
-      : <div className={styles.stage} key={step.kind === "dialogueTurn" ? step.block.id : index}>
-        {step.heading && <p className={styles.section}>{step.heading}</p>}
-        <StepContent scope={scope} lesson={lesson} step={step} answersFor={answersFor} answer={answer} shared={shared} markShared={markShared} />
-        {hasWordsPanel(step) && <NewWords words={step.words} />}
-      </div>}
+      : <StepStage key={stageKey(step, index)} step={step} renderQuestion={(question) => {
+        const practice = practiceFromBlock(question.block, lesson.answerCounts);
+        return <QuestionStep scope={scope} lessonId={lesson.id} block={practice} item={question.itemIndex} answers={answersFor(practice)}
+          onAnswer={(value) => answer(practice, question.itemIndex, value)} shared={shared[practice.id] ?? false} onShared={() => markShared(practice)} />;
+      }} />}
     {!finished && <div className={styles.nav}>
       <Button variant="quiet" disabled={index === 0} onClick={() => setIndex((value) => value - 1)}>{t("common.back")}</Button>
       <Button onClick={() => setIndex((value) => value + 1)}>{index === steps.length - 1 ? t("courses.player.finish") : t("common.next")}</Button>

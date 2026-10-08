@@ -125,12 +125,12 @@ If a deleted group is a person’s only group, status appears in the restricted 
 
 ## Work through a lesson step by step
 
-1. On the course page, a member chooses Start lesson on any lesson with content. A focused player opens with a progress bar and a step counter.
+1. At the top of the course page, above Manage course, a progress card shows the member's course percentage and one button: Continue lesson for the lesson they last moved in, otherwise Start lesson for the first lesson they have not finished, otherwise Practise again. A focused player opens with a progress bar and a step counter.
 2. Text, callouts, and example sentences arrive one step at a time; an example shows its translation and note.
 3. Dialogue lines arrive one after another; earlier lines stay visible.
 4. Practice questions are asked one by one with a single answer field. Answers are saved as the same browser draft the lesson view uses. On the last question the learner may share the answer set with the group or keep it private.
-5. Back and Next move freely, and each move is saved. If the learner leaves mid-lesson, the course page offers Pick up where you left off and the lesson's action reads Continue lesson; the player reopens at the saved step and offers Start over. After the last step the player shows that the lesson is complete, the learner's course percentage, and a link to the next lesson or back to the course.
+5. Back and Next move freely, and each move is saved. If the learner leaves mid-lesson, the progress card offers Pick up where you left off with Continue lesson; the player reopens at the saved step and offers Start over. After the last step the player shows that the lesson is complete, the learner's course percentage, and a link to the next lesson or back to the course.
 6. A step that introduces new words shows them in a New words panel below it, with term, forms, meaning, example, and note; a section that holds only words is a step of its own. After the last step, a run that had words offers Review words: a card per word, where Show meaning reveals the meaning, and Back to the summary returns to the completion screen.
-7. The finished lesson shows a check in the outline and offers Practise again. The course's Progress panel shows every member's percentage, listed by name; a started lesson counts for the share of its steps already passed.
+7. The finished lesson shows a check in the outline and Finished under its title, and the progress card moves on to the next unfinished lesson. The course's Progress panel shows every member's percentage, listed by name; a started lesson counts for the share of its steps already passed.
 8. Once a member has finished lessons with words, the course page offers Review words for all of them in lesson order, each repeated term once. Nothing in a recap is recorded.
 9. Owners and contributors can run an unpublished lesson as a preview; it does not count toward progress.

@@ -119,7 +119,7 @@ The [courses blueprint](courses.md) owns every course rule. Each phase is comple
 
   With C6 the planned course feature is delivered. Later course work is listed in the [courses blueprint](courses.md#deferred).
 
-- **C6b — Lesson positions** (completed 2026-10-07): the player saves the step a member is on, reopens a started lesson there with Start over, and the course page offers Pick up where you left off. Course percentages count the passed share of started lessons, so they move with each step, not only with finished lessons. It stays inside the C6 progress exception.
+- **C6b — Lesson positions** (completed 2026-10-07): the player saves the step a member is on, reopens a started lesson there with Start over, and the course page offers Pick up where you left off. Later the course page's player entry was consolidated into one progress card at the top of the page (own percentage plus a single Continue, Start, or Practise again action); lessons no longer carry start buttons. Course percentages count the passed share of started lessons, so they move with each step, not only with finished lessons. It stays inside the C6 progress exception.
 
   C6b adds migration `0016_course_lesson_positions.sql` with `course_lesson_positions` and `PUT .../lessons/:lessonId/position`, and adds the viewer's `positions` to the progress payload. Steps are keyed by block ID so positions survive unrelated edits. Workers, contract, React Testing Library, and Chromium/WebKit tests cover saving, resuming, edits, privacy, deletion, refusals, and tenant isolation.
 
@@ -143,6 +143,8 @@ The [courses blueprint](courses.md) owns every course rule. Each phase is comple
   - **C7f — Columns** (completed 2026-10-07, released with C7): two- and three-column slash items, edge-drop column creation with BlockNote's drop cursor, width handles, editor-side refusal of a fourth column or nested columns with in-place repair as a fallback, and stacked columns on narrow screens. See [block types](courses.md#block-types).
   - **C7g — Merge and polish** (completed 2026-10-07, released with C7): block-level three-way merge on `409` with side-by-side choices for blocks both sides changed, and paste sanitizing (pasted HTML and Markdown repaired to the lesson subset, foreign images removed, pasted image files through the upload dialog). See [drafts and publishing](courses.md#drafts-and-publishing) and [inline content](courses.md#inline-content).
 - **C8 — New words and recap** (approved 2026-10-07, in progress; C8a–C8d completed 2026-10-07; migration `0017_course_lesson_words.sql` and the C8 API applied and deployed remotely on 2026-10-07; production lessons seeded with words on 2026-10-07; the C8c web deploy, the manual check of the seeded words, the smoke test, and the docs pass remain): a `vocabulary` block of words (term, meaning, optional forms, example, and note), New words panels on the player steps they follow, a lesson recap from the completion screen, and a course recap over the viewer's finished published lessons backed by the `course_lesson_words` index. A cross-course Words tab is deferred. See [new words and recap](courses.md#new-words-and-recap); [NEW_WORDS_PLAN.md](../NEW_WORDS_PLAN.md) holds the delivery checklist.
+
+- **Lesson overview prototype** (experimental, started 2026-10-08, not approved): a development-only per-lesson overview road reading authored lesson files, to settle the design before any data layer or API. See [lesson overview](courses.md#lesson-overview-prototype).
 
 ## Settings split
 

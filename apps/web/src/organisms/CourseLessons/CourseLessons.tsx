@@ -12,7 +12,7 @@ import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChi
 import { LessonDocument } from "../LessonDocument/LessonDocument";
 import { WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
-import { LessonPlayer, lessonSteps, playableDocument } from "./LessonPlayer";
+import { lessonSteps, playableDocument } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
 import { PracticeContent, practiceFromBlock, PracticeThread } from "./PracticeBlock";
 
@@ -70,15 +70,10 @@ function LessonForm({ initial, submitLabel, pending, error, onSubmit, onCancel }
   </form>;
 }
 
-// Unfinished lessons with a saved step say where the reader stopped; finished ones offer another run.
-const startLabels = (completed: boolean, position: LessonPosition | undefined) =>
-  completed ? ["courses.player.again", "courses.player.againNamed"] as const
-  : position ? ["courses.player.continue", "courses.player.continueNamed"] as const
-  : ["courses.player.start", "courses.player.startNamed"] as const;
-
-function LessonSection({ scope, summary, number, preloaded, outline, dataUpdatedAt, completed, position, round, onStart }: {
+// Lessons only report where the reader stands; the course's single resume action opens the player.
+function LessonSection({ scope, summary, number, preloaded, outline, dataUpdatedAt, completed, position, round }: {
   scope: Scope; summary: CourseLessonSummary; number: number; preloaded?: CourseLesson; outline: CourseLessonSummary[]; dataUpdatedAt: number;
-  completed: boolean; position: LessonPosition | undefined; round: number; onStart: () => void;
+  completed: boolean; position: LessonPosition | undefined; round: number;
 }) {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const lessonKey = lessonQueryOptions(scope.groupId, scope.courseId, summary.id).queryKey;
@@ -104,14 +99,12 @@ function LessonSection({ scope, summary, number, preloaded, outline, dataUpdated
   // The outline summary is fresher after a publish elsewhere; the loaded lesson is fresher after this viewer's own edits.
   const current = data ?? summary;
   const playable = data ? lessonSteps(data).length > 0 : false;
-  const [label, namedLabel] = startLabels(completed, position);
   return <section className={styles.lesson} id={lessonAnchor(summary.id)} aria-labelledby={`${lessonAnchor(summary.id)}-title`}>
     <header className={styles.lessonHeader}>
       <p className={styles.lessonNumber}>{t("courses.lessons.number", { number })}</p>
       <h2 id={`${lessonAnchor(summary.id)}-title`}>{current.title}</h2>
       {current.goal && <p className={styles.goal}><PlainText>{current.goal}</PlainText></p>}
-      {playable && !editing && <div className={styles.start}>
-        <Button variant={completed ? "secondary" : "primary"} onClick={onStart} aria-label={t(namedLabel, { number })}>{t(label)}</Button>
+      {playable && !editing && (completed || position) && <div className={styles.start}>
         {completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
         {!completed && position && <span className={styles.position}>{t("courses.player.step", { current: position.stepIndex + 1, total: position.totalSteps })}</span>}
       </div>}
@@ -135,7 +128,6 @@ function LessonSection({ scope, summary, number, preloaded, outline, dataUpdated
       : editing ? <Suspense fallback={<LoadingState label={t("courses.editor.loading")} />}>
         <LessonEditor groupId={scope.groupId} courseId={scope.courseId} accountId={scope.accountId} owner={scope.owner} lesson={data} onClose={() => setEditing(false)} />
       </Suspense>
-      // The round changes after the lesson player closes, so answer composers reread drafts the player may have changed.
       : <div className={styles.body} key={round}><LessonBody scope={scope} lesson={data} /></div>}
     <AdaptiveDialog opened={detailsOpen} onClose={() => setDetailsOpen(false)} title={t("courses.lessons.editTitle")}>
       {detailsOpen && <LessonForm initial={current} submitLabel={t("common.save")} pending={update.isPending} error={update.error}
@@ -147,8 +139,9 @@ function LessonSection({ scope, summary, number, preloaded, outline, dataUpdated
   </section>;
 }
 
-export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdatedAt }: {
-  groupId: string; courseId: string; accountId: string; detail: CourseDetailResponse; dataUpdatedAt: number;
+// `round` changes after the lesson player closes, so answer composers reread drafts the player may have changed.
+export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdatedAt, round }: {
+  groupId: string; courseId: string; accountId: string; detail: CourseDetailResponse; dataUpdatedAt: number; round: number;
 }) {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const { permissions } = detail.course;
@@ -157,17 +150,15 @@ export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdate
   // Lessons render progressively: the preloaded ones first, then one more each time the reader continues.
   const [shown, setShown] = useState(detail.lessons.length);
   const [addOpen, setAddOpen] = useState(false);
-  const [playing, setPlaying] = useState<string | null>(null); const [round, setRound] = useState(0);
   // Below 48em the outline collapses behind a toggle so the first lesson stays above the fold.
   const narrow = useMediaQuery("(max-width: 48em)"); const [outlineOpen, setOutlineOpen] = useState(false);
   const progress = useQuery(courseProgressQueryOptions(groupId, courseId));
   const completed = new Set(progress.data?.completedLessonIds ?? []);
-  // Saved steps of unfinished lessons, most recent first; the first one in the outline is offered as the place to pick up.
+  // Saved steps of unfinished lessons, shown on each started lesson.
   const positions = (progress.data?.positions ?? []).filter((entry) => !completed.has(entry.lessonId));
   // The course recap covers the published lessons the viewer has finished; it is offered only when they carried words.
   const words = useQuery(courseWordsQueryOptions(groupId, courseId)).data?.words ?? [];
   const [reviewing, setReviewing] = useState(false);
-  const resume = positions.map((entry) => ({ entry, index: outline.findIndex((lesson) => lesson.id === entry.lessonId) })).find(({ index }) => index >= 0);
   const create = useMutation({
     mutationFn: (input: LessonInput) => apiRequest(lessonsPath(scope), lessonResponseSchema, { method: "POST", body: JSON.stringify(input) }),
     onSuccess: async (data) => {
@@ -204,10 +195,6 @@ export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdate
       </div>
     </nav>
     <div className={styles.lessons}>
-      {resume && <Surface tone="quiet" className={styles.resume}>
-        <p>{t("courses.player.resumeHelp", { number: resume.index + 1, title: outline[resume.index]!.title, current: resume.entry.stepIndex + 1, total: resume.entry.totalSteps })}</p>
-        <Button onClick={() => setPlaying(resume.entry.lessonId)}>{t("courses.player.continue")}</Button>
-      </Surface>}
       {words.length > 0 && <Surface tone="quiet" className={styles.recap}>
         <p>{t("courses.words.courseHelp", { count: words.length })}</p>
         <Button variant="secondary" onClick={() => setReviewing(true)}>{t("courses.words.review")}</Button>
@@ -215,19 +202,10 @@ export function CourseLessons({ groupId, courseId, accountId, detail, dataUpdate
       {outline.length
         ? visible.map((lesson, index) => <LessonSection key={lesson.id} scope={scope} summary={lesson} number={index + 1} outline={outline}
           preloaded={detail.lessons.find((entry) => entry.id === lesson.id)} dataUpdatedAt={dataUpdatedAt}
-          completed={completed.has(lesson.id)} position={positions.find((entry) => entry.lessonId === lesson.id)} round={round} onStart={() => setPlaying(lesson.id)} />)
+          completed={completed.has(lesson.id)} position={positions.find((entry) => entry.lessonId === lesson.id)} round={round} />)
         : <Surface tone="quiet"><EmptyState title={t("courses.noLessonsTitle")} action={addAction || undefined}>{t("courses.noLessonsBody")}</EmptyState></Surface>}
       {next && <Button variant="secondary" className={styles.continue} onClick={() => jumpTo(visible.length)}>{t("courses.lessons.continue", { number: visible.length + 1, title: next.title })}</Button>}
     </div>
-    <LessonPlayer scope={scope} lessonId={playing} outline={outline} positions={progress.data?.positions ?? []}
-      onChangeLesson={(lessonId) => { setPlaying(lessonId); setShown((value) => Math.max(value, outline.findIndex((entry) => entry.id === lessonId) + 1)); }}
-      onClose={() => {
-        setPlaying(null); setRound((value) => value + 1);
-        // The player saved the reader's steps while it was open; refresh the positions and percentages it changed, and the
-        // course recap, which a finished lesson may extend.
-        void queryClient.invalidateQueries({ queryKey: courseProgressQueryOptions(groupId, courseId).queryKey });
-        void queryClient.invalidateQueries({ queryKey: courseWordsQueryOptions(groupId, courseId).queryKey });
-      }} />
     <AdaptiveDialog opened={reviewing && words.length > 0} onClose={() => setReviewing(false)} title={t("courses.words.recapTitle")}>
       {reviewing && <WordRecap words={words} doneLabel={t("courses.words.backToCourse")} onDone={() => setReviewing(false)} />}
     </AdaptiveDialog>

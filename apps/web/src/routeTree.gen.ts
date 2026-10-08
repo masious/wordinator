@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as UiRouteImport } from './routes/ui'
 import { Route as GroupsGroupIdRouteImport } from './routes/groups.$groupId'
 import { Route as InviteTokenRouteImport } from './routes/invite.$token'
+import { Route as OverviewLessonSlugRouteImport } from './routes/overview.$lessonSlug'
 import { Route as GroupsGroupIdCoursesRouteImport } from './routes/groups.$groupId_.courses'
 import { Route as GroupsGroupIdMembersRouteImport } from './routes/groups.$groupId_.members'
 import { Route as GroupsGroupIdNotificationsRouteImport } from './routes/groups.$groupId_.notifications'
@@ -42,6 +43,11 @@ const GroupsGroupIdRoute = GroupsGroupIdRouteImport.update({
 const InviteTokenRoute = InviteTokenRouteImport.update({
   id: '/invite/$token',
   path: '/invite/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OverviewLessonSlugRoute = OverviewLessonSlugRouteImport.update({
+  id: '/overview/$lessonSlug',
+  path: '/overview/$lessonSlug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GroupsGroupIdCoursesRoute = GroupsGroupIdCoursesRouteImport.update({
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/ui': typeof UiRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/overview/$lessonSlug': typeof OverviewLessonSlugRoute
   '/groups/$groupId/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId/notifications': typeof GroupsGroupIdNotificationsRoute
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/ui': typeof UiRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/overview/$lessonSlug': typeof OverviewLessonSlugRoute
   '/groups/$groupId/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId/notifications': typeof GroupsGroupIdNotificationsRoute
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/ui': typeof UiRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/overview/$lessonSlug': typeof OverviewLessonSlugRoute
   '/groups/$groupId_/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId_/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId_/notifications': typeof GroupsGroupIdNotificationsRoute
@@ -159,6 +168,7 @@ export interface FileRouteTypes {
     | '/ui'
     | '/groups/$groupId'
     | '/invite/$token'
+    | '/overview/$lessonSlug'
     | '/groups/$groupId/courses'
     | '/groups/$groupId/members'
     | '/groups/$groupId/notifications'
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/ui'
     | '/groups/$groupId'
     | '/invite/$token'
+    | '/overview/$lessonSlug'
     | '/groups/$groupId/courses'
     | '/groups/$groupId/members'
     | '/groups/$groupId/notifications'
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
     | '/ui'
     | '/groups/$groupId'
     | '/invite/$token'
+    | '/overview/$lessonSlug'
     | '/groups/$groupId_/courses'
     | '/groups/$groupId_/members'
     | '/groups/$groupId_/notifications'
@@ -208,6 +220,7 @@ export interface RootRouteChildren {
   UiRoute: typeof UiRoute
   GroupsGroupIdRoute: typeof GroupsGroupIdRoute
   InviteTokenRoute: typeof InviteTokenRoute
+  OverviewLessonSlugRoute: typeof OverviewLessonSlugRoute
   GroupsGroupIdCoursesRoute: typeof GroupsGroupIdCoursesRoute
   GroupsGroupIdMembersRoute: typeof GroupsGroupIdMembersRoute
   GroupsGroupIdNotificationsRoute: typeof GroupsGroupIdNotificationsRoute
@@ -248,6 +261,13 @@ declare module '@tanstack/react-router' {
       path: '/invite/$token'
       fullPath: '/invite/$token'
       preLoaderRoute: typeof InviteTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/overview/$lessonSlug': {
+      id: '/overview/$lessonSlug'
+      path: '/overview/$lessonSlug'
+      fullPath: '/overview/$lessonSlug'
+      preLoaderRoute: typeof OverviewLessonSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/groups/$groupId_/courses': {
@@ -328,6 +348,7 @@ const rootRouteChildren: RootRouteChildren = {
   UiRoute: UiRoute,
   GroupsGroupIdRoute: GroupsGroupIdRoute,
   InviteTokenRoute: InviteTokenRoute,
+  OverviewLessonSlugRoute: OverviewLessonSlugRoute,
   GroupsGroupIdCoursesRoute: GroupsGroupIdCoursesRoute,
   GroupsGroupIdMembersRoute: GroupsGroupIdMembersRoute,
   GroupsGroupIdNotificationsRoute: GroupsGroupIdNotificationsRoute,

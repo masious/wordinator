@@ -9,6 +9,7 @@ import { PlainText } from "../molecules/PlainText";
 import { CourseContributors } from "../organisms/CourseContributors/CourseContributors";
 import { CourseErrorMessage as ErrorMessage } from "../organisms/CourseLessons/CourseErrorMessage";
 import { CourseLessons } from "../organisms/CourseLessons/CourseLessons";
+import { CourseResume } from "../organisms/CourseLessons/CourseResume";
 import { CourseProgress } from "../organisms/CourseProgress/CourseProgress";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, MetadataRow, PageHeader, SectionHeader, Surface, TextAreaField, TextField } from "../ui";
@@ -90,6 +91,8 @@ export function CourseLibraryPage({ groupId }: { groupId: string }) {
 export function CoursePage({ groupId, courseId }: { groupId: string; courseId: string }) {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const [editOpen, setEditOpen] = useState(false); const [archiveOpen, setArchiveOpen] = useState(false);
+  // Closing the lesson player starts a new round, so the lesson sections reread answer drafts the player may have changed.
+  const [round, setRound] = useState(0);
   const session = useQuery(sessionQueryOptions());
   const course = useQuery(courseQueryOptions(groupId, courseId));
   const refresh = async () => { await Promise.all([queryClient.invalidateQueries({ queryKey: ["course", groupId, courseId] }), queryClient.invalidateQueries({ queryKey: ["courses", groupId] })]); };
@@ -125,6 +128,7 @@ export function CoursePage({ groupId, courseId }: { groupId: string; courseId: s
       </div>
     </article>
     {archived && <Surface tone="quiet"><EmptyState title={t("courses.archivedTitle")}>{t("courses.archivedBody")}</EmptyState></Surface>}
+    <CourseResume groupId={groupId} courseId={courseId} accountId={session.data.user.id} outline={course.data.outline} onClose={() => setRound((value) => value + 1)} />
     {(data.permissions.edit || data.permissions.archive) && <Surface className={styles.tools} tone="featured">
       <SectionHeader title={t("courses.manageTitle")} description={data.status === "draft" ? t("courses.draftHelp") : undefined} />
       <div className={styles.toolActions}>
@@ -141,7 +145,7 @@ export function CoursePage({ groupId, courseId }: { groupId: string; courseId: s
     </Surface>}
     {!archived && <CourseProgress groupId={groupId} courseId={courseId} accountId={session.data.user.id} />}
     {!archived && <CourseContributors groupId={groupId} course={data} />}
-    <CourseLessons groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} dataUpdatedAt={course.dataUpdatedAt} />
+    <CourseLessons groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} dataUpdatedAt={course.dataUpdatedAt} round={round} />
     <AdaptiveDialog opened={editOpen} onClose={() => setEditOpen(false)} title={t("courses.editTitle")}>
       {editOpen && <CourseForm initial={data} submitLabel={t("common.save")} pending={edit.isPending} error={edit.error} onSubmit={(input) => edit.mutate(input)} onCancel={() => setEditOpen(false)} />}
     </AdaptiveDialog>

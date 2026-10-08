@@ -42,7 +42,7 @@ const answer = {
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
 function renderLessons(value: CourseDetailResponse) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false, staleTime: 20_000 }, mutations: { retry: false } } });
-  return render(<MantineProvider><QueryClientProvider client={queryClient}><CourseLessons groupId={groupId} courseId={courseId} accountId={accountId} detail={value} dataUpdatedAt={Date.now()} /></QueryClientProvider></MantineProvider>);
+  return render(<MantineProvider><QueryClientProvider client={queryClient}><CourseLessons groupId={groupId} courseId={courseId} accountId={accountId} detail={value} dataUpdatedAt={Date.now()} round={0} /></QueryClientProvider></MantineProvider>);
 }
 
 beforeEach(() => {

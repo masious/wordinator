@@ -5,6 +5,7 @@ import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-li
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
 import { CourseLessons } from "./CourseLessons";
+import { CourseResume } from "./CourseResume";
 
 const groupId = "20000000-0000-4000-8000-000000000001";
 const accountId = "10000000-0000-4000-8000-000000000001";
@@ -44,7 +45,11 @@ function response(body: unknown, status = 200) { return new Response(JSON.string
 function renderLessons(detail: CourseDetailResponse) {
   // Mirrors the application's stale time, so preloaded lessons are not refetched on mount.
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false, staleTime: 20_000 }, mutations: { retry: false } } });
-  return render(<MantineProvider><QueryClientProvider client={queryClient}><CourseLessons groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} dataUpdatedAt={Date.now()} /></QueryClientProvider></MantineProvider>);
+  // The course page renders the resume action above the lessons; both read the same progress query.
+  return render(<MantineProvider><QueryClientProvider client={queryClient}>
+    <CourseResume groupId={groupId} courseId={courseId} accountId={accountId} outline={detail.outline} onClose={() => undefined} />
+    <CourseLessons groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} dataUpdatedAt={Date.now()} round={0} />
+  </QueryClientProvider></MantineProvider>);
 }
 
 const lessonFour = lesson(4, [example("50000000-0000-4000-8000-000000000004", "Ik stap over.")]);
@@ -242,11 +247,32 @@ describe("Course lessons", () => {
 
   it("does not record progress for an unpublished lesson preview", async () => {
     renderLessons({ course: course(true), outline: [summary(1, false)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")], { published: false, editing: true })] });
+    expect(await screen.findByText(/is a preview: it starts from the beginning/)).toBeInTheDocument();
     fireEvent.click(await screen.findByRole("button", { name: "Start lesson 1" }));
     const dialog = await screen.findByRole("dialog");
     fireEvent.click(within(dialog).getByRole("button", { name: "Finish lesson" }));
     expect(await within(dialog).findByText("This lesson is unpublished, so finishing it does not count toward progress.")).toBeInTheDocument();
     expect(vi.mocked(fetch).mock.calls.some(([path]) => String(path).endsWith("/completion") || String(path).endsWith("/position"))).toBe(false);
+  });
+
+  it("offers one course action: the first unfinished lesson, and nothing per lesson", async () => {
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") ? response(progress([lessonId(1)])) : original(input, init));
+    const blocks = [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")];
+    renderLessons({ course: course(false), outline: [1, 2, 3].map((n) => summary(n)), lessons: [lesson(1, blocks), lesson(2, blocks), lesson(3, blocks)] });
+    expect(await screen.findByText("Next up: lesson 2, Lesson title 2.")).toBeInTheDocument();
+    expect(screen.getByRole("progressbar", { name: "Your course progress" })).toHaveAttribute("aria-valuenow", "25");
+    expect(screen.getByText("25%")).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: /^(Start|Continue|Practise)/ })).toHaveLength(1);
+    expect(screen.getByRole("button", { name: "Start lesson 2" })).toBeInTheDocument();
+  });
+
+  it("offers the first lesson again once every lesson is finished", async () => {
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") ? response(progress([lessonId(1), lessonId(2)])) : original(input, init));
+    renderLessons({ course: course(false), outline: [1, 2].map((n) => summary(n)), lessons: [lesson(1), lesson(2)] });
+    expect(await screen.findByRole("button", { name: "Practise lesson 1 again" })).toBeInTheDocument();
+    expect(screen.getByText("You have finished every lesson. Run through them again whenever you like.")).toBeInTheDocument();
   });
 
   it("resumes an unfinished lesson at the saved step and can start over", async () => {
@@ -256,7 +282,8 @@ describe("Course lessons", () => {
     // The example moved one step later since the position was saved; the key still finds the same question.
     const first = lesson(1, [example("50000000-0000-4000-8000-000000000009", "Nieuw."), example("50000000-0000-4000-8000-000000000001", "Er is een balkon."), dialogue, practice]);
     renderLessons({ course: course(false), outline: [1, 2].map((n) => summary(n)), lessons: [first, lesson(2)] });
-    expect(await screen.findByText("Pick up where you left off: lesson 1, Lesson title 1, step 4 of 5.")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Pick up where you left off" })).toBeInTheDocument();
+    expect(screen.getByText("Lesson 1, Lesson title 1, step 4 of 5.")).toBeInTheDocument();
     expect(screen.getByText("Step 4 of 5")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Continue lesson 1" }));
     const dialog = await screen.findByRole("dialog");

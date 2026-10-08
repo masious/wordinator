@@ -10,6 +10,7 @@ Content workspace for the "Dutch Foundations" courses. Lessons are authored as J
 | `part-iii/existing/` | reference | The two lessons already in the course for row 13. Do not edit; do not re-cover them. |
 | `*/course.json` | — | Import manifest (course ID, local group/owner, position offset). |
 | `tools/lesson.ts` | — | Validator and SQL generator. |
+| `tools/normalize.ts` | — | Authoring shorthand → stored document; shared with the web app's dev-only lesson overview prototype. |
 | `tools/sample-lesson.json` | — | Reference showing every supported feature in the authoring shorthand. |
 
 ## Commands
