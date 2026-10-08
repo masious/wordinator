@@ -216,6 +216,9 @@
   --width-modal-reading: 760px;
   --aspect-course-cover: 2 / 1;
   --width-course-card-min: 17rem;
+  /* Word cards (C9a): every card has one height so a page of them can be fitted to the viewport. */
+  --size-word-card: 15rem;
+  --size-word-card-min: 15rem;
   --lesson-column-gap: var(--space-6);
   --lesson-callout-icon: 1.25rem;
   --page-gutter: clamp(var(--space-4), 4vw, var(--space-10));
@@ -398,6 +401,7 @@
     --navigation-offset: var(--space-3);
     --card-inset: var(--space-4);
     --navigation-height: 56px;
+    --size-word-card: 12rem;
     --mobile-dock-height: 64px;
     --type-page-title: 1.75rem;
     --type-section-title: 1.375rem;

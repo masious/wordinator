@@ -970,7 +970,7 @@
       "type": "example",
       "props": {
         "translation": "On Sunday I'm going to take the empty boxes away.",
-        "note": "The moving boxes from 14-a. wegbrengen = to take away, drop off."
+        "note": "The last moving boxes from 14-a are empty now. wegbrengen = to take away, drop off."
       },
       "content": [
         {
@@ -1303,7 +1303,7 @@
       "type": "example",
       "props": {
         "translation": "On Saturday we're going cycling.",
-        "note": "Plural: gaan. Also fine: Op zaterdag gaan we fietsen."
+        "note": "Plural: gaan. Also fine: Zaterdag gaan wij fietsen. (stressed wij)"
       },
       "content": [
         {
@@ -1415,7 +1415,14 @@
             "textColor": "green"
           }
         },
-        " zaterdag ",
+        " ",
+        {
+          "text": "zaterdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
         {
           "text": "fietsen",
           "styles": {
@@ -1830,14 +1837,14 @@
         "icon": "map-pin"
       },
       "content": [
-        "Utrecht is a bike city: at Utrecht Centraal is one of the biggest bicycle parking garages in the world, ",
+        "Utrecht is a bike city: next to Utrecht Centraal is the biggest bike park in the world, with about 12,500 places (",
         {
           "text": "de fietsenstalling",
           "styles": {
             "bold": true
           }
         },
-        ". Bike thieves are common, so always lock your bike: ",
+        "). Bike thieves are common, so always lock your bike: ",
         {
           "text": "Zet je fiets op slot!",
           "styles": {
@@ -1934,7 +1941,7 @@
           },
           {
             "speaker": "Ahmed",
-            "text": "Ja, drie maanden. Een lekke band? Dan repareer ik de band. En zet je fiets altijd op slot!"
+            "text": "Ja, drie maanden. Is er iets kapot? Dan repareer ik de fiets gratis. En zet je fiets altijd op slot!"
           },
           {
             "speaker": "Sofia",
@@ -1992,6 +1999,13 @@
     {
       "type": "bulletListItem",
       "content": [
+        {
+          "text": "Wat kan ik voor je doen?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = What can I do for you? (the jij-version of Wat kan ik voor u doen?, 15-a); ",
         {
           "text": "Hij fietst lekker",
           "styles": {
@@ -2172,7 +2186,7 @@
                 "slot",
                 "neem"
               ],
-              "note": "het slot, so een goed slot (no -e after een with a het-word). Ik neem = I'll take (12-b)."
+              "note": "het slot, so een goed slot (no -e after een with a het-word). Ik neem = I'll take (12-b). Also fine: koop."
             },
             {
               "prompt": "Sofia: Is er … op de fiets? / Ahmed: Ja, drie maanden. En zet je fiets altijd op …!",
@@ -2741,21 +2755,56 @@
     {
       "type": "numberedListItem",
       "content": [
-        "niet just before the infinitive; geen + noun: Ik ga ",
+        "niet just before the infinitive; geen + noun: Ik ",
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
         {
           "text": "geen",
           "styles": {
             "bold": true
           }
         },
-        " nieuwe fiets kopen."
+        " nieuwe fiets ",
+        {
+          "text": "kopen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
       ],
       "id": "a0385a9f-207d-4eed-b92f-72cea7c1002b"
     },
     {
       "type": "numberedListItem",
       "content": [
-        "gaan + place = movement; the present + a time word also means the future: Morgen koop ik een fiets."
+        "gaan + place = movement; the present + a time word also means the future: ",
+        {
+          "text": "Morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "koop",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een fiets."
       ],
       "id": "e25f752d-f42f-458d-a6de-59043824c9e6"
     }

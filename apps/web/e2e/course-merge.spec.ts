@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
-import { courseApi, paragraph, seedLesson } from "./lessonSeed";
+import { courseApi, paragraph, seedLesson, openLesson } from "./lessonSeed";
 
 async function signIn(page: Page) {
   await page.goto("/"); await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL); await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD); await page.getByRole("button", { name: "Sign in" }).click();
@@ -38,6 +38,7 @@ test("two editors of the same lesson merge by block and choose when both changed
 
   for (const page of [first, second]) {
     await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
+    await openLesson(page);
     await page.getByRole("button", { name: "Edit lesson 1" }).click();
     await expect(page.locator(".bn-editor").getByText("Tweede zin.")).toBeVisible();
   }

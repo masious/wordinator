@@ -1,5 +1,5 @@
 import { env } from "cloudflare:test";
-import { commentResponseSchema, practiceDiscussionResponseSchema, reactionTargetResponseSchema } from "@wordinator/contracts";
+import { commentResponseSchema, practiceCheckResponseSchema, practiceDiscussionResponseSchema, reactionTargetResponseSchema } from "@wordinator/contracts";
 import { courseDetailResponseSchema, readPracticeBlock, type LessonBlockOf } from "@wordinator/contracts/lesson-document";
 import { beforeEach, describe, expect, it } from "vitest";
 import fixture from "../../../test/fixtures/courses/dutch-foundations-part-iii.json";
@@ -201,5 +201,58 @@ describe("Course practices and answer threads API", () => {
     expect((await request(`${base}/${hidden.id}/discussion`, setup.owner)).status).toBe(200);
     expect((await request(`${base}/${paragraph.id}/discussion`, reader)).status).toBe(404);
     expect((await request(`${base}/${paragraph.id}/comments`, reader, { kind: "practice_response", answers: ["a"] })).status).toBe(404);
+  });
+
+  it("confirms matches and answers misses with the author's version, storing nothing", async () => {
+    const ownerId = await seedUser("owner"); const readerId = await seedUser("reader");
+    const groupId = await seedGroup("alpha", ownerId); await join(groupId, readerId);
+    const setup = await publishedPractice("owner", groupId, {
+      instruction: "Vertaal of vul in.",
+      items: [...fillPractice.items, { prompt: "There is a garden." }, { prompt: "There is a balcony.", authorsVersion: ["Er is een balkon."] }],
+    });
+    const reader = await signIn("reader");
+    const result = async (item: number, answer: string) => {
+      const response = await request(`${setup.path}/check`, reader, { item, answer });
+      expect(response.status).toBe(200);
+      return practiceCheckResponseSchema.parse(await response.json());
+    };
+    const check = async (item: number, answer: string) => (await result(item, answer)).match;
+    // A match needs no reference; a miss returns the author's version, but never the item note.
+    expect(await result(0, "Er is")).toEqual({ match: true, authorsVersion: null });
+    expect(await result(1, "Er is")).toEqual({ match: false, authorsVersion: ["Er zijn"] });
+    expect(await result(2, "Er is een tuin.")).toEqual({ match: false, authorsVersion: null });
+    expect(JSON.stringify(await result(0, "Daar is"))).not.toContain("One kitchen");
+    expect(await check(0, " er IS ")).toBe(true);
+    expect(await check(0, "Er is een kleine keuken")).toBe(true);
+    expect(await check(1, "Er is")).toBe(false);
+    expect(await check(3, "er is een balkon")).toBe(true);
+    expect(await check(3, "Een balkon is er.")).toBe(false);
+    // Items without an author's version and blank answers never match.
+    expect(await check(2, "Er is een tuin.")).toBe(false);
+    expect(await check(3, "  ")).toBe(false);
+    expect((await request(`${setup.path}/check`, reader, { item: 4, answer: "x" })).status).toBe(404);
+    expect((await request(`${setup.path}/check`, reader, { item: -1, answer: "x" })).status).toBe(400);
+    expect(await thread(setup, reader)).toMatchObject({ items: [], count: 0 });
+  });
+
+  it("isolates answer checks by tenant and visibility", async () => {
+    const ownerId = await seedUser("owner"); const readerId = await seedUser("reader"); const outsiderId = await seedUser("outsider");
+    const groupId = await seedGroup("alpha", ownerId); await join(groupId, readerId);
+    const otherGroupId = await seedGroup("beta", outsiderId);
+    const setup = await publishedPractice("owner", groupId);
+    const other = await publishedPractice("outsider", otherGroupId);
+    const reader = await signIn("reader"); const outsider = await signIn("outsider");
+    const body = { item: 0, answer: "Er is" };
+    expect((await request(`${setup.path}/check`, outsider, body)).status).toBe(404);
+    const crossed = `/api/groups/${otherGroupId}/courses/${setup.courseId}/lessons/${setup.lessonId}/blocks/${setup.block.id}`;
+    expect((await request(`${crossed}/check`, outsider, body)).status).toBe(404);
+    const base = `${coursePath(groupId, setup.courseId)}/lessons/${setup.lessonId}/blocks`;
+    expect((await request(`${base}/${other.block.id}/check`, reader, body)).status).toBe(404);
+    // A practice that exists only in the draft cannot be checked by readers.
+    const hidden = blocks.practice(fillPractice);
+    const current = await readLesson(setup.lessonPath, setup.owner);
+    await saveDraft(setup.lessonPath, setup.owner, documentOf(...current.draft!.document.blocks, hidden), current.draft!.version);
+    expect((await request(`${base}/${hidden.id}/check`, reader, body)).status).toBe(404);
+    expect((await request(`${base}/${hidden.id}/check`, setup.owner, body)).status).toBe(200);
   });
 });

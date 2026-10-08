@@ -99,11 +99,11 @@ If a deleted group is a person’s only group, status appears in the restricted 
 5. Publishing makes the course visible to every active member in the newest-first library. The first publication also adds a course card to the top of the feed, where members can react, comment, and follow the link to the course. The owner can return it to draft at any time.
 6. The owner or group creator can archive the course after confirming. Other members no longer see it, and its feed card says the course is unavailable. The owner and creator still see it in the library and can restore it, which returns it as a draft.
 
-7. The owner adds lessons with a title and optional goal. New lessons are unpublished and appear in the outline with an Unpublished label.
-8. Inside a lesson, the owner writes in a block editor: headings, paragraphs, lists, callouts, images, columns, examples, dialogues, practices, and New words, added from the slash menu and moved by dragging. The owner can also move lessons up or down.
+7. The owner adds lessons with a title and optional goal. A new lesson is unpublished, appears in the course's lesson list with an Unpublished label, and opens on its own lesson page.
+8. On the lesson page, Edit lesson opens a block editor: headings, paragraphs, lists, callouts, images, columns, examples, dialogues, practices, and New words, added from the slash menu and moved by dragging. The owner can also move lessons up or down in the course's lesson list.
 9. The editor autosaves the lesson's draft. Readers see only the published version until the owner chooses Publish; Discard returns the draft to the published version, and Unpublish hides the lesson. An edit that has not reached the server yet stays in the browser and reopens on the next visit.
 10. If someone saved a newer version first, the editor merges the two by block and says so. Blocks both people changed are shown side by side, and the author keeps the newer version or their own edit for each. See [drafts and publishing](courses.md#drafts-and-publishing).
-11. Readers see the outline and the first three lessons, and continue to later lessons one at a time.
+11. Readers see the course's lesson list and open each lesson on its own page, which links to the previous and next lessons.
 
 ## Contribute to a course
 
@@ -116,21 +116,21 @@ If a deleted group is a person’s only group, status appears in the restricted 
 
 ## Practise a lesson
 
-1. A member reads a published lesson. A practice block shows its instruction, an optional reading passage, and its numbered prompts. Fill-in prompts show `…` for each blank. Authors' versions and notes are not shown.
-2. Below the prompts, the answer thread is concealed and shows only how many answers and replies it holds.
-3. The learner fills in one answer set covering every item, leaving any item blank. Unsent answers stay in the browser across visits and sign-out.
-4. Publishing the answer set, or choosing to reveal without answering, shows the author's version and item notes as a reference, plus everyone's answer sets in order. Nothing is marked right or wrong.
+1. A member opens a published lesson's page. A practice block shows its instruction, its first three numbered prompts (with how many more there are), how many answer sets were shared, and an Answer button. Fill-in prompts show `…` for each blank. Authors' versions and notes are not shown.
+2. Answer opens a dialog with the instruction, any reading passage, the answer set, and the answer thread, which is concealed and shows only how many answers and replies it holds.
+3. The learner fills in one answer set covering every item, leaving any item blank. A fill-in item with several blanks has one field per blank, and Enter moves to the next blank. Enter in an answer checks it: an answer that matches the author's version gets a short animated confirmation, and any other answer shows the author's version as a reference, with a reminder that other answers can work too. Unsent answers stay in the browser across visits and sign-out.
+4. Publishing the answer set, or choosing to reveal without answering, shows the author's version and item notes as a reference, plus everyone's answer sets in order. Nothing is marked right or wrong in the thread.
 5. Members reply to an answer set and react to answers and replies. Authors can edit or delete their own answers; the group creator can delete any.
-6. Returning to the lesson later starts concealed again.
+6. Opening the dialog again, or returning to the lesson later, starts concealed again.
 
 ## Work through a lesson step by step
 
 1. At the top of the course page, above Manage course, a progress card shows the member's course percentage and one button: Continue lesson for the lesson they last moved in, otherwise Start lesson for the first lesson they have not finished, otherwise Practise again. A focused player opens with a progress bar and a step counter.
-2. Text, callouts, and example sentences arrive one step at a time; an example shows its translation and note.
+2. Text, callouts, and example sentences arrive one step at a time; an example shows its translation and note. A section heading is the title of the section's first step, never a step of its own.
 3. Dialogue lines arrive one after another; earlier lines stay visible.
-4. Practice questions are asked one by one with a single answer field. Answers are saved as the same browser draft the lesson view uses. On the last question the learner may share the answer set with the group or keep it private.
+4. Practice questions are asked one by one with a single answer field, or one field per blank for a fill-in question with several blanks. Next checks a filled answer first, confirming a match or showing the author's version, and moves on with the next press; an empty answer moves on at once. Enter does the same as Next, so pressing Enter repeatedly walks through the lesson. Answers are saved as the same browser draft the lesson page's answer dialog uses. On the last question the learner may share the answer set with the group or keep it private.
 5. Back and Next move freely, and each move is saved. If the learner leaves mid-lesson, the progress card offers Pick up where you left off with Continue lesson; the player reopens at the saved step and offers Start over. After the last step the player shows that the lesson is complete, the learner's course percentage, and a link to the next lesson or back to the course.
-6. A step that introduces new words shows them in a New words panel below it, with term, forms, meaning, example, and note; a section that holds only words is a step of its own. After the last step, a run that had words offers Review words: a card per word, where Show meaning reveals the meaning, and Back to the summary returns to the completion screen.
-7. The finished lesson shows a check in the outline and Finished under its title, and the progress card moves on to the next unfinished lesson. The course's Progress panel shows every member's percentage, listed by name; a started lesson counts for the share of its steps already passed.
+6. A step that introduces new words shows them in a New words panel below it, with term, forms, meaning, example, and note; a section that holds only words is a step of its own. After the last step, a run that had words offers Review words: a page of word cards sized to fit the screen, where Show meaning flips a card to its meaning and Show all flips the whole page; Back and Next move by a page, and Back to the summary returns to the completion screen.
+7. The finished lesson shows a check in the course's lesson list and Finished under its title, and the progress card moves on to the next unfinished lesson. The course's Progress panel shows every member's percentage, listed by name; a started lesson counts for the share of its steps already passed.
 8. Once a member has finished lessons with words, the course page offers Review words for all of them in lesson order, each repeated term once. Nothing in a recap is recorded.
 9. Owners and contributors can run an unpublished lesson as a preview; it does not count toward progress.

@@ -62,7 +62,7 @@ describe("Lesson overview page", () => {
     expect(screen.getByRole("progressbar", { name: "Lesson progress" })).toHaveAttribute("aria-valuenow", "0");
     expect(screen.getByRole("button", { name: `${first.title}, Up next` })).toBeInTheDocument();
 
-    fireEvent.click(screen.getByRole("button", { name: `Start: ${first.title}` }));
+    fireEvent.click(screen.getByRole("button", { name: "Start section" }));
     const dialog = await screen.findByRole("dialog");
     expect(within(dialog).getByText(`Step 1 of ${first.end - first.start}`)).toBeInTheDocument();
     for (let step = first.start; step < first.end; step += 1) {

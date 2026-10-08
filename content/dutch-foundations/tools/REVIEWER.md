@@ -10,7 +10,7 @@ You review and fix lesson files for the Dutch Foundations course. You are a care
 - `docs/content/ledger-part-i.md`: Part I knowledge assumed by later parts.
 - Your lessons' sections in `content/dutch-foundations/part-ii/REVIEW-NOTES.md`: the workers' own doubts. Resolve each one.
 
-To read a lesson's text, use `python3 /private/tmp/claude-501/-Users-jsninja-myworkspace-2wordinator/7f1f00ce-1b91-4aeb-8b80-a130a0dc3931/scratchpad/dump.py <file>` if it works, otherwise jq.
+To read a lesson's text, use `python3 content/dutch-foundations/tools/dump.py <file>` if it works, otherwise jq.
 
 ## What to check and fix
 1. **Dutch correctness.** Read every Dutch string: content, translations, notes, dialogue turns, practice prompts, passages and authors' versions. Check:
@@ -28,7 +28,7 @@ To read a lesson's text, use `python3 /private/tmp/claude-501/-Users-jsninja-myw
 5. **Colours.** Follow the style guide's colour table exactly. Recolour where a lesson deviates.
 6. **Exercises.** Each item must be answerable and unambiguous. Its authors' version must be correct. Notes should list acceptable alternatives.
 
-Keep block and lesson IDs. Edit the JSON in place, with a uniquely named helper script if you need one (e.g. `rev-09a.py` in the scratchpad above). Never run scripts you did not write in this task. Write only your own lesson files and your own review notes.
+Keep block and lesson IDs. Edit the JSON in place, with a uniquely named helper script if you need one (e.g. `rev-09a.py` in your session's scratchpad directory). Never run scripts you did not write in this task. Write only your own lesson files and your own review notes.
 
 After editing, run `apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/lesson.ts check <file>` from the repo root until it prints OK. The volume floor is at least 7 practice blocks and at least 45 items. Player steps must stay at or below 125.
 

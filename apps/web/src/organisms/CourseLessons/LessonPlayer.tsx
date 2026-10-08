@@ -1,5 +1,5 @@
 import {
-  commentResponseSchema, courseProgressResponseSchema, lessonPositionResponseSchema, RESPONSE_ANSWER_MAX, type CourseLessonSummary, type LessonPosition,
+  commentResponseSchema, courseProgressResponseSchema, lessonPositionResponseSchema, type CourseLessonSummary, type LessonPosition,
 } from "@wordinator/contracts";
 import {
   flattenToSteps, lessonStepKey, resolveStepIndex, type CourseLesson, type LessonBlockOf, type LessonStep,
@@ -11,12 +11,12 @@ import { apiRequest, courseProgressQueryOptions, lessonQueryOptions, practiceDis
 import { Callout } from "../../molecules/Callout";
 import { PlainText } from "../../molecules/PlainText";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
-import { AdaptiveDialog, Button, ErrorState, LoadingState, TextAreaField } from "../../ui";
+import { AdaptiveDialog, Button, ErrorState, LoadingState } from "../../ui";
 import { DialogueBlock, ExampleBlock, InlineText, LessonBlocks, NewWords } from "../LessonDocument/LessonDocument";
 import { runWords, WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import styles from "./LessonPlayer.module.css";
-import { blockPath, practiceDraftKey, practiceFromBlock, readAnswers, storeAnswers, type Practice } from "./PracticeBlock";
+import { AnswerField, type AnswerSubmit, blockPath, practiceDraftKey, practiceFromBlock, readAnswers, storeAnswers, type Practice } from "./PracticeBlock";
 
 // Readers play the published document. Editors preview the draft of a lesson that is not published yet; previews never count.
 export const playableDocument = (lesson: CourseLesson) => lesson.document ?? lesson.draft?.document ?? null;
@@ -55,8 +55,9 @@ export function QuestionPrompt({ block, item }: { block: Practice; item: number 
 }
 
 // Answers share the practice block's local draft, so a set started here can be finished in the lesson view and the reverse.
-function QuestionStep({ scope, lessonId, block, item, answers, onAnswer, shared, onShared }: {
+function QuestionStep({ scope, lessonId, block, item, answers, onAnswer, shared, onShared, onNext, submitRef }: {
   scope: PlayerScope; lessonId: string; block: Practice; item: number; answers: string[]; onAnswer: (value: string) => void; shared: boolean; onShared: () => void;
+  onNext: () => void; submitRef: AnswerSubmit;
 }) {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const { payload } = block; const last = item === payload.items.length - 1;
@@ -74,8 +75,8 @@ function QuestionStep({ scope, lessonId, block, item, answers, onAnswer, shared,
     <QuestionPrompt block={block} item={item} />
     {shared
       ? <p className={styles.shared} role="status">{t("courses.player.shared")}</p>
-      : <TextAreaField key={item} label={t("courses.player.yourAnswer")} value={answers[item] ?? ""} maxLength={RESPONSE_ANSWER_MAX} autosize minRows={2}
-        onChange={(event) => onAnswer(event.currentTarget.value)} />}
+      : <AnswerField key={item} scope={{ ...scope, lessonId }} blockId={block.id} item={item} prompt={payload.items[item]!.prompt} label={t("courses.player.yourAnswer")} description={t("courses.practice.enterHelp")}
+        value={answers[item] ?? ""} minRows={2} onChange={onAnswer} onAdvance={onNext} submitRef={submitRef} />}
     {last && !shared && answers.some((entry) => entry.trim()) && <div className={styles.shareRow}>
       <p className={styles.help}>{t("courses.player.shareHelp")}</p>
       <Button variant="secondary" loading={share.isPending} onClick={() => share.mutate()}>{t("courses.player.share")}</Button>
@@ -135,10 +136,18 @@ const hasWordsPanel = (step: LessonStep) => step.words.length > 0 && step.kind !
 // Key a stage with `stageKey`: a dialogue keeps one stage while its lines arrive, so only the newest line animates in.
 export const stageKey = (step: LessonStep, index: number) => step.kind === "dialogueTurn" ? step.block.id : String(index);
 
+// The first step under a heading shows it as the stage's title; later steps in the section keep it as a small label. A dialogue's
+// lines share one stage, so they all follow the line that opens it.
+export const opensSection = (steps: readonly LessonStep[], index: number) => {
+  const step = steps[index]; if (!step) return false;
+  const first = index - (step.kind === "dialogueTurn" ? step.turnIndex : 0);
+  return first <= 0 || steps[first - 1]?.heading !== step.heading;
+};
+
 // One step on its stage. The caller supplies how a practice question is answered; everything else renders the same everywhere.
-export function StepStage({ step, renderQuestion }: { step: LessonStep; renderQuestion: (step: QuestionStepOf) => ReactNode }) {
+export function StepStage({ step, opensSection = false, renderQuestion }: { step: LessonStep; opensSection?: boolean; renderQuestion: (step: QuestionStepOf) => ReactNode }) {
   return <div className={styles.stage}>
-    {step.heading && <p className={styles.section}>{step.heading}</p>}
+    {step.heading && (opensSection ? <h3 className={styles.sectionTitle}>{step.heading}</h3> : <p className={styles.section}>{step.heading}</p>)}
     <StepContent step={step} renderQuestion={renderQuestion} />
     {hasWordsPanel(step) && <NewWords words={step.words} />}
   </div>;
@@ -180,6 +189,26 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
     storeAnswers(draftKey(practice), []);
     setShared((current) => ({ ...current, [practice.id]: true }));
   };
+  // Next and Enter share one action. On a question with a filled, unchecked answer it shows the check's feedback first; the
+  // next press moves on. Enter outside a field or control acts as Next, so pressing it repeatedly walks through the lesson.
+  const answerSubmit: AnswerSubmit = useRef(null);
+  const advance = () => setIndex((value) => value + 1);
+  const forward = () => { if (answerSubmit.current) answerSubmit.current(); else advance(); };
+  const forwardRef = useRef(forward); forwardRef.current = forward;
+  // The dialog focuses its close button on opening, where Enter would close the player; start on Next instead.
+  const nav = useRef<HTMLDivElement>(null);
+  useEffect(() => { nav.current?.querySelector<HTMLButtonElement>("[data-next]")?.focus(); }, []);
+  useEffect(() => {
+    if (finished) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Enter" || event.defaultPrevented || event.repeat || event.shiftKey || event.altKey || event.ctrlKey || event.metaKey || event.isComposing) return;
+      if (event.target instanceof Element && event.target.closest("input, textarea, select, button, a, summary, [contenteditable]")) return;
+      event.preventDefault();
+      forwardRef.current();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [finished]);
   const percent = steps.length ? (Math.min(index, steps.length) / steps.length) * 100 : 100;
   return <div className={styles.player}>
     <div className={styles.status}>
@@ -198,14 +227,15 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
         </div>
         {reviewing && <WordRecap words={words} doneLabel={t("courses.player.backToSummary")} onDone={() => setReviewing(false)} />}
       </>
-      : <StepStage key={stageKey(step, index)} step={step} renderQuestion={(question) => {
+      : <StepStage key={stageKey(step, index)} step={step} opensSection={opensSection(steps, index)} renderQuestion={(question) => {
         const practice = practiceFromBlock(question.block, lesson.answerCounts);
         return <QuestionStep scope={scope} lessonId={lesson.id} block={practice} item={question.itemIndex} answers={answersFor(practice)}
-          onAnswer={(value) => answer(practice, question.itemIndex, value)} shared={shared[practice.id] ?? false} onShared={() => markShared(practice)} />;
+          onAnswer={(value) => answer(practice, question.itemIndex, value)} shared={shared[practice.id] ?? false} onShared={() => markShared(practice)}
+          onNext={advance} submitRef={answerSubmit} />;
       }} />}
-    {!finished && <div className={styles.nav}>
+    {!finished && <div ref={nav} className={styles.nav}>
       <Button variant="quiet" disabled={index === 0} onClick={() => setIndex((value) => value - 1)}>{t("common.back")}</Button>
-      <Button onClick={() => setIndex((value) => value + 1)}>{index === steps.length - 1 ? t("courses.player.finish") : t("common.next")}</Button>
+      <Button data-next data-autofocus onClick={forward}>{index === steps.length - 1 ? t("courses.player.finish") : t("common.next")}</Button>
     </div>}
   </div>;
 }

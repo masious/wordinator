@@ -70,6 +70,10 @@ R2 key (primary key), group ID, course ID, lesson ID, created-by user ID, and cr
 
 Added in C8. A derived index of the words in each lesson's published document, so the [course word recap](courses.md#word-recap) never parses documents at read time. Group ID, course ID, lesson ID, block ID, word ID, position (document order within the lesson), term, meaning, and optional forms, example, and note. The primary key is `(lesson_id, word_id)`. The published document stays the source of truth: publishing replaces the lesson's rows from the new published document in the same D1 batch, unpublishing deletes them, lesson deletion also removes them explicitly in its batch, and rows cascade from their course and lesson. Text is stored trimmed, with empty optional fields as null. Indexed by `(group_id, course_id, lesson_id, position)`. Migration `0017_course_lesson_words.sql` adds the table empty, since no published document held vocabulary before it.
 
+### `course_word_bookmarks`
+
+Planned for C9b; see [bookmarks](words.md#bookmarks). Group ID, course ID, lesson ID, word ID, user ID, and created timestamp. The primary key is `(user_id, lesson_id, word_id)`. The row is a key only: word text is read from [`course_lesson_words`](#course_lesson_words) at read time, and there is deliberately no foreign key to that table, because publishing replaces a lesson's word rows and would cascade bookmarks away. A bookmark whose word is not in the index is hidden, not deleted. Rows cascade from their course and lesson, lesson deletion also removes them explicitly in its batch, and they stay when a member leaves the group. Indexed by `(group_id, user_id, created_at)`. Migration `0018_course_word_bookmarks.sql` adds the table.
+
 ### `course_contributors`
 
 Group ID, course ID, user ID, state (`pending`, `active`, `rejected`, `left`, or `removed`), requested timestamp, nullable decided timestamp, and updated timestamp. The primary key is `(course_id, user_id)`: like a membership, each member has one row per course whose state changes, so there is at most one pending request. A new request reuses a `rejected`, `left`, or `removed` row. A check constraint limits the states. Rows cascade from their course, and leaving or being removed from the group moves that member's `pending` and `active` rows in the group to `left` or `removed`. Contributor display uses the live or group snapshot profile at read time. Migration `0013_course_contributors.sql` adds the table and its `(group_id, course_id, state)` index.
@@ -92,7 +96,7 @@ Migration `0011_course_practice_threads.sql` rebuilds `comments` with the block 
 
 ### `comment_response_items`
 
-For structured reading, fill, and practice answers: comment ID, ordered position, optional prompt/question snapshot, answer text, skipped flag, and optional positive-match result. Snapshots preserve understandable historical answers if an author later edits questions or prompts. Practice answer sets always snapshot each item prompt and never store a match result.
+For structured reading, fill, and practice answers: comment ID, ordered position, optional prompt/question snapshot, answer text, skipped flag, and optional positive-match result. Snapshots preserve understandable historical answers if an author later edits questions or prompts. Practice answer sets always snapshot each item prompt and never store a match result; the learner's answer check is not persisted. A fill-in practice item answered blank by blank stores its blanks as one answer joined by ` · `.
 
 ### Post pin
 

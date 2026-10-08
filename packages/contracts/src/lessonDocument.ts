@@ -283,7 +283,7 @@ export function collectLessonWords(document: LessonDocument): LessonWord[] {
 }
 
 // Player steps. A heading is not a step; it labels the steps that follow. Consecutive prose (paragraphs, lists, images,
-// dividers) under one heading is one step. Columns without interactive blocks are one step; otherwise they are read column by column.
+// dividers) under one heading is one step, trimmed of leading and trailing dividers and blank paragraphs. Columns without interactive blocks are one step; otherwise they are read column by column.
 // Every step carries the new words it introduces (see `flattenToSteps`); a heading section holding only words is a `words` step.
 type StepBase = { heading: string | null; words: VocabularyWord[] };
 export type LessonStep = StepBase & (
@@ -298,7 +298,8 @@ export type LessonStep = StepBase & (
 type StepShape = LessonStep extends infer S ? S extends LessonStep ? Omit<S, keyof StepBase> : never : never;
 
 const isInteractive = (block: LessonLeafBlock) => block.type === "dialogue" || block.type === "practice";
-const isBlankParagraph = (block: LessonLeafBlock) => block.type === "paragraph" && !inlineText(block.content).trim();
+// Dividers and blank paragraphs only space prose out. They never make a step and never open or close one.
+const isFiller = (block: LessonLeafBlock) => block.type === "divider" || (block.type === "paragraph" && !inlineText(block.content).trim());
 
 // A vocabulary block is never a step. Its words join the steps built from the block directly before it in the same heading
 // section: the prose step it ends, an example or callout, or every turn or item of a dialogue or practice. Words with no step
@@ -319,7 +320,9 @@ export function flattenToSteps(document: LessonDocument): LessonStep[] {
     pending = { blocks: [], words: [] };
   };
   const flush = () => {
-    if (prose.some((block) => !isBlankParagraph(block))) push([{ kind: "content", blocks: prose }]);
+    const first = prose.findIndex((block) => !isFiller(block));
+    const last = prose.length - [...prose].reverse().findIndex((block) => !isFiller(block));
+    if (first >= 0) push([{ kind: "content", blocks: prose.slice(first, last) }]);
     prose = [];
   };
   const endSection = () => {

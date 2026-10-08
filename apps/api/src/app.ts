@@ -45,6 +45,9 @@ import {
   updateLessonRequestSchema,
   createPracticeCommentRequestSchema,
   practiceDiscussionResponseSchema,
+  practiceCheckRequestSchema,
+  practiceCheckResponseSchema,
+  answerMatches,
   splitPracticePayload,
   updatePracticeCommentRequestSchema,
   contributorDecisionRequestSchema,
@@ -2031,6 +2034,16 @@ app.get(`${practicePath}/discussion`, requireGroupAccess, async (context) => {
     items, count: items.reduce((total, item) => total + 1 + item.replies.length, 0),
     quickReactions: [account!.one, account!.two, account!.three], reference: splitPracticePayload(found.practice).reference,
   }));
+});
+
+// A check confirms a match, or answers a miss with the item's author's version as a reference. Nothing is stored.
+app.post(`${practicePath}/check`, requireGroupAccess, async (context) => {
+  const found = await practiceBlock(context, false); if ("error" in found) return found.error;
+  const parsed = await parseJson(context, practiceCheckRequestSchema); if ("response" in parsed) return parsed.response;
+  const item = found.practice.items[parsed.data.item];
+  if (!item) return apiError(context, 404, "PRACTICE_ITEM_NOT_FOUND", "This question is not available.");
+  const match = answerMatches(item, parsed.data.answer);
+  return context.json(practiceCheckResponseSchema.parse({ match, authorsVersion: match || !item.authorsVersion.length ? null : item.authorsVersion }));
 });
 
 app.post(`${practicePath}/comments`, requireGroupAccess, async (context) => {

@@ -109,11 +109,11 @@
           },
           {
             "speaker": "Daan",
-            "text": "Ja. Onze trein vertrekt om 8.16 van spoor 7. Check je in met je bankpas?"
+            "text": "Ja. Onze trein vertrekt om 8.16 van spoor 7. Check je altijd in met je bankpas?"
           },
           {
             "speaker": "Sofia",
-            "text": "Ja, ik check altijd in met mijn bankpas. Bij de poortjes."
+            "text": "Ja, ik check altijd in met mijn bankpas, bij de poortjes."
           },
           {
             "speaker": "Daan",
@@ -211,6 +211,20 @@
               "example": "Kom op, stap in!",
               "note": "Separable. The opposite of uitstappen (15-b).",
               "id": "998f0083-c305-4055-828c-b14ac326797c"
+            },
+            {
+              "term": "het probleem",
+              "meaning": "problem",
+              "forms": "de problemen",
+              "example": "Is dat een probleem?",
+              "note": "Known from the chunk Geen probleem! (15-a).",
+              "id": "ddb803f2-2a3d-4cc9-8f81-8cb8b2b00966"
+            },
+            {
+              "term": "Kom op!",
+              "meaning": "Come on! (hurry up)",
+              "example": "Kom op, stap in!",
+              "id": "2548cc46-3cef-4f9a-811c-9668aed99610"
             }
           ]
         }
@@ -232,7 +246,22 @@
             "backgroundColor": "gray"
           }
         },
-        " Daan answers with the correct form: ",
+        " Daan answers with the correct order: in Amsterdam ",
+        {
+          "text": "stappen",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " we ",
+        {
+          "text": "over",
+          "styles": {
+            "textColor": "red",
+            "bold": true
+          }
+        },
+        ". The correct question is ",
         {
           "text": "Stappen",
           "styles": {
@@ -329,7 +358,7 @@
       "type": "example",
       "props": {
         "translation": "I check in with my bank card.",
-        "note": "Also fine: Ik check in met mijn bankpas. A phrase with met may come after the prefix."
+        "note": "inchecken → ik check … in. A phrase with met may come after the prefix. Also fine: Ik check met mijn bankpas in."
       },
       "content": [
         {
@@ -345,7 +374,7 @@
             "textColor": "blue"
           }
         },
-        " met mijn bankpas ",
+        " ",
         {
           "text": "in",
           "styles": {
@@ -354,7 +383,7 @@
             "backgroundColor": "yellow"
           }
         },
-        "."
+        " met mijn bankpas."
       ],
       "id": "c3455390-9ee0-45bd-8fc4-ee431d09c5d0"
     },
@@ -445,7 +474,7 @@
       "type": "example",
       "props": {
         "translation": "The train arrives in Amsterdam at ten to nine.",
-        "note": "Time first, then verb, then subject (08-a). The prefix stays at the very end."
+        "note": "Time first, then verb, then subject (08-b). The prefix stays at the very end."
       },
       "content": [
         {
@@ -994,6 +1023,14 @@
               "example": "De bus rijdt om 8.02 weg.",
               "note": "Separable.",
               "id": "199b1444-6499-4a94-aa27-ad06deaf8ddc"
+            },
+            {
+              "term": "doorlopen",
+              "meaning": "to walk on, to keep walking",
+              "forms": "loopt door · liep door · doorgelopen",
+              "example": "Kom op, we lopen even door.",
+              "note": "Separable.",
+              "id": "d356c237-c64d-4cfc-beaf-39d3a307711e"
             }
           ]
         }
@@ -1022,7 +1059,8 @@
             "bold": true
           }
         },
-        " is stressed, it splits. If the stress is on the verb part, it never splits."
+        " is stressed, it splits. If the stress is on the verb part, it never splits.",
+        " Capitals show the stressed syllable."
       ],
       "id": "563bb6e0-b57e-4465-a5e2-5a1cd37daafc"
     },
@@ -1046,10 +1084,17 @@
                 {
                   "text": "IN",
                   "styles": {
-                    "textColor": "red"
+                    "bold": true
                   }
                 },
-                "stappen → ik stap ",
+                "stappen → ik ",
+                {
+                  "text": "stap",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
                 {
                   "text": "in",
                   "styles": {
@@ -1065,10 +1110,17 @@
                 {
                   "text": "OVER",
                   "styles": {
-                    "textColor": "red"
+                    "bold": true
                   }
                 },
-                "stappen → we stappen ",
+                "stappen → we ",
+                {
+                  "text": "stappen",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
                 {
                   "text": "over",
                   "styles": {
@@ -1084,10 +1136,17 @@
                 {
                   "text": "AAN",
                   "styles": {
-                    "textColor": "red"
+                    "bold": true
                   }
                 },
-                "komen → de trein komt ",
+                "komen → de trein ",
+                {
+                  "text": "komt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
                 {
                   "text": "aan",
                   "styles": {
@@ -1103,10 +1162,17 @@
                 {
                   "text": "UIT",
                   "styles": {
-                    "textColor": "red"
+                    "bold": true
                   }
                 },
-                "checken → je checkt ",
+                "checken → je ",
+                {
+                  "text": "checkt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
                 {
                   "text": "uit",
                   "styles": {
@@ -1137,7 +1203,7 @@
                 {
                   "text": "TREK",
                   "styles": {
-                    "textColor": "blue"
+                    "bold": true
                   }
                 },
                 "ken → de trein ",
@@ -1157,7 +1223,7 @@
                 {
                   "text": "TA",
                   "styles": {
-                    "textColor": "blue"
+                    "bold": true
                   }
                 },
                 "len → ik ",
@@ -1177,7 +1243,7 @@
                 {
                   "text": "GIN",
                   "styles": {
-                    "textColor": "blue"
+                    "bold": true
                   }
                 },
                 "nen → de vergadering ",
@@ -1197,7 +1263,7 @@
                 {
                   "text": "HA",
                   "styles": {
-                    "textColor": "blue"
+                    "bold": true
                   }
                 },
                 "len → hij ",
@@ -1217,7 +1283,7 @@
                 {
                   "text": "BIJ",
                   "styles": {
-                    "textColor": "blue"
+                    "bold": true
                   }
                 },
                 "ten → ik ",
@@ -1460,14 +1526,31 @@
       "id": "54eebee4-0f5f-45be-ad88-397894958697"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de metro",
+              "meaning": "underground, metro",
+              "forms": "de metro's",
+              "example": "In Amsterdam kun je met de metro gaan.",
+              "id": "c173b52c-9767-4304-a9ba-fc1a560d90f7"
+            }
+          ]
+        }
+      },
+      "id": "28041b8d-fde0-4945-bbe4-7c7991694e4f"
+    },
+    {
       "type": "example",
       "props": {
-        "translation": "On Monday Sofia goes to the office by bus.",
-        "note": "Time, manner, place (09-b). The bus stop is in the Kanaalstraat, opposite the supermarket (15-a)."
+        "translation": "On Monday Sofia takes the bus to the office.",
+        "note": "Time, manner, place (09-b). Maandag without op = this Monday (09-b). The bus stop is in the Kanaalstraat, opposite the supermarket (15-a)."
       },
       "content": [
         {
-          "text": "Op maandag",
+          "text": "Maandag",
           "styles": {
             "textColor": "orange"
           }
@@ -1652,29 +1735,6 @@
       "id": "4793e4b8-0ea6-4d2d-bb0d-e9deccbc0d23"
     },
     {
-      "type": "vocabulary",
-      "props": {
-        "data": {
-          "words": [
-            {
-              "term": "de metro",
-              "meaning": "underground, metro",
-              "forms": "de metro's",
-              "example": "In Amsterdam kun je met de metro gaan.",
-              "id": "c173b52c-9767-4304-a9ba-fc1a560d90f7"
-            },
-            {
-              "term": "het openbaar vervoer",
-              "meaning": "public transport (often: het ov)",
-              "example": "Sofia gaat met het openbaar vervoer naar haar werk.",
-              "id": "807c63d5-1549-4cc0-84d4-73c145fbaac5"
-            }
-          ]
-        }
-      },
-      "id": "28041b8d-fde0-4945-bbe4-7c7991694e4f"
-    },
-    {
       "type": "callout",
       "props": {
         "variant": "false-friend",
@@ -1702,7 +1762,14 @@
             "backgroundColor": "gray"
           }
         },
-        " does not mean I run to the bus: Ik ",
+        " does not mean ",
+        {
+          "text": "I run to the bus",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": Ik ",
         {
           "text": "ren",
           "styles": {
@@ -1731,7 +1798,14 @@
     {
       "type": "paragraph",
       "content": [
-        "In Dutch trains, trams and buses you rarely buy a paper ticket. You check in with your ",
+        "In Dutch public transport (",
+        {
+          "text": "het openbaar vervoer",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": trains, trams and buses) you rarely buy a paper ticket. You check in with your ",
         {
           "text": "bankpas",
           "styles": {
@@ -1835,6 +1909,12 @@
               "id": "2d34070d-8761-48d5-bb65-9deae195a272"
             },
             {
+              "term": "het openbaar vervoer",
+              "meaning": "public transport (often: het ov)",
+              "example": "Sofia gaat met het openbaar vervoer naar haar werk.",
+              "id": "807c63d5-1549-4cc0-84d4-73c145fbaac5"
+            },
+            {
               "term": "enkele reis",
               "meaning": "one-way (ticket)",
               "example": "Een enkele reis Amsterdam, alstublieft.",
@@ -1843,7 +1923,6 @@
             {
               "term": "retour",
               "meaning": "return (ticket)",
-              "forms": "de retours",
               "example": "Een retour Amsterdam, alstublieft.",
               "id": "f15e815d-24b3-41dd-b4a8-343989e1bd23"
             },
@@ -1851,7 +1930,7 @@
               "term": "de reis",
               "meaning": "trip, journey",
               "forms": "de reizen",
-              "example": "De reis naar Amsterdam is ongeveer dertig minuten.",
+              "example": "De reis naar Amsterdam duurt ongeveer dertig minuten.",
               "id": "7a613d85-734e-4025-a177-b9bf92816942"
             },
             {
@@ -1991,11 +2070,11 @@
           },
           {
             "speaker": "Conducteur",
-            "text": "Prima. Mag ik de bankpas even zien?"
+            "text": "Prima. Mag ik uw bankpas even zien?"
           },
           {
             "speaker": "Sofia",
-            "text": "Alstublieft. Is het goed?"
+            "text": "Alstublieft. Is dat goed?"
           },
           {
             "speaker": "Conducteur",
@@ -2035,7 +2114,7 @@
               "meaning": "conductor, ticket inspector (on a train)",
               "forms": "de conducteurs",
               "example": "De conducteur vraagt: Hebt u een kaartje?",
-              "note": "False friend: not the conductor of an orchestra (de dirigent).",
+              "note": "In an orchestra the conductor is de dirigent.",
               "id": "fb9a1bca-67b9-47fa-92f7-059979b8b1b8"
             },
             {
@@ -2049,14 +2128,6 @@
               "meaning": "quiet, silent",
               "example": "In de stiltecoupé zijn de reizigers stil.",
               "id": "f04d177d-8744-432f-a86d-bf15b36c9497"
-            },
-            {
-              "term": "doorlopen",
-              "meaning": "to walk on, to keep walking",
-              "forms": "loopt door · liep door · doorgelopen",
-              "example": "Kom op, we lopen even door.",
-              "note": "Separable.",
-              "id": "d356c237-c64d-4cfc-beaf-39d3a307711e"
             },
             {
               "term": "Goede reis!",
@@ -2120,15 +2191,15 @@
                 "komt",
                 "aan"
               ],
-              "note": "aankomen (07-b, 08-a): komt … aan."
+              "note": "aankomen (08-a): komt … aan."
             },
             {
-              "prompt": "Ik … met mijn bankpas …. (inchecken)",
+              "prompt": "Bij de poortjes … ik …. (inchecken)",
               "authorsVersion": [
                 "check",
                 "in"
               ],
-              "note": "ik check: the stem. Also fine: Ik check in met mijn bankpas."
+              "note": "Place first: verb, then subject (inversion). ik check: the stem. The prefix in goes to the end."
             },
             {
               "prompt": "… je hier …? (uitstappen)",
@@ -2155,12 +2226,12 @@
               "note": "Time first: komen we (inversion). terug at the end."
             },
             {
-              "prompt": "De trein … naar Amsterdam Centraal …. (doorrijden)",
+              "prompt": "De trein stopt in Amsterdam Amstel en … dan … naar Amsterdam Centraal. (doorrijden)",
               "authorsVersion": [
                 "rijdt",
                 "door"
               ],
-              "note": "rijden: hij rijdt (stem rijd + t)."
+              "note": "rijden: hij rijdt (stem rijd + t). Here naar Amsterdam Centraal comes after the prefix, the natural order with a direction."
             }
           ]
         }
@@ -2228,7 +2299,7 @@
                 "check",
                 "ov-chipkaart"
               ],
-              "note": "Check je in? The t drops before je. Also fine: Met mijn bankpas."
+              "note": "Check je in? The t drops before je. Daan has an ov-chipkaart; Met mijn bankpas is also possible."
             },
             {
               "prompt": "Sofia: Waar … we …? / Daan: Hier. Kom op, … in!",
@@ -2302,11 +2373,11 @@
               "note": "Daarna + verb + subject; prefix last."
             },
             {
-              "prompt": "Put in order: op maandag / Sofia / met de bus / gaat / naar kantoor",
+              "prompt": "Put in order: maandag / Sofia / met de bus / gaat / naar kantoor",
               "authorsVersion": [
-                "Op maandag gaat Sofia met de bus naar kantoor."
+                "Maandag gaat Sofia met de bus naar kantoor."
               ],
-              "note": "Time first, then manner before place."
+              "note": "Time first, then verb and subject; manner before place (09-b)."
             }
           ]
         }
@@ -2356,11 +2427,11 @@
               "note": "Question word, verb, subject, prefix."
             },
             {
-              "prompt": "Je checkt met je bankpas in. (with kunnen)",
+              "prompt": "Je checkt in met je bankpas. (with kunnen)",
               "authorsVersion": [
-                "Je kunt met je bankpas inchecken."
+                "Je kunt inchecken met je bankpas."
               ],
-              "note": "Also fine: Je kunt inchecken met je bankpas."
+              "note": "The infinitive inchecken stays one word. Also fine: Je kunt met je bankpas inchecken."
             },
             {
               "prompt": "U stapt in Amsterdam uit. (question)",
@@ -2455,7 +2526,7 @@
               "authorsVersion": [
                 "De trein vertrekt om tien over acht."
               ],
-              "note": "Not: De trein vertrekt … weg. vertrekken is one word."
+              "note": "vertrekken never splits: one word. Also fine: om 8.10."
             },
             {
               "prompt": "Are you getting off here?",
@@ -2483,7 +2554,7 @@
               "authorsVersion": [
                 "De trein heeft tien minuten vertraging."
               ],
-              "note": "Use minuten (plural) and no article before vertraging."
+              "note": "minuut → tien minuten (plural, unlike uur) and no article before vertraging. Also fine: De trein is tien minuten te laat."
             }
           ]
         }
@@ -2522,7 +2593,7 @@
               "authorsVersion": [
                 "The train continues to Amsterdam Centraal."
               ],
-              "note": "doorrijden = to keep going."
+              "note": "doorrijden = to keep going. Also fine: The train goes on to Amsterdam Centraal."
             },
             {
               "prompt": "Daan gaat met de fiets en Sofia gaat lopend.",
@@ -2577,22 +2648,23 @@
             {
               "prompt": "Klopt dit? Sofia heeft een kaartje nodig.",
               "authorsVersion": [
-                "Nee, ze checkt in met haar bankpas."
+                "Nee, dat klopt niet. Ze checkt in met haar bankpas."
               ],
-              "note": "Je hebt geen kaartje nodig."
+              "note": "Daan: Je hebt geen kaartje nodig."
             },
             {
               "prompt": "Waar checken ze uit?",
               "authorsVersion": [
                 "In Amsterdam Centraal."
-              ]
+              ],
+              "note": "Also fine: Op Amsterdam Centraal."
             },
             {
               "prompt": "Waar stappen ze over op tram 2?",
               "authorsVersion": [
-                "In Amsterdam, bij het station."
+                "In Amsterdam, voor het station."
               ],
-              "note": "Also fine: In Amsterdam Centraal."
+              "note": "De halte is voor het station. Also fine: Bij Amsterdam Centraal."
             },
             {
               "prompt": "Hoe laat begint de vergadering?",
@@ -2633,9 +2705,9 @@
             {
               "prompt": "Write 3–4 sentences: how do you travel to work, school or the city centre?",
               "authorsVersion": [
-                "Ik ga meestal met de bus naar mijn werk. Ik stap in de Kanaalstraat in en ik check in met mijn bankpas. Bij Utrecht Centraal stap ik uit. Op vrijdag ga ik lopend."
+                "Ik ga meestal lopend naar mijn werk. Soms ben ik te laat, en dan neem ik de bus. Ik stap in de Kanaalstraat in en bij Utrecht Centraal stap ik uit. Ik check in met mijn bankpas."
               ],
-              "note": "Model by Sofia. Check: met de bus / lopend, prefixes at the end (stap … in, stap … uit), and inversion after a time or place (Bij Utrecht Centraal stap ik uit)."
+              "note": "Model by Sofia. Check: lopend / met de bus, prefixes at the end (stap … in, stap … uit, check … in), and inversion after dan or a place (dan neem ik, bij Utrecht Centraal stap ik uit)."
             }
           ]
         }

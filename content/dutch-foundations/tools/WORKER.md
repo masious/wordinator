@@ -14,7 +14,7 @@ You write one lesson file for the Dutch Foundations course in the Wordinator app
    - `docs/content/ledger-part-iii.md`
 
    Recycle this material on purpose, and do not re-teach it as new.
-7. One finished lesson as a model of depth and structure: `content/dutch-foundations/part-ii/12-b-wat-kost-dat.json`. Read it with `python3 /private/tmp/claude-501/-Users-jsninja-myworkspace-2wordinator/7f1f00ce-1b91-4aeb-8b80-a130a0dc3931/scratchpad/dump.py <file>`.
+7. One finished lesson as a model of depth and structure: `content/dutch-foundations/part-ii/12-b-wat-kost-dat.json`. Read it with `python3 content/dutch-foundations/tools/dump.py <file>`.
 
 ## Requirements
 - **Volume:** at least 7 practice blocks and at least 45 items. Every item has an authors' version. Add notes for rules, alternative answers and typical mistakes. Use the exercise mix from the style guide:
@@ -39,7 +39,7 @@ You write one lesson file for the Dutch Foundations course in the Wordinator app
 - **Done** means `apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/lesson.ts check <your file>`, run from the repo root, prints `OK` with counts that meet the above.
 
 ## Rules
-- Write **only** your own lesson file. If you use a helper script, give it a name unique to your lesson, e.g. `gen-15a.py`, in the scratchpad directory above. Never run a script you did not write in this task.
+- Write **only** your own lesson file. If you use a helper script, give it a name unique to your lesson, e.g. `gen-15a.py`, in your session's scratchpad directory. Never run a script you did not write in this task.
 - Do not touch the database, `wrangler`, `docs/`, other lessons, or the `sql` command.
 - No images in blocks; use `imageIdeas`. No gamification wording.
 

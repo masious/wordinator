@@ -61,3 +61,14 @@ Planned simplifications (from the briefs). Confirm or revise after each lesson i
 - **Positional verbs before row 14**: 10-a avoids "staan in de koelkast" and uses other phrasing. After 14-b, recycle "staat/ligt in de koelkast" in later lessons.
 - **Bitterballen**: 10-b serves 40 bitterballen that are not on 10-a's shopping list. Assume they come from the freezer, and do not contradict this later.
 - **Unglossed chunks**: the reviewers glossed most of them at first use. The full list per lesson is in the [Part II ledger](ledger-part-ii.md) "Expressions" entries. Treat these chunks as known from now on, but not as taught grammar.
+
+## Part III review follow-ups 16-a … 17-a (2026-10-08)
+
+- **Separable participles** (16-a): ingecheckt, overgestapt etc. appear only in vocabulary `forms`; the perfect is row 25 onwards.
+- **Prefix before a time expression** (16-a): "De trein komt aan om tien uur" is mentioned as spoken usage in a hint only; the lesson teaches prefix last.
+- **Public-transport culture** (16-a): bikes on trains (not in rush hour, weekdays 6:30–9:00 and 16:00–18:30), check-out fines and OVpay are simplified to one or two sentences each.
+- **Trams in Utrecht**: deliberately absent from the story (Lombok has buses only); the only tram is tram 2 in Amsterdam (16-a). Do not add a Utrecht tram later.
+- **Object pronoun hem for things** (16-b): still avoided ("Mag ik deze fiets proberen?"); "Wat kan ik voor je doen?" stays a chunk. Row 37.
+- **Weather past tense** (17-a): waaien's past forms (waaide/woei) appear in `forms` only; the past is row 25 onwards.
+- **worden** (17-a): present forms and "het wordt + adjective/number" only; other uses later.
+- **de regenbui** (17-a): only in a note to de bui; **de kleding** glossed in the saying, taught properly in 18-a.

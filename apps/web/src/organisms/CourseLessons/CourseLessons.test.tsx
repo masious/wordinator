@@ -1,10 +1,12 @@
 import { MantineProvider } from "@mantine/core";
 import { LESSON_DOCUMENT_SCHEMA_VERSION, type CourseDetailResponse, type CourseLesson, type LessonDocument, type LessonTopBlock } from "@wordinator/contracts/lesson-document";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { createMemoryHistory, createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
-import { CourseLessons } from "./CourseLessons";
+import { CourseLessons, LessonView } from "./CourseLessons";
 import { CourseResume } from "./CourseResume";
 
 const groupId = "20000000-0000-4000-8000-000000000001";
@@ -42,20 +44,27 @@ const progress = (completedLessonIds: string[], positions: unknown[] = []) => ({
 });
 
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
-function renderLessons(detail: CourseDetailResponse) {
+function renderWithRouter(page: ReactNode) {
   // Mirrors the application's stale time, so preloaded lessons are not refetched on mount.
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false, staleTime: 20_000 }, mutations: { retry: false } } });
-  // The course page renders the resume action above the lessons; both read the same progress query.
-  return render(<MantineProvider><QueryClientProvider client={queryClient}>
-    <CourseResume groupId={groupId} courseId={courseId} accountId={accountId} outline={detail.outline} onClose={() => undefined} />
-    <CourseLessons groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} dataUpdatedAt={Date.now()} round={0} />
-  </QueryClientProvider></MantineProvider>);
+  const root = createRootRoute();
+  const route = createRoute({ getParentRoute: () => root, path: "$", component: () => page });
+  const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: [`/groups/${groupId}/courses/${courseId}`] }) });
+  return render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
 }
+// The course page renders the resume action above the lesson list; both read the same progress query.
+let served: CourseLesson[] = [];
+const renderLessons = (detail: CourseDetailResponse) => { served = detail.lessons; return renderWithRouter(<>
+  <CourseResume groupId={groupId} courseId={courseId} accountId={accountId} outline={detail.outline} />
+  <CourseLessons groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} />
+</>); };
+const renderLesson = (detail: CourseDetailResponse, id = lessonId(1)) =>
+  renderWithRouter(<LessonView groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} lessonId={id} dataUpdatedAt={Date.now()} />);
 
 const lessonFour = lesson(4, [example("50000000-0000-4000-8000-000000000004", "Ik stap over.")]);
 
 beforeEach(() => {
-  localStorage.clear();
+  localStorage.clear(); served = [];
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
     if (path.endsWith("/progress")) return response(progress([]));
@@ -64,42 +73,70 @@ beforeEach(() => {
     if (path.endsWith("/position") && init?.method === "PUT") {
       return response({ position: { lessonId: lessonId(1), stepKey: JSON.parse(String(init.body)).stepKey, stepIndex: 0, passedSteps: 0, totalSteps: 1, updatedAt: 1 } });
     }
-    if (path.endsWith(`/lessons/${lessonId(4)}`)) return response({ lesson: lessonFour });
+    // The player and the lesson page read a lesson by ID: lesson four, or one the rendered course read preloaded.
+    const read = /\/lessons\/([^/]+)$/.exec(path)?.[1];
+    if (read) { const found = read === lessonId(4) ? lessonFour : served.find((entry) => entry.id === read); if (found) return response({ lesson: found }); }
     return response({ ok: true });
   }));
 });
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 
 describe("Course lessons", () => {
-  it("renders the published document for readers and loads later lessons by ID", async () => {
-    const detail = { course: course(false), outline: [1, 2, 3, 4].map((n) => summary(n)), lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.", "There is a balcony."), dialogue]), lesson(2), lesson(3)] };
+  it("lists every lesson as a link to its own page without rendering lesson content", async () => {
+    const detail = { course: course(false), outline: [1, 2, 3, 4].map((n) => summary(n)), lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")]), lesson(2), lesson(3)] };
     renderLessons(detail);
-    expect(screen.getByRole("heading", { name: "Lesson title 1", level: 2 })).toBeInTheDocument();
+    const link = await screen.findByRole("link", { name: "Open lesson 1: Lesson title 1" });
+    expect(link).toHaveAttribute("href", `/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}`);
+    expect(screen.getByRole("link", { name: "Open lesson 4: Lesson title 4" })).toBeInTheDocument();
+    expect(screen.queryByText("Er is een balkon.")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /Edit/ })).not.toBeInTheDocument();
+    // The list loads no lesson; only the viewer's progress and course recap.
+    await waitFor(() => expect(vi.mocked(fetch).mock.results).toHaveLength(2));
+    expect(vi.mocked(fetch).mock.calls.map(([path]) => String(path)).sort()).toEqual([`/api/groups/${groupId}/courses/${courseId}/progress`, `/api/groups/${groupId}/courses/${courseId}/words`]);
+    // A viewer with no finished words is not offered a recap.
+    expect(screen.queryByRole("button", { name: "Review words" })).not.toBeInTheDocument();
+  });
+
+  it("renders one lesson's published document on its page with links to its neighbours", async () => {
+    const detail = { course: course(false), outline: [1, 2, 3].map((n) => summary(n)), lessons: [lesson(1), lesson(2, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.", "There is a balcony."), dialogue]), lesson(3)] };
+    renderLesson(detail, lessonId(2));
+    expect(await screen.findByRole("heading", { name: "Lesson title 2", level: 1 })).toBeInTheDocument();
     expect(screen.getByText("Er is een balkon.")).toBeInTheDocument();
     expect(screen.getByText("There is a balcony.")).toBeInTheDocument();
     expect(screen.getByText("Is er een tuin?")).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: /Edit/ })).not.toBeInTheDocument();
-    expect(screen.queryByRole("heading", { name: "Lesson title 4" })).not.toBeInTheDocument();
-    // Preloaded lessons are not fetched again; only the viewer's progress and course recap load.
-    expect(vi.mocked(fetch).mock.calls.map(([path]) => String(path)).sort()).toEqual([`/api/groups/${groupId}/courses/${courseId}/progress`, `/api/groups/${groupId}/courses/${courseId}/words`]);
-    // A viewer with no finished words is not offered a recap.
-    await waitFor(() => expect(vi.mocked(fetch).mock.results).toHaveLength(2));
-    expect(screen.queryByRole("button", { name: "Review words" })).not.toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Continue with lesson 4: Lesson title 4" }));
+    expect(screen.queryByText("Lesson title 1", { selector: "h1" })).not.toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Previous: Lesson title 1" })).toHaveAttribute("href", `/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}`);
+    expect(screen.getByRole("link", { name: "Next: Lesson title 3" })).toHaveAttribute("href", `/groups/${groupId}/courses/${courseId}/lessons/${lessonId(3)}`);
+    // A preloaded lesson is not fetched again.
+    expect(fetch).not.toHaveBeenCalledWith(expect.stringMatching(/\/lessons\/[^/]+$/), expect.anything());
+  });
+
+  it("loads a lesson that the course read did not preload by ID", async () => {
+    renderLesson({ course: course(false), outline: [1, 2, 3, 4].map((n) => summary(n)), lessons: [lesson(1), lesson(2), lesson(3)] }, lessonId(4));
     expect(await screen.findByText("Ik stap over.")).toBeInTheDocument();
     expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(4)}`, expect.anything());
+    expect(screen.queryByRole("link", { name: /^Next:/ })).not.toBeInTheDocument();
   });
 
-  it("shows editors the draft of an unpublished lesson as a preview", () => {
-    renderLessons({ course: course(true), outline: [summary(1, false)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Een concept.")], { published: false, editing: true })] });
+  it("shows a lesson outside the course outline as unavailable", async () => {
+    renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1)] }, lessonId(4));
+    expect(await screen.findByText("This lesson is not available.")).toBeInTheDocument();
+  });
+
+  it("shows editors the draft of an unpublished lesson as a preview", async () => {
+    renderLesson({ course: course(true), outline: [summary(1, false)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Een concept.")], { published: false, editing: true })] });
+    expect(await screen.findByText("Een concept.")).toBeInTheDocument();
     expect(screen.getAllByText("Unpublished").length).toBeGreaterThan(0);
-    expect(screen.getByText("Een concept.")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Edit lesson 1" })).toBeInTheDocument();
   });
 
-  it("lets a contributor edit content but not reorder or change details of a published lesson", () => {
-    renderLessons({ course: course(false, true), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")], { editing: true })] });
-    expect(screen.getByRole("button", { name: "Edit lesson 1" })).toBeInTheDocument();
+  it("lets a contributor edit content but not reorder or change details of a published lesson", async () => {
+    const detail = { course: course(false, true), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")], { editing: true })] };
+    renderLesson(detail);
+    expect(await screen.findByRole("button", { name: "Edit lesson 1" })).toBeInTheDocument();
+    cleanup();
+    renderLessons(detail);
+    expect(await screen.findByRole("link", { name: "Open lesson 1: Lesson title 1" })).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Edit details" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Move lesson 1/ })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /^Publish/ })).not.toBeInTheDocument();
@@ -109,6 +146,7 @@ describe("Course lessons", () => {
     let shared: unknown = null;
     const original = vi.mocked(fetch).getMockImplementation()!;
     vi.mocked(fetch).mockImplementation(async (input, init) => {
+      if (String(input).endsWith(`/blocks/${practice.id}/check`)) return response({ match: true, authorsVersion: null });
       if (String(input).endsWith(`/blocks/${practice.id}/comments`) && init?.method === "POST") {
         shared = JSON.parse(String(init.body));
         return response({ item: { id: "60000000-0000-4000-8000-000000000001", parentId: null, kind: "practice_response", author: { id: accountId, displayName: "Ada", avatarUrl: null }, body: null, createdAt: 1, updatedAt: 1, edited: false, pinned: false, responseItems: [], reactions: [], replies: [], permissions: { reply: true, edit: true, delete: true, pin: false } } }, 201);
@@ -129,8 +167,9 @@ describe("Course lessons", () => {
     expect(within(dialog).getByText("There is a balcony.")).toBeInTheDocument();
     expect(within(dialog).queryByRole("region", { name: "New words" })).not.toBeInTheDocument();
 
-    // Dialogue lines arrive one after another.
-    fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
+    // Next starts focused, and Enter outside a field acts as Next. Dialogue lines arrive one after another.
+    expect(within(dialog).getByRole("button", { name: "Next" })).toHaveFocus();
+    fireEvent.keyDown(document.body, { key: "Enter" });
     expect(within(dialog).getByText("Is er een tuin?")).toBeInTheDocument();
     expect(within(dialog).queryByText("Nee.")).not.toBeInTheDocument();
     fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
@@ -146,14 +185,24 @@ describe("Course lessons", () => {
     expect(within(dialog).getByText("There is a garden.")).toBeInTheDocument();
     fireEvent.change(within(dialog).getByLabelText("Your answer"), { target: { value: "Er is een tuin." } });
     expect(JSON.parse(localStorage.getItem(`wordinator:draft:v1:${accountId}:${groupId}:practice-answer:${practice.id}`)!)).toEqual({ version: 1, answers: ["Er is een tuin.", ""] });
+    // Next on a filled, unchecked answer shows the check's feedback and stays; pressing it again moves on.
+    const checks = () => vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith(`/blocks/${practice.id}/check`));
     fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
+    expect(await within(dialog).findByText("Matches the author’s version")).toBeInTheDocument();
+    expect(within(dialog).getByText("Question 1 of 2")).toBeInTheDocument();
+    expect(checks()[0]![1]).toMatchObject({ method: "POST", body: JSON.stringify({ item: 0, answer: "Er is een tuin." }) });
+    // Enter in the field does the same: the answer is already checked, so it moves on without checking again.
+    fireEvent.keyDown(within(dialog).getByLabelText("Your answer"), { key: "Enter" });
     expect(within(dialog).getByText("Question 2 of 2")).toBeInTheDocument();
+    expect(checks()).toHaveLength(1);
     fireEvent.click(within(dialog).getByRole("button", { name: "Share my answers" }));
     expect(await within(dialog).findByText("Shared with the group.")).toBeInTheDocument();
     expect(shared).toEqual({ kind: "practice_response", answers: ["Er is een tuin.", ""] });
 
+    // An empty answer is never checked: Next moves straight on.
     fireEvent.click(within(dialog).getByRole("button", { name: "Finish lesson" }));
     expect(await within(dialog).findByText("You have finished 1 of 4 lessons (25%).")).toBeInTheDocument();
+    expect(checks()).toHaveLength(1);
     expect(meter()).toHaveAttribute("aria-valuenow", "100");
     expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/completion`, expect.objectContaining({ method: "PUT" }));
     expect(within(dialog).getByRole("button", { name: "Next: Lesson title 2" })).toBeInTheDocument();

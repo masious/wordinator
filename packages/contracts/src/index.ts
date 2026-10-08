@@ -448,6 +448,24 @@ export const practiceDiscussionResponseSchema = z.object({
 });
 export type PracticeDiscussionResponse = z.infer<typeof practiceDiscussionResponseSchema>;
 
+// A sentence has many valid translations, so a check never says an answer is wrong. A match is confirmed; a miss returns the
+// item's author's version as a reference, or null when the item has none.
+export const practiceCheckRequestSchema = z.object({ item: z.number().int().nonnegative().max(COURSE_PRACTICE_ITEMS_MAX - 1), answer: z.string().max(RESPONSE_ANSWER_MAX) });
+export type PracticeCheckRequest = z.input<typeof practiceCheckRequestSchema>;
+export const practiceCheckResponseSchema = z.object({ match: z.boolean(), authorsVersion: z.array(z.string().nullable()).nullable() });
+export type PracticeCheckResponse = z.infer<typeof practiceCheckResponseSchema>;
+// Case, punctuation, quote style, and spacing are ignored.
+const normalizeAnswer = (value: string) => value.normalize("NFKC").toLowerCase().replace(/[\p{P}\p{S}]+/gu, " ").replace(/\s+/g, " ").trim();
+// A fill-in answer matches either the blanks' words in order or the whole prompt with its blanks filled.
+export function answerMatches(item: { prompt: string; authorsVersion: (string | null)[] }, answer: string): boolean {
+  const given = normalizeAnswer(answer);
+  if (!given || !item.authorsVersion.length || item.authorsVersion.some((entry) => entry === null)) return false;
+  const entries = item.authorsVersion as string[];
+  const candidates = [entries.join(" ")];
+  if (countBlanks(item.prompt)) { let blank = 0; candidates.push(item.prompt.replace(/…/g, () => entries[blank++] ?? "")); }
+  return candidates.some((candidate) => normalizeAnswer(candidate) === given);
+}
+
 // Course progress counts the lessons a member finished in the lesson player among the currently published lessons,
 // plus the passed share of each published lesson they have started but not finished.
 export const courseParticipantProgressSchema = z.object({

@@ -11,8 +11,8 @@ import styles from "./CourseResume.module.css";
 // The viewer's one way into the lesson player. It resumes the most recently moved unfinished lesson at its saved step, otherwise
 // starts the first lesson they have not finished, otherwise offers the first lesson again. Lessons that count come first: an
 // unpublished lesson is chosen only when nothing in the course is published, and then it plays as a preview.
-export function CourseResume({ groupId, courseId, accountId, outline, onClose }: {
-  groupId: string; courseId: string; accountId: string; outline: CourseLessonSummary[]; onClose: () => void;
+export function CourseResume({ groupId, courseId, accountId, outline }: {
+  groupId: string; courseId: string; accountId: string; outline: CourseLessonSummary[];
 }) {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const [playing, setPlaying] = useState<string | null>(null);
@@ -44,7 +44,7 @@ export function CourseResume({ groupId, courseId, accountId, outline, onClose }:
     <LessonPlayer scope={{ groupId, courseId, accountId }} lessonId={playing} outline={outline} positions={progress.data?.positions ?? []}
       onChangeLesson={setPlaying}
       onClose={() => {
-        setPlaying(null); onClose();
+        setPlaying(null);
         // The player saved the reader's steps while it was open; refresh the positions and percentages it changed, and the
         // course recap, which a finished lesson may extend.
         void queryClient.invalidateQueries({ queryKey: courseProgressQueryOptions(groupId, courseId).queryKey });

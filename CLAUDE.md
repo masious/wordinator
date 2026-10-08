@@ -24,7 +24,7 @@ Documentation is part of the definition of done:
 - Answer concealment prevents accidental spoilers; it is not authorization.
 - User content is plain text, except course lessons. Preserve line breaks, escape output, and link only safe `http`/`https` URLs.
 - Course lessons are the one rich-content surface: BlockNote documents restricted by the shared contracts to bold, italic, a token-mapped text palette, and safe links, as defined in `docs/courses.md`. Do not extend rich text or the BlockNote editor to posts, comments, or other surfaces.
-- No Tailwind, analytics, third-party tracking, gamification, or AI features. The single exception is non-competitive course lesson progress as defined in `docs/courses.md`; do not extend it into points, streaks, badges, or rankings.
+- No Tailwind, analytics, third-party tracking, or AI features.
 
 ## Planned repository shape
 

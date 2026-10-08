@@ -61,10 +61,10 @@ Reaction toggles use an explicit desired `active` state, making retries idempote
 
 Each published practice block in a [course](courses.md#practice-answers) has its own answer thread built on the same comments, replies, and reactions.
 
-- Concealment is identical to posts: the thread starts concealed on every visit, shows its count, and is revealed by submitting or by explicit consent. Revealed state is not stored.
+- Concealment is identical to posts: the thread starts concealed on every visit, shows its count, and is revealed by submitting or by explicit consent. Revealed state is not stored. On the [lesson page](courses.md#lesson-pages) the composer and thread live in the practice's Answer dialog, which starts concealed each time it opens.
 - A top-level answer is one ordered answer set covering every practice item, like a reading answer set. Blank entries render as “No answer”. Each entry snapshots its item prompt, so answers stay understandable after the practice is edited, and edits keep the snapshotted prompts.
 - Replies are plain text, one level deep. Reactions work on answers and replies.
-- There are no pins and no matching: nothing is marked as correct.
-- The author's version and item notes are delivered only with the revealed thread, as a reference for discussion.
+- There are no pins and nothing in a thread is marked as correct. The learner's private [answer check](courses.md#practice-answers) is never stored or shown to others.
+- The author's version and item notes are delivered with the revealed thread, as a reference for discussion. A learner's [answer check](courses.md#practice-answers) that misses also shows that one item's author's version, without its note.
 - Authors edit their own items; authors and the group creator delete them. Deleting a practice block or its lesson deletes the thread, response items, and reactions. Threads in archived courses cannot change.
 - Practice-thread activity creates no notifications yet; course notifications beyond contributor requests are deferred.

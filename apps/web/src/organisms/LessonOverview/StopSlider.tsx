@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { AdaptiveDialog, Button, TextAreaField } from "../../ui";
-import { QuestionPrompt, stageKey, StepStage } from "../CourseLessons/LessonPlayer";
+import { opensSection, QuestionPrompt, stageKey, StepStage } from "../CourseLessons/LessonPlayer";
 import { practiceFromBlock } from "../CourseLessons/PracticeBlock";
 import { stopStatus, type LessonOverview, type OverviewStop } from "./overviewModel";
 import styles from "./StopSlider.module.css";
@@ -36,7 +36,7 @@ function Slider({ overview, stop, reached, onReach, onNextStop, onClose }: {
       <span className={styles.stepLabel}>{t("courses.overview.stepOf", { current: index + 1, total })}</span>
       <ProgressMeter value={(index / total) * 100} label={t("courses.overview.slider.progressLabel")} />
     </div>
-    <StepStage key={stageKey(step, index)} step={step} renderQuestion={(question) => {
+    <StepStage key={stageKey(step, index)} step={step} opensSection={opensSection(overview.steps, stop.start + index)} renderQuestion={(question) => {
       const key = `${question.block.id}:${question.itemIndex}`;
       return <div className={styles.question}>
         <QuestionPrompt block={practiceFromBlock(question.block, {})} item={question.itemIndex} />

@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_INVITATION_TOKEN, E2E_PASSWORD } from "./global-setup";
-import { paragraph, seedLesson } from "./lessonSeed";
+import { paragraph, seedLesson, openLesson } from "./lessonSeed";
 
 test("a member asks to contribute, edits the lesson draft, and the owner publishes it", async ({ browser }, testInfo) => {
   test.setTimeout(90_000);
@@ -46,6 +46,7 @@ test("a member asks to contribute, edits the lesson draft, and the owner publish
 
   // The contributor edits the published lesson's draft in the editor; it autosaves but readers still see the published text.
   await helper.reload();
+  await openLesson(helper);
   await helper.getByRole("button", { name: "Edit lesson 1" }).click();
   const editor = helper.getByRole("textbox").filter({ hasText: "De eerste zin." });
   await editor.getByText("De eerste zin.").click();
@@ -61,6 +62,7 @@ test("a member asks to contribute, edits the lesson draft, and the owner publish
 
   // The owner reviews the draft and publishes it.
   await owner.reload();
+  await openLesson(owner);
   await owner.getByRole("button", { name: "Edit lesson 1" }).click();
   const ownerBar = owner.getByRole("region", { name: "Lesson saving and publishing" });
   await expect(owner.getByText("Een voorstel van de helper.")).toBeVisible();

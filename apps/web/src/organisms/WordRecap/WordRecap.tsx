@@ -1,8 +1,9 @@
 import type { CourseWord, LessonStep } from "@wordinator/contracts/lesson-document";
-import { useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
 import { Button } from "../../ui";
+import { measureFit, type GridFit } from "./fitGrid";
 import styles from "./WordRecap.module.css";
 
 export type RecapWord = Omit<CourseWord, "lessonId">;
@@ -16,31 +17,98 @@ export function runWords(steps: readonly LessonStep[]): RecapWord[] {
   }));
 }
 
-// A slideshow of word cards: the term and forms first, Show meaning reveals the meaning, example, and note. Back and Next move
-// freely and nothing is graded, recorded, or counted. Callers render it only when there is at least one word.
-export function WordRecap({ words, doneLabel, onDone }: { words: readonly RecapWord[]; doneLabel: string; onDone: () => void }) {
+// Fits the card grid to the space its frame leaves, remeasuring when the recap, its frame, or the viewport changes size.
+function useGridFit() {
+  const recapRef = useRef<HTMLDivElement>(null); const gridRef = useRef<HTMLDivElement>(null);
+  const [fit, setFit] = useState<GridFit>({ columns: 1, rows: 1 });
+  useLayoutEffect(() => {
+    const recap = recapRef.current; const grid = gridRef.current;
+    if (!recap || !grid) return;
+    const measure = () => {
+      const next = measureFit(grid, recap);
+      setFit((current) => current.columns === next.columns && current.rows === next.rows ? current : next);
+    };
+    measure();
+    const frame = recap.closest<HTMLElement>(".mantine-Modal-content");
+    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
+    for (const element of [recap, grid, frame]) if (element) observer?.observe(element);
+    // A dialog's entry transition moves the recap without resizing anything, so measure again once it settles.
+    frame?.addEventListener("transitionend", measure); frame?.addEventListener("animationend", measure);
+    window.addEventListener("resize", measure); window.visualViewport?.addEventListener("resize", measure);
+    return () => {
+      observer?.disconnect();
+      frame?.removeEventListener("transitionend", measure); frame?.removeEventListener("animationend", measure);
+      window.removeEventListener("resize", measure); window.visualViewport?.removeEventListener("resize", measure);
+    };
+  }, []);
+  return { recapRef, gridRef, size: fit.columns * fit.rows };
+}
+
+function WordCard({ word, shown, opened, onToggle }: { word: RecapWord; shown: boolean; opened: boolean; onToggle: () => void }) {
   const { t } = useTranslation();
-  const [index, setIndex] = useState(0); const [shown, setShown] = useState(false);
-  const word = words[Math.min(index, words.length - 1)];
-  if (!word) return null;
-  const last = index >= words.length - 1;
-  const go = (next: number) => { setIndex(next); setShown(false); };
-  return <div className={styles.recap}>
-    <p className={styles.counter}>{t("courses.words.counter", { current: index + 1, total: words.length })}</p>
-    <article className={styles.card} key={word.id} aria-label={word.term}>
-      <p className={styles.term}>{word.term}</p>
-      {word.forms && <p className={styles.forms}>{word.forms}</p>}
-      {shown
-        ? <div className={styles.answer}>
+  return <article className={`${styles.card} ${shown ? styles.flipped : ""}`} aria-label={word.term}>
+    <div className={styles.faces}>
+      <div className={`${styles.face} ${styles.front}`} aria-hidden={shown || undefined} inert={shown}>
+        <p className={styles.term}>{word.term}</p>
+        {word.forms && <p className={styles.forms}>{word.forms}</p>}
+      </div>
+      {/* The back stays empty until first revealed, so nothing is spoiled; it then keeps its text to show while flipping back. */}
+      <div className={`${styles.face} ${styles.back}`} aria-hidden={!shown || undefined} inert={!shown} tabIndex={shown ? 0 : undefined}>
+        {opened && <>
+          <p className={styles.backTerm}>{word.term}{word.forms && <span className={styles.forms}> · {word.forms}</span>}</p>
           <p className={styles.meaning}><PlainText>{word.meaning}</PlainText></p>
           {word.example && <p className={styles.example}><PlainText>{word.example}</PlainText></p>}
           {word.note && <p className={styles.note}><PlainText>{word.note}</PlainText></p>}
-        </div>
-        : <Button variant="secondary" className={styles.reveal} onClick={() => setShown(true)}>{t("courses.words.showMeaning")}</Button>}
-    </article>
+        </>}
+      </div>
+    </div>
+    <div className={styles.footer}>
+      <Button variant="secondary" onClick={onToggle}>{shown ? t("courses.words.hideMeaning") : t("courses.words.showMeaning")}</Button>
+    </div>
+  </article>;
+}
+
+// Pages of word cards sized to fit without scrolling. Each card flips in place to reveal its meaning, example, and note, and Show
+// all reveals the page. Back and Next move by a page; the last page offers the done action when there is one. Nothing is graded,
+// recorded, or counted. Callers render it only when there is at least one word.
+export function WordRecap({ words, doneLabel, onDone }: { words: readonly RecapWord[]; doneLabel?: string; onDone?: () => void }) {
+  const { t } = useTranslation();
+  const { recapRef, gridRef, size } = useGridFit();
+  // The first word shown; a page always starts at a multiple of the page size, so resizing keeps that word in view.
+  const [first, setFirst] = useState(0);
+  const start = Math.floor(Math.min(first, Math.max(words.length - 1, 0)) / size) * size;
+  const page = words.slice(start, start + size);
+  // Reveals belong to the page they were made on: moving away or resizing resets them.
+  const [reveals, setReveals] = useState<{ start: number; shown: ReadonlySet<string>; opened: ReadonlySet<string> }>({ start: 0, shown: new Set(), opened: new Set() });
+  const shown = reveals.start === start ? reveals.shown : new Set<string>();
+  const opened = reveals.start === start ? reveals.opened : new Set<string>();
+  const reveal = (ids: readonly string[], show: boolean) => {
+    const nextShown = new Set(shown);
+    for (const id of ids) if (show) nextShown.add(id); else nextShown.delete(id);
+    setReveals({ start, shown: nextShown, opened: show ? new Set([...opened, ...ids]) : opened });
+  };
+  const allShown = page.every((word) => shown.has(word.id));
+  const last = start + size >= words.length;
+  const go = (next: number) => { setFirst(next); setReveals({ start: -1, shown: new Set(), opened: new Set() }); };
+  const end = start + page.length;
+  return <div className={styles.recap} ref={recapRef}>
+    <div className={styles.toolbar}>
+      <p className={styles.counter}>{page.length > 1
+        ? t("courses.words.range", { first: start + 1, last: end, total: words.length })
+        : t("courses.words.counter", { current: start + 1, total: words.length })}</p>
+      {page.length > 1 && <Button variant="quiet" onClick={() => reveal(page.map((word) => word.id), !allShown)}>
+        {allShown ? t("courses.words.hideAll") : t("courses.words.showAll")}
+      </Button>}
+    </div>
+    <div className={styles.grid} ref={gridRef}>
+      {page.map((word, index) => <WordCard key={`${start + index}:${word.id}`} word={word} shown={shown.has(word.id)} opened={opened.has(word.id)}
+        onToggle={() => reveal([word.id], !shown.has(word.id))} />)}
+    </div>
     <div className={styles.nav}>
-      <Button variant="quiet" disabled={index === 0} onClick={() => go(index - 1)}>{t("common.back")}</Button>
-      {last ? <Button onClick={onDone}>{doneLabel}</Button> : <Button onClick={() => go(index + 1)}>{t("common.next")}</Button>}
+      <Button variant="quiet" disabled={start === 0} onClick={() => go(Math.max(0, start - size))}>{t("common.back")}</Button>
+      {last && doneLabel && onDone
+        ? <Button onClick={onDone}>{doneLabel}</Button>
+        : <Button disabled={last} onClick={() => go(start + size)}>{t("common.next")}</Button>}
     </div>
   </div>;
 }

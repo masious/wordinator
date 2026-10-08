@@ -1,11 +1,13 @@
 import { MantineProvider } from "@mantine/core";
 import { LESSON_DOCUMENT_SCHEMA_VERSION, type CourseDetailResponse, type LessonDocument, type LessonTopBlock } from "@wordinator/contracts/lesson-document";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { createMemoryHistory, createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
-import { CourseLessons } from "./CourseLessons";
-import { practiceDraftKey } from "./PracticeBlock";
+import { LessonView } from "./CourseLessons";
+import { AnswerField, joinBlanks, practiceDraftKey, splitBlanks } from "./PracticeBlock";
 
 const groupId = "20000000-0000-4000-8000-000000000001";
 const accountId = "10000000-0000-4000-8000-000000000001";
@@ -40,9 +42,15 @@ const answer = {
 };
 
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
-function renderLessons(value: CourseDetailResponse) {
+// Renders the lesson page and opens the practice's answer dialog, which is closed by default.
+async function openPractice(value: CourseDetailResponse) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false, staleTime: 20_000 }, mutations: { retry: false } } });
-  return render(<MantineProvider><QueryClientProvider client={queryClient}><CourseLessons groupId={groupId} courseId={courseId} accountId={accountId} detail={value} dataUpdatedAt={Date.now()} round={0} /></QueryClientProvider></MantineProvider>);
+  const root = createRootRoute();
+  const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <LessonView groupId={groupId} courseId={courseId} accountId={accountId} detail={value} lessonId={lessonId} dataUpdatedAt={Date.now()} /> });
+  const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: [`/groups/${groupId}/courses/${courseId}/lessons/${lessonId}`] }) });
+  render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
+  fireEvent.click(await screen.findByRole("button", { name: "Answer" }));
+  return screen.findByRole("dialog", { name: "Answer the practice" });
 }
 
 beforeEach(() => {
@@ -51,6 +59,10 @@ beforeEach(() => {
     const path = String(input);
     if (path === `${blockPath}/discussion`) return response({ items: [answer], count: 1, quickReactions: ["👍", "❤️", "😂"], reference });
     if (path === `${blockPath}/comments` && init?.method === "POST") return response({ item: answer }, 201);
+    if (path === `${blockPath}/check`) {
+      const match = (JSON.parse(String(init?.body)) as { answer: string }).answer === "Er is";
+      return response({ match, authorsVersion: match ? null : ["Er is"] });
+    }
     if (path.endsWith(`/lessons/${lessonId}`)) return response({ lesson: detail().lessons[0] });
     return response({ status: "signedOut" });
   }));
@@ -58,9 +70,79 @@ beforeEach(() => {
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 
 describe("Practice blocks", () => {
+  it("answers a fill-in item blank by blank, moving on with Enter and checking after the last blank", async () => {
+    expect(splitBlanks(joinBlanks(["Er ", ""]), 2)).toEqual(["Er ", ""]);
+    expect(joinBlanks(["", " "])).toBe("");
+    const onAdvance = vi.fn();
+    function Field() {
+      const [value, setValue] = useState("");
+      return <AnswerField scope={{ groupId, courseId, lessonId, accountId }} blockId={blockId} item={0} prompt="… een keuken, … twee kamers." label="Your answer"
+        value={value} onChange={setValue} minRows={2} onAdvance={onAdvance} />;
+    }
+    const queryClient = new QueryClient({ defaultOptions: { mutations: { retry: false } } });
+    render(<MantineProvider><QueryClientProvider client={queryClient}><Field /></QueryClientProvider></MantineProvider>);
+    expect(screen.getByRole("group", { name: "Your answer" })).toBeInTheDocument();
+    const first = screen.getByLabelText("Blank 1"); const second = screen.getByLabelText("Blank 2");
+    first.focus();
+    fireEvent.change(first, { target: { value: "Er is" } });
+    fireEvent.keyDown(first, { key: "Enter" });
+    expect(second).toHaveFocus();
+    expect(vi.mocked(fetch).mock.calls.filter(([path]) => path === `${blockPath}/check`)).toHaveLength(0);
+    fireEvent.change(second, { target: { value: "er zijn" } });
+    fireEvent.keyDown(second, { key: "Enter" });
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${blockPath}/check`, expect.objectContaining({ body: JSON.stringify({ item: 0, answer: "Er is · er zijn" }) })));
+    // Once the check settles, Enter on the unchanged answer moves on.
+    await waitFor(() => { fireEvent.keyDown(second, { key: "Enter" }); expect(onAdvance).toHaveBeenCalledTimes(1); });
+    expect(vi.mocked(fetch).mock.calls.filter(([path]) => path === `${blockPath}/check`)).toHaveLength(1);
+  });
+
+  it("lists at most three prompts on the lesson page and keeps the answer set in a closed dialog", async () => {
+    const items = ["Een.", "Twee.", "Drie.", "Vier.", "Vijf."].map((prompt) => ({ prompt, authorsVersion: [], note: null }));
+    const long: LessonTopBlock = { ...practiceBlock, props: { data: JSON.stringify({ instruction: "Vertaal.", passage: { title: "Mijn huis", content: "Ik woon hier." }, items }) } };
+    const value = detail(); value.lessons = [{ ...value.lessons[0]!, document: { ...document, blocks: [long] } }];
+    const dialog = openPractice(value);
+    // Before the dialog opens, the page shows the instruction and the first three prompts only.
+    expect(await screen.findByText("Vertaal.")).toBeInTheDocument();
+    for (const prompt of ["Een.", "Twee.", "Drie."]) expect(screen.getByText(prompt)).toBeInTheDocument();
+    expect(screen.queryByText("Vier.")).not.toBeInTheDocument();
+    expect(screen.getByText("and 2 more questions")).toBeInTheDocument();
+    expect(screen.getByText("3 answers shared")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Publish answer set" })).not.toBeInTheDocument();
+    expect(screen.queryByText("Ik woon hier.")).not.toBeInTheDocument();
+    // The dialog holds the passage and one answer field per prompt.
+    const opened = await dialog;
+    expect(within(opened).getByText("Ik woon hier.")).toBeInTheDocument();
+    expect(within(opened).getByLabelText(/^5\. Vijf\./)).toBeInTheDocument();
+    expect(within(opened).getByRole("button", { name: "Publish answer set" })).toBeInTheDocument();
+  });
+
+  it("checks an answer on Enter, celebrating a match and showing the author's version for a miss", async () => {
+    await openPractice(detail());
+    const field = screen.getByLabelText(/^1\. … een kleine keuken\./);
+    const checks = () => vi.mocked(fetch).mock.calls.filter(([path]) => path === `${blockPath}/check`);
+    // Shift+Enter keeps a new line and checks nothing.
+    fireEvent.change(field, { target: { value: "Daar is" } });
+    fireEvent.keyDown(field, { key: "Enter", shiftKey: true });
+    expect(checks()).toHaveLength(0);
+    // A miss shows the author's version as a reference, which stays while the learner edits.
+    fireEvent.keyDown(field, { key: "Enter" });
+    expect(await screen.findByText("Er is")).toBeInTheDocument();
+    expect(screen.getByText(/can still be right/)).toBeInTheDocument();
+    expect(screen.queryByText("Matches the author’s version")).not.toBeInTheDocument();
+    fireEvent.change(field, { target: { value: "Er is" } });
+    expect(screen.getByText(/can still be right/)).toBeInTheDocument();
+    fireEvent.keyDown(field, { key: "Enter" });
+    expect(await screen.findByText("Matches the author’s version")).toBeInTheDocument();
+    expect(screen.queryByText(/can still be right/)).not.toBeInTheDocument();
+    expect(checks()[1]![1]).toMatchObject({ method: "POST", body: JSON.stringify({ item: 0, answer: "Er is" }) });
+    // Editing the answer clears the feedback until it is checked again.
+    fireEvent.change(field, { target: { value: "Er is een" } });
+    expect(screen.queryByText("Matches the author’s version")).not.toBeInTheDocument();
+  });
+
   it("shows prompts concealed, keeps a local answer draft, and reveals the thread with the author's version after publishing", async () => {
-    renderLessons(detail());
-    expect(screen.getByText("Vul in of vertaal.")).toBeInTheDocument();
+    await openPractice(detail());
+    expect(screen.getAllByText("Vul in of vertaal.").length).toBeGreaterThan(0);
     expect(screen.getByText("3 answers are concealed")).toBeInTheDocument();
     expect(screen.queryByText("Er zijn twee slaapkamers.")).not.toBeInTheDocument();
     expect(fetch).not.toHaveBeenCalledWith(`${blockPath}/discussion`, expect.anything());
@@ -83,7 +165,7 @@ describe("Practice blocks", () => {
   });
 
   it("reveals without answering", async () => {
-    renderLessons(detail());
+    await openPractice(detail());
     fireEvent.click(screen.getByRole("button", { name: "Reveal answers" }));
     expect(await screen.findByText("Er zijn twee slaapkamers.")).toBeInTheDocument();
     expect(fetch).not.toHaveBeenCalledWith(`${blockPath}/comments`, expect.anything());

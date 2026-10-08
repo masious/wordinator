@@ -1,6 +1,6 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
 import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
-import { courseApi, paragraph, seedLesson } from "./lessonSeed";
+import { courseApi, paragraph, seedLesson, openLesson } from "./lessonSeed";
 
 type Block = Record<string, unknown>;
 const columns = (...contents: Block[][]): Block => ({
@@ -39,6 +39,7 @@ test("an author makes columns by slash item and by dragging, and they survive a 
   await seedLesson(page, course.id, `${suffix} lesson`, [paragraph("Links."), paragraph("Rechts.")], { publish: false });
 
   await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
+  await openLesson(page);
   await page.getByRole("button", { name: "Edit lesson 1" }).click();
   const editor = page.locator(".bn-editor");
   await dragToRightEdge(page, editor.getByText("Rechts."), editor.locator('[data-node-type="blockContainer"]', { hasText: "Links." }));
@@ -75,6 +76,7 @@ test("the editor refuses a fourth column and readers see the published columns",
   await seedLesson(page, course.id, `${suffix} lesson`, [paragraph("Vier."), columns([paragraph("Een.")], [paragraph("Twee.")], [paragraph("Drie.")])], { publish: false });
 
   await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
+  await openLesson(page);
   await page.getByRole("button", { name: "Edit lesson 1" }).click();
   const editor = page.locator(".bn-editor");
   await expect(editorColumns(page)).toHaveCount(3);

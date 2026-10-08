@@ -22,8 +22,9 @@ Documentation is part of the definition of done:
 - Group content is private to current members, except that uploaded R2 images are intentionally public-by-URL.
 - The feed is strict reverse chronology. Do not add ranking, filtering, search, or feed pinning without an explicit product change.
 - Answer concealment prevents accidental spoilers; it is not authorization.
-- User content is plain text. Preserve line breaks, escape output, and link only safe `http`/`https` URLs.
-- No Tailwind, rich-text editor, analytics, third-party tracking, gamification, or AI features.
+- User content is plain text, except course lessons. Preserve line breaks, escape output, and link only safe `http`/`https` URLs.
+- Course lessons are the one rich-content surface: BlockNote documents restricted by the shared contracts to bold, italic, a token-mapped text palette, and safe links, as defined in `docs/courses.md`. Do not extend rich text or the BlockNote editor to posts, comments, or other surfaces.
+- No Tailwind, analytics, third-party tracking, or AI features.
 
 ## Planned repository shape
 

@@ -1,6 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
 import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_INVITATION_TOKEN, E2E_PASSWORD } from "./global-setup";
-import { courseApi, seedLesson } from "./lessonSeed";
+import { courseApi, seedLesson, openLesson } from "./lessonSeed";
 
 test("an author writes a rich lesson in the editor, publishes it, and another member reads it", async ({ browser, browserName }, testInfo) => {
   // Flaky in Chromium: after the colour menu closes, the coloured word is sometimes lost before publishing. Passes in WebKit.
@@ -24,6 +24,7 @@ test("an author writes a rich lesson in the editor, publishes it, and another me
   const coursePage = `/groups/${E2E_GROUP_ID}/courses/${course.id}`;
 
   await owner.goto(coursePage);
+  await openLesson(owner);
   await owner.getByRole("button", { name: "Edit lesson 1" }).click();
   const slash = async (query: string, option: string) => {
     await owner.keyboard.type(`/${query}`);
@@ -72,6 +73,7 @@ test("an author writes a rich lesson in the editor, publishes it, and another me
   await api(`/memberships/${memberships.pending.find((entry) => entry.displayName === readerName)!.id}`, { decision: "accept" }, "PATCH");
 
   await reader.goto(coursePage);
+  await openLesson(reader);
   await expect(reader.getByRole("heading", { name: "In de keuken" })).toBeVisible();
   await expect(reader.locator("strong", { hasText: "belangrijk" })).toBeVisible();
   await expect(reader.getByText("rood", { exact: true })).toHaveClass(/text-red/);

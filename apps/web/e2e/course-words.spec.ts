@@ -1,6 +1,7 @@
 import { expect, test } from "@playwright/test";
 import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
-import { courseApi, dialogue, example, paragraph, seedLesson, vocabulary } from "./lessonSeed";
+import { courseApi, dialogue, example, paragraph, seedLesson, vocabulary, openLesson } from "./lessonSeed";
+import { expectRecapFits, finishRecap, pageToWord } from "./wordRecap";
 
 // The learner journey seeds its lessons through the API like the other course specs; authoring words is covered below.
 test("a learner sees new words on the steps that introduce them and reviews them after finishing", async ({ page }, testInfo) => {
@@ -22,9 +23,11 @@ test("a learner sees new words on the steps that introduce them and reviews them
   await seedLesson(page, course.id, `${suffix} unfinished`, [vocabulary({ term: "de bus", meaning: "the bus" }), example("De bus komt.")]);
 
   await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
-  // The reader shows each vocabulary block in place.
-  await expect(page.getByRole("region", { name: "New words" }).first()).toContainText("het kaartje");
   await expect(page.getByRole("button", { name: "Review words" })).toHaveCount(0);
+  // The lesson page shows each vocabulary block in place.
+  await openLesson(page);
+  await expect(page.getByRole("region", { name: "New words" }).first()).toContainText("het kaartje");
+  await page.getByRole("link", { name: /^Back to / }).click();
 
   await page.getByRole("button", { name: "Start lesson 1" }).click();
   const player = page.getByRole("dialog");
@@ -45,13 +48,14 @@ test("a learner sees new words on the steps that introduce them and reviews them
 
   await expect(player.getByRole("heading", { name: "Lesson complete" })).toBeVisible();
   await player.getByRole("button", { name: "Review words" }).click();
-  await expect(player.getByText("Word 1 of 2")).toBeVisible();
-  await expect(player.getByRole("article", { name: "het kaartje" })).toContainText("de kaartjes");
+  await expect(player.getByText(/^Words? 1\b.* of 2$/)).toBeVisible();
+  const ticket = player.getByRole("article", { name: "het kaartje" });
+  await expect(ticket).toContainText("de kaartjes");
   await expect(player.getByText("the ticket")).toHaveCount(0);
-  await player.getByRole("button", { name: "Show meaning" }).click();
-  await expect(player.getByText("the ticket")).toBeVisible();
-  await player.getByRole("button", { name: "Next" }).click();
-  await player.getByRole("button", { name: "Back to the summary" }).click();
+  await ticket.getByRole("button", { name: "Show meaning" }).click();
+  await expect(ticket.getByText("the ticket")).toBeVisible();
+  await expectRecapFits(page, "lesson word recap");
+  await finishRecap(player, "Back to the summary");
   await player.getByRole("button", { name: "Back to the course" }).click();
 
   // The course recap covers the finished lesson only.
@@ -59,10 +63,9 @@ test("a learner sees new words on the steps that introduce them and reviews them
   await page.getByRole("button", { name: "Review words" }).click();
   const recap = page.getByRole("dialog", { name: "Review words" });
   await expect(recap.getByRole("article", { name: "het kaartje" })).toBeVisible();
-  await recap.getByRole("button", { name: "Next" }).click();
-  await expect(recap.getByRole("article", { name: "het spoor" })).toBeVisible();
+  await pageToWord(recap, "het spoor");
   await expect(recap.getByText("de bus")).toHaveCount(0);
-  await recap.getByRole("button", { name: "Back to the course" }).click();
+  await finishRecap(recap, "Back to the course");
   await expect(recap).toHaveCount(0);
 });
 
@@ -77,6 +80,7 @@ test("an author adds new words in the editor, fixes an empty meaning, and publis
   await seedLesson(page, course.id, `${suffix} lesson`, [example("Ik koop een kaartje.", "I buy a ticket.")], { publish: false });
 
   await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
+  await openLesson(page);
   await page.getByRole("button", { name: "Edit lesson 1" }).click();
   await page.locator('.bn-editor [data-content-type="example"] .bn-inline-content').first().click();
   await page.keyboard.press("End"); await page.keyboard.press("Enter");

@@ -1,6 +1,6 @@
 import { useState, type CSSProperties } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, LabelChip, PageContainer } from "../../ui";
+import { Button, LabelChip } from "../../ui";
 import { OverviewPath } from "./OverviewPath";
 import { overviewTotals, stopStatus, type LessonOverview as LessonOverviewData, type OverviewStop } from "./overviewModel";
 import { StopSlider } from "./StopSlider";
@@ -36,7 +36,7 @@ export function LessonOverview({ overview, reached, onReach }: { overview: Lesso
     { label: t("courses.overview.stats.questions"), done: totals.questions, total: overview.questions },
   ];
   return <main className={styles.page}>
-    <PageContainer>
+    <div className={styles.shell}>
       <header className={styles.header}>
         <div className={styles.intro}>
           <LabelChip>{t("courses.overview.eyebrow")}</LabelChip>
@@ -50,14 +50,15 @@ export function LessonOverview({ overview, reached, onReach }: { overview: Lesso
             <dd>{t("courses.overview.stats.value", { done: stat.done, total: stat.total })}</dd>
           </div>)}</dl>
           {next
-            ? <Button className={styles.action} onClick={() => setOpen(next)}>
-              {t(reached > next.start ? "courses.overview.continue" : "courses.overview.start", { title: next.title })}
-            </Button>
+            ? <div className={styles.next}>
+              <p><span className={styles.nextLabel}>{t("courses.overview.status.next")}</span>{next.title}</p>
+              <Button onClick={() => setOpen(next)}>{t(reached > next.start ? "courses.overview.continue" : "courses.overview.start")}</Button>
+            </div>
             : <p className={styles.complete}>{t("courses.overview.finishDone")}</p>}
         </section>
       </header>
       <OverviewPath overview={overview} reached={reached} onOpen={setOpen} />
-    </PageContainer>
+    </div>
     <ProgressSimulator reached={reached} total={overview.steps.length} onChange={onReach} />
     <StopSlider overview={overview} stop={open} reached={reached} onReach={onReach} onChangeStop={setOpen} onClose={() => setOpen(null)} />
   </main>;

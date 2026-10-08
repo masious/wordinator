@@ -226,6 +226,20 @@ describe("lesson document helpers", () => {
     expect(prose.kind === "content" && prose.blocks.map((block) => block.type)).toEqual(["paragraph", "bulletListItem", "image"]);
   });
 
+  it("never makes a step of dividers and blank paragraphs, and trims them from prose", () => {
+    const divider = () => ({ id: randomUUID(), type: "divider", props: {}, children: [] });
+    const steps = flattenToSteps(parse(
+      heading("Part one"), example("Ich sehe den Hund."), paragraph(""), divider(),
+      heading("Part two"), divider(), paragraph("Prose A"), divider(), paragraph("Prose B"), divider(), paragraph(""), callout("Hint"),
+      divider(), practice(),
+    ));
+    expect(steps.map((step) => [step.kind, step.heading])).toEqual([
+      ["example", "Part one"], ["content", "Part two"], ["callout", "Part two"], ["practiceItem", "Part two"], ["practiceItem", "Part two"],
+    ]);
+    const prose = steps[1]!;
+    expect(prose.kind === "content" && prose.blocks.map((block) => block.type)).toEqual(["paragraph", "divider", "paragraph"]);
+  });
+
   it("keys steps by block so a saved position survives unrelated edits", () => {
     const intro = paragraph("Intro"); const talk = dialogue(); const quiz = practice();
     const steps = flattenToSteps(parse(intro, talk, quiz));

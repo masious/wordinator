@@ -33,3 +33,9 @@ export async function seedLesson(page: Page, courseId: string, title: string, bl
   if (publish) await api(`${lessonPath}/publish`, { draftVersion: version });
   return lesson.id;
 }
+
+// Follows the course page's link to a lesson's own page, where its content and editor live.
+export async function openLesson(page: Page, number = 1) {
+  await page.getByRole("link", { name: new RegExp(`^Open lesson ${number}:`) }).click();
+  await expect(page).toHaveURL(/\/lessons\/[^/]+$/);
+}

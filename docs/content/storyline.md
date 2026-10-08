@@ -14,7 +14,7 @@ Places (keep consistent):
 - **Sofia's work**: a small IT company ("een klein IT-bedrijf") with an office ("het kantoor") near Utrecht Centraal. Work starts at nine.
 - **Café De Zwaluw**: fictional café on the Oudegracht where Noor works on Saturdays.
 - **De markt op het Vredenburg**: the real Saturday market in the centre. Henk's cheese stall ("de kaaskraam") is there.
-- **Kastanjestraat 14**: Sofia's new apartment, fictional street in the real neighbourhood **Lombok**, west of the centre. Henk lives on the first floor ("de eerste verdieping"), Sofia on the second ("de tweede verdieping"). The building has a lift. Nearby: the Kanaalstraat with many shops, a bakery, a supermarket, a pharmacy, the library, a park, the big mosque, Ahmed's bike shop, a tram/bus stop. Utrecht Centraal is about 15 minutes' walk.
+- **Kastanjestraat 14**: Sofia's new apartment, fictional street in the real neighbourhood **Lombok**, west of the centre. Henk lives on the first floor ("de eerste verdieping"), Sofia on the second ("de tweede verdieping"). The building has a lift. Nearby: the Kanaalstraat with many shops, a bakery, a supermarket, a pharmacy, the library, a park, the big mosque, Ahmed's bike shop, a bus stop in the Kanaalstraat opposite the supermarket (Lombok has no tram). Utrecht Centraal is about 15 minutes' walk.
 
 ## Cast
 
@@ -50,12 +50,17 @@ Minor or unnamed speakers allowed: "Ober", "Serveerster", "Verkoper", "Verkoopst
 | 14-b | zo 18 oktober | Furnishing: where everything stands, lies, hangs; Henk and Tijger the cat drop by. | Sofia, Henk, Noor |
 | 15-a | za 24 oktober | Henk shows Sofia Lombok: what is where and what you can do there. | Sofia, Henk, Ahmed (brief) |
 | 15-b | zo 25 oktober | Directions: Noor visits for the first time and asks the way; a tourist asks Sofia the way to the station. | Sofia, Noor, Toerist |
-| 16-a | ma 26 – di 27 oktober | Commuting by tram and bus; a train trip to Amsterdam with Daan for a client meeting (checking in, changing trains). | Sofia, Daan, Conducteur |
-| 16-b | wo 28 – za 31 oktober | Sofia plans to buy a bike; she goes to Ahmed's shop and plans her weekend. | Sofia, Ahmed, Daan |
-| 17-a | early november | First real Dutch autumn: rain, wind, Henk's weather talk; Sofia misses Valencia. | Sofia, Henk, Noor |
+| 16-a | ma 26 – di 27 oktober | Commuting on foot or by bus; a train trip to Amsterdam with Daan for a client meeting (checking in, delay, changing to tram 2 in Amsterdam). | Sofia, Daan, Conducteur |
+| 16-b | wo 28 – za 31 oktober | Sofia plans to buy a bike; on za 31 oktober she buys a second-hand bike at Ahmed's shop and returns Noor's key. | Sofia, Ahmed, Daan |
+| 17-a | ma 2 – wo 4 november | First real Dutch autumn: rain, wind, Henk's weather talk; Sofia misses Valencia. | Sofia, Henk, Noor |
 | 17-b | za 7 november | A day at the sea (Zandvoort) with Noor and Daan: cycling in the wind, lovely weather then a shower. | Sofia, Noor, Daan |
 | 18-a | za 14 november | Sofia needs winter clothes; Noor takes her shopping in the centre. | Sofia, Noor, Verkoopster |
 | 18-b | za 14 november | Choosing between coats; comparing; Sofia buys a warm coat. Ends with Sofia settled in her new home at the start of winter. | Sofia, Noor, Verkoopster, Henk (end) |
 
-Fixed story facts (never contradict): Sofia has no bike until 16-b (she walks, takes the tram or bus). Henk's cat is called Tijger. Henk has no surname in the lessons; Sofia calls him meneer, then Henk. Noor's flat has one bathroom and a small kitchen. Sofia's new apartment matches the row-13 listing exactly. Sofia's mother lives in Valencia (she calls her on Sundays). Daan always arrives early; Sofia is often a little late.
+Fixed story facts (never contradict): Sofia has no bike until za 31 oktober (16-b); before that she walks or takes the bus. There is no tram in Lombok or anywhere in Sofia's Utrecht; the only tram in the story is tram 2 in Amsterdam (16-a). Henk's cat is called Tijger. Henk has no surname in the lessons; Sofia calls him meneer, then Henk. Noor's flat has one bathroom and a small kitchen. Sofia's new apartment matches the row-13 listing exactly. Sofia's mother lives in Valencia (she calls her on Sundays). Daan always arrives early; Sofia is often a little late.
+
+Fixed facts from 16-a … 17-a (accepted 2026-10-08):
+- **16-a**: Sofia usually walks to the office; when late she takes the bus from the Kanaalstraat to Utrecht Centraal. di 27 oktober: train 8.16 from spoor 7, five minutes' delay, via Amsterdam Amstel to Amsterdam Centraal (~8.50), then tram 2 (stop in front of the station, ~15 min) to the client at 10.00; back at 15.00, in Utrecht 15.30. Daan has an ov-chipkaart; Sofia checks in with her bank card.
+- **16-b**: za 31 oktober 10:00 Sofia buys a black second-hand bike from Ahmed (a fietsenmaker) for €150 plus a €25 lock (€175, card), three months' guarantee, bell repaired. Afterwards she returns her key to Noor and eats at Noor's. Fleur is back zo 1 november. On Sunday Sofia takes the last empty boxes away and calls her mother at 11:00. Daan and Lotte cycle on Saturday and eat at Daan's mother's on Sunday. From the next week Sofia cycles to the office.
+- **17-a**: ma 2 november Sofia cycles home in the rain without a raincoat; Henk advises a raincoat, not an umbrella. She buys a raincoat on di 3 november (no scene). wo 4 november Noor visits; they plan Zandvoort with Daan for za 7 november (forecast: sunny and dry in the morning, 12°, a shower in the afternoon). Valencia: 20° and sunny.
 

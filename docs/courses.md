@@ -1,6 +1,6 @@
 # Courses
 
-Status: delivered. C1 (course shell), C2 (lessons and content blocks), C3 (practice blocks and answer threads), C4 (feed presence), C5 (contributors), C6 (lesson player and progress), C6b (lesson positions), and C7 (lesson editor; see [lesson documents](#lesson-documents)) are complete. C8 (new words and recap) is approved and in progress; see [new words](#new-words-and-recap). Delivery phases live in the [roadmap](roadmap.md#course-phases).
+Status: delivered. C1 (course shell), C2 (lessons and content blocks), C3 (practice blocks and answer threads), C4 (feed presence), C5 (contributors), C6 (lesson player and progress), C6b (lesson positions), C7 (lesson editor; see [lesson documents](#lesson-documents)), and C8 (new words and recap; see [new words](#new-words-and-recap)) are complete. C9 ([word bookmarks and the Words tab](words.md)) is approved and planned. Delivery phases live in the [roadmap](roadmap.md#course-phases).
 
 ## Purpose
 
@@ -133,7 +133,7 @@ Lesson images reuse the [public R2 image pipeline](architecture.md#images) under
 
 ## New words and recap
 
-Approved product change (C8), in progress. Lessons introduce vocabulary explicitly, each player step shows the words it introduces, and a learner can review every word from the lessons they have finished in one slideshow. C8 builds on [lesson documents](#lesson-documents) and ships after the C7 release.
+Delivered in C8 (2026-10-08). Lessons introduce vocabulary explicitly, each player step shows the words it introduces, and a learner can review every word from the lessons they have finished. C8 builds on [lesson documents](#lesson-documents). [Word bookmarks and the Words tab](words.md) (C9) build on it.
 
 ### Vocabulary block
 
@@ -172,7 +172,7 @@ A vocabulary block is not a step of its own. Its words appear in a New words pan
 
 ### Word recap
 
-- Recap is a slideshow in the player shell: one card per word showing the term and forms, with Show meaning revealing the meaning, example, and note. Back and Next move freely. Nothing is graded, recorded, or counted.
+- Recap shows pages of [word cards](words.md#word-cards) (C9a) in the player shell: as many as fit without scrolling, each flipping in place to its meaning, example, and note. Nothing is graded, recorded, or counted. C9b adds [bookmarks](words.md#bookmarks) to the cards and the New words lists.
 - **Lesson recap:** the player's completion screen offers Review words when the run had words. It uses the words of that run, once each in step order, so previews work too. Back to the summary returns to the completion screen.
 - **Course recap:** the course page offers Review words, with the word count, to a member who has finished at least one published lesson with words. It covers the currently published lessons the viewer has [finished](#progress), in lesson order and then document order. A term repeated across lessons (compared trimmed and case-insensitively) shows once, at its first occurrence.
 - The course recap follows course visibility: archived courses offer no recap except to those who can still see them.
@@ -180,20 +180,23 @@ A vocabulary block is not a step of its own. Its words appear in a New words pan
 
 ## Practice answers
 
-Answers are collaborative, not graded. Participants decide together whether an answer works, because a sentence can have several valid translations.
+Answers are collaborative, not graded. Participants decide together whether an answer works, because a sentence can have several valid translations. The private answer check below confirms a match with the author's version, or shows that version as a reference; it never marks an answer wrong.
 
 - Each practice block has its own answer thread, built on the shared [discussion and reaction system](discussions-and-reactions.md#course-practice-threads).
 - A top-level answer is one ordered answer set covering every item, like a reading answer set. Blank entries are allowed.
 - Answers begin concealed and are revealed only by explicit consent, exactly like post answers.
-- The author's version and item notes are delivered only with the revealed thread. They are a reference for discussion, never a verdict.
-- There is no automatic matching, no positive-match signal, no pinning, and no score. Answering is never required to finish a lesson; [progress](#lesson-player-and-progress) counts finished lessons, not answers.
+- The author's version and item notes are delivered with the revealed thread. They are a reference for discussion, never a verdict. The [answer check](#practice-answers) also returns one item's author's version, without its note, after the learner checks an answer that does not match it.
+- There is no pinning and no score. Answering is never required to finish a lesson; [progress](#lesson-player-and-progress) counts finished lessons, not answers.
+- **Answer check** (approved product change, 2026-10-08). Pressing Enter in an item's answer field checks that answer against the item's author's version through the API. A match shows a brief animated "Matches the author's version" confirmation, and editing the answer clears it. A miss shows the author's version as a reference, with a reminder that the answer can still be right because a sentence can be translated in several ways; it stays while the learner edits, until the next check. The API returns the version only for a miss, and an item with no author's version shows nothing on a miss. Shift+Enter adds a line break. Checks are never stored, never shown to others, and never count toward progress; shared answer sets still carry no match result.
+- Matching ignores case, punctuation, quote style, and spacing. An open item matches its single author's version. A fill-in item matches either its blank entries in order or the whole prompt with its blanks filled; an item with no author's version, or with any blank left without one, never matches.
+- A fill-in item with more than one blank is answered in one field per blank. Enter in a blank moves to the next blank, and Enter in the last blank checks the item. The blanks are stored as one item answer joined by ` · `, the separator the author's version list uses, so answer sets keep one entry per item.
 - Answer sets snapshot each item prompt so they stay understandable after the practice is edited. Editing an answer set keeps those snapshotted prompts; a new answer set follows the current items.
 - Unsent answer sets are local drafts with draft kind `practice-answer` and the block ID as target.
 - Practice-thread activity creates no notifications.
 
 ## Lesson player and progress
 
-Approved product change (C6): a light, non-competitive layer of progress on top of courses. It is the one deliberate exception to the [no-gamification non-goal](what_is_it.md#explicit-non-goals); points, streaks, badges, rankings, and leaderboards remain out of scope.
+Approved product change (C6): a light, non-competitive layer of progress on top of courses.
 
 ### Lesson player
 
@@ -203,16 +206,16 @@ The course page has one player action, in a progress card at the top of the page
 2. **Start lesson** — otherwise the first lesson in the outline the viewer has not finished.
 3. **Practise again** — otherwise, when every lesson is finished, the first lesson.
 
-Only published lessons are chosen while the course has any; an editor's unpublished lesson is chosen only when nothing is published, and then plays as a preview, which the card says: it starts from the beginning and saves no place or progress. Editors still read unpublished drafts inline as previews.
+Only published lessons are chosen while the course has any; an editor's unpublished lesson is chosen only when nothing is published, and then plays as a preview, which the card says: it starts from the beginning and saves no place or progress. Editors still read unpublished drafts on the [lesson page](#lesson-pages) as previews.
 
-The player is focused and step-by-step, with a progress bar and a step counter. Below `48em` the player is a full-screen sheet, and the course page's lesson outline collapses behind a Lessons toggle that closes again once a lesson is chosen.
+The player is focused and step-by-step, with a progress bar and a step counter. Below `48em` the player is a full-screen sheet.
 
-- Steps come from the published document in order (`flattenToSteps` in the contracts). A `heading` is not a step; it labels the steps that follow it.
-- Consecutive prose under one heading (paragraphs, list items, images, and dividers) is one step; blank paragraphs alone make no step. A `callout` and an `example` are one step each. An example shows its translation and note with the sentence.
+- Steps come from the published document in order (`flattenToSteps` in the contracts). A `heading` is not a step; it labels the steps that follow it. The first step under a heading shows it as the stage's title, and later steps in that section show it as a small section label. A dialogue's lines share the title of the line that opens it.
+- Consecutive prose under one heading (paragraphs, list items, images, and dividers) is one step. Dividers and blank paragraphs only space prose out: they never make a step on their own and are trimmed from the start and end of a prose step. A `callout` and an `example` are one step each. An example shows its translation and note with the sentence.
 - A column list without dialogue or practice is one step, laid out as in the reader. A column list containing dialogue or practice is read column by column, block by block, with the rules above.
 - Each `dialogue` turn is a step: lines appear one after another, earlier lines stay visible and muted, and the newest line is emphasized.
-- Each `practice` item is a step that asks one question with one answer field. The instruction stays visible, and a passage is collapsible and open on the first item. Answers use the same local `practice-answer` draft as the lesson view, so either surface can continue a set. On the last item, a learner with at least one answer may share the set to the practice thread; otherwise it stays a private draft. Sharing follows the ordinary [practice answer](#practice-answers) rules and does not reveal the thread inside the player.
-- Steps are fixed when a run starts; a refetch during the run never moves the learner. Back and Next move freely. There is no timer and nothing is marked right or wrong.
+- Each `practice` item is a step that asks one question with one answer field. The instruction stays visible, and a passage is collapsible and open on the first item. Answers use the same local `practice-answer` draft as the lesson page's answer dialog, so either surface can continue a set. On the last item, a learner with at least one answer may share the set to the practice thread; otherwise it stays a private draft. Sharing follows the ordinary [practice answer](#practice-answers) rules and does not reveal the thread inside the player.
+- Steps are fixed when a run starts; a refetch during the run never moves the learner. Back and Next move freely. There is no timer and nothing is marked wrong; the [answer check](#practice-answers) confirms a match or shows the author's version as a reference. Next and Enter are one action: Enter outside a field or button acts as Next, and the player opens with Next focused, so pressing Enter repeatedly walks through the lesson. In a question step with a filled answer that has not been checked, Next (or Enter in the answer field) checks it and shows the feedback first, and the next press moves on; an empty or already-checked answer moves on at once.
 - A published lesson the learner has started opens at their [saved step](#lesson-positions) with a Picked up where you left off note and a Start over action. Previews always start at the first step.
 - After the last step the player shows a completion screen with the learner's course percentage and offers the next lesson or a return to the course.
 - Owners and contributors can run unpublished lessons as a preview. Previews never count toward progress, and the completion screen says so.
@@ -222,7 +225,7 @@ The player is focused and step-by-step, with a progress bar and a step counter. 
 - Finishing a published lesson in the player records one completion per member and lesson. Repeating the lesson keeps the first completion. Reading the lesson page alone does not record anything.
 - A member's course progress is the share of the currently published lessons they have worked through, as a whole percentage rounded down. Every published lesson weighs the same: a finished lesson counts whole, a started lesson counts as the furthest share of its steps the member has passed (see [lesson positions](#lesson-positions)), and an untouched lesson counts nothing. Unpublishing a lesson removes it from every count; republishing restores it. Editing a finished lesson does not reset it. Deleting a lesson deletes its completions and positions.
 - The course page shows a Progress panel, visible to everyone who can see the course, listing every active group member with their percentage and `completed of total` finished lessons. Members are listed by name, never ranked. The panel is hidden while the course has no published lessons or is archived.
-- The outline marks the viewer's finished lessons with a check.
+- The course page's lesson list marks the viewer's finished lessons with a check.
 - Former members disappear from the panel; their completions stay stored and reappear if they rejoin.
 - Archived courses refuse new completions (`409 COURSE_ARCHIVED`), and unpublished lessons refuse them (`409 LESSON_UNPUBLISHED`).
 - Progress creates no notifications and no feed posts.
@@ -242,12 +245,12 @@ Approved product change (C6b): the player remembers where a member stopped, so t
 
 ### Lesson overview (prototype)
 
-Experimental, not an approved product change. A design prototype at `/overview/<lesson-file-slug>` (for example `/overview/07-a-mijn-dag`) shows one lesson as a winding road of stops so a member can see how far they are and what remains before the lesson is finished. It is registered only in development builds: it reads authored lesson files straight from `content/` (normalized with `content/dutch-foundations/tools/normalize.ts` and validated with `lessonDocumentSchema`), and production builds bundle no lesson file and answer `404`.
+Experimental, not an approved product change. A design prototype at `/overview/<lesson-file-slug>` (for example `/overview/07-a-mijn-dag`) shows one lesson as a winding road of stops so a member can see how far they are and what remains before the lesson is finished. Below 48em the road winds down one lane with cards beside it; wider screens lay it out as a board of two to four columns that the road snakes across, turning in the page margin at each row end, with seeded (stable) bends and offsets so it looks hand-drawn rather than gridded. It is registered only in development builds: it reads authored lesson files straight from `content/` (normalized with `content/dutch-foundations/tools/normalize.ts` and validated with `lessonDocumentSchema`), and production builds bundle no lesson file and answer `404`.
 
-- **Stops.** One stop per heading section that has player steps. Level-3 headings are stops inside their level-1 or level-2 chapter, and a chapter with more than one stop gets a banner on the road. A stop is a Story (it has a dialogue), Practice, Reading (a practice with a passage), or Topic, and shows only its title, a one-line teaser (the instruction, the scene, or the section's grammar or important callout), its step, line, question, and new-word counts, and its first few terms.
+- **Stops.** One stop per heading section that has player steps. Level-3 headings are stops inside their level-1 or level-2 chapter, and a chapter with more than one stop gets a banner on the road (a tag above its first stop on the board). A stop is a Story (it has a dialogue), Practice, Reading (a practice with a passage), or Topic, and is collapsed to its title on one line. Hovering or focusing a stop opens its card over its neighbours, with a short reveal, without moving the road; the current stop stays open, and on touch screens a tap opens the slider directly. The open card shows a one-line teaser (the instruction, the scene, or the section's grammar or important callout), its step, line, question, and new-word counts, and its first few terms.
 - **Progress.** Progress is a step index, the same unit as [lesson positions](#lesson-positions): stops before it are Completed, the stop that holds it is Up next or In progress (with a ring for its share of steps), and later stops are Ahead. The road is coloured up to the current stop and ends at a finish line. The page header shows the lesson percentage and covered sections, steps, new words, and questions.
 - **Slider.** Opening a stop shows the [lesson player](#lesson-player)'s stage (`StepStage`) for that stop's steps only. Moving past the furthest step advances progress; reviewing a finished stop or previewing one ahead changes nothing. Practice answers stay in the dialog and are never shared.
-- **Prototype only.** Progress is simulated through the `step` search parameter and a floating range control; nothing is saved. Before it ships it needs an approved product decision (including how it sits with the [no-gamification non-goal](what_is_it.md#explicit-non-goals): it adds no points, streaks, badges, or rankings), a lesson-scoped route, data from the lesson read and position APIs, and the usual tests.
+- **Prototype only.** Progress is simulated through the `step` search parameter and a floating range control; nothing is saved. Before it ships it needs an approved product decision, a place on (or beside) the [lesson page](#lesson-pages), data from the lesson read and position APIs, and the usual tests.
 
 ## Contributors and publishing
 
@@ -282,11 +285,20 @@ Authors save small pieces, so they can return to a course at any time.
 - Reordering lessons sends the complete ordered ID list for the course, and the server rewrites positions in one D1 batch. A list that no longer matches the course's lessons is rejected. Blocks move inside the document.
 - The server-side draft is the durable draft. Local storage keeps only an unsaved edit of a lesson document, under the [draft-key rules](posts-and-feed.md#composer-and-drafts) with draft kind `course-lesson-doc` and the lesson ID as target.
 
+## Lesson pages
+
+Approved product change (2026-10-08): each lesson has its own page, and the course page no longer shows lesson content.
+
+- **Course page.** Below the course header, progress card, management, progress, and contributors, the course page lists every visible lesson in order: derived number (a check once the viewer has finished it), title, goal, and Finished or the saved step. Each entry links to the lesson page. Owners and contributors also see the Unpublished and Unpublished changes labels there, and the lesson tools that need no document: Edit details, Move up and Move down, and Delete, under the usual [permissions](#contributors-and-publishing). Add lesson stays on the course page and opens the new lesson's page. The course word recap stays on the course page.
+- **Lesson page.** `/groups/$groupId/courses/$courseId/lessons/$lessonId` shows one lesson: a link back to the course, the derived lesson number, title, goal, and Finished or the saved step, the published document (an editor's draft preview for an unpublished lesson), and links to the previous and next lessons. Owners and contributors edit the content there with Edit lesson. A lesson the viewer cannot see, or one outside the course, shows This lesson is not available. Reading the page records nothing.
+- **Practice on the lesson page.** A practice block is not answered inline. It shows its instruction, at most its first three prompts with an “and N more questions” note when it has more, how many answer sets were shared, and an Answer button. Answer opens a dialog (full screen below `48em`) with the instruction, any reading passage, the answer set composer, and the concealed thread, all following the [practice answer](#practice-answers) rules. Each opening starts concealed.
+- The player stays on the course page's progress card.
+
 ## Reading and loading
 
 - The course library lists the group's courses that the viewer may see, newest first. Library filtering by level is permitted because the library is not the feed.
 - A course read returns the full outline (lesson IDs, titles, goals, positions, published state) plus the documents of the first three visible lessons.
-- Further lessons load by ID as the reader advances.
+- The lesson page and the player read further lessons by ID (`GET .../lessons/:lessonId`), reusing a lesson the course read already returned.
 - Learner payloads never include authors' versions or item notes. Editors receive them for editing.
 
 ## Feed presence
@@ -311,4 +323,4 @@ Courses are archived, not hard-deleted. The owner or group creator may archive a
 - Text-to-speech playback and interactive role-play dialogues
 - Feed posts for course updates
 - Course-specific notifications beyond contributor requests
-- A Words tab in the main navigation for practising recently learnt words across courses. Per-member review scheduling would be progress tracking and needs its own product exception under the [no-gamification rule](what_is_it.md#explicit-non-goals); "Practice" is not used as its name because it already means practice blocks.
+- Review scheduling for bookmarked words in the [Words tab](words.md#words-tab)

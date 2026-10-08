@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import fixture from "../../../test/fixtures/courses/dutch-foundations-part-iii.json";
 import {
-  COURSE_DIALOGUE_TURNS_MAX, COURSE_PRACTICE_ITEMS_MAX, COURSE_SPEAKER_MAX, courseBlockContentSchema, courseBlockKindSchema, courseInputSchema,
+  answerMatches, COURSE_DIALOGUE_TURNS_MAX, COURSE_PRACTICE_ITEMS_MAX, COURSE_SPEAKER_MAX, courseBlockContentSchema, courseBlockKindSchema, courseInputSchema,
   createPracticeCommentRequestSchema, lessonInputSchema, practicePayloadSchema, reorderRequestSchema, splitPracticePayload, updateLessonRequestSchema,
   updatePracticeCommentRequestSchema,
 } from ".";
@@ -60,6 +60,20 @@ describe("course block contracts", () => {
     expect(split.payload).toEqual({ instruction: "Vertaal.", passage: null, items: [{ prompt: "There is a garden." }] });
     expect(JSON.stringify(split.payload)).not.toContain("Er is een tuin.");
     expect(split.reference.items[0]).toEqual({ prompt: "There is a garden.", authorsVersion: ["Er is een tuin."], note: "Word order" });
+  });
+
+  it("matches answers to the author's version, ignoring case, punctuation, and spacing", () => {
+    const open = { prompt: "There is a garden.", authorsVersion: ["Er is een tuin."] };
+    expect(answerMatches(open, "er is   een „tuin“")).toBe(true);
+    expect(answerMatches(open, "Er is een tuin!")).toBe(true);
+    expect(answerMatches(open, "Een tuin is er.")).toBe(false);
+    expect(answerMatches(open, " ")).toBe(false);
+    expect(answerMatches({ prompt: "There is a garden.", authorsVersion: [] }, "Er is een tuin.")).toBe(false);
+    const fill = { prompt: "… een kleine keuken, … drie kamers.", authorsVersion: ["Er is", "er zijn"] };
+    expect(answerMatches(fill, "er is, er zijn")).toBe(true);
+    expect(answerMatches(fill, "Er is een kleine keuken, er zijn drie kamers.")).toBe(true);
+    expect(answerMatches(fill, "er is")).toBe(false);
+    expect(answerMatches({ prompt: "… een … keuken.", authorsVersion: ["Er is", null] }, "Er is")).toBe(false);
   });
 
   it("accepts practice answer sets and plain-text replies only", () => {

@@ -24,6 +24,7 @@ import { Route as GroupsGroupIdSettingsIndexRouteImport } from './routes/groups.
 import { Route as GroupsGroupIdSettingsAccountRouteImport } from './routes/groups.$groupId_.settings.account'
 import { Route as GroupsGroupIdSettingsGroupRouteImport } from './routes/groups.$groupId_.settings.group'
 import { Route as GroupsGroupIdSettingsMembersRouteImport } from './routes/groups.$groupId_.settings.members'
+import { Route as GroupsGroupIdCoursesCourseIdLessonsLessonIdRouteImport } from './routes/groups.$groupId_.courses_.$courseId_.lessons.$lessonId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -108,6 +109,12 @@ const GroupsGroupIdSettingsMembersRoute =
     path: '/groups/$groupId/settings/members',
     getParentRoute: () => rootRouteImport,
   } as any)
+const GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute =
+  GroupsGroupIdCoursesCourseIdLessonsLessonIdRouteImport.update({
+    id: '/groups/$groupId_/courses_/$courseId_/lessons/$lessonId',
+    path: '/groups/$groupId/courses/$courseId/lessons/$lessonId',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -125,6 +132,7 @@ export interface FileRoutesByFullPath {
   '/groups/$groupId/settings/group': typeof GroupsGroupIdSettingsGroupRoute
   '/groups/$groupId/settings/members': typeof GroupsGroupIdSettingsMembersRoute
   '/groups/$groupId/settings/': typeof GroupsGroupIdSettingsIndexRoute
+  '/groups/$groupId/courses/$courseId/lessons/$lessonId': typeof GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -142,6 +150,7 @@ export interface FileRoutesByTo {
   '/groups/$groupId/settings/group': typeof GroupsGroupIdSettingsGroupRoute
   '/groups/$groupId/settings/members': typeof GroupsGroupIdSettingsMembersRoute
   '/groups/$groupId/settings': typeof GroupsGroupIdSettingsIndexRoute
+  '/groups/$groupId/courses/$courseId/lessons/$lessonId': typeof GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -160,6 +169,7 @@ export interface FileRoutesById {
   '/groups/$groupId_/settings/group': typeof GroupsGroupIdSettingsGroupRoute
   '/groups/$groupId_/settings/members': typeof GroupsGroupIdSettingsMembersRoute
   '/groups/$groupId_/settings/': typeof GroupsGroupIdSettingsIndexRoute
+  '/groups/$groupId_/courses_/$courseId_/lessons/$lessonId': typeof GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -179,6 +189,7 @@ export interface FileRouteTypes {
     | '/groups/$groupId/settings/group'
     | '/groups/$groupId/settings/members'
     | '/groups/$groupId/settings/'
+    | '/groups/$groupId/courses/$courseId/lessons/$lessonId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -196,6 +207,7 @@ export interface FileRouteTypes {
     | '/groups/$groupId/settings/group'
     | '/groups/$groupId/settings/members'
     | '/groups/$groupId/settings'
+    | '/groups/$groupId/courses/$courseId/lessons/$lessonId'
   id:
     | '__root__'
     | '/'
@@ -213,6 +225,7 @@ export interface FileRouteTypes {
     | '/groups/$groupId_/settings/group'
     | '/groups/$groupId_/settings/members'
     | '/groups/$groupId_/settings/'
+    | '/groups/$groupId_/courses_/$courseId_/lessons/$lessonId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -231,6 +244,7 @@ export interface RootRouteChildren {
   GroupsGroupIdSettingsGroupRoute: typeof GroupsGroupIdSettingsGroupRoute
   GroupsGroupIdSettingsMembersRoute: typeof GroupsGroupIdSettingsMembersRoute
   GroupsGroupIdSettingsIndexRoute: typeof GroupsGroupIdSettingsIndexRoute
+  GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute: typeof GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -340,6 +354,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GroupsGroupIdSettingsMembersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/groups/$groupId_/courses_/$courseId_/lessons/$lessonId': {
+      id: '/groups/$groupId_/courses_/$courseId_/lessons/$lessonId'
+      path: '/groups/$groupId/courses/$courseId/lessons/$lessonId'
+      fullPath: '/groups/$groupId/courses/$courseId/lessons/$lessonId'
+      preLoaderRoute: typeof GroupsGroupIdCoursesCourseIdLessonsLessonIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -359,6 +380,8 @@ const rootRouteChildren: RootRouteChildren = {
   GroupsGroupIdSettingsGroupRoute: GroupsGroupIdSettingsGroupRoute,
   GroupsGroupIdSettingsMembersRoute: GroupsGroupIdSettingsMembersRoute,
   GroupsGroupIdSettingsIndexRoute: GroupsGroupIdSettingsIndexRoute,
+  GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute:
+    GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

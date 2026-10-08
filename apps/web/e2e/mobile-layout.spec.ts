@@ -1,6 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
 import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
-import { courseApi, dialogue, example, paragraph, practice, seedLesson, vocabulary } from "./lessonSeed";
+import { courseApi, dialogue, example, openLesson, paragraph, practice, seedLesson, vocabulary } from "./lessonSeed";
+import { expectRecapFits, pageToWord } from "./wordRecap";
 
 const userId = "10000000-0000-4000-8000-000000000001";
 const group = `/groups/${E2E_GROUP_ID}`;
@@ -185,30 +186,29 @@ test("mobile composer is a full-screen sheet with sticky title and action bars",
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-composer.png` });
 });
 
-test("mobile course page collapses the lesson outline behind a toggle", async ({ page }) => {
-  const course = await page.request.post(`/api/groups/${E2E_GROUP_ID}/courses`, { data: { title: "Outline course", summary: "Two lessons.", level: null, intendedLearner: null } });
-  expect(course.ok()).toBe(true);
-  const { course: { id: courseId } } = await course.json() as { course: { id: string } };
-  for (const title of ["Er is een huis", "Waar is de kat?"]) {
-    const lesson = await page.request.post(`/api/groups/${E2E_GROUP_ID}/courses/${courseId}/lessons`, { data: { title, goal: null } });
-    expect(lesson.ok()).toBe(true);
-  }
+test("mobile course page lists lessons that open their own page", async ({ page }) => {
+  const api = courseApi(page);
+  const { course } = await api<{ course: { id: string } }>("/courses", { title: "Outline course", summary: "Two lessons." });
+  await api(`/courses/${course.id}/visibility`, { status: "published" });
+  await seedLesson(page, course.id, "Er is een huis", [paragraph("Het huis is groot.")]);
+  await seedLesson(page, course.id, "Waar is de kat?", [practice("Vertaal de zinnen.", ["One.", "Two.", "Three.", "Four with a much longer prompt that has to wrap on a narrow phone screen."].map((prompt) => ({ prompt })))]);
 
-  await page.goto(`${group}/courses/${courseId}`, { waitUntil: "networkidle" });
-  const outline = page.getByRole("navigation", { name: "Lessons" });
-  const toggle = outline.getByRole("button", { name: /Lessons\s*2 lessons/ });
-  await expect(toggle).toHaveAttribute("aria-expanded", "false");
-  await expect(outline.getByRole("list")).toBeHidden();
-  await expectNoHorizontalOverflow(page, "course with collapsed outline");
-  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-course-outline.png` });
+  await page.goto(`${group}/courses/${course.id}`, { waitUntil: "networkidle" });
+  const lessons = page.getByRole("region", { name: "Lessons" });
+  await expect(lessons.getByRole("link")).toHaveCount(2);
+  await expect(page.getByText("Het huis is groot.")).toHaveCount(0);
+  await expectNoHorizontalOverflow(page, "course lesson list");
+  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-course-lessons.png` });
 
-  await toggle.click();
-  await expect(toggle).toHaveAttribute("aria-expanded", "true");
-  await expect(outline.getByRole("list")).toBeVisible();
-  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-course-outline-open.png` });
-  await outline.getByRole("button", { name: "Waar is de kat?" }).click();
-  await expect(toggle).toHaveAttribute("aria-expanded", "false");
-  await expect(page.getByRole("heading", { level: 2, name: "Waar is de kat?" })).toBeInViewport();
+  await openLesson(page, 2);
+  await expect(page.getByRole("heading", { level: 1, name: "Waar is de kat?" })).toBeVisible();
+  await expect(page.getByText("and 1 more question")).toBeVisible();
+  await expect(page.getByRole("link", { name: "Previous: Er is een huis" })).toBeVisible();
+  await expectNoHorizontalOverflow(page, "lesson page");
+  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-lesson-page.png` });
+  await page.getByRole("button", { name: "Answer", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Answer the practice" }).getByRole("button", { name: "Publish answer set" })).toBeVisible();
+  await expectNoHorizontalOverflow(page, "practice answer dialog");
 });
 
 test("mobile lesson player stays within the viewport at every step", async ({ page }) => {
@@ -263,12 +263,14 @@ test("mobile new words panel and word recap stay within the viewport", async ({ 
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-player-words.png` });
   await player.getByRole("button", { name: "Finish lesson" }).click();
   await player.getByRole("button", { name: "Review words" }).click();
-  await player.getByRole("button", { name: "Show meaning" }).click();
-  await expect(player.getByText("the platform", { exact: true })).toBeVisible();
+  const platform = player.getByRole("article", { name: "het perron" });
+  await platform.getByRole("button", { name: "Show meaning" }).click();
+  await expect(platform.getByText("the platform", { exact: true })).toBeVisible();
   await expectNoHorizontalOverflow(page, "lesson word recap");
-  await player.getByRole("button", { name: "Next" }).click();
-  await expect(player.getByRole("article", { name: "de overstapmogelijkheid" })).toBeVisible();
+  await expectRecapFits(page, "lesson word recap");
+  await pageToWord(player, "de overstapmogelijkheid");
   await expectNoHorizontalOverflow(page, "lesson word recap long term");
+  await expectRecapFits(page, "lesson word recap long term");
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-word-recap.png` });
 });
 
@@ -280,6 +282,7 @@ test("mobile lesson reader stacks columns", async ({ page }) => {
   await seedLesson(page, course.id, "Links en rechts", [{ id: crypto.randomUUID(), type: "columnList", props: {}, children: [column("De linker kolom met een zin."), column("De rechter kolom met een zin.")] }]);
 
   await page.goto(`${group}/courses/${course.id}`, { waitUntil: "networkidle" });
+  await openLesson(page);
   const left = page.getByText("De linker kolom met een zin.", { exact: true });
   const right = page.getByText("De rechter kolom met een zin.", { exact: true });
   await expect(right).toBeVisible();

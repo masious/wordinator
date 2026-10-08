@@ -25,7 +25,7 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | 5 | Possessives mijn/jouw/zijn/haar; de/het intro | Part I | 07-a (ons/onze, jullie, hun) | assumed | |
 | 6 | Adjectives; de/het + adjective basics | Part I | 13-2, 12-a, 18-a | assumed | Full ending system in 18-a. |
 | 7 | Present tense plural | 07-a | — | covered | |
-| 7 | Separable verbs (introduction) | 07-b | — | covered | Deepened in 16-a. |
+| 7 | Separable verbs (introduction) | 07-b | 15-b, 16-a | covered | Deepened in 16-a. |
 | 8 | Telling time | 08-a | — | covered | |
 | 8 | om, van … tot; inversion after time | 08-b | — | covered | |
 | 9 | Days, months, dates; ordinals | 09-a | — | covered | |
@@ -39,9 +39,9 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | 14 | staan/liggen/zitten (+ hangen); leggen/zetten/steken action pairs | 14-b | — | covered | Published as the standalone mini-course "Leggen of zetten?". |
 | 15 | kunnen | 15-a | — | covered | |
 | 15 | Directions; imperative | 15-b | — | covered | |
-| 16 | Separable verbs in depth | — | — | missing (planned: 16-a) | |
-| 16 | gaan + infinitive | — | — | missing (planned: 16-b) | |
-| 17 | Impersonal het (weather) | — | — | missing (planned: 17-a) | |
+| 16 | Separable verbs in depth | 16-a | 16-b (separable infinitive after gaan) | covered | All positions, separable infinitive after kunnen/mogen, stress rule. Participles (ingecheckt) not taught. |
+| 16 | gaan + infinitive | 16-b | 17-a (Het gaat regenen.) | covered | |
+| 17 | Impersonal het (weather) | 17-a | — | covered | Weather verbs, het is + adjective, seasons with in de. |
 | 17 | Adjective vs adverb | — | — | missing (planned: 17-b) | |
 | 18 | Adjective endings; colours | — | — | missing (planned: 18-a) | |
 | 18 | Comparison (introduction) | — | — | missing (planned: 18-b) | Comparative + dan, even/net zo … als. Superlative deferred to row 32. |
@@ -75,7 +75,7 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | Frequency adverbs (altijd, vaak, soms, nooit) and their position | 07-a | — | covered | |
 | Plural possessives ons/onze, jullie, hun | 07-a | — | covered | |
 | 's ochtends / 's middags / 's avonds / 's nachts | 07-a | 08-a | covered | |
-| Inseparable prefixes (be-, ver-, ont-, her-, ge-, er-) | 07-b | — | partial (continues: 16-a) | |
+| Inseparable prefixes (be-, ver-, ont-, her-, ge-, er-) | 07-b | 16-a | covered | 16-a: stress rule, never split. |
 | Ordinal numbers | 09-a | — | covered | |
 | jarig zijn, birthday customs | 09-a | 09-b | covered | |
 | Units singular after numbers; no "of" in quantities | 10-b | — | covered | |
@@ -88,6 +88,8 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | er + positional verb | 14-b | — | covered | |
 | Action → state position pairs (leggen→liggen, zetten→staan/zitten, steken→zitten, hangen→hangen) | 14-b | — | covered | Published as the standalone mini-course "Leggen of zetten?". |
 | weten (vocabulary) | 15-b | — | covered | |
-| worden ("het wordt koud") | — | — | missing (planned: 17-a) | |
+| worden ("het wordt koud") | 17-a | — | partial | Present forms and het wordt + adjective/number only; worden as passive/other uses later. |
+| met + transport; lopen vs rennen | 16-a | 16-b | covered | |
+| Seasons (in de lente/zomer/herfst/winter) | 17-a | — | covered | |
 | Intensifiers heel, erg, best, een beetje, te | — | — | missing (planned: 17-b) | |
 | Non-inflecting adjectives (oranje, roze, -en materials) | — | — | missing (planned: 18-a) | |

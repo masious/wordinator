@@ -33,7 +33,7 @@
               "term": "het weer",
               "meaning": "the weather",
               "example": "Wat voor weer is het?",
-              "note": "New meaning: in 07-b weer meant again. het weer (the weather) is a het-word.",
+              "note": "New meaning: in 07-b weer meant again (Het regent weer = it is raining again). Met in 15-a in Mooi weer, hè? het weer is a het-word.",
               "id": "4465280d-4ac1-4bac-8578-b11ad812815d"
             }
           ]
@@ -81,7 +81,7 @@
             "italic": true
           }
         },
-        "), verbs blue, an infinitive at the end red, time expressions orange and places purple. The new form is bold."
+        "), verbs blue, an infinitive at the end red, time expressions orange, places purple and the de-word article pink. The new form is bold."
       ],
       "id": "29468b20-b091-4daf-ae86-04261e3d0db1"
     },
@@ -238,7 +238,8 @@
               "term": "de zon",
               "meaning": "the sun",
               "example": "In Valencia schijnt de zon.",
-              "id": "27931781-f9b1-4783-b33f-883dd4ef48cf"
+              "id": "27931781-f9b1-4783-b33f-883dd4ef48cf",
+              "note": "Met in 15-a in the chunk in de zon zitten."
             },
             {
               "term": "missen",
@@ -276,7 +277,7 @@
     {
       "type": "paragraph",
       "content": [
-        "Henk uses ",
+        "Henk and Sofia use ",
         {
           "text": "het",
           "styles": {
@@ -1224,11 +1225,19 @@
             "textColor": "blue"
           }
         },
-        " de ",
+        " ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
         {
           "text": "temperatuur",
           "styles": {
-            "bold": true
+            "bold": true,
+            "textColor": "green"
           }
         },
         "? ",
@@ -1401,7 +1410,14 @@
             "textColor": "blue"
           }
         },
-        " veel wolken ",
+        " ",
+        {
+          "text": "veel wolken",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
         {
           "text": "vandaag",
           "styles": {
@@ -2222,7 +2238,7 @@
     {
       "type": "paragraph",
       "content": [
-        "Wednesday 4 November. Noor visits Sofia in Lombok. On Saturday they want to go to Zandvoort, a town by the sea, with Daan. Sofia checks the weather on her phone."
+        "Wednesday 4 November. Noor visits Sofia in Lombok. On Tuesday Sofia bought a raincoat. On Saturday they want to go to Zandvoort, a town by the sea, with Daan. Sofia checks the weather on her phone."
       ],
       "id": "b283ad63-67fa-4255-8b6f-cf33ffd24d2b"
     },
@@ -2268,7 +2284,7 @@
           },
           {
             "speaker": "Sofia",
-            "text": "Haha, dat zegt Henk ook altijd! En zaterdag kijken we om twaalf uur op de buienradar."
+            "text": "Haha, dat zegt Henk ook altijd! En zaterdag kijken we eerst op de buienradar."
           }
         ]
       },
@@ -2306,6 +2322,20 @@
               "example": "Zaterdag kijken we op de buienradar.",
               "note": "A live map of showers for the next two hours. Many Dutch people check it before they cycle.",
               "id": "af3b6f20-8ab9-485d-a904-3e5eff9ed56f"
+            },
+            {
+              "term": "lekker weer",
+              "meaning": "nice weather",
+              "example": "Het wordt twaalf graden. Lekker weer!",
+              "note": "Also mooi weer (15-a). The opposite: slecht weer.",
+              "id": "62153fb8-b746-4649-97d0-9284d677466d"
+            },
+            {
+              "term": "de kleding",
+              "meaning": "clothing, clothes",
+              "example": "Er is geen slecht weer, alleen slechte kleding.",
+              "note": "No plural. More clothes words in 18-a.",
+              "id": "ab7a0fbf-669e-47cd-9965-dc461effce42"
             }
           ]
         }
@@ -2352,7 +2382,14 @@
             "bold": true
           }
         },
-        ": maybe you can wait ten minutes and stay dry. The national weather institute is the KNMI: ",
+        " to see if they can wait ten minutes and stay dry. A favourite saying: ",
+        {
+          "text": "Er is geen slecht weer, alleen slechte kleding.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " The national weather institute is the KNMI: ",
         {
           "type": "link",
           "href": "https://www.knmi.nl",
@@ -2718,7 +2755,7 @@
               "note": "At the start of a sentence: 's Ochtends with a capital O."
             },
             {
-              "prompt": "Put in order: het / ? / waait / buiten",
+              "prompt": "Put in order (question): het / waait / buiten",
               "authorsVersion": [
                 "Waait het buiten?"
               ],
@@ -2729,7 +2766,7 @@
               "authorsVersion": [
                 "In de zomer schijnt de zon vaak in Valencia."
               ],
-              "note": "Season first, then the verb, then the subject de zon."
+              "note": "Season first, then the verb, then the subject de zon. Also fine: In Valencia schijnt de zon in de zomer vaak. De zon schijnt in de zomer vaak in Valencia."
             }
           ]
         }
