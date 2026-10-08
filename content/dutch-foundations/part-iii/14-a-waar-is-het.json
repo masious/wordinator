@@ -1,0 +1,3119 @@
+{
+  "title": "Waar is het?",
+  "goal": "Say where things are with prepositions of place, and refer to things with hij, het and ze.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Waar is het?",
+      "id": "614d96a3-d6a5-401b-9279-a17459a43ea0"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Saturday 17 October: moving day. Sofia leaves her room at Noor's flat and moves into her own apartment at Kastanjestraat 14 in Lombok. Ingrid Visser hands over the keys, and Noor and Daan help with the boxes. In this lesson you will say ",
+        {
+          "text": "where",
+          "styles": {
+            "italic": true
+          }
+        },
+        " things are with prepositions of place, and refer to things with ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "93746730-3f02-4dd9-b985-3aae3d1a35fd"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: places and prepositions are ",
+        {
+          "text": "purple",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ", verbs ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", subjects ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", de-words and plurals (and their pronouns hij and ze) ",
+        {
+          "text": "pink",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " and het-words (and their pronoun het) ",
+        {
+          "text": "brown",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        ". The new form is bold."
+      ],
+      "id": "fb86a505-bab2-47f4-9a60-414d233a9040"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: de sleutels",
+      "id": "7de811f8-9097-45f1-b162-2a3fc778be4a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Ten o'clock in the morning. Sofia waits at the door of her new apartment on the second floor. Ingrid Visser, the landlady, is exactly on time. Daan has a small rented van with Sofia's boxes, and Noor comes with him."
+      ],
+      "id": "8931de80-9868-4ec8-ad87-c6520ef3d9d5"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Ingrid",
+            "text": "Goedemorgen, mevrouw Moreno. Welkom! Hier zijn de sleutels."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goedemorgen, mevrouw Visser. Dank u wel! Twee sleutels?"
+          },
+          {
+            "speaker": "Ingrid",
+            "text": "Ja. Deze is voor de voordeur beneden en die is voor het appartement."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Prima. En waar is de meterkast?"
+          },
+          {
+            "speaker": "Ingrid",
+            "text": "De meterkast is hier, naast de deur. De meters zijn links."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En waar zijn de containers voor het afval?"
+          },
+          {
+            "speaker": "Ingrid",
+            "text": "Ze zijn beneden, achter het gebouw."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank u. En de lift is tegenover de trap, toch?"
+          },
+          {
+            "speaker": "Ingrid",
+            "text": "Dat klopt. Hebt u nog vragen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, dank u. O, kijk! Daan is er al."
+          },
+          {
+            "speaker": "Ingrid",
+            "text": "Prima. Veel succes met de verhuizing!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank u wel. Tot ziens!"
+          }
+        ]
+      },
+      "id": "374cd9de-9874-4ccf-a3a6-a8939cbb889d"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "welkom",
+              "meaning": "welcome",
+              "example": "Welkom, mevrouw Moreno!",
+              "id": "75de167b-b084-4059-8082-c6b3979992b5"
+            },
+            {
+              "term": "de sleutel",
+              "meaning": "key",
+              "forms": "de sleutels",
+              "example": "Hier zijn de sleutels.",
+              "id": "9233fa3f-f213-484d-b61f-0d589f6babbb"
+            },
+            {
+              "term": "de voordeur",
+              "meaning": "front door",
+              "forms": "de voordeuren",
+              "example": "Deze sleutel is voor de voordeur.",
+              "id": "40721efe-11c3-44a6-991f-7bbae7caa618"
+            },
+            {
+              "term": "beneden",
+              "meaning": "downstairs",
+              "example": "De containers zijn beneden.",
+              "id": "9bcb9e59-aa5a-4863-bdce-60c692fe0149"
+            },
+            {
+              "term": "de meterkast",
+              "meaning": "meter cupboard (with the meters and the fuse box)",
+              "forms": "de meterkasten",
+              "example": "De meterkast is naast de deur.",
+              "id": "99df6983-a1e9-44a1-af39-37a8e1a344db"
+            },
+            {
+              "term": "naast",
+              "meaning": "next to",
+              "example": "De meterkast is naast de deur.",
+              "id": "4817b1ef-7a1e-459e-8f96-88cd80238bef"
+            },
+            {
+              "term": "de meter",
+              "meaning": "meter (for gas, electricity, water)",
+              "forms": "de meters",
+              "example": "De meters zijn links.",
+              "id": "44998550-5345-4033-bdab-224fab94ccce"
+            },
+            {
+              "term": "links",
+              "meaning": "on the left",
+              "example": "De meters zijn links.",
+              "id": "88eccb00-1f36-436f-a8c5-2380fd97b4ab"
+            },
+            {
+              "term": "de container",
+              "meaning": "large outdoor bin",
+              "forms": "de containers",
+              "example": "De containers zijn achter het gebouw.",
+              "id": "111ab86a-24bf-4f04-8330-ff184739283b"
+            },
+            {
+              "term": "het afval",
+              "meaning": "rubbish, waste",
+              "example": "Waar zijn de containers voor het afval?",
+              "id": "82fa3141-01af-4d0a-9cd1-ea42460de58a"
+            },
+            {
+              "term": "achter",
+              "meaning": "behind",
+              "example": "Ze zijn achter het gebouw.",
+              "id": "57d606bd-20b0-470d-8666-097304425dbd"
+            },
+            {
+              "term": "tegenover",
+              "meaning": "opposite",
+              "example": "De lift is tegenover de trap.",
+              "id": "aa77d758-7a98-493d-b814-e241acb6a767"
+            },
+            {
+              "term": "de trap",
+              "meaning": "stairs, staircase",
+              "forms": "de trappen",
+              "example": "De lift is tegenover de trap.",
+              "note": "One trap = a whole staircase: English stairs, Dutch de trap (singular).",
+              "id": "69def740-11ec-4cb2-9eb7-0b1d1fab7bf8"
+            },
+            {
+              "term": "Dat klopt.",
+              "meaning": "That's right.",
+              "example": "En de lift is tegenover de trap, toch? — Dat klopt.",
+              "id": "c353a1a8-ef1c-4cce-96be-61fcde85098c"
+            },
+            {
+              "term": "de vraag",
+              "meaning": "question",
+              "forms": "de vragen",
+              "example": "Hebt u nog vragen?",
+              "id": "dab84576-7549-4ec2-befa-39d1a94bd422"
+            },
+            {
+              "term": "de verhuizing",
+              "meaning": "the move (moving house)",
+              "forms": "de verhuizingen",
+              "example": "Veel succes met de verhuizing!",
+              "id": "cc6dfd72-b326-4bec-ba99-ce693bdd980a"
+            },
+            {
+              "term": "al",
+              "meaning": "already",
+              "example": "Kijk! Daan is er al.",
+              "id": "f893dd4d-3387-4491-8eb7-842fe5a09306"
+            }
+          ]
+        }
+      },
+      "children": [],
+      "id": "60ff1f0e-e88f-4515-a883-aec0c5150d1d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "New words: ",
+          "styles": {
+            "bold": true
+          }
+        },
+        "welkom = welcome; de sleutel = key; de voordeur = front door; beneden = downstairs; de meterkast = meter cupboard; de meter = meter; links = on the left; de container = large outdoor bin; het afval = rubbish; achter = behind; tegenover = opposite; de trap = stairs; Dat klopt = that's right; de vraag (vragen) = question; al = already; de verhuizing = the move."
+      ],
+      "id": "f6d2ed50-974a-46e6-95e8-44666d023770"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "map-pin"
+      },
+      "content": [
+        {
+          "text": "De meterkast. ",
+          "styles": {
+            "bold": true
+          }
+        },
+        "Every Dutch home has a ",
+        {
+          "text": "meterkast",
+          "styles": {
+            "italic": true
+          }
+        },
+        " near the front door: a small cupboard with the meters for gas, electricity and water, and the fuse box. The internet router is often there too, so a new tenant always asks: ",
+        {
+          "text": "Waar is de meterkast?",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "d824aa6c-95c7-4e9c-aa9d-f91e7db9407b"
+    },
+    {
+      "type": "divider",
+      "id": "760cd219-b371-4a51-a85e-d2e8745e22e5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Prepositions of place",
+      "id": "b74ff0bc-e015-40cd-acb5-607553bf3c84"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "A preposition of place says where something is: ",
+        {
+          "text": "in, on, under, next to",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". In Dutch the preposition comes before the noun with its article, just like in English: ",
+        {
+          "text": "op de tafel",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " = ",
+        {
+          "text": "on the table",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "938c10ce-2f42-4375-961e-defb0bdd3876"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "In, on, under",
+              "id": "b2311156-0ff5-47e8-ab9d-df55f0f58bac"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "in",
+                  "styles": {
+                    "textColor": "purple",
+                    "bold": true
+                  }
+                },
+                " = in"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "De borden zijn ",
+                    {
+                      "text": "in de doos",
+                      "styles": {
+                        "textColor": "purple"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "5ad8826b-b178-45c7-81f2-db4dd25a7c53"
+                }
+              ],
+              "id": "709fc1c6-8832-4c9f-add5-c7bec62b1a4e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "op",
+                  "styles": {
+                    "textColor": "purple",
+                    "bold": true
+                  }
+                },
+                " = on (on top of)"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "De sleutels zijn ",
+                    {
+                      "text": "op de tafel",
+                      "styles": {
+                        "textColor": "purple"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "f924045e-1448-4b86-b3ed-314bc8712676"
+                }
+              ],
+              "id": "ab3a882b-803e-488e-8b6b-c9c6ce973ea2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "onder",
+                  "styles": {
+                    "textColor": "purple",
+                    "bold": true
+                  }
+                },
+                " = under"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "De tas is ",
+                    {
+                      "text": "onder de tafel",
+                      "styles": {
+                        "textColor": "purple"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "702633b5-a879-4664-bd2b-2c0f7135c506"
+                }
+              ],
+              "id": "2309c550-32d4-4c78-b7b2-f19d015f3691"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "boven",
+                  "styles": {
+                    "textColor": "purple",
+                    "bold": true
+                  }
+                },
+                " = above"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "De lamp is ",
+                    {
+                      "text": "boven de tafel",
+                      "styles": {
+                        "textColor": "purple"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "37c21c9f-9b54-4782-8767-48e4fc2d5877"
+                }
+              ],
+              "id": "5623102a-d0ce-47c8-b7f4-8a904a49c960"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "naast",
+                  "styles": {
+                    "textColor": "purple",
+                    "bold": true
+                  }
+                },
+                " = next to"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "De lamp is ",
+                    {
+                      "text": "naast de bank",
+                      "styles": {
+                        "textColor": "purple"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "ea818855-1607-433c-a7f1-6ad78531eb2e"
+                }
+              ],
+              "id": "726dda7f-1e29-4fd4-b321-05449c7b016a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "tussen",
+                  "styles": {
+                    "textColor": "purple",
+                    "bold": true
+                  }
+                },
+                " … ",
+                {
+                  "text": "en",
+                  "styles": {
+                    "textColor": "purple",
+                    "bold": true
+                  }
+                },
+                " … = between … and …"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "De tafel is ",
+                    {
+                      "text": "tussen de bank en het raam",
+                      "styles": {
+                        "textColor": "purple"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "cc72227a-4964-491e-8309-55d7cacb6ffa"
+                }
+              ],
+              "id": "df1c699f-fcb5-40fd-b67b-5b37d75389b5"
+            }
+          ],
+          "id": "1630384c-db91-4662-bf9b-9dd2b05e287d"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Front, back, side",
+              "id": "6785b17e-76e6-4f72-9022-7d9dba9eff2a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "voor",
+                  "styles": {
+                    "textColor": "purple",
+                    "bold": true
+                  }
+                },
+                " = in front of"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "De plant is ",
+                    {
+                      "text": "voor het raam",
+                      "styles": {
+                        "textColor": "purple"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "e76d3557-de1a-475d-9fb3-1986467684a5"
+                }
+              ],
+              "id": "1ee7da26-4e8f-4acc-ba82-6dea6f00a766"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "achter",
+                  "styles": {
+                    "textColor": "purple",
+                    "bold": true
+                  }
+                },
+                " = behind"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "De prullenbak is ",
+                    {
+                      "text": "achter de deur",
+                      "styles": {
+                        "textColor": "purple"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "ab1aa934-fc7f-4b1d-aae0-cb91d5425893"
+                }
+              ],
+              "id": "87bd89d2-e3f5-4eae-aa89-97fc99c6db51"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "tegenover",
+                  "styles": {
+                    "textColor": "purple",
+                    "bold": true
+                  }
+                },
+                " = opposite"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "De lift is ",
+                    {
+                      "text": "tegenover de trap",
+                      "styles": {
+                        "textColor": "purple"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "0524ff2e-0dec-43e8-b60b-c105ab46ee48"
+                }
+              ],
+              "id": "803a9ef1-aebe-49e1-8991-74435714544b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "bij",
+                  "styles": {
+                    "textColor": "purple",
+                    "bold": true
+                  }
+                },
+                " = by, near, at"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "De bank is ",
+                    {
+                      "text": "bij het raam",
+                      "styles": {
+                        "textColor": "purple"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "f824921e-30f8-4375-b21a-4dc4d486e67a"
+                }
+              ],
+              "id": "2ed56f47-f56e-4928-b05c-d78555ae9939"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "aan",
+                  "styles": {
+                    "textColor": "purple",
+                    "bold": true
+                  }
+                },
+                " = on (a wall or ceiling)"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "De spiegel is ",
+                    {
+                      "text": "aan de muur",
+                      "styles": {
+                        "textColor": "purple"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "84b550d0-149a-4209-bd4f-df0b5749f49e"
+                }
+              ],
+              "id": "2f40554a-d9da-4d46-b716-802477df84cc"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "links van / rechts van",
+                  "styles": {
+                    "textColor": "purple",
+                    "bold": true
+                  }
+                },
+                " = to the left / right of"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "De koelkast is ",
+                    {
+                      "text": "rechts van de deur",
+                      "styles": {
+                        "textColor": "purple"
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "f1b1537d-f0b8-4719-86d6-44066da61d4b"
+                }
+              ],
+              "id": "383243c6-099c-4aca-8079-aa5f6f8d07cf"
+            }
+          ],
+          "id": "5e9b1616-d56d-4df5-9023-36836c3e1c93"
+        }
+      ],
+      "id": "03fbabe2-503f-45b6-8ef1-08ce3a33849d"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de bank",
+              "meaning": "sofa",
+              "forms": "de banken",
+              "example": "De lamp is naast de bank.",
+              "note": "Also a bank for money. See the false-friend callout.",
+              "id": "6f2daefc-f519-4880-9add-0359d3ddc9ba"
+            },
+            {
+              "term": "de prullenbak",
+              "meaning": "(indoor) bin, wastebasket",
+              "forms": "de prullenbakken",
+              "example": "De prullenbak is achter de deur.",
+              "id": "242e1c5b-e73b-4089-82c7-56946359d735"
+            },
+            {
+              "term": "onder",
+              "meaning": "under",
+              "example": "De tas is onder de tafel.",
+              "id": "8033b978-e884-4c13-a5d6-57c9d690eef4"
+            },
+            {
+              "term": "boven",
+              "meaning": "above",
+              "example": "De lamp is boven de tafel.",
+              "id": "030d9f78-a98b-4dbf-96d6-83820fd3d4b7"
+            },
+            {
+              "term": "tussen … en …",
+              "meaning": "between … and …",
+              "example": "De tafel is tussen de bank en het raam.",
+              "note": "Always with en, never of.",
+              "id": "d9499848-a18a-4dc3-9e85-830f85ed9d11"
+            },
+            {
+              "term": "voor",
+              "meaning": "in front of",
+              "example": "De plant is voor het raam.",
+              "note": "New meaning. You know voor = for (Voor mij een koffie, 11-a) and before (vijf voor drie, 08-a).",
+              "id": "1805bfbc-616e-4020-b2ff-65777a765d72"
+            },
+            {
+              "term": "bij",
+              "meaning": "by, near",
+              "example": "De bank is bij het raam.",
+              "note": "You know bij Noor (at Noor's place, 07-a) and Mogen wij bij het raam zitten? (11-b).",
+              "id": "b264ed79-49d7-40fc-9c44-f909f6ec69f3"
+            },
+            {
+              "term": "aan",
+              "meaning": "on (fixed to a wall or ceiling)",
+              "example": "De spiegel is aan de muur.",
+              "note": "New use. You know aan tafel and aan de bar from 11-a.",
+              "id": "c4a57092-af9e-47e8-b814-26b9ca4871ff"
+            },
+            {
+              "term": "de muur",
+              "meaning": "wall",
+              "forms": "de muren",
+              "example": "De spiegel is aan de muur.",
+              "id": "7ee88919-af5d-415a-803b-099146141d06"
+            },
+            {
+              "term": "links van",
+              "meaning": "to the left of",
+              "example": "De tafel is links van de deur.",
+              "id": "802d1cab-f484-442c-bf12-d82096e50bd9"
+            },
+            {
+              "term": "rechts van",
+              "meaning": "to the right of",
+              "example": "De koelkast is rechts van de deur.",
+              "id": "b26e2a2b-a8e2-40cd-92e2-1b7e34c26286"
+            }
+          ]
+        }
+      },
+      "children": [],
+      "id": "1c5bef3a-92fb-4b03-bab9-3cea6cecbf47"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "In the room",
+      "id": "87dee8d3-ef7c-4a1d-af52-29840373f2c4"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The keys are on the table.",
+        "note": "Op = on top of a surface. De sleutel is from the story; de tafel from 11-b."
+      },
+      "content": [
+        "De sleutels ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "op",
+          "styles": {
+            "textColor": "purple",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": " de tafel",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "3237b72d-910b-4ecd-8330-8713fe64ed2a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The bin is behind the door.",
+        "note": "New word: de prullenbak = (indoor) bin, wastebasket. The opposite of achter is voor."
+      },
+      "content": [
+        "De prullenbak ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "achter",
+          "styles": {
+            "textColor": "purple",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": " de deur",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "37b96855-dac7-4f26-89dc-6c2a6d5870b7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The table is between the sofa and the window.",
+        "note": "New word: de bank = sofa (het raam is from 11-b). Always tussen … en …, with en, never of."
+      },
+      "content": [
+        "De tafel ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "tussen",
+          "styles": {
+            "textColor": "purple",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": " de bank ",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        {
+          "text": "en",
+          "styles": {
+            "textColor": "purple",
+            "bold": true
+          }
+        },
+        {
+          "text": " het raam",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "ebbf7f4f-0205-4e16-857c-e3d35acdd8d5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Walls, corners and floors",
+      "id": "1266eded-5262-4761-89bd-87fc28a96ed5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The mirror is on the wall.",
+        "note": "New word: de muur = wall (de spiegel is from 12-b). Things fixed to a wall or ceiling use aan, not op. In everyday speech Dutch speakers say hangt instead of is here; you learn it in 14-b."
+      },
+      "content": [
+        "De spiegel ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "aan",
+          "styles": {
+            "textColor": "purple",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": " de muur",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "53864b72-8cd3-4714-809d-8f4e44b71241"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The plant is in the corner of the room.",
+        "note": "New word: de hoek = corner. Dutch says in de hoek (in the corner), like English."
+      },
+      "content": [
+        "De plant ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in de hoek",
+          "styles": {
+            "textColor": "purple",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": " van de kamer",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "df7a0133-ad18-4f0a-8990-c31da3a39ea5"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de hoek",
+              "meaning": "corner",
+              "forms": "de hoeken",
+              "example": "De plant is in de hoek van de kamer.",
+              "note": "in de hoek = in the corner; in de hoek van … = in the corner of …",
+              "id": "26c749d0-871c-442f-bc89-a8ce79278bab"
+            }
+          ]
+        }
+      },
+      "children": [],
+      "id": "d693ae8d-b9cd-4be2-9bcf-b2a33047a4c3"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Walls and tables: ",
+        {
+          "text": "De spiegel is op de muur.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "De spiegel is aan de muur.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " And ",
+        {
+          "text": "De sleutels zijn in de tafel.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "De sleutels zijn op de tafel.",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "ec2e0f48-a3c5-4191-8ce0-57d759534f30"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "Voor",
+          "styles": {
+            "textColor": "purple",
+            "bold": true
+          }
+        },
+        " has two meanings. ",
+        {
+          "text": "De plant is voor het raam",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = in front of the window. ",
+        {
+          "text": "Deze sleutel is voor de voordeur",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = this key is for the front door. The context tells you which one."
+      ],
+      "id": "ffc97fd4-1fd3-4ec9-9d5e-ded589087e38"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        {
+          "text": "De bank",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is the sofa in your living room. The same word also means a bank for money. ",
+        {
+          "text": "Het kussen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is a cushion or a pillow, but the verb ",
+        {
+          "text": "kussen",
+          "styles": {
+            "italic": true
+          }
+        },
+        " means to kiss. The article het tells you it is the thing: ",
+        {
+          "text": "het kussen",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        "."
+      ],
+      "id": "2d53fd01-2cc7-4833-85b7-299155ddfad7"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het kussen",
+              "meaning": "cushion, pillow",
+              "forms": "de kussens",
+              "example": "Het kussen is op het bed.",
+              "note": "The verb kussen means to kiss.",
+              "id": "0d7d7883-a371-4bc5-ba9c-59d49c78fb6b"
+            }
+          ]
+        }
+      },
+      "children": [],
+      "id": "98d3d2fa-3a3a-4401-88ab-9ac293ab268d"
+    },
+    {
+      "type": "divider",
+      "id": "853c57e1-9a6f-4b82-ba1f-df8994cd548d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Waar is …? Waar zijn …?",
+      "id": "6e0ecc9f-5862-4410-8c8d-147e9a2f9d83"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "To ask where something is, use ",
+        {
+          "text": "Waar is",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + singular noun or ",
+        {
+          "text": "Waar zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + plural noun. The answer uses the same verb and a place."
+      ],
+      "id": "82efe2f2-b459-40d2-8e14-e338bfc3a8c6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where are the plates? The plates are in the box next to the sofa.",
+        "note": "Plural noun: zijn. Two places in a row are fine: first the box, then where the box is."
+      },
+      "content": [
+        {
+          "text": "Waar zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " de borden? De borden ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in de doos naast de bank",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "0074cae6-8711-47e4-b70b-1a6c9436eeef"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "In this lesson we always use ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " and ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " for location. That is correct Dutch. In the next lesson (14-b) you learn a more typically Dutch way to say where things are."
+      ],
+      "id": "9ebb1151-ba77-40dd-a750-5bc863d66011"
+    },
+    {
+      "type": "divider",
+      "id": "345e4e3b-8b50-49b3-90e6-b28d860758f4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Hij, het and ze for things",
+      "id": "c71c0d7d-6492-4546-89a0-fa72a7694346"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "English uses ",
+        {
+          "text": "it",
+          "styles": {
+            "italic": true
+          }
+        },
+        " for every thing. Dutch looks at the article of the noun. A de-word becomes ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ", a het-word becomes ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        ", and every plural becomes ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "919dc90e-b723-4a8b-ae91-0cdc57349283"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "de-word → hij",
+              "id": "b1c721b9-13c8-4a36-9938-7dc9f57add24"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de lamp",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                }
+              ],
+              "id": "9b2c56ec-55f0-442a-ab3b-e72f4043073a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de tas",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                }
+              ],
+              "id": "cd6238d7-1544-4a1c-8ac6-8584ca21429d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de bank",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                }
+              ],
+              "id": "081477c7-8949-4959-8203-e193db6e0e1a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Waar is ",
+                {
+                  "text": "de lamp",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                "? ",
+                {
+                  "text": "Hij",
+                  "styles": {
+                    "textColor": "pink",
+                    "bold": true
+                  }
+                },
+                " is in de doos."
+              ],
+              "id": "06801d84-a510-4d35-a1b4-827c46931f8e"
+            }
+          ],
+          "id": "34877e0d-9bb0-43c4-b96a-94be381244fe"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "het-word → het",
+              "id": "a0a754d1-406c-441f-9eae-d5bb55da2aa2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "het boek",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                }
+              ],
+              "id": "8fb30d21-1282-4310-83f6-7cf6935d6ffe"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "het kussen",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                }
+              ],
+              "id": "90504b8d-17bb-4bc9-9ad9-9272f59eddf5"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "het bed",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                }
+              ],
+              "id": "37bc765a-6044-4623-aca5-1ff8c3bd5cdf"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Waar is ",
+                {
+                  "text": "het boek",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                "? ",
+                {
+                  "text": "Het",
+                  "styles": {
+                    "textColor": "brown",
+                    "bold": true
+                  }
+                },
+                " is op de tafel."
+              ],
+              "id": "86dc287f-f506-4424-8511-eca9067f2c06"
+            }
+          ],
+          "id": "36b92752-3ccf-47a8-aa5c-003ddd0d1c41"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "plural → ze",
+              "id": "0fd8199f-9bea-4275-9ada-b0f2e402667a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de borden",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                }
+              ],
+              "id": "a1af5d39-2faf-4d15-8e94-5644e4034d14"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de dozen",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                }
+              ],
+              "id": "995205a5-4395-4679-81cc-fadfbcd21c4f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "de sleutels",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                }
+              ],
+              "id": "4c480bef-fdda-45f5-8608-c03c75ca992a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Waar zijn ",
+                {
+                  "text": "de borden",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                "? ",
+                {
+                  "text": "Ze",
+                  "styles": {
+                    "textColor": "pink",
+                    "bold": true
+                  }
+                },
+                " zijn in de keuken."
+              ],
+              "id": "440116a9-9860-4199-9749-3363946afb0d"
+            }
+          ],
+          "id": "9f73eaa8-66e6-45d1-b617-ca173d5f6d4c"
+        }
+      ],
+      "id": "9af6acb7-d8b8-4110-955e-01088c0262ab"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het bed",
+              "meaning": "bed",
+              "forms": "de bedden",
+              "example": "Het kussen is op het bed.",
+              "id": "fbb21973-a527-4b02-831d-b3a5a91a010e"
+            }
+          ]
+        }
+      },
+      "children": [],
+      "id": "7b51ebb2-fdd1-462c-876c-36ebb36fcd39"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "How to choose:"
+      ],
+      "id": "ee0b9d39-5a24-4fcc-b050-365743887b23"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Find the noun you mean: ",
+        {
+          "text": "de lamp",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "8c9cb52d-10b9-48c8-ad66-16009af3a67e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Check the article: de or het? Plural?"
+      ],
+      "id": "742c12c1-15fb-40e2-b3ad-adfd96f7606c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "de-word → ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        "; het-word → ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        "; plural → ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        "."
+      ],
+      "id": "5f41e555-6b84-4b45-bf52-f0ccf25912fc"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Use the matching verb: hij/het ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", ze ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "12d963f6-4c60-4627-9e7b-18dd0ff100f5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where is the lamp? It is in the box.",
+        "note": "de lamp is a de-word, so hij. English it, Dutch hij."
+      },
+      "content": [
+        "Waar is ",
+        {
+          "text": "de lamp",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        "? ",
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "pink",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in de doos",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "0b8137e2-8092-4d2f-bafa-1ce50d582761"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where is the cushion? It is on the bed.",
+        "note": "het kussen is a het-word, so het."
+      },
+      "content": [
+        "Waar is ",
+        {
+          "text": "het kussen",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        "? ",
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "brown",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "op het bed",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "0acacfcc-c115-4fee-9bfc-820c1bc7b755"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where are the boxes? They are by the lift.",
+        "note": "Plural, so ze + zijn. Recycles de lift from row 13."
+      },
+      "content": [
+        "Waar zijn ",
+        {
+          "text": "de dozen",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        "? ",
+        {
+          "text": "Ze",
+          "styles": {
+            "textColor": "pink",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "bij de lift",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "035ea5dd-55c5-4291-b8b5-1c74159529d6"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "Formula: ",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "de-word → hij",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ", ",
+        {
+          "text": "het-word → het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        ", ",
+        {
+          "text": "plural → ze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ". The pronoun follows the article, not the meaning: a lamp is ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ", a book is ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        "."
+      ],
+      "id": "9c1e04ca-d736-480f-9377-4e316a21c948"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Waar is de lamp? ",
+        {
+          "text": "Het is in de doos.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Hij is in de doos.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " English ",
+        {
+          "text": "it",
+          "styles": {
+            "italic": true
+          }
+        },
+        " tempts you to say het, but de lamp is a de-word."
+      ],
+      "id": "c61ed696-f849-4436-86b5-796db5b941b9"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "Learn every noun with its article: ",
+        {
+          "text": "de lamp",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ", ",
+        {
+          "text": "het raam",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        ". Then the pronoun is easy. Not sure? Check the article on ",
+        {
+          "type": "link",
+          "href": "https://woordenlijst.org",
+          "content": [
+            {
+              "text": "woordenlijst.org",
+              "styles": {}
+            }
+          ]
+        },
+        "."
+      ],
+      "id": "5ab29c41-8271-442a-9be8-7c61d830351f"
+    },
+    {
+      "type": "divider",
+      "id": "7528813e-cfb5-4fa8-88e3-a4ffb0583412"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Start with the place",
+      "id": "3e975608-4765-4723-877c-2d6e85caa1d8"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You can begin a sentence with the place to set the scene. The verb stays in position 2, so the subject moves behind the verb. You know this rule from time words: ",
+        {
+          "text": "Morgen werk ik niet.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "f8fc134f-fa92-45ef-9c7d-248328e8e882"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Place + verb + subject",
+      "id": "b0602d3d-b0cf-41ad-9d78-0503f07d40b2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The fridge is in the kitchen.",
+        "note": "Normal order: De koelkast is in de keuken. With the place first, the verb is still second."
+      },
+      "content": [
+        {
+          "text": "In de keuken",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "de koelkast",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "."
+      ],
+      "id": "fa979e99-89fa-40a1-abcb-27597dcbc7af"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Next to the door is the meter cupboard.",
+        "note": "Ingrid's sentence from the story, with the place first."
+      },
+      "content": [
+        {
+          "text": "Naast de deur",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "de meterkast",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "."
+      ],
+      "id": "76c0babe-16c6-4ccc-81b0-defb9117cf8e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Henk lives on the first floor.",
+        "note": "Works with every verb, not only is/zijn."
+      },
+      "content": [
+        {
+          "text": "Op de eerste verdieping",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Henk",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "."
+      ],
+      "id": "0372fc63-871b-4f84-8faa-a2830f33426b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "Formula: ",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "place",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " + ",
+        {
+          "text": "verb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " + ",
+        {
+          "text": "subject",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ". Not ",
+        {
+          "text": "In de woonkamer de bank is.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "In de woonkamer is de bank.",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "54742faa-2ec6-4be8-8496-877b30e25c45"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Er is, er zijn + place",
+      "id": "e2f18090-d028-401a-8d4d-176c5c6d11ef"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Use ",
+        {
+          "text": "er is",
+          "styles": {
+            "bold": true
+          }
+        },
+        " / ",
+        {
+          "text": "er zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (row 13) for something new: ",
+        {
+          "text": "there is, there are",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". After a fronted place, ",
+        {
+          "text": "er",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is optional: you may leave it out, and Dutch speakers usually do."
+      ],
+      "id": "b7e10195-d21b-4106-8620-a787ff468e6d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "There is a wardrobe in the bedroom.",
+        "note": "New word: de kast = cupboard, wardrobe. Er is + een: something new."
+      },
+      "content": [
+        {
+          "text": "Er is",
+          "styles": {
+            "bold": true
+          }
+        },
+        " een kast ",
+        {
+          "text": "in de slaapkamer",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "19945258-a464-4e74-be88-1c4ec2c22641"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de kast",
+              "meaning": "cupboard, wardrobe",
+              "forms": "de kasten",
+              "example": "Er is een kast in de slaapkamer.",
+              "id": "be0c076a-cafb-4d60-a376-647f571a9b96"
+            }
+          ]
+        }
+      },
+      "children": [],
+      "id": "e04ad310-edf4-4e6f-b9f9-b574be27735a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "In the living room there is a big sofa.",
+        "note": "Also correct: In de woonkamer is er een grote bank. Without er sounds more natural."
+      },
+      "content": [
+        {
+          "text": "In de woonkamer",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " een grote bank."
+      ],
+      "id": "4cb71cbe-a293-42aa-b0b2-b3b9283b56e3"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Er is goes with een, geen or a number, not with de or het. ",
+        {
+          "text": "Er is de bank in de woonkamer.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "De bank is in de woonkamer.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "Er is een bank in de woonkamer.",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "e12d461b-f528-48a5-8509-ef1f68a53352"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        {
+          "text": "Steep stairs. ",
+          "styles": {
+            "bold": true
+          }
+        },
+        "Old Dutch houses have very steep, narrow stairs (",
+        {
+          "text": "de trap",
+          "styles": {
+            "italic": true
+          }
+        },
+        "). Big furniture often goes in through the window, with a hook on a beam at the top of the house (",
+        {
+          "text": "de hijsbalk",
+          "styles": {
+            "italic": true
+          }
+        },
+        "). Sofia is lucky: her building has a lift."
+      ],
+      "id": "6c3f1ad0-db70-4199-9312-3a3006f49a2b"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de hijsbalk",
+              "meaning": "hoisting beam (at the top of an old Dutch house)",
+              "forms": "de hijsbalken",
+              "id": "5d6e878a-3d9e-4a8f-92cc-79b7cee2972a"
+            }
+          ]
+        }
+      },
+      "children": [],
+      "id": "76f24c0b-64aa-472b-a74b-5fd0da40bdca"
+    },
+    {
+      "type": "divider",
+      "id": "bc5e87e9-7180-41a8-9647-d38a6e7503b5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Waar is mijn tas?",
+      "id": "5e2e53e7-46eb-45cd-8ce0-73bd0ab8dac0"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Four o'clock. All the boxes are upstairs and the living room is chaos. Everybody is looking for something."
+      ],
+      "id": "b1cf3e19-d7be-421e-91d1-9698cdddf789"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Sofia, waar zijn de borden?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ze zijn in de doos naast de bank."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Welke doos? Hier zijn tien dozen!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Die grote doos, tussen de bank en het raam."
+          },
+          {
+            "speaker": "Daan",
+            "text": "En waar is de lamp van de markt?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Het is in die kleine doos, op de stoel."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Hij, Sofia. De lamp: hij is in die doos. Kijk, hier is hij!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, hij! Dank je. Maar waar is mijn tas? Mijn telefoon is in de tas."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Hij is onder de tafel, naast de prullenbak."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Super! En het kussen van de bank?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Het is in de slaapkamer, op het bed."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Mag ik de lege dozen meenemen? Ze zijn bij de deur."
+          }
+        ]
+      },
+      "id": "3052654e-5235-4380-86dd-e43eaab93091"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Sofia says ",
+        {
+          "text": "Het is in die kleine doos",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " about de lamp. Noor answers with the correct form: ",
+        {
+          "text": "Hij is in die doos.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " The lamp is a de-word, so hij."
+      ],
+      "id": "259400b6-a30b-4a2b-9a8c-1696956cda4d"
+    },
+    {
+      "type": "divider",
+      "id": "85d3898b-951e-4ac7-8a2e-8a5c44c36ea4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "ac13a76b-795f-4f3a-bbf1-7c25c409417d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "1. Fill in the preposition",
+      "id": "1f2e15ba-ae4d-4bc4-90b5-265b144a45d0"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Sofia's living room on moving day. Fill in the Dutch preposition. The English hint is in brackets.",
+          "items": [
+            {
+              "prompt": "De lamp is … de bank. (next to)",
+              "authorsVersion": [
+                "naast"
+              ],
+              "note": "naast = next to."
+            },
+            {
+              "prompt": "Sofia's tas is … de tafel. (under)",
+              "authorsVersion": [
+                "onder"
+              ],
+              "note": "onder = under."
+            },
+            {
+              "prompt": "De prullenbak is … de deur. (behind)",
+              "authorsVersion": [
+                "achter"
+              ],
+              "note": "achter = behind; opposite: voor."
+            },
+            {
+              "prompt": "De spiegel is … de muur. (on)",
+              "authorsVersion": [
+                "aan"
+              ],
+              "note": "Walls and ceilings take aan. Typical mistake: op de muur."
+            },
+            {
+              "prompt": "De lege dozen zijn … de deur. (in front of)",
+              "authorsVersion": [
+                "voor"
+              ],
+              "note": "voor = in front of (and also: for). The plant is not here: it is on the balcony."
+            },
+            {
+              "prompt": "De boekenkast is … de bank. (opposite)",
+              "authorsVersion": [
+                "tegenover"
+              ],
+              "note": "tegenover = opposite, facing. New word: de boekenkast = bookcase."
+            },
+            {
+              "prompt": "Het appartement is … de tweede verdieping. (on)",
+              "authorsVersion": [
+                "op"
+              ],
+              "note": "Floors always take op: op de tweede verdieping."
+            }
+          ]
+        }
+      },
+      "id": "dac067e6-9827-4713-83d1-ac8667135bdb"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de boekenkast",
+              "meaning": "bookcase",
+              "forms": "de boekenkasten",
+              "example": "De boekenkast is tegenover de bank.",
+              "id": "287834ef-90b5-4d13-9a8f-8a7abe4c1fa9"
+            }
+          ]
+        }
+      },
+      "children": [],
+      "id": "3300d1c8-9192-44e4-965a-155808c8c44f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "2. Hij, het or ze?",
+      "id": "607e98bd-9886-4839-a217-016ade1627fe"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the answers. First the pronoun (hij, het or ze), then the preposition from the brackets.",
+          "items": [
+            {
+              "prompt": "Waar is de lamp? … is … de doos. (in)",
+              "authorsVersion": [
+                "Hij",
+                "in"
+              ],
+              "note": "de lamp: de-word → hij."
+            },
+            {
+              "prompt": "Waar is het kussen? … is … de bank. (on)",
+              "authorsVersion": [
+                "Het",
+                "op"
+              ],
+              "note": "het kussen: het-word → het."
+            },
+            {
+              "prompt": "Waar zijn de borden? … zijn … de keuken. (in)",
+              "authorsVersion": [
+                "Ze",
+                "in"
+              ],
+              "note": "Plural → ze + zijn."
+            },
+            {
+              "prompt": "Noor: Waar is de spiegel? / Daan: … is … de badkamer, … de deur. (in; next to)",
+              "authorsVersion": [
+                "Hij",
+                "in",
+                "naast"
+              ],
+              "note": "de spiegel → hij."
+            },
+            {
+              "prompt": "Sofia: Waar is het bed? / Noor: … is … de slaapkamer, … het raam. (in; under)",
+              "authorsVersion": [
+                "Het",
+                "in",
+                "onder"
+              ],
+              "note": "het bed → het."
+            },
+            {
+              "prompt": "Ingrid: Waar zijn de sleutels? / Sofia: … zijn … mijn tas. (in)",
+              "authorsVersion": [
+                "Ze",
+                "in"
+              ],
+              "note": "de sleutels: plural → ze."
+            },
+            {
+              "prompt": "Daan: Waar is de prullenbak? / Noor: … is … de keuken, … de hoek. (in; in)",
+              "authorsVersion": [
+                "Hij",
+                "in",
+                "in"
+              ],
+              "note": "de prullenbak → hij. in de hoek = in the corner."
+            }
+          ]
+        }
+      },
+      "id": "8b1ca0d7-61f8-4a8f-b5c1-1ad383fb2d9c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "3. Word order",
+      "id": "4f1320bb-4faa-4f50-8f66-e1fee15bf82c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the chunks in order. Start with the subject, unless a question word or er is given.",
+          "items": [
+            {
+              "prompt": "Put in order: in de woonkamer / de bank / is",
+              "authorsVersion": [
+                "De bank is in de woonkamer."
+              ],
+              "note": "Subject + verb + place. Also fine: In de woonkamer is de bank."
+            },
+            {
+              "prompt": "Put in order: is / naast de deur / de meterkast",
+              "authorsVersion": [
+                "De meterkast is naast de deur."
+              ],
+              "note": "Also fine: Naast de deur is de meterkast."
+            },
+            {
+              "prompt": "Put in order: de dozen / zijn / waar",
+              "authorsVersion": [
+                "Waar zijn de dozen?"
+              ],
+              "note": "Question word + verb + subject."
+            },
+            {
+              "prompt": "Put in order: in de keuken / is / de koelkast / rechts van de deur",
+              "authorsVersion": [
+                "De koelkast is in de keuken, rechts van de deur."
+              ],
+              "note": "First the room, then the exact spot."
+            },
+            {
+              "prompt": "Put in order: op de tweede verdieping / is / het appartement",
+              "authorsVersion": [
+                "Het appartement is op de tweede verdieping."
+              ],
+              "note": "Floors take op."
+            },
+            {
+              "prompt": "Put in order: naast de bank / is / een lamp / er",
+              "authorsVersion": [
+                "Er is een lamp naast de bank."
+              ],
+              "note": "Er is + een + noun + place."
+            },
+            {
+              "prompt": "Put in order: de tafel / tussen de bank en het raam / is",
+              "authorsVersion": [
+                "De tafel is tussen de bank en het raam."
+              ],
+              "note": "tussen … en …, never tussen … of …."
+            }
+          ]
+        }
+      },
+      "id": "890bdbea-f924-4104-9c2d-72e1c827a4a1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "4. Rewrite",
+      "id": "13bee322-3e31-4f16-bbf6-54617749863e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence as asked.",
+          "items": [
+            {
+              "prompt": "Start with the place: De bank is in de woonkamer.",
+              "authorsVersion": [
+                "In de woonkamer is de bank."
+              ],
+              "note": "Place first, verb second, subject after the verb."
+            },
+            {
+              "prompt": "Start with the place: De meterkast is naast de deur.",
+              "authorsVersion": [
+                "Naast de deur is de meterkast."
+              ],
+              "note": "Verb stays in position 2."
+            },
+            {
+              "prompt": "Start with the place: Er is een spiegel in de badkamer.",
+              "authorsVersion": [
+                "In de badkamer is een spiegel."
+              ],
+              "note": "After a fronted place, er is usually dropped. Also fine: In de badkamer is er een spiegel."
+            },
+            {
+              "prompt": "Start with the place: Er zijn tien dozen in de woonkamer.",
+              "authorsVersion": [
+                "In de woonkamer zijn tien dozen."
+              ],
+              "note": "Also fine: In de woonkamer zijn er tien dozen."
+            },
+            {
+              "prompt": "Use the opposite preposition: De plant is voor het raam.",
+              "authorsVersion": [
+                "De plant is achter het raam."
+              ],
+              "note": "voor ↔ achter."
+            },
+            {
+              "prompt": "Use the opposite and swap the people: Henk woont onder Sofia.",
+              "authorsVersion": [
+                "Sofia woont boven Henk."
+              ],
+              "note": "onder ↔ boven. Henk lives on the first floor, Sofia on the second."
+            }
+          ]
+        }
+      },
+      "id": "d125475d-2254-4188-b665-ef20dd8d8a2d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "5. Translate into Dutch",
+      "id": "bc6ae7bd-7ef7-4c59-ae6a-1d12afd0d9d9"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Use is or zijn, and hij, het or ze for it and they.",
+          "items": [
+            {
+              "prompt": "Where are the keys? They are on the table.",
+              "authorsVersion": [
+                "Waar zijn de sleutels? Ze zijn op de tafel."
+              ],
+              "note": "Plural → ze zijn."
+            },
+            {
+              "prompt": "Where is the lamp? It is in the box.",
+              "authorsVersion": [
+                "Waar is de lamp? Hij is in de doos."
+              ],
+              "note": "de lamp → hij, not het."
+            },
+            {
+              "prompt": "Where is the book? It is under the bed.",
+              "authorsVersion": [
+                "Waar is het boek? Het is onder het bed."
+              ],
+              "note": "het boek → het."
+            },
+            {
+              "prompt": "The meter cupboard is next to the front door.",
+              "authorsVersion": [
+                "De meterkast is naast de voordeur."
+              ],
+              "note": "naast = next to."
+            },
+            {
+              "prompt": "There is a mirror in the bathroom.",
+              "authorsVersion": [
+                "Er is een spiegel in de badkamer."
+              ],
+              "note": "Also fine: In de badkamer is een spiegel."
+            },
+            {
+              "prompt": "The table is between the sofa and the window.",
+              "authorsVersion": [
+                "De tafel is tussen de bank en het raam."
+              ],
+              "note": "tussen … en …."
+            }
+          ]
+        }
+      },
+      "id": "a98cd7d8-8851-400d-9233-b9431c6598e6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "6. Translate into English",
+      "id": "8ad706cf-45e3-4897-8add-7229e1de3089"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "De prullenbak is achter de deur.",
+              "authorsVersion": [
+                "The bin is behind the door."
+              ],
+              "note": "Also fine: wastebasket."
+            },
+            {
+              "prompt": "Het kussen is op de bank.",
+              "authorsVersion": [
+                "The cushion is on the sofa."
+              ],
+              "note": "False friends: het kussen = cushion, de bank = sofa."
+            },
+            {
+              "prompt": "Tegenover de bank is de boekenkast.",
+              "authorsVersion": [
+                "The bookcase is opposite the sofa."
+              ],
+              "note": "Also fine: Opposite the sofa is the bookcase."
+            },
+            {
+              "prompt": "Waar zijn de dozen? Ze zijn bij de lift.",
+              "authorsVersion": [
+                "Where are the boxes? They are by the lift."
+              ],
+              "note": "Also fine: near the lift / by the elevator."
+            },
+            {
+              "prompt": "De lamp is aan het plafond.",
+              "authorsVersion": [
+                "The lamp is on the ceiling."
+              ],
+              "note": "New word: het plafond = ceiling. aan = attached to a wall or ceiling. Also fine: The light is on the ceiling. Dutch speakers usually say De lamp hangt aan het plafond (14-b)."
+            },
+            {
+              "prompt": "In de hoek van de keuken is de koelkast.",
+              "authorsVersion": [
+                "The fridge is in the corner of the kitchen."
+              ],
+              "note": "English usually puts the subject first."
+            }
+          ]
+        }
+      },
+      "id": "9abc1df6-0109-4383-9173-dbd9476f7357"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het plafond",
+              "meaning": "ceiling",
+              "forms": "de plafonds",
+              "example": "De lamp is aan het plafond.",
+              "id": "dbbdf92b-3dfb-4578-ba59-20acca1c35d0"
+            }
+          ]
+        }
+      },
+      "children": [],
+      "id": "4d5bafe1-4720-4292-b673-72f463c2c9fa"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Sofia's message to her mother",
+      "id": "3aa96c61-8801-49f2-8ff2-79a895ccd02c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's message from Saturday evening and answer in Dutch. Use hij, het or ze where you can.",
+          "items": [
+            {
+              "prompt": "Waar is het nieuwe appartement van Sofia?",
+              "authorsVersion": [
+                "Het is in Lombok, op de tweede verdieping."
+              ],
+              "note": "het appartement → het."
+            },
+            {
+              "prompt": "Waar is de bank?",
+              "authorsVersion": [
+                "Hij is bij het raam."
+              ],
+              "note": "de bank → hij."
+            },
+            {
+              "prompt": "Waar is de lamp van de markt?",
+              "authorsVersion": [
+                "Hij is naast de bank."
+              ],
+              "note": "de lamp → hij. Sofia bought it at the market in 12-b."
+            },
+            {
+              "prompt": "Waar zijn de tafel en de stoelen?",
+              "authorsVersion": [
+                "Ze zijn in de hoek, links van de deur."
+              ],
+              "note": "Two nouns together → ze."
+            },
+            {
+              "prompt": "Waar zijn de borden?",
+              "authorsVersion": [
+                "Ze zijn in een doos in de keuken."
+              ],
+              "note": "Plural → ze."
+            },
+            {
+              "prompt": "Wat is tegenover de bank?",
+              "authorsVersion": [
+                "De boekenkast."
+              ],
+              "note": "Also fine: Tegenover de bank is de boekenkast."
+            },
+            {
+              "prompt": "Klopt dit? De boeken zijn in de boekenkast.",
+              "authorsVersion": [
+                "Nee, ze zijn nog in de dozen."
+              ],
+              "note": "nog = still."
+            },
+            {
+              "prompt": "Waar is de plant van Sofia?",
+              "authorsVersion": [
+                "Hij is op het balkon."
+              ],
+              "note": "de plant → hij. Sofia bought the plant at the market in 12-a."
+            }
+          ],
+          "passage": {
+            "title": "Hoi mam!",
+            "content": "Hoi mam!\nVandaag verhuis ik! Mijn nieuwe appartement is in Lombok, op de tweede verdieping. Henk woont op de eerste verdieping.\nNoor en Daan helpen de hele dag. Nu is het acht uur en ik ben alleen. Wat een rommel!\nDe woonkamer is groot en licht. De bank is bij het raam. Mijn lamp van de markt is naast de bank. Hij is wit en heel mooi.\nDe tafel en vier stoelen zijn in de hoek, links van de deur. Ze zijn van Daan en Lotte.\nTegenover de bank is de boekenkast, maar de boeken zijn nog in de dozen. Er zijn overal dozen: op de vloer, op de stoelen en in de gang.\nDe borden zijn in een doos in de keuken. De koelkast is leeg!\nHet balkon is klein maar zonnig. Mijn plant is op het balkon.\nMorgen is het zondag. Dan ruim ik op en bellen we, hè?\nVeel liefs,\nSofia"
+          }
+        }
+      },
+      "id": "0862f813-2d06-480e-899e-11aea8063429"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "verhuizen",
+              "meaning": "to move (house)",
+              "forms": "verhuist · verhuisde · verhuisd",
+              "example": "Vandaag verhuis ik!",
+              "id": "3d50b4a3-d2c7-4379-8635-1f4449b11a17"
+            },
+            {
+              "term": "de hele dag",
+              "meaning": "all day",
+              "example": "Noor en Daan helpen de hele dag.",
+              "id": "eb4f51b2-848a-44dd-b8a1-b8fb30349b42"
+            },
+            {
+              "term": "de vloer",
+              "meaning": "floor",
+              "forms": "de vloeren",
+              "example": "Er zijn dozen op de vloer.",
+              "id": "9dcbf02f-2a3a-4b54-9365-1a164aef1a36"
+            },
+            {
+              "term": "overal",
+              "meaning": "everywhere",
+              "example": "Er zijn overal dozen.",
+              "id": "f9c19770-19b1-4cf7-82d0-0b38de85895c"
+            },
+            {
+              "term": "de gang",
+              "meaning": "hall, corridor",
+              "forms": "de gangen",
+              "example": "Er zijn dozen in de gang.",
+              "id": "e91c21e3-00d2-4e9e-a0a8-ce1396f8dc3e"
+            },
+            {
+              "term": "zijn van",
+              "meaning": "to belong to",
+              "example": "Ze zijn van Daan en Lotte.",
+              "id": "17877837-8cb8-462f-9616-1754abf54ed6"
+            },
+            {
+              "term": "nog",
+              "meaning": "still",
+              "example": "De boeken zijn nog in de dozen.",
+              "note": "New meaning. You know nog in nog een (another) and Nu nog … (10-a, 11-a).",
+              "id": "c61a72bf-df44-43db-97f5-97ed8d3483c2"
+            }
+          ]
+        }
+      },
+      "children": [],
+      "id": "29a93ca9-dcf0-40ca-afa4-9216c88001c1"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "New words in the message: verhuizen = to move (house); de hele dag = all day; de vloer = floor; overal = everywhere; de gang = hall; zijn van = to belong to; nog = still; leeg = empty (10-a)."
+      ],
+      "id": "5193d57c-ed81-4c8d-93ab-2365681c4f6e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "c384574d-9033-4ea8-bf0a-09527d7b4f95"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about where things are in your room. Use at least three prepositions and one of hij, het or ze.",
+          "items": [
+            {
+              "prompt": "Describe your room: where are the bed, a lamp, a cupboard and the window?",
+              "authorsVersion": [
+                "Mijn slaapkamer is klein maar licht. Het bed is onder het raam. Het is groot en wit. Naast het bed is een kleine lamp. De kast is tegenover het bed en de spiegel is aan de muur, naast de deur."
+              ],
+              "note": "Model by Sofia; many answers are possible. Check: de-word → hij, het-word → het, plural → ze; walls take aan."
+            }
+          ]
+        }
+      },
+      "id": "791eac8d-9224-416f-bef9-ee82d86f530b"
+    },
+    {
+      "type": "divider",
+      "id": "067fda89-a10b-44c6-a9cf-b967c70f692a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "9c7e5058-ff37-47c9-b87b-a5d1ebb6484a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Ask: ",
+        {
+          "text": "Waar is",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + singular, ",
+        {
+          "text": "Waar zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + plural."
+      ],
+      "id": "43e5ccc5-9156-4f1f-a16e-8686efcd5f27"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Prepositions: in, op, onder, boven, naast, tussen … en …, voor, achter, tegenover, bij, aan de muur, in de hoek van, links/rechts van."
+      ],
+      "id": "79346754-0ad0-4667-a330-cb0c1bb26613"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Things: de-word → ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ", het-word → ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        ", plural → ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        "."
+      ],
+      "id": "7403ac5f-1ae3-4a75-8a38-0b0733037f3b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Place first: ",
+        {
+          "text": "place",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " + ",
+        {
+          "text": "verb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " + ",
+        {
+          "text": "subject",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ". After a fronted place, you can leave out er."
+      ],
+      "id": "4e3b2beb-2a1a-4ae9-abca-a05ff623ccad"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Remember: ",
+          "styles": {
+            "bold": true
+          }
+        },
+        "English ",
+        {
+          "text": "it",
+          "styles": {
+            "italic": true
+          }
+        },
+        " splits into hij and het. Look at the article, not the thing."
+      ],
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "id": "e28fdf58-ccdf-4a4f-9c42-3218dfd7c2aa"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Prepositions of place",
+      "description": "A simple living room with a sofa by the window, a table between them, a lamp next to the sofa, a mirror on the wall, a bin behind the door and a plant in the corner, each labelled with its Dutch preposition.",
+      "alt": "Living room with furniture labelled naast, tussen, aan, achter and in de hoek"
+    },
+    {
+      "afterHeading": "Story: Waar is mijn tas?",
+      "description": "Moving-day chaos in Sofia's new living room: boxes everywhere, Noor opening a box next to the sofa, Daan pointing under the table at a bag.",
+      "alt": "Sofia, Noor and Daan among moving boxes in a living room"
+    }
+  ],
+  "id": "934e8e5c-d056-4027-8995-8d40cca1d6b5"
+}

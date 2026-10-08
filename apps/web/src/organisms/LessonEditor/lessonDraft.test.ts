@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { breaksColumnRules, lessonImagePath, normalizeEditorBlocks, sanitizeEditorBlock, toLessonDocument, type EditorBlock } from "./lessonDraft";
+import { breaksColumnRules, lessonImagePath, normalizeEditorBlocks, sanitizeEditorBlock, toLessonDocument, vocabularyIdRepairs, type EditorBlock } from "./lessonDraft";
 
 const image = (previewWidth?: number) => ({
   id: "50000000-0000-4000-8000-000000000001", type: "image", children: [],
@@ -88,5 +88,32 @@ describe("Pasted content repair", () => {
     const child = { ...paragraph([{ type: "link", href: "ftp://x.test", content: [{ type: "text", text: "x", styles: {} }] }]), type: "bulletListItem" };
     const parent: EditorBlock = { ...paragraph([{ type: "text", text: "a", styles: {} }]), id: "50000000-0000-4000-8000-000000000003", type: "bulletListItem", children: [child] };
     expect(sanitizeEditorBlock(parent, path)!.children![0]!.content).toEqual([{ type: "text", text: "x", styles: {} }]);
+  });
+});
+
+const word = (n: number, term = `woord ${n}`) => ({ id: `70000000-0000-4000-8000-0000000000${String(n).padStart(2, "0")}`, term, meaning: `word ${n}` });
+const vocabulary = (n: number, words: ReturnType<typeof word>[]): EditorBlock => ({
+  id: `50000000-0000-4000-8000-0000000004${String(n).padStart(2, "0")}`, type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [],
+});
+
+describe("New words in the editor", () => {
+  it("leaves vocabulary blocks untouched when repairing pasted content", () => {
+    const block = vocabulary(1, [{ ...word(1), forms: "de woorden" } as ReturnType<typeof word>]);
+    expect(sanitizeEditorBlock(block, lessonImagePath("c", "l"))).toBe(block);
+    expect(toLessonDocument([block]).success).toBe(true);
+  });
+
+  it("gives a pasted or duplicated block fresh word IDs and keeps the first block's IDs", () => {
+    const original = vocabulary(1, [word(1), word(2)]);
+    const copy = vocabulary(2, [word(1), word(3)]);
+    const inColumns = columns(1, [column(1, [paragraph(1)]), column(2, [vocabulary(3, [word(2)])])]);
+    expect(toLessonDocument([original, copy]).success).toBe(false);
+    let next = 0;
+    const repairs = vocabularyIdRepairs([original, copy, inColumns], () => `80000000-0000-4000-8000-00000000000${++next}`);
+    expect(repairs).toEqual([
+      { id: copy.id, data: JSON.stringify({ words: [{ ...word(1), id: "80000000-0000-4000-8000-000000000001" }, word(3)] }) },
+      { id: "50000000-0000-4000-8000-000000000403", data: JSON.stringify({ words: [{ ...word(2), id: "80000000-0000-4000-8000-000000000002" }] }) },
+    ]);
+    expect(vocabularyIdRepairs([original, vocabulary(2, [word(3)])])).toEqual([]);
   });
 });

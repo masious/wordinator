@@ -241,6 +241,115 @@
       "id": "a1fb6569-e90e-4af8-b42c-6eb6790e60ad"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "willen",
+              "meaning": "to want",
+              "forms": "wil · wilde · gewild",
+              "example": "Ik wil graag een cappuccino.",
+              "note": "ik/hij/zij wil (no -t), jij wilt (Wil je …?), u wilt. False friend: not \"will\".",
+              "id": "8e276eed-17f5-4cba-b5fc-5d31039d01da"
+            },
+            {
+              "term": "mogen",
+              "meaning": "may, to be allowed to",
+              "forms": "mag · mocht · gemogen",
+              "example": "Mag ik een glas water?",
+              "note": "ik/jij/u/hij mag: never magt. wij/jullie/zij mogen.",
+              "id": "336fd1d9-7e00-4473-8af0-6a94981a71f1"
+            },
+            {
+              "term": "zitten",
+              "meaning": "to sit",
+              "forms": "zit · zat · gezeten",
+              "example": "Om half een zitten Sofia en Daan op het terras.",
+              "id": "10c2e708-3309-4127-acd5-72a0afe7f196"
+            },
+            {
+              "term": "het terras",
+              "meaning": "terrace (outdoor seating of a café)",
+              "forms": "de terrassen",
+              "example": "Sofia en Daan zitten op het terras.",
+              "id": "c9305e90-0150-4cb5-bb5f-7255066bbd0d"
+            },
+            {
+              "term": "aan de Oudegracht",
+              "meaning": "on the Oudegracht (by the canal)",
+              "example": "De Zwaluw is een klein café aan de Oudegracht.",
+              "note": "aan = on, by (water, a canal, a street).",
+              "id": "bbd3556a-0aa8-4178-aee5-30ab03ac8c35"
+            },
+            {
+              "term": "Ik wil graag …",
+              "meaning": "I'd like …",
+              "example": "Ik wil graag een cappuccino.",
+              "note": "graag directly after wil makes it polite.",
+              "id": "3f949b47-5597-410d-a2e9-de9b53f5fd6f"
+            },
+            {
+              "term": "de cappuccino",
+              "meaning": "cappuccino",
+              "forms": "de cappuccino's",
+              "example": "Sofia wil graag een cappuccino.",
+              "id": "39bd53ab-8d26-43b6-883e-06a7e0fedfd6"
+            },
+            {
+              "term": "Doe mij maar …",
+              "meaning": "I'll have … (informal)",
+              "example": "Doe mij maar een thee.",
+              "note": "A fixed chunk for ordering.",
+              "id": "a83273c3-cc6c-4f1a-86b4-6060218a74de"
+            },
+            {
+              "term": "gewone thee",
+              "meaning": "regular tea",
+              "example": "Gewone thee of verse muntthee?",
+              "note": "gewoon = normal, regular; gewone before a de-word.",
+              "id": "7a5e76e8-7618-4cce-b5c6-0ffffef92844"
+            },
+            {
+              "term": "de muntthee",
+              "meaning": "mint tea",
+              "example": "Daan drinkt verse muntthee.",
+              "note": "In Dutch cafés: fresh mint leaves in hot water.",
+              "id": "5058b46b-f248-4538-85da-f8d613d9b235"
+            },
+            {
+              "term": "vers",
+              "meaning": "fresh",
+              "example": "Verse muntthee, graag.",
+              "note": "verse before a de-word: verse muntthee.",
+              "id": "bf6666c3-9f2e-4c6d-b2ba-e4b538ede86b"
+            },
+            {
+              "term": "Mag ik …?",
+              "meaning": "Can I have …? / May I …?",
+              "example": "Mag ik een glas water?",
+              "note": "The polite way to ask for something.",
+              "id": "4c88ba96-70c1-448d-a8b7-545569e2e489"
+            },
+            {
+              "term": "het kraanwater",
+              "meaning": "tap water",
+              "example": "Kraanwater? – Ja, prima.",
+              "id": "59ea2aae-0bb8-45b9-a028-d1742f01e00c"
+            },
+            {
+              "term": "Verder nog iets?",
+              "meaning": "Anything else?",
+              "example": "Een cappuccino en een muntthee. Verder nog iets?",
+              "note": "A fixed waiter phrase. Answer: Nee, dank je. / Nee, dank u.",
+              "id": "2f27ce4a-046f-4a23-a0d8-8957149193fd"
+            }
+          ]
+        }
+      },
+      "id": "b1dceb4a-e55e-41fd-a63b-58a74c9893a7"
+    },
+    {
       "type": "paragraph",
       "content": [
         "Look at the verbs: ",
@@ -1056,6 +1165,24 @@
       "id": "d440c8af-181b-446f-98ec-712a337b6447"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de kaart",
+              "meaning": "menu (in a café or restaurant)",
+              "forms": "de kaarten",
+              "example": "Mag ik de kaart?",
+              "note": "het menu is a set menu. de kaart is also a card or a map.",
+              "id": "9b87c0f3-a594-4b2d-bd5b-503c91f19d6d"
+            }
+          ]
+        }
+      },
+      "id": "50e8bf63-7cd0-4e47-b514-76cabe3702e8"
+    },
+    {
       "type": "example",
       "props": {
         "translation": "Can Daan have a glass of water too?",
@@ -1295,6 +1422,30 @@
       "id": "a1908167-f276-42d3-a1ca-3bf6b5c08d3d"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "buiten",
+              "meaning": "outside",
+              "example": "Wij willen buiten zitten.",
+              "id": "7585243f-bdb9-4e13-8463-4f7378beaf11"
+            },
+            {
+              "term": "de tosti",
+              "meaning": "toasted sandwich",
+              "forms": "de tosti's",
+              "example": "Ik neem een tosti ham-kaas.",
+              "note": "een tosti ham-kaas = a ham and cheese toastie.",
+              "id": "05dccbed-187f-4ed9-b6e6-5be8f2f58af8"
+            }
+          ]
+        }
+      },
+      "id": "a94097ca-359a-4981-960f-b1847fe2a06d"
+    },
+    {
       "type": "example",
       "props": {
         "translation": "I'd like to order.",
@@ -1326,6 +1477,24 @@
         "."
       ],
       "id": "5d96b0e5-ee67-494a-a604-bd866cdb245e"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "bestellen",
+              "meaning": "to order",
+              "forms": "bestelt · bestelde · besteld",
+              "example": "Ik wil graag bestellen.",
+              "note": "Not separable: be- is never stressed.",
+              "id": "0fd7027a-bddd-442f-ad28-7ba8712ee38a"
+            }
+          ]
+        }
+      },
+      "id": "5487ed1d-d855-4102-9da4-9cc73af26dc6"
     },
     {
       "type": "example",
@@ -1519,10 +1688,25 @@
       "type": "bulletListItem",
       "content": [
         {
-          "text": "Ik wil graag",
+          "text": "Ik",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "wil",
           "styles": {
             "bold": true,
             "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "graag",
+          "styles": {
+            "bold": true
           }
         },
         " + thing"
@@ -1547,10 +1731,18 @@
       "type": "bulletListItem",
       "content": [
         {
-          "text": "Mag ik",
+          "text": "Mag",
           "styles": {
             "bold": true,
             "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
           }
         },
         " + thing?"
@@ -1575,7 +1767,15 @@
       "type": "bulletListItem",
       "content": [
         {
-          "text": "Ik neem",
+          "text": "Ik",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "neem",
           "styles": {
             "bold": true,
             "textColor": "blue"
@@ -1659,6 +1859,36 @@
         }
       ],
       "id": "ce5e8a93-0cc2-4197-9a7b-618e41479ca9"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Voor mij een …, alstublieft.",
+              "meaning": "A … for me, please.",
+              "example": "Voor mij een cola, alstublieft.",
+              "id": "0631650b-74d7-436b-9b26-9da58be79e4b"
+            },
+            {
+              "term": "de cola",
+              "meaning": "cola",
+              "forms": "de cola's",
+              "example": "Voor mij een cola, alstublieft.",
+              "id": "b4b1c27c-7b79-4cd5-9e2a-58418cda7056"
+            },
+            {
+              "term": "de jus d'orange",
+              "meaning": "orange juice",
+              "example": "Doe mij maar een jus d'orange.",
+              "note": "From French; say: zjuu-dorANzje.",
+              "id": "587cd7f6-a840-46f5-bab3-fd5bd008db17"
+            }
+          ]
+        }
+      },
+      "id": "8168eb1f-ff7f-4c78-bc02-2b40fe31e6ff"
     },
     {
       "type": "callout",
@@ -1821,6 +2051,30 @@
       "id": "023d018f-f3b8-46cb-b3dd-4dec78ce1441"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Wat mag het zijn?",
+              "meaning": "What can I get you?",
+              "example": "Wat mag het zijn? – Voor mij een cola, alstublieft.",
+              "note": "A fixed waiter phrase.",
+              "id": "1ae36988-c2f5-4190-870e-d52e208435de"
+            },
+            {
+              "term": "Wat wilt u drinken?",
+              "meaning": "What would you like to drink? (formal)",
+              "example": "Goedemiddag! Wat wilt u drinken?",
+              "note": "To friends: Wat willen jullie drinken?",
+              "id": "72192672-2709-40dd-80ef-50c9f0a4f0dc"
+            }
+          ]
+        }
+      },
+      "id": "8a2bdfcd-946b-4bed-a155-d2d5b801d3ff"
+    },
+    {
       "type": "example",
       "props": {
         "translation": "What can I get you? – A cola for me, please.",
@@ -1943,6 +2197,23 @@
         " (when you give something)"
       ],
       "id": "cda9cd22-7dcd-45e4-9c54-7cf0bdaae1d8"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Alsjeblieft. / Alstublieft.",
+              "meaning": "Here you are.",
+              "example": "Mag ik de kaart? – Alsjeblieft.",
+              "note": "Part I: please. When you give something, it means here you are. alsjeblieft to friends, alstublieft formal.",
+              "id": "2720acb4-7ee6-433f-af43-55f180e980ea"
+            }
+          ]
+        }
+      },
+      "id": "041483a3-4a9f-4a46-96d4-96dd8ea542d6"
     },
     {
       "type": "callout",
@@ -2318,6 +2589,69 @@
       "id": "1c96c124-2ab1-4862-a20e-7de07d5a465e"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de suiker",
+              "meaning": "sugar",
+              "example": "Koffie met melk en suiker?",
+              "id": "69c2368d-d217-4086-aae2-453f8e399a91"
+            },
+            {
+              "term": "de soep",
+              "meaning": "soup",
+              "forms": "de soepen",
+              "example": "Is de soep lekker?",
+              "id": "3000cc38-5a06-42ba-9418-6420c9e71b86"
+            },
+            {
+              "term": "het broodje kaas",
+              "meaning": "cheese roll",
+              "example": "Voor mij een broodje kaas.",
+              "note": "No van: een broodje kaas, een broodje ham.",
+              "id": "4c7f1f44-c1d9-4f3c-b860-e56157f9ef6a"
+            },
+            {
+              "term": "de ham",
+              "meaning": "ham",
+              "example": "Een tosti ham-kaas, graag.",
+              "id": "f662f050-56c4-4854-89b1-0af62c8b5c58"
+            },
+            {
+              "term": "de appeltaart",
+              "meaning": "apple pie",
+              "forms": "de appeltaarten",
+              "example": "De appeltaart is heel lekker.",
+              "id": "ad485d66-caf0-4ce8-b6b8-4a282a65233a"
+            },
+            {
+              "term": "de slagroom",
+              "meaning": "whipped cream",
+              "example": "Appeltaart met veel slagroom!",
+              "id": "26e52a0d-2742-42a4-a443-7f8a439f6218"
+            },
+            {
+              "term": "de ober",
+              "meaning": "waiter",
+              "forms": "de obers",
+              "example": "De ober geeft Daan de kaart.",
+              "id": "14b4f4b7-d74d-43bf-beb7-37f4dace8c31"
+            },
+            {
+              "term": "de serveerster",
+              "meaning": "waitress",
+              "forms": "de serveersters",
+              "example": "Op zaterdag is Noor serveerster.",
+              "id": "d61367ca-e669-4d2b-8192-0678aafbc125"
+            }
+          ]
+        }
+      },
+      "id": "97e040f3-34b9-4701-82a0-a569edc10572"
+    },
+    {
       "type": "paragraph",
       "content": [
         "Verbs: ",
@@ -2413,6 +2747,22 @@
       "id": "989ad2f3-b7ed-40fd-a413-22d519c7f137"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "binnen",
+              "meaning": "inside",
+              "example": "Willen jullie binnen of buiten zitten?",
+              "id": "e6bd76d2-6372-4ce2-9e97-43d7b46f4c8c"
+            }
+          ]
+        }
+      },
+      "id": "81636e2c-0360-495c-9731-d9f775c405c3"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 2
@@ -2482,6 +2832,34 @@
         ]
       },
       "id": "64c5ee9c-52e0-48dc-8b32-f036e66f6018"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de tomatensoep",
+              "meaning": "tomato soup",
+              "example": "Voor mij een kop tomatensoep.",
+              "id": "01e2ee57-24f0-4ea3-bd34-69b11aa047cf"
+            },
+            {
+              "term": "nog een",
+              "meaning": "another (one more)",
+              "example": "Mag ik nog een muntthee?",
+              "id": "0f464c0b-5220-4d11-9159-7d0e33eee99d"
+            },
+            {
+              "term": "Nee, dat is alles.",
+              "meaning": "No, that's all.",
+              "example": "Verder nog iets? – Nee, dat is alles.",
+              "id": "7db37733-5409-4d89-b275-8a92d5e21c84"
+            }
+          ]
+        }
+      },
+      "id": "99e11ae1-5a32-448b-9dfb-b0a664be2b2d"
     },
     {
       "type": "paragraph",
@@ -2578,7 +2956,7 @@
         },
         " = ",
         {
-          "text": "a bowl of tomato soup",
+          "text": "a cup of tomato soup",
           "styles": {
             "italic": true
           }
@@ -2815,7 +3193,7 @@
               "authorsVersion": [
                 "Om half een wil Noor koffie drinken."
               ],
-              "note": "Time first, then wil, then the subject; drinken goes to the end."
+              "note": "Time first, then wil, then the subject; drinken goes to the end. Also fine: Noor wil om half een koffie drinken."
             }
           ]
         }
@@ -3102,6 +3480,66 @@
         }
       },
       "id": "fa0775aa-3d69-4aac-8d8d-5650c04b8935"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "kosten",
+              "meaning": "to cost",
+              "forms": "kost · kostte · gekost",
+              "example": "Een cappuccino kost vier euro.",
+              "id": "4097b91e-d77e-45ef-bc95-09f8f2bcc729"
+            },
+            {
+              "term": "Hoeveel kost …?",
+              "meaning": "How much is …?",
+              "example": "Hoeveel kost een koffie?",
+              "id": "5d8d92ad-0a0c-404b-87bf-3ae9f15ee7e1"
+            },
+            {
+              "term": "gratis",
+              "meaning": "free (no cost)",
+              "example": "Kraanwater is gratis.",
+              "id": "7cb52bf8-4b90-4d7b-a293-4b6891ac3831"
+            },
+            {
+              "term": "zonder",
+              "meaning": "without",
+              "example": "Appeltaart met of zonder slagroom?",
+              "id": "cd62b07c-bafa-4b04-8428-2bf8cf5e963e"
+            },
+            {
+              "term": "open",
+              "meaning": "open",
+              "example": "Het café is open van tien uur tot zes uur.",
+              "id": "49f08256-acd5-4234-9e90-123bf4b5671c"
+            },
+            {
+              "term": "aan het water",
+              "meaning": "by the water",
+              "example": "Het terras is aan het water.",
+              "id": "2998a0b2-c62d-4b9a-a5f9-154497b3cf6d"
+            },
+            {
+              "term": "aan de bar",
+              "meaning": "at the counter (in a café)",
+              "example": "Je betaalt aan de bar of aan tafel.",
+              "id": "fec74062-9287-4365-922b-b3441f77514a"
+            },
+            {
+              "term": "aan tafel",
+              "meaning": "at the table",
+              "example": "Je betaalt aan de bar of aan tafel.",
+              "note": "No article: aan tafel.",
+              "id": "085b6d91-6d47-4049-a37f-afba4f5b8d07"
+            }
+          ]
+        }
+      },
+      "id": "387ab4ab-2feb-4cfd-bad6-e4adce54f582"
     },
     {
       "type": "divider",

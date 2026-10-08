@@ -41,6 +41,7 @@ Blocks follow BlockNote's `{ type, props, content, children }`. The tool fills i
 | `example` | `content` = the Dutch sentence (rich; bold/colour the target form). `props.translation`, `props.note` plain text (≤ 1000 / 2000). The player hides the translation until tapped. |
 | `dialogue` | `props.turns`: `[{ "speaker", "text" }]`, 1–50 turns, speaker ≤ 40 chars, plain text. Each turn is one player step. |
 | `practice` | `props.data`: `{ instruction, passage?, items }`. Plain text only. 1–50 items. |
+| `vocabulary` | "New words". `props.data`: `{ "words": [{ "term", "meaning", "forms"?, "example"?, "note"? }] }`, 1–50 words, plain text. Not a player step: its words join the step of the block directly before it (see `docs/courses.md#words-in-the-player`). IDs are assigned by `check`. Conventions in `docs/content/style-guide.md#new-words`. |
 | `columnList` → `column` | 2–3 columns, top level only, never nested. Any block may sit in a column. `props.width` is a relative ratio (default 1). |
 | `image` | **Not available to agents.** Images must be uploaded through the app. Put ideas in `imageIdeas` instead: `[{ "afterHeading": "…", "description": "…", "alt": "…" }]`. |
 

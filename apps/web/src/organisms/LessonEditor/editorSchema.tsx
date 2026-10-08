@@ -2,17 +2,18 @@ import { BlockNoteSchema, createHeadingBlockSpec, defaultBlockSpecs, defaultStyl
 import { createReactBlockSpec, type ReactCustomBlockRenderProps } from "@blocknote/react";
 import { withMultiColumn } from "@blocknote/xl-multi-column";
 import { Menu } from "@mantine/core";
-import { calloutIconSchema, calloutVariantSchema, type CalloutIcon, type CalloutVariant } from "@wordinator/contracts/lesson-document";
+import { calloutIconSchema, calloutVariantSchema, vocabularyPayloadSchema, type CalloutIcon, type CalloutVariant } from "@wordinator/contracts/lesson-document";
 import { COURSE_NOTE_MAX, COURSE_SENTENCE_MAX, practicePayloadSchema } from "@wordinator/contracts";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { calloutIcon, calloutIcons } from "../../molecules/Callout";
 import calloutStyles from "../../molecules/Callout.module.css";
 import { DialogueFields, dialogueTurnsFromFields, PracticeFields, practiceFieldsFromPayload, practicePayloadFromFields, type Turn } from "./PracticeFields";
+import { newVocabularyWord, VocabularyFields } from "./VocabularyFields";
 import styles from "./LessonEditor.module.css";
 
 // The editor's schema is limited to what the lesson document contracts accept: headings 1–3 without toggles, the text
-// blocks, uploaded images, two or three top-level columns, and Wordinator's own callout, example, dialogue, and practice blocks;
+// blocks, uploaded images, two or three top-level columns, and Wordinator's own callout, example, dialogue, practice, and New words (vocabulary) blocks;
 // bold, italic, and palette colours only.
 // Structured payloads live in string props, matching the contracts. New blocks start with valid placeholder data.
 export const DEFAULT_TURNS = JSON.stringify([{ speaker: "A", text: "…" }, { speaker: "B", text: "…" }]);
@@ -117,10 +118,25 @@ function PracticeEditorBlock({ block, editor }: ReactCustomBlockRenderProps<type
   </section>;
 }
 
+// New words keep their payload in a string prop like practices. A payload the contracts refuse (only possible from
+// outside the editor) shows no rows, so adding a word starts it over.
+const vocabularyConfig = { type: "vocabulary", propSchema: { data: { default: JSON.stringify({ words: [] }) } }, content: "none" } as const;
+export const newVocabularyData = () => JSON.stringify({ words: [newVocabularyWord()] });
+function VocabularyEditorBlock({ block, editor }: ReactCustomBlockRenderProps<typeof vocabularyConfig>) {
+  const { t } = useTranslation();
+  const parsed = vocabularyPayloadSchema.safeParse(parseJson(block.props.data));
+  return <section className={styles.structured} contentEditable={false} aria-label={t("courses.editor.blocks.vocabulary")}>
+    <span className={styles.blockLabel}>{t("courses.editor.blocks.vocabulary")}</span>
+    <VocabularyFields words={parsed.success ? parsed.data.words : []} onChange={(words) => editor.updateBlock(block, { props: { data: JSON.stringify({ words }) } })} />
+    {!parsed.success && <p className={styles.incomplete} role="status">{t("courses.editor.incomplete")}</p>}
+  </section>;
+}
+
 const createCallout = createReactBlockSpec(calloutConfig, { render: (props) => <CalloutBlock {...props} /> });
 const createExample = createReactBlockSpec(exampleConfig, { render: (props) => <ExampleEditorBlock {...props} /> });
 const createDialogue = createReactBlockSpec(dialogueConfig, { render: (props) => <DialogueEditorBlock {...props} /> });
 const createPractice = createReactBlockSpec(practiceConfig, { render: (props) => <PracticeEditorBlock {...props} /> });
+const createVocabulary = createReactBlockSpec(vocabularyConfig, { render: (props) => <VocabularyEditorBlock {...props} /> });
 
 const { paragraph, bulletListItem, numberedListItem, divider, image } = defaultBlockSpecs;
 const { bold, italic, textColor, backgroundColor } = defaultStyleSpecs;
@@ -129,6 +145,7 @@ export const lessonEditorSchema = withMultiColumn(BlockNoteSchema.create({
   blockSpecs: {
     paragraph, heading: createHeadingBlockSpec({ levels: [1, 2, 3], allowToggleHeadings: false }), bulletListItem, numberedListItem, divider, image,
     callout: createCallout(), example: createExample(), dialogue: createDialogue(), practice: createPractice(),
+    vocabulary: createVocabulary(),
   },
   styleSpecs: { bold, italic, textColor, backgroundColor },
 }));

@@ -100,7 +100,7 @@ If a deleted group is a person’s only group, status appears in the restricted 
 6. The owner or group creator can archive the course after confirming. Other members no longer see it, and its feed card says the course is unavailable. The owner and creator still see it in the library and can restore it, which returns it as a draft.
 
 7. The owner adds lessons with a title and optional goal. New lessons are unpublished and appear in the outline with an Unpublished label.
-8. Inside a lesson, the owner writes in a block editor: headings, paragraphs, lists, callouts, images, columns, examples, dialogues, and practices, added from the slash menu and moved by dragging. The owner can also move lessons up or down.
+8. Inside a lesson, the owner writes in a block editor: headings, paragraphs, lists, callouts, images, columns, examples, dialogues, practices, and New words, added from the slash menu and moved by dragging. The owner can also move lessons up or down.
 9. The editor autosaves the lesson's draft. Readers see only the published version until the owner chooses Publish; Discard returns the draft to the published version, and Unpublish hides the lesson. An edit that has not reached the server yet stays in the browser and reopens on the next visit.
 10. If someone saved a newer version first, the editor merges the two by block and says so. Blocks both people changed are shown side by side, and the author keeps the newer version or their own edit for each. See [drafts and publishing](courses.md#drafts-and-publishing).
 11. Readers see the outline and the first three lessons, and continue to later lessons one at a time.
@@ -130,5 +130,7 @@ If a deleted group is a person’s only group, status appears in the restricted 
 3. Dialogue lines arrive one after another; earlier lines stay visible.
 4. Practice questions are asked one by one with a single answer field. Answers are saved as the same browser draft the lesson view uses. On the last question the learner may share the answer set with the group or keep it private.
 5. Back and Next move freely, and each move is saved. If the learner leaves mid-lesson, the course page offers Pick up where you left off and the lesson's action reads Continue lesson; the player reopens at the saved step and offers Start over. After the last step the player shows that the lesson is complete, the learner's course percentage, and a link to the next lesson or back to the course.
-6. The finished lesson shows a check in the outline and offers Practise again. The course's Progress panel shows every member's percentage, listed by name; a started lesson counts for the share of its steps already passed.
-7. Owners and contributors can run an unpublished lesson as a preview; it does not count toward progress.
+6. A step that introduces new words shows them in a New words panel below it, with term, forms, meaning, example, and note; a section that holds only words is a step of its own. After the last step, a run that had words offers Review words: a card per word, where Show meaning reveals the meaning, and Back to the summary returns to the completion screen.
+7. The finished lesson shows a check in the outline and offers Practise again. The course's Progress panel shows every member's percentage, listed by name; a started lesson counts for the share of its steps already passed.
+8. Once a member has finished lessons with words, the course page offers Review words for all of them in lesson order, each repeated term once. Nothing in a recap is recorded.
+9. Owners and contributors can run an unpublished lesson as a preview; it does not count toward progress.

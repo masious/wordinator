@@ -7,10 +7,10 @@ import styles from "./LessonEditor.module.css";
 
 // The bar above the editor: save state, whether readers see the latest draft, who edited last, and the owner's actions.
 // Contributors see no publishing actions; their work stays a draft until the owner publishes it.
-export function LessonPublishBar({ owner, published, changed, status, editorName, problems, error, busy, onPublish, onDiscard, onUnpublish, onFocusBlock, onDone }: {
+export function LessonPublishBar({ owner, published, changed, status, editorName, problems, error, busy, onPublish, onDiscard, onUnpublish, onFocusProblem, onDone }: {
   owner: boolean; published: boolean; changed: boolean; status: SaveStatus; editorName: string; problems: LessonPublishProblem[]; error: Error | null;
   busy: "publish" | "discard" | "unpublish" | "done" | null;
-  onPublish: () => void; onDiscard: () => void; onUnpublish: () => void; onFocusBlock: (blockId: string) => void; onDone: () => void;
+  onPublish: () => void; onDiscard: () => void; onUnpublish: () => void; onFocusProblem: (problem: LessonPublishProblem) => void; onDone: () => void;
 }) {
   const { t } = useTranslation();
   // A draft that differs from what readers see, or a lesson nobody can read yet, has something to publish.
@@ -34,8 +34,8 @@ export function LessonPublishBar({ owner, published, changed, status, editorName
     </div>
     {problems.length > 0 && <div className={styles.problems} role="alert">
       <p>{t("courses.editor.problemsTitle")}</p>
-      <ul>{problems.map((problem) => <li key={`${problem.blockId}-${problem.problem}`}>
-        <button type="button" onClick={() => onFocusBlock(problem.blockId)}>{t(`courses.editor.problems.${problem.problem}`)}</button>
+      <ul>{problems.map((problem) => <li key={`${problem.blockId}-${problem.wordId ?? ""}-${problem.problem}`}>
+        <button type="button" onClick={() => onFocusProblem(problem)}>{t(`courses.editor.problems.${problem.problem}`)}</button>
       </li>)}</ul>
     </div>}
     <CourseErrorMessage error={error} />

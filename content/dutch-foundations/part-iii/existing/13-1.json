@@ -2,148 +2,485 @@
   "id": "cbb04fbe-14f4-4b49-bd0a-94257186523d",
   "title": "Mijn huis",
   "goal": "Describe a home, its rooms, and what is present in them.",
-  "document": {
-    "schemaVersion": 2,
-    "blocks": [
-      {
-        "id": "eab73a77-fa0a-4552-96f3-17d12351e182",
-        "type": "paragraph",
-        "props": {
-          "textColor": "default",
-          "backgroundColor": "default",
-          "textAlignment": "left"
+  "blocks": [
+    {
+      "id": "80dbb128-24bf-4012-bf69-134da75716a0",
+      "type": "columnList",
+      "props": {},
+      "children": [
+        {
+          "id": "6310dd8b-6414-4d0c-873a-c5ed43a23b5d",
+          "type": "column",
+          "props": {
+            "width": 1.3311043231789537
+          },
+          "children": [
+            {
+              "id": "5634d09f-75a6-424b-b5ad-7e5bd085cdd9",
+              "type": "paragraph",
+              "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Grammar:",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "6361d93a-f920-4c18-9278-da45eb829e54",
+              "type": "bulletListItem",
+              "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "er is / er zijn",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "ca50c71a-ac53-46b6-affe-6b2ccf49b876",
+              "type": "bulletListItem",
+              "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "indefinite vs definite noun references",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "0cdbdb1d-c6ba-40d5-8d35-efbaa7711a69",
+              "type": "bulletListItem",
+              "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "basic review of de/het",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            }
+          ]
         },
-        "content": [
-          {
-            "type": "text",
-            "text": "Grammer:\ner is / er zijn,\nindefinite vs definite noun references,\nbasic review of de/het\n\nTopic Vocabulary:\nrooms\nfurniture\nparts of a home",
-            "styles": {}
+        {
+          "id": "38197208-0df4-47e9-9adc-fec693df7ea5",
+          "type": "column",
+          "props": {
+            "width": 0.6688956768210463
+          },
+          "children": [
+            {
+              "id": "7bcfd229-8bb0-4154-a7ae-056cd18f0438",
+              "type": "paragraph",
+              "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "Topic Vocabulary:",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "ab31d800-4c67-4c67-802e-61819fc35a33",
+              "type": "bulletListItem",
+              "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "rooms",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "2dcca045-01cc-4d51-97ef-36fcd297d1b8",
+              "type": "bulletListItem",
+              "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "furniture",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "debd88d4-2153-41c5-9fff-bc4d7e88d217",
+              "type": "bulletListItem",
+              "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left"
+              },
+              "content": [
+                {
+                  "type": "text",
+                  "text": "parts of a home",
+                  "styles": {}
+                }
+              ],
+              "children": []
+            },
+            {
+              "id": "4ef4724c-d6e3-4826-bc2e-6bb4a5a115a7",
+              "type": "paragraph",
+              "props": {
+                "textColor": "default",
+                "backgroundColor": "default",
+                "textAlignment": "left"
+              },
+              "content": [],
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a8d8adbf-53e5-456c-b2dc-f7cdfb190801",
+      "type": "paragraph",
+      "props": {
+        "textColor": "default",
+        "backgroundColor": "default",
+        "textAlignment": "left"
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "Er is",
+          "styles": {
+            "bold": true
           }
-        ],
-        "children": []
-      },
-      {
-        "id": "82ae1641-4a2f-4515-9aef-0a89aad3b0b6",
-        "type": "paragraph",
-        "props": {
-          "textColor": "default",
-          "backgroundColor": "default",
-          "textAlignment": "left"
         },
-        "content": [
-          {
-            "type": "text",
-            "text": "Er is en er zijn\npurpose: Introduce existence before teaching precise location.",
-            "styles": {}
+        {
+          "type": "text",
+          "text": " en ",
+          "styles": {}
+        },
+        {
+          "type": "text",
+          "text": "er zijn\n",
+          "styles": {
+            "bold": true
           }
-        ],
-        "children": []
-      },
-      {
-        "id": "9eca63e8-df48-40ad-8e75-9865a194ad81",
-        "type": "paragraph",
-        "props": {
-          "textColor": "default",
-          "backgroundColor": "default",
-          "textAlignment": "left"
         },
-        "content": [
-          {
-            "type": "text",
-            "text": "Use 'er is' for one thing and 'er zijn' for more than one thing when saying that something exists or is present. Questions use 'is er' and 'zijn er'.",
-            "styles": {}
-          }
-        ],
-        "children": []
+        {
+          "type": "text",
+          "text": "purpose: Introduce existence before teaching precise location.",
+          "styles": {}
+        }
+      ],
+      "children": []
+    },
+    {
+      "id": "9eca63e8-df48-40ad-8e75-9865a194ad81",
+      "type": "paragraph",
+      "props": {
+        "textColor": "default",
+        "backgroundColor": "default",
+        "textAlignment": "left"
       },
-      {
-        "id": "74e429d6-819f-48ca-98a8-b4591369908d",
-        "type": "example",
-        "props": {
-          "translation": "There is a balcony.",
-          "note": "The balcony is being introduced for the first time."
-        },
-        "content": [
-          {
-            "type": "text",
-            "text": "Er is een balkon.",
-            "styles": {}
-          }
-        ],
-        "children": []
+      "content": [
+        {
+          "type": "text",
+          "text": "Use 'er is' for one thing and 'er zijn' for more than one thing when saying that something exists or is present. Questions use 'is er' and 'zijn er'.",
+          "styles": {}
+        }
+      ],
+      "children": []
+    },
+    {
+      "id": "74e429d6-819f-48ca-98a8-b4591369908d",
+      "type": "example",
+      "props": {
+        "translation": "There is a balcony.",
+        "note": "The balcony is being introduced for the first time."
       },
-      {
-        "id": "818b9f46-cec3-4bb3-a38e-f876ddccd0eb",
-        "type": "example",
-        "props": {
-          "translation": "There are two bedrooms.",
-          "note": "Use 'zijn' because 'twee slaapkamers' is plural."
-        },
-        "content": [
-          {
-            "type": "text",
-            "text": "Er zijn twee slaapkamers.",
-            "styles": {}
-          }
-        ],
-        "children": []
+      "content": [
+        {
+          "type": "text",
+          "text": "Er is een balkon.",
+          "styles": {}
+        }
+      ],
+      "children": []
+    },
+    {
+      "id": "32007ec1-4a51-4455-9ca7-510720786d96",
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "id": "9c9bc5bf-e643-4347-b8d0-e81433bd138d",
+              "term": "het balkon",
+              "meaning": "balcony",
+              "forms": "de balkons"
+            }
+          ]
+        }
       },
-      {
-        "id": "a196817a-ad8e-42da-95f8-f7c15968ef6d",
-        "type": "example",
-        "props": {
-          "translation": "Is there a garden?",
-          "note": "In a question, 'is' comes before 'er'."
-        },
-        "content": [
-          {
-            "type": "text",
-            "text": "Is er een tuin?",
-            "styles": {}
-          }
-        ],
-        "children": []
+      "children": []
+    },
+    {
+      "id": "818b9f46-cec3-4bb3-a38e-f876ddccd0eb",
+      "type": "example",
+      "props": {
+        "translation": "There are two bedrooms.",
+        "note": "Use 'zijn' because 'twee slaapkamers' is plural."
       },
-      {
-        "id": "7d52c47b-a814-43fc-8c6e-20462e23b4e8",
-        "type": "example",
-        "props": {
-          "translation": "Are there shops nearby?",
-          "note": "The same inversion happens with plural 'zijn er'. This also previews the neighborhood lesson."
-        },
-        "content": [
-          {
-            "type": "text",
-            "text": "Zijn er winkels in de buurt?",
-            "styles": {}
-          }
-        ],
-        "children": []
+      "content": [
+        {
+          "type": "text",
+          "text": "Er zijn twee slaapkamers.",
+          "styles": {}
+        }
+      ],
+      "children": []
+    },
+    {
+      "id": "384c02a4-fc16-4223-950c-23b5e11ab0f9",
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "id": "d817258e-d26e-4da6-a73b-d2fbe9697ec1",
+              "term": "de slaapkamer",
+              "meaning": "bedroom",
+              "forms": "de slaapkamers"
+            }
+          ]
+        }
       },
-      {
-        "id": "5fe5228f-a3c3-49a5-a133-9f1e6f32b8eb",
-        "type": "dialogue",
-        "props": {
-          "turns": "[{\"speaker\":\"A\",\"text\":\"s er een tuin?\"},{\"speaker\":\"B\",\"text\":\"Nee, maar er is wel een balkon.\"},{\"speaker\":\"A\",\"text\":\"Zijn er twee slaapkamers?\"},{\"speaker\":\"B\",\"text\":\"Ja, er zijn twee slaapkamers.\"}]"
-        },
-        "children": []
+      "children": []
+    },
+    {
+      "id": "a196817a-ad8e-42da-95f8-f7c15968ef6d",
+      "type": "example",
+      "props": {
+        "translation": "Is there a garden?",
+        "note": "In a question, 'is' comes before 'er'."
       },
-      {
-        "id": "67d210b8-45cf-4323-9ceb-b2a1a42902f1",
-        "type": "practice",
-        "props": {
-          "data": "{\"instruction\":\"Complete each sentence with 'er is', 'er zijn', 'is er' or 'zijn er'.\",\"passage\":null,\"items\":[{\"prompt\":\"… … een kleine keuken.\",\"authorsVersion\":[\"Er\",\"is\"],\"note\":null},{\"prompt\":\"… … drie slaapkamers.\",\"authorsVersion\":[\"Er\",\"zijn\"],\"note\":null},{\"prompt\":\"… … een balkon?\",\"authorsVersion\":[\"Is\",\"er\"],\"note\":null},{\"prompt\":\"… … twee badkamers?\",\"authorsVersion\":[\"Zijn\",\"er\"],\"note\":null},{\"prompt\":\"In mijn appartement … … een grote woonkamer.\",\"authorsVersion\":[\"is\",\"er\"],\"note\":\"The sentence begins with a place expression, so 'er is' becomes 'is er'.\"},{\"prompt\":\"In het huis … … vier kamers.\",\"authorsVersion\":[\"zijn\",\"er\"],\"note\":\"This reinforces inversion after a sentence-initial place expression.\"},{\"prompt\":\"… … geen lift in het gebouw.\",\"authorsVersion\":[\"Er\",\"is\"],\"note\":null},{\"prompt\":\"… … ook een garage?\",\"authorsVersion\":[\"is\",\"er\"],\"note\":null}]}"
-        },
-        "children": []
+      "content": [
+        {
+          "type": "text",
+          "text": "Is er een tuin?",
+          "styles": {}
+        }
+      ],
+      "children": []
+    },
+    {
+      "id": "8b53bdba-951b-472e-ae5c-1b7424a26af4",
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "id": "74bd274b-e82e-4db2-853f-67b161366a14",
+              "term": "de tuin",
+              "meaning": "garden",
+              "forms": "de tuinen"
+            }
+          ]
+        }
       },
-      {
-        "id": "a4fbb4e1-1b39-460c-8949-73a5f2ad71bc",
-        "type": "practice",
-        "props": {
-          "data": "{\"instruction\":\"Translate the sentences into Dutch. Pay attention to singular, plural and word order.\",\"passage\":null,\"items\":[{\"prompt\":\"There is a bathroom.\",\"authorsVersion\":[\"Er is een badkamer.\"],\"note\":null},{\"prompt\":\"There are two bedrooms.\",\"authorsVersion\":[\"Er zijn twee slaapkamers.\"],\"note\":null},{\"prompt\":\"Is there a garden?\",\"authorsVersion\":[\"Is er een tuin?\"],\"note\":null},{\"prompt\":\"Are there three rooms?\",\"authorsVersion\":[\"Zijn er drie kamers?\"],\"note\":null},{\"prompt\":\"There is no elevator.\",\"authorsVersion\":[\"Er is geen lift.\"],\"note\":null},{\"prompt\":\"In the apartment there is a small kitchen.\",\"authorsVersion\":[\"In het appartement is er een kleine keuken.\"],\"note\":\"Recycles inversion after a sentence-initial place expression.\"}]}"
-        },
-        "children": []
-      }
-    ]
-  }
+      "children": []
+    },
+    {
+      "id": "7d52c47b-a814-43fc-8c6e-20462e23b4e8",
+      "type": "example",
+      "props": {
+        "translation": "Are there shops nearby?",
+        "note": "The same inversion happens with plural 'zijn er'. This also previews the neighborhood lesson."
+      },
+      "content": [
+        {
+          "type": "text",
+          "text": "Zijn er winkels in de buurt?",
+          "styles": {}
+        }
+      ],
+      "children": []
+    },
+    {
+      "id": "c20a61f1-d647-499e-9feb-8fd5af40e36f",
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "id": "d5b12d01-1a40-40b1-a8e0-7eddc29d4bf7",
+              "term": "de winkel",
+              "meaning": "shop",
+              "forms": "de winkels"
+            },
+            {
+              "id": "784d10a9-a12f-40c5-a2d6-fb1930219ca9",
+              "term": "in de buurt",
+              "meaning": "nearby, in the neighbourhood"
+            }
+          ]
+        }
+      },
+      "children": []
+    },
+    {
+      "id": "5fe5228f-a3c3-49a5-a133-9f1e6f32b8eb",
+      "type": "dialogue",
+      "props": {
+        "turns": "[{\"speaker\": \"A\", \"text\": \"Is er een tuin?\"}, {\"speaker\": \"B\", \"text\": \"Nee, maar er is wel een balkon.\"}, {\"speaker\": \"A\", \"text\": \"Zijn er twee slaapkamers?\"}, {\"speaker\": \"B\", \"text\": \"Ja, er zijn twee slaapkamers.\"}]"
+      },
+      "children": []
+    },
+    {
+      "id": "fc54ed5a-8d6d-4606-89bc-3a4e0894d2ca",
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "id": "3272f9c7-e70c-48fd-b973-d107070c9f4e",
+              "term": "wel",
+              "meaning": "(stresses a positive contrast)",
+              "example": "Nee, maar er is wel een balkon."
+            }
+          ]
+        }
+      },
+      "children": []
+    },
+    {
+      "id": "67d210b8-45cf-4323-9ceb-b2a1a42902f1",
+      "type": "practice",
+      "props": {
+        "data": "{\"instruction\": \"Complete each sentence with 'er is', 'er zijn', 'is er' or 'zijn er'.\", \"passage\": null, \"items\": [{\"prompt\": \"… … een kleine keuken.\", \"authorsVersion\": [\"Er\", \"is\"], \"note\": null}, {\"prompt\": \"… … drie slaapkamers.\", \"authorsVersion\": [\"Er\", \"zijn\"], \"note\": null}, {\"prompt\": \"… … een balkon?\", \"authorsVersion\": [\"Is\", \"er\"], \"note\": null}, {\"prompt\": \"… … twee badkamers?\", \"authorsVersion\": [\"Zijn\", \"er\"], \"note\": null}, {\"prompt\": \"In mijn appartement … … een grote woonkamer.\", \"authorsVersion\": [\"is\", \"er\"], \"note\": \"The sentence begins with a place expression, so 'er is' becomes 'is er'.\"}, {\"prompt\": \"In het huis … … vier kamers.\", \"authorsVersion\": [\"zijn\", \"er\"], \"note\": \"This reinforces inversion after a sentence-initial place expression.\"}, {\"prompt\": \"… … geen lift in het gebouw.\", \"authorsVersion\": [\"Er\", \"is\"], \"note\": null}, {\"prompt\": \"… … ook een garage?\", \"authorsVersion\": [\"Is\", \"er\"], \"note\": null}]}"
+      },
+      "children": []
+    },
+    {
+      "id": "c1b67574-c6af-44e6-b8a1-d7fdcde23f54",
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "id": "b90dd625-32cf-41cd-a45f-5256c81d6d0c",
+              "term": "de keuken",
+              "meaning": "kitchen",
+              "forms": "de keukens"
+            },
+            {
+              "id": "c3966aaa-da42-4627-833e-5212e824afff",
+              "term": "de woonkamer",
+              "meaning": "living room",
+              "forms": "de woonkamers"
+            },
+            {
+              "id": "275c1381-4568-4864-aa30-bb185a55adad",
+              "term": "het appartement",
+              "meaning": "apartment",
+              "forms": "de appartementen"
+            },
+            {
+              "id": "8b90cf4b-0eb1-4997-95ca-44f4d25732f1",
+              "term": "het huis",
+              "meaning": "house",
+              "forms": "de huizen"
+            },
+            {
+              "id": "dac4b387-50c8-4051-8a3a-d393afe540eb",
+              "term": "de kamer",
+              "meaning": "room",
+              "forms": "de kamers"
+            },
+            {
+              "id": "72c10b78-82bf-467a-ac9a-bb10a5e31860",
+              "term": "de lift",
+              "meaning": "elevator, lift",
+              "forms": "de liften"
+            },
+            {
+              "id": "56b5fa03-0540-4fb8-a5a2-b24251e3b198",
+              "term": "het gebouw",
+              "meaning": "building",
+              "forms": "de gebouwen"
+            },
+            {
+              "id": "e1bac8e4-2156-40ed-b620-59ab01504d86",
+              "term": "de garage",
+              "meaning": "garage",
+              "forms": "de garages"
+            }
+          ]
+        }
+      },
+      "children": []
+    },
+    {
+      "id": "a4fbb4e1-1b39-460c-8949-73a5f2ad71bc",
+      "type": "practice",
+      "props": {
+        "data": "{\"instruction\": \"Translate the sentences into Dutch. Pay attention to singular, plural and word order.\", \"passage\": null, \"items\": [{\"prompt\": \"There is a bathroom.\", \"authorsVersion\": [\"Er is een badkamer.\"], \"note\": null}, {\"prompt\": \"There are two bedrooms.\", \"authorsVersion\": [\"Er zijn twee slaapkamers.\"], \"note\": null}, {\"prompt\": \"Is there a garden?\", \"authorsVersion\": [\"Is er een tuin?\"], \"note\": null}, {\"prompt\": \"Are there three rooms?\", \"authorsVersion\": [\"Zijn er drie kamers?\"], \"note\": null}, {\"prompt\": \"There is no elevator.\", \"authorsVersion\": [\"Er is geen lift.\"], \"note\": null}, {\"prompt\": \"In the apartment there is a small kitchen.\", \"authorsVersion\": [\"In het appartement is er een kleine keuken.\"], \"note\": \"Recycles inversion after a sentence-initial place expression.\"}]}"
+      },
+      "children": []
+    },
+    {
+      "id": "defcb2c6-9089-4ce2-9ffb-b98a1df98a1a",
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "id": "ecf9fe76-1a11-44fc-bb61-bc0ada8ed95c",
+              "term": "de badkamer",
+              "meaning": "bathroom",
+              "forms": "de badkamers"
+            }
+          ]
+        }
+      },
+      "children": []
+    }
+  ]
 }

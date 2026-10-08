@@ -10,7 +10,7 @@ Briefs describe the **plan**. What a lesson actually teaches is recorded in the 
 - **Title**: Mijn dag
 - **Goal**: Talk about your daily routine and other people's routines using the full present tense, including the plural forms, and say how often you do things.
 - **Communicative goal**: describe a normal day (yours, a flatmate's, "we", "they"); ask "Wat doen jullie …?"; say how often (altijd, vaak, soms, nooit).
-- **Story beat**: Week of 14 September. Sofia lives in Noor's flat. Dialogue 1: breakfast in the kitchen, Noor and Sofia compare routines ("Wij ontbijten samen", "Jij drinkt altijd koffie"). Dialogue 2: at the office, Daan asks Sofia and a colleague "Wat doen jullie 's avonds?"; Daan cycles every day, works early. Reading: Sofia's short text "Mijn dag in Utrecht" or an email to her mother.
+- **Story beat**: Week of 7 September (Sofia's first full work week). Sofia lives in Noor's flat. Dialogue 1: breakfast in the kitchen, Noor and Sofia compare routines ("Wij ontbijten samen", "Jij drinkt altijd koffie"). Dialogue 2: at the office, Daan asks Sofia and a colleague "Wat doen jullie 's avonds?"; Daan cycles every day, works early. Reading: Sofia's short text "Mijn dag in Utrecht" or an email to her mother.
 - **Grammar**:
   1. **Present tense, full paradigm** (singular is known from Part I; plural is new):
      - ik + stem (werk), jij/u/hij/zij/het + stem + t (werkt), **wij/jullie/zij (plural) + infinitive form = stem + en** (werken).

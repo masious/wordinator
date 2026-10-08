@@ -81,6 +81,28 @@ describe("Lesson editor", () => {
     expect(body).toEqual({ document: doc("Mijn onbewaarde zin."), draftVersion: 3 });
   });
 
+  it("edits New words in place and autosaves the block", async () => {
+    const wordId = "70000000-0000-4000-8000-000000000001";
+    const words = (meaning: string) => ({ id: "50000000-0000-4000-8000-000000000009", type: "vocabulary", props: { data: JSON.stringify({ words: [{ id: wordId, term: "het huis", meaning, forms: "de huizen" }] }) }, children: [] }) as LessonDocument["blocks"][number];
+    vi.mocked(fetch).mockResolvedValueOnce(saved(4));
+    renderEditor(false, lesson({ draft: { document: { schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks: [para(exampleId, "Het huis is groot."), words("house")] }, version: 3 } }));
+    const block = await screen.findByRole("region", { name: "New words" });
+    expect(within(block).getByLabelText("Word 1 forms")).toHaveValue("de huizen");
+    fireEvent.change(within(block).getByLabelText(/^Word 1 meaning/), { target: { value: "the house" } });
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${path}/draft`, expect.objectContaining({ method: "PUT" })), { timeout: 3_000 });
+    expect(JSON.parse(String(vi.mocked(fetch).mock.calls[0]![1]!.body)).document.blocks[1]).toEqual(words("the house"));
+  });
+
+  it("focuses the empty field of a word that blocks publishing", async () => {
+    const blockId = "50000000-0000-4000-8000-000000000009"; const wordId = "70000000-0000-4000-8000-000000000001";
+    const words = { id: blockId, type: "vocabulary", props: { data: JSON.stringify({ words: [{ id: wordId, term: "het huis", meaning: "" }] }) }, children: [] } as LessonDocument["blocks"][number];
+    vi.mocked(fetch).mockResolvedValueOnce(json({ error: { code: "LESSON_NOT_READY", message: "Finish first." }, problems: [{ blockId, wordId, problem: "word-empty" }] }, 422));
+    renderEditor(true, lesson({ draft: { document: { schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks: [words] }, version: 3 } }));
+    fireEvent.click(await screen.findByRole("button", { name: "Publish lesson" }));
+    fireEvent.click(await screen.findByRole("button", { name: "A new word needs both the word and its meaning." }));
+    expect(screen.getByLabelText(/^Word 1 meaning/)).toHaveFocus();
+  });
+
   it("keeps a local edit from an older draft aside after a conflict and lets the author bring it back", async () => {
     const key = lessonDocumentDraftKey(accountId, groupId, lessonId);
     storeLocalLessonDraft(key, { baseVersion: 2, document: doc("Mijn versie."), conflict: true });

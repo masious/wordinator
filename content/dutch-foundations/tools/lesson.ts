@@ -1,11 +1,11 @@
 // Authoring tool for course lesson files. Run with apps/api/node_modules/.bin/tsx.
 //   check <lesson.json...>  normalize authoring shorthand, assign missing block IDs (written back), validate, print feature usage
-//   sql <partDir>           print local-D1 SQL that upserts the part's course, its lessons (as drafts) and practice anchors
+//   sql <partDir> [manifest] print D1 SQL that upserts the part's course, its lessons (as drafts) and practice anchors
 import { randomUUID } from "node:crypto";
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import {
-  findPublishProblems, flattenToSteps, lessonDocumentSchema, walkLessonBlocks, type LessonDocument,
+  collectLessonWords, findPublishProblems, flattenToSteps, lessonDocumentSchema, walkLessonBlocks, type LessonDocument,
 } from "../../../packages/contracts/src/lessonDocument";
 import { countBlanks, practicePayloadSchema } from "../../../packages/contracts/src/index";
 
@@ -43,6 +43,17 @@ const normalize = (block: Json): Json => {
       const data = typeof props.data === "string" ? JSON.parse(props.data) : props.data;
       const payload = { instruction: data.instruction, passage: data.passage ?? null, items: data.items.map((item: Json) => ({ prompt: item.prompt, authorsVersion: item.authorsVersion ?? [], note: item.note ?? null })) };
       return { id: block.id, type: "practice", props: { data: JSON.stringify(payload) }, children: [] };
+    }
+    case "vocabulary": {
+      // Word IDs are assigned on the authoring words so they persist; empty optional fields are dropped.
+      if (typeof props.data === "string") block.props.data = JSON.parse(props.data);
+      const words = block.props.data.words.map((word: Json) => {
+        word.id ??= randomUUID();
+        const out: Json = { id: word.id, term: word.term, meaning: word.meaning };
+        for (const key of ["forms", "example", "note"]) if (word[key]) out[key] = word[key];
+        return out;
+      });
+      return { id: block.id, type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [] };
     }
     case "columnList":
       return { id: block.id, type: "columnList", props: {}, children };
@@ -98,6 +109,14 @@ function check(path: string): boolean {
         }
       }
       if (block.type === "dialogue") bump("dialogue.turns", JSON.parse(block.props.turns).length);
+      if (block.type === "vocabulary") bump("vocabulary.words", JSON.parse(block.props.data).words.length);
+    }
+    // Each term once per lesson (trimmed, case-insensitive), as in the course recap.
+    const seen = new Set<string>();
+    for (const word of collectLessonWords(doc)) {
+      const key = word.term.trim().toLowerCase();
+      if (seen.has(key)) errors.push(`vocabulary: "${word.term}" appears more than once`);
+      seen.add(key);
     }
     stats["player.steps"] = flattenToSteps(doc).length;
     stats["bytes"] = new TextEncoder().encode(JSON.stringify(doc)).length;
@@ -110,9 +129,9 @@ function check(path: string): boolean {
 
 const q = (value: unknown) => value == null ? "NULL" : typeof value === "number" ? String(value) : `'${String(value).replace(/'/g, "''")}'`;
 
-// course.json: { courseId, groupId, ownerId, positionOffset, create?: { title, summary, level, intendedLearner } }
-function sql(dir: string) {
-  const course = JSON.parse(readFileSync(join(dir, "course.json"), "utf8"));
+// course.json (or the manifest named on the command line, e.g. course.prod.json): { courseId, groupId, ownerId, positionOffset, create?: { title, summary, level, intendedLearner } }
+function sql(dir: string, manifest: string) {
+  const course = JSON.parse(readFileSync(join(dir, manifest), "utf8"));
   const now = Date.now();
   const out: string[] = [];
   if (course.create) {
@@ -138,7 +157,7 @@ if (command === "check") {
   const results = args.map(check);
   process.exit(results.every(Boolean) ? 0 : 1);
 } else if (command === "sql") {
-  sql(args[0]!);
+  sql(args[0]!, args[1] ?? "course.json");
 } else {
   console.error("usage: lesson.ts check <files...> | sql <partDir>");
   process.exit(2);

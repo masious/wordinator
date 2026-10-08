@@ -99,21 +99,21 @@
             "italic": true
           }
         },
-        ") and make ",
+        ") and check ",
         {
-          "text": "een boodschappenlijstje",
+          "text": "het boodschappenlijstje",
           "styles": {
             "textColor": "brown"
           }
         },
         " (",
         {
-          "text": "a shopping list",
+          "text": "the shopping list",
           "styles": {
             "italic": true
           }
         },
-        ")."
+        ") that Noor wrote this morning."
       ],
       "id": "f3a3545e-6f3b-4fea-b54d-e91c1f247e0a"
     },
@@ -143,15 +143,15 @@
           },
           {
             "speaker": "Noor",
-            "text": "En aardappelen? Hebben we aardappelen?"
+            "text": "En we hebben geen aardappelen."
           },
           {
             "speaker": "Sofia",
-            "text": "Nee, geen aardappelen. Dan koop ik aardappelen en uien."
+            "text": "Geen aardappelen? Dan koop ik aardappelen en uien."
           },
           {
             "speaker": "Noor",
-            "text": "Goed. Ik maak een boodschappenlijstje: eieren, aardappelen, uien."
+            "text": "Goed. Kijk, hier is mijn boodschappenlijstje: eieren, aardappelen, uien."
           },
           {
             "speaker": "Sofia",
@@ -164,6 +164,114 @@
         ]
       },
       "id": "22e73d13-07b5-49e5-9c49-e1caaddbb4eb"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de koelkast",
+              "meaning": "fridge",
+              "forms": "de koelkasten",
+              "example": "De koelkast is bijna leeg.",
+              "id": "94e3116d-9a80-4d90-9e37-715bacec52a2"
+            },
+            {
+              "term": "het boodschappenlijstje",
+              "meaning": "shopping list",
+              "forms": "de boodschappenlijstjes",
+              "example": "Kijk, hier is mijn boodschappenlijstje.",
+              "id": "41930eaf-3a37-4bce-92f4-7a4ec507032f"
+            },
+            {
+              "term": "bijna",
+              "meaning": "almost",
+              "example": "De koelkast is bijna leeg.",
+              "id": "c628aee6-04a6-4e4a-a5a6-a2bb5ea17bc7"
+            },
+            {
+              "term": "leeg",
+              "meaning": "empty",
+              "example": "De flessen zijn leeg.",
+              "id": "1b2880ac-d2f0-4207-a462-82329c6bc773"
+            },
+            {
+              "term": "de tortilla",
+              "meaning": "tortilla (Spanish potato omelette)",
+              "forms": "de tortilla's",
+              "example": "Jij maakt een tortilla, toch?",
+              "id": "4fbe3ede-3a20-48bc-b5de-09d9062a3768"
+            },
+            {
+              "term": "het ei",
+              "meaning": "egg",
+              "forms": "de eieren",
+              "example": "Hebben we eieren?",
+              "note": "Irregular plural: eieren, like het kind → de kinderen.",
+              "id": "b282a64b-f57f-4af7-8c14-c6d0e9d79b37"
+            },
+            {
+              "term": "de melk",
+              "meaning": "milk",
+              "example": "We hebben ook geen melk.",
+              "note": "Uncountable: no plural, no een.",
+              "id": "b4f936d5-f63c-4c18-b979-04639c1516b3"
+            },
+            {
+              "term": "Wacht even!",
+              "meaning": "Wait a moment!",
+              "example": "Wacht even, ik kijk in de koelkast.",
+              "id": "df39ec4b-c487-4ef0-8fa1-93bcc7061edc"
+            },
+            {
+              "term": "de ui",
+              "meaning": "onion",
+              "forms": "de uien",
+              "example": "We hebben een ui en twee tomaten.",
+              "id": "e750b24a-4bd4-4010-8899-1162b73fbb9c"
+            },
+            {
+              "term": "de tomaat",
+              "meaning": "tomato",
+              "forms": "de tomaten",
+              "example": "We hebben een ui, twee tomaten, kaas en boter.",
+              "note": "Not tomaats: aa is written single in tomaten.",
+              "id": "4c8eb1ee-34c1-45b3-a39c-e51f746f6fbb"
+            },
+            {
+              "term": "de boter",
+              "meaning": "butter",
+              "example": "We hebben kaas en boter.",
+              "note": "Uncountable: no plural.",
+              "id": "79d184b5-8484-4ae5-87b8-888fc5c51d7e"
+            },
+            {
+              "term": "de aardappel",
+              "meaning": "potato",
+              "forms": "de aardappelen / de aardappels",
+              "example": "We hebben geen aardappelen.",
+              "note": "Both plurals are correct.",
+              "id": "3dd7a95a-1f7e-4f5b-85bd-6bfa095d2d1e"
+            },
+            {
+              "term": "kopen",
+              "meaning": "to buy",
+              "forms": "koopt · kocht · gekocht",
+              "example": "Dan koop ik aardappelen en uien.",
+              "id": "d28061f9-ad8c-4b07-ae52-53d18fbbafeb"
+            },
+            {
+              "term": "het koekje",
+              "meaning": "biscuit, cookie",
+              "forms": "de koekjes",
+              "example": "En chips en koekjes voor het feest!",
+              "id": "52cf6be8-f4fe-401e-bb73-938e907a16b9"
+            }
+          ]
+        }
+      },
+      "id": "96a280ce-9dd4-4491-8bff-8cc2b5c0f6cd"
     },
     {
       "type": "divider",
@@ -245,6 +353,23 @@
         "."
       ],
       "id": "5cfdd901-3589-4e97-94eb-eb6c172aab00"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de supermarkt",
+              "meaning": "supermarket",
+              "forms": "de supermarkten",
+              "example": "Om half zes doen we boodschappen in de supermarkt.",
+              "id": "86d65023-4339-4e4f-90a6-307d33b5ace7"
+            }
+          ]
+        }
+      },
+      "id": "7e6c598d-3aa8-4669-b82f-73e41ac43f4d"
     },
     {
       "type": "heading",
@@ -463,6 +588,81 @@
       "id": "5e0fa644-83ad-407a-8444-82fa9dd3c6a6"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de appel",
+              "meaning": "apple",
+              "forms": "de appels",
+              "example": "Sofia neemt zes appels.",
+              "note": "appelen is old-fashioned and formal; say appels.",
+              "id": "3af6b909-41ed-4aa7-931c-7d0ea7719aab"
+            },
+            {
+              "term": "de tafel",
+              "meaning": "table",
+              "forms": "de tafels",
+              "example": "De tafel in de keuken is klein.",
+              "id": "0990716f-c40c-4a20-b9b7-80ce17971a94"
+            },
+            {
+              "term": "de wortel",
+              "meaning": "carrot",
+              "forms": "de wortels",
+              "example": "Ik koop twee wortels.",
+              "id": "ba2c5e58-7a34-419d-82c7-c665392485b0"
+            },
+            {
+              "term": "de komkommer",
+              "meaning": "cucumber",
+              "forms": "de komkommers",
+              "example": "Noor neemt een komkommer.",
+              "id": "c800f12d-e014-4d12-a668-35e9649c0a18"
+            },
+            {
+              "term": "het broodje",
+              "meaning": "bread roll",
+              "forms": "de broodjes",
+              "example": "De broodjes zijn voor het feest.",
+              "id": "aca23c82-138a-4823-bf8a-816497107f9e"
+            },
+            {
+              "term": "de paprika",
+              "meaning": "(bell) pepper",
+              "forms": "de paprika's",
+              "example": "Hebben we paprika's?",
+              "note": "The vegetable. The spice is paprikapoeder.",
+              "id": "9a001173-53b1-4e10-85fd-338245336a0b"
+            },
+            {
+              "term": "de pizza",
+              "meaning": "pizza",
+              "forms": "de pizza's",
+              "example": "We eten vanavond pizza.",
+              "id": "11230e07-e8f8-495a-b136-3075e7660993"
+            },
+            {
+              "term": "de foto",
+              "meaning": "photo",
+              "forms": "de foto's",
+              "example": "Kijk, een foto van het feest!",
+              "id": "1f9f2408-5b5d-4346-b92a-4fb820775c04"
+            },
+            {
+              "term": "het menu",
+              "meaning": "menu",
+              "forms": "de menu's",
+              "example": "Het menu is in het Nederlands.",
+              "id": "065d6f9d-6de4-4a74-b417-be78a35f4aae"
+            }
+          ]
+        }
+      },
+      "id": "5c5c120c-c79d-408b-b2b3-8c74848bf86f"
+    },
+    {
       "type": "example",
       "props": {
         "translation": "Sofia takes six apples.",
@@ -596,6 +796,30 @@
       "id": "981558a4-8a12-400a-9288-c683b92f9332"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de kop",
+              "meaning": "cup, mug",
+              "forms": "de koppen",
+              "example": "Noor drinkt een kop koffie.",
+              "id": "16458f7d-5abe-4d09-8c18-d6f7efe7016c"
+            },
+            {
+              "term": "de pan",
+              "meaning": "pan",
+              "forms": "de pannen",
+              "example": "Sofia maakt de tortilla in een grote pan.",
+              "id": "04f8449b-9490-4ab4-b8f1-2d8e29cde384"
+            }
+          ]
+        }
+      },
+      "id": "9aef9071-c182-4c7b-8e99-5b65208460e2"
+    },
+    {
       "type": "example",
       "props": {
         "translation": "The bottles are empty.",
@@ -679,6 +903,44 @@
       "id": "3ffe3bcf-307d-4399-af5b-c0e007b9de26"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de peer",
+              "meaning": "pear",
+              "forms": "de peren",
+              "example": "Noor koopt bananen en peren.",
+              "id": "4d0e0eb7-c8d6-48ba-9896-eb969b1b48ff"
+            },
+            {
+              "term": "het brood",
+              "meaning": "bread, loaf",
+              "forms": "de broden",
+              "example": "Kijk, een groot brood!",
+              "id": "e1b8b4fd-2be4-4460-bff2-0cb8b8e703ef"
+            },
+            {
+              "term": "de boon",
+              "meaning": "bean",
+              "forms": "de bonen",
+              "example": "We hebben geen bonen.",
+              "id": "1a33289a-042f-4e83-acdd-5a718f31b582"
+            },
+            {
+              "term": "de banaan",
+              "meaning": "banana",
+              "forms": "de bananen",
+              "example": "Noor koopt bananen en peren.",
+              "id": "295c16fc-89b6-4b00-bd6b-4a98da5ef5c0"
+            }
+          ]
+        }
+      },
+      "id": "30f21924-14a1-424e-b822-ff04d2bc3b0e"
+    },
+    {
       "type": "example",
       "props": {
         "translation": "The tomatoes are red.",
@@ -709,6 +971,22 @@
         " rood."
       ],
       "id": "3b0dcae3-3b0c-4e12-96ce-ca6339f5bee0"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "rood",
+              "meaning": "red",
+              "example": "De tomaten zijn rood.",
+              "id": "6dd53538-9fff-4f89-a2fa-145ae7cc75f9"
+            }
+          ]
+        }
+      },
+      "id": "1d7dafe0-7a8a-4a6c-8b27-ff57fbc7a182"
     },
     {
       "type": "heading",
@@ -760,6 +1038,24 @@
         "en."
       ],
       "id": "e654759b-ae9c-4375-bc50-78a764123f17"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de druif",
+              "meaning": "grape",
+              "forms": "de druiven",
+              "example": "De druiven zijn lekker.",
+              "note": "f → v in the plural: druiven.",
+              "id": "f5d6f459-f40e-44d3-b282-c688c2713a1d"
+            }
+          ]
+        }
+      },
+      "id": "fd38516f-5d71-4e9b-87d2-bc466522b111"
     },
     {
       "type": "example",
@@ -1224,7 +1520,7 @@
     {
       "type": "example",
       "props": {
-        "translation": "We don't have any milk and we don't have any butter.",
+        "translation": "We don't have any milk or butter.",
         "note": "melk and boter have no plural. geen still works."
       },
       "content": [
@@ -1333,6 +1629,30 @@
       "id": "3efc251b-cfe7-4dfb-9ee2-d0ca5af5c527"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de rijst",
+              "meaning": "rice",
+              "example": "We hebben geen rijst.",
+              "note": "Uncountable: no plural.",
+              "id": "f25143f8-9b6d-4a71-9ce6-94317e6a736b"
+            },
+            {
+              "term": "het fruit",
+              "meaning": "fruit",
+              "example": "Noor koopt fruit: appels, peren en druiven.",
+              "note": "Uncountable: one apple is een appel, not een fruit.",
+              "id": "2645c668-d1d9-475b-95b9-adf047c132e4"
+            }
+          ]
+        }
+      },
+      "id": "2ff8e0c1-e461-40d5-b6b6-b6895ba16e90"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 3
@@ -1386,6 +1706,22 @@
         " duur."
       ],
       "id": "68611b59-91f2-4cf9-8ac6-55ea2c2fc6b5"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "duur",
+              "meaning": "expensive",
+              "example": "De appels zijn duur.",
+              "id": "1969501f-da69-44ef-b277-10249679cd3a"
+            }
+          ]
+        }
+      },
+      "id": "d471c07e-84e0-4c5f-a61f-0613f6a7a082"
     },
     {
       "type": "example",
@@ -1494,6 +1830,48 @@
         ]
       },
       "id": "25120ed6-c2aa-4e8c-81c7-d3952d9506cc"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Ik neem …",
+              "meaning": "I'll have …, I'll take … (in a shop)",
+              "example": "Ik neem zes grote tomaten voor het feest.",
+              "note": "nemen (to take) is from 07-a; in a shop it means 'I'll have'.",
+              "id": "bcfbbb53-3688-4745-a44c-cbdba471b361"
+            },
+            {
+              "term": "Ja hoor.",
+              "meaning": "Sure. / Yes, of course.",
+              "example": "Neem jij de broodjes? Ja hoor.",
+              "id": "edb6618c-43df-45be-a7d6-27e65e2f60f4"
+            },
+            {
+              "term": "Nee, joh!",
+              "meaning": "No way! / No, silly! (informal)",
+              "example": "Nee, joh! Geen brood, broodjes!",
+              "note": "joh is from 07-a.",
+              "id": "464d0d23-8777-481b-ac2b-78ba4e3911d3"
+            },
+            {
+              "term": "Hoe zeg je … in het Nederlands?",
+              "meaning": "How do you say … in Dutch?",
+              "example": "Hoe zeg je 'rolls' in het Nederlands?",
+              "id": "18c888ea-c5c5-451f-bde6-6c5ada0502fc"
+            },
+            {
+              "term": "Nu nog …",
+              "meaning": "Now just … (what is still left)",
+              "example": "Nu nog chips en koekjes, en dan naar huis.",
+              "id": "c63ca78b-d047-4f0b-a8b0-d3a92b1a79ce"
+            }
+          ]
+        }
+      },
+      "id": "7c2c4408-12f1-4736-8f9c-367e132b5811"
     },
     {
       "type": "callout",
@@ -1631,7 +2009,7 @@
               "note": "een only with a singular noun. geen works with singular and plural."
             },
             {
-              "prompt": "… brood is lekker, en … broodjes zijn ook lekker.",
+              "prompt": "… brood is lekker en … broodjes zijn ook lekker.",
               "authorsVersion": [
                 "Het",
                 "de"
@@ -1639,7 +2017,7 @@
               "note": "het brood, but every plural takes de: de broodjes."
             },
             {
-              "prompt": "Ik heb … appel, maar ik heb … peer.",
+              "prompt": "Ik heb … appel, maar ik heb … peer. (I have an apple, but I don't have a pear.)",
               "authorsVersion": [
                 "een",
                 "geen"
@@ -1652,7 +2030,7 @@
                 "De",
                 "de"
               ],
-              "note": "Plural: de. de komkommer is a de-word. goedkoop = cheap, duur = expensive."
+              "note": "Plural: de. de komkommer is a de-word. goedkoop = cheap, duur = expensive. Also possible: een komkommer (any cucumber is cheap)."
             },
             {
               "prompt": "Noor: Hebben we melk? / Sofia: Nee, we hebben … melk. En we hebben ook … water.",
@@ -1671,17 +2049,34 @@
               "note": "First a broodje (new), then the broodje: het broodje."
             },
             {
-              "prompt": "… water is in … koelkast.",
+              "prompt": "… koelkast is bijna leeg: we hebben … eieren.",
               "authorsVersion": [
-                "Het",
-                "de"
+                "De",
+                "geen"
               ],
-              "note": "het water, de koelkast."
+              "note": "de koelkast; geen + plural. bijna leeg = almost empty."
             }
           ]
         }
       },
       "id": "2df7deee-b5c1-4aeb-8587-00f34dc58aeb"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "goedkoop",
+              "meaning": "cheap",
+              "example": "De komkommer is goedkoop.",
+              "note": "The opposite of duur.",
+              "id": "987ed109-f1eb-4a42-8bba-875ca5d56d32"
+            }
+          ]
+        }
+      },
+      "id": "e081c59f-29f8-453f-a801-d5c968265e50"
     },
     {
       "type": "heading",
@@ -1916,11 +2311,11 @@
               "note": "In a shop, ik neem means 'I'll have / I'll take'. Also fine: Sofia is getting three peppers."
             },
             {
-              "prompt": "De flessen zijn in de koelkast.",
+              "prompt": "De peren zijn duur.",
               "authorsVersion": [
-                "The bottles are in the fridge."
+                "The pears are expensive."
               ],
-              "note": null
+              "note": "peer → peren. duur = expensive."
             },
             {
               "prompt": "Vandaag doen Noor en Sofia boodschappen.",
@@ -2023,6 +2418,42 @@
       "id": "54176e6c-ea0d-46de-a025-3681ebd1c6e1"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de universiteit",
+              "meaning": "university",
+              "forms": "de universiteiten",
+              "example": "Ik ben vandaag tot vijf uur op de universiteit.",
+              "id": "805ed399-909c-4eb9-b78a-a1895f7ac0fd"
+            },
+            {
+              "term": "het bier",
+              "meaning": "beer",
+              "example": "In de koelkast hebben we nog kaas, boter en bier.",
+              "id": "a0e600cd-6f45-4316-9293-a67658955940"
+            },
+            {
+              "term": "het sap",
+              "meaning": "juice",
+              "example": "Noor koopt sap voor het feest.",
+              "id": "e18a3c3b-9404-4d21-b580-774949bdf882"
+            },
+            {
+              "term": "de fruitsalade",
+              "meaning": "fruit salad",
+              "forms": "de fruitsalades",
+              "example": "Ik maak een grote fruitsalade met druiven, peren en appels.",
+              "id": "1853af61-87fd-426e-b0b4-8dbcc26c8f54"
+            }
+          ]
+        }
+      },
+      "id": "ee938a71-a951-4f25-8e47-07228dd2bc98"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 2
@@ -2107,9 +2538,25 @@
         },
         ", geen eieren. ",
         {
-          "text": "De tomaten zijn",
+          "text": "De",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " ",
+        {
+          "text": "tomaten",
           "styles": {
             "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
           }
         },
         " rood."

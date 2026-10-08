@@ -1,0 +1,2896 @@
+{
+  "title": "Rechtdoor en dan links",
+  "goal": "Ask for and give directions using the imperative, including separable verbs and the polite u-form.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Rechtdoor en dan links",
+      "id": "af377486-e381-4939-9fc0-8a20257b52c7"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Sunday 25 October, one week after the move. Today Noor visits Sofia's new home in Lombok for the first time, but she cannot find the Kastanjestraat. Later, a tourist asks Sofia the way to the station."
+      ],
+      "id": "283b5db2-8cd3-40e5-b249-8c6a8a41ff7f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In this lesson you will ask the way, understand directions and give directions with the ",
+        {
+          "text": "imperative",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "Ga",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " rechtdoor! ",
+        {
+          "text": "Steek",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " de brug ",
+        {
+          "text": "over",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "!"
+      ],
+      "id": "1c94ba38-0963-4376-98e9-490edcf7b15d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: the imperative verb is ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", a prefix at the end is ",
+        {
+          "text": "red",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ", ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " is green, places are ",
+        {
+          "text": "purple",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " and the step words eerst, dan, daarna are ",
+        {
+          "text": "orange",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ". The new form is bold."
+      ],
+      "id": "5e24067b-d730-46b8-9a76-a2fb0422adba"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Noor is lost",
+      "id": "cd03901e-9e22-43c3-8d01-fd301e8ca85e"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "On Saturday evening Sofia sends Noor a message with the route from the station (you can read it at the end of the lesson). On Sunday Noor walks from Utrecht Centraal, but halfway she calls Sofia."
+      ],
+      "id": "14d2d94e-838a-4487-ae1d-baf078c8c56d"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Met Sofia!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Hoi, met Noor! Sorry, ik weet de weg niet. Waar is de Kastanjestraat?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Joh! Waar ben je nu?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ik sta bij een groot kruispunt met een stoplicht. Ik zie een brug en een grote moskee."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "O, dan ben je vlakbij! Steek bij het stoplicht over. Steek dan de brug over."
+          },
+          {
+            "speaker": "Noor",
+            "text": "De brug over. Oké. En dan?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dan ben je in de Kanaalstraat. Loop rechtdoor, voorbij de bakker."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En dan de tweede straat rechts?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, niet de tweede! Neem de derde straat rechts. Dat is de Kastanjestraat."
+          },
+          {
+            "speaker": "Noor",
+            "text": "De derde straat rechts. Is het ver?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, het is drie minuten lopen. Wees voorzichtig op de brug. Er zijn veel fietsers!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja hoor. Tot straks!"
+          }
+        ]
+      },
+      "id": "edc9ef77-e28a-4fc0-b84c-66fdb7ca2a30"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "weten",
+              "meaning": "to know (a fact, the way)",
+              "forms": "weet · wist · geweten",
+              "example": "Ik weet de weg niet.",
+              "note": "Here only: ik weet, jij weet, wij weten + a noun. You met Dat weet ik niet. in 12-b.",
+              "id": "b2f15a9e-da0a-4199-9622-7fe6b95ae7d9"
+            },
+            {
+              "term": "de weg",
+              "meaning": "the way; the road",
+              "forms": "de wegen",
+              "example": "Sorry, ik weet de weg niet.",
+              "id": "93032699-8674-4232-bdd7-617d9b5875ca"
+            },
+            {
+              "term": "het kruispunt",
+              "meaning": "crossroads, junction",
+              "forms": "de kruispunten",
+              "example": "Ik sta bij een groot kruispunt.",
+              "id": "c88b3e79-6d28-4735-8ec0-f5d1337b0959"
+            },
+            {
+              "term": "het stoplicht",
+              "meaning": "traffic lights",
+              "forms": "de stoplichten",
+              "example": "Steek bij het stoplicht over.",
+              "note": "One set of traffic lights is het stoplicht (singular).",
+              "id": "e8bfa49b-0d2b-46ab-877f-9c33723beb55"
+            },
+            {
+              "term": "oversteken",
+              "meaning": "to cross (a street, a bridge)",
+              "forms": "steekt over · stak over · overgestoken",
+              "example": "Steek de brug over.",
+              "note": "Separable: Steek … over. Never: Oversteek.",
+              "id": "c73a5b32-9d7b-48e1-8fc6-a71462e6e09f"
+            },
+            {
+              "term": "rechtdoor",
+              "meaning": "straight on, straight ahead",
+              "example": "Loop rechtdoor, voorbij de bakker.",
+              "id": "136c1511-b3f7-42c2-bd7b-952a30321a81"
+            },
+            {
+              "term": "voorbij",
+              "meaning": "past (going past something)",
+              "example": "Loop rechtdoor, voorbij de bakker.",
+              "id": "470da611-cfd8-4815-935c-6ddf0fe0c6b6"
+            },
+            {
+              "term": "rechts",
+              "meaning": "right, on the right",
+              "example": "Neem de derde straat rechts.",
+              "id": "64f331a7-c665-4c06-a2fa-33be9a39e0c5"
+            },
+            {
+              "term": "de fietser",
+              "meaning": "cyclist",
+              "forms": "de fietsers",
+              "example": "Er zijn veel fietsers op de brug.",
+              "id": "7abc4786-f296-4bac-a4e1-5192c3ce652a"
+            },
+            {
+              "term": "Wees voorzichtig!",
+              "meaning": "Be careful!",
+              "example": "Wees voorzichtig op de brug!",
+              "note": "voorzichtig = careful. Wees is the irregular imperative of zijn.",
+              "id": "de10d42f-de26-44e3-9244-0d3c9faf3d46"
+            },
+            {
+              "term": "… minuten lopen",
+              "meaning": "a …-minute walk",
+              "example": "Het is drie minuten lopen.",
+              "id": "8f68a9e9-14c3-4127-84ac-ce54fde654ba"
+            }
+          ]
+        }
+      },
+      "id": "eefe9858-623d-4aed-8ce8-8e2b7d691657"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Ik weet de weg niet.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = I don't know the way. (ik weet, from weten = to know)"
+      ],
+      "id": "ebf078eb-7697-4f7d-bdf2-3913a2007fc1"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "het kruispunt = the crossroads; het stoplicht = the traffic lights; de brug = the bridge"
+      ],
+      "id": "57a23473-1b44-4df9-acfd-f5b8f6ef91ef"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "vlakbij = very close; voorbij = past; drie minuten lopen = a three-minute walk"
+      ],
+      "id": "cfb87689-afaa-4475-b017-dafce3200899"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Wees voorzichtig!",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = Be careful!"
+      ],
+      "id": "0667d2d1-f63e-4003-813a-b9917bfbb09f"
+    },
+    {
+      "type": "divider",
+      "id": "c8354482-6810-465b-ba0d-459e06048019"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "The imperative: just the stem",
+      "id": "e63aa2e9-9be4-488c-bf1e-d4aa1adda5cf"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "To tell a friend what to do, Dutch uses the ",
+        {
+          "text": "stem",
+          "styles": {
+            "bold": true
+          }
+        },
+        " of the verb: the ik-form without ",
+        {
+          "text": "ik",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". There is no subject. You already know some chunks: ",
+        {
+          "text": "Kijk",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "!, ",
+        {
+          "text": "Wacht",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " even!, ",
+        {
+          "text": "Kom",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " binnen!, ",
+        {
+          "text": "Ga",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " zitten."
+      ],
+      "id": "5debac6e-0373-44d1-b1e5-52e33399897f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "How to make it",
+      "id": "da621bc1-50e6-4436-9a1c-9a5edc82e157"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Take the infinitive: ",
+        {
+          "text": "nemen",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "3f5a9b91-3e6b-4a0f-9b7a-2754c336081f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Make the ik-form: ik neem."
+      ],
+      "id": "ac89c6ce-2dd3-4af9-8d18-cc31ace7d541"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Leave out ik: ",
+        {
+          "text": "Neem",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " de tweede straat!"
+      ],
+      "id": "915f4b0a-d4f1-4896-a28d-4dfb7f11d631"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "A long vowel is written with two letters"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "lopen → ik loop → ",
+            {
+              "text": "Loop",
+              "styles": {
+                "bold": true,
+                "textColor": "blue"
+              }
+            },
+            "!"
+          ],
+          "id": "85412ce3-70b1-4047-90d8-7036f795ddb7"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "nemen → ik neem → ",
+            {
+              "text": "Neem",
+              "styles": {
+                "bold": true,
+                "textColor": "blue"
+              }
+            },
+            "!"
+          ],
+          "id": "bcd6f522-8286-41f2-8446-e90e8a371637"
+        }
+      ],
+      "id": "54f698b1-5356-4207-8014-3b1b6c699424"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "A double consonant becomes single"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "bellen → ik bel → ",
+            {
+              "text": "Bel",
+              "styles": {
+                "bold": true,
+                "textColor": "blue"
+              }
+            },
+            "!"
+          ],
+          "id": "db64af3c-2dd1-4683-88fd-74cfbec8a254"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "stoppen → ik stop → ",
+            {
+              "text": "Stop",
+              "styles": {
+                "bold": true,
+                "textColor": "blue"
+              }
+            },
+            "!"
+          ],
+          "id": "d7fef087-0111-4e94-8c21-f8a5d98d1a0e"
+        }
+      ],
+      "id": "ef340b6d-3093-462b-810f-d2b2fbe25c75"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Short verbs and stems in -t"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "gaan → ik ga → ",
+            {
+              "text": "Ga",
+              "styles": {
+                "bold": true,
+                "textColor": "blue"
+              }
+            },
+            "!; komen → ik kom → ",
+            {
+              "text": "Kom",
+              "styles": {
+                "bold": true,
+                "textColor": "blue"
+              }
+            },
+            "!"
+          ],
+          "id": "77d40c9f-cd32-46c5-9528-ebccb6fa8e17"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "wachten → ik wacht → ",
+            {
+              "text": "Wacht",
+              "styles": {
+                "bold": true,
+                "textColor": "blue"
+              }
+            },
+            "! (no extra t)"
+          ],
+          "id": "111881ec-faac-4db2-bc9e-84891918cdc5"
+        }
+      ],
+      "id": "ed2d856a-ecc5-4f50-9063-74e9ef25b498"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Go straight on.",
+        "note": "gaan → ik ga → Ga. rechtdoor = straight ahead."
+      },
+      "content": [
+        {
+          "text": "Ga",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " rechtdoor."
+      ],
+      "id": "65c0d2ca-5b43-4a57-b4fa-fd65de6016cd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Take the second street on the left.",
+        "note": "Recycles the ordinals from 09-a: de eerste, de tweede, de derde straat."
+      },
+      "content": [
+        {
+          "text": "Neem",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " de tweede straat links."
+      ],
+      "id": "be45d493-5ff6-406c-98a8-b5f1b09e8186"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "links",
+              "meaning": "left, on the left",
+              "example": "Neem de tweede straat links.",
+              "id": "faf5ee1e-3b7e-45ef-844d-9b79fc1e6140"
+            }
+          ]
+        }
+      },
+      "id": "8399711b-e4a1-4943-80d8-8d7aa8c26ebd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Walk as far as the bridge.",
+        "note": "tot = up to, as far as (you know tot from times: van negen tot vijf)."
+      },
+      "content": [
+        {
+          "text": "Loop",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " tot ",
+        {
+          "text": "de brug",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "1a2651e0-87ea-411f-8cf5-2ed89f29b820"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "tot",
+              "meaning": "as far as, up to (a place)",
+              "example": "Loop tot de brug.",
+              "note": "New use: you know tot = until from 08-b (van negen tot vijf).",
+              "id": "2f565b8d-2e46-4c4e-893f-f0b644578bb8"
+            }
+          ]
+        }
+      },
+      "id": "9173edaa-f9c0-4686-b226-a21f2ae0f69e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "Imperative = ",
+        {
+          "text": "stem",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", no subject: ",
+        {
+          "text": "Ga",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " rechtdoor. ",
+        {
+          "text": "Loop",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " tot de brug. The spelling is the same as the ik-form: ik loop → ",
+        {
+          "text": "Loop",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "!"
+      ],
+      "id": "808f8523-a20b-492b-a985-85832cadc99a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Words for the way",
+      "id": "bbe22de9-5e1b-4c18-a426-535dd85a3fc2"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Which way?",
+              "id": "9ab8f04e-e989-48fa-bbdc-448099512b91"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "rechtdoor = straight on"
+              ],
+              "id": "74e6a491-aa0f-4b90-952a-3c25a05e9508"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "links / rechts = (on the) left / right"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    "Neem de eerste straat ",
+                    {
+                      "text": "links",
+                      "styles": {
+                        "bold": true
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "1ca56b04-0df8-4760-9c99-2adce17def48"
+                }
+              ],
+              "id": "468a3cd8-9584-4d56-bfd9-cb75347d098f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "linksaf / rechtsaf = (turn) left / right"
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    {
+                      "text": "Ga",
+                      "styles": {
+                        "bold": true,
+                        "textColor": "blue"
+                      }
+                    },
+                    " hier ",
+                    {
+                      "text": "rechtsaf",
+                      "styles": {
+                        "bold": true
+                      }
+                    },
+                    "."
+                  ],
+                  "id": "a9c88013-8cba-437c-9d18-94b6eafce8d0"
+                }
+              ],
+              "id": "3f171d3c-e7f1-4af0-897f-eb198d9f2c94"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "voorbij = past; tot = as far as; tegenover = opposite"
+              ],
+              "id": "9ae69a4c-98dc-492b-b549-f0cf5b4bdf0a"
+            }
+          ],
+          "id": "bd19c693-86de-48f7-aa5a-1668f444a735"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "On the way",
+              "id": "88bda8b3-db11-47ce-8a50-7f4c60ab27b0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "de hoek = the corner; het plein = the square"
+              ],
+              "id": "b6567574-276d-4b69-b7fa-aa4fe99f1b0f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "het kruispunt = the crossroads; de rotonde = the roundabout"
+              ],
+              "id": "c81ef4f6-f7fe-40ca-b892-5df0bdecbae8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "het stoplicht = the traffic lights; het zebrapad = the zebra crossing"
+              ],
+              "id": "09608c12-31be-420b-915b-5ca547700098"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "de brug = the bridge; het station = the station"
+              ],
+              "id": "38c22cb0-a34b-432b-988e-6297af6abf63"
+            }
+          ],
+          "id": "fcbd98e5-37ad-46e3-9d4c-99fd8bdbedcf"
+        }
+      ],
+      "id": "c9ad667e-62f5-4d33-b4f1-3b155c995ebc"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "linksaf",
+              "meaning": "(turning) left",
+              "example": "Ga hier linksaf.",
+              "note": "links = on the left side; linksaf = turning to the left.",
+              "id": "14d19426-f5dc-487d-ad83-5b1317eed63f"
+            },
+            {
+              "term": "rechtsaf",
+              "meaning": "(turning) right",
+              "example": "Ga hier rechtsaf.",
+              "id": "d853dd7c-6882-4e7f-9b2a-02b35beaca24"
+            },
+            {
+              "term": "de rotonde",
+              "meaning": "roundabout",
+              "forms": "de rotondes",
+              "example": "Ga bij de rotonde rechtsaf.",
+              "id": "7ab30439-233e-4e21-a3d8-446c59ba5a99"
+            },
+            {
+              "term": "het zebrapad",
+              "meaning": "zebra crossing",
+              "forms": "de zebrapaden",
+              "example": "Steek bij het zebrapad over.",
+              "id": "5b8c5fae-4b73-4d63-b994-6c764c678ca0"
+            }
+          ]
+        }
+      },
+      "id": "9d079720-fbb5-439b-93f4-02319b2aba90"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Turn right at the roundabout.",
+        "note": "links = on the left side; linksaf = turning to the left."
+      },
+      "content": [
+        {
+          "text": "Ga",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " bij ",
+        {
+          "text": "de rotonde",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " rechtsaf."
+      ],
+      "id": "ca50d594-354f-488a-8e37-1980fd33d44d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The station is opposite the square.",
+        "note": "Places liggen (14-b, 15-a). tegenover recycles 14-a."
+      },
+      "content": [
+        "Het station ligt tegenover ",
+        {
+          "text": "het plein",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "d190db1c-df5b-44c6-b3b2-3155ee984a88"
+    },
+    {
+      "type": "divider",
+      "id": "84d5c3ca-2cd2-47cd-8294-3093692c9f7f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Separable verbs: prefix at the end",
+      "id": "d7f91690-e153-4016-bb5b-54d2f72d6d3f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You know separable verbs from 07-b: ",
+        {
+          "text": "opstaan",
+          "styles": {
+            "italic": true
+          }
+        },
+        " → ik sta op. In the imperative the verb part comes first and the prefix goes to the very end, just like in a statement."
+      ],
+      "id": "0e752674-f07f-4d01-be9b-e513e393b5a5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Cross the bridge.",
+        "note": "oversteken → ik steek over → Steek … over."
+      },
+      "content": [
+        {
+          "text": "Steek",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "de brug",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "over",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "ad71a517-2e6c-46ce-adfe-e5a10972a318"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Turn left at the traffic lights.",
+        "note": "linksaf slaan works like a separable verb: linksaf goes to the end. Also fine: Ga bij het stoplicht linksaf."
+      },
+      "content": [
+        {
+          "text": "Sla",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " bij ",
+        {
+          "text": "het stoplicht",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "linksaf",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "85aa0cdb-1d58-4705-8d7a-e5b1c180820c"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "linksaf slaan",
+              "meaning": "to turn left",
+              "forms": "slaat linksaf · sloeg linksaf · linksaf geslagen",
+              "example": "Sla bij het stoplicht linksaf.",
+              "note": "Works like a separable verb: linksaf goes to the end. rechtsaf slaan works the same. Also fine: Ga linksaf.",
+              "id": "c1f094a2-659b-4926-9b36-b6108753c127"
+            }
+          ]
+        }
+      },
+      "id": "54fecef0-cbc0-4e6c-a671-8f561685fb17"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Get off here.",
+        "note": "uitstappen = to get off (a bus or tram). More travel verbs come in 16-a."
+      },
+      "content": [
+        {
+          "text": "Stap",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " hier ",
+        {
+          "text": "uit",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "3ea4c9c4-ee8e-489d-ada4-11cfc9ca22f4"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "uitstappen",
+              "meaning": "to get off (a bus, tram or train)",
+              "forms": "stapt uit · stapte uit · uitgestapt",
+              "example": "Stap hier uit.",
+              "note": "Separable: Stap … uit. More travel verbs in 16-a.",
+              "id": "1e09e2c1-6b28-474b-9dc5-505cf06bbf7a"
+            }
+          ]
+        }
+      },
+      "id": "17911f62-e56f-4653-931d-77c7cfcb5a59"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "verb part",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " + rest + ",
+        {
+          "text": "prefix",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        ": ",
+        {
+          "text": "Steek",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " + de brug + ",
+        {
+          "text": "over",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        ". ",
+        {
+          "text": "Sla",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " + bij de rotonde + ",
+        {
+          "text": "rechtsaf",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "74a29cde-c5fc-4754-93e8-7f2e42121787"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Oversteek de brug.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Steek",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " de brug ",
+        {
+          "text": "over",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        ". The prefix never stays in front of the imperative."
+      ],
+      "id": "4179d813-4bb7-4255-b78a-bf3da2bbbb63"
+    },
+    {
+      "type": "divider",
+      "id": "05111f63-0217-4aa3-9632-73f348eb277d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Polite: stem + t + u",
+      "id": "1bd45be0-cff7-4538-9e77-f1fa56c48e12"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "With a stranger or an older person you use ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ". Add -t to the stem and put ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " directly after the verb. It sounds friendly and polite, like ",
+        {
+          "text": "please go straight on",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "79297c01-926b-472b-ac2e-47008245cbe1"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "To a friend (jij)",
+              "id": "27f1abd9-5a1d-4946-97f8-302b9df8fa26"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Ga",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " rechtdoor."
+              ],
+              "id": "26d7179a-1957-42d5-8c0c-727b58287e67"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Neem",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " de tweede straat rechts."
+              ],
+              "id": "a6bc65f4-6bd1-48c8-a446-462e98921547"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Steek",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " de brug ",
+                {
+                  "text": "over",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "red"
+                  }
+                },
+                "."
+              ],
+              "id": "aebd5561-fac5-4aff-b359-53a6b4eaf0b1"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Wacht",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " even."
+              ],
+              "id": "8d1c30dd-a782-4c45-a3ad-be0c51d0d0c6"
+            }
+          ],
+          "id": "f50c917a-0173-44c0-9445-2ec271e79cb7"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "To a stranger (u)",
+              "id": "83be625c-3270-41a2-b3e7-73069c70d2a0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Gaat",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "u",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " rechtdoor."
+              ],
+              "id": "edb12305-0cfa-4314-92c3-2ad1d9938e4b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Neemt",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "u",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " de tweede straat rechts."
+              ],
+              "id": "f03faa25-78cf-4b3d-bde1-a89aac3e9eee"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Steekt",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "u",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " de brug ",
+                {
+                  "text": "over",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "red"
+                  }
+                },
+                "."
+              ],
+              "id": "496322c5-9cf5-4ecd-a22d-4d4d687376dd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Wacht",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "u",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " even."
+              ],
+              "id": "dadd75a3-f909-4f24-8266-84abefa2534c"
+            }
+          ],
+          "id": "8208f58b-f292-4ca4-b6ad-fe070040c46b"
+        }
+      ],
+      "id": "9e240760-da9f-4dce-809e-e599fdc6e743"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "The imperative formula. Friend: ",
+        {
+          "text": "stem",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + rest (+ prefix). Stranger: ",
+        {
+          "text": "stem + t + u",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + rest (+ prefix). Verb always first."
+      ],
+      "id": "a972308b-9476-4513-8671-c33e17354188"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Gaat rechtdoor.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Ga",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " rechtdoor. or ",
+        {
+          "text": "Gaat",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " rechtdoor. The -t only comes together with u."
+      ],
+      "id": "dd4025e6-1243-43c7-8edb-7bdc2e6ed7b6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Take the first street on the left, please.",
+        "note": "Polite form: neem + t + u."
+      },
+      "content": [
+        {
+          "text": "Neemt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " de eerste straat links."
+      ],
+      "id": "71584277-d941-48f4-8e86-fc92613416ec"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Softer: maar and even, and wees",
+      "id": "2b98a2de-f018-4ea4-9d9e-8172bf77f9ff"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Small words make an imperative friendlier. ",
+        {
+          "text": "maar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = go ahead, just; ",
+        {
+          "text": "even",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = for a moment, quickly: ",
+        {
+          "text": "Kijk",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " maar. (Go ahead and look.) ",
+        {
+          "text": "Wacht",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " even! (Wait a moment!)"
+      ],
+      "id": "0f20a127-a645-4f54-a47c-3bde80ca9215"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "maar",
+              "meaning": "just, go ahead (makes an imperative friendlier)",
+              "example": "Kijk maar.",
+              "note": "New use: you know maar = but from Part I.",
+              "id": "1cb73141-0e8a-4d9f-9e5a-64c9f76619e4"
+            }
+          ]
+        }
+      },
+      "id": "c0e6b176-c199-4615-b98d-496e5abe9a70"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Just call me!",
+        "note": "A fixed chunk: me = me. Learn it as one piece."
+      },
+      "content": [
+        {
+          "text": "Bel",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " me maar!"
+      ],
+      "id": "924e73c2-f0fe-45a2-999d-0da9dc82873c"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Bel me maar!",
+              "meaning": "Just call me!",
+              "example": "Ben je bij de deur? Bel me maar!",
+              "note": "A fixed chunk: me = me.",
+              "id": "c0202faa-137a-4607-8204-27765a69e9c3"
+            }
+          ]
+        }
+      },
+      "id": "8b391dbc-aadd-4df6-9b4f-f333efb93000"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Be careful!",
+        "note": "zijn has an irregular imperative: wees. Learn it as a chunk."
+      },
+      "content": [
+        {
+          "text": "Wees",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " voorzichtig!"
+      ],
+      "id": "23a24e9a-6b9f-4f68-95ab-6603b1c49e43"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Not this way: niet and geen",
+      "id": "5ed3502e-3c3b-416e-baef-ef220ffef5f4"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Don't go left, go right.",
+        "note": "niet before the direction, as in a statement."
+      },
+      "content": [
+        {
+          "text": "Ga",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " links, ",
+        {
+          "text": "ga",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " rechts."
+      ],
+      "id": "50d9f6c9-9571-427b-8f93-73cfb99c752b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Don't take a bus. It's very close.",
+        "note": "geen + noun, as in Part I."
+      },
+      "content": [
+        {
+          "text": "Neem",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " bus. Het is vlakbij."
+      ],
+      "id": "2d55ad12-85af-4f92-978c-d4d560787a5a"
+    },
+    {
+      "type": "divider",
+      "id": "45218502-5d6f-44f7-94c9-775a19a81600"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "First, then, after that",
+      "id": "3edf5110-d6fb-4e30-85cd-68b2e5c9ed44"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Directions are steps. Use ",
+        {
+          "text": "eerst",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " (first), ",
+        {
+          "text": "dan",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " (then) and ",
+        {
+          "text": "daarna",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " (after that). In a statement, a word like ",
+        {
+          "text": "dan",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " at the start makes the verb come before the subject (inversion, from 08-b)."
+      ],
+      "id": "aa70a24f-1657-4612-95eb-647403df2d35"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Ga",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "eerst",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " rechtdoor tot het plein."
+      ],
+      "id": "8b967281-9530-4258-90fd-c76541ffb278"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Steek",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "dan",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " het plein ",
+        {
+          "text": "over",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "26ada095-e263-47e7-88da-c55776ff47f8"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Sla",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "daarna",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " bij het stoplicht ",
+        {
+          "text": "rechtsaf",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "05189466-fd2a-4a58-abb0-ded2c33864e7"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Dan",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "zie",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " het station."
+      ],
+      "id": "e3256ba2-aaf1-4217-a522-a258f237c768"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "First go straight on, then take the first street on the right.",
+        "note": "eerst and dan at the start: verb + u (inversion)."
+      },
+      "content": [
+        {
+          "text": "Eerst",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " rechtdoor, ",
+        {
+          "text": "dan",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "neemt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " de eerste straat rechts."
+      ],
+      "id": "94db468b-b578-4a18-b260-64345e72751e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Then you'll see the station.",
+        "note": "A statement, not an imperative: dan + verb + subject."
+      },
+      "content": [
+        {
+          "text": "Dan",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "ziet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " het station."
+      ],
+      "id": "2bc6f4c1-09c3-4550-9ef2-f0a0c7371c98"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "Signs and recipes use the infinitive: ",
+        {
+          "text": "Niet roken.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (No smoking.) ",
+        {
+          "text": "Niet parkeren.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (No parking.) When you talk to a person, use the imperative: ",
+        {
+          "text": "Sla",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " linksaf, not ",
+        {
+          "text": "Linksaf slaan",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        "."
+      ],
+      "id": "485db2a1-b52b-48ac-9c2d-a894a650ade9"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "parkeren",
+              "meaning": "to park",
+              "forms": "parkeert · parkeerde · geparkeerd",
+              "example": "Niet parkeren.",
+              "id": "6fee143e-f80f-424b-a116-f400fd400b66"
+            }
+          ]
+        }
+      },
+      "id": "f640b42b-80bb-4760-a339-a85077842548"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "map-pin"
+      },
+      "content": [
+        "In the Netherlands cyclists are everywhere, and on many paths and crossings they go first. Look left and right for bikes before you cross: ",
+        {
+          "text": "Pas",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "op",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        " voor de fietsers! (Watch out for the cyclists!)"
+      ],
+      "id": "f922e010-cccd-4d31-9fa9-37cd2bfe5d6b"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "oppassen",
+              "meaning": "to watch out, to be careful",
+              "forms": "past op · paste op · opgepast",
+              "example": "Pas op voor de fietsers!",
+              "note": "Separable: Pas … op. oppassen voor = watch out for.",
+              "id": "9539f79b-aa9a-4d43-ad0c-a991ae402366"
+            }
+          ]
+        }
+      },
+      "id": "cb7c1982-ceee-484e-bf49-568c8eb5d27e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: The way to the station",
+      "id": "e8c6f695-b590-4037-bed6-b24dc5897213"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In the afternoon Sofia and Noor walk in the Kanaalstraat. A tourist with a map stops them. Sofia uses u with him."
+      ],
+      "id": "a561eabf-0c5c-435d-8bbd-be8a7e79cd15"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Toerist",
+            "text": "Pardon, mevrouw. Hoe kom ik bij Utrecht Centraal?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Utrecht Centraal? Dat is niet ver. Gaat u hier rechtdoor tot de brug."
+          },
+          {
+            "speaker": "Toerist",
+            "text": "Tot de brug. En dan?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Steekt u de brug over. Dan ziet u een groot kruispunt met een stoplicht."
+          },
+          {
+            "speaker": "Toerist",
+            "text": "Een kruispunt. Ga ik daar links of rechts?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Niet links en niet rechts. Steekt u daar over en gaat u rechtdoor. Dan ziet u het station."
+          },
+          {
+            "speaker": "Toerist",
+            "text": "Is het ver?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, het is ongeveer tien minuten lopen."
+          },
+          {
+            "speaker": "Noor",
+            "text": "U kunt ook de bus nemen. De halte is daar, tegenover de supermarkt."
+          },
+          {
+            "speaker": "Toerist",
+            "text": "Nee, dank u. Ik loop wel."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Pas op voor de fietsers bij het kruispunt!"
+          },
+          {
+            "speaker": "Toerist",
+            "text": "Dank u wel! Tot ziens!"
+          }
+        ]
+      },
+      "id": "7647e98d-557a-477b-b7de-810e376eac23"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "mevrouw",
+              "meaning": "madam; Mrs (polite address)",
+              "example": "Pardon, mevrouw.",
+              "id": "8993219c-6d88-418c-be24-209f00a9e942"
+            },
+            {
+              "term": "Hoe kom ik bij …?",
+              "meaning": "How do I get to …?",
+              "example": "Hoe kom ik bij Utrecht Centraal?",
+              "id": "e4b3f138-02b6-4c47-bd2d-431204465e63"
+            },
+            {
+              "term": "Ik loop wel.",
+              "meaning": "I'll just walk.",
+              "example": "Nee, dank u. Ik loop wel.",
+              "note": "wel: walking, not the bus.",
+              "id": "b03a39ad-ae59-4827-9354-b21d89264c2b"
+            }
+          ]
+        }
+      },
+      "id": "e1895777-e04e-487b-b155-5684d4f7457f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Hoe kom ik bij …?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = How do I get to …?"
+      ],
+      "id": "78b4364d-2595-4506-b3b2-413c82b85314"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Ik loop wel.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = I'll just walk. (wel: walking, not the bus)"
+      ],
+      "id": "8e17cb21-9168-45b4-95bf-dd7b04e62081"
+    },
+    {
+      "type": "divider",
+      "id": "3af1b208-7bc2-4355-be5a-b8c065feef36"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "6a8895c0-7bb9-4bf7-b842-caa2b49e05c5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Make the imperative",
+      "id": "5d2087a1-d2b2-47bf-9d78-d6ffbf459a3c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the imperative for a friend (jij). The infinitive is in brackets. A separable verb needs two words.",
+          "items": [
+            {
+              "prompt": "… rechtdoor. (gaan)",
+              "authorsVersion": [
+                "Ga"
+              ],
+              "note": "gaan → ik ga → Ga."
+            },
+            {
+              "prompt": "… de tweede straat links. (nemen)",
+              "authorsVersion": [
+                "Neem"
+              ],
+              "note": "Long e: ik neem → Neem."
+            },
+            {
+              "prompt": "… tot de brug. (lopen)",
+              "authorsVersion": [
+                "Loop"
+              ],
+              "note": "lopen → ik loop: write oo in a closed syllable."
+            },
+            {
+              "prompt": "… even! (wachten)",
+              "authorsVersion": [
+                "Wacht"
+              ],
+              "note": "The stem already ends in t. No extra t."
+            },
+            {
+              "prompt": "… de brug …. (oversteken)",
+              "authorsVersion": [
+                "Steek",
+                "over"
+              ],
+              "note": "Separable: Steek first, over at the end. Not: Oversteek de brug."
+            },
+            {
+              "prompt": "… bij het stoplicht …. (linksaf slaan)",
+              "authorsVersion": [
+                "Sla",
+                "linksaf"
+              ],
+              "note": "slaan → ik sla → Sla. linksaf goes to the end."
+            },
+            {
+              "prompt": "… me maar! (bellen)",
+              "authorsVersion": [
+                "Bel"
+              ],
+              "note": "Double l becomes single: ik bel → Bel."
+            },
+            {
+              "prompt": "… voorzichtig! (zijn)",
+              "authorsVersion": [
+                "Wees"
+              ],
+              "note": "Irregular: zijn → Wees."
+            }
+          ]
+        }
+      },
+      "id": "57b47d1c-e33f-48e9-bc45-98021655f048"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the phone call",
+      "id": "831486bc-9788-49a0-b0cc-440baf69b42d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Noor is lost and calls Sofia. Fill in one word per blank.",
+          "items": [
+            {
+              "prompt": "Noor: Waar is jouw straat? Ik … de weg niet. / Sofia: Waar … je nu?",
+              "authorsVersion": [
+                "weet",
+                "ben"
+              ],
+              "note": "ik weet (from weten); jij bent, but je after the verb drops the t: ben je."
+            },
+            {
+              "prompt": "Sofia: … rechtdoor, voorbij de bakker. / Noor: Voorbij de bakker. Oké. En …?",
+              "authorsVersion": [
+                "Loop",
+                "dan"
+              ],
+              "note": "lopen → ik loop → Loop. Also fine: Ga. En dan? = And then?"
+            },
+            {
+              "prompt": "Sofia: … de brug …. / Noor: De brug over. Is het …?",
+              "authorsVersion": [
+                "Steek",
+                "over",
+                "ver"
+              ],
+              "note": "oversteken splits: Steek … over. ver = far."
+            },
+            {
+              "prompt": "Sofia: Nee, het is …. Drie minuten ….",
+              "authorsVersion": [
+                "vlakbij",
+                "lopen"
+              ],
+              "note": "vlakbij = very close; drie minuten lopen = a three-minute walk."
+            },
+            {
+              "prompt": "Noor: De tweede straat rechts? / Sofia: Nee, … de tweede! … de derde straat rechts.",
+              "authorsVersion": [
+                "niet",
+                "Neem"
+              ],
+              "note": "niet de tweede = not the second one. Neem = take."
+            },
+            {
+              "prompt": "Sofia: … voorzichtig op de brug! / Noor: Ja hoor. Tot …!",
+              "authorsVersion": [
+                "Wees",
+                "straks"
+              ],
+              "note": "Wees voorzichtig! = Be careful! Tot straks! = See you soon!"
+            }
+          ]
+        }
+      },
+      "id": "dd86f72e-b24a-446a-840e-54d03f0f66b5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "aafe7036-0b85-48de-93f9-e25ff9e9a93d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the correct order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: de brug / steek / over",
+              "authorsVersion": [
+                "Steek de brug over."
+              ],
+              "note": "Verb part first, prefix last."
+            },
+            {
+              "prompt": "Put in order: linksaf / bij het stoplicht / sla",
+              "authorsVersion": [
+                "Sla bij het stoplicht linksaf."
+              ],
+              "note": "linksaf at the very end."
+            },
+            {
+              "prompt": "Put in order: de tweede straat / neem / rechts",
+              "authorsVersion": [
+                "Neem de tweede straat rechts."
+              ],
+              "note": "Ordinal before the noun: de tweede straat, not de straat tweede."
+            },
+            {
+              "prompt": "Put in order: u / rechtdoor / gaat / tot de rotonde",
+              "authorsVersion": [
+                "Gaat u rechtdoor tot de rotonde."
+              ],
+              "note": "Polite: verb + t, then u directly after it."
+            },
+            {
+              "prompt": "Put in order: dan / u / het station / ziet",
+              "authorsVersion": [
+                "Dan ziet u het station."
+              ],
+              "note": "Dan first, then the verb, then u (inversion)."
+            },
+            {
+              "prompt": "Put in order: niet / ga / links",
+              "authorsVersion": [
+                "Ga niet links."
+              ],
+              "note": "niet before the direction."
+            },
+            {
+              "prompt": "Put in order: steekt / het plein / over / u / eerst",
+              "authorsVersion": [
+                "Steekt u eerst het plein over."
+              ],
+              "note": "Also fine: Eerst steekt u het plein over."
+            }
+          ]
+        }
+      },
+      "id": "4a45b2a9-926e-4e42-a262-7e0c4041a429"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "From statement to imperative",
+      "id": "ed47853d-6a0f-4360-9111-0ba13d683a16"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the statement as an imperative for a friend.",
+          "items": [
+            {
+              "prompt": "Je gaat rechtdoor.",
+              "authorsVersion": [
+                "Ga rechtdoor."
+              ],
+              "note": "Leave out je and use the stem."
+            },
+            {
+              "prompt": "Je neemt de eerste straat links.",
+              "authorsVersion": [
+                "Neem de eerste straat links."
+              ],
+              "note": "neemt → Neem: no -t without u."
+            },
+            {
+              "prompt": "Je steekt de brug over.",
+              "authorsVersion": [
+                "Steek de brug over."
+              ],
+              "note": "The prefix stays at the end."
+            },
+            {
+              "prompt": "Je slaat bij de rotonde rechtsaf.",
+              "authorsVersion": [
+                "Sla bij de rotonde rechtsaf."
+              ],
+              "note": "slaat → Sla."
+            },
+            {
+              "prompt": "Je bent voorzichtig.",
+              "authorsVersion": [
+                "Wees voorzichtig."
+              ],
+              "note": "zijn is irregular: Wees, not Ben."
+            }
+          ]
+        }
+      },
+      "id": "da7d7e03-2f59-49d1-8699-e38534f26e75"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "From friend to stranger",
+      "id": "7cf766ef-8f94-441f-b805-c98041ac0322"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Make the imperative polite with u.",
+          "items": [
+            {
+              "prompt": "Ga rechtdoor.",
+              "authorsVersion": [
+                "Gaat u rechtdoor."
+              ],
+              "note": "stem + t + u."
+            },
+            {
+              "prompt": "Neem de tweede straat rechts.",
+              "authorsVersion": [
+                "Neemt u de tweede straat rechts."
+              ]
+            },
+            {
+              "prompt": "Steek het kruispunt over.",
+              "authorsVersion": [
+                "Steekt u het kruispunt over."
+              ],
+              "note": "The prefix stays at the end."
+            },
+            {
+              "prompt": "Wacht even bij het stoplicht.",
+              "authorsVersion": [
+                "Wacht u even bij het stoplicht."
+              ],
+              "note": "The stem ends in t, so wacht + t is still wacht. To a stranger you often add alstublieft: Wacht u even, alstublieft."
+            },
+            {
+              "prompt": "Loop voorbij de kerk.",
+              "authorsVersion": [
+                "Loopt u voorbij de kerk."
+              ],
+              "note": "de kerk = the church (15-a)."
+            }
+          ]
+        }
+      },
+      "id": "f00cb126-2489-4244-9fcb-c5bc068f68a8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "24c82f7f-f549-4f4d-b2f9-2ee0dc27298e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Use jij unless the sentence says (polite).",
+          "items": [
+            {
+              "prompt": "Go straight on.",
+              "authorsVersion": [
+                "Ga rechtdoor."
+              ]
+            },
+            {
+              "prompt": "Take the third street on the left.",
+              "authorsVersion": [
+                "Neem de derde straat links."
+              ],
+              "note": "derde is irregular (09-a)."
+            },
+            {
+              "prompt": "Cross the bridge.",
+              "authorsVersion": [
+                "Steek de brug over."
+              ],
+              "note": "Not: Oversteek de brug."
+            },
+            {
+              "prompt": "Turn right at the roundabout. (polite)",
+              "authorsVersion": [
+                "Slaat u bij de rotonde rechtsaf."
+              ],
+              "note": "Also fine: Gaat u bij de rotonde rechtsaf."
+            },
+            {
+              "prompt": "Excuse me, where is the station?",
+              "authorsVersion": [
+                "Pardon, waar is het station?"
+              ],
+              "note": "Not: Weet u waar het station is? (a structure for later)."
+            },
+            {
+              "prompt": "Don't take a bus. It's a five-minute walk.",
+              "authorsVersion": [
+                "Neem geen bus. Het is vijf minuten lopen."
+              ],
+              "note": "geen + noun. Also fine: Neem de bus niet."
+            },
+            {
+              "prompt": "Watch out for the cyclists!",
+              "authorsVersion": [
+                "Pas op voor de fietsers!"
+              ],
+              "note": "oppassen splits: Pas … op."
+            }
+          ]
+        }
+      },
+      "id": "33434a89-11f8-434f-b7b8-2643903888af"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "939c8b58-2f2a-413c-beca-1615179f6ed2"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Loop tot het kruispunt en ga dan linksaf.",
+              "authorsVersion": [
+                "Walk to the crossroads and then turn left."
+              ]
+            },
+            {
+              "prompt": "Het station ligt tegenover het plein.",
+              "authorsVersion": [
+                "The station is opposite the square."
+              ],
+              "note": "liggen for places: no 'lies' in English."
+            },
+            {
+              "prompt": "Hoe kom ik bij de bibliotheek?",
+              "authorsVersion": [
+                "How do I get to the library?"
+              ]
+            },
+            {
+              "prompt": "Steekt u bij het zebrapad over.",
+              "authorsVersion": [
+                "Please cross at the zebra crossing."
+              ],
+              "note": "The u-form sounds polite: add please or a friendly tone."
+            },
+            {
+              "prompt": "Eerst gaat u rechtdoor, dan ziet u de brug.",
+              "authorsVersion": [
+                "First go straight on, then you'll see the bridge."
+              ],
+              "note": "Also fine: First you go straight on, then you see the bridge."
+            }
+          ]
+        }
+      },
+      "id": "339ff4cc-b250-4675-a37e-9c27be28d6c7"
+    },
+    {
+      "type": "divider",
+      "id": "a2fbfe2b-3bd4-4e6d-8ae3-a3267ffffb91"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Zo kom je bij mij!",
+      "id": "65fd3478-a3cf-4499-8f27-9d67a57735e8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's message to Noor (Saturday 24 October) and answer in Dutch.",
+          "items": [
+            {
+              "prompt": "Wanneer komt Noor naar het nieuwe huis van Sofia?",
+              "authorsVersion": [
+                "Morgen, op zondag 25 oktober."
+              ],
+              "note": "Also fine: Op zondag. / Morgen."
+            },
+            {
+              "prompt": "Waar steekt Noor de straat over?",
+              "authorsVersion": [
+                "Bij het stoplicht, op het zebrapad."
+              ]
+            },
+            {
+              "prompt": "Welke straat is na de brug?",
+              "authorsVersion": [
+                "De Kanaalstraat."
+              ],
+              "note": "na = after."
+            },
+            {
+              "prompt": "Welke straat neemt Noor in de Kanaalstraat?",
+              "authorsVersion": [
+                "De derde straat rechts: de Kastanjestraat."
+              ],
+              "note": "Not the second: in the phone call Noor asks exactly this."
+            },
+            {
+              "prompt": "Waar staat nummer 14?",
+              "authorsVersion": [
+                "Op de hoek, tegenover een klein park."
+              ],
+              "note": "Buildings staan (14-b)."
+            },
+            {
+              "prompt": "Klopt dit? Het is vijf minuten lopen.",
+              "authorsVersion": [
+                "Nee, het is ongeveer vijftien minuten lopen."
+              ]
+            },
+            {
+              "prompt": "Op welke verdieping woont Sofia?",
+              "authorsVersion": [
+                "Op de tweede verdieping."
+              ],
+              "note": "Henk lives on the first floor."
+            },
+            {
+              "prompt": "Klopt dit? Noor kan ook de bus nemen.",
+              "authorsVersion": [
+                "Ja, dat klopt."
+              ],
+              "note": "Je kunt ook de bus nemen (kunnen, 15-a)."
+            }
+          ],
+          "passage": {
+            "title": "Zo kom je bij mij!",
+            "content": "Hoi Noor!\nMorgen kom je naar mijn nieuwe huis. Super! Hier is de route.\nNeem de bus naar Utrecht Centraal. Loop eerst over het plein voor het station. Ga dan rechtdoor tot een groot kruispunt. Steek bij het stoplicht over, op het zebrapad. Pas op voor de fietsers!\nSteek daarna de brug over. Dan ben je in de Kanaalstraat. Daar zijn veel winkels.\nLoop rechtdoor, voorbij de bakker en de supermarkt. Neem dan de derde straat rechts. Dat is de Kastanjestraat. Nummer 14 staat op de hoek, tegenover een klein park. Ik woon op de tweede verdieping.\nHet is ongeveer vijftien minuten lopen. Je kunt ook de bus nemen, maar lopen is leuk!\nBen je bij de deur? Bel me maar!\nTot morgen!\nSofia"
+          }
+        }
+      },
+      "id": "ce1926f9-3a53-4f86-bcaa-ae6ce6500260"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de route",
+              "meaning": "route, the way to go",
+              "forms": "de routes",
+              "example": "Hier is de route.",
+              "id": "aa4e4697-13b7-4800-965f-b34494d8b9cf"
+            }
+          ]
+        }
+      },
+      "id": "c8d12bf1-b493-4700-a859-4f4e56050c76"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "b7fac606-daf1-424d-adee-13c8e1f6a715"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write directions from a station or bus stop to your home in 3–4 sentences. Use the imperative and eerst, dan or daarna.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences: the way from the station or bus stop to your home.",
+              "authorsVersion": [
+                "Ga eerst rechtdoor tot het kruispunt. Steek daar bij het zebrapad over. Neem dan de tweede straat links. Mijn huis staat op de hoek, tegenover de bakker."
+              ],
+              "note": "Neutral model. Check: stem first, prefix at the end (Steek … over), de tweede straat, and verb before subject after dan."
+            }
+          ]
+        }
+      },
+      "id": "c326b5d9-88b3-4836-90a3-3b4ea74b64a8"
+    },
+    {
+      "type": "divider",
+      "id": "8054e08c-18b9-4e9a-9ecd-02f9e2520374"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "924b34d5-9e87-43fc-9ecd-14c2be81ea73"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Imperative = stem, no subject: ",
+        {
+          "text": "Ga",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " rechtdoor. ",
+        {
+          "text": "Loop",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " tot de brug."
+      ],
+      "id": "65cc23d2-ca6b-4a82-a369-91d267290539"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Separable verbs: prefix at the end: ",
+        {
+          "text": "Steek",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " de brug ",
+        {
+          "text": "over",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        ". ",
+        {
+          "text": "Sla",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " bij het stoplicht ",
+        {
+          "text": "linksaf",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "7dfaa335-4230-4475-bb17-cb9785a8c6cf"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Polite: stem + t + u: ",
+        {
+          "text": "Gaat",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " rechtdoor. Never -t without u."
+      ],
+      "id": "95707d09-dd78-4e6c-977c-7daa7d6541a9"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Softer with maar and even; zijn → ",
+        {
+          "text": "Wees",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " voorzichtig!"
+      ],
+      "id": "f4b844f8-f379-49d1-aa9a-3fcaddaed335"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Negative: ",
+        {
+          "text": "Ga",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " niet links. ",
+        {
+          "text": "Neem",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " geen bus."
+      ],
+      "id": "3130bdd0-8ed5-4cca-838f-2708e4b5d871"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Steps: eerst, dan, daarna; ",
+        {
+          "text": "Dan",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "ziet",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " het station."
+      ],
+      "id": "21e652e9-2746-4564-84a3-71e6fc9a438d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Remember: ask with ",
+        {
+          "text": "Pardon, waar is …?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " or ",
+        {
+          "text": "Hoe kom ik bij …?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and answer with the imperative."
+      ],
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "id": "2391aa28-c6a8-4242-881f-fd518f78ad96"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Noor is lost",
+      "description": "Noor stands at a busy crossroads in Lombok, Utrecht, phone at her ear, looking around: traffic lights, a bridge over a canal, cyclists, and the big mosque in the background.",
+      "alt": "A young woman on the phone at a crossroads near a bridge and a mosque."
+    },
+    {
+      "afterHeading": "Story: The way to the station",
+      "description": "Sofia points down the Kanaalstraat while a tourist with a paper map listens; Noor stands next to them; shops and bikes along the street.",
+      "alt": "A woman pointing the way to a tourist with a map in a shopping street."
+    }
+  ],
+  "id": "aaed6640-2d35-4b75-a4ef-873d18da0bd6"
+}

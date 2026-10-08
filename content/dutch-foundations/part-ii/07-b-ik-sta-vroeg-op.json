@@ -121,13 +121,6 @@
         },
         " = mess, ",
         {
-          "text": "Wat een rommel!",
-          "styles": {
-            "italic": true
-          }
-        },
-        " = What a mess!, ",
-        {
           "text": "straks",
           "styles": {
             "italic": true
@@ -199,6 +192,147 @@
         ]
       },
       "id": "c3fdd20f-7979-42ef-bc47-66426ffd45e9"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "opstaan",
+              "meaning": "to get up",
+              "forms": "staat op · stond op · opgestaan",
+              "example": "Ik sta altijd vroeg op.",
+              "note": "Separable: ik sta … op.",
+              "id": "66910d7e-5964-4bea-8a28-4031c42fdccd"
+            },
+            {
+              "term": "zaterdag",
+              "meaning": "Saturday",
+              "example": "Het is zaterdag!",
+              "note": "Days of the week take no article and no capital letter.",
+              "id": "bf0f0176-dae7-4b08-b516-7d954cb95bdf"
+            },
+            {
+              "term": "zo",
+              "meaning": "so, this (early, late …)",
+              "example": "Sta jij altijd zo vroeg op?",
+              "id": "6a53eb36-b0fb-45bf-b143-9c8c1420f848"
+            },
+            {
+              "term": "het weekend",
+              "meaning": "weekend",
+              "forms": "de weekends",
+              "example": "Ik sta in het weekend nooit vroeg op.",
+              "note": "in het weekend = at the weekend.",
+              "id": "8fec2f26-ebc0-453d-b352-9742355b2b4b"
+            },
+            {
+              "term": "Ik niet.",
+              "meaning": "Not me. / I don't.",
+              "example": "Ik niet. Ik sta in het weekend nooit vroeg op.",
+              "id": "397161d2-64e5-479c-b239-75f2a82a002d"
+            },
+            {
+              "term": "Kijk!",
+              "meaning": "Look!",
+              "example": "Kijk, onze keuken.",
+              "id": "14b4d120-dfe6-4cac-8974-a752d9e0cb2b"
+            },
+            {
+              "term": "de rommel",
+              "meaning": "mess",
+              "example": "Kijk, onze keuken. Wat een rommel!",
+              "id": "e3f1ddce-d727-4af6-b0e4-3bd05244575e"
+            },
+            {
+              "term": "Wat een rommel!",
+              "meaning": "What a mess!",
+              "example": "Kijk, onze keuken. Wat een rommel!",
+              "id": "f0ed62c4-bc11-4646-9c45-9a7f9fadb437"
+            },
+            {
+              "term": "Oei!",
+              "meaning": "Oops!",
+              "example": "Oei. Sorry!",
+              "id": "1983a349-be11-4fa9-b756-68aabaa9616c"
+            },
+            {
+              "term": "opruimen",
+              "meaning": "to tidy up",
+              "forms": "ruimt op · ruimde op · opgeruimd",
+              "example": "Jij ruimt de keuken op.",
+              "note": "Separable: not ik opruim, but ik ruim … op.",
+              "id": "bf5cd295-f451-4f76-8ae9-0d78500a3c85"
+            },
+            {
+              "term": "afwassen",
+              "meaning": "to do the washing-up, to wash up",
+              "forms": "wast af · waste af · afgewassen",
+              "example": "Jij ruimt op en ik was af.",
+              "note": "Separable: ik was af.",
+              "id": "e9dfb987-788e-4e7c-b4bd-06c14136c6f7"
+            },
+            {
+              "term": "Nee hoor!",
+              "meaning": "No, no! (a friendly but firm no)",
+              "example": "Nee hoor! Jij ruimt op en ik was af.",
+              "id": "2776e372-c116-433f-929a-770b4d2e9dec"
+            },
+            {
+              "term": "klaarmaken",
+              "meaning": "to prepare, to make (a meal)",
+              "forms": "maakt klaar · maakte klaar · klaargemaakt",
+              "example": "Jij maakt het ontbijt klaar.",
+              "note": "Separable: ik maak … klaar.",
+              "id": "b39dca97-26a9-4cc1-8ceb-b4e87f8e24f1"
+            },
+            {
+              "term": "straks",
+              "meaning": "later, in a bit",
+              "example": "Wij doen straks samen boodschappen.",
+              "id": "ae700b40-471c-4882-9d1b-353770c278d2"
+            },
+            {
+              "term": "boodschappen doen",
+              "meaning": "to do the shopping",
+              "forms": "doet boodschappen · deed boodschappen · boodschappen gedaan",
+              "example": "Ik doe straks boodschappen.",
+              "note": "Two parts, but not a separable verb.",
+              "id": "d47fd3b1-d5e1-43e3-b5ee-b62e4c5b4443"
+            }
+          ]
+        }
+      },
+      "id": "0136b6c4-5726-4ccc-afd0-9bc5ebc12a8f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In the dialogue: ",
+        {
+          "text": "Wat een rommel!",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = What a mess! ",
+        {
+          "text": "Oei",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = Oops! ",
+        {
+          "text": "Nee hoor!",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = No, no! (a friendly but firm no)."
+      ],
+      "id": "96b575aa-17ac-4d29-89a5-47b23d893b36"
     },
     {
       "type": "callout",
@@ -553,6 +687,24 @@
       "id": "6e09f0e2-0c38-413d-b37b-5d08310b9559"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "meekomen",
+              "meaning": "to come along",
+              "forms": "komt mee · kwam mee · meegekomen",
+              "example": "Kom je mee?",
+              "note": "Separable: kom … mee. A very common question among friends.",
+              "id": "a7bfa275-fc6e-4fbe-9d38-7f94e0fc9f87"
+            }
+          ]
+        }
+      },
+      "id": "8b9dde06-0e1d-4a55-9508-0da2cadfecb9"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 3
@@ -574,7 +726,6 @@
         {
           "text": "altijd",
           "styles": {
-            "bold": true,
             "textColor": "orange"
           }
         },
@@ -638,6 +789,23 @@
       "id": "e5528d27-fe1d-443b-8fc0-151773cf5802"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "wassen",
+              "meaning": "to wash",
+              "forms": "wast · waste · gewassen",
+              "note": "ik was, wij wassen. afwassen = af + wassen.",
+              "id": "08b6aa4f-4c39-44fe-a175-bb1a59100bf7"
+            }
+          ]
+        }
+      },
+      "id": "d2584dae-503b-41d0-ab95-ad76e2fd6eaa"
+    },
+    {
       "type": "example",
       "props": {
         "translation": "I call my mother.",
@@ -669,6 +837,32 @@
         "."
       ],
       "id": "f5dbb3cc-1b08-4482-8bc9-3d6eb4edb73a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "opbellen",
+              "meaning": "to call (on the phone)",
+              "forms": "belt op · belde op · opgebeld",
+              "example": "Ik bel mijn moeder op.",
+              "note": "Separable: ik bel … op.",
+              "id": "525f7805-db0f-4c04-9f52-4b596ded89af"
+            },
+            {
+              "term": "bellen",
+              "meaning": "to call, to phone",
+              "forms": "belt · belde · gebeld",
+              "example": "Ik bel mijn moeder.",
+              "note": "Means the same as opbellen.",
+              "id": "909f6f67-5817-4833-b78d-d55b8816e06f"
+            }
+          ]
+        }
+      },
+      "id": "79be403b-7e7c-4ef1-b7bc-ceee0bed7717"
     },
     {
       "type": "example",
@@ -710,6 +904,30 @@
         "."
       ],
       "id": "46351e7c-7c72-4de3-b524-1ae3751c51ff"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "uitgaan",
+              "meaning": "to go out",
+              "forms": "gaat uit · ging uit · uitgegaan",
+              "example": "Daan en Lotte gaan vanavond uit.",
+              "note": "Separable: ik ga … uit.",
+              "id": "de7e239c-ac96-493e-a78c-9d46abd1d034"
+            },
+            {
+              "term": "vanavond",
+              "meaning": "tonight, this evening",
+              "example": "Daan en Lotte gaan vanavond uit.",
+              "id": "49dcae26-21b3-4a12-a3a2-cd5316490682"
+            }
+          ]
+        }
+      },
+      "id": "8df3c9d3-08a4-483d-8111-44dfdb5a5fe8"
     },
     {
       "type": "callout",
@@ -885,6 +1103,22 @@
       "id": "c958fb75-4a9f-4029-a0f4-995c77de65f8"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "wanneer",
+              "meaning": "when (question word)",
+              "example": "Wanneer kom je thuis?",
+              "id": "51bae18f-daf3-47a3-ae4f-c3c67f6891ec"
+            }
+          ]
+        }
+      },
+      "id": "8bd3d584-161d-47b7-8a7d-0881f7079bfd"
+    },
+    {
       "type": "example",
       "props": {
         "translation": "When are you coming home?",
@@ -924,6 +1158,24 @@
         "?"
       ],
       "id": "0449fa1d-808f-436a-93f9-76114310abd0"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "thuiskomen",
+              "meaning": "to come home",
+              "forms": "komt thuis · kwam thuis · thuisgekomen",
+              "example": "Wanneer kom je thuis?",
+              "note": "Separable: ik kom … thuis.",
+              "id": "1a33b178-5716-4170-ae42-41b9c4c15a2d"
+            }
+          ]
+        }
+      },
+      "id": "72c7acd4-9738-49c0-bbfc-65913bcf5969"
     },
     {
       "type": "example",
@@ -998,6 +1250,24 @@
         ". For wij, jullie and zij (plural) you use that same form, split in two."
       ],
       "id": "d885ec7a-216d-4f66-aaa2-34727b2dc4a1"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "meenemen",
+              "meaning": "to bring, to take along",
+              "forms": "neemt mee · nam mee · meegenomen",
+              "example": "Neem jij een fles wijn mee?",
+              "note": "Separable: ik neem … mee.",
+              "id": "be85cad0-092c-405d-949a-c8568e060747"
+            }
+          ]
+        }
+      },
+      "id": "ec07ae9a-3e7f-4ce2-a51e-c087292ec1d4"
     },
     {
       "type": "example",
@@ -1547,6 +1817,24 @@
       "id": "4390bae8-f301-4c8f-acf3-0807c9db7e03"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "betalen",
+              "meaning": "to pay (for)",
+              "forms": "betaalt · betaalde · betaald",
+              "example": "Sofia betaalt de koffie.",
+              "note": "Not separable: be- is never stressed.",
+              "id": "386d9145-a243-47bb-8d63-edfdc8581300"
+            }
+          ]
+        }
+      },
+      "id": "c7afcfac-c0ec-41e4-a2cc-7c3d1efd7385"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "warning",
@@ -2045,6 +2333,107 @@
       "id": "ffa6f84e-9c25-4bf2-9194-b47abe448813"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "weggaan",
+              "meaning": "to leave, to go away",
+              "forms": "gaat weg · ging weg · weggegaan",
+              "example": "Wanneer gaan jullie weg?",
+              "note": "Separable: ik ga … weg.",
+              "id": "1da2e29a-277f-4a6f-882b-61ef81c5e50b"
+            },
+            {
+              "term": "schoonmaken",
+              "meaning": "to clean",
+              "forms": "maakt schoon · maakte schoon · schoongemaakt",
+              "example": "Wij maken samen de badkamer schoon.",
+              "note": "Separable: ik maak … schoon.",
+              "id": "f926a7e7-20b4-4c3e-b7d4-313fadf2698b"
+            },
+            {
+              "term": "de afwas",
+              "meaning": "the washing-up, the dirty dishes",
+              "note": "afwassen = to do the washing-up.",
+              "id": "4c0777bc-08da-4a23-b0f5-d10102d38af8"
+            },
+            {
+              "term": "de boodschappen",
+              "meaning": "the shopping, groceries",
+              "note": "Usually plural: boodschappen doen = to do the shopping.",
+              "id": "7030d227-8be1-40d2-9182-bc6a14752e4d"
+            },
+            {
+              "term": "de tas",
+              "meaning": "bag",
+              "forms": "de tassen",
+              "example": "Neem jij een tas mee?",
+              "id": "b787a7a1-8e72-4551-b4f4-e036b15fd81e"
+            },
+            {
+              "term": "de deur",
+              "meaning": "door",
+              "forms": "de deuren",
+              "id": "bb918ae6-d8b0-4562-9c05-453c341394f9"
+            },
+            {
+              "term": "de badkamer",
+              "meaning": "bathroom",
+              "forms": "de badkamers",
+              "example": "Wij maken samen de badkamer schoon.",
+              "id": "b23c8b32-4298-44c1-9e5f-f10c68add7fd"
+            },
+            {
+              "term": "het eten",
+              "meaning": "food, meal",
+              "note": "Also the verb eten (to eat), known from Part I.",
+              "id": "8587e818-5ff8-44b5-8730-1f23e207c05a"
+            },
+            {
+              "term": "het bericht",
+              "meaning": "message",
+              "forms": "de berichten",
+              "example": "Noor schrijft vaak een bericht op het bord.",
+              "id": "a7ef1163-4974-4a91-b65a-d2ff535249fb"
+            },
+            {
+              "term": "het feest",
+              "meaning": "party",
+              "forms": "de feesten",
+              "example": "Een vriendin van Lotte geeft een feest.",
+              "id": "c131b668-b8cc-4245-a118-c02f63f9a6d2"
+            },
+            {
+              "term": "nu",
+              "meaning": "now",
+              "id": "64993d98-e8d8-4a64-9955-d50e2b1b2061"
+            },
+            {
+              "term": "vandaag",
+              "meaning": "today",
+              "example": "Ik sta vandaag laat op.",
+              "id": "0835cdcf-a177-4289-bf66-44fe6ac63982"
+            },
+            {
+              "term": "morgen",
+              "meaning": "tomorrow",
+              "example": "Ik werk morgen weer.",
+              "id": "80314060-a798-4dd0-be54-fdd4dff8619c"
+            },
+            {
+              "term": "zondag",
+              "meaning": "Sunday",
+              "example": "Ik bel mijn moeder elke zondag op.",
+              "id": "e7068454-ccae-4a93-8cf8-08cafbd22dae"
+            }
+          ]
+        }
+      },
+      "id": "971a2fc1-df54-44da-b63b-667ad2fb2c81"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 2
@@ -2137,6 +2526,74 @@
       "id": "1da0b521-8e76-4266-9055-05303102fe1d"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Met Sofia.",
+              "meaning": "Sofia speaking. (on the phone)",
+              "example": "Hallo, met Sofia.",
+              "note": "met + your name: how you answer the phone, and how a caller says who they are (Hoi Sofia, met Daan).",
+              "id": "64250a49-1a5f-4c25-990f-875516af89a4"
+            },
+            {
+              "term": "een feest geven",
+              "meaning": "to throw a party",
+              "forms": "geeft · gaf · gegeven",
+              "example": "Een vriendin van Lotte geeft een feest.",
+              "id": "f9fba15d-4146-4468-9130-7c3e0acc7eac"
+            },
+            {
+              "term": "Ja, leuk!",
+              "meaning": "Yes, great! / I'd love to!",
+              "example": "Kom je mee? – Ja, leuk!",
+              "id": "67782fa6-1091-4661-9d9e-f1f65f816f6e"
+            },
+            {
+              "term": "iets",
+              "meaning": "something",
+              "example": "Neem ik iets mee?",
+              "id": "bae89eb4-462f-4a6a-96ba-80b9f053049a"
+            },
+            {
+              "term": "de fles",
+              "meaning": "bottle",
+              "forms": "de flessen",
+              "example": "Neem jij een fles wijn mee?",
+              "id": "0630c7f7-3be2-4029-ae43-9650a8af1239"
+            },
+            {
+              "term": "de wijn",
+              "meaning": "wine",
+              "forms": "de wijnen",
+              "example": "Neem jij een fles wijn mee?",
+              "id": "d90251ff-ab88-4a44-8b1b-fec0e4e10ad2"
+            },
+            {
+              "term": "de chips",
+              "meaning": "crisps (UK), chips (US)",
+              "example": "Lotte neemt chips mee.",
+              "id": "7766f9b7-1853-472e-a3ae-2d274febaa5b"
+            },
+            {
+              "term": "op tijd",
+              "meaning": "on time",
+              "example": "Ik ben altijd op tijd, hè.",
+              "id": "55c33bae-f814-4900-ad2d-b80ddfcc2d22"
+            },
+            {
+              "term": "Tot vanavond!",
+              "meaning": "See you tonight!",
+              "example": "Tot vanavond. Doei!",
+              "id": "fc480d83-d2b8-4b3b-bce1-81f4afd84795"
+            }
+          ]
+        }
+      },
+      "id": "7b2fbf83-cfee-492f-b23c-da4d5b7a9164"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "culture",
@@ -2174,6 +2631,33 @@
         "."
       ],
       "id": "b0a554c0-be85-4de2-967e-9d462e8c369d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Tot vanavond!",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = See you tonight! ",
+        {
+          "text": "Doei!",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = Bye! (informal) ",
+        {
+          "text": "chips",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = crisps."
+      ],
+      "id": "be865b5e-1ac6-466d-a61c-130a40bdc5ef"
     },
     {
       "type": "heading",
@@ -2379,7 +2863,7 @@
               "note": "Kom jij mee? jij after the verb: no -t."
             },
             {
-              "prompt": "Sofia: … ik een tas …? (meenemen) / Noor: Ja, super! Wij … twee tassen … .",
+              "prompt": "Sofia: … ik een tas …? (meenemen) / Noor: Ja, graag! Wij … twee tassen … .",
               "authorsVersion": [
                 "Neem",
                 "mee",
@@ -2669,7 +3153,7 @@
       "type": "practice",
       "props": {
         "data": {
-          "instruction": "Read Sofia's text about her Sunday. Answer the questions in Dutch. (het bord = the board; snel = quickly; natuurlijk = of course; vragen = to ask; mama = mum; de film = the cinema, the film; moe = tired; weer = again)",
+          "instruction": "Read Sofia's text about her Sunday. Answer the questions in Dutch. (het bord = the board; snel = quickly; klaar = done, finished; natuurlijk = of course; vragen = to ask; zeggen = to say; mama = mum; naar de film = to the cinema; moe = tired; weer = again)",
           "items": [
             {
               "prompt": "Wie staat vandaag laat op?",
@@ -2732,6 +3216,83 @@
         }
       },
       "id": "80cdcdd1-3a95-475a-ae01-d4e7caf8a0f7"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het bord",
+              "meaning": "board (for notes or messages)",
+              "forms": "de borden",
+              "example": "Noor schrijft vaak een bericht op het bord in de keuken.",
+              "note": "Also means plate.",
+              "id": "60fe5d62-a597-4a83-a160-733157757305"
+            },
+            {
+              "term": "snel",
+              "meaning": "quick, quickly",
+              "example": "Wij zijn snel klaar.",
+              "id": "af2fbec8-59c7-466f-b296-266d68105ddc"
+            },
+            {
+              "term": "klaar",
+              "meaning": "done, finished, ready",
+              "example": "Wij zijn snel klaar.",
+              "id": "41667e82-40b7-4597-9d38-8d7c2b28850c"
+            },
+            {
+              "term": "natuurlijk",
+              "meaning": "of course",
+              "example": "Wij spreken natuurlijk Spaans.",
+              "id": "67969f5d-e8d8-474a-8abf-1c7efab44af5"
+            },
+            {
+              "term": "vragen",
+              "meaning": "to ask",
+              "forms": "vraagt · vroeg · gevraagd",
+              "example": "Zij vraagt altijd: \"Eet je goed?\"",
+              "note": "The past vroeg looks like vroeg (early).",
+              "id": "94e7c146-10be-4b67-82fb-209e2e6d3086"
+            },
+            {
+              "term": "zeggen",
+              "meaning": "to say",
+              "forms": "zegt · zei · gezegd",
+              "example": "Ik zeg: \"Ja, mama!\"",
+              "id": "1a816957-0d8c-4179-8c26-cbea409e2c8a"
+            },
+            {
+              "term": "mama",
+              "meaning": "mum",
+              "example": "Ja, mama!",
+              "id": "183d0d9a-f9b7-4145-9980-7a16336a004c"
+            },
+            {
+              "term": "naar de film gaan",
+              "meaning": "to go to the cinema",
+              "example": "Zij gaat met een vriendin naar de film.",
+              "note": "de film = the film.",
+              "id": "da129cd5-01ac-455f-b867-cec2fb29a406"
+            },
+            {
+              "term": "het boek",
+              "meaning": "book",
+              "forms": "de boeken",
+              "example": "Ik lees een boek.",
+              "id": "a8dca9d8-60e7-4040-b06b-93ac188a309e"
+            },
+            {
+              "term": "weer",
+              "meaning": "again",
+              "example": "Ik werk morgen weer.",
+              "id": "55b8481d-575f-4982-bef6-ecffbddf25f9"
+            }
+          ]
+        }
+      },
+      "id": "06d4644c-7abc-4b6a-ad9e-24aee9224c2a"
     },
     {
       "type": "heading",

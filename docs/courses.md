@@ -153,6 +153,10 @@ A `vocabulary` block (shown to authors as "New words") holds an ordered list of 
 - The block is top level or inside a column, like any other leaf block. Adding the block type does not change the document schema version.
 - Learners receive the whole word, including the note; nothing in a vocabulary block is concealed.
 - The lesson reader renders the block as a compact word list in place.
+- Authors add the block with the "New words" slash item, which starts it with one empty word. The block's form edits each word's term and meaning, shows forms, example, and note on request (rows that already have one start expanded), and adds, removes (never the last word), and reorders words. New words get IDs from `crypto.randomUUID()`.
+- A pasted or duplicated block would repeat word IDs, which the document's unique-ID check refuses, so the editor gives the later block's repeated words fresh IDs before saving. The first use of an ID in document order keeps it.
+- The publish bar lists each `word-empty` problem; choosing one focuses that word's empty term, or else its meaning.
+- A published document written directly in the database (outside the publish route) also needs its `course_lesson_words` rows, which only the publish route maintains.
 
 ### Words in the player
 
@@ -168,8 +172,8 @@ A vocabulary block is not a step of its own. Its words appear in a New words pan
 ### Word recap
 
 - Recap is a slideshow in the player shell: one card per word showing the term and forms, with Show meaning revealing the meaning, example, and note. Back and Next move freely. Nothing is graded, recorded, or counted.
-- **Lesson recap:** the player's completion screen offers Review words when the run had words. It uses the words of that run, so previews work too.
-- **Course recap:** the course page offers Review words to a member who has finished at least one published lesson with words. It covers the currently published lessons the viewer has [finished](#progress), in lesson order and then document order. A term repeated across lessons (compared trimmed and case-insensitively) shows once, at its first occurrence.
+- **Lesson recap:** the player's completion screen offers Review words when the run had words. It uses the words of that run, once each in step order, so previews work too. Back to the summary returns to the completion screen.
+- **Course recap:** the course page offers Review words, with the word count, to a member who has finished at least one published lesson with words. It covers the currently published lessons the viewer has [finished](#progress), in lesson order and then document order. A term repeated across lessons (compared trimmed and case-insensitively) shows once, at its first occurrence.
 - The course recap follows course visibility: archived courses offer no recap except to those who can still see them.
 - The course recap reads the [`course_lesson_words`](data-model.md#course_lesson_words) index through `GET /groups/:groupId/courses/:courseId/words`, which proves membership and scopes by `group_id`.
 

@@ -54,3 +54,10 @@ Planned simplifications (from the briefs). Confirm or revise after each lesson i
 
 - Row 13 grammar (er is/er zijn) is needed for natural descriptions in Part II, which therefore avoids it (uses "hebben" and "is" instead).
 - Rows 11 and 15 introduce modals with an infinitive at the end before row 20 "modal verbs + infinitive"; row 20 should be a consolidation lesson.
+
+## Part II review follow-ups (2026-10-08)
+
+- **Henk's surname**: resolved 2026-10-08 — dropped; 12-b uses "meneer" alone.
+- **Positional verbs before row 14**: 10-a avoids "staan in de koelkast" and uses other phrasing. After 14-b, recycle "staat/ligt in de koelkast" in later lessons.
+- **Bitterballen**: 10-b serves 40 bitterballen that are not on 10-a's shopping list. Assume they come from the freezer, and do not contradict this later.
+- **Unglossed chunks**: the reviewers glossed most of them at first use. The full list per lesson is in the [Part II ledger](ledger-part-ii.md) "Expressions" entries. Treat these chunks as known from now on, but not as taught grammar.

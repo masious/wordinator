@@ -13,7 +13,7 @@ import {
   collectPracticeIds, lessonNotReadySchema, lessonResponseSchema, type CourseLesson, type LessonDocument, type LessonDraft, type LessonPublishProblem,
 } from "@wordinator/contracts/lesson-document";
 import { useQueryClient } from "@tanstack/react-query";
-import { BookOpenText, Columns2, Columns3, Heading1, Heading2, Heading3, List, ListOrdered, Lightbulb, MessagesSquare, PencilLine, Pilcrow, Smile } from "lucide-react";
+import { BookOpenText, Columns2, Columns3, Heading1, Heading2, Heading3, Languages, List, ListOrdered, Lightbulb, MessagesSquare, PencilLine, Pilcrow, Smile } from "lucide-react";
 import { type DragEvent, type KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiError, courseProgressQueryOptions, courseQueryOptions, lessonQueryOptions } from "../../api";
@@ -21,10 +21,10 @@ import { EmojiPicker } from "../../molecules/EmojiPicker";
 import { Button, ConfirmDialog } from "../../ui";
 import { lessonDropCursor, refusesColumnDrop } from "./columnDrops";
 import { lessonEditorDictionary } from "./editorDictionary";
-import { DEFAULT_PRACTICE, DEFAULT_TURNS, lessonEditorSchema, type LessonEditorInstance } from "./editorSchema";
+import { DEFAULT_PRACTICE, DEFAULT_TURNS, lessonEditorSchema, newVocabularyData, type LessonEditorInstance } from "./editorSchema";
 import {
   breaksColumnRules, clearLocalLessonDraft, lessonDocumentDraftKey, lessonImagePath, normalizeEditorBlocks, readLocalLessonDraft, sameDocument, sanitizeEditorBlock,
-  toLessonDocument, type EditorBlock,
+  toLessonDocument, vocabularyIdRepairs, type EditorBlock,
 } from "./lessonDraft";
 import { LessonImageDialog } from "./LessonImageDialog";
 import { LessonMergeConflicts, type MergeChoice } from "./LessonMergeConflicts";
@@ -205,6 +205,12 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
       });
       return;
     }
+    // A pasted or duplicated New words block repeats word IDs; its words get fresh ones.
+    const renamed = vocabularyIdRepairs(editor.document as unknown as EditorBlock[]);
+    if (renamed.length) {
+      editor.transact(() => { for (const { id, data } of renamed) editor.updateBlock(id, { props: { data } }); });
+      return;
+    }
     const parsed = toLessonDocument(editor.document as unknown as EditorBlock[]);
     if (!parsed.success) { autosave.markInvalid(); return; }
     if (problems.length) setProblems([]);
@@ -267,6 +273,15 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
     editor.setTextCursorPosition(blockId, "start"); editor.focus();
     document.querySelector(`[data-id="${CSS.escape(blockId)}"]`)?.scrollIntoView?.({ behavior: "smooth", block: "center" });
   };
+  // A word problem focuses the word's first empty field (the word, else its meaning) instead of the block.
+  const focusProblem = ({ blockId, wordId }: LessonPublishProblem) => {
+    const row = wordId && document.querySelector(`[data-id="${CSS.escape(blockId)}"] [data-word-id="${CSS.escape(wordId)}"]`);
+    if (!row) { focusBlock(blockId); return; }
+    const fields = [...row.querySelectorAll<HTMLInputElement>("input[data-word-field]")];
+    const target = fields.find((field) => !field.value.trim()) ?? fields[0];
+    target?.scrollIntoView?.({ behavior: "smooth", block: "center" });
+    target?.focus();
+  };
 
   // Applies the author's pick for a merge conflict: the chosen version replaces the block's own content, or the block goes.
   const chooseVersion = (conflict: MergeConflict, choice: MergeChoice) => {
@@ -294,6 +309,8 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
         onItemClick: () => insertOrUpdateBlockForSlashMenu(editor, { type: "dialogue", props: { turns: DEFAULT_TURNS } }) },
       { title: t("courses.editor.blocks.practice"), group, icon: <PencilLine size={18} />, aliases: ["practice", "exercise", "quiz"],
         onItemClick: () => insertOrUpdateBlockForSlashMenu(editor, { type: "practice", props: { data: DEFAULT_PRACTICE } }) },
+      { title: t("courses.editor.blocks.vocabulary"), group, icon: <Languages size={18} />, aliases: ["words", "vocabulary", "vocab", "glossary"],
+        onItemClick: () => insertOrUpdateBlockForSlashMenu(editor, { type: "vocabulary", props: { data: newVocabularyData() } }) },
       { title: t("emojiPicker.title"), group, icon: <Smile size={18} />, aliases: ["emoji", "smiley"], onItemClick: () => setEmojiOpen(true) },
     ];
     const columnIcons = [<Columns2 key="two" size={18} />, <Columns3 key="three" size={18} />];
@@ -312,7 +329,7 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
   return <div className={styles.editorShell} aria-label={t("courses.editor.label")}>
     <LessonPublishBar owner={owner} published={current.published} changed={current.changed} status={autosave.status} editorName={current.editorName}
       problems={problems} error={error} busy={busy} onPublish={requestPublish} onDiscard={() => setConfirm("discard")} onUnpublish={() => setConfirm("unpublish")}
-      onFocusBlock={focusBlock} onDone={() => void done()} />
+      onFocusProblem={focusProblem} onDone={() => void done()} />
     {restored && <p className={styles.notice} role="status">{t("courses.editor.restored")} <button type="button" onClick={() => setRestored(false)}>{t("common.dismiss")}</button></p>}
     {kept && <div className={styles.conflict} role="alert">
       <p>{t("courses.editor.conflictTitle")}</p>

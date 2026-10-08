@@ -256,6 +256,80 @@
       "id": "2b769a60-d7d0-4843-94e0-a3f9417ee6d0"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "tijd hebben",
+              "meaning": "to have time, to be free",
+              "forms": "heeft tijd · had tijd · tijd gehad",
+              "example": "Heb je morgen tijd?",
+              "id": "85e7c667-b059-4e06-8dec-b67f19a5600e"
+            },
+            {
+              "term": "Lunchen we samen?",
+              "meaning": "Shall we have lunch together?",
+              "example": "Hoi Daan! Heb je morgen tijd? Lunchen we samen?",
+              "id": "68c896a0-3089-4fee-9af8-219001b7d96f"
+            },
+            {
+              "term": "de agenda",
+              "meaning": "diary, calendar",
+              "forms": "de agenda's",
+              "example": "Ik kijk even in mijn agenda.",
+              "id": "a35fec29-c618-432b-863e-823a33ae7333"
+            },
+            {
+              "term": "Ik kijk even in mijn agenda.",
+              "meaning": "I'll just check my diary.",
+              "example": "Morgen? Ik kijk even in mijn agenda.",
+              "id": "ba6e4979-8ad8-4f88-9fac-00accd779548"
+            },
+            {
+              "term": "Ik heb het druk.",
+              "meaning": "I'm busy.",
+              "example": "Morgen heb ik het druk.",
+              "note": "A fixed chunk: learn it as a whole.",
+              "id": "58ee2943-47a6-410c-8036-8fe07b45017f"
+            },
+            {
+              "term": "Jammer.",
+              "meaning": "Pity. / Too bad.",
+              "example": "Jammer. En overmorgen?",
+              "id": "4a52d8f9-901a-4955-89c1-6eb2eb9f6178"
+            },
+            {
+              "term": "overmorgen",
+              "meaning": "the day after tomorrow",
+              "example": "Ben je overmorgen vrij?",
+              "id": "17f16584-5029-4537-8fac-f1a7cc165650"
+            },
+            {
+              "term": "vrij",
+              "meaning": "free (not busy)",
+              "example": "Ben je overmorgen vrij?",
+              "id": "0239240b-2bea-496a-a690-64bbbdaab981"
+            },
+            {
+              "term": "Is half een goed?",
+              "meaning": "Is half past twelve OK?",
+              "example": "Is half een goed? Prima, dat past.",
+              "id": "224eb5b0-123e-4e52-8d05-91722c6f2bd5"
+            },
+            {
+              "term": "de teamvergadering",
+              "meaning": "team meeting",
+              "forms": "de teamvergaderingen",
+              "example": "De teamvergadering is van half tien tot half elf.",
+              "id": "9ee95985-58a5-4d6e-8c76-42eb374cc2c4"
+            }
+          ]
+        }
+      },
+      "id": "f5a1086a-acc9-4759-8b1a-bbdd6b0ea0c2"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "culture",
@@ -457,6 +531,23 @@
       "id": "65db1271-5dc2-4eb4-bc3e-9109a2aa87fe"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "van … tot …",
+              "meaning": "from … till …",
+              "example": "Ik werk van negen tot vijf.",
+              "note": "For time, never van … naar.",
+              "id": "474ffefb-f36b-49a7-96c4-f9f07e6fb106"
+            }
+          ]
+        }
+      },
+      "id": "07ab1cd5-5efe-411f-864e-104026c26a4a"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "warning",
@@ -647,6 +738,34 @@
       "id": "37a4dd97-fe92-48b5-9548-b47b2dd57ddd"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "tot",
+              "meaning": "until, till",
+              "example": "Daan werkt vandaag tot vier uur.",
+              "id": "9f33b298-bf22-4c9a-809d-bd12b3ccf8f3"
+            },
+            {
+              "term": "Tot dan!",
+              "meaning": "See you then!",
+              "example": "Donderdag om half zes. Tot dan!",
+              "id": "38f0bcf6-bfa7-44d0-bd9f-d1a6b6f736ee"
+            },
+            {
+              "term": "Tot donderdag!",
+              "meaning": "See you on Thursday!",
+              "example": "Graag gedaan. Tot donderdag!",
+              "id": "f7f22064-1664-4adc-b4ed-12eee5227aba"
+            }
+          ]
+        }
+      },
+      "id": "e1f32aa5-4b40-47bd-9578-b0c014f9e73f"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 3
@@ -708,6 +827,22 @@
         "."
       ],
       "id": "b2dc8756-555f-44df-853c-156ad598fd64"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "tussen … en …",
+              "meaning": "between … and …",
+              "example": "Ik heb tijd tussen twaalf en één.",
+              "id": "d3460af2-a403-4408-ae77-10be3d78b27d"
+            }
+          ]
+        }
+      },
+      "id": "5486e533-e544-44d4-ba24-7912f4c0e86b"
     },
     {
       "type": "divider",
@@ -1333,6 +1468,24 @@
       "id": "1eab3c99-b301-4497-9463-2adc0f6891b7"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "afspreken",
+              "meaning": "to arrange to meet, to agree on",
+              "forms": "spreekt af · sprak af · afgesproken",
+              "example": "Vanavond spreek ik met Noor af.",
+              "note": "Separable: af goes to the end. Stress on AF.",
+              "id": "08a30a6c-9d92-45a2-bd55-e1abffde01ea"
+            }
+          ]
+        }
+      },
+      "id": "156a37a0-c124-464e-baac-7ed96ea23b26"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 3
@@ -1472,6 +1625,34 @@
         " koffie."
       ],
       "id": "81a8dabb-209e-474c-bfc8-56cc3e8ba4ca"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "vanmiddag",
+              "meaning": "this afternoon",
+              "example": "Vanmiddag heb ik het druk.",
+              "id": "95779d28-687f-4c9c-9556-0f2ea0c5b9ac"
+            },
+            {
+              "term": "dan",
+              "meaning": "then",
+              "example": "Dan kom ik om drie uur.",
+              "id": "ed29a553-7f2d-4453-b34c-e168400f15b3"
+            },
+            {
+              "term": "daarna",
+              "meaning": "after that, afterwards",
+              "example": "Daarna drinken we koffie.",
+              "id": "6cbc18a6-b71f-4df0-99c8-bb33e0b854c9"
+            }
+          ]
+        }
+      },
+      "id": "c6c22dc1-145d-4953-87ac-aafd56fb47f3"
     },
     {
       "type": "paragraph",
@@ -1676,15 +1857,7 @@
               "styles": {
                 "italic": true
               }
-            },
-            "; de klant: ",
-            {
-              "text": "client",
-              "styles": {
-                "italic": true
-              }
-            },
-            " (you know it from 08-a)"
+            }
           ],
           "id": "fcb43123-adb9-433a-ba46-b2b03529fbcd"
         }
@@ -1880,6 +2053,82 @@
       "id": "480273f9-fbee-4f65-a04a-3e83bc119e6d"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de afspraak",
+              "meaning": "appointment",
+              "forms": "de afspraken",
+              "example": "Ik heb vanmiddag een afspraak bij de tandarts.",
+              "id": "58fee15e-553a-4ec0-8a92-8e9f38f87da9"
+            },
+            {
+              "term": "de kapper",
+              "meaning": "hairdresser",
+              "forms": "de kappers",
+              "example": "Sofia belt de kapper.",
+              "id": "6aba277a-65e0-4fe7-aa4a-f25891db08b8"
+            },
+            {
+              "term": "de tandarts",
+              "meaning": "dentist",
+              "forms": "de tandartsen",
+              "example": "Om vier uur heb ik een afspraak bij de tandarts.",
+              "id": "ea3e158a-ff4a-4137-ac7d-f6566c8cf65e"
+            },
+            {
+              "term": "de huisarts",
+              "meaning": "GP, family doctor",
+              "forms": "de huisartsen",
+              "id": "cd58565e-5164-4ac2-b877-819bb98934e8"
+            },
+            {
+              "term": "Hebt u plaats?",
+              "meaning": "Do you have a free slot? (formal)",
+              "example": "Hebt u donderdag om vier uur plaats?",
+              "note": "Also correct: Heeft u plaats?",
+              "id": "6fe26e72-a3bf-4902-beac-c74e32db6655"
+            },
+            {
+              "term": "Dat is goed.",
+              "meaning": "That's fine. / OK.",
+              "example": "Dat is goed. Donderdag om half zes.",
+              "id": "979b66e3-6dcd-4cef-86ba-4c6fafac9d33"
+            },
+            {
+              "term": "passen",
+              "meaning": "to fit, to suit (a time)",
+              "forms": "past · paste · gepast",
+              "example": "Om half zes heb ik plaats. Past dat?",
+              "note": "Past dat? = Does that work for you? Dat past (niet). = That works (doesn't work).",
+              "id": "fc8fba1b-bf5c-44dc-9711-7549f70e8e1d"
+            },
+            {
+              "term": "helaas",
+              "meaning": "unfortunately",
+              "example": "Nee, helaas. Om vier uur heb ik geen plaats.",
+              "id": "e28a62dd-da4d-44f6-bf28-dae380653aa9"
+            },
+            {
+              "term": "later",
+              "meaning": "later",
+              "example": "Hebt u later plaats?",
+              "id": "7f565e45-4728-47f1-ade8-3159b237c3cf"
+            },
+            {
+              "term": "eerder",
+              "meaning": "earlier",
+              "example": "Hebt u eerder plaats?",
+              "id": "7f94d262-3827-4281-b144-57976c6ca2eb"
+            }
+          ]
+        }
+      },
+      "id": "0723e3cb-1930-4156-baca-ff51caa9b11c"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "hint",
@@ -2040,6 +2289,54 @@
         ]
       },
       "id": "9386117a-e113-49d3-9b6d-c88ecd8c5c3d"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de kapsalon",
+              "meaning": "hair salon",
+              "forms": "de kapsalons",
+              "example": "Kapsalon Knip, goedemiddag!",
+              "id": "02e23932-ad5c-4ba8-b236-66ab8ca8602a"
+            },
+            {
+              "term": "Ik bel voor een afspraak.",
+              "meaning": "I'm calling to make an appointment.",
+              "example": "Goedemiddag, met Sofia Moreno. Ik bel voor een afspraak.",
+              "id": "ae7b9a24-cd89-4629-9383-0c3e3088ec09"
+            },
+            {
+              "term": "knippen",
+              "meaning": "to cut (hair)",
+              "forms": "knipt · knipte · geknipt",
+              "example": "Alleen knippen, alstublieft.",
+              "id": "edf8d601-a5ce-434b-b6e6-bdabe8d552da"
+            },
+            {
+              "term": "Alleen knippen, alstublieft.",
+              "meaning": "Just a cut, please.",
+              "example": "Ja, dat past. Alleen knippen, alstublieft.",
+              "id": "a1608453-8ccc-47be-b12b-5bf0e907ebd8"
+            },
+            {
+              "term": "mevrouw",
+              "meaning": "Mrs; madam",
+              "example": "Donderdag om half zes, voor mevrouw Moreno.",
+              "id": "ba84c6fc-228b-430c-bbf8-d9e4b6ef1470"
+            },
+            {
+              "term": "Graag gedaan.",
+              "meaning": "You're welcome.",
+              "example": "Dank u wel! Graag gedaan.",
+              "id": "b4c84f54-9ba6-4fde-a8c4-b72ba937ff9a"
+            }
+          ]
+        }
+      },
+      "id": "e69fbd86-3cce-4e5b-ae52-bad3be6b66c1"
     },
     {
       "type": "example",
@@ -2246,7 +2543,7 @@
                 "Om",
                 "komt"
               ],
-              "note": "A short answer starts with Om. After a time at the start the verb comes before the subject: komt de klant."
+              "note": "A short answer starts with Om. After a time at the start the verb comes before the subject: komt de klant. Reminder: de klant = the client (from 08-a)."
             },
             {
               "prompt": "Sofia: Heb je vanmiddag tijd? / Daan: Nee, helaas. Vanmiddag … ik het druk. Overmorgen heb ik tijd tussen twaalf … twee.",
@@ -2526,7 +2823,7 @@
               "authorsVersion": [
                 "After that we have coffee."
               ],
-              "note": "The Dutch present tense often means the near future."
+              "note": "The Dutch present tense often means the near future. Also fine: After that we'll have coffee."
             }
           ]
         }
@@ -2624,6 +2921,36 @@
       "id": "76aad232-921d-4b6e-9c3d-f44cfa9403fd"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Hoi allemaal,",
+              "meaning": "Hi everyone, (informal)",
+              "example": "Hoi allemaal, morgen hebben we een drukke dag.",
+              "id": "6beda96e-55b7-4641-9323-d45322be6c80"
+            },
+            {
+              "term": "het project",
+              "meaning": "project",
+              "forms": "de projecten",
+              "example": "Daarna werken we aan het nieuwe project.",
+              "id": "26d93fbc-9fec-4694-99fb-d32b9b4853c2"
+            },
+            {
+              "term": "de lunchpauze",
+              "meaning": "lunch break",
+              "forms": "de lunchpauzes",
+              "example": "Tussen twaalf en één uur hebben we lunchpauze.",
+              "id": "d6e127cd-c8b8-49f3-8714-eb07717c219a"
+            }
+          ]
+        }
+      },
+      "id": "1ae7fcd6-ed74-486a-aa56-d109300fbf85"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 2
@@ -2648,6 +2975,22 @@
         }
       },
       "id": "46f70c56-35d9-4934-ba23-2c3aba48d67e"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "dus",
+              "meaning": "so",
+              "example": "Morgen werk ik tot vijf uur. Dus ben ik om zes uur thuis.",
+              "id": "61153e55-ed33-4216-81f5-747705a9fd87"
+            }
+          ]
+        }
+      },
+      "id": "754b28cc-e259-49bb-b346-73d00fe50a27"
     },
     {
       "type": "divider",

@@ -24,21 +24,21 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | 4 | hebben; numbers 0–100; question words | Part I | 07-a (wij hebben), 09-a (ordinals), 12-b (prices) | assumed | |
 | 5 | Possessives mijn/jouw/zijn/haar; de/het intro | Part I | 07-a (ons/onze, jullie, hun) | assumed | |
 | 6 | Adjectives; de/het + adjective basics | Part I | 13-2, 12-a, 18-a | assumed | Full ending system in 18-a. |
-| 7 | Present tense plural | — | — | missing (planned: 07-a) | |
-| 7 | Separable verbs (introduction) | — | — | missing (planned: 07-b) | Deepened in 16-a. |
-| 8 | Telling time | — | — | missing (planned: 08-a) | |
-| 8 | om, van … tot; inversion after time | — | — | missing (planned: 08-b) | |
-| 9 | Days, months, dates; ordinals | — | — | missing (planned: 09-a) | |
-| 9 | Word order with time expressions (TMP); op/in | — | — | missing (planned: 09-a, 09-b) | |
-| 10 | Plurals; een/de/het/geen | — | — | missing (planned: 10-a) | |
-| 10 | Countable quantities | — | — | missing (planned: 10-b) | |
-| 11 | willen, mogen; polite requests | — | — | missing (planned: 11-a, 11-b) | Modal + infinitive at the end introduced at basic depth; system in row 20. |
-| 12 | Demonstratives deze/die/dit/dat | — | — | missing (planned: 12-a, 12-b) | |
+| 7 | Present tense plural | 07-a | — | covered | |
+| 7 | Separable verbs (introduction) | 07-b | — | covered | Deepened in 16-a. |
+| 8 | Telling time | 08-a | — | covered | |
+| 8 | om, van … tot; inversion after time | 08-b | — | covered | |
+| 9 | Days, months, dates; ordinals | 09-a | — | covered | |
+| 9 | Word order with time expressions (TMP); op/in | 09-a | 09-b | covered | |
+| 10 | Plurals; een/de/het/geen | 10-a | — | covered | |
+| 10 | Countable quantities | 10-b | — | covered | |
+| 11 | willen, mogen; polite requests | 11-a | 11-b | covered | Modal + infinitive at the end introduced at basic depth; system in row 20. |
+| 12 | Demonstratives deze/die/dit/dat | 12-a | 12-b | covered | |
 | 13 | er is / er zijn; location vocabulary | 13-1 | 13-2 | partial | Existing lessons are thin (14 + 20 items). Reinforced in 14-a/14-b (planned). |
-| 14 | Prepositions of place | — | — | missing (planned: 14-a) | |
+| 14 | Prepositions of place | 14-a | — | covered | |
 | 14 | staan/liggen/zitten (+ hangen); leggen/zetten/steken action pairs | 14-b | — | covered | Published as the standalone mini-course "Leggen of zetten?". |
-| 15 | kunnen | — | — | missing (planned: 15-a) | |
-| 15 | Directions; imperative | — | — | missing (planned: 15-b) | |
+| 15 | kunnen | 15-a | — | covered | |
+| 15 | Directions; imperative | 15-b | — | covered | |
 | 16 | Separable verbs in depth | — | — | missing (planned: 16-a) | |
 | 16 | gaan + infinitive | — | — | missing (planned: 16-b) | |
 | 17 | Impersonal het (weather) | — | — | missing (planned: 17-a) | |
@@ -72,22 +72,22 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 
 | Topic | Introduced | Reinforced | Status | Notes |
 | --- | --- | --- | --- | --- |
-| Frequency adverbs (altijd, vaak, soms, nooit) and their position | — | — | missing (planned: 07-a) | |
-| Plural possessives ons/onze, jullie, hun | — | — | missing (planned: 07-a) | |
-| 's ochtends / 's middags / 's avonds / 's nachts | — | — | missing (planned: 07-a chunk, 08-a) | |
-| Inseparable prefixes (be-, ver-, ont-, her-, ge-, er-) | — | — | missing (planned: 07-b, 16-a) | |
-| Ordinal numbers | — | — | missing (planned: 09-a) | |
-| jarig zijn, birthday customs | — | — | missing (planned: 09-a, 09-b) | |
-| Units singular after numbers; no "of" in quantities | — | — | missing (planned: 10-b) | |
-| nodig hebben | — | — | missing (planned: 10-b) | |
-| Diminutives (-je, always het) | — | — | missing (planned: 10-b) | Vocabulary rule only; formation (-tje, -pje, -etje) not systematic. |
-| u vs jij register; alstublieft/alsjeblieft | — | — | missing (planned: 11-b) | |
-| Prices, euros and cents | — | — | missing (planned: 12-b) | |
-| te + adjective (too) | — | — | missing (planned: 12-b) | |
-| hij/het/ze for things | — | — | missing (planned: 14-a) | |
+| Frequency adverbs (altijd, vaak, soms, nooit) and their position | 07-a | — | covered | |
+| Plural possessives ons/onze, jullie, hun | 07-a | — | covered | |
+| 's ochtends / 's middags / 's avonds / 's nachts | 07-a | 08-a | covered | |
+| Inseparable prefixes (be-, ver-, ont-, her-, ge-, er-) | 07-b | — | partial (continues: 16-a) | |
+| Ordinal numbers | 09-a | — | covered | |
+| jarig zijn, birthday customs | 09-a | 09-b | covered | |
+| Units singular after numbers; no "of" in quantities | 10-b | — | covered | |
+| nodig hebben | 10-b | — | covered | |
+| Diminutives (-je, always het) | 10-b | — | covered | Vocabulary rule only; formation (-tje, -pje, -etje) not systematic. |
+| u vs jij register; alstublieft/alsjeblieft | 11-b | — | covered | |
+| Prices, euros and cents | 12-b | — | covered | |
+| te + adjective (too) | 12-b | — | covered | |
+| hij/het/ze for things | 14-a | — | covered | |
 | er + positional verb | 14-b | — | covered | |
 | Action → state position pairs (leggen→liggen, zetten→staan/zitten, steken→zitten, hangen→hangen) | 14-b | — | covered | Published as the standalone mini-course "Leggen of zetten?". |
-| weten (vocabulary) | — | — | missing (planned: 15-b) | |
+| weten (vocabulary) | 15-b | — | covered | |
 | worden ("het wordt koud") | — | — | missing (planned: 17-a) | |
 | Intensifiers heel, erg, best, een beetje, te | — | — | missing (planned: 17-b) | |
 | Non-inflecting adjectives (oranje, roze, -en materials) | — | — | missing (planned: 18-a) | |

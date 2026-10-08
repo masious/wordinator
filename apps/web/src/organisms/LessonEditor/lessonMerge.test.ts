@@ -63,6 +63,13 @@ describe("lesson merge", () => {
     expect(result.conflicts).toEqual([{ blockId: id(2), local: p(2, "mine"), server: p(2, "theirs") }]);
   });
 
+  it("asks side by side when both sides edited the same New words block", () => {
+    const words = (meaning: string) => ({ id: id(20), type: "vocabulary", props: { data: JSON.stringify({ words: [{ id: id(21), term: "het huis", meaning }] }) }, children: [] }) as LessonBlock;
+    const result = mergeLessonDocuments(doc(p(1), words("house")), doc(p(1), words("the house")), doc(p(1, "edited"), words("home")))!;
+    expect(texts(result.document)).toEqual(["edited", "vocabulary"]);
+    expect(result.conflicts).toEqual([{ blockId: id(20), local: words("the house"), server: words("home") }]);
+  });
+
   it("does not ask when both sides made the same edit", () => {
     const result = mergeLessonDocuments(base, doc(p(1), p(2, "same"), p(3)), doc(p(1), p(2, "same"), p(3)))!;
     expect(result.conflicts).toEqual([]);

@@ -101,6 +101,19 @@ Every lesson: **at least 7 practice blocks and 45 items**, all with authors' ver
 
 Practice items may stand inside the relevant grammar section (e.g. a short P1 right after the rule) or all in the Practice section; keep instructions explicit about the task.
 
+## New words
+
+Every lesson lists the words it introduces in `vocabulary` blocks ("New words", [courses.md](../courses.md#new-words-and-recap)). Learners see them in a panel on the player step they belong to and review them later in the word recap, so the list is the lesson's vocabulary record.
+
+- **Placement**: put one vocabulary block directly after the block where its words first appear: the example, callout, dialogue, practice, or the prose that introduces them. Words after a dialogue or practice show on every turn or item, so prefer placing a dialogue's words after the dialogue; words placed after an intro paragraph show before the dialogue starts. A vocabulary block never changes the number of player steps.
+- **Which words**: every word the lesson presents as new, including those in its vocabulary list, glossed chunks and useful expressions (as a term like "Tot vanavond!"). Do not list words recorded as known in the ledgers, except to add a new meaning (put the earlier lesson in the note). Each term appears once per lesson (`check` fails on a repeat); a term may appear again in a later lesson only for a new meaning or use. Words belong to the lesson that introduces them first: never leave a word out because a *later* lesson also lists it. Exception: 14-b is also published as the standalone course "Leggen of zetten?" and keeps its complete list, so some terms repeat between 14-a and 14-b; the course recap shows each term once (first occurrence).
+- **term**: dictionary form. Nouns with article (`het balkon`), verbs as infinitive (`opstaan`), adjectives in base form (`duur`), chunks as said (`Wat kost dat?`).
+- **forms**: nouns → the plural with article (`de balkons`); verbs → `hij`-form · past · participle (`staat op · stond op · opgestaan`; separable verbs as shown); irregular adjectives or useful extras (`goed · beter`) only when taught. Omit when there is nothing useful.
+- **meaning**: short English gloss; add what distinguishes it (`to lie, to be lying (flat)`). Mark informal or formal register in the meaning (`bye (informal)`).
+- **example**: one short sentence from or matching the lesson's story, at the lesson's level. Optional, but give one for verbs and chunks.
+- **note**: only when needed: a false friend, irregular plural, separable verb, the lesson where it first appeared with another meaning.
+- Typical volume: 15–35 words per lesson, in 4–8 blocks.
+
 ## Feature checklist (every lesson)
 
 - One h1, several h2, several h3.

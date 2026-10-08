@@ -13,7 +13,7 @@
     {
       "type": "paragraph",
       "content": [
-        "It is Monday 7 September, the start of Sofia's first full week at work. Sofia lives in Noor's flat in Utrecht-Oost and works at a small IT company near Utrecht Centraal. In this lesson you will describe a normal day, use the ",
+        "It is the week of Monday 7 September 2026, Sofia's first full week at work. Sofia lives in Noor's flat in Utrecht-Oost and works at a small IT company near Utrecht Centraal. In this lesson you will describe a normal day, use the ",
         {
           "text": "plural",
           "styles": {
@@ -156,6 +156,163 @@
         ]
       },
       "id": "6c08b061-2714-4bda-80b0-5a7ef6585d30"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "ontbijten",
+              "meaning": "to have breakfast",
+              "forms": "ontbijt · ontbeet · ontbeten",
+              "example": "Wij ontbijten samen.",
+              "note": "Not separable: ik ontbijt, wij ontbijten. The stem ends in t, so no extra t: hij ontbijt.",
+              "id": "586b52bb-692b-4b30-be9a-19d58c086511"
+            },
+            {
+              "term": "de keuken",
+              "meaning": "kitchen",
+              "forms": "de keukens",
+              "example": "Wij ontbijten altijd samen in de keuken.",
+              "id": "e13f5448-b056-4de5-8f24-1c410db2c423"
+            },
+            {
+              "term": "de koffie",
+              "meaning": "coffee",
+              "example": "Jij drinkt altijd koffie.",
+              "id": "6b8a45b0-96ec-4fbc-ab2a-8c02cefa1f46"
+            },
+            {
+              "term": "Ja, graag!",
+              "meaning": "Yes, please!",
+              "example": "Koffie, Sofia? – Ja, graag!",
+              "id": "e0573000-5f16-4e43-85ef-8b806d2cad66"
+            },
+            {
+              "term": "de thee",
+              "meaning": "tea",
+              "example": "En jij drinkt altijd thee, hè?",
+              "id": "e8e55001-6173-4c5b-a224-817a27af0b26"
+            },
+            {
+              "term": "altijd",
+              "meaning": "always",
+              "example": "Ik drink altijd koffie.",
+              "note": "Comes directly after the verb.",
+              "id": "99c3ad69-c1e3-4995-9612-7e6670240e6e"
+            },
+            {
+              "term": "hè?",
+              "meaning": "right?, isn't it? (tag at the end of a sentence)",
+              "example": "En jij drinkt altijd thee, hè?",
+              "id": "8e6829f2-7035-41f0-b485-a7ca5412e199"
+            },
+            {
+              "term": "nooit",
+              "meaning": "never",
+              "example": "Ik drink nooit koffie.",
+              "id": "d90b9930-2cfb-4ec1-8946-37d072bb7612"
+            },
+            {
+              "term": "lekker",
+              "meaning": "tasty, nice",
+              "example": "Thee is lekker!",
+              "id": "88160406-9217-46ac-8a3f-fece6986b17a"
+            },
+            {
+              "term": "samen",
+              "meaning": "together",
+              "example": "Wij eten 's avonds samen.",
+              "id": "7aecf9d9-c222-49b9-a3c5-08b705150534"
+            },
+            {
+              "term": "gezellig",
+              "meaning": "cosy, sociable, nice (of a place, time or company)",
+              "example": "Wij ontbijten samen. Gezellig!",
+              "note": "A typical Dutch word with no exact English translation.",
+              "id": "0fd14982-4fda-4ccd-924e-3023f489400c"
+            },
+            {
+              "term": "Super!",
+              "meaning": "Great!",
+              "example": "Super! Werk jij thuis of op kantoor?",
+              "id": "f04f17b2-cb2c-47b9-89d3-7daec0ea72c1"
+            },
+            {
+              "term": "thuis",
+              "meaning": "at home",
+              "example": "Werk jij thuis of op kantoor?",
+              "id": "3fadd894-bd17-4caa-93e1-9bc5cbba6dce"
+            },
+            {
+              "term": "het kantoor",
+              "meaning": "office",
+              "forms": "de kantoren",
+              "example": "Ik werk meestal op kantoor.",
+              "note": "op kantoor = at the office, naar kantoor = to the office: no article.",
+              "id": "9dbedd89-c3cd-411b-939b-ef869ee106c4"
+            },
+            {
+              "term": "meestal",
+              "meaning": "usually",
+              "example": "Ik werk meestal op kantoor.",
+              "id": "ada3f8f9-73f3-4704-b091-b320b66d72d4"
+            },
+            {
+              "term": "'s middags",
+              "meaning": "in the afternoon",
+              "example": "Ik studeer 's middags thuis.",
+              "id": "4759b519-0d71-488f-b930-c5ce6c292673"
+            },
+            {
+              "term": "koken",
+              "meaning": "to cook",
+              "forms": "kookt · kookte · gekookt",
+              "example": "Jij kookt altijd lekker!",
+              "id": "d9197f6a-f865-4702-b5cb-f24700c68249"
+            },
+            {
+              "term": "'s avonds",
+              "meaning": "in the evening",
+              "example": "Ik kook 's avonds.",
+              "id": "be833caf-1550-434b-a79f-4291aa575d9e"
+            },
+            {
+              "term": "toch?",
+              "meaning": "right?, don't we? (asks for agreement)",
+              "example": "Wij eten samen, toch?",
+              "id": "b54665cf-f809-4807-9059-eb8b1993473e"
+            },
+            {
+              "term": "Joh",
+              "meaning": "hey, oh (informal, shows surprise or emphasis)",
+              "example": "Joh, en jij gaat altijd laat naar bed!",
+              "id": "c6dd35d5-21b3-441d-aa3e-23729f1e9a54"
+            },
+            {
+              "term": "laat",
+              "meaning": "late",
+              "example": "Jij bent soms laat op kantoor!",
+              "id": "ee434099-63d3-4d00-b9c2-04595b22f4d2"
+            },
+            {
+              "term": "naar bed gaan",
+              "meaning": "to go to bed",
+              "example": "Jij gaat altijd laat naar bed!",
+              "id": "1b57a727-a82e-48ba-bb76-c29adcacfde2"
+            },
+            {
+              "term": "elke ochtend",
+              "meaning": "every morning",
+              "example": "Ik ben elke ochtend moe!",
+              "note": "de ochtend = the morning; elke + de-word.",
+              "id": "53e93ba3-600b-4638-b9a9-c9d761102e93"
+            }
+          ]
+        }
+      },
+      "id": "e1ee4b91-eab2-43a4-bbfd-3e6a1e8086cc"
     },
     {
       "type": "callout",
@@ -955,6 +1112,24 @@
       "id": "71a86344-cc01-4b05-978c-7f5aa06c7fd2"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "doen",
+              "meaning": "to do",
+              "forms": "doet · deed · gedaan",
+              "example": "Wat doen jullie 's avonds?",
+              "note": "Irregular singular: ik doe, jij doet, wij doen.",
+              "id": "14742090-1ea7-431b-b268-3da853919fdb"
+            }
+          ]
+        }
+      },
+      "id": "6c912942-3bea-48cc-936e-35fe5747cc3f"
+    },
+    {
       "type": "example",
       "props": {
         "translation": "Do you work at home?",
@@ -1302,6 +1477,23 @@
       "id": "ddc26308-6262-4dff-be49-197ce3973703"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "slapen",
+              "meaning": "to sleep",
+              "forms": "slaapt · sliep · geslapen",
+              "example": "Ze slapen lang.",
+              "id": "1bcc48ba-ccd0-42b0-b31d-053b9680fd13"
+            }
+          ]
+        }
+      },
+      "id": "5069abdc-b9ba-4cf8-8906-b22b06351969"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 3
@@ -1393,6 +1585,39 @@
       "id": "d05445ea-dea8-4a7f-bf5a-1825abe51815"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "gaan",
+              "meaning": "to go",
+              "forms": "gaat · ging · gegaan",
+              "example": "Wij gaan laat naar bed.",
+              "note": "Irregular singular: ik ga, jij gaat, wij gaan.",
+              "id": "1b6997d0-3672-42a1-adb8-3b0e22eaa8bc"
+            },
+            {
+              "term": "staan",
+              "meaning": "to stand",
+              "forms": "staat · stond · gestaan",
+              "note": "Irregular singular: ik sta, jij staat, wij staan.",
+              "id": "790320f7-6548-4d96-93ca-b444202a566c"
+            },
+            {
+              "term": "zien",
+              "meaning": "to see",
+              "forms": "ziet · zag · gezien",
+              "example": "Sofia ziet Daan elke dag op kantoor.",
+              "note": "Irregular singular: ik zie, jij ziet, wij zien.",
+              "id": "078a646a-90f4-47c3-92cd-d7e1cc8f1281"
+            }
+          ]
+        }
+      },
+      "id": "ac6a0bef-1302-454d-98f1-d269a1f394b8"
+    },
+    {
       "type": "example",
       "props": {
         "translation": "Daan and Lotte go to bed early.",
@@ -1424,6 +1649,22 @@
         " naar bed."
       ],
       "id": "1f99591c-d1b2-41a8-9ece-a3c8e1ff7380"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "vroeg",
+              "meaning": "early",
+              "example": "Daan en Lotte gaan vroeg naar bed.",
+              "id": "290ad060-b67a-4b10-8837-d41fef3fa044"
+            }
+          ]
+        }
+      },
+      "id": "2135c6ca-b597-44be-92ea-979c71a49a0e"
     },
     {
       "type": "divider",
@@ -1621,6 +1862,35 @@
       "id": "a11e35b5-2656-4b41-b206-20716825b02b"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "vaak",
+              "meaning": "often",
+              "example": "Noor kookt vaak.",
+              "id": "0fb20ccd-03ac-4807-bb1c-4bc7cc509f01"
+            },
+            {
+              "term": "soms",
+              "meaning": "sometimes",
+              "example": "Ik kook soms.",
+              "id": "d4000d34-f665-408c-bd74-77837eab33ab"
+            },
+            {
+              "term": "elke dag",
+              "meaning": "every day",
+              "example": "Daan fietst elke dag naar kantoor.",
+              "note": "de dag = the day, de dagen = the days.",
+              "id": "bdd32055-b4c8-4965-910a-1e5b2b291f6a"
+            }
+          ]
+        }
+      },
+      "id": "2ce2bee7-5f53-4426-ba86-1553964529d5"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "grammar",
@@ -1747,6 +2017,23 @@
       "id": "4a86763a-d53a-4b17-b876-1b2e55e3fb78"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "fietsen",
+              "meaning": "to cycle",
+              "forms": "fietst · fietste · gefietst",
+              "example": "Daan fietst elke dag naar kantoor.",
+              "id": "808dcb86-79ea-400d-864b-d8294b65c505"
+            }
+          ]
+        }
+      },
+      "id": "8f9151c2-156b-46b4-b452-e7d4a662de3c"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "warning",
@@ -1848,6 +2135,23 @@
         ") are fixed chunks. For now, put them after the verb or at the end, and start your sentence with the subject."
       ],
       "id": "3b1b45ad-0f0c-4bf2-8a9c-df35add51d64"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "'s ochtends",
+              "meaning": "in the morning",
+              "example": "Wat drinkt Noor 's ochtends?",
+              "note": "Sounds like sochtends.",
+              "id": "30cc2856-97db-48f8-b02c-5ef48a097877"
+            }
+          ]
+        }
+      },
+      "id": "8f0a409f-a352-4434-a451-0247bbfcc69f"
     },
     {
       "type": "example",
@@ -1987,7 +2291,7 @@
           },
           {
             "speaker": "Daan",
-            "text": "Wij lezen vaak. Lotte leest de krant en ik luister naar muziek. En we gaan vroeg naar bed."
+            "text": "Wij lezen vaak de krant en ik luister soms naar muziek. En we gaan vroeg naar bed."
           },
           {
             "speaker": "Sofia",
@@ -2000,6 +2304,89 @@
         ]
       },
       "id": "f84ea039-2db7-49f8-89c9-3cd6074949bc"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Precies.",
+              "meaning": "Exactly.",
+              "example": "Jij bent altijd vroeg. – Precies.",
+              "id": "2b86a018-be61-4cc5-8019-26a3172338e3"
+            },
+            {
+              "term": "ook",
+              "meaning": "also, too",
+              "example": "Onze keuken is ook klein.",
+              "id": "7abc742b-5829-4b79-aa88-f6d3b7cde8ec"
+            },
+            {
+              "term": "naar huis gaan",
+              "meaning": "to go home",
+              "example": "En ik ga ook vroeg naar huis.",
+              "id": "2a1dd6e2-db75-4e16-b471-df4eac757007"
+            },
+            {
+              "term": "sporten",
+              "meaning": "to do sport, to work out",
+              "forms": "sport · sportte · gesport",
+              "example": "Ik sport vaak.",
+              "id": "b45132c1-fead-4624-b491-8df6c905baf6"
+            },
+            {
+              "term": "tv kijken",
+              "meaning": "to watch TV",
+              "forms": "kijkt tv · keek tv · tv gekeken",
+              "example": "Ik kijk soms tv.",
+              "id": "0e41af90-c980-4041-9ed5-b0c7f1ea4579"
+            },
+            {
+              "term": "de krant",
+              "meaning": "newspaper",
+              "forms": "de kranten",
+              "example": "Wij lezen vaak de krant.",
+              "id": "64a05cf8-627f-4135-bfca-b6481979c1ec"
+            },
+            {
+              "term": "luisteren naar",
+              "meaning": "to listen to",
+              "forms": "luistert · luisterde · geluisterd",
+              "example": "Ik luister soms naar muziek.",
+              "note": "Always with naar: luisteren naar muziek.",
+              "id": "d19e3cf8-febf-4e53-b532-8d1a8179f355"
+            },
+            {
+              "term": "de muziek",
+              "meaning": "music",
+              "example": "Wij luisteren naar muziek.",
+              "id": "decd8f18-5409-458e-8380-7004f15b48f2"
+            }
+          ]
+        }
+      },
+      "id": "ed9a98a9-33f6-4c3e-b41e-8e32a0a6426f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Precies.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = Exactly. Daan says it a lot. ",
+        {
+          "text": "Collega",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = colleague."
+      ],
+      "id": "e7e894fc-a4f3-4006-b00c-172d6f4ee3d6"
     },
     {
       "type": "callout",
@@ -2032,6 +2419,29 @@
         "."
       ],
       "id": "0e920706-7946-4269-89e5-37563a901ba6"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de boterham",
+              "meaning": "slice of bread, sandwich",
+              "forms": "de boterhammen",
+              "example": "Daan en ik lunchen meestal op kantoor: een boterham met kaas.",
+              "id": "920f2cd5-c425-4ebb-bbfe-79e24450c58b"
+            },
+            {
+              "term": "het avondeten",
+              "meaning": "dinner, the evening meal",
+              "note": "The warm meal of the day.",
+              "id": "fa42c0a0-fa8c-40d6-92a7-6047b0df3e29"
+            }
+          ]
+        }
+      },
+      "id": "4f6d4676-2727-4368-890d-0811d6c428d6"
     },
     {
       "type": "callout",
@@ -2196,6 +2606,56 @@
       "id": "9fe596ce-a3ad-449b-b9c8-5fb9820af86a"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "ons",
+              "meaning": "our (with a het-word)",
+              "example": "Ons appartement is klein, maar gezellig.",
+              "id": "5290286d-0cd3-40cc-9938-a3bd40afe1de"
+            },
+            {
+              "term": "onze",
+              "meaning": "our (with a de-word or a plural)",
+              "example": "Onze keuken is ook klein.",
+              "id": "035ef7ff-387c-4a9b-9f3e-e21b663a7902"
+            },
+            {
+              "term": "het appartement",
+              "meaning": "flat, apartment",
+              "forms": "de appartementen",
+              "example": "Ons appartement is klein, maar gezellig.",
+              "id": "bffb22e5-1c6e-42e0-9cfe-f4017143116d"
+            },
+            {
+              "term": "het ontbijt",
+              "meaning": "breakfast",
+              "forms": "de ontbijten",
+              "note": "The verb is ontbijten: to have breakfast.",
+              "id": "ddb2f8b2-03d7-4bf8-982b-819bfc0f3c32"
+            },
+            {
+              "term": "de huisgenoot",
+              "meaning": "housemate, flatmate",
+              "forms": "de huisgenoten",
+              "example": "Noor is mijn vriendin en mijn huisgenoot.",
+              "id": "a3044a37-e04e-4748-ad08-1d095b77dbb1"
+            },
+            {
+              "term": "de kamer",
+              "meaning": "room",
+              "forms": "de kamers",
+              "example": "Ik heb een kamer.",
+              "id": "548953b8-7b41-4c52-a3d9-14f02838372b"
+            }
+          ]
+        }
+      },
+      "id": "b06822dc-92a4-4e6f-a6aa-3e1ad0e2f736"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "grammar",
@@ -2246,6 +2706,29 @@
         ") never change."
       ],
       "id": "5b526d6c-4be7-473a-9644-01eab3b5ed4a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "jullie",
+              "meaning": "your (to two or more people)",
+              "note": "Also the subject pronoun you (plural), as in jullie werken. Never changes.",
+              "id": "776a3b6a-dd18-4002-be73-1a7b6f23f35d"
+            },
+            {
+              "term": "hun",
+              "meaning": "their",
+              "example": "Hun kantoor is klein.",
+              "note": "Never changes.",
+              "id": "67391b13-6c07-4149-a59e-4d41a98bb64c"
+            }
+          ]
+        }
+      },
+      "id": "2cba7c57-b61d-4eb4-b15f-ca589bc04f90"
     },
     {
       "type": "example",
@@ -2301,6 +2784,23 @@
       "id": "6ffb9de8-4932-4375-8469-821142fa18f7"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het centrum",
+              "meaning": "centre (of a town)",
+              "forms": "de centra",
+              "example": "Hun kantoor is in het centrum.",
+              "id": "f7207b45-4a9b-44dc-9a4e-a3037ea42e16"
+            }
+          ]
+        }
+      },
+      "id": "586a47c1-872c-490a-a282-c1d18feeff4a"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "warning",
@@ -2342,9 +2842,6 @@
         },
         "."
       ],
-      "props": {
-        "backgroundColor": "gray"
-      },
       "id": "4de4f47f-9e42-435e-bc70-5f6db2a8d163"
     },
     {
@@ -2570,6 +3067,23 @@
       "id": "08f64519-1653-4d30-9b43-a23a8c2b236c"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "lunchen",
+              "meaning": "to have lunch",
+              "forms": "luncht · lunchte · geluncht",
+              "example": "Sofia luncht meestal op kantoor.",
+              "id": "98ce4336-dee8-4741-831f-5502ccdb7aeb"
+            }
+          ]
+        }
+      },
+      "id": "7dce7a37-53a0-4878-b614-b22079c4fc14"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 3
@@ -2688,7 +3202,7 @@
               "authorsVersion": [
                 "Ons appartement is klein, maar leuk."
               ],
-              "note": "Het appartement: ons. Also fine: mooi or gezellig."
+              "note": "Het appartement: ons. Also fine: mooi or gezellig, or Onze flat is klein, maar leuk (de flat: onze)."
             },
             {
               "prompt": "Do you (plural) work at home?",
@@ -2826,11 +3340,75 @@
           ],
           "passage": {
             "title": "Een dag bij Noor en Sofia",
-            "content": "Ik ben Sofia. Ik ben 28 en ik kom uit Spanje. Ik woon in Utrecht, bij Noor. Noor is mijn vriendin en mijn huisgenoot. Ons appartement is klein, maar gezellig. Ik heb een kamer en wij hebben samen een kleine keuken.\nWij ontbijten altijd samen in de keuken. Ik drink koffie en Noor drinkt thee. Noor leest vaak de krant.\nIk werk op kantoor. Ik heb geen fiets. Ik loop naar kantoor of ik neem de bus. Mijn collega Daan fietst elke dag. Hij is altijd vroeg op kantoor en ik ben soms laat! Wij lunchen meestal op kantoor: een boterham met kaas.\nNoor studeert psychologie. Ze studeert 's middags thuis. Noor kookt vaak en wij eten 's avonds samen. Ik kook soms. Wij kijken soms tv of wij luisteren naar muziek.\nNoor gaat vroeg naar bed. Ik ga altijd laat naar bed. Ik ben elke ochtend moe!"
+            "content": "Ik ben Sofia. Ik ben 28 en ik kom uit Spanje. Ik woon in Utrecht, bij Noor. Noor is mijn vriendin en mijn huisgenoot. Ons appartement is klein, maar gezellig. Ik heb een kamer en wij hebben samen een kleine keuken.\nWij ontbijten altijd samen in de keuken. Ik drink koffie en Noor drinkt thee. Noor leest vaak de krant.\nIk werk op kantoor. Ik heb geen fiets. Ik loop naar kantoor of ik neem de bus. Mijn collega Daan fietst elke dag. Hij is altijd vroeg op kantoor en ik ben soms laat! Daan en ik lunchen meestal op kantoor: een boterham met kaas.\nNoor studeert psychologie. Ze studeert 's middags thuis. Noor kookt vaak en wij eten 's avonds samen. Ik kook soms. Wij kijken soms tv of wij luisteren naar muziek.\nNoor gaat vroeg naar bed. Ik ga altijd laat naar bed. Ik ben elke ochtend moe!"
           }
         }
       },
       "id": "717af40f-919c-43ac-96d1-23be4d9ee3ea"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "bij",
+              "meaning": "at (someone's place), with",
+              "example": "Ik woon in Utrecht, bij Noor.",
+              "id": "a0eda4a7-2fba-4147-ad69-f60d70e73763"
+            },
+            {
+              "term": "de fiets",
+              "meaning": "bike, bicycle",
+              "forms": "de fietsen",
+              "example": "Ik heb geen fiets.",
+              "id": "5af0a106-5073-484e-ac32-3f3c8f36dd24"
+            },
+            {
+              "term": "lopen",
+              "meaning": "to walk",
+              "forms": "loopt · liep · gelopen",
+              "example": "Ik loop naar kantoor.",
+              "id": "99a826fb-ad41-48c0-a24f-fa2d6ca21cde"
+            },
+            {
+              "term": "nemen",
+              "meaning": "to take",
+              "forms": "neemt · nam · genomen",
+              "example": "Ik neem de bus.",
+              "note": "ik neem, wij nemen: one e in the plural.",
+              "id": "01f51681-cfda-4188-b782-0e1e21ea46df"
+            },
+            {
+              "term": "de bus",
+              "meaning": "bus",
+              "forms": "de bussen",
+              "example": "Ik neem de bus.",
+              "id": "e2fcdee2-c6cc-4499-af26-0419d634cfe0"
+            },
+            {
+              "term": "de kaas",
+              "meaning": "cheese",
+              "forms": "de kazen",
+              "example": "Een boterham met kaas.",
+              "id": "eebc451d-3cd1-4c15-9fcb-8d5cd696e07b"
+            },
+            {
+              "term": "de psychologie",
+              "meaning": "psychology",
+              "example": "Noor studeert psychologie.",
+              "id": "db740d82-75d3-43b6-90a5-94ac237a712b"
+            },
+            {
+              "term": "Klopt dit?",
+              "meaning": "Is this right?",
+              "example": "Klopt dit? Sofia gaat vroeg naar bed.",
+              "id": "5bb22197-b0c1-4a1a-ab7c-984a1c9dfb5f"
+            }
+          ]
+        }
+      },
+      "id": "ea8b2222-5480-4aac-9724-b9e73832329e"
     },
     {
       "type": "heading",

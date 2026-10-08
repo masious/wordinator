@@ -170,6 +170,119 @@
       "id": "a5ce4733-6e73-4f5e-88c0-5c69dd9870e2"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Zo!",
+              "meaning": "well!, right! (to start or round off something)",
+              "example": "Zo! Goedemorgen, dames!",
+              "note": "In 07-b zo meant so (zo vroeg).",
+              "id": "0a4e7c1a-de2b-405d-b789-f379069b8045"
+            },
+            {
+              "term": "het weer",
+              "meaning": "the weather",
+              "example": "Mooi weer vandaag, hè?",
+              "note": "Not the same word as weer (again) from 07-b.",
+              "id": "680656ba-2bd5-4117-999a-86feb2acbd7c"
+            },
+            {
+              "term": "Nou, nou!",
+              "meaning": "well, well! (surprise)",
+              "example": "Nou, nou! Uit Spanje!",
+              "id": "35694385-cb93-4659-a934-14242f95237b"
+            },
+            {
+              "term": "de markt",
+              "meaning": "market",
+              "forms": "de markten",
+              "example": "Welkom op de markt.",
+              "id": "97f0154f-b6b5-4675-a05b-17119f8ecf76"
+            },
+            {
+              "term": "de kaaskraam",
+              "meaning": "cheese stall",
+              "forms": "de kaaskramen",
+              "example": "Noor en Sofia staan bij de kaaskraam van Henk.",
+              "id": "23a197c2-c72f-4f7b-86fc-9eaa6bb7b40c"
+            },
+            {
+              "term": "deze",
+              "meaning": "this, these (near)",
+              "example": "Deze kaas is lekker!",
+              "note": "With de-words and all plurals: deze kaas, deze bloemen. On its own: Ik neem deze.",
+              "id": "3b74eaad-908a-4a93-8d13-b456da19c312"
+            },
+            {
+              "term": "die",
+              "meaning": "that, those (far)",
+              "example": "Mag ik die ook proeven?",
+              "note": "With de-words and all plurals: die kaas, die bloemen.",
+              "id": "ed51ef81-59cd-4b2e-a653-d2d61671b840"
+            },
+            {
+              "term": "dit",
+              "meaning": "this (near)",
+              "example": "Dit is mijn vriendin Sofia.",
+              "note": "With het-words in the singular: dit stuk. Also to introduce or name anything: Dit is Henk. Dit zijn zonnebloemen.",
+              "id": "28108994-59cd-4e40-9402-8d82a1f90496"
+            },
+            {
+              "term": "dat",
+              "meaning": "that (far)",
+              "example": "Dit is jonge kaas en dat is oude kaas.",
+              "note": "With het-words in the singular: dat boek. Also to name anything (Dat zijn zonnebloemen) and for a whole situation (Dat is lekker!).",
+              "id": "3597d003-fa74-409f-9034-3cff87699db6"
+            },
+            {
+              "term": "proeven",
+              "meaning": "to taste, to try (food)",
+              "forms": "proeft · proefde · geproefd",
+              "example": "Mag ik die kaas proeven?",
+              "id": "582aee76-95a2-45d1-b51e-af42d709f444"
+            },
+            {
+              "term": "Wilt u proeven?",
+              "meaning": "Would you like to taste? (formal)",
+              "example": "Dit is jonge kaas. Wilt u proeven?",
+              "id": "36b46779-7c34-4d58-a279-c8b640bac096"
+            },
+            {
+              "term": "Mag ik … proeven?",
+              "meaning": "May I taste …?",
+              "example": "Mag ik die ook proeven?",
+              "note": "The infinitive proeven goes to the end.",
+              "id": "e2ab37b3-8446-43fa-82ef-3cade65c9bb1"
+            },
+            {
+              "term": "Dat is lekker!",
+              "meaning": "That's delicious!",
+              "example": "Mmm, dat is lekker!",
+              "note": "dat points at the whole experience, so dat even about de kaas.",
+              "id": "373f07cc-8a0e-41be-8873-47ae705f5f22"
+            },
+            {
+              "term": "de euro",
+              "meaning": "euro",
+              "forms": "de euro's",
+              "example": "Dat kost acht euro.",
+              "note": "After a number euro stays singular: acht euro, not acht euro's.",
+              "id": "45b8105a-6271-4073-9a63-a33bd6bdec8d"
+            },
+            {
+              "term": "Wat kost dit?",
+              "meaning": "How much is this?",
+              "example": "Wat kost dit? Dat kost acht euro.",
+              "id": "ced0c66c-3beb-483c-8492-5706b6a3c855"
+            }
+          ]
+        }
+      },
+      "id": "7307d1b8-1177-4971-b61c-f1f17d3d4029"
+    },
+    {
       "type": "bulletListItem",
       "content": [
         {
@@ -924,6 +1037,45 @@
       "id": "0fb9c822-2835-4f32-acf9-e628f4f1e35f"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Ik neem deze.",
+              "meaning": "I'll take this one.",
+              "example": "Mijn kamer is niet groot. Ik neem deze.",
+              "note": "Choose deze, die, dit or dat by the noun you mean: here de plant.",
+              "id": "a98e7954-3e96-40c5-97d1-384464aef7f4"
+            },
+            {
+              "term": "de plant",
+              "meaning": "plant",
+              "forms": "de planten",
+              "example": "Ik wil graag een plant voor mijn kamer.",
+              "id": "5ea60df8-95af-49ce-9258-9c55ca83a116"
+            },
+            {
+              "term": "het bord",
+              "meaning": "plate",
+              "forms": "de borden",
+              "example": "Ik wil graag dit bord.",
+              "note": "In 07-b het bord was the board in the kitchen; here it is a plate.",
+              "id": "262ba390-4f27-4a2a-b13c-75308c7964ea"
+            },
+            {
+              "term": "de zonnebloem",
+              "meaning": "sunflower",
+              "forms": "de zonnebloemen",
+              "example": "Dat zijn zonnebloemen.",
+              "id": "0be6b0f8-7fbe-4e55-a2d1-0684c2196c87"
+            }
+          ]
+        }
+      },
+      "id": "5a2ef304-6d6b-48c6-be49-f8e62d3c99f5"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 3
@@ -1108,37 +1260,65 @@
       "content": [
         "After a demonstrative, an adjective always ends in -e: ",
         {
-          "text": "deze jonge kaas",
+          "text": "deze",
           "styles": {
             "textColor": "pink",
             "bold": true
           }
         },
-        ", ",
+        " ",
         {
-          "text": "dit oude boek",
+          "text": "jonge",
+          "styles": {
+            "bold": true
+          }
+        },
+        " kaas, ",
+        {
+          "text": "dit",
           "styles": {
             "textColor": "brown",
             "bold": true
           }
         },
-        ", ",
+        " ",
         {
-          "text": "die mooie bloemen",
+          "text": "oude",
+          "styles": {
+            "bold": true
+          }
+        },
+        " boek, ",
+        {
+          "text": "die",
           "styles": {
             "textColor": "pink",
             "bold": true
           }
         },
-        ", ",
+        " ",
         {
-          "text": "dat grote stuk",
+          "text": "mooie",
+          "styles": {
+            "bold": true
+          }
+        },
+        " bloemen, ",
+        {
+          "text": "dat",
           "styles": {
             "textColor": "brown",
             "bold": true
           }
         },
-        "."
+        " ",
+        {
+          "text": "grote",
+          "styles": {
+            "bold": true
+          }
+        },
+        " stuk."
       ],
       "id": "d6e5ee6e-897f-404e-b18a-c7b5b342f1c7"
     },
@@ -1259,13 +1439,20 @@
         },
         " → ",
         {
-          "text": "dit oude boek",
+          "text": "dit",
           "styles": {
             "textColor": "brown",
             "bold": true
           }
         },
-        ", ",
+        " ",
+        {
+          "text": "oude",
+          "styles": {
+            "bold": true
+          }
+        },
+        " boek, ",
         {
           "text": "dat groot stuk",
           "styles": {
@@ -1275,13 +1462,20 @@
         },
         " → ",
         {
-          "text": "dat grote stuk",
+          "text": "dat",
           "styles": {
             "textColor": "brown",
             "bold": true
           }
         },
-        "."
+        " ",
+        {
+          "text": "grote",
+          "styles": {
+            "bold": true
+          }
+        },
+        " stuk."
       ],
       "id": "3a0cd88f-a4a5-4621-bd05-d2f18aeda2bb"
     },
@@ -1741,6 +1935,94 @@
       "id": "b19bdcdb-f1cd-4b56-ae2f-dd5e1490ee3d"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "belegen",
+              "meaning": "matured (cheese between young and old)",
+              "example": "Henk heeft jonge, belegen en oude kaas.",
+              "id": "47ca3352-ff1d-4fa1-b762-c1d8fae5cc26"
+            },
+            {
+              "term": "de kaasboer",
+              "meaning": "cheese seller, cheese maker",
+              "forms": "de kaasboeren",
+              "example": "Dit is Henk. Hij is kaasboer.",
+              "id": "fd7db054-cf0b-45d1-989f-d677cb05c148"
+            },
+            {
+              "term": "de kraam",
+              "meaning": "market stall",
+              "forms": "de kramen",
+              "example": "De markt heeft veel kramen.",
+              "note": "Plural with one a: kraam → kramen.",
+              "id": "843aba7d-36af-436a-ab12-3749a6e11898"
+            },
+            {
+              "term": "de bloemenkraam",
+              "meaning": "flower stall",
+              "forms": "de bloemenkramen",
+              "example": "Noor en Sofia gaan naar de bloemenkraam.",
+              "id": "22d67716-1141-476a-8a5d-026a9c614f60"
+            },
+            {
+              "term": "de bloem",
+              "meaning": "flower",
+              "forms": "de bloemen",
+              "example": "Die mooie bloemen zijn voor Noor.",
+              "id": "74cff320-5c0e-4bac-9438-286395c40ec2"
+            },
+            {
+              "term": "de bos bloemen",
+              "meaning": "bunch of flowers",
+              "forms": "de bossen bloemen",
+              "example": "Een bos zonnebloemen kost vijf euro.",
+              "id": "de083298-8619-4157-9e2a-e083d165a6da"
+            },
+            {
+              "term": "de pot",
+              "meaning": "pot",
+              "forms": "de potten",
+              "example": "Deze plant kost zes euro, met de pot.",
+              "id": "78b70337-f0cb-4089-8a76-7e3c15ab774c"
+            },
+            {
+              "term": "de vaas",
+              "meaning": "vase",
+              "forms": "de vazen",
+              "example": "De zonnebloemen staan in een vaas.",
+              "note": "Plural with z: vaas → vazen.",
+              "id": "b9e11370-cade-4063-937f-a6510dcc307d"
+            },
+            {
+              "term": "de spullen",
+              "meaning": "things, stuff",
+              "example": "Daar is een kraam met oude spullen.",
+              "note": "Only used in the plural.",
+              "id": "9951abff-dce6-4c98-9b97-a6f511197fdf"
+            },
+            {
+              "term": "de mok",
+              "meaning": "mug",
+              "forms": "de mokken",
+              "example": "Deze mok is mooi.",
+              "id": "128b20b2-227f-4a28-a817-bac6e9bf0fdc"
+            },
+            {
+              "term": "de lamp",
+              "meaning": "lamp",
+              "forms": "de lampen",
+              "example": "Die mooie lamp kost veertig euro.",
+              "id": "8da1b690-2d91-488e-b21a-8d2456f7111c"
+            }
+          ]
+        }
+      },
+      "id": "fed60087-1f94-46af-91ff-1cb43dd267f3"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 3
@@ -1855,7 +2137,49 @@
     {
       "type": "paragraph",
       "content": [
-        "Next, Noor and Sofia go to the flower stall. Sofia wants a plant for her room at Noor's."
+        "Next, Noor and Sofia go to the flower stall. Sofia wants a plant for her room at Noor's. New words: ",
+        {
+          "text": "daar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "there",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "Wat lief!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "How sweet!",
+          "styles": {
+            "italic": true
+          }
+        },
+        "); ",
+        {
+          "text": "het cadeau",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "the present",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") is from 09-b."
       ],
       "id": "33f5dfe7-a758-438f-911d-abb3ae40458d"
     },
@@ -1935,6 +2259,36 @@
         ]
       },
       "id": "cf59c128-2643-4584-8c6b-7e05778d8b3d"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de verkoopster",
+              "meaning": "seller, shop assistant (woman)",
+              "forms": "de verkoopsters",
+              "example": "De verkoopster zegt: Wat mag het zijn?",
+              "note": "A man is de verkoper.",
+              "id": "01574e15-13b3-4982-baf5-1363768169f1"
+            },
+            {
+              "term": "Deze … of die?",
+              "meaning": "This one … or that one?",
+              "example": "Deze bloemen of die?",
+              "id": "e798be34-5681-4fc2-94d3-9a3e77dae5d3"
+            },
+            {
+              "term": "Wat lief!",
+              "meaning": "How sweet!",
+              "example": "Wat lief, Sofia! Dank je wel!",
+              "id": "fdb80e13-0289-4800-b6de-355c569ca6b9"
+            }
+          ]
+        }
+      },
+      "id": "858a2cf3-a3f8-4cee-8cc3-8df0fbfd7e71"
     },
     {
       "type": "paragraph",
@@ -2494,6 +2848,23 @@
       "id": "55aac4f0-574b-40e6-816d-a176dbfb5986"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de fruitkraam",
+              "meaning": "fruit stall",
+              "forms": "de fruitkramen",
+              "example": "Daarna gaan Sofia en Noor naar de fruitkraam.",
+              "id": "4fac7511-d59f-4b9d-8a28-48124890827c"
+            }
+          ]
+        }
+      },
+      "id": "614bbf01-67f6-4070-be3a-440fc18f4c95"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 2
@@ -2512,12 +2883,28 @@
               "authorsVersion": [
                 "Dit is mijn kamer bij Noor. Deze plant is nieuw en heel mooi. Die oude lamp is van Noor. Dat boek is Nederlands en een beetje moeilijk."
               ],
-              "note": "Model answer by Sofia. Check: de-words and plurals take deze/die, het-words take dit/dat, and an adjective after them ends in -e."
+              "note": "Model answer by Sofia. Check: de-words and plurals take deze/die, het-words take dit/dat, and an adjective after them ends in -e. moeilijk = difficult."
             }
           ]
         }
       },
       "id": "fb914575-7c90-411b-90e9-f73ee9009119"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "moeilijk",
+              "meaning": "difficult",
+              "example": "Dat boek is Nederlands en een beetje moeilijk.",
+              "id": "b263b94f-52b8-4b9e-a3a2-eae08332bd2f"
+            }
+          ]
+        }
+      },
+      "id": "2bc2f0c3-1af6-4d0a-ba24-8d35cc5c846b"
     },
     {
       "type": "divider",
@@ -2681,21 +3068,35 @@
       "content": [
         "Adjective after a demonstrative: always -e: ",
         {
-          "text": "dit oude boek",
+          "text": "dit",
           "styles": {
             "textColor": "brown",
             "bold": true
           }
         },
-        ", ",
+        " ",
         {
-          "text": "die mooie bloemen",
+          "text": "oude",
+          "styles": {
+            "bold": true
+          }
+        },
+        " boek, ",
+        {
+          "text": "die",
           "styles": {
             "textColor": "pink",
             "bold": true
           }
         },
-        "."
+        " ",
+        {
+          "text": "mooie",
+          "styles": {
+            "bold": true
+          }
+        },
+        " bloemen."
       ],
       "id": "b3ab7b28-9efc-4f8a-b634-172681267084"
     },

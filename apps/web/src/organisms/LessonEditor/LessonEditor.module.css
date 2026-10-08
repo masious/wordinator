@@ -50,12 +50,16 @@
 .fields{display:grid;gap:var(--space-3);min-width:0;margin:0;padding:0;border:0}
 .fields legend{margin-bottom:var(--space-2);font-size:var(--type-control-label);font-weight:var(--weight-semibold)}
 .turnRow{display:grid;grid-template-columns:minmax(5rem,0.25fr) minmax(0,1fr) auto;align-items:end;gap:var(--space-2)}
+.wordRow{display:grid;gap:var(--space-2);padding:var(--space-3);background:var(--color-surface);border:var(--ring-hairline);border-radius:var(--radius-md)}
+.wordMain{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2)}
+.rowActions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2)}
 .practiceItem{display:grid;gap:var(--space-2);padding:var(--space-3);background:var(--color-surface);border:var(--ring-hairline);border-radius:var(--radius-md)}
 @media(max-width:48em){
   .bar{top:0}
   .editor{margin-inline:calc(-1 * var(--space-8)) 0}
   .editor :global(.bn-editor){padding-inline:var(--space-8) 0}
   .turnRow{grid-template-columns:1fr}
+  .wordMain{grid-template-columns:1fr}
   .mergeVersions{grid-template-columns:1fr}
   .barActions>*{flex:1}
 }

@@ -1,0 +1,2810 @@
+{
+  "title": "Mijn buurt",
+  "goal": "Talk about your neighbourhood and say what you can do where with kunnen and an infinitive at the end.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Mijn buurt",
+      "id": "f90559f0-90ae-49a3-a926-d2265143365d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Saturday 24 October, one week after moving day. Henk is home early from the market and takes Sofia for a walk through Lombok, her new neighbourhood. In this lesson you will say what is in a neighbourhood and what you ",
+        {
+          "text": "can",
+          "styles": {
+            "italic": true
+          }
+        },
+        " do there with ",
+        {
+          "text": "kunnen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + an infinitive, and ask for help politely."
+      ],
+      "id": "fa4a6d1f-5549-4f73-9695-374512b7ca67"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: forms of kunnen are ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", the infinitive at the end is ",
+        {
+          "text": "red",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ", places are ",
+        {
+          "text": "purple",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ", subjects ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " and times ",
+        {
+          "text": "orange",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ". The new form is bold."
+      ],
+      "id": "7404d40f-571b-47f0-8826-72829c4d5382"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: a walk through Lombok",
+      "id": "6bd1c711-2a8d-4b8a-8ac3-6c7b734a0251"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Henk knocks on Sofia's door. New words: ",
+        {
+          "text": "Mooi weer, hè?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (Nice weather, isn't it?), ",
+        {
+          "text": "de bakker",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (the baker's), ",
+        {
+          "text": "de apotheek",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (the pharmacy), ",
+        {
+          "text": "het plein",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (the square), ",
+        {
+          "text": "het kanaal",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (the canal), ",
+        {
+          "text": "dicht",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (closed), ",
+        {
+          "text": "wandelen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (to walk, stroll), ",
+        {
+          "text": "lenen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (to borrow)."
+      ],
+      "id": "7409358b-bfc1-4761-b4ff-931f7a5f13df"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Henk",
+            "text": "Zo, Sofia! Vandaag ben ik vroeg klaar op de markt. Mooi weer, hè? Kom je mee? Dan zie je onze buurt."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, graag! Is er een supermarkt in de buurt?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Ja hoor, in de Kanaalstraat. Daar zijn veel winkels. Daar kun je alles kopen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wat leuk! En waar ik kan brood kopen?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Waar kun je brood kopen? Bij de bakker. De bakker is ook in de Kanaalstraat, naast de supermarkt."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Is de bakker ook op zondag open?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Nee, op zondag is hij dicht. Maar de supermarkt is wel open."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En wat is dat grote gebouw daar?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Dat is de grote moskee. Hij is mooi, hè? En kijk, daar is het park. Daar kun je lekker wandelen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En de bibliotheek? Ik wil graag Nederlandse boeken lenen."
+          },
+          {
+            "speaker": "Henk",
+            "text": "De bibliotheek is vlakbij, aan het plein bij het kanaal. Daar kun je ook koffie drinken. Naast de bibliotheek is de apotheek."
+          }
+        ]
+      },
+      "id": "a7e4785c-ac3c-4710-a3cc-c8aa8f8848b5"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Mooi weer, hè?",
+              "meaning": "Nice weather, isn't it?",
+              "example": "Zo, Sofia! Mooi weer, hè?",
+              "note": "Small talk. Weather words come in 17-a.",
+              "id": "bb50bda2-fc7a-4f39-a158-1b5d0c146228"
+            },
+            {
+              "term": "kunnen",
+              "meaning": "can, to be able to",
+              "forms": "kan · kon · gekund",
+              "example": "Daar kun je alles kopen.",
+              "note": "ik kan, jij kunt/kan, u kunt, hij kan, wij kunnen. The infinitive goes to the end.",
+              "id": "7490cf61-95e5-4c09-b01a-d2f86b34bc40"
+            },
+            {
+              "term": "de bakker",
+              "meaning": "baker's (shop); baker",
+              "forms": "de bakkers",
+              "example": "De bakker is naast de supermarkt.",
+              "id": "47def3af-52a0-4fc8-8000-8d07066b9670"
+            },
+            {
+              "term": "open",
+              "meaning": "open",
+              "example": "Is de bakker ook op zondag open?",
+              "id": "9e96a3db-5989-47ae-9f8e-9d8d2a7ff8b3"
+            },
+            {
+              "term": "dicht",
+              "meaning": "closed",
+              "example": "Op zondag is de bakker dicht.",
+              "note": "New meaning: in row 13 dicht bij = close to.",
+              "id": "d3c8b456-f335-4ee9-926f-970a281d1002"
+            },
+            {
+              "term": "de moskee",
+              "meaning": "mosque",
+              "forms": "de moskeeën",
+              "example": "Dat is de grote moskee.",
+              "id": "40a53cf4-94f7-446a-a29b-cb804d35d63f"
+            },
+            {
+              "term": "het park",
+              "meaning": "park",
+              "forms": "de parken",
+              "example": "Daar is het park.",
+              "id": "e3072416-8aa7-4d27-8b5b-4af93b8fe4ce"
+            },
+            {
+              "term": "wandelen",
+              "meaning": "to walk (for pleasure), to stroll",
+              "forms": "wandelt · wandelde · gewandeld",
+              "example": "Daar kun je lekker wandelen.",
+              "id": "0bf3eb6a-fd88-4195-bd46-c6d69128ddb7"
+            },
+            {
+              "term": "lenen",
+              "meaning": "to borrow; to lend",
+              "forms": "leent · leende · geleend",
+              "example": "Ik wil graag Nederlandse boeken lenen.",
+              "id": "f14688c0-8e52-40cf-a192-f0e3ef0b1616"
+            },
+            {
+              "term": "vlakbij",
+              "meaning": "close by, nearby",
+              "example": "De bibliotheek is vlakbij.",
+              "id": "3f510a51-928c-48cb-8e64-95aca151855b"
+            },
+            {
+              "term": "het plein",
+              "meaning": "square",
+              "forms": "de pleinen",
+              "example": "De bibliotheek ligt aan het plein.",
+              "id": "431ea7f4-18c9-41b4-890f-10b5f47bff4d"
+            },
+            {
+              "term": "het kanaal",
+              "meaning": "canal",
+              "forms": "de kanalen",
+              "example": "Het plein ligt bij het kanaal.",
+              "id": "40ad5dc1-1cb6-4da8-a997-28e9f744f356"
+            },
+            {
+              "term": "de apotheek",
+              "meaning": "pharmacy",
+              "forms": "de apotheken",
+              "example": "Naast de bibliotheek is de apotheek.",
+              "id": "b690e141-1470-44f8-b400-794c7d2d7fad"
+            }
+          ]
+        }
+      },
+      "id": "57fe070b-bad7-4af5-9b22-cf52e93b755c"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Sofia says ",
+        {
+          "text": "Waar ik kan brood kopen?",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " Henk repeats it correctly: ",
+        {
+          "text": "Waar kun je brood kopen?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " In a question the verb comes straight after the question word, and the infinitive goes to the end."
+      ],
+      "id": "3cb9ed44-1518-448f-956b-5f7071f7fa11"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Daar kun je alles kopen.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = You can buy everything there. ",
+        {
+          "text": "lekker wandelen",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = go for a nice walk. ",
+        {
+          "text": "vlakbij",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = close by."
+      ],
+      "id": "170f4ffc-0709-40d3-8271-5b62d6687d79"
+    },
+    {
+      "type": "divider",
+      "id": "25d5dd3f-be10-4823-aa9d-0ca4e6334cf2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "kunnen: can",
+      "id": "aeba1715-4f4e-47af-a5d1-ea9a19d01ec0"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Kunnen means ",
+        {
+          "text": "can",
+          "styles": {
+            "italic": true
+          }
+        },
+        " or ",
+        {
+          "text": "to be able to",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". It works like willen and mogen from 11-a: ik, hij and zij have no -t."
+      ],
+      "id": "44feeeb2-7d71-4e7f-972d-98301177055a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "The forms of kunnen",
+      "id": "8157b3f7-8ebd-4b42-b3f1-907b132c48f2"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "kunnen",
+              "id": "4343e6cf-f73e-46bd-a6c6-45f942d1ce05"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ik",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "kan",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "bc6b58d6-4328-4338-953d-f8fb9345d371"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "kunt",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " / ",
+                {
+                  "text": "kan",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "f10831ce-b81d-43ea-a51e-1601d0d861b1"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "u",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "kunt",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "af4f1a32-f952-4273-aa6f-5512eb3e8c59"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "hij / zij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "kan",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "51a58ef1-e3f5-4dcc-b1e7-58f0843421db"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "wij / jullie / zij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "kunnen",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "3ab9af48-3bbd-4568-8d1d-32ed85d38190"
+            }
+          ],
+          "id": "bb2d39c7-c62d-4779-a2ee-12fe6d6c3fd7"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "willen",
+              "id": "ed9209e4-6acf-4478-8d69-7210800a27ce"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ik",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "wil",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "0ed6ef8d-4c71-4801-bf36-b1b717aae890"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "wilt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " / ",
+                {
+                  "text": "wil",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "a390f42e-a7ef-4266-8fe4-95dd9b1bd317"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "u",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "wilt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "b9a38f69-03da-4075-8875-9070f31e4481"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "hij / zij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "wil",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "000665d9-9a53-46db-ba42-6e312ecf6c5a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "wij / jullie / zij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "willen",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "ceb19d0d-bfe8-4bee-bb16-60ef6a5b17fc"
+            }
+          ],
+          "id": "d34cbf80-12a8-4c85-a7ef-492a618a8f40"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "mogen",
+              "id": "a6271bf5-2116-4d09-a0ab-596d99881d5b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ik",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "mag",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "abdd97d6-bc38-4f62-8d70-92e22f3bab7b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "mag",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "56008998-506f-4709-b37c-17b8550767e9"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "u",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "mag",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "94470a9b-ce63-49a2-b3cb-8e26b1175008"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "hij / zij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "mag",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "48a2b736-011c-42d6-bfd1-47e306846937"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "wij / jullie / zij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "mogen",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "b548298d-c210-4635-80af-565868136377"
+            }
+          ],
+          "id": "13b160c1-a4c3-4a1f-b062-8cf6ecba0db5"
+        }
+      ],
+      "id": "7fb2b1da-013a-4e18-ab74-9b5eb97d1f1f"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "kan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", never ",
+        {
+          "text": "hij kunt",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ". Only jij and u take ",
+        {
+          "text": "kunt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ". In a question with jij the t drops: ",
+        {
+          "text": "Kun",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " jij …? ",
+        {
+          "text": "Kun",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " je …?"
+      ],
+      "id": "4765b0f4-0fc2-4d86-8470-ed1a25094aab"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "With jij both ",
+        {
+          "text": "kunt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " and ",
+        {
+          "text": "kan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " are correct: ",
+        {
+          "text": "Jij kunt / Jij kan",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". In questions you hear ",
+        {
+          "text": "Kan je …?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " a lot. In writing, use ",
+        {
+          "text": "Kun je …?",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "f0f338d9-7636-42be-86f7-f830ae94b369"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        "The u in ",
+        {
+          "text": "kun",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "kunt",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "kunnen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is short, like the u in ",
+        {
+          "text": "bus",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". The double uu in ",
+        {
+          "text": "buurt",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "uur",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is long. Say ",
+        {
+          "text": "kun",
+          "styles": {
+            "italic": true
+          }
+        },
+        " short and ",
+        {
+          "text": "buurt",
+          "styles": {
+            "italic": true
+          }
+        },
+        " long."
+      ],
+      "id": "6d48ec10-9f1e-4fed-b745-e8cdcf1529c2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "The infinitive goes to the end",
+      "id": "9abd35bb-fd5d-4ad7-9edb-591709b0bb07"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Kunnen stands in the verb position. The second verb, the infinitive, goes to the very end of the sentence. Use it for what you are able to do, for what is possible in a place, and for polite requests."
+      ],
+      "id": "02d545fd-252d-44fa-8bdd-d9dd6faaabc5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor is a good cook.",
+        "note": "Ability. goed comes before the infinitive: not Noor kan koken goed."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "kan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " goed ",
+        {
+          "text": "koken",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "390109aa-a176-4ed9-8ec5-5db4d6a03af7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You can buy vegetables in the Kanaalstraat.",
+        "note": "Possibility. The place is first, so the verb comes next and then je (inversion). The t drops: kun je."
+      },
+      "content": [
+        {
+          "text": "In de Kanaalstraat",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "kun",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " groente ",
+        {
+          "text": "kopen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "5e79a7d1-1bf9-4ae5-8e96-81b324d92110"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Could you help me?",
+        "note": "Polite request with u. Kunt u mij helpen? is a fixed phrase: learn it as one chunk."
+      },
+      "content": [
+        {
+          "text": "Kunt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " mij ",
+        {
+          "text": "helpen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "626bafae-8b69-4907-90de-0fc3c3f90a3e"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Kunt u mij helpen?",
+              "meaning": "Could you help me? (formal)",
+              "example": "Goedemiddag. Kunt u mij helpen?",
+              "note": "Learn it as a chunk: mij = me.",
+              "id": "15fce9ba-95e4-4895-a2a7-4e969b041a94"
+            },
+            {
+              "term": "helpen",
+              "meaning": "to help",
+              "forms": "helpt · hielp · geholpen",
+              "example": "Kunt u mij helpen?",
+              "id": "41cf604b-380c-4047-9b3f-c7e9bd0a597e"
+            }
+          ]
+        }
+      },
+      "id": "9b35d501-d595-4878-a04e-7b6999700752"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Can you ride a bike? Yes, I can.",
+        "note": "Yes/no question: kunnen first, the infinitive last."
+      },
+      "content": [
+        {
+          "text": "Kun",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "fietsen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "? Ja, ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "kan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "fietsen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "a9622375-9d3d-4d81-ad15-b7866aa8aacf"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        {
+          "text": "subject + kunnen + … + infinitive",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Everything else (goed, groente, hier, mij) stands between the two verbs."
+      ],
+      "id": "9890f412-30c8-46ef-8571-88f3051a9a86"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Start with the subject, or with a place or time."
+      ],
+      "id": "b95f43b9-4920-4990-9c43-d81ee8e6b06a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Put the form of kunnen in second place (first in a yes/no question)."
+      ],
+      "id": "1b4372ac-0d06-40f0-bfde-ad64e331c2c9"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Add the rest: who, what, where."
+      ],
+      "id": "bdd9ee66-af30-4b53-8525-222dba7ce20a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Finish with the infinitive."
+      ],
+      "id": "32fd057d-4283-4d3c-8752-3b52e50970db"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Separable verbs stay together",
+      "id": "dbb46cf6-d803-48c1-bec7-1686779ae5d5"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "When the infinitive is a separable verb, it stays in one piece at the end. Compare ",
+        {
+          "text": "Ik haal mijn fiets op",
+          "styles": {
+            "italic": true
+          }
+        },
+        " with ",
+        {
+          "text": "Ik kan mijn fiets ophalen",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". ",
+        {
+          "text": "ophalen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = to pick up, collect."
+      ],
+      "id": "d7abac76-2b65-4bdc-8d88-54482b9ac1ce"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "ophalen",
+              "meaning": "to pick up, to collect",
+              "forms": "haalt op · haalde op · opgehaald",
+              "example": "Je kunt hier je fiets ophalen.",
+              "note": "Separable: Ik haal mijn fiets op. After kunnen it stays whole: Ik kan mijn fiets ophalen.",
+              "id": "46722cdf-8049-4a07-b150-ed904be48816"
+            }
+          ]
+        }
+      },
+      "id": "ad9e3247-f9cf-451c-ad8e-618ffb15c2b2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You can pick up your bike here.",
+        "note": "Not: Je kunt hier je fiets op halen. After kunnen the prefix and verb are one word at the end. Same as with willen: Ik wil opruimen."
+      },
+      "content": [
+        {
+          "text": "Je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "kunt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "hier",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " je fiets ",
+        {
+          "text": "ophalen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "e7d62f72-70a6-4da9-8749-c29521b76d4f"
+    },
+    {
+      "type": "divider",
+      "id": "b9453e95-802f-4ef4-afe2-a94365a67597"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Not possible: niet and geen",
+      "id": "6f18c24d-af4e-45e0-8a48-4c32b1ed5635"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Use ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " before the infinitive. Use ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " before a noun without the or een. You know both from 11-b, with willen."
+      ],
+      "id": "e17b5ad0-1bfb-4d99-87ca-69853614cc9e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You can't pay by card here.",
+        "note": "Recycles pinnen from 12-b. niet stands just before the infinitive."
+      },
+      "content": [
+        {
+          "text": "Hier",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "kun",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "pinnen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "d6d9be57-614a-4dfe-90f3-fd07aa888aea"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You can't buy bread at the pharmacy.",
+        "note": "geen + noun: geen brood. Not: niet brood."
+      },
+      "content": [
+        {
+          "text": "Bij de apotheek",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "kun",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " brood ",
+        {
+          "text": "kopen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "38f1422f-82b7-453d-9425-3d1eac2264df"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "kan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " … ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + infinitive; ",
+        {
+          "text": "kan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + noun + infinitive. Example: Ik kan niet koken. Ik kan geen brood kopen."
+      ],
+      "id": "0fdce305-0b39-406d-965d-3706623d0d65"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Je kunt kopen groente.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Je kunt groente kopen.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Ik kan koken goed.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Ik kan goed koken.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " The infinitive is always last."
+      ],
+      "id": "544e42c8-f4ca-4265-9646-5f33fda1d3a9"
+    },
+    {
+      "type": "divider",
+      "id": "3a93f095-972e-4fd0-9802-881505d8f2d0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "What is where in the neighbourhood?",
+      "id": "a85e97fb-3155-4c07-a2c2-fcaf7b3b5570"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "de buurt",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "de wijk",
+          "styles": {
+            "bold": true
+          }
+        },
+        " both mean ",
+        {
+          "text": "neighbourhood, district",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". Here are words for places in a neighbourhood."
+      ],
+      "id": "f24d4857-f0e4-4c48-af8f-59362d6de048"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Shops",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "de bakker (baker's), de slager (butcher's), de supermarkt"
+          ],
+          "id": "de414bce-9620-4f46-8ba9-c69917a654d7"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "de apotheek (pharmacy), de fietsenwinkel (bike shop), de winkel (shop)"
+          ],
+          "id": "09f16778-99f5-4dc8-9fb0-dfa98412d8c7"
+        }
+      ],
+      "id": "708c4ad0-b61d-4624-9405-6d09068ce300"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Outside",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "het park, het plein (square), de brug (bridge), het kanaal (canal), de straat"
+          ],
+          "id": "cf882822-930b-405a-b1ac-85a66d1a2cdf"
+        }
+      ],
+      "id": "0b80f81f-a2fa-4ca0-83e2-15bc3694c08d"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Other places",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "de bibliotheek (library), de huisarts (GP), de moskee (mosque), de kerk (church), de markt"
+          ],
+          "id": "3174f307-4d56-4c9f-86a3-3f9ffb403b34"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "de halte (stop), de bushalte (bus stop), het station"
+          ],
+          "id": "b2e0fcdd-7157-48cf-9adb-832faf90206b"
+        }
+      ],
+      "id": "d334ff5e-c15a-42dd-bacc-9fb613630c4a"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Useful words",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "open ↔ dicht (closed); vlakbij (close by) ↔ ver (far)"
+          ],
+          "id": "5230614c-904b-4c60-b0b4-55efda9bc855"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "halen (to get, fetch): Ik haal brood bij de bakker. wandelen (to walk for fun)"
+          ],
+          "id": "af7d16bb-c9ea-4ca9-97aa-281285ffb11a"
+        }
+      ],
+      "id": "db3ed08f-2d02-45c1-b53a-67998f3e625a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de wijk",
+              "meaning": "neighbourhood, district",
+              "forms": "de wijken",
+              "example": "Lombok is een wijk in Utrecht.",
+              "id": "0b2bc28f-bb49-41f4-8787-5da70f4637d4"
+            },
+            {
+              "term": "de slager",
+              "meaning": "butcher's (shop); butcher",
+              "forms": "de slagers",
+              "id": "af3ae5e0-b241-4837-86d7-850f009c535a"
+            },
+            {
+              "term": "de fietsenwinkel",
+              "meaning": "bike shop",
+              "forms": "de fietsenwinkels",
+              "example": "De fietsenwinkel van Ahmed is in de Kanaalstraat.",
+              "id": "793e4d63-b0b6-4c1b-9795-f5310252b876"
+            },
+            {
+              "term": "de brug",
+              "meaning": "bridge",
+              "forms": "de bruggen",
+              "id": "72a5d536-7e44-42fa-b495-b6942326f4a8"
+            },
+            {
+              "term": "de kerk",
+              "meaning": "church",
+              "forms": "de kerken",
+              "id": "6cedb279-ecf8-4b90-8c7a-4fe0b2846e2b"
+            },
+            {
+              "term": "de halte",
+              "meaning": "stop (bus, tram)",
+              "forms": "de haltes",
+              "id": "a7c7bd22-9fda-49a4-9c5e-1966cc4ccb1f"
+            },
+            {
+              "term": "de bushalte",
+              "meaning": "bus stop",
+              "forms": "de bushaltes",
+              "example": "De bushalte is tegenover de supermarkt.",
+              "id": "a2b692d4-3031-4c9e-9b9d-78f591986da1"
+            },
+            {
+              "term": "ver",
+              "meaning": "far",
+              "example": "Is het park ver? Nee, het is vlakbij.",
+              "id": "5b87eaf8-fc84-4b24-a4ea-59ce58ec2035"
+            },
+            {
+              "term": "halen",
+              "meaning": "to get, to fetch",
+              "forms": "haalt · haalde · gehaald",
+              "example": "Ik haal brood bij de bakker.",
+              "id": "7bc95c97-b272-4b3a-9b77-90f3b73beff2"
+            }
+          ]
+        }
+      },
+      "id": "8466c8fe-7ee0-4357-832b-865540dc8d57"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Asking about places",
+      "id": "d59f1cd2-0552-40a5-9bb6-6ae8bf938b28"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is there a pharmacy in the neighbourhood? Yes, the pharmacy is next to the library.",
+        "note": "Recycles Is er …? from row 13 and naast from 14-a."
+      },
+      "content": [
+        {
+          "text": "Is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " er een apotheek ",
+        {
+          "text": "in de buurt",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "? Ja, ",
+        {
+          "text": "de apotheek",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "naast de bibliotheek",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "668657f2-752a-4fd9-b136-5dd60661884e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is the park far? No, it's close by.",
+        "note": "het park is a het-word, so it = het (14-a). For a de-word say hij: De bakker? Hij is dicht."
+      },
+      "content": [
+        {
+          "text": "Is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het park",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ver? Nee, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "vlakbij",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "6307ee8c-ab8a-4ff0-a27b-3576feda7121"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The library is on the square.",
+        "note": "For buildings and towns Dutch often uses liggen (14-b): Utrecht ligt in het midden van Nederland (in the middle of the Netherlands). Is is also fine."
+      },
+      "content": [
+        {
+          "text": "De bibliotheek",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ligt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "aan het plein",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "63969561-1675-48d7-8910-02b106c692dc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Daar and hier at the start",
+      "id": "282eee51-c14d-48ac-a3ad-81a9977c65eb"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You can borrow books there.",
+        "note": "Daar first, then the verb, then je. The t drops: kun je. Also fine: Daar kan je boeken lenen."
+      },
+      "content": [
+        {
+          "text": "Daar",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ",
+        {
+          "text": "kun",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " boeken ",
+        {
+          "text": "lenen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "912a0783-3e24-44f8-8ca9-84811d9a45de"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "Daar / Hier / place + kunnen + subject + … + infinitive",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". After daar or hier, the subject moves behind the verb, like after a time (08-b)."
+      ],
+      "id": "07cc43d0-3d2d-4063-9f54-210d827e1d7c"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "map-pin"
+      },
+      "content": [
+        "Lombok is a lively, mixed neighbourhood west of the centre. People from many countries live there. The Kanaalstraat is full of Turkish, Moroccan and Dutch shops, and a big mosque is part of the neighbourhood too."
+      ],
+      "id": "3adf71ee-e168-4bbd-b1e6-8a364263f67e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Story: Ahmed's bike shop",
+      "id": "f8a8b287-ed02-40c6-ba15-13088c0d531a"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Henk",
+            "text": "Kijk, hier is de fietsenwinkel van Ahmed. Hoi Ahmed!"
+          },
+          {
+            "speaker": "Ahmed",
+            "text": "Hoi Henk! En wie is dit?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Dit is Sofia. Ze woont boven mij, op de tweede verdieping."
+          },
+          {
+            "speaker": "Ahmed",
+            "text": "Welkom in Lombok, Sofia! Kun jij fietsen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ik kan fietsen. Maar ik heb geen fiets."
+          },
+          {
+            "speaker": "Ahmed",
+            "text": "Geen probleem! Kijk eens, hier staan veel fietsen. Hier kun je een fiets kopen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je, Ahmed! Ik kom snel terug."
+          }
+        ]
+      },
+      "id": "6ec701f6-c1bb-4e46-aebd-5b4a352455ce"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Welkom!",
+              "meaning": "Welcome!",
+              "example": "Welkom in Lombok, Sofia!",
+              "id": "b013c296-c71e-446b-ae65-d2bb19f9dcfb"
+            },
+            {
+              "term": "Geen probleem!",
+              "meaning": "No problem!",
+              "example": "Geen probleem! Hier kun je een fiets kopen.",
+              "id": "15583ca1-854b-487d-a09e-72327ded9e57"
+            }
+          ]
+        }
+      },
+      "id": "8bdc68c0-e09d-454d-90d6-dc142fa5a8bf"
+    },
+    {
+      "type": "divider",
+      "id": "9702453f-5fd1-4386-a4e8-c537ff58c47e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: in the library",
+      "id": "8f54efbf-894d-4c6b-8a41-474641ae6bbc"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Henk goes home and Sofia walks into the library on the square. She does not know the woman at the desk, so she says ",
+        {
+          "text": "u",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". New words: ",
+        {
+          "text": "Wat kan ik voor u doen?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (What can I do for you?), ",
+        {
+          "text": "de pas",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (the library card), ",
+        {
+          "text": "Dat kan.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (That's possible.)."
+      ],
+      "id": "a417851f-3253-4052-b2fa-a862100851e0"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Goedemiddag. Kunt u mij helpen?"
+          },
+          {
+            "speaker": "Medewerkster",
+            "text": "Ja, natuurlijk. Wat kan ik voor u doen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik woon nu in Lombok. Kan ik hier boeken lenen?"
+          },
+          {
+            "speaker": "Medewerkster",
+            "text": "Ja, dat kan. Dan hebt u een pas nodig. U kunt de pas hier krijgen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Prima. En kan ik hier ook Spaanse boeken lenen?"
+          },
+          {
+            "speaker": "Medewerkster",
+            "text": "Nee, we hebben geen Spaanse boeken. Maar we hebben veel Engelse boeken."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Oké. Ik kan ook een beetje Nederlands. Wanneer is de bibliotheek open?"
+          },
+          {
+            "speaker": "Medewerkster",
+            "text": "Van dinsdag tot zaterdag, van tien tot vijf. Op zondag en maandag zijn we dicht."
+          }
+        ]
+      },
+      "id": "5adf957b-9fba-404a-81b3-914a4ab9db33"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Wat kan ik voor u doen?",
+              "meaning": "What can I do for you? (formal)",
+              "example": "Ja, natuurlijk. Wat kan ik voor u doen?",
+              "id": "8be801df-3431-49b3-bfb3-70668860264b"
+            },
+            {
+              "term": "de pas",
+              "meaning": "card (here: library card)",
+              "forms": "de passen",
+              "example": "U kunt de pas hier krijgen.",
+              "note": "You know de pinpas from 12-b.",
+              "id": "1606d94e-7e0e-4b10-9b27-e04885fafc56"
+            },
+            {
+              "term": "Dat kan.",
+              "meaning": "That's possible.",
+              "example": "Kan ik hier boeken lenen? Ja, dat kan.",
+              "id": "97c6096b-1202-4306-92d5-7ef1804a823b"
+            },
+            {
+              "term": "Ik kan een beetje Nederlands.",
+              "meaning": "I speak a little Dutch.",
+              "example": "Ik kan ook een beetje Nederlands.",
+              "note": "kunnen + a language, no infinitive.",
+              "id": "d685f725-1fab-4124-8edd-55a4c64bbfb6"
+            }
+          ]
+        }
+      },
+      "id": "289d3926-a386-4d1e-b36d-1e39042babdf"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "kunnen with a language",
+      "id": "fbe538e6-af67-4612-9f83-9366c7fc6841"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I speak a little Dutch.",
+        "note": "A fixed chunk: kunnen + a language, no infinitive. Also fine: Ik spreek een beetje Nederlands."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "kan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " een beetje Nederlands."
+      ],
+      "id": "e2ca42fe-fb52-409e-af50-6455408df627"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        {
+          "text": "lenen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means both ",
+        {
+          "text": "to borrow",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and ",
+        {
+          "text": "to lend",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". In the library: Ik leen een boek = I borrow a book. It is not English ",
+        {
+          "text": "lean",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "85acb986-d4b3-486e-8ca8-bf211208e32d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "Dutch shops are usually open from about 9 to 6, Monday to Saturday. In Utrecht and other cities many shops and supermarkets also open on Sunday afternoon. Small shops such as a bakery, and places like the library, are often closed on Sunday or Monday: always check the times on the door."
+      ],
+      "id": "32b2da72-bbb8-47fb-b6e5-fbd5023c459f"
+    },
+    {
+      "type": "divider",
+      "id": "e712850d-f7e4-47ad-bc18-344c7f9adcf3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "d4bc1529-2b20-4b32-8ff1-fa17b2735228"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Forms of kunnen",
+      "id": "601e3a7a-d987-49fc-958e-7aa8ba284ccf"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct form of kunnen.",
+          "items": [
+            {
+              "prompt": "Ik … goed koken.",
+              "authorsVersion": [
+                "kan"
+              ],
+              "note": "ik kan: no -t, like ik wil and ik mag."
+            },
+            {
+              "prompt": "… jij fietsen, Sofia?",
+              "authorsVersion": [
+                "Kun"
+              ],
+              "note": "Question with jij: the t drops. Also fine: Kan jij fietsen?"
+            },
+            {
+              "prompt": "Tijger … niet lezen.",
+              "authorsVersion": [
+                "kan"
+              ],
+              "note": "hij/zij/a name: kan. Typical mistake: Tijger kunt."
+            },
+            {
+              "prompt": "Wij … in de Kanaalstraat groente kopen.",
+              "authorsVersion": [
+                "kunnen"
+              ],
+              "note": "wij: plural = infinitive form."
+            },
+            {
+              "prompt": "… u mij helpen?",
+              "authorsVersion": [
+                "Kunt"
+              ],
+              "note": "u always takes kunt, also in a question: Kunt u …? No t-drop with u."
+            },
+            {
+              "prompt": "Jullie … hier boeken lenen.",
+              "authorsVersion": [
+                "kunnen"
+              ],
+              "note": "jullie + -en: jullie kunnen (not jullie kunt)."
+            },
+            {
+              "prompt": "In de bibliotheek … je ook koffie drinken.",
+              "authorsVersion": [
+                "kun"
+              ],
+              "note": "Inversion after the place, and je comes after the verb, so the t drops: kun je. Also fine: kan je."
+            },
+            {
+              "prompt": "Ahmed … elke fiets maken.",
+              "authorsVersion": [
+                "kan"
+              ],
+              "note": "Ahmed = hij: kan. een fiets maken = to repair a bike."
+            }
+          ]
+        }
+      },
+      "id": "fffe4234-1333-4e18-92c8-4b506f91ae96"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "maken",
+              "meaning": "to fix, to repair (informal)",
+              "forms": "maakt · maakte · gemaakt",
+              "example": "Ahmed kan elke fiets maken.",
+              "note": "New meaning: you know maken = to make (Part I).",
+              "id": "a708f91d-a588-44e6-bc79-24b280c92b66"
+            }
+          ]
+        }
+      },
+      "id": "82dafcf5-09dd-45b9-a89e-1a6a316579d6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the dialogues",
+      "id": "24eb263c-45cb-4470-9682-ce36840b8384"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the dialogues. Fill in one word per blank.",
+          "items": [
+            {
+              "prompt": "Sofia: Is er een bakker in de …? / Henk: Ja, de bakker is … de supermarkt.",
+              "authorsVersion": [
+                "buurt",
+                "naast"
+              ],
+              "note": "in de buurt = in the neighbourhood. naast = next to (14-a): in Lombok the bakery is next to the supermarket. Also fine: bij."
+            },
+            {
+              "prompt": "Sofia: Waar … ik brood kopen? / Henk: Bij de bakker. Daar … je ook broodjes kopen.",
+              "authorsVersion": [
+                "kan",
+                "kun"
+              ],
+              "note": "ik kan; after Daar the verb comes before je and the t drops: kun je."
+            },
+            {
+              "prompt": "Sofia: Is het park …? / Henk: Nee, het is vlakbij. Daar kun je lekker ….",
+              "authorsVersion": [
+                "ver",
+                "wandelen"
+              ],
+              "note": "ver = far, vlakbij = close by. The infinitive wandelen goes to the end."
+            },
+            {
+              "prompt": "Sofia: … u mij helpen? / Medewerkster: Ja, natuurlijk. U … hier boeken lenen.",
+              "authorsVersion": [
+                "Kunt",
+                "kunt"
+              ],
+              "note": "u takes kunt in both questions and statements."
+            },
+            {
+              "prompt": "Sofia: Is de bibliotheek op zondag …? / Henk: Nee, op zondag is hij ….",
+              "authorsVersion": [
+                "open",
+                "dicht"
+              ],
+              "note": "de bibliotheek is a de-word, so Henk says hij. dicht = closed."
+            },
+            {
+              "prompt": "Ahmed: … je fietsen? / Sofia: Ja, maar ik heb … fiets.",
+              "authorsVersion": [
+                "Kun",
+                "geen"
+              ],
+              "note": "Kun je …? (also fine: Kan je …?). geen + noun: geen fiets."
+            }
+          ]
+        }
+      },
+      "id": "2224ce05-f33f-4104-8c84-1d77bc7f9e66"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "f5a859ed-5f59-4339-bfc0-267f8216b0e7"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the correct order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: kan / ik / koken / goed",
+              "authorsVersion": [
+                "Ik kan goed koken."
+              ],
+              "note": "goed stands between kan and the infinitive. Not: Ik kan koken goed."
+            },
+            {
+              "prompt": "Put in order: daar / kun / je / boeken / lenen",
+              "authorsVersion": [
+                "Daar kun je boeken lenen."
+              ],
+              "note": "Daar first, then the verb, then je, and the infinitive last."
+            },
+            {
+              "prompt": "Put in order: u / helpen / mij / kunt / ?",
+              "authorsVersion": [
+                "Kunt u mij helpen?"
+              ],
+              "note": "Yes/no question: the verb first, the infinitive last."
+            },
+            {
+              "prompt": "Put in order: hier / geen brood / je / kopen / kun",
+              "authorsVersion": [
+                "Hier kun je geen brood kopen."
+              ],
+              "note": "geen brood before the infinitive. Kun (without t) fits only after hier, with je behind it."
+            },
+            {
+              "prompt": "Put in order: je fiets / je / bij Ahmed / ophalen / kunt",
+              "authorsVersion": [
+                "Je kunt je fiets bij Ahmed ophalen."
+              ],
+              "note": "ophalen stays in one piece at the end. Also fine: Je kunt bij Ahmed je fiets ophalen."
+            },
+            {
+              "prompt": "Put in order: op zondag / is / de bakker / dicht",
+              "authorsVersion": [
+                "Op zondag is de bakker dicht."
+              ],
+              "note": "Time first, then the verb, then the subject. Also fine: De bakker is op zondag dicht."
+            }
+          ]
+        }
+      },
+      "id": "379b0e07-ae9a-4a81-97f1-c70e223f2fcc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Rewrite",
+      "id": "e69dd387-7a45-4fe7-aab4-8f7c6f5afaa7"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence as the label says. With kunnen: add kunnen and move the verb to the end as an infinitive. Negative: add niet or geen.",
+          "items": [
+            {
+              "prompt": "With kunnen: Bij de bakker koop je brood.",
+              "authorsVersion": [
+                "Bij de bakker kun je brood kopen."
+              ],
+              "note": "koop → kun … kopen. The infinitive goes to the end."
+            },
+            {
+              "prompt": "With kunnen: In het park wandel je.",
+              "authorsVersion": [
+                "In het park kun je wandelen."
+              ],
+              "note": "wandel → kun … wandelen. After the place comes the verb, then je."
+            },
+            {
+              "prompt": "With kunnen: Sofia leent boeken in de bibliotheek.",
+              "authorsVersion": [
+                "Sofia kan in de bibliotheek boeken lenen."
+              ],
+              "note": "Sofia = zij: kan. Also fine: Sofia kan boeken lenen in de bibliotheek."
+            },
+            {
+              "prompt": "With kunnen: Bij Ahmed haal je je fiets op.",
+              "authorsVersion": [
+                "Bij Ahmed kun je je fiets ophalen."
+              ],
+              "note": "The separable verb comes together again at the end: haal … op → ophalen."
+            },
+            {
+              "prompt": "Negative: Hier kun je pinnen.",
+              "authorsVersion": [
+                "Hier kun je niet pinnen."
+              ],
+              "note": "niet directly before the infinitive."
+            },
+            {
+              "prompt": "Negative: In de apotheek kun je brood kopen.",
+              "authorsVersion": [
+                "In de apotheek kun je geen brood kopen."
+              ],
+              "note": "brood is a noun without een or de: geen brood. Not: niet brood."
+            },
+            {
+              "prompt": "Negative: Ik kan goed fietsen.",
+              "authorsVersion": [
+                "Ik kan niet goed fietsen."
+              ],
+              "note": "niet before goed: Ik kan niet goed fietsen = I'm not good at cycling."
+            }
+          ]
+        }
+      },
+      "id": "c9881a0b-d20b-4d20-87f0-365ae20574e3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "fa6b6b94-3a02-46f0-95b7-332e64529e70"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "Could you help me? (formal)",
+              "authorsVersion": [
+                "Kunt u mij helpen?"
+              ],
+              "note": "Fixed polite chunk with u."
+            },
+            {
+              "prompt": "Is there a pharmacy in the neighbourhood?",
+              "authorsVersion": [
+                "Is er een apotheek in de buurt?"
+              ],
+              "note": "Recycles Is er …? from row 13."
+            },
+            {
+              "prompt": "You can borrow books there.",
+              "authorsVersion": [
+                "Daar kun je boeken lenen."
+              ],
+              "note": "Also fine: Je kunt daar boeken lenen. lenen = to borrow."
+            },
+            {
+              "prompt": "She can't cook.",
+              "authorsVersion": [
+                "Ze kan niet koken."
+              ],
+              "note": "Also fine: Zij kan niet koken. niet before the infinitive."
+            },
+            {
+              "prompt": "The library is closed on Sundays.",
+              "authorsVersion": [
+                "Op zondag is de bibliotheek dicht."
+              ],
+              "note": "Also fine: De bibliotheek is op zondag dicht. closed = dicht."
+            },
+            {
+              "prompt": "The park is close by.",
+              "authorsVersion": [
+                "Het park is vlakbij."
+              ],
+              "note": "Also fine: Het park ligt vlakbij."
+            },
+            {
+              "prompt": "We can pick up the bike tomorrow.",
+              "authorsVersion": [
+                "Morgen kunnen we de fiets ophalen."
+              ],
+              "note": "Also fine: We kunnen morgen de fiets ophalen. ophalen in one piece at the end."
+            }
+          ]
+        }
+      },
+      "id": "2b3b6227-ce09-4bac-9750-d950c2c2df1d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "4c320b01-47e9-4cb4-a845-4df5f3ddfef8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into English.",
+          "items": [
+            {
+              "prompt": "In de Kanaalstraat kun je alles kopen.",
+              "authorsVersion": [
+                "You can buy everything in the Kanaalstraat."
+              ],
+              "note": "alles = everything."
+            },
+            {
+              "prompt": "Kun jij fietsen?",
+              "authorsVersion": [
+                "Can you ride a bike?"
+              ],
+              "note": "fietsen = to cycle, ride a bike."
+            },
+            {
+              "prompt": "Hier kun je niet pinnen.",
+              "authorsVersion": [
+                "You can't pay by card here."
+              ],
+              "note": "pinnen = to pay by card (12-b)."
+            },
+            {
+              "prompt": "De bushalte is tegenover de supermarkt.",
+              "authorsVersion": [
+                "The bus stop is opposite the supermarket."
+              ],
+              "note": "tegenover = opposite (14-a). de bushalte = the bus stop."
+            },
+            {
+              "prompt": "Is het station ver? Nee, het is vlakbij.",
+              "authorsVersion": [
+                "Is the station far? No, it's close by."
+              ]
+            },
+            {
+              "prompt": "Hij kan een beetje Spaans.",
+              "authorsVersion": [
+                "He speaks a little Spanish."
+              ],
+              "note": "kunnen + language. Also fine: He can speak a little Spanish."
+            }
+          ]
+        }
+      },
+      "id": "113714bc-1f9c-49c4-81d9-05aac1579df5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Welkom in Lombok",
+      "id": "774353cd-78ca-48b2-b3a0-be287ceb8b19"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "A welcome leaflet is in Sofia's letterbox. Read it and answer the questions in Dutch. New words: Turkse, Marokkaanse (Turkish, Moroccan), in de zon (in the sun), gezellig (cosy, friendly).",
+          "items": [
+            {
+              "prompt": "Waar ligt Lombok?",
+              "authorsVersion": [
+                "Vlakbij het centrum van Utrecht."
+              ],
+              "note": "Also fine: Lombok ligt vlakbij het centrum."
+            },
+            {
+              "prompt": "Wat kun je in de Kanaalstraat kopen?",
+              "authorsVersion": [
+                "Groente, fruit, vlees, brood en kaas."
+              ],
+              "note": "Also fine: Je kunt daar groente, fruit, vlees, brood en kaas kopen."
+            },
+            {
+              "prompt": "Hoe laat zijn veel winkels op zondag open?",
+              "authorsVersion": [
+                "Van twaalf tot vijf."
+              ],
+              "note": "Opening times: van … tot …."
+            },
+            {
+              "prompt": "Wat kun je in het park doen?",
+              "authorsVersion": [
+                "Je kunt wandelen of in de zon zitten."
+              ],
+              "note": "Infinitives at the end: wandelen, zitten."
+            },
+            {
+              "prompt": "Klopt dit? De bibliotheek is op maandag open.",
+              "authorsVersion": [
+                "Nee, op maandag is de bibliotheek dicht."
+              ],
+              "note": "The leaflet says: Op zondag en maandag is de bibliotheek dicht."
+            },
+            {
+              "prompt": "Waar is de huisarts?",
+              "authorsVersion": [
+                "Boven de apotheek."
+              ],
+              "note": "boven = above (14-a)."
+            },
+            {
+              "prompt": "Waar kun je de bus naar het centrum nemen?",
+              "authorsVersion": [
+                "Bij de bushalte tegenover de supermarkt."
+              ],
+              "note": "Also fine: In de Kanaalstraat, tegenover de supermarkt."
+            }
+          ],
+          "passage": {
+            "title": "Welkom in Lombok!",
+            "content": "Lombok is een wijk vlakbij het centrum van Utrecht. Utrecht Centraal is niet ver: je kunt in vijftien minuten naar het station lopen.\nIn Lombok wonen mensen uit veel landen. Dat zie je in de Kanaalstraat. Daar zijn veel winkels: Turkse, Marokkaanse en Nederlandse winkels. Daar kun je groente, fruit, vlees, brood en kaas kopen.\nDe winkels zijn van maandag tot zaterdag open, van negen tot zes. Op zondag zijn veel winkels open van twaalf tot vijf. De supermarkt is elke dag open.\nEr is ook een klein park. Daar kun je wandelen of in de zon zitten.\nDe bibliotheek ligt aan het plein bij het kanaal. Daar kun je boeken lenen en koffie drinken. Op zondag en maandag is de bibliotheek dicht. Naast de bibliotheek is de apotheek. De huisarts is boven de apotheek.\nHeb je een fiets? In de fietsenwinkel in de Kanaalstraat kun je een fiets kopen of je fiets ophalen.\nDe bushalte is in de Kanaalstraat, tegenover de supermarkt. Daar kun je de bus naar het centrum nemen.\nLombok is een gezellige buurt. Welkom!"
+          }
+        }
+      },
+      "id": "e3d28285-ec70-4a9f-961c-81762e0c15fe"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Turks",
+              "meaning": "Turkish",
+              "forms": "Turkse (before a noun)",
+              "example": "Daar zijn Turkse winkels.",
+              "id": "83a7b231-9470-4205-ba92-8a7e5210ac2e"
+            },
+            {
+              "term": "Marokkaans",
+              "meaning": "Moroccan",
+              "forms": "Marokkaanse (before a noun)",
+              "example": "Daar zijn Marokkaanse winkels.",
+              "id": "cfcfd78b-b04d-498a-abad-981c31cc919b"
+            },
+            {
+              "term": "in de zon zitten",
+              "meaning": "to sit in the sun",
+              "example": "In het park kun je in de zon zitten.",
+              "id": "b76ae61c-2f07-4ddd-ae84-01e7e5ca633c"
+            }
+          ]
+        }
+      },
+      "id": "2708e89f-aa49-463e-97e6-2d5bc704ecde"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "a63a1c24-64b4-4c68-9489-c07582e82a1f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about your neighbourhood: what is there and what can you do there? Use kunnen with an infinitive at the end at least twice.",
+          "items": [
+            {
+              "prompt": "Write about your neighbourhood.",
+              "authorsVersion": [
+                "Ik woon in Lombok, in de Kastanjestraat. In mijn buurt zijn veel winkels. In de Kanaalstraat kun je groente en brood kopen. De bibliotheek ligt aan het plein. Daar kun je boeken lenen, maar op zondag is hij dicht."
+              ],
+              "note": "Model answer by Sofia. Check: kunnen in second place, the infinitive at the end, and kun je (no t) after daar or a place."
+            }
+          ]
+        }
+      },
+      "id": "08ebc9c5-9323-4feb-9892-97df8aa7a351"
+    },
+    {
+      "type": "divider",
+      "id": "d62ee196-1e47-42e9-8310-85a9d65dbf9f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "07a424e2-2ef1-4475-977f-bd42317ba3c2"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "kunnen",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ik kan, jij kunt/kan, u kunt, hij/zij kan, wij/jullie/zij kunnen. Never hij kunt."
+      ],
+      "id": "fee24474-b01e-452c-bd03-a315ff8559d0"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "kunnen + … + ",
+        {
+          "text": "infinitive",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        " at the end: Ik kan goed koken. A separable verb stays whole: ophalen."
+      ],
+      "id": "8361d218-9ba1-4cd0-af3d-e1e258743192"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Place, daar or hier first: verb, then subject. With je the t drops: Daar kun je boeken lenen."
+      ],
+      "id": "de6e1297-c61c-4a8f-aa09-a307736790ff"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "niet before the infinitive, geen before a noun: Hier kun je niet pinnen. Hier kun je geen brood kopen."
+      ],
+      "id": "9fc8d48c-a599-45f7-bc12-6e16f2e9e06b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Ask about places: Is er een … in de buurt? Is het ver? Het is vlakbij."
+      ],
+      "id": "b709c49f-12f4-4dd9-9203-12c121645bf8"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Remember:",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Kunt u mij helpen? is the polite way to ask for help in a shop or library."
+      ],
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "id": "50d1637e-12f5-4733-9aba-43041b6b826c"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: a walk through Lombok",
+      "description": "Henk and Sofia walking along a busy street with small shops, a bakery next to a supermarket, a big mosque in the background, autumn sun.",
+      "alt": "Henk and Sofia walk through the shopping street in Lombok."
+    },
+    {
+      "afterHeading": "Story: in the library",
+      "description": "Sofia at the desk of a small neighbourhood library, a staff member handing her a library card, shelves of books behind.",
+      "alt": "Sofia gets a library card at the desk."
+    }
+  ],
+  "id": "8468b1ee-a942-44a9-855a-998b885467b9"
+}

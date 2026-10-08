@@ -48,6 +48,13 @@
             "textColor": "blue"
           }
         },
+        ", an infinitive at the end is ",
+        {
+          "text": "red",
+          "styles": {
+            "textColor": "red"
+          }
+        },
         ", subjects ",
         {
           "text": "green",
@@ -166,6 +173,94 @@
       "id": "3fd09900-47be-4bd6-9871-faca53501591"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "tweedehands",
+              "meaning": "second-hand",
+              "example": "De lamp is tweedehands!",
+              "id": "40035a61-0f3d-4719-aae2-d17cbe3b242a"
+            },
+            {
+              "term": "zwart",
+              "meaning": "black",
+              "example": "Wat kosten die zwarte mokken?",
+              "id": "5c26710c-8cb0-40d8-9629-acf37ba41599"
+            },
+            {
+              "term": "Dat is te duur.",
+              "meaning": "That's too expensive.",
+              "example": "Vijftien euro? Dat is te duur.",
+              "note": "te = too, before an adjective. Dat is ook duur means That is also expensive.",
+              "id": "cab85316-1b6f-43ef-8715-d630462c95e0"
+            },
+            {
+              "term": "Voor u …",
+              "meaning": "For you … (a seller's offer)",
+              "example": "Voor u twaalf euro vijftig.",
+              "id": "4b464d7f-2d81-4f75-a0aa-77288181b7d4"
+            },
+            {
+              "term": "Wat kosten …?",
+              "meaning": "How much are …? (more things)",
+              "example": "Wat kosten die zwarte mokken?",
+              "note": "One thing: Wat kost …? More things: Wat kosten …?",
+              "id": "5c15fbbe-b278-48d4-8ce6-beeb18d62f08"
+            },
+            {
+              "term": "per stuk",
+              "meaning": "each, per piece",
+              "example": "Die mokken kosten drie euro vijftig per stuk.",
+              "id": "f2ee0ad0-15ad-4c17-ad52-db2cccfd3f26"
+            },
+            {
+              "term": "Anders nog iets?",
+              "meaning": "Anything else?",
+              "example": "Prima. Anders nog iets?",
+              "id": "1ec6ea7e-88d0-42a4-9125-849873b85c27"
+            },
+            {
+              "term": "Alleen contant.",
+              "meaning": "Cash only.",
+              "example": "Mag ik pinnen? Nee, sorry. Alleen contant.",
+              "id": "e402442f-c4de-4961-8158-cca10c7cd676"
+            },
+            {
+              "term": "Samen is dat …",
+              "meaning": "That comes to … altogether.",
+              "example": "Samen is dat negentien euro vijftig.",
+              "id": "18f8a739-4600-499c-948d-b543b7223c21"
+            },
+            {
+              "term": "het wisselgeld",
+              "meaning": "change (money back)",
+              "example": "Hier is uw wisselgeld, vijftig cent.",
+              "id": "df98bff8-956f-4ad3-9ec2-be0076d904ec"
+            },
+            {
+              "term": "de cent",
+              "meaning": "cent",
+              "forms": "de centen",
+              "example": "Hier is uw wisselgeld, vijftig cent.",
+              "note": "After a number cent stays singular: vijftig cent.",
+              "id": "8f54aef1-8f87-477f-b7bb-2f50e490aaa7"
+            },
+            {
+              "term": "de bon",
+              "meaning": "receipt",
+              "forms": "de bonnen",
+              "example": "En hier is uw bon.",
+              "note": "Not a bonus: in a shop de bon is the receipt.",
+              "id": "fdbf0717-3bc9-4757-a8db-a05eb8dadd19"
+            }
+          ]
+        }
+      },
+      "id": "ff0ab3d3-3fb9-4486-ba95-ff8aeb4a7492"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "warning",
@@ -274,14 +369,21 @@
             "italic": true
           }
         },
-        ", and you do not say ",
+        ", and you usually leave out the word ",
         {
           "text": "cent",
           "styles": {
             "italic": true
           }
         },
-        " after the euros."
+        " at the end: ",
+        {
+          "text": "twee euro vijftig",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
       ],
       "id": "bd2611a7-6020-4975-bc86-70a2fff3cc1a"
     },
@@ -478,6 +580,30 @@
         "."
       ],
       "id": "9f8ebcd8-2bcf-47a6-a7cc-9bb8175c60f2"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de spiegel",
+              "meaning": "mirror",
+              "forms": "de spiegels",
+              "example": "Deze grote spiegel kost honderdtwintig euro.",
+              "id": "1448716e-96c0-4c56-bdf9-31af3732fca8"
+            },
+            {
+              "term": "honderd",
+              "meaning": "a hundred",
+              "example": "Deze spiegel kost honderdtwintig euro.",
+              "note": "One word, no en after honderd: honderdtwintig, honderdvijftig.",
+              "id": "ae1950b2-0c04-4689-89fe-715c005533ae"
+            }
+          ]
+        }
+      },
+      "id": "bfd1644b-d576-4132-9401-eb2ad9cdea1b"
     },
     {
       "type": "heading",
@@ -1518,6 +1644,22 @@
       "id": "5b1249ed-d08d-4e5b-b4c7-65d6621107e5"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Contant of pinnen?",
+              "meaning": "Cash or card?",
+              "example": "Dat is zes euro vijfennegentig. Contant of pinnen?",
+              "id": "f1a2a8dd-10df-44c2-900b-c9538ccd0b2e"
+            }
+          ]
+        }
+      },
+      "id": "7aad7dc7-1906-4f1d-929d-9e7759f365ee"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 3
@@ -1665,6 +1807,38 @@
       "id": "e6ea8e9b-30f5-4255-ba0a-ab45e9afa4e4"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de prijs",
+              "meaning": "price",
+              "forms": "de prijzen",
+              "example": "De prijs weet ik niet.",
+              "note": "Also prize (in a competition). Plural with z: prijzen.",
+              "id": "29db9b1c-462c-4720-9494-e7a586b17b93"
+            },
+            {
+              "term": "de korting",
+              "meaning": "discount",
+              "forms": "de kortingen",
+              "example": "Sofia krijgt twee euro vijftig korting.",
+              "id": "d04911d7-9737-443f-9098-2f0366930925"
+            },
+            {
+              "term": "de pinpas",
+              "meaning": "debit card",
+              "forms": "de pinpassen",
+              "example": "Mag ik met de pinpas betalen?",
+              "id": "34b60291-4759-4b13-b033-f1ea9ef61078"
+            }
+          ]
+        }
+      },
+      "id": "2d7121f3-602a-49e6-9d7b-cfccd96b633f"
+    },
+    {
       "type": "example",
       "props": {
         "translation": "Can I pay by card?",
@@ -1679,7 +1853,14 @@
             "backgroundColor": "yellow"
           }
         },
-        " ik pinnen?"
+        " ik ",
+        {
+          "text": "pinnen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "?"
       ],
       "id": "b6a24a3f-28ee-429a-b638-402d88abbc9b"
     },
@@ -1761,7 +1942,77 @@
     {
       "type": "paragraph",
       "content": [
-        "Sofia goes back to Henk's cheese stall. Her piece of old cheese is waiting for her."
+        "Sofia goes back to Henk's cheese stall. Her piece of old cheese is waiting for her. New words: ",
+        {
+          "text": "zo duur",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "so expensive",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "de verdieping",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "the floor, storey",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "de eigenaar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "the owner; here the landlady",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "ik stuur",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "I send",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", from sturen), ",
+        {
+          "text": "Wat leuk!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "How nice!",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")."
       ],
       "id": "52aa14f9-5dfe-4941-bb08-e33efa4b682d"
     },
@@ -1775,11 +2026,11 @@
           },
           {
             "speaker": "Sofia",
-            "text": "Dank u wel, meneer Jansen. Wat kost de kaas?"
+            "text": "Dank u wel, meneer. Wat kost de kaas?"
           },
           {
             "speaker": "Henk",
-            "text": "Acht euro. Maar meneer Jansen? Nee, nee. Zeg maar Henk!"
+            "text": "Acht euro. Maar meneer? Nee, nee. Zeg maar Henk!"
           },
           {
             "speaker": "Sofia",
@@ -1820,6 +2071,97 @@
         ]
       },
       "id": "85c4cd93-0636-4728-a731-24fb589016e8"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Daar bent u weer!",
+              "meaning": "There you are again! (formal)",
+              "example": "Zo! Daar bent u weer!",
+              "id": "bda50741-7028-475a-a493-d74cf2aa8684"
+            },
+            {
+              "term": "meneer",
+              "meaning": "Mr, sir",
+              "example": "Dank u wel, meneer.",
+              "note": "Alone it means sir; with a surname it means Mr (meneer De Vries). For a woman: mevrouw (08-b).",
+              "id": "49034245-f86a-4d2f-b9bd-5245e32f236f"
+            },
+            {
+              "term": "Zeg maar Henk!",
+              "meaning": "Just call me Henk!",
+              "example": "Meneer? Nee, nee. Zeg maar Henk!",
+              "note": "An offer to use jij and the first name. Also: Zeg maar jij!",
+              "id": "c743a669-f0b5-4b00-a065-5a845cc16bff"
+            },
+            {
+              "term": "boven",
+              "meaning": "above, upstairs",
+              "example": "Boven mij is een appartement te huur.",
+              "id": "d916ef87-bf68-40d5-abe8-f1be91d317f3"
+            },
+            {
+              "term": "te huur",
+              "meaning": "for rent",
+              "example": "Boven mij is een appartement te huur.",
+              "id": "d8ef9f4a-f731-4180-8768-6d6df377ed43"
+            },
+            {
+              "term": "het balkon",
+              "meaning": "balcony",
+              "forms": "de balkons",
+              "example": "Een appartement met balkon!",
+              "id": "22cfd586-0bf9-4020-a514-212bf2aa39f8"
+            },
+            {
+              "term": "de verdieping",
+              "meaning": "floor, storey",
+              "forms": "de verdiepingen",
+              "example": "Ik woon op de eerste verdieping.",
+              "id": "81f8e8b5-d673-470a-abea-f70ba5f9054e"
+            },
+            {
+              "term": "de eigenaar",
+              "meaning": "owner; here the landlady",
+              "forms": "de eigenaren",
+              "example": "De eigenaar is Ingrid Visser.",
+              "note": "Also for a woman: Ingrid is de eigenaar.",
+              "id": "9fbe4a5a-b0e3-4bec-b370-46bf980b1e39"
+            },
+            {
+              "term": "weten",
+              "meaning": "to know (a fact)",
+              "forms": "weet · wist · geweten",
+              "example": "Dat weet ik niet.",
+              "id": "68a1811c-aec3-4d92-817e-627403c27626"
+            },
+            {
+              "term": "sturen",
+              "meaning": "to send",
+              "forms": "stuurt · stuurde · gestuurd",
+              "example": "Ik stuur straks het telefoonnummer van Ingrid.",
+              "id": "34ee3728-6e0a-46c3-b0fe-9466ec98bedc"
+            },
+            {
+              "term": "het telefoonnummer",
+              "meaning": "phone number",
+              "forms": "de telefoonnummers",
+              "example": "Hier is het telefoonnummer van Ingrid Visser.",
+              "id": "4afcfd62-b133-42c0-beb1-c3634ae8aa0e"
+            },
+            {
+              "term": "per maand",
+              "meaning": "a month, per month",
+              "example": "Wat kost het appartement per maand?",
+              "id": "39265408-66f1-47e8-95b7-24649800bf15"
+            }
+          ]
+        }
+      },
+      "id": "1dcb74d1-e6a7-4198-a750-cc96eeb98671"
     },
     {
       "type": "bulletListItem",
@@ -1867,20 +2209,6 @@
         },
         "; ",
         {
-          "text": "de eigenaar",
-          "styles": {
-            "bold": true
-          }
-        },
-        " = ",
-        {
-          "text": "the owner",
-          "styles": {
-            "italic": true
-          }
-        },
-        "; ",
-        {
           "text": "straks",
           "styles": {
             "bold": true
@@ -1888,21 +2216,21 @@
         },
         " = ",
         {
-          "text": "later today",
+          "text": "later, soon",
           "styles": {
             "italic": true
           }
         },
         "; ",
         {
-          "text": "de verdieping",
+          "text": "per maand",
           "styles": {
             "bold": true
           }
         },
         " = ",
         {
-          "text": "the floor (storey)",
+          "text": "a month",
           "styles": {
             "italic": true
           }
@@ -1944,7 +2272,7 @@
         },
         " and ",
         {
-          "text": "meneer Jansen",
+          "text": "meneer",
           "styles": {
             "italic": true
           }
@@ -2222,13 +2550,13 @@
               "note": "€10,00 − €6,95 = €3,05: drie euro vijf (five cents is just vijf). Het wisselgeld = the change. The seller says uw to a customer."
             },
             {
-              "prompt": "Sofia: Wat … die zwarte mokken? / Verkoper: Die … vier euro per stuk. / Sofia: Vier euro? Dat is te …!",
+              "prompt": "Sofia: Wat … die witte borden? / Verkoper: Die … vier euro per stuk. / Sofia: Vier euro? Dat is te …!",
               "authorsVersion": [
                 "kosten",
                 "kosten",
                 "duur"
               ],
-              "note": "Plural mokken, so kosten. te duur = too expensive."
+              "note": "Plural borden, so kosten twice. te duur = too expensive."
             },
             {
               "prompt": "Verkoper: Deze lamp kost twaalf euro. / Sofia: Twaalf …? Dat is niet duur, dat is …!",
@@ -2489,9 +2817,9 @@
             {
               "prompt": "Boven mij is een appartement te huur.",
               "authorsVersion": [
-                "The apartment above me is for rent."
+                "There's an apartment for rent above me."
               ],
-              "note": "Also fine: There's an apartment for rent above me."
+              "note": "Also fine: The apartment above me is for rent."
             },
             {
               "prompt": "Zeg maar Henk!",
@@ -2526,7 +2854,77 @@
     {
       "type": "paragraph",
       "content": [
-        "Sofia has the receipt from the second-hand stall in her bag. At home she gets a text message from Henk."
+        "Sofia has the receipt from the second-hand stall in her bag. At home she gets a text message from Henk. New words: ",
+        {
+          "text": "het berichtje",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "the text message",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "het gebouw",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "the building",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "zonnig",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "sunny",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "de kat",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "the cat",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), ",
+        {
+          "text": "Groetjes",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "Best wishes",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")."
       ],
       "id": "44b006e5-699c-4501-862a-a6912777db2a"
     },
@@ -2546,13 +2944,6 @@
                 "Twee euro vijftig."
               ],
               "note": "€2,50: twee euro vijftig."
-            },
-            {
-              "prompt": "Hoeveel kost één mok?",
-              "authorsVersion": [
-                "Drie euro vijftig."
-              ],
-              "note": "€3,50 per stuk."
             },
             {
               "prompt": "Hoeveel betaalt Sofia samen?",
@@ -2607,6 +2998,57 @@
         }
       },
       "id": "a0ad0a86-0610-42ee-b838-1518133d8390"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het berichtje",
+              "meaning": "text message, short message",
+              "forms": "de berichtjes",
+              "example": "Sofia krijgt een berichtje van Henk.",
+              "note": "Small form of het bericht (07-b). A word with -je is always a het-word.",
+              "id": "31062a58-8391-4b33-9d7e-9a86fb4e905f"
+            },
+            {
+              "term": "het gebouw",
+              "meaning": "building",
+              "forms": "de gebouwen",
+              "example": "Het gebouw heeft een lift.",
+              "id": "cfcb1d3b-6a6d-4214-8474-4caa12ad8d5f"
+            },
+            {
+              "term": "de lift",
+              "meaning": "lift, elevator",
+              "forms": "de liften",
+              "example": "Het gebouw heeft een lift.",
+              "id": "00077b83-5d56-4cc8-b080-1382f54838b0"
+            },
+            {
+              "term": "zonnig",
+              "meaning": "sunny",
+              "example": "Het balkon is klein, maar zonnig.",
+              "id": "d05d06cf-dcc8-422f-b733-cc233bbc48e9"
+            },
+            {
+              "term": "de kat",
+              "meaning": "cat",
+              "forms": "de katten",
+              "example": "Ik woon op de eerste verdieping, met mijn kat Tijger.",
+              "id": "8ccaddde-b763-45a1-8fff-197bfb68c574"
+            },
+            {
+              "term": "Groetjes",
+              "meaning": "Best wishes, cheers (informal, at the end of a message)",
+              "example": "Tot zaterdag op de markt! Groetjes, Henk",
+              "id": "41ab8ae1-b13b-4606-8ab2-6da2ceb559fa"
+            }
+          ]
+        }
+      },
+      "id": "e119c0db-f3c3-4344-a18d-74d78b95c784"
     },
     {
       "type": "heading",

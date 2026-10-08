@@ -188,6 +188,63 @@
       "id": "a2354394-43b6-4b41-83ba-137d6e0e072b"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Hoe laat is het?",
+              "meaning": "What time is it?",
+              "example": "Sorry! Hoe laat is het?",
+              "note": "Not: Wat tijd is het?",
+              "id": "acf782bd-ee94-4e4f-ada2-3dbb5a169b1f"
+            },
+            {
+              "term": "het uur",
+              "meaning": "hour; o'clock (after a number)",
+              "forms": "de uren",
+              "example": "Het is acht uur.",
+              "note": "After a number uur stays singular: drie uur, not drie uren.",
+              "id": "492bfaad-1068-4699-98e8-0bbcb3a8ba87"
+            },
+            {
+              "term": "te laat",
+              "meaning": "late (too late)",
+              "example": "Je bent te laat!",
+              "id": "b1e9951d-ae8f-4d08-8906-76882c8c42cf"
+            },
+            {
+              "term": "beginnen",
+              "meaning": "to begin, to start",
+              "forms": "begint · begon · begonnen",
+              "example": "Het ontbijt begint om half negen.",
+              "id": "d70e2391-4995-4973-9ff3-0ed7f143f1e0"
+            },
+            {
+              "term": "de minuut",
+              "meaning": "minute",
+              "forms": "de minuten",
+              "example": "Ik ben tien minuten te laat.",
+              "id": "08a6b7f0-1494-4d47-b219-f4851a080f3f"
+            },
+            {
+              "term": "Echt?",
+              "meaning": "Really?",
+              "example": "Echt? \"Half nine\" is negen uur dertig in het Engels.",
+              "id": "0bac4b3a-5246-45c2-b859-7c5f514e131a"
+            },
+            {
+              "term": "anders",
+              "meaning": "different",
+              "example": "Het Nederlands is anders.",
+              "id": "260053ba-269a-4d90-aff0-7e4afdce171a"
+            }
+          ]
+        }
+      },
+      "id": "88953242-d888-4fdb-81f1-94c116e7c9f7"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "false-friend",
@@ -483,6 +540,36 @@
       "id": "592a45a8-7d73-4aa4-b921-161d35ed729b"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "één uur",
+              "meaning": "one o'clock",
+              "example": "Het is één uur.",
+              "note": "The accents show the difference from een uur (an hour).",
+              "id": "f11b0985-35e4-4902-9e91-98e12300556a"
+            },
+            {
+              "term": "een uur",
+              "meaning": "an hour (a length of time)",
+              "example": "We hebben een uur pauze.",
+              "id": "4d9cfb99-fdf2-4863-b7c1-8256bb7f1c19"
+            },
+            {
+              "term": "de pauze",
+              "meaning": "break",
+              "forms": "de pauzes",
+              "example": "We hebben een uur pauze.",
+              "id": "55504a70-15e2-451d-97ec-d785db75adef"
+            }
+          ]
+        }
+      },
+      "id": "de9d357c-f393-4136-b7f7-4369be902e69"
+    },
+    {
       "type": "divider",
       "id": "12aabcd8-c4c1-4644-b661-c33e16046f06"
     },
@@ -591,7 +678,7 @@
     {
       "type": "example",
       "props": {
-        "translation": "The breakfast starts at half past eight."
+        "translation": "Breakfast starts at half past eight."
       },
       "content": [
         {
@@ -619,6 +706,23 @@
         "."
       ],
       "id": "300d4e9e-a4c5-482c-b1ab-210f8dafca3f"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "half negen",
+              "meaning": "half past eight (8:30)",
+              "example": "Het ontbijt begint om half negen.",
+              "note": "False friend: half + the next hour. half negen is 8:30, not 9:30.",
+              "id": "afb525fb-f2eb-446c-a26c-68f834d426c3"
+            }
+          ]
+        }
+      },
+      "id": "8f2efdc5-2be9-4880-8d6c-2faf8959ac68"
     },
     {
       "type": "heading",
@@ -720,6 +824,36 @@
         "."
       ],
       "id": "e8edfa90-a79c-4ae0-8915-2add27abc439"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "kwart over acht",
+              "meaning": "a quarter past eight (8:15)",
+              "example": "Het is kwart over acht.",
+              "note": "over = past. Never kwart na acht.",
+              "id": "b23317c6-9a71-4a42-8674-d803a0d1b73c"
+            },
+            {
+              "term": "kwart voor negen",
+              "meaning": "a quarter to nine (8:45)",
+              "example": "Het is kwart voor negen.",
+              "id": "027ae145-02b3-4916-bcce-ad56220d565a"
+            },
+            {
+              "term": "het kwartier",
+              "meaning": "quarter of an hour",
+              "forms": "de kwartieren",
+              "example": "We hebben een pauze van een kwartier.",
+              "id": "71b40bb0-da5b-4df6-9042-e68a5eae3783"
+            }
+          ]
+        }
+      },
+      "id": "30aff132-7aff-4d60-8f66-f50b6189b504"
     },
     {
       "type": "callout",
@@ -1423,6 +1557,30 @@
       "id": "f5e30931-ef1d-4d19-a0c6-85b6442d093e"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "tien voor half negen",
+              "meaning": "twenty past eight (8:20)",
+              "example": "Het is tien voor half negen.",
+              "note": "Count back from the half hour. Also heard: twintig over acht.",
+              "id": "683dfa43-5095-4175-afbf-d75525faca54"
+            },
+            {
+              "term": "vijf over half negen",
+              "meaning": "twenty-five to nine (8:35)",
+              "example": "Het is vijf over half negen.",
+              "note": "Count on from the half hour.",
+              "id": "bfc86958-bac7-461d-b3ed-056536bc39e1"
+            }
+          ]
+        }
+      },
+      "id": "9948eb9a-b045-43f6-9295-ce1ff4230983"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "important",
@@ -1601,6 +1759,22 @@
       "id": "2fc91e60-7f01-4ff3-ae4e-4f5eefbc70da"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "'s nachts",
+              "meaning": "at night",
+              "example": "Het is twee uur 's nachts.",
+              "id": "b5c5b3f5-97b0-4685-b19c-6631881aef9c"
+            }
+          ]
+        }
+      },
+      "id": "873fb65f-1fca-454b-a428-c1960593dab2"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "pronunciation",
@@ -1670,6 +1844,7 @@
         {
           "text": "om zeven uur 's ochtends",
           "styles": {
+            "bold": true,
             "textColor": "orange"
           }
         },
@@ -1757,6 +1932,31 @@
         "."
       ],
       "id": "274c5273-9404-4c74-a8f4-5e176ee9c33c"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de trein",
+              "meaning": "train",
+              "forms": "de treinen",
+              "example": "De trein vertrekt om 17.35 uur.",
+              "id": "c80d0403-db82-498b-a0a6-c5a22c024db7"
+            },
+            {
+              "term": "vertrekken",
+              "meaning": "to leave, to depart",
+              "forms": "vertrekt · vertrok · vertrokken",
+              "example": "Zijn trein naar Amsterdam vertrekt om vijf over half zes.",
+              "note": "Not separable: ver- never splits off.",
+              "id": "958d7cb2-a7fa-43b3-88dd-28739cd650e7"
+            }
+          ]
+        }
+      },
+      "id": "33c886dd-1caa-4c5d-9838-ca5d0249cac9"
     },
     {
       "type": "callout",
@@ -1946,6 +2146,38 @@
       "id": "6541b231-75ab-42a4-a7cc-e4c4fd4e3cb9"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de vergadering",
+              "meaning": "meeting",
+              "forms": "de vergaderingen",
+              "example": "Hoe laat begint de vergadering?",
+              "id": "b94c6247-7a41-492d-bd32-d66aac49c385"
+            },
+            {
+              "term": "om tien uur",
+              "meaning": "at ten o'clock",
+              "example": "De vergadering begint om tien uur.",
+              "note": "om + clock time. A short answer: Om tien uur.",
+              "id": "4b2a4130-7479-4b14-8cfe-dcd68e16e790"
+            },
+            {
+              "term": "aankomen",
+              "meaning": "to arrive",
+              "forms": "komt aan · kwam aan · aangekomen",
+              "example": "De trein komt om tien voor half tien aan.",
+              "note": "Separable: aan goes to the end.",
+              "id": "fdde22e5-676e-4295-8b55-856876511c8f"
+            }
+          ]
+        }
+      },
+      "id": "88de7172-2dc2-404f-8915-d66861907099"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 3
@@ -2056,6 +2288,35 @@
         }
       ],
       "id": "f235455b-0893-48bd-9098-7d67beb8c91c"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "precies",
+              "meaning": "exactly",
+              "example": "Het is precies negen uur.",
+              "note": "You know Precies! (Exactly!) as a reply from 07-a.",
+              "id": "4539319f-d70c-4f41-969c-e06e66002ee4"
+            },
+            {
+              "term": "ongeveer",
+              "meaning": "about, approximately",
+              "example": "Sofia komt ongeveer om zes uur thuis.",
+              "id": "bfff7eb8-741a-4dc8-8c6a-4006eeb64c2e"
+            },
+            {
+              "term": "rond",
+              "meaning": "around, about (with times)",
+              "example": "We lunchen rond half een.",
+              "id": "ef5e0f1e-3887-4001-b0ca-1f8ba41be5cd"
+            }
+          ]
+        }
+      },
+      "id": "36253f61-de4e-4f2c-9eb8-9addbbb0776c"
     },
     {
       "type": "heading",
@@ -2173,6 +2434,70 @@
         "beginnen, stoppen, vertrekken (to leave), aankomen (to arrive), wachten (op) (to wait for), rennen (to run)"
       ],
       "id": "7f75aaa6-e22b-4b3c-9564-8555d7ddc621"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de klok",
+              "meaning": "clock",
+              "forms": "de klokken",
+              "id": "e63e8b54-841e-440f-8da7-a1d99f95b43e"
+            },
+            {
+              "term": "het horloge",
+              "meaning": "watch",
+              "forms": "de horloges",
+              "id": "2f6f1575-1a46-45f3-a803-d96a23df364e"
+            },
+            {
+              "term": "de tijd",
+              "meaning": "time",
+              "forms": "de tijden",
+              "example": "Daan is altijd op tijd.",
+              "id": "324e971a-2ab6-4054-a31d-7a59f8f6ed6e"
+            },
+            {
+              "term": "het station",
+              "meaning": "station",
+              "forms": "de stations",
+              "example": "Ik wacht op het station op de klant.",
+              "id": "b6021527-7c94-4113-9ddc-af3c3db99059"
+            },
+            {
+              "term": "de klant",
+              "meaning": "client, customer",
+              "forms": "de klanten",
+              "example": "De klant komt met de trein uit Amsterdam.",
+              "id": "321a2452-36ae-434e-a290-dbc3b78b10cd"
+            },
+            {
+              "term": "stoppen",
+              "meaning": "to stop, to end",
+              "forms": "stopt · stopte · gestopt",
+              "example": "Hoe laat stopt de vergadering?",
+              "id": "c7f2edbb-ef7b-46b6-b105-a192068fe462"
+            },
+            {
+              "term": "wachten (op)",
+              "meaning": "to wait (for)",
+              "forms": "wacht · wachtte · gewacht",
+              "example": "Daan wacht op het station op de klant.",
+              "id": "ada7ca5d-a83a-472c-a4bb-f57565c24e55"
+            },
+            {
+              "term": "rennen",
+              "meaning": "to run",
+              "forms": "rent · rende · gerend",
+              "example": "Ze rent naar het kantoor.",
+              "id": "98d97692-037c-48cb-a211-9dd38d42d472"
+            }
+          ]
+        }
+      },
+      "id": "596a1b9b-06dc-496b-874e-d4f7fdb036ce"
     },
     {
       "type": "callout",
@@ -2294,6 +2619,34 @@
         ]
       },
       "id": "e0fa5cba-6b95-46de-9a48-58a5bdefa8e7"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de planning",
+              "meaning": "schedule, plan",
+              "example": "Dit is de planning van vandaag.",
+              "id": "294fded1-3357-49d9-83a9-400a77628fb8"
+            },
+            {
+              "term": "Prima.",
+              "meaning": "Fine. / OK.",
+              "example": "Prima. En hoe laat gaat de klant weg?",
+              "id": "8b3aa739-a5ac-4b7e-ab30-85921828b139"
+            },
+            {
+              "term": "de hele dag",
+              "meaning": "all day, the whole day",
+              "example": "Ik ben vandaag de hele dag op tijd!",
+              "id": "af10e608-5be3-48bb-8e8c-885c0231e464"
+            }
+          ]
+        }
+      },
+      "id": "d07be102-c33b-420f-937f-33bb86eebba4"
     },
     {
       "type": "divider",

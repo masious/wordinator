@@ -267,7 +267,7 @@ export const resources = {
           placeholder: "Write, or type / for blocks",
           headingPlaceholder: "Heading",
           listPlaceholder: "List",
-          slashHelp: "Type / for headings, lists, callouts, examples, dialogues, and practice.",
+          slashHelp: "Type / for headings, lists, callouts, examples, dialogues, practice, and new words.",
           status: { saved: "Saved", pending: "Unsaved changes", saving: "Saving…", conflict: "Conflict", error: "Not saved, retrying on the next change", invalid: "Cannot save yet" },
           invalid: "Some of this content cannot be saved. Undo the last change, or remove the highlighted structure.",
           incomplete: "Fill in every required field. Until then the last complete version is saved.",
@@ -304,7 +304,7 @@ export const resources = {
           removesAnswersBody_other: "{{count}} removed practices have answers. Publishing deletes them with their answer threads.",
           publishAnyway: "Publish and delete answers",
           problemsTitle: "Finish these blocks before publishing:",
-          problems: { "image-missing": "An image has not finished uploading.", "image-alt-missing": "An image needs alt text.", "example-empty": "An example has no sentence." },
+          problems: { "image-missing": "An image has not finished uploading.", "image-alt-missing": "An image needs alt text.", "example-empty": "An example has no sentence.", "word-empty": "A new word needs both the word and its meaning." },
           slashGroups: { text: "Text", lesson: "Lesson blocks", layout: "Layout", media: "Media" },
           slash: { image: "Image", paragraph: "Paragraph", heading: "Heading 1", heading_2: "Heading 2", heading_3: "Heading 3", bullet_list: "Bulleted list", numbered_list: "Numbered list", divider: "Divider" },
           image: {
@@ -315,7 +315,7 @@ export const resources = {
             altHelp: "After inserting, add alt text from the image toolbar; publishing requires it.",
             insert: "Insert image"
           },
-          blocks: { callout: "Callout", example: "Example", dialogue: "Dialogue", practice: "Practice" },
+          blocks: { callout: "Callout", example: "Example", dialogue: "Dialogue", practice: "Practice", vocabulary: "New words" },
           fields: {
             translation: "Translation",
             note: "Note",
@@ -331,12 +331,23 @@ export const resources = {
             prompt: "Item {{number}} prompt",
             authorsVersion: "Item {{number}} author’s version",
             authorsVersionBlank: "Item {{number}}, blank {{blank}}: author’s version",
-            itemNote: "Item {{number}} note"
+            itemNote: "Item {{number}} note",
+            words: "Words",
+            wordTerm: "Word {{number}}",
+            wordMeaning: "Word {{number}} meaning",
+            wordForms: "Word {{number}} forms",
+            wordExample: "Word {{number}} example",
+            wordNote: "Word {{number}} note"
           },
           addItem: "Add item",
           removeItem: "Remove item {{number}}",
           addTurn: "Add turn",
           removeTurn: "Remove turn {{number}}",
+          addWord: "Add word",
+          removeWord: "Remove word {{number}}",
+          moveWordUp: "Move word {{number}} up",
+          moveWordDown: "Move word {{number}} down",
+          wordDetails: "Forms, example, and note for word {{number}}",
           ui: {
             addBlock: "Add block",
             blockMenu: "Open block menu",

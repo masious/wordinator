@@ -2,117 +2,209 @@
   "id": "f863af43-a458-4cf3-a34b-1443de5ac69b",
   "title": "Een huis beschrijven",
   "goal": "Combine existing adjective and noun knowledge with the new existential structure.",
-  "document": {
-    "schemaVersion": 2,
-    "blocks": [
-      {
-        "id": "1aaaea94-186d-465d-bd06-1af6116f9c4e",
-        "type": "paragraph",
-        "props": {
-          "textColor": "default",
-          "backgroundColor": "default",
-          "textAlignment": "left"
-        },
-        "content": [
-          {
-            "type": "text",
-            "text": "You can combine 'er is' and 'er zijn' with numbers, adjectives and room names to describe a home. Once something has been introduced, you can refer to it again with 'de' or 'het'.",
-            "styles": {}
-          }
-        ],
-        "children": []
+  "blocks": [
+    {
+      "id": "1aaaea94-186d-465d-bd06-1af6116f9c4e",
+      "type": "paragraph",
+      "props": {
+        "textColor": "default",
+        "backgroundColor": "default",
+        "textAlignment": "left"
       },
-      {
-        "id": "9eb9eca4-181b-4405-9382-96a5cba28f69",
-        "type": "example",
-        "props": {
-          "translation": "There is a small kitchen and there are two large bedrooms.",
-          "note": "This deliberately recycles adjective endings from an earlier lesson."
-        },
-        "content": [
-          {
-            "type": "text",
-            "text": "Er is een kleine keuken en er zijn twee grote slaapkamers.",
-            "styles": {}
-          }
-        ],
-        "children": []
+      "content": [
+        {
+          "type": "text",
+          "text": "You can combine 'er is' and 'er zijn' with numbers, adjectives and room names to describe a home. Once something has been introduced, you can refer to it again with 'de' or 'het'.",
+          "styles": {}
+        }
+      ],
+      "children": []
+    },
+    {
+      "id": "9eb9eca4-181b-4405-9382-96a5cba28f69",
+      "type": "example",
+      "props": {
+        "translation": "There is a small kitchen and there are two large bedrooms.",
+        "note": "This deliberately recycles adjective endings from an earlier lesson."
       },
-      {
-        "id": "20b8c5de-0d36-420f-b598-a4387e1a026b",
-        "type": "example",
-        "props": {
-          "translation": "There is a balcony. The balcony is small.",
-          "note": "First the balcony is introduced with 'een'. The second sentence refers to the same balcony with 'het'."
-        },
-        "content": [
-          {
-            "type": "text",
-            "text": "Er is een balkon. Het balkon is klein.",
-            "styles": {}
-          }
-        ],
-        "children": []
+      "content": [
+        {
+          "type": "text",
+          "text": "Er is een kleine keuken en er zijn twee grote slaapkamers.",
+          "styles": {}
+        }
+      ],
+      "children": []
+    },
+    {
+      "id": "e5c9f3c0-470e-4f9a-951d-3758a5e3c0cd",
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "id": "07a69e56-95cf-4179-97db-2e78cb75ecf1",
+              "term": "klein",
+              "meaning": "small",
+              "forms": "kleine",
+              "example": "een kleine keuken"
+            },
+            {
+              "id": "d8dbd24e-eae0-4f39-b694-ac248c55d448",
+              "term": "groot",
+              "meaning": "large, big",
+              "forms": "grote",
+              "example": "twee grote slaapkamers"
+            }
+          ]
+        }
       },
-      {
-        "id": "0ec0d202-398f-4864-9911-3f125e4caf46",
-        "type": "example",
-        "props": {
-          "translation": "There are two bedrooms. The bedrooms are bright.",
-          "note": "After introducing the bedrooms, 'de' refers back to them."
-        },
-        "content": [
-          {
-            "type": "text",
-            "text": "Er zijn twee slaapkamers. De slaapkamers zijn licht.",
-            "styles": {}
-          }
-        ],
-        "children": []
+      "children": []
+    },
+    {
+      "id": "20b8c5de-0d36-420f-b598-a4387e1a026b",
+      "type": "example",
+      "props": {
+        "translation": "There is a balcony. The balcony is small.",
+        "note": "First the balcony is introduced with 'een'. The second sentence refers to the same balcony with 'het'."
       },
-      {
-        "id": "16e054eb-eb97-4398-9b8e-9406e29c2a5e",
-        "type": "practice",
-        "props": {
-          "data": "{\"instruction\":\"Complete each sentence with 'een', 'de' or 'het'.\",\"passage\":null,\"items\":[{\"prompt\":\"Er is …balkon. … balkon is groot.\",\"authorsVersion\":[\"een\",\"het\"],\"note\":null},{\"prompt\":\"Er is … keuken. … keuken is klein.\",\"authorsVersion\":[\"een\",\"De\"],\"note\":null},{\"prompt\":\"Er is … badkamer. … badkamer heeft een douche.\",\"authorsVersion\":[\"een\",\"De\"],\"note\":null},{\"prompt\":\"Er is … appartement op de tweede verdieping. … appartement heeft twee slaapkamers.\",\"authorsVersion\":[\"een\",\"Het\"],\"note\":null},{\"prompt\":\"Er is … tuin. … tuin is groot.\",\"authorsVersion\":[\"een\",\"De\"],\"note\":null}]}"
-        },
-        "children": []
+      "content": [
+        {
+          "type": "text",
+          "text": "Er is een balkon. Het balkon is klein.",
+          "styles": {}
+        }
+      ],
+      "children": []
+    },
+    {
+      "id": "0ec0d202-398f-4864-9911-3f125e4caf46",
+      "type": "example",
+      "props": {
+        "translation": "There are two bedrooms. The bedrooms are bright.",
+        "note": "After introducing the bedrooms, 'de' refers back to them."
       },
-      {
-        "id": "e0ef9d16-b34b-4c4d-b2a2-0c7fd0b33582",
-        "type": "practice",
-        "props": {
-          "data": "{\"instruction\":\"Translate the descriptions into Dutch.\",\"passage\":null,\"items\":[{\"prompt\":\"There is a large living room and a small kitchen.\",\"authorsVersion\":[\"Er is een grote woonkamer en een kleine keuken.\"],\"note\":null},{\"prompt\":\"There are two small bedrooms.\",\"authorsVersion\":[\"Er zijn twee kleine slaapkamers.\"],\"note\":null},{\"prompt\":\"There is a balcony. The balcony is large.\",\"authorsVersion\":[\"Er is een balkon. Het balkon is groot.\"],\"note\":null},{\"prompt\":\"There is a bathroom. The bathroom is small.\",\"authorsVersion\":[\"Er is een badkamer. De badkamer is klein.\"],\"note\":null}]}"
-        },
-        "children": []
+      "content": [
+        {
+          "type": "text",
+          "text": "Er zijn twee slaapkamers. De slaapkamers zijn licht.",
+          "styles": {}
+        }
+      ],
+      "children": []
+    },
+    {
+      "id": "0345e08a-a297-4f82-a587-31360ac6ae59",
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "id": "00f788c9-4f5b-4a75-9f79-77162bd88916",
+              "term": "licht",
+              "meaning": "bright, light",
+              "forms": "lichte",
+              "example": "De slaapkamers zijn licht."
+            }
+          ]
+        }
       },
-      {
-        "id": "7ff05e35-1d43-415d-a5d9-a25d92dc682e",
-        "type": "practice",
-        "props": {
-          "data": "{\"instruction\":\"Read the apartment listing and answer the questions in Dutch where possible.\",\"passage\":{\"title\":\"Licht appartement met balkon\",\"content\":\"Te huur: een licht appartement op de tweede verdieping. Het appartement heeft een grote woonkamer, een kleine keuken, twee slaapkamers en een badkamer met douche. Er is ook een balkon. Het balkon is klein, maar zonnig. Er is geen tuin en er is geen garage. In het gebouw is er wel een lift. Het appartement is 72 m² en ligt dicht bij het centrum.\"},\"items\":[{\"prompt\":\"Op welke verdieping is het appartement?\",\"authorsVersion\":[\"Op de tweede verdieping.\"],\"note\":null},{\"prompt\":\"Hoeveel slaapkamers zijn er?\",\"authorsVersion\":[\"Er zijn twee slaapkamers.\"],\"note\":null},{\"prompt\":\"Is de keuken groot?\",\"authorsVersion\":[\"Nee, de keuken is klein.\"],\"note\":null},{\"prompt\":\"Is er een balkon?\",\"authorsVersion\":[\"Ja, er is een balkon.\"],\"note\":null},{\"prompt\":\"Hoe is het balkon?\",\"authorsVersion\":[\"Het balkon is klein maar zonnig.\"],\"note\":null},{\"prompt\":\"Is er een tuin?\",\"authorsVersion\":[\"Nee, er is geen tuin.\"],\"note\":null},{\"prompt\":\"Is er een lift in het gebouw?\",\"authorsVersion\":[\"a, er is een lift.\"],\"note\":null},{\"prompt\":\"Hoe groot is het appartement?\",\"authorsVersion\":[\"Het appartement is 72 m².\"],\"note\":null}]}"
-        },
-        "children": []
+      "children": []
+    },
+    {
+      "id": "16e054eb-eb97-4398-9b8e-9406e29c2a5e",
+      "type": "practice",
+      "props": {
+        "data": "{\"instruction\": \"Complete each sentence with 'een', 'de' or 'het'.\", \"passage\": null, \"items\": [{\"prompt\": \"Er is … balkon. … balkon is groot.\", \"authorsVersion\": [\"een\", \"het\"], \"note\": null}, {\"prompt\": \"Er is … keuken. … keuken is klein.\", \"authorsVersion\": [\"een\", \"De\"], \"note\": null}, {\"prompt\": \"Er is … badkamer. … badkamer heeft een douche.\", \"authorsVersion\": [\"een\", \"De\"], \"note\": null}, {\"prompt\": \"Er is … appartement op de tweede verdieping. … appartement heeft twee slaapkamers.\", \"authorsVersion\": [\"een\", \"Het\"], \"note\": null}, {\"prompt\": \"Er is … tuin. … tuin is groot.\", \"authorsVersion\": [\"een\", \"De\"], \"note\": null}]}"
       },
-      {
-        "id": "7aa84f76-286c-44cc-bfc6-381b82f6ea94",
-        "type": "practice",
-        "props": {
-          "data": "{\"instruction\":\"Rewrite information from the listing using 'er is' or 'er zijn'.\",\"passage\":null,\"items\":[{\"prompt\":\"Het appartement heeft twee slaapkamers.\",\"authorsVersion\":[\"Er zijn twee slaapkamers.\"],\"note\":null},{\"prompt\":\"Het appartement heeft een balkon.\",\"authorsVersion\":[\"Er is een balkon.\"],\"note\":null},{\"prompt\":\"Het gebouw heeft een lift.\",\"authorsVersion\":[\"Er is een lift in het gebouw.\"],\"note\":null}]}"
-        },
-        "children": []
+      "children": []
+    },
+    {
+      "id": "1dc7036c-08d2-4821-bcd8-986ccd53e133",
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "id": "7d743939-2e2d-459d-9de1-b86a0c19af1f",
+              "term": "de douche",
+              "meaning": "shower",
+              "forms": "de douches"
+            },
+            {
+              "id": "39365e03-8cdf-4180-affc-9d95649a361d",
+              "term": "de verdieping",
+              "meaning": "floor, storey",
+              "forms": "de verdiepingen",
+              "example": "op de tweede verdieping"
+            },
+            {
+              "id": "932793e7-4e71-4920-b075-2737902c4a8a",
+              "term": "hebben",
+              "meaning": "to have",
+              "forms": "heeft · had · gehad",
+              "example": "Het appartement heeft twee slaapkamers."
+            }
+          ]
+        }
       },
-      {
-        "id": "51f5c545-dca4-4ddc-b67e-211f29e46524",
-        "type": "paragraph",
-        "props": {
-          "textColor": "default",
-          "backgroundColor": "default",
-          "textAlignment": "left"
-        },
-        "content": [],
-        "children": []
-      }
-    ]
-  }
+      "children": []
+    },
+    {
+      "id": "e0ef9d16-b34b-4c4d-b2a2-0c7fd0b33582",
+      "type": "practice",
+      "props": {
+        "data": "{\"instruction\": \"Translate the descriptions into Dutch.\", \"passage\": null, \"items\": [{\"prompt\": \"There is a large living room and a small kitchen.\", \"authorsVersion\": [\"Er is een grote woonkamer en een kleine keuken.\"], \"note\": null}, {\"prompt\": \"There are two small bedrooms.\", \"authorsVersion\": [\"Er zijn twee kleine slaapkamers.\"], \"note\": null}, {\"prompt\": \"There is a balcony. The balcony is large.\", \"authorsVersion\": [\"Er is een balkon. Het balkon is groot.\"], \"note\": null}, {\"prompt\": \"There is a bathroom. The bathroom is small.\", \"authorsVersion\": [\"Er is een badkamer. De badkamer is klein.\"], \"note\": null}]}"
+      },
+      "children": []
+    },
+    {
+      "id": "7ff05e35-1d43-415d-a5d9-a25d92dc682e",
+      "type": "practice",
+      "props": {
+        "data": "{\"instruction\": \"Read the apartment listing and answer the questions in Dutch where possible.\", \"passage\": {\"title\": \"Licht appartement met balkon\", \"content\": \"Te huur: een licht appartement op de tweede verdieping. Het appartement heeft een grote woonkamer, een kleine keuken, twee slaapkamers en een badkamer met douche. Er is ook een balkon. Het balkon is klein, maar zonnig. Er is geen tuin en er is geen garage. In het gebouw is er wel een lift. Het appartement is 72 m² en ligt dicht bij het centrum.\"}, \"items\": [{\"prompt\": \"Op welke verdieping is het appartement?\", \"authorsVersion\": [\"Op de tweede verdieping.\"], \"note\": null}, {\"prompt\": \"Hoeveel slaapkamers zijn er?\", \"authorsVersion\": [\"Er zijn twee slaapkamers.\"], \"note\": null}, {\"prompt\": \"Is de keuken groot?\", \"authorsVersion\": [\"Nee, de keuken is klein.\"], \"note\": null}, {\"prompt\": \"Is er een balkon?\", \"authorsVersion\": [\"Ja, er is een balkon.\"], \"note\": null}, {\"prompt\": \"Hoe is het balkon?\", \"authorsVersion\": [\"Het balkon is klein maar zonnig.\"], \"note\": null}, {\"prompt\": \"Is er een tuin?\", \"authorsVersion\": [\"Nee, er is geen tuin.\"], \"note\": null}, {\"prompt\": \"Is er een lift in het gebouw?\", \"authorsVersion\": [\"Ja, er is een lift.\"], \"note\": null}, {\"prompt\": \"Hoe groot is het appartement?\", \"authorsVersion\": [\"Het appartement is 72 m².\"], \"note\": null}]}"
+      },
+      "children": []
+    },
+    {
+      "id": "2f8ea3a0-2b99-44b0-bbeb-d1b5fa5341d7",
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "id": "8baf9b73-7026-4d5f-905b-7de51dcb7048",
+              "term": "te huur",
+              "meaning": "for rent"
+            },
+            {
+              "id": "d0e16465-9fad-4663-8086-91e6b11a0f6b",
+              "term": "zonnig",
+              "meaning": "sunny"
+            },
+            {
+              "id": "2296edef-0fa4-4441-83a1-f97878e4594b",
+              "term": "dicht bij",
+              "meaning": "close to"
+            },
+            {
+              "id": "9252713d-ea28-499a-af08-43c41387ad11",
+              "term": "het centrum",
+              "meaning": "city centre",
+              "forms": "de centra"
+            }
+          ]
+        }
+      },
+      "children": []
+    },
+    {
+      "id": "7aa84f76-286c-44cc-bfc6-381b82f6ea94",
+      "type": "practice",
+      "props": {
+        "data": "{\"instruction\": \"Rewrite information from the listing using 'er is' or 'er zijn'.\", \"passage\": null, \"items\": [{\"prompt\": \"Het appartement heeft twee slaapkamers.\", \"authorsVersion\": [\"Er zijn twee slaapkamers.\"], \"note\": null}, {\"prompt\": \"Het appartement heeft een balkon.\", \"authorsVersion\": [\"Er is een balkon.\"], \"note\": null}, {\"prompt\": \"Het gebouw heeft een lift.\", \"authorsVersion\": [\"Er is een lift in het gebouw.\"], \"note\": null}]}"
+      },
+      "children": []
+    }
+  ]
 }

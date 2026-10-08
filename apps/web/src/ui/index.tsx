@@ -49,7 +49,7 @@ export function Button({ variant = "primary", className, children, trailingIcon,
   );
 }
 
-export function IconButton({ label, className, children, ...props }: Omit<ActionIconProps, "aria-label"> & { label: string }) {
+export function IconButton({ label, className, children, ...props }: ActionIconProps & Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof ActionIconProps | "aria-label"> & { label: string }) {
   return <ActionIcon aria-label={label} className={`${styles.iconButton} ${className ?? ""}`} {...props}>{children}</ActionIcon>;
 }
 

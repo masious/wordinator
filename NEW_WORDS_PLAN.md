@@ -46,28 +46,36 @@ Notes (2026-10-07): migration `0017_course_lesson_words.sql`. The publish batch'
 
 ## C8c — Editor
 
+Deferred (2026-10-07): the first courses are written directly in the database. Meanwhile `editorSchema.tsx` has a read-only `vocabulary` spec so editing a lesson keeps its words; the items below replace it.
+
 `apps/web/src/organisms/LessonEditor`:
 
-- [ ] `vocabulary` custom spec in `editorSchema.tsx` with a `VocabularyFields` form (rows of term, meaning, and expandable forms, example, and note; add, remove, and reorder rows), following `PracticeFields`.
-- [ ] Slash item "New words" with an icon and i18next labels; new word IDs from `crypto.randomUUID()`.
-- [ ] Publish bar lists `word-empty` problems and focuses the row.
-- [ ] Merge (`lessonMerge.ts`) needs no change because the block is compared by props; add a test that two editors' edits to the same vocabulary block are asked side by side.
-- [ ] Tests: RTL for adding, editing, and removing words, autosave round-trip, publish problem focus; `lessonDraft` sanitizing leaves vocabulary intact.
+- [x] `vocabulary` custom spec in `editorSchema.tsx` with a `VocabularyFields` form (rows of term, meaning, and expandable forms, example, and note; add, remove, and reorder rows), following `PracticeFields`.
+- [x] Slash item "New words" with an icon and i18next labels; new word IDs from `crypto.randomUUID()`.
+- [x] Publish bar lists `word-empty` problems and focuses the row.
+- [x] Merge (`lessonMerge.ts`) needs no change because the block is compared by props; add a test that two editors' edits to the same vocabulary block are asked side by side.
+- [x] Tests: RTL for adding, editing, and removing words, autosave round-trip, publish problem focus; `lessonDraft` sanitizing leaves vocabulary intact.
+
+Notes (2026-10-07): the form writes the block's props on every change (drafts accept empty words, so there is no separate local form state), which also keeps merge choices in step. `vocabularyIdRepairs` in `lessonDraft.ts` runs in the editor's `onChange` and gives a pasted or duplicated block fresh IDs for repeated words. A word problem focuses the word's first empty field through `data-word-id` and `data-word-field`. `IconButton` now accepts native button props so the reorder buttons can take `onClick`. A Playwright case in `course-words.spec.ts` authors words through the slash item.
 
 ## C8d — Reader, player, and recap
 
-- [ ] `LessonDocument` renderer: vocabulary block as a compact word list (term with forms, meaning, example, and note), escaped text only.
-- [ ] `LessonPlayer`: New words panel on any step with `words`; a `words` step for words-only sections. Coordinate with step-level positions so resuming keys stay stable.
-- [ ] `WordRecap` organism in the player shell: one card per word, Show meaning reveals meaning, example, and note; Back and Next; no recording.
-- [ ] Completion screen: Review words when the run's steps carried words.
-- [ ] Course page: Review words when the course words endpoint returns any; TanStack Query owns the fetch, and the route loader stays small.
-- [ ] Tokens for the panel and card in `apps/web/src/tokens.css`, documented in `docs/design-system.md`; all copy through i18next.
-- [ ] Tests: RTL for the renderer, the panel on each step kind, recap stepping and reveal, entry points shown only when words exist; Playwright: author a lesson with words after an example and after a dialogue, publish, finish it as another member, see the panels, then review words from the course page (Chromium and WebKit, plus `mobile-layout.spec.ts` coverage of the recap).
+- [x] `LessonDocument` renderer: vocabulary block as a compact word list (term with forms, meaning, example, and note), escaped text only.
+- [x] `LessonPlayer`: New words panel on any step with `words`; a `words` step for words-only sections. Coordinate with step-level positions so resuming keys stay stable.
+- [x] `WordRecap` organism in the player shell: one card per word, Show meaning reveals meaning, example, and note; Back and Next; no recording.
+- [x] Completion screen: Review words when the run's steps carried words.
+- [x] Course page: Review words when the course words endpoint returns any; TanStack Query owns the fetch, and the route loader stays small.
+- [x] Tokens for the panel and card in `apps/web/src/tokens.css`, documented in `docs/design-system.md`; all copy through i18next.
+- [x] Tests: RTL for the renderer, the panel on each step kind, recap stepping and reveal, entry points shown only when words exist; Playwright: author a lesson with words after an example and after a dialogue, publish, finish it as another member, see the panels, then review words from the course page (Chromium and WebKit, plus `mobile-layout.spec.ts` coverage of the recap).
+
+Notes (2026-10-07): `NewWords` in `LessonDocument.tsx` serves the reader block, the player panel, and the words step; a columns step shows its words in place, without a panel. `WordRecap` and `runWords` live in `organisms/WordRecap`. The lesson recap covers the completion screen, which stays mounted so the completion is recorded once. Tokens: `--color-words-surface`, `--color-words-card`. Playwright seeds the lesson through the API (the editor has no New words item) and finishes it as the e2e creator, the only seeded account; per-member results are covered by the Workers tests. The stale "Show translation" steps in `CourseLessons.test.tsx` and `course-progress.spec.ts` were updated to the documented behaviour (the translation shows with the sentence).
 
 ## Release
 
-- [ ] Type-check, Vitest, RTL, Playwright, and production builds for web and API.
+- [ ] Type-check, Vitest, RTL, Playwright, and production builds for web and API (all passed locally on 2026-10-07 for C8a, C8b, and C8d; rerun on the release commit).
 - [ ] Back up production D1, apply the C8 migration with an explicit `--remote`, deploy the API, then the web app.
-- [ ] Seed words into the existing course (production has one) to review the panel manually: read each published lesson, find the words it introduces, and add `vocabulary` blocks directly after the block that introduces them, so the words join that block's step under the [attachment rules](docs/courses.md#words-in-the-player). Word IDs are fresh UUIDs, unique within the lesson. Write the same document to `draft_doc` and `published_doc` (keeping both equal, so the lesson shows no unpublished changes), and fill `course_lesson_words` from it in the same statement batch, because direct SQL skips the publish route that maintains the index. Back up D1 first and target it with an explicit `--remote`. Then check each lesson's panels in the player, the reader's word lists, and both recaps.
+- [~] Seed words into the existing courses (production has two) to review the panel manually: read each published lesson, find the words it introduces, and add `vocabulary` blocks directly after the block that introduces them, so the words join that block's step under the [attachment rules](docs/courses.md#words-in-the-player). Word IDs are fresh UUIDs, unique within the lesson. Write the same document to `draft_doc` and `published_doc` (keeping both equal, so the lesson shows no unpublished changes), and fill `course_lesson_words` from it in the same statement batch, because direct SQL skips the publish route that maintains the index. Back up D1 first and target it with an explicit `--remote`. Then check each lesson's panels in the player, the reader's word lists, and both recaps.
+
+  Notes (2026-10-07): seeded 74 words (Leggen of zetten? 49, Mijn huis 15, Een huis beschrijven 10), one vocabulary block after each block that first introduces words, each term once per lesson; the existing "New words" callouts and practice notes were left as written. Every statement was guarded by the read draft version and `draft_doc = published_doc`, step keys were checked unchanged, and a dry run ran on the backup first (`~/wordinator-backups/wordinator-2026-10-07T201222Z-c8-word-seed/`). Remaining: the manual check in the player, reader, and both recaps.
 - [ ] Smoke test: an existing lesson reads and plays unchanged; a newly published lesson with words shows panels and appears in the course recap after finishing it.
 - [ ] Docs pass: `docs/courses.md` status line, `docs/architecture.md` (route), `docs/testing.md`, `docs/user-flows.md`, `docs/design-system.md`, `docs/roadmap.md`. Delete this file once C8 ships.

@@ -23,11 +23,11 @@ Places (keep consistent):
 | **Sofia Moreno** | 28 | From Valencia, Spain. Programmeur at the IT company. Speaks Spanish and English, learning Dutch. Arrived di 1 september. | Curious, warm, a bit chaotic, often a little late. Says "Wacht even!", "Echt?", "Hoe zeg je … in het Nederlands?". Sometimes makes a realistic learner mistake in a dialogue; a friend then repeats the correct form naturally (the correct form must appear in the next turn, and a note or callout must point it out). Misses the sun of Valencia. |
 | **Noor Bakker** | 25 | Dutch, from Groningen. Studies psychology at the university; works in Café De Zwaluw on Saturdays. Sofia's landlady-flatmate in Part II, her best friend afterwards. | Cheerful, chatty, informal, loves cooking. Says "Joh!", "Super!", "Lekker!", "Gezellig!". Always uses jij/je. |
 | **Daan de Vries** | 32 | Born in Utrecht. Sofia's colleague (senior programmeur). Has a girlfriend, **Lotte** (minor character, 30, teacher). Birthday **za 19 september** (turns 33). | Punctual, direct, organised, lives by his agenda, cycles everywhere and fast. Says "Prima.", "Precies.", "Kom op!", "Doe maar.". |
-| **Henk Jansen** | 67 | Sells cheese at the Saturday market ("kaasboer"). Lives alone with his cat **Tijger** on the first floor of Kastanjestraat 14. | Friendly, jokey, talks about the weather all the time. At the stall: "Zo!", "Nou, nou!", "Alstublieft!". Sofia first says u to him; in 12-b he says "Zeg maar Henk!" and from then on they use jij. |
+| **Henk** | 67 | Sells cheese at the Saturday market ("kaasboer"). Lives alone with his cat **Tijger** on the first floor of Kastanjestraat 14. | Friendly, jokey, talks about the weather all the time. At the stall: "Zo!", "Nou, nou!", "Alstublieft!". Sofia first says u to him; in 12-b he says "Zeg maar Henk!" and from then on they use jij. |
 | **Ingrid Visser** | 54 | Owner and landlady ("de verhuurder") of the Kastanjestraat apartment. | Formal, businesslike, friendly but brief. Always u. Says "Dat klopt.", "Prima.", "Alstublieft.". |
 | **Ahmed El Amrani** | 40 | Born and raised in Utrecht. Owns the bike shop in the Kanaalstraat ("de fietsenwinkel"). | Practical, relaxed, helpful. Says "Geen probleem!", "Kijk eens.", "Nou, kijk…". Uses jij with Sofia. |
 
-Minor or unnamed speakers allowed: "Ober", "Serveerster", "Verkoper", "Verkoopster", "Kapper", "Conducteur", "Toerist", "Collega", "Daans moeder", "Lotte", "Fleur" (only mentioned, she is abroad).
+Minor or unnamed speakers allowed: "Ober", "Serveerster", "Verkoper", "Verkoopster", "Kapper", "Conducteur", "Toerist", "Collega", "Daans moeder", "Medewerkster" (library), "Lotte", "Fleur" (only mentioned, she is abroad).
 
 ## Lesson-by-lesson story beats
 
@@ -35,7 +35,7 @@ Minor or unnamed speakers allowed: "Ober", "Serveerster", "Verkoper", "Verkoopst
 | --- | --- | --- | --- |
 | 07-a | week of ma 7 sept (Sofia's first full work week) | Sofia's normal day; life in Noor's flat; Sofia and Noor ("wij") compare routines; Daan's routine at work. | Sofia, Noor, Daan |
 | 07-b | za 12 – zo 13 sept | Weekend chores and going out: getting up, tidying, washing up, calling Sofia's mother, going out in the evening with Daan and Lotte. | Sofia, Noor, Daan, Lotte |
-| 08-a | ma 14 sept | First Monday of a full week at the office; train times; Sofia is late, Daan is always exactly on time; clocks and Dutch "half". | Sofia, Daan |
+| 08-a | ma 14 sept | Monday of her second full week at the office; train times; Sofia is late, Daan is always exactly on time; clocks and Dutch "half". | Sofia, Daan |
 | 08-b | di 15 sept | Making appointments: a lunch with Daan, the team meeting, the hairdresser by phone. | Sofia, Daan, Kapper |
 | 09-a | wo 16 sept | Sofia's new agenda: Dutch lessons on Tuesday evenings, Daan's birthday on za 19 september, Noor's exam on vr 2 oktober, and the deadline: the room is free only until za 31 oktober. | Sofia, Noor, Daan |
 | 09-b | do 17 – za 19 sept | Sofia's week plan; Daan's birthday party on Saturday (Dutch birthday customs: congratulating everyone, the circle). | Sofia, Noor, Daan, Lotte |
@@ -57,5 +57,5 @@ Minor or unnamed speakers allowed: "Ober", "Serveerster", "Verkoper", "Verkoopst
 | 18-a | za 14 november | Sofia needs winter clothes; Noor takes her shopping in the centre. | Sofia, Noor, Verkoopster |
 | 18-b | za 14 november | Choosing between coats; comparing; Sofia buys a warm coat. Ends with Sofia settled in her new home at the start of winter. | Sofia, Noor, Verkoopster, Henk (end) |
 
-Fixed story facts (never contradict): Sofia has no bike until 16-b (she walks, takes the tram or bus). Henk's cat is called Tijger. Noor's flat has one bathroom and a small kitchen. Sofia's new apartment matches the row-13 listing exactly. Sofia's mother lives in Valencia (she calls her on Sundays). Daan always arrives early; Sofia is often a little late.
+Fixed story facts (never contradict): Sofia has no bike until 16-b (she walks, takes the tram or bus). Henk's cat is called Tijger. Henk has no surname in the lessons; Sofia calls him meneer, then Henk. Noor's flat has one bathroom and a small kitchen. Sofia's new apartment matches the row-13 listing exactly. Sofia's mother lives in Valencia (she calls her on Sundays). Daan always arrives early; Sofia is often a little late.
 

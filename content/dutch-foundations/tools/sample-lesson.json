@@ -2,56 +2,227 @@
   "title": "Sample — every feature",
   "goal": "Reference file showing the authoring shorthand. Not imported.",
   "blocks": [
-    { "type": "heading", "props": { "level": 1 }, "content": "Waar is de sleutel?" },
-    { "type": "paragraph", "content": [
-      "Sanne is late. She is looking for her ",
-      { "text": "sleutel", "styles": { "bold": true } },
-      " (",
-      { "text": "key", "styles": { "italic": true } },
-      ")."
-    ] },
-    { "type": "callout", "props": { "variant": "grammar", "icon": "book-open" }, "content": [
-      { "text": "liggen", "styles": { "bold": true, "textColor": "blue" } },
-      " = lying flat; ",
-      { "text": "staan", "styles": { "bold": true, "textColor": "green" } },
-      " = standing upright."
-    ] },
-    { "type": "columnList", "children": [
-      { "type": "column", "children": [
-        { "type": "heading", "props": { "level": 3 }, "content": "liggen" },
-        { "type": "bulletListItem", "content": "het boek", "children": [
-          { "type": "bulletListItem", "content": "De telefoon ligt op tafel." }
-        ] }
-      ] },
-      { "type": "column", "children": [
-        { "type": "heading", "props": { "level": 3 }, "content": "staan" },
-        { "type": "bulletListItem", "content": "de fles" }
-      ] }
-    ] },
-    { "type": "example", "props": { "translation": "The key is lying on the table.", "note": "Keys lie flat: liggen." }, "content": [
-      "De sleutel ", { "text": "ligt", "styles": { "bold": true, "backgroundColor": "yellow" } }, " op de tafel."
-    ] },
-    { "type": "dialogue", "props": { "turns": [
-      { "speaker": "Sanne", "text": "Waar is mijn sleutel?" },
-      { "speaker": "Daan", "text": "Hij ligt op de tafel." }
-    ] } },
-    { "type": "numberedListItem", "content": "Find the object." },
-    { "type": "numberedListItem", "content": "Choose the verb." },
-    { "type": "paragraph", "props": { "backgroundColor": "gray" }, "content": [
-      "Check gender at ", { "type": "link", "href": "https://woordenlijst.org", "content": [{ "text": "woordenlijst.org", "styles": {} }] }, "."
-    ] },
-    { "type": "divider" },
-    { "type": "practice", "props": { "data": {
-      "instruction": "Fill in ligt, staat or zit.",
-      "items": [
-        { "prompt": "De fles … op de tafel.", "authorsVersion": ["staat"], "note": "Bottles stand." },
-        { "prompt": "There is a key on the table.", "authorsVersion": ["Er ligt een sleutel op de tafel."] }
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Waar is de sleutel?"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Sanne is late. She is looking for her ",
+        {
+          "text": "sleutel",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "key",
+          "styles": {
+            "italic": true
+          }
+        },
+        ")."
       ]
-    } } },
-    { "type": "practice", "props": { "data": {
-      "instruction": "Read and answer in Dutch.",
-      "passage": { "title": "Sannes kamer", "content": "In Sannes kamer staat een bed.\nNaast het bed staat een kast." },
-      "items": [{ "prompt": "Wat staat naast het bed?", "authorsVersion": ["Een kast."] }]
-    } } }
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "liggen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " = lying flat; ",
+        {
+          "text": "staan",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        " = standing upright."
+      ]
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "liggen"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "het boek",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "De telefoon ligt op tafel."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "staan"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de fles"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The key is lying on the table.",
+        "note": "Keys lie flat: liggen."
+      },
+      "content": [
+        "De sleutel ",
+        {
+          "text": "ligt",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " op de tafel."
+      ]
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de sleutel",
+              "meaning": "key",
+              "forms": "de sleutels",
+              "example": "De sleutel ligt op de tafel."
+            },
+            {
+              "term": "liggen",
+              "meaning": "to lie, to be lying (flat)",
+              "forms": "ligt · lag · gelegen"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sanne",
+            "text": "Waar is mijn sleutel?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Hij ligt op de tafel."
+          }
+        ]
+      }
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Find the object."
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Choose the verb."
+    },
+    {
+      "type": "paragraph",
+      "props": {
+        "backgroundColor": "gray"
+      },
+      "content": [
+        "Check gender at ",
+        {
+          "type": "link",
+          "href": "https://woordenlijst.org",
+          "content": [
+            {
+              "text": "woordenlijst.org",
+              "styles": {}
+            }
+          ]
+        },
+        "."
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in ligt, staat or zit.",
+          "items": [
+            {
+              "prompt": "De fles … op de tafel.",
+              "authorsVersion": [
+                "staat"
+              ],
+              "note": "Bottles stand."
+            },
+            {
+              "prompt": "There is a key on the table.",
+              "authorsVersion": [
+                "Er ligt een sleutel op de tafel."
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read and answer in Dutch.",
+          "passage": {
+            "title": "Sannes kamer",
+            "content": "In Sannes kamer staat een bed.\nNaast het bed staat een kast."
+          },
+          "items": [
+            {
+              "prompt": "Wat staat naast het bed?",
+              "authorsVersion": [
+                "Een kast."
+              ]
+            }
+          ]
+        }
+      }
+    }
   ]
 }

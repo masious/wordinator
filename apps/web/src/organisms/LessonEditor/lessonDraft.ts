@@ -1,5 +1,6 @@
 import {
   isSafeLessonHref, LESSON_COLUMNS_MAX, LESSON_DOCUMENT_SCHEMA_VERSION, LESSON_LIST_DEPTH_MAX, lessonColorSchema, lessonDocumentSchema, type LessonDocument,
+  vocabularyPayloadSchema,
 } from "@wordinator/contracts/lesson-document";
 
 // The editor's own block JSON: BlockNote follows the same `{ id, type, props, content, children }` convention as the contracts.
@@ -79,6 +80,31 @@ export function sanitizeEditorBlock(block: EditorBlock, lessonImagePath: string)
   const children = (block.children ?? []).flatMap((child) => sanitizeEditorBlock(child, lessonImagePath) ?? []);
   const repaired = { ...block, props, content, children };
   return stableJson(repaired) === stableJson(block) ? block : repaired;
+}
+
+// Word IDs share the document's unique-ID check, so a pasted or duplicated New words block would make the whole draft
+// invalid. The first use of an ID in document order keeps it; later vocabulary blocks get fresh IDs for the words that
+// repeat one. Returns the new `data` prop of each block that needs it.
+export function vocabularyIdRepairs(blocks: readonly EditorBlock[], newId: () => string = () => crypto.randomUUID()) {
+  const all: EditorBlock[] = [];
+  const walk = (list: readonly EditorBlock[]) => { for (const block of list) { all.push(block); walk(block.children ?? []); } };
+  walk(blocks);
+  const claimed = new Set(all.map((block) => block.id));
+  return all.flatMap((block): Array<{ id: string; data: string }> => {
+    if (block.type !== "vocabulary" || typeof block.props?.data !== "string") return [];
+    let data: unknown;
+    try { data = JSON.parse(block.props.data); } catch { return []; }
+    const parsed = vocabularyPayloadSchema.safeParse(data);
+    if (!parsed.success) return [];
+    let repaired = false;
+    const words = parsed.data.words.map((word) => {
+      if (!claimed.has(word.id)) { claimed.add(word.id); return word; }
+      repaired = true;
+      const id = newId(); claimed.add(id);
+      return { ...word, id };
+    });
+    return repaired ? [{ id: block.id, data: JSON.stringify({ words }) }] : [];
+  });
 }
 
 // Lesson images live under this path segment of the public media URL.

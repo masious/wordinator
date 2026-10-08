@@ -13,7 +13,7 @@
     {
       "type": "paragraph",
       "content": [
-        "It is Friday 2 October 2026. Noor has her exam today, and she gets an 8! Sofia, Daan and Lotte take her out for dinner in a restaurant in the centre of Utrecht. In this lesson you will reserve a table, ask permission with ",
+        "It is Friday 2 October 2026. Today Noor has an exam at the university (het tentamen). It is an oral exam, so she hears her grade straight away: an 8! Sofia, Daan and Lotte take her out for dinner in a restaurant in the centre of Utrecht. In this lesson you will reserve a table, ask permission with ",
         {
           "text": "mogen",
           "styles": {
@@ -214,6 +214,92 @@
         ]
       },
       "id": "3a95f476-cc32-4f99-b4cd-04bacbfa244d"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Hebt u een reservering?",
+              "meaning": "Do you have a reservation?",
+              "example": "Goedenavond! Hebt u een reservering?",
+              "note": "Also fine: Heeft u een reservering?",
+              "id": "0228bfb2-d8c1-43c4-9666-7d6010ea4d7f"
+            },
+            {
+              "term": "de reservering",
+              "meaning": "reservation",
+              "forms": "de reserveringen",
+              "example": "Daan heeft een reservering voor vier personen.",
+              "id": "f5c16209-785a-4bd5-8783-32d8a328e3dc"
+            },
+            {
+              "term": "op naam van …",
+              "meaning": "in the name of …",
+              "example": "Voor vier personen, op naam van De Vries.",
+              "id": "ba7e7377-c25b-49b2-993d-27302107924b"
+            },
+            {
+              "term": "het raam",
+              "meaning": "window",
+              "forms": "de ramen",
+              "example": "Mogen wij bij het raam zitten?",
+              "id": "ae86ecf2-b141-4075-b05c-5c9a0242c233"
+            },
+            {
+              "term": "wit",
+              "meaning": "white",
+              "example": "Ik wil graag een glas witte wijn.",
+              "note": "witte before a de-word: witte wijn.",
+              "id": "d1836d25-f9e1-4c7a-8554-c13519fc6083"
+            },
+            {
+              "term": "de vis",
+              "meaning": "fish",
+              "forms": "de vissen",
+              "example": "Daan en ik willen graag de vis.",
+              "id": "35fd2740-b106-4826-99b1-68dc0fb36c48"
+            },
+            {
+              "term": "vegetarisch",
+              "meaning": "vegetarian",
+              "example": "Ik ben vegetarisch.",
+              "note": "vegetarische before a de-word: de vegetarische pasta.",
+              "id": "5ab97ec1-4dad-4f24-b861-45b7e5e53047"
+            },
+            {
+              "term": "het vlees",
+              "meaning": "meat",
+              "example": "Ik wil geen vlees.",
+              "id": "22b19f7a-e630-41cd-8d5f-0eea351694d9"
+            },
+            {
+              "term": "de groente",
+              "meaning": "vegetable(s)",
+              "forms": "de groenten",
+              "example": "De pasta met groente is vegetarisch.",
+              "note": "Plural also: de groentes.",
+              "id": "65fd160d-8b9d-452c-b7a5-f776a5b2f529"
+            },
+            {
+              "term": "de kip",
+              "meaning": "chicken",
+              "forms": "de kippen",
+              "example": "Ik wil graag de kip met friet.",
+              "id": "20024a94-6043-4b70-84a1-890f5e468caa"
+            },
+            {
+              "term": "de friet",
+              "meaning": "fries, chips",
+              "example": "Noor eet de kip met friet.",
+              "note": "Also called patat.",
+              "id": "8996f887-5afb-4032-b9e1-87e9c28691cd"
+            }
+          ]
+        }
+      },
+      "id": "84df57b7-066b-4862-92eb-70f23be55837"
     },
     {
       "type": "paragraph",
@@ -516,6 +602,58 @@
       "id": "733ea8f6-fac6-476a-9480-3c2034310520"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het restaurant",
+              "meaning": "restaurant",
+              "forms": "de restaurants",
+              "example": "Vanavond eten we in een restaurant.",
+              "id": "bc21c09f-7fd0-48f4-8449-f7a310402eba"
+            },
+            {
+              "term": "het voorgerecht",
+              "meaning": "starter",
+              "forms": "de voorgerechten",
+              "example": "Als voorgerecht neem ik de soep.",
+              "id": "d020fec2-c2af-4ff2-ae39-6f524b073879"
+            },
+            {
+              "term": "het hoofdgerecht",
+              "meaning": "main course",
+              "forms": "de hoofdgerechten",
+              "example": "Lotte wil een vegetarisch hoofdgerecht.",
+              "id": "58318dd0-f628-4b62-968f-6de0cf9b827a"
+            },
+            {
+              "term": "het nagerecht",
+              "meaning": "dessert",
+              "forms": "de nagerechten",
+              "example": "Wilt u nog een nagerecht?",
+              "id": "8bdfe186-5f77-4547-84ed-620957212f7f"
+            },
+            {
+              "term": "het toetje",
+              "meaning": "dessert (informal)",
+              "forms": "de toetjes",
+              "example": "Daan wil geen toetje.",
+              "id": "3695e214-09fe-44c9-9a5d-d792ce17632d"
+            },
+            {
+              "term": "de salade",
+              "meaning": "salad",
+              "forms": "de salades",
+              "example": "Als voorgerecht neem ik een salade.",
+              "id": "b7da5d31-8311-47d1-a42a-0b095944677c"
+            }
+          ]
+        }
+      },
+      "id": "32c8c767-680d-46e5-818d-676eb5b81935"
+    },
+    {
       "type": "example",
       "props": {
         "translation": "Lotte wants a vegetarian main course.",
@@ -772,6 +910,83 @@
     {
       "type": "divider",
       "id": "1563b811-8d9f-4dd0-aede-24c7517f2af6"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "reserveren",
+              "meaning": "to reserve, to book",
+              "forms": "reserveert · reserveerde · gereserveerd",
+              "example": "Daan reserveert een tafel voor vier personen.",
+              "id": "adab157c-6885-4fd8-9b4a-9363e87e82e7"
+            },
+            {
+              "term": "de rekening",
+              "meaning": "bill",
+              "forms": "de rekeningen",
+              "example": "Mogen we de rekening, alstublieft?",
+              "id": "803f2f61-6d60-4d4b-ad79-205b2d887bba"
+            },
+            {
+              "term": "pinnen",
+              "meaning": "to pay by card",
+              "forms": "pint · pinde · gepind",
+              "example": "Mag ik pinnen?",
+              "id": "cff40b6f-4d39-4db1-89b7-311c8224ce28"
+            },
+            {
+              "term": "contant",
+              "meaning": "cash",
+              "example": "Lotte betaalt contant.",
+              "note": "contant betalen = to pay cash.",
+              "id": "eaf64a93-a488-400c-a074-edae1b0ee21a"
+            },
+            {
+              "term": "apart",
+              "meaning": "separately",
+              "example": "Samen of apart? – Apart, alstublieft.",
+              "note": "False friend: not \"apart\" in the English sense.",
+              "id": "e0ddf272-7030-47c8-8c00-951f8fa8b029"
+            },
+            {
+              "term": "de fooi",
+              "meaning": "tip (money)",
+              "forms": "de fooien",
+              "example": "Lotte geeft ook een fooi.",
+              "id": "a9142b85-d848-456a-80c1-85b5eaea6f4c"
+            },
+            {
+              "term": "Eet smakelijk!",
+              "meaning": "Enjoy your meal!",
+              "example": "Alstublieft, de pasta. Eet smakelijk!",
+              "id": "66e96945-8836-4cf9-962b-dc6cf5999f91"
+            },
+            {
+              "term": "Proost!",
+              "meaning": "Cheers!",
+              "example": "Op Noor! Proost!",
+              "id": "fec32f39-9e4d-4b11-bb31-940dd64ebd5b"
+            },
+            {
+              "term": "Is alles goed?",
+              "meaning": "Is everything all right?",
+              "example": "Is alles goed? – Ja, het is heerlijk!",
+              "note": "A waiter checks during the meal.",
+              "id": "973f119e-8c9d-463c-a72c-f2b4ab35f12a"
+            },
+            {
+              "term": "heerlijk",
+              "meaning": "delicious, lovely",
+              "example": "Het eten is heerlijk!",
+              "id": "1d6e28a5-3c02-444e-9876-6154a8740702"
+            }
+          ]
+        }
+      },
+      "id": "96ab4f4b-90d6-4112-8dcf-8b9af506b149"
     },
     {
       "type": "heading",
@@ -1074,6 +1289,23 @@
         "."
       ],
       "id": "45c827a5-c223-4694-a25b-9eff23298066"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "roken",
+              "meaning": "to smoke",
+              "forms": "rookt · rookte · gerookt",
+              "example": "Je mag hier niet roken.",
+              "id": "fa9b262e-1925-4536-a051-14a3859bc5cf"
+            }
+          ]
+        }
+      },
+      "id": "08c836ac-1a59-49f7-9a33-2dbba12facd9"
     },
     {
       "type": "callout",
@@ -1983,6 +2215,41 @@
       "id": "ffe17fb6-fe7f-48dc-ac34-a5b3c9a0965f"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Samen of apart?",
+              "meaning": "Together or separately?",
+              "example": "Alstublieft, de rekening. Samen of apart?",
+              "note": "The waiter asks how you want to pay.",
+              "id": "420755c6-9338-4de9-9162-7804abf66d19"
+            },
+            {
+              "term": "De rest is voor u.",
+              "meaning": "Keep the change.",
+              "example": "Alstublieft. De rest is voor u.",
+              "id": "ef826b43-0b26-42c6-8147-998154e0506a"
+            },
+            {
+              "term": "fijn",
+              "meaning": "nice, pleasant",
+              "example": "Het is een fijne avond.",
+              "id": "55640686-a484-47d9-85ff-674e78f68c2e"
+            },
+            {
+              "term": "Nog een fijne avond!",
+              "meaning": "Have a nice evening!",
+              "example": "Dank u wel! Nog een fijne avond!",
+              "id": "58797b30-12d9-498b-a6d4-dea8737654bd"
+            }
+          ]
+        }
+      },
+      "id": "8859a919-2131-4a2a-926b-7907d3a27d5f"
+    },
+    {
       "type": "paragraph",
       "content": [
         {
@@ -2018,7 +2285,29 @@
           "styles": {
             "italic": true
           }
-        }
+        },
+        " In ",
+        {
+          "text": "Wilt u nog een nagerecht?",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", nog means ",
+        {
+          "text": "also, as well",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": ",
+        {
+          "text": "Would you like a dessert?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (not another one)."
       ],
       "id": "c54a7c4f-5026-48e5-afd6-1aa647ca9025"
     },
@@ -2029,16 +2318,39 @@
         "icon": "globe"
       },
       "content": [
-        "Paying separately is normal among Dutch friends; people jokingly call it ",
+        "Paying separately is normal among Dutch friends. In English this is called going Dutch; in Dutch you may hear ",
         {
           "text": "Nederlands betalen",
           "styles": {
             "bold": true
           }
         },
-        ". Often one person pays and the others send a payment request by app afterwards. A tip is optional: about 5–10% for good service."
+        ". Often one person pays the whole bill and then sends the others a payment request by app. A tip (",
+        {
+          "text": "de fooi",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") is optional, because service is included in the price. Many people round up the bill or give about 5–10% for good service."
       ],
       "id": "4cd2baf4-f27a-44a7-9110-05a936f71616"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Nederlands betalen",
+              "meaning": "to go Dutch (each pays for themselves)",
+              "example": "Vanavond betalen we Nederlands.",
+              "id": "d5994380-dfe3-437c-99d9-e3f62d5531ce"
+            }
+          ]
+        }
+      },
+      "id": "39c1efc9-5a0f-49ce-a198-9c215af7f80a"
     },
     {
       "type": "divider",
@@ -2193,6 +2505,23 @@
         }
       },
       "id": "0673aed3-167e-4989-9efe-5374ea36b6fd"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het pinapparaat",
+              "meaning": "card machine",
+              "forms": "de pinapparaten",
+              "example": "Alstublieft, het pinapparaat.",
+              "id": "75b6cb27-bf59-4f7d-bb19-0191e7a6816d"
+            }
+          ]
+        }
+      },
+      "id": "877fe7f6-d0de-4b09-b01b-33915406e463"
     },
     {
       "type": "heading",
@@ -2475,7 +2804,7 @@
       "type": "practice",
       "props": {
         "data": {
-          "instruction": "Read Noor's message to her sister Fleur in Australia. Answer the questions in Dutch. New words: het tentamen = the exam (09-a), als toetje = as dessert, vragen om = to ask for, weer = again, back, Lief, hè? = Sweet, isn't it?, Liefs = Love.",
+          "instruction": "Read Noor's message to her sister Fleur in Australia. Answer the questions in Dutch. New words: het tentamen = a university exam (09-a; het examen is the final exam at school), als toetje = as dessert, vragen om = to ask for, weer = again, back, Lief, hè? = Sweet, isn't it?, Liefs = Love.",
           "passage": {
             "title": "Een bericht aan Fleur",
             "content": "Hoi Fleur!\nGroot nieuws: ik heb een 8 voor mijn tentamen! Het is vrijdag 2 oktober en ik ben heel blij.\nNu zit ik met Sofia, Daan en Lotte in een restaurant in het centrum. We zitten aan een tafel bij het raam.\nIk drink witte wijn en ik eet de kip met friet. Lotte is vegetarisch. Zij wil geen vlees en geen vis. Zij eet de pasta met groente. Sofia en Daan eten de vis. Het eten is heerlijk!\nAls toetje neem ik appeltaart met slagroom. Daan wil geen toetje. Hij drinkt een koffie.\nDan vraagt Lotte om de rekening. De ober vraagt: \"Samen of apart?\" Wij betalen apart, maar vanavond betaal ik niet: Sofia, Daan en Lotte betalen mijn eten! Lief, hè?\nSofia pint en Lotte betaalt contant. Ze geeft ook een fooi.\nOp 1 november ben jij weer in Nederland. Dan eten we samen in een restaurant, oké?\nLiefs, Noor"
@@ -2543,6 +2872,73 @@
       "id": "fb29d53f-72a4-4a5c-888c-f919ac25a57b"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het nieuws",
+              "meaning": "news",
+              "example": "Groot nieuws: ik heb een 8!",
+              "id": "a94cf485-d331-429c-8ad0-985a9e6b78b9"
+            },
+            {
+              "term": "het cijfer",
+              "meaning": "grade, mark (also: digit)",
+              "forms": "de cijfers",
+              "example": "Noor heeft een 8 voor haar tentamen. Een goed cijfer!",
+              "note": "Dutch grades go from 1 to 10.",
+              "id": "342a8e0b-34ba-43fc-837e-e785f677cb25"
+            },
+            {
+              "term": "het examen",
+              "meaning": "final exam (at school)",
+              "forms": "de examens",
+              "example": "Een examen heb je op school.",
+              "note": "het tentamen (09-a) is an exam at college or university.",
+              "id": "ffd62a38-ef06-41b3-9413-7407a2935829"
+            },
+            {
+              "term": "als toetje",
+              "meaning": "as dessert",
+              "example": "Als toetje neem ik appeltaart met slagroom.",
+              "note": "als = as: als voorgerecht, als hoofdgerecht.",
+              "id": "858c0ac0-4435-4417-acd0-e9d9c32a5ffb"
+            },
+            {
+              "term": "vragen om",
+              "meaning": "to ask for",
+              "forms": "vraagt om · vroeg om · gevraagd om",
+              "example": "Lotte vraagt om de rekening.",
+              "note": "vragen = to ask (07-b); vragen om + thing = to ask for it.",
+              "id": "96428920-b65a-4fa0-a2a6-e82b37678c29"
+            },
+            {
+              "term": "weer",
+              "meaning": "back (again)",
+              "example": "Op 1 november ben jij weer in Nederland.",
+              "note": "07-b: weer = again. Here: back.",
+              "id": "952f2899-37ce-4972-a18f-ea0ad876e019"
+            },
+            {
+              "term": "welk / welke",
+              "meaning": "which",
+              "example": "Welk cijfer heeft Noor?",
+              "note": "welk with a het-word (het cijfer), welke with a de-word or plural (welke dag).",
+              "id": "392c3bce-794a-4dc6-bd6a-79501f9c510b"
+            },
+            {
+              "term": "Lief, hè?",
+              "meaning": "Sweet, isn't it?",
+              "example": "Mijn vrienden betalen mijn eten. Lief, hè?",
+              "id": "45801f0d-b208-4408-ba07-c8101a33d018"
+            }
+          ]
+        }
+      },
+      "id": "cb74395f-5e24-4950-aac3-6371d9c1ad0f"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 2
@@ -2561,12 +2957,28 @@
               "authorsVersion": [
                 "Als voorgerecht neem ik de soep. Als hoofdgerecht wil ik graag de vis met groente, maar ik wil geen friet. Ik drink een glas witte wijn. Aan het eind vraag ik: \"Mogen we de rekening, alstublieft? Mag ik pinnen?\""
               ],
-              "note": "Model answer by Sofia. Check: u-forms to the waiter, alstublieft, geen + noun, the infinitive at the end."
+              "note": "Model answer by Sofia. New: als voorgerecht / als hoofdgerecht = as a starter / as a main course, aan het eind = at the end. Check: alstublieft to the waiter, geen + noun, mag/wil in position 2 (or 1 in a question)."
             }
           ]
         }
       },
       "id": "9ea62aba-5fbc-4219-abb1-3a7282707f80"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "aan het eind",
+              "meaning": "at the end",
+              "example": "Aan het eind vraag ik om de rekening.",
+              "id": "fa8e1f56-0484-450a-9ada-addbcf59ce7d"
+            }
+          ]
+        }
+      },
+      "id": "73b83beb-b618-4950-a8cd-799e9565fb97"
     },
     {
       "type": "divider",

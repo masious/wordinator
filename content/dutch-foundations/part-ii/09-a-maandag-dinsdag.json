@@ -69,14 +69,28 @@
             "textColor": "green"
           }
         },
-        " and a prefix that moves to the end is ",
+        ", a prefix that moves to the end is ",
         {
           "text": "red",
           "styles": {
             "textColor": "red"
           }
         },
-        ". The new form is ",
+        ", and the articles ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " and ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " are pink and brown. The new form is ",
         {
           "text": "bold",
           "styles": {
@@ -98,7 +112,7 @@
     {
       "type": "paragraph",
       "content": [
-        "Wednesday evening in Noor's kitchen. Sofia opens her new agenda."
+        "Wednesday morning, breakfast in Noor's kitchen. Sofia opens her new agenda."
       ],
       "id": "717a9b2b-86ae-463f-b8f3-d52ee402b85e"
     },
@@ -148,7 +162,7 @@
           },
           {
             "speaker": "Sofia",
-            "text": "Tot 31 oktober. Dat is een zaterdag. Dus in oktober zoek ik een appartement!"
+            "text": "Tot 31 oktober. Dat is een zaterdag. In oktober zoek ik dus een appartement!"
           },
           {
             "speaker": "Noor",
@@ -157,6 +171,80 @@
         ]
       },
       "id": "2cc60f29-f3d3-4762-9316-291c1fc2c5ef"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het papier",
+              "meaning": "paper",
+              "example": "Een agenda van papier.",
+              "note": "van papier = (made) of paper.",
+              "id": "1669ed44-71ee-455f-b708-05077dc51d29"
+            },
+            {
+              "term": "De hoeveelste is het vandaag?",
+              "meaning": "What's the date today?",
+              "example": "De hoeveelste is het vandaag? — Het is de zestiende.",
+              "note": "Answer with de + ordinal. Also fine: Welke datum is het vandaag?",
+              "id": "f4a69fcd-07d4-48d1-ab21-e610ce36dcbb"
+            },
+            {
+              "term": "jarig",
+              "meaning": "having your birthday",
+              "example": "Wanneer is Daan jarig? — Op zaterdag.",
+              "note": "jarig zijn = to have your birthday. Not: verjaardag hebben.",
+              "id": "23133509-8206-431f-81de-b84458d8a320"
+            },
+            {
+              "term": "het tentamen",
+              "meaning": "exam (at college or university)",
+              "forms": "de tentamens",
+              "example": "Op vrijdag 2 oktober heb ik een tentamen.",
+              "id": "b5d422a8-5d9f-4309-a17c-451bdf8dc4cf"
+            },
+            {
+              "term": "Succes!",
+              "meaning": "Good luck!",
+              "example": "Succes, Noor!",
+              "note": "False friend: not \"success\".",
+              "id": "227faf81-c68c-4e1f-8659-3e78cfa74da3"
+            },
+            {
+              "term": "terugkomen",
+              "meaning": "to come back",
+              "forms": "komt terug · kwam terug · teruggekomen",
+              "example": "Fleur komt op 1 november terug.",
+              "note": "Separable: terug goes to the end.",
+              "id": "268bc176-c071-4209-8d0c-1fc61b919b4b"
+            },
+            {
+              "term": "dat is …",
+              "meaning": "that is …",
+              "example": "Tot 31 oktober. Dat is een zaterdag.",
+              "note": "Learn it as a chunk for now. After a time expression: In 2027 is dat een vrijdag.",
+              "id": "010ba6a4-14d6-4df9-a69b-65fe5f92fdf8"
+            },
+            {
+              "term": "zoeken",
+              "meaning": "to look for, to search",
+              "forms": "zoekt · zocht · gezocht",
+              "example": "In oktober zoek ik een appartement.",
+              "id": "70dc4492-2f5e-49a8-b7a9-1c08d7789fa9"
+            },
+            {
+              "term": "eerst",
+              "meaning": "first (before something else)",
+              "example": "Maar eerst het feest van Daan!",
+              "note": "eerst = first, before that; eerste = first in a row (de eerste).",
+              "id": "0acfa137-bbd7-4278-a53f-a0c994121321"
+            }
+          ]
+        }
+      },
+      "id": "0b5a5d6b-758a-4d09-84ab-9690fb43af0c"
     },
     {
       "type": "paragraph",
@@ -204,7 +292,35 @@
             "italic": true
           }
         },
-        ". Fleur is Noor's sister; she is in Australia until the end of October."
+        ". ",
+        {
+          "text": "Dat is een zaterdag",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = ",
+        {
+          "text": "that is a Saturday",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": learn ",
+        {
+          "text": "dat is",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "that is",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") as a fixed chunk for now. Fleur is Noor's sister; she is in Australia until the end of October."
       ],
       "id": "9f6a7f5e-217e-4314-bbfc-7807f8251593"
     },
@@ -464,6 +580,115 @@
         }
       ],
       "id": "f27e5040-8a2b-4f35-89cb-541c2053007e"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de maandag",
+              "meaning": "Monday",
+              "example": "Op maandag werkt Sofia op kantoor.",
+              "note": "Days and months take a small letter. Short form: ma.",
+              "id": "2c647e6d-f626-41a5-8d8b-071641310e5b"
+            },
+            {
+              "term": "de dinsdag",
+              "meaning": "Tuesday",
+              "example": "Op dinsdag heeft Sofia Nederlandse les.",
+              "note": "Short form: di.",
+              "id": "1f9fdd5b-6a86-493e-a187-57a238e8ab7f"
+            },
+            {
+              "term": "de woensdag",
+              "meaning": "Wednesday",
+              "example": "Vandaag is het woensdag.",
+              "note": "Short form: wo.",
+              "id": "94032afc-0968-4ef9-829e-0af2ccd2bbcb"
+            },
+            {
+              "term": "de donderdag",
+              "meaning": "Thursday",
+              "note": "Short form: do.",
+              "id": "35fefdb0-856d-4321-a8d1-edff5c66d3d9"
+            },
+            {
+              "term": "de vrijdag",
+              "meaning": "Friday",
+              "example": "Op vrijdag trakteert Daan op taart.",
+              "note": "Short form: vr.",
+              "id": "94bdd6f0-efcb-4920-9072-faf6aa1fedc4"
+            },
+            {
+              "term": "januari",
+              "meaning": "January",
+              "id": "9654ecaa-5405-4de9-ad90-91e89ecdee62"
+            },
+            {
+              "term": "februari",
+              "meaning": "February",
+              "id": "2b4d30bb-76a2-49f5-bc3c-d2401f882858"
+            },
+            {
+              "term": "maart",
+              "meaning": "March",
+              "id": "c3e32a18-6372-4102-807a-f6fb1d1101dd"
+            },
+            {
+              "term": "april",
+              "meaning": "April",
+              "example": "Sofia is op 23 april jarig.",
+              "id": "8094c9b6-50d3-43ff-83ed-13d10624f758"
+            },
+            {
+              "term": "mei",
+              "meaning": "May",
+              "id": "9916cf5f-73d3-4bb1-a8ff-35d586ad2177"
+            },
+            {
+              "term": "juni",
+              "meaning": "June",
+              "note": "Sounds like juli; people often stress the end: juNI.",
+              "id": "b03fd7f5-978c-47d4-81d0-0875909b04e1"
+            },
+            {
+              "term": "juli",
+              "meaning": "July",
+              "note": "Sounds like juni; people often stress the end: juLI.",
+              "id": "0df5cd4d-f2dd-4662-b1a5-0372a5ec6c5a"
+            },
+            {
+              "term": "augustus",
+              "meaning": "August",
+              "id": "287d6039-0879-44e4-8c47-d877f33714fd"
+            },
+            {
+              "term": "september",
+              "meaning": "September",
+              "example": "Daan is in september jarig.",
+              "id": "35043f40-ee02-43cd-8f98-a295047fa01b"
+            },
+            {
+              "term": "oktober",
+              "meaning": "October",
+              "example": "In oktober zoekt Sofia een appartement.",
+              "id": "98cb578b-08b8-4ec2-b639-8ed245422489"
+            },
+            {
+              "term": "november",
+              "meaning": "November",
+              "id": "72ef9e49-b324-47c7-8e4d-164f1785f9bf"
+            },
+            {
+              "term": "december",
+              "meaning": "December",
+              "id": "72800e5f-670c-4d79-b4af-db5a7d20eb7a"
+            }
+          ]
+        }
+      },
+      "id": "a6a52c9c-98a2-4bdd-83db-a5d1ddc06428"
     },
     {
       "type": "callout",
@@ -856,6 +1081,64 @@
       "id": "c7b77a3d-98b1-4088-8d29-cb3b57eabcee"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de week",
+              "meaning": "week",
+              "forms": "de weken",
+              "example": "Sofia heeft elke week Nederlandse les.",
+              "id": "b7d3cbe0-4e2a-4c39-bc47-91efdbdf1302"
+            },
+            {
+              "term": "de maand",
+              "meaning": "month",
+              "forms": "de maanden",
+              "example": "In welke maand ben je jarig?",
+              "id": "e90febda-2146-4e97-985e-7b34bd328165"
+            },
+            {
+              "term": "de datum",
+              "meaning": "date (day of the month)",
+              "forms": "de data / de datums",
+              "example": "Sofia schrijft de datum in haar agenda.",
+              "id": "249b4399-aa40-437c-a0cc-29c69eada8ff"
+            },
+            {
+              "term": "de verjaardag",
+              "meaning": "birthday",
+              "forms": "de verjaardagen",
+              "example": "Mijn verjaardag is op 23 april.",
+              "note": "Usually you say Ik ben jarig, not Ik heb verjaardag.",
+              "id": "f0c39824-3475-4ab2-a661-7f6b69ce33f9"
+            },
+            {
+              "term": "deze week",
+              "meaning": "this week",
+              "example": "Deze week heeft Noor het druk.",
+              "note": "No op before deze, volgende or elke week.",
+              "id": "800fad10-c636-4ce8-917f-fbc189e789ed"
+            },
+            {
+              "term": "volgende week",
+              "meaning": "next week",
+              "example": "Volgende week heeft Noor het druk.",
+              "id": "d2a66070-aaaa-4693-9e9d-40d88eba39bb"
+            },
+            {
+              "term": "elke week",
+              "meaning": "every week",
+              "example": "Elke week belt Sofia haar moeder op.",
+              "id": "4b6ca8c9-ed0d-45d1-8794-3a8c931107fc"
+            }
+          ]
+        }
+      },
+      "id": "2c478f46-875c-4891-bdf2-8d672c7a9b1c"
+    },
+    {
       "type": "example",
       "props": {
         "translation": "Noor is busy next week.",
@@ -1136,6 +1419,66 @@
       "id": "75667782-5602-4e72-aafa-00c4acc7ef44"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "eerste",
+              "meaning": "first",
+              "example": "Fleur komt op de eerste terug.",
+              "note": "Irregular: not eende. Written 1e.",
+              "id": "ec7fa189-0609-4b3a-969b-185b72752070"
+            },
+            {
+              "term": "tweede",
+              "meaning": "second",
+              "example": "Het tentamen is op de tweede.",
+              "note": "Not tweeënde. Written 2e.",
+              "id": "79947e74-80f3-42e0-917a-b145493bf163"
+            },
+            {
+              "term": "derde",
+              "meaning": "third",
+              "note": "Irregular: not drieste. Written 3e.",
+              "id": "1ac5b2b0-56f8-44c3-9b71-289b23844395"
+            },
+            {
+              "term": "vierde",
+              "meaning": "fourth",
+              "note": "1–19: number + de.",
+              "id": "078185db-9ba3-4ff2-b20f-90748bd54882"
+            },
+            {
+              "term": "achtste",
+              "meaning": "eighth",
+              "note": "Irregular: not achtde. Written 8e.",
+              "id": "59dc6c9c-bf9e-4aff-a840-d63110b2aad1"
+            },
+            {
+              "term": "zestiende",
+              "meaning": "sixteenth",
+              "example": "Het is de zestiende.",
+              "id": "3737de6d-c9f7-4428-8879-ce2e06ab2cd8"
+            },
+            {
+              "term": "twintigste",
+              "meaning": "twentieth",
+              "note": "From 20: number + ste.",
+              "id": "28ebc423-ab58-48c6-b1a0-7cb4e8cbff7b"
+            },
+            {
+              "term": "eenendertigste",
+              "meaning": "thirty-first",
+              "example": "De kamer is vrij tot de eenendertigste.",
+              "id": "8a483bd4-8e70-4a41-8d84-2d9052fea0a0"
+            }
+          ]
+        }
+      },
+      "id": "15252b1a-ce46-4421-a07b-d35e8ecfaa15"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "warning",
@@ -1384,6 +1727,23 @@
         "."
       ],
       "id": "ff543b8c-5536-441c-b550-47599f9bc825"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Welke dag is het vandaag?",
+              "meaning": "What day is it today?",
+              "example": "Welke dag is het vandaag? — Het is woensdag.",
+              "note": "Asks for the day of the week; De hoeveelste? asks for the date.",
+              "id": "b4fee03f-f955-44a6-9e6a-7c30c7c63c78"
+            }
+          ]
+        }
+      },
+      "id": "bec9f84d-7101-4e60-a211-36298140208b"
     },
     {
       "type": "example",
@@ -1755,14 +2115,14 @@
     {
       "type": "paragraph",
       "content": [
-        "In Dutch you ",
+        "In Dutch you don't have your birthday, you ",
         {
           "text": "are",
           "styles": {
             "bold": true
           }
         },
-        " your birthday: ",
+        " jarig: ",
         {
           "text": "jarig zijn",
           "styles": {
@@ -1881,6 +2241,23 @@
       "id": "15290618-f1f4-401f-82ac-01476b2d6b19"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Wanneer ben je jarig?",
+              "meaning": "When is your birthday?",
+              "example": "Wanneer ben je jarig? — Ik ben op 23 april jarig.",
+              "note": "Answer: Ik ben op … jarig.",
+              "id": "552a97a0-0108-40b5-9a30-f4f10908f2df"
+            }
+          ]
+        }
+      },
+      "id": "473d0814-f538-4b42-b06c-cb5dfa599fd2"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "warning",
@@ -1953,6 +2330,31 @@
       "id": "ca0b83ce-1e29-452c-a694-b2406dc8af24"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Gefeliciteerd met Daan!",
+              "meaning": "Congratulations on Daan's birthday!",
+              "example": "Hoi Lotte! Gefeliciteerd met Daan!",
+              "note": "Said to the birthday person's family and friends.",
+              "id": "3e76a93d-6f82-455f-bb17-f5331f5996b3"
+            },
+            {
+              "term": "trakteren (op)",
+              "meaning": "to treat (people to something)",
+              "forms": "trakteert · trakteerde · getrakteerd",
+              "example": "Op vrijdag trakteert Daan op taart.",
+              "note": "At work the birthday person brings the treat.",
+              "id": "5a19aedb-6b1b-47ed-94f3-29f8dc29afc6"
+            }
+          ]
+        }
+      },
+      "id": "69eec758-9022-40ad-8d29-1f56eeefc753"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 3
@@ -1963,7 +2365,7 @@
     {
       "type": "paragraph",
       "content": [
-        "Wednesday morning at the office. Daan sees Sofia's new agenda."
+        "Later that morning at the office. Daan sees Sofia's new agenda."
       ],
       "id": "4bbd48e4-6cf1-4923-9d0c-c961fc1344fd"
     },
@@ -2017,11 +2419,28 @@
           },
           {
             "speaker": "Sofia",
-            "text": "Prima! Tot zaterdag!"
+            "text": "Prima! Dan trakteer ik op taart."
           }
         ]
       },
       "id": "4315c350-be46-46d5-9b56-9df73d1f7516"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de taart",
+              "meaning": "cake, tart",
+              "forms": "de taarten",
+              "example": "Dan trakteer ik op taart.",
+              "id": "cd22dd4a-6921-4ab8-a569-fd1db283a96d"
+            }
+          ]
+        }
+      },
+      "id": "3cc76674-8b54-4aeb-93f9-a012bdd41d35"
     },
     {
       "type": "paragraph",
@@ -2053,7 +2472,14 @@
             "italic": true
           }
         },
-        "."
+        ". In 2027 is dat een vrijdag = ",
+        {
+          "text": "in 2027, that is a Friday",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": the same chunk dat is, with is before dat because the sentence starts with a time."
       ],
       "id": "6a9da97f-492d-487c-b6a3-90dbfd8da7cf"
     },
@@ -2152,7 +2578,7 @@
           "instruction": "Complete the dialogues. Each … is one word.",
           "items": [
             {
-              "prompt": "Sofia: De … is het vandaag? / Noor: Het is de ….",
+              "prompt": "Sofia: De … is het vandaag? / Noor: Het is de …. (16 September)",
               "authorsVersion": [
                 "hoeveelste",
                 "zestiende"
@@ -2160,12 +2586,12 @@
               "note": "Without the month you use de + ordinal: de zestiende."
             },
             {
-              "prompt": "Sofia: Welke … is het vandaag? / Noor: Het is ….",
+              "prompt": "Sofia: Welke … is het vandaag? / Noor: Het is …. (Wednesday)",
               "authorsVersion": [
                 "dag",
                 "woensdag"
               ],
-              "note": "woensdag with a small letter."
+              "note": "woensdag with a small letter. Welke dag? asks for the day of the week; Welke datum? asks for the date."
             },
             {
               "prompt": "Daan: Wanneer ben je …? / Sofia: … 23 april.",
@@ -2176,7 +2602,7 @@
               "note": "jarig zijn = to have your birthday. op + date."
             },
             {
-              "prompt": "Sofia: Wanneer is je …? / Noor: Op vrijdag 2 ….",
+              "prompt": "Sofia: Wanneer is je …? / Noor: Op vrijdag 2 …. (exam / October)",
               "authorsVersion": [
                 "tentamen",
                 "oktober"
@@ -2483,16 +2909,16 @@
             {
               "prompt": "Gefeliciteerd met Daan!",
               "authorsVersion": [
-                "Happy birthday to Daan! (said to his family or friends)"
+                "Congratulations on Daan's birthday!"
               ],
-              "note": "You say this to Lotte or to Daan's family, not to Daan himself."
+              "note": "You say this to Lotte or to Daan's family, not to Daan himself. English has no exact equivalent."
             },
             {
               "prompt": "Sofia schrijft de datum in haar agenda.",
               "authorsVersion": [
-                "Sofia writes the date in her diary."
+                "Sofia writes the date in her planner."
               ],
-              "note": "de agenda = diary or planner, not the agenda of a meeting."
+              "note": "de agenda = planner / diary, not the agenda of a meeting. Also fine: Sofia writes the date in her diary."
             }
           ]
         }

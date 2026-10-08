@@ -115,7 +115,7 @@
         "turns": [
           {
             "speaker": "Noor",
-            "text": "Joh, Sofia, jouw agenda is vol! Wat doe je deze week?"
+            "text": "Joh, Sofia, jouw agenda is vol! Wat doe je elke week?"
           },
           {
             "speaker": "Sofia",
@@ -123,7 +123,7 @@
           },
           {
             "speaker": "Noor",
-            "text": "O, je gaat elke dinsdag naar de bibliotheek? Waarom?"
+            "text": "O, je gaat elke dinsdag naar de bibliotheek? Wat doe je daar?"
           },
           {
             "speaker": "Sofia",
@@ -164,6 +164,80 @@
         ]
       },
       "id": "7013a519-d9d4-44f4-bc8f-e3dccf48330a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "een drukke week",
+              "meaning": "a busy week",
+              "example": "Sofia heeft een drukke week.",
+              "note": "druk + e before a de-word: een drukke week.",
+              "id": "342c5b5d-4e98-4567-b49d-3dbf7f238679"
+            },
+            {
+              "term": "vol",
+              "meaning": "full",
+              "example": "Jouw agenda is vol!",
+              "id": "6dc1f0db-be2f-49e8-bbfd-a04279bbaec8"
+            },
+            {
+              "term": "de bibliotheek",
+              "meaning": "library",
+              "forms": "de bibliotheken",
+              "example": "Op dinsdag gaat Sofia naar de bibliotheek.",
+              "note": "False friend: not a bookshop (de boekwinkel).",
+              "id": "fa9f77ed-c5d8-4774-b3d0-538f2b090480"
+            },
+            {
+              "term": "daar",
+              "meaning": "there",
+              "example": "Ik heb daar Nederlandse les.",
+              "id": "5a61e31f-1917-4b57-9d54-d7f71cf2f45f"
+            },
+            {
+              "term": "de les",
+              "meaning": "lesson, class",
+              "forms": "de lessen",
+              "example": "Op dinsdag heb ik Nederlandse les.",
+              "note": "Nederlandse les hebben = to have a Dutch class (no article).",
+              "id": "0cda0f24-35d4-4a0e-b961-32404715cb10"
+            },
+            {
+              "term": "lopend",
+              "meaning": "on foot, walking",
+              "example": "Sofia gaat lopend naar kantoor.",
+              "note": "From lopen (07-a). No met: lopend, not met lopend.",
+              "id": "9bb3dbc6-33e6-4a83-9ae6-f73a7a85522e"
+            },
+            {
+              "term": "de sportschool",
+              "meaning": "gym",
+              "forms": "de sportscholen",
+              "example": "Elke donderdag sport Noor in de sportschool.",
+              "note": "Not a school: a place to work out.",
+              "id": "02793800-d426-4e79-ad43-316a19c21653"
+            },
+            {
+              "term": "het café",
+              "meaning": "café, pub",
+              "forms": "de cafés",
+              "example": "Op zaterdag werk ik in het café.",
+              "id": "93ec62e1-fd4a-465a-893a-8648678dd8a5"
+            },
+            {
+              "term": "de tram",
+              "meaning": "tram",
+              "forms": "de trams",
+              "example": "Om acht uur gaan we met de tram naar Daan.",
+              "id": "1eea61c3-f033-43a0-8932-494b7b85983f"
+            }
+          ]
+        }
+      },
+      "id": "3e96c1e2-f695-4db5-a7bd-f4756148ca3e"
     },
     {
       "type": "paragraph",
@@ -501,6 +575,30 @@
       "id": "1cbde7f6-00ab-4c2f-bd3f-89d1f8ed1d58"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "met de bus",
+              "meaning": "by bus",
+              "example": "Ik ga morgen met de bus naar de bibliotheek.",
+              "note": "met + transport: met de trein, met de tram, met de fiets.",
+              "id": "d7096ef3-4df4-4cd8-84b9-ba64320b7a4a"
+            },
+            {
+              "term": "alleen",
+              "meaning": "alone",
+              "example": "Sofia zwemt alleen.",
+              "note": "Also means only (08-b: Alleen knippen).",
+              "id": "8bed30e4-3f48-4e17-a5b2-0448ab45509d"
+            }
+          ]
+        }
+      },
+      "id": "287aa518-47f1-423b-af22-3468c1776f34"
+    },
+    {
       "type": "example",
       "props": {
         "translation": "Daan goes to the office by bike every day.",
@@ -649,7 +747,7 @@
     {
       "type": "example",
       "props": {
-        "translation": "I come home by bus at ten o'clock.",
+        "translation": "I get home by bus at ten o'clock.",
         "note": "Recycles thuiskomen (07-b): time – manner, and the prefix thuis stays at the very end."
       },
       "content": [
@@ -928,6 +1026,23 @@
       "id": "3485aafc-91cd-4fde-82ea-bc18353e2b5f"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het zwembad",
+              "meaning": "swimming pool",
+              "forms": "de zwembaden",
+              "example": "Sofia gaat op woensdag naar het zwembad.",
+              "id": "5ff56e54-28bd-4713-95ce-efe3ebc18a39"
+            }
+          ]
+        }
+      },
+      "id": "38e283d9-c33e-410a-8151-50f105f39e6d"
+    },
+    {
       "type": "paragraph",
       "content": [
         "English often uses the mirror order: ",
@@ -1188,8 +1303,8 @@
     {
       "type": "example",
       "props": {
-        "translation": "Sofia swims at the swimming pool every week on Wednesday.",
-        "note": "General (elke week) before specific (op woensdag)."
+        "translation": "Sofia swims at the pool every Wednesday.",
+        "note": "General (elke week) before specific (op woensdag). In everyday speech you also simply say elke woensdag."
       },
       "content": [
         {
@@ -1223,6 +1338,23 @@
         "."
       ],
       "id": "34eb2496-76c9-43db-abea-18b4ba372061"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "zwemmen",
+              "meaning": "to swim",
+              "forms": "zwemt · zwom · gezwommen",
+              "example": "Op woensdag zwem ik in het zwembad.",
+              "id": "24262730-6f9e-4a46-bc92-9da1b1b27f26"
+            }
+          ]
+        }
+      },
+      "id": "7e95a0e6-40e1-404e-8bef-46f7361418ea"
     },
     {
       "type": "heading",
@@ -1796,6 +1928,44 @@
       "id": "dc44e950-7c1d-4617-8906-753f89e996df"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de kring",
+              "meaning": "circle",
+              "forms": "de kringen",
+              "example": "Op het feest zit iedereen in een kring.",
+              "id": "742a3b55-cb18-4c75-b14c-6c53a8fe443b"
+            },
+            {
+              "term": "het cadeau",
+              "meaning": "present, gift",
+              "forms": "de cadeaus",
+              "example": "Alsjeblieft, een cadeau!",
+              "id": "8758fde4-87e1-4cf7-8da6-32b3d642f74e"
+            },
+            {
+              "term": "geven",
+              "meaning": "to give",
+              "forms": "geeft · gaf · gegeven",
+              "example": "Sofia geeft Daan een boek.",
+              "id": "fe2a4a25-92e3-4dd6-95f9-18fc99dcfa51"
+            },
+            {
+              "term": "krijgen",
+              "meaning": "to get, to receive",
+              "forms": "krijgt · kreeg · gekregen",
+              "example": "Daan krijgt een boek van Sofia.",
+              "id": "99cbf42d-ed7e-4ffe-9218-f32e592dd0f2"
+            }
+          ]
+        }
+      },
+      "id": "7e980a09-f7f7-45ff-a8b6-e177dd538524"
+    },
+    {
       "type": "callout",
       "props": {
         "variant": "pronunciation",
@@ -1853,7 +2023,7 @@
           },
           {
             "speaker": "Daans moeder",
-            "text": "Dank u wel! Ga zitten. Koffie? Taart?"
+            "text": "Dank je wel! Ga zitten. Koffie? Taart?"
           },
           {
             "speaker": "Sofia",
@@ -1874,6 +2044,41 @@
         ]
       },
       "id": "36ec4230-b532-418e-923c-16bbf4b15678"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Gefeliciteerd met je verjaardag!",
+              "meaning": "Happy birthday!",
+              "example": "Hoi Daan! Gefeliciteerd met je verjaardag!",
+              "note": "Said to the birthday person. To the others: Gefeliciteerd met Daan! (09-a).",
+              "id": "4faf9d85-bb5f-4d87-a7ed-6692a29047b7"
+            },
+            {
+              "term": "Kom binnen!",
+              "meaning": "Come in!",
+              "example": "Dank je wel, Sofia! Kom binnen!",
+              "id": "fb7a614f-7c66-40cd-9ba9-060dd696480a"
+            },
+            {
+              "term": "Wat leuk!",
+              "meaning": "How nice!",
+              "example": "Een boek! Wat leuk, dank je wel!",
+              "id": "6d7be7c6-0357-4e98-bdad-07e50a56c0d2"
+            },
+            {
+              "term": "Ga zitten.",
+              "meaning": "Sit down. / Have a seat.",
+              "example": "Ga zitten. Koffie? Taart?",
+              "id": "64be21e2-bf93-4f27-a0cb-1d7a8bfec5a0"
+            }
+          ]
+        }
+      },
+      "id": "32e2e0f7-d2ac-49fa-91ee-867cb5faaaa1"
     },
     {
       "type": "example",
@@ -2004,7 +2209,7 @@
               "note": "Time – manner – place."
             },
             {
-              "prompt": "Wij gaan … … … . (naar het feest / samen / zaterdag)",
+              "prompt": "Wij gaan … … …. (naar het feest / samen / zaterdag)",
               "authorsVersion": [
                 "zaterdag",
                 "samen",
@@ -2029,7 +2234,7 @@
               "note": "Thuiskomen: the prefix thuis stays at the end; time and manner come before it."
             },
             {
-              "prompt": "Lotte gaat … … … . (met de trein / naar Amersfoort / op woensdag)",
+              "prompt": "Lotte gaat … … …. (met de trein / naar Amersfoort / op woensdag)",
               "authorsVersion": [
                 "op woensdag",
                 "met de trein",
@@ -2078,7 +2283,7 @@
                 "met",
                 "Koffie"
               ],
-              "note": "Gefeliciteerd met + the birthday person. Offer with one word: Koffie? Taart?"
+              "note": "Gefeliciteerd met + the birthday person. Offer things with one word: Koffie? Also fine: Taart? or Thee?"
             },
             {
               "prompt": "Lotte: Wat doe jij volgende week, Sofia? / Sofia: Op dinsdag … … Nederlandse les.",
@@ -2317,7 +2522,7 @@
               "note": "Also fine: Gefeliciteerd, Daan!"
             },
             {
-              "prompt": "I come home by tram at ten o'clock.",
+              "prompt": "I get home by tram at ten o'clock.",
               "authorsVersion": [
                 "Ik kom om tien uur met de tram thuis."
               ],
@@ -2389,6 +2594,23 @@
       "id": "9008f195-2f01-4e8c-8b98-eed7e911abb1"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "iedereen",
+              "meaning": "everyone, everybody",
+              "example": "Op het feest zit iedereen in een kring.",
+              "note": "Takes a singular verb: iedereen zit.",
+              "id": "1a9188d7-a3d9-40cf-affb-0c9a66fc85b5"
+            }
+          ]
+        }
+      },
+      "id": "c82cd6f3-eb8d-459d-8ec4-c3c18f591146"
+    },
+    {
       "type": "heading",
       "props": {
         "level": 2
@@ -2403,7 +2625,7 @@
           "instruction": "Read Sofia's email to her mother. Answer the questions in Dutch.",
           "passage": {
             "title": "Lieve mama",
-            "content": "Lieve mama,\n\nHoe gaat het in Valencia? Hier in Utrecht is het druk!\n\nVan maandag tot vrijdag werk ik op kantoor. Ik ga elke dag om half negen lopend naar kantoor. Daan gaat altijd met de fiets. Hij is altijd op tijd en ik ben vaak een beetje te laat!\n\nOp dinsdag heb ik Nederlandse les. Ik ga om half zeven met de bus naar de bibliotheek in het centrum. De les is van zeven tot negen uur. De cursus is leuk, maar moeilijk.\n\nOp woensdag zwem ik 's ochtends om zeven uur in het zwembad. Ik zwem alleen. Het water is koud! Elke donderdag sport Noor in de sportschool. Volgende week ga ik samen met Noor.\n\nMorgen is Daan jarig. Het feest is om acht uur bij Daan thuis. Noor en ik gaan samen met de tram. Wij nemen een Spaanse tortilla mee!\n\nZondag bellen we, goed?\n\nVeel liefs,\nSofia"
+            "content": "Lieve mama,\n\nHoe gaat het in Valencia? Hier in Utrecht is het druk!\n\nVan maandag tot vrijdag werk ik op kantoor. Ik ga elke dag om half negen lopend naar kantoor. Daan gaat altijd met de fiets. Hij is altijd op tijd en ik ben vaak een beetje te laat!\n\nOp dinsdag heb ik Nederlandse les. Ik ga om half zeven met de bus naar de bibliotheek in het centrum. De les is van zeven tot negen uur. De cursus is heel leuk!\n\nOp woensdag zwem ik 's ochtends om zeven uur in het zwembad. Ik zwem alleen. Het water is koud! Elke donderdag sport Noor in de sportschool. Volgende week ga ik samen met Noor.\n\nMorgen is Daan jarig. Het feest is om acht uur bij Daan thuis. Noor en ik gaan samen met de tram. Wij nemen een Spaanse tortilla mee!\n\nZondag bellen we, goed?\n\nVeel liefs,\nSofia"
           },
           "items": [
             {
@@ -2461,6 +2683,54 @@
         }
       },
       "id": "156c3567-0a88-43ca-ae62-44b6a22437b3"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Lieve mama",
+              "meaning": "Dear Mum (opening a letter or email)",
+              "example": "Lieve mama, hoe gaat het in Valencia?",
+              "note": "Informal, for family and friends: Lieve Noor, …",
+              "id": "2c57ba4c-a70e-43b0-9f0a-da7aa029432e"
+            },
+            {
+              "term": "de cursus",
+              "meaning": "course",
+              "forms": "de cursussen",
+              "example": "De cursus is heel leuk!",
+              "id": "3b54a9d7-a548-4328-b640-a8b1abedee41"
+            },
+            {
+              "term": "het water",
+              "meaning": "water",
+              "example": "Het water is koud!",
+              "id": "a292ffb2-06e6-4455-b344-50ea90dcb3e4"
+            },
+            {
+              "term": "koud",
+              "meaning": "cold",
+              "example": "Het water in het zwembad is koud.",
+              "id": "0a2fbc8d-f8f0-4cde-849e-f91808273f5b"
+            },
+            {
+              "term": "bij Daan thuis",
+              "meaning": "at Daan's (home)",
+              "example": "Het feest is om acht uur bij Daan thuis.",
+              "id": "e0195559-03a8-4af6-a5a5-338eb20c4f9d"
+            },
+            {
+              "term": "Veel liefs",
+              "meaning": "Lots of love (closing a letter or email, informal)",
+              "example": "Veel liefs, Sofia",
+              "id": "711048e8-fe1d-48d0-89e6-a1817ac726b8"
+            }
+          ]
+        }
+      },
+      "id": "b3e588d7-5749-4046-9695-36466dd610f6"
     },
     {
       "type": "heading",
