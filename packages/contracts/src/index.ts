@@ -294,6 +294,31 @@ export const toggleReactionRequestSchema = z.object({ emoji: quickReactionSchema
 export const reactionTargetResponseSchema = z.object({ reactions: z.array(reactionSummarySchema) });
 export const pinRequestSchema = z.object({ commentId: opaqueIdSchema.nullable() });
 
+// Lesson speech (C10): the voices of each target language, narrator first. Changing the list is a product change; see docs/speech.md.
+export const SPEECH_VOICES = {
+  nl: ["nl-NL-FennaNeural", "nl-NL-ColetteNeural", "nl-NL-MaartenNeural"],
+  de: ["de-DE-KatjaNeural", "de-DE-AmalaNeural", "de-DE-ConradNeural", "de-DE-KillianNeural"],
+} as const satisfies Record<z.infer<typeof languageSchema>, readonly string[]>;
+export const speechVoiceSchema = z.enum([...SPEECH_VOICES.nl, ...SPEECH_VOICES.de]);
+export type SpeechVoice = z.infer<typeof speechVoiceSchema>;
+export const speechNarrator = (language: z.infer<typeof languageSchema>): SpeechVoice => SPEECH_VOICES[language][0];
+// A word's pronunciation override: IPA letters and diacritics, stress and length marks, `.`, and spaces only, so it can never
+// carry markup into a synthesis request.
+export const WORD_IPA_MAX = 100;
+export const wordIpaSchema = z.string().max(WORD_IPA_MAX)
+  .regex(/^[a-z\u00e6\u00e7\u00f0\u00f8\u0127\u014b\u0153\u0250-\u02ff\u0300-\u036f\u03b2\u03b8\u03c7. ]*$/u, "Use IPA letters, stress and length marks, dots, and spaces only.");
+
+// Dialogue speaker labels; the cast below keys on them.
+export const COURSE_SPEAKER_MAX = 40;
+// A course's dialogue cast maps speaker labels to voices. Labels match trimmed and case-insensitively, so two labels that only
+// differ in case or surrounding space are refused; voices are checked against the group language by the API.
+export const COURSE_CAST_MAX = 50;
+export const speechCastKey = (speaker: string) => speaker.trim().toLowerCase();
+export const speechCastSchema = z.record(z.string().trim().min(1).max(COURSE_SPEAKER_MAX), speechVoiceSchema)
+  .refine((cast) => Object.keys(cast).length <= COURSE_CAST_MAX, `A cast holds at most ${COURSE_CAST_MAX} speakers.`)
+  .refine((cast) => new Set(Object.keys(cast).map(speechCastKey)).size === Object.keys(cast).length, "Each speaker appears once in the cast.");
+export type SpeechCast = z.infer<typeof speechCastSchema>;
+
 export const COURSE_TITLE_MAX = 200;
 export const COURSE_TEXT_MAX = 2_000;
 export const COURSE_LEVEL_MAX = 200;
@@ -307,13 +332,16 @@ export const courseInputSchema = z.object({
   intendedLearner: optionalCourseTextSchema(COURSE_TEXT_MAX),
 });
 export const createCourseRequestSchema = courseInputSchema;
-export const updateCourseRequestSchema = courseInputSchema;
+// The owner may change the dialogue cast with the course details; leaving it out keeps the current cast.
+export const updateCourseRequestSchema = courseInputSchema.extend({ speechCast: speechCastSchema.optional() });
 export type CourseInput = z.infer<typeof courseInputSchema>;
+export type UpdateCourseInput = z.input<typeof updateCourseRequestSchema>;
 export const courseVisibilityRequestSchema = z.object({ status: z.enum(["draft", "published"]) });
 export const courseSchema = z.object({
   id: opaqueIdSchema, groupId: opaqueIdSchema, title: z.string(), summary: z.string(),
   level: z.string().nullable(), intendedLearner: z.string().nullable(), coverUrl: z.string().url().nullable(),
   status: courseStatusSchema, owner: postAuthorSchema, createdAt: z.number().int(), updatedAt: z.number().int(),
+  speechCast: speechCastSchema,
   // The viewer's own contributor request or role; null when they have neither.
   contribution: z.enum(["pending", "active"]).nullable(),
   permissions: z.object({
@@ -339,7 +367,6 @@ export const COURSE_HEADING_MAX = 200;
 export const COURSE_BLOCK_TEXT_MAX = 10_000;
 export const COURSE_SENTENCE_MAX = 1_000;
 export const COURSE_NOTE_MAX = 2_000;
-export const COURSE_SPEAKER_MAX = 40;
 export const COURSE_DIALOGUE_TURNS_MAX = 50;
 export const COURSE_LESSONS_MAX = 200;
 export const COURSE_BLOCKS_MAX = 200;

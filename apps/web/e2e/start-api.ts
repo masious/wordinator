@@ -5,7 +5,8 @@ import setupDatabase from "./global-setup";
 setupDatabase();
 
 const apiDirectory = resolve(import.meta.dirname, "../../api");
-const worker = spawn("pnpm", ["exec", "wrangler", "dev", "--persist-to", "../../.wrangler/e2e", "--port", "8788"], {
+// An empty Azure key keeps lesson speech from calling Azure during browser tests, whatever `.dev.vars` holds.
+const worker = spawn("pnpm", ["exec", "wrangler", "dev", "--persist-to", "../../.wrangler/e2e", "--port", "8788", "--var", "AZURE_SPEECH_KEY:"], {
   cwd: apiDirectory,
   env: process.env,
   stdio: "inherit",

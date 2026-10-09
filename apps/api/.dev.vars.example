@@ -1,1 +1,2 @@
 COOKIE_SIGNING_SECRET=replace-with-a-random-secret-of-at-least-32-characters
+AZURE_SPEECH_KEY=replace-with-the-azure-speech-resource-key

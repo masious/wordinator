@@ -4,13 +4,13 @@ const migrations = await readD1Migrations("../../packages/db/migrations");
 
 export default defineWorkersConfig({
   test: {
-    include: ["test/phase-five-media.test.ts", "test/course-media.test.ts"],
+    include: ["test/phase-five-media.test.ts", "test/course-media.test.ts", "test/course-speech.test.ts"],
     setupFiles: ["./test/setup.ts"],
     provide: { migrations },
     poolOptions: {
       workers: {
         main: "./src/index.ts",
-        // Work around the 0.8 pool's macOS R2 SQLite-sidecar isolation bug; this config runs one media suite only.
+        // Work around the 0.8 pool's macOS R2 SQLite-sidecar isolation bug; this config runs the suites that write to R2.
         isolatedStorage: false,
         singleWorker: true,
         miniflare: {

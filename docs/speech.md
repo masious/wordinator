@@ -1,6 +1,6 @@
 # Speech
 
-Status: approved product change (C10, 2026-10-09), planned. Phases are tracked in the [roadmap](roadmap.md#course-phases); [SPEECH_PLAN.md](../SPEECH_PLAN.md) holds the delivery checklist.
+Status: approved product change (C10, 2026-10-09), in progress: the generation pipeline (C10a) is implemented; playback (C10b) and authoring (C10c) are planned. Phases are tracked in the [roadmap](roadmap.md#course-phases); [SPEECH_PLAN.md](../SPEECH_PLAN.md) holds the delivery checklist.
 
 Speech lets a learner hear a lesson's new words, example sentences, and dialogues read aloud in the group's target language. Audio is synthesized by Azure AI Speech neural voices, generated once per distinct text in the background, stored in R2, and played from there. It builds on [lesson documents](courses.md#lesson-documents) and [new words](courses.md#new-words-and-recap).
 
@@ -28,7 +28,7 @@ Only Netherlands and Germany voices are listed; Belgian, Austrian, and Swiss voi
 
 ## Dialogue cast
 
-Characters recur across a course's lessons, so a course has a cast: a map from speaker label to voice, edited by the course owner with the course details. Speaker labels match trimmed and case-insensitively. A speaker without a cast entry takes the language's voices in the order speakers first appear in that dialogue, starting after the narrator, wrapping round the list. Changing the cast regenerates the affected turns in the background; the old clips stay valid for any other course that uses them.
+Characters recur across a course's lessons, so a course has a cast: a map from speaker label to voice, edited by the course owner with the course details. Speaker labels match trimmed and case-insensitively, so a cast may not hold two labels that differ only in case or surrounding space; labels are stored trimmed. A speaker without a cast entry takes the voice at their position among the dialogue's speakers in order of first appearance (cast speakers included), counted from the voice after the narrator and wrapping round the whole list, narrator included: in Dutch the first speaker is Colette, the second Maarten, the third Fenna. A cast voice of another language is ignored. Changing the cast regenerates the affected turns in the background; the old clips stay valid for any other course that uses them.
 
 ## Spoken text
 
@@ -58,9 +58,10 @@ Generation is strictly background work. Opening or playing a lesson never calls 
 - **Clip identity.** A clip is identified by the SHA-256 hash of its schema version, voice, and the exact synthesis markup (spoken text or IPA). Its R2 key is `speech/{hash}.mp3`. Identical text with the same voice shares one clip across lessons, courses, and groups, so Azure is called once per distinct clip.
 - **Jobs.** Each lesson has at most one pending speech job. Publishing a lesson makes its job due at once; saving a draft makes it due 2 minutes after the last save, so text typed in between is never synthesized; changing a course's cast makes the job of every lesson in the course due at once.
 - **Worker.** A Cron Trigger runs every minute. It takes due jobs, collects the lesson's spoken items from its published document and its draft, and claims every clip that is not ready by inserting its row; a row that already exists is never synthesized again. It then synthesizes each claimed clip, writes the MP3 to R2, and marks the row ready. Each run synthesizes a bounded number of clips and leaves the rest of the job due for the next run. Publishing also starts one run in the background after its response.
-- **Failures.** A failed clip is retried with growing delays and marked failed after 5 attempts. Azure `429` responses back off the whole run. A claim that never finishes expires after 10 minutes and can be claimed again.
+- **Failures.** A failed clip is retried after 1, 2, 4, and 8 minutes and marked failed after 5 attempts. An Azure `429` response stops the whole run and pushes the job back by its `Retry-After`, or a minute. A claim that never finishes expires after 10 minutes and can be claimed again.
 - **Retention.** Clips are content-addressed and shared, so editing, unpublishing, or deleting a lesson never deletes them. A deleted lesson's job is deleted with it.
-- Leading and trailing silence is removed in the synthesis request, so a word clip is about as long as the word.
+- Leading and trailing silence is removed in the synthesis request (`mstts:silence` `Leading-exact` and `Tailing-exact`), so a word clip is about as long as the word. Azure still pads some short clips to about 1.9 seconds with trailing silence; playback is unaffected, since nothing follows a clip automatically except within Play dialogue.
+- **Limits.** A run takes at most 10 due jobs and synthesizes at most 40 clips. A job waiting only on a retry or on another run's claim is pushed to that time instead of staying due. An Azure `401` or `403` (a refused key) stops the run like a `429`, without counting an attempt. Without `AZURE_SPEECH_KEY` and `AZURE_SPEECH_REGION`, the worker does nothing and jobs stay due.
 
 ## Playback
 
@@ -77,9 +78,9 @@ Spoken lesson text is sent to Microsoft Azure AI Speech, and clips are public-by
 
 ## API and data
 
-- Lesson reads (`GET .../lessons/:lessonId`, and the lessons a course read includes) add `speech`, a map from item key to clip URL for ready clips only. Item keys are `word:{wordId}`, `wordExample:{wordId}`, `example:{blockId}`, and `turn:{blockId}:{index}`. Editors also receive `draftSpeech` for the draft, with each item's status.
+- Lesson reads (`GET .../lessons/:lessonId`, and the lessons a course read includes) add `speech`, a map from item key to clip URL for ready clips only. Item keys are `word:{wordId}`, `wordExample:{wordId}`, `example:{blockId}`, and `turn:{blockId}:{index}`. Editors also receive `draftSpeech` for the draft, with each item's status (`pending`, `ready`, or `failed`) and its URL once ready; an item whose clip has never been claimed is pending. Learners receive `draftSpeech: null`. The course read returns `speechCast` with the course.
 - Course words and word bookmark responses add each word's `speech: { term, example }` URLs, `null` while not ready.
-- The course details update accepts the cast, owner only, validated against the group language's voices.
+- The course details update (`PATCH .../courses/:courseId`) accepts an optional `speechCast`; leaving it out keeps the cast, and an empty map clears it. It is owner only like the rest of the details, and a voice outside the group language's list is refused with `400 SPEECH_VOICE_INVALID`.
 - No route accepts text to synthesize, and no route triggers synthesis directly.
 - Data lives in [`speech_clips`](data-model.md#speech_clips) and [`speech_jobs`](data-model.md#speech_jobs); the cast is a column of [`courses`](data-model.md#courses), and the IPA is part of the word payload and of [`course_lesson_words`](data-model.md#course_lesson_words).
 - Azure is called through its REST endpoint from the Worker, with the key as the `AZURE_SPEECH_KEY` secret and the region as the `AZURE_SPEECH_REGION` variable; see [operations](operations.md).

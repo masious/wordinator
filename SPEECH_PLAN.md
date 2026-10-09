@@ -18,16 +18,16 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 
 ## C10a — Generation pipeline (contracts, data, worker)
 
-- [ ] Spike: call the Azure REST endpoint (`https://{region}.tts.speech.microsoft.com/cognitiveservices/v1`) with `fetch` from a local Worker, confirm the key and region work there (the resource lists the multi-service endpoint `germanywestcentral.api.cognitive.microsoft.com`), `audio-24khz-96kbitrate-mono-mp3` output, `mstts:silence` leading/trailing trimming, and an IPA `phoneme` for a Dutch and a German word. Record findings here.
-- [ ] Contracts: voice lists and narrators per language; `ipa` on `vocabularyWordSchema` with its character allowlist and limit; course cast schema; `spokenText`, `speechItems(document, cast, language)` returning item keys with voice and markup, the SSML builder with XML escaping, and `speechClipHash` (Web Crypto, usable by API and tests); `speech` maps on lesson, course words, and bookmark responses.
-- [ ] Migration `0019_speech.sql` with `packages/db/src/schema.ts`: `speech_clips`, `speech_jobs`, `courses.speech_cast`, and `course_lesson_words.ipa`, as in the data model. `collectLessonWords` carries `ipa`.
-- [ ] Azure client in `apps/api`: REST call, timeout, `429` and `5xx` classification; never logs text or the key.
-- [ ] Jobs: upsert on draft save (due in 2 minutes), on publish (due now, plus one background run through `waitUntil`), and on cast change (every lesson of the course, due now); jobs cascade from lessons.
-- [ ] Worker: per-minute cron next to the daily media sweep (`scheduled` dispatches by `event.cron`); claim by insert, lease expiry, per-run clip cap, retries with backoff, failed after 5 attempts, R2 `put` with `audio/mpeg` and an immutable cache header.
-- [ ] Reads: `speech` for published items on lesson and course reads, `draftSpeech` with statuses for editors, `speech` on course words and bookmark pages; a ready clip is a single indexed lookup by hash.
-- [ ] Course details update accepts the cast (owner only), validated against the group language.
-- [ ] Workers tests: tenant isolation (another group's lesson job never surfaces clips in this group's reads beyond its own items; nested IDs), learners never get `draftSpeech`, non-member and former-member denial, contributor refused on the cast, jobs debounced on draft save, one Azure call for the same text in two lessons and two groups, concurrent claims, lease expiry, retries, failed state, `429` backoff, lesson deletion removing the job, IPA validation refusing markup. Contract tests for `spokenText`, SSML escaping, and hashes.
-- [ ] Docs: `docs/architecture.md` (cron, Azure binding, reads), `docs/data-model.md` status, `docs/courses.md` vocabulary `ipa` field and course cast, `docs/operations.md` secret, variable, cron, and backfill, `docs/testing.md`.
+- [x] Spike (2026-10-09): the regional TTS endpoint `https://germanywestcentral.tts.speech.microsoft.com/cognitiveservices/v1` works with the resource key (the multi-service `germanywestcentral.api.cognitive.microsoft.com` endpoint is not needed), from Node and from a local Worker (`wrangler dev --test-scheduled`, 40 clips in one cron run, served back as `audio/mpeg`). `audio-24khz-96kbitrate-mono-mp3` returns MP3 at 12 KB/s. A bad request is `400` with an empty body, a wrong key `401`. `mstts:silence` `Leading-exact`/`Tailing-exact` at `0ms` cut *water* from 1.87 s to 0.62 s, but Azure still pads some short words (plain *voorkomen*) to 1.87 s with about 1 s of trailing silence, and `Tailing` or `10ms` change nothing; accepted, noted in [speech](docs/speech.md#generation). IPA `phoneme` works for Dutch (*voorkomen* `ˈvoːrkoːmə` against `voːrˈkoːmə` differ audibly in stress) and German (*umfahren* `ʊmˈfaːʁən`). Calls take 250–1,500 ms.
+- [x] Contracts: `SPEECH_VOICES` with the narrator first, `speechVoiceSchema`, `wordIpaSchema` (allowlist, 100 characters) as `ipa` on `vocabularyWordSchema`, `speechCastSchema` and `speechCast` on courses and the course update; `@wordinator/contracts/speech` with `spokenText`, `wordSpeechItems`, `dialogueVoices`, `speechItems`, `speechMarkup`, `speechSsml` (XML escaping), `speechClipHash` (Web Crypto), and `speechClipKey`; `speech` and `draftSpeech` on lessons, `speech` on course words and bookmarks.
+- [x] Migration `0019_speech.sql` with `packages/db/src/schema.ts`: `speech_clips`, `speech_jobs`, `courses.speech_cast`, and `course_lesson_words.ipa`. `collectLessonWords` carries `ipa`. Applied locally only.
+- [x] Azure client in `apps/api/src/speech.ts`: REST call, 15-second timeout, `429` (throttled), `401`/`403` (unauthorized), and other failures classified; logs statuses only.
+- [x] Jobs: upsert on draft save (due in 2 minutes), on publish (due now, plus one background run through `waitUntil`), and on cast change (every lesson of the course, due now); lesson deletion removes the job, which also cascades.
+- [x] Worker: per-minute cron next to the daily media sweep (`scheduled` dispatches by `controller.cron`); claim by insert, 10-minute lease expiry, 10 jobs and 40 clips per run, retries after 1, 2, 4, and 8 minutes, failed after 5 attempts, R2 `put` with `audio/mpeg` and an immutable cache header. `/api/media/*` serves `speech/` keys for local development.
+- [x] Reads: `speech` for published items on lesson and course reads, `draftSpeech` with statuses for editors, `speech` on course words and bookmark pages; ready clips are one indexed lookup by hash per response.
+- [x] Course details update accepts the cast (owner only), validated against the group language (`400 SPEECH_VOICE_INVALID`).
+- [x] Workers tests (`course-speech.test.ts`, in the R2 config) and contract tests (`speech.test.ts`); see [testing](docs/testing.md).
+- [x] Docs: `docs/speech.md`, `docs/architecture.md`, `docs/data-model.md`, `docs/courses.md`, `docs/operations.md` (secret, variable, cron, local runs, and backfill), `docs/testing.md`, `docs/security-and-privacy.md`, `docs/roadmap.md`.
 
 ## C10b — Playback
 
@@ -48,7 +48,7 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 ## Release
 
 - [ ] Type-check, Vitest, RTL, Playwright, and production builds for web and API on the release commit.
-- [ ] Rotate the Azure key shared during evaluation, then `wrangler secret put AZURE_SPEECH_KEY` and set `AZURE_SPEECH_REGION`.
+- [ ] Rotate the Azure key shared during evaluation, then `wrangler secret put AZURE_SPEECH_KEY` (`AZURE_SPEECH_REGION` is already a variable in `apps/api/wrangler.jsonc`).
 - [ ] Back up production D1, apply `0019` with an explicit `--remote`, deploy the API, then the web app.
 - [ ] Backfill: queue a due job for every published lesson (lessons seeded directly into the database included), and watch the cron drain them.
 - [ ] Smoke test: a Dutch word that is also English (*water*), an example, and a dialogue play with the expected voices; an IPA override changes a word's stress.

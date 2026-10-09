@@ -2,7 +2,7 @@ import { z } from "zod";
 import {
   COURSE_BLOCK_TEXT_MAX, COURSE_BLOCKS_MAX, COURSE_HEADING_MAX, COURSE_NOTE_MAX, COURSE_PRELOADED_LESSONS, COURSE_RECAP_WORDS_MAX, COURSE_SENTENCE_MAX,
   COURSE_WORD_FORMS_MAX, COURSE_WORD_MEANING_MAX, COURSE_WORD_TERM_MAX, COURSE_WORDS_PER_BLOCK_MAX, courseLessonSummarySchema, courseSchema, dialoguePayloadSchema, editorRefSchema, opaqueIdSchema, paginationQuerySchema, practicePayloadSchema, splitPracticePayload, type PracticePayload,
-  WORD_BOOKMARKS_MAX,
+  WORD_BOOKMARKS_MAX, wordIpaSchema,
   type PracticeReference,
 } from "./index";
 
@@ -139,6 +139,8 @@ export const vocabularyWordSchema = z.strictObject({
   forms: z.string().max(COURSE_WORD_FORMS_MAX).optional(),
   example: z.string().max(COURSE_SENTENCE_MAX).optional(),
   note: z.string().max(COURSE_NOTE_MAX).optional(),
+  // The pronunciation override of the term (docs/speech.md#pronunciation-override).
+  ipa: wordIpaSchema.optional(),
 });
 export type VocabularyWord = z.infer<typeof vocabularyWordSchema>;
 export const vocabularyPayloadSchema = z.strictObject({
@@ -272,6 +274,7 @@ export function findPublishProblems(document: LessonDocument): LessonPublishProb
 // across the whole lesson; the API's course word index and the lesson recap both read this.
 export type LessonWord = {
   blockId: string; position: number; id: string; term: string; meaning: string; forms: string | null; example: string | null; note: string | null;
+  ipa: string | null;
 };
 export function collectLessonWords(document: LessonDocument): LessonWord[] {
   const optional = (value: string | undefined) => value?.trim() || null;
@@ -279,7 +282,7 @@ export function collectLessonWords(document: LessonDocument): LessonWord[] {
     .flatMap(({ block }) => block.type === "vocabulary" ? readVocabularyBlock(block).words.map((word) => ({ blockId: block.id, word })) : [])
     .map(({ blockId, word }, position) => ({
       blockId, position, id: word.id, term: word.term.trim(), meaning: word.meaning.trim(),
-      forms: optional(word.forms), example: optional(word.example), note: optional(word.note),
+      forms: optional(word.forms), example: optional(word.example), note: optional(word.note), ipa: optional(word.ipa),
     }));
 }
 
@@ -498,10 +501,20 @@ export type LessonImageUploadResponse = z.infer<typeof lessonImageUploadResponse
 // active contributors also receive the full draft, including authors' versions and item notes, and its version.
 export const lessonDraftSchema = z.object({ document: lessonDocumentSchema, version: draftVersionSchema });
 export type LessonDraft = z.infer<typeof lessonDraftSchema>;
+// Lesson speech (docs/speech.md#api-and-data): `speech` maps the item keys of the published document to ready clip URLs only.
+// Editors also receive `draftSpeech` with every spoken item of the draft and its status; a pending or failed item has no URL.
+export const speechMapSchema = z.record(z.string(), z.url());
+export type SpeechMap = z.infer<typeof speechMapSchema>;
+export const speechStatusSchema = z.enum(["pending", "ready", "failed"]);
+export type SpeechStatus = z.infer<typeof speechStatusSchema>;
+export const draftSpeechSchema = z.record(z.string(), z.object({ status: speechStatusSchema, url: z.url().nullable() }));
+export type DraftSpeech = z.infer<typeof draftSpeechSchema>;
 export const courseLessonSchema = courseLessonSummarySchema.extend({
   document: lessonDocumentSchema.nullable(),
   answerCounts: z.record(z.string(), z.number().int().nonnegative()),
   draft: lessonDraftSchema.nullable(),
+  speech: speechMapSchema,
+  draftSpeech: draftSpeechSchema.nullable(),
 });
 export type CourseLesson = z.infer<typeof courseLessonSchema>;
 export const lessonResponseSchema = z.object({ lesson: courseLessonSchema });
@@ -523,10 +536,13 @@ export const lessonNotReadySchema = z.object({
 });
 
 // The course word recap: the words of the currently published lessons the viewer has finished, in lesson order and then
-// document order, with repeated terms (trimmed, case-insensitive) kept at their first occurrence.
+// document order, with repeated terms (trimmed, case-insensitive) kept at their first occurrence. `speech` holds the ready clip
+// URLs of the term and the example, null while not ready.
+export const wordSpeechSchema = z.object({ term: z.url().nullable(), example: z.url().nullable() });
+export type WordSpeech = z.infer<typeof wordSpeechSchema>;
 export const courseWordSchema = z.object({
   id: opaqueIdSchema, lessonId: opaqueIdSchema, term: z.string(), meaning: z.string(),
-  forms: z.string().nullable(), example: z.string().nullable(), note: z.string().nullable(),
+  forms: z.string().nullable(), example: z.string().nullable(), note: z.string().nullable(), speech: wordSpeechSchema,
 });
 export type CourseWord = z.infer<typeof courseWordSchema>;
 export const courseWordsResponseSchema = z.object({ words: z.array(courseWordSchema).max(COURSE_RECAP_WORDS_MAX) });

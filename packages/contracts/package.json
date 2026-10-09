@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./lesson-document": "./src/lessonDocument.ts"
+    "./lesson-document": "./src/lessonDocument.ts",
+    "./speech": "./src/speech.ts"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

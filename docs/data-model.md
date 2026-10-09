@@ -48,7 +48,7 @@ Opaque ID, group ID, owner ID, title, summary, optional level, optional intended
 
 Migration `0009_course_shell.sql` adds the table and its library index.
 
-Planned for C10a: a nullable `speech_cast` JSON column holding the course's [dialogue cast](speech.md#dialogue-cast), a map from speaker label to voice.
+Added in C10a (migration `0019_speech.sql`): a nullable `speech_cast` JSON column holding the course's [dialogue cast](speech.md#dialogue-cast), a map from trimmed speaker label to voice; null when there is none. A check constraint requires valid JSON.
 
 ### `course_lessons`
 
@@ -70,7 +70,7 @@ R2 key (primary key), group ID, course ID, lesson ID, created-by user ID, and cr
 
 ### `course_lesson_words`
 
-Added in C8. A derived index of the words in each lesson's published document, so the [course word recap](courses.md#word-recap) never parses documents at read time. Group ID, course ID, lesson ID, block ID, word ID, position (document order within the lesson), term, meaning, and optional forms, example, and note. The primary key is `(lesson_id, word_id)`. The published document stays the source of truth: publishing replaces the lesson's rows from the new published document in the same D1 batch, unpublishing deletes them, lesson deletion also removes them explicitly in its batch, and rows cascade from their course and lesson. Text is stored trimmed, with empty optional fields as null. Indexed by `(group_id, course_id, lesson_id, position)`. Migration `0017_course_lesson_words.sql` adds the table empty, since no published document held vocabulary before it. Planned for C10a: an optional `ipa` column carrying the word's [pronunciation override](speech.md#pronunciation-override).
+Added in C8. A derived index of the words in each lesson's published document, so the [course word recap](courses.md#word-recap) never parses documents at read time. Group ID, course ID, lesson ID, block ID, word ID, position (document order within the lesson), term, meaning, and optional forms, example, and note. The primary key is `(lesson_id, word_id)`. The published document stays the source of truth: publishing replaces the lesson's rows from the new published document in the same D1 batch, unpublishing deletes them, lesson deletion also removes them explicitly in its batch, and rows cascade from their course and lesson. Text is stored trimmed, with empty optional fields as null. Indexed by `(group_id, course_id, lesson_id, position)`. Migration `0017_course_lesson_words.sql` adds the table empty, since no published document held vocabulary before it. Migration `0019_speech.sql` adds an optional `ipa` column carrying the word's [pronunciation override](speech.md#pronunciation-override), filled from the next publish of each lesson; reads use it to identify the term's clip and never return it.
 
 ### `course_word_bookmarks`
 
@@ -90,7 +90,7 @@ Added in C6b. Group ID, course ID, lesson ID, user ID, step key, step index, pas
 
 ## Speech
 
-Planned for C10a; migration `0019_speech.sql`. The [speech rules](speech.md) own behavior.
+Added in C10a; migration `0019_speech.sql`. The [speech rules](speech.md) own behavior.
 
 ### `speech_clips`
 
@@ -98,7 +98,7 @@ One row per synthesized clip, shared across groups because a clip is content-add
 
 ### `speech_jobs`
 
-At most one pending job per lesson. Lesson ID (primary key), group ID, course ID, due timestamp, attempt count, and created/updated timestamps. Draft saves, publishing, and cast changes upsert it; the worker deletes it once every spoken item of the lesson's documents is ready or failed. Rows cascade from their course and lesson. Indexed by due timestamp.
+At most one pending job per lesson. Lesson ID (primary key), group ID, course ID, due timestamp, attempt count, and created/updated timestamps. Draft saves, publishing, and cast changes upsert it (resetting its attempt count); the worker deletes it once every spoken item of the lesson's documents is ready or failed, unless an upsert changed it during the run. Rows cascade from their course and lesson, and lesson deletion also removes the row in its batch. Jobs of a soft-deleted group are skipped while it is deleted. Indexed by due timestamp.
 
 ## Discussion
 

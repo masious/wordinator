@@ -34,7 +34,7 @@ Its D1 fixture is isolated under `.wrangler/e2e`; running `pnpm test:e2e` does n
 ## Local setup
 
 1. Run `pnpm install`.
-2. Copy `apps/api/.dev.vars.example` to the ignored `apps/api/.dev.vars` and replace the placeholder with a strong local cookie-signing secret.
+2. Copy `apps/api/.dev.vars.example` to the ignored `apps/api/.dev.vars` and replace the placeholder with a strong local cookie-signing secret. For [lesson speech](speech.md), also set `AZURE_SPEECH_KEY` there; without it the speech worker does nothing. `AZURE_SPEECH_REGION` is a plain variable in `wrangler.jsonc`. `wrangler dev` does not fire cron triggers on its own: start it with `--test-scheduled` and request `/__scheduled?cron=*+*+*+*+*` to run the speech worker once.
 3. Run `pnpm db:migrate:local` to create and migrate a fresh local D1 database.
 4. Run `pnpm bootstrap --local` and enter the first account and group details.
 5. Run `pnpm dev`.
@@ -49,8 +49,9 @@ Production needs:
 1. A D1 database bound to the API Worker.
 2. An R2 bucket configured for public object reads and bound to the API Worker.
 3. A strong cookie-signing secret stored with Wrangler secret management.
-4. An API Worker route for `/api/*` on the application hostname.
-5. A web Worker using Workers Static Assets with SPA fallback for all other routes.
+4. An Azure AI Speech resource (currently in `germanywestcentral`), whose key is the `AZURE_SPEECH_KEY` Worker secret (`pnpm --filter @wordinator/api exec wrangler secret put AZURE_SPEECH_KEY`) and whose region is the `AZURE_SPEECH_REGION` variable in `apps/api/wrangler.jsonc`. Rotate the key in the Azure portal and put the new one; never commit it.
+5. An API Worker route for `/api/*` on the application hostname.
+6. A web Worker using Workers Static Assets with SPA fallback for all other routes.
 
 Keep IDs and non-secret binding names in Wrangler configuration. Keep secrets out of committed files.
 
@@ -72,6 +73,17 @@ Required workflow:
 8. Deploy compatible API/web versions.
 
 Never edit production schema ad hoc without immediately capturing and reconciling a migration.
+
+### Speech backfill
+
+Migration `0019_speech.sql` adds the speech tables empty. After it is applied and the API with the speech worker is deployed, queue a due job for every published lesson, including lessons seeded directly into the database, and watch the per-minute `speech.run` log lines drain them (about 40 clips a minute):
+
+```sh
+pnpm --filter @wordinator/api exec wrangler d1 execute wordinator --remote --command "INSERT INTO speech_jobs (lesson_id, group_id, course_id, due_at, attempts, created_at, updated_at) SELECT id, group_id, course_id, 0, 0, unixepoch() * 1000, unixepoch() * 1000 FROM course_lessons WHERE published_doc IS NOT NULL ON CONFLICT (lesson_id) DO UPDATE SET due_at = 0"
+pnpm --filter @wordinator/api exec wrangler d1 execute wordinator --remote --command "SELECT COUNT(*) AS jobs FROM speech_jobs"
+```
+
+Use `--local` instead of `--remote` for the local database. The same statement re-queues every lesson if clips ever need regenerating, for example after the speech schema version changes. Word IPA reaches `course_lesson_words` only when a lesson is next published, so the term clips of words with an IPA override in a published lesson come from the published document either way.
 
 ## Bootstrap CLI
 
@@ -114,7 +126,7 @@ Then:
 4. Run `pnpm bootstrap --remote` only for a clean installation. Never run bootstrap against an installation containing users.
 5. In current desktop Chrome, desktop Safari, Chrome on Android, and Safari on iOS, record date/version/pass-fail for sign-in, group switch, composer, notification destination, discussion reply, and mobile navigation.
 6. Verify the offline fallback says the internet is required and that reconnect/retry preserves a local draft.
-7. Confirm the API Worker shows its daily cron trigger (`wrangler deploy` prints it; the dashboard lists it under Triggers). Its `lesson_media.swept` log line records how many unreferenced lesson images were removed.
+7. Confirm the API Worker shows its two cron triggers, daily and every minute (`wrangler deploy` prints them; the dashboard lists them under Triggers). The daily `lesson_media.swept` log line records how many unreferenced lesson images were removed; each minute's `speech.run` line records the jobs taken and clips synthesized or failed, and `speech.throttled`, `speech.unauthorized`, or `speech.synthesis_failed` lines need attention when they repeat.
 8. Run the friend-group smoke test with two accounts: invitation, approval, post, concealed answer, reaction, reply, notification/read state, image delivery, leave/removal status, and sign-out/sign-in.
 
 The deploy scripts above invoke `wrangler deploy` from the appropriate app directory. Before the first production deploy, replace the placeholder D1 ID, provision the resources described above, and configure the two hostname routes. Production provisioning and route IDs are intentionally not invented in source control.

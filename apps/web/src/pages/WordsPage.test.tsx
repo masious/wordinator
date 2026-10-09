@@ -14,7 +14,7 @@ const id = (n: number) => `90000000-0000-4000-8000-${String(n).padStart(12, "0")
 const groupId = id(1); const userId = id(2); const courseId = id(3);
 const session = { status: "signedIn", user: { id: userId, displayName: "Ada", avatarUrl: null, mustChangePassword: false }, groups: [{ id: groupId, name: "Study", language: "nl", role: "member", icon: "🇳🇱", iconUrl: null }], requests: [], deletedGroups: [] };
 const item = (n: number, lesson = id(40)) => ({
-  word: { id: id(100 + n), lessonId: lesson, term: `woord ${n}`, meaning: `meaning ${n}`, forms: null, example: null, note: null },
+  word: { id: id(100 + n), lessonId: lesson, term: `woord ${n}`, meaning: `meaning ${n}`, forms: null, example: null, note: null, speech: { term: null, example: null } },
   course: { id: courseId, title: "Dutch foundations" }, lesson: { id: lesson, title: `Lesson ${lesson.slice(-2)}` }, bookmarkedAt: 1000 - n,
 });
 const listPath = `/api/groups/${groupId}/word-bookmarks?limit=100`;

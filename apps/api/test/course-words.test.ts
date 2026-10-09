@@ -102,7 +102,7 @@ describe("Course word recap", () => {
     const words = await recap(path, reader);
     // " DER HUND " repeats "der Hund" (trimmed, case-insensitive), so only the first lesson's entry is kept.
     expect(words.map((entry) => entry.term)).toEqual(["der Hund", "die Katze", "das Haus"]);
-    expect(words[0]).toEqual({ id: hund.id, lessonId: first.lesson.id, term: "der Hund", meaning: "meaning of der Hund", forms: "die Hunde", example: "Der Hund bellt.", note: "Masculine." });
+    expect(words[0]).toEqual({ id: hund.id, lessonId: first.lesson.id, term: "der Hund", meaning: "meaning of der Hund", forms: "die Hunde", example: "Der Hund bellt.", note: "Masculine.", speech: { term: null, example: null } });
     // Lesson order follows the outline.
     expect((await request(`${path}/lessons/order`, owner, { ids: [second.lesson.id, first.lesson.id] }, "PUT")).status).toBe(200);
     expect(await terms(path, reader)).toEqual(["das Haus", "DER HUND", "die Katze"]);

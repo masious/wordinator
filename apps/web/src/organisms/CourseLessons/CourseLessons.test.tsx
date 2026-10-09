@@ -16,7 +16,7 @@ const lessonId = (n: number) => `40000000-0000-4000-8000-00000000000${n}`;
 const editor = { id: accountId, displayName: "Ada" };
 const course = (edit: boolean, contribute = edit) => ({
   id: courseId, groupId, title: "Dutch Foundations", summary: "Home", level: null, intendedLearner: null, coverUrl: null, status: "published" as const,
-  owner: { id: accountId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, contribution: !edit && contribute ? "active" as const : null,
+  owner: { id: accountId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, speechCast: {}, contribution: !edit && contribute ? "active" as const : null,
   permissions: { edit, publish: edit, archive: edit, removeContent: edit, contribute, requestContribution: false, leaveContribution: !edit && contribute, manageContributors: edit },
 });
 const summary = (n: number, published = true) => ({
@@ -36,7 +36,7 @@ const practice: LessonTopBlock = {
 const doc = (blocks: LessonTopBlock[]): LessonDocument => ({ schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks });
 // Readers receive the published document only; editors also receive the draft.
 const lesson = (n: number, blocks: LessonTopBlock[] = [], { published = true, editing = false } = {}): CourseLesson => ({
-  ...summary(n, published), document: published ? doc(blocks) : null, answerCounts: {}, draft: editing ? { document: doc(blocks), version: 1 } : null,
+  ...summary(n, published), document: published ? doc(blocks) : null, answerCounts: {}, draft: editing ? { document: doc(blocks), version: 1 } : null, speech: {}, draftSpeech: editing ? {} : null,
 });
 const progress = (completedLessonIds: string[], positions: unknown[] = []) => ({
   publishedLessons: 4, completedLessonIds, positions,
@@ -283,8 +283,8 @@ describe("Course lessons", () => {
   it("offers the course recap when the viewer has finished lessons with words", async () => {
     const original = vi.mocked(fetch).getMockImplementation()!;
     const words = [
-      { id: "70000000-0000-4000-8000-000000000001", lessonId: lessonId(1), term: "de hond", meaning: "the dog", forms: "de honden", example: null, note: null },
-      { id: "70000000-0000-4000-8000-000000000002", lessonId: lessonId(1), term: "de kat", meaning: "the cat", forms: null, example: null, note: null },
+      { id: "70000000-0000-4000-8000-000000000001", lessonId: lessonId(1), term: "de hond", meaning: "the dog", forms: "de honden", example: null, note: null, speech: { term: null, example: null } },
+      { id: "70000000-0000-4000-8000-000000000002", lessonId: lessonId(1), term: "de kat", meaning: "the cat", forms: null, example: null, note: null, speech: { term: null, example: null } },
     ];
     vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/words") ? response({ words }) : original(input, init));
     renderLessons({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")])] });

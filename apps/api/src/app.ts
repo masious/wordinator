@@ -53,6 +53,8 @@ import {
   updatePracticeCommentRequestSchema,
   contributorDecisionRequestSchema,
   courseContributorsResponseSchema,
+  SPEECH_VOICES,
+  speechCastKey,
   type Course,
   type CourseLessonSummary,
   type DiscussionItem,
@@ -65,6 +67,7 @@ import {
   lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
   toLearnerDocument, walkLessonBlocks, type CourseLesson, type CourseWord, type LessonBlockOf, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
+import { wordSpeechItems } from "@wordinator/contracts/speech";
 import { createDatabase, groups, memberships, users } from "@wordinator/db";
 import { and, asc, count, eq, inArray, isNull } from "drizzle-orm";
 import { Hono, type Context } from "hono";
@@ -74,9 +77,14 @@ import { routePath } from "hono/route";
 import { clearSession, hashPassword, newInvitationToken, readSession, setSession, sha256, type AuthUser, verifyPassword } from "./auth";
 import { apiError, parseJson } from "./http";
 import { logError, logInfo } from "./logger";
+import {
+  clipUrl, courseSpeechJobsStatement, documentSpeechItems, hashSpeechItems, presentDraftSpeech, presentSpeech, readClips, runSpeechJobs,
+  SPEECH_DRAFT_DELAY_MS, speechJobStatement, storedSpeechCast,
+} from "./speech";
 
 export type Bindings = Env & { MEDIA: R2Bucket; PUBLIC_MEDIA_BASE_URL: string };
-type GroupAccess = { id: string; name: string; language: "nl" | "de"; creatorUserId: string; invitationToken: string; iconKey: string | null };
+type Language = "nl" | "de";
+type GroupAccess = { id: string; name: string; language: Language; creatorUserId: string; invitationToken: string; iconKey: string | null };
 type AppEnvironment = { Bindings: Bindings; Variables: { user: AuthUser | null; groupAccess: GroupAccess } };
 
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
@@ -446,13 +454,14 @@ async function toggleReaction(context: Context<AppEnvironment>, targetKind: "pos
 type CourseRow = {
   id: string; groupId: string; ownerId: string; title: string; summary: string; level: string | null; intendedLearner: string | null;
   coverKey: string | null; status: Course["status"]; firstPublishedAt: number | null; createdAt: number; updatedAt: number; displayName: string; avatarKey: string | null;
-  contributorState: ContributorState | null;
+  contributorState: ContributorState | null; speechCast: string | null;
 };
 type ContributorState = "pending" | "active" | "rejected" | "left" | "removed";
 
 // The first bound parameter is the viewer, whose own contributor state travels with the course row.
 const COURSE_SELECT = `SELECT c.id, c.group_id AS groupId, c.owner_id AS ownerId, c.title, c.summary, c.level,
     c.intended_learner AS intendedLearner, c.cover_key AS coverKey, c.status, c.first_published_at AS firstPublishedAt, c.created_at AS createdAt, c.updated_at AS updatedAt,
+    c.speech_cast AS speechCast,
     CASE WHEN m.state = 'active' THEN u.display_name ELSE COALESCE(m.profile_display_name, 'Former member') END AS displayName,
     CASE WHEN m.state = 'active' THEN u.avatar_key ELSE m.profile_avatar_key END AS avatarKey,
     (SELECT cc.state FROM course_contributors cc WHERE cc.course_id = c.id AND cc.user_id = ?) AS contributorState
@@ -473,7 +482,7 @@ function presentCourse(row: CourseRow, viewerId: string, creatorUserId: string, 
     id: row.id, groupId: row.groupId, title: row.title, summary: row.summary, level: row.level, intendedLearner: row.intendedLearner,
     coverUrl: mediaUrlFromBase(mediaBase, row.coverKey), status: row.status,
     owner: { id: row.ownerId, displayName: row.displayName, avatarUrl: mediaUrlFromBase(mediaBase, row.avatarKey) },
-    createdAt: row.createdAt, updatedAt: row.updatedAt, contribution,
+    createdAt: row.createdAt, updatedAt: row.updatedAt, speechCast: storedSpeechCast(row.speechCast) ?? {}, contribution,
     permissions: {
       edit: owner && active, publish: owner && active, archive: owner || creatorUserId === viewerId, removeContent: (owner || creatorUserId === viewerId) && active,
       contribute: (owner || contribution === "active") && active,
@@ -578,18 +587,33 @@ async function threadCounts(binding: D1Database, groupId: string, practiceIds: s
 }
 
 // Learners receive the published document with practice prompts only. Editors also receive the full draft and its version.
-async function presentLessons(binding: D1Database, course: CourseRow, viewerId: string, rows: LessonDocumentRow[], mediaBase: string): Promise<CourseLesson[]> {
+// Speech: everyone gets the ready clips of the published document; editors also get every draft item with its status.
+async function presentLessons(binding: D1Database, course: CourseRow, viewerId: string, rows: LessonDocumentRow[], mediaBase: string, language: Language): Promise<CourseLesson[]> {
   const editor = seesCourseDrafts(course, viewerId);
-  const documents = rows.map((row) => ({ row, ...storedDocuments(row) }));
+  const cast = storedSpeechCast(course.speechCast);
+  const documents = await Promise.all(rows.map(async (row) => {
+    const stored = storedDocuments(row);
+    return {
+      row, ...stored,
+      publishedSpeech: stored.published ? await documentSpeechItems(stored.published, cast, language) : [],
+      draftSpeech: editor ? await documentSpeechItems(stored.draft, cast, language) : [],
+    };
+  }));
   const practiceIds = documents.flatMap(({ draft, published }) => [...(published ? collectPracticeIds(published) : []), ...(editor ? collectPracticeIds(draft) : [])]);
-  const counts = await threadCounts(binding, course.groupId, practiceIds);
-  return documents.map(({ row, draft, published }) => {
+  const [counts, clips] = await Promise.all([
+    threadCounts(binding, course.groupId, practiceIds),
+    readClips(binding, documents.flatMap(({ publishedSpeech, draftSpeech }) => [...publishedSpeech, ...draftSpeech].map((item) => item.hash))),
+  ]);
+  const media = (key: string) => mediaUrlFromBase(mediaBase, key)!;
+  return documents.map(({ row, draft, published, publishedSpeech, draftSpeech }) => {
     const ids = new Set([...(published ? collectPracticeIds(published) : []), ...(editor ? collectPracticeIds(draft) : [])]);
     return {
       ...presentLessonSummary(row, editor),
       document: published && expandImages(toLearnerDocument(published).document, mediaBase),
       answerCounts: Object.fromEntries([...ids].map((id) => [id, counts[id] ?? 0])),
       draft: editor ? { document: expandImages(draft, mediaBase), version: row.draftVersion } : null,
+      speech: presentSpeech(publishedSpeech, clips, media),
+      draftSpeech: editor ? presentDraftSpeech(draftSpeech, clips, media) : null,
     };
   });
 }
@@ -635,7 +659,7 @@ async function publishableCourse(context: Context<AppEnvironment>) {
 
 async function lessonResponse(context: Context<AppEnvironment>, course: CourseRow, lessonId: string, status: 200 | 201 = 200) {
   const rows = await readLessonRows(context.env.DB, course, [lessonId]);
-  const [lesson] = await presentLessons(context.env.DB, course, context.get("user")!.id, rows, context.env.PUBLIC_MEDIA_BASE_URL);
+  const [lesson] = await presentLessons(context.env.DB, course, context.get("user")!.id, rows, context.env.PUBLIC_MEDIA_BASE_URL, context.get("groupAccess").language);
   return context.json(lessonResponseSchema.parse({ lesson }), status);
 }
 
@@ -697,10 +721,22 @@ function lessonWordStatements(binding: D1Database, course: CourseRow, lessonId: 
   return [
     binding.prepare(`DELETE FROM course_lesson_words WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND ${guard.sql}`).bind(course.groupId, course.id, lessonId, ...guard.values),
     binding.prepare(
-      `INSERT INTO course_lesson_words (group_id, course_id, lesson_id, block_id, word_id, position, term, meaning, forms, example, note)
-       SELECT ?, ?, ?, ${["blockId", "id", "position", "term", "meaning", "forms", "example", "note"].map(word).join(", ")} FROM json_each(?) WHERE ${guard.sql}`,
+      `INSERT INTO course_lesson_words (group_id, course_id, lesson_id, block_id, word_id, position, term, meaning, forms, example, note, ipa)
+       SELECT ?, ?, ?, ${["blockId", "id", "position", "term", "meaning", "forms", "example", "note", "ipa"].map(word).join(", ")} FROM json_each(?) WHERE ${guard.sql}`,
     ).bind(course.groupId, course.id, lessonId, JSON.stringify(collectLessonWords(published)), ...guard.values),
   ];
+}
+
+// Attaches the ready term and example clips to indexed words; the IPA override only shapes the term's clip and is not returned.
+type IndexedWord = Omit<CourseWord, "speech"> & { ipa: string | null };
+async function withWordSpeech<T extends IndexedWord>(binding: D1Database, rows: T[], language: Language, mediaBase: string) {
+  const items = await Promise.all(rows.map((row) => hashSpeechItems(wordSpeechItems(row, language))));
+  const clips = await readClips(binding, items.flat().map((item) => item.hash));
+  const url = (item: { hash: string } | undefined) => item && clips.get(item.hash)?.status === "ready" ? clipUrl((key) => mediaUrlFromBase(mediaBase, key)!, item.hash) : null;
+  return rows.map(({ ipa: _ipa, ...row }, index) => ({
+    ...row,
+    speech: { term: url(items[index]!.find((item) => item.key.startsWith("word:"))), example: url(items[index]!.find((item) => item.key.startsWith("wordExample:"))) },
+  }));
 }
 
 // The daily sweep removes lesson images that neither the draft nor the published document of their lesson references
@@ -780,7 +816,7 @@ app.get("/api/health", (context) => context.json(healthResponseSchema.parse({ st
 
 app.get("/api/media/*", async (context) => {
   const key = context.req.path.slice("/api/media/".length).split("/").map(decodeURIComponent).join("/");
-  if (!key || !["avatars/", "groups/", "courses/"].some((prefix) => key.startsWith(prefix))) return apiError(context, 404, "IMAGE_NOT_FOUND", "This image is not available.");
+  if (!key || !["avatars/", "groups/", "courses/", "speech/"].some((prefix) => key.startsWith(prefix))) return apiError(context, 404, "IMAGE_NOT_FOUND", "This image is not available.");
   const object = await context.env.MEDIA.get(key);
   if (!object) return apiError(context, 404, "IMAGE_NOT_FOUND", "This image is not available.");
   const headers = new Headers();
@@ -1565,19 +1601,33 @@ app.get("/api/groups/:groupId/courses/:courseId", requireGroupAccess, async (con
   // The outline is complete; documents come only for the first few visible lessons, and later lessons load by ID.
   const outline = await readOutline(context.env.DB, found.row, user.id);
   const preloaded = await readLessonRows(context.env.DB, found.row, outline.slice(0, COURSE_PRELOADED_LESSONS).map((lesson) => lesson.id));
-  const lessons = await presentLessons(context.env.DB, found.row, user.id, preloaded, context.env.PUBLIC_MEDIA_BASE_URL);
+  const lessons = await presentLessons(context.env.DB, found.row, user.id, preloaded, context.env.PUBLIC_MEDIA_BASE_URL, group.language);
   return context.json(courseDetailResponseSchema.parse({
     course: presentCourse(found.row, user.id, group.creatorUserId, context.env.PUBLIC_MEDIA_BASE_URL),
     outline: outline.map((row) => presentLessonSummary(row, seesCourseDrafts(found.row, user.id))), lessons,
   }));
 });
 
+// Only the owner changes course details, including the dialogue cast. A changed cast makes every lesson's speech job due now.
 app.patch("/api/groups/:groupId/courses/:courseId", requireGroupAccess, async (context) => {
   const found = await editableCourse(context); if ("error" in found) return found.error;
   const parsed = await parseJson(context, updateCourseRequestSchema); if ("response" in parsed) return parsed.response;
-  await context.env.DB.prepare("UPDATE courses SET title = ?, summary = ?, level = ?, intended_learner = ?, updated_at = ? WHERE group_id = ? AND id = ?")
-    .bind(parsed.data.title, parsed.data.summary, parsed.data.level || null, parsed.data.intendedLearner || null, Date.now(), found.row.groupId, found.row.id).run();
-  return courseResponse(context, found.row.id);
+  const db = context.env.DB; const course = found.row; const now = Date.now();
+  const { speechCast } = parsed.data;
+  const voices: readonly string[] = SPEECH_VOICES[context.get("groupAccess").language];
+  if (speechCast && Object.values(speechCast).some((voice) => !voices.includes(voice))) {
+    return apiError(context, 400, "SPEECH_VOICE_INVALID", "Choose voices for this group's language.");
+  }
+  // Labels are stored trimmed and in a stable order, so an unchanged cast never regenerates speech.
+  const cast = speechCast === undefined ? course.speechCast : Object.keys(speechCast).length
+    ? JSON.stringify(Object.fromEntries(Object.entries(speechCast).map(([speaker, voice]) => [speaker.trim(), voice]).sort(([a], [b]) => speechCastKey(a!).localeCompare(speechCastKey(b!)))))
+    : null;
+  await db.batch([
+    db.prepare("UPDATE courses SET title = ?, summary = ?, level = ?, intended_learner = ?, speech_cast = ?, updated_at = ? WHERE group_id = ? AND id = ?")
+      .bind(parsed.data.title, parsed.data.summary, parsed.data.level || null, parsed.data.intendedLearner || null, cast, now, course.groupId, course.id),
+    ...(cast !== course.speechCast ? [courseSpeechJobsStatement(db, { groupId: course.groupId, courseId: course.id }, now)] : []),
+  ]);
+  return courseResponse(context, course.id);
 });
 
 app.post("/api/groups/:groupId/courses/:courseId/visibility", requireGroupAccess, async (context) => {
@@ -1801,13 +1851,13 @@ app.get("/api/groups/:groupId/courses/:courseId/progress", requireGroupAccess, a
 app.get("/api/groups/:groupId/courses/:courseId/words", requireGroupAccess, async (context) => {
   const found = await visibleCourse(context); if ("error" in found) return found.error;
   const rows = await context.env.DB.prepare(
-    `SELECT w.word_id AS id, w.lesson_id AS lessonId, w.term, w.meaning, w.forms, w.example, w.note
+    `SELECT w.word_id AS id, w.lesson_id AS lessonId, w.term, w.meaning, w.forms, w.example, w.note, w.ipa
      FROM course_lesson_words w
      JOIN course_lessons l ON l.id = w.lesson_id AND l.group_id = w.group_id AND l.course_id = w.course_id AND l.published_doc IS NOT NULL
      JOIN course_lesson_completions c ON c.lesson_id = w.lesson_id AND c.group_id = w.group_id AND c.user_id = ?
      WHERE w.group_id = ? AND w.course_id = ?
      ORDER BY l.position ASC, w.position ASC`,
-  ).bind(context.get("user")!.id, found.row.groupId, found.row.id).all<CourseWord>();
+  ).bind(context.get("user")!.id, found.row.groupId, found.row.id).all<IndexedWord>();
   const seen = new Set<string>();
   const words = rows.results.filter((row) => {
     const term = row.term.trim().toLowerCase();
@@ -1815,7 +1865,8 @@ app.get("/api/groups/:groupId/courses/:courseId/words", requireGroupAccess, asyn
     seen.add(term);
     return true;
   });
-  return context.json(courseWordsResponseSchema.parse({ words: words.slice(0, COURSE_RECAP_WORDS_MAX) }));
+  const spoken = await withWordSpeech(context.env.DB, words.slice(0, COURSE_RECAP_WORDS_MAX), context.get("groupAccess").language, context.env.PUBLIC_MEDIA_BASE_URL);
+  return context.json(courseWordsResponseSchema.parse({ words: spoken }));
 });
 
 // Word bookmarks (C9b): a member saves a word of a published lesson. The key must name an indexed word of that lesson in the
@@ -1874,7 +1925,7 @@ app.get("/api/groups/:groupId/word-bookmarks", requireGroupAccess, async (contex
   const values: Array<string | number> = [group.id, user.id, ...visible.values];
   if (cursor) { clauses.push("(b.created_at, b.lesson_id, b.word_id) < (?, ?, ?)"); values.push(cursor.createdAt, cursorLesson!, cursorWord!); }
   const rows = await context.env.DB.prepare(
-    `SELECT b.created_at AS bookmarkedAt, w.word_id AS id, w.lesson_id AS lessonId, w.term, w.meaning, w.forms, w.example, w.note,
+    `SELECT b.created_at AS bookmarkedAt, w.word_id AS id, w.lesson_id AS lessonId, w.term, w.meaning, w.forms, w.example, w.note, w.ipa,
        c.id AS courseId, c.title AS courseTitle, l.title AS lessonTitle
      FROM course_word_bookmarks b
      JOIN course_lesson_words w ON w.group_id = b.group_id AND w.course_id = b.course_id AND w.lesson_id = b.lesson_id AND w.word_id = b.word_id
@@ -1882,10 +1933,11 @@ app.get("/api/groups/:groupId/word-bookmarks", requireGroupAccess, async (contex
      JOIN courses c ON c.id = b.course_id AND c.group_id = b.group_id
      WHERE ${clauses.join(" AND ")}
      ORDER BY b.created_at DESC, b.lesson_id DESC, b.word_id DESC LIMIT ?`,
-  ).bind(...values, parsed.data.limit + 1).all<CourseWord & { bookmarkedAt: number; courseId: string; courseTitle: string; lessonTitle: string }>();
+  ).bind(...values, parsed.data.limit + 1).all<IndexedWord & { bookmarkedAt: number; courseId: string; courseTitle: string; lessonTitle: string }>();
   const page = rows.results.slice(0, parsed.data.limit); const tail = page.at(-1);
+  const spoken = await withWordSpeech(context.env.DB, page, group.language, context.env.PUBLIC_MEDIA_BASE_URL);
   return context.json(wordBookmarkPageSchema.parse({
-    items: page.map(({ bookmarkedAt, courseId, courseTitle, lessonTitle, ...word }) => ({
+    items: spoken.map(({ bookmarkedAt, courseId, courseTitle, lessonTitle, ...word }) => ({
       word, course: { id: courseId, title: courseTitle }, lesson: { id: word.lessonId, title: lessonTitle }, bookmarkedAt,
     })),
     nextCursor: rows.results.length > parsed.data.limit && tail ? encodeCursor({ createdAt: tail.bookmarkedAt, id: `${tail.lessonId} ${tail.id}` }) : null,
@@ -1947,7 +1999,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
   const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id; const db = context.env.DB;
   const media = await db.prepare("SELECT key FROM course_media WHERE group_id = ? AND lesson_id = ?").bind(groupId, lessonId).all<{ key: string }>();
-  // Lessons are hard-deleted with their practice threads, completions, positions, word index rows, word bookmarks, and images; reactions have no foreign key, so they go first.
+  // Lessons are hard-deleted with their practice threads, completions, positions, word index rows, word bookmarks, speech job, and images; reactions have no foreign key, so they go first.
   const practices = "SELECT id FROM course_practices WHERE group_id = ? AND course_id = ? AND lesson_id = ?";
   await db.batch([
     db.prepare(`DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND target_id IN (SELECT id FROM comments WHERE group_id = ? AND block_id IN (${practices}))`)
@@ -1959,6 +2011,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
     db.prepare("DELETE FROM course_lesson_positions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lesson_words WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_word_bookmarks WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
+    db.prepare("DELETE FROM speech_jobs WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lessons WHERE group_id = ? AND course_id = ? AND id = ?").bind(groupId, courseId, lessonId),
   ]);
   if (media.results.length) await context.env.MEDIA.delete(media.results.map((row) => row.key));
@@ -1990,6 +2043,8 @@ app.put(`${lessonPath}/draft`, requireGroupAccess, async (context) => {
     if (current && current.draftVersion !== parsed.data.draftVersion) return draftConflict(context, current);
     return apiError(context, 409, "PRACTICE_ID_TAKEN", "A practice in this lesson uses an ID that belongs to another lesson.");
   }
+  // Speech for the draft is generated 2 minutes after the last save, so text typed in between is never synthesized.
+  await speechJobStatement(db, { groupId, courseId, lessonId }, now + SPEECH_DRAFT_DELAY_MS, now).run();
   const [current] = await readLessonRows(db, found.row, [lessonId]);
   return context.json(lessonDraftSavedResponseSchema.parse({
     draftVersion: current!.draftVersion, changed: Boolean(current!.changed), updatedBy: { id: current!.updatedById, displayName: current!.updatedByName }, updatedAt: current!.updatedAt,
@@ -1997,7 +2052,7 @@ app.put(`${lessonPath}/draft`, requireGroupAccess, async (context) => {
 });
 
 // Publishing copies the draft the owner reviewed (by version) to the published document, refreshes the lesson's word index,
-// and cleans up what neither document keeps.
+// cleans up what neither document keeps, and queues the lesson's speech.
 app.post(`${lessonPath}/publish`, requireGroupAccess, async (context) => {
   const found = await publishableCourse(context); if ("error" in found) return found.error;
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
@@ -2020,6 +2075,9 @@ app.post(`${lessonPath}/publish`, requireGroupAccess, async (context) => {
     return draftConflict(context, current!);
   }
   if (cleanup.mediaKeys.length) await context.env.MEDIA.delete(cleanup.mediaKeys);
+  // The published lesson's speech is due at once, and one worker run for it starts after the response.
+  await speechJobStatement(db, { groupId, courseId, lessonId }, Date.now()).run();
+  context.executionCtx.waitUntil(runSpeechJobs(context.env, { lessonId }).catch((error: unknown) => logError("speech.run_failed", { name: error instanceof Error ? error.name : "unknown" })));
   return lessonResponse(context, found.row, lessonId);
 });
 

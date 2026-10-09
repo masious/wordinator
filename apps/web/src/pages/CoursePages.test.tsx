@@ -15,7 +15,7 @@ const ownerPermissions = { edit: true, publish: true, archive: true, removeConte
 const readerPermissions = { edit: false, publish: false, archive: false, removeContent: false, contribute: false, requestContribution: true, leaveContribution: false, manageContributors: false };
 const course = (overrides: Record<string, unknown> = {}) => ({
   id: courseId, groupId, title: "Deutsch für Anfänger", summary: "Erste Schritte\nmit Freunden", level: "A1 → early A2", intendedLearner: null, coverUrl: null,
-  status: "draft", owner: { id: ownerId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, contribution: null,
+  status: "draft", owner: { id: ownerId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, speechCast: {}, contribution: null,
   permissions: ownerPermissions, ...overrides,
 });
 let current = course();

@@ -8,7 +8,8 @@ import { measureFit, type GridFit } from "./fitGrid";
 import styles from "./WordRecap.module.css";
 
 // Words from several lessons (the course recap, the Words tab) carry their lesson, since word IDs are unique only within a lesson.
-export type RecapWord = Omit<CourseWord, "lessonId"> & { lessonId?: string };
+// Words read from a lesson document carry no speech; the lesson's speech map holds theirs.
+export type RecapWord = Omit<CourseWord, "lessonId" | "speech"> & { lessonId?: string; speech?: CourseWord["speech"] };
 
 // The words a lesson run carried, once each in step order, with empty optional fields as null like the course recap.
 export function runWords(steps: readonly LessonStep[]): RecapWord[] {

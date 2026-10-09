@@ -216,6 +216,8 @@ export const courses = sqliteTable(
     level: text("level"),
     intendedLearner: text("intended_learner"),
     coverKey: text("cover_key"),
+    // The dialogue cast as a JSON map from speaker label to voice (docs/speech.md#dialogue-cast); null when there is none.
+    speechCast: text("speech_cast"),
     status: text("status", { enum: ["draft", "published", "archived"] }).notNull(),
     firstPublishedAt: integer("first_published_at"),
     createdAt: integer("created_at").notNull(),
@@ -224,6 +226,7 @@ export const courses = sqliteTable(
   (table) => [
     index("courses_group_library_idx").on(table.groupId, table.createdAt, table.id),
     check("courses_status_check", sql`${table.status} in ('draft', 'published', 'archived')`),
+    check("courses_speech_cast_check", sql`${table.speechCast} IS NULL OR json_valid(${table.speechCast})`),
   ],
 );
 
@@ -352,6 +355,7 @@ export const courseLessonWords = sqliteTable(
     forms: text("forms"),
     example: text("example"),
     note: text("note"),
+    ipa: text("ipa"),
   },
   (table) => [
     primaryKey({ columns: [table.lessonId, table.wordId] }),
@@ -374,4 +378,36 @@ export const courseWordBookmarks = sqliteTable(
     primaryKey({ columns: [table.userId, table.lessonId, table.wordId] }),
     index("course_word_bookmarks_user_idx").on(table.groupId, table.userId, table.createdAt),
   ],
+);
+
+// Lesson speech (C10a): one row per synthesized clip, shared across groups; see docs/data-model.md#speech_clips.
+export const speechClips = sqliteTable(
+  "speech_clips",
+  {
+    hash: text("hash").primaryKey(),
+    voice: text("voice").notNull(),
+    characters: integer("characters").notNull(),
+    status: text("status", { enum: ["pending", "ready", "failed"] }).notNull(),
+    attempts: integer("attempts").notNull().default(0),
+    nextAttemptAt: integer("next_attempt_at"),
+    claimedAt: integer("claimed_at"),
+    createdAt: integer("created_at").notNull(),
+    updatedAt: integer("updated_at").notNull(),
+  },
+  (table) => [check("speech_clips_status_check", sql`${table.status} in ('pending', 'ready', 'failed')`)],
+);
+
+// At most one pending speech job per lesson; see docs/data-model.md#speech_jobs.
+export const speechJobs = sqliteTable(
+  "speech_jobs",
+  {
+    lessonId: text("lesson_id").primaryKey().references(() => courseLessons.id, { onDelete: "cascade" }),
+    groupId: text("group_id").notNull().references(() => groups.id),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    dueAt: integer("due_at").notNull(),
+    attempts: integer("attempts").notNull().default(0),
+    createdAt: integer("created_at").notNull(),
+    updatedAt: integer("updated_at").notNull(),
+  },
+  (table) => [index("speech_jobs_due_idx").on(table.dueAt)],
 );

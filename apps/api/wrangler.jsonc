@@ -18,10 +18,11 @@
     }
   ],
   "triggers": {
-    "crons": ["17 3 * * *"]
+    "crons": ["17 3 * * *", "* * * * *"]
   },
   "vars": {
-    "PUBLIC_MEDIA_BASE_URL": "https://taalk-images.masious.ir/"
+    "PUBLIC_MEDIA_BASE_URL": "https://taalk-images.masious.ir/",
+    "AZURE_SPEECH_REGION": "germanywestcentral"
   },
   "observability": {
 	"logs": {

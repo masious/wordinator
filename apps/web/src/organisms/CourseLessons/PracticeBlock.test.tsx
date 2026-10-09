@@ -29,11 +29,11 @@ const summary = { id: lessonId, position: 0, title: "Mijn huis", goal: null, pub
 const detail = (): CourseDetailResponse => ({
   course: {
     id: courseId, groupId, title: "Dutch", summary: "Home", level: null, intendedLearner: null, coverUrl: null, status: "published",
-    owner: { id: accountId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, contribution: null,
+    owner: { id: accountId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, speechCast: {}, contribution: null,
     permissions: { edit: false, publish: false, archive: false, removeContent: false, contribute: false, requestContribution: true, leaveContribution: false, manageContributors: false },
   },
   outline: [summary],
-  lessons: [{ ...summary, document, answerCounts: { [blockId]: 3 }, draft: null }],
+  lessons: [{ ...summary, document, answerCounts: { [blockId]: 3 }, draft: null, speech: {}, draftSpeech: null }],
 });
 const answer = {
   id: "60000000-0000-4000-8000-000000000001", parentId: null, kind: "practice_response", body: null, author: { id: accountId, displayName: "Ada", avatarUrl: null },

@@ -165,14 +165,15 @@ describe("lesson document helpers", () => {
     expect(words.map((entry) => [entry.id, entry.position, entry.blockId])).toEqual([
       [first.id, 0, document.blocks[0]!.id], [second.id, 1, document.blocks[1]!.children[0]!.children[0]!.id], [third.id, 2, document.blocks[2]!.id],
     ]);
-    expect(words[0]).toMatchObject({ term: "der Hund", meaning: "meaning of  der Hund ".trim(), forms: "die Hunde", example: null, note: null });
+    expect(words[0]).toMatchObject({ term: "der Hund", meaning: "meaning of  der Hund ".trim(), forms: "die Hunde", example: null, note: null, ipa: null });
     expect(collectLessonWords(parse(paragraph("x")))).toEqual([]);
   });
 
   it("validates the course words response", () => {
-    const entry = { id: randomUUID(), lessonId: randomUUID(), term: "der Hund", meaning: "the dog", forms: null, example: null, note: null };
+    const entry = { id: randomUUID(), lessonId: randomUUID(), term: "der Hund", meaning: "the dog", forms: null, example: null, note: null, speech: { term: "https://media.test/speech/a.mp3", example: null } };
     expect(courseWordsResponseSchema.safeParse({ words: [entry] }).success).toBe(true);
     expect(courseWordsResponseSchema.safeParse({ words: [{ ...entry, lessonId: undefined }] }).success).toBe(false);
+    expect(courseWordsResponseSchema.safeParse({ words: [{ ...entry, speech: undefined }] }).success).toBe(false);
   });
 
   it("reports unfinished work that blocks publishing", () => {

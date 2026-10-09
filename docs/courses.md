@@ -147,6 +147,7 @@ A `vocabulary` block (shown to authors as "New words") holds an ordered list of 
 | `forms` | no | 200 | Plural or principal parts (`die Hunde`, `lopen – liep – gelopen`) |
 | `example` | no | 1,000 | One example sentence |
 | `note` | no | 2,000 | |
+| `ipa` | no | 100 | [Pronunciation override](speech.md#pronunciation-override) of the term: IPA letters and diacritics, stress and length marks, `.`, and spaces only. Never shown to learners |
 
 - All fields are plain text. Gender, word class, and grammar are written into `term`, `forms`, or `note`; they are not separate fields.
 - A block holds 1–50 words. Drafts may hold words with an empty term or meaning; publishing requires both (a `word-empty` publish problem that names the block and the word).
@@ -280,7 +281,7 @@ Contributor rules settled in C5:
 
 Authors save small pieces, so they can return to a course at any time.
 
-- Course details and lessons are saved through their own endpoints. There is no whole-course save.
+- Course details and lessons are saved through their own endpoints. There is no whole-course save. The course details include the [dialogue cast](speech.md#dialogue-cast), owner only.
 - A lesson's content is saved as its whole draft document, autosaved by the editor under the [drafts and publishing](#drafts-and-publishing) rules. Lesson title and goal are saved separately and carry no version.
 - Reordering lessons sends the complete ordered ID list for the course, and the server rewrites positions in one D1 batch. A list that no longer matches the course's lessons is rejected. Blocks move inside the document.
 - The server-side draft is the durable draft. Local storage keeps only an unsaved edit of a lesson document, under the [draft-key rules](posts-and-feed.md#composer-and-drafts) with draft kind `course-lesson-doc` and the lesson ID as target.

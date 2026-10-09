@@ -1,7 +1,7 @@
 import { drizzle } from "drizzle-orm/d1";
 import * as schema from "./schema";
 
-export { courseContributors, courseLessons, courseMedia, coursePractices, courses, fillExpectedAnswers, groups, loginAttempts, memberships, notifications, platformMetadata, posts, readingQuestions, users } from "./schema";
+export { courseContributors, courseLessons, courseMedia, coursePractices, courses, fillExpectedAnswers, groups, loginAttempts, memberships, notifications, platformMetadata, posts, readingQuestions, speechClips, speechJobs, users } from "./schema";
 
 export function createDatabase(binding: D1Database) {
   return drizzle(binding, { schema });
