@@ -73,6 +73,27 @@ export function speechItems(document: LessonDocument, cast: SpeechCast | null, l
   });
 }
 
+// Voice samples for the cast editor: one fixed sentence per language, read by each of its voices. The cron keeps them ready.
+export const SPEECH_SAMPLE_TEXT: Record<SpeechLanguage, string> = { nl: "Hallo! Zo klinkt mijn stem.", de: "Hallo! So klingt meine Stimme." };
+export function voiceSampleItems(language: SpeechLanguage): SpeechItem[] {
+  return (SPEECH_VOICES[language] as readonly SpeechVoice[]).map((voice) => ({ key: `sample:${voice}`, voice, text: SPEECH_SAMPLE_TEXT[language], ipa: null }));
+}
+
+// The dialogue speakers of some documents in order of first appearance, trimmed, and once per cast key.
+export function dialogueSpeakers(documents: readonly LessonDocument[]) {
+  const speakers = new Map<string, string>();
+  for (const document of documents) {
+    for (const { block } of walkLessonBlocks(document.blocks)) {
+      if (block.type !== "dialogue") continue;
+      for (const turn of readDialogueTurns(block)) {
+        const label = turn.speaker.trim();
+        if (label && !speakers.has(speechCastKey(label))) speakers.set(speechCastKey(label), label);
+      }
+    }
+  }
+  return [...speakers.values()];
+}
+
 const escapeXml = (value: string) => value.replace(/[<>&"']/g, (character) => `&#${character.charCodeAt(0)};`);
 
 // The synthesis markup of an item: its escaped text, or a phoneme element carrying the escaped IPA.

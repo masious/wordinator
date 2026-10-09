@@ -54,7 +54,7 @@ import {
   contributorDecisionRequestSchema,
   courseContributorsResponseSchema,
   SPEECH_VOICES,
-  speechCastKey,
+  courseSpeechCastResponseSchema, speechCastKey,
   type Course,
   type CourseLessonSummary,
   type DiscussionItem,
@@ -67,7 +67,7 @@ import {
   lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
   toLearnerDocument, walkLessonBlocks, type CourseLesson, type CourseWord, type LessonBlockOf, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
-import { wordSpeechItems } from "@wordinator/contracts/speech";
+import { dialogueSpeakers, voiceSampleItems, wordSpeechItems } from "@wordinator/contracts/speech";
 import { createDatabase, groups, memberships, users } from "@wordinator/db";
 import { and, asc, count, eq, inArray, isNull } from "drizzle-orm";
 import { Hono, type Context } from "hono";
@@ -1628,6 +1628,29 @@ app.patch("/api/groups/:groupId/courses/:courseId", requireGroupAccess, async (c
     ...(cast !== course.speechCast ? [courseSpeechJobsStatement(db, { groupId: course.groupId, courseId: course.id }, now)] : []),
   ]);
   return courseResponse(context, course.id);
+});
+
+// The owner's cast editor: every speaker of the course's dialogues, published or draft, and the group language's voices with
+// their samples. Cast entries no dialogue uses any more are listed last, so the owner can clear them.
+app.get("/api/groups/:groupId/courses/:courseId/speech-cast", requireGroupAccess, async (context) => {
+  const found = await editableCourse(context); if ("error" in found) return found.error;
+  const course = found.row; const language = context.get("groupAccess").language;
+  const rows = await context.env.DB.prepare(
+    "SELECT id, draft_doc AS draftDoc, published_doc AS publishedDoc FROM course_lessons WHERE group_id = ? AND course_id = ? ORDER BY position, created_at, id",
+  ).bind(course.groupId, course.id).all<{ id: string; draftDoc: string; publishedDoc: string | null }>();
+  const documents = rows.results.flatMap((row) => [
+    ...(row.publishedDoc === null ? [] : [storedDocument(row.publishedDoc, row.id)]), storedDocument(row.draftDoc, row.id),
+  ]);
+  const speakers = dialogueSpeakers(documents);
+  const used = new Set(speakers.map(speechCastKey));
+  const unused = Object.keys(storedSpeechCast(course.speechCast) ?? {}).filter((speaker) => !used.has(speechCastKey(speaker)));
+  const samples = await hashSpeechItems(voiceSampleItems(language));
+  const clips = await readClips(context.env.DB, samples.map((item) => item.hash));
+  const media = (key: string) => mediaUrlFromBase(context.env.PUBLIC_MEDIA_BASE_URL, key)!;
+  return context.json(courseSpeechCastResponseSchema.parse({
+    speakers: [...speakers, ...unused],
+    voices: samples.map((item) => ({ voice: item.voice, sample: clips.get(item.hash)?.status === "ready" ? clipUrl(media, item.hash) : null })),
+  }));
 });
 
 app.post("/api/groups/:groupId/courses/:courseId/visibility", requireGroupAccess, async (context) => {

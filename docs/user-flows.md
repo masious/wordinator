@@ -95,13 +95,13 @@ If a deleted group is a person’s only group, status appears in the restricted 
 1. A member opens Courses from the main navigation and chooses New course.
 2. They enter a title and summary, plus an optional free-text level and intended learner, and create a draft.
 3. The draft opens on its course page. Only the owner and accepted contributors can see it; it does not appear in other members' libraries.
-4. The owner can edit the details and upload, replace, or remove a wide cover image.
+4. The owner can edit the details and upload, replace, or remove a wide cover image. Editing the details also sets the dialogue voices: each speaker of the course's dialogues gets a voice or stays on Automatic, and each voice has a sample to listen to. See [dialogue cast](speech.md#dialogue-cast).
 5. Publishing makes the course visible to every active member in the newest-first library. The first publication also adds a course card to the top of the feed, where members can react, comment, and follow the link to the course. The owner can return it to draft at any time.
 6. The owner or group creator can archive the course after confirming. Other members no longer see it, and its feed card says the course is unavailable. The owner and creator still see it in the library and can restore it, which returns it as a draft.
 
 7. The owner adds lessons with a title and optional goal. A new lesson is unpublished, appears in the course's lesson list with an Unpublished label, and opens on its own lesson page.
 8. On the lesson page, Edit lesson opens a block editor: headings, paragraphs, lists, callouts, images, columns, examples, dialogues, practices, and New words, added from the slash menu and moved by dragging. The owner can also move lessons up or down in the course's lesson list.
-9. The editor autosaves the lesson's draft. Readers see only the published version until the owner chooses Publish; Discard returns the draft to the published version, and Unpublish hides the lesson. An edit that has not reached the server yet stays in the browser and reopens on the next visit.
+9. The editor autosaves the lesson's draft. Readers see only the published version until the owner chooses Publish; Discard returns the draft to the published version, and Unpublish hides the lesson. An edit that has not reached the server yet stays in the browser and reopens on the next visit. Each New words row says whether the word's audio is ready (with a speaker button), pending, or failed; audio is generated a few minutes after saving, and the status updates without reloading. A word the voice says wrongly gets an IPA pronunciation under its details. See [speech](speech.md#playback).
 10. If someone saved a newer version first, the editor merges the two by block and says so. Blocks both people changed are shown side by side, and the author keeps the newer version or their own edit for each. See [drafts and publishing](courses.md#drafts-and-publishing).
 11. Readers see the course's lesson list and open each lesson on its own page, which links to the previous and next lessons.
 

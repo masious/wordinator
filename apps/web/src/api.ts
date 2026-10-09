@@ -1,4 +1,4 @@
-import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, practiceDiscussionResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
+import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, practiceDiscussionResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
 import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkPageSchema } from "@wordinator/contracts/lesson-document";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
@@ -104,6 +104,13 @@ export const coursesQueryOptions = (groupId: string) => infiniteQueryOptions({
 export const courseQueryOptions = (groupId: string, courseId: string) => queryOptions({
   queryKey: ["course", groupId, courseId] as const,
   queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}`, courseDetailResponseSchema),
+  retry: false,
+});
+
+// The owner's dialogue cast editor: the course's speakers and the voices with their samples.
+export const courseSpeechCastQueryOptions = (groupId: string, courseId: string) => queryOptions({
+  queryKey: ["course-speech-cast", groupId, courseId] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/speech-cast`, courseSpeechCastResponseSchema),
   retry: false,
 });
 

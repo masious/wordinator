@@ -20,6 +20,8 @@ const course = (overrides: Record<string, unknown> = {}) => ({
 });
 let current = course();
 let contributors = { active: [] as unknown[], pending: [] as unknown[] };
+const sample = (voice: string) => `https://media.test/speech/${voice}.mp3`;
+let speechCast: () => Response;
 
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
 function renderPage(page: "library" | "course") {
@@ -32,6 +34,10 @@ function renderPage(page: "library" | "course") {
 
 beforeEach(() => {
   current = course(); contributors = { active: [], pending: [] };
+  speechCast = () => response({ speakers: ["Anna", "Ben"], voices: [
+    { voice: "de-DE-KatjaNeural", sample: sample("katja") }, { voice: "de-DE-AmalaNeural", sample: null },
+    { voice: "de-DE-ConradNeural", sample: sample("conrad") }, { voice: "de-DE-KillianNeural", sample: sample("killian") },
+  ] });
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
     if (path === "/api/session") return response(session);
@@ -44,12 +50,21 @@ beforeEach(() => {
       return response({ course: current }, 201);
     }
     if (path.endsWith("/contributors")) return response(contributors);
+    if (path.endsWith("/speech-cast")) return speechCast();
+    if (path === `/api/groups/${groupId}/courses/${courseId}` && init?.method === "PATCH") { current = course({ ...JSON.parse(String(init.body)) }); return response({ course: current }); }
     if (path === `/api/groups/${groupId}/courses/${courseId}`) return response({ course: current, outline: [], lessons: [] });
     return response({ ok: true });
   }));
 });
 
 afterEach(cleanup);
+
+// Every Select keeps its options mounted; the open one is found through the listbox its combobox controls.
+async function choose(combobox: HTMLElement, option: string) {
+  fireEvent.click(combobox);
+  await waitFor(() => expect(combobox).toHaveAttribute("aria-expanded", "true"));
+  fireEvent.click(within(document.getElementById(combobox.getAttribute("aria-controls")!)!).getByRole("option", { name: option, hidden: true }));
+}
 
 describe("Course shell pages", () => {
   it("lists visible courses with draft labels and validates the create form", async () => {
@@ -108,5 +123,43 @@ describe("Course shell pages", () => {
     const dialog = await screen.findByRole("dialog", { name: "Remove this contributor?" });
     fireEvent.click(within(dialog).getByRole("button", { name: "Remove" }));
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/contributors/${helper.id}`, expect.objectContaining({ method: "DELETE" })));
+  });
+
+  it("lets the owner give speakers voices in the course details, with a sample for each ready voice", async () => {
+    current = course({ speechCast: { anna: "de-DE-ConradNeural" } });
+    renderPage("course");
+    fireEvent.click(await screen.findByRole("button", { name: "Edit details" }));
+    const dialog = await screen.findByRole("dialog", { name: "Edit course" });
+    const voices = await within(dialog).findByRole("list", { name: "Voices" });
+    expect(within(voices).getAllByRole("listitem").map((item) => item.textContent)).toEqual(["Katja (narrator)", "Amala", "Conrad", "Killian"]);
+    // A voice whose sample is not ready yet has no sample button.
+    expect(within(voices).getByRole("button", { name: "Play a sample of Katja" })).toBeInTheDocument();
+    expect(within(voices).queryByRole("button", { name: "Play a sample of Amala" })).not.toBeInTheDocument();
+    // The stored cast matches speakers case-insensitively.
+    expect(within(dialog).getByRole("combobox", { name: "Voice for Anna" })).toHaveValue("Conrad");
+    const ben = within(dialog).getByRole("combobox", { name: "Voice for Ben" });
+    expect(ben).toHaveValue("Automatic");
+    await choose(ben, "Killian");
+    await choose(within(dialog).getByRole("combobox", { name: "Voice for Anna" }), "Automatic");
+    fireEvent.click(within(dialog).getByRole("button", { name: "Save" }));
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}`, expect.objectContaining({ method: "PATCH" })));
+    const patch = vi.mocked(fetch).mock.calls.find(([, init]) => init?.method === "PATCH")!;
+    expect(JSON.parse(String(patch[1]!.body)).speechCast).toEqual({ Ben: "de-DE-KillianNeural" });
+  });
+
+  it("keeps the current cast when the cast editor cannot load, and says when no dialogue has speakers", async () => {
+    speechCast = () => response({ error: { code: "COURSE_EDIT_FORBIDDEN", message: "No." } }, 403);
+    renderPage("course");
+    fireEvent.click(await screen.findByRole("button", { name: "Edit details" }));
+    const dialog = await screen.findByRole("dialog", { name: "Edit course" });
+    expect(await within(dialog).findByText("The dialogue voices could not be loaded. Saving keeps the current voices.")).toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole("button", { name: "Save" }));
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}`, expect.objectContaining({ method: "PATCH" })));
+    expect(JSON.parse(String(vi.mocked(fetch).mock.calls.find(([, init]) => init?.method === "PATCH")![1]!.body))).not.toHaveProperty("speechCast");
+    cleanup();
+    speechCast = () => response({ speakers: [], voices: [{ voice: "de-DE-KatjaNeural", sample: null }] });
+    renderPage("course");
+    fireEvent.click(await screen.findByRole("button", { name: "Edit details" }));
+    expect(await screen.findByText("No dialogue in this course has a speaker yet.")).toBeInTheDocument();
   });
 });

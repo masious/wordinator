@@ -63,3 +63,6 @@
   .mergeVersions{grid-template-columns:1fr}
   .barActions>*{flex:1}
 }
+.wordSpeech{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);min-height:var(--touch-target);margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.wordSpeech[data-status="ready"]{color:var(--color-success)}
+.wordSpeech[data-status="failed"]{color:var(--color-danger-text)}

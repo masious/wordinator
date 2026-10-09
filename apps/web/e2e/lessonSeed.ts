@@ -12,7 +12,7 @@ export const practice = (instruction: string, items: Array<{ prompt: string; aut
   id: crypto.randomUUID(), type: "practice", children: [],
   props: { data: JSON.stringify({ instruction, passage: null, items: items.map((item) => ({ prompt: item.prompt, authorsVersion: item.authorsVersion ?? [], note: item.note ?? null })) }) },
 });
-export const vocabulary = (...words: Array<{ term: string; meaning: string; forms?: string; example?: string; note?: string }>): Block => ({
+export const vocabulary = (...words: Array<{ term: string; meaning: string; forms?: string; example?: string; note?: string; ipa?: string }>): Block => ({
   id: crypto.randomUUID(), type: "vocabulary", children: [], props: { data: JSON.stringify({ words: words.map((word) => ({ id: crypto.randomUUID(), ...word })) }) },
 });
 

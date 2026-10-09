@@ -32,7 +32,7 @@ describe("Vocabulary fields", () => {
     const onChange = vi.fn();
     render(<Harness initial={[tuin]} onChange={onChange} />);
     expect(screen.queryByLabelText("Word 1 example")).not.toBeInTheDocument();
-    const toggle = screen.getByRole("button", { name: "Forms, example, and note for word 1" });
+    const toggle = screen.getByRole("button", { name: "Forms, example, note, and pronunciation for word 1" });
     expect(toggle).toHaveAttribute("aria-expanded", "false");
     fireEvent.click(toggle);
     fireEvent.change(screen.getByLabelText("Word 1 example"), { target: { value: "De tuin is groot." } });
@@ -52,5 +52,23 @@ describe("Vocabulary fields", () => {
     expect(last(onChange).map((word) => word.id)).toEqual([added!.id, huis.id]);
     fireEvent.click(screen.getByRole("button", { name: "Remove word 1" }));
     expect(last(onChange)).toEqual([huis]);
+  });
+
+  it("stores a valid pronunciation, keeps an invalid one in the field with a message, and drops a cleared one", () => {
+    const onChange = vi.fn();
+    render(<Harness initial={[{ ...tuin, ipa: "tœyn" }]} onChange={onChange} />);
+    // A word with a pronunciation starts expanded.
+    const field = screen.getByLabelText(/^Word 1 pronunciation \(IPA\)/);
+    expect(field).toHaveValue("tœyn");
+    fireEvent.change(field, { target: { value: "ˈtœyn" } });
+    expect(last(onChange)).toEqual([{ ...tuin, ipa: "ˈtœyn" }]);
+    const calls = onChange.mock.calls.length;
+    fireEvent.change(field, { target: { value: '<break time="9s"/>' } });
+    expect(field).toHaveValue('<break time="9s"/>');
+    expect(field).toHaveAccessibleDescription(expect.stringContaining("Use IPA letters, stress and length marks, dots, and spaces only."));
+    expect(onChange.mock.calls.length).toBe(calls);
+    fireEvent.change(field, { target: { value: "" } });
+    expect(screen.queryByText(/Use IPA letters/)).not.toBeInTheDocument();
+    expect(last(onChange)).toEqual([tuin]);
   });
 });

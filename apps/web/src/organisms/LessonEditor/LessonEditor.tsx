@@ -12,7 +12,7 @@ import type { CourseDetailResponse } from "@wordinator/contracts/lesson-document
 import {
   collectPracticeIds, lessonNotReadySchema, lessonResponseSchema, type CourseLesson, type LessonDocument, type LessonDraft, type LessonPublishProblem,
 } from "@wordinator/contracts/lesson-document";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { BookOpenText, Columns2, Columns3, Heading1, Heading2, Heading3, Languages, List, ListOrdered, Lightbulb, MessagesSquare, PencilLine, Pilcrow, Smile } from "lucide-react";
 import { type DragEvent, type KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -31,6 +31,7 @@ import { LessonMergeConflicts, type MergeChoice } from "./LessonMergeConflicts";
 import { mergeLessonDocuments, type MergeConflict } from "./lessonMerge";
 import { LessonPublishBar } from "./LessonPublishBar";
 import { useLessonAutosave } from "./useLessonAutosave";
+import { carryDraftSpeech, DraftWordSpeechScope, hasPendingSpeech } from "./WordSpeechStatus";
 import styles from "./LessonEditor.module.css";
 
 // Palette colours and editor chrome follow the design tokens in both colour schemes.
@@ -49,6 +50,9 @@ const editorTheme: Theme = {
     highlights: Object.fromEntries(palette.map((color) => [color, { text: `var(--color-lesson-${color}-text)`, background: `var(--color-lesson-${color}-surface)` }])),
   },
 };
+
+// While any draft item's audio is pending, the lesson is read again this often so the word form shows when it is ready.
+export const SPEECH_STATUS_POLL_MS = 15_000;
 
 const isListBlock = (type: string) => type === "bulletListItem" || type === "numberedListItem";
 const toEditorBlocks = (document: LessonDocument) => document.blocks.length ? document.blocks as unknown as PartialBlock<typeof lessonEditorSchema.blockSchema>[] : undefined;
@@ -122,6 +126,11 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
   const courseKey = courseQueryOptions(groupId, courseId).queryKey;
   const localKey = lessonDocumentDraftKey(accountId, groupId, lesson.id);
   const serverDraft = lesson.draft!;
+  // The latest read of the lesson, refreshed while audio is pending; the editor content itself never follows it.
+  const live = useQuery({
+    ...lessonQueryOptions(groupId, courseId, lesson.id), initialData: { lesson }, staleTime: Infinity,
+    refetchInterval: (query) => hasPendingSpeech(query.state.data?.lesson.draftSpeech) ? SPEECH_STATUS_POLL_MS : false,
+  }).data.lesson;
 
   // A local copy based on the current server draft is an unsaved edit and is restored. A copy based on an older draft
   // (or left by a conflict) is kept aside so the author can bring it back explicitly.
@@ -190,7 +199,10 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
       baseline.current = document;
       setCurrent((value) => ({ ...value, changed: saved.changed, editorName: saved.updatedBy.displayName }));
       queryClient.setQueryData(lessonKey, (value: { lesson: CourseLesson } | undefined) => value && {
-        lesson: { ...value.lesson, changed: saved.changed, updatedBy: saved.updatedBy, updatedAt: saved.updatedAt, draft: { document, version: saved.draftVersion } },
+        lesson: {
+          ...value.lesson, changed: saved.changed, updatedBy: saved.updatedBy, updatedAt: saved.updatedAt, draft: { document, version: saved.draftVersion },
+          draftSpeech: carryDraftSpeech(value.lesson.draft?.document ?? document, document, value.lesson.draftSpeech),
+        },
       });
       queryClient.setQueryData(courseKey, (value: CourseDetailResponse | undefined) => value && {
         ...value, outline: value.outline.map((entry) => entry.id === lesson.id ? { ...entry, changed: saved.changed, updatedBy: saved.updatedBy, updatedAt: saved.updatedAt } : entry),
@@ -378,11 +390,13 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
       <span className={styles.help}>{t("courses.editor.slashHelp")}</span>
     </div>
     <div className={styles.editor} onKeyDownCapture={onKeyDownCapture} onDropCapture={onDropCapture}>
+      <DraftWordSpeechScope document={live.draft?.document ?? null} draftSpeech={live.draftSpeech}>
       <BlockNoteView editor={editor} theme={editorTheme} slashMenu={false} emojiPicker={false} formattingToolbar={false} filePanel={false} onChange={onChange}>
         <SuggestionMenuController triggerCharacter="/" getItems={async (query) => filterSuggestionItems(slashItems, query)} />
         <FormattingToolbarController formattingToolbar={LessonFormattingToolbar} />
         <FilePanelController filePanel={LessonFilePanel} />
       </BlockNoteView>
+      </DraftWordSpeechScope>
     </div>
     <LessonImageDialog path={path} file={upload?.file ?? null}
       onUploaded={(image) => { upload?.resolve({ props: { url: image.url, name: "" } }); setUpload(null); }}

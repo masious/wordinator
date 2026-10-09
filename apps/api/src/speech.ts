@@ -1,6 +1,6 @@
-import { speechCastSchema, type SpeechCast } from "@wordinator/contracts";
+import { SPEECH_VOICES, speechCastSchema, type SpeechCast } from "@wordinator/contracts";
 import { parseStoredLessonDocument, type DraftSpeech, type LessonDocument, type SpeechMap, type SpeechStatus } from "@wordinator/contracts/lesson-document";
-import { speechClipHash, speechClipKey, speechItems, speechSsml, type SpeechItem, type SpeechLanguage } from "@wordinator/contracts/speech";
+import { speechClipHash, speechClipKey, speechItems, speechSsml, voiceSampleItems, type SpeechItem, type SpeechLanguage } from "@wordinator/contracts/speech";
 import { logError, logInfo } from "./logger";
 
 // Lesson speech (docs/speech.md): background synthesis through Azure AI Speech, clips stored in R2 by content hash.
@@ -159,29 +159,13 @@ export async function runSpeechJobs(env: SpeechEnv, options: SpeechRunOptions = 
       if (clip && clip.status !== "pending") continue;
       if (!(await claimClip(db, item, clip, now()))) continue;
       budget -= 1;
-      const outcome = await synthesize(speechSsml(item));
-      if (outcome.ok) {
-        await env.MEDIA.put(speechClipKey(item.hash), outcome.audio, { httpMetadata: { contentType: "audio/mpeg", cacheControl: "public, max-age=31536000, immutable" } });
-        await db.prepare("UPDATE speech_clips SET status = 'ready', attempts = attempts + 1, claimed_at = NULL, next_attempt_at = NULL, updated_at = ? WHERE hash = ?")
-          .bind(now(), item.hash).run();
-        result.synthesized += 1;
-      } else if (outcome.kind === "failed") {
-        const at = now();
-        const updated = await db.prepare(
-          `UPDATE speech_clips SET attempts = attempts + 1, claimed_at = NULL, updated_at = ?,
-             status = CASE WHEN attempts + 1 >= ? THEN 'failed' ELSE 'pending' END,
-             next_attempt_at = CASE WHEN attempts + 1 >= ? THEN NULL ELSE ? + ? * (1 << attempts) END
-           WHERE hash = ? RETURNING status`,
-        ).bind(at, SPEECH_MAX_ATTEMPTS, SPEECH_MAX_ATTEMPTS, at, SPEECH_RETRY_BASE_MS, item.hash).first<{ status: SpeechStatus }>();
-        if (updated?.status === "failed") result.failed += 1;
-        logError("speech.synthesis_failed", { status: outcome.status, voice: item.voice });
-      } else {
-        // Throttling and a refused key stop the run; the claim is released without counting an attempt.
-        await db.prepare("UPDATE speech_clips SET claimed_at = NULL, updated_at = ? WHERE hash = ?").bind(now(), item.hash).run();
+      const outcome = await synthesizeClaimed(env, item, synthesize, now);
+      if (outcome.kind === "ready") result.synthesized += 1;
+      else if (outcome.kind === "failed") result.failed += 1;
+      else if (outcome.kind === "throttled" || outcome.kind === "unauthorized") {
         await db.prepare("UPDATE speech_jobs SET due_at = MAX(due_at, ?) WHERE lesson_id = ? AND updated_at = ?")
           .bind(now() + (outcome.retryAfterMs ?? SPEECH_THROTTLE_MS), job.lessonId, job.updatedAt).run();
         result.stopped = outcome.kind;
-        logError(`speech.${outcome.kind}`, { status: outcome.status });
       }
     }
     if (result.stopped) break;
@@ -201,6 +185,57 @@ export async function runSpeechJobs(env: SpeechEnv, options: SpeechRunOptions = 
   }
   logInfo("speech.run", { jobs: jobs.results.length, ...result });
   return result;
+}
+
+// Voice samples for the cast editor (docs/speech.md#dialogue-cast). The cron runs this after the jobs unless they were stopped;
+// once every sample is ready or failed it is a single lookup.
+export async function runSpeechSamples(env: SpeechEnv, options: Pick<SpeechRunOptions, "synthesize" | "now"> = {}): Promise<SpeechRunResult | null> {
+  const synthesize = options.synthesize ?? (env.AZURE_SPEECH_KEY && env.AZURE_SPEECH_REGION ? azureSynthesizer(env.AZURE_SPEECH_KEY, env.AZURE_SPEECH_REGION) : null);
+  if (!synthesize) return null;
+  const now = options.now ?? Date.now;
+  const result: SpeechRunResult = { synthesized: 0, failed: 0, finishedJobs: 0, stopped: null };
+  const items = await hashSpeechItems((Object.keys(SPEECH_VOICES) as SpeechLanguage[]).flatMap(voiceSampleItems));
+  const known = await readClips(env.DB, items.map((item) => item.hash));
+  for (const item of items) {
+    const clip = known.get(item.hash);
+    if (clip && clip.status !== "pending") continue;
+    if (!(await claimClip(env.DB, item, clip, now()))) continue;
+    const outcome = await synthesizeClaimed(env, item, synthesize, now);
+    if (outcome.kind === "ready") result.synthesized += 1;
+    else if (outcome.kind === "failed") result.failed += 1;
+    else if (outcome.kind === "throttled" || outcome.kind === "unauthorized") { result.stopped = outcome.kind; break; }
+  }
+  if (result.synthesized || result.failed || result.stopped) logInfo("speech.samples", result);
+  return result;
+}
+
+type ClipOutcome = { kind: "ready" | "retry" | "failed" } | { kind: "throttled" | "unauthorized"; retryAfterMs: number | null };
+
+// Synthesizes a claimed clip and records the outcome: ready in R2, a counted failure with its retry delay (failed after the last
+// attempt), or, for throttling and a refused key, a released claim without a counted attempt.
+async function synthesizeClaimed(env: SpeechEnv, item: HashedSpeechItem, synthesize: Synthesize, now: () => number): Promise<ClipOutcome> {
+  const db = env.DB;
+  const outcome = await synthesize(speechSsml(item));
+  if (outcome.ok) {
+    await env.MEDIA.put(speechClipKey(item.hash), outcome.audio, { httpMetadata: { contentType: "audio/mpeg", cacheControl: "public, max-age=31536000, immutable" } });
+    await db.prepare("UPDATE speech_clips SET status = 'ready', attempts = attempts + 1, claimed_at = NULL, next_attempt_at = NULL, updated_at = ? WHERE hash = ?")
+      .bind(now(), item.hash).run();
+    return { kind: "ready" };
+  }
+  if (outcome.kind === "failed") {
+    const at = now();
+    const updated = await db.prepare(
+      `UPDATE speech_clips SET attempts = attempts + 1, claimed_at = NULL, updated_at = ?,
+         status = CASE WHEN attempts + 1 >= ? THEN 'failed' ELSE 'pending' END,
+         next_attempt_at = CASE WHEN attempts + 1 >= ? THEN NULL ELSE ? + ? * (1 << attempts) END
+       WHERE hash = ? RETURNING status`,
+    ).bind(at, SPEECH_MAX_ATTEMPTS, SPEECH_MAX_ATTEMPTS, at, SPEECH_RETRY_BASE_MS, item.hash).first<{ status: SpeechStatus }>();
+    logError("speech.synthesis_failed", { status: outcome.status, voice: item.voice });
+    return { kind: updated?.status === "failed" ? "failed" : "retry" };
+  }
+  await db.prepare("UPDATE speech_clips SET claimed_at = NULL, updated_at = ? WHERE hash = ?").bind(now(), item.hash).run();
+  logError(`speech.${outcome.kind}`, { status: outcome.status });
+  return { kind: outcome.kind, retryAfterMs: outcome.retryAfterMs };
 }
 
 // Claims a clip for this run: a missing row is claimed by inserting it, a pending row by retaking it once its lease expired

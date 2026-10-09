@@ -105,7 +105,7 @@ test("an author adds new words in the editor, fixes an empty meaning, and publis
   const block = page.getByRole("region", { name: "New words" });
   await block.getByLabel(/^Word 1 meaning/).fill("the ticket");
   await block.getByLabel(/^Word 1( \*)?$/).fill("het kaartje");
-  await block.getByRole("button", { name: "Forms, example, and note for word 1" }).click();
+  await block.getByRole("button", { name: "Forms, example, note, and pronunciation for word 1" }).click();
   await block.getByLabel("Word 1 forms").fill("de kaartjes");
   await block.getByRole("button", { name: "Add word" }).click();
   await block.getByLabel(/^Word 2( \*)?$/).fill("kopen");

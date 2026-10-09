@@ -203,6 +203,18 @@ export const resources = {
           levelHelp: "Optional free text, for example A1 → early A2.",
           intendedLearner: "Intended learner"
         },
+        cast: {
+          title: "Dialogue voices",
+          help: "Each speaker keeps their voice in every lesson of the course. A speaker left on Automatic takes the next free voice in each dialogue.",
+          voices: "Voices",
+          narrator: "{{voice}} (narrator)",
+          sample: "Play a sample of {{voice}}",
+          speakerVoice: "Voice for {{speaker}}",
+          automatic: "Automatic",
+          noSpeakers: "No dialogue in this course has a speaker yet.",
+          loading: "Loading dialogue voices",
+          unavailable: "The dialogue voices could not be loaded. Saving keeps the current voices."
+        },
         contributors: {
           title: "Contributors",
           ownerHelp: "Contributors add lessons and edit every lesson draft. Their work stays a draft until you publish it.",
@@ -351,7 +363,10 @@ export const resources = {
             wordMeaning: "Word {{number}} meaning",
             wordForms: "Word {{number}} forms",
             wordExample: "Word {{number}} example",
-            wordNote: "Word {{number}} note"
+            wordNote: "Word {{number}} note",
+            wordIpa: "Word {{number}} pronunciation (IPA)",
+            wordIpaHelp: "Optional. Only for a word the voice says wrongly, such as with the stress on the wrong syllable. Wiktionary gives most words.",
+            wordIpaInvalid: "Use IPA letters, stress and length marks, dots, and spaces only. It is not saved until it is valid."
           },
           addItem: "Add item",
           removeItem: "Remove item {{number}}",
@@ -361,7 +376,12 @@ export const resources = {
           removeWord: "Remove word {{number}}",
           moveWordUp: "Move word {{number}} up",
           moveWordDown: "Move word {{number}} down",
-          wordDetails: "Forms, example, and note for word {{number}}",
+          wordDetails: "Forms, example, note, and pronunciation for word {{number}}",
+          wordSpeech: {
+            ready: "Audio ready",
+            pending: "Audio pending: it is generated a few minutes after saving.",
+            failed: "The audio could not be generated."
+          },
           ui: {
             addBlock: "Add block",
             blockMenu: "Open block menu",

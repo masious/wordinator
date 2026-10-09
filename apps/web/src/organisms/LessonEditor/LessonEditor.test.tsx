@@ -93,6 +93,33 @@ describe("Lesson editor", () => {
     expect(JSON.parse(String(vi.mocked(fetch).mock.calls[0]![1]!.body)).document.blocks[1]).toEqual(words("the house"));
   });
 
+  it("shows each word's audio status from the draft speech and marks an edited term pending until it is saved and generated", async () => {
+    const blockId = "50000000-0000-4000-8000-000000000009";
+    const huis = "70000000-0000-4000-8000-000000000001"; const tuin = "70000000-0000-4000-8000-000000000002"; const deur = "70000000-0000-4000-8000-000000000003";
+    const words = { id: blockId, type: "vocabulary", props: { data: JSON.stringify({ words: [
+      { id: huis, term: "het huis", meaning: "house" }, { id: tuin, term: "de tuin", meaning: "garden" }, { id: deur, term: "de deur", meaning: "door" },
+    ] }) }, children: [] } as LessonDocument["blocks"][number];
+    const url = "https://media.test/speech/huis.mp3";
+    vi.mocked(fetch).mockResolvedValue(saved(4));
+    renderEditor(false, lesson({ draft: { document: { schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks: [words] }, version: 3 }, draftSpeech: {
+      [`word:${huis}`]: { status: "ready", url }, [`word:${tuin}`]: { status: "failed", url: null },
+    } }));
+    const block = await screen.findByRole("region", { name: "New words" });
+    const row = (id: string) => block.querySelector(`[data-word-id="${id}"]`) as HTMLElement;
+    expect(within(row(huis)).getByText("Audio ready")).toBeInTheDocument();
+    expect(within(row(huis)).getByRole("button", { name: "Play pronunciation of het huis" })).toBeInTheDocument();
+    expect(within(row(tuin)).getByText("The audio could not be generated.")).toBeInTheDocument();
+    expect(within(row(deur)).getByText(/Audio pending/)).toBeInTheDocument();
+    // An edited term no longer matches its clip, before and after the save.
+    fireEvent.change(within(row(huis)).getByLabelText(/^Word 1\W*$/), { target: { value: "het huisje" } });
+    expect(within(row(huis)).getByText(/Audio pending/)).toBeInTheDocument();
+    expect(within(row(huis)).queryByRole("button", { name: /Play pronunciation/ })).not.toBeInTheDocument();
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${path}/draft`, expect.objectContaining({ method: "PUT" })), { timeout: 3_000 });
+    expect(within(row(huis)).getByText(/Audio pending/)).toBeInTheDocument();
+    // A meaning edit changes nothing that is spoken.
+    expect(within(row(tuin)).getByText("The audio could not be generated.")).toBeInTheDocument();
+  });
+
   it("focuses the empty field of a word that blocks publishing", async () => {
     const blockId = "50000000-0000-4000-8000-000000000009"; const wordId = "70000000-0000-4000-8000-000000000001";
     const words = { id: blockId, type: "vocabulary", props: { data: JSON.stringify({ words: [{ id: wordId, term: "het huis", meaning: "" }] }) }, children: [] } as LessonDocument["blocks"][number];

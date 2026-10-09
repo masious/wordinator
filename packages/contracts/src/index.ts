@@ -318,6 +318,13 @@ export const speechCastSchema = z.record(z.string().trim().min(1).max(COURSE_SPE
   .refine((cast) => Object.keys(cast).length <= COURSE_CAST_MAX, `A cast holds at most ${COURSE_CAST_MAX} speakers.`)
   .refine((cast) => new Set(Object.keys(cast).map(speechCastKey)).size === Object.keys(cast).length, "Each speaker appears once in the cast.");
 export type SpeechCast = z.infer<typeof speechCastSchema>;
+// The owner's cast editor: the course's dialogue speakers (every lesson's published and draft documents, then cast entries no
+// dialogue uses any more) and the group language's voices, narrator first, each with its sample clip once it is ready.
+export const courseSpeechCastResponseSchema = z.object({
+  speakers: z.array(z.string()),
+  voices: z.array(z.object({ voice: speechVoiceSchema, sample: z.string().url().nullable() })),
+});
+export type CourseSpeechCastResponse = z.infer<typeof courseSpeechCastResponseSchema>;
 
 export const COURSE_TITLE_MAX = 200;
 export const COURSE_TEXT_MAX = 2_000;

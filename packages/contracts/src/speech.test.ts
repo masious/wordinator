@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { speechCastSchema, updateCourseRequestSchema, WORD_IPA_MAX, wordIpaSchema } from ".";
 import { lessonDocumentSchema, LESSON_DOCUMENT_SCHEMA_VERSION, type LessonDocument } from "./lessonDocument";
-import { dialogueVoices, speechClipHash, speechItems, speechMarkup, speechSsml, spokenText, wordSpeechItems } from "./speech";
+import { dialogueSpeakers, dialogueVoices, SPEECH_SAMPLE_TEXT, speechClipHash, speechItems, speechMarkup, speechSsml, spokenText, voiceSampleItems, wordSpeechItems } from "./speech";
 
 const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const textProps = { textColor: "default", backgroundColor: "default", textAlignment: "left" } as const;
@@ -102,5 +102,19 @@ describe("dialogue cast", () => {
     expect(speechCastSchema.safeParse({ Anna: "en-US-JennyNeural" }).success).toBe(false);
     expect(speechCastSchema.safeParse({ " ": "nl-NL-ColetteNeural" }).success).toBe(false);
     expect(updateCourseRequestSchema.parse({ title: "T", summary: "S" }).speechCast).toBeUndefined();
+  });
+});
+
+describe("cast editor helpers", () => {
+  it("lists dialogue speakers across documents once, trimmed, in order of first appearance", () => {
+    const first = documentOf(dialogue(1, [["Anna", "Hoi!"], ["Ben", "Dag."]]), example(2, "Geen spreker."));
+    const second = documentOf(dialogue(3, [[" anna ", "Ja."], ["Cor", "Nee."], ["BEN", "Oké."]]));
+    expect(dialogueSpeakers([first, second])).toEqual(["Anna", "Ben", "Cor"]);
+    expect(dialogueSpeakers([])).toEqual([]);
+  });
+
+  it("reads one sample sentence per voice of a language, narrator first", () => {
+    expect(voiceSampleItems("de").map((item) => item.voice)).toEqual(["de-DE-KatjaNeural", "de-DE-AmalaNeural", "de-DE-ConradNeural", "de-DE-KillianNeural"]);
+    expect(voiceSampleItems("nl")[1]).toEqual({ key: "sample:nl-NL-ColetteNeural", voice: "nl-NL-ColetteNeural", text: SPEECH_SAMPLE_TEXT.nl, ipa: null });
   });
 });

@@ -24,7 +24,7 @@ There is no separate section level. A `heading` block titles a part of a lesson,
 - Owner: the member who created it
 - Status: `draft`, `published`, or `archived`
 
-Any active member may create a course. Draft courses are visible only to their owner and contributors.
+Any active member may create a course. Draft courses are visible only to their owner and contributors. The owner also edits the course's [dialogue voices](speech.md#dialogue-cast) with its details.
 
 ### Lesson
 
@@ -154,7 +154,7 @@ A `vocabulary` block (shown to authors as "New words") holds an ordered list of 
 - The block is top level or inside a column, like any other leaf block. Adding the block type does not change the document schema version.
 - Learners receive the whole word, including the note. It is not concealed, only shortened: a New words list shows each word's term, forms, and meaning, and a Show more button under a word with an example or note opens them (Show less closes them). Each list starts closed.
 - The lesson reader renders the block as a compact word list in place.
-- Authors add the block with the "New words" slash item, which starts it with one empty word. The block's form edits each word's term and meaning, shows forms, example, and note on request (rows that already have one start expanded), and adds, removes (never the last word), and reorders words. New words get IDs from `crypto.randomUUID()`.
+- Authors add the block with the "New words" slash item, which starts it with one empty word. The block's form edits each word's term and meaning, shows forms, example, note, and pronunciation (IPA) on request (rows that already have one start expanded), shows each word's [audio status](speech.md#playback), and adds, removes (never the last word), and reorders words. An IPA the contracts refuse stays in its field with a message and is not saved until it is valid. New words get IDs from `crypto.randomUUID()`.
 - A pasted or duplicated block would repeat word IDs, which the document's unique-ID check refuses, so the editor gives the later block's repeated words fresh IDs before saving. The first use of an ID in document order keeps it.
 - The publish bar lists each `word-empty` problem; choosing one focuses that word's empty term, or else its meaning.
 - A published document written directly in the database (outside the publish route) also needs its `course_lesson_words` rows, which only the publish route maintains.

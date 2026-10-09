@@ -30,3 +30,4 @@
 @media(max-width:48em){.hero{grid-template-columns:1fr;gap:var(--space-6)}}
 @media(max-width:40em){.toolActions>*,.formActions>*{flex:1}}
 @media(prefers-reduced-motion:reduce){.stack{animation:none}.card{transition-duration:1ms}.card:hover{transform:none}}
+.castUnavailable{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}

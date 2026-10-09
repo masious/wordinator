@@ -1,10 +1,10 @@
-import { COURSE_LEVEL_MAX, COURSE_TEXT_MAX, COURSE_TITLE_MAX, courseResponseSchema, type Course, type CourseInput } from "@wordinator/contracts";
+import { COURSE_LEVEL_MAX, COURSE_TEXT_MAX, COURSE_TITLE_MAX, courseResponseSchema, type Course, type CourseInput, type SpeechCast, type UpdateCourseInput } from "@wordinator/contracts";
 import type { CourseDetailResponse } from "@wordinator/contracts/lesson-document";
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { apiRequest, courseQueryOptions, coursesQueryOptions, sessionQueryOptions } from "../api";
+import { apiRequest, courseQueryOptions, coursesQueryOptions, courseSpeechCastQueryOptions, sessionQueryOptions } from "../api";
 import { PlainText } from "../molecules/PlainText";
 import { CourseContributors } from "../organisms/CourseContributors/CourseContributors";
 import { CourseErrorMessage as ErrorMessage } from "../organisms/CourseLessons/CourseErrorMessage";
@@ -12,6 +12,7 @@ import { CourseLessons, LessonView } from "../organisms/CourseLessons/CourseLess
 import { CourseResume } from "../organisms/CourseLessons/CourseResume";
 import { CourseProgress } from "../organisms/CourseProgress/CourseProgress";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
+import { SpeechCastFields } from "../organisms/SpeechCast/SpeechCastFields";
 import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, MetadataRow, PageHeader, SectionHeader, Surface, TextAreaField, TextField } from "../ui";
 import { ImageUpload } from "./PhaseFivePages";
 import shellStyles from "./PhaseOnePages.module.css";
@@ -25,20 +26,30 @@ function StatusChip({ status }: { status: Course["status"] }) {
   return status === "published" ? null : <LabelChip>{t(`courses.status.${status}`)}</LabelChip>;
 }
 
+// Editing an existing course also edits its dialogue cast. The cast is sent only once the editor has loaded, so a failed load
+// keeps the current cast.
 function CourseForm({ initial, submitLabel, pending, error, onSubmit, onCancel }: {
-  initial?: Course; submitLabel: string; pending: boolean; error: Error | null; onSubmit: (input: CourseInput) => void; onCancel: () => void;
+  initial?: Course; submitLabel: string; pending: boolean; error: Error | null; onSubmit: (input: UpdateCourseInput) => void; onCancel: () => void;
 }) {
   const { t } = useTranslation();
   const [title, setTitle] = useState(initial?.title ?? "");
   const [summary, setSummary] = useState(initial?.summary ?? "");
   const [level, setLevel] = useState(initial?.level ?? "");
   const [intendedLearner, setIntendedLearner] = useState(initial?.intendedLearner ?? "");
-  const submit = (event: FormEvent) => { event.preventDefault(); onSubmit({ title, summary, level: level || null, intendedLearner: intendedLearner || null }); };
+  const [cast, setCast] = useState<SpeechCast>(initial?.speechCast ?? {});
+  const castEditor = useQuery({ ...courseSpeechCastQueryOptions(initial?.groupId ?? "", initial?.id ?? ""), enabled: Boolean(initial) });
+  const submit = (event: FormEvent) => {
+    event.preventDefault();
+    onSubmit({ title, summary, level: level || null, intendedLearner: intendedLearner || null, ...(castEditor.isSuccess ? { speechCast: cast } : {}) });
+  };
   return <form className={styles.form} onSubmit={submit}>
     <TextField label={t("courses.fields.title")} value={title} onChange={(event) => setTitle(event.currentTarget.value)} maxLength={COURSE_TITLE_MAX} required />
     <TextAreaField label={t("courses.fields.summary")} value={summary} onChange={(event) => setSummary(event.currentTarget.value)} maxLength={COURSE_TEXT_MAX} autosize minRows={3} required />
     <TextField label={t("courses.fields.level")} description={t("courses.fields.levelHelp")} value={level} onChange={(event) => setLevel(event.currentTarget.value)} maxLength={COURSE_LEVEL_MAX} />
     <TextAreaField label={t("courses.fields.intendedLearner")} value={intendedLearner} onChange={(event) => setIntendedLearner(event.currentTarget.value)} maxLength={COURSE_TEXT_MAX} autosize minRows={2} />
+    {initial && (castEditor.isPending ? <LoadingState label={t("courses.cast.loading")} />
+      : castEditor.isError ? <p className={styles.castUnavailable} role="status">{t("courses.cast.unavailable")}</p>
+      : <SpeechCastFields data={castEditor.data} cast={cast} onChange={setCast} />)}
     <ErrorMessage error={error} />
     <div className={styles.formActions}><Button variant="quiet" onClick={onCancel}>{t("common.cancel")}</Button><Button type="submit" loading={pending} disabled={!title.trim() || !summary.trim()}>{submitLabel}</Button></div>
   </form>;
@@ -99,7 +110,7 @@ export function CoursePage({ groupId, courseId }: { groupId: string; courseId: s
     await Promise.all([queryClient.invalidateQueries({ queryKey: ["course", groupId, courseId] }), queryClient.invalidateQueries({ queryKey: ["courses", groupId] })]);
   };
   const edit = useMutation({
-    mutationFn: (input: CourseInput) => apiRequest(coursePath(groupId, courseId), courseResponseSchema, { method: "PATCH", body: json(input) }),
+    mutationFn: (input: UpdateCourseInput) => apiRequest(coursePath(groupId, courseId), courseResponseSchema, { method: "PATCH", body: json(input) }),
     onSuccess: async (data) => { await applied(data); setEditOpen(false); },
   });
   const visibility = useMutation({ mutationFn: (status: "draft" | "published") => apiRequest(`${coursePath(groupId, courseId)}/visibility`, courseResponseSchema, { method: "POST", body: json({ status }) }), onSuccess: applied });
