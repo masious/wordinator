@@ -1,7 +1,8 @@
 import { z } from "zod";
 import {
   COURSE_BLOCK_TEXT_MAX, COURSE_BLOCKS_MAX, COURSE_HEADING_MAX, COURSE_NOTE_MAX, COURSE_PRELOADED_LESSONS, COURSE_RECAP_WORDS_MAX, COURSE_SENTENCE_MAX,
-  COURSE_WORD_FORMS_MAX, COURSE_WORD_MEANING_MAX, COURSE_WORD_TERM_MAX, COURSE_WORDS_PER_BLOCK_MAX, courseLessonSummarySchema, courseSchema, dialoguePayloadSchema, editorRefSchema, opaqueIdSchema, practicePayloadSchema, splitPracticePayload, type PracticePayload,
+  COURSE_WORD_FORMS_MAX, COURSE_WORD_MEANING_MAX, COURSE_WORD_TERM_MAX, COURSE_WORDS_PER_BLOCK_MAX, courseLessonSummarySchema, courseSchema, dialoguePayloadSchema, editorRefSchema, opaqueIdSchema, paginationQuerySchema, practicePayloadSchema, splitPracticePayload, type PracticePayload,
+  WORD_BOOKMARKS_MAX,
   type PracticeReference,
 } from "./index";
 
@@ -530,3 +531,18 @@ export const courseWordSchema = z.object({
 export type CourseWord = z.infer<typeof courseWordSchema>;
 export const courseWordsResponseSchema = z.object({ words: z.array(courseWordSchema).max(COURSE_RECAP_WORDS_MAX) });
 export type CourseWordsResponse = z.infer<typeof courseWordsResponseSchema>;
+
+// Word bookmarks (C9b): a member's keys to words of published lessons. Keys mark bookmark toggles on every surface; the list
+// carries the indexed word with its course and lesson, newest bookmark first, and leaves out words no longer published.
+export const wordBookmarkKeySchema = z.object({ lessonId: opaqueIdSchema, wordId: opaqueIdSchema });
+export type WordBookmarkKey = z.infer<typeof wordBookmarkKeySchema>;
+export const wordBookmarkKeysResponseSchema = z.object({ keys: z.array(wordBookmarkKeySchema).max(WORD_BOOKMARKS_MAX) });
+export type WordBookmarkKeysResponse = z.infer<typeof wordBookmarkKeysResponseSchema>;
+export const wordBookmarkSchema = z.object({
+  word: courseWordSchema, course: z.object({ id: opaqueIdSchema, title: z.string() }), lesson: z.object({ id: opaqueIdSchema, title: z.string() }),
+  bookmarkedAt: z.number().int(),
+});
+export type WordBookmark = z.infer<typeof wordBookmarkSchema>;
+export const wordBookmarkPageSchema = z.object({ items: z.array(wordBookmarkSchema), nextCursor: z.string().nullable() });
+export type WordBookmarkPage = z.infer<typeof wordBookmarkPageSchema>;
+export const wordBookmarksQuerySchema = paginationQuerySchema;

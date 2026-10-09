@@ -24,9 +24,10 @@ test("a learner sees new words on the steps that introduce them and reviews them
 
   await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
   await expect(page.getByRole("button", { name: "Review words" })).toHaveCount(0);
-  // The lesson page shows each vocabulary block in place.
+  // The lesson page lists the lesson's words beside the text instead of showing vocabulary blocks in place.
   await openLesson(page);
-  await expect(page.getByRole("region", { name: "New words" }).first()).toContainText("het kaartje");
+  await expect(page.getByRole("complementary", { name: "New words" })).toContainText("het kaartje");
+  await expect(page.getByRole("region", { name: "New words" })).toHaveCount(0);
   await page.getByRole("link", { name: /^Back to / }).click();
 
   await page.getByRole("button", { name: "Start lesson 1" }).click();
@@ -34,13 +35,16 @@ test("a learner sees new words on the steps that introduce them and reviews them
   const panel = player.getByRole("region", { name: "New words" });
   await expect(player.getByText("Step 1 of 4")).toBeVisible();
   await expect(panel).toContainText("het kaartje");
+  await expect(panel.getByText("Diminutive of de kaart.")).toHaveCount(0);
+  await panel.getByRole("button", { name: "Show more about het kaartje" }).click();
   await expect(panel).toContainText("Diminutive of de kaart.");
-  // The dialogue's words stay visible on every line.
-  for (const line of ["Waar is de trein?", "Op spoor twee."]) {
-    await player.getByRole("button", { name: "Next" }).click();
-    await expect(player.getByText(line, { exact: true })).toBeVisible();
-    await expect(panel).toContainText("het spoor");
-  }
+  // A dialogue's word shows on the first line that uses it, not before.
+  await player.getByRole("button", { name: "Next" }).click();
+  await expect(player.getByText("Waar is de trein?", { exact: true })).toBeVisible();
+  await expect(panel).toHaveCount(0);
+  await player.getByRole("button", { name: "Next" }).click();
+  await expect(player.getByText("Op spoor twee.", { exact: true })).toBeVisible();
+  await expect(panel).toContainText("het spoor");
   await player.getByRole("button", { name: "Next" }).click();
   await expect(player.getByText("Tot ziens!")).toBeVisible();
   await expect(panel).toHaveCount(0);
@@ -105,7 +109,7 @@ test("an author adds new words in the editor, fixes an empty meaning, and publis
   await expect(bar.getByText("Unpublished", { exact: true })).toHaveCount(0);
   await bar.getByRole("button", { name: "Done editing" }).click();
 
-  const words = page.getByRole("region", { name: "New words" });
+  const words = page.getByRole("complementary", { name: "New words" });
   await expect(words).toContainText("het kaartje");
   await expect(words).toContainText("de kaartjes");
   await expect(words).toContainText("to buy");

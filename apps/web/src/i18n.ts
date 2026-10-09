@@ -492,6 +492,12 @@ export const resources = {
           range: "Words {{first}}–{{last}} of {{total}}",
           showMeaning: "Show meaning",
           hideMeaning: "Hide meaning",
+          bookmark: "Bookmark {{term}}",
+          bookmarkFailed: "The bookmark could not be saved. Try again.",
+          showMore: "Show more",
+          showLess: "Show less",
+          showMoreAbout: "Show more about {{term}}",
+          showLessAbout: "Show less about {{term}}",
           showAll: "Show all",
           hideAll: "Hide all",
           backToCourse: "Back to the course"

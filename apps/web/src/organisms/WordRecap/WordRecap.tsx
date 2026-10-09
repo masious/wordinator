@@ -3,6 +3,7 @@ import { useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
 import { Button } from "../../ui";
+import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
 import { measureFit, type GridFit } from "./fitGrid";
 import styles from "./WordRecap.module.css";
 
@@ -64,6 +65,7 @@ function WordCard({ word, shown, opened, onToggle }: { word: RecapWord; shown: b
     </div>
     <div className={styles.footer}>
       <Button variant="secondary" onClick={onToggle}>{shown ? t("courses.words.hideMeaning") : t("courses.words.showMeaning")}</Button>
+      <span className={styles.bookmark}><WordBookmarkToggle wordId={word.id} term={word.term} /></span>
     </div>
   </article>;
 }

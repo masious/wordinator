@@ -13,6 +13,7 @@ import { PlainText } from "../../molecules/PlainText";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { AdaptiveDialog, Button, ErrorState, LoadingState } from "../../ui";
 import { DialogueBlock, ExampleBlock, InlineText, LessonBlocks, NewWords } from "../LessonDocument/LessonDocument";
+import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import { runWords, WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import styles from "./LessonPlayer.module.css";
@@ -160,6 +161,8 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
   // Steps are fixed when the run starts, so a refetch (for example after sharing answers) never moves the reader.
   const [steps] = useState(() => lessonSteps(lesson));
   const [words] = useState(() => runWords(steps)); const [reviewing, setReviewing] = useState(false);
+  // Words of the published document can be bookmarked in the panels and the recap; a preview's cannot.
+  const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
   // A published lesson resumes at the reader's saved step; previews always start at the beginning.
   const [start] = useState(() => lesson.published && position && steps.length ? resolveStepIndex(steps, position.stepKey, position.stepIndex) : 0);
   const [index, setIndex] = useState(start); const [resumed, setResumed] = useState(start > 0);
@@ -210,7 +213,7 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [finished]);
   const percent = steps.length ? (Math.min(index, steps.length) / steps.length) * 100 : 100;
-  return <div className={styles.player}>
+  return <WordBookmarkScope resolve={bookmarkTarget}><div className={styles.player}>
     <div className={styles.status}>
       <span className={styles.stepLabel}>{finished ? t("courses.player.done") : t("courses.player.step", { current: index + 1, total: steps.length })}</span>
       <ProgressMeter value={percent} label={t("courses.player.progressLabel")} />
@@ -237,7 +240,7 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
       <Button variant="quiet" disabled={index === 0} onClick={() => setIndex((value) => value - 1)}>{t("common.back")}</Button>
       <Button data-next data-autofocus onClick={forward}>{index === steps.length - 1 ? t("courses.player.finish") : t("common.next")}</Button>
     </div>}
-  </div>;
+  </div></WordBookmarkScope>;
 }
 
 // A focused, step-by-step run through one lesson. Each step of a published lesson is saved as the viewer's position, and finishing

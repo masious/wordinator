@@ -1,6 +1,6 @@
 import { MantineProvider } from "@mantine/core";
 import { LESSON_DOCUMENT_SCHEMA_VERSION, type LessonDocument as LessonDocumentData, type LessonTopBlock } from "@wordinator/contracts/lesson-document";
-import { cleanup, render, screen } from "@testing-library/react";
+import { cleanup, fireEvent, render, screen } from "@testing-library/react";
 import { afterEach, describe, expect, it } from "vitest";
 import "../../i18n";
 import { LessonDocument } from "./LessonDocument";
@@ -24,8 +24,18 @@ describe("Lesson document renderer", () => {
     expect(list).toHaveTextContent("der Hund");
     expect(screen.getByText("die Hunde")).toBeInTheDocument();
     expect(screen.getByText("the dog")).toBeInTheDocument();
+    // The example and note open on request.
+    expect(screen.queryByText("Der Hund bellt.")).not.toBeInTheDocument();
+    const more = screen.getByRole("button", { name: "Show more about der Hund" });
+    expect(more).toHaveAttribute("aria-expanded", "false");
+    fireEvent.click(more);
     expect(screen.getByText("Der Hund bellt.")).toBeInTheDocument();
     expect(screen.getByText(/Plural with -e\./)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Show less about der Hund" })).toHaveAttribute("aria-expanded", "true");
+    fireEvent.click(screen.getByRole("button", { name: "Show less about der Hund" }));
+    expect(screen.queryByText("Der Hund bellt.")).not.toBeInTheDocument();
+    // A word with neither has no toggle.
+    expect(screen.getAllByRole("button", { name: /^Show more/ })).toHaveLength(1);
     expect(screen.getAllByRole("listitem")).toHaveLength(2);
     // Authored markup stays text, and empty optional fields render nothing.
     expect(screen.getByText("<b>das Haus</b>")).toBeInTheDocument();

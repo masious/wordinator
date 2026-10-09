@@ -1,5 +1,5 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, practiceDiscussionResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
-import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema } from "@wordinator/contracts/lesson-document";
+import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema } from "@wordinator/contracts/lesson-document";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 export class ApiError extends Error {
@@ -124,6 +124,14 @@ export const courseProgressQueryOptions = (groupId: string, courseId: string) =>
 export const courseWordsQueryOptions = (groupId: string, courseId: string) => queryOptions({
   queryKey: ["course", groupId, courseId, "words"] as const,
   queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/words`, courseWordsResponseSchema),
+  retry: false,
+});
+
+// Word bookmarks (C9b) live under one group-level prefix, so a toggle can refresh every bookmark view at once.
+export const wordBookmarksKey = (groupId: string) => ["word-bookmarks", groupId] as const;
+export const wordBookmarkKeysQueryOptions = (groupId: string) => queryOptions({
+  queryKey: [...wordBookmarksKey(groupId), "keys"] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/word-bookmarks/keys`, wordBookmarkKeysResponseSchema),
   retry: false,
 });
 

@@ -1,5 +1,6 @@
 .document{display:grid;gap:var(--space-5);min-width:0}
-.document>*,.column>*{margin-block:0}
+.document>*,.column>*,.anchor>*{margin-block:0}
+.anchor{display:grid;min-width:0}
 .paragraph{margin:0;font-size:var(--type-authored);line-height:var(--line-body);white-space:pre-wrap;overflow-wrap:anywhere}
 .tinted{padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm)}
 .heading{margin:var(--space-4) 0 0;font-family:var(--font-display);font-weight:var(--weight-medium);letter-spacing:var(--tracking-title);line-height:var(--line-title);overflow-wrap:anywhere}
@@ -34,6 +35,13 @@
 .forms{font-size:var(--type-metadata);color:var(--color-foreground-muted);overflow-wrap:anywhere}
 .meaning,.wordExample{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
 .wordExample{font-style:italic}
+.wordBookmark{display:inline-flex;margin-left:auto}
+.wordBookmark:empty{display:none}
+.wordDetails{display:grid;gap:var(--space-1);min-width:0}
+.wordDetails .note{margin:0}
+.wordToggle{justify-self:start;min-height:var(--touch-target);margin-block:calc((var(--touch-target) - 1lh) / -2);padding:0;background:none;border:0;color:var(--color-foreground-muted);font:inherit;font-size:var(--type-metadata);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:0.18em;cursor:pointer}
+.wordToggle:hover{color:var(--color-foreground)}
+.wordToggle:focus-visible{outline:var(--border-strong);outline-offset:2px;border-radius:var(--radius-sm)}
 .columns{display:grid;grid-template-columns:var(--lesson-columns);gap:var(--lesson-column-gap);align-items:start;min-width:0}
 .column{display:grid;gap:var(--space-4);min-width:0}
 .text-gray{color:var(--color-lesson-gray-text)}.surface-gray{background:var(--color-lesson-gray-surface)}

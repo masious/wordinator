@@ -7,7 +7,9 @@
 .lessonNumber{min-width:2ch;font-family:var(--font-mono);font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 .lessonCopy{display:grid;gap:var(--space-1);min-width:0}
 .lessonTitle{font-family:var(--font-display);font-size:var(--type-card-title);font-weight:var(--weight-medium);line-height:var(--line-title);overflow-wrap:anywhere}
-.page{display:grid;gap:var(--space-6);min-width:0;max-width:var(--width-reading)}
+.page{display:grid;gap:var(--space-6);min-width:0}
+.page>.lessonHeader,.page>.pager{max-width:var(--width-reading)}
+.withWords{display:grid;grid-template-columns:minmax(0,var(--width-reading)) minmax(14rem,20rem);align-items:start;gap:var(--space-10)}
 .lessonHeader{display:grid;gap:var(--space-2);padding-bottom:var(--space-4);border-bottom:var(--ring-hairline)}
 .lessonHeader h1{margin:0;font-family:var(--font-display);font-size:var(--type-section-title);font-weight:var(--weight-medium);letter-spacing:var(--tracking-title);line-height:var(--line-title);overflow-wrap:anywhere}
 .eyebrow{margin:0;font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
@@ -53,7 +55,8 @@
 .actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:var(--space-2)}
 .error{margin:0;color:var(--color-danger-text);font-weight:var(--weight-semibold)}
 @media(max-width:40em){.actions>*{flex:1}}
-.body{display:grid;gap:var(--space-5);min-width:0}
+.body{display:grid;gap:var(--space-5);min-width:0;max-width:var(--width-reading)}
 .preview{margin:0;padding:var(--space-2) var(--space-3);font-size:var(--type-metadata);background:var(--color-highlight-soft);border-radius:var(--radius-sm)}
 .practice{display:grid;gap:var(--space-4);min-width:0}
 @media(max-width:48em){.turnRow{grid-template-columns:1fr}}
+@media(max-width:64em){.withWords{grid-template-columns:minmax(0,1fr);gap:var(--space-8)}}

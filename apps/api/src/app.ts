@@ -36,6 +36,7 @@ import {
   paginationQuerySchema,
   COURSE_LESSONS_MAX,
   COURSE_RECAP_WORDS_MAX,
+  WORD_BOOKMARKS_MAX,
   COURSE_PRELOADED_LESSONS,
   courseProgressResponseSchema,
   lessonPositionResponseSchema,
@@ -60,7 +61,7 @@ import {
   type PostInput,
 } from "@wordinator/contracts";
 import {
-  collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
+  collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
   lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
   toLearnerDocument, walkLessonBlocks, type CourseLesson, type CourseWord, type LessonBlockOf, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
@@ -1520,14 +1521,24 @@ app.patch("/api/groups/:groupId/memberships/:userId", requireGroupAccess, async 
   return context.json({ ok: true } as const);
 });
 
+// The SQL form of `courseVisible` for course alias `c`: published courses, the viewer's own, archived ones for the group creator,
+// and drafts the viewer actively contributes to.
+function courseVisibleClause(userId: string, creatorUserId: string) {
+  return {
+    sql: `(c.status = 'published' OR c.owner_id = ? OR (c.status = 'archived' AND ? = ?)
+    OR (c.status = 'draft' AND EXISTS (SELECT 1 FROM course_contributors cc WHERE cc.course_id = c.id AND cc.user_id = ? AND cc.state = 'active')))`,
+    values: [userId, userId, creatorUserId, userId],
+  };
+}
+
 app.get("/api/groups/:groupId/courses", requireGroupAccess, async (context) => {
   const parsed = paginationQuerySchema.safeParse(context.req.query());
   const cursor = decodeCursor(parsed.success ? parsed.data.cursor : undefined);
   if (!parsed.success || (parsed.data.cursor && !cursor)) return apiError(context, 400, "INVALID_CURSOR", "The course list cursor is invalid.");
   const group = context.get("groupAccess"); const user = context.get("user")!;
-  const clauses = ["c.group_id = ?", `(c.status = 'published' OR c.owner_id = ? OR (c.status = 'archived' AND ? = ?)
-    OR (c.status = 'draft' AND EXISTS (SELECT 1 FROM course_contributors cc WHERE cc.course_id = c.id AND cc.user_id = ? AND cc.state = 'active')))`];
-  const values: Array<string | number> = [user.id, group.id, user.id, group.creatorUserId, user.id, user.id];
+  const visible = courseVisibleClause(user.id, group.creatorUserId);
+  const clauses = ["c.group_id = ?", visible.sql];
+  const values: Array<string | number> = [user.id, group.id, ...visible.values];
   if (cursor) { clauses.push("(c.created_at < ? OR (c.created_at = ? AND c.id < ?))"); values.push(cursor.createdAt, cursor.createdAt, cursor.id); }
   const rows = await context.env.DB.prepare(`${COURSE_SELECT} WHERE ${clauses.join(" AND ")} ORDER BY c.created_at DESC, c.id DESC LIMIT ?`)
     .bind(...values, parsed.data.limit + 1).all<CourseRow>();
@@ -1807,6 +1818,80 @@ app.get("/api/groups/:groupId/courses/:courseId/words", requireGroupAccess, asyn
   return context.json(courseWordsResponseSchema.parse({ words: words.slice(0, COURSE_RECAP_WORDS_MAX) }));
 });
 
+// Word bookmarks (C9b): a member saves a word of a published lesson. The key must name an indexed word of that lesson in the
+// course; a course or word the viewer cannot see is a 404 like a missing one. Bookmarking again keeps the first timestamp.
+const bookmarkPath = `${lessonPath}/words/:wordId/bookmark`;
+app.put(bookmarkPath, requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  const { groupId, id: courseId } = found.row; const lessonId = context.req.param("lessonId"); const wordId = context.req.param("wordId");
+  const userId = context.get("user")!.id; const db = context.env.DB;
+  const indexed = await db.prepare(
+    `SELECT 1 AS found FROM course_lesson_words w
+     JOIN course_lessons l ON l.id = w.lesson_id AND l.group_id = w.group_id AND l.course_id = w.course_id AND l.published_doc IS NOT NULL
+     WHERE w.group_id = ? AND w.course_id = ? AND w.lesson_id = ? AND w.word_id = ?`,
+  ).bind(groupId, courseId, lessonId, wordId).first();
+  if (!indexed) return apiError(context, 404, "WORD_NOT_FOUND", "This word is not available.");
+  const inserted = await db.prepare(
+    `INSERT INTO course_word_bookmarks (group_id, course_id, lesson_id, word_id, user_id, created_at)
+     SELECT ?, ?, ?, ?, ?, ? WHERE (SELECT COUNT(*) FROM course_word_bookmarks WHERE group_id = ? AND user_id = ?) < ?
+     ON CONFLICT (user_id, lesson_id, word_id) DO NOTHING`,
+  ).bind(groupId, courseId, lessonId, wordId, userId, Date.now(), groupId, userId, WORD_BOOKMARKS_MAX).run();
+  if (!inserted.meta.changes) {
+    const existing = await db.prepare("SELECT 1 AS found FROM course_word_bookmarks WHERE group_id = ? AND user_id = ? AND lesson_id = ? AND word_id = ?")
+      .bind(groupId, userId, lessonId, wordId).first();
+    if (!existing) return apiError(context, 409, "WORD_BOOKMARKS_FULL", `You can keep up to ${WORD_BOOKMARKS_MAX} bookmarked words in a group.`);
+  }
+  return context.json({ ok: true } as const);
+});
+
+app.delete(bookmarkPath, requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  await context.env.DB.prepare("DELETE FROM course_word_bookmarks WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND word_id = ? AND user_id = ?")
+    .bind(found.row.groupId, found.row.id, context.req.param("lessonId"), context.req.param("wordId"), context.get("user")!.id).run();
+  return context.json({ ok: true } as const);
+});
+
+// Every bookmark key the viewer holds in the group, including words currently hidden, so toggles can show their state anywhere.
+app.get("/api/groups/:groupId/word-bookmarks/keys", requireGroupAccess, async (context) => {
+  const rows = await context.env.DB.prepare(
+    "SELECT lesson_id AS lessonId, word_id AS wordId FROM course_word_bookmarks WHERE group_id = ? AND user_id = ? ORDER BY created_at DESC LIMIT ?",
+  ).bind(context.get("groupAccess").id, context.get("user")!.id, WORD_BOOKMARKS_MAX).all<{ lessonId: string; wordId: string }>();
+  return context.json(wordBookmarkKeysResponseSchema.parse({ keys: rows.results }));
+});
+
+// The viewer's bookmarked words, newest first, joined to the word index: a word no longer published, or in a course the viewer
+// can no longer see, is left out. The cursor is the bookmark time with the lesson and word IDs as a tie-break.
+app.get("/api/groups/:groupId/word-bookmarks", requireGroupAccess, async (context) => {
+  const parsed = wordBookmarksQuerySchema.safeParse(context.req.query());
+  const cursor = decodeCursor(parsed.success ? parsed.data.cursor : undefined);
+  const [cursorLesson, cursorWord, extra] = cursor ? cursor.id.split(" ") : [];
+  if (!parsed.success || (parsed.data.cursor && (!cursor || !cursorLesson || !cursorWord || extra !== undefined))) {
+    return apiError(context, 400, "INVALID_CURSOR", "The bookmark cursor is invalid.");
+  }
+  const group = context.get("groupAccess"); const user = context.get("user")!;
+  const visible = courseVisibleClause(user.id, group.creatorUserId);
+  const clauses = ["b.group_id = ?", "b.user_id = ?", visible.sql];
+  const values: Array<string | number> = [group.id, user.id, ...visible.values];
+  if (cursor) { clauses.push("(b.created_at, b.lesson_id, b.word_id) < (?, ?, ?)"); values.push(cursor.createdAt, cursorLesson!, cursorWord!); }
+  const rows = await context.env.DB.prepare(
+    `SELECT b.created_at AS bookmarkedAt, w.word_id AS id, w.lesson_id AS lessonId, w.term, w.meaning, w.forms, w.example, w.note,
+       c.id AS courseId, c.title AS courseTitle, l.title AS lessonTitle
+     FROM course_word_bookmarks b
+     JOIN course_lesson_words w ON w.group_id = b.group_id AND w.course_id = b.course_id AND w.lesson_id = b.lesson_id AND w.word_id = b.word_id
+     JOIN course_lessons l ON l.id = b.lesson_id AND l.group_id = b.group_id AND l.course_id = b.course_id AND l.published_doc IS NOT NULL
+     JOIN courses c ON c.id = b.course_id AND c.group_id = b.group_id
+     WHERE ${clauses.join(" AND ")}
+     ORDER BY b.created_at DESC, b.lesson_id DESC, b.word_id DESC LIMIT ?`,
+  ).bind(...values, parsed.data.limit + 1).all<CourseWord & { bookmarkedAt: number; courseId: string; courseTitle: string; lessonTitle: string }>();
+  const page = rows.results.slice(0, parsed.data.limit); const tail = page.at(-1);
+  return context.json(wordBookmarkPageSchema.parse({
+    items: page.map(({ bookmarkedAt, courseId, courseTitle, lessonTitle, ...word }) => ({
+      word, course: { id: courseId, title: courseTitle }, lesson: { id: word.lessonId, title: lessonTitle }, bookmarkedAt,
+    })),
+    nextCursor: rows.results.length > parsed.data.limit && tail ? encodeCursor({ createdAt: tail.bookmarkedAt, id: `${tail.lessonId} ${tail.id}` }) : null,
+  }));
+});
+
 // Finishing a published lesson in the lesson player records it once; repeating the lesson keeps the first completion time.
 app.put(`${lessonPath}/completion`, requireGroupAccess, async (context) => {
   const found = await visibleCourse(context); if ("error" in found) return found.error;
@@ -1862,7 +1947,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
   const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id; const db = context.env.DB;
   const media = await db.prepare("SELECT key FROM course_media WHERE group_id = ? AND lesson_id = ?").bind(groupId, lessonId).all<{ key: string }>();
-  // Lessons are hard-deleted with their practice threads, completions, positions, word index rows, and images; reactions have no foreign key, so they go first.
+  // Lessons are hard-deleted with their practice threads, completions, positions, word index rows, word bookmarks, and images; reactions have no foreign key, so they go first.
   const practices = "SELECT id FROM course_practices WHERE group_id = ? AND course_id = ? AND lesson_id = ?";
   await db.batch([
     db.prepare(`DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND target_id IN (SELECT id FROM comments WHERE group_id = ? AND block_id IN (${practices}))`)
@@ -1873,6 +1958,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
     db.prepare("DELETE FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lesson_positions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lesson_words WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
+    db.prepare("DELETE FROM course_word_bookmarks WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lessons WHERE group_id = ? AND course_id = ? AND id = ?").bind(groupId, courseId, lessonId),
   ]);
   if (media.results.length) await context.env.MEDIA.delete(media.results.map((row) => row.key));

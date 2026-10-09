@@ -19,7 +19,7 @@ C9a replaces the one-card recap slideshow with a page of cards. Every surface th
 
 C9b lets a member save words to come back to later.
 
-- **Where.** A bookmark toggle appears on word cards and on every word in a [New words](courses.md#words-in-the-player) list: the player's panel, the words step, and the reader's word list. A member may bookmark words of lessons they have not finished.
+- **Where.** A bookmark toggle appears on word cards and on every word in a [New words](courses.md#words-in-the-player) list: the player's panel, the words step, the reader's word list, and the lesson page's [New words panel](courses.md#lesson-pages) beside the text (sticky or as the list after the text). Toggling a word in that panel never changes its highlight or scrolls the panel. A member may bookmark words of lessons they have not finished.
 - **Published words only.** Bookmarks are offered only for words of a lesson's published document. A preview of unpublished changes and a draft show no toggle.
 - **Reference, not copy.** A bookmark is the member's key to a word, `(lesson, word ID)`; its text is read from the [`course_lesson_words`](data-model.md#course_lesson_words) index. An author's edits therefore show in bookmarks. A word that leaves the published document (edited out or the lesson unpublished) is hidden while it is gone and returns if a later publish brings back the same word ID. Deleting the lesson or course deletes its bookmarks.
 - **Visibility.** Bookmarks show only while the member is active in the group and can still see the course under the course read rules. A former member's bookmarks are kept but cannot be read.

@@ -118,6 +118,29 @@ describe("Course lessons", () => {
     expect(screen.queryByRole("link", { name: /^Next:/ })).not.toBeInTheDocument();
   });
 
+  it("lists the lesson's new words beside the text and highlights the words of blocks on screen", async () => {
+    const word = (n: number, term: string) => ({ id: `70000000-0000-4000-8000-00000000000${n}`, term, meaning: `meaning of ${term}` });
+    const vocabulary = (n: number, ...words: unknown[]): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000002${n}`, type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [] });
+    const first = example("50000000-0000-4000-8000-000000000011", "De hond blaft.");
+    const second = example("50000000-0000-4000-8000-000000000012", "De kat slaapt.");
+    // Only the first example is on screen.
+    const observed: Element[] = [];
+    vi.stubGlobal("IntersectionObserver", class {
+      constructor(private readonly callback: IntersectionObserverCallback) {}
+      observe(target: Element) { observed.push(target); this.callback([{ target, isIntersecting: target.getAttribute("data-block-id") === first.id } as IntersectionObserverEntry], this as unknown as IntersectionObserver); }
+      disconnect() { /* nothing to release */ }
+    });
+    renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [first, vocabulary(1, word(1, "de hond")), second, vocabulary(2, word(2, "de kat"))])] });
+    const panel = await screen.findByRole("complementary", { name: "New words" });
+    expect(within(panel).getByText("de hond")).toBeInTheDocument();
+    expect(within(panel).getByText("meaning of de kat")).toBeInTheDocument();
+    // The text itself carries no New words boxes.
+    expect(screen.queryAllByRole("region", { name: "New words" }).filter((region) => !panel.contains(region))).toHaveLength(0);
+    await waitFor(() => expect(within(panel).getByText("de hond").closest("li")).toHaveAttribute("aria-current", "true"));
+    expect(within(panel).getByText("de kat").closest("li")).not.toHaveAttribute("aria-current");
+    expect(observed.map((element) => element.getAttribute("data-block-id"))).toEqual([first.id, second.id]);
+  });
+
   it("shows a lesson outside the course outline as unavailable", async () => {
     renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1)] }, lessonId(4));
     expect(await screen.findByText("This lesson is not available.")).toBeInTheDocument();

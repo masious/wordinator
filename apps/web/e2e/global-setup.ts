@@ -29,6 +29,7 @@ DELETE FROM posts;
 DELETE FROM course_lesson_completions;
 DELETE FROM course_lesson_positions;
 DELETE FROM course_lesson_words;
+DELETE FROM course_word_bookmarks;
 DELETE FROM course_contributors;
 DELETE FROM course_media;
 DELETE FROM course_practices;

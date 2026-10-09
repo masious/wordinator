@@ -12,10 +12,11 @@ import {
   type StyledText,
   type VocabularyWord,
 } from "@wordinator/contracts/lesson-document";
-import { Fragment, useState, type CSSProperties, type ReactNode } from "react";
+import { createContext, Fragment, useContext, useId, useState, type CSSProperties, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Callout } from "../../molecules/Callout";
 import { PlainText } from "../../molecules/PlainText";
+import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
 import styles from "./LessonDocument.module.css";
 
 // Wordinator's own lesson renderer. Every piece of authored text becomes a React text node, so nothing is parsed as HTML;
@@ -130,8 +131,9 @@ export function DialogueBlock({
   );
 }
 
-// New words as a compact list: the term with its forms, the meaning, then the example and note. Every field is plain text,
-// and nothing is concealed. The reader shows a vocabulary block this way in place; the player shows a step's words as a panel.
+// New words as a compact list: the term with its forms and the meaning, with Show more opening the example and note when a
+// word has them. Every field is plain text. The reader shows a vocabulary block this way in place; the player shows a step's
+// words as a panel.
 export function NewWords({ words }: { words: readonly VocabularyWord[] }) {
   const { t } = useTranslation();
   return (
@@ -149,35 +151,60 @@ export function NewWords({ words }: { words: readonly VocabularyWord[] }) {
 }
 
 function NewWord({ word }: { word: VocabularyWord }) {
-  const [showExample, setShowExample] = useState(false);
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const detailsId = useId();
+  const example = word.example?.trim(); const note = word.note?.trim();
   return (
-    <li
-      key={word.id}
-      className={styles.word}
-      onClick={() => setShowExample(!showExample)}
-    >
+    <li className={styles.word}>
       <p className={styles.wordHead}>
         <span className={styles.term}>{word.term}</span>
         {word.forms?.trim() && (
           <span className={styles.forms}>{word.forms}</span>
         )}
+        <span className={styles.wordBookmark}>
+          <WordBookmarkToggle wordId={word.id} term={word.term} />
+        </span>
       </p>
       <p className={styles.meaning}>
         <PlainText>{word.meaning}</PlainText>
       </p>
-      {showExample && word.example?.trim() && (
-        <p className={styles.wordExample}>
-          <PlainText>{word.example}</PlainText>
-        </p>
-      )}
-      {showExample && word.note?.trim() && (
-        <p className={styles.note}>
-          <PlainText>{word.note}</PlainText>
-        </p>
+      {(example || note) && (
+        <>
+          {open && (
+            <div id={detailsId} className={styles.wordDetails}>
+              {example && (
+                <p className={styles.wordExample}>
+                  <PlainText>{word.example!}</PlainText>
+                </p>
+              )}
+              {note && (
+                <p className={styles.note}>
+                  <PlainText>{word.note!}</PlainText>
+                </p>
+              )}
+            </div>
+          )}
+          <button
+            type="button"
+            className={styles.wordToggle}
+            aria-expanded={open}
+            aria-controls={open ? detailsId : undefined}
+            aria-label={t(open ? "courses.words.showLessAbout" : "courses.words.showMoreAbout", { term: word.term })}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? t("courses.words.showLess") : t("courses.words.showMore")}
+          </button>
+        </>
       )}
     </li>
   );
 }
+
+// How the lesson page reads a document: `anchored` wraps each block in an element carrying its ID, so the page can tell which
+// blocks are on screen, and `vocabulary: false` leaves New words blocks out because the page lists them beside the text.
+type ReaderOptions = { anchored: boolean; vocabulary: boolean };
+const ReaderOptionsContext = createContext<ReaderOptions>({ anchored: false, vocabulary: true });
 
 // Document headings sit below the lesson title (an h2), so levels 1–3 render as h3–h5.
 const headingTags = { 1: "h3", 2: "h4", 3: "h5" } as const;
@@ -333,6 +360,7 @@ export function LessonBlocks({
   blocks: readonly LessonBlock[];
   renderPractice?: PracticeRenderer;
 }) {
+  const { anchored, vocabulary } = useContext(ReaderOptionsContext);
   let end = blocks.length;
   while (
     end > 0 &&
@@ -342,14 +370,16 @@ export function LessonBlocks({
     end -= 1;
   const runs: Array<LessonBlock | ListItemBlock[]> = [];
   for (const block of blocks.slice(0, end)) {
+    if (!vocabulary && block.type === "vocabulary") continue;
     const last = runs.at(-1);
     if (isListItem(block) && Array.isArray(last)) last.push(block);
     else runs.push(isListItem(block) ? [block] : block);
   }
   return (
     <>
-      {runs.map((run) =>
-        Array.isArray(run) ? (
+      {runs.map((run) => {
+        const id = Array.isArray(run) ? run[0]!.id : run.id;
+        const content = Array.isArray(run) ? (
           <ListItems
             key={run[0]!.id}
             items={run}
@@ -361,8 +391,15 @@ export function LessonBlocks({
             block={run as Exclude<LessonBlock, ListItemBlock>}
             renderPractice={renderPractice}
           />
-        ),
-      )}
+        );
+        return anchored ? (
+          <div key={id} className={styles.anchor} data-block-id={id}>
+            {content}
+          </div>
+        ) : (
+          <Fragment key={id}>{content}</Fragment>
+        );
+      })}
     </>
   );
 }
@@ -370,13 +407,19 @@ export function LessonBlocks({
 export function LessonDocument({
   document,
   renderPractice,
+  anchored = false,
+  vocabulary = true,
 }: {
   document: LessonDocumentData;
   renderPractice?: PracticeRenderer;
+  anchored?: boolean;
+  vocabulary?: boolean;
 }) {
   return (
-    <div className={styles.document}>
-      <LessonBlocks blocks={document.blocks} renderPractice={renderPractice} />
-    </div>
+    <ReaderOptionsContext.Provider value={{ anchored, vocabulary }}>
+      <div className={styles.document}>
+        <LessonBlocks blocks={document.blocks} renderPractice={renderPractice} />
+      </div>
+    </ReaderOptionsContext.Provider>
   );
 }

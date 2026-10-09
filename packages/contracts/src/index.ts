@@ -350,6 +350,8 @@ export const COURSE_WORD_MEANING_MAX = 500;
 export const COURSE_WORD_FORMS_MAX = 200;
 // The course recap is bounded by the lesson and block limits; the response is capped defensively instead of paginated.
 export const COURSE_RECAP_WORDS_MAX = 10_000;
+// Word bookmarks (C9b): a member holds at most this many per group, so every key fits one response.
+export const WORD_BOOKMARKS_MAX = 2_000;
 
 // Block payloads of the v1 per-row model. They remain the shape of practice and dialogue data inside lesson documents
 // and of the course fixture; `upgradeLegacyBlocks` in ./lessonDocument turns them into documents.

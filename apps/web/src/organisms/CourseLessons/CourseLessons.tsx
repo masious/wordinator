@@ -4,16 +4,18 @@ import {
 import { lessonResponseSchema, type CourseDetailResponse, type CourseLesson } from "@wordinator/contracts/lesson-document";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { type FormEvent, lazy, Suspense, useState } from "react";
+import { type FormEvent, lazy, Suspense, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { apiRequest, courseProgressQueryOptions, courseQueryOptions, courseWordsQueryOptions, lessonQueryOptions } from "../../api";
+import { apiRequest, courseProgressQueryOptions, courseQueryOptions, courseWordsQueryOptions, lessonQueryOptions, wordBookmarksKey } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
 import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, SectionHeader, Surface, TextAreaField, TextField } from "../../ui";
 import { LessonDocument } from "../LessonDocument/LessonDocument";
+import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import { WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import { lessonSteps, playableDocument } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
+import { LessonWords, useVisibleWords } from "./LessonWords";
 import { practiceFromBlock, PracticeSummary } from "./PracticeBlock";
 
 // The editor and BlockNote load only when someone opens a lesson for editing.
@@ -39,16 +41,26 @@ function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" 
 }
 
 // Readers see the published document. Editors of a lesson that is not published yet see its draft, marked as a preview. A practice
-// shows only its first prompts; its answer set and thread open in a dialog.
+// shows only its first prompts; its answer set and thread open in a dialog. New words are not shown in the text: the lesson's
+// words sit in a panel beside it, where the words of the blocks on screen are highlighted.
 function LessonBody({ scope, lesson }: { scope: Scope; lesson: CourseLesson }) {
   const { t } = useTranslation();
   const document = playableDocument(lesson);
-  if (!document || !lessonSteps(lesson).length) return <p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p>;
-  return <>
-    {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
-    <LessonDocument document={document} renderPractice={(block) =>
-      <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.answerCounts)} />} />
-  </>;
+  const steps = useMemo(() => lessonSteps(lesson), [lesson]);
+  const reading = useRef<HTMLDivElement>(null); const panel = useRef<HTMLElement>(null);
+  const active = useVisibleWords(reading, panel, steps);
+  // Only words of the published document can be bookmarked, so a draft preview shows no toggles.
+  const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
+  if (!document || !steps.length) return <div className={styles.body}><p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p></div>;
+  const hasWords = steps.some((step) => step.words.length > 0);
+  return <WordBookmarkScope resolve={bookmarkTarget}><div className={hasWords ? styles.withWords : undefined}>
+    <div ref={reading} className={styles.body}>
+      {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
+      <LessonDocument document={document} anchored vocabulary={false} renderPractice={(block) =>
+        <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.answerCounts)} />} />
+    </div>
+    {hasWords && <LessonWords steps={steps} active={active} panelRef={panel} />}
+  </div></WordBookmarkScope>;
 }
 
 function LessonForm({ initial, submitLabel, pending, error, onSubmit, onCancel }: {
@@ -86,7 +98,12 @@ function LessonRow({ scope, summary, number, outline, completed, position }: {
   });
   const remove = useMutation({
     mutationFn: () => apiRequest(lessonPath, okResponseSchema, { method: "DELETE" }),
-    onSuccess: async () => { setDeleting(false); queryClient.removeQueries({ queryKey: lessonKey }); await queryClient.invalidateQueries({ queryKey: courseKey }); },
+    onSuccess: async () => {
+      setDeleting(false); queryClient.removeQueries({ queryKey: lessonKey });
+      // Deleting a lesson also deletes its words' bookmarks.
+      void queryClient.invalidateQueries({ queryKey: wordBookmarksKey(scope.groupId) });
+      await queryClient.invalidateQueries({ queryKey: courseKey });
+    },
   });
   return <li className={styles.lesson}>
     <Link className={styles.lessonLink} to="/groups/$groupId/courses/$courseId/lessons/$lessonId" params={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: summary.id }}
@@ -139,8 +156,14 @@ export function CourseLessons({ groupId, courseId, accountId, detail }: { groupI
   // Saved steps of unfinished lessons, shown on each started lesson.
   const positions = (progress.data?.positions ?? []).filter((entry) => !completed.has(entry.lessonId));
   // The course recap covers the published lessons the viewer has finished; it is offered only when they carried words.
-  const words = useQuery(courseWordsQueryOptions(groupId, courseId)).data?.words ?? [];
+  const wordsQuery = useQuery(courseWordsQueryOptions(groupId, courseId));
+  const words = useMemo(() => wordsQuery.data?.words ?? [], [wordsQuery.data]);
   const [reviewing, setReviewing] = useState(false);
+  // Every recap word comes from the published index, so each can be bookmarked in its own lesson.
+  const recapTarget = useMemo(() => {
+    const lessons = new Map(words.map((word) => [word.id, word.lessonId]));
+    return (wordId: string) => { const lessonId = lessons.get(wordId); return lessonId ? { groupId, courseId, lessonId } : null; };
+  }, [words, groupId, courseId]);
   const create = useMutation({
     mutationFn: (input: LessonInput) => apiRequest(lessonsPath(scope), lessonResponseSchema, { method: "POST", body: JSON.stringify(input) }),
     onSuccess: async (data) => {
@@ -163,7 +186,9 @@ export function CourseLessons({ groupId, courseId, accountId, detail }: { groupI
         completed={completed.has(lesson.id)} position={positions.find((entry) => entry.lessonId === lesson.id)} />)}</ol>
       : <Surface tone="quiet"><EmptyState title={t("courses.noLessonsTitle")} action={addAction || undefined}>{t("courses.noLessonsBody")}</EmptyState></Surface>}
     <AdaptiveDialog opened={reviewing && words.length > 0} onClose={() => setReviewing(false)} title={t("courses.words.recapTitle")}>
-      {reviewing && <WordRecap words={words} doneLabel={t("courses.words.backToCourse")} onDone={() => setReviewing(false)} />}
+      {reviewing && <WordBookmarkScope resolve={recapTarget}>
+        <WordRecap words={words} doneLabel={t("courses.words.backToCourse")} onDone={() => setReviewing(false)} />
+      </WordBookmarkScope>}
     </AdaptiveDialog>
     <AdaptiveDialog opened={addOpen} onClose={() => setAddOpen(false)} title={t("courses.lessons.addTitle")}>
       {addOpen && <LessonForm submitLabel={t("courses.lessons.addSubmit")} pending={create.isPending} error={create.error} onSubmit={(input) => create.mutate(input)} onCancel={() => setAddOpen(false)} />}
@@ -215,7 +240,7 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
       : editing ? <Suspense fallback={<LoadingState label={t("courses.editor.loading")} />}>
         <LessonEditor groupId={groupId} courseId={courseId} accountId={accountId} owner={scope.owner} lesson={data} onClose={() => setEditing(false)} />
       </Suspense>
-      : <div className={styles.body}><LessonBody scope={scope} lesson={data} /></div>}
+      : <LessonBody scope={scope} lesson={data} />}
     {(previous || next) && <nav className={styles.pager} aria-label={t("courses.lessons.pager")}>
       {previous && pagerLink(previous, "courses.lessons.previous", styles.previous!)}
       {next && pagerLink(next, "courses.lessons.next", styles.next!)}

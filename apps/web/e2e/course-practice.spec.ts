@@ -21,7 +21,7 @@ test("a learner answers a practice and reveals the thread with the author's vers
   // The lesson page lists the prompts; answering happens in a dialog.
   await expect(page.getByText("Vul in of vertaal.")).toBeVisible();
   await expect(page.getByText("There are two bedrooms.")).toBeVisible();
-  await expect(page.getByText("No answers shared yet")).toBeVisible();
+  await expect(page.getByText("Not answered yet")).toBeVisible();
   await expect(page.getByRole("button", { name: "Publish answer set" })).toHaveCount(0);
   await page.getByRole("button", { name: "Answer", exact: true }).click();
   const dialog = page.getByRole("dialog", { name: "Answer the practice" });

@@ -358,3 +358,20 @@ export const courseLessonWords = sqliteTable(
     index("course_lesson_words_lesson_idx").on(table.groupId, table.courseId, table.lessonId, table.position),
   ],
 );
+
+// Word bookmarks (C9b): keys into `course_lesson_words`, deliberately without a foreign key to it (see the migration).
+export const courseWordBookmarks = sqliteTable(
+  "course_word_bookmarks",
+  {
+    groupId: text("group_id").notNull().references(() => groups.id),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    wordId: text("word_id").notNull(),
+    userId: text("user_id").notNull().references(() => users.id),
+    createdAt: integer("created_at").notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.userId, table.lessonId, table.wordId] }),
+    index("course_word_bookmarks_user_idx").on(table.groupId, table.userId, table.createdAt),
+  ],
+);
