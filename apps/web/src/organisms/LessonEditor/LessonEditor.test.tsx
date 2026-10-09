@@ -129,6 +129,26 @@ describe("Lesson editor", () => {
     expect(screen.getByRole("alert")).toBeInTheDocument();
   });
 
+  it("keeps the alt text field open and focused while the author types", async () => {
+    const imageId = "50000000-0000-4000-8000-000000000009";
+    const withImage: LessonDocument = { schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks: [{
+      id: imageId, type: "image", children: [],
+      props: { textAlignment: "left", backgroundColor: "default", name: "", url: `https://media.test/courses/${courseId}/lessons/${lessonId}/k.jpg`, caption: "", showPreview: true },
+    }, para(exampleId, "Het huis is groot.")] };
+    const { container } = renderEditor(true, lesson({ draft: { document: withImage, version: 3 } }));
+    vi.mocked(fetch).mockResolvedValueOnce(json({ error: { code: "LESSON_NOT_READY", message: "Finish first." }, problems: [{ blockId: imageId, problem: "image-alt-missing" }] }, 422));
+    await waitFor(() => expect(container.querySelector(`[data-id="${imageId}"] img`)).not.toBeNull());
+    fireEvent.click(screen.getByRole("button", { name: "Publish lesson" }));
+    fireEvent.click(await screen.findByRole("button", { name: "An image needs alt text." }));
+    fireEvent.click(await screen.findByRole("button", { name: "Edit alt text" }));
+    const field = await screen.findByPlaceholderText("Edit alt text");
+    fireEvent.change(field, { target: { value: "D" } });
+    await screen.findByText("Unsaved changes", { exact: false });
+    const after = screen.getByPlaceholderText("Edit alt text");
+    expect(after).toBe(field);
+    expect(after).toHaveValue("D");
+  });
+
   it("merges a conflicting save by block and saves the result against the newer version", async () => {
     const key = lessonDocumentDraftKey(accountId, groupId, lessonId);
     storeLocalLessonDraft(key, { baseVersion: 3, document: twoDoc("Mijn eerste zin.", "Tweede.") });

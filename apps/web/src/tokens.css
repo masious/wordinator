@@ -221,6 +221,8 @@
   --size-word-card-min: 15rem;
   --lesson-column-gap: var(--space-6);
   --lesson-callout-icon: 1.25rem;
+  /* Icon-only controls (bookmark, speaker): the glyph; the hit area is --touch-target. */
+  --size-icon-control: 1.25rem;
   --page-gutter: clamp(var(--space-4), 4vw, var(--space-10));
   --section-rhythm: clamp(var(--space-20), 10vw, var(--space-40));
   --card-inset: clamp(var(--space-5), 3vw, var(--space-8));

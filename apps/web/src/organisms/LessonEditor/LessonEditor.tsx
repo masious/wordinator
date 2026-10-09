@@ -5,7 +5,7 @@ import { getMultiColumnSlashMenuItems } from "@blocknote/xl-multi-column";
 import {
   BasicTextStyleButton, BlockTypeSelect, ColorStyleButton, CreateLinkButton, FileCaptionButton, FileDeleteButton, FilePanel, FilePanelController, FileRenameButton,
   FileReplaceButton, FormattingToolbar, FormattingToolbarController, getDefaultReactSlashMenuItems, SuggestionMenuController, UploadTab, useCreateBlockNote,
-  type DefaultReactSuggestionItem,
+  type DefaultReactSuggestionItem, type FilePanelProps,
 } from "@blocknote/react";
 import { Popover } from "@mantine/core";
 import type { CourseDetailResponse } from "@wordinator/contracts/lesson-document";
@@ -62,6 +62,39 @@ const pastedImage = (data: DataTransfer | null) => {
   const text = html ? new DOMParser().parseFromString(html, "text/html").body.textContent : data.getData("text/plain");
   return text?.trim() ? null : image;
 };
+
+// BlockNote renders these as components, so they live at module level: an inline function would be a new component on
+// every editor render and remount the toolbar, closing the alt text field and dropping its focus mid-word.
+const blockTypeItems = [
+  { key: "paragraph", type: "paragraph", icon: Pilcrow },
+  { key: "heading", type: "heading", props: { level: 1 }, icon: Heading1 },
+  { key: "heading_2", type: "heading", props: { level: 2 }, icon: Heading2 },
+  { key: "heading_3", type: "heading", props: { level: 3 }, icon: Heading3 },
+  { key: "bullet_list", type: "bulletListItem", icon: List },
+  { key: "numbered_list", type: "numberedListItem", icon: ListOrdered },
+] as const;
+
+function LessonFormattingToolbar() {
+  const { t } = useTranslation();
+  const blockTypes = useMemo(() => blockTypeItems.map(({ key, ...item }) => ({ ...item, name: t(`courses.editor.slash.${key}`) })), [t]);
+  return <FormattingToolbar>
+    <BlockTypeSelect key="type" items={blockTypes} />
+    <BasicTextStyleButton key="bold" basicTextStyle="bold" />
+    <BasicTextStyleButton key="italic" basicTextStyle="italic" />
+    <ColorStyleButton key="color" />
+    <CreateLinkButton key="link" />
+    <FileCaptionButton key="caption" />
+    <FileRenameButton key="alt" />
+    <FileReplaceButton key="replace" />
+    <FileDeleteButton key="delete" />
+  </FormattingToolbar>;
+}
+
+// Only uploads: the API accepts images uploaded to this lesson, never links to images elsewhere.
+function LessonFilePanel(props: FilePanelProps) {
+  const { t } = useTranslation();
+  return <FilePanel {...props} tabs={[{ name: t("courses.editor.ui.upload"), tabPanel: <UploadTab blockId={props.blockId} setLoading={() => undefined} /> }]} />;
+}
 
 type Props = { groupId: string; courseId: string; accountId: string; owner: boolean; lesson: CourseLesson; onClose: () => void };
 type ImageUpdate = { props?: { url: string; name: string } };
@@ -317,15 +350,6 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
     const columns = getMultiColumnSlashMenuItems(editor).map((item, index) => ({ ...item, icon: columnIcons[index] }));
     return [...builtIn, ...columns, ...custom];
   }, [editor, t]);
-  const blockTypes = useMemo(() => [
-    { name: t("courses.editor.slash.paragraph"), type: "paragraph", icon: Pilcrow },
-    { name: t("courses.editor.slash.heading"), type: "heading", props: { level: 1 }, icon: Heading1 },
-    { name: t("courses.editor.slash.heading_2"), type: "heading", props: { level: 2 }, icon: Heading2 },
-    { name: t("courses.editor.slash.heading_3"), type: "heading", props: { level: 3 }, icon: Heading3 },
-    { name: t("courses.editor.slash.bullet_list"), type: "bulletListItem", icon: List },
-    { name: t("courses.editor.slash.numbered_list"), type: "numberedListItem", icon: ListOrdered },
-  ], [t]);
-
   return <div className={styles.editorShell} aria-label={t("courses.editor.label")}>
     <LessonPublishBar owner={owner} published={current.published} changed={current.changed} status={autosave.status} editorName={current.editorName}
       problems={problems} error={error} busy={busy} onPublish={requestPublish} onDiscard={() => setConfirm("discard")} onUnpublish={() => setConfirm("unpublish")}
@@ -356,19 +380,8 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
     <div className={styles.editor} onKeyDownCapture={onKeyDownCapture} onDropCapture={onDropCapture}>
       <BlockNoteView editor={editor} theme={editorTheme} slashMenu={false} emojiPicker={false} formattingToolbar={false} filePanel={false} onChange={onChange}>
         <SuggestionMenuController triggerCharacter="/" getItems={async (query) => filterSuggestionItems(slashItems, query)} />
-        <FormattingToolbarController formattingToolbar={() => <FormattingToolbar>
-          <BlockTypeSelect key="type" items={blockTypes} />
-          <BasicTextStyleButton key="bold" basicTextStyle="bold" />
-          <BasicTextStyleButton key="italic" basicTextStyle="italic" />
-          <ColorStyleButton key="color" />
-          <CreateLinkButton key="link" />
-          <FileCaptionButton key="caption" />
-          <FileRenameButton key="alt" />
-          <FileReplaceButton key="replace" />
-          <FileDeleteButton key="delete" />
-        </FormattingToolbar>} />
-        {/* Only uploads: the API accepts images uploaded to this lesson, never links to images elsewhere. */}
-        <FilePanelController filePanel={(props) => <FilePanel {...props} tabs={[{ name: t("courses.editor.ui.upload"), tabPanel: <UploadTab blockId={props.blockId} setLoading={() => undefined} /> }]} />} />
+        <FormattingToolbarController formattingToolbar={LessonFormattingToolbar} />
+        <FilePanelController filePanel={LessonFilePanel} />
       </BlockNoteView>
     </div>
     <LessonImageDialog path={path} file={upload?.file ?? null}

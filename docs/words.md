@@ -12,6 +12,7 @@ C9a replaces the one-card recap slideshow with a page of cards. Every surface th
 - **Navigation.** The counter shows the range and total ("Words 1–6 of 40", or "Word 3 of 40" for a single card). Back and Next move by a page. On the last page of a recap, Next becomes the recap's done action; the Words tab has no done action.
 - **Flip in place.** A card's front shows the term and forms. Show meaning flips the card to its back: the term in a smaller size, then the meaning, example, and note. Hide meaning flips it back. The card keeps its height; text longer than the back can hold scrolls inside the card. The flip is a short rotation, removed under reduced motion. The toggle keeps focus and its label follows the side shown.
 - **Show all.** Flips every card on the current page; when every card on the page is revealed it becomes Hide all. It is offered when the page holds more than one card. Changing page or page size shows every card's front again.
+- **Speech.** A card's front has a speaker button for the term, and its back for the term and the example, where their audio is [ready](speech.md#playback).
 - **Bookmark.** Each card carries a bookmark toggle on both sides (see [bookmarks](#bookmarks)), except where bookmarks are not offered.
 - Nothing on a card is graded, timed, or recorded; a bookmark is the only thing a card saves. There is no shuffle.
 

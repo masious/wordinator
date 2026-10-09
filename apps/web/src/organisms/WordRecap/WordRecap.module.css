@@ -28,6 +28,7 @@
 .footer{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--space-2)}
 .footer>:first-child{grid-column:2}
 .bookmark{display:inline-flex;justify-self:end;margin-right:var(--space-2)}
+.speech{margin-inline-start:var(--space-2)}
 .nav{display:flex;flex-wrap:wrap;justify-content:space-between;gap:var(--space-3)}
 @keyframes cardIn{from{opacity:0;transform:translateY(var(--space-2))}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.card{animation:none}.faces,.front,.back{transition:none}}

@@ -6,7 +6,7 @@
 .toggle:disabled{cursor:default;opacity:.5}
 .toggle:focus-visible{outline:var(--border-strong);outline-offset:-4px}
 .toggle[aria-pressed="true"]{color:var(--color-action)}
-.icon{width:1.25rem;height:1.25rem;fill:none;stroke:currentColor;stroke-linejoin:round;stroke-width:1.25}
+.icon{width:var(--size-icon-control);height:var(--size-icon-control);fill:none;stroke:currentColor;stroke-linejoin:round;stroke-width:1.25}
 .toggle[aria-pressed="true"] .icon{fill:currentColor}
 .error{position:absolute;top:100%;right:0;z-index:var(--z-transient);width:max-content;max-width:min(16rem,70vw);margin-top:var(--space-1);padding:var(--space-1) var(--space-2);color:var(--color-danger-text);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-sm);box-shadow:var(--shadow-card);font-size:var(--type-metadata);text-align:left}
 @media(prefers-reduced-motion:reduce){.toggle{transition:none}}

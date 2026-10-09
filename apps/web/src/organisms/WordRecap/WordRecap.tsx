@@ -2,6 +2,7 @@ import type { CourseWord, LessonStep } from "@wordinator/contracts/lesson-docume
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
+import { SpeechButton, useSpeechResolver } from "../../molecules/Speech";
 import { Button } from "../../ui";
 import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
 import { measureFit, type GridFit } from "./fitGrid";
@@ -52,19 +53,27 @@ const wordKey = (word: RecapWord) => word.lessonId ? `${word.lessonId}:${word.id
 
 function WordCard({ word, source, shown, opened, onToggle }: { word: RecapWord; source: string | null; shown: boolean; opened: boolean; onToggle: () => void }) {
   const { t } = useTranslation();
+  // Indexed words (course recap, Words tab) carry their clips; a lesson run's words take them from the lesson's speech scope.
+  const resolve = useSpeechResolver();
+  const termSpeech = word.speech ? word.speech.term : resolve(`word:${word.id}`);
+  const exampleSpeech = word.speech ? word.speech.example : resolve(`wordExample:${word.id}`);
+  const termLabel = t("courses.speech.term", { term: word.term });
   return <article className={`${styles.card} ${shown ? styles.flipped : ""}`} aria-label={word.term}>
     <div className={styles.faces}>
       <div className={`${styles.face} ${styles.front}`} aria-hidden={shown || undefined} inert={shown}>
         {source && <p className={styles.source}>{source}</p>}
         <p className={styles.term}>{word.term}</p>
+        <SpeechButton url={termSpeech} label={termLabel} />
         {word.forms && <p className={styles.forms}>{word.forms}</p>}
       </div>
       {/* The back stays empty until first revealed, so nothing is spoiled; it then keeps its text to show while flipping back. */}
       <div className={`${styles.face} ${styles.back}`} aria-hidden={!shown || undefined} inert={!shown} tabIndex={shown ? 0 : undefined}>
         {opened && <>
-          <p className={styles.backTerm}>{word.term}{word.forms && <span className={styles.forms}> · {word.forms}</span>}</p>
+          <p className={styles.backTerm}>{word.term}{word.forms && <span className={styles.forms}> · {word.forms}</span>}
+            <SpeechButton url={termSpeech} label={termLabel} className={styles.speech} /></p>
           <p className={styles.meaning}><PlainText>{word.meaning}</PlainText></p>
-          {word.example && <p className={styles.example}><PlainText>{word.example}</PlainText></p>}
+          {word.example && <p className={styles.example}><PlainText>{word.example}</PlainText>
+            <SpeechButton url={exampleSpeech} label={t("courses.speech.wordExample", { term: word.term })} className={styles.speech} /></p>}
           {word.note && <p className={styles.note}><PlainText>{word.note}</PlainText></p>}
         </>}
       </div>

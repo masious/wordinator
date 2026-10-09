@@ -8,6 +8,7 @@ import { type FormEvent, lazy, Suspense, useCallback, useMemo, useRef, useState 
 import { useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, courseQueryOptions, courseWordsQueryOptions, lessonQueryOptions, wordBookmarksKey } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
+import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
 import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, SectionHeader, Surface, TextAreaField, TextField } from "../../ui";
 import { LessonDocument } from "../LessonDocument/LessonDocument";
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
@@ -51,16 +52,18 @@ function LessonBody({ scope, lesson }: { scope: Scope; lesson: CourseLesson }) {
   const active = useVisibleWords(reading, panel, steps);
   // Only words of the published document can be bookmarked, so a draft preview shows no toggles.
   const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
+  const speech = useMemo(() => lessonSpeech(lesson), [lesson]);
+  const resolveSpeech = useCallback((key: string) => speech[key] ?? null, [speech]);
   if (!document || !steps.length) return <div className={styles.body}><p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p></div>;
   const hasWords = steps.some((step) => step.words.length > 0);
-  return <WordBookmarkScope resolve={bookmarkTarget}><div className={hasWords ? styles.withWords : undefined}>
+  return <WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={hasWords ? styles.withWords : undefined}>
     <div ref={reading} className={styles.body}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
       <LessonDocument document={document} anchored vocabulary={false} renderPractice={(block) =>
         <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.answerCounts)} />} />
     </div>
     {hasWords && <LessonWords steps={steps} active={active} panelRef={panel} />}
-  </div></WordBookmarkScope>;
+  </div></SpeechScope></WordBookmarkScope>;
 }
 
 function LessonForm({ initial, submitLabel, pending, error, onSubmit, onCancel }: {

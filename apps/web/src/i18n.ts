@@ -514,6 +514,15 @@ export const resources = {
           hideAll: "Hide all",
           backToCourse: "Back to the course"
         },
+        speech: {
+          term: "Play pronunciation of {{term}}",
+          wordExample: "Play the example for {{term}}",
+          example: "Play the example sentence",
+          turn: "Play line {{number}}, {{speaker}}",
+          playDialogue: "Play dialogue",
+          stopDialogue: "Stop dialogue",
+          failed: "The audio could not be played. Try again."
+        },
         progress: {
           title: "Progress",
           help: "How much of the course each member has worked through in the lesson player.",

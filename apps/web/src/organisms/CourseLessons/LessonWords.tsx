@@ -2,6 +2,7 @@ import type { LessonStep } from "@wordinator/contracts/lesson-document";
 import { type RefObject, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
+import { SpeechButton, useSpeechResolver } from "../../molecules/Speech";
 import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
 import { runWords, type RecapWord } from "../WordRecap/WordRecap";
 import styles from "./LessonWords.module.css";
@@ -59,6 +60,7 @@ export function useVisibleWords(container: RefObject<HTMLElement | null>, panel:
 // otherwise starting at the first of them. A highlighted range already in view stays put.
 export function LessonWords({ steps, active, panelRef }: { steps: readonly LessonStep[]; active: ReadonlySet<string>; panelRef: RefObject<HTMLElement | null> }) {
   const { t } = useTranslation();
+  const speech = useSpeechResolver();
   const words: RecapWord[] = useMemo(() => runWords(steps), [steps]);
   const highlighted = words.filter((word) => active.has(word.id)).map((word) => word.id).join(" ");
   useEffect(() => {
@@ -78,7 +80,8 @@ export function LessonWords({ steps, active, panelRef }: { steps: readonly Lesso
   return <aside ref={panelRef} className={styles.panel} aria-label={t("courses.words.title")}>
     <p className={styles.title} aria-hidden="true">{t("courses.words.title")}</p>
     <ul className={styles.list}>{words.map((word) => <li key={word.id} className={active.has(word.id) ? `${styles.word} ${styles.active}` : styles.word} aria-current={active.has(word.id) || undefined}>
-      <p className={styles.head}><span className={styles.term}>{word.term}</span>{word.forms && <span className={styles.forms}>{word.forms}</span>}
+      <p className={styles.head}><span className={styles.term}>{word.term}</span>
+        <SpeechButton url={speech(`word:${word.id}`)} label={t("courses.speech.term", { term: word.term })} />{word.forms && <span className={styles.forms}>{word.forms}</span>}
         <span className={styles.bookmark}><WordBookmarkToggle wordId={word.id} term={word.term} /></span></p>
       <p className={styles.meaning}><PlainText>{word.meaning}</PlainText></p>
     </li>)}</ul>

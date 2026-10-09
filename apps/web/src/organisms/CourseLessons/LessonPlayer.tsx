@@ -5,11 +5,12 @@ import {
   flattenToSteps, lessonStepKey, resolveStepIndex, type CourseLesson, type LessonBlockOf, type LessonStep,
 } from "@wordinator/contracts/lesson-document";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, lessonQueryOptions, practiceDiscussionQueryOptions } from "../../api";
 import { Callout } from "../../molecules/Callout";
 import { PlainText } from "../../molecules/PlainText";
+import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { AdaptiveDialog, Button, ErrorState, LoadingState } from "../../ui";
 import { DialogueBlock, ExampleBlock, InlineText, LessonBlocks, NewWords } from "../LessonDocument/LessonDocument";
@@ -163,6 +164,9 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
   const [words] = useState(() => runWords(steps)); const [reviewing, setReviewing] = useState(false);
   // Words of the published document can be bookmarked in the panels and the recap; a preview's cannot.
   const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
+  // Clips follow the latest read, so a clip that becomes ready during the run gets its button.
+  const speech = useMemo(() => lessonSpeech(lesson), [lesson]);
+  const resolveSpeech = useCallback((key: string) => speech[key] ?? null, [speech]);
   // A published lesson resumes at the reader's saved step; previews always start at the beginning.
   const [start] = useState(() => lesson.published && position && steps.length ? resolveStepIndex(steps, position.stepKey, position.stepIndex) : 0);
   const [index, setIndex] = useState(start); const [resumed, setResumed] = useState(start > 0);
@@ -213,7 +217,7 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [finished]);
   const percent = steps.length ? (Math.min(index, steps.length) / steps.length) * 100 : 100;
-  return <WordBookmarkScope resolve={bookmarkTarget}><div className={styles.player}>
+  return <WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={styles.player}>
     <div className={styles.status}>
       <span className={styles.stepLabel}>{finished ? t("courses.player.done") : t("courses.player.step", { current: index + 1, total: steps.length })}</span>
       <ProgressMeter value={percent} label={t("courses.player.progressLabel")} />
@@ -240,7 +244,7 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
       <Button variant="quiet" disabled={index === 0} onClick={() => setIndex((value) => value - 1)}>{t("common.back")}</Button>
       <Button data-next data-autofocus onClick={forward}>{index === steps.length - 1 ? t("courses.player.finish") : t("common.next")}</Button>
     </div>}
-  </div></WordBookmarkScope>;
+  </div></SpeechScope></WordBookmarkScope>;
 }
 
 // A focused, step-by-step run through one lesson. Each step of a published lesson is saved as the viewer's position, and finishing

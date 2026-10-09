@@ -14,8 +14,10 @@ import {
 } from "@wordinator/contracts/lesson-document";
 import { createContext, Fragment, useContext, useId, useState, type CSSProperties, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { Square, Volume2 } from "lucide-react";
 import { Callout } from "../../molecules/Callout";
 import { PlainText } from "../../molecules/PlainText";
+import { playSpeech, SpeechButton, SpeechFailure, stopSpeech, useSpeechFailure, useSpeechPlayback, useSpeechResolver, useSpeechUrl, useStopSpeechOnUnmount } from "../../molecules/Speech";
 import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
 import styles from "./LessonDocument.module.css";
 
@@ -86,12 +88,17 @@ export function ExampleBlock({
   block: LessonBlockOf<"example">;
   details?: ReactNode;
 }) {
+  const { t } = useTranslation();
   const { translation, note } = block.props;
+  const speech = useSpeechUrl(`example:${block.id}`);
   return (
     <figure className={styles.example}>
-      <blockquote className={styles.sentence}>
-        <InlineText content={block.content} />
-      </blockquote>
+      <div className={styles.spoken}>
+        <blockquote className={styles.sentence}>
+          <InlineText content={block.content} />
+        </blockquote>
+        <SpeechButton url={speech} label={t("courses.speech.example")} />
+      </div>
       {details ?? (
         <>
           {translation && (
@@ -106,6 +113,8 @@ export function ExampleBlock({
   );
 }
 
+// The player passes `upTo` to show the turns read so far, and Play dialogue plays only those. Each turn with a ready clip has its
+// own speaker button; while Play dialogue runs, the turn being spoken is marked.
 export function DialogueBlock({
   block,
   upTo,
@@ -113,21 +122,50 @@ export function DialogueBlock({
   block: LessonBlockOf<"dialogue">;
   upTo?: number;
 }) {
-  const turns = readDialogueTurns(block);
+  const { t } = useTranslation();
+  const resolve = useSpeechResolver();
+  const owner = `dialogue:${block.id}`;
+  const playback = useSpeechPlayback(owner);
+  useStopSpeechOnUnmount(owner);
+  const [failed, setFailed] = useSpeechFailure(playback?.status);
+  const turns = readDialogueTurns(block)
+    .slice(0, upTo === undefined ? undefined : upTo + 1)
+    .map((turn, index) => ({ ...turn, index, speech: resolve(`turn:${block.id}:${index}`) }));
+  const ready = turns.filter((turn) => turn.speech);
+  const speaking = playback && playback.status !== "error" ? ready[playback.index]?.index : undefined;
   return (
-    <ol className={styles.dialogue}>
-      {turns
-        .slice(0, upTo === undefined ? turns.length : upTo + 1)
-        .map((turn, index) => (
+    <div className={styles.dialogue}>
+      {ready.length > 0 && (
+        <span className={styles.playDialogueWrap}>
+          <button
+            type="button"
+            className={styles.playDialogue}
+            onClick={() => {
+              setFailed(false);
+              if (playback) stopSpeech();
+              else playSpeech(owner, ready.map((turn) => turn.speech!));
+            }}
+          >
+            {playback ? <Square aria-hidden="true" className={styles.playIcon} /> : <Volume2 aria-hidden="true" className={styles.playIcon} />}
+            {playback ? t("courses.speech.stopDialogue") : t("courses.speech.playDialogue")}
+          </button>
+          {failed && <SpeechFailure />}
+        </span>
+      )}
+      <ol className={styles.turns}>
+        {turns.map((turn) => (
           <li
-            key={index}
-            className={index === upTo ? styles.newest : undefined}
+            key={turn.index}
+            className={join(turn.index === upTo && styles.newest, turn.index === speaking && styles.speaking)}
+            aria-current={turn.index === speaking || undefined}
           >
             <span className={styles.speaker}>{turn.speaker}</span>
             <span className={styles.line}>{turn.text}</span>
+            <SpeechButton url={turn.speech} label={t("courses.speech.turn", { number: turn.index + 1, speaker: turn.speaker })} />
           </li>
         ))}
-    </ol>
+      </ol>
+    </div>
   );
 }
 
@@ -155,10 +193,12 @@ function NewWord({ word }: { word: VocabularyWord }) {
   const [open, setOpen] = useState(false);
   const detailsId = useId();
   const example = word.example?.trim(); const note = word.note?.trim();
+  const termSpeech = useSpeechUrl(`word:${word.id}`); const exampleSpeech = useSpeechUrl(`wordExample:${word.id}`);
   return (
     <li className={styles.word}>
       <p className={styles.wordHead}>
         <span className={styles.term}>{word.term}</span>
+        <SpeechButton url={termSpeech} label={t("courses.speech.term", { term: word.term })} />
         {word.forms?.trim() && (
           <span className={styles.forms}>{word.forms}</span>
         )}
@@ -174,8 +214,11 @@ function NewWord({ word }: { word: VocabularyWord }) {
           {open && (
             <div id={detailsId} className={styles.wordDetails}>
               {example && (
-                <p className={styles.wordExample}>
-                  <PlainText>{word.example!}</PlainText>
+                <p className={styles.spoken}>
+                  <span className={styles.wordExample}>
+                    <PlainText>{word.example!}</PlainText>
+                  </span>
+                  <SpeechButton url={exampleSpeech} label={t("courses.speech.wordExample", { term: word.term })} />
                 </p>
               )}
               {note && (

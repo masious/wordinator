@@ -31,12 +31,12 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 
 ## C10b — Playback
 
-- [ ] `SpeechButton` molecule with one shared audio element (starting a clip stops the current one), loading and error states, icon and sizes from design tokens, i18next labels.
-- [ ] Words: New words lists (`NewWords`, `LessonWords`, the reader's word list) and both sides of word cards in `WordRecap` (lesson recap, course recap, Words tab).
-- [ ] Examples: example blocks in `LessonDocument` and `LessonPlayer`; word examples on card backs and opened New words rows.
-- [ ] Dialogues: a button per turn and Play dialogue with the current turn marked, in the reader and the player.
-- [ ] Tests: RTL for hidden buttons while not ready, one clip at a time, Play dialogue order and stop; Playwright playing a word, an example, and a dialogue on desktop and mobile, with `mobile-layout.spec.ts` unchanged.
-- [ ] Docs: `docs/design-system.md` speaker button, `docs/user-flows.md`, `docs/testing.md`.
+- [x] `SpeechButton` molecule with one shared audio element (starting a clip stops the current one), loading and error states, icon and sizes from design tokens, i18next labels.
+- [x] Words: New words lists (`NewWords`, `LessonWords`, the reader's word list) and both sides of word cards in `WordRecap` (lesson recap, course recap, Words tab).
+- [x] Examples: example blocks in `LessonDocument` and `LessonPlayer`; word examples on card backs and opened New words rows.
+- [x] Dialogues: a button per turn and Play dialogue with the current turn marked, in the reader and the player.
+- [x] Tests: RTL for hidden buttons while not ready, one clip at a time, Play dialogue order and stop; Playwright playing a word, an example, and a dialogue on desktop and mobile, with `mobile-layout.spec.ts` unchanged.
+- [x] Docs: `docs/design-system.md` speaker button, `docs/user-flows.md`, `docs/testing.md`.
 
 ## C10c — Authoring
 

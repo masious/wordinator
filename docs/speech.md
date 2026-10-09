@@ -1,6 +1,6 @@
 # Speech
 
-Status: approved product change (C10, 2026-10-09), in progress: the generation pipeline (C10a) is implemented; playback (C10b) and authoring (C10c) are planned. Phases are tracked in the [roadmap](roadmap.md#course-phases); [SPEECH_PLAN.md](../SPEECH_PLAN.md) holds the delivery checklist.
+Status: approved product change (C10, 2026-10-09), in progress: the generation pipeline (C10a) and playback (C10b) are implemented; authoring (C10c) is planned. Phases are tracked in the [roadmap](roadmap.md#course-phases); [SPEECH_PLAN.md](../SPEECH_PLAN.md) holds the delivery checklist.
 
 Speech lets a learner hear a lesson's new words, example sentences, and dialogues read aloud in the group's target language. Audio is synthesized by Azure AI Speech neural voices, generated once per distinct text in the background, stored in R2, and played from there. It builds on [lesson documents](courses.md#lesson-documents) and [new words](courses.md#new-words-and-recap).
 
@@ -67,8 +67,10 @@ Generation is strictly background work. Opening or playing a lesson never calls 
 
 - A speaker button follows each spoken item whose clip is ready; while a clip is pending or failed, its item shows no button. Read responses carry each ready item's clip URL, so the web never probes R2.
 - **Where:** word terms in every New words list (the player's panel, the words step, the reader's word list, and the lesson page's New words panel) and on both sides of [word cards](words.md#word-cards) (lesson recap, course recap, and the Words tab); word examples on the card's back and in an opened New words row; example blocks in the reader and player; and each dialogue turn.
-- A dialogue also has Play dialogue, which plays its ready turns in order and marks the turn being spoken; any other speaker button, or pressing it again, stops it.
-- One clip plays at a time across the page; starting another stops the current one. Playback never autoplays.
+- A dialogue also has Play dialogue, which plays its ready turns in order and marks the turn being spoken; any other speaker button, or pressing it again (it reads Stop dialogue while playing), stops it. In the player, where lines arrive one step at a time, it plays only the lines shown so far, so it never reads ahead.
+- One clip plays at a time across the page; starting another stops the current one. A speaker button is pressed while its clip loads or plays, and pressing it again stops it. Leaving the surface that started a clip (closing a word's details, moving to another player step, closing the player) stops it. Playback never autoplays.
+- A clip the browser cannot play shows "The audio could not be played. Try again." beside its button for five seconds.
+- The web keeps one `Audio` element for the page (`apps/web/src/molecules/Speech.tsx`); surfaces provide a speech scope that resolves item keys to URLs, from the lesson's `speech` (or a draft preview's ready `draftSpeech` items), while indexed words (the course recap and the Words tab) carry their own `speech`.
 - Learners hear published content. The owner and active contributors also hear their draft and preview, once its job has run, and the word form shows whether a word's audio is ready, pending, or failed.
 - Every label is an i18next key, such as "Play pronunciation of {{term}}".
 
