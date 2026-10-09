@@ -39,8 +39,8 @@ The expected load is small—about ten users and up to one hundred new posts per
 ## Explicit non-goals
 
 - Public discovery, public profiles, followers, or direct messages
-- Platform-provided lessons or a fixed curriculum, translation, dictionaries, grammar correction, pronunciation, or AI generation
+- Platform-provided lessons or a fixed curriculum, translation, dictionaries, grammar correction, or pronunciation assessment
 - Automated language detection or enforcement
-- Rich text, media posts, audio, or file attachments. Course lessons are a deliberate exception for restricted rich text and images, owned by [courses](courses.md#lesson-documents)
-- Monetization, advertising, or product analytics
+- Rich text, media posts, audio, or file attachments. Course lessons are a deliberate exception for restricted rich text and images, owned by [courses](courses.md#lesson-documents), and for synthesized [lesson speech](speech.md)
+- Monetization or advertising
 

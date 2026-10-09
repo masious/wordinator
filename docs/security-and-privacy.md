@@ -29,9 +29,15 @@ Former-member profile fields come from the membership’s last group-visible sna
 
 Course progress is visible to every member who can see the course: each active member's finished-lesson count and percentage are shown by name. The percentage includes the share of started lessons a member has passed, so it reveals roughly how far they are, but never which step they are on, their answers, or timing; saved lesson positions are returned only to their own member. Former members are not listed.
 
+Word bookmarks are private to their member: no route returns another member's bookmarks or counts them. A bookmark is readable only while its member is active in the group and can still see the course.
+
 Answer concealment, for posts and for course practice threads, is spoiler protection, not authorization. Practice authors' versions and item notes are left out of learner block payloads and are delivered with the practice thread to any member who can read the practice and reveals it. Their concealment never protects them from a member.
 
 R2 objects are an explicit exception: images are public-by-URL. Unguessable keys reduce discovery but are not access control. Document this to users/operators and do not claim image confidentiality.
+
+### Lesson speech
+
+[Lesson speech](speech.md) (C10, planned) sends the spoken text of lessons (word terms and their IPA, word examples, example sentences, and dialogue turns, from published documents and from drafts) to Microsoft Azure AI Speech in the `germanywestcentral` region. Accepted as a product decision on 2026-10-09: lesson text is member-authored course material, not personal conversation. Post, comment, practice answer, and profile text is never sent. Clips are stored in R2 under hashed keys and are public-by-URL like images. Because identical text shares one clip across groups, an author can infer from instant audio that some group already used the same sentence with the same voice; this reveals no group, lesson, or person. No route accepts arbitrary text, so members cannot spend the Azure quota on text outside lessons. The Azure key is a Worker secret and is never logged.
 
 ## Known accepted limitations
 

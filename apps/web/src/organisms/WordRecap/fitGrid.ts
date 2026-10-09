@@ -27,7 +27,8 @@ function spaceBelow(element: HTMLElement, frame: HTMLElement): number {
 }
 
 // How many cards of `grid` fit inside `recap` without scrolling. Columns come from the grid's CSS tracks; rows from the height the
-// recap's frame allows (a dialog's content box, or else the viewport) minus everything around the grid. Every term is measured
+// recap's frame allows (a dialog's content box, or else the first screen of the page above any `[data-fit-bottom]` bar) minus
+// everything around the grid. Every term is measured
 // independently of the grid's own height, so applying the result never changes the next measurement.
 export function measureFit(grid: HTMLElement, recap: HTMLElement): GridFit {
   const style = getComputedStyle(grid);
@@ -44,9 +45,12 @@ export function measureFit(grid: HTMLElement, recap: HTMLElement): GridFit {
     above = recap.getBoundingClientRect().top - frame.getBoundingClientRect().top + frame.scrollTop;
     below = spaceBelow(recap, frame);
   } else {
-    budget = viewport;
+    // On a page the cards fit the first screen, above a fixed bottom bar (the mobile dock) when one shows. The page's own bottom
+    // padding is not counted: on wide screens it is only whitespace.
+    const bar = [...document.querySelectorAll<HTMLElement>("[data-fit-bottom]")].find((element) => element.offsetHeight > 0);
+    budget = (bar ? bar.getBoundingClientRect().top : viewport) - px(getComputedStyle(recap).rowGap);
     above = recap.getBoundingClientRect().top + window.scrollY;
-    below = spaceBelow(recap, document.body);
+    below = 0;
   }
   const around = recap.offsetHeight - grid.offsetHeight;
   return { columns, rows: fitRows(budget - above - below - around, px(style.gridAutoRows), px(style.rowGap)) };

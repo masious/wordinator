@@ -7,7 +7,8 @@ import { ApiError, apiRequest, wordBookmarkKeysQueryOptions, wordBookmarksKey } 
 import styles from "./WordBookmark.module.css";
 
 export type BookmarkTarget = { groupId: string; courseId: string; lessonId: string };
-type ResolveTarget = (wordId: string) => BookmarkTarget | null;
+// A word ID is unique within its lesson only, so surfaces that list words of several lessons pass the lesson too.
+type ResolveTarget = (wordId: string, lessonId?: string) => BookmarkTarget | null;
 
 // Surfaces that show words say which of them can be bookmarked, and where. Outside a scope, or for a word the scope does not
 // resolve (a draft preview's words), no toggle renders.
@@ -71,8 +72,8 @@ function Toggle({ target, wordId, term }: { target: BookmarkTarget; wordId: stri
 }
 
 // A bookmark toggle for one word: pressed while the viewer has it bookmarked. Renders nothing where the word cannot be bookmarked.
-export function WordBookmarkToggle({ wordId, term }: { wordId: string; term: string }) {
+export function WordBookmarkToggle({ wordId, lessonId, term }: { wordId: string; lessonId?: string; term: string }) {
   const resolve = useContext(BookmarkScopeContext);
-  const target = resolve?.(wordId) ?? null;
+  const target = resolve?.(wordId, lessonId) ?? null;
   return target ? <Toggle target={target} wordId={wordId} term={term} /> : null;
 }

@@ -38,6 +38,11 @@ test("a learner sees new words on the steps that introduce them and reviews them
   await expect(panel.getByText("Diminutive of de kaart.")).toHaveCount(0);
   await panel.getByRole("button", { name: "Show more about het kaartje" }).click();
   await expect(panel).toContainText("Diminutive of de kaart.");
+  // Words can be bookmarked from the panel before the lesson is finished.
+  const ticketBookmark = panel.getByRole("button", { name: "Bookmark het kaartje" });
+  await expect(ticketBookmark).toHaveAttribute("aria-pressed", "false");
+  await ticketBookmark.click();
+  await expect(ticketBookmark).toHaveAttribute("aria-pressed", "true");
   // A dialogue's word shows on the first line that uses it, not before.
   await player.getByRole("button", { name: "Next" }).click();
   await expect(player.getByText("Waar is de trein?", { exact: true })).toBeVisible();
@@ -58,6 +63,8 @@ test("a learner sees new words on the steps that introduce them and reviews them
   await expect(player.getByText("the ticket")).toHaveCount(0);
   await ticket.getByRole("button", { name: "Show meaning" }).click();
   await expect(ticket.getByText("the ticket")).toBeVisible();
+  // The recap card shows the bookmark made in the panel.
+  await expect(ticket.getByRole("button", { name: "Bookmark het kaartje" })).toHaveAttribute("aria-pressed", "true");
   await expectRecapFits(page, "lesson word recap");
   await finishRecap(player, "Back to the summary");
   await player.getByRole("button", { name: "Back to the course" }).click();
@@ -67,10 +74,15 @@ test("a learner sees new words on the steps that introduce them and reviews them
   await page.getByRole("button", { name: "Review words" }).click();
   const recap = page.getByRole("dialog", { name: "Review words" });
   await expect(recap.getByRole("article", { name: "het kaartje" })).toBeVisible();
-  await pageToWord(recap, "het spoor");
+  const track = await pageToWord(recap, "het spoor");
+  await track.getByRole("button", { name: "Bookmark het spoor" }).click();
+  await expect(track.getByRole("button", { name: "Bookmark het spoor" })).toHaveAttribute("aria-pressed", "true");
   await expect(recap.getByText("de bus")).toHaveCount(0);
   await finishRecap(recap, "Back to the course");
   await expect(recap).toHaveCount(0);
+  // Both browsers share the seeded account, so only this course's bookmarks are compared.
+  const bookmarks = await (await page.request.get(`/api/groups/${E2E_GROUP_ID}/word-bookmarks`)).json() as { items: Array<{ word: { term: string }; course: { id: string } }> };
+  expect(bookmarks.items.filter((item) => item.course.id === course.id).map((item) => item.word.term)).toEqual(["het spoor", "het kaartje"]);
 });
 
 test("an author adds new words in the editor, fixes an empty meaning, and publishes them", async ({ page }, testInfo) => {

@@ -92,7 +92,17 @@ export const resources = {
         unavailable: "This group is not available.",
         iconOptional: "Group icon (optional)"
       },
-      nav: { primary: "Main navigation", mobile: "Mobile navigation", accountMenu: "Account menu", journal: "Journal", courses: "Courses", members: "Members", notifications: "Notices", profile: "My profile", settings: "Settings", more: "More" },
+      nav: { primary: "Main navigation", mobile: "Mobile navigation", accountMenu: "Account menu", journal: "Journal", courses: "Courses", words: "Words", members: "Members", notifications: "Notices", profile: "My profile", settings: "Settings", more: "More" },
+      words: {
+        eyebrow: "Words",
+        title: "Your words",
+        intro: "The words you bookmarked in this group's lessons, newest first. Show a meaning when you want to check yourself.",
+        loading: "Opening your words",
+        unavailable: "Your words could not be loaded.",
+        emptyTitle: "No bookmarked words yet",
+        emptyBody: "Bookmark a word with the bookmark icon beside it in a lesson's New words or on a review card, and it appears here.",
+        source: "{{course}} · {{lesson}}"
+      },
       notifications: {
         eyebrow: "Group activity",
         title: "Notifications",
@@ -490,6 +500,8 @@ export const resources = {
           courseHelp_other: "{{count}} words from the lessons you have finished.",
           counter: "Word {{current}} of {{total}}",
           range: "Words {{first}}–{{last}} of {{total}}",
+          counterOpen: "Word {{current}}",
+          rangeOpen: "Words {{first}}–{{last}}",
           showMeaning: "Show meaning",
           hideMeaning: "Hide meaning",
           bookmark: "Bookmark {{term}}",

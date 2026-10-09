@@ -52,6 +52,7 @@ test("authenticated routes stay within the mobile viewport", async ({ page }) =>
     ["post detail", `${group}/posts/${post.id}`],
     ["courses", `${group}/courses`],
     ["course detail", `${group}/courses/${courseId}`],
+    ["words", `${group}/words`],
     ["members", `${group}/members`],
     ["profile", `${group}/members/${userId}`],
     ["notices", `${group}/notifications`],
@@ -87,7 +88,7 @@ test("mobile shell uses a slim header, four-slot dock, and More sheet", async ({
   await more.click();
   const sheet = page.getByRole("dialog", { name: "More" });
   await expect(sheet).toBeVisible();
-  for (const name of ["Members", "My profile", "Settings", "Create a group", "Sign out"]) await expect(sheet.getByText(name, { exact: true })).toBeVisible();
+  for (const name of ["Words", "Members", "My profile", "Settings", "Create a group", "Sign out"]) await expect(sheet.getByText(name, { exact: true })).toBeVisible();
   await expectNoHorizontalOverflow(page, "More sheet");
   if (process.env.MOBILE_SHOTS) { await page.waitForTimeout(600); await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-more-sheet.png` }); }
   await sheet.getByRole("link", { name: "Members" }).click();
@@ -291,4 +292,41 @@ test("mobile lesson reader stacks columns", async ({ page }) => {
   expect(rightBox.y).toBeGreaterThanOrEqual(leftBox.y + leftBox.height);
   await expectNoHorizontalOverflow(page, "lesson with columns");
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-lesson-columns.png` });
+});
+
+test("mobile Words tab opens from the More sheet and fits its cards without scrolling", async ({ page }, testInfo) => {
+  const api = courseApi(page);
+  // The phone projects share the seeded account, so each bookmarks words of its own course.
+  const courseTitle = `Bookmarked course ${testInfo.project.name}`;
+  const { course } = await api<{ course: { id: string } }>("/courses", { title: courseTitle, summary: "Woorden" });
+  await api(`/courses/${course.id}/visibility`, { status: "published" });
+  const lessonId = await seedLesson(page, course.id, "Op het station", [
+    example("Het perron is aan de overkant van het spoor.", "The platform is across the track."),
+    vocabulary({ term: "het perron", meaning: "the platform", note: "A het-word." }, { term: "de overstapmogelijkheid", meaning: "the possibility to change trains" }),
+  ]);
+  const { lesson } = await api<{ lesson: { document: { blocks: Array<{ type: string; props: { data?: string } }> } } }>(`/courses/${course.id}/lessons/${lessonId}`);
+  const words = JSON.parse(lesson.document.blocks.find((block) => block.type === "vocabulary")!.props.data!) as { words: Array<{ id: string }> };
+  for (const word of words.words) await api(`/courses/${course.id}/lessons/${lessonId}/words/${word.id}/bookmark`, undefined, "PUT");
+
+  // WebKit can take long to settle the feed's network, so wait for the dock instead of network idle.
+  await page.goto(group);
+  await page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("button", { name: "More" }).click();
+  await page.getByRole("dialog", { name: "More" }).getByRole("link", { name: "Words" }).click();
+  await expect(page).toHaveURL(/\/words$/);
+  await expect(page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("button", { name: "More" })).toHaveAttribute("aria-current", "page");
+  // Newest first, and a narrow phone fits one card per page, so page to the first bookmarked word.
+  const card = page.getByRole("article", { name: "het perron" }).filter({ hasText: courseTitle });
+  await expect(page.getByRole("heading", { name: "Your words" })).toBeVisible();
+  await expect(page.getByRole("article").first()).toBeVisible();
+  for (let pages = 0; pages < 20 && !await card.isVisible(); pages += 1) await page.getByRole("button", { name: "Next" }).click();
+  await expect(card).toContainText(`${courseTitle} · Op het station`);
+  await card.getByRole("button", { name: "Show meaning" }).click();
+  await expect(card.getByText("the platform", { exact: true })).toBeVisible();
+  await expectNoHorizontalOverflow(page, "words tab");
+  // The cards, counter, and Back and Next sit above the dock without scrolling.
+  await page.waitForTimeout(600);
+  const next = await page.getByRole("button", { name: /^(Next)$/ }).boundingBox();
+  const dock = await page.getByRole("navigation", { name: "Mobile navigation" }).boundingBox();
+  expect(next!.y + next!.height).toBeLessThanOrEqual(dock!.y);
+  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-words-tab.png` });
 });

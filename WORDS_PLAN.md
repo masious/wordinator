@@ -32,13 +32,15 @@ Notes (2026-10-08): `measureFit` in `organisms/WordRecap/fitGrid.ts` reads colum
 
 ## C9b — Bookmarks
 
-- [ ] Contracts: bookmark keys and list responses, `WORD_BOOKMARKS_MAX`, `lessonId` on course words.
-- [ ] Migration `0018_course_word_bookmarks.sql` as in the data model, with `packages/db/src/schema.ts`. No foreign key to `course_lesson_words`: publishing replaces those rows, which would cascade bookmarks away.
-- [ ] API routes from [docs/words.md](docs/words.md#api); lesson deletion removes bookmarks explicitly in its batch. Bookmark reads join `course_lesson_words` and apply course visibility.
-- [ ] Web: one bookmark keys query per group with optimistic toggles and revert on failure; the toggle on word cards, in `NewWords` (player panel, words step, reader list), and in the lesson page's `LessonWords` panel; hidden in previews and drafts, including the lesson page's draft preview of an unpublished lesson.
-- [ ] Workers tests: tenant isolation (another group's course, lesson, and word IDs), non-member and former-member denial, unpublished and missing words refused, idempotent put and delete, the limit, hidden after edit-out or unpublish and back after republish, course visibility, lesson and course deletion.
-- [ ] RTL: toggles on each surface (including `LessonWords`, without changing its highlight), optimistic revert, no toggle in a preview. Playwright: bookmark from the panel and from the recap.
-- [ ] Docs: `docs/architecture.md` routes, `docs/user-flows.md`, `docs/testing.md`, `docs/security-and-privacy.md` if bookmark privacy needs a line.
+- [x] Contracts: bookmark keys and list responses, `WORD_BOOKMARKS_MAX`, `lessonId` on course words.
+- [x] Migration `0018_course_word_bookmarks.sql` as in the data model, with `packages/db/src/schema.ts`. No foreign key to `course_lesson_words`: publishing replaces those rows, which would cascade bookmarks away.
+- [x] API routes from [docs/words.md](docs/words.md#api); lesson deletion removes bookmarks explicitly in its batch. Bookmark reads join `course_lesson_words` and apply course visibility.
+- [x] Web: one bookmark keys query per group with optimistic toggles and revert on failure; the toggle on word cards, in `NewWords` (player panel, words step, reader list), and in the lesson page's `LessonWords` panel; hidden in previews and drafts, including the lesson page's draft preview of an unpublished lesson.
+- [x] Workers tests: tenant isolation (another group's course, lesson, and word IDs), non-member and former-member denial, unpublished and missing words refused, idempotent put and delete, the limit, hidden after edit-out or unpublish and back after republish, course visibility, lesson and course deletion.
+- [x] RTL: toggles on each surface (including `LessonWords`, without changing its highlight), optimistic revert, no toggle in a preview. Playwright: bookmark from the panel and from the recap.
+- [x] Docs: `docs/architecture.md` routes, `docs/user-flows.md`, `docs/testing.md`, `docs/security-and-privacy.md` if bookmark privacy needs a line.
+
+Notes (2026-10-09): the API reuses `courseWordsResponseSchema`'s `courseWordSchema`, which already carried `lessonId`, so the course words response needed no change. `courseVisibleClause` is the SQL form of `courseVisible`, now shared by the course list and the bookmark list. The keys route returns hidden keys too, so a toggle stays pressed while its word is unpublished. The limit is enforced inside the insert (`INSERT … SELECT … WHERE count < max`), and a bookmark that already exists still succeeds at the limit. `WordBookmarkScope` resolves word IDs to bookmark targets: the player and the lesson page use `useLessonBookmarkTarget` over `lesson.document` (the published document; `null` for a draft preview), and the course recap maps each recap word to its lesson. Lesson deletion invalidates the bookmark queries. No `security-and-privacy.md` change beyond one line on bookmark privacy.
 
 ## C9c — Words tab
 

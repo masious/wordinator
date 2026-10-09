@@ -100,4 +100,4 @@ Done in C5: migration `0013_course_contributors.sql` adds `course_contributors` 
 
 ## Later, not planned
 
-Feed posts for course updates from an activity log, speaking practice (requires a product exception and privacy review), text-to-speech, role-play dialogues, images inside blocks, and progress tracking. Add a phase to this plan only after the product decision is recorded in `docs/courses.md`.
+Feed posts for course updates from an activity log, speaking practice (requires a product exception and privacy review), role-play dialogues, images inside blocks, and progress tracking. Add a phase to this plan only after the product decision is recorded in `docs/courses.md`. Text-to-speech was approved separately as [lesson speech](docs/speech.md) and is delivered through [SPEECH_PLAN.md](SPEECH_PLAN.md).

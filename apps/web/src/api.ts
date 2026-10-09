@@ -1,5 +1,5 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, practiceDiscussionResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
-import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema } from "@wordinator/contracts/lesson-document";
+import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkPageSchema } from "@wordinator/contracts/lesson-document";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 export class ApiError extends Error {
@@ -133,6 +133,14 @@ export const wordBookmarkKeysQueryOptions = (groupId: string) => queryOptions({
   queryKey: [...wordBookmarksKey(groupId), "keys"] as const,
   queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/word-bookmarks/keys`, wordBookmarkKeysResponseSchema),
   retry: false,
+});
+
+// The Words tab's list: bookmarked words newest first, a hundred at a time.
+export const wordBookmarksQueryOptions = (groupId: string) => infiniteQueryOptions({
+  queryKey: [...wordBookmarksKey(groupId), "list"] as const,
+  initialPageParam: undefined as string | undefined,
+  queryFn: ({ pageParam }) => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/word-bookmarks?limit=100${pageParam ? `&cursor=${encodeURIComponent(pageParam)}` : ""}`, wordBookmarkPageSchema),
+  getNextPageParam: (page) => page.nextCursor ?? undefined,
 });
 
 export const lessonQueryOptions = (groupId: string, courseId: string, lessonId: string) => queryOptions({

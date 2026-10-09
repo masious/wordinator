@@ -1,5 +1,5 @@
 import type { CourseWord, LessonStep } from "@wordinator/contracts/lesson-document";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
 import { Button } from "../../ui";
@@ -7,7 +7,8 @@ import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
 import { measureFit, type GridFit } from "./fitGrid";
 import styles from "./WordRecap.module.css";
 
-export type RecapWord = Omit<CourseWord, "lessonId">;
+// Words from several lessons (the course recap, the Words tab) carry their lesson, since word IDs are unique only within a lesson.
+export type RecapWord = Omit<CourseWord, "lessonId"> & { lessonId?: string };
 
 // The words a lesson run carried, once each in step order, with empty optional fields as null like the course recap.
 export function runWords(steps: readonly LessonStep[]): RecapWord[] {
@@ -33,23 +34,27 @@ function useGridFit() {
     const frame = recap.closest<HTMLElement>(".mantine-Modal-content");
     const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
     for (const element of [recap, grid, frame]) if (element) observer?.observe(element);
-    // A dialog's entry transition moves the recap without resizing anything, so measure again once it settles.
-    frame?.addEventListener("transitionend", measure); frame?.addEventListener("animationend", measure);
+    // A dialog's or page's entry motion moves the recap without resizing anything, so measure again once it settles.
+    document.addEventListener("transitionend", measure); document.addEventListener("animationend", measure);
     window.addEventListener("resize", measure); window.visualViewport?.addEventListener("resize", measure);
     return () => {
       observer?.disconnect();
-      frame?.removeEventListener("transitionend", measure); frame?.removeEventListener("animationend", measure);
+      document.removeEventListener("transitionend", measure); document.removeEventListener("animationend", measure);
       window.removeEventListener("resize", measure); window.visualViewport?.removeEventListener("resize", measure);
     };
   }, []);
   return { recapRef, gridRef, size: fit.columns * fit.rows };
 }
 
-function WordCard({ word, shown, opened, onToggle }: { word: RecapWord; shown: boolean; opened: boolean; onToggle: () => void }) {
+// A word's identity on a page: its lesson and ID where the lesson is known, since word IDs are unique only within a lesson.
+const wordKey = (word: RecapWord) => word.lessonId ? `${word.lessonId}:${word.id}` : word.id;
+
+function WordCard({ word, source, shown, opened, onToggle }: { word: RecapWord; source: string | null; shown: boolean; opened: boolean; onToggle: () => void }) {
   const { t } = useTranslation();
   return <article className={`${styles.card} ${shown ? styles.flipped : ""}`} aria-label={word.term}>
     <div className={styles.faces}>
       <div className={`${styles.face} ${styles.front}`} aria-hidden={shown || undefined} inert={shown}>
+        {source && <p className={styles.source}>{source}</p>}
         <p className={styles.term}>{word.term}</p>
         {word.forms && <p className={styles.forms}>{word.forms}</p>}
       </div>
@@ -65,15 +70,21 @@ function WordCard({ word, shown, opened, onToggle }: { word: RecapWord; shown: b
     </div>
     <div className={styles.footer}>
       <Button variant="secondary" onClick={onToggle}>{shown ? t("courses.words.hideMeaning") : t("courses.words.showMeaning")}</Button>
-      <span className={styles.bookmark}><WordBookmarkToggle wordId={word.id} term={word.term} /></span>
+      <span className={styles.bookmark}><WordBookmarkToggle wordId={word.id} lessonId={word.lessonId} term={word.term} /></span>
     </div>
   </article>;
 }
 
+// Words that arrive in pages (the Words tab): whether more exist, and how to ask for them.
+export type MoreWords = { hasMore: boolean; loading: boolean; onLoad: () => void };
+
 // Pages of word cards sized to fit without scrolling. Each card flips in place to reveal its meaning, example, and note, and Show
-// all reveals the page. Back and Next move by a page; the last page offers the done action when there is one. Nothing is graded,
-// recorded, or counted. Callers render it only when there is at least one word.
-export function WordRecap({ words, doneLabel, onDone }: { words: readonly RecapWord[]; doneLabel?: string; onDone?: () => void }) {
+// all reveals the page. Back and Next move by a page; the last page offers the done action when there is one. With `more`, the
+// next words load while the reader is a page away from the end, and the total is not shown until every word has loaded. Nothing is
+// graded, recorded, or counted. Callers render it only when there is at least one word.
+export function WordRecap({ words, doneLabel, onDone, source, more }: {
+  words: readonly RecapWord[]; doneLabel?: string; onDone?: () => void; source?: (word: RecapWord) => string | null; more?: MoreWords;
+}) {
   const { t } = useTranslation();
   const { recapRef, gridRef, size } = useGridFit();
   // The first word shown; a page always starts at a multiple of the page size, so resizing keeps that word in view.
@@ -84,33 +95,42 @@ export function WordRecap({ words, doneLabel, onDone }: { words: readonly RecapW
   const [reveals, setReveals] = useState<{ start: number; shown: ReadonlySet<string>; opened: ReadonlySet<string> }>({ start: 0, shown: new Set(), opened: new Set() });
   const shown = reveals.start === start ? reveals.shown : new Set<string>();
   const opened = reveals.start === start ? reveals.opened : new Set<string>();
-  const reveal = (ids: readonly string[], show: boolean) => {
+  const reveal = (keys: readonly string[], show: boolean) => {
     const nextShown = new Set(shown);
-    for (const id of ids) if (show) nextShown.add(id); else nextShown.delete(id);
-    setReveals({ start, shown: nextShown, opened: show ? new Set([...opened, ...ids]) : opened });
+    for (const key of keys) if (show) nextShown.add(key); else nextShown.delete(key);
+    setReveals({ start, shown: nextShown, opened: show ? new Set([...opened, ...keys]) : opened });
   };
-  const allShown = page.every((word) => shown.has(word.id));
-  const last = start + size >= words.length;
+  const allShown = page.every((word) => shown.has(wordKey(word)));
+  const loadedEnd = start + size >= words.length;
+  const last = loadedEnd && !more?.hasMore;
   const go = (next: number) => { setFirst(next); setReveals({ start: -1, shown: new Set(), opened: new Set() }); };
   const end = start + page.length;
+  const wantsMore = Boolean(more?.hasMore && !more.loading && start + size * 2 >= words.length);
+  const onLoad = more?.onLoad;
+  useEffect(() => { if (wantsMore) onLoad?.(); }, [wantsMore, onLoad]);
+  const counter = more?.hasMore
+    ? page.length > 1 ? t("courses.words.rangeOpen", { first: start + 1, last: end }) : t("courses.words.counterOpen", { current: start + 1 })
+    : page.length > 1 ? t("courses.words.range", { first: start + 1, last: end, total: words.length }) : t("courses.words.counter", { current: start + 1, total: words.length });
   return <div className={styles.recap} ref={recapRef}>
     <div className={styles.toolbar}>
-      <p className={styles.counter}>{page.length > 1
-        ? t("courses.words.range", { first: start + 1, last: end, total: words.length })
-        : t("courses.words.counter", { current: start + 1, total: words.length })}</p>
-      {page.length > 1 && <Button variant="quiet" onClick={() => reveal(page.map((word) => word.id), !allShown)}>
+      <p className={styles.counter}>{counter}</p>
+      {page.length > 1 && <Button variant="quiet" onClick={() => reveal(page.map(wordKey), !allShown)}>
         {allShown ? t("courses.words.hideAll") : t("courses.words.showAll")}
       </Button>}
     </div>
     <div className={styles.grid} ref={gridRef}>
-      {page.map((word, index) => <WordCard key={`${start + index}:${word.id}`} word={word} shown={shown.has(word.id)} opened={opened.has(word.id)}
-        onToggle={() => reveal([word.id], !shown.has(word.id))} />)}
+      {page.map((word, index) => {
+        const key = wordKey(word);
+        return <WordCard key={`${start + index}:${key}`} word={word} source={source?.(word) ?? null} shown={shown.has(key)} opened={opened.has(key)}
+          onToggle={() => reveal([key], !shown.has(key))} />;
+      })}
     </div>
     <div className={styles.nav}>
       <Button variant="quiet" disabled={start === 0} onClick={() => go(Math.max(0, start - size))}>{t("common.back")}</Button>
       {last && doneLabel && onDone
         ? <Button onClick={onDone}>{doneLabel}</Button>
-        : <Button disabled={last} onClick={() => go(start + size)}>{t("common.next")}</Button>}
+        // While the next words are loading, Next waits for them.
+        : <Button disabled={loadedEnd} loading={loadedEnd && more?.loading} onClick={() => go(start + size)}>{t("common.next")}</Button>}
     </div>
   </div>;
 }

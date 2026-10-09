@@ -10,12 +10,13 @@ import { CreateGroupForm } from "../CreateGroupForm/CreateGroupForm";
 import type { SignedInSession } from "../types/auth";
 import styles from "./GroupFrame.module.css";
 
-type ShellIconName = "journal" | "courses" | "members" | "notifications" | "profile" | "settings" | "signOut" | "chevron" | "more" | "plus" | "check";
+type ShellIconName = "journal" | "courses" | "words" | "members" | "notifications" | "profile" | "settings" | "signOut" | "chevron" | "more" | "plus" | "check";
 
 function ShellIcon({ name }: { name: ShellIconName }) {
   const paths: Record<ShellIconName, ReactNode> = {
     journal: <><path d="M4.25 3.5h7.5A2.25 2.25 0 0 1 14 5.75v10.5H6.5A2.25 2.25 0 0 1 4.25 14V3.5Z" /><path d="M14 5.75a2.25 2.25 0 0 1 2.25-2.25h.5v10.75a2 2 0 0 1-2 2H14V5.75Z" /></>,
     courses: <><path d="M3.25 4.75c2.35-.6 4.6-.35 6.75 1.25v10.25c-2.15-1.6-4.4-1.85-6.75-1.25V4.75Z" /><path d="M16.75 4.75c-2.35-.6-4.6-.35-6.75 1.25v10.25c2.15-1.6 4.4-1.85 6.75-1.25V4.75Z" /></>,
+    words: <path d="M5.5 3.5h9v13L10 13.25 5.5 16.5v-13Z" />,
     members: <><circle cx="7.25" cy="7" r="2.75" /><path d="M2.75 16.25c.35-3 1.85-4.5 4.5-4.5s4.15 1.5 4.5 4.5M12.25 4.75a2.75 2.75 0 0 1 0 5.25M13.75 12c2.05.37 3.22 1.78 3.5 4.25" /></>,
     notifications: <><path d="M4.25 14.25h11.5l-1.5-2V8a4.25 4.25 0 0 0-8.5 0v4.25l-1.5 2Z" /><path d="M8.25 16.5c.45.67 1.03 1 1.75 1s1.3-.33 1.75-1" /></>,
     profile: <><circle cx="10" cy="6.75" r="3.25" /><path d="M3.75 17c.45-3.67 2.53-5.5 6.25-5.5s5.8 1.83 6.25 5.5" /></>,
@@ -50,7 +51,7 @@ export function GroupFrame({ children, groupId, session }: PropsWithChildren<{ g
   const journalActive = pathname === groupPath || pathname.startsWith(`${groupPath}/posts/`);
   const coursesActive = pathname === `${groupPath}/courses` || pathname.startsWith(`${groupPath}/courses/`);
   // More collects every destination that is not in the four-slot dock.
-  const moreActive = ["members", "settings"].some((section) => pathname === `${groupPath}/${section}` || pathname.startsWith(`${groupPath}/${section}/`));
+  const moreActive = ["words", "members", "settings"].some((section) => pathname === `${groupPath}/${section}` || pathname.startsWith(`${groupPath}/${section}/`));
   const journalLink = <Link aria-current={journalActive ? "page" : undefined} activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId" params={{ groupId }}><NavLabel icon="journal">{t("nav.journal")}</NavLabel></Link>;
   const coursesLink = <Link aria-current={coursesActive ? "page" : undefined} className={styles.navItem} to="/groups/$groupId/courses" params={{ groupId }}><NavLabel icon="courses">{t("nav.courses")}</NavLabel></Link>;
   const notificationsLink = <Link activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId/notifications" params={{ groupId }}><NavLabel icon="notifications">{t("nav.notifications")}</NavLabel></Link>;
@@ -65,6 +66,7 @@ export function GroupFrame({ children, groupId, session }: PropsWithChildren<{ g
           <nav className={styles.desktopNav} aria-label={t("nav.primary")}>
             {journalLink}
             {coursesLink}
+            <Link activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId/words" params={{ groupId }}><NavLabel icon="words">{t("nav.words")}</NavLabel></Link>
             <Link activeOptions={{ exact: true }} className={styles.navItem} to="/groups/$groupId/members" params={{ groupId }}><NavLabel icon="members">{t("nav.members")}</NavLabel></Link>
             {notificationsLink}
           </nav>
@@ -109,7 +111,7 @@ export function GroupFrame({ children, groupId, session }: PropsWithChildren<{ g
       </div>
     </header>
     <main className={styles.shellMain}>{children}</main>
-    <nav className={styles.mobileDock} aria-label={t("nav.mobile")}>
+    <nav className={styles.mobileDock} aria-label={t("nav.mobile")} data-fit-bottom>
       <div className={styles.mobileNav}>
         {journalLink}
         {coursesLink}
@@ -119,6 +121,7 @@ export function GroupFrame({ children, groupId, session }: PropsWithChildren<{ g
     </nav>
     <Drawer classNames={{ content: styles.sheet, header: styles.sheetHeader, title: styles.sheetTitle, body: styles.sheetBody }} opened={moreOpen} onClose={closeMore} position="bottom" title={t("nav.more")}>
       <div className={styles.sheetList}>
+        <Link activeOptions={{ exact: true }} className={styles.sheetItem} to="/groups/$groupId/words" params={{ groupId }} onClick={closeMore}><ShellIcon name="words" />{t("nav.words")}</Link>
         <Link activeOptions={{ exact: true }} className={styles.sheetItem} to="/groups/$groupId/members" params={{ groupId }} onClick={closeMore}><ShellIcon name="members" />{t("nav.members")}</Link>
         <Link activeOptions={{ exact: true }} className={styles.sheetItem} to="/groups/$groupId/members/$userId" params={profileParams} onClick={closeMore}><ShellIcon name="profile" />{t("nav.profile")}</Link>
         <Link className={styles.sheetItem} to="/groups/$groupId/settings" params={{ groupId }} onClick={closeMore}><ShellIcon name="settings" />{t("nav.settings")}</Link>

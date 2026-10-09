@@ -1,6 +1,6 @@
 # Words
 
-Status: approved product change (C9, 2026-10-08), in progress. C9a (word cards) is complete; C9b (bookmarks) and C9c (Words tab) are planned. Phases are tracked in the [roadmap](roadmap.md#course-phases); [WORDS_PLAN.md](../WORDS_PLAN.md) holds the delivery checklist.
+Status: approved product change (C9, 2026-10-08), in progress. C9a (word cards) and C9b (bookmarks) are complete; C9c (Words tab) is planned. Phases are tracked in the [roadmap](roadmap.md#course-phases); [WORDS_PLAN.md](../WORDS_PLAN.md) holds the delivery checklist.
 
 Words builds on [new words and recap](courses.md#new-words-and-recap). Lessons define words; this document owns how learners review them several at a time, bookmark them, and come back to them in a Words tab.
 

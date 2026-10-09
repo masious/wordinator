@@ -17,6 +17,7 @@ import { Route as OverviewLessonSlugRouteImport } from './routes/overview.$lesso
 import { Route as GroupsGroupIdCoursesRouteImport } from './routes/groups.$groupId_.courses'
 import { Route as GroupsGroupIdMembersRouteImport } from './routes/groups.$groupId_.members'
 import { Route as GroupsGroupIdNotificationsRouteImport } from './routes/groups.$groupId_.notifications'
+import { Route as GroupsGroupIdWordsRouteImport } from './routes/groups.$groupId_.words'
 import { Route as GroupsGroupIdCoursesCourseIdRouteImport } from './routes/groups.$groupId_.courses_.$courseId'
 import { Route as GroupsGroupIdMembersUserIdRouteImport } from './routes/groups.$groupId_.members_.$userId'
 import { Route as GroupsGroupIdPostsPostIdRouteImport } from './routes/groups.$groupId_.posts.$postId'
@@ -67,6 +68,11 @@ const GroupsGroupIdNotificationsRoute =
     path: '/groups/$groupId/notifications',
     getParentRoute: () => rootRouteImport,
   } as any)
+const GroupsGroupIdWordsRoute = GroupsGroupIdWordsRouteImport.update({
+  id: '/groups/$groupId_/words',
+  path: '/groups/$groupId/words',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GroupsGroupIdCoursesCourseIdRoute =
   GroupsGroupIdCoursesCourseIdRouteImport.update({
     id: '/groups/$groupId_/courses_/$courseId',
@@ -125,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/groups/$groupId/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId/notifications': typeof GroupsGroupIdNotificationsRoute
+  '/groups/$groupId/words': typeof GroupsGroupIdWordsRoute
   '/groups/$groupId/courses/$courseId': typeof GroupsGroupIdCoursesCourseIdRoute
   '/groups/$groupId/members/$userId': typeof GroupsGroupIdMembersUserIdRoute
   '/groups/$groupId/posts/$postId': typeof GroupsGroupIdPostsPostIdRoute
@@ -143,6 +150,7 @@ export interface FileRoutesByTo {
   '/groups/$groupId/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId/notifications': typeof GroupsGroupIdNotificationsRoute
+  '/groups/$groupId/words': typeof GroupsGroupIdWordsRoute
   '/groups/$groupId/courses/$courseId': typeof GroupsGroupIdCoursesCourseIdRoute
   '/groups/$groupId/members/$userId': typeof GroupsGroupIdMembersUserIdRoute
   '/groups/$groupId/posts/$postId': typeof GroupsGroupIdPostsPostIdRoute
@@ -162,6 +170,7 @@ export interface FileRoutesById {
   '/groups/$groupId_/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId_/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId_/notifications': typeof GroupsGroupIdNotificationsRoute
+  '/groups/$groupId_/words': typeof GroupsGroupIdWordsRoute
   '/groups/$groupId_/courses_/$courseId': typeof GroupsGroupIdCoursesCourseIdRoute
   '/groups/$groupId_/members_/$userId': typeof GroupsGroupIdMembersUserIdRoute
   '/groups/$groupId_/posts/$postId': typeof GroupsGroupIdPostsPostIdRoute
@@ -182,6 +191,7 @@ export interface FileRouteTypes {
     | '/groups/$groupId/courses'
     | '/groups/$groupId/members'
     | '/groups/$groupId/notifications'
+    | '/groups/$groupId/words'
     | '/groups/$groupId/courses/$courseId'
     | '/groups/$groupId/members/$userId'
     | '/groups/$groupId/posts/$postId'
@@ -200,6 +210,7 @@ export interface FileRouteTypes {
     | '/groups/$groupId/courses'
     | '/groups/$groupId/members'
     | '/groups/$groupId/notifications'
+    | '/groups/$groupId/words'
     | '/groups/$groupId/courses/$courseId'
     | '/groups/$groupId/members/$userId'
     | '/groups/$groupId/posts/$postId'
@@ -218,6 +229,7 @@ export interface FileRouteTypes {
     | '/groups/$groupId_/courses'
     | '/groups/$groupId_/members'
     | '/groups/$groupId_/notifications'
+    | '/groups/$groupId_/words'
     | '/groups/$groupId_/courses_/$courseId'
     | '/groups/$groupId_/members_/$userId'
     | '/groups/$groupId_/posts/$postId'
@@ -237,6 +249,7 @@ export interface RootRouteChildren {
   GroupsGroupIdCoursesRoute: typeof GroupsGroupIdCoursesRoute
   GroupsGroupIdMembersRoute: typeof GroupsGroupIdMembersRoute
   GroupsGroupIdNotificationsRoute: typeof GroupsGroupIdNotificationsRoute
+  GroupsGroupIdWordsRoute: typeof GroupsGroupIdWordsRoute
   GroupsGroupIdCoursesCourseIdRoute: typeof GroupsGroupIdCoursesCourseIdRoute
   GroupsGroupIdMembersUserIdRoute: typeof GroupsGroupIdMembersUserIdRoute
   GroupsGroupIdPostsPostIdRoute: typeof GroupsGroupIdPostsPostIdRoute
@@ -303,6 +316,13 @@ declare module '@tanstack/react-router' {
       path: '/groups/$groupId/notifications'
       fullPath: '/groups/$groupId/notifications'
       preLoaderRoute: typeof GroupsGroupIdNotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/groups/$groupId_/words': {
+      id: '/groups/$groupId_/words'
+      path: '/groups/$groupId/words'
+      fullPath: '/groups/$groupId/words'
+      preLoaderRoute: typeof GroupsGroupIdWordsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/groups/$groupId_/courses_/$courseId': {
@@ -373,6 +393,7 @@ const rootRouteChildren: RootRouteChildren = {
   GroupsGroupIdCoursesRoute: GroupsGroupIdCoursesRoute,
   GroupsGroupIdMembersRoute: GroupsGroupIdMembersRoute,
   GroupsGroupIdNotificationsRoute: GroupsGroupIdNotificationsRoute,
+  GroupsGroupIdWordsRoute: GroupsGroupIdWordsRoute,
   GroupsGroupIdCoursesCourseIdRoute: GroupsGroupIdCoursesCourseIdRoute,
   GroupsGroupIdMembersUserIdRoute: GroupsGroupIdMembersUserIdRoute,
   GroupsGroupIdPostsPostIdRoute: GroupsGroupIdPostsPostIdRoute,

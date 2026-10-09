@@ -321,7 +321,7 @@ Courses are archived, not hard-deleted. The owner or group creator may archive a
 ## Deferred
 
 - Speaking practice, speak-and-repeat, and spoken answers. These need an explicit product exception for audio and pronunciation, and a privacy review because browser speech recognition may send audio to the browser vendor.
-- Text-to-speech playback and interactive role-play dialogues
+- Interactive role-play dialogues. Text-to-speech playback is [lesson speech](speech.md) (C10).
 - Feed posts for course updates
 - Course-specific notifications beyond contributor requests
 - Review scheduling for bookmarked words in the [Words tab](words.md#words-tab)

@@ -48,6 +48,8 @@ Opaque ID, group ID, owner ID, title, summary, optional level, optional intended
 
 Migration `0009_course_shell.sql` adds the table and its library index.
 
+Planned for C10a: a nullable `speech_cast` JSON column holding the course's [dialogue cast](speech.md#dialogue-cast), a map from speaker label to voice.
+
 ### `course_lessons`
 
 Opaque ID, group ID, course ID, title, optional goal, position, draft document (JSON text, not null), integer draft version (starting at 1), nullable published document (JSON text), nullable published timestamp, created-by and updated-by user IDs, and created/updated timestamps. Check constraints require both documents to be valid JSON. A lesson is published exactly when its published document is not null. Lesson numbers shown to readers are derived from position among the visible lessons and are never stored.
@@ -68,11 +70,11 @@ R2 key (primary key), group ID, course ID, lesson ID, created-by user ID, and cr
 
 ### `course_lesson_words`
 
-Added in C8. A derived index of the words in each lesson's published document, so the [course word recap](courses.md#word-recap) never parses documents at read time. Group ID, course ID, lesson ID, block ID, word ID, position (document order within the lesson), term, meaning, and optional forms, example, and note. The primary key is `(lesson_id, word_id)`. The published document stays the source of truth: publishing replaces the lesson's rows from the new published document in the same D1 batch, unpublishing deletes them, lesson deletion also removes them explicitly in its batch, and rows cascade from their course and lesson. Text is stored trimmed, with empty optional fields as null. Indexed by `(group_id, course_id, lesson_id, position)`. Migration `0017_course_lesson_words.sql` adds the table empty, since no published document held vocabulary before it.
+Added in C8. A derived index of the words in each lesson's published document, so the [course word recap](courses.md#word-recap) never parses documents at read time. Group ID, course ID, lesson ID, block ID, word ID, position (document order within the lesson), term, meaning, and optional forms, example, and note. The primary key is `(lesson_id, word_id)`. The published document stays the source of truth: publishing replaces the lesson's rows from the new published document in the same D1 batch, unpublishing deletes them, lesson deletion also removes them explicitly in its batch, and rows cascade from their course and lesson. Text is stored trimmed, with empty optional fields as null. Indexed by `(group_id, course_id, lesson_id, position)`. Migration `0017_course_lesson_words.sql` adds the table empty, since no published document held vocabulary before it. Planned for C10a: an optional `ipa` column carrying the word's [pronunciation override](speech.md#pronunciation-override).
 
 ### `course_word_bookmarks`
 
-Planned for C9b; see [bookmarks](words.md#bookmarks). Group ID, course ID, lesson ID, word ID, user ID, and created timestamp. The primary key is `(user_id, lesson_id, word_id)`. The row is a key only: word text is read from [`course_lesson_words`](#course_lesson_words) at read time, and there is deliberately no foreign key to that table, because publishing replaces a lesson's word rows and would cascade bookmarks away. A bookmark whose word is not in the index is hidden, not deleted. Rows cascade from their course and lesson, lesson deletion also removes them explicitly in its batch, and they stay when a member leaves the group. Indexed by `(group_id, user_id, created_at)`. Migration `0018_course_word_bookmarks.sql` adds the table.
+Added in C9b; see [bookmarks](words.md#bookmarks). Group ID, course ID, lesson ID, word ID, user ID, and created timestamp. The primary key is `(user_id, lesson_id, word_id)`. The row is a key only: word text is read from [`course_lesson_words`](#course_lesson_words) at read time, and there is deliberately no foreign key to that table, because publishing replaces a lesson's word rows and would cascade bookmarks away. A bookmark whose word is not in the index is hidden, not deleted. Rows cascade from their course and lesson, lesson deletion also removes them explicitly in its batch, and they stay when a member leaves the group. Indexed by `(group_id, user_id, created_at)`. Migration `0018_course_word_bookmarks.sql` adds the table.
 
 ### `course_contributors`
 
@@ -85,6 +87,18 @@ Group ID, course ID, lesson ID, user ID, and completed timestamp. The primary ke
 ### `course_lesson_positions`
 
 Added in C6b. Group ID, course ID, lesson ID, user ID, step key, step index, passed steps, total steps, and updated timestamp; the primary key is `(lesson_id, user_id)`. The step key and index are the last [player step](courses.md#lesson-positions) shown, for resuming. Passed steps of total steps is the furthest share of the lesson passed, which counts toward course progress while the lesson is unfinished; a check keeps `total_steps > 0` and both the index and passed steps below it. Finishing the lesson deletes the row. Rows cascade from their course and lesson, lesson deletion also removes them explicitly in its batch, and they stay when a member leaves the group. Indexed by `(group_id, course_id, user_id)`. Migration `0016_course_lesson_positions.sql` adds the table.
+
+## Speech
+
+Planned for C10a; migration `0019_speech.sql`. The [speech rules](speech.md) own behavior.
+
+### `speech_clips`
+
+One row per synthesized clip, shared across groups because a clip is content-addressed. Hash (primary key, the [clip identity](speech.md#generation)), voice, character count, status (`pending`, `ready`, or `failed`), attempt count, nullable next-attempt and claimed timestamps, and created/updated timestamps. The R2 key is `speech/{hash}.mp3`. Inserting the row is the claim that keeps Azure from being called twice for one clip. The row holds no lesson, course, or group ID and no text; the worker rebuilds the markup from the lesson it is processing. Rows and their R2 objects are kept when lessons change. A check constraint limits the statuses.
+
+### `speech_jobs`
+
+At most one pending job per lesson. Lesson ID (primary key), group ID, course ID, due timestamp, attempt count, and created/updated timestamps. Draft saves, publishing, and cast changes upsert it; the worker deletes it once every spoken item of the lesson's documents is ready or failed. Rows cascade from their course and lesson. Indexed by due timestamp.
 
 ## Discussion
 

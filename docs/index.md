@@ -13,6 +13,7 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [discussions-and-reactions.md](discussions-and-reactions.md) | Answers, spoiler concealment, comments, replies, pins, and emoji reactions |
 | [courses.md](courses.md) | Course structure, blocks, contributors, publishing, practice threads, and loading |
 | [words.md](words.md) | Word cards, word bookmarks, and the Words tab |
+| [speech.md](speech.md) | Lesson speech: spoken items, voices, dialogue cast, pronunciation overrides, background generation, and playback |
 | [content/index.md](content/index.md) | Course curriculum, storyline, and taught-topic coverage for member-authored Dutch Foundations content |
 | [settings-and-administration.md](settings-and-administration.md) | Settings page structure, creator membership administration, and the interactive image cropper |
 | [notifications.md](notifications.md) | Notification triggers, scope, read state, retention, and links |
@@ -22,6 +23,7 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [VISUAL-REDESIGN-PLAN.md](../VISUAL-REDESIGN-PLAN.md) | Cross-phase premium visual refresh audit, migration batches, verification, and completion criteria |
 | [LESSON_EDITOR_PLAN.md](../LESSON_EDITOR_PLAN.md) | Course lesson editor (C7) delivery steps, status, and release procedure |
 | [WORDS_PLAN.md](../WORDS_PLAN.md) | Word cards, bookmarks, and Words tab (C9) delivery steps, status, and release procedure |
+| [SPEECH_PLAN.md](../SPEECH_PLAN.md) | Lesson speech (C10) delivery steps, status, and release procedure |
 | [architecture.md](architecture.md) | Runtime topology, monorepo boundaries, client/server responsibilities, and API conventions |
 | [data-model.md](data-model.md) | Conceptual entities, relationships, constraints, retention, and deletion semantics |
 | [security-and-privacy.md](security-and-privacy.md) | Security baseline, privacy boundaries, tradeoffs, and deferred work |

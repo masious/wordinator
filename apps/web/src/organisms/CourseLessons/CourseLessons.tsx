@@ -4,7 +4,7 @@ import {
 import { lessonResponseSchema, type CourseDetailResponse, type CourseLesson } from "@wordinator/contracts/lesson-document";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { type FormEvent, lazy, Suspense, useMemo, useRef, useState } from "react";
+import { type FormEvent, lazy, Suspense, useCallback, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, courseQueryOptions, courseWordsQueryOptions, lessonQueryOptions, wordBookmarksKey } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
@@ -159,11 +159,8 @@ export function CourseLessons({ groupId, courseId, accountId, detail }: { groupI
   const wordsQuery = useQuery(courseWordsQueryOptions(groupId, courseId));
   const words = useMemo(() => wordsQuery.data?.words ?? [], [wordsQuery.data]);
   const [reviewing, setReviewing] = useState(false);
-  // Every recap word comes from the published index, so each can be bookmarked in its own lesson.
-  const recapTarget = useMemo(() => {
-    const lessons = new Map(words.map((word) => [word.id, word.lessonId]));
-    return (wordId: string) => { const lessonId = lessons.get(wordId); return lessonId ? { groupId, courseId, lessonId } : null; };
-  }, [words, groupId, courseId]);
+  // Every recap word comes from the published index and carries its lesson, so each can be bookmarked there.
+  const recapTarget = useCallback((_wordId: string, lessonId?: string) => lessonId ? { groupId, courseId, lessonId } : null, [groupId, courseId]);
   const create = useMutation({
     mutationFn: (input: LessonInput) => apiRequest(lessonsPath(scope), lessonResponseSchema, { method: "POST", body: JSON.stringify(input) }),
     onSuccess: async (data) => {

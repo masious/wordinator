@@ -1,0 +1,8 @@
+.center{min-height:100dvh;display:grid;place-items:center;padding:var(--space-6)}
+/* The cards fit below the header without scrolling, so the header and grid sit closer than the usual section rhythm. */
+.page{display:grid;gap:var(--space-8);animation:wordinator-enter var(--motion-reveal) var(--ease-physical) both}
+/* A compact header leaves the viewport to the cards. */
+.header.header{padding-block:0}
+.header h1{max-width:none;font-size:var(--text-4xl)}
+/* On phones the intro gives way to the cards; the empty state still explains how to bookmark. */
+@media(max-width:48em){.page{gap:var(--space-4)}.header h1{font-size:var(--text-3xl)}.header p{display:none}}
