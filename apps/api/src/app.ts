@@ -46,12 +46,9 @@ import {
   outlineResponseSchema,
   reorderRequestSchema,
   updateLessonRequestSchema,
-  practiceCheckRequestSchema,
-  practiceCheckResponseSchema,
   practiceProgressRequestSchema,
   practiceProgressResponseSchema,
   type PracticeProgress,
-  answerMatches,
   contributorDecisionRequestSchema,
   courseContributorsResponseSchema,
   SPEECH_VOICES,
@@ -66,7 +63,7 @@ import {
   SLUG_MAX_LENGTH,
 } from "@wordinator/contracts";
 import {
-  collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
+  collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
   lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
   toLearnerDocument, walkLessonBlocks, type CourseLesson, type CourseWord, type LessonBlockOf, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
@@ -561,16 +558,21 @@ async function courseResponse(context: Context<AppEnvironment>, courseId: string
 
 type LessonRow = {
   id: string; slug: string; courseId: string; title: string; goal: string | null; position: number; published: number; publishedAt: number | null; changed: number;
-  updatedById: string; updatedByName: string; updatedAt: number;
+  updatedById: string; updatedByName: string; updatedAt: number; wordCount: number; practiceCount: number;
 };
 type LessonDocumentRow = LessonRow & { draftDoc: string; draftVersion: number; publishedDoc: string | null };
 // Attributes the last editor, falling back to their group profile snapshot once they are no longer active.
 const editorColumns = (table: string, alias: string) => `CASE WHEN em.state = 'active' THEN eu.display_name ELSE COALESCE(em.profile_display_name, 'Former member') END AS updatedByName
    FROM ${table} ${alias} JOIN users eu ON eu.id = ${alias}.updated_by
    LEFT JOIN memberships em ON em.group_id = ${alias}.group_id AND em.user_id = ${alias}.updated_by`;
+// What the published document offers for the course page's lesson actions: its words, read from the published word index, and its
+// practice blocks, at any depth. Unpublished lessons count none.
+const LESSON_COUNT_COLUMNS = `(SELECT COUNT(*) FROM course_lesson_words w WHERE w.lesson_id = l.id) AS wordCount,
+    (SELECT COUNT(*) FROM json_tree(l.published_doc) WHERE json_tree.key = 'type' AND json_tree.atom = 'practice') AS practiceCount`;
 // A lesson is published while it has a published document; `changed` tells editors the draft differs from it.
 const LESSON_COLUMNS = `l.id, l.slug, l.course_id AS courseId, l.title, l.goal, l.position, l.published_doc IS NOT NULL AS published, l.published_at AS publishedAt,
-    (l.published_doc IS NOT NULL AND l.draft_doc != l.published_doc) AS changed, l.updated_by AS updatedById, l.updated_at AS updatedAt`;
+    (l.published_doc IS NOT NULL AND l.draft_doc != l.published_doc) AS changed, l.updated_by AS updatedById, l.updated_at AS updatedAt,
+    ${LESSON_COUNT_COLUMNS}`;
 const LESSON_SELECT = `SELECT ${LESSON_COLUMNS}, ${editorColumns("course_lessons", "l")}`;
 const LESSON_DOCUMENT_SELECT = `SELECT ${LESSON_COLUMNS}, l.draft_doc AS draftDoc, l.draft_version AS draftVersion, l.published_doc AS publishedDoc,
     ${editorColumns("course_lessons", "l")}`;
@@ -581,6 +583,7 @@ const seesCourseDrafts = (course: CourseRow, viewerId: string) => course.ownerId
 const presentLessonSummary = (row: LessonRow, editor: boolean): CourseLessonSummary => ({
   id: row.id, slug: row.slug, position: row.position, title: row.title, goal: row.goal, published: Boolean(row.published), publishedAt: row.publishedAt,
   changed: editor && Boolean(row.changed), updatedBy: { id: row.updatedById, displayName: row.updatedByName }, updatedAt: row.updatedAt,
+  wordCount: row.wordCount, practiceCount: row.practiceCount,
 });
 
 function storedDocument(raw: string, lessonId: string) {
@@ -618,7 +621,8 @@ async function practiceProgress(binding: D1Database, groupId: string, viewerId: 
 const practiceQuestions = (document: LessonDocument) => [...walkLessonBlocks(document.blocks)]
   .flatMap(({ block }) => block.type === "practice" ? [[block.id, readPracticeBlock(block as LessonBlockOf<"practice">).items.length] as const] : []);
 
-// Learners receive the published document with practice prompts only. Editors also receive the full draft and its version.
+// Learners receive the published document with practice prompts and authors' versions, which their device checks answers
+// against; item notes stay editor-only. Editors also receive the full draft and its version.
 // Speech: everyone gets the ready clips of the published document; editors also get every draft item with its status.
 async function presentLessons(binding: D1Database, course: CourseRow, viewerId: string, rows: LessonDocumentRow[], mediaBase: string, language: Language): Promise<CourseLesson[]> {
   const editor = seesCourseDrafts(course, viewerId);
@@ -752,10 +756,15 @@ function lessonWordStatements(binding: D1Database, course: CourseRow, lessonId: 
   return [
     binding.prepare(`DELETE FROM course_lesson_words WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND ${guard.sql}`).bind(course.groupId, course.id, lessonId, ...guard.values),
     binding.prepare(
-      `INSERT INTO course_lesson_words (group_id, course_id, lesson_id, block_id, word_id, position, term, meaning, forms, example, note, ipa)
-       SELECT ?, ?, ?, ${["blockId", "id", "position", "term", "meaning", "forms", "example", "note", "ipa"].map(word).join(", ")} FROM json_each(?) WHERE ${guard.sql}`,
-    ).bind(course.groupId, course.id, lessonId, JSON.stringify(collectLessonWords(published)), ...guard.values),
+      `INSERT INTO course_lesson_words (group_id, course_id, lesson_id, block_id, word_id, position, term, meaning, forms, example, note, ipa, term_key, search_key)
+       SELECT ?, ?, ?, ${["blockId", "id", "position", "term", "meaning", "forms", "example", "note", "ipa", "termKey", "searchKey"].map(word).join(", ")} FROM json_each(?) WHERE ${guard.sql}`,
+    ).bind(course.groupId, course.id, lessonId, JSON.stringify(collectLessonWords(published).map((entry) => ({ ...entry, ...wordSearchKeys(entry) }))), ...guard.values),
   ];
+}
+
+// The word search keys of an indexed word: its term, and its term, forms, and meaning together (see migration 0023).
+function wordSearchKeys(entry: { term: string; meaning: string; forms: string | null }) {
+  return { termKey: wordSearchKey(entry.term), searchKey: [entry.term, entry.forms ?? "", entry.meaning].map(wordSearchKey).join("\n") };
 }
 
 // Attaches the ready term and example clips to indexed words; the IPA override only shapes the term's clip and is not returned.
@@ -2041,6 +2050,71 @@ app.get("/api/groups/:groupId/word-bookmarks", requireGroupAccess, async (contex
   }));
 });
 
+// Index rows written before migration 0023 have no search keys, and SQLite cannot fold diacritics, so the search endpoint
+// fills them here first, a bounded number per request. A partial index finds the rows without keys.
+const WORD_SEARCH_FILL_BATCH = 500;
+async function fillWordSearchKeys(binding: D1Database) {
+  for (let round = 0; round < 4; round += 1) {
+    const rows = await binding.prepare(
+      "SELECT lesson_id AS lessonId, word_id AS wordId, term, meaning, forms FROM course_lesson_words WHERE term_key IS NULL OR search_key IS NULL LIMIT ?",
+    ).bind(WORD_SEARCH_FILL_BATCH).all<{ lessonId: string; wordId: string; term: string; meaning: string; forms: string | null }>();
+    if (!rows.results.length) return;
+    await binding.batch(rows.results.map((row) => {
+      const keys = wordSearchKeys(row);
+      return binding.prepare("UPDATE course_lesson_words SET term_key = ?, search_key = ? WHERE lesson_id = ? AND word_id = ?").bind(keys.termKey, keys.searchKey, row.lessonId, row.wordId);
+    }));
+    if (rows.results.length < WORD_SEARCH_FILL_BATCH) return;
+  }
+}
+
+const likeEscape = (value: string) => value.replace(/[\\%_]/g, (character) => `\\${character}`);
+const encodeSearchCursor = (lessonId: string, wordId: string) => btoa(JSON.stringify([lessonId, wordId]));
+const decodeSearchCursor = (value: string): [string, string] | null => {
+  try {
+    const parsed: unknown = JSON.parse(atob(value));
+    return Array.isArray(parsed) && parsed.length === 2 && parsed.every((part) => typeof part === "string") ? [parsed[0] as string, parsed[1] as string] : null;
+  } catch { return null; }
+};
+
+// Library word search (New words panel): words of published lessons in courses the viewer can see, archived courses left out,
+// whose term, forms, or meaning contains the folded query. Terms that start with the query come first, then other term
+// matches, then meaning matches, each by term. The cursor names the last word; a page after a word that no longer matches is empty.
+app.get("/api/groups/:groupId/word-search", requireGroupAccess, async (context) => {
+  const parsed = wordSearchQuerySchema.safeParse(context.req.query());
+  if (!parsed.success) return apiError(context, 400, "INVALID_SEARCH", "Enter a word to search for.");
+  const cursor = parsed.data.cursor ? decodeSearchCursor(parsed.data.cursor) : null;
+  if (parsed.data.cursor && !cursor) return apiError(context, 400, "INVALID_CURSOR", "The search cursor is invalid.");
+  const key = wordSearchKey(parsed.data.q);
+  if (!key) return context.json(wordSearchPageSchema.parse({ items: [], nextCursor: null }));
+  const group = context.get("groupAccess"); const user = context.get("user")!; const db = context.env.DB;
+  await fillWordSearchKeys(db);
+  const visible = courseVisibleClause(user.id, group.creatorUserId);
+  const pattern = likeEscape(key);
+  const rows = await db.prepare(
+    `WITH matches AS (
+       SELECT w.word_id AS id, w.lesson_id AS lessonId, w.term, w.meaning, w.forms, w.example, w.note, w.ipa, w.term_key AS termKey,
+         CASE WHEN w.term_key LIKE ? ESCAPE '\\' THEN 0 WHEN w.term_key LIKE ? ESCAPE '\\' THEN 1 ELSE 2 END AS rank,
+         c.id AS courseId, c.slug AS courseSlug, c.title AS courseTitle, l.slug AS lessonSlug, l.title AS lessonTitle
+       FROM course_lesson_words w
+       JOIN course_lessons l ON l.id = w.lesson_id AND l.group_id = w.group_id AND l.course_id = w.course_id AND l.published_doc IS NOT NULL
+       JOIN courses c ON c.id = w.course_id AND c.group_id = w.group_id
+       WHERE w.group_id = ? AND c.status <> 'archived' AND ${visible.sql} AND w.search_key LIKE ? ESCAPE '\\'
+     )
+     SELECT * FROM matches
+     ${cursor ? "WHERE (rank, termKey, lessonId, id) > (SELECT rank, termKey, lessonId, id FROM matches WHERE lessonId = ? AND id = ?)" : ""}
+     ORDER BY rank, termKey, lessonId, id LIMIT ?`,
+  ).bind(`${pattern}%`, `%${pattern}%`, group.id, ...visible.values, `%${pattern}%`, ...(cursor ?? []), parsed.data.limit + 1)
+    .all<IndexedWord & { termKey: string; rank: number; courseId: string; courseSlug: string; courseTitle: string; lessonSlug: string; lessonTitle: string }>();
+  const page = rows.results.slice(0, parsed.data.limit); const tail = page.at(-1);
+  const spoken = await withWordSpeech(db, page, group.language, context.env.PUBLIC_MEDIA_BASE_URL);
+  return context.json(wordSearchPageSchema.parse({
+    items: spoken.map(({ termKey: _termKey, rank: _rank, courseId, courseSlug, courseTitle, lessonSlug, lessonTitle, ...word }) => ({
+      word, course: { id: courseId, slug: courseSlug, title: courseTitle }, lesson: { id: word.lessonId, slug: lessonSlug, title: lessonTitle },
+    })),
+    nextCursor: rows.results.length > parsed.data.limit && tail ? encodeSearchCursor(tail.lessonId, tail.id) : null,
+  }));
+});
+
 // Finishing a published lesson in the lesson player records it once; repeating the lesson keeps the first completion time.
 app.put(`${lessonPath}/completion`, requireGroupAccess, async (context) => {
   const found = await visibleCourse(context); if ("error" in found) return found.error;
@@ -2225,7 +2299,7 @@ app.post(`${lessonPath}/images`, requireGroupAccess, async (context) => {
   return context.json(lessonImageUploadResponseSchema.parse({ key: uploaded.key, url: mediaUrl(context.env, uploaded.key), width: uploaded.width, height: uploaded.height }), 201);
 });
 
-// Resolves a practice for its answer thread from the published document by block ID. Editors may also answer a practice
+// Resolves a practice for progress from the published document by block ID. Editors may also reach a practice
 // that so far exists only in the draft, for example while previewing an unpublished lesson. Writes are refused while the
 // course is archived.
 async function practiceBlock(context: Context<AppEnvironment>, write: boolean) {
@@ -2243,16 +2317,6 @@ async function practiceBlock(context: Context<AppEnvironment>, write: boolean) {
 }
 
 const practicePath = `${lessonPath}/blocks/:blockId`;
-
-// A check confirms a match, or answers a miss with the item's author's version as a reference. Nothing is stored.
-app.post(`${practicePath}/check`, requireGroupAccess, async (context) => {
-  const found = await practiceBlock(context, false); if ("error" in found) return found.error;
-  const parsed = await parseJson(context, practiceCheckRequestSchema); if ("response" in parsed) return parsed.response;
-  const item = found.practice.items[parsed.data.item];
-  if (!item) return apiError(context, 404, "PRACTICE_ITEM_NOT_FOUND", "This question is not available.");
-  const match = answerMatches(item, parsed.data.answer);
-  return context.json(practiceCheckResponseSchema.parse({ match, authorsVersion: match || !item.authorsVersion.length ? null : item.authorsVersion }));
-});
 
 // Saving progress records only how many questions the viewer has answered, never the answers. The highest count wins, so a
 // device without the local draft never lowers it. Only published practices count; a draft preview records nothing.

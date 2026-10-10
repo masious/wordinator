@@ -60,7 +60,8 @@ export function GroupFrame({ children, session }: PropsWithChildren<{ groupId: s
             {journalLink}
             {notificationsLink}
           </nav>
-          <Menu position="bottom-end" width={260} withinPortal>
+          {/* The trigger is always on the page when the menu opens; WebKit can misjudge the scrolling header as clipped and hide it. */}
+          <Menu position="bottom-end" width={260} withinPortal hideDetached={false}>
             <Menu.Target>
               <button aria-label={t("nav.accountMenu")} className={styles.accountTrigger} type="button">
                 <Avatar name={session.user.displayName} src={session.user.avatarUrl} />

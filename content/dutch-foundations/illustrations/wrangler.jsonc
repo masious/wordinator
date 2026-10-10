@@ -1,6 +1,0 @@
-// Only used by tools/illustrate.ts to get a Workers AI binding through wrangler's login. Never deployed.
-{
-  "name": "wordinator-illustrate",
-  "compatibility_date": "2025-09-06",
-  "ai": { "binding": "AI" }
-}

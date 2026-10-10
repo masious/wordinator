@@ -1,0 +1,12 @@
+.actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:var(--space-1)}
+.empty{margin:0;color:var(--color-foreground-muted)}
+.practices{display:grid;gap:var(--space-2);margin:0;padding:0;list-style:none}
+.practice{display:flex;align-items:baseline;gap:var(--space-3);width:100%;min-height:var(--touch-target);padding:var(--space-3) var(--space-4);font:inherit;color:var(--color-foreground);text-align:start;cursor:pointer;background:var(--color-bezel);border:var(--ring-hairline);border-radius:var(--radius-md);transition:background-color var(--motion-standard) var(--ease-physical)}
+.practice:hover{background:var(--color-wash)}
+.practice:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.practiceNumber{min-width:2ch;font-family:var(--font-mono);font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.practiceCopy{display:grid;gap:var(--space-1);min-width:0}
+.instruction{display:-webkit-box;overflow:hidden;font-weight:var(--weight-semibold);overflow-wrap:anywhere;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2}
+.status{font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.done{font-size:var(--type-metadata);font-weight:var(--weight-semibold);color:var(--color-success)}
+.answering{display:grid;gap:var(--space-4);min-width:0}

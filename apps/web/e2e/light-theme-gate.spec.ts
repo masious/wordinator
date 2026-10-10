@@ -75,7 +75,7 @@ test("stable light-theme visual baselines", async ({ browserName, page }) => {
   for (const viewport of [viewports[0], viewports[2]]) {
     await page.setViewportSize(viewport);
     await page.goto("/");
-    await expect(page.getByRole("heading", { name: "Start learning." })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Practise what you need." })).toBeVisible();
     await expect(page).toHaveScreenshot(`light-auth-${viewport.name}.png`, { animations: "disabled", fullPage: true });
   }
 

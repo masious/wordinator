@@ -1,5 +1,5 @@
 import type { CourseLessonSummary } from "@wordinator/contracts";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { type QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { courseProgressQueryOptions, courseWordsQueryOptions } from "../../api";
@@ -8,7 +8,14 @@ import { Button, Surface } from "../../ui";
 import { LessonPlayer } from "./LessonPlayer";
 import styles from "./CourseResume.module.css";
 
-// The viewer's one way into the lesson player. It resumes the most recently moved unfinished lesson at its saved step, otherwise
+// The player saved the reader's steps while it was open; refresh the positions and percentages it changed, and the course recap,
+// which a finished lesson may extend.
+export function refreshAfterPlaying(queryClient: QueryClient, groupId: string, courseId: string) {
+  void queryClient.invalidateQueries({ queryKey: courseProgressQueryOptions(groupId, courseId).queryKey });
+  void queryClient.invalidateQueries({ queryKey: courseWordsQueryOptions(groupId, courseId).queryKey });
+}
+
+// The course-wide way into the lesson player. It resumes the most recently moved unfinished lesson at its saved step, otherwise
 // starts the first lesson they have not finished, otherwise offers the first lesson again. Lessons that count come first: an
 // unpublished lesson is chosen only when nothing in the course is published, and then it plays as a preview.
 export function CourseResume({ groupId, courseId, accountId, outline }: {
@@ -43,12 +50,6 @@ export function CourseResume({ groupId, courseId, accountId, outline }: {
     <Button className={styles.action} variant={resume || unfinished ? "primary" : "secondary"} onClick={() => setPlaying(target.id)} aria-label={t(namedLabel, { number })}>{t(label)}</Button>
     <LessonPlayer scope={{ groupId, courseId, accountId }} lessonId={playing} outline={outline} positions={progress.data?.positions ?? []}
       onChangeLesson={setPlaying}
-      onClose={() => {
-        setPlaying(null);
-        // The player saved the reader's steps while it was open; refresh the positions and percentages it changed, and the
-        // course recap, which a finished lesson may extend.
-        void queryClient.invalidateQueries({ queryKey: courseProgressQueryOptions(groupId, courseId).queryKey });
-        void queryClient.invalidateQueries({ queryKey: courseWordsQueryOptions(groupId, courseId).queryKey });
-      }} />
+      onClose={() => { setPlaying(null); refreshAfterPlaying(queryClient, groupId, courseId); }} />
   </Surface>;
 }

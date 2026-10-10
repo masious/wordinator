@@ -1,0 +1,27 @@
+/* Lesson progress along the top edge of the window, in the gap above the navigation island. It moves in whole steps, so the fill
+   eases between them. */
+.bar {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: var(--z-navigation);
+  height: 3px;
+  background: var(--color-wash-strong);
+  pointer-events: none;
+}
+
+.fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--color-action);
+  transform-origin: left;
+  transition: transform var(--motion-standard) var(--ease-physical), background-color var(--motion-standard);
+}
+
+.bar[data-complete] .fill {
+  background: var(--color-success);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fill { transition-duration: 1ms; }
+}

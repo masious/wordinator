@@ -90,7 +90,7 @@ export async function playLessonSpeech(page: Page, testInfo: TestInfo) {
 
   // In the player, a word plays from the step's New words panel and a line from the dialogue stage.
   await page.getByRole("link", { name: /^Back to / }).click();
-  await page.getByRole("button", { name: "Start lesson 1" }).click();
+  await page.getByRole("button", { name: "Start lesson 1", exact: true }).click();
   const player = page.getByRole("dialog");
   const panelWord = player.getByRole("region", { name: "New words" }).getByRole("button", { name: "Play pronunciation of het water" });
   await panelWord.click();

@@ -10,7 +10,7 @@ test("a new person signs up, sets up a username, and lands in the one global lib
   // Retired invitation links fall through to the ordinary signed-out entry.
   await page.goto(`/invite/${E2E_INVITATION_TOKEN}`);
   await expect(page).toHaveURL(/\/$/);
-  await expect(page.getByRole("heading", { name: "Start learning." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Practise what you need." })).toBeVisible();
 
   await page.getByLabel("Email").fill(email);
   await page.getByRole("textbox", { name: "Password" }).fill("member-password");

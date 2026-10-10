@@ -8,7 +8,7 @@
 .identity p{margin:var(--space-1) 0 0;color:var(--color-foreground-muted)}
 .actions{display:flex;gap:var(--space-2);flex-wrap:wrap;justify-content:flex-end}
 .formerList{opacity:.78}.leavePanel{padding:var(--card-inset)}
-.manageLink{font-weight:var(--weight-semibold);color:var(--color-action-text)}
+.manageLink{font-weight:var(--weight-semibold);color:var(--color-foreground)}
 .upload{display:grid;gap:var(--space-4);padding:var(--space-4);background:var(--color-muted);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-inset-highlight)}
 .widePreview{flex:none;width:8rem;aspect-ratio:2/1;overflow:hidden;background:var(--color-muted);border:var(--ring-hairline);border-radius:var(--radius-md)}.widePreview img{display:block;width:100%;height:100%;object-fit:cover}
 .preview{display:flex;align-items:center;gap:var(--space-4);padding-bottom:var(--space-4);border-bottom:1px solid var(--color-separator)}.preview span{max-width:32rem;color:var(--color-foreground-muted);font-size:var(--type-metadata)}

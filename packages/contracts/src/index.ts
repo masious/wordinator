@@ -455,10 +455,12 @@ export type LessonInput = z.input<typeof lessonInputSchema>;
 export const reorderRequestSchema = z.object({ ids: z.array(opaqueIdSchema).max(COURSE_LESSONS_MAX) });
 
 export const editorRefSchema = z.object({ id: opaqueIdSchema, displayName: z.string() });
-// Learners receive practice prompts only. Authors' versions and item notes travel separately as the reference, which editors
-// receive with the draft and everyone else receives only with the revealed answer thread.
+// Learners receive each published practice item's prompt and author's version, so the answer check runs on their device
+// (docs/courses.md#practice-answers). The client never renders a version before a check misses: that concealment prevents
+// accidental spoilers and is not authorization. Item notes stay in the reference, which only editors receive with the draft.
 export const learnerPracticePayloadSchema = z.object({
-  instruction: z.string(), passage: z.object({ title: z.string().nullable(), content: z.string() }).nullable(), items: z.array(z.object({ prompt: z.string() })),
+  instruction: z.string(), passage: z.object({ title: z.string().nullable(), content: z.string() }).nullable(),
+  items: z.array(z.object({ prompt: z.string(), authorsVersion: z.array(z.string().nullable()) })),
 });
 export type LearnerPracticePayload = z.infer<typeof learnerPracticePayloadSchema>;
 export const practiceReferenceSchema = z.object({
@@ -467,7 +469,7 @@ export const practiceReferenceSchema = z.object({
 export type PracticeReference = z.infer<typeof practiceReferenceSchema>;
 export function splitPracticePayload(payload: PracticePayload): { payload: LearnerPracticePayload; reference: PracticeReference } {
   return {
-    payload: { instruction: payload.instruction, passage: payload.passage, items: payload.items.map((item) => ({ prompt: item.prompt })) },
+    payload: { instruction: payload.instruction, passage: payload.passage, items: payload.items.map((item) => ({ prompt: item.prompt, authorsVersion: item.authorsVersion })) },
     reference: { items: payload.items.map((item) => ({ prompt: item.prompt, authorsVersion: item.authorsVersion, note: item.note })) },
   };
 }
@@ -475,6 +477,9 @@ export function splitPracticePayload(payload: PracticePayload): { payload: Learn
 export const courseLessonSummarySchema = z.object({
   id: opaqueIdSchema, slug: slugSchema, position: z.number().int().nonnegative(), title: z.string(), goal: z.string().nullable(),
   published: z.boolean(), publishedAt: z.number().int().nullable(), changed: z.boolean(), updatedBy: editorRefSchema, updatedAt: z.number().int(),
+  // The published document's new words and practices, so the course page offers Review words and Practise again only where they
+  // exist. Both are 0 for an unpublished lesson.
+  wordCount: z.number().int().nonnegative(), practiceCount: z.number().int().nonnegative(),
 });
 export type CourseLessonSummary = z.infer<typeof courseLessonSummarySchema>;
 // Resolves a course (and optionally a lesson) URL segment, either a slug or a legacy ID, to IDs and canonical slugs.
@@ -498,18 +503,22 @@ export const practiceProgressSchema = z.object({
 export type PracticeProgress = z.infer<typeof practiceProgressSchema>;
 export const practiceProgressResponseSchema = z.object({ progress: practiceProgressSchema });
 
-// A sentence has many valid translations, so a check never says an answer is wrong. A match is confirmed; a miss returns the
-// item's author's version as a reference, or null when the item has none.
-export const practiceCheckRequestSchema = z.object({ item: z.number().int().nonnegative().max(COURSE_PRACTICE_ITEMS_MAX - 1), answer: z.string().max(RESPONSE_ANSWER_MAX) });
-export type PracticeCheckRequest = z.input<typeof practiceCheckRequestSchema>;
-export const practiceCheckResponseSchema = z.object({ match: z.boolean(), authorsVersion: z.array(z.string().nullable()).nullable() });
-export type PracticeCheckResponse = z.infer<typeof practiceCheckResponseSchema>;
+// A sentence has many valid translations, so a check never says an answer is wrong: a match is confirmed and a miss shows the
+// item's author's version as a reference. The client and any server code share these functions, so matching cannot diverge.
 // Case, punctuation, quote style, and spacing are ignored.
-const normalizeAnswer = (value: string) => value.normalize("NFKC").toLowerCase().replace(/[\p{P}\p{S}]+/gu, " ").replace(/\s+/g, " ").trim();
-// A fill-in answer matches either the blanks' words in order or the whole prompt with its blanks filled.
-export function answerMatches(item: { prompt: string; authorsVersion: (string | null)[] }, answer: string): boolean {
+export const normalizeAnswer = (value: string) => value.normalize("NFKC").toLowerCase().replace(/[\p{P}\p{S}]+/gu, " ").replace(/\s+/g, " ").trim();
+// An item can be checked only when every entry of its author's version is filled.
+export const hasAuthorsVersion = (item: { authorsVersion: readonly (string | null)[] }) =>
+  item.authorsVersion.length > 0 && item.authorsVersion.every((entry) => entry !== null);
+// One blank of a fill-in item against its own author's entry; a blank without an entry never matches.
+export function blankMatches(entry: string | null | undefined, answer: string): boolean {
   const given = normalizeAnswer(answer);
-  if (!given || !item.authorsVersion.length || item.authorsVersion.some((entry) => entry === null)) return false;
+  return Boolean(given && entry && normalizeAnswer(entry) === given);
+}
+// A fill-in answer matches either the blanks' words in order or the whole prompt with its blanks filled.
+export function answerMatches(item: { prompt: string; authorsVersion: readonly (string | null)[] }, answer: string): boolean {
+  const given = normalizeAnswer(answer);
+  if (!given || !hasAuthorsVersion(item)) return false;
   const entries = item.authorsVersion as string[];
   const candidates = [entries.join(" ")];
   if (countBlanks(item.prompt)) { let blank = 0; candidates.push(item.prompt.replace(/…/g, () => entries[blank++] ?? "")); }

@@ -27,7 +27,7 @@
 .turns li>:last-child:not(.line){align-self:center}
 .playDialogueWrap{position:relative;justify-self:start}
 .playDialogue{display:inline-flex;align-items:center;gap:var(--space-2);min-height:var(--touch-target);margin-block:calc((var(--touch-target) - 1lh) / -2);padding:0;background:none;border:0;color:var(--color-foreground-muted);font:inherit;font-size:var(--type-metadata);font-weight:var(--weight-semibold);cursor:pointer}
-.playDialogue:hover{color:var(--color-action-text)}
+.playDialogue:hover{color:var(--color-foreground)}
 .playDialogue:focus-visible{outline:var(--border-strong);outline-offset:2px;border-radius:var(--radius-sm)}
 .playIcon{width:var(--size-icon-control);height:var(--size-icon-control);stroke-width:1.5}
 .spoken{display:flex;align-items:center;gap:var(--space-2);margin:0;min-width:0}

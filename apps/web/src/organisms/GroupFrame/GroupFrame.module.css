@@ -2,9 +2,9 @@
   padding-bottom: var(--mobile-dock-clearance);
 }
 
+/* The header scrolls away with the page; it is not pinned. It keeps its stacking level so its menus open above the content. */
 .topbar {
-  position: sticky;
-  top: 0;
+  position: relative;
   z-index: var(--z-navigation);
   padding: var(--navigation-offset) var(--page-gutter) 0;
   pointer-events: none;
@@ -14,7 +14,7 @@
 .navIsland {
   width: min(100%, var(--width-shell));
   margin-inline: auto;
-  padding: 6px;
+  padding: var(--space-1);
   background: var(--color-bezel);
   border: var(--ring-hairline);
   border-radius: var(--radius-shell);
@@ -27,7 +27,7 @@
   justify-content: space-between;
   gap: var(--space-3);
   min-height: var(--navigation-height);
-  padding: var(--space-2);
+  padding: var(--space-1) var(--space-2);
   background: var(--color-navigation-glass);
   border: var(--ring-hairline);
   border-radius: var(--radius-core);
@@ -41,7 +41,7 @@
   padding-inline: var(--space-2);
   color: var(--color-foreground);
   font-family: var(--font-display);
-  font-size: var(--text-xl);
+  font-size: var(--text-lg);
   font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-title);
   text-decoration: none;
@@ -227,7 +227,7 @@
   gap: var(--space-6);
   width: min(calc(100% - (var(--page-gutter) * 2)), var(--width-shell));
   margin: 0 auto;
-  padding: var(--space-8) 0 var(--space-10);
+  padding: var(--shell-clearance) 0 var(--space-10);
   animation: wordinator-enter var(--motion-reveal) var(--ease-physical) both;
 }
 .shellMain h2 {

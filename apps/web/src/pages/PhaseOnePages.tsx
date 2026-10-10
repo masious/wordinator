@@ -28,13 +28,28 @@ function MutationError({ error }: { error: Error | null }) {
   return <p className={styles.formError} role="alert">{message}</p>;
 }
 
-function AuthCard({ children, eyebrow, title, intro }: { children: ReactNode; eyebrow: string; title: string; intro: string }) {
+function AuthCard({ children, eyebrow, title, intro, story }: { children: ReactNode; eyebrow: string; title: string; intro: string; story?: ReactNode }) {
   return <main className={styles.authPage}>
     <SplitLayout className={styles.authLayout} primary={<div className={styles.authStory}>
       <LabelChip>{eyebrow}</LabelChip><h1>{title}</h1><p className={styles.intro}>{intro}</p>
-      <div aria-hidden="true" className={styles.journalMotif}><span /><span /><span /></div>
+      {story ?? <div aria-hidden="true" className={styles.journalMotif}><span /><span /><span /></div>}
     </div>} secondary={<Surface className={styles.authCard} tone="featured">{children}</Surface>} />
   </main>;
+}
+
+const practiceFocusAreas = ["grammar", "vocabulary", "listening", "progress"] as const;
+
+function PracticeFocus() {
+  const { t } = useTranslation();
+  return <section className={styles.focus} aria-labelledby="home-focus-title">
+    <h2 id="home-focus-title" className={styles.focusTitle}>{t("home.focusTitle")}</h2>
+    <ul className={styles.focusList}>
+      {practiceFocusAreas.map((area) => <li key={area} className={styles.focusItem}>
+        <span className={styles.focusName}>{t(`home.focus.${area}.title`)}</span>
+        <span className={styles.focusDetail}>{t(`home.focus.${area}.detail`)}</span>
+      </li>)}
+    </ul>
+  </section>;
 }
 
 function LoginForm({ afterSignIn }: { afterSignIn?: () => void }) {
@@ -160,7 +175,7 @@ export function HomePage() {
   }, [navigate, session.data]);
   if (session.isPending) return <main className={styles.center}><LoadingState label={t("common.loading")} /></main>;
   if (session.isError) return <main className={styles.center}><ErrorState title={t("common.loadError")}>{t("errors.generic")}</ErrorState></main>;
-  if (session.data.status === "signedOut") return <AuthCard eyebrow={t("eyebrow")} title={authMode === "signup" ? t("auth.signupTitle") : t("auth.welcomeTitle")} intro={authMode === "signup" ? t("auth.signupIntro") : t("auth.welcomeIntro")}>
+  if (session.data.status === "signedOut") return <AuthCard eyebrow={t("home.eyebrow")} story={<PracticeFocus />} title={authMode === "signup" ? t("auth.signupTitle") : t("auth.welcomeTitle")} intro={authMode === "signup" ? t("auth.signupIntro") : t("auth.welcomeIntro")}>
     {authMode === "signup" ? <SignupForm onSignIn={() => setAuthMode("signin")} /> : <><LoginForm /><Button variant="quiet" onClick={() => setAuthMode("signup")}>{t("auth.needAccount")}</Button></>}
   </AuthCard>;
   if (session.data.user.mustChangePassword) return <ForcePasswordChange />;

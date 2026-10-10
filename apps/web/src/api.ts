@@ -1,5 +1,5 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
-import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkPageSchema } from "@wordinator/contracts/lesson-document";
+import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkPageSchema, wordSearchPageSchema } from "@wordinator/contracts/lesson-document";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 export class ApiError extends Error {
@@ -156,6 +156,17 @@ export const wordBookmarksQueryOptions = (groupId: string) => infiniteQueryOptio
   initialPageParam: undefined as string | undefined,
   queryFn: ({ pageParam }) => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/word-bookmarks?limit=100${pageParam ? `&cursor=${encodeURIComponent(pageParam)}` : ""}`, wordBookmarkPageSchema),
   getNextPageParam: (page) => page.nextCursor ?? undefined,
+});
+
+// Library word search (New words panel): published words of visible courses matching the query, twenty at a time.
+export const wordSearchQueryOptions = (groupId: string, query: string) => infiniteQueryOptions({
+  queryKey: ["word-search", groupId, query] as const,
+  initialPageParam: undefined as string | undefined,
+  queryFn: ({ pageParam, signal }) => apiRequest(
+    `/api/groups/${encodeURIComponent(groupId)}/word-search?q=${encodeURIComponent(query)}${pageParam ? `&cursor=${encodeURIComponent(pageParam)}` : ""}`, wordSearchPageSchema, { signal },
+  ),
+  getNextPageParam: (page) => page.nextCursor ?? undefined,
+  retry: false,
 });
 
 export const lessonQueryOptions = (groupId: string, courseId: string, lessonId: string) => queryOptions({

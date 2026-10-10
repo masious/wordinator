@@ -18,7 +18,7 @@ import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/Word
 import { runWords, WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import styles from "./LessonPlayer.module.css";
-import { AnswerField, type AnswerSubmit, practiceDraftKey, practiceFromBlock, readAnswers, storeAnswers, usePracticeProgress, type Practice } from "./PracticeBlock";
+import { AnswerField, type AnswerSubmit, PracticePosition, practiceDraftKey, practiceFromBlock, readAnswers, storeAnswers, usePracticeProgress, type Practice } from "./PracticeBlock";
 
 // Readers play the published document. Editors preview the draft of a lesson that is not published yet; previews never count.
 export const playableDocument = (lesson: CourseLesson) => lesson.document ?? lesson.draft?.document ?? null;
@@ -42,30 +42,30 @@ function ExampleStep({ block }: { block: LessonBlockOf<"example"> }) {
   </>} />;
 }
 
-// The instruction, reading passage, and prompt of one practice item, without the answer field.
+// The practice's position bar, instruction, reading passage, and prompt of one practice item, without the answer field.
 export function QuestionPrompt({ block, item }: { block: Practice; item: number }) {
   const { t } = useTranslation(); const { payload } = block;
   return <>
+    <PracticePosition current={item + 1} total={payload.items.length} />
     <p className={styles.instruction}><PlainText>{payload.instruction}</PlainText></p>
     {payload.passage && <details className={styles.passage} open={item === 0}>
       <summary>{payload.passage.title ?? t("courses.practice.passage")}</summary>
       <p><PlainText>{payload.passage.content}</PlainText></p>
     </details>}
-    <p className={styles.counter}>{t("courses.player.question", { current: item + 1, total: payload.items.length })}</p>
     <p className={styles.prompt}><PlainText>{payload.items[item]!.prompt}</PlainText></p>
   </>;
 }
 
 // Answers share the practice block's local draft, so a set started here can be finished in the lesson view and the reverse.
-function QuestionStep({ scope, lessonId, block, item, answers, onAnswer, onNext, submitRef }: {
-  scope: PlayerScope; lessonId: string; block: Practice; item: number; answers: string[]; onAnswer: (value: string) => void;
+function QuestionStep({ block, item, answers, onAnswer, onNext, submitRef }: {
+  block: Practice; item: number; answers: string[]; onAnswer: (value: string) => void;
   onNext: () => void; submitRef: AnswerSubmit;
 }) {
   const { t } = useTranslation();
   const { payload } = block;
   return <div className={styles.question}>
     <QuestionPrompt block={block} item={item} />
-    <AnswerField key={item} scope={{ ...scope, lessonId }} blockId={block.id} item={item} prompt={payload.items[item]!.prompt} label={t("courses.player.yourAnswer")} description={t("courses.practice.enterHelp")}
+    <AnswerField key={item} question={payload.items[item]!} label={t("courses.player.yourAnswer")} description={t("courses.practice.enterHelp")}
       value={answers[item] ?? ""} minRows={2} onChange={onAnswer} onAdvance={onNext} submitRef={submitRef} />
   </div>;
 }
@@ -188,14 +188,22 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
     storeAnswers(draftKey(practice), nextAnswers);
     setAnswers((current) => ({ ...current, [practice.id]: nextAnswers }));
   };
-  // Next and Enter share one action. On a question with a filled, unchecked answer it shows the check's feedback first; the
-  // next press moves on. Enter outside a field or control acts as Next, so pressing it repeatedly walks through the lesson.
-  const answerSubmit: AnswerSubmit = useRef(null);
+  // Next and Enter share one action. On a question with a filled, unchecked answer it checks it first: a match moves on at once,
+  // a miss shows the author's version and the next press moves on. Enter outside a field or control acts as Next, so pressing it repeatedly walks through the lesson.
+  const answerSubmit: AnswerSubmit = useRef(null); const nav = useRef<HTMLDivElement>(null);
   const advance = () => setIndex((value) => value + 1);
+  // A matching answer (or Enter with nothing to check) moves on from inside the answer field; focus then follows to the next
+  // step's answer field, or to Next when the next step asks nothing, so the keyboard flow continues.
+  const stage = useRef<HTMLDivElement>(null); const focusNext = useRef(false);
+  const advanceFromAnswer = () => { focusNext.current = Boolean(stage.current?.contains(document.activeElement)); advance(); };
+  useEffect(() => {
+    if (!focusNext.current) return;
+    focusNext.current = false;
+    (stage.current?.querySelector<HTMLElement>("[data-answer-field] textarea, [data-answer-field] input") ?? nav.current?.querySelector<HTMLButtonElement>("[data-next]"))?.focus();
+  }, [index]);
   const forward = () => { if (answerSubmit.current) answerSubmit.current(); else advance(); };
   const forwardRef = useRef(forward); forwardRef.current = forward;
   // The dialog focuses its close button on opening, where Enter would close the player; start on Next instead.
-  const nav = useRef<HTMLDivElement>(null);
   useEffect(() => { nav.current?.querySelector<HTMLButtonElement>("[data-next]")?.focus(); }, []);
   useEffect(() => {
     if (finished) return;
@@ -226,11 +234,11 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
         </div>
         {reviewing && <WordRecap words={words} doneLabel={t("courses.player.backToSummary")} onDone={() => setReviewing(false)} />}
       </>
-      : <StepStage key={stageKey(step, index)} step={step} opensSection={opensSection(steps, index)} renderQuestion={(question) => {
+      : <div ref={stage} className={styles.stageSlot}><StepStage key={stageKey(step, index)} step={step} opensSection={opensSection(steps, index)} renderQuestion={(question) => {
         const practice = practiceFromBlock(question.block, lesson.practiceProgress);
-        return <QuestionStep scope={scope} lessonId={lesson.id} block={practice} item={question.itemIndex} answers={answersFor(practice)}
-          onAnswer={(value) => answer(practice, question.itemIndex, value)} onNext={advance} submitRef={answerSubmit} />;
-      }} />}
+        return <QuestionStep block={practice} item={question.itemIndex} answers={answersFor(practice)}
+          onAnswer={(value) => answer(practice, question.itemIndex, value)} onNext={advanceFromAnswer} submitRef={answerSubmit} />;
+      }} /></div>}
     {!finished && <div ref={nav} className={styles.nav}>
       <Button variant="quiet" disabled={index === 0} onClick={() => setIndex((value) => value - 1)}>{t("common.back")}</Button>
       <Button data-next data-autofocus onClick={forward}>{index === steps.length - 1 ? t("courses.player.finish") : t("common.next")}</Button>

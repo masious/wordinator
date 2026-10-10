@@ -20,7 +20,7 @@ test("a learner steps through a lesson, resumes it, and the course shows their p
   await page.goto(`/courses/${course.id}`);
   const progress = page.getByRole("progressbar", { name: "Course progress for", exact: false }).first();
   await expect(progress).toHaveAttribute("aria-valuenow", "0");
-  await page.getByRole("button", { name: "Start lesson 1" }).click();
+  await page.getByRole("button", { name: "Start lesson 1", exact: true }).click();
 
   const player = page.getByRole("dialog");
   await expect(player.getByText("Step 1 of 4")).toBeVisible();
@@ -37,7 +37,7 @@ test("a learner steps through a lesson, resumes it, and the course shows their p
   await expect(page.getByRole("heading", { name: "Pick up where you left off" })).toBeVisible();
   await expect(page.getByRole("progressbar", { name: "Your course progress" })).toHaveAttribute("aria-valuenow", "25");
   await expect(progress).toHaveAttribute("aria-valuenow", "25");
-  await page.getByRole("button", { name: "Continue lesson 1" }).click();
+  await page.getByRole("button", { name: "Continue lesson 1", exact: true }).click();
   await expect(player.getByText("Step 3 of 4")).toBeVisible();
   await expect(player.getByText("Picked up where you left off.")).toBeVisible();
   await player.getByRole("button", { name: "Next" }).click();
@@ -52,7 +52,7 @@ test("a learner steps through a lesson, resumes it, and the course shows their p
   await expect(player.getByText("You have finished 1 of 2 lessons (50%).")).toBeVisible();
   await player.getByRole("button", { name: "Back to the course" }).click();
   // The single course action moves on to the next unfinished lesson.
-  await expect(page.getByRole("button", { name: "Start lesson 2" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Start lesson 2", exact: true })).toBeVisible();
   await expect(page.getByText("1 of 2 lessons")).toBeVisible();
 
   // The answer typed in the player stays as the practice draft on the lesson page.

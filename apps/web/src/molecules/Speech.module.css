@@ -1,7 +1,7 @@
 .wrap{position:relative;display:inline-flex;flex:none;vertical-align:middle}
 /* A compact icon with a full touch target: negative margins keep the row as tall as its text, like the bookmark toggle. */
 .button{display:inline-grid;place-items:center;min-width:var(--touch-target);min-height:var(--touch-target);margin:calc((var(--touch-target) - 1.5rem) / -2);padding:0;color:var(--color-foreground-muted);background:none;border:0;border-radius:var(--radius-pill);cursor:pointer;transition:color var(--motion-press) var(--ease-physical),transform var(--motion-press) var(--ease-physical)}
-.button:hover{color:var(--color-action-text)}
+.button:hover{color:var(--color-foreground)}
 .button:active{transform:scale(.92)}
 .button:focus-visible{outline:var(--border-strong);outline-offset:-4px}
 .button[aria-pressed="true"]{color:var(--color-action)}

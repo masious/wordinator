@@ -31,7 +31,7 @@ test("a learner sees new words on the steps that introduce them and reviews them
   await expect(page.getByRole("region", { name: "New words" })).toHaveCount(0);
   await page.getByRole("link", { name: /^Back to / }).click();
 
-  await page.getByRole("button", { name: "Start lesson 1" }).click();
+  await page.getByRole("button", { name: "Start lesson 1", exact: true }).click();
   const player = page.getByRole("dialog");
   const panel = player.getByRole("region", { name: "New words" });
   await expect(player.getByText("Step 1 of 4")).toBeVisible();

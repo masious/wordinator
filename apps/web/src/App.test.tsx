@@ -1,7 +1,7 @@
 import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { RouterProvider } from "@tanstack/react-router";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import "./i18n";
 import { queryClient as routerQueryClient } from "./query";
@@ -18,7 +18,9 @@ describe("Phase 1 application entry", () => {
   it("offers immediate account creation with sign-in as the alternate path", async () => {
     const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
     render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
-    expect(await screen.findByRole("heading", { name: "Start learning." })).toBeVisible();
+    expect(await screen.findByRole("heading", { name: "Practise what you need." })).toBeVisible();
+    const focus = screen.getByRole("region", { name: "Choose your focus" });
+    for (const skill of ["Grammar", "Vocabulary", "Listening", "Progress"]) expect(within(focus).getByText(skill)).toBeVisible();
     expect(screen.getByRole("button", { name: "Create account" })).toBeVisible();
     expect(screen.getByRole("button", { name: "I already have an account" })).toBeVisible();
   });

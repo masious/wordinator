@@ -1,7 +1,7 @@
 .wrap{position:relative;display:inline-flex;flex:none}
 /* A compact icon with a full touch target: negative margins keep the row as tall as its text. */
 .toggle{display:inline-grid;place-items:center;min-width:var(--touch-target);min-height:var(--touch-target);margin:calc((var(--touch-target) - 1.5rem) / -2);padding:0;color:var(--color-foreground-muted);background:none;border:0;border-radius:var(--radius-pill);cursor:pointer;transition:color var(--motion-press) var(--ease-physical),transform var(--motion-press) var(--ease-physical)}
-.toggle:hover:not(:disabled){color:var(--color-action-text)}
+.toggle:hover:not(:disabled){color:var(--color-foreground)}
 .toggle:active:not(:disabled){transform:scale(.92)}
 .toggle:disabled{cursor:default;opacity:.5}
 .toggle:focus-visible{outline:var(--border-strong);outline-offset:-4px}

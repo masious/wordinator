@@ -60,3 +60,5 @@
 .practice{display:grid;gap:var(--space-4);min-width:0}
 @media(max-width:48em){.turnRow{grid-template-columns:1fr}}
 @media(max-width:64em){.withWords{grid-template-columns:minmax(0,1fr);gap:var(--space-8)}}
+.lessonMain{display:flex;align-items:center;gap:var(--space-4)}
+.lessonMain>.lessonLink{flex:1;min-width:0}

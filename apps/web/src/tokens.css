@@ -5,6 +5,8 @@
   --palette-surface: #fffaf2;
   --palette-surface-raised: #fffdf8;
   --palette-surface-muted: #eee5d8;
+  /* Resting surface of secondary controls; lifted off the card in dark mode so the pill reads as a control. */
+  --palette-surface-control: #fffdf8;
   --palette-ink: #2d2622;
   --palette-ink-muted: #6f6259;
   --palette-coral: #e9826d;
@@ -68,6 +70,7 @@
   --color-foreground-muted: var(--palette-ink-muted);
   --color-action: var(--palette-coral);
   --color-action-text: var(--palette-ink);
+  --color-control-surface: var(--palette-surface-control);
   --color-support: var(--palette-sage);
   --color-support-soft: var(--palette-sage-soft);
   --color-highlight: var(--palette-ochre);
@@ -254,8 +257,8 @@
   --page-header-block-end: var(--space-20);
   --page-header-gap: var(--space-4);
   --shell-clearance: var(--space-6);
-  --navigation-offset: var(--space-6);
-  --navigation-height: 72px;
+  --navigation-offset: var(--space-3);
+  --navigation-height: 56px;
   --mobile-dock-height: 72px;
   --mobile-dock-clearance: calc(var(--mobile-dock-height) + var(--navigation-offset) + env(safe-area-inset-bottom, 0px));
   --control-height-sm: 40px;
@@ -293,6 +296,7 @@
   --palette-surface: #251f1c;
   --palette-surface-raised: #2d2521;
   --palette-surface-muted: #38302b;
+  --palette-surface-control: #40362f;
   --palette-ink: #f6eadc;
   --palette-ink-muted: #c6b5a8;
   --palette-coral: #f09a87;
@@ -359,6 +363,7 @@
   --palette-surface: #fffaf2;
   --palette-surface-raised: #fffdf8;
   --palette-surface-muted: #eee5d8;
+  --palette-surface-control: #fffdf8;
   --palette-ink: #2d2622;
   --palette-ink-muted: #6f6259;
   --palette-coral: #e9826d;
@@ -424,9 +429,7 @@
     --page-gutter: var(--space-4);
     --section-rhythm: var(--space-10);
     --shell-clearance: var(--space-4);
-    --navigation-offset: var(--space-3);
     --card-inset: var(--space-4);
-    --navigation-height: 56px;
     --size-word-card: 12rem;
     --mobile-dock-height: 64px;
     --type-page-title: 1.75rem;

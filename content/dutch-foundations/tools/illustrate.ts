@@ -1,11 +1,10 @@
-// Story illustrations through Workers AI (FLUX.2 multi-reference). Run with apps/api/node_modules/.bin/tsx.
-// Uses wrangler's login (`wrangler login`); nothing is deployed and no database is touched.
+// Story illustrations through Azure (Microsoft Foundry) FLUX.2 [pro] with multi-reference input. Run with apps/api/node_modules/.bin/tsx.
+// Needs AZURE_FLUX_ENDPOINT and AZURE_FLUX_API_KEY, from the environment or illustrations/.dev.vars; nothing is deployed and no database is touched.
 //   sheet <castId|locationId> [--count N]          reference-sheet candidates → illustrations/candidates/sheets/
-//   freeze <castId|locationId> <candidate.png>     adopt a candidate as the frozen reference (refs/<id>.png + refs/<id>.ref.png)
-//   scene <lesson.json> <imageIdeaIndex> [--count N] [--final]   scene candidates → illustrations/candidates/<lesson>/
+//   freeze <castId|locationId> <candidate.jpg>     adopt a candidate as the frozen reference (refs/<id>.png)
+//   scene <lesson.json> <imageIdeaIndex> [--count N]   scene candidates → illustrations/candidates/<lesson>/
 import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { createRequire } from "node:module";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -13,7 +12,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..", "illustrations"
 const read = (name: string) => JSON.parse(readFileSync(join(root, name), "utf8"));
 
 type Style = {
-  model: string; finalModel: string; prompt: string; refMaxSide: number;
+  endpointPath: string; model: string; prompt: string;
   scene: { width: number; height: number }; sheet: { width: number; height: number };
 };
 type Person = { name: string; label: string; appearance: string; outfit: string };
@@ -25,7 +24,9 @@ const style: Style = read("style.json");
 const cast: Record<string, Person> = read("cast.json");
 const places: Record<string, Place> = read("locations.json");
 
-const refPath = (id: string) => join(root, "refs", `${id}.ref.png`);
+// FLUX.2 [pro] on Foundry accepts at most eight reference images.
+const maxRefs = 8;
+const refPath = (id: string) => join(root, "refs", `${id}.png`);
 
 function sheetRequest(id: string): Request {
   const person = cast[id];
@@ -41,76 +42,109 @@ function sheetRequest(id: string): Request {
   throw new Error(`unknown cast or location id: ${id}`);
 }
 
-function sceneRequest(idea: ImageIdea, final: boolean): Request {
+function sceneRequest(idea: ImageIdea): Request {
   if (!idea.location || !idea.characters?.length || !idea.action) throw new Error("imageIdea needs location, characters and action");
   const ids = [idea.location, ...idea.characters];
+  if (ids.length > maxRefs) throw new Error(`at most ${maxRefs - 1} characters per scene`);
   for (const id of ids) if (!existsSync(refPath(id))) throw new Error(`no frozen reference for ${id}; run sheet + freeze first`);
   const place = places[idea.location];
   if (!place) throw new Error(`unknown location id: ${idea.location}`);
+  // The BFL API numbers reference images from 1: the location is image 1, the characters images 2…n.
   const people = idea.characters.map((id, i) => {
     const person = cast[id];
     if (!person) throw new Error(`unknown cast id: ${id}`);
-    return `${person.name} is ${person.label} from image ${i + 1}; keep her or his face, hair, accessories and outfit exactly as in image ${i + 1}. ${person.appearance} Outfit: ${person.outfit}`;
+    return `${person.name} is ${person.label} from image ${i + 2}; keep her or his face, hair, accessories and outfit exactly as in image ${i + 2}. ${person.appearance} Outfit: ${person.outfit}`;
   });
   return {
-    model: final ? style.finalModel : style.model, ...style.scene, refs: ids.map(refPath),
-    prompt: `${style.prompt} The scene takes place in the room from image 0; keep its layout, furniture, window and colours exactly. ${place.description} ${people.join(" ")} ${idea.action} Exactly ${idea.characters.length} people in the picture; they use the room's existing furniture and nothing is added, so no extra chairs or objects; shown from the knees up or full body, same flat cartoon style as the reference images.`,
+    model: style.model, ...style.scene, refs: ids.map(refPath),
+    prompt: `${style.prompt} The scene takes place in the room from image 1; keep its layout, furniture, window and colours exactly. ${place.description} ${people.join(" ")} ${idea.action} Exactly ${idea.characters.length} people in the picture; they use the room's existing furniture and nothing is added, so no extra chairs or objects; shown from the knees up or full body, same flat cartoon style as the reference images.`,
   };
 }
 
-async function run(request: Request, outDir: string, stem: string, count: number) {
-  // ILLUSTRATE_WRANGLER_DIR points at a directory with a newer wrangler when the workspace one cannot open a remote session.
-  const require = createRequire(join(process.env.ILLUSTRATE_WRANGLER_DIR ?? join(root, "..", "..", "..", "apps", "api"), "package.json"));
-  const { getPlatformProxy } = require("wrangler") as typeof import("wrangler");
-  const proxy = await getPlatformProxy<{ AI: Ai }>({ configPath: join(root, "wrangler.jsonc") });
-  mkdirSync(outDir, { recursive: true });
-  try {
-    // Continue numbering after earlier candidates so a rerun never overwrites them.
-    let n = 1;
-    while (existsSync(join(outDir, `${stem}-${n}.json`))) n++;
-    for (const last = n + count - 1; n <= last; n++) {
-      const seed = Math.floor(Math.random() * 2 ** 31);
-      const form = new FormData();
-      form.append("prompt", request.prompt);
-      form.append("width", String(request.width));
-      form.append("height", String(request.height));
-      form.append("seed", String(seed));
-      for (const [i, path] of request.refs.entries()) {
-        form.append(`input_image_${i}`, new Blob([readFileSync(path)], { type: "image/png" }), basename(path));
+function credentials() {
+  const vars = join(root, ".dev.vars");
+  if (existsSync(vars)) process.loadEnvFile(vars);
+  const endpoint = process.env.AZURE_FLUX_ENDPOINT?.replace(/\/+$/, "");
+  const key = process.env.AZURE_FLUX_API_KEY;
+  if (!endpoint || !key) throw new Error(`set AZURE_FLUX_ENDPOINT and AZURE_FLUX_API_KEY (environment or ${vars})`);
+  return { endpoint, key };
+}
+
+async function download(url: string) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`image download failed: ${response.status}`);
+  return Buffer.from(await response.arrayBuffer());
+}
+
+type Result = {
+  data?: { b64_json?: string; url?: string }[];
+  result?: { sample?: string };
+  polling_url?: string;
+  status?: string;
+};
+
+// The response is either synchronous (base64 or a URL) or a BFL-style job with a polling URL.
+async function imageFrom(result: Result, key: string): Promise<Buffer> {
+  const item = result.data?.[0];
+  if (item?.b64_json) return Buffer.from(item.b64_json, "base64");
+  if (item?.url) return download(item.url);
+  if (result.result?.sample) return download(result.result.sample);
+  if (result.polling_url) {
+    for (let attempt = 0; attempt < 120; attempt++) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await fetch(result.polling_url, { headers: { Authorization: `Bearer ${key}` } });
+      if (!response.ok) throw new Error(`polling failed: ${response.status} ${(await response.text()).slice(0, 300)}`);
+      const job = await response.json() as Result;
+      if (job.status === "Ready" && job.result?.sample) return download(job.result.sample);
+      if (job.status && !["Pending", "Processing", "Queued", "Task not found"].includes(job.status)) {
+        throw new Error(`generation ended with status ${job.status}: ${JSON.stringify(job).slice(0, 300)}`);
       }
-      // Serializing through Response gives the multipart body and its boundary header.
-      const body = new Response(form);
-      const started = Date.now();
-      const result = await proxy.env.AI.run(request.model as keyof AiModels, {
-        multipart: { body: body.body, contentType: body.headers.get("content-type") ?? "multipart/form-data" },
-      } as never) as { image?: string };
-      if (!result?.image) throw new Error(`no image in response: ${JSON.stringify(result).slice(0, 300)}`);
-      const image = Buffer.from(result.image, "base64");
-      const extension = image[0] === 0xff && image[1] === 0xd8 ? "jpg" : "png";
-      const file = join(outDir, `${stem}-${n}.${extension}`);
-      writeFileSync(file, image);
-      writeFileSync(join(outDir, `${stem}-${n}.json`), `${JSON.stringify({ ...request, seed }, null, 2)}\n`);
-      console.log(`${file} (${((Date.now() - started) / 1000).toFixed(1)} s)`);
     }
-  } finally {
-    await proxy.dispose();
+    throw new Error("generation timed out");
+  }
+  throw new Error(`no image in response: ${JSON.stringify(result).slice(0, 300)}`);
+}
+
+async function run(request: Request, outDir: string, stem: string, count: number) {
+  const { endpoint, key } = credentials();
+  mkdirSync(outDir, { recursive: true });
+  const images = request.refs.map((path) => readFileSync(path).toString("base64"));
+  // Continue numbering after earlier candidates so a rerun never overwrites them.
+  let n = 1;
+  while (existsSync(join(outDir, `${stem}-${n}.json`))) n++;
+  for (const last = n + count - 1; n <= last; n++) {
+    const seed = Math.floor(Math.random() * 2 ** 31);
+    const body: Record<string, unknown> = {
+      model: request.model, prompt: request.prompt, width: request.width, height: request.height,
+      seed, output_format: "jpeg",
+    };
+    for (const [i, image] of images.entries()) body[i === 0 ? "input_image" : `input_image_${i + 1}`] = image;
+    const started = Date.now();
+    const response = await fetch(`${endpoint}${style.endpointPath}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
+      body: JSON.stringify(body),
+    });
+    if (!response.ok) throw new Error(`request failed: ${response.status} ${(await response.text()).slice(0, 500)}`);
+    const image = await imageFrom(await response.json() as Result, key);
+    const extension = image[0] === 0xff && image[1] === 0xd8 ? "jpg" : "png";
+    const file = join(outDir, `${stem}-${n}.${extension}`);
+    writeFileSync(file, image);
+    writeFileSync(join(outDir, `${stem}-${n}.json`), `${JSON.stringify({ ...request, seed }, null, 2)}\n`);
+    console.log(`${file} (${((Date.now() - started) / 1000).toFixed(1)} s)`);
   }
 }
 
 function freeze(id: string, candidate: string) {
   if (!cast[id] && !places[id]) throw new Error(`unknown cast or location id: ${id}`);
   mkdirSync(join(root, "refs"), { recursive: true });
-  const full = join(root, "refs", `${id}.png`);
-  execFileSync("sips", ["-s", "format", "png", candidate, "--out", full], { stdio: "ignore" });
+  execFileSync("sips", ["-s", "format", "png", candidate, "--out", refPath(id)], { stdio: "ignore" });
   copyFileSync(candidate.replace(/\.(jpg|png)$/, ".json"), join(root, "refs", `${id}.json`));
-  // FLUX.2 on Workers AI requires reference images smaller than 512×512.
-  execFileSync("sips", ["-s", "format", "png", "-Z", String(style.refMaxSide), full, "--out", refPath(id)], { stdio: "ignore" });
-  console.log(`froze ${id}: ${full}, ${refPath(id)}`);
+  console.log(`froze ${id}: ${refPath(id)}`);
 }
 
 async function main() {
   const [command, ...args] = process.argv.slice(2);
-  const flag = (name: string) => args.includes(name);
   const option = (name: string, fallback: number) => {
     const i = args.indexOf(name);
     return i >= 0 ? Number(args[i + 1]) : fallback;
@@ -125,10 +159,9 @@ async function main() {
     const index = Number(args[1]);
     const idea = lesson.imageIdeas?.[index];
     if (!idea) throw new Error(`no imageIdeas[${index}] in ${args[0]}`);
-    const stem = `${index}-${flag("--final") ? "final" : "draft"}`;
-    await run(sceneRequest(idea, flag("--final")), join(root, "candidates", basename(args[0], ".json")), stem, option("--count", 3));
+    await run(sceneRequest(idea), join(root, "candidates", basename(args[0], ".json")), `${index}-pro`, option("--count", 3));
   } else {
-    console.error("usage: illustrate.ts sheet <id> [--count N] | freeze <id> <candidate.png> | scene <lesson.json> <index> [--count N] [--final]");
+    console.error("usage: illustrate.ts sheet <id> [--count N] | freeze <id> <candidate.jpg> | scene <lesson.json> <index> [--count N]");
     process.exit(1);
   }
 }

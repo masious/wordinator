@@ -21,6 +21,44 @@ async function expectNoOverflow(page: import("@playwright/test").Page) {
   await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
 }
 
+// Measures a control's text against what is actually painted behind it: its own background composited over every translucent
+// ancestor. A canvas resolves any computed color syntax (including `color-mix()` and `contrast-color()`) to sRGB pixels.
+async function renderedContrast(control: import("@playwright/test").Locator) {
+  return control.evaluate((node) => {
+    const canvas = document.createElement("canvas");
+    canvas.width = 1;
+    canvas.height = 1;
+    const context = canvas.getContext("2d", { willReadFrequently: true });
+    if (!context) return 0;
+    const layers: string[] = [];
+    for (let current: Element | null = node; current; current = current.parentElement) {
+      const background = getComputedStyle(current).backgroundColor;
+      layers.unshift(background);
+      context.clearRect(0, 0, 1, 1);
+      context.fillStyle = background;
+      context.fillRect(0, 0, 1, 1);
+      if (context.getImageData(0, 0, 1, 1).data[3] === 255) break;
+    }
+    const paint = (colors: string[]) => {
+      context.fillStyle = "#fff";
+      context.fillRect(0, 0, 1, 1);
+      for (const color of colors) {
+        context.fillStyle = color;
+        context.fillRect(0, 0, 1, 1);
+      }
+      const [red, green, blue] = context.getImageData(0, 0, 1, 1).data;
+      const linear = [red, green, blue].map((channel) => {
+        const normalized = channel / 255;
+        return normalized <= 0.04045 ? normalized / 12.92 : ((normalized + 0.055) / 1.055) ** 2.4;
+      });
+      return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
+    };
+    const background = paint(layers);
+    const foreground = paint([...layers, getComputedStyle(node).color]);
+    return (Math.max(foreground, background) + 0.05) / (Math.min(foreground, background) + 0.05);
+  });
+}
+
 test("system resolves before application startup and follows operating-system changes", async ({ page }) => {
   await page.emulateMedia({ colorScheme: "dark" });
   await page.goto("/ui");
@@ -130,6 +168,20 @@ test("semantic contrast, focus, forced colors, and media treatment remain safe",
     expect(ratios.danger).toBeGreaterThanOrEqual(4.5);
     expect(ratios.selected).toBeGreaterThanOrEqual(4.5);
     expect(ratios.focus).toBeGreaterThanOrEqual(3);
+  }
+
+  const buttons = ["Primary", "Secondary", "Quiet", "Delete", "Favorite"];
+  for (const scheme of ["light", "dark"] as const) {
+    await setPreference(page, scheme);
+    await page.goto(`/ui?buttons=${scheme}`, { waitUntil: "networkidle" });
+    for (const name of buttons) {
+      const button = page.getByRole("button", { name, exact: true }).first();
+      await page.mouse.move(0, 0);
+      expect.soft(await renderedContrast(button), `${scheme} ${name}`).toBeGreaterThanOrEqual(4.5);
+      await button.hover();
+      await page.waitForTimeout(400);
+      expect.soft(await renderedContrast(button), `${scheme} ${name} hover`).toBeGreaterThanOrEqual(4.5);
+    }
   }
 
   await page.emulateMedia({ forcedColors: "active", reducedMotion: "reduce" });

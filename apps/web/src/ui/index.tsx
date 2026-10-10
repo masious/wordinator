@@ -196,7 +196,7 @@ export function AdaptiveDialog({ dock, ...props }: ModalProps & { dock?: RefObje
   const narrow = useMediaQuery("(max-width: 48em)");
   const wide = useMediaQuery("(min-width: 64em)");
   const docked = useDockFrame(dock && wide ? dock : null, props.opened);
-  if (docked) return <Dialog centered={false} radius="xl" size={docked.width} yOffset="calc(var(--navigation-height) + (var(--navigation-offset) * 2))" withOverlay={false} trapFocus={false} lockScroll={false} closeOnClickOutside={false}
+  if (docked) return <Dialog centered={false} radius="xl" size={docked.width} yOffset="var(--navigation-offset)" withOverlay={false} trapFocus={false} lockScroll={false} closeOnClickOutside={false}
     classNames={{ inner: styles.dialogDocked }} styles={{ inner: { paddingInlineStart: docked.left } }} {...props} />;
   // The theme's content border and shadow are inline styles, so only a styles prop can drop them from the full-screen sheet.
   return <Dialog centered={!narrow} fullScreen={narrow} radius={narrow ? 0 : "xl"} size="var(--width-modal)" styles={narrow ? { content: { border: 0, boxShadow: "none" } } : undefined} {...props} />;

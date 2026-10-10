@@ -6,7 +6,7 @@ Words builds on [new words and recap](courses.md#new-words-and-recap). Lessons d
 
 ## Word cards
 
-C9a replaces the one-card recap slideshow with a page of cards. Every surface that reviews words uses it: the lesson recap, the course recap, and the Words tab.
+C9a replaces the one-card recap slideshow with a page of cards. Every surface that reviews words uses it: the lesson recap, a lesson's [Review words](courses.md#lesson-actions) on the course page, the course recap, and the Words tab.
 
 - **Page size.** Cards have a fixed height. Columns follow the width available to the grid: one below `40em`, then as many cards of the minimum card width as fit, at most three. Rows are as many full cards as fit in the height available to the grid without scrolling the page, at least one. A page holds columns × rows cards. Resizing recomputes it and keeps the page that holds the first visible word.
 - **Navigation.** The counter shows the range and total ("Words 1–6 of 40", or "Word 3 of 40" for a single card). Back and Next move by a page. On the last page of a recap, Next becomes the recap's done action; the Words tab has no done action.
@@ -40,6 +40,17 @@ C9c adds a Words destination to the main navigation at `/groups/$groupId/words`.
 - With no bookmarks, the page explains how to bookmark a word from a lesson.
 - There is no review scheduling, score, "known" state, or streak. The tab is not called "Practice", which already means practice blocks.
 
+## Word search
+
+The lesson page's [New words panel](courses.md#lesson-pages) has a search box above its words and a switch between This lesson and Library.
+
+- **Folding.** Both modes compare search keys from `wordSearchKey` in the contracts: lower case, diacritics removed by Unicode decomposition, `ß` as `ss`, and runs of whitespace as one space, so `uber` finds `Über`. A query matches when its key is a substring of the key of a word's term, forms, or meaning.
+- **This lesson** (the default) filters the panel's own words in the browser; nothing is requested. Highlighting and scrolling to the words on screen keep working on the filtered list, and an empty result says that no word in the lesson matches.
+- **Library** searches the words of every published lesson the viewer may see, across courses, through the API. Requests wait until typing pauses for 300 ms (`WORD_SEARCH_DEBOUNCE_MS`) and are cached by TanStack Query per query. Matches come twenty at a time with Show more matches. Each match shows its term, forms, meaning, and pronunciation button, and a book icon whose tooltip names the course and lesson that introduced the word and which links to that lesson's page. With an empty query the panel explains what Library searches; while it searches, after a failure, and with no match it says so.
+- **Order.** Terms that start with the query come first, then terms that contain it, then words that match only by forms or meaning; each group by term key, then lesson and word ID.
+- **Visibility.** Library search returns only words of published lessons (the [word index](data-model.md#course_lesson_words) holds nothing else) in courses the viewer can see under the course read rules, and never from archived courses, not even for their owner. Draft courses show to their owner and active contributors only.
+- Search does not record anything, rank by popularity, or remember queries. The same term in two lessons is two matches.
+
 ## API
 
 All routes run after the group middleware, prove active membership, and scope every ID by `group_id`. Courses and lessons the viewer may not see return the same `404` as missing ones.
@@ -49,5 +60,6 @@ All routes run after the group middleware, prove active membership, and scope ev
 - `GET /groups/:groupId/word-bookmarks/keys` returns `{ keys: [{ lessonId, wordId }] }`, every bookmark key of the viewer in the group (bounded by the limit). The web keeps it as one query that marks toggles on every surface and updates it optimistically.
 - `GET /groups/:groupId/word-bookmarks?cursor=` returns the visible bookmarks, newest first, with the word, course and lesson IDs and titles, and the bookmark time, as `(created_at, lesson_id, word_id)` cursor pages.
 - The course words response gains each word's `lessonId` so the course recap can toggle bookmarks.
+- `GET /groups/:groupId/word-search?q=&cursor=&limit=` ([word search](#word-search)) returns `{ items: [{ word, course: { id, slug, title }, lesson: { id, slug, title } }], nextCursor }` (`wordSearchPageSchema`). `q` is 1–100 characters after trimming (`WORD_SEARCH_QUERY_MAX`), `limit` defaults to 20 and is at most 50 (`WORD_SEARCH_PAGE_MAX`); otherwise `400 INVALID_SEARCH`. A query whose key is empty returns no matches. The cursor names the last word returned (`400 INVALID_CURSOR` when malformed); a page after a word that no longer matches is empty.
 
 Data lives in [`course_word_bookmarks`](data-model.md#course_word_bookmarks).

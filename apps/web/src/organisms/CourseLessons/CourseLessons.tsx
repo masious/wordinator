@@ -14,8 +14,11 @@ import { LessonDocument } from "../LessonDocument/LessonDocument";
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import { WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
-import { lessonSteps, playableDocument } from "./LessonPlayer";
+import { refreshAfterPlaying } from "./CourseResume";
+import { LessonActions } from "./LessonActions";
+import { LessonPlayer, lessonSteps, playableDocument } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
+import { LessonReadingProgress, type ReadingTracking } from "./LessonReadingProgress";
 import { LessonWords, useVisibleWords } from "./LessonWords";
 import { practiceFromBlock, PracticeSummary } from "./PracticeBlock";
 
@@ -44,7 +47,7 @@ function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" 
 // Readers see the published document. Editors of a lesson that is not published yet see its draft, marked as a preview. A practice
 // shows only its first prompts; its answer set opens in a dialog that, beside the words panel, sits over the text. New words are
 // not shown in the text: the lesson's words sit in a panel beside it, where the words of the blocks on screen are highlighted.
-function LessonBody({ scope, lesson }: { scope: Scope; lesson: CourseLesson }) {
+function LessonBody({ scope, lesson, tracking }: { scope: Scope; lesson: CourseLesson; tracking: ReadingTracking }) {
   const { t } = useTranslation();
   const document = playableDocument(lesson);
   const steps = useMemo(() => lessonSteps(lesson), [lesson]);
@@ -57,13 +60,14 @@ function LessonBody({ scope, lesson }: { scope: Scope; lesson: CourseLesson }) {
   if (!document || !steps.length) return <div className={styles.body}><p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p></div>;
   const hasWords = steps.some((step) => step.words.length > 0);
   return <WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={hasWords ? styles.withWords : undefined}>
+    <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} />
     <div ref={reading} className={styles.body}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
       <LessonDocument document={document} anchored vocabulary={false} renderPractice={(block) =>
         <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.practiceProgress)}
           published={lesson.document !== null} dock={hasWords ? reading : undefined} />} />
     </div>
-    {hasWords && <LessonWords steps={steps} active={active} panelRef={panel} />}
+    {hasWords && <LessonWords steps={steps} active={active} panelRef={panel} groupId={scope.groupId} />}
   </div></SpeechScope></WordBookmarkScope>;
 }
 
@@ -81,10 +85,11 @@ function LessonForm({ initial, submitLabel, pending, error, onSubmit, onCancel }
   </form>;
 }
 
-// One entry of the course's lesson list. It links to the lesson page and reports where the reader stands; the course's single
-// resume action opens the player.
-function LessonRow({ scope, summary, number, outline, completed, position }: {
-  scope: Scope; summary: CourseLessonSummary; number: number; outline: CourseLessonSummary[]; completed: boolean; position: LessonPosition | undefined;
+// One entry of the course's lesson list. It links to the lesson page, reports where the reader stands, and offers the lesson's own
+// actions: play it, review its words, and practise again. `saved` is the viewer's saved position, also in a finished lesson.
+function LessonRow({ scope, summary, number, outline, completed, saved, archived, onPlay }: {
+  scope: Scope; summary: CourseLessonSummary; number: number; outline: CourseLessonSummary[]; completed: boolean; saved: LessonPosition | undefined;
+  archived: boolean; onPlay: (lessonId: string) => void;
 }) {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const [detailsOpen, setDetailsOpen] = useState(false); const [deleting, setDeleting] = useState(false);
@@ -109,19 +114,23 @@ function LessonRow({ scope, summary, number, outline, completed, position }: {
       await queryClient.invalidateQueries({ queryKey: courseKey });
     },
   });
+  const position = completed ? undefined : saved;
   return <li className={styles.lesson}>
-    <Link className={styles.lessonLink} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug: scope.courseSlug, lessonSlug: summary.slug }}
-      aria-label={t("courses.lessons.open", { number, title: summary.title })}>
-      <span className={styles.lessonNumber}>{completed ? <span className={styles.check} role="img" aria-label={t("courses.progress.completed")}>✓</span> : number}</span>
-      <span className={styles.lessonCopy}>
-        <span className={styles.lessonTitle}>{summary.title}</span>
-        {summary.goal && <span className={styles.goal}>{summary.goal}</span>}
-        {(completed || position) && <span className={styles.start}>
-          {completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
-          {!completed && position && <span className={styles.position}>{t("courses.player.step", { current: position.stepIndex + 1, total: position.totalSteps })}</span>}
-        </span>}
-      </span>
-    </Link>
+    <div className={styles.lessonMain}>
+      <Link className={styles.lessonLink} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug: scope.courseSlug, lessonSlug: summary.slug }}
+        aria-label={t("courses.lessons.open", { number, title: summary.title })}>
+        <span className={styles.lessonNumber}>{completed ? <span className={styles.check} role="img" aria-label={t("courses.progress.completed")}>✓</span> : number}</span>
+        <span className={styles.lessonCopy}>
+          <span className={styles.lessonTitle}>{summary.title}</span>
+          {summary.goal && <span className={styles.goal}>{summary.goal}</span>}
+          {(completed || position) && <span className={styles.start}>
+            {completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
+            {!completed && position && <span className={styles.position}>{t("courses.player.step", { current: position.stepIndex + 1, total: position.totalSteps })}</span>}
+          </span>}
+        </span>
+      </Link>
+      <LessonActions scope={scope} summary={summary} number={number} completed={completed} position={saved} archived={archived} onPlay={onPlay} />
+    </div>
     {(scope.contribute || scope.removable) && <div className={styles.blockTools}>
       <StateChips lesson={summary} />
       <div className={styles.toolButtons}>
@@ -157,8 +166,9 @@ export function CourseLessons({ groupId, courseId, accountId, detail }: { groupI
   const [addOpen, setAddOpen] = useState(false);
   const progress = useQuery(courseProgressQueryOptions(groupId, courseId));
   const completed = new Set(progress.data?.completedLessonIds ?? []);
-  // Saved steps of unfinished lessons, shown on each started lesson.
-  const positions = (progress.data?.positions ?? []).filter((entry) => !completed.has(entry.lessonId));
+  // Saved steps, shown on each started lesson and resumed by its Continue action.
+  const positions = progress.data?.positions ?? [];
+  const [playing, setPlaying] = useState<string | null>(null);
   // The course recap covers the published lessons the viewer has finished; it is offered only when they carried words.
   const wordsQuery = useQuery(courseWordsQueryOptions(groupId, courseId));
   const words = useMemo(() => wordsQuery.data?.words ?? [], [wordsQuery.data]);
@@ -184,13 +194,15 @@ export function CourseLessons({ groupId, courseId, accountId, detail }: { groupI
     </Surface>}
     {outline.length
       ? <ol className={styles.lessonList}>{outline.map((lesson, index) => <LessonRow key={lesson.id} scope={scope} summary={lesson} number={index + 1} outline={outline}
-        completed={completed.has(lesson.id)} position={positions.find((entry) => entry.lessonId === lesson.id)} />)}</ol>
+        completed={completed.has(lesson.id)} saved={positions.find((entry) => entry.lessonId === lesson.id)} archived={detail.course.status === "archived"} onPlay={setPlaying} />)}</ol>
       : <Surface tone="quiet"><EmptyState title={t("courses.noLessonsTitle")} action={addAction || undefined}>{t("courses.noLessonsBody")}</EmptyState></Surface>}
     <AdaptiveDialog opened={reviewing && words.length > 0} onClose={() => setReviewing(false)} title={t("courses.words.recapTitle")}>
       {reviewing && <WordBookmarkScope resolve={recapTarget}>
         <WordRecap words={words} doneLabel={t("courses.words.backToCourse")} onDone={() => setReviewing(false)} />
       </WordBookmarkScope>}
     </AdaptiveDialog>
+    <LessonPlayer scope={scope} lessonId={playing} outline={outline} positions={positions} onChangeLesson={setPlaying}
+      onClose={() => { setPlaying(null); refreshAfterPlaying(queryClient, groupId, courseId); }} />
     <AdaptiveDialog opened={addOpen} onClose={() => setAddOpen(false)} title={t("courses.lessons.addTitle")}>
       {addOpen && <LessonForm submitLabel={t("courses.lessons.addSubmit")} pending={create.isPending} error={create.error} onSubmit={(input) => create.mutate(input)} onCancel={() => setAddOpen(false)} />}
     </AdaptiveDialog>
@@ -241,7 +253,11 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
       : editing ? <Suspense fallback={<LoadingState label={t("courses.editor.loading")} />}>
         <LessonEditor groupId={groupId} courseId={courseId} accountId={accountId} owner={scope.owner} lesson={data} onClose={() => setEditing(false)} />
       </Suspense>
-      : <LessonBody scope={scope} lesson={data} />}
+      : <LessonBody scope={scope} lesson={data} tracking={{
+        // Scrolling saves the furthest step of a published lesson the viewer has not finished; previews and archived courses never save.
+        save: data.published && data.document !== null && !completed && detail.course.status !== "archived" && progress.isSuccess,
+        completed, position, path: `${lessonsPath(scope)}/${encodeURIComponent(lessonId)}`, groupId, courseId, lessonId,
+      }} />}
     {(previous || next) && <nav className={styles.pager} aria-label={t("courses.lessons.pager")}>
       {previous && pagerLink(previous, "courses.lessons.previous", styles.previous!)}
       {next && pagerLink(next, "courses.lessons.next", styles.next!)}

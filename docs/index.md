@@ -4,7 +4,7 @@ These files are the living specification for Wordinator. Each topic has one prim
 
 | Document | Owns |
 | --- | --- |
-| [what_is_it.md](what_is_it.md) | Purpose, audience, value, success, and business context |
+| [what_is_it.md](what_is_it.md) | Purpose, target learner (committed desktop Dutch/German learners), value, success, and business context |
 | [product-requirements.md](product-requirements.md) | Release scope, global rules, non-goals, and acceptance summary |
 | [user-flows.md](user-flows.md) | End-to-end behavior from a user’s perspective |
 | [groups-and-membership.md](groups-and-membership.md) | Retired group model and temporary storage-compatibility boundary |

@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import fixture from "../../../test/fixtures/courses/dutch-foundations-part-iii.json";
 import {
-  answerMatches, COURSE_DIALOGUE_TURNS_MAX, COURSE_PRACTICE_ITEMS_MAX, COURSE_SPEAKER_MAX, courseBlockContentSchema, courseBlockKindSchema, courseInputSchema,
+  answerMatches, blankMatches, COURSE_DIALOGUE_TURNS_MAX, COURSE_PRACTICE_ITEMS_MAX, COURSE_SPEAKER_MAX, courseBlockContentSchema, courseBlockKindSchema, courseInputSchema, hasAuthorsVersion,
   lessonInputSchema, practicePayloadSchema, practiceProgressRequestSchema, reorderRequestSchema, splitPracticePayload, updateLessonRequestSchema,
 } from ".";
 
@@ -53,11 +53,11 @@ describe("course block contracts", () => {
     expect(practice([{ prompt: "Waar?" }], { passage: { title: "", content: "Het huis is groot." } }).data?.passage).toEqual({ title: null, content: "Het huis is groot." });
   });
 
-  it("separates the learner payload from the reference", () => {
+  it("ships the author's version for the client-side check but keeps item notes in the reference", () => {
     const payload = practicePayloadSchema.parse({ instruction: "Vertaal.", items: [{ prompt: "There is a garden.", authorsVersion: ["Er is een tuin."], note: "Word order" }] });
     const split = splitPracticePayload(payload);
-    expect(split.payload).toEqual({ instruction: "Vertaal.", passage: null, items: [{ prompt: "There is a garden." }] });
-    expect(JSON.stringify(split.payload)).not.toContain("Er is een tuin.");
+    expect(split.payload).toEqual({ instruction: "Vertaal.", passage: null, items: [{ prompt: "There is a garden.", authorsVersion: ["Er is een tuin."] }] });
+    expect(JSON.stringify(split.payload)).not.toContain("Word order");
     expect(split.reference.items[0]).toEqual({ prompt: "There is a garden.", authorsVersion: ["Er is een tuin."], note: "Word order" });
   });
 
@@ -73,6 +73,17 @@ describe("course block contracts", () => {
     expect(answerMatches(fill, "Er is een kleine keuken, er zijn drie kamers.")).toBe(true);
     expect(answerMatches(fill, "er is")).toBe(false);
     expect(answerMatches({ prompt: "… een … keuken.", authorsVersion: ["Er is", null] }, "Er is")).toBe(false);
+  });
+
+  it("checks one blank against its own entry with the same normalisation", () => {
+    expect(blankMatches("Er is", "  er IS! ")).toBe(true);
+    expect(blankMatches("Er is", "Er zijn")).toBe(false);
+    expect(blankMatches("Er is", " ")).toBe(false);
+    expect(blankMatches(null, "Er is")).toBe(false);
+    expect(blankMatches(undefined, "")).toBe(false);
+    expect(hasAuthorsVersion({ authorsVersion: ["Er is"] })).toBe(true);
+    expect(hasAuthorsVersion({ authorsVersion: [] })).toBe(false);
+    expect(hasAuthorsVersion({ authorsVersion: ["Er is", null] })).toBe(false);
   });
 
   it("accepts a practice progress count within the practice item limit", () => {

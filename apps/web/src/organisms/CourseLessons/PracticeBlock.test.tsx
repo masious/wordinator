@@ -22,10 +22,10 @@ const reference = { items: [
 ] };
 const practiceBlock: LessonTopBlock = {
   id: blockId, type: "practice", children: [],
-  props: { data: JSON.stringify({ instruction: "Vul in of vertaal.", passage: null, items: reference.items.map((item) => ({ prompt: item.prompt, authorsVersion: [], note: null })) }) },
+  props: { data: JSON.stringify({ instruction: "Vul in of vertaal.", passage: null, items: reference.items.map((item) => ({ prompt: item.prompt, authorsVersion: item.authorsVersion })) }) },
 };
 const document: LessonDocument = { schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks: [practiceBlock] };
-const summary = { id: lessonId, slug: "mijn-huis", position: 0, title: "Mijn huis", goal: null, published: true, publishedAt: 1, changed: false, updatedBy: editor, updatedAt: 1 };
+const summary = { id: lessonId, slug: "mijn-huis", position: 0, title: "Mijn huis", goal: null, published: true, publishedAt: 1, changed: false, updatedBy: editor, updatedAt: 1, wordCount: 0, practiceCount: 0 };
 const detail = (): CourseDetailResponse => ({
   course: {
     id: courseId, slug: "dutch", groupId, title: "Dutch", summary: "Home", level: null, intendedLearner: null, coverUrl: null, status: "published",
@@ -52,41 +52,54 @@ beforeEach(() => {
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
     if (path === `${blockPath}/progress`) return response({ progress: { done: 3, started: 4, answered: (JSON.parse(String(init?.body)) as { answered: number }).answered } });
-    if (path === `${blockPath}/check`) {
-      const match = (JSON.parse(String(init?.body)) as { answer: string }).answer === "Er is";
-      return response({ match, authorsVersion: match ? null : ["Er is"] });
-    }
     if (path.endsWith(`/lessons/${lessonId}`)) return response({ lesson: detail().lessons[0] });
     return response({ status: "signedOut" });
   }));
 });
-afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
+// Answers are checked on the device; no request ever carries one.
+const checkRequests = () => vi.mocked(fetch).mock.calls.filter(([path]) => String(path).includes("/check"));
+afterEach(() => { expect(checkRequests()).toHaveLength(0); cleanup(); vi.unstubAllGlobals(); });
 
 describe("Practice blocks", () => {
-  it("answers a fill-in item blank by blank, moving on with Enter and checking after the last blank", async () => {
+  it("checks a fill-in item blank by blank on the device, moving on with Enter after a match", () => {
     expect(splitBlanks(joinBlanks(["Er ", ""]), 2)).toEqual(["Er ", ""]);
     expect(joinBlanks(["", " "])).toBe("");
     const onAdvance = vi.fn();
     function Field() {
       const [value, setValue] = useState("");
-      return <AnswerField scope={{ groupId, courseId, lessonId, accountId }} blockId={blockId} item={0} prompt="… een keuken, … twee kamers." label="Your answer"
+      return <AnswerField question={{ prompt: "… een keuken, … twee kamers.", authorsVersion: ["Er is", "er zijn"] }} label="Your answer"
         value={value} onChange={setValue} minRows={2} onAdvance={onAdvance} />;
     }
-    const queryClient = new QueryClient({ defaultOptions: { mutations: { retry: false } } });
-    render(<MantineProvider><QueryClientProvider client={queryClient}><Field /></QueryClientProvider></MantineProvider>);
+    render(<MantineProvider><Field /></MantineProvider>);
     expect(screen.getByRole("group", { name: "Your answer" })).toBeInTheDocument();
     const first = screen.getByLabelText("Blank 1"); const second = screen.getByLabelText("Blank 2");
     first.focus();
-    fireEvent.change(first, { target: { value: "Er is" } });
+    // A blank that misses its entry keeps focus and shows the author's version; Enter again on it moves on.
+    fireEvent.change(first, { target: { value: "Daar is" } });
+    fireEvent.keyDown(first, { key: "Enter" });
+    expect(first).toHaveFocus();
+    expect(screen.getByText("Er is · er zijn")).toBeInTheDocument();
+    fireEvent.change(first, { target: { value: "er IS" } });
     fireEvent.keyDown(first, { key: "Enter" });
     expect(second).toHaveFocus();
-    expect(vi.mocked(fetch).mock.calls.filter(([path]) => path === `${blockPath}/check`)).toHaveLength(0);
+    // The last blank checks the whole item; a match is confirmed and moves on.
     fireEvent.change(second, { target: { value: "er zijn" } });
     fireEvent.keyDown(second, { key: "Enter" });
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${blockPath}/check`, expect.objectContaining({ body: JSON.stringify({ item: 0, answer: "Er is · er zijn" }) })));
-    // Once the check settles, Enter on the unchanged answer moves on.
-    await waitFor(() => { fireEvent.keyDown(second, { key: "Enter" }); expect(onAdvance).toHaveBeenCalledTimes(1); });
-    expect(vi.mocked(fetch).mock.calls.filter(([path]) => path === `${blockPath}/check`)).toHaveLength(1);
+    expect(screen.getByText("Matches the author’s version")).toBeInTheDocument();
+    expect(onAdvance).toHaveBeenCalledTimes(1);
+  });
+
+  it("moves on at once where there is nothing to check", () => {
+    const onAdvance = vi.fn();
+    function Field() {
+      const [value, setValue] = useState("Er is een tuin.");
+      return <AnswerField question={{ prompt: "There is a garden.", authorsVersion: [] }} label="Your answer" value={value} onChange={setValue} minRows={1} onAdvance={onAdvance} />;
+    }
+    render(<MantineProvider><Field /></MantineProvider>);
+    fireEvent.keyDown(screen.getByLabelText("Your answer"), { key: "Enter" });
+    expect(onAdvance).toHaveBeenCalledTimes(1);
+    expect(screen.queryByText("Author’s version")).not.toBeInTheDocument();
+    expect(screen.queryByText("Matches the author’s version")).not.toBeInTheDocument();
   });
 
   it("lists at most three prompts on the lesson page and keeps the answer set in a closed dialog", async () => {
@@ -109,34 +122,58 @@ describe("Practice blocks", () => {
     expect(within(opened).getByRole("button", { name: "Finish later" })).toBeInTheDocument();
   });
 
-  it("checks an answer on Enter, celebrating a match and showing the author's version for a miss", async () => {
+  it("checks an answer on Enter on the device, celebrating a match and moving focus, or keeping focus to show the author's version", async () => {
     await openPractice(detail());
     const field = screen.getByLabelText(/^1\. … een kleine keuken\./);
-    const checks = () => vi.mocked(fetch).mock.calls.filter(([path]) => path === `${blockPath}/check`);
+    const second = screen.getByLabelText(/^2\. There are two bedrooms\./);
+    // The dialog opens on the first unanswered question, and no author's version shows before a check.
+    await waitFor(() => expect(field).toHaveFocus());
+    expect(screen.queryByText("Er is")).not.toBeInTheDocument();
+    expect(screen.queryByText("Er zijn twee slaapkamers.")).not.toBeInTheDocument();
     // Shift+Enter keeps a new line and checks nothing.
     fireEvent.change(field, { target: { value: "Daar is" } });
     fireEvent.keyDown(field, { key: "Enter", shiftKey: true });
-    expect(checks()).toHaveLength(0);
-    // A miss shows the author's version as a reference, which stays while the learner edits.
+    expect(screen.queryByText("Author’s version")).not.toBeInTheDocument();
+    // A miss keeps focus and shows the author's version as a reference, which stays while the learner edits.
     fireEvent.keyDown(field, { key: "Enter" });
-    expect(await screen.findByText("Er is")).toBeInTheDocument();
+    expect(screen.getByText("Er is")).toBeInTheDocument();
     expect(screen.getByText(/can still be right/)).toBeInTheDocument();
+    expect(field).toHaveFocus();
     expect(screen.queryByText("Matches the author’s version")).not.toBeInTheDocument();
     fireEvent.change(field, { target: { value: "Er is" } });
     expect(screen.getByText(/can still be right/)).toBeInTheDocument();
+    // A match is confirmed and focus moves to the next question.
     fireEvent.keyDown(field, { key: "Enter" });
-    expect(await screen.findByText("Matches the author’s version")).toBeInTheDocument();
+    expect(screen.getByText("Matches the author’s version")).toBeInTheDocument();
     expect(screen.queryByText(/can still be right/)).not.toBeInTheDocument();
-    expect(checks()[1]![1]).toMatchObject({ method: "POST", body: JSON.stringify({ item: 0, answer: "Er is" }) });
+    expect(second).toHaveFocus();
     // Editing the answer clears the feedback until it is checked again.
     fireEvent.change(field, { target: { value: "Er is een" } });
     expect(screen.queryByText("Matches the author’s version")).not.toBeInTheDocument();
+    // A match in the last question moves focus to the dialog's button.
+    fireEvent.change(second, { target: { value: "er zijn twee slaapkamers" } });
+    fireEvent.keyDown(second, { key: "Enter" });
+    expect(screen.getByRole("button", { name: "Done" })).toHaveFocus();
+  });
+
+  it("shows the focused question's position within the practice as a progress bar", async () => {
+    const value = detail();
+    localStorage.setItem(practiceDraftKey(accountId, groupId, "practice-answer", blockId), JSON.stringify({ version: 1, answers: ["Er is", ""] }));
+    await openPractice(value);
+    const bar = () => screen.getByRole("progressbar", { name: "Practice progress" });
+    // The dialog opens on the first unanswered question.
+    await waitFor(() => expect(screen.getByLabelText(/^2\. There are two bedrooms\./)).toHaveFocus());
+    expect(screen.getByText("Question 2 of 2")).toBeInTheDocument();
+    expect(bar()).toHaveAttribute("aria-valuenow", "100");
+    fireEvent.focus(screen.getByLabelText(/^1\. … een kleine keuken\./));
+    expect(screen.getByText("Question 1 of 2")).toBeInTheDocument();
+    expect(bar()).toHaveAttribute("aria-valuenow", "50");
   });
 
   it("has no concealed thread and saves only the answered count when Done closes the dialog", async () => {
     await openPractice(detail());
     expect(screen.getAllByText("Vul in of vertaal.").length).toBeGreaterThan(0);
-    for (const gone of [/concealed/, /Reveal answers/, /Author’s version/]) expect(screen.queryByText(gone)).not.toBeInTheDocument();
+    for (const gone of [/concealed/, /Reveal answers/, /Author’s version/, /Er zijn twee slaapkamers/]) expect(screen.queryByText(gone)).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Reveal answers" })).not.toBeInTheDocument();
 
     // The button reads Finish later while a question is blank and Done once every question has an answer.

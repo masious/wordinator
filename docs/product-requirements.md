@@ -2,7 +2,9 @@
 
 ## Release definition
 
-The current release is an installable, connectivity-required responsive web application for current Chrome and Safari on desktop and mobile. It exposes one global course library; courses remain the organizational layer above lessons.
+The current release is an installable, connectivity-required web application for current Chrome and Safari. It serves committed Dutch and German learners who choose the skill they practise (see [what it is](what_is_it.md#who-it-is-for)). It exposes one global course library; courses remain the organizational layer above lessons.
+
+**Desktop is the only target for new work.** New features are designed, laid out, and tested for desktop viewports only. Existing phone layouts (the slim header, dock, and full-screen surfaces) keep working and their `mobile-*` tests keep passing until phone support is discontinued by an explicit product change; new features do not add phone-specific layouts, behaviors, or tests, and must not be blocked on phone behavior.
 
 ## Required capabilities
 
@@ -15,7 +17,9 @@ The current release is an installable, connectivity-required responsive web appl
 - On-demand in-app notifications
 - Local browser drafts for every writing flow
 - Account profile, password, appearance, and avatar settings
-- Responsive warm editorial design and an English localization catalog
+- Desktop-first warm editorial design and an English localization catalog
+- A signed-out home page that addresses the target learner and names the skills they can practise
+- Progress measurement and interface guidance toward the next useful practice, without competitive mechanics
 - Installable PWA metadata with an internet-required offline fallback
 - Manual local/production setup, migration, deployment, backup, and restore procedures
 
@@ -38,8 +42,8 @@ The current release is an installable, connectivity-required responsive web appl
 
 ## Initial exclusions
 
-The release excludes email verification, self-service password recovery, account deletion, a global admin UI, session management, reports, blocking, muting, search, formal accessibility conformance, offline application behavior, push/email notifications, notification badges, CI/CD, and automated backups.
+The release excludes new mobile phone layouts or phone-specific features, gamification (points, streaks, rankings, leaderboards), email verification, self-service password recovery, account deletion, a global admin UI, session management, reports, blocking, muting, search, formal accessibility conformance, offline application behavior, push/email notifications, notification badges, CI/CD, and automated backups.
 
 ## Acceptance summary
 
-The release is ready when the critical flows in [user-flows.md](user-flows.md) work in current Chrome and Safari, authentication and global-resource authorization tests pass, both applications type-check/test/build, and a clean installation can be bootstrapped and deployed from the documentation.
+The release is ready when the critical flows in [user-flows.md](user-flows.md) work in current desktop Chrome and Safari, authentication and global-resource authorization tests pass, both applications type-check/test/build, and a clean installation can be bootstrapped and deployed from the documentation.

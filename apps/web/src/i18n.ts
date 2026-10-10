@@ -43,17 +43,27 @@ export const resources = {
         createAccount: "Create account",
         haveAccount: "I already have an account",
         needAccount: "Create a new account",
-        signupTitle: "Start learning.",
-        signupIntro: "Create your account and go straight to the lesson library—no invitation or approval needed.",
+        signupTitle: "Practise what you need.",
+        signupIntro: "For Dutch and German learners who already know where they are weak. Create an account and go straight to the practice you came for.",
         signIn: "Sign in",
         signOut: "Sign out",
         welcomeTitle: "Welcome back.",
-        welcomeIntro: "Sign in to continue learning.",
+        welcomeIntro: "Sign in to pick up your practice where you left it.",
         requiredEyebrow: "One quick security step",
         changePasswordTitle: "Choose a new password.",
         changePasswordIntro: "Your temporary password must be replaced before you continue.",
         newPassword: "New password",
         savePassword: "Save password"
+      },
+      home: {
+        eyebrow: "Dutch and German practice",
+        focusTitle: "Choose your focus",
+        focus: {
+          grammar: { title: "Grammar", detail: "Lessons that work one structure at a time." },
+          vocabulary: { title: "Vocabulary", detail: "Word cards from every lesson, saved for review." },
+          listening: { title: "Listening", detail: "Lessons and dialogues read aloud by natural voices." },
+          progress: { title: "Progress", detail: "See which lessons you have finished and what comes next." }
+        }
       },
       onboarding: {
         eyebrow: "Make it yours",
@@ -282,6 +292,7 @@ export const resources = {
           previous: "Previous: {{title}}",
           next: "Next: {{title}}",
           pager: "Other lessons",
+          readingProgress: "Lesson progress",
           add: "Add lesson",
           addTitle: "Add a lesson",
           addSubmit: "Add unpublished lesson",
@@ -295,6 +306,29 @@ export const resources = {
           deleteTitle: "Delete this lesson?",
           deleteConfirm: "Delete “{{title}}” with its content, images, and practice answers? This cannot be undone.",
           fields: { title: "Lesson title", goal: "Goal" }
+        },
+        lessonActions: {
+          label: "Lesson {{number}}: {{title}}",
+          start: "Start",
+          startNamed: "Start lesson {{number}}: {{title}}",
+          continue: "Continue",
+          continueNamed: "Continue lesson {{number}}: {{title}}",
+          again: "Start again",
+          againNamed: "Start lesson {{number}} again: {{title}}",
+          preview: "Preview",
+          previewNamed: "Preview lesson {{number}}: {{title}}",
+          reviewWords: "Review words",
+          reviewWordsNamed: "Review the words of lesson {{number}}: {{title}}",
+          wordsTitle: "Words of lesson {{number}}",
+          noWords: "This lesson has no new words.",
+          practise: "Practise again",
+          practiseNamed: "Practise lesson {{number}} again: {{title}}",
+          practicesTitle: "Practices in lesson {{number}}",
+          noPractices: "This lesson has no practices.",
+          questions_one: "{{count}} question",
+          questions_other: "{{count}} questions",
+          practiceAnswered: "{{answered}} of {{total}} answered",
+          practiceDone: "Done"
         },
         callout: {
           change: "Change callout type and icon",
@@ -462,7 +496,9 @@ export const resources = {
           questionsLeft_other: "{{count}} questions left",
           youAreDone: "You’re done",
           morePrompts_one: "and {{count}} more question",
-          morePrompts_other: "and {{count}} more questions"
+          morePrompts_other: "and {{count}} more questions",
+          position: "Question {{current}} of {{total}}",
+          progressLabel: "Practice progress"
         },
         player: {
           start: "Start lesson",
@@ -478,7 +514,6 @@ export const resources = {
           done: "Lesson complete",
           finish: "Finish lesson",
           showTranslation: "Show translation",
-          question: "Question {{current}} of {{total}}",
           yourAnswer: "Your answer",
           completeTitle: "Lesson complete",
           courseProgress: "You have finished {{completed}} of {{total}} lessons ({{percent}}%).",
@@ -566,7 +601,25 @@ export const resources = {
           showLessAbout: "Show less about {{term}}",
           showAll: "Show all",
           hideAll: "Hide all",
-          backToCourse: "Back to the course"
+          backToCourse: "Back to the course",
+          search: {
+            lessonLabel: "Search this lesson's words",
+            libraryLabel: "Search words in the library",
+            lessonPlaceholder: "Search this lesson",
+            libraryPlaceholder: "Search the library",
+            scope: "Search in",
+            thisLesson: "This lesson",
+            library: "Library",
+            noLessonMatches: "No word in this lesson matches your search.",
+            libraryHint: "Type a word or a meaning to search every published lesson.",
+            searching: "Searching the library",
+            failed: "The library could not be searched. Try again.",
+            noLibraryMatches: "No word in the library matches your search.",
+            results: "Library matches",
+            more: "Show more matches",
+            source: "{{course}} · {{lesson}}",
+            openSource: "Introduced in {{lesson}} ({{course}}). Open the lesson"
+          }
         },
         speech: {
           term: "Play pronunciation of {{term}}",

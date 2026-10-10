@@ -140,12 +140,12 @@ describe("lesson document helpers", () => {
     expect(collectImageUrls(document)).toEqual(["media:courses/a.png"]);
   });
 
-  it("strips authors' versions and notes from learner documents and returns them as references", () => {
+  it("keeps authors' versions for the client-side check, strips notes from learner documents, and returns them as references", () => {
     const block = practice();
     const { document, references } = toLearnerDocument(parse(columns(column(block), column(paragraph("x")))));
     const learnerBlock = document.blocks[0]!.children[0]!.children[0]!;
     expect(JSON.parse((learnerBlock.props as { data: string }).data)).toEqual({
-      instruction: "Fill in the blanks.", passage: null, items: [{ prompt: "Ik zie … hond." }, { prompt: "Translate: I see the dog." }],
+      instruction: "Fill in the blanks.", passage: null, items: [{ prompt: "Ik zie … hond.", authorsVersion: ["de"] }, { prompt: "Translate: I see the dog.", authorsVersion: [] }],
     });
     expect(JSON.stringify(document)).not.toContain("Hond is a de-word.");
     expect(references[block.id]!.items[0]).toEqual({ prompt: "Ik zie … hond.", authorsVersion: ["de"], note: "Hond is a de-word." });

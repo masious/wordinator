@@ -19,8 +19,9 @@ const course = (edit: boolean, contribute = edit) => ({
   owner: { id: accountId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, speechCast: {}, contribution: !edit && contribute ? "active" as const : null,
   permissions: { edit, publish: edit, archive: edit, removeContent: edit, contribute, requestContribution: false, leaveContribution: !edit && contribute, manageContributors: edit },
 });
-const summary = (n: number, published = true) => ({
+const summary = (n: number, published = true, counts: { wordCount?: number; practiceCount?: number } = {}) => ({
   id: lessonId(n), slug: `lesson-title-${n}`, position: n - 1, title: `Lesson title ${n}`, goal: null, published, publishedAt: published ? 1 : null, changed: false, updatedBy: editor, updatedAt: 1,
+  wordCount: 0, practiceCount: 0, ...counts,
 });
 const text = (value: string) => [{ type: "text" as const, text: value, styles: {} }];
 const example = (id: string, sentence: string, translation = ""): LessonTopBlock =>
@@ -30,7 +31,7 @@ const dialogue: LessonTopBlock = {
 };
 const practice: LessonTopBlock = {
   id: "50000000-0000-4000-8000-000000000003", type: "practice",
-  props: { data: JSON.stringify({ instruction: "Translate.", passage: null, items: [{ prompt: "There is a garden.", authorsVersion: [], note: null }, { prompt: "No.", authorsVersion: [], note: null }] }) },
+  props: { data: JSON.stringify({ instruction: "Translate.", passage: null, items: [{ prompt: "There is a garden.", authorsVersion: ["Er is een tuin."] }, { prompt: "No.", authorsVersion: [] }] }) },
   children: [],
 };
 const doc = (blocks: LessonTopBlock[]): LessonDocument => ({ schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks });
@@ -168,7 +169,6 @@ describe("Course lessons", () => {
   it("steps through a lesson one sentence and question at a time and records completion", async () => {
     const original = vi.mocked(fetch).getMockImplementation()!;
     vi.mocked(fetch).mockImplementation(async (input, init) => {
-      if (String(input).endsWith(`/blocks/${practice.id}/check`)) return response({ match: true, authorsVersion: null });
       if (String(input).endsWith(`/blocks/${practice.id}/progress`)) return response({ progress: { done: 0, started: 1, answered: 1 } });
       return original(input, init);
     });
@@ -203,18 +203,23 @@ describe("Course lessons", () => {
     fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
     expect(within(dialog).getByText("Question 1 of 2")).toBeInTheDocument();
     expect(within(dialog).getByText("There is a garden.")).toBeInTheDocument();
-    fireEvent.change(within(dialog).getByLabelText("Your answer"), { target: { value: "Er is een tuin." } });
-    expect(JSON.parse(localStorage.getItem(`wordinator:draft:v1:${accountId}:${groupId}:practice-answer:${practice.id}`)!)).toEqual({ version: 1, answers: ["Er is een tuin.", ""] });
-    // Next on a filled, unchecked answer shows the check's feedback and stays; pressing it again moves on.
-    const checks = () => vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith(`/blocks/${practice.id}/check`));
+    expect(within(dialog).getByRole("progressbar", { name: "Practice progress" })).toHaveAttribute("aria-valuenow", "50");
+    fireEvent.change(within(dialog).getByLabelText("Your answer"), { target: { value: "Er is een boom." } });
+    expect(JSON.parse(localStorage.getItem(`wordinator:draft:v1:${accountId}:${groupId}:practice-answer:${practice.id}`)!)).toEqual({ version: 1, answers: ["Er is een boom.", ""] });
+    // Next on a filled answer that misses checks it on the device, shows the author's version, and stays.
+    expect(within(dialog).queryByText("Er is een tuin.")).not.toBeInTheDocument();
     fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
-    expect(await within(dialog).findByText("Matches the author’s version")).toBeInTheDocument();
+    expect(within(dialog).getByText("Er is een tuin.")).toBeInTheDocument();
     expect(within(dialog).getByText("Question 1 of 2")).toBeInTheDocument();
-    expect(checks()[0]![1]).toMatchObject({ method: "POST", body: JSON.stringify({ item: 0, answer: "Er is een tuin." }) });
-    // Enter in the field does the same: the answer is already checked, so it moves on without checking again.
-    fireEvent.keyDown(within(dialog).getByLabelText("Your answer"), { key: "Enter" });
+    // Enter on a matching answer moves on at once, and focus follows to the next question's field.
+    const field = within(dialog).getByLabelText("Your answer");
+    fireEvent.change(field, { target: { value: "er is een TUIN" } });
+    field.focus();
+    fireEvent.keyDown(field, { key: "Enter" });
     expect(within(dialog).getByText("Question 2 of 2")).toBeInTheDocument();
-    expect(checks()).toHaveLength(1);
+    expect(within(dialog).getByRole("progressbar", { name: "Practice progress" })).toHaveAttribute("aria-valuenow", "100");
+    await waitFor(() => expect(within(dialog).getByLabelText("Your answer")).toHaveFocus());
+    expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path).includes("/check"))).toHaveLength(0);
     // Leaving a question saves only how many of the practice's questions are answered, never the answers.
     await waitFor(() => expect(progress()).toEqual([["PUT", { answered: 1 }]]));
     expect(within(dialog).queryByRole("button", { name: /share/i })).not.toBeInTheDocument();
@@ -222,7 +227,6 @@ describe("Course lessons", () => {
     // An empty answer is never checked: Next moves straight on.
     fireEvent.click(within(dialog).getByRole("button", { name: "Finish lesson" }));
     expect(await within(dialog).findByText("You have finished 1 of 4 lessons (25%).")).toBeInTheDocument();
-    expect(checks()).toHaveLength(1);
     expect(meter()).toHaveAttribute("aria-valuenow", "100");
     await waitFor(() => expect(progress().length).toBe(2));
     expect(progress().every(([method, body]) => method === "PUT" && JSON.stringify(body) === JSON.stringify({ answered: 1 }))).toBe(true);
@@ -326,7 +330,7 @@ describe("Course lessons", () => {
     expect(vi.mocked(fetch).mock.calls.some(([path]) => String(path).endsWith("/completion") || String(path).endsWith("/position"))).toBe(false);
   });
 
-  it("offers one course action: the first unfinished lesson, and nothing per lesson", async () => {
+  it("offers one course action: the first unfinished lesson", async () => {
     const original = vi.mocked(fetch).getMockImplementation()!;
     vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") ? response(progress([lessonId(1)])) : original(input, init));
     const blocks = [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")];
@@ -334,7 +338,7 @@ describe("Course lessons", () => {
     expect(await screen.findByText("Next up: lesson 2, Lesson title 2.")).toBeInTheDocument();
     expect(screen.getByRole("progressbar", { name: "Your course progress" })).toHaveAttribute("aria-valuenow", "25");
     expect(screen.getByText("25%")).toBeInTheDocument();
-    expect(screen.getAllByRole("button", { name: /^(Start|Continue|Practise)/ })).toHaveLength(1);
+    expect(screen.getAllByRole("button", { name: /^(Start|Continue|Practise) lesson \d+( again)?$/ })).toHaveLength(1);
     expect(screen.getByRole("button", { name: "Start lesson 2" })).toBeInTheDocument();
   });
 
@@ -368,5 +372,97 @@ describe("Course lessons", () => {
     expect(within(dialog).queryByText("Picked up where you left off.")).not.toBeInTheDocument();
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/position`,
       expect.objectContaining({ method: "PUT", body: JSON.stringify({ stepKey: "50000000-0000-4000-8000-000000000009" }) })));
+  });
+});
+
+describe("Lesson actions", () => {
+  const word = (n: number, term: string) => ({ id: `70000000-0000-4000-8000-00000000000${n}`, term, meaning: `meaning of ${term}` });
+  const vocabulary = (n: number, ...words: unknown[]): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000002${n}`, type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [] });
+  const second: LessonTopBlock = {
+    id: "50000000-0000-4000-8000-000000000013", type: "practice",
+    props: { data: JSON.stringify({ instruction: "Complete the dialogue.", passage: null, items: [{ prompt: "Hoe gaat het?", authorsVersion: [], note: null }] }) }, children: [],
+  };
+  const withProgress = (body: unknown) => {
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") && !String(input).includes("/blocks/") ? response(body) : original(input, init));
+  };
+  const lessonReads = () => vi.mocked(fetch).mock.calls.filter(([path]) => /\/lessons\/[^/]+$/.test(String(path)));
+
+  it("plays each lesson by the viewer's state: start, continue at the saved step, or start a finished one again", async () => {
+    const saved = { lessonId: lessonId(2), stepKey: "50000000-0000-4000-8000-000000000002", stepIndex: 1, passedSteps: 1, totalSteps: 2, updatedAt: 1 };
+    withProgress(progress([lessonId(1)], [saved]));
+    const blocks = [example("50000000-0000-4000-8000-000000000001", "Er is een balkon."), example("50000000-0000-4000-8000-000000000002", "Er is een tuin.")];
+    renderLessons({ course: course(false), outline: [1, 2, 3].map((n) => summary(n)), lessons: [lesson(1, blocks), lesson(2, blocks), lesson(3, blocks)] });
+    expect(await screen.findByRole("button", { name: "Start lesson 1 again: Lesson title 1" })).toHaveTextContent("Start again");
+    expect(screen.getByRole("button", { name: "Start lesson 3: Lesson title 3" })).toHaveTextContent("Start");
+    // Lessons without words or practices offer nothing to review or practise.
+    expect(screen.queryByRole("button", { name: /^Review the words of lesson/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /^Practise lesson \d+ again:/ })).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Continue lesson 2: Lesson title 2" }));
+    const dialog = await screen.findByRole("dialog", { name: "Lesson 2 · Lesson title 2" });
+    expect(within(dialog).getByText("Step 2 of 2")).toBeInTheDocument();
+    expect(within(dialog).getByText("Picked up where you left off.")).toBeInTheDocument();
+    fireEvent.keyDown(within(dialog).getByRole("button", { name: "Finish lesson" }), { key: "Escape" });
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+    fireEvent.click(screen.getByRole("button", { name: "Start lesson 1 again: Lesson title 1" }));
+    expect(await within(await screen.findByRole("dialog")).findByText("Step 1 of 2")).toBeInTheDocument();
+  });
+
+  it("reviews one lesson's words, loading the lesson only when asked", async () => {
+    const words = lesson(4, [example("50000000-0000-4000-8000-000000000001", "De hond blaft."), vocabulary(1, word(1, "de hond"), word(2, "de kat"))]);
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith(`/lessons/${lessonId(4)}`) ? response({ lesson: words }) : original(input, init));
+    renderLessons({ course: course(false), outline: [summary(1), summary(4, true, { wordCount: 2 })], lessons: [lesson(1)] });
+    const review = await screen.findByRole("button", { name: "Review the words of lesson 2: Lesson title 4" });
+    expect(screen.getAllByRole("button", { name: /^Review the words of lesson/ })).toHaveLength(1);
+    expect(lessonReads()).toHaveLength(0);
+    fireEvent.click(review);
+    const dialog = await screen.findByRole("dialog", { name: "Words of lesson 2" });
+    expect(await within(dialog).findByText("Word 1 of 2")).toBeInTheDocument();
+    expect(within(dialog).getByRole("article", { name: "de hond" })).toBeInTheDocument();
+    expect(lessonReads()).toHaveLength(1);
+    fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
+    fireEvent.click(within(dialog).getByRole("button", { name: "Back to the course" }));
+    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+    // Reviewing records nothing.
+    expect(vi.mocked(fetch).mock.calls.some(([, init]) => init?.method === "PUT")).toBe(false);
+  });
+
+  it("lists a lesson's practices with the viewer's state and opens the chosen one's answer set", async () => {
+    const practised = { ...lesson(1, [practice, dialogue, second]), practiceProgress: { [practice.id]: { done: 1, started: 1, answered: 2 }, [second.id]: { done: 0, started: 0, answered: null } } };
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    vi.mocked(fetch).mockImplementation(async (input, init) => {
+      const path = String(input);
+      if (path.endsWith(`/lessons/${lessonId(1)}`)) return response({ lesson: practised });
+      if (path.endsWith(`/blocks/${second.id}/progress`)) return response({ progress: { done: 1, started: 1, answered: 1 } });
+      return original(input, init);
+    });
+    renderLessons({ course: course(false), outline: [summary(1, true, { practiceCount: 2 })], lessons: [lesson(1)] });
+    fireEvent.click(await screen.findByRole("button", { name: "Practise lesson 1 again: Lesson title 1" }));
+    const dialog = await screen.findByRole("dialog", { name: "Practices in lesson 1" });
+    const first = await within(dialog).findByRole("button", { name: /Translate\./ });
+    expect(first).toHaveTextContent("Done");
+    const other = within(dialog).getByRole("button", { name: /Complete the dialogue\./ });
+    expect(other).toHaveTextContent("1 question");
+    // Entries stay minimal: no prompts until a practice is chosen.
+    expect(within(dialog).queryByText("Hoe gaat het?")).not.toBeInTheDocument();
+    fireEvent.click(other);
+    const field = await within(dialog).findByLabelText(/Hoe gaat het\?/);
+    fireEvent.change(field, { target: { value: "Goed." } });
+    fireEvent.click(within(dialog).getByRole("button", { name: "Done" }));
+    // Finishing the set saves only the answered count and returns to the list.
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/blocks/${second.id}/progress`,
+      expect.objectContaining({ method: "PUT", body: JSON.stringify({ answered: 1 }) })));
+    expect(await within(dialog).findByRole("button", { name: /Translate\./ })).toBeInTheDocument();
+  });
+
+  it("previews an editor's unpublished lesson and leaves practising out of archived courses", async () => {
+    renderLessons({ course: course(true), outline: [summary(1, false)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Een concept.")], { published: false, editing: true })] });
+    expect(await screen.findByRole("button", { name: "Preview lesson 1: Lesson title 1" })).toHaveTextContent("Preview");
+    cleanup();
+    const archived = { ...course(true), status: "archived" as const };
+    renderLessons({ course: archived, outline: [summary(1, true, { wordCount: 1, practiceCount: 1 })], lessons: [lesson(1, [practice])] });
+    expect(await screen.findByRole("button", { name: "Review the words of lesson 1: Lesson title 1" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Practise lesson 1 again: Lesson title 1" })).not.toBeInTheDocument();
   });
 });

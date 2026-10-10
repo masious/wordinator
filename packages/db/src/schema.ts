@@ -388,10 +388,14 @@ export const courseLessonWords = sqliteTable(
     example: text("example"),
     note: text("note"),
     ipa: text("ipa"),
+    // Word search keys (migration 0023); NULL until written on publish or filled by the search endpoint.
+    termKey: text("term_key"),
+    searchKey: text("search_key"),
   },
   (table) => [
     primaryKey({ columns: [table.lessonId, table.wordId] }),
     index("course_lesson_words_lesson_idx").on(table.groupId, table.courseId, table.lessonId, table.position),
+    index("course_lesson_words_unkeyed_idx").on(table.lessonId).where(sql`${table.termKey} IS NULL OR ${table.searchKey} IS NULL`),
   ],
 );
 

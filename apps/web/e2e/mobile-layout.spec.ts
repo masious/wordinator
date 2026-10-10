@@ -210,7 +210,7 @@ test("mobile lesson player stays within the viewport at every step", async ({ pa
   ]);
 
   await page.goto(`/courses/${course.id}`, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Start lesson 1" }).click();
+  await page.getByRole("button", { name: "Start lesson 1", exact: true }).click();
   const player = page.getByRole("dialog");
   const steps: Array<[string, () => Promise<void>]> = [
     ["example", () => expect(player.getByText("Step 1 of 4")).toBeVisible()],
@@ -248,7 +248,7 @@ test("mobile new words panel and word recap stay within the viewport", async ({ 
   ]);
 
   await page.goto(`/courses/${course.id}`, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Start lesson 1" }).click();
+  await page.getByRole("button", { name: "Start lesson 1", exact: true }).click();
   const player = page.getByRole("dialog");
   await expect(player.getByRole("region", { name: "New words" })).toContainText("de overstapmogelijkheid");
   await expectNoHorizontalOverflow(page, "lesson player new words panel");

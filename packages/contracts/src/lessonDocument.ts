@@ -240,7 +240,7 @@ export function mapLessonBlocks(document: LessonDocument, map: (block: LessonBlo
 export const mapImageUrls = (document: LessonDocument, map: (url: string) => string) =>
   mapLessonBlocks(document, (block) => block.type === "image" && block.props.url ? { ...block, props: { ...block.props, url: map(block.props.url) } } : block);
 
-// Learners receive practice prompts only; authors' versions and notes travel separately, keyed by practice block ID.
+// Learners receive practice prompts and authors' versions for the client-side check; item notes travel separately, keyed by practice block ID.
 export function toLearnerDocument(document: LessonDocument): { document: LessonDocument; references: Record<string, PracticeReference> } {
   const references: Record<string, PracticeReference> = {};
   const learner = mapLessonBlocks(document, (block) => {
@@ -497,7 +497,7 @@ export const lessonImageUploadResponseSchema = z.object({
 });
 export type LessonImageUploadResponse = z.infer<typeof lessonImageUploadResponseSchema>;
 
-// The lesson as one reader sees it. Learners receive the published document with practice prompts only; the owner and
+// The lesson as one reader sees it. Learners receive the published document with practice prompts and authors' versions; the owner and
 // active contributors also receive the full draft, including authors' versions and item notes, and its version.
 export const lessonDraftSchema = z.object({ document: lessonDocumentSchema, version: draftVersionSchema });
 export type LessonDraft = z.infer<typeof lessonDraftSchema>;
@@ -562,3 +562,26 @@ export type WordBookmark = z.infer<typeof wordBookmarkSchema>;
 export const wordBookmarkPageSchema = z.object({ items: z.array(wordBookmarkSchema), nextCursor: z.string().nullable() });
 export type WordBookmarkPage = z.infer<typeof wordBookmarkPageSchema>;
 export const wordBookmarksQuerySchema = paginationQuerySchema;
+
+// Word search (New words panel). A search key folds case, diacritics (by Unicode decomposition), ß, and runs of whitespace,
+// so "uber" finds "Über". The lesson panel filters its own words with it; the API stores the keys of indexed words and
+// matches the normalized query as a substring of the term or the meaning.
+export const WORD_SEARCH_QUERY_MAX = 100;
+export const WORD_SEARCH_PAGE_MAX = 50;
+export const wordSearchKey = (value: string): string =>
+  value.normalize("NFKD").replace(/\p{M}/gu, "").replace(/[ßẞ]/g, "ss").toLowerCase().replace(/\s+/g, " ").trim();
+export const wordSearchQuerySchema = z.object({
+  q: z.string().trim().min(1).max(WORD_SEARCH_QUERY_MAX),
+  cursor: paginationQuerySchema.shape.cursor,
+  limit: z.coerce.number().int().min(1).max(WORD_SEARCH_PAGE_MAX).default(20),
+});
+export type WordSearchQuery = z.infer<typeof wordSearchQuerySchema>;
+// A match carries the lesson that introduced the word, so the result can name and link it.
+export const wordSearchResultSchema = z.object({
+  word: courseWordSchema,
+  course: z.object({ id: opaqueIdSchema, slug: z.string(), title: z.string() }),
+  lesson: z.object({ id: opaqueIdSchema, slug: z.string(), title: z.string() }),
+});
+export type WordSearchResult = z.infer<typeof wordSearchResultSchema>;
+export const wordSearchPageSchema = z.object({ items: z.array(wordSearchResultSchema).max(WORD_SEARCH_PAGE_MAX), nextCursor: z.string().nullable() });
+export type WordSearchPage = z.infer<typeof wordSearchPageSchema>;

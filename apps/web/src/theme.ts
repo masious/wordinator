@@ -111,14 +111,12 @@ export const theme = createTheme({
       styles: {
         root: {
           minHeight: "var(--control-height)",
-          color: "var(--color-action-text)",
           fontWeight: "var(--weight-semibold)",
         },
       },
     }),
     ActionIcon: ActionIcon.extend({
       defaultProps: { autoContrast: false, color: "coral", radius: "xl", size: "var(--touch-target)" },
-      styles: { root: { color: "var(--color-action-text)" } },
     }),
     TextInput: TextInput.extend({ defaultProps: inputDefaults }),
     PasswordInput: PasswordInput.extend({ defaultProps: inputDefaults }),
