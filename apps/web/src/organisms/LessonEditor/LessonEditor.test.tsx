@@ -24,8 +24,8 @@ const twoDoc = (first: string, second: string): LessonDocument => ({ schemaVersi
 const conflict = (document: LessonDocument, version: number) => json({ error: { code: "VERSION_CONFLICT", message: "Newer." }, draft: { document, version } }, 409);
 const saved = (draftVersion: number) => json({ draftVersion, changed: true, updatedBy: editor, updatedAt: 2 });
 const lesson = (overrides: Partial<CourseLesson> = {}): CourseLesson => ({
-  id: lessonId, position: 0, title: "Mijn huis", goal: null, published: false, publishedAt: null, changed: false, updatedBy: editor, updatedAt: 1,
-  document: null, answerCounts: {}, draft: { document: doc("Het huis is groot."), version: 3 }, speech: {}, draftSpeech: {}, ...overrides,
+  id: lessonId, slug: "mijn-huis", position: 0, title: "Mijn huis", goal: null, published: false, publishedAt: null, changed: false, updatedBy: editor, updatedAt: 1,
+  document: null, practiceProgress: {}, draft: { document: doc("Het huis is groot."), version: 3 }, speech: {}, draftSpeech: {}, ...overrides,
 });
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
 

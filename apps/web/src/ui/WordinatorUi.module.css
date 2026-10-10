@@ -77,6 +77,9 @@
 .dialogShell { padding: var(--space-2); background: var(--color-bezel); border: var(--ring-hairline); box-shadow: var(--shadow-overlay); }
 .dialogHeader { margin: 0; padding: var(--space-6) var(--space-6) var(--space-3); background: var(--color-overlay-glass); border: var(--ring-hairline); border-bottom: 0; border-radius: var(--radius-core) var(--radius-core) 0 0; box-shadow: var(--shadow-inset-highlight); }
 .dialogContent { padding: 0 var(--space-6) var(--space-6); background: var(--color-overlay-glass); border: var(--ring-hairline); border-top: 0; border-radius: 0 0 var(--radius-core) var(--radius-core); }
+/* A docked dialog sits over its reading column below the navigation bar; only the dialog itself takes pointer input. */
+.dialogDocked { justify-content: flex-start; padding-inline-end: 0; pointer-events: none; }
+.dialogDocked > * { pointer-events: auto; }
 .dialogBody, .confirmBody { display: grid; gap: var(--space-6); }
 .dialogBody :where(p) { margin: 0; color: var(--color-foreground-muted); }
 .dialogActions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-3); padding-top: var(--space-2); }

@@ -3,8 +3,6 @@ import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
 import { courseApi, dialogue, example, openLesson, paragraph, practice, seedLesson, vocabulary } from "./lessonSeed";
 import { expectRecapFits, pageToWord } from "./wordRecap";
 
-const userId = "10000000-0000-4000-8000-000000000001";
-const group = `/groups/${E2E_GROUP_ID}`;
 
 // Mobile browsers widen the layout viewport to fit overflowing content (zooming the page out),
 // so compare against the device viewport rather than innerWidth.
@@ -48,15 +46,13 @@ test("authenticated routes stay within the mobile viewport", async ({ page }) =>
   await page.route(/\/courses\/[^/]+\.png$/, (route) => route.fulfill({ contentType: "image/png", body: cover }));
 
   const routes: Array<[string, string]> = [
-    ["feed", group],
-    ["post detail", `${group}/posts/${post.id}`],
-    ["courses", `${group}/courses`],
-    ["course detail", `${group}/courses/${courseId}`],
-    ["words", `${group}/words`],
-    ["members", `${group}/members`],
-    ["profile", `${group}/members/${userId}`],
-    ["notices", `${group}/notifications`],
-    ["settings", `${group}/settings`],
+    ["journal", "/journal"],
+    ["post detail", `/journal/${post.id}`],
+    ["notices", "/notifications"],
+    ["courses", "/courses"],
+    ["course detail", `/courses/${courseId}`],
+    ["words", "/words"],
+    ["settings", "/settings"],
   ];
   for (const [label, route] of routes) {
     await page.goto(route, { waitUntil: "networkidle" });
@@ -64,14 +60,14 @@ test("authenticated routes stay within the mobile viewport", async ({ page }) =>
     if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-${label.replace(/ /g, "-")}.png` });
   }
 
-  await page.goto(group, { waitUntil: "networkidle" });
+  await page.goto("/journal", { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Write something…" }).click();
   await expect(page.getByRole("dialog")).toBeVisible();
   await expectNoHorizontalOverflow(page, "composer");
 });
 
-test("mobile shell uses a slim header, four-slot dock, and More sheet", async ({ page }) => {
-  await page.goto(group, { waitUntil: "networkidle" });
+test("mobile shell uses a slim header and a four-slot dock with the journal third, without a workspace switcher", async ({ page }) => {
+  await page.goto("/courses", { waitUntil: "networkidle" });
   const header = page.getByRole("banner");
   const headerBox = await header.boundingBox();
   expect(headerBox).not.toBeNull();
@@ -80,24 +76,15 @@ test("mobile shell uses a slim header, four-slot dock, and More sheet", async ({
   await expect(header.getByRole("button", { name: "Account menu" })).toBeVisible();
 
   const dock = page.getByRole("navigation", { name: "Mobile navigation" });
-  await expect(dock.getByRole("link")).toHaveCount(3);
+  await expect(dock.getByRole("link")).toHaveText(["Courses", "Words", "Journal", "Notices"]);
+  await expect(dock.getByRole("link", { name: "Courses" })).toHaveAttribute("aria-current", "page");
+  await dock.getByRole("link", { name: "Journal" }).click();
+  await expect(page).toHaveURL(/\/journal$/);
   await expect(dock.getByRole("link", { name: "Journal" })).toHaveAttribute("aria-current", "page");
-  const more = dock.getByRole("button", { name: "More" });
-  await expect(more).not.toHaveAttribute("aria-current", "page");
-
-  await more.click();
-  const sheet = page.getByRole("dialog", { name: "More" });
-  await expect(sheet).toBeVisible();
-  for (const name of ["Words", "Members", "My profile", "Settings", "Create a group", "Sign out"]) await expect(sheet.getByText(name, { exact: true })).toBeVisible();
-  await expectNoHorizontalOverflow(page, "More sheet");
-  if (process.env.MOBILE_SHOTS) { await page.waitForTimeout(600); await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-more-sheet.png` }); }
-  await sheet.getByRole("link", { name: "Members" }).click();
-  await expect(sheet).toBeHidden();
-  await expect(page).toHaveURL(/\/members$/);
-  await expect(more).toHaveAttribute("aria-current", "page");
 
   await header.getByRole("button", { name: "Account menu" }).click();
-  await expect(page.getByRole("group", { name: "Active group" }).locator('[role="menuitem"][aria-current="true"]')).toHaveCount(1);
+  await expect(page.getByRole("group", { name: "Active group" })).toHaveCount(0);
+  await expect(page.getByRole("menuitem", { name: "Sign out" })).toBeVisible();
   await expectNoHorizontalOverflow(page, "account menu");
   if (process.env.MOBILE_SHOTS) { await page.waitForTimeout(600); await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-account-menu.png` }); }
 });
@@ -108,10 +95,9 @@ test("mobile journal drops the hero and opens with a one-line prompt row", async
     const created = await page.request.post(`/api/groups/${E2E_GROUP_ID}/posts`, { data: { type: "shared_sentence", body: `Prompt row scroll filler ${index}\nNog een regel.\nEn nog een.`, notes: null } });
     expect(created.ok()).toBe(true);
   }
-  await page.goto(group, { waitUntil: "networkidle" });
-  await expect(page.getByRole("button", { name: "Create a group" })).toBeHidden();
+  await page.goto("/journal", { waitUntil: "networkidle" });
   await expect(page.getByText("Share what you are learning and keep the conversation close.")).toBeHidden();
-  await expect(page.getByRole("heading", { level: 1, name: "Alpha Journal" })).toBeAttached();
+  await expect(page.getByRole("heading", { level: 1, name: "Journal" })).toBeAttached();
 
   const prompt = page.getByRole("button", { name: "Write something…" });
   await expect(prompt).toBeVisible();
@@ -138,7 +124,7 @@ test("mobile discussion uses one frame per comment and an 8px reply indent", asy
   expect(reply.ok()).toBe(true);
   const { item: replyItem } = await reply.json() as { item: { id: string } };
 
-  await page.goto(`${group}/posts/${post.id}`, { waitUntil: "networkidle" });
+  await page.goto(`/journal/${post.id}`, { waitUntil: "networkidle" });
   const top = page.locator(`#comment-${item.id}`);
   const nested = page.locator(`#comment-${replyItem.id}`);
   await expect(nested).toBeVisible();
@@ -156,7 +142,7 @@ test("mobile discussion uses one frame per comment and an 8px reply indent", asy
 });
 
 test("mobile composer is a full-screen sheet with sticky title and action bars", async ({ page }) => {
-  await page.goto(group, { waitUntil: "networkidle" });
+  await page.goto("/journal", { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Write something…" }).click();
   const dialog = page.getByRole("dialog", { name: "Create a post" });
   await expect(dialog).toBeVisible();
@@ -194,7 +180,7 @@ test("mobile course page lists lessons that open their own page", async ({ page 
   await seedLesson(page, course.id, "Er is een huis", [paragraph("Het huis is groot.")]);
   await seedLesson(page, course.id, "Waar is de kat?", [practice("Vertaal de zinnen.", ["One.", "Two.", "Three.", "Four with a much longer prompt that has to wrap on a narrow phone screen."].map((prompt) => ({ prompt })))]);
 
-  await page.goto(`${group}/courses/${course.id}`, { waitUntil: "networkidle" });
+  await page.goto(`/courses/${course.id}`, { waitUntil: "networkidle" });
   const lessons = page.getByRole("region", { name: "Lessons" });
   await expect(lessons.getByRole("link")).toHaveCount(2);
   await expect(page.getByText("Het huis is groot.")).toHaveCount(0);
@@ -208,7 +194,7 @@ test("mobile course page lists lessons that open their own page", async ({ page 
   await expectNoHorizontalOverflow(page, "lesson page");
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-lesson-page.png` });
   await page.getByRole("button", { name: "Answer", exact: true }).click();
-  await expect(page.getByRole("dialog", { name: "Answer the practice" }).getByRole("button", { name: "Publish answer set" })).toBeVisible();
+  await expect(page.getByRole("dialog", { name: "Answer the practice" }).getByRole("button", { name: "Finish later" })).toBeVisible();
   await expectNoHorizontalOverflow(page, "practice answer dialog");
 });
 
@@ -219,10 +205,10 @@ test("mobile lesson player stays within the viewport at every step", async ({ pa
   await seedLesson(page, course.id, "Onderweg naar het station", [
     example("Waar is het dichtstbijzijnde treinstation in deze buurt?", "Where is the nearest train station in this neighbourhood?", "Dichtstbijzijnde is een lange overtreffende trap."),
     dialogue([{ speaker: "Reiziger", text: "Moet ik hier rechtdoor of linksaf?" }, { speaker: "Buurvrouw", text: "Rechtdoor, en dan de tweede straat rechts." }]),
-    practice("Vertaal.", [{ prompt: "Turn left at the traffic lights." }]),
+    practice("Vertaal.", [{ prompt: "Turn left at the traffic lights.", authorsVersion: ["Sla linksaf bij het verkeerslicht."] }]),
   ]);
 
-  await page.goto(`${group}/courses/${course.id}`, { waitUntil: "networkidle" });
+  await page.goto(`/courses/${course.id}`, { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Start lesson 1" }).click();
   const player = page.getByRole("dialog");
   const steps: Array<[string, () => Promise<void>]> = [
@@ -238,6 +224,10 @@ test("mobile lesson player stays within the viewport at every step", async ({ pa
     if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-player-${label.replace(/ /g, "-")}.png` });
   }
   await player.getByLabel("Your answer").fill("Ga linksaf bij het stoplicht.");
+  // The first press checks the filled answer against the author's version; the next one finishes.
+  await player.getByRole("button", { name: "Finish lesson" }).click();
+  await expect(player.getByText("Author’s version")).toBeVisible();
+  await expectNoHorizontalOverflow(page, "lesson player answer check");
   await player.getByRole("button", { name: "Finish lesson" }).click();
   await expect(player.getByRole("heading", { name: "Lesson complete" })).toBeVisible();
   await expectNoHorizontalOverflow(page, "lesson player finish");
@@ -256,7 +246,7 @@ test("mobile new words panel and word recap stay within the viewport", async ({ 
     ),
   ]);
 
-  await page.goto(`${group}/courses/${course.id}`, { waitUntil: "networkidle" });
+  await page.goto(`/courses/${course.id}`, { waitUntil: "networkidle" });
   await page.getByRole("button", { name: "Start lesson 1" }).click();
   const player = page.getByRole("dialog");
   await expect(player.getByRole("region", { name: "New words" })).toContainText("de overstapmogelijkheid");
@@ -282,7 +272,7 @@ test("mobile lesson reader stacks columns", async ({ page }) => {
   const column = (text: string) => ({ id: crypto.randomUUID(), type: "column", props: { width: 1 }, children: [paragraph(text)] });
   await seedLesson(page, course.id, "Links en rechts", [{ id: crypto.randomUUID(), type: "columnList", props: {}, children: [column("De linker kolom met een zin."), column("De rechter kolom met een zin.")] }]);
 
-  await page.goto(`${group}/courses/${course.id}`, { waitUntil: "networkidle" });
+  await page.goto(`/courses/${course.id}`, { waitUntil: "networkidle" });
   await openLesson(page);
   const left = page.getByText("De linker kolom met een zin.", { exact: true });
   const right = page.getByText("De rechter kolom met een zin.", { exact: true });
@@ -294,7 +284,7 @@ test("mobile lesson reader stacks columns", async ({ page }) => {
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-lesson-columns.png` });
 });
 
-test("mobile Words tab opens from the More sheet and fits its cards without scrolling", async ({ page }, testInfo) => {
+test("mobile Words tab opens from the dock and fits its cards without scrolling", async ({ page }, testInfo) => {
   const api = courseApi(page);
   // The phone projects share the seeded account, so each bookmarks words of its own course.
   const courseTitle = `Bookmarked course ${testInfo.project.name}`;
@@ -308,12 +298,11 @@ test("mobile Words tab opens from the More sheet and fits its cards without scro
   const words = JSON.parse(lesson.document.blocks.find((block) => block.type === "vocabulary")!.props.data!) as { words: Array<{ id: string }> };
   for (const word of words.words) await api(`/courses/${course.id}/lessons/${lessonId}/words/${word.id}/bookmark`, undefined, "PUT");
 
-  // WebKit can take long to settle the feed's network, so wait for the dock instead of network idle.
-  await page.goto(group);
-  await page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("button", { name: "More" }).click();
-  await page.getByRole("dialog", { name: "More" }).getByRole("link", { name: "Words" }).click();
+  // WebKit can take long to settle the library's network, so wait for the dock instead of network idle.
+  await page.goto("/courses");
+  await page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("link", { name: "Words" }).click();
   await expect(page).toHaveURL(/\/words$/);
-  await expect(page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("button", { name: "More" })).toHaveAttribute("aria-current", "page");
+  await expect(page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("link", { name: "Words" })).toHaveAttribute("aria-current", "page");
   // Newest first, and a narrow phone fits one card per page, so page to the first bookmarked word.
   const card = page.getByRole("article", { name: "het perron" }).filter({ hasText: courseTitle });
   await expect(page.getByRole("heading", { name: "Your words" })).toBeVisible();

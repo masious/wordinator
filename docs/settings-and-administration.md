@@ -1,5 +1,7 @@
 # Settings and administration
 
+> Current scope: only the account settings surface at `/settings` remains in the product shell. Group and member administration below is retired behavior retained as migration history while its compatibility endpoints still exist; every `/groups/$groupId/settings/...` route now redirects to `/settings`.
+
 Status: shipped on 2026-10-06. See the [roadmap](roadmap.md#settings-split).
 
 This document owns how Settings is divided into pages, who sees each page, the creator's membership administration page, and the interactive image cropper. Field rules stay with their current owners: account fields in [profiles-and-settings.md](profiles-and-settings.md), membership states and creator powers in [groups-and-membership.md](groups-and-membership.md), credentials in [authentication.md](authentication.md).

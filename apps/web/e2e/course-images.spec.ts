@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
+import { signIn } from "./auth";
 import { courseApi, openLesson, paragraph, seedLesson } from "./lessonSeed";
 
 // A 4×4 opaque PNG, small enough to inline and real enough for the browser to decode and re-encode.
@@ -8,14 +8,13 @@ const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAAEElEQVR
 test("an author uploads a lesson image, must add alt text, and readers see it", async ({ page }, testInfo) => {
   test.setTimeout(90_000);
   const suffix = `images-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
-  await page.goto("/"); await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL); await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD); await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
+  await signIn(page);
   const api = courseApi(page);
   const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Beelden" });
   await api(`/courses/${course.id}/visibility`, { status: "published" });
   await seedLesson(page, course.id, `${suffix} lesson`, [paragraph("De keuken.")], { publish: false });
 
-  await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
+  await page.goto(`/courses/${course.id}`);
   await openLesson(page);
   await page.getByRole("button", { name: "Edit lesson 1" }).click();
   await page.getByText("De keuken.").click();

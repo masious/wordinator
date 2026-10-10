@@ -1,11 +1,6 @@
 import { expect, test, type Page } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
+import { signIn } from "./auth";
 import { courseApi, paragraph, seedLesson, openLesson } from "./lessonSeed";
-
-async function signIn(page: Page) {
-  await page.goto("/"); await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL); await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD); await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
-}
 
 const saved = (page: Page) => expect(page.getByRole("region", { name: "Lesson saving and publishing" }).getByRole("status").first()).toHaveText("Saved", { timeout: 10_000 });
 // Puts the caret at the end of the editor paragraph holding `text` and types. macOS has no End key for line ends, and a
@@ -37,7 +32,7 @@ test("two editors of the same lesson merge by block and choose when both changed
   const lessonId = await seedLesson(first, course.id, `${suffix} lesson`, [paragraph("Eerste zin."), paragraph("Tweede zin.")], { publish: false });
 
   for (const page of [first, second]) {
-    await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
+    await page.goto(`/courses/${course.id}`);
     await openLesson(page);
     await page.getByRole("button", { name: "Edit lesson 1" }).click();
     await expect(page.locator(".bn-editor").getByText("Tweede zin.")).toBeVisible();

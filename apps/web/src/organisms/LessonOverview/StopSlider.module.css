@@ -8,6 +8,8 @@
 .help{margin:0;color:var(--color-foreground-muted)}
 .badge{display:grid;place-items:center;width:4rem;height:4rem;font-size:var(--text-2xl);color:var(--color-success);background:var(--color-success-surface);border-radius:var(--radius-pill);animation:pop var(--motion-overlay) var(--ease-physical)}
 .actions{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-3)}
+.badge[data-custom]{width:calc(var(--text-4xl) * 1.9);height:calc(var(--text-4xl) * 1.9);font-size:var(--text-4xl)}
 @keyframes pop{0%{transform:scale(.6);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
 @media(prefers-reduced-motion:reduce){.badge{animation:none}}
 @media(max-width:40em){.nav>*,.actions>*{flex:1}}
+.wordsStep{display:grid;justify-items:start;gap:var(--space-3);padding:var(--space-4) var(--space-5);background:var(--color-words-surface);border-radius:var(--radius-md)}

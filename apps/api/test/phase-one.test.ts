@@ -71,51 +71,61 @@ describe("Phase 1 API", () => {
     expect(await session.json()).toEqual({ status: "signedOut" });
   });
 
-  it("registers through an invitation, remains pending, and enters after creator approval", async () => {
+  it("registers immediately and enters the library after required account setup", async () => {
     const creator = await seedGroup("alpha");
     const registration = await jsonRequest("/api/auth/register", {
-      invitationToken: creator.token,
       email: "new@example.test",
       password: "new-user-password",
-      displayName: "New learner",
     });
     expect(registration.status).toBe(201);
     const memberCookie = registration.headers.get("set-cookie")!.split(";", 1)[0]!;
-    const pendingSession = await SELF.fetch("https://wordinator.test/api/session", { headers: { cookie: memberCookie } });
-    const pending = sessionResponseSchema.parse(await pendingSession.json());
-    expect(pending.status).toBe("signedIn");
-    if (pending.status !== "signedIn") throw new Error("expected signed-in session");
-    expect(pending.groups).toEqual([]);
-    expect(pending.requests[0]?.state).toBe("pending");
+    const setupSession = sessionResponseSchema.parse(await (await SELF.fetch("https://wordinator.test/api/session", { headers: { cookie: memberCookie } })).json());
+    expect(setupSession.status).toBe("signedIn");
+    if (setupSession.status !== "signedIn") throw new Error("expected signed-in session");
+    expect(setupSession.user.onboardingComplete).toBe(false);
+    expect(setupSession.groups[0]?.id).toBe(creator.groupId);
+    expect(setupSession.requests).toEqual([]);
+    expect((await SELF.fetch(`https://wordinator.test/api/groups/${creator.groupId}`, { headers: { cookie: memberCookie } })).status).toBe(403);
 
-    const creatorCookie = await signIn("alpha@example.test");
-    const shell = await SELF.fetch(`https://wordinator.test/api/groups/${creator.groupId}`, { headers: { cookie: creatorCookie } });
-    const shellBody = await shell.json<{ pendingRequestCount: number }>();
-    expect(shellBody.pendingRequestCount).toBe(1);
-    const admin = await SELF.fetch(`https://wordinator.test/api/groups/${creator.groupId}/memberships`, { headers: { cookie: creatorCookie } });
-    const adminBody = await admin.json<{ pending: Array<{ id: string }> }>();
-    const approval = await jsonRequest(`/api/groups/${creator.groupId}/memberships/${adminBody.pending[0]!.id}`, { decision: "accept" }, creatorCookie, "PATCH");
-    expect(approval.status).toBe(200);
-    const acceptedSession = await SELF.fetch("https://wordinator.test/api/session", { headers: { cookie: memberCookie } });
-    const accepted = sessionResponseSchema.parse(await acceptedSession.json());
-    expect(accepted.status === "signedIn" && accepted.groups[0]?.id).toBe(creator.groupId);
+    expect((await jsonRequest("/api/auth/complete-onboarding", { username: "new_learner" }, memberCookie)).status).toBe(200);
+    const readySession = sessionResponseSchema.parse(await (await SELF.fetch("https://wordinator.test/api/session", { headers: { cookie: memberCookie } })).json());
+    expect(readySession.status === "signedIn" && readySession.user.username).toBe("new_learner");
+    expect((await SELF.fetch(`https://wordinator.test/api/groups/${creator.groupId}`, { headers: { cookie: memberCookie } })).status).toBe(200);
   });
 
-  it("allows a rejected membership to request again without creating a duplicate", async () => {
+  it("rejects invalid, duplicate, and premature registrations", async () => {
+    expect((await jsonRequest("/api/auth/register", { email: "early@example.test", password: "early-password" })).status).toBe(409);
+    await seedGroup("alpha");
+    expect((await jsonRequest("/api/auth/register", { email: "not-an-email", password: "valid-password" })).status).toBe(400);
+    expect((await jsonRequest("/api/auth/register", { email: "short@example.test", password: "123" })).status).toBe(400);
+    const duplicate = await jsonRequest("/api/auth/register", { email: "ALPHA@example.test", password: "valid-password" });
+    expect(duplicate.status).toBe(409);
+    expect(await duplicate.json()).toMatchObject({ error: { code: "ACCOUNT_EXISTS" } });
+  });
+
+  it("guards account setup with authentication, validation, and case-insensitive username uniqueness", async () => {
     const creator = await seedGroup("alpha");
-    const registration = await jsonRequest("/api/auth/register", {
-      invitationToken: creator.token,
-      email: "retry@example.test",
-      password: "retry-password",
-      displayName: "Retry learner",
-    });
-    const memberCookie = registration.headers.get("set-cookie")!.split(";", 1)[0]!;
-    const member = await env.DB.prepare("SELECT id FROM users WHERE normalized_email = ?").bind("retry@example.test").first<{ id: string }>();
-    const creatorCookie = await signIn("alpha@example.test");
-    expect((await jsonRequest(`/api/groups/${creator.groupId}/memberships/${member!.id}`, { decision: "reject" }, creatorCookie, "PATCH")).status).toBe(200);
-    expect((await jsonRequest(`/api/invitations/${creator.token}/request`, {}, memberCookie)).status).toBe(200);
-    const rows = await env.DB.prepare("SELECT state FROM memberships WHERE group_id = ? AND user_id = ?").bind(creator.groupId, member!.id).all<{ state: string }>();
-    expect(rows.results).toEqual([{ state: "pending" }]);
+    expect((await jsonRequest("/api/auth/complete-onboarding", { username: "anon_user" })).status).toBe(401);
+    const register = async (email: string) => {
+      const response = await jsonRequest("/api/auth/register", { email, password: "setup-password" });
+      expect(response.status).toBe(201);
+      return response.headers.get("set-cookie")!.split(";", 1)[0]!;
+    };
+    const first = await register("first@example.test");
+    const second = await register("second@example.test");
+    const coursesPath = `/api/groups/${creator.groupId}/courses`;
+    const blocked = await SELF.fetch(`https://wordinator.test${coursesPath}`, { headers: { cookie: first } });
+    expect(blocked.status).toBe(403);
+    expect(await blocked.json()).toMatchObject({ error: { code: "ONBOARDING_REQUIRED" } });
+    for (const username of ["ab", "has space", "no-dashes", "x".repeat(31), ""]) {
+      expect((await jsonRequest("/api/auth/complete-onboarding", { username }, first)).status).toBe(400);
+    }
+    expect((await jsonRequest("/api/auth/complete-onboarding", { username: "Taken_Name" }, first)).status).toBe(200);
+    const taken = await jsonRequest("/api/auth/complete-onboarding", { username: "taken_name" }, second);
+    expect(taken.status).toBe(409);
+    expect(await taken.json()).toMatchObject({ error: { code: "USERNAME_TAKEN" } });
+    expect((await SELF.fetch(`https://wordinator.test${coursesPath}`, { headers: { cookie: second } })).status).toBe(403);
+    expect((await SELF.fetch(`https://wordinator.test${coursesPath}`, { headers: { cookie: first } })).status).toBe(200);
   });
 
   it("isolates group reads and creator decisions across tenants", async () => {

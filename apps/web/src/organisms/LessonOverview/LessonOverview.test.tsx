@@ -41,6 +41,32 @@ describe("Lesson overview model", () => {
     expect(overview.questions).toBe(49);
   });
 
+  it("gives every stop a specific category from its contents or its practice instruction", async () => {
+    const overview = await load();
+    expect(overview.stops.map((stop) => [stop.title, stop.category])).toEqual([
+      ["Mijn dag", "intro"],
+      ["Story: Ontbijt in de keuken", "story"],
+      ["The present tense: singular and plural", "grammar"],
+      ["We and ze", "topic"],
+      ["Jullie", "vocabulary"],
+      ["Spelling: just use the infinitive", "vocabulary"],
+      ["Irregular verbs", "vocabulary"],
+      ["How often?", "grammar"],
+      ["In the morning, afternoon, evening", "pronunciation"],
+      ["Story: Op kantoor", "story"],
+      ["Ons, onze, jullie, hun", "grammar"],
+      ["Fill in the verb", "fillIn"],
+      ["At breakfast", "conversation"],
+      ["Word order: how often?", "wordOrder"],
+      ["From singular to plural", "rewrite"],
+      ["Translate into Dutch", "translate"],
+      ["Translate into English", "translate"],
+      ["Reading: Een dag bij Noor en Sofia", "reading"],
+      ["Your turn", "writing"],
+      ["Summary", "summary"],
+    ]);
+  });
+
   it("marks stops done, current, or upcoming from the reached step", async () => {
     const overview = await load();
     const second = overview.stops[1]!;

@@ -13,6 +13,8 @@ export type AuthUser = {
   id: string;
   avatarKey: string | null;
   displayName: string;
+  username: string | null;
+  onboardingComplete: boolean;
   mustChangePassword: boolean;
 };
 
@@ -99,13 +101,22 @@ export async function readSession(context: Context, database: Database, secret: 
   const payload = decodeSession(signed);
   if (!payload || payload.expiresAt <= Date.now()) return null;
   const [user] = await database
-    .select({ id: users.id, displayName: users.displayName, avatarKey: users.avatarKey, mustChangePassword: users.mustChangePassword })
+    .select({
+      id: users.id,
+      displayName: users.displayName,
+      username: users.username,
+      avatarKey: users.avatarKey,
+      onboardingCompletedAt: users.onboardingCompletedAt,
+      mustChangePassword: users.mustChangePassword,
+    })
     .from(users)
     .where(eq(users.id, payload.userId))
     .limit(1);
   if (!user) return null;
   await setSession(context, user.id, secret);
-  return user;
+  // Pre-migration fixtures and operator-created accounts already have a real display name. Open-registration
+  // accounts use the reserved provisional name until the required setup step records a username.
+  return { ...user, onboardingComplete: user.onboardingCompletedAt !== null || user.displayName !== "New learner" };
 }
 
 export function newInvitationToken(): string {

@@ -43,6 +43,19 @@
   --palette-lesson-purple-soft: #e7ddf0;
   --palette-lesson-pink: #a2477a;
   --palette-lesson-pink-soft: #f4d9e6;
+  /* Vivid accents: saturated hues that mark categories on dark or light canvases alike, so they keep one value in both schemes.
+     White sits on every hue except yellow, which takes the fixed dark ink. */
+  --palette-vivid-yellow: #f5b301;
+  --palette-vivid-orange: #f26b1d;
+  --palette-vivid-red: #e5383b;
+  --palette-vivid-pink: #e0377f;
+  --palette-vivid-violet: #7b4cf0;
+  --palette-vivid-blue: #2d6ff0;
+  --palette-vivid-teal: #0e9488;
+  --palette-vivid-green: #1f9d55;
+  --palette-vivid-slate: #56627a;
+  --palette-vivid-on: #ffffff;
+  --palette-vivid-on-yellow: #2d2622;
 
   /* Semantic color roles */
   --color-page: var(--palette-paper);
@@ -113,6 +126,17 @@
   --color-lesson-purple-surface: var(--palette-lesson-purple-soft);
   --color-lesson-pink-text: var(--palette-lesson-pink);
   --color-lesson-pink-surface: var(--palette-lesson-pink-soft);
+  --color-vivid-yellow: var(--palette-vivid-yellow);
+  --color-vivid-orange: var(--palette-vivid-orange);
+  --color-vivid-red: var(--palette-vivid-red);
+  --color-vivid-pink: var(--palette-vivid-pink);
+  --color-vivid-violet: var(--palette-vivid-violet);
+  --color-vivid-blue: var(--palette-vivid-blue);
+  --color-vivid-teal: var(--palette-vivid-teal);
+  --color-vivid-green: var(--palette-vivid-green);
+  --color-vivid-slate: var(--palette-vivid-slate);
+  --color-vivid-text: var(--palette-vivid-on);
+  --color-vivid-text-on-yellow: var(--palette-vivid-on-yellow);
   /* Callout tones: one lesson surface per callout variant. */
   --color-callout-hint: var(--color-lesson-yellow-surface);
   --color-callout-important: var(--color-lesson-blue-surface);

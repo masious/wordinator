@@ -25,6 +25,6 @@ export default function CoursePostPreview({ course, groupId, linked = true }: { 
     </>
   );
   return linked
-    ? <Link className={styles.preview} to="/groups/$groupId/courses/$courseId" params={{ groupId, courseId: course.id }}>{content}</Link>
+    ? <Link className={styles.preview} to="/courses/$courseSlug" params={{ courseSlug: course.id }}>{content}</Link>
     : <div className={styles.preview}>{content}</div>;
 }

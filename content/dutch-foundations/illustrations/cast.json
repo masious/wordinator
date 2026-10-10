@@ -1,0 +1,38 @@
+{
+  "sofia": {
+    "name": "Sofia",
+    "label": "the young woman with wavy dark-brown hair and a mustard cardigan",
+    "appearance": "Sofia, a 28-year-old Spanish woman: light olive skin, brown eyes, shoulder-length wavy dark-brown hair worn loose, slim average build, small gold hoop earrings, no glasses.",
+    "outfit": "Mustard-yellow knitted cardigan over a plain white T-shirt, dark-blue jeans, white sneakers."
+  },
+  "noor": {
+    "name": "Noor",
+    "label": "the young woman with a blonde ponytail and round glasses",
+    "appearance": "Noor, a 25-year-old Dutch woman: fair skin with light freckles, blue eyes, straight light-blonde hair in a high ponytail, round tortoiseshell glasses, tall and slender.",
+    "outfit": "Long-sleeved Breton top with white and sage-green horizontal stripes, black jeans, dark-green canvas sneakers."
+  },
+  "daan": {
+    "name": "Daan",
+    "label": "the tall man with short light-brown hair and a short beard",
+    "appearance": "Daan, a 32-year-old Dutch man: light skin, short neatly combed light-brown hair, short trimmed beard, tall and lean.",
+    "outfit": "Navy-blue rain jacket over a grey hoodie, dark chinos, brown leather shoes; often carries a black bike helmet."
+  },
+  "henk": {
+    "name": "Henk",
+    "label": "the older man with white hair, a moustache and a terracotta sweater",
+    "appearance": "Henk, a 67-year-old Dutch man: ruddy light skin, short white hair, bushy white moustache, round friendly face, sturdy build.",
+    "outfit": "Terracotta-red knitted sweater, beige trousers; at his market stall a dark-blue apron."
+  },
+  "ingrid": {
+    "name": "Ingrid",
+    "label": "the woman with a grey bob and a navy blazer",
+    "appearance": "Ingrid, a 54-year-old Dutch woman: light skin, sleek chin-length grey bob, slim, upright posture.",
+    "outfit": "Navy-blue blazer over a light-blue blouse, grey trousers, black flat shoes; carries a leather folder."
+  },
+  "ahmed": {
+    "name": "Ahmed",
+    "label": "the man with short black hair, a black beard and a dark-green work jacket",
+    "appearance": "Ahmed, a 40-year-old Dutch-Moroccan man: medium-brown skin, short black hair, neat black beard, friendly smile, medium build.",
+    "outfit": "Dark-green work jacket with rolled-up sleeves over a grey T-shirt, dark work trousers, black boots."
+  }
+}

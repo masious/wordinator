@@ -23,11 +23,9 @@ function Notice({ item, restricted = false }: { item: Notification; restricted?:
   </>;
   return <article className={`${styles.notice} ${item.readAt ? styles.read : ""}`}>
     {item.targetAvailable && item.postId
-      ? <Link onClick={() => !item.readAt && markRead.mutate()} to="/groups/$groupId/posts/$postId" params={{ groupId: item.groupId, postId: item.postId }} search={item.commentId ? { comment: item.commentId } : {}}>{content}</Link>
+      ? <Link onClick={() => !item.readAt && markRead.mutate()} to="/journal/$postId" params={{ postId: item.postId }} search={item.commentId ? { comment: item.commentId } : {}}>{content}</Link>
       : item.targetAvailable && item.courseId && !restricted
-        ? <Link onClick={() => !item.readAt && markRead.mutate()} to="/groups/$groupId/courses/$courseId" params={{ groupId: item.groupId, courseId: item.courseId }}>{content}</Link>
-      : item.kind === "join_requested" && !restricted
-        ? <Link onClick={() => !item.readAt && markRead.mutate()} to="/groups/$groupId/settings/members" params={{ groupId: item.groupId }}>{content}</Link>
+        ? <Link onClick={() => !item.readAt && markRead.mutate()} to="/courses/$courseSlug" params={{ courseSlug: item.courseId }}>{content}</Link>
         : <div>{content}</div>}
     {!item.readAt && <Button variant="quiet" loading={markRead.isPending} onClick={() => markRead.mutate()}>{t("notifications.markRead")}</Button>}
   </article>;

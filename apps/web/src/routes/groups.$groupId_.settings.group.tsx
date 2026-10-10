@@ -1,10 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { GroupSettingsPage } from "../pages/SettingsPages";
-import { requireCreatorSettings } from "../settingsRoutes";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
+// Retired group namespace: the product has one global library, so legacy links land on the global equivalent.
 export const Route = createFileRoute("/groups/$groupId_/settings/group")({
-  beforeLoad: ({ context, params }) => requireCreatorSettings(context.queryClient, params.groupId),
-  component: GroupSettingsRoute,
+  beforeLoad: () => { throw redirect({ to: "/settings", replace: true }); },
 });
-
-function GroupSettingsRoute() { const { groupId } = Route.useParams(); return <GroupSettingsPage groupId={groupId} />; }

@@ -74,7 +74,7 @@ export default function PostCard({
         queryClient.invalidateQueries({ queryKey: ["profile-posts", groupId] }),
       ]);
       if (!compact)
-        await navigate({ to: "/groups/$groupId", params: { groupId } });
+        await navigate({ to: "/journal" });
     },
   });
   const body =
@@ -150,8 +150,8 @@ export default function PostCard({
           {compact ? (
             <Link
               className={styles.cardLink}
-              to="/groups/$groupId/posts/$postId"
-              params={{ groupId, postId: post.id }}
+              to="/journal/$postId"
+              params={{ postId: post.id }}
             >
               {content}
             </Link>

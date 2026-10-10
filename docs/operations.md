@@ -23,7 +23,7 @@ Run these commands from the repository root:
 - `pnpm db:generate` — generate a reviewed Drizzle migration after a schema change
 - `pnpm db:migrate:local` — apply committed migrations to local D1
 - `pnpm db:migrate:remote` — apply committed migrations to production D1 explicitly
-- `pnpm bootstrap --local` or `pnpm bootstrap --remote` — create the first account, group, and creator membership against one explicit target
+- `pnpm bootstrap --local` or `pnpm bootstrap --remote` — create the first account and the single course-library record against one explicit target
 - `pnpm set-password --local <email>` or `pnpm set-password --remote <email>` — replace an existing account password against one explicit target
 
 Do not implement an ambiguous `deploy` or `migrate` command that silently chooses production.
@@ -36,7 +36,7 @@ Its D1 fixture is isolated under `.wrangler/e2e`; running `pnpm test:e2e` does n
 1. Run `pnpm install`.
 2. Copy `apps/api/.dev.vars.example` to the ignored `apps/api/.dev.vars` and replace the placeholder with a strong local cookie-signing secret. For [lesson speech](speech.md), also set `AZURE_SPEECH_KEY` there; without it the speech worker does nothing. `AZURE_SPEECH_REGION` is a plain variable in `wrangler.jsonc`. `wrangler dev` does not fire cron triggers on its own: start it with `--test-scheduled` and request `/__scheduled?cron=*+*+*+*+*` to run the speech worker once.
 3. Run `pnpm db:migrate:local` to create and migrate a fresh local D1 database.
-4. Run `pnpm bootstrap --local` and enter the first account and group details.
+4. Run `pnpm bootstrap --local` and enter the first account and library language.
 5. Run `pnpm dev`.
 6. Open `http://localhost:5173` and sign in with the bootstrap account.
 
@@ -89,14 +89,12 @@ Use `--local` instead of `--remote` for the local database. The same statement r
 
 The interactive bootstrap tool requires exactly one of `--local` or `--remote`. It prompts for:
 
-- First user email, password, and display name
-- First group name
-- Target language: Dutch or German
-- Optional group icon may be added later in the UI
+- First user email, password, and username (3–30 letters, numbers, or underscores)
+- Library language: Dutch or German, used for lesson speech
 
-It validates that bootstrap has not already created equivalent records, hashes the password, creates the user/group/active creator membership atomically where possible, and never echoes the password after input.
+It validates that bootstrap has not already created equivalent records, hashes the password, creates the already-onboarded user plus the single library record and its legacy membership row atomically where possible, and never echoes the password after input.
 
-Run it from the workspace root as `pnpm bootstrap --local` or `pnpm bootstrap --remote`. Supplying both targets, neither target, or any extra argument fails before database access. The tool checks that the target has no user records, writes the three records in one Wrangler invocation, removes its mode-`0600` temporary SQL file, and prints the initial reusable invitation path after success. Wrangler's local D1 executor does not accept explicit transaction statements; if any bootstrap statement fails, the tool makes a scoped cleanup pass using the newly generated user and group IDs.
+Run it from the workspace root as `pnpm bootstrap --local` or `pnpm bootstrap --remote`. Supplying both targets, neither target, or any extra argument fails before database access. The tool checks that the target has no user records, writes the three records in one Wrangler invocation, removes its mode-`0600` temporary SQL file, and confirms that open registration is available. Open registration (`POST /api/auth/register`) fails with `LIBRARY_NOT_READY` until bootstrap has created the library record. Wrangler's local D1 executor does not accept explicit transaction statements; if any bootstrap statement fails, the tool makes a scoped cleanup pass using the newly generated user and group IDs.
 
 ## Operator password setting
 

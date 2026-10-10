@@ -297,11 +297,11 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
     setProblems([]); clearLocalLessonDraft(localKey);
     await afterPublishChange(next);
   });
-  // Publishing deletes the threads of practices in neither document, so the owner confirms when any of them has answers.
+  // Publishing deletes the progress of practices in neither document, so the owner confirms when anyone has started one of them.
   const answeredRemovals = () => {
     const parsed = toLessonDocument(editor.document as unknown as EditorBlock[]);
     const kept = new Set(parsed.success ? collectPracticeIds(parsed.data) : []);
-    return Object.entries(lesson.answerCounts).filter(([id, count]) => count > 0 && !kept.has(id)).length;
+    return Object.entries(lesson.practiceProgress).filter(([id, progress]) => progress.started > 0 && !kept.has(id)).length;
   };
   const requestPublish = () => { if (answeredRemovals() > 0) setConfirm("removesAnswers"); else void publish(); };
   const discard = () => run("discard", async () => {

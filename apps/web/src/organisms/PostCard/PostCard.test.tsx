@@ -82,7 +82,7 @@ describe("PostCard feed card", () => {
   it("makes the byline and body one link to the post, with the menu outside it and no footer on wide screens", async () => {
     renderCard({ edit: true, delete: true });
     const link = await screen.findByRole("link");
-    expect(link).toHaveAttribute("href", `/groups/${groupId}/posts/${post.id}`);
+    expect(link).toHaveAttribute("href", `/journal/${post.id}`);
     expect(link).toHaveTextContent(/Ada shared a sentence .+\.Goedemorgen$/);
     expect(link).not.toContainElement(screen.getByRole("button", { name: "More Actions" }));
     expect(screen.queryByText("2 responses")).not.toBeInTheDocument();
@@ -139,14 +139,14 @@ describe("PostCard course posts", () => {
   it("links the feed card to the post rather than nesting a course link", async () => {
     renderCourse(course, true);
     const link = await screen.findByRole("link", { name: /Deutsch für Anfänger/ });
-    expect(link).toHaveAttribute("href", `/groups/${groupId}/posts/${post.id}`);
+    expect(link).toHaveAttribute("href", `/journal/${post.id}`);
     expect(screen.getAllByRole("link")).toHaveLength(1);
   });
 
   it("links to the course with its title, level, and summary on the post page", async () => {
     renderCourse(course);
     const link = await screen.findByRole("link", { name: /Deutsch für Anfänger/ });
-    expect(link).toHaveAttribute("href", `/groups/${groupId}/courses/${course.id}`);
+    expect(link).toHaveAttribute("href", `/courses/${course.id}`);
     expect(screen.getByText("Published a new course")).toBeInTheDocument();
     expect(screen.getByText("A1")).toBeInTheDocument();
     expect(screen.getByText("Erste Schritte")).toBeInTheDocument();

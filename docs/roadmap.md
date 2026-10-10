@@ -1,5 +1,17 @@
 # Roadmap
 
+## Global course-library flow — completed 2026-10-10
+
+- Open email/password registration replaces invitation-originated signup and creator approval.
+- Required first-use setup collects a unique username and prominently offers an optional avatar.
+- The authenticated shell now exposes global Courses, Words, and Settings destinations. Course and lesson URLs no longer contain a group namespace.
+- Viewer progress is private in the course UI. The journal stays as one global feed: Journal is the third navigation tab (`/journal`, posts at `/journal/:postId`), followed by Notices (`/notifications`). The member directory, group switching, and group administration are absent from the primary flow.
+- Migration `0020_global_accounts.sql` adds username and onboarding state. Historical group columns and scoped API handlers remain as a compatibility bridge until production course/lesson data can be rebuilt safely.
+- Every legacy `/groups/...` web route redirects to its global equivalent (`/courses`, `/courses/:courseId`, lesson pages, `/words`, `/settings`), and `/invite/:token` redirects to `/`. `pnpm bootstrap` now asks for a username and library language and creates the single library record that open registration requires.
+- Playwright moved to shared `e2e/auth.ts` helpers. Journal, discussion, notices, and course-feed specs run against the global routes; member-administration specs and the empty-journal visual baselines were removed.
+- Readable course and lesson URLs (completed 2026-10-10): migration `0021_course_slugs.sql` adds stable title slugs, routes are `/courses/:courseSlug` and `/courses/:courseSlug/lessons/:lessonSlug`, and ID links redirect. See [readable URLs](courses.md#readable-urls).
+- Remaining cleanup, tracked here: delete the now-unrouted member-directory, profile, and group-settings page modules and their API handlers once the storage bridge is retired.
+
 The initial delivery is ordered by dependency. Completion means code, tests, migrations, and affected documentation are all complete. Post-launch items are intentionally unprioritized until real use provides evidence.
 
 ## Phase 0 — Workspace and platform foundation (completed)
@@ -148,7 +160,8 @@ The [courses blueprint](courses.md) owns every course rule. Each phase is comple
 
 - **Practice answer check** (completed 2026-10-08): Enter checks a practice answer through `POST .../blocks/:blockId/check`, which confirms a match with an animated confirmation and answers a miss with the author's version as a reference; fill-in items with several blanks get one field per blank. See [practice answers](courses.md#practice-answers).
 - **Lesson pages** (approved and completed 2026-10-08): each lesson has its own page at `/groups/$groupId/courses/$courseId/lessons/$lessonId`; the course page lists lessons as links instead of showing their content, and a practice on the lesson page lists at most three prompts with an Answer button that opens the answer set and thread in a dialog. See [lesson pages](courses.md#lesson-pages).
-- **Lesson overview prototype** (experimental, started 2026-10-08, not approved): a development-only per-lesson overview road reading authored lesson files, to settle the design before any data layer or API. See [lesson overview](courses.md#lesson-overview-prototype).
+- **Practice progress** (approved and completed 2026-10-10, migration `0022_course_practice_progress.sql` not yet applied remotely): practice answer threads, reveal, replies, and reactions are retired; the server records only how many questions each learner answered (highest count wins), Done or Finish later and closing the answer dialog both save it, the player saves it when leaving a question, and a practice shows how many people are done and the viewer's questions left. Existing shared answer sets became their authors' progress and were deleted. Beside the New words panel on wide screens the answer dialog is docked over the reading column. See [practice answers](courses.md#practice-answers).
+- **Lesson overview prototype** (experimental, started 2026-10-08, not approved): a development-only per-lesson overview road reading authored lesson files, to settle the design before any data layer or API; a zigzag variation with a docked section panel lives at `/2overview` (added 2026-10-10). See [lesson overview](courses.md#lesson-overview-prototype).
 
 ## Settings split
 

@@ -59,8 +59,8 @@ function CourseCover({ course, className }: { course: Course; className?: string
   return <div aria-hidden="true" className={`${styles.cover} ${className ?? ""}`}>{course.coverUrl ? <img alt="" src={course.coverUrl} /> : <span>{course.title.slice(0, 1)}</span>}</div>;
 }
 
-function CourseCard({ course, groupId }: { course: Course; groupId: string }) {
-  return <Link className={styles.card} to="/groups/$groupId/courses/$courseId" params={{ groupId, courseId: course.id }}>
+function CourseCard({ course }: { course: Course }) {
+  return <Link className={styles.card} to="/courses/$courseSlug" params={{ courseSlug: course.slug }}>
     <CourseCover course={course} />
     <div className={styles.cardBody}>
       <StatusChip status={course.status} />
@@ -81,7 +81,7 @@ export function CourseLibraryPage({ groupId }: { groupId: string }) {
     mutationFn: (input: CourseInput) => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses`, courseResponseSchema, { method: "POST", body: json(input) }),
     onSuccess: async ({ course }) => {
       await queryClient.invalidateQueries({ queryKey: ["courses", groupId] });
-      await navigate({ to: "/groups/$groupId/courses/$courseId", params: { groupId, courseId: course.id } });
+      await navigate({ to: "/courses/$courseSlug", params: { courseSlug: course.slug } });
     },
   });
   if (session.isPending || courses.isPending) return <main className={shellStyles.center}><LoadingState label={t("courses.loading")} /></main>;
@@ -90,7 +90,7 @@ export function CourseLibraryPage({ groupId }: { groupId: string }) {
   return <GroupFrame groupId={groupId} session={session.data}><div className={styles.stack}>
     <PageHeader eyebrow={<LabelChip>{t("courses.eyebrow")}</LabelChip>} title={t("courses.title")} intro={t("courses.intro")} actions={<Button onClick={() => setCreateOpen(true)}>{t("courses.create")}</Button>} />
     {courses.isError ? <ErrorState title={t("courses.unavailable")} /> : items.length
-      ? <div className={styles.library}>{items.map((course) => <CourseCard key={course.id} course={course} groupId={groupId} />)}</div>
+      ? <div className={styles.library}>{items.map((course) => <CourseCard key={course.id} course={course} />)}</div>
       : <Surface><EmptyState title={t("courses.emptyTitle")} action={<Button onClick={() => setCreateOpen(true)}>{t("courses.create")}</Button>}>{t("courses.emptyBody")}</EmptyState></Surface>}
     {courses.hasNextPage && <Button variant="secondary" loading={courses.isFetchingNextPage} onClick={() => void courses.fetchNextPage()}>{t("courses.loadMore")}</Button>}
     <AdaptiveDialog opened={createOpen} onClose={() => setCreateOpen(false)} title={t("courses.createTitle")}>
@@ -118,7 +118,7 @@ export function CoursePage({ groupId, courseId }: { groupId: string; courseId: s
   const restore = useMutation({ mutationFn: () => apiRequest(`${coursePath(groupId, courseId)}/restore`, courseResponseSchema, { method: "POST" }), onSuccess: applied });
   if (session.isPending || course.isPending) return <main className={shellStyles.center}><LoadingState label={t("courses.loadingCourse")} /></main>;
   if (session.data?.status !== "signedIn") return null;
-  const back = <Link className={styles.back} to="/groups/$groupId/courses" params={{ groupId }}>{t("courses.backToLibrary")}</Link>;
+  const back = <Link className={styles.back} to="/courses">{t("courses.backToLibrary")}</Link>;
   if (course.isError) return <GroupFrame groupId={groupId} session={session.data}><ErrorState title={t("courses.courseUnavailable")} action={back} /></GroupFrame>;
   const data = course.data.course; const archived = data.status === "archived";
   return <GroupFrame groupId={groupId} session={session.data}><div className={styles.stack}>
@@ -171,11 +171,11 @@ export function LessonPage({ groupId, courseId, lessonId }: { groupId: string; c
   if (session.isPending || course.isPending) return <main className={shellStyles.center}><LoadingState label={t("courses.lessons.loading")} /></main>;
   if (session.data?.status !== "signedIn") return null;
   if (course.isError) {
-    const back = <Link className={styles.back} to="/groups/$groupId/courses" params={{ groupId }}>{t("courses.backToLibrary")}</Link>;
+    const back = <Link className={styles.back} to="/courses">{t("courses.backToLibrary")}</Link>;
     return <GroupFrame groupId={groupId} session={session.data}><ErrorState title={t("courses.courseUnavailable")} action={back} /></GroupFrame>;
   }
   return <GroupFrame groupId={groupId} session={session.data}><div className={styles.stack}>
-    <Link className={styles.back} to="/groups/$groupId/courses/$courseId" params={{ groupId, courseId }}>{t("courses.lessons.backToCourse", { title: course.data.course.title })}</Link>
+    <Link className={styles.back} to="/courses/$courseSlug" params={{ courseSlug: course.data.course.slug }}>{t("courses.lessons.backToCourse", { title: course.data.course.title })}</Link>
     <LessonView key={lessonId} groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} lessonId={lessonId} dataUpdatedAt={course.dataUpdatedAt} />
   </div></GroupFrame>;
 }

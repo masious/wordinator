@@ -1,16 +1,6 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
-import { coursesQueryOptions, groupQueryOptions, sessionQueryOptions } from "../api";
-import { CourseLibraryPage } from "../pages/CoursePages";
 
+// Retired group namespace: the product has one global library, so legacy links land on the global equivalent.
 export const Route = createFileRoute("/groups/$groupId_/courses")({
-  beforeLoad: async ({ context }) => {
-    const session = await context.queryClient.ensureQueryData(sessionQueryOptions());
-    if (session.status !== "signedIn" || session.user.mustChangePassword) throw redirect({ to: "/" });
-  },
-  loader: async ({ context, params }) => Promise.all([
-    context.queryClient.ensureQueryData(groupQueryOptions(params.groupId)),
-    context.queryClient.ensureInfiniteQueryData(coursesQueryOptions(params.groupId)),
-  ]),
-  component: CourseLibraryRoute,
+  beforeLoad: () => { throw redirect({ to: "/courses", replace: true }); },
 });
-function CourseLibraryRoute() { const { groupId } = Route.useParams(); return <CourseLibraryPage groupId={groupId} />; }

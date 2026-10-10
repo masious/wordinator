@@ -1,12 +1,11 @@
 import { expect, test } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
+import { signIn } from "./auth";
 import { courseApi, openLesson, practice, seedLesson } from "./lessonSeed";
 
-test("a learner answers a practice and reveals the thread with the author's version", async ({ page }, testInfo) => {
+test("a learner answers a practice, finishes it later, and is counted as done", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
   const suffix = `practice-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
-  await page.goto("/"); await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL); await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD); await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
+  await signIn(page);
 
   // Course content is authored through the API with the signed-in session; the journey under test is practising.
   const api = courseApi(page);
@@ -16,32 +15,27 @@ test("a learner answers a practice and reveals the thread with the author's vers
     { prompt: "… een kleine keuken.", authorsVersion: ["Er is"], note: "Eén keuken." }, { prompt: "There are two bedrooms.", authorsVersion: ["Er zijn twee slaapkamers."] },
   ])]);
 
-  await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
+  await page.goto(`/courses/${course.id}`);
   await openLesson(page);
-  // The lesson page lists the prompts; answering happens in a dialog.
+  // The lesson page lists the prompts with who is done and what is left; answering happens in a dialog.
   await expect(page.getByText("Vul in of vertaal.")).toBeVisible();
   await expect(page.getByText("There are two bedrooms.")).toBeVisible();
-  await expect(page.getByText("Not answered yet")).toBeVisible();
-  await expect(page.getByRole("button", { name: "Publish answer set" })).toHaveCount(0);
+  await expect(page.getByText("Nobody done yet · 2 questions left")).toBeVisible();
   await page.getByRole("button", { name: "Answer", exact: true }).click();
   const dialog = page.getByRole("dialog", { name: "Answer the practice" });
-  await expect(dialog.getByText("0 answers are concealed")).toBeVisible();
+  await expect(dialog.getByRole("button", { name: "Reveal answers" })).toHaveCount(0);
   await expect(dialog.getByText("Er zijn twee slaapkamers.")).toHaveCount(0);
   await dialog.getByLabel(/^1\. … een kleine keuken\./).fill("Er is");
-  await dialog.getByRole("button", { name: "Publish answer set" }).click();
+  // Closing the dialog saves progress just like its button.
+  await dialog.getByRole("button", { name: "Finish later" }).click();
+  await expect(dialog).toHaveCount(0);
+  await expect(page.getByText("Nobody done yet · 1 question left")).toBeVisible();
 
-  const thread = page.getByRole("region", { name: "Practice answers" });
-  await expect(thread.getByText("Er zijn twee slaapkamers.")).toBeVisible();
-  await expect(thread.getByText("Eén keuken.")).toBeVisible();
-  const answer = thread.locator("article").filter({ hasText: "No answer" });
-  await expect(answer).toBeVisible();
-  await answer.getByRole("button", { name: "Reply" }).click(); await answer.getByLabel("Reply").fill("Goed geprobeerd!"); await answer.getByRole("button", { name: "Publish reply" }).click();
-  await expect(thread.getByText("Goed geprobeerd!")).toBeVisible();
-
-  // A new visit starts concealed again.
+  // The answers stay on this device; answering the rest makes the learner done.
   await page.reload();
   await page.getByRole("button", { name: "Answer", exact: true }).click();
-  await expect(dialog.getByText("2 answers are concealed")).toBeVisible();
-  await dialog.getByRole("button", { name: "Reveal answers" }).click();
-  await expect(page.getByText("Goed geprobeerd!")).toBeVisible();
+  await expect(dialog.getByLabel(/^1\. … een kleine keuken\./)).toHaveValue("Er is");
+  await dialog.getByLabel(/^2\. There are two bedrooms\./).fill("Er zijn twee kamers.");
+  await dialog.getByRole("button", { name: "Done" }).click();
+  await expect(page.getByText("1 person done · You’re done")).toBeVisible();
 });

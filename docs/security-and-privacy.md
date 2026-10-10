@@ -31,7 +31,7 @@ Course progress is visible to every member who can see the course: each active m
 
 Word bookmarks are private to their member: no route returns another member's bookmarks or counts them. A bookmark is readable only while its member is active in the group and can still see the course.
 
-Answer concealment, for posts and for course practice threads, is spoiler protection, not authorization. Practice authors' versions and item notes are left out of learner block payloads and are delivered with the practice thread to any member who can read the practice and reveals it. Their concealment never protects them from a member.
+Answer concealment for posts is spoiler protection, not authorization. Practice authors' versions and item notes are left out of learner block payloads; a learner sees one item's author's version only when an answer check misses, so withholding them never protects them from a member. Course practice answers are never sent to the server: it stores only how many questions each learner answered, and the answers stay in the learner's local draft.
 
 R2 objects are an explicit exception: images are public-by-URL. Unguessable keys reduce discovery but are not access control. Document this to users/operators and do not claim image confidentiality.
 

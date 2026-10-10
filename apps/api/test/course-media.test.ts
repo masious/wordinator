@@ -25,7 +25,7 @@ describe("Course cover media", () => {
       env.DB.prepare("INSERT INTO groups (id, creator_user_id, name, language, invitation_token, created_at, updated_at) VALUES (?, ?, 'Cover group', 'nl', ?, ?, ?)").bind(groupId, ownerId, "c".repeat(40), now, now),
       env.DB.prepare("INSERT INTO memberships (group_id, user_id, state, requested_at, decided_at, profile_display_name, updated_at) VALUES (?, ?, 'active', ?, ?, 'Cover owner', ?)").bind(groupId, ownerId, now, now, now),
       env.DB.prepare("INSERT INTO memberships (group_id, user_id, state, requested_at, decided_at, profile_display_name, updated_at) VALUES (?, ?, 'active', ?, ?, 'Cover member', ?)").bind(groupId, memberId, now, now, now),
-      env.DB.prepare("INSERT INTO courses (id, group_id, owner_id, title, summary, status, created_at, updated_at) VALUES (?, ?, ?, 'Course', 'Summary', 'published', ?, ?)").bind(courseId, groupId, ownerId, now, now),
+      env.DB.prepare("INSERT INTO courses (id, slug, group_id, owner_id, title, summary, status, created_at, updated_at) VALUES (?, lower(hex(randomblob(6))), ?, ?, 'Course', 'Summary', 'published', ?, ?)").bind(courseId, groupId, ownerId, now, now),
     ]);
     const owner = await signIn("cover-owner@test.local"); const member = await signIn("cover-member@test.local");
     const path = `/api/groups/${groupId}/courses/${courseId}/cover`;
@@ -53,8 +53,8 @@ describe("Course cover media", () => {
       env.DB.prepare("INSERT INTO groups (id, creator_user_id, name, language, invitation_token, created_at, updated_at) VALUES (?, ?, 'Lesson group', 'nl', ?, ?, ?)").bind(groupId, ownerId, "l".repeat(40), now, now),
       env.DB.prepare("INSERT INTO memberships (group_id, user_id, state, requested_at, decided_at, profile_display_name, updated_at) VALUES (?, ?, 'active', ?, ?, 'Lesson owner', ?)").bind(groupId, ownerId, now, now, now),
       env.DB.prepare("INSERT INTO memberships (group_id, user_id, state, requested_at, decided_at, profile_display_name, updated_at) VALUES (?, ?, 'active', ?, ?, 'Lesson reader', ?)").bind(groupId, readerId, now, now, now),
-      env.DB.prepare("INSERT INTO courses (id, group_id, owner_id, title, summary, status, created_at, updated_at) VALUES (?, ?, ?, 'Course', 'Summary', 'published', ?, ?)").bind(courseId, groupId, ownerId, now, now),
-      ...lessonIds.map((id, position) => env.DB.prepare("INSERT INTO course_lessons (id, group_id, course_id, title, position, created_by, updated_by, created_at, updated_at) VALUES (?, ?, ?, 'Lesson', ?, ?, ?, ?, ?)")
+      env.DB.prepare("INSERT INTO courses (id, slug, group_id, owner_id, title, summary, status, created_at, updated_at) VALUES (?, lower(hex(randomblob(6))), ?, ?, 'Course', 'Summary', 'published', ?, ?)").bind(courseId, groupId, ownerId, now, now),
+      ...lessonIds.map((id, position) => env.DB.prepare("INSERT INTO course_lessons (id, slug, group_id, course_id, title, position, created_by, updated_by, created_at, updated_at) VALUES (?, lower(hex(randomblob(6))), ?, ?, 'Lesson', ?, ?, ?, ?, ?)")
         .bind(id, groupId, courseId, position, ownerId, ownerId, now, now)),
     ]);
     const owner = await signIn("lesson-owner@test.local"); const reader = await signIn("lesson-reader@test.local");
@@ -111,8 +111,8 @@ describe("Course cover media", () => {
       env.DB.prepare("INSERT INTO users (id, email, normalized_email, password_hash, display_name, must_change_password, created_at, updated_at) VALUES (?, 'sweep-owner@test.local', 'sweep-owner@test.local', ?, 'Sweep owner', 0, ?, ?)").bind(ownerId, passwordHash, now, now),
       env.DB.prepare("INSERT INTO groups (id, creator_user_id, name, language, invitation_token, created_at, updated_at) VALUES (?, ?, 'Sweep group', 'nl', ?, ?, ?)").bind(groupId, ownerId, "s".repeat(40), now, now),
       env.DB.prepare("INSERT INTO memberships (group_id, user_id, state, requested_at, decided_at, profile_display_name, updated_at) VALUES (?, ?, 'active', ?, ?, 'Sweep owner', ?)").bind(groupId, ownerId, now, now, now),
-      env.DB.prepare("INSERT INTO courses (id, group_id, owner_id, title, summary, status, created_at, updated_at) VALUES (?, ?, ?, 'Course', 'Summary', 'published', ?, ?)").bind(courseId, groupId, ownerId, now, now),
-      env.DB.prepare("INSERT INTO course_lessons (id, group_id, course_id, title, position, created_by, updated_by, created_at, updated_at) VALUES (?, ?, ?, 'Lesson', 0, ?, ?, ?, ?)").bind(lessonId, groupId, courseId, ownerId, ownerId, now, now),
+      env.DB.prepare("INSERT INTO courses (id, slug, group_id, owner_id, title, summary, status, created_at, updated_at) VALUES (?, lower(hex(randomblob(6))), ?, ?, 'Course', 'Summary', 'published', ?, ?)").bind(courseId, groupId, ownerId, now, now),
+      env.DB.prepare("INSERT INTO course_lessons (id, slug, group_id, course_id, title, position, created_by, updated_by, created_at, updated_at) VALUES (?, lower(hex(randomblob(6))), ?, ?, 'Lesson', 0, ?, ?, ?, ?)").bind(lessonId, groupId, courseId, ownerId, ownerId, now, now),
     ]);
     const owner = await signIn("sweep-owner@test.local");
     const path = `/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId}`;

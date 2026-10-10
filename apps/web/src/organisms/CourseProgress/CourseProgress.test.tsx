@@ -19,14 +19,14 @@ function renderProgress(body: unknown) {
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 
 describe("Course progress", () => {
-  it("shows every participant's percentage and marks the viewer", async () => {
+  it("shows only the viewer's progress", async () => {
     renderProgress({
       publishedLessons: 4, completedLessonIds: [], positions: [],
       participants: [{ user: bo, completedLessons: 3, percent: 75 }, { user: ada, completedLessons: 0, percent: 0 }],
     });
     expect(await screen.findByRole("heading", { name: "Progress" })).toBeInTheDocument();
-    expect(screen.getByRole("progressbar", { name: "Course progress for Bo" })).toHaveAttribute("aria-valuenow", "75");
-    expect(screen.getByText("3 of 4 lessons")).toBeInTheDocument();
+    expect(screen.queryByRole("progressbar", { name: "Course progress for Bo" })).not.toBeInTheDocument();
+    expect(screen.queryByText("3 of 4 lessons")).not.toBeInTheDocument();
     expect(screen.getByText("Ada (you)")).toBeInTheDocument();
     expect(screen.getByRole("progressbar", { name: "Course progress for Ada" })).toHaveAttribute("aria-valuenow", "0");
   });

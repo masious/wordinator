@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
+import { E2E_GROUP_ID } from "./global-setup";
+import { signIn } from "./auth";
 import { courseApi, dialogue, example, paragraph, seedLesson, vocabulary, openLesson } from "./lessonSeed";
 import { expectRecapFits, finishRecap, pageToWord } from "./wordRecap";
 
@@ -7,8 +8,7 @@ import { expectRecapFits, finishRecap, pageToWord } from "./wordRecap";
 test("a learner sees new words on the steps that introduce them and reviews them after finishing", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
   const suffix = `words-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
-  await page.goto("/"); await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL); await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD); await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
+  await signIn(page);
 
   const api = courseApi(page);
   const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Woorden" });
@@ -22,7 +22,7 @@ test("a learner sees new words on the steps that introduce them and reviews them
   ]);
   await seedLesson(page, course.id, `${suffix} unfinished`, [vocabulary({ term: "de bus", meaning: "the bus" }), example("De bus komt.")]);
 
-  await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
+  await page.goto(`/courses/${course.id}`);
   await expect(page.getByRole("button", { name: "Review words" })).toHaveCount(0);
   // The lesson page lists the lesson's words beside the text instead of showing vocabulary blocks in place.
   await openLesson(page);
@@ -88,14 +88,13 @@ test("a learner sees new words on the steps that introduce them and reviews them
 test("an author adds new words in the editor, fixes an empty meaning, and publishes them", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
   const suffix = `words-editor-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
-  await page.goto("/"); await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL); await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD); await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
+  await signIn(page);
   const api = courseApi(page);
   const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Woorden" });
   await api(`/courses/${course.id}/visibility`, { status: "published" });
   await seedLesson(page, course.id, `${suffix} lesson`, [example("Ik koop een kaartje.", "I buy a ticket.")], { publish: false });
 
-  await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
+  await page.goto(`/courses/${course.id}`);
   await openLesson(page);
   await page.getByRole("button", { name: "Edit lesson 1" }).click();
   await page.locator('.bn-editor [data-content-type="example"] .bn-inline-content').first().click();

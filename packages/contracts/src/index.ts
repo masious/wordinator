@@ -35,18 +35,15 @@ export type HealthResponse = z.infer<typeof healthResponseSchema>;
 export const emailSchema = z.string().trim().email().max(254);
 export const passwordSchema = z.string().min(6).max(256);
 export const displayNameSchema = z.string().trim().min(1).max(80);
+export const usernameSchema = z.string().trim().min(3).max(30).regex(/^[a-zA-Z0-9_]+$/, "Use only letters, numbers, and underscores.");
 export const bioSchema = z.string().trim().max(500);
 export const groupNameSchema = z.string().trim().min(1).max(100);
 export const languageSchema = z.enum(["nl", "de"]);
 export const membershipStateSchema = z.enum(["pending", "active", "rejected", "left", "removed"]);
 
 export const signInRequestSchema = z.object({ email: emailSchema, password: passwordSchema });
-export const registerRequestSchema = z.object({
-  invitationToken: z.string().min(32).max(256),
-  email: emailSchema,
-  password: passwordSchema,
-  displayName: displayNameSchema,
-});
+export const registerRequestSchema = z.object({ email: emailSchema, password: passwordSchema });
+export const completeOnboardingRequestSchema = z.object({ username: usernameSchema });
 export const isSingleEmojiGrapheme = (value: string): boolean => {
   const graphemes = [...new Intl.Segmenter(undefined, { granularity: "grapheme" }).segment(value)];
   if (graphemes.length !== 1) return false;
@@ -159,9 +156,11 @@ export const sessionResponseSchema = z.discriminatedUnion("status", [
     status: z.literal("signedIn"),
     user: z.object({ 
       id: opaqueIdSchema, 
-      displayName: z.string(), 
+      displayName: z.string(),
+      username: usernameSchema.nullable().optional(),
       avatarUrl: z.string().nullable(), 
-      mustChangePassword: z.boolean() }),
+      mustChangePassword: z.boolean(),
+      onboardingComplete: z.boolean().optional() }),
     groups: z.array(groupSummarySchema),
     requests: z.array(membershipRequestSummarySchema),
     deletedGroups: z.array(deletedGroupSummarySchema),
@@ -259,7 +258,7 @@ export type Notification = z.infer<typeof notificationSchema>;
 
 export const COMMENT_BODY_MAX = 10_000;
 export const RESPONSE_ANSWER_MAX = 4_000;
-export const commentKindSchema = z.enum(["text", "reading_response", "fill_response", "practice_response"]);
+export const commentKindSchema = z.enum(["text", "reading_response", "fill_response"]);
 export const textCommentInputSchema = z.object({ kind: z.literal("text"), body: z.string().trim().min(1).max(COMMENT_BODY_MAX), parentId: opaqueIdSchema.nullable().optional() });
 export const readingResponseInputSchema = z.object({ kind: z.literal("reading_response"), answers: z.array(z.string().max(RESPONSE_ANSWER_MAX)).min(1).max(READING_QUESTION_COUNT_MAX) });
 export const fillResponseInputSchema = z.object({ kind: z.literal("fill_response"), answers: z.array(z.string().max(FILL_EXPECTED_ANSWER_MAX)).min(1).max(READING_QUESTION_COUNT_MAX) });
@@ -344,8 +343,14 @@ export const updateCourseRequestSchema = courseInputSchema.extend({ speechCast: 
 export type CourseInput = z.infer<typeof courseInputSchema>;
 export type UpdateCourseInput = z.input<typeof updateCourseRequestSchema>;
 export const courseVisibilityRequestSchema = z.object({ status: z.enum(["draft", "published"]) });
+// Readable URL segments for courses and lessons. Assigned once from the title and kept on rename, so shared links stay valid.
+export const SLUG_MAX_LENGTH = 60;
+export const slugSchema = z.string().min(1).max(SLUG_MAX_LENGTH).regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/);
+export const slugify = (value: string): string => value.normalize("NFKD").replace(/[\u0300-\u036f]/g, "").replace(/ß/g, "ss")
+  .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "").slice(0, SLUG_MAX_LENGTH).replace(/-+$/, "");
+
 export const courseSchema = z.object({
-  id: opaqueIdSchema, groupId: opaqueIdSchema, title: z.string(), summary: z.string(),
+  id: opaqueIdSchema, slug: slugSchema, groupId: opaqueIdSchema, title: z.string(), summary: z.string(),
   level: z.string().nullable(), intendedLearner: z.string().nullable(), coverUrl: z.string().url().nullable(),
   status: courseStatusSchema, owner: postAuthorSchema, createdAt: z.number().int(), updatedAt: z.number().int(),
   speechCast: speechCastSchema,
@@ -468,21 +473,30 @@ export function splitPracticePayload(payload: PracticePayload): { payload: Learn
 }
 // The outline entry of a lesson. `changed` tells editors that the draft differs from the published document.
 export const courseLessonSummarySchema = z.object({
-  id: opaqueIdSchema, position: z.number().int().nonnegative(), title: z.string(), goal: z.string().nullable(),
+  id: opaqueIdSchema, slug: slugSchema, position: z.number().int().nonnegative(), title: z.string(), goal: z.string().nullable(),
   published: z.boolean(), publishedAt: z.number().int().nullable(), changed: z.boolean(), updatedBy: editorRefSchema, updatedAt: z.number().int(),
 });
 export type CourseLessonSummary = z.infer<typeof courseLessonSummarySchema>;
+// Resolves a course (and optionally a lesson) URL segment, either a slug or a legacy ID, to IDs and canonical slugs.
+export const courseRefResponseSchema = z.object({
+  courseId: opaqueIdSchema, courseSlug: slugSchema,
+  lessonId: opaqueIdSchema.optional(), lessonSlug: slugSchema.optional(),
+});
+export type CourseRefResponse = z.infer<typeof courseRefResponseSchema>;
 export const COURSE_PRELOADED_LESSONS = 3;
 export const outlineResponseSchema = z.object({ outline: z.array(courseLessonSummarySchema) });
 
-export const practiceResponseInputSchema = z.object({ kind: z.literal("practice_response"), answers: z.array(z.string().max(RESPONSE_ANSWER_MAX)).min(1).max(COURSE_PRACTICE_ITEMS_MAX) });
-export const createPracticeCommentRequestSchema = z.discriminatedUnion("kind", [textCommentInputSchema, practiceResponseInputSchema]);
-export const updatePracticeCommentRequestSchema = z.discriminatedUnion("kind", [textCommentInputSchema.omit({ parentId: true }), practiceResponseInputSchema]);
-export type CreatePracticeCommentRequest = z.input<typeof createPracticeCommentRequestSchema>;
-export const practiceDiscussionResponseSchema = z.object({
-  items: z.array(discussionItemSchema), count: z.number().int().nonnegative(), quickReactions: quickReactionsSchema, reference: practiceReferenceSchema,
+// Practice answers are never shared. A learner records only how many questions of a practice they have answered; the server
+// keeps the highest count it has received, so a device with an empty local draft never lowers it.
+export const practiceProgressRequestSchema = z.object({ answered: z.number().int().nonnegative().max(COURSE_PRACTICE_ITEMS_MAX) });
+export type PracticeProgressRequest = z.input<typeof practiceProgressRequestSchema>;
+// `done` counts the people whose count reaches the practice's current number of questions; `started` counts everyone with a
+// count; `answered` is the viewer's own count, or null before they have saved any.
+export const practiceProgressSchema = z.object({
+  done: z.number().int().nonnegative(), started: z.number().int().nonnegative(), answered: z.number().int().nonnegative().nullable(),
 });
-export type PracticeDiscussionResponse = z.infer<typeof practiceDiscussionResponseSchema>;
+export type PracticeProgress = z.infer<typeof practiceProgressSchema>;
+export const practiceProgressResponseSchema = z.object({ progress: practiceProgressSchema });
 
 // A sentence has many valid translations, so a check never says an answer is wrong. A match is confirmed; a miss returns the
 // item's author's version as a reference, or null when the item has none.

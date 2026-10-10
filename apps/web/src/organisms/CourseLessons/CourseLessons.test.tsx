@@ -15,12 +15,12 @@ const courseId = "30000000-0000-4000-8000-000000000001";
 const lessonId = (n: number) => `40000000-0000-4000-8000-00000000000${n}`;
 const editor = { id: accountId, displayName: "Ada" };
 const course = (edit: boolean, contribute = edit) => ({
-  id: courseId, groupId, title: "Dutch Foundations", summary: "Home", level: null, intendedLearner: null, coverUrl: null, status: "published" as const,
+  id: courseId, slug: "dutch-foundations", groupId, title: "Dutch Foundations", summary: "Home", level: null, intendedLearner: null, coverUrl: null, status: "published" as const,
   owner: { id: accountId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, speechCast: {}, contribution: !edit && contribute ? "active" as const : null,
   permissions: { edit, publish: edit, archive: edit, removeContent: edit, contribute, requestContribution: false, leaveContribution: !edit && contribute, manageContributors: edit },
 });
 const summary = (n: number, published = true) => ({
-  id: lessonId(n), position: n - 1, title: `Lesson title ${n}`, goal: null, published, publishedAt: published ? 1 : null, changed: false, updatedBy: editor, updatedAt: 1,
+  id: lessonId(n), slug: `lesson-title-${n}`, position: n - 1, title: `Lesson title ${n}`, goal: null, published, publishedAt: published ? 1 : null, changed: false, updatedBy: editor, updatedAt: 1,
 });
 const text = (value: string) => [{ type: "text" as const, text: value, styles: {} }];
 const example = (id: string, sentence: string, translation = ""): LessonTopBlock =>
@@ -36,7 +36,7 @@ const practice: LessonTopBlock = {
 const doc = (blocks: LessonTopBlock[]): LessonDocument => ({ schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks });
 // Readers receive the published document only; editors also receive the draft.
 const lesson = (n: number, blocks: LessonTopBlock[] = [], { published = true, editing = false } = {}): CourseLesson => ({
-  ...summary(n, published), document: published ? doc(blocks) : null, answerCounts: {}, draft: editing ? { document: doc(blocks), version: 1 } : null, speech: {}, draftSpeech: editing ? {} : null,
+  ...summary(n, published), document: published ? doc(blocks) : null, practiceProgress: {}, draft: editing ? { document: doc(blocks), version: 1 } : null, speech: {}, draftSpeech: editing ? {} : null,
 });
 const progress = (completedLessonIds: string[], positions: unknown[] = []) => ({
   publishedLessons: 4, completedLessonIds, positions,
@@ -86,7 +86,7 @@ describe("Course lessons", () => {
     const detail = { course: course(false), outline: [1, 2, 3, 4].map((n) => summary(n)), lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")]), lesson(2), lesson(3)] };
     renderLessons(detail);
     const link = await screen.findByRole("link", { name: "Open lesson 1: Lesson title 1" });
-    expect(link).toHaveAttribute("href", `/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}`);
+    expect(link).toHaveAttribute("href", "/courses/dutch-foundations/lessons/lesson-title-1");
     expect(screen.getByRole("link", { name: "Open lesson 4: Lesson title 4" })).toBeInTheDocument();
     expect(screen.queryByText("Er is een balkon.")).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /Edit/ })).not.toBeInTheDocument();
@@ -105,8 +105,8 @@ describe("Course lessons", () => {
     expect(screen.getByText("There is a balcony.")).toBeInTheDocument();
     expect(screen.getByText("Is er een tuin?")).toBeInTheDocument();
     expect(screen.queryByText("Lesson title 1", { selector: "h1" })).not.toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Previous: Lesson title 1" })).toHaveAttribute("href", `/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}`);
-    expect(screen.getByRole("link", { name: "Next: Lesson title 3" })).toHaveAttribute("href", `/groups/${groupId}/courses/${courseId}/lessons/${lessonId(3)}`);
+    expect(screen.getByRole("link", { name: "Previous: Lesson title 1" })).toHaveAttribute("href", "/courses/dutch-foundations/lessons/lesson-title-1");
+    expect(screen.getByRole("link", { name: "Next: Lesson title 3" })).toHaveAttribute("href", "/courses/dutch-foundations/lessons/lesson-title-3");
     // A preloaded lesson is not fetched again.
     expect(fetch).not.toHaveBeenCalledWith(expect.stringMatching(/\/lessons\/[^/]+$/), expect.anything());
   });
@@ -166,16 +166,13 @@ describe("Course lessons", () => {
   });
 
   it("steps through a lesson one sentence and question at a time and records completion", async () => {
-    let shared: unknown = null;
     const original = vi.mocked(fetch).getMockImplementation()!;
     vi.mocked(fetch).mockImplementation(async (input, init) => {
       if (String(input).endsWith(`/blocks/${practice.id}/check`)) return response({ match: true, authorsVersion: null });
-      if (String(input).endsWith(`/blocks/${practice.id}/comments`) && init?.method === "POST") {
-        shared = JSON.parse(String(init.body));
-        return response({ item: { id: "60000000-0000-4000-8000-000000000001", parentId: null, kind: "practice_response", author: { id: accountId, displayName: "Ada", avatarUrl: null }, body: null, createdAt: 1, updatedAt: 1, edited: false, pinned: false, responseItems: [], reactions: [], replies: [], permissions: { reply: true, edit: true, delete: true, pin: false } } }, 201);
-      }
+      if (String(input).endsWith(`/blocks/${practice.id}/progress`)) return response({ progress: { done: 0, started: 1, answered: 1 } });
       return original(input, init);
     });
+    const progress = () => vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith(`/blocks/${practice.id}/progress`)).map(([, init]) => [init?.method, JSON.parse(String(init?.body))]);
     const first = lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.", "There is a balcony."), dialogue, practice]);
     const withAnswers = vi.mocked(fetch).getMockImplementation()!;
     vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith(`/lessons/${lessonId(1)}`) ? response({ lesson: first }) : withAnswers(input, init));
@@ -202,7 +199,7 @@ describe("Course lessons", () => {
     const saved = () => vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith("/position")).map(([, init]) => JSON.parse(String(init?.body)).stepKey);
     await waitFor(() => expect(saved()).toEqual([`${dialogue.id}:0`, `${dialogue.id}:1`]));
 
-    // Practice items are asked one by one and share the practice draft.
+    // Practice items are asked one by one and share the practice draft. Nothing is saved before an answer exists.
     fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
     expect(within(dialog).getByText("Question 1 of 2")).toBeInTheDocument();
     expect(within(dialog).getByText("There is a garden.")).toBeInTheDocument();
@@ -218,15 +215,17 @@ describe("Course lessons", () => {
     fireEvent.keyDown(within(dialog).getByLabelText("Your answer"), { key: "Enter" });
     expect(within(dialog).getByText("Question 2 of 2")).toBeInTheDocument();
     expect(checks()).toHaveLength(1);
-    fireEvent.click(within(dialog).getByRole("button", { name: "Share my answers" }));
-    expect(await within(dialog).findByText("Shared with the group.")).toBeInTheDocument();
-    expect(shared).toEqual({ kind: "practice_response", answers: ["Er is een tuin.", ""] });
+    // Leaving a question saves only how many of the practice's questions are answered, never the answers.
+    await waitFor(() => expect(progress()).toEqual([["PUT", { answered: 1 }]]));
+    expect(within(dialog).queryByRole("button", { name: /share/i })).not.toBeInTheDocument();
 
     // An empty answer is never checked: Next moves straight on.
     fireEvent.click(within(dialog).getByRole("button", { name: "Finish lesson" }));
     expect(await within(dialog).findByText("You have finished 1 of 4 lessons (25%).")).toBeInTheDocument();
     expect(checks()).toHaveLength(1);
     expect(meter()).toHaveAttribute("aria-valuenow", "100");
+    await waitFor(() => expect(progress().length).toBe(2));
+    expect(progress().every(([method, body]) => method === "PUT" && JSON.stringify(body) === JSON.stringify({ answered: 1 }))).toBe(true);
     expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/completion`, expect.objectContaining({ method: "PUT" }));
     expect(within(dialog).getByRole("button", { name: "Next: Lesson title 2" })).toBeInTheDocument();
     // A run without words offers no recap.

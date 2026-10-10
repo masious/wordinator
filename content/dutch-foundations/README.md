@@ -11,6 +11,7 @@ Content workspace for the "Dutch Foundations" courses. Lessons are authored as J
 | `*/course.json` | — | Import manifest (course ID, local group/owner, position offset). |
 | `tools/lesson.ts` | — | Validator and SQL generator. |
 | `tools/normalize.ts` | — | Authoring shorthand → stored document; shared with the web app's dev-only lesson overview prototype. |
+| `illustrations/`, `tools/illustrate.ts` | — | Visual canon, frozen reference sheets and the Workers AI generator for `imageIdeas`; see [`docs/content/illustrations.md`](../../docs/content/illustrations.md). |
 | `tools/sample-lesson.json` | — | Reference showing every supported feature in the authoring shorthand. |
 
 ## Commands

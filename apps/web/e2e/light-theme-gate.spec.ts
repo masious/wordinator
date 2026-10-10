@@ -1,6 +1,4 @@
 import { expect, test } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_PASSWORD } from "./global-setup";
-import { openEmptyJournal } from "./emptyJournal";
 
 const viewports = [
   { name: "narrow", width: 390, height: 844 },
@@ -77,7 +75,7 @@ test("stable light-theme visual baselines", async ({ browserName, page }) => {
   for (const viewport of [viewports[0], viewports[2]]) {
     await page.setViewportSize(viewport);
     await page.goto("/");
-    await expect(page.getByRole("heading", { name: "Welcome back." })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Start learning." })).toBeVisible();
     await expect(page).toHaveScreenshot(`light-auth-${viewport.name}.png`, { animations: "disabled", fullPage: true });
   }
 
@@ -86,14 +84,5 @@ test("stable light-theme visual baselines", async ({ browserName, page }) => {
     await page.goto("/ui");
     await expect(page.getByRole("heading", { name: "Wordinator UI workbench" })).toBeVisible();
     await expect(page).toHaveScreenshot(`light-ui-${viewport.name}.png`, { animations: "disabled", fullPage: true });
-  }
-
-  await page.request.post("/api/auth/sign-in", { data: { email: E2E_CREATOR_EMAIL, password: E2E_PASSWORD } });
-  const journal = await openEmptyJournal(page);
-  for (const viewport of [viewports[0], viewports[2]]) {
-    await page.setViewportSize(viewport);
-    await page.goto(journal.path);
-    await expect(page.getByRole("heading", { name: "Baseline Journal" })).toBeVisible();
-    await expect(page).toHaveScreenshot(`light-journal-${viewport.name}.png`, { animations: "disabled", mask: journal.mask });
   }
 });

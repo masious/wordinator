@@ -35,8 +35,8 @@ describe("Course lessons and lesson documents API", () => {
     expect(first.draft).toBeNull();
     expect(first.document!.blocks.map((block) => block.type)).toEqual(fixtureDocument(0).blocks.map((block) => block.type));
     expect(first.updatedBy.displayName).toBe("owner");
-    // Every practice has a thread anchor and an answer count.
-    expect(Object.values(first.answerCounts)).toEqual(Array(6).fill(0));
+    // Every practice has an anchor and empty progress.
+    expect(Object.values(first.practiceProgress)).toEqual(Array(6).fill({ done: 0, started: 0, answered: null }));
 
     const fourth = await readLesson(lessonPath(groupId, course.id, read.outline[3]!.id), reader);
     expect(fourth.title).toBe("Onderweg");
@@ -121,30 +121,25 @@ describe("Course lessons and lesson documents API", () => {
     const kept = blocks.practice(practice); const removed = blocks.practice(practice);
     const { path, lesson } = await addLesson(groupId, course.id, owner, "One", { document: documentOf(kept, removed) });
     const other = await addLesson(groupId, course.id, owner, "Two", { published: false });
-    // Another lesson cannot take over a practice ID and with it the thread.
+    // Another lesson cannot take over a practice ID and with it the progress.
     const stolen = await request(`${other.path}/draft`, owner, { document: documentOf(blocks.practice(practice, kept.id)), draftVersion: 1 }, "PUT");
     expect(stolen.status).toBe(409);
     expect(await errorCode(stolen)).toBe("PRACTICE_ID_TAKEN");
     expect((await readLesson(other.path, owner)).draft!.version).toBe(1);
 
-    for (const block of [kept, removed]) {
-      const answered = await request(`${path}/blocks/${block.id}/comments`, reader, { kind: "practice_response", answers: ["Er is"] });
-      expect(answered.status).toBe(201);
-      const item = (await answered.json() as { item: { id: string } }).item;
-      await request(`${path}/blocks/${block.id}/comments/${item.id}/reactions`, owner, { emoji: "👍", active: true }, "PUT");
-    }
-    expect((await readLesson(path, owner)).answerCounts).toEqual({ [kept.id]: 1, [removed.id]: 1 });
+    for (const block of [kept, removed]) expect((await request(`${path}/blocks/${block.id}/progress`, reader, { answered: 1 }, "PUT")).status).toBe(200);
+    const done = { done: 1, started: 1, answered: null };
+    expect((await readLesson(path, owner)).practiceProgress).toEqual({ [kept.id]: done, [removed.id]: done });
 
-    // Removing a practice from the draft keeps its thread while the published document still has it.
+    // Removing a practice from the draft keeps its progress while the published document still has it.
     await saveDraft(path, owner, documentOf(kept), lesson.draft!.version);
-    expect((await request(`${path}/blocks/${removed.id}/discussion`, reader)).status).toBe(200);
+    expect((await request(`${path}/blocks/${removed.id}/progress`, reader, { answered: 1 }, "PUT")).status).toBe(200);
     const current = await readLesson(path, owner);
-    expect(current.answerCounts).toEqual({ [kept.id]: 1, [removed.id]: 1 });
+    expect(current.practiceProgress).toEqual({ [kept.id]: done, [removed.id]: done });
     await publishLesson(path, owner, current.draft!.version);
-    expect((await request(`${path}/blocks/${removed.id}/discussion`, reader)).status).toBe(404);
-    const left = await env.DB.prepare(`SELECT (SELECT COUNT(*) FROM course_practices) AS practices, (SELECT COUNT(*) FROM comments) AS comments,
-      (SELECT COUNT(*) FROM comment_response_items) AS items, (SELECT COUNT(*) FROM reactions) AS reactions`).first();
-    expect(left).toEqual({ practices: 1, comments: 1, items: 1, reactions: 1 });
+    expect((await request(`${path}/blocks/${removed.id}/progress`, reader, { answered: 1 }, "PUT")).status).toBe(404);
+    const left = await env.DB.prepare("SELECT (SELECT COUNT(*) FROM course_practices) AS practices, (SELECT COUNT(*) FROM course_practice_progress) AS progress").first();
+    expect(left).toEqual({ practices: 1, progress: 1 });
   });
 
   it("reorders lessons from the complete ID list and rejects stale lists", async () => {

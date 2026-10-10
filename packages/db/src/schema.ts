@@ -15,6 +15,8 @@ export const users = sqliteTable(
     normalizedEmail: text("normalized_email").notNull(),
     passwordHash: text("password_hash").notNull(),
     displayName: text("display_name").notNull(),
+    username: text("username"),
+    onboardingCompletedAt: integer("onboarding_completed_at"),
     bio: text("bio"),
     avatarKey: text("avatar_key"),
     quickReactionOne: text("quick_reaction_one").notNull().default("👍"),
@@ -24,7 +26,10 @@ export const users = sqliteTable(
     createdAt: integer("created_at").notNull(),
     updatedAt: integer("updated_at").notNull(),
   },
-  (table) => [uniqueIndex("users_normalized_email_unique").on(table.normalizedEmail)],
+  (table) => [
+    uniqueIndex("users_normalized_email_unique").on(table.normalizedEmail),
+    uniqueIndex("users_username_unique").on(table.username),
+  ],
 );
 
 export const groups = sqliteTable(
@@ -211,6 +216,9 @@ export const courses = sqliteTable(
     id: text("id").primaryKey(),
     groupId: text("group_id").notNull().references(() => groups.id),
     ownerId: text("owner_id").notNull().references(() => users.id),
+    // Readable URL segment, assigned once from the title (docs/courses.md#readable-urls). Every write sets it;
+    // the column is nullable only because SQLite cannot add a NOT NULL column without a default.
+    slug: text("slug"),
     title: text("title").notNull(),
     summary: text("summary").notNull(),
     level: text("level"),
@@ -225,6 +233,7 @@ export const courses = sqliteTable(
   },
   (table) => [
     index("courses_group_library_idx").on(table.groupId, table.createdAt, table.id),
+    uniqueIndex("courses_group_slug_unique").on(table.groupId, table.slug),
     check("courses_status_check", sql`${table.status} in ('draft', 'published', 'archived')`),
     check("courses_speech_cast_check", sql`${table.speechCast} IS NULL OR json_valid(${table.speechCast})`),
   ],
@@ -238,6 +247,8 @@ export const courseLessons = sqliteTable(
     id: text("id").primaryKey(),
     groupId: text("group_id").notNull().references(() => groups.id),
     courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    // Readable URL segment, unique within the course; see `courses.slug`.
+    slug: text("slug"),
     title: text("title").notNull(),
     goal: text("goal"),
     position: integer("position").notNull(),
@@ -252,6 +263,7 @@ export const courseLessons = sqliteTable(
   },
   (table) => [
     index("course_lessons_course_position_idx").on(table.groupId, table.courseId, table.position),
+    uniqueIndex("course_lessons_course_slug_unique").on(table.courseId, table.slug),
     check("course_lessons_draft_doc_check", sql`json_valid(${table.draftDoc})`),
     check("course_lessons_published_doc_check", sql`${table.publishedDoc} IS NULL OR json_valid(${table.publishedDoc})`),
   ],
@@ -316,6 +328,26 @@ export const courseLessonCompletions = sqliteTable(
   (table) => [
     primaryKey({ columns: [table.lessonId, table.userId] }),
     index("course_lesson_completions_course_idx").on(table.groupId, table.courseId, table.userId),
+  ],
+);
+
+// How many questions of a practice a member has answered. Only the count is stored; the answers stay in the member's local draft.
+// A practice is done when the count reaches its current number of questions.
+export const coursePracticeProgress = sqliteTable(
+  "course_practice_progress",
+  {
+    practiceId: text("practice_id").notNull().references(() => coursePractices.id, { onDelete: "cascade" }),
+    groupId: text("group_id").notNull().references(() => groups.id),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    userId: text("user_id").notNull().references(() => users.id),
+    answered: integer("answered").notNull(),
+    updatedAt: integer("updated_at").notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.practiceId, table.userId] }),
+    index("course_practice_progress_lesson_idx").on(table.groupId, table.lessonId),
+    check("course_practice_progress_answered_check", sql`${table.answered} >= 0`),
   ],
 );
 

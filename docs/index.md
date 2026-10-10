@@ -7,17 +7,17 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [what_is_it.md](what_is_it.md) | Purpose, audience, value, success, and business context |
 | [product-requirements.md](product-requirements.md) | Release scope, global rules, non-goals, and acceptance summary |
 | [user-flows.md](user-flows.md) | End-to-end behavior from a user’s perspective |
-| [groups-and-membership.md](groups-and-membership.md) | Tenancy, group lifecycle, invitations, roles, and former members |
+| [groups-and-membership.md](groups-and-membership.md) | Retired group model and temporary storage-compatibility boundary |
 | [authentication.md](authentication.md) | Registration, credentials, cookies, password regeneration, and known limitations |
-| [posts-and-feed.md](posts-and-feed.md) | Post shapes, composer, drafts, feed ordering, pagination, and polling |
+| [posts-and-feed.md](posts-and-feed.md) | Journal post shapes, composer, drafts, feed ordering, pagination, and polling |
 | [discussions-and-reactions.md](discussions-and-reactions.md) | Answers, spoiler concealment, comments, replies, pins, and emoji reactions |
-| [courses.md](courses.md) | Course structure, blocks, contributors, publishing, practice threads, and loading |
+| [courses.md](courses.md) | Course structure, blocks, contributors, publishing, practice progress, and loading |
 | [words.md](words.md) | Word cards, word bookmarks, and the Words tab |
 | [speech.md](speech.md) | Lesson speech: spoken items, voices, dialogue cast, pronunciation overrides, background generation, and playback |
 | [content/index.md](content/index.md) | Course curriculum, storyline, and taught-topic coverage for member-authored Dutch Foundations content |
 | [settings-and-administration.md](settings-and-administration.md) | Settings page structure, creator membership administration, and the interactive image cropper |
-| [notifications.md](notifications.md) | Notification triggers, scope, read state, retention, and links |
-| [profiles-and-settings.md](profiles-and-settings.md) | Group-private profiles and account preferences |
+| [notifications.md](notifications.md) | Notification triggers, read state, retention, and links |
+| [profiles-and-settings.md](profiles-and-settings.md) | Required account setup, public identity fields, and account preferences |
 | [design-system.md](design-system.md) | Visual language and canonical UI tokens |
 | [design-system-plan.md](design-system-plan.md) | Phase 0 design-system implementation tasks, sequencing, and completion criteria |
 | [VISUAL-REDESIGN-PLAN.md](../VISUAL-REDESIGN-PLAN.md) | Cross-phase premium visual refresh audit, migration batches, verification, and completion criteria |

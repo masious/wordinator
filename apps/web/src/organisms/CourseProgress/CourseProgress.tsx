@@ -5,18 +5,20 @@ import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { Avatar, SectionHeader, Surface } from "../../ui";
 import styles from "./CourseProgress.module.css";
 
-// Each member's share of the published lessons they finished in the lesson player. Nothing here is graded.
+// The viewer's share of the published lessons they finished in the lesson player. Nothing here is graded.
 export function CourseProgress({ groupId, courseId, accountId }: { groupId: string; courseId: string; accountId: string }) {
   const { t } = useTranslation();
   const progress = useQuery(courseProgressQueryOptions(groupId, courseId));
   if (!progress.data?.publishedLessons) return null;
   const { participants, publishedLessons } = progress.data;
+  const viewer = participants.find((entry) => entry.user.id === accountId);
+  if (!viewer) return null;
   return <Surface className={styles.panel}>
     <SectionHeader title={t("courses.progress.title")} description={t("courses.progress.help")} />
     <ul className={styles.rows}>
-      {participants.map((entry) => {
-        const name = entry.user.id === accountId ? t("courses.progress.you", { name: entry.user.displayName }) : entry.user.displayName;
-        return <li key={entry.user.id} className={styles.row} data-viewer={entry.user.id === accountId || undefined}>
+      {[viewer].map((entry) => {
+        const name = t("courses.progress.you", { name: entry.user.displayName });
+        return <li key={entry.user.id} className={styles.row} data-viewer>
           <Avatar name={entry.user.displayName} src={entry.user.avatarUrl ?? undefined} />
           <div className={styles.detail}>
             <div className={styles.line}>

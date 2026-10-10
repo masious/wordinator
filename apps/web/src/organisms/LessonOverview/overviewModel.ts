@@ -7,12 +7,18 @@ import {
 // work it holds, and how much of it there is. Each stop covers a run of player steps, so the reader's saved step decides
 // which stops are done, which one is next, and which are still ahead.
 export type OverviewKind = "topic" | "story" | "practice" | "reading";
+// A finer reading of the same stop, for icons and labels. Explanation stops are told apart by what they hold; practices have no
+// type of their own, so they are told apart by their instruction's opening words.
+export type OverviewCategory =
+  | "intro" | "topic" | "grammar" | "vocabulary" | "pronunciation" | "culture" | "story" | "summary"
+  | "fillIn" | "conversation" | "translate" | "wordOrder" | "rewrite" | "reading" | "writing";
 export type OverviewStop = {
   id: string;
   title: string;
   // The level-1 or level-2 heading the stop sits under. Level-3 headings become stops of their own inside it.
   chapter: string | null;
   kind: OverviewKind;
+  category: OverviewCategory;
   // Player steps [start, end).
   start: number;
   end: number;
@@ -70,6 +76,32 @@ function teaserOf(kind: OverviewKind, steps: readonly LessonStep[]): string | nu
   return null;
 }
 
+const practiceCategories: [RegExp, OverviewCategory][] = [
+  [/translat/i, "translate"],
+  [/conversation|dialogue|small talk|\bcalls\b/i, "conversation"],
+  [/^put the\b|\bin the (right|correct) order\b/i, "wordOrder"],
+  [/^(rewrite|make)\b/i, "rewrite"],
+  // Free writing asks for sentences of the reader's own; "Write the plural" is a drill.
+  [/^write\b(?! the\b)/i, "writing"],
+];
+
+export function categoryOf(kind: OverviewKind, title: string, steps: readonly LessonStep[], first: boolean): OverviewCategory {
+  if (kind === "reading") return "reading";
+  if (kind === "practice") {
+    const step = steps.find((entry) => entry.kind === "practiceItem");
+    const instruction = step ? readPracticeBlock(step.block).instruction.trim() : "";
+    return practiceCategories.find(([pattern]) => pattern.test(instruction))?.[1] ?? "fillIn";
+  }
+  if (kind === "story") return "story";
+  if (/^(summary|recap|review)\b/i.test(title)) return "summary";
+  if (first) return "intro";
+  const callouts = new Set(steps.flatMap((step) => step.kind === "callout" ? [step.block.props.variant] : []));
+  if (callouts.has("grammar") || steps.some((step) => step.kind === "columns")) return "grammar";
+  if (callouts.has("pronunciation")) return "pronunciation";
+  if (callouts.has("culture")) return "culture";
+  return steps.some((step) => step.words.length > 0) ? "vocabulary" : "topic";
+}
+
 function toStop(section: Section, steps: LessonStep[], start: number): OverviewStop {
   const kind = kindOf(steps);
   const words = new Map<string, VocabularyWord>();
@@ -77,7 +109,7 @@ function toStop(section: Section, steps: LessonStep[], start: number): OverviewS
   for (const step of steps) for (const word of step.words) words.set(word.id, word);
   const dialogues = new Set(steps.flatMap((step) => step.kind === "dialogueTurn" ? [step.block] : []));
   return {
-    id: section.id, title: section.title, chapter: section.chapter, kind, start, end: start + steps.length,
+    id: section.id, title: section.title, chapter: section.chapter, kind, category: categoryOf(kind, section.title, steps, start === 0), start, end: start + steps.length,
     words: [...words.values()],
     questions: steps.filter((step) => step.kind === "practiceItem").length,
     lines: steps.filter((step) => step.kind === "dialogueTurn").length,

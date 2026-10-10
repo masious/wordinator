@@ -1,0 +1,1470 @@
+{
+  "title": "Deze jas is warmer",
+  "goal": "Compare two things with the comparative and dan, and say that things are equal with even … als and net zo … als.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Deze jas is warmer",
+      "id": "41792cdc-276b-4b2a-a37b-24f579bf4469"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Saturday 14 November, later the same day as the clothes shopping trip. Sofia must choose between two winter coats, and Noor and the shop assistant help her compare them.",
+      "id": "60f65354-681d-408e-9969-63b64208b9cc"
+    },
+    {
+      "type": "paragraph",
+      "content": "In this lesson you will compare two things in Dutch with the comparative (adjective + er) and the word dan, and say that two things are equal with even … als and net zo … als.",
+      "id": "d780fc2b-e5b3-4cfb-a61f-63ff7e0b2172"
+    },
+    {
+      "type": "paragraph",
+      "content": "Colours in this lesson: the new comparative form is bold, sometimes highlighted in yellow. Subjects are green, the finite verb is blue, de-forms (deze, die) are pink and het-forms (dit, dat) are brown.",
+      "id": "819da1de-7bdd-4494-9d46-35887e4412ae"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: In de jassenwinkel",
+      "id": "f77922b2-28f5-4312-8221-29ab5bf6b471"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sofia, Noor and the Verkoopster (shop assistant) are in a clothes shop in the centre of Utrecht. Sofia must choose between a black coat and a dark-blue coat.",
+      "id": "b1717de4-1e91-4553-b99e-399434abbcf6"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Verkoopster",
+            "text": "Deze zwarte jas is goedkoper, maar deze donkerblauwe jas is warmer."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Welke jas is langer?"
+          },
+          {
+            "speaker": "Verkoopster",
+            "text": "De blauwe jas is langer dan de zwarte jas. Hij is ook dikker."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En de kwaliteit? Is de blauwe jas beter?"
+          },
+          {
+            "speaker": "Verkoopster",
+            "text": "Ja, deze jas is dikker en zwaarder. Hij is ook warmer dan die jas."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Maar de blauwe jas is duurder. Ik twijfel."
+          },
+          {
+            "speaker": "Noor",
+            "text": "De zwarte jas is lichter en goedkoper, maar de winter hier is lang en koud."
+          },
+          {
+            "speaker": "Verkoopster",
+            "text": "Die blauwe jas is ook heel mooi."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik vergelijk de prijzen. De blauwe jas kost honderdtwintig euro, de zwarte kost tachtig euro."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Dus is de blauwe jas veertig euro duurder, maar hij is warmer en praktischer."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goed, ik kies de blauwe jas! Hij is mooier en warmer."
+          },
+          {
+            "speaker": "Verkoopster",
+            "text": "Een goede keus! Wilt u deze nu meenemen?"
+          }
+        ]
+      },
+      "id": "f149503d-a305-4a05-8ac9-de721e342abc"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de kwaliteit",
+              "meaning": "the quality",
+              "example": "De kwaliteit van deze jas is goed.",
+              "id": "b3e7e074-8d90-4772-bbec-6f595f5ab34a"
+            },
+            {
+              "term": "de keus",
+              "meaning": "the choice",
+              "note": "Also: de keuze (slightly more formal).",
+              "example": "Een goede keus!",
+              "id": "bbf38369-b26c-48d8-8d1f-64509fc6d43c"
+            },
+            {
+              "term": "kiezen",
+              "meaning": "to choose",
+              "forms": "kiest · koos · gekozen",
+              "example": "Ik kies de blauwe jas.",
+              "id": "24e68a33-c45a-4304-be81-d278a9092219"
+            },
+            {
+              "term": "twijfelen",
+              "meaning": "to hesitate, to be unsure",
+              "forms": "twijfelt · twijfelde · getwijfeld",
+              "example": "Ik twijfel. Welke jas is beter?",
+              "id": "92858750-a2bb-4759-b400-10561d009790"
+            },
+            {
+              "term": "vergelijken",
+              "meaning": "to compare (inseparable: ver- never splits)",
+              "forms": "vergelijkt · vergeleek · vergeleken",
+              "example": "Ik vergelijk de prijzen.",
+              "id": "9c1082a7-7e72-4ee1-bd67-95b9baf6782a"
+            },
+            {
+              "term": "zwaar",
+              "meaning": "heavy",
+              "example": "Deze jas is zwaar.",
+              "id": "bfdf01c1-6168-4d29-982a-f900e9139ff4"
+            },
+            {
+              "term": "licht",
+              "meaning": "light (not heavy)",
+              "note": "New meaning: here licht is about weight. Earlier licht = bright (13-2); het licht = the bike light (16-b).",
+              "example": "Deze jas is licht.",
+              "id": "b26dce4b-289e-4fe8-9060-2691de65a594"
+            },
+            {
+              "term": "praktisch",
+              "meaning": "practical",
+              "example": "Een korte jas is praktisch voor de fiets.",
+              "id": "1994f192-a4ae-4a85-ab9b-f8e64105ea50"
+            },
+            {
+              "term": "dan",
+              "meaning": "than (after a comparative)",
+              "note": "New use. Earlier dan = then, next (08-b, 15-b): Tot dan!",
+              "example": "Deze jas is warmer dan die jas.",
+              "id": "9d708d99-9cd7-4114-92f9-0742fbcb1c23"
+            }
+          ]
+        }
+      },
+      "id": "7fd05a47-5b1d-469b-8b01-61c797807eea"
+    },
+    {
+      "type": "divider",
+      "id": "f03311f5-cb01-454c-8fd6-3b9aea5597bc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "De vergelijkende vorm: adjectief + er",
+      "id": "754e6d27-b858-4325-8c83-34f9f75cb229"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Een vergelijking maken",
+      "id": "d5e3677e-f66a-404e-84f8-7bdec4a548f3"
+    },
+    {
+      "type": "paragraph",
+      "content": "To compare two things, add -er to the adjective. Put dan (than) between the two things you compare.",
+      "id": "362f09f3-e8ca-4201-88d8-aa817819d153"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This coat is warmer than that coat.",
+        "note": "warm + er = warmer. The basic rule for most adjectives."
+      },
+      "content": [
+        {
+          "text": "Deze jas",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "warmer",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " dan die jas."
+      ],
+      "id": "a9f438aa-51ab-447b-b76b-24c46f1fa8a6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The blue coat is bigger than the black coat.",
+        "note": "groot → groter: the long oo stays single before -er, like groot → grote in the previous lesson."
+      },
+      "content": [
+        "De blauwe jas is ",
+        {
+          "text": "groter",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " dan de zwarte jas."
+      ],
+      "id": "0c37797c-c7ed-4590-9a61-835cfc2b5e76"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Spelling: dubbele letters",
+      "id": "40d9a4bd-a9d4-4652-8fd1-3796e684c342"
+    },
+    {
+      "type": "paragraph",
+      "content": "Watch the spelling when you add -er, just like the -e rule from the previous lesson.",
+      "id": "e1163192-8473-45d2-a5c3-286c479239d1"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Long vowel stays single",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "groot → groter",
+          "id": "2710b048-de04-4dbb-ad01-cbe9ed03cde9"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "mooi → mooier",
+          "id": "69946c62-b046-4985-a303-9bc8c15c2e52"
+        }
+      ],
+      "id": "7fbb225f-c1b3-46c8-a2e7-8414f971fd9d"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Double the consonant after a short vowel",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "dik → dikker",
+          "id": "acb34b9b-2023-4577-94e7-d4b19420d6c3"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "dun → dunner",
+          "id": "e0cc381b-8746-4459-86dd-22f6fc96c0c7"
+        }
+      ],
+      "id": "8ab5e753-a70c-4cf2-a6b2-77687030fc60"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Already ends in -r: add -der, not just -er",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "duur → duurder",
+          "id": "9cbe4218-bca8-405d-8c5d-71801903e9d5"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "ver → verder",
+          "id": "9d32a195-2ac5-4b74-b26b-b453d50e9c8a"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "lekker → lekkerder",
+          "id": "23bd5dea-135e-4d2c-9e39-b086ec92b0e9"
+        }
+      ],
+      "id": "1377b838-0c8d-45b2-b3be-7c4eb83e8d4c"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "Formula: adjective + ",
+        {
+          "text": "er",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (+ ",
+        {
+          "text": "der",
+          "styles": {
+            "bold": true
+          }
+        },
+        " if the adjective already ends in -r)."
+      ],
+      "id": "f9e18b8a-0aee-4f9c-9be5-dc847f610aad"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Woorden die al op -r eindigen",
+      "id": "262bef74-1c47-4fcb-a2ad-498d865bc2a0"
+    },
+    {
+      "type": "paragraph",
+      "content": "An adjective that already ends in -r adds -der instead of just -er.",
+      "id": "f7616b9c-641d-4aef-aa2c-77cb2c83a46a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The station is further than the bakery.",
+        "note": "ver already ends in -r, so add -der: ver → verder."
+      },
+      "content": [
+        "Het station is ",
+        {
+          "text": "verder",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " dan de bakkerij."
+      ],
+      "id": "2c3d3cb6-b6ea-4796-900b-911345d74274"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Not ",
+        {
+          "text": "warmer als",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ". Say ",
+        {
+          "text": "warmer dan",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". dan always follows a comparative; als is for equal things (see below)."
+      ],
+      "id": "528b92ec-eb91-46c6-b7ee-5172587dd518"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Overzicht: adjectief, vergelijkend, voorbeeld",
+      "id": "d69b2570-6141-469c-a7a6-cec2d06885d8"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Adjectief",
+              "id": "1ad2a8c9-7a9e-42e4-bc38-b2292510753a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "warm",
+              "id": "981b7f69-5811-47db-a2ab-ca405e61d954"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "klein",
+              "id": "f1471698-3142-4732-aa59-b381706b4506"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "duur",
+              "id": "a9606684-ce57-47cf-adad-7b58739c7094"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "goed",
+              "id": "4507a05d-0a1c-42da-af17-eb952dccf5f4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "veel",
+              "id": "1a177462-6ef4-40ab-b25d-8cd49fc24c30"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "weinig",
+              "id": "79283eb5-b87f-4385-b53e-e1620c1e6d43"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "ver",
+              "id": "7f31ac1e-8d92-4521-8121-8f12bb53de05"
+            }
+          ],
+          "id": "750db206-6a6f-4c72-854a-031a03a3c30a"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Vergelijkend",
+              "id": "76c57306-52ad-4d57-b634-910f1f7001b0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "warmer",
+              "id": "11734adf-87ef-4a7a-b990-0363fff7d2c3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "kleiner",
+              "id": "ad147a03-5f77-4102-8150-d8254c811808"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "duurder",
+              "id": "97ce7a12-58e3-42b7-b1dd-2e566b06136e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "beter",
+              "id": "a94a0ea7-3a9d-44b8-81e8-067aa04006cf"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "meer",
+              "id": "4ad09faf-b810-48ac-b361-6f4a97800b94"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "minder",
+              "id": "aff34b75-23b6-4a12-a85a-ad1f4c905c00"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "verder",
+              "id": "dbdf6119-f2ab-4590-8d5b-c86656d5fba2"
+            }
+          ],
+          "id": "92b776b7-c93a-4868-884b-3fdb4492f514"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Voorbeeld",
+              "id": "a21742ae-064d-4b36-8315-c73598fe5cb3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Deze jas is warmer dan die jas.",
+              "id": "02588602-4911-42be-b7ce-50d329d96c11"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Mijn appartement is kleiner dan het huis.",
+              "id": "e689b884-455b-47e1-9d96-09653a95c1e0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Deze jas is duurder dan die jas.",
+              "id": "df2b9263-9512-46a0-8d7c-9e542fa6ce6e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Deze jas is beter dan mijn oude jas.",
+              "id": "3eb9329f-3958-4168-8255-ef5ea2787f40"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Deze winkel heeft meer jassen.",
+              "id": "25d93693-c722-4886-a66b-329fad88093f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Deze jas heeft minder kwaliteit.",
+              "id": "9bb795dd-d3cc-4321-8c4e-07d893874556"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Het station is verder dan de bakkerij.",
+              "id": "087959dc-6501-4752-a615-b69bd4568c7f"
+            }
+          ],
+          "id": "dc471ad5-1774-4313-8ef7-920171a41c6b"
+        }
+      ],
+      "id": "c7e604a0-fe96-4890-8985-f41b1997b7f8"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Pick the two things you compare.",
+      "id": "776ec765-593f-46c4-a5c0-56dc49540a2c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Add -er (or -der after -r) to the adjective, unless it is irregular (you will meet three in the next section).",
+      "id": "c14b78df-a4f0-4d75-843c-d2012d540426"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Put dan between the two things.",
+      "id": "9dae0bf2-c1cf-4459-be40-8b4d70bf1a04"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Check: does the sentence mean 'more/less X than', not 'equally X'?",
+      "id": "85aaee56-349a-44c0-be74-8f03b0b20c6a"
+    },
+    {
+      "type": "divider",
+      "id": "a58512f3-6ff4-4c2d-998c-c52033ec3a70"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Onregelmatige vormen: beter, meer, minder",
+      "id": "a8ee3852-960a-4e99-8c1c-e5a73ccb5395"
+    },
+    {
+      "type": "paragraph",
+      "content": "Three common adjectives do not simply add -er. Learn them as fixed forms.",
+      "id": "a15b01e1-b06d-4ab3-943c-9e7d37ece0b2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This coat is better than my old coat.",
+        "note": "goed → beter (irregular, not goeder)."
+      },
+      "content": [
+        "Deze jas is ",
+        {
+          "text": "beter",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " dan mijn oude jas."
+      ],
+      "id": "3baddd24-1e79-4dd2-bdf4-2eb71676db3e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This shop has more coats than that shop.",
+        "note": "veel → meer (irregular, not veeler)."
+      },
+      "content": [
+        "Deze winkel heeft ",
+        {
+          "text": "meer",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " jassen dan die winkel."
+      ],
+      "id": "6df514cb-9790-4a3e-8e90-378326932913"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This coat has less quality than that coat.",
+        "note": "weinig → minder (irregular, not weiniger)."
+      },
+      "content": [
+        "Deze jas heeft ",
+        {
+          "text": "minder",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " kwaliteit dan die jas."
+      ],
+      "id": "8f03d20b-8e65-4a1e-9f6a-3002ff4f8e11"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "Learn goed–beter, veel–meer, weinig–minder as one short list, like the English good–better, much–more, little–less.",
+      "id": "8e66bf42-835c-442b-a38f-d32436903e24"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "beter",
+              "meaning": "better (comparative of goed)",
+              "note": "Irregular: not goeder.",
+              "example": "Deze jas is beter dan mijn oude jas.",
+              "id": "1f9602aa-9d0e-4f44-9638-149184fb7b1b"
+            },
+            {
+              "term": "meer",
+              "meaning": "more (comparative of veel)",
+              "note": "Irregular: not veeler.",
+              "example": "Deze winkel heeft meer jassen.",
+              "id": "fa6598f7-ea1a-45d9-9f8f-a0efe9b45ba4"
+            },
+            {
+              "term": "minder",
+              "meaning": "less, fewer (comparative of weinig)",
+              "note": "Irregular: not weiniger.",
+              "example": "Deze jas heeft minder kwaliteit.",
+              "id": "cd01207c-7179-48b6-8505-08fa01160835"
+            }
+          ]
+        }
+      },
+      "id": "a8be2d0e-d84d-4c6e-bd58-d84f1f54ee03"
+    },
+    {
+      "type": "divider",
+      "id": "337aabaa-629c-4c9a-b712-93eba7f1f334"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Even mooi, net zo gezellig",
+      "id": "00e51649-3056-4a79-bed3-e39b12e690f4"
+    },
+    {
+      "type": "paragraph",
+      "content": "To say two things are equal, use even … als or net zo … als (both mean 'just as … as'). For 'not as … as' use niet zo … als. The adjective keeps its base form here, never the comparative.",
+      "id": "22d747b6-699a-474b-b6de-b6249b81ca08"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This coat is just as expensive as that coat.",
+        "note": "even + adjective + als; the adjective does not change."
+      },
+      "content": [
+        "Deze jas is ",
+        {
+          "text": "even duur als",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " die jas."
+      ],
+      "id": "9d78408e-ff03-484e-8337-18a93d647950"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Utrecht is just as cosy as Valencia.",
+        "note": "net zo + adjective + als: the same meaning as even … als."
+      },
+      "content": [
+        "Utrecht is ",
+        {
+          "text": "net zo gezellig als",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " Valencia."
+      ],
+      "id": "2206eb7f-50c6-48e7-85d3-8055744d0edf"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This scarf isn't as warm as that coat.",
+        "note": "niet zo + adjective + als for a negative comparison."
+      },
+      "content": [
+        "Deze sjaal is ",
+        {
+          "text": "niet zo warm als",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " die jas."
+      ],
+      "id": "2bb937d1-a1fb-4ad5-8592-cc200f19a832"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "A comparative before a noun takes ",
+        {
+          "text": "-e",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", like any other adjective: de duurdere jas, een duurdere jas. Exception: a het-word after een or geen has no -e, even in the comparative: ",
+        {
+          "text": "een warmer vest",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (not een warmere vest) — the same exception as for -e with een."
+      ],
+      "id": "cd668a45-49c0-4f27-bf1c-98278a59e320"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I buy a more expensive scarf, but it is indeed warmer.",
+        "note": "Comparative before a noun takes -e: duur → duurdere sjaal (de-word)."
+      },
+      "content": [
+        "Ik koop een ",
+        {
+          "type": "text",
+          "text": "duurdere",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " sjaal, maar hij is wel warmer."
+      ],
+      "id": "b42a7cda-7560-4a89-bd6d-48f8475879e9"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "even … als",
+              "meaning": "just as … as (equality)",
+              "example": "Deze jas is even duur als die jas.",
+              "id": "0f19497b-dcc8-44a9-b5ee-6c864c092481"
+            },
+            {
+              "term": "net zo … als",
+              "meaning": "just as … as (equality, same meaning as even … als)",
+              "example": "Utrecht is net zo gezellig als Valencia.",
+              "id": "aabbbf0d-1dba-4435-9ce3-e6dd06caf165"
+            },
+            {
+              "term": "niet zo … als",
+              "meaning": "not as … as",
+              "example": "Deze sjaal is niet zo warm als die jas.",
+              "id": "c6358a4e-6902-4160-919c-760347437377"
+            }
+          ]
+        }
+      },
+      "id": "314d8642-282b-46c5-a833-3ded44653af1"
+    },
+    {
+      "type": "divider",
+      "id": "ef0d13da-8a3c-4de5-9757-d54d9d5e8b51"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Thuis bij Henk",
+      "id": "69afe3ad-dfc6-4b26-a8f6-e134b275f34e"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sofia walks home in her new coat. Henk is in the hallway of Kastanjestraat 14 with his cat Tijger.",
+      "id": "fbc86e4e-cc40-496a-8f47-58513c105e0d"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Henk",
+            "text": "Zo, Sofia! Mooie jas! Die jas staat je goed."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je, Henk! Ik kies deze donkerblauwe jas. Hij is warmer dan mijn oude regenjas."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Prima! De winter hier is kouder dan in Spanje, hè?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja! Utrecht is kouder dan Valencia, en de winter hier is ook langer."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Mis je de zon?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Een beetje. Maar mijn appartement hier is gezelliger dan mijn oude kamer bij Noor."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Mooi! En je hebt nu ook een fiets en goede vrienden."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Precies. Mijn appartement is kleiner dan het huis in Valencia, maar het is net zo gezellig."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Dat is heel goed. Welkom thuis, Sofia!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je wel, Henk. Ik ben hier nu thuis."
+          }
+        ]
+      },
+      "id": "6a312d9d-1f47-4891-a933-20fb62a32560"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Die jas staat je goed.",
+              "meaning": "That coat suits you.",
+              "note": "staan here means 'to suit', not 'to stand'. Chunk, jij-form only.",
+              "id": "9361a2b2-dd05-4858-a1be-5e13555c6dcd"
+            }
+          ]
+        }
+      },
+      "id": "428e576c-fbe7-4588-a7d7-bf363422b230"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": "passen = to fit, to try on (not 'to pass'). And staan does not always mean 'to stand': in Die jas staat je goed it means 'to suit'.",
+      "id": "a5bd3dee-14a1-4521-a18c-613edff4e81e"
+    },
+    {
+      "type": "divider",
+      "id": "78c54d1c-c428-462f-81c5-4c14f95ef188"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "e8f153e2-0ef0-4682-95bb-a901015fea9b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in the comparative",
+      "id": "2bef42c3-bec2-4027-9f93-329d954b83ea"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the comparative form of the adjective in brackets.",
+          "items": [
+            {
+              "prompt": "Deze jas is … dan die jas. (warm)",
+              "authorsVersion": [
+                "warmer"
+              ],
+              "note": "Regular: warm + er."
+            },
+            {
+              "prompt": "Mijn trui is … dan jouw trui. (dik)",
+              "authorsVersion": [
+                "dikker"
+              ],
+              "note": "dik → dikker: double the k to keep the short i."
+            },
+            {
+              "prompt": "Deze sjaal is … dan die sjaal. (dun)",
+              "authorsVersion": [
+                "dunner"
+              ],
+              "note": "dun → dunner: double the n."
+            },
+            {
+              "prompt": "De blauwe jas is … dan de zwarte jas. (groot)",
+              "authorsVersion": [
+                "groter"
+              ],
+              "note": "groot → groter: the long oo stays single."
+            },
+            {
+              "prompt": "Deze jas is … dan die jas. (duur)",
+              "authorsVersion": [
+                "duurder"
+              ],
+              "note": "Already ends in -r: add -der, not just -er."
+            },
+            {
+              "prompt": "Het station is … dan de bakkerij. (ver)",
+              "authorsVersion": [
+                "verder"
+              ],
+              "note": "ver → verder: another -r word."
+            },
+            {
+              "prompt": "Deze jas is … dan die jas. (goed)",
+              "authorsVersion": [
+                "beter"
+              ],
+              "note": "Irregular: goed → beter, not goeder."
+            },
+            {
+              "prompt": "Deze winkel heeft … jassen dan die winkel. (veel)",
+              "authorsVersion": [
+                "meer"
+              ],
+              "note": "Irregular: veel → meer, not veeler."
+            }
+          ]
+        }
+      },
+      "id": "dd3944b4-92bb-4caa-ab4d-07744605da39"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the dialogue",
+      "id": "7d4bf823-7b64-4be1-98a8-5f6a1ede621f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the dialogues. Fill in one word per blank.",
+          "items": [
+            {
+              "prompt": "Sofia: Deze jas is … dan die jas. (warm) / Noor: En hij is ook … dan de zwarte sjaal. (lang)",
+              "authorsVersion": [
+                "warmer",
+                "langer"
+              ]
+            },
+            {
+              "prompt": "Verkoopster: De blauwe jas is … dan de zwarte jas. (duur) / Sofia: Dat weet ik. Maar de kwaliteit is … dan bij de zwarte jas. (goed)",
+              "authorsVersion": [
+                "duurder",
+                "beter"
+              ]
+            },
+            {
+              "prompt": "Noor: Is deze trui even duur … die jas? / Verkoopster: Nee, de trui is … duur.",
+              "authorsVersion": [
+                "als",
+                "minder"
+              ],
+              "note": "minder duur = less expensive."
+            },
+            {
+              "prompt": "Sofia: Utrecht is … dan Valencia. (koud) / Henk: En de winter is ook … dan in Spanje. (lang)",
+              "authorsVersion": [
+                "kouder",
+                "langer"
+              ]
+            },
+            {
+              "prompt": "Verkoopster: Deze jas is niet zo duur … de blauwe jas. / Sofia: Nee, maar hij is ook … warm.",
+              "authorsVersion": [
+                "als",
+                "minder"
+              ]
+            },
+            {
+              "prompt": "Noor: Mijn appartement is … dan jouw appartement. (klein) / Sofia: Ja, maar het is net zo … als het jouwe. (gezellig)",
+              "authorsVersion": [
+                "kleiner",
+                "gezellig"
+              ]
+            }
+          ]
+        }
+      },
+      "id": "30ac7d47-cb0c-4085-991d-3c63b57dfa1f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "83dd6e60-b6d4-4fe0-8c60-c37c94b78d5d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the correct order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: is / deze jas / dan die jas / warmer",
+              "authorsVersion": [
+                "Deze jas is warmer dan die jas."
+              ]
+            },
+            {
+              "prompt": "Put in order: de blauwe jas / is / langer / dan de zwarte jas",
+              "authorsVersion": [
+                "De blauwe jas is langer dan de zwarte jas."
+              ]
+            },
+            {
+              "prompt": "Put in order: duurder / is / deze trui / dan die trui",
+              "authorsVersion": [
+                "Deze trui is duurder dan die trui."
+              ]
+            },
+            {
+              "prompt": "Put in order: ik / de warmere jas / kies",
+              "authorsVersion": [
+                "Ik kies de warmere jas."
+              ]
+            },
+            {
+              "prompt": "Put in order: is / mijn appartement / kleiner / dan het huis in Valencia",
+              "authorsVersion": [
+                "Mijn appartement is kleiner dan het huis in Valencia."
+              ]
+            },
+            {
+              "prompt": "Put in order: is / even duur / deze jas / als die jas",
+              "authorsVersion": [
+                "Deze jas is even duur als die jas."
+              ]
+            },
+            {
+              "prompt": "Put in order: is / net zo gezellig / Utrecht / als Valencia",
+              "authorsVersion": [
+                "Utrecht is net zo gezellig als Valencia."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "d6140013-31cf-4d74-ae93-ad1cbf1516da"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Transformation: one comparison",
+      "id": "1e7b5550-daf4-4c7d-b577-1ee5aa785892"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the two facts as one comparison. Use the adjective that fits.",
+          "items": [
+            {
+              "prompt": "De zwarte jas kost tachtig euro. De blauwe jas kost honderdtwintig euro.",
+              "authorsVersion": [
+                "De blauwe jas is duurder dan de zwarte jas."
+              ],
+              "note": "Also fine: De zwarte jas is goedkoper dan de blauwe jas."
+            },
+            {
+              "prompt": "Deze trui is dik. Die trui is dun.",
+              "authorsVersion": [
+                "Deze trui is dikker dan die trui."
+              ]
+            },
+            {
+              "prompt": "Mijn fiets is klein. Jouw fiets is groot.",
+              "authorsVersion": [
+                "Jouw fiets is groter dan mijn fiets."
+              ]
+            },
+            {
+              "prompt": "Deze jas kost vijftig euro. Die jas kost ook vijftig euro.",
+              "authorsVersion": [
+                "Deze jas is even duur als die jas."
+              ]
+            },
+            {
+              "prompt": "Utrecht is gezellig. Valencia is ook gezellig.",
+              "authorsVersion": [
+                "Utrecht is net zo gezellig als Valencia."
+              ]
+            },
+            {
+              "prompt": "Deze winkel heeft veel jassen. Die winkel heeft weinig jassen.",
+              "authorsVersion": [
+                "Deze winkel heeft meer jassen dan die winkel."
+              ],
+              "note": "Also fine: Die winkel heeft minder jassen dan deze winkel."
+            },
+            {
+              "prompt": "Deze winkel is goed. Die winkel is ook goed.",
+              "authorsVersion": [
+                "Deze winkel is even goed als die winkel."
+              ],
+              "note": "Equal quality: even + base adjective + als, no comparative needed."
+            }
+          ]
+        }
+      },
+      "id": "de6cab8a-38bd-401f-af59-856096311632"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "5177bd68-3e5f-4eff-81a7-2955d5afa78a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "This coat is warmer than that coat.",
+              "authorsVersion": [
+                "Deze jas is warmer dan die jas."
+              ]
+            },
+            {
+              "prompt": "My sweater is thicker than your sweater.",
+              "authorsVersion": [
+                "Mijn trui is dikker dan jouw trui."
+              ]
+            },
+            {
+              "prompt": "The black coat is cheaper, but the blue coat is better.",
+              "authorsVersion": [
+                "De zwarte jas is goedkoper, maar de blauwe jas is beter."
+              ]
+            },
+            {
+              "prompt": "This coat is just as expensive as that coat.",
+              "authorsVersion": [
+                "Deze jas is even duur als die jas."
+              ]
+            },
+            {
+              "prompt": "Utrecht is just as cosy as Valencia.",
+              "authorsVersion": [
+                "Utrecht is net zo gezellig als Valencia."
+              ]
+            },
+            {
+              "prompt": "This scarf isn't as warm as that coat.",
+              "authorsVersion": [
+                "Deze sjaal is niet zo warm als die jas."
+              ]
+            },
+            {
+              "prompt": "I choose the warmer coat.",
+              "authorsVersion": [
+                "Ik kies de warmere jas."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "e1a7179a-149f-4531-b974-a7b154f297fb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "7e80eeb3-07d8-484a-b980-ca2b22ec8664"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Deze jas is warmer dan die jas.",
+              "authorsVersion": [
+                "This coat is warmer than that coat."
+              ]
+            },
+            {
+              "prompt": "De blauwe jas is duurder, maar hij is ook beter.",
+              "authorsVersion": [
+                "The blue coat is more expensive, but it is also better."
+              ]
+            },
+            {
+              "prompt": "Ik twijfel. Welke jas is beter?",
+              "authorsVersion": [
+                "I'm not sure. Which coat is better?"
+              ]
+            },
+            {
+              "prompt": "Mijn appartement is kleiner dan het huis in Valencia, maar het is net zo gezellig.",
+              "authorsVersion": [
+                "My apartment is smaller than the house in Valencia, but it is just as cosy."
+              ]
+            },
+            {
+              "prompt": "Die jas staat je goed.",
+              "authorsVersion": [
+                "That coat suits you."
+              ]
+            },
+            {
+              "prompt": "Deze winkel heeft meer jassen dan die winkel.",
+              "authorsVersion": [
+                "This shop has more coats than that shop."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "f1f690e2-814a-4c16-86cc-bbfc5181180a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Twee jassen vergelijken",
+      "id": "618d8508-e1f9-49d4-bb78-65bf65a15077"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sofia wrote down the two coats to compare them before choosing. Read her notes and answer the questions in Dutch.",
+      "id": "ddd46ae1-16b5-4e3f-b50f-0ff2c3b61b32"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the notes about the two coats. Answer the questions in Dutch.",
+          "passage": {
+            "title": "Twee jassen vergelijken",
+            "content": "Jas 1: zwart\nPrijs: tachtig euro\nLengte: kort\nGewicht: licht\nKwaliteit: goed\n\nJas 2: donkerblauw\nPrijs: honderdtwintig euro\nLengte: lang\nGewicht: zwaar\nKwaliteit: heel goed. Deze jas is warmer dan jas 1.\n\nSofia kiest jas 2, de donkerblauwe jas. Hij is duurder en zwaarder, maar ook warmer en langer dan de zwarte jas. Noor zegt: 'De zwarte jas is ook mooi!' Maar voor Sofia is de blauwe kleur mooier.\n\nThuis zegt Henk: 'Die jas staat je goed!' Sofia is heel blij. Haar appartement in Lombok is klein, maar gezellig. Het is kleiner dan het huis van haar moeder in Valencia. Maar het appartement is net zo gezellig als dat huis. Utrecht is nu haar thuis."
+          },
+          "items": [
+            {
+              "prompt": "Hoeveel kost jas 1?",
+              "authorsVersion": [
+                "Jas 1 kost tachtig euro."
+              ]
+            },
+            {
+              "prompt": "Hoeveel kost jas 2?",
+              "authorsVersion": [
+                "Jas 2 kost honderdtwintig euro."
+              ]
+            },
+            {
+              "prompt": "Welke jas is warmer?",
+              "authorsVersion": [
+                "Jas 2, de donkerblauwe jas, is warmer."
+              ]
+            },
+            {
+              "prompt": "Welke jas kiest Sofia?",
+              "authorsVersion": [
+                "Sofia kiest jas 2, de donkerblauwe jas."
+              ]
+            },
+            {
+              "prompt": "Klopt dit? Jas 1 is zwaarder dan jas 2.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Jas 2 is zwaarder dan jas 1."
+              ]
+            },
+            {
+              "prompt": "Is het appartement van Sofia groter dan het huis van haar moeder?",
+              "authorsVersion": [
+                "Nee, het appartement is kleiner dan het huis."
+              ]
+            },
+            {
+              "prompt": "Is het appartement net zo gezellig als het huis in Valencia?",
+              "authorsVersion": [
+                "Ja, het appartement is net zo gezellig als het huis."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "21eff556-ce99-48c8-a3af-869c950025ad"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "6aaca368-6152-443f-a3b1-3f6c7afa24ac"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Compare two things you own (clothes, bikes, rooms…) in 3–4 sentences. Use at least one comparative and even … als or net zo … als.",
+          "items": [
+            {
+              "prompt": "Compare two things you own in 3–4 sentences.",
+              "authorsVersion": [
+                "Mijn zwarte fiets is goedkoper dan een nieuwe fiets. Hij is ook net zo snel. Mijn oude regenjas is dunner dan mijn nieuwe winterjas, maar de winterjas is warmer. Ik kies nu altijd de winterjas."
+              ],
+              "note": "Model answer. Check: comparative with dan, and even … als or net zo … als at least once."
+            }
+          ]
+        }
+      },
+      "id": "8e7871a2-fb9f-493c-958c-43fab070e981"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "baff0301-fcbf-491c-9759-2226ee2038c6"
+    },
+    {
+      "type": "paragraph",
+      "content": "Remember:",
+      "id": "c7f5da10-d3d0-42e0-b686-2af8fe14f319"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Comparative = adjective + er (+ der after -r): warm → warmer, duur → duurder.",
+      "id": "8a2002ac-3865-467a-9397-7aa74c1b06fa"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "dan follows a comparative: warmer dan, never warmer als.",
+      "id": "9ae96b7c-e9d5-4774-bd62-c1734fddb74d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Irregular: goed → beter, veel → meer, weinig → minder.",
+      "id": "c6f8ed91-164a-4120-9f9f-f8eea2abb829"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Equal: even … als or net zo … als. Not equal: niet zo … als.",
+      "id": "165258a3-e9bf-45a3-8896-c62ddb81ab8f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "A comparative before a noun takes -e: de duurdere jas (but een warmer vest, the same het-word exception as before).",
+      "id": "ebe60c40-d469-4159-b46e-b8dd5cbc4ec9"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Die jas staat je goed. = that coat suits you.",
+      "id": "4b87770e-b9b5-4898-810f-f04f37f48872"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: In de jassenwinkel",
+      "description": "Inside a clothes shop in the centre of Utrecht: Sofia holds up a black coat and a dark-blue coat side by side to compare them, while Noor and the Verkoopster look on.",
+      "alt": "Sofia comparing a black coat and a dark-blue coat in a clothes shop."
+    },
+    {
+      "afterHeading": "Story: Thuis bij Henk",
+      "description": "Henk, a cheerful 67-year-old cheese seller, and his cat Tijger in the hallway of Kastanjestraat 14, greeting Sofia who is wearing her new dark-blue coat.",
+      "alt": "Henk and his cat greeting Sofia in the hallway, wearing her new dark-blue coat."
+    }
+  ],
+  "id": "178c375c-b9cd-4e54-90ed-d3c3c1ca2a05"
+}

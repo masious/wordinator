@@ -1,5 +1,5 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
+import { signIn } from "./auth";
 import { courseApi, paragraph, seedLesson, openLesson } from "./lessonSeed";
 
 type Block = Record<string, unknown>;
@@ -7,11 +7,6 @@ const columns = (...contents: Block[][]): Block => ({
   id: crypto.randomUUID(), type: "columnList", props: {},
   children: contents.map((children) => ({ id: crypto.randomUUID(), type: "column", props: { width: 1 }, children })),
 });
-
-async function signIn(page: Page) {
-  await page.goto("/"); await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL); await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD); await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
-}
 
 // Drags a block by its side-menu handle onto the right edge of another block (or column), where BlockNote makes a column.
 async function dragToRightEdge(page: Page, block: Locator, target: Locator) {
@@ -38,7 +33,7 @@ test("an author makes columns by slash item and by dragging, and they survive a 
   await api(`/courses/${course.id}/visibility`, { status: "published" });
   await seedLesson(page, course.id, `${suffix} lesson`, [paragraph("Links."), paragraph("Rechts.")], { publish: false });
 
-  await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
+  await page.goto(`/courses/${course.id}`);
   await openLesson(page);
   await page.getByRole("button", { name: "Edit lesson 1" }).click();
   const editor = page.locator(".bn-editor");
@@ -75,7 +70,7 @@ test("the editor refuses a fourth column and readers see the published columns",
   await api(`/courses/${course.id}/visibility`, { status: "published" });
   await seedLesson(page, course.id, `${suffix} lesson`, [paragraph("Vier."), columns([paragraph("Een.")], [paragraph("Twee.")], [paragraph("Drie.")])], { publish: false });
 
-  await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
+  await page.goto(`/courses/${course.id}`);
   await openLesson(page);
   await page.getByRole("button", { name: "Edit lesson 1" }).click();
   const editor = page.locator(".bn-editor");

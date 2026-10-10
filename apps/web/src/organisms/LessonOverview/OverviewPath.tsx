@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { stopProgress, stopStatus, type LessonOverview, type OverviewKind, type OverviewStop } from "./overviewModel";
 import styles from "./OverviewPath.module.css";
 
-const kindIcons = { topic: BookOpen, story: MessagesSquare, practice: PencilLine, reading: BookOpenText } as const satisfies Record<OverviewKind, LucideIcon>;
+export const kindIcons = { topic: BookOpen, story: MessagesSquare, practice: PencilLine, reading: BookOpenText } as const satisfies Record<OverviewKind, LucideIcon>;
 
 // A fixed pseudo-random number in [0, 1) for a waypoint, so the road bends differently at every stop but the same on every visit.
 const noise = (index: number, salt: number) => {

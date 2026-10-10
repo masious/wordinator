@@ -1,0 +1,1792 @@
+{
+  "title": "Lekker weer",
+  "goal": "Use the same word as an adjective and as an adverb, and make it stronger or weaker with heel, erg, best, een beetje and te.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Lekker weer",
+      "id": "6245b1f5-78c2-4f5a-a8ce-bbf762ed5cc5"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Saturday 7 November. Sofia, Noor and Daan take the train to Zandvoort, a town by the sea, for a day at the beach: lovely weather in the morning, a shower in the afternoon."
+      ],
+      "id": "ad2677d0-0d09-434b-862f-cc61cac1ddb4"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In this lesson you will use the same Dutch word as an adjective and as an adverb (how something happens), and make it stronger or weaker with ",
+        {
+          "text": "heel",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "erg",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "best",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "een beetje",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and ",
+        {
+          "text": "te",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "eb749e49-e6ab-4ba5-9c9b-7c3e866be149"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: verbs are ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", subjects are ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", and the adverb — how something happens — is ",
+        {
+          "text": "gray",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        ". The new form itself is always bold."
+      ],
+      "id": "5f35ed00-2e82-4fcb-8975-5e84914c468f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Op het strand",
+      "id": "c2275745-ce31-4ac0-baa7-b082ff4958cd"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Saturday morning. Sofia, Noor and Daan get off the train at Zandvoort (they changed trains in Haarlem) and walk down to the beach. The sun is out and the sea looks calm."
+      ],
+      "id": "803a70b4-253c-4e13-9875-e0ce5024c6a2"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Bij de zee",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "het strand (de stranden) ",
+            {
+              "text": "— the beach",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "e31e6bdc-8acf-456f-810e-7157fdc8fb61"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "de zee (de zeeën) ",
+            {
+              "text": "— the sea",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "cc2ea9d5-4d96-473d-a6b6-8a6ad21b82d0"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "de golf, de golven ",
+            {
+              "text": "— the wave, the waves",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "47a27ae9-eb32-4fc0-bd04-0f84c1884427"
+        }
+      ],
+      "id": "47c29624-7e67-4d25-9583-2e57375f6c6e"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "In de duinen",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "het duin, de duinen ",
+            {
+              "text": "— the dune, the dunes",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "ecce07ae-f24c-449c-b204-b5408246a977"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "het zand ",
+            {
+              "text": "— the sand",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "2a4bd08e-42fc-42d7-acfe-185723391e7e"
+        }
+      ],
+      "id": "e6f69655-f21a-4ead-a751-a2f289d2082e"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het strand",
+              "meaning": "the beach",
+              "forms": "de stranden",
+              "example": "We lopen op het strand.",
+              "id": "e80ca046-2e18-45bc-8e87-8a2014e88578"
+            },
+            {
+              "term": "de zee",
+              "meaning": "the sea",
+              "forms": "de zeeën",
+              "example": "De zee is kalm vandaag.",
+              "id": "fd63c295-4a80-4cad-9537-44f2796c937e"
+            },
+            {
+              "term": "de golf",
+              "meaning": "the wave",
+              "forms": "de golven",
+              "note": "De golf can also mean the sport golf; here it means a wave.",
+              "id": "fb52b200-a02d-4573-9718-ece87a8c3b76"
+            },
+            {
+              "term": "het duin",
+              "meaning": "the dune",
+              "forms": "de duinen",
+              "id": "d8e9a5bb-3215-48db-b26c-239f23c6178b"
+            },
+            {
+              "term": "het zand",
+              "meaning": "the sand",
+              "example": "Het zand is hier zacht.",
+              "id": "c730b075-469f-4e2a-8a11-a1d7de4f1739"
+            }
+          ]
+        }
+      },
+      "id": "6b72ee49-d262-4629-b637-5d9c5c6bf2c9"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Kom op! Lopen we naar de zee?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wacht even, Daan! Jij loopt zo snel."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ik loop altijd snel. Jij loopt juist zo langzaam, Sofia!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Kijk, de zee is kalm en de zon schijnt. Heerlijk, hè?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Lekker weer! Voel je de wind? Die waait hier hard."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, aan de zee waait het altijd hard. Kijk naar de golven!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Lopen we naar de duinen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goed plan. Het zand is hier zo zacht."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En kijk, daar is een strandcafé. Straks gaan we daar iets drinken."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Eerst nog een lange wandeling!"
+          }
+        ]
+      },
+      "id": "9a7e4c90-8246-4aea-857b-5f2d977e5627"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "kalm",
+              "meaning": "calm",
+              "example": "De zee is kalm vandaag.",
+              "id": "f9264539-ccaf-4d56-9471-91dde5a05e40"
+            },
+            {
+              "term": "hard",
+              "meaning": "hard, loud, strongly (wind, rain, sound)",
+              "note": "The same word is an adjective and an adverb: never an ending.",
+              "id": "6a6175d4-64f7-4436-99fa-2ad8bab4d24e"
+            },
+            {
+              "term": "langzaam",
+              "meaning": "slow, slowly",
+              "id": "5e206121-88f9-4ebf-8dde-51fd2599b818"
+            },
+            {
+              "term": "zacht",
+              "meaning": "soft, gentle, mild",
+              "id": "ee979adc-5e70-4136-9eff-4f4ccf9c6f81"
+            },
+            {
+              "term": "het strandcafé",
+              "meaning": "the beach café",
+              "forms": "de strandcafés",
+              "id": "cdf1c1ac-03b6-4fb8-ac9c-08f614d75953"
+            },
+            {
+              "term": "de wandeling",
+              "meaning": "a walk, a stroll",
+              "example": "Ze maken een lange wandeling op het strand.",
+              "note": "The verb wandelen (to walk, to stroll) is already known from 15-a; this is the noun.",
+              "id": "09fad3fb-427f-4c1a-b9cd-f0e38a56a235"
+            }
+          ]
+        }
+      },
+      "id": "04573652-b1bc-4b1a-ab71-4e4cfd8bc2df"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Daan and Sofia walk at different speeds, and the wind blows hard: snel, langzaam and hard describe ",
+        {
+          "text": "how",
+          "styles": {
+            "italic": true
+          }
+        },
+        " something happens, not the noun itself. That is an adverb."
+      ],
+      "id": "4dd42e78-4d40-450d-a3dc-d4f8ed5f645d"
+    },
+    {
+      "type": "divider",
+      "id": "660f36ca-24fe-42a8-a74f-c7e7b1cd6a78"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Snel of langzaam? Adjective or adverb",
+      "id": "c482877b-6a31-4ea3-a577-e97aafe5d358"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Before a noun (recap)",
+      "id": "431f469c-4a44-42d4-b6d7-7b5ae45fe64e"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You already know this rule from Part I: an adjective right before a noun usually gets ",
+        {
+          "text": "-e",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". A singular ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        "-word after ",
+        {
+          "text": "een",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " or ",
+        {
+          "text": "geen",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " or with no article is the one exception."
+      ],
+      "id": "05d53176-a805-4d1a-b3f3-e2f6d155a969"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's a beautiful day.",
+        "note": "dag is a de-word, so mooi gets -e after een."
+      },
+      "content": [
+        "Het is ",
+        {
+          "text": "een",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " mooi",
+        {
+          "text": "e",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " dag."
+      ],
+      "id": "11fd0057-5fb8-43da-96f5-ad0fe8468d52"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's a cold weekend.",
+        "note": "weekend is a het-word, so after een there is no -e: koud, not koude."
+      },
+      "content": [
+        "Het is ",
+        {
+          "text": "een",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " koud weekend."
+      ],
+      "id": "afce2a31-0cf3-462e-a207-68d82d659cac"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "After zijn or worden: no ending",
+      "id": "624f0574-94d4-4157-91f9-8f026001ccc4"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "When the adjective comes after ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " or ",
+        {
+          "text": "worden",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", it never gets -e — even with a de-word."
+      ],
+      "id": "ebeb52ac-702d-486e-87e5-adbfcf840078"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The day is cold.",
+        "note": "dag is a de-word, but after is there is still no -e."
+      },
+      "content": [
+        "De dag is ",
+        {
+          "text": "koud",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "1794f090-a5b3-4c1a-9b4d-1d5e014d37e9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's getting warm today.",
+        "note": "Recycles worden from 17-a: no ending after wordt either."
+      },
+      "content": [
+        "Het wordt ",
+        {
+          "text": "warm",
+          "styles": {
+            "bold": true
+          }
+        },
+        " vandaag."
+      ],
+      "id": "aa021e4a-ab8c-4e44-8f93-c0b3c695d368"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "After ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "worden",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", an adjective never takes -e: ",
+        {
+          "text": "De dag is koud",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", not ",
+        {
+          "text": "koude",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        "."
+      ],
+      "id": "21b4bbaf-38be-4006-8bfa-0c7f91dfe16b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "As an adverb: always the base form",
+      "id": "f08da3ce-444f-4580-b8a0-43f3b54ab629"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "An adverb says ",
+        {
+          "text": "how",
+          "styles": {
+            "italic": true
+          }
+        },
+        " something happens — how someone walks, how hard the wind blows. Dutch adverbs are simply the adjective's base form: ",
+        {
+          "text": "never",
+          "styles": {
+            "bold": true
+          }
+        },
+        " an ending, and never ",
+        {
+          "text": "-ly",
+          "styles": {
+            "italic": true
+          }
+        },
+        " as in English."
+      ],
+      "id": "7fd6c328-7e09-44b7-8f6a-5075da5e92b5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's blowing hard.",
+        "note": "hard describes how it waait: adverb, base form."
+      },
+      "content": [
+        "Het waait ",
+        {
+          "text": "hard",
+          "styles": {
+            "bold": true,
+            "textColor": "gray"
+          }
+        },
+        "."
+      ],
+      "id": "fccdb3e0-63d2-49a4-a3d8-c9de7a88e9a8"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan walks fast, but Sofia walks slowly.",
+        "note": "Both describe how they loopt: adverbs, never snelle or langzame."
+      },
+      "content": [
+        "Daan loopt ",
+        {
+          "text": "snel",
+          "styles": {
+            "bold": true,
+            "textColor": "gray"
+          }
+        },
+        ", maar Sofia loopt ",
+        {
+          "text": "langzaam",
+          "styles": {
+            "bold": true,
+            "textColor": "gray"
+          }
+        },
+        "."
+      ],
+      "id": "9f59e279-046c-4ff8-ab20-71e6d8b66e0e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's going well.",
+        "note": "goed never changes form (recycle)."
+      },
+      "content": [
+        "Het gaat ",
+        {
+          "text": "goed",
+          "styles": {
+            "bold": true,
+            "textColor": "gray"
+          }
+        },
+        "."
+      ],
+      "id": "59c2c71f-a777-4e53-b572-518c263b33d1"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Hij fietst snelle.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Hij fietst snel.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " An adverb is never spelled with -e, even though the matching adjective sometimes is."
+      ],
+      "id": "454f0df3-7595-4553-a278-a6804977bb06"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "Memory trick: an adverb is ",
+        {
+          "text": "lazy",
+          "styles": {
+            "italic": true
+          }
+        },
+        " — it never adds a letter. If you can ask ",
+        {
+          "text": "hoe?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (how?) about the word, it is an adverb and stays short."
+      ],
+      "id": "4dbb8362-8d86-45c8-a6a0-ecab3c19b773"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Voor een woord (+ -e)",
+              "id": "69dd2a4e-dc1d-4184-925b-578f28c9a18c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "een snelle fiets",
+              "id": "cf8be2e8-ad21-40ea-943b-4700890cf0d1"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "een harde wind",
+              "id": "694e4a56-7c6e-47dc-ad89-7ae81f4f47fe"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "een koude dag",
+              "id": "fb8b62c2-39bb-4795-93d7-542672e8cfbd"
+            }
+          ],
+          "id": "454a47b1-4a7b-4033-b6c4-6d0722b818a4"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Na zijn/worden (geen -e)",
+              "id": "ffbb37d9-94b4-45b1-9ab8-13d20c2ecd24"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "De fiets is snel.",
+              "id": "f3f669d9-3c57-4c6c-a376-93c8fbe7601d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "De wind is hard.",
+              "id": "280730f0-e661-4c08-8f75-54269ca2ed1c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "De dag is koud.",
+              "id": "cbc0bb31-f303-4aa0-bb58-4e61f209fc19"
+            }
+          ],
+          "id": "328120e3-46d4-4edc-9efc-d17eefd9b498"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Als bijwoord (geen -e)",
+              "id": "9de86f2f-09dc-45c1-bfc6-6b28d32f68d7"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Hij fietst snel.",
+              "id": "5e90bc66-fbfc-40db-b73e-79828ecbc3bc"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Het waait hard.",
+              "id": "239a2ca2-0a54-4971-8526-63a8c0f4394c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Het wordt koud.",
+              "id": "819315e9-f15b-4848-93bc-c7c12c3625cb"
+            }
+          ],
+          "id": "847875ad-aad8-4b6b-addf-bec9ddbeb29b"
+        }
+      ],
+      "id": "22429aab-d6c9-4232-86ab-3fd8b772a244"
+    },
+    {
+      "type": "divider",
+      "id": "9f763383-a935-43c6-8074-58c2eb41f013"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Heel, erg, best, een beetje, te: meer of minder",
+      "id": "ef39fb45-be74-4a0c-9cb6-5a2d2de6b0a6"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "A small word right before an adjective or adverb can make it stronger or weaker. These five never change form themselves: ",
+        {
+          "text": "heel",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "erg",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "best",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "een beetje",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "te",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "dca15e85-def7-48f4-b146-3c6463a104d7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's very cold today.",
+        "note": "heel = very. heel itself never gets an ending."
+      },
+      "content": [
+        "Het is ",
+        {
+          "text": "heel",
+          "styles": {
+            "bold": true
+          }
+        },
+        " koud vandaag."
+      ],
+      "id": "700f8e81-afc9-49e5-adde-29693208544a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's a very cold day.",
+        "note": "heel stays heel; koude still gets -e because of the de-word dag (the Part I rule). You also hear 'een hele koude dag' in speech, but heel is standard in writing."
+      },
+      "content": [
+        "Het is een ",
+        {
+          "text": "heel",
+          "styles": {
+            "bold": true
+          }
+        },
+        " koude dag."
+      ],
+      "id": "578edb70-e797-4d52-a301-629e844c6f70"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's very busy on the beach.",
+        "note": "erg = very, like heel. druk still has no ending after is."
+      },
+      "content": [
+        "Het is ",
+        {
+          "text": "erg",
+          "styles": {
+            "bold": true
+          }
+        },
+        " druk op het strand."
+      ],
+      "id": "b11fe9de-9680-4acf-b758-d2ca2d9e4dd9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's quite wet, but not cold.",
+        "note": "best here means quite/fairly — a false friend! It does not mean 'best' as in the top one."
+      },
+      "content": [
+        "Het is ",
+        {
+          "text": "best",
+          "styles": {
+            "bold": true
+          }
+        },
+        " nat, maar niet koud."
+      ],
+      "id": "172f0a53-e158-4326-b24d-23226f137c18"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's a bit cloudy.",
+        "note": "Recycles een beetje from 10-a, now used before an adjective instead of a noun."
+      },
+      "content": [
+        "Het is ",
+        {
+          "text": "een beetje",
+          "styles": {
+            "bold": true
+          }
+        },
+        " bewolkt."
+      ],
+      "id": "3446530a-4330-4d71-9697-3c65700bbce3"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's too busy here.",
+        "note": "Recycles te from 12-b (Dat is te duur)."
+      },
+      "content": [
+        "Het is hier ",
+        {
+          "text": "te",
+          "styles": {
+            "bold": true
+          }
+        },
+        " druk."
+      ],
+      "id": "08ada55f-2be4-4e36-8c7d-799fe0fb89db"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "Formula: ",
+        {
+          "text": "heel / erg / best / een beetje / te",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + adjective or adverb. These five words never change; only the Part I -e rule on the word that follows can still apply."
+      ],
+      "id": "24b09359-ec87-4f0c-a336-fe27062772f4"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        {
+          "text": "best",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = quite, fairly — not the English \"best\". ",
+        {
+          "text": "De zee is best kalm.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " means the sea is fairly calm, nothing more."
+      ],
+      "id": "29fe9e72-38cf-42d3-8f85-f2861a2427c5"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "heel",
+              "meaning": "very (before an adjective or adverb)",
+              "note": "A known word with a new meaning: de hele dag (14-a) uses heel to mean 'whole'. Here it means 'very'.",
+              "id": "93e58938-952f-48fa-9535-1ad1e1c57229"
+            },
+            {
+              "term": "erg",
+              "meaning": "very",
+              "id": "35b515ae-7ab0-4185-bbb2-cd5ad8316081"
+            },
+            {
+              "term": "best",
+              "meaning": "quite, fairly",
+              "note": "False friend: not the English 'best'.",
+              "id": "8c962f1f-ab86-4116-a54f-d406f08775ee"
+            }
+          ]
+        }
+      },
+      "id": "a8ff8368-4c48-4e3d-a0e6-3a54e7d0fb4f"
+    },
+    {
+      "type": "divider",
+      "id": "dd217608-59e1-44db-8efc-0656ea190f62"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Lekker: hetzelfde woord, twee keer",
+      "id": "b586c885-61a1-4c7f-9ac1-bd26ebedf894"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You already know ",
+        {
+          "text": "lekker",
+          "styles": {
+            "bold": true
+          }
+        },
+        " from Lekker!, lekker weer and lekker wandelen. It is both an adjective and an adverb, and it never takes an ending either way."
+      ],
+      "id": "dba7d604-3f68-4560-b368-914a0a98221f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's nice and warm in the café.",
+        "note": "lekker here is an adverb before another adjective (warm): it makes warm sound pleasant."
+      },
+      "content": [
+        "Het is ",
+        {
+          "text": "lekker",
+          "styles": {
+            "bold": true,
+            "textColor": "gray"
+          }
+        },
+        " warm in het café."
+      ],
+      "id": "222bfb4c-2932-461a-8c6a-61a5d213139d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The hot chocolate is tasty.",
+        "note": "Here lekker is a plain predicative adjective (recycle)."
+      },
+      "content": [
+        "De chocolademelk is ",
+        {
+          "text": "lekker",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "164dfc11-5bd2-48a3-a719-1d0f73968dc3"
+    },
+    {
+      "type": "divider",
+      "id": "d98d889f-2701-42ed-a8cc-11a0606699e5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: In het strandcafé",
+      "id": "46809a56-64b4-404b-9916-16328f7f6619"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In the afternoon a shower suddenly arrives, just as the forecast said (17-a). Sofia, Noor and Daan run to the strandcafé to shelter and warm up."
+      ],
+      "id": "ad595361-804e-4342-ada3-3bea38f53917"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Kijk, een bui! Snel, naar het strandcafé!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "We schuilen hier. Ik ben best nat!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ik ook, maar binnen is het lekker warm."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Drie warme chocolademelk, graag!"
+          },
+          {
+            "speaker": "Ober",
+            "text": "Alstublieft, drie warme chocolademelk."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank u wel. Mmm, dit is heerlijk."
+          },
+          {
+            "speaker": "Daan",
+            "text": "De ochtend is zo mooi, en nu deze bui!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Het regent nu heel hard, maar morgen wordt het weer droog."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hier binnen is het lekker warm. Dat is fijn!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Gaan we hier nog even zitten?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goed idee. Buiten waait het nog steeds erg hard."
+          }
+        ]
+      },
+      "id": "4bf6e08b-07ec-46fa-94e3-0ecf15421b4f"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "schuilen",
+              "meaning": "to shelter, to take cover (from rain)",
+              "forms": "schuilt · schuilde · geschuild",
+              "example": "We schuilen in het strandcafé.",
+              "id": "24aa5bd5-c57c-41c6-a891-f0c1299f6759"
+            },
+            {
+              "term": "de warme chocolademelk",
+              "meaning": "the hot chocolate (drink)",
+              "example": "Drie warme chocolademelk, graag!",
+              "id": "291e95e5-e25b-4df9-b0f4-84689a784c9d"
+            },
+            {
+              "term": "Goed idee!",
+              "meaning": "Good idea!",
+              "note": "Fixed chunk, like Goed plan! (16-b).",
+              "id": "6b17062c-d809-40d0-8c74-9a9ab9fecece"
+            }
+          ]
+        }
+      },
+      "id": "411afa9d-e3e2-43c3-9c0c-a1ad028b8748"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Notice how ",
+        {
+          "text": "heel",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "erg",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and ",
+        {
+          "text": "best",
+          "styles": {
+            "italic": true
+          }
+        },
+        " come right before the adjective or adverb, and how ",
+        {
+          "text": "lekker",
+          "styles": {
+            "italic": true
+          }
+        },
+        " stays the same whether it describes warm (adverb) or stands alone (adjective)."
+      ],
+      "id": "e1d625d8-0bee-4e20-bb38-0a2b092a7fb1"
+    },
+    {
+      "type": "divider",
+      "id": "6c4b25ff-165b-4d9c-af63-9ed55b48cb88"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "9da8d1fb-6566-4f8c-abab-cbf2229b7fa7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in the right form",
+      "id": "10402bd8-5789-439f-8baf-ac51a746de61"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct form: with -e, or without. The base form is in brackets.",
+          "items": [
+            {
+              "prompt": "Het is een … dag. (koud)",
+              "authorsVersion": [
+                "koude"
+              ],
+              "note": "dag is a de-word, so een + adjective → -e."
+            },
+            {
+              "prompt": "De dag is … . (koud)",
+              "authorsVersion": [
+                "koud"
+              ],
+              "note": "After is there is no -e."
+            },
+            {
+              "prompt": "Daan loopt … naar de zee. (snel)",
+              "authorsVersion": [
+                "snel"
+              ],
+              "note": "Adverb: never an ending."
+            },
+            {
+              "prompt": "Hij heeft een … fiets. (snel)",
+              "authorsVersion": [
+                "snelle"
+              ],
+              "note": "fiets is a de-word, so -e after een."
+            },
+            {
+              "prompt": "Het waait … vandaag. (hard)",
+              "authorsVersion": [
+                "hard"
+              ],
+              "note": "Adverb: base form."
+            },
+            {
+              "prompt": "Het is een … wind. (hard)",
+              "authorsVersion": [
+                "harde"
+              ],
+              "note": "wind is a de-word, so -e after een."
+            },
+            {
+              "prompt": "Sofia loopt … . (langzaam)",
+              "authorsVersion": [
+                "langzaam"
+              ],
+              "note": "Adverb: there is no form langzame as an adverb."
+            },
+            {
+              "prompt": "Het is een … wandeling. (langzaam)",
+              "authorsVersion": [
+                "langzame"
+              ],
+              "note": "wandeling is a de-word, so -e before the noun."
+            },
+            {
+              "prompt": "Het weer wordt … . (zacht)",
+              "authorsVersion": [
+                "zacht"
+              ],
+              "note": "After wordt there is no -e; zacht weer = mild weather."
+            }
+          ]
+        }
+      },
+      "id": "7f2f2276-8770-4c6b-bd62-9143b83c6c5f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Beach conversation",
+      "id": "c6a23ed4-c324-4bc0-bb46-f5524d52aafb"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the beach conversation. One word per blank.",
+          "items": [
+            {
+              "prompt": "Daan: Jij loopt … , Sofia! / Sofia: En jij loopt altijd … !",
+              "authorsVersion": [
+                "langzaam",
+                "snel"
+              ],
+              "note": "Both are adverbs: never -e."
+            },
+            {
+              "prompt": "Noor: De zee is … vandaag. / Daan: En de zon … ook!",
+              "authorsVersion": [
+                "kalm",
+                "schijnt"
+              ],
+              "note": "schijnen is recycled from 17-a."
+            },
+            {
+              "prompt": "Sofia: Het waait hier … ! / Noor: Ja, het waait hier altijd … hard.",
+              "authorsVersion": [
+                "hard",
+                "heel"
+              ],
+              "note": "heel hard = very hard; heel itself never changes."
+            },
+            {
+              "prompt": "Daan: Het is hier … druk! / Sofia: Ja, het is hier ook … druk.",
+              "authorsVersion": [
+                "erg",
+                "te"
+              ],
+              "note": "erg = very; te = too (recycle 12-b)."
+            },
+            {
+              "prompt": "Noor: Kijk, een bui! Snel, we … hier! / Sofia: Ja, ik ben … nat!",
+              "authorsVersion": [
+                "schuilen",
+                "best"
+              ],
+              "note": "schuilen: wij-form is the same as the infinitive. best = quite."
+            }
+          ]
+        }
+      },
+      "id": "b30e9a3c-3adb-45ef-beed-6ab59d74804e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "36e2da5c-a93a-438b-96f4-93f1612e3321"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the correct order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: hard / het / waait",
+              "authorsVersion": [
+                "Het waait hard."
+              ]
+            },
+            {
+              "prompt": "Put in order: snel / Daan / loopt",
+              "authorsVersion": [
+                "Daan loopt snel."
+              ]
+            },
+            {
+              "prompt": "Put in order: Sofia / langzaam / loopt",
+              "authorsVersion": [
+                "Sofia loopt langzaam."
+              ]
+            },
+            {
+              "prompt": "Put in order: een / dag / heel / koude / het is",
+              "authorsVersion": [
+                "Het is een heel koude dag."
+              ]
+            },
+            {
+              "prompt": "Put in order: erg / druk / het is / hier",
+              "authorsVersion": [
+                "Het is hier erg druk."
+              ],
+              "note": "Also fine: Het is erg druk hier."
+            },
+            {
+              "prompt": "Put in order: nat / best / is / het",
+              "authorsVersion": [
+                "Het is best nat."
+              ]
+            },
+            {
+              "prompt": "Put in order: warm / lekker / is / het / hier",
+              "authorsVersion": [
+                "Het is hier lekker warm."
+              ],
+              "note": "Also fine: Het is lekker warm hier."
+            }
+          ]
+        }
+      },
+      "id": "0b316c36-a2d6-438e-99af-d95f4e32fdbb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Transformation",
+      "id": "33432b9d-2a32-4e3b-998c-767354ae4aa4"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence following the instruction in brackets.",
+          "items": [
+            {
+              "prompt": "De wind is hard. (use waaien)",
+              "authorsVersion": [
+                "Het waait hard."
+              ]
+            },
+            {
+              "prompt": "De regen is hard. (use regenen)",
+              "authorsVersion": [
+                "Het regent hard."
+              ]
+            },
+            {
+              "prompt": "De dag is koud. (rewrite with een … dag)",
+              "authorsVersion": [
+                "Het is een koude dag."
+              ]
+            },
+            {
+              "prompt": "De wind is zacht. (rewrite with een … wind)",
+              "authorsVersion": [
+                "Het is een zachte wind."
+              ]
+            },
+            {
+              "prompt": "Sofia loopt. Ze is langzaam. (combine into one sentence)",
+              "authorsVersion": [
+                "Sofia loopt langzaam."
+              ]
+            },
+            {
+              "prompt": "Het is koud. (add heel)",
+              "authorsVersion": [
+                "Het is heel koud."
+              ]
+            },
+            {
+              "prompt": "Het is druk. (add erg)",
+              "authorsVersion": [
+                "Het is erg druk."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "a230aece-c66e-4966-bb87-76b197aa616e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "ee84c51e-60c8-48c8-af0d-4254f7694a06"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "It's blowing hard today.",
+              "authorsVersion": [
+                "Het waait vandaag hard."
+              ]
+            },
+            {
+              "prompt": "Daan walks fast.",
+              "authorsVersion": [
+                "Daan loopt snel."
+              ]
+            },
+            {
+              "prompt": "It's a very cold day.",
+              "authorsVersion": [
+                "Het is een heel koude dag."
+              ]
+            },
+            {
+              "prompt": "It's quite busy here.",
+              "authorsVersion": [
+                "Het is hier best druk."
+              ]
+            },
+            {
+              "prompt": "It's a bit cloudy.",
+              "authorsVersion": [
+                "Het is een beetje bewolkt."
+              ]
+            },
+            {
+              "prompt": "It's nice and warm in the café.",
+              "authorsVersion": [
+                "Het is lekker warm in het café."
+              ],
+              "note": "Also fine: In het café is het lekker warm."
+            },
+            {
+              "prompt": "The sea is calm today.",
+              "authorsVersion": [
+                "De zee is kalm vandaag."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "cc9f0c66-0bc8-47cb-9493-c48fad60e5c6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "bbc9a4aa-bc58-46ea-b913-cbbca430a398"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into English.",
+          "items": [
+            {
+              "prompt": "Het zand is hier zacht.",
+              "authorsVersion": [
+                "The sand is soft here."
+              ]
+            },
+            {
+              "prompt": "We schuilen in het strandcafé.",
+              "authorsVersion": [
+                "We're sheltering in the beach café."
+              ]
+            },
+            {
+              "prompt": "Het is hier te druk.",
+              "authorsVersion": [
+                "It's too busy here."
+              ]
+            },
+            {
+              "prompt": "Ze maken een lange wandeling.",
+              "authorsVersion": [
+                "They're taking a long walk."
+              ]
+            },
+            {
+              "prompt": "Het waait hier erg hard.",
+              "authorsVersion": [
+                "It's blowing very hard here."
+              ]
+            },
+            {
+              "prompt": "Dit is heerlijk!",
+              "authorsVersion": [
+                "This is wonderful!"
+              ]
+            }
+          ]
+        }
+      },
+      "id": "52b9feca-bf0b-4890-a776-2642fd74d83a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Noors berichtje",
+      "id": "aaa4d770-7485-47b3-9ad6-8a2f41f9854a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Noor's message to her mother. Answer the questions in Dutch.",
+          "items": [
+            {
+              "prompt": "Met wie gaat Noor naar Zandvoort?",
+              "authorsVersion": [
+                "Met Sofia en Daan."
+              ]
+            },
+            {
+              "prompt": "Wat maken ze op het strand?",
+              "authorsVersion": [
+                "Een lange wandeling."
+              ]
+            },
+            {
+              "prompt": "Hoe loopt Daan?",
+              "authorsVersion": [
+                "Heel snel."
+              ]
+            },
+            {
+              "prompt": "Hoe loopt Sofia?",
+              "authorsVersion": [
+                "Heel langzaam."
+              ]
+            },
+            {
+              "prompt": "Er komt een bui. Wat doen ze dan?",
+              "authorsVersion": [
+                "Ze schuilen in een strandcafé."
+              ]
+            },
+            {
+              "prompt": "Klopt dit? Binnen in het café is het koud.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Binnen is het lekker warm."
+              ]
+            },
+            {
+              "prompt": "Wat drinken ze in het strandcafé?",
+              "authorsVersion": [
+                "Een warme chocolademelk."
+              ]
+            },
+            {
+              "prompt": "Wat voor weer wordt het morgen?",
+              "authorsVersion": [
+                "Droog."
+              ]
+            }
+          ],
+          "passage": {
+            "title": "Noors berichtje",
+            "content": "Hoi mam!\nVandaag gaan we met de trein naar Zandvoort: Sofia, Daan en ik. We maken een lange wandeling op het strand en kijken naar de zee en de golven.\n's Ochtends is het heerlijk weer. De zon schijnt en het is lekker rustig.\nDaan loopt altijd heel snel, en Sofia loopt juist heel langzaam. Ik loop lekker rustig.\n's Middags waait het heel hard en dan komt er een bui. We schuilen snel in een strandcafé.\nBinnen is het lekker warm. We drinken een warme chocolademelk, en dat is heerlijk!\nHet is hier best gezellig, ook met deze regen. Morgen wordt het weer droog.\nTot snel! Liefs, Noor"
+          }
+        }
+      },
+      "id": "849182a0-c995-4287-a81b-b318d46c4349"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "702057e5-5220-4c6d-855b-afdb3c6c3b90"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about a day outside: the weather, and how you walk, cycle or travel.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about a day outside: the weather, and how you walk, cycle or travel.",
+              "authorsVersion": [
+                "Vandaag is het heel mooi weer buiten. De zon schijnt en het waait een beetje. Ik loop lekker langzaam door het park. Het is hier heerlijk rustig."
+              ],
+              "note": "Sofia's model answer. Check: an adjective or adverb with no extra ending, and heel/erg/een beetje/te used correctly."
+            }
+          ]
+        }
+      },
+      "id": "fe0ff5b7-0431-4b66-b10d-d8ba36ca3d20"
+    },
+    {
+      "type": "divider",
+      "id": "819f3013-4a49-498b-b4bd-c57aa83bc711"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "7a33b23f-9074-41e2-aa93-f7a731ccbfa1"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Before a noun, an adjective gets -e (Part I rule); a singular het-word after een/geen is the exception.",
+      "id": "951eeb3f-e48f-4734-99fb-85011c2807f5"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "After zijn or worden, the adjective never gets -e: De dag is koud. Het wordt warm.",
+      "id": "fdf1a42f-efd9-49ec-9f63-69725134897f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "As an adverb (how something happens), the word is always the base form: Het waait hard. Daan loopt snel.",
+      "id": "d2d903be-b01f-41d1-9a66-60e6a876508d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "heel, erg, best, een beetje and te go right before the adjective or adverb and never change themselves: heel koud, een beetje nat, te druk. best means quite/fairly, not \"best\".",
+      "id": "c993006f-ea58-41cb-955f-b5ce5a194cd0"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "lekker is both adjective and adverb and never takes an ending: lekker weer, lekker warm, Ik slaap lekker.",
+      "id": "9ac4178e-ffec-4ee4-8e64-8f5b135e93b9"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Remember: ",
+        {
+          "text": "Het waait hard.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " ",
+        {
+          "text": "Een heel koude dag.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " ",
+        {
+          "text": "Best nat, maar lekker warm binnen!",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "361a26bb-c0e8-4b26-bb17-287f0b845fc1"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Op het strand",
+      "description": "Sofia, Noor and Daan walk along the wide beach at Zandvoort on a bright windy morning: Daan strides ahead fast, Sofia lags behind slowly, Noor in the middle laughing, dunes and waves in the background.",
+      "alt": "Sofia, Noor and Daan walk on the beach at Zandvoort in the wind"
+    },
+    {
+      "afterHeading": "Story: In het strandcafé",
+      "description": "Sofia, Noor and Daan sit at a small table inside a cosy beach café, rain streaking the window behind them, three mugs of steaming hot chocolate on the table, windswept hair.",
+      "alt": "Sofia, Noor and Daan warm up with hot chocolate in a beach café while it rains outside"
+    }
+  ],
+  "id": "80632daf-3d35-4fe1-85fb-7630a0578802"
+}

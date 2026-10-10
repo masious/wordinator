@@ -3602,7 +3602,13 @@
     {
       "afterHeading": "Story: Ontbijt in de keuken",
       "description": "Noor and Sofia at breakfast in a small Dutch kitchen: Sofia with coffee, Noor with tea and a newspaper.",
-      "alt": "Two young women having breakfast together in a small kitchen."
+      "alt": "Two young women having breakfast together in a small kitchen.",
+      "location": "noor-kitchen",
+      "characters": [
+        "sofia",
+        "noor"
+      ],
+      "action": "Morning breakfast: Sofia and Noor sit facing each other at the small table by the window. Sofia, sleepy but smiling, holds a mug of coffee; Noor holds a cup of tea and has a folded newspaper next to her plate. On the table: two plates with bread, a small plate of cheese slices and a teapot."
     },
     {
       "afterHeading": "Story: Op kantoor",

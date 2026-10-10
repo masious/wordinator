@@ -16,11 +16,11 @@ Documentation is part of the definition of done:
 
 ## Product invariants
 
-- A group is a tenant. Every tenant-owned query and mutation must prove current membership and scope by `group_id`.
-- A group has one immutable target language. Initially only Dutch and German are supported.
-- Registration begins through a group invitation. The main application is unavailable until at least one membership is accepted.
-- Group content is private to current members, except that uploaded R2 images are intentionally public-by-URL.
-- The feed is strict reverse chronology. Do not add ranking, filtering, search, or feed pinning without an explicit product change.
+- The product has one global course library. Groups, workspaces, language tenants, invitations, and join approvals are retired product concepts.
+- Registration is open and immediate. A signed-in account must complete its username setup before using the library; the avatar is optional.
+- Courses contain lessons. Do not introduce a second workspace or tenant boundary around either layer.
+- The journal (posts, answers, comments, reactions, pins, and notices) is one global feed beside the library, shown as the third navigation tab. The feed is strict reverse chronology. Do not add ranking, filtering, search, or feed pinning without an explicit product change.
+- Uploaded R2 images are intentionally public-by-URL.
 - Answer concealment prevents accidental spoilers; it is not authorization.
 - User content is plain text, except course lessons. Preserve line breaks, escape output, and link only safe `http`/`https` URLs.
 - Course lessons are the one rich-content surface: BlockNote documents restricted by the shared contracts to bold, italic, a token-mapped text palette, and safe links, as defined in `docs/courses.md`. Do not extend rich text or the BlockNote editor to posts, comments, or other surfaces.
@@ -64,13 +64,12 @@ Every implementation change must run the relevant subset of:
 - Playwright critical-path tests
 - Production builds for affected applications
 
-Tenant-isolation tests are mandatory for tenant-owned API work. Changes to authentication, membership, deletion, or invitation behavior require negative authorization tests. Do not claim commands passed until the workspace and commands exist and were actually run.
+Authentication and global-resource authorization tests are mandatory for protected API work. Changes to registration or onboarding require negative authorization and validation tests. Do not claim commands passed until the workspace and commands exist and were actually run.
 
 ## Safety and operations
 
 - Local and production D1 targets must always be selected explicitly; never silently default a database command to production.
 - Treat group deletion as recoverable soft deletion. Treat post/comment deletion according to `docs/data-model.md`.
 - R2 replacement and deletion flows must clean up superseded objects where specified.
-- Preserve local drafts across sign-out and namespace them by account, group, target item, and schema version.
+- Preserve local drafts across sign-out and namespace them by account, target item, and schema version.
 - The initial auth model has deliberate limitations. Do not imply session revocation or stronger guarantees than `docs/authentication.md` provides.
-

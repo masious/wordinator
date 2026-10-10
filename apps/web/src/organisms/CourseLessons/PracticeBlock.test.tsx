@@ -25,22 +25,16 @@ const practiceBlock: LessonTopBlock = {
   props: { data: JSON.stringify({ instruction: "Vul in of vertaal.", passage: null, items: reference.items.map((item) => ({ prompt: item.prompt, authorsVersion: [], note: null })) }) },
 };
 const document: LessonDocument = { schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks: [practiceBlock] };
-const summary = { id: lessonId, position: 0, title: "Mijn huis", goal: null, published: true, publishedAt: 1, changed: false, updatedBy: editor, updatedAt: 1 };
+const summary = { id: lessonId, slug: "mijn-huis", position: 0, title: "Mijn huis", goal: null, published: true, publishedAt: 1, changed: false, updatedBy: editor, updatedAt: 1 };
 const detail = (): CourseDetailResponse => ({
   course: {
-    id: courseId, groupId, title: "Dutch", summary: "Home", level: null, intendedLearner: null, coverUrl: null, status: "published",
+    id: courseId, slug: "dutch", groupId, title: "Dutch", summary: "Home", level: null, intendedLearner: null, coverUrl: null, status: "published",
     owner: { id: accountId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, speechCast: {}, contribution: null,
     permissions: { edit: false, publish: false, archive: false, removeContent: false, contribute: false, requestContribution: true, leaveContribution: false, manageContributors: false },
   },
   outline: [summary],
-  lessons: [{ ...summary, document, answerCounts: { [blockId]: 3 }, draft: null, speech: {}, draftSpeech: null }],
+  lessons: [{ ...summary, document, practiceProgress: { [blockId]: { done: 3, started: 4, answered: null } }, draft: null, speech: {}, draftSpeech: null }],
 });
-const answer = {
-  id: "60000000-0000-4000-8000-000000000001", parentId: null, kind: "practice_response", body: null, author: { id: accountId, displayName: "Ada", avatarUrl: null },
-  createdAt: 1, updatedAt: 1, edited: false, pinned: false, reactions: [], replies: [], permissions: { edit: true, delete: true, reply: true, pin: false },
-  responseItems: [{ position: 0, prompt: "… een kleine keuken.", answer: "Er is", skipped: false, matched: null }, { position: 1, prompt: "There are two bedrooms.", answer: "", skipped: true, matched: null }],
-};
-
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
 // Renders the lesson page and opens the practice's answer dialog, which is closed by default.
 async function openPractice(value: CourseDetailResponse) {
@@ -57,8 +51,7 @@ beforeEach(() => {
   localStorage.clear();
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
-    if (path === `${blockPath}/discussion`) return response({ items: [answer], count: 1, quickReactions: ["👍", "❤️", "😂"], reference });
-    if (path === `${blockPath}/comments` && init?.method === "POST") return response({ item: answer }, 201);
+    if (path === `${blockPath}/progress`) return response({ progress: { done: 3, started: 4, answered: (JSON.parse(String(init?.body)) as { answered: number }).answered } });
     if (path === `${blockPath}/check`) {
       const match = (JSON.parse(String(init?.body)) as { answer: string }).answer === "Er is";
       return response({ match, authorsVersion: match ? null : ["Er is"] });
@@ -106,14 +99,14 @@ describe("Practice blocks", () => {
     for (const prompt of ["Een.", "Twee.", "Drie."]) expect(screen.getByText(prompt)).toBeInTheDocument();
     expect(screen.queryByText("Vier.")).not.toBeInTheDocument();
     expect(screen.getByText("and 2 more questions")).toBeInTheDocument();
-    expect(screen.getByText("3 answers shared")).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Publish answer set" })).not.toBeInTheDocument();
+    expect(screen.getByText(/3 people done/)).toHaveTextContent("3 people done · 5 questions left");
+    expect(screen.queryByRole("button", { name: "Finish later" })).not.toBeInTheDocument();
     expect(screen.queryByText("Ik woon hier.")).not.toBeInTheDocument();
     // The dialog holds the passage and one answer field per prompt.
     const opened = await dialog;
     expect(within(opened).getByText("Ik woon hier.")).toBeInTheDocument();
     expect(within(opened).getByLabelText(/^5\. Vijf\./)).toBeInTheDocument();
-    expect(within(opened).getByRole("button", { name: "Publish answer set" })).toBeInTheDocument();
+    expect(within(opened).getByRole("button", { name: "Finish later" })).toBeInTheDocument();
   });
 
   it("checks an answer on Enter, celebrating a match and showing the author's version for a miss", async () => {
@@ -140,34 +133,41 @@ describe("Practice blocks", () => {
     expect(screen.queryByText("Matches the author’s version")).not.toBeInTheDocument();
   });
 
-  it("shows prompts concealed, keeps a local answer draft, and reveals the thread with the author's version after publishing", async () => {
+  it("has no concealed thread and saves only the answered count when Done closes the dialog", async () => {
     await openPractice(detail());
     expect(screen.getAllByText("Vul in of vertaal.").length).toBeGreaterThan(0);
-    expect(screen.getByText("3 answers are concealed")).toBeInTheDocument();
-    expect(screen.queryByText("Er zijn twee slaapkamers.")).not.toBeInTheDocument();
-    expect(fetch).not.toHaveBeenCalledWith(`${blockPath}/discussion`, expect.anything());
+    for (const gone of [/concealed/, /Reveal answers/, /Author’s version/]) expect(screen.queryByText(gone)).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Reveal answers" })).not.toBeInTheDocument();
 
-    fireEvent.change(screen.getByLabelText(/^1\. … een kleine keuken\./), { target: { value: "Er is" } });
+    // The button reads Finish later while a question is blank and Done once every question has an answer.
     const key = practiceDraftKey(accountId, groupId, "practice-answer", blockId);
-    await waitFor(() => expect(JSON.parse(localStorage.getItem(key)!)).toEqual({ version: 1, answers: ["Er is", ""] }));
-    fireEvent.click(screen.getByRole("button", { name: "Publish answer set" }));
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${blockPath}/comments`, expect.objectContaining({
-      method: "POST", body: JSON.stringify({ kind: "practice_response", answers: ["Er is", ""] }),
-    })));
-    expect(await screen.findByText("Er zijn twee slaapkamers.")).toBeInTheDocument();
-    expect(screen.getByText("One kitchen.")).toBeInTheDocument();
-    expect(screen.getByText("No answer")).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: /pin/i })).not.toBeInTheDocument();
-    expect(localStorage.getItem(key)).toBeNull();
-    // Concealing again hides the reference.
-    fireEvent.click(screen.getByRole("button", { name: "Conceal answers" }));
-    expect(screen.queryByText("Er zijn twee slaapkamers.")).not.toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText(/^1\. … een kleine keuken\./), { target: { value: "Er is" } });
+    expect(screen.getByRole("button", { name: "Finish later" })).toBeInTheDocument();
+    fireEvent.change(screen.getByLabelText(/^2\. There are two bedrooms\./), { target: { value: "Er zijn twee kamers." } });
+    await waitFor(() => expect(JSON.parse(localStorage.getItem(key)!)).toEqual({ version: 1, answers: ["Er is", "Er zijn twee kamers."] }));
+    fireEvent.click(screen.getByRole("button", { name: "Done" }));
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${blockPath}/progress`, expect.objectContaining({ method: "PUT", body: JSON.stringify({ answered: 2 }) })));
+    await waitFor(() => expect(screen.queryByRole("dialog", { name: "Answer the practice" })).not.toBeInTheDocument());
+    // The answers stay in the local draft, so the learner can come back and change them.
+    expect(JSON.parse(localStorage.getItem(key)!)).toEqual({ version: 1, answers: ["Er is", "Er zijn twee kamers."] });
   });
 
-  it("reveals without answering", async () => {
+  it("saves progress when the dialog closes with its close button, and nothing when no question is answered", async () => {
     await openPractice(detail());
-    fireEvent.click(screen.getByRole("button", { name: "Reveal answers" }));
-    expect(await screen.findByText("Er zijn twee slaapkamers.")).toBeInTheDocument();
-    expect(fetch).not.toHaveBeenCalledWith(`${blockPath}/comments`, expect.anything());
+    fireEvent.click(screen.getByRole("button", { name: "Finish later" }));
+    await waitFor(() => expect(screen.queryByRole("dialog", { name: "Answer the practice" })).not.toBeInTheDocument());
+    expect(fetch).not.toHaveBeenCalledWith(`${blockPath}/progress`, expect.anything());
+
+    fireEvent.click(screen.getByRole("button", { name: "Answer" }));
+    const dialog = await screen.findByRole("dialog", { name: "Answer the practice" });
+    fireEvent.change(within(dialog).getByLabelText(/^1\. … een kleine keuken\./), { target: { value: "Er is" } });
+    fireEvent.keyDown(dialog, { key: "Escape" });
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${blockPath}/progress`, expect.objectContaining({ method: "PUT", body: JSON.stringify({ answered: 1 }) })));
+  });
+
+  it("shows the viewer as done once their count reaches the number of questions", async () => {
+    const value = detail(); value.lessons = [{ ...value.lessons[0]!, practiceProgress: { [blockId]: { done: 1, started: 1, answered: 2 } } }];
+    await openPractice(value);
+    expect(screen.getByText(/1 person done/)).toHaveTextContent("1 person done · You’re done");
   });
 });

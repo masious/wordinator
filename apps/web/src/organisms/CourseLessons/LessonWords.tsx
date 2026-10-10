@@ -55,14 +55,9 @@ export function useVisibleWords(container: RefObject<HTMLElement | null>, panel:
   return visible;
 }
 
-// Every new word of a lesson, in the order the player introduces them, beside the reading column. Words whose blocks are on
-// screen are highlighted. When the panel scrolls on its own, it brings the highlighted words into view: centred when they fit,
-// otherwise starting at the first of them. A highlighted range already in view stays put.
-export function LessonWords({ steps, active, panelRef }: { steps: readonly LessonStep[]; active: ReadonlySet<string>; panelRef: RefObject<HTMLElement | null> }) {
-  const { t } = useTranslation();
-  const speech = useSpeechResolver();
-  const words: RecapWord[] = useMemo(() => runWords(steps), [steps]);
-  const highlighted = words.filter((word) => active.has(word.id)).map((word) => word.id).join(" ");
+// When `panel` scrolls on its own, brings its `[aria-current]` items into view whenever `highlighted` changes: centred when they
+// fit, otherwise starting at the first of them. A highlighted range already in view stays put.
+export function useRevealCurrent(panelRef: RefObject<HTMLElement | null>, highlighted: string) {
   useEffect(() => {
     const panel = panelRef.current;
     if (!panel || !highlighted || panel.scrollHeight <= panel.clientHeight) return;
@@ -76,6 +71,15 @@ export function LessonWords({ steps, active, panelRef }: { steps: readonly Lesso
     const target = bottom - top + margin * 2 <= view ? (top + bottom - view) / 2 : top - margin;
     panel.scrollTo({ top: Math.max(0, Math.min(target, panel.scrollHeight - view)), behavior: "smooth" });
   }, [highlighted, panelRef]);
+}
+
+// Every new word of a lesson, in the order the player introduces them, beside the reading column. Words whose blocks are on
+// screen are highlighted and brought into view.
+export function LessonWords({ steps, active, panelRef }: { steps: readonly LessonStep[]; active: ReadonlySet<string>; panelRef: RefObject<HTMLElement | null> }) {
+  const { t } = useTranslation();
+  const speech = useSpeechResolver();
+  const words: RecapWord[] = useMemo(() => runWords(steps), [steps]);
+  useRevealCurrent(panelRef, words.filter((word) => active.has(word.id)).map((word) => word.id).join(" "));
   if (!words.length) return null;
   return <aside ref={panelRef} className={styles.panel} aria-label={t("courses.words.title")}>
     <p className={styles.title} aria-hidden="true">{t("courses.words.title")}</p>

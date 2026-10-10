@@ -223,7 +223,7 @@ export function PostDetailPage({
         <ErrorState
           title={t("posts.postUnavailable")}
           action={
-            <Link to="/groups/$groupId" params={{ groupId }}>
+            <Link to="/journal">
               {t("common.backToFeed")}
             </Link>
           }
@@ -235,8 +235,7 @@ export function PostDetailPage({
       <div className={styles.detail}>
         <Link
           className={styles.backLink}
-          to="/groups/$groupId"
-          params={{ groupId }}
+          to="/journal"
         >
           {t("common.backToFeed")}
         </Link>

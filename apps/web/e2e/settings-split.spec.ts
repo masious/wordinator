@@ -1,21 +1,17 @@
 import { expect, test } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
+import { signIn } from "./auth";
 
 // A real, decodable 1×1 PNG so the browser's bitmap and canvas pipeline runs end to end.
 const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==", "base64");
 
 for (const viewport of [{ name: "desktop", width: 1440, height: 900 }, { name: "mobile", width: 390, height: 844 }]) {
-  test(`settings opens on Account and uploads an avatar through the cropper (${viewport.name})`, async ({ page }) => {
+  test(`settings opens globally and uploads an avatar through the cropper (${viewport.name})`, async ({ page }) => {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
-    await page.goto("/");
-    await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL);
-    await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD);
-    await page.getByRole("button", { name: "Sign in" }).click();
-    await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
+    await signIn(page);
 
-    await page.goto(`/groups/${E2E_GROUP_ID}/settings`);
-    await expect(page).toHaveURL(new RegExp(`/groups/${E2E_GROUP_ID}/settings/account$`));
-    await expect(page.getByText("Applies in every group")).toBeVisible();
+    // Legacy group settings links land on the single global settings page.
+    await page.goto("/groups/legacy-library/settings/members");
+    await expect(page).toHaveURL(/\/settings$/);
     await page.getByLabel("Bio").fill(`Updated from the ${viewport.name} account page.`);
     await page.getByRole("button", { name: "Save profile" }).click();
     await expect(page.getByText("Saved.").first()).toBeVisible();

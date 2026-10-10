@@ -1,7 +1,7 @@
 import { z } from "zod";
 import {
   COURSE_BLOCK_TEXT_MAX, COURSE_BLOCKS_MAX, COURSE_HEADING_MAX, COURSE_NOTE_MAX, COURSE_PRELOADED_LESSONS, COURSE_RECAP_WORDS_MAX, COURSE_SENTENCE_MAX,
-  COURSE_WORD_FORMS_MAX, COURSE_WORD_MEANING_MAX, COURSE_WORD_TERM_MAX, COURSE_WORDS_PER_BLOCK_MAX, courseLessonSummarySchema, courseSchema, dialoguePayloadSchema, editorRefSchema, opaqueIdSchema, paginationQuerySchema, practicePayloadSchema, splitPracticePayload, type PracticePayload,
+  COURSE_WORD_FORMS_MAX, COURSE_WORD_MEANING_MAX, COURSE_WORD_TERM_MAX, COURSE_WORDS_PER_BLOCK_MAX, courseLessonSummarySchema, courseSchema, dialoguePayloadSchema, editorRefSchema, opaqueIdSchema, paginationQuerySchema, practicePayloadSchema, practiceProgressSchema, splitPracticePayload, type PracticePayload,
   WORD_BOOKMARKS_MAX, wordIpaSchema,
   type PracticeReference,
 } from "./index";
@@ -511,7 +511,7 @@ export const draftSpeechSchema = z.record(z.string(), z.object({ status: speechS
 export type DraftSpeech = z.infer<typeof draftSpeechSchema>;
 export const courseLessonSchema = courseLessonSummarySchema.extend({
   document: lessonDocumentSchema.nullable(),
-  answerCounts: z.record(z.string(), z.number().int().nonnegative()),
+  practiceProgress: z.record(z.string(), practiceProgressSchema),
   draft: lessonDraftSchema.nullable(),
   speech: speechMapSchema,
   draftSpeech: draftSpeechSchema.nullable(),

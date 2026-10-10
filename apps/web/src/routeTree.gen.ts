@@ -10,14 +10,23 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CoursesRouteImport } from './routes/courses'
+import { Route as JournalRouteImport } from './routes/journal'
+import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as UiRouteImport } from './routes/ui'
+import { Route as WordsRouteImport } from './routes/words'
+import { Route as R2overviewLessonSlugRouteImport } from './routes/2overview.$lessonSlug'
+import { Route as CoursesCourseSlugRouteImport } from './routes/courses_.$courseSlug'
 import { Route as GroupsGroupIdRouteImport } from './routes/groups.$groupId'
 import { Route as InviteTokenRouteImport } from './routes/invite.$token'
+import { Route as JournalPostIdRouteImport } from './routes/journal_.$postId'
 import { Route as OverviewLessonSlugRouteImport } from './routes/overview.$lessonSlug'
 import { Route as GroupsGroupIdCoursesRouteImport } from './routes/groups.$groupId_.courses'
 import { Route as GroupsGroupIdMembersRouteImport } from './routes/groups.$groupId_.members'
 import { Route as GroupsGroupIdNotificationsRouteImport } from './routes/groups.$groupId_.notifications'
 import { Route as GroupsGroupIdWordsRouteImport } from './routes/groups.$groupId_.words'
+import { Route as CoursesCourseSlugLessonsLessonSlugRouteImport } from './routes/courses_.$courseSlug_.lessons.$lessonSlug'
 import { Route as GroupsGroupIdCoursesCourseIdRouteImport } from './routes/groups.$groupId_.courses_.$courseId'
 import { Route as GroupsGroupIdMembersUserIdRouteImport } from './routes/groups.$groupId_.members_.$userId'
 import { Route as GroupsGroupIdPostsPostIdRouteImport } from './routes/groups.$groupId_.posts.$postId'
@@ -32,9 +41,44 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoursesRoute = CoursesRouteImport.update({
+  id: '/courses',
+  path: '/courses',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NotificationsRoute = NotificationsRouteImport.update({
+  id: '/notifications',
+  path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UiRoute = UiRouteImport.update({
   id: '/ui',
   path: '/ui',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WordsRoute = WordsRouteImport.update({
+  id: '/words',
+  path: '/words',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const R2overviewLessonSlugRoute = R2overviewLessonSlugRouteImport.update({
+  id: '/2overview/$lessonSlug',
+  path: '/2overview/$lessonSlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursesCourseSlugRoute = CoursesCourseSlugRouteImport.update({
+  id: '/courses_/$courseSlug',
+  path: '/courses/$courseSlug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GroupsGroupIdRoute = GroupsGroupIdRouteImport.update({
@@ -45,6 +89,11 @@ const GroupsGroupIdRoute = GroupsGroupIdRouteImport.update({
 const InviteTokenRoute = InviteTokenRouteImport.update({
   id: '/invite/$token',
   path: '/invite/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JournalPostIdRoute = JournalPostIdRouteImport.update({
+  id: '/journal_/$postId',
+  path: '/journal/$postId',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OverviewLessonSlugRoute = OverviewLessonSlugRouteImport.update({
@@ -73,6 +122,12 @@ const GroupsGroupIdWordsRoute = GroupsGroupIdWordsRouteImport.update({
   path: '/groups/$groupId/words',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoursesCourseSlugLessonsLessonSlugRoute =
+  CoursesCourseSlugLessonsLessonSlugRouteImport.update({
+    id: '/courses_/$courseSlug_/lessons/$lessonSlug',
+    path: '/courses/$courseSlug/lessons/$lessonSlug',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const GroupsGroupIdCoursesCourseIdRoute =
   GroupsGroupIdCoursesCourseIdRouteImport.update({
     id: '/groups/$groupId_/courses_/$courseId',
@@ -124,14 +179,23 @@ const GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/courses': typeof CoursesRoute
+  '/journal': typeof JournalRoute
+  '/notifications': typeof NotificationsRoute
+  '/settings': typeof SettingsRoute
   '/ui': typeof UiRoute
+  '/words': typeof WordsRoute
+  '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
+  '/courses/$courseSlug': typeof CoursesCourseSlugRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/journal/$postId': typeof JournalPostIdRoute
   '/overview/$lessonSlug': typeof OverviewLessonSlugRoute
   '/groups/$groupId/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId/notifications': typeof GroupsGroupIdNotificationsRoute
   '/groups/$groupId/words': typeof GroupsGroupIdWordsRoute
+  '/courses/$courseSlug/lessons/$lessonSlug': typeof CoursesCourseSlugLessonsLessonSlugRoute
   '/groups/$groupId/courses/$courseId': typeof GroupsGroupIdCoursesCourseIdRoute
   '/groups/$groupId/members/$userId': typeof GroupsGroupIdMembersUserIdRoute
   '/groups/$groupId/posts/$postId': typeof GroupsGroupIdPostsPostIdRoute
@@ -143,14 +207,23 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/courses': typeof CoursesRoute
+  '/journal': typeof JournalRoute
+  '/notifications': typeof NotificationsRoute
+  '/settings': typeof SettingsRoute
   '/ui': typeof UiRoute
+  '/words': typeof WordsRoute
+  '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
+  '/courses/$courseSlug': typeof CoursesCourseSlugRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/journal/$postId': typeof JournalPostIdRoute
   '/overview/$lessonSlug': typeof OverviewLessonSlugRoute
   '/groups/$groupId/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId/notifications': typeof GroupsGroupIdNotificationsRoute
   '/groups/$groupId/words': typeof GroupsGroupIdWordsRoute
+  '/courses/$courseSlug/lessons/$lessonSlug': typeof CoursesCourseSlugLessonsLessonSlugRoute
   '/groups/$groupId/courses/$courseId': typeof GroupsGroupIdCoursesCourseIdRoute
   '/groups/$groupId/members/$userId': typeof GroupsGroupIdMembersUserIdRoute
   '/groups/$groupId/posts/$postId': typeof GroupsGroupIdPostsPostIdRoute
@@ -163,14 +236,23 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/courses': typeof CoursesRoute
+  '/journal': typeof JournalRoute
+  '/notifications': typeof NotificationsRoute
+  '/settings': typeof SettingsRoute
   '/ui': typeof UiRoute
+  '/words': typeof WordsRoute
+  '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
+  '/courses_/$courseSlug': typeof CoursesCourseSlugRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
+  '/journal_/$postId': typeof JournalPostIdRoute
   '/overview/$lessonSlug': typeof OverviewLessonSlugRoute
   '/groups/$groupId_/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId_/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId_/notifications': typeof GroupsGroupIdNotificationsRoute
   '/groups/$groupId_/words': typeof GroupsGroupIdWordsRoute
+  '/courses_/$courseSlug_/lessons/$lessonSlug': typeof CoursesCourseSlugLessonsLessonSlugRoute
   '/groups/$groupId_/courses_/$courseId': typeof GroupsGroupIdCoursesCourseIdRoute
   '/groups/$groupId_/members_/$userId': typeof GroupsGroupIdMembersUserIdRoute
   '/groups/$groupId_/posts/$postId': typeof GroupsGroupIdPostsPostIdRoute
@@ -184,14 +266,23 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/courses'
+    | '/journal'
+    | '/notifications'
+    | '/settings'
     | '/ui'
+    | '/words'
+    | '/2overview/$lessonSlug'
+    | '/courses/$courseSlug'
     | '/groups/$groupId'
     | '/invite/$token'
+    | '/journal/$postId'
     | '/overview/$lessonSlug'
     | '/groups/$groupId/courses'
     | '/groups/$groupId/members'
     | '/groups/$groupId/notifications'
     | '/groups/$groupId/words'
+    | '/courses/$courseSlug/lessons/$lessonSlug'
     | '/groups/$groupId/courses/$courseId'
     | '/groups/$groupId/members/$userId'
     | '/groups/$groupId/posts/$postId'
@@ -203,14 +294,23 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/courses'
+    | '/journal'
+    | '/notifications'
+    | '/settings'
     | '/ui'
+    | '/words'
+    | '/2overview/$lessonSlug'
+    | '/courses/$courseSlug'
     | '/groups/$groupId'
     | '/invite/$token'
+    | '/journal/$postId'
     | '/overview/$lessonSlug'
     | '/groups/$groupId/courses'
     | '/groups/$groupId/members'
     | '/groups/$groupId/notifications'
     | '/groups/$groupId/words'
+    | '/courses/$courseSlug/lessons/$lessonSlug'
     | '/groups/$groupId/courses/$courseId'
     | '/groups/$groupId/members/$userId'
     | '/groups/$groupId/posts/$postId'
@@ -222,14 +322,23 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/courses'
+    | '/journal'
+    | '/notifications'
+    | '/settings'
     | '/ui'
+    | '/words'
+    | '/2overview/$lessonSlug'
+    | '/courses_/$courseSlug'
     | '/groups/$groupId'
     | '/invite/$token'
+    | '/journal_/$postId'
     | '/overview/$lessonSlug'
     | '/groups/$groupId_/courses'
     | '/groups/$groupId_/members'
     | '/groups/$groupId_/notifications'
     | '/groups/$groupId_/words'
+    | '/courses_/$courseSlug_/lessons/$lessonSlug'
     | '/groups/$groupId_/courses_/$courseId'
     | '/groups/$groupId_/members_/$userId'
     | '/groups/$groupId_/posts/$postId'
@@ -242,14 +351,23 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CoursesRoute: typeof CoursesRoute
+  JournalRoute: typeof JournalRoute
+  NotificationsRoute: typeof NotificationsRoute
+  SettingsRoute: typeof SettingsRoute
   UiRoute: typeof UiRoute
+  WordsRoute: typeof WordsRoute
+  R2overviewLessonSlugRoute: typeof R2overviewLessonSlugRoute
+  CoursesCourseSlugRoute: typeof CoursesCourseSlugRoute
   GroupsGroupIdRoute: typeof GroupsGroupIdRoute
   InviteTokenRoute: typeof InviteTokenRoute
+  JournalPostIdRoute: typeof JournalPostIdRoute
   OverviewLessonSlugRoute: typeof OverviewLessonSlugRoute
   GroupsGroupIdCoursesRoute: typeof GroupsGroupIdCoursesRoute
   GroupsGroupIdMembersRoute: typeof GroupsGroupIdMembersRoute
   GroupsGroupIdNotificationsRoute: typeof GroupsGroupIdNotificationsRoute
   GroupsGroupIdWordsRoute: typeof GroupsGroupIdWordsRoute
+  CoursesCourseSlugLessonsLessonSlugRoute: typeof CoursesCourseSlugLessonsLessonSlugRoute
   GroupsGroupIdCoursesCourseIdRoute: typeof GroupsGroupIdCoursesCourseIdRoute
   GroupsGroupIdMembersUserIdRoute: typeof GroupsGroupIdMembersUserIdRoute
   GroupsGroupIdPostsPostIdRoute: typeof GroupsGroupIdPostsPostIdRoute
@@ -269,11 +387,60 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/courses': {
+      id: '/courses'
+      path: '/courses'
+      fullPath: '/courses'
+      preLoaderRoute: typeof CoursesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/notifications': {
+      id: '/notifications'
+      path: '/notifications'
+      fullPath: '/notifications'
+      preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ui': {
       id: '/ui'
       path: '/ui'
       fullPath: '/ui'
       preLoaderRoute: typeof UiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/words': {
+      id: '/words'
+      path: '/words'
+      fullPath: '/words'
+      preLoaderRoute: typeof WordsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/2overview/$lessonSlug': {
+      id: '/2overview/$lessonSlug'
+      path: '/2overview/$lessonSlug'
+      fullPath: '/2overview/$lessonSlug'
+      preLoaderRoute: typeof R2overviewLessonSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses_/$courseSlug': {
+      id: '/courses_/$courseSlug'
+      path: '/courses/$courseSlug'
+      fullPath: '/courses/$courseSlug'
+      preLoaderRoute: typeof CoursesCourseSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/groups/$groupId': {
@@ -288,6 +455,13 @@ declare module '@tanstack/react-router' {
       path: '/invite/$token'
       fullPath: '/invite/$token'
       preLoaderRoute: typeof InviteTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journal_/$postId': {
+      id: '/journal_/$postId'
+      path: '/journal/$postId'
+      fullPath: '/journal/$postId'
+      preLoaderRoute: typeof JournalPostIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/overview/$lessonSlug': {
@@ -323,6 +497,13 @@ declare module '@tanstack/react-router' {
       path: '/groups/$groupId/words'
       fullPath: '/groups/$groupId/words'
       preLoaderRoute: typeof GroupsGroupIdWordsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/courses_/$courseSlug_/lessons/$lessonSlug': {
+      id: '/courses_/$courseSlug_/lessons/$lessonSlug'
+      path: '/courses/$courseSlug/lessons/$lessonSlug'
+      fullPath: '/courses/$courseSlug/lessons/$lessonSlug'
+      preLoaderRoute: typeof CoursesCourseSlugLessonsLessonSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/groups/$groupId_/courses_/$courseId': {
@@ -386,14 +567,24 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CoursesRoute: CoursesRoute,
+  JournalRoute: JournalRoute,
+  NotificationsRoute: NotificationsRoute,
+  SettingsRoute: SettingsRoute,
   UiRoute: UiRoute,
+  WordsRoute: WordsRoute,
+  R2overviewLessonSlugRoute: R2overviewLessonSlugRoute,
+  CoursesCourseSlugRoute: CoursesCourseSlugRoute,
   GroupsGroupIdRoute: GroupsGroupIdRoute,
   InviteTokenRoute: InviteTokenRoute,
+  JournalPostIdRoute: JournalPostIdRoute,
   OverviewLessonSlugRoute: OverviewLessonSlugRoute,
   GroupsGroupIdCoursesRoute: GroupsGroupIdCoursesRoute,
   GroupsGroupIdMembersRoute: GroupsGroupIdMembersRoute,
   GroupsGroupIdNotificationsRoute: GroupsGroupIdNotificationsRoute,
   GroupsGroupIdWordsRoute: GroupsGroupIdWordsRoute,
+  CoursesCourseSlugLessonsLessonSlugRoute:
+    CoursesCourseSlugLessonsLessonSlugRoute,
   GroupsGroupIdCoursesCourseIdRoute: GroupsGroupIdCoursesCourseIdRoute,
   GroupsGroupIdMembersUserIdRoute: GroupsGroupIdMembersUserIdRoute,
   GroupsGroupIdPostsPostIdRoute: GroupsGroupIdPostsPostIdRoute,

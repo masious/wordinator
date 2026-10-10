@@ -2,7 +2,7 @@
 
 Curriculum, storyline and coverage tracking for the member-authored **Dutch Foundations** courses. The lesson files themselves, the validator and the import manifests live in [`content/dutch-foundations/`](../../content/dutch-foundations/README.md); how lessons render and play is owned by [courses.md](../courses.md). These documents own *what* is taught, *in which order*, *in which story*, and *what is still missing*.
 
-The 40-row curriculum is [`content/dutch-foundations/outline.md`](../../content/dutch-foundations/outline.md) (owned by the user). Current state: Part I is assumed knowledge (no lessons), Parts II and III are being written, Parts IV–VII are not started.
+The 40-row curriculum is [`content/dutch-foundations/outline.md`](../../content/dutch-foundations/outline.md) (owned by the user). Current state: Part I is assumed knowledge (no lessons), Parts II and III are being written, Parts IV–VII are not started. Writing order (user's priority): Part II → Part III → Part IV → V → VI → VII, and Part I last.
 
 ## Documents
 
@@ -16,6 +16,7 @@ The 40-row curriculum is [`content/dutch-foundations/outline.md`](../../content/
 | [ledger-part-ii.md](ledger-part-ii.md) | What each Part II lesson actually teaches: grammar with depth, vocabulary with de/het, expressions, story facts, deviations | coordinator | After each lesson is reviewed and accepted, from the lesson file |
 | [ledger-part-iii.md](ledger-part-iii.md) | Same for Part III, including the two existing row-13 lessons | coordinator | As above |
 | [topic-map.md](topic-map.md) | Cross-part map of every grammar topic: where introduced, where reinforced, status (`covered`/`partial`/`assumed`/`deferred`/`missing`) | coordinator | With every ledger update |
+| [illustrations.md](illustrations.md) | Visual canon (style, how characters and places look), reference sheets, the `imageIdeas` generation fields and the `illustrate.ts` workflow | coordinator | When a character or place gets a sheet, or its look changes |
 | [gaps.md](gaps.md) | Backlog: parts without lessons, simplifications and deferrals, vocabulary and skills to revisit, outline issues | coordinator | With every ledger update, and whenever something is skipped on purpose |
 
 ## Workflow

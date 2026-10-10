@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
+import { signIn } from "./auth";
 import { courseApi, openLesson, seedLesson, vocabulary } from "./lessonSeed";
 import { markSpeechReady, serveSpeech } from "./speech";
 
@@ -8,8 +8,7 @@ import { markSpeechReady, serveSpeech } from "./speech";
 test("an author sets a pronunciation and sees the word's audio go from pending to ready", async ({ page }, testInfo) => {
   testInfo.setTimeout(90_000);
   const suffix = `speech-authoring-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
-  await page.goto("/"); await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL); await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD); await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
+  await signIn(page);
   const played = await serveSpeech(page);
 
   const api = courseApi(page);
@@ -18,7 +17,7 @@ test("an author sets a pronunciation and sees the word's audio go from pending t
   await seedLesson(page, course.id, `${suffix} lesson`, [words], { publish: false });
   await markSpeechReady([words]);
 
-  await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
+  await page.goto(`/courses/${course.id}`);
   await openLesson(page);
   await page.getByRole("button", { name: "Edit lesson 1" }).click();
   const block = page.getByRole("region", { name: "New words" });

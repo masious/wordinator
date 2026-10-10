@@ -1,17 +1,14 @@
 import { expect, test } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_PASSWORD } from "./global-setup";
+import { signIn } from "./auth";
 
 test("the redesigned journal preserves order and collapses cleanly on narrow screens", async ({ page }, testInfo) => {
   const suffix = `batch5-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
   const older = `${suffix} first journal entry`;
   const newer = `${suffix} ${"langwoord".repeat(70)}`;
 
-  await page.goto("/");
-  await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL);
-  await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD);
-  await page.getByRole("button", { name: "Sign in" }).click();
-
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
+  await signIn(page);
+  await page.goto("/journal");
+  await expect(page.getByRole("heading", { name: "Journal", level: 1 })).toBeVisible();
   await expect(page.getByRole("button", { name: "Write something…" })).toBeVisible();
 
   for (const body of [older, newer]) {
@@ -31,7 +28,7 @@ test("the redesigned journal preserves order and collapses cleanly on narrow scr
 
   await page.setViewportSize({ width: 390, height: 700 });
   await page.reload();
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Journal", level: 1 })).toBeAttached();
   await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth)).toBe(true);
 
   await page.getByRole("button", { name: "Write something…" }).click();

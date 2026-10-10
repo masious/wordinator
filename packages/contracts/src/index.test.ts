@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { apiErrorSchema, createCommentRequestSchema, isSingleEmojiGrapheme, paginationQuerySchema, postInputSchema, quickReactionsSchema, toggleReactionRequestSchema } from ".";
+import { apiErrorSchema, completeOnboardingRequestSchema, createCommentRequestSchema, isSingleEmojiGrapheme, paginationQuerySchema, postInputSchema, quickReactionsSchema, registerRequestSchema, SLUG_MAX_LENGTH, slugify, slugSchema, toggleReactionRequestSchema } from ".";
 
 describe("shared contracts", () => {
   it("coerces and bounds pagination input", () => {
@@ -11,6 +11,12 @@ describe("shared contracts", () => {
     expect(
       apiErrorSchema.parse({ error: { code: "NOT_FOUND", message: "Not found" } }),
     ).toBeDefined();
+  });
+
+  it("keeps registration immediate and validates the separate username setup", () => {
+    expect(registerRequestSchema.parse({ email: "learner@example.test", password: "secret12" })).toEqual({ email: "learner@example.test", password: "secret12" });
+    expect(completeOnboardingRequestSchema.parse({ username: "dutch_learner" }).username).toBe("dutch_learner");
+    expect(() => completeOnboardingRequestSchema.parse({ username: "not a username" })).toThrow();
   });
 
   it("accepts single emoji graphemes and requires three unique reactions", () => {
@@ -36,5 +42,19 @@ describe("shared contracts", () => {
     expect(() => createCommentRequestSchema.parse({ kind: "text", body: "" })).toThrow();
     expect(toggleReactionRequestSchema.parse({ emoji: "👨‍👩‍👧‍👦", active: true }).active).toBe(true);
     expect(() => toggleReactionRequestSchema.parse({ emoji: "!!", active: true })).toThrow();
+  });
+});
+
+describe("slugify", () => {
+  it("folds accents and punctuation into a bounded, URL-safe slug", () => {
+    expect(slugify("Dutch Foundations — Part II: Everyday Life")).toBe("dutch-foundations-part-ii-everyday-life");
+    expect(slugify("Deutsch für Anfänger")).toBe("deutsch-fur-anfanger");
+    expect(slugify("  ÉÉN Straße?! ")).toBe("een-strasse");
+    expect(slugify("It's Ruud’s “huis”")).toBe("it-s-ruud-s-huis");
+    expect(slugify("日本語")).toBe("");
+    const long = slugify(`${"woord ".repeat(20)}einde`);
+    expect(long.length).toBeLessThanOrEqual(SLUG_MAX_LENGTH);
+    expect(slugSchema.safeParse(long).success).toBe(true);
+    expect(slugSchema.safeParse("Not-A-Slug").success).toBe(false);
   });
 });

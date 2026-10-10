@@ -22,12 +22,14 @@ import {
 import { useMediaQuery } from "@mantine/hooks";
 import {
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
   type ButtonHTMLAttributes,
   type HTMLAttributes,
   type PropsWithChildren,
   type ReactNode,
+  type RefObject,
 } from "react";
 import styles from "./WordinatorUi.module.css";
 
@@ -173,8 +175,29 @@ export function Dialog(props: ModalProps) {
   return <Modal classNames={{ inner: styles.dialogInner, content: styles.dialogShell, header: styles.dialogHeader, body: styles.dialogContent, ...customClassNames }} {...modalProps}><DialogBody>{children}</DialogBody></Modal>;
 }
 
-export function AdaptiveDialog(props: ModalProps) {
+// Measures the element a docked dialog sits over, while the dialog is open, so the dialog can take its place on the page.
+function useDockFrame(target: RefObject<HTMLElement | null> | null, opened: boolean) {
+  const [frame, setFrame] = useState<{ left: number; width: number } | null>(null);
+  useLayoutEffect(() => {
+    const element = target?.current;
+    if (!opened || !element) { setFrame(null); return; }
+    const measure = () => { const rect = element.getBoundingClientRect(); setFrame({ left: rect.left, width: rect.width }); };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, [target, opened]);
+  return frame;
+}
+
+// `dock` pins the dialog over that element (such as a reading column) on wide screens instead of centring it, and keeps the rest of
+// the page usable beside it: there is no backdrop, focus trap, or scroll lock, and a click outside does not close it. Below `64em`
+// the dialog is centred or full screen as usual.
+export function AdaptiveDialog({ dock, ...props }: ModalProps & { dock?: RefObject<HTMLElement | null> }) {
   const narrow = useMediaQuery("(max-width: 48em)");
+  const wide = useMediaQuery("(min-width: 64em)");
+  const docked = useDockFrame(dock && wide ? dock : null, props.opened);
+  if (docked) return <Dialog centered={false} radius="xl" size={docked.width} yOffset="calc(var(--navigation-height) + (var(--navigation-offset) * 2))" withOverlay={false} trapFocus={false} lockScroll={false} closeOnClickOutside={false}
+    classNames={{ inner: styles.dialogDocked }} styles={{ inner: { paddingInlineStart: docked.left } }} {...props} />;
   // The theme's content border and shadow are inline styles, so only a styles prop can drop them from the full-screen sheet.
   return <Dialog centered={!narrow} fullScreen={narrow} radius={narrow ? 0 : "xl"} size="var(--width-modal)" styles={narrow ? { content: { border: 0, boxShadow: "none" } } : undefined} {...props} />;
 }

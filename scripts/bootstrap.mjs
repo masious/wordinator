@@ -75,16 +75,15 @@ if (!Number.isFinite(existingCount) || existingCount > 0) {
 
 const prompt = createInterface({ input: stdin, output: stdout });
 const email = (await prompt.question("First user email: ")).trim();
-const displayName = (await prompt.question("Display name: ")).trim();
-const groupName = (await prompt.question("First group name: ")).trim();
-const languageInput = (await prompt.question("Target language (Dutch/German): ")).trim().toLowerCase();
+const username = (await prompt.question("Username: ")).trim();
+const languageInput = (await prompt.question("Library language (Dutch/German): ")).trim().toLowerCase();
 prompt.close();
 const password = await hiddenPrompt("Password (hidden): ");
 
 const language = languageInput === "dutch" || languageInput === "nl" ? "nl"
   : languageInput === "german" || languageInput === "de" ? "de" : null;
-if (!/^\S+@\S+\.\S+$/.test(email) || !displayName || !groupName || !language || password.length < 6) {
-  console.error("Enter a valid email, non-empty names, Dutch/German, and a password of at least 6 characters.");
+if (!/^\S+@\S+\.\S+$/.test(email) || !/^[A-Za-z0-9_]{3,30}$/.test(username) || !language || password.length < 6) {
+  console.error("Enter a valid email, a 3-30 character username of letters, numbers, or underscores, Dutch/German, and a password of at least 6 characters.");
   process.exit(1);
 }
 
@@ -94,12 +93,13 @@ const userId = randomUUID();
 const groupId = randomUUID();
 const invitationToken = randomBytes(32).toString("base64url");
 const now = Date.now();
-const statements = `INSERT INTO users (id, email, normalized_email, password_hash, display_name, quick_reaction_one, quick_reaction_two, quick_reaction_three, must_change_password, created_at, updated_at)
-VALUES (${sql(userId)}, ${sql(email)}, ${sql(email.toLowerCase())}, ${sql(passwordHash)}, ${sql(displayName)}, char(128077), char(10084, 65039), char(128514), 0, ${now}, ${now});
+// The single library record is the storage-compatibility anchor described in docs/data-model.md.
+const statements = `INSERT INTO users (id, email, normalized_email, password_hash, display_name, username, onboarding_completed_at, quick_reaction_one, quick_reaction_two, quick_reaction_three, must_change_password, created_at, updated_at)
+VALUES (${sql(userId)}, ${sql(email)}, ${sql(email.toLowerCase())}, ${sql(passwordHash)}, ${sql(username)}, ${sql(username)}, ${now}, char(128077), char(10084, 65039), char(128514), 0, ${now}, ${now});
 INSERT INTO groups (id, creator_user_id, name, language, invitation_token, created_at, updated_at)
-VALUES (${sql(groupId)}, ${sql(userId)}, ${sql(groupName)}, ${sql(language)}, ${sql(invitationToken)}, ${now}, ${now});
+VALUES (${sql(groupId)}, ${sql(userId)}, 'Course library', ${sql(language)}, ${sql(invitationToken)}, ${now}, ${now});
 INSERT INTO memberships (group_id, user_id, state, requested_at, decided_at, profile_display_name, updated_at)
-VALUES (${sql(groupId)}, ${sql(userId)}, 'active', ${now}, ${now}, ${sql(displayName)}, ${now});`;
+VALUES (${sql(groupId)}, ${sql(userId)}, 'active', ${now}, ${now}, ${sql(username)}, ${now});`;
 
 const temporaryDirectory = mkdtempSync(join(tmpdir(), "wordinator-bootstrap-"));
 const sqlFile = join(temporaryDirectory, "bootstrap.sql");
@@ -118,5 +118,4 @@ if (!completed) {
   process.exit(1);
 }
 
-console.log(`Bootstrap complete for ${local ? "local" : "remote"}. Group ID: ${groupId}`);
-console.log(`Invitation path: /invite/${invitationToken}`);
+console.log(`Bootstrap complete for ${local ? "local" : "remote"}. Registration is now open at /.`);

@@ -1,76 +1,47 @@
 import { expect, test } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_INVITATION_TOKEN, E2E_PASSWORD } from "./global-setup";
+import { E2E_INVITATION_TOKEN } from "./global-setup";
+import { registerLearner, signOut } from "./auth";
 
-test("an invited person is approved and enters an isolated group", async ({ page }, testInfo) => {
+test("a new person signs up, sets up a username, and lands in the one global library", async ({ page }, testInfo) => {
   const suffix = testInfo.project.name.replaceAll(/[^a-z]/g, "");
-  const memberName = `${testInfo.project.name} learner`;
-  const memberEmail = `${suffix}@e2e.test`;
-  const memberPassword = "member-password";
-  const secondGroup = `${testInfo.project.name} Study Room`;
+  const email = `${suffix}-signup@e2e.test`;
+  const username = `learner_${suffix}`;
 
+  // Retired invitation links fall through to the ordinary signed-out entry.
   await page.goto(`/invite/${E2E_INVITATION_TOKEN}`);
-  await expect(page.getByRole("heading", { name: "Join Alpha Journal" })).toBeVisible();
-  await page.getByLabel("Display name").fill(memberName);
-  await page.getByLabel("Email").fill(memberEmail);
-  await page.getByRole("textbox", { name: "Password" }).fill(memberPassword);
-  await page.getByRole("button", { name: "Create account and request access" }).click();
-  await expect(page.getByText("Waiting for approval")).toBeVisible();
+  await expect(page).toHaveURL(/\/$/);
+  await expect(page.getByRole("heading", { name: "Start learning." })).toBeVisible();
 
-  await page.goto("/");
-  await page.getByRole("button", { name: "Sign out" }).click();
-  await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL);
-  await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD);
-  await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
+  await page.getByLabel("Email").fill(email);
+  await page.getByRole("textbox", { name: "Password" }).fill("member-password");
+  await page.getByRole("button", { name: "Create account" }).click();
+  await expect(page.getByRole("heading", { name: "Set up your account." })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Choose a profile photo" })).toBeVisible();
+  // The library stays closed until setup completes.
+  await page.goto("/courses");
+  await expect(page.getByRole("heading", { name: "Set up your account." })).toBeVisible();
+  await page.getByRole("textbox", { name: "Username" }).fill(username);
+  await page.getByRole("button", { name: "Open the lesson library" }).click();
+  await expect(page).toHaveURL(/\/courses$/);
+  await expect(page.getByRole("heading", { name: "Courses", level: 1 })).toBeVisible();
 
-  await page.getByRole("button", { name: "Create a group" }).click();
-  await page.getByLabel("Group name").fill(secondGroup);
-  await page.getByRole("button", { name: "Create group" }).click();
-  await expect(page.getByRole("heading", { name: secondGroup })).toBeVisible();
-  await page.getByRole("button", { name: "Account menu" }).click();
-  await page.getByRole("menuitem", { name: "Settings" }).click();
-  await page.getByLabel("Bio").fill("Learning together, one useful phrase at a time.");
-  await page.getByLabel("Quick reaction 1").fill("👏");
-  await page.getByLabel("Quick reaction 2").fill("🌱");
-  await page.getByLabel("Quick reaction 3").fill("🤔");
-  await page.getByRole("button", { name: "Save profile" }).click();
-  await expect(page.getByText("Saved.").first()).toBeVisible();
-  const renamedSecondGroup = `${secondGroup} Renamed`;
-  await page.getByRole("navigation", { name: "Settings sections" }).getByRole("link", { name: "Group" }).click();
-  await expect(page).toHaveURL(/\/settings\/group$/);
-  await page.getByLabel("Group name").fill(renamedSecondGroup);
-  await page.getByRole("button", { name: "Rename group" }).click();
-  await page.getByRole("button", { name: "Account menu" }).click();
-  await page.getByRole("menuitem", { name: "My profile" }).click();
-  await expect(page.getByRole("heading", { name: "Creator" })).toBeVisible();
-  await expect(page.getByText("Learning together, one useful phrase at a time.")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "No posts to show yet" })).toBeVisible();
-  await page.getByRole("link", { name: "Journal" }).click();
-  await expect(page.getByRole("heading", { name: renamedSecondGroup })).toBeVisible();
-  await page.getByRole("button", { name: "Account menu" }).click();
-  await expect(page.getByRole("group", { name: "Active group" }).getByRole("menuitem", { name: renamedSecondGroup })).toHaveAttribute("aria-current", "true");
-  await page.getByRole("menuitem", { name: "Alpha Journal" }).click();
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
-
-  await page.getByRole("link", { name: /join requests? waiting/ }).click();
-  await expect(page).toHaveURL(/\/settings\/members$/);
-  const request = page.getByText(memberName, { exact: true }).locator("../../..");
-  await request.getByRole("button", { name: "Accept" }).click();
-  await expect(page.getByRole("button", { name: "Accept" })).toBeHidden();
-  await page.getByRole("button", { name: "Account menu" }).click();
-  await page.getByRole("menuitem", { name: "Sign out" }).click();
-
-  await page.getByLabel("Email").fill(memberEmail);
-  await page.getByRole("textbox", { name: "Password" }).fill(memberPassword);
-  await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
+  // Legacy group URLs land on their global equivalents.
+  // Each redirect is a client-side history change; WebKit treats one still settling as interrupting the next goto, so wait for
+  // the destination page itself before navigating again.
+  await page.goto("/groups/legacy-library/words");
+  await expect(page).toHaveURL(/\/words$/);
+  await expect(page.getByRole("heading", { name: "Your words" })).toBeVisible();
+  await page.goto("/groups/legacy-library");
+  await expect(page).toHaveURL(/\/journal$/);
+  await expect(page.getByRole("heading", { name: "Journal", level: 1 })).toBeAttached();
 
   const desktopNavigation = page.getByRole("navigation", { name: "Main navigation" });
   const mobileNavigation = page.getByRole("navigation", { name: "Mobile navigation" });
+  await page.goto("/courses");
   await expect(desktopNavigation).toBeVisible();
   await expect(mobileNavigation).toBeHidden();
-  await expect(desktopNavigation.getByRole("link", { name: "Journal" })).toHaveAttribute("aria-current", "page");
-  await expect(desktopNavigation.locator("svg")).toHaveCount(4);
+  await expect(desktopNavigation.getByRole("link", { name: "Courses" })).toHaveAttribute("aria-current", "page");
+  await expect(desktopNavigation.getByRole("link")).toHaveText(["Courses", "Words", "Journal", "Notices"]);
   const islandBox = await page.getByRole("banner").locator(":scope > div").boundingBox();
   const desktopViewport = page.viewportSize();
   expect(islandBox).not.toBeNull();
@@ -82,20 +53,37 @@ test("an invited person is approved and enters an isolated group", async ({ page
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(desktopNavigation).toBeHidden();
   await expect(mobileNavigation).toBeVisible();
-  await expect(mobileNavigation.getByRole("link", { name: "Journal" })).toHaveAttribute("aria-current", "page");
-  await expect(mobileNavigation.getByRole("link")).toHaveCount(3);
-  await expect(page.getByRole("banner").getByText("Alpha Journal")).toBeVisible();
+  await expect(mobileNavigation.getByRole("link", { name: "Courses" })).toHaveAttribute("aria-current", "page");
+  await expect(mobileNavigation.getByRole("link")).toHaveText(["Courses", "Words", "Journal", "Notices"]);
   const dockBox = await mobileNavigation.boundingBox();
   expect(dockBox).not.toBeNull();
   expect(dockBox!.x).toBeGreaterThan(0);
   expect(dockBox!.width).toBeLessThan(390);
   expect(dockBox!.y + dockBox!.height).toBeLessThan(844);
-  await page.setViewportSize({ width: 390, height: 500 });
-  const compactDockBox = await mobileNavigation.boundingBox();
-  expect(compactDockBox).not.toBeNull();
-  expect(compactDockBox!.y).toBeGreaterThan(0);
-  expect(compactDockBox!.y + compactDockBox!.height).toBeLessThan(500);
   expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBe(false);
+  await page.setViewportSize({ width: 1280, height: 720 });
+  await signOut(page);
+
+  // A second account cannot claim the same username in a different case.
+  await page.getByLabel("Email").fill(`${suffix}-second@e2e.test`);
+  await page.getByRole("textbox", { name: "Password" }).fill("member-password");
+  await page.getByRole("button", { name: "Create account" }).click();
+  await page.getByRole("textbox", { name: "Username" }).fill(username.toUpperCase());
+  await page.getByRole("button", { name: "Open the lesson library" }).click();
+  await expect(page.getByText("That username is already in use.")).toBeVisible();
+  await page.getByRole("textbox", { name: "Username" }).fill(`${username}_2`);
+  await page.getByRole("button", { name: "Open the lesson library" }).click();
+  await expect(page.getByRole("heading", { name: "Courses", level: 1 })).toBeVisible();
+});
+
+test("signing up again with a known email is refused", async ({ page }, testInfo) => {
+  const email = `${testInfo.project.name.replaceAll(/[^a-z]/g, "")}-repeat@e2e.test`;
+  await registerLearner(page, email, "member-password", `repeat_${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`);
+  await signOut(page);
+  await page.getByLabel("Email").fill(email);
+  await page.getByRole("textbox", { name: "Password" }).fill("member-password");
+  await page.getByRole("button", { name: "Create account" }).click();
+  await expect(page.getByText("An account already uses this email. Sign in instead.")).toBeVisible();
 });
 
 test("the UI workbench remains directly addressable", async ({ page }) => {

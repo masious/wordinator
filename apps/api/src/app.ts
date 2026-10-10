@@ -1,8 +1,10 @@
 import {
   accountSettingsResponseSchema,
   changePasswordRequestSchema,
+  completeOnboardingRequestSchema,
   commentResponseSchema,
   coursePageSchema,
+  courseRefResponseSchema,
   courseResponseSchema,
   courseVisibilityRequestSchema,
   createCommentRequestSchema,
@@ -44,13 +46,12 @@ import {
   outlineResponseSchema,
   reorderRequestSchema,
   updateLessonRequestSchema,
-  createPracticeCommentRequestSchema,
-  practiceDiscussionResponseSchema,
   practiceCheckRequestSchema,
   practiceCheckResponseSchema,
+  practiceProgressRequestSchema,
+  practiceProgressResponseSchema,
+  type PracticeProgress,
   answerMatches,
-  splitPracticePayload,
-  updatePracticeCommentRequestSchema,
   contributorDecisionRequestSchema,
   courseContributorsResponseSchema,
   SPEECH_VOICES,
@@ -61,6 +62,8 @@ import {
   type Notification,
   type Post,
   type PostInput,
+  slugify,
+  SLUG_MAX_LENGTH,
 } from "@wordinator/contracts";
 import {
   collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
@@ -349,8 +352,8 @@ type CommentRow = {
   body: string | null; createdAt: number; updatedAt: number; displayName: string; pinned: number;
 };
 
-// A discussion hangs off exactly one target. Only post discussions can have pins, so practice threads pass no pin owner.
-type DiscussionTarget = { column: "post_id" | "block_id"; id: string };
+// A discussion hangs off one post. Comment rows keep a nullable block column from the retired practice threads; it is always empty.
+type DiscussionTarget = { column: "post_id"; id: string };
 
 async function readDiscussion(binding: D1Database, groupId: string, target: DiscussionTarget, viewerId: string, creatorUserId: string, pinOwnerId: string | null) {
   const rows = await binding.prepare(
@@ -423,7 +426,7 @@ async function responseStatements(binding: D1Database, commentId: string, postId
   });
 }
 
-// A comment reaction is scoped to the comment's discussion target. Practice-thread reactions create no notifications.
+// A comment reaction is scoped to the comment's discussion target.
 async function toggleReaction(context: Context<AppEnvironment>, targetKind: "post" | "comment", targetId: string, scope?: DiscussionTarget) {
   const parsed = await parseJson(context, toggleReactionRequestSchema); if ("response" in parsed) return parsed.response;
   const group = context.get("groupAccess"); const user = context.get("user")!;
@@ -436,7 +439,7 @@ async function toggleReaction(context: Context<AppEnvironment>, targetKind: "pos
     const result = await context.env.DB.prepare(
     "INSERT INTO reactions (group_id, user_id, target_kind, target_id, emoji, created_at) VALUES (?, ?, ?, ?, ?, ?) ON CONFLICT(user_id, target_kind, target_id, emoji) DO NOTHING",
     ).bind(group.id, user.id, targetKind, targetId, parsed.data.emoji.normalize("NFC"), Date.now()).run();
-    if (result.meta.changes && scope?.column !== "block_id") await createNotification(context.env.DB, { groupId: group.id, recipientUserId: target.authorId, actorUserId: user.id, kind: "reaction", postId: targetKind === "post" ? targetId : postId, commentId: targetKind === "comment" ? targetId : null });
+    if (result.meta.changes) await createNotification(context.env.DB, { groupId: group.id, recipientUserId: target.authorId, actorUserId: user.id, kind: "reaction", postId: targetKind === "post" ? targetId : postId, commentId: targetKind === "comment" ? targetId : null });
   }
   else await context.env.DB.prepare("DELETE FROM reactions WHERE group_id = ? AND user_id = ? AND target_kind = ? AND target_id = ? AND emoji = ?")
     .bind(group.id, user.id, targetKind, targetId, parsed.data.emoji.normalize("NFC")).run();
@@ -452,14 +455,14 @@ async function toggleReaction(context: Context<AppEnvironment>, targetKind: "pos
 
 
 type CourseRow = {
-  id: string; groupId: string; ownerId: string; title: string; summary: string; level: string | null; intendedLearner: string | null;
+  id: string; slug: string; groupId: string; ownerId: string; title: string; summary: string; level: string | null; intendedLearner: string | null;
   coverKey: string | null; status: Course["status"]; firstPublishedAt: number | null; createdAt: number; updatedAt: number; displayName: string; avatarKey: string | null;
   contributorState: ContributorState | null; speechCast: string | null;
 };
 type ContributorState = "pending" | "active" | "rejected" | "left" | "removed";
 
 // The first bound parameter is the viewer, whose own contributor state travels with the course row.
-const COURSE_SELECT = `SELECT c.id, c.group_id AS groupId, c.owner_id AS ownerId, c.title, c.summary, c.level,
+const COURSE_SELECT = `SELECT c.id, c.slug, c.group_id AS groupId, c.owner_id AS ownerId, c.title, c.summary, c.level,
     c.intended_learner AS intendedLearner, c.cover_key AS coverKey, c.status, c.first_published_at AS firstPublishedAt, c.created_at AS createdAt, c.updated_at AS updatedAt,
     c.speech_cast AS speechCast,
     CASE WHEN m.state = 'active' THEN u.display_name ELSE COALESCE(m.profile_display_name, 'Former member') END AS displayName,
@@ -479,7 +482,7 @@ function presentCourse(row: CourseRow, viewerId: string, creatorUserId: string, 
   const active = row.status !== "archived";
   const contribution = row.contributorState === "pending" || row.contributorState === "active" ? row.contributorState : null;
   return {
-    id: row.id, groupId: row.groupId, title: row.title, summary: row.summary, level: row.level, intendedLearner: row.intendedLearner,
+    id: row.id, slug: row.slug, groupId: row.groupId, title: row.title, summary: row.summary, level: row.level, intendedLearner: row.intendedLearner,
     coverUrl: mediaUrlFromBase(mediaBase, row.coverKey), status: row.status,
     owner: { id: row.ownerId, displayName: row.displayName, avatarUrl: mediaUrlFromBase(mediaBase, row.avatarKey) },
     createdAt: row.createdAt, updatedAt: row.updatedAt, speechCast: storedSpeechCast(row.speechCast) ?? {}, contribution,
@@ -490,6 +493,22 @@ function presentCourse(row: CourseRow, viewerId: string, creatorUserId: string, 
       leaveContribution: contribution !== null, manageContributors: owner && active,
     },
   };
+}
+
+// A new course or lesson takes the slug of its title, or the first numbered variant not yet used in its scope.
+// Slugs never change afterwards, so links stay valid when the title does.
+async function freeSlug(binding: D1Database, target: { table: "courses"; groupId: string } | { table: "course_lessons"; courseId: string }, title: string) {
+  const base = slugify(title) || (target.table === "courses" ? "course" : "lesson");
+  const [scopeColumn, scopeValue] = target.table === "courses" ? ["group_id", target.groupId] : ["course_id", target.courseId];
+  // Slugs hold only letters, digits, and dashes, so the base needs no LIKE escaping.
+  const rows = await binding.prepare(`SELECT slug FROM ${target.table} WHERE ${scopeColumn} = ? AND (slug = ? OR slug LIKE ?)`)
+    .bind(scopeValue, base, `${base}-%`).all<{ slug: string }>();
+  const taken = new Set(rows.results.map((row) => row.slug));
+  if (!taken.has(base)) return base;
+  for (let suffix = 2; ; suffix += 1) {
+    const candidate = `${base.slice(0, SLUG_MAX_LENGTH - String(suffix).length - 1).replace(/-+$/, "")}-${suffix}`;
+    if (!taken.has(candidate)) return candidate;
+  }
 }
 
 async function readCourseRow(binding: D1Database, viewerId: string, groupId: string, courseId: string) {
@@ -541,7 +560,7 @@ async function courseResponse(context: Context<AppEnvironment>, courseId: string
 }
 
 type LessonRow = {
-  id: string; courseId: string; title: string; goal: string | null; position: number; published: number; publishedAt: number | null; changed: number;
+  id: string; slug: string; courseId: string; title: string; goal: string | null; position: number; published: number; publishedAt: number | null; changed: number;
   updatedById: string; updatedByName: string; updatedAt: number;
 };
 type LessonDocumentRow = LessonRow & { draftDoc: string; draftVersion: number; publishedDoc: string | null };
@@ -550,7 +569,7 @@ const editorColumns = (table: string, alias: string) => `CASE WHEN em.state = 'a
    FROM ${table} ${alias} JOIN users eu ON eu.id = ${alias}.updated_by
    LEFT JOIN memberships em ON em.group_id = ${alias}.group_id AND em.user_id = ${alias}.updated_by`;
 // A lesson is published while it has a published document; `changed` tells editors the draft differs from it.
-const LESSON_COLUMNS = `l.id, l.course_id AS courseId, l.title, l.goal, l.position, l.published_doc IS NOT NULL AS published, l.published_at AS publishedAt,
+const LESSON_COLUMNS = `l.id, l.slug, l.course_id AS courseId, l.title, l.goal, l.position, l.published_doc IS NOT NULL AS published, l.published_at AS publishedAt,
     (l.published_doc IS NOT NULL AND l.draft_doc != l.published_doc) AS changed, l.updated_by AS updatedById, l.updated_at AS updatedAt`;
 const LESSON_SELECT = `SELECT ${LESSON_COLUMNS}, ${editorColumns("course_lessons", "l")}`;
 const LESSON_DOCUMENT_SELECT = `SELECT ${LESSON_COLUMNS}, l.draft_doc AS draftDoc, l.draft_version AS draftVersion, l.published_doc AS publishedDoc,
@@ -560,7 +579,7 @@ const LESSON_DOCUMENT_SELECT = `SELECT ${LESSON_COLUMNS}, l.draft_doc AS draftDo
 const seesCourseDrafts = (course: CourseRow, viewerId: string) => course.ownerId === viewerId || course.contributorState === "active";
 
 const presentLessonSummary = (row: LessonRow, editor: boolean): CourseLessonSummary => ({
-  id: row.id, position: row.position, title: row.title, goal: row.goal, published: Boolean(row.published), publishedAt: row.publishedAt,
+  id: row.id, slug: row.slug, position: row.position, title: row.title, goal: row.goal, published: Boolean(row.published), publishedAt: row.publishedAt,
   changed: editor && Boolean(row.changed), updatedBy: { id: row.updatedById, displayName: row.updatedByName }, updatedAt: row.updatedAt,
 });
 
@@ -579,12 +598,25 @@ const expandImages = (document: LessonDocument, mediaBase: string) => mapImageUr
 // Large ID lists travel as one JSON parameter because D1 limits bound parameters per statement.
 const jsonList = (values: readonly string[]) => JSON.stringify([...new Set(values)]);
 
-async function threadCounts(binding: D1Database, groupId: string, practiceIds: string[]) {
-  if (!practiceIds.length) return {};
-  const rows = await binding.prepare("SELECT block_id AS blockId, COUNT(*) AS total FROM comments WHERE group_id = ? AND block_id IN (SELECT value FROM json_each(?)) GROUP BY block_id")
-    .bind(groupId, jsonList(practiceIds)).all<{ blockId: string; total: number }>();
-  return Object.fromEntries(rows.results.map((row) => [row.blockId, row.total]));
+// A practice is done once someone's answered count reaches its current number of questions, so editing a practice can move
+// people back from done. `questions` maps each practice ID to that number.
+async function practiceProgress(binding: D1Database, groupId: string, viewerId: string, questions: Map<string, number>) {
+  const ids = [...questions.keys()];
+  const empty = (): PracticeProgress => ({ done: 0, started: 0, answered: null });
+  const progress: Record<string, PracticeProgress> = Object.fromEntries(ids.map((id) => [id, empty()]));
+  if (!ids.length) return progress;
+  const rows = await binding.prepare("SELECT practice_id AS practiceId, user_id AS userId, answered FROM course_practice_progress WHERE group_id = ? AND practice_id IN (SELECT value FROM json_each(?))")
+    .bind(groupId, jsonList(ids)).all<{ practiceId: string; userId: string; answered: number }>();
+  for (const row of rows.results) {
+    const entry = progress[row.practiceId]!;
+    entry.started += 1;
+    if (row.answered >= questions.get(row.practiceId)!) entry.done += 1;
+    if (row.userId === viewerId) entry.answered = row.answered;
+  }
+  return progress;
 }
+const practiceQuestions = (document: LessonDocument) => [...walkLessonBlocks(document.blocks)]
+  .flatMap(({ block }) => block.type === "practice" ? [[block.id, readPracticeBlock(block as LessonBlockOf<"practice">).items.length] as const] : []);
 
 // Learners receive the published document with practice prompts only. Editors also receive the full draft and its version.
 // Speech: everyone gets the ready clips of the published document; editors also get every draft item with its status.
@@ -599,9 +631,10 @@ async function presentLessons(binding: D1Database, course: CourseRow, viewerId: 
       draftSpeech: editor ? await documentSpeechItems(stored.draft, cast, language) : [],
     };
   }));
-  const practiceIds = documents.flatMap(({ draft, published }) => [...(published ? collectPracticeIds(published) : []), ...(editor ? collectPracticeIds(draft) : [])]);
-  const [counts, clips] = await Promise.all([
-    threadCounts(binding, course.groupId, practiceIds),
+  // The published practice sets the number of questions; a practice only in an editor's draft uses the draft's.
+  const questions = new Map(documents.flatMap(({ draft, published }) => [...(editor ? practiceQuestions(draft) : []), ...(published ? practiceQuestions(published) : [])]));
+  const [progress, clips] = await Promise.all([
+    practiceProgress(binding, course.groupId, viewerId, questions),
     readClips(binding, documents.flatMap(({ publishedSpeech, draftSpeech }) => [...publishedSpeech, ...draftSpeech].map((item) => item.hash))),
   ]);
   const media = (key: string) => mediaUrlFromBase(mediaBase, key)!;
@@ -610,7 +643,7 @@ async function presentLessons(binding: D1Database, course: CourseRow, viewerId: 
     return {
       ...presentLessonSummary(row, editor),
       document: published && expandImages(toLearnerDocument(published).document, mediaBase),
-      answerCounts: Object.fromEntries([...ids].map((id) => [id, counts[id] ?? 0])),
+      practiceProgress: Object.fromEntries([...ids].map((id) => [id, progress[id]!])),
       draft: editor ? { document: expandImages(draft, mediaBase), version: row.draftVersion } : null,
       speech: presentSpeech(publishedSpeech, clips, media),
       draftSpeech: editor ? presentDraftSpeech(draftSpeech, clips, media) : null,
@@ -692,8 +725,8 @@ async function canonicalDocument(context: Context<AppEnvironment>, course: Cours
   return { document: keyed };
 }
 
-// After publishing or discarding, both documents equal `kept`. Practices outside it lose their threads (reactions have no
-// foreign key, so they go first), and media rows outside it that are old enough to be no in-flight upload are removed.
+// After publishing or discarding, both documents equal `kept`. Practices outside it lose their anchors and, by cascade, their
+// progress rows, and media rows outside it that are old enough to be no in-flight upload are removed.
 // Every statement repeats `guard` so nothing is cleaned up when the version check of the same batch failed.
 const MEDIA_GRACE_MS = 24 * 60 * 60 * 1000;
 async function lessonCleanup(binding: D1Database, course: CourseRow, lessonId: string, kept: LessonDocument, guard: { sql: string; values: Array<string | number> }) {
@@ -705,8 +738,6 @@ async function lessonCleanup(binding: D1Database, course: CourseRow, lessonId: s
   return {
     mediaKeys,
     statements: [
-      binding.prepare(`DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND target_id IN (SELECT id FROM comments WHERE group_id = ? AND block_id IN (${doomed})) AND ${guard.sql}`)
-        .bind(course.groupId, course.groupId, course.groupId, lessonId, practices, ...guard.values),
       binding.prepare(`DELETE FROM course_practices WHERE id IN (${doomed}) AND ${guard.sql}`).bind(course.groupId, lessonId, practices, ...guard.values),
       binding.prepare(`DELETE FROM course_media WHERE group_id = ? AND lesson_id = ? AND key IN (SELECT value FROM json_each(?)) AND ${guard.sql}`)
         .bind(course.groupId, lessonId, jsonList(mediaKeys), ...guard.values),
@@ -777,6 +808,7 @@ const requireGroupAccess = createMiddleware<AppEnvironment>(async (context, next
   const user = context.get("user");
   if (!user) return apiError(context, 401, "AUTH_REQUIRED", "Sign in to continue.");
   if (user.mustChangePassword) return apiError(context, 403, "PASSWORD_CHANGE_REQUIRED", "Change your password to continue.");
+  if (!user.onboardingComplete) return apiError(context, 403, "ONBOARDING_REQUIRED", "Finish setting up your account to continue.");
   const groupId = context.req.param("groupId");
   if (!groupId) return apiError(context, 404, "GROUP_NOT_FOUND", "This group is not available.");
   const [group] = await createDatabase(context.env.DB)
@@ -934,6 +966,32 @@ app.post("/api/auth/change-password", async (context) => {
   return context.json({ ok: true } as const);
 });
 
+app.post("/api/auth/complete-onboarding", async (context) => {
+  const user = context.get("user");
+  if (!user) return apiError(context, 401, "AUTH_REQUIRED", "Sign in to continue.");
+  if (user.mustChangePassword) return apiError(context, 403, "PASSWORD_CHANGE_REQUIRED", "Change your password to continue.");
+  const parsed = await parseJson(context, completeOnboardingRequestSchema);
+  if ("response" in parsed) return parsed.response;
+  const username = parsed.data.username.trim();
+  const now = Date.now();
+  try {
+    await context.env.DB.batch([
+      context.env.DB.prepare(
+        "UPDATE users SET username = ?, display_name = ?, onboarding_completed_at = ?, updated_at = ? WHERE id = ?",
+      ).bind(username, username, now, now, user.id),
+      context.env.DB.prepare(
+        "UPDATE memberships SET profile_display_name = ?, updated_at = ? WHERE user_id = ? AND state = 'active'",
+      ).bind(username, now, user.id),
+    ]);
+  } catch (error) {
+    if (error instanceof Error && /unique/i.test(error.message)) {
+      return apiError(context, 409, "USERNAME_TAKEN", "That username is already in use.");
+    }
+    throw error;
+  }
+  return context.json({ ok: true } as const);
+});
+
 app.get("/api/settings", async (context) => {
   const user = context.get("user");
   if (!user) return apiError(context, 401, "AUTH_REQUIRED", "Sign in to continue.");
@@ -1023,9 +1081,9 @@ app.post("/api/auth/register", async (context) => {
   const parsed = await parseJson(context, registerRequestSchema);
   if ("response" in parsed) return parsed.response;
   const database = createDatabase(context.env.DB);
-  const [group] = await database.select({ id: groups.id, creatorUserId: groups.creatorUserId }).from(groups)
-    .where(and(eq(groups.invitationToken, parsed.data.invitationToken), isNull(groups.deletedAt))).limit(1);
-  if (!group) return apiError(context, 404, "INVITATION_NOT_FOUND", "This invitation is not available.");
+  const [group] = await database.select({ id: groups.id }).from(groups)
+    .where(isNull(groups.deletedAt)).orderBy(asc(groups.createdAt)).limit(1);
+  if (!group) return apiError(context, 409, "LIBRARY_NOT_READY", "The lesson library has not been initialized yet.");
   const normalizedEmail = parsed.data.email.trim().toLowerCase();
   const [existing] = await database.select({ id: users.id }).from(users).where(eq(users.normalizedEmail, normalizedEmail)).limit(1);
   if (existing) return apiError(context, 409, "ACCOUNT_EXISTS", "An account already uses this email. Sign in instead.");
@@ -1034,10 +1092,9 @@ app.post("/api/auth/register", async (context) => {
   const passwordHash = await hashPassword(parsed.data.password);
   await context.env.DB.batch([
     context.env.DB.prepare("INSERT INTO users (id, email, normalized_email, password_hash, display_name, quick_reaction_one, quick_reaction_two, quick_reaction_three, must_change_password, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?)")
-      .bind(userId, parsed.data.email.trim(), normalizedEmail, passwordHash, parsed.data.displayName.trim(), "👍", "❤️", "😂", now, now),
-    context.env.DB.prepare("INSERT INTO memberships (group_id, user_id, state, requested_at, profile_display_name, updated_at) VALUES (?, ?, 'pending', ?, ?, ?)")
-      .bind(group.id, userId, now, parsed.data.displayName.trim(), now),
-    ...(group.creatorUserId === userId ? [] : [notificationStatement(context.env.DB, { groupId: group.id, recipientUserId: group.creatorUserId, actorUserId: userId, kind: "join_requested", createdAt: now })]),
+      .bind(userId, parsed.data.email.trim(), normalizedEmail, passwordHash, "New learner", "👍", "❤️", "😂", now, now),
+    context.env.DB.prepare("INSERT INTO memberships (group_id, user_id, state, requested_at, decided_at, profile_display_name, updated_at) VALUES (?, ?, 'active', ?, ?, ?, ?)")
+      .bind(group.id, userId, now, now, "New learner", now),
   ]);
   await setSession(context, userId, context.env.COOKIE_SIGNING_SECRET);
   return context.json({ ok: true } as const, 201);
@@ -1589,10 +1646,26 @@ app.post("/api/groups/:groupId/courses", requireGroupAccess, async (context) => 
   const parsed = await parseJson(context, createCourseRequestSchema); if ("response" in parsed) return parsed.response;
   const group = context.get("groupAccess"); const user = context.get("user")!;
   const courseId = crypto.randomUUID(); const now = Date.now();
+  const slug = await freeSlug(context.env.DB, { table: "courses", groupId: group.id }, parsed.data.title);
   await context.env.DB.prepare(
-    "INSERT INTO courses (id, group_id, owner_id, title, summary, level, intended_learner, cover_key, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, NULL, 'draft', ?, ?)",
-  ).bind(courseId, group.id, user.id, parsed.data.title, parsed.data.summary, parsed.data.level || null, parsed.data.intendedLearner || null, now, now).run();
+    "INSERT INTO courses (id, slug, group_id, owner_id, title, summary, level, intended_learner, cover_key, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, NULL, 'draft', ?, ?)",
+  ).bind(courseId, slug, group.id, user.id, parsed.data.title, parsed.data.summary, parsed.data.level || null, parsed.data.intendedLearner || null, now, now).run();
   return courseResponse(context, courseId, 201);
+});
+
+// Resolves a course URL segment, and optionally a lesson one, to IDs. Either segment may be a slug or a legacy ID.
+// Visibility matches the course and lesson reads, so a slug never reveals a course or lesson the viewer cannot open.
+app.get("/api/groups/:groupId/course-refs/:courseRef", requireGroupAccess, async (context) => {
+  const group = context.get("groupAccess"); const user = context.get("user")!;
+  const courseRef = context.req.param("courseRef"); const lessonRef = context.req.query("lesson");
+  const row = await context.env.DB.prepare(`${COURSE_SELECT} WHERE c.group_id = ? AND (c.id = ? OR c.slug = ?)`)
+    .bind(user.id, group.id, courseRef, courseRef).first<CourseRow>();
+  if (!row || !courseVisible(row, user.id, group.creatorUserId)) return apiError(context, 404, "COURSE_NOT_FOUND", "This course is not available.");
+  if (!lessonRef) return context.json(courseRefResponseSchema.parse({ courseId: row.id, courseSlug: row.slug }));
+  const lesson = await context.env.DB.prepare("SELECT id, slug, published_doc IS NOT NULL AS published FROM course_lessons WHERE group_id = ? AND course_id = ? AND (id = ? OR slug = ?)")
+    .bind(row.groupId, row.id, lessonRef, lessonRef).first<{ id: string; slug: string; published: number }>();
+  if (!lesson || (!lesson.published && !seesCourseDrafts(row, user.id))) return apiError(context, 404, "LESSON_NOT_FOUND", "This lesson is not available.");
+  return context.json(courseRefResponseSchema.parse({ courseId: row.id, courseSlug: row.slug, lessonId: lesson.id, lessonSlug: lesson.slug }));
 });
 
 app.get("/api/groups/:groupId/courses/:courseId", requireGroupAccess, async (context) => {
@@ -1797,13 +1870,14 @@ app.post("/api/groups/:groupId/courses/:courseId/lessons", requireGroupAccess, a
   const found = await contributableCourse(context); if ("error" in found) return found.error;
   const parsed = await parseJson(context, createLessonRequestSchema); if ("response" in parsed) return parsed.response;
   const user = context.get("user")!; const course = found.row; const lessonId = crypto.randomUUID(); const now = Date.now();
+  const slug = await freeSlug(context.env.DB, { table: "course_lessons", courseId: course.id }, parsed.data.title);
   // Position and the lesson limit are evaluated inside the insert so concurrent saves cannot exceed the limit. New lessons
   // start unpublished with an empty draft.
   const inserted = await context.env.DB.prepare(
-    `INSERT INTO course_lessons (id, group_id, course_id, title, goal, position, created_by, updated_by, created_at, updated_at)
-     SELECT ?, ?, ?, ?, ?, (SELECT COALESCE(MAX(position) + 1, 0) FROM course_lessons WHERE group_id = ? AND course_id = ?), ?, ?, ?, ?
+    `INSERT INTO course_lessons (id, slug, group_id, course_id, title, goal, position, created_by, updated_by, created_at, updated_at)
+     SELECT ?, ?, ?, ?, ?, ?, (SELECT COALESCE(MAX(position) + 1, 0) FROM course_lessons WHERE group_id = ? AND course_id = ?), ?, ?, ?, ?
      WHERE (SELECT COUNT(*) FROM course_lessons WHERE group_id = ? AND course_id = ?) < ?`,
-  ).bind(lessonId, course.groupId, course.id, parsed.data.title, parsed.data.goal, course.groupId, course.id, user.id, user.id, now, now, course.groupId, course.id, COURSE_LESSONS_MAX).run();
+  ).bind(lessonId, slug, course.groupId, course.id, parsed.data.title, parsed.data.goal, course.groupId, course.id, user.id, user.id, now, now, course.groupId, course.id, COURSE_LESSONS_MAX).run();
   if (!inserted.meta.changes) return apiError(context, 409, "LESSON_LIMIT_REACHED", "This course already has the maximum number of lessons.");
   return lessonResponse(context, course, lessonId, 201);
 });
@@ -2022,12 +2096,9 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
   const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id; const db = context.env.DB;
   const media = await db.prepare("SELECT key FROM course_media WHERE group_id = ? AND lesson_id = ?").bind(groupId, lessonId).all<{ key: string }>();
-  // Lessons are hard-deleted with their practice threads, completions, positions, word index rows, word bookmarks, speech job, and images; reactions have no foreign key, so they go first.
-  const practices = "SELECT id FROM course_practices WHERE group_id = ? AND course_id = ? AND lesson_id = ?";
+  // Lessons are hard-deleted with their practice progress, completions, positions, word index rows, word bookmarks, speech job, and images.
   await db.batch([
-    db.prepare(`DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND target_id IN (SELECT id FROM comments WHERE group_id = ? AND block_id IN (${practices}))`)
-      .bind(groupId, groupId, groupId, courseId, lessonId),
-    db.prepare(`DELETE FROM comments WHERE group_id = ? AND block_id IN (${practices})`).bind(groupId, groupId, courseId, lessonId),
+    db.prepare("DELETE FROM course_practice_progress WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_practices WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_media WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
@@ -2165,43 +2236,13 @@ async function practiceBlock(context: Context<AppEnvironment>, write: boolean) {
   const { draft, published } = storedDocuments(lesson.lesson);
   const find = (document: LessonDocument | null) => document && [...walkLessonBlocks(document.blocks)].map(({ block }) => block)
     .find((block): block is LessonBlockOf<"practice"> => block.type === "practice" && block.id === blockId);
-  const block = find(published) ?? (seesCourseDrafts(found.row, context.get("user")!.id) ? find(draft) : undefined);
+  const publishedBlock = find(published);
+  const block = publishedBlock ?? (seesCourseDrafts(found.row, context.get("user")!.id) ? find(draft) : undefined);
   if (!block) return { error: apiError(context, 404, "PRACTICE_NOT_FOUND", "This practice is not available.") };
-  return { course: found.row, block, practice: readPracticeBlock(block), target: { column: "block_id", id: block.id } satisfies DiscussionTarget };
-}
-
-async function practiceThreadItem(context: Context<AppEnvironment>, target: DiscussionTarget, commentId: string) {
-  const user = context.get("user")!; const group = context.get("groupAccess");
-  return (await readDiscussion(context.env.DB, group.id, target, user.id, group.creatorUserId, null))
-    .flatMap((entry) => [entry, ...entry.replies]).find((entry) => entry.id === commentId)!;
-}
-
-// Each response item snapshots its prompt so the answer set stays readable after the practice is edited. Nothing is matched.
-function practiceResponseStatements(binding: D1Database, commentId: string, prompts: string[], answers: string[]) {
-  if (answers.length !== prompts.length) return null;
-  return prompts.map((prompt, position) => {
-    const answer = answers[position]?.trim() ?? "";
-    return binding.prepare("INSERT INTO comment_response_items (comment_id, position, prompt, answer, skipped, matched) VALUES (?, ?, ?, ?, ?, NULL)")
-      .bind(commentId, position, prompt, answer, answer ? 0 : 1);
-  });
+  return { course: found.row, lessonId: lesson.lesson.id, block, published: Boolean(publishedBlock), practice: readPracticeBlock(block) };
 }
 
 const practicePath = `${lessonPath}/blocks/:blockId`;
-
-// The thread, together with the author's version and item notes, is fetched only when the reader reveals it.
-app.get(`${practicePath}/discussion`, requireGroupAccess, async (context) => {
-  const found = await practiceBlock(context, false); if ("error" in found) return found.error;
-  const group = context.get("groupAccess"); const user = context.get("user")!;
-  const [items, account] = await Promise.all([
-    readDiscussion(context.env.DB, group.id, found.target, user.id, group.creatorUserId, null),
-    context.env.DB.prepare("SELECT quick_reaction_one AS one, quick_reaction_two AS two, quick_reaction_three AS three FROM users WHERE id = ?")
-      .bind(user.id).first<{ one: string; two: string; three: string }>(),
-  ]);
-  return context.json(practiceDiscussionResponseSchema.parse({
-    items, count: items.reduce((total, item) => total + 1 + item.replies.length, 0),
-    quickReactions: [account!.one, account!.two, account!.three], reference: splitPracticePayload(found.practice).reference,
-  }));
-});
 
 // A check confirms a match, or answers a miss with the item's author's version as a reference. Nothing is stored.
 app.post(`${practicePath}/check`, requireGroupAccess, async (context) => {
@@ -2213,73 +2254,20 @@ app.post(`${practicePath}/check`, requireGroupAccess, async (context) => {
   return context.json(practiceCheckResponseSchema.parse({ match, authorsVersion: match || !item.authorsVersion.length ? null : item.authorsVersion }));
 });
 
-app.post(`${practicePath}/comments`, requireGroupAccess, async (context) => {
+// Saving progress records only how many questions the viewer has answered, never the answers. The highest count wins, so a
+// device without the local draft never lowers it. Only published practices count; a draft preview records nothing.
+app.put(`${practicePath}/progress`, requireGroupAccess, async (context) => {
   const found = await practiceBlock(context, true); if ("error" in found) return found.error;
-  const parsed = await parseJson(context, createPracticeCommentRequestSchema); if ("response" in parsed) return parsed.response;
-  const group = context.get("groupAccess"); const user = context.get("user")!;
-  let parentId: string | null = null;
-  if (parsed.data.kind === "text") {
-    if (!parsed.data.parentId) return apiError(context, 400, "INVALID_RESPONSE_KIND", "Answer every item in one answer set.");
-    const parent = await context.env.DB.prepare("SELECT id, parent_comment_id AS parentId FROM comments WHERE group_id = ? AND block_id = ? AND id = ?")
-      .bind(group.id, found.block.id, parsed.data.parentId).first<{ id: string; parentId: string | null }>();
-    if (!parent || parent.parentId) return apiError(context, 400, "INVALID_PARENT", "Replies can only be added to a top-level answer in this practice.");
-    parentId = parent.id;
-  }
-  const commentId = crypto.randomUUID(); const now = Date.now();
-  const children = parsed.data.kind === "practice_response"
-    ? practiceResponseStatements(context.env.DB, commentId, found.practice.items.map((item) => item.prompt), parsed.data.answers) : [];
-  if (children === null) return apiError(context, 400, "ANSWER_COUNT_MISMATCH", "Answer every prompt, leaving a blank response when needed.");
-  await context.env.DB.batch([
-    context.env.DB.prepare("INSERT INTO comments (id, group_id, post_id, block_id, author_id, parent_comment_id, kind, body, created_at, updated_at) VALUES (?, ?, NULL, ?, ?, ?, ?, ?, ?, ?)")
-      .bind(commentId, group.id, found.block.id, user.id, parentId, parsed.data.kind, parsed.data.kind === "text" ? parsed.data.body.trim() : null, now, now),
-    ...children,
-  ]);
-  return context.json(commentResponseSchema.parse({ item: await practiceThreadItem(context, found.target, commentId) }), 201);
-});
-
-app.patch(`${practicePath}/comments/:commentId`, requireGroupAccess, async (context) => {
-  const found = await practiceBlock(context, true); if ("error" in found) return found.error;
-  const parsed = await parseJson(context, updatePracticeCommentRequestSchema); if ("response" in parsed) return parsed.response;
-  const group = context.get("groupAccess"); const user = context.get("user")!; const commentId = context.req.param("commentId");
-  const existing = await context.env.DB.prepare("SELECT author_id AS authorId, kind, created_at AS createdAt FROM comments WHERE group_id = ? AND block_id = ? AND id = ?")
-    .bind(group.id, found.block.id, commentId).first<{ authorId: string; kind: DiscussionItem["kind"]; createdAt: number }>();
-  if (!existing) return apiError(context, 404, "COMMENT_NOT_FOUND", "This response is not available.");
-  if (existing.authorId !== user.id) return apiError(context, 403, "COMMENT_EDIT_FORBIDDEN", "Only the author can edit this response.");
-  if (existing.kind !== parsed.data.kind) return apiError(context, 400, "INVALID_RESPONSE_KIND", "The response type cannot be changed.");
-  let children: D1PreparedStatement[] | null = [];
-  if (parsed.data.kind === "practice_response") {
-    // Edits keep the prompts the answer set was written against, even if the practice has changed since.
-    const snapshots = await context.env.DB.prepare("SELECT prompt FROM comment_response_items WHERE comment_id = ? ORDER BY position ASC").bind(commentId).all<{ prompt: string | null }>();
-    children = practiceResponseStatements(context.env.DB, commentId, snapshots.results.map((row) => row.prompt ?? ""), parsed.data.answers);
-  }
-  if (children === null) return apiError(context, 400, "ANSWER_COUNT_MISMATCH", "Answer every prompt, leaving a blank response when needed.");
-  await context.env.DB.batch([
-    context.env.DB.prepare("DELETE FROM comment_response_items WHERE comment_id = ?").bind(commentId),
-    context.env.DB.prepare("UPDATE comments SET body = ?, updated_at = ? WHERE group_id = ? AND block_id = ? AND id = ?")
-      .bind(parsed.data.kind === "text" ? parsed.data.body.trim() : null, Math.max(Date.now(), existing.createdAt + 1), group.id, found.block.id, commentId),
-    ...children,
-  ]);
-  return context.json(commentResponseSchema.parse({ item: await practiceThreadItem(context, found.target, commentId) }));
-});
-
-app.delete(`${practicePath}/comments/:commentId`, requireGroupAccess, async (context) => {
-  const found = await practiceBlock(context, true); if ("error" in found) return found.error;
-  const group = context.get("groupAccess"); const user = context.get("user")!; const commentId = context.req.param("commentId");
-  const existing = await context.env.DB.prepare("SELECT author_id AS authorId FROM comments WHERE group_id = ? AND block_id = ? AND id = ?")
-    .bind(group.id, found.block.id, commentId).first<{ authorId: string }>();
-  if (!existing) return apiError(context, 404, "COMMENT_NOT_FOUND", "This response is not available.");
-  if (existing.authorId !== user.id && group.creatorUserId !== user.id) return apiError(context, 403, "COMMENT_DELETE_FORBIDDEN", "You cannot delete this response.");
-  await context.env.DB.batch([
-    context.env.DB.prepare("DELETE FROM reactions WHERE group_id = ? AND target_kind = 'comment' AND (target_id = ? OR target_id IN (SELECT id FROM comments WHERE group_id = ? AND parent_comment_id = ?))")
-      .bind(group.id, commentId, group.id, commentId),
-    context.env.DB.prepare("DELETE FROM comments WHERE group_id = ? AND block_id = ? AND (id = ? OR parent_comment_id = ?)").bind(group.id, found.block.id, commentId, commentId),
-  ]);
-  return context.json({ ok: true } as const);
-});
-
-app.put(`${practicePath}/comments/:commentId/reactions`, requireGroupAccess, async (context) => {
-  const found = await practiceBlock(context, true); if ("error" in found) return found.error;
-  return toggleReaction(context, "comment", context.req.param("commentId"), found.target);
+  const parsed = await parseJson(context, practiceProgressRequestSchema); if ("response" in parsed) return parsed.response;
+  if (!found.published) return apiError(context, 409, "PRACTICE_NOT_PUBLISHED", "Progress is saved only for published practices.");
+  const questions = found.practice.items.length;
+  if (parsed.data.answered > questions) return apiError(context, 400, "PRACTICE_PROGRESS_INVALID", "This practice does not have that many questions.");
+  const user = context.get("user")!; const { groupId, id: courseId } = found.course;
+  await context.env.DB.prepare(`INSERT INTO course_practice_progress (practice_id, group_id, course_id, lesson_id, user_id, answered, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)
+    ON CONFLICT (practice_id, user_id) DO UPDATE SET answered = max(answered, excluded.answered), updated_at = excluded.updated_at`)
+    .bind(found.block.id, groupId, courseId, found.lessonId, user.id, parsed.data.answered, Date.now()).run();
+  const progress = await practiceProgress(context.env.DB, groupId, user.id, new Map([[found.block.id, questions]]));
+  return context.json(practiceProgressResponseSchema.parse({ progress: progress[found.block.id] }));
 });
 
 app.notFound((context) => apiError(context, 404, "NOT_FOUND", "The requested resource was not found."));

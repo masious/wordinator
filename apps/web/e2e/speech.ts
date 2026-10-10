@@ -3,7 +3,7 @@ import { resolve } from "node:path";
 import { expect, type Page, type TestInfo } from "@playwright/test";
 import type { LessonDocument } from "@wordinator/contracts/lesson-document";
 import { speechClipHash, speechItems } from "@wordinator/contracts/speech";
-import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
+import { signIn } from "./auth";
 import { courseApi, dialogue, example, openLesson, seedLesson, vocabulary } from "./lessonSeed";
 
 // Browser tests never call Azure, so a lesson's clips are marked ready directly in the local database, under the same hashes the
@@ -41,8 +41,7 @@ export async function serveSpeech(page: Page) {
 export async function playLessonSpeech(page: Page, testInfo: TestInfo) {
   testInfo.setTimeout(60_000);
   const suffix = `speech-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
-  await page.goto("/"); await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL); await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD); await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
+  await signIn(page);
   const played = await serveSpeech(page);
 
   const api = courseApi(page);
@@ -56,7 +55,7 @@ export async function playLessonSpeech(page: Page, testInfo: TestInfo) {
   await seedLesson(page, course.id, `${suffix} lesson`, blocks);
   await markSpeechReady(blocks);
 
-  await page.goto(`/groups/${E2E_GROUP_ID}/courses/${course.id}`);
+  await page.goto(`/courses/${course.id}`);
   await openLesson(page);
   const word = page.getByRole("complementary", { name: "New words" }).getByRole("button", { name: "Play pronunciation of het water" });
   await word.click();

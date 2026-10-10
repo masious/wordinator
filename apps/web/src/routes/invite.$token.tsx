@@ -1,9 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { invitationQueryOptions } from "../api";
-import { InvitationPage } from "../pages/PhaseOnePages";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
+// Retired group namespace: the product has one global library, so legacy links land on the global equivalent.
 export const Route = createFileRoute("/invite/$token")({
-  loader: ({ context, params }) => context.queryClient.ensureQueryData(invitationQueryOptions(params.token)),
-  component: InviteRoute,
+  beforeLoad: () => { throw redirect({ to: "/", replace: true }); },
 });
-function InviteRoute() { const { token } = Route.useParams(); return <InvitationPage token={token} />; }

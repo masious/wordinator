@@ -1,5 +1,7 @@
 # Posts and feed
 
+> Current scope: the journal is one global feed at `/journal`, the third tab in the main navigation, and post pages live at `/journal/:postId`. Every set-up account shares it. Storage still scopes posts by the single backing library record (see [data-model.md](data-model.md#global-library-migration-state)); where this document says "group", read "the library". Old `/groups/:groupId` and `/groups/:groupId/posts/:postId` links redirect to the journal routes.
+
 ## Post types
 
 All posts have an author, group, type, optional notes, creation/update timestamps, and edited state. Notes are concealed on every visit.

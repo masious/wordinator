@@ -141,3 +141,61 @@ describe("Course shell API", () => {
     expect(unchanged.status).toBe("published");
   });
 });
+
+describe("Readable course URLs", () => {
+  const resolve = (groupId: string, cookie: string, courseRef: string, lessonRef?: string) =>
+    request(`/api/groups/${groupId}/course-refs/${encodeURIComponent(courseRef)}${lessonRef ? `?lesson=${encodeURIComponent(lessonRef)}` : ""}`, cookie);
+
+  it("gives courses and lessons stable title slugs, numbered on repeats, that resolve like IDs", async () => {
+    const ownerId = await seedUser("slug-owner"); const groupId = await seedGroup("slugs", ownerId);
+    const cookie = await signIn("slug-owner");
+    const first = await createCourse(groupId, cookie);
+    const second = await createCourse(groupId, cookie);
+    expect([first.slug, second.slug]).toEqual(["deutsch-fur-anfanger", "deutsch-fur-anfanger-2"]);
+
+    // Renaming keeps the slug, so shared links stay valid.
+    expect((await request(`/api/groups/${groupId}/courses/${first.id}`, cookie, { title: "Deutsch für Fortgeschrittene", summary: "Weiter", level: null, intendedLearner: null }, "PATCH")).status).toBe(200);
+    expect(courseResponseSchema.parse(await (await request(`/api/groups/${groupId}/courses/${first.id}`, cookie)).json()).course.slug).toBe("deutsch-fur-anfanger");
+
+    for (const ref of [first.slug, first.id]) {
+      const resolved = await resolve(groupId, cookie, ref);
+      expect(resolved.status).toBe(200);
+      expect(await resolved.json()).toEqual({ courseId: first.id, courseSlug: "deutsch-fur-anfanger" });
+    }
+    expect((await resolve(groupId, cookie, "no-such-course")).status).toBe(404);
+
+    const lessons = [];
+    for (const title of ["Im Café", "Im Café", "!!!"]) {
+      const created = await request(`/api/groups/${groupId}/courses/${first.id}/lessons`, cookie, { title, goal: null });
+      expect(created.status).toBe(201);
+      lessons.push((await created.json() as { lesson: { id: string; slug: string } }).lesson);
+    }
+    expect(lessons.map((lesson) => lesson.slug)).toEqual(["im-cafe", "im-cafe-2", "lesson"]);
+    const lesson = await resolve(groupId, cookie, first.slug, lessons[1]!.id);
+    expect(await lesson.json()).toEqual({ courseId: first.id, courseSlug: first.slug, lessonId: lessons[1]!.id, lessonSlug: "im-cafe-2" });
+    expect((await resolve(groupId, cookie, second.slug, lessons[0]!.slug)).status).toBe(404);
+  });
+
+  it("resolves only what the viewer may open", async () => {
+    const ownerId = await seedUser("slug-author"); const groupId = await seedGroup("visibility", ownerId);
+    const readerId = await seedUser("slug-reader"); await join(groupId, readerId);
+    const outsiderId = await seedUser("slug-outsider"); const otherGroupId = await seedGroup("elsewhere", outsiderId);
+    const owner = await signIn("slug-author"); const reader = await signIn("slug-reader"); const outsider = await signIn("slug-outsider");
+    const course = await createCourse(groupId, owner, "Geheimer Kurs");
+    const created = await request(`/api/groups/${groupId}/courses/${course.id}/lessons`, owner, { title: "Entwurf", goal: null });
+    const { lesson } = await created.json() as { lesson: { id: string; slug: string } };
+
+    // A draft course and an unpublished lesson stay as hidden by slug as by ID.
+    expect((await resolve(groupId, reader, course.slug)).status).toBe(404);
+    expect((await request(`/api/groups/${groupId}/courses/${course.id}/visibility`, owner, { status: "published" })).status).toBe(200);
+    expect((await resolve(groupId, reader, course.slug)).status).toBe(200);
+    const hidden = await resolve(groupId, reader, course.slug, lesson.slug);
+    expect(hidden.status).toBe(404);
+    expect(await hidden.json()).toMatchObject({ error: { code: "LESSON_NOT_FOUND" } });
+    expect((await resolve(groupId, owner, course.slug, lesson.slug)).status).toBe(200);
+
+    expect((await resolve(otherGroupId, outsider, course.slug)).status).toBe(404);
+    expect((await resolve(groupId, outsider, course.slug)).status).toBe(404);
+    expect((await SELF.fetch(`https://wordinator.test/api/groups/${groupId}/course-refs/${course.slug}`)).status).toBe(401);
+  });
+});

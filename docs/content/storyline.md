@@ -18,6 +18,8 @@ Places (keep consistent):
 
 ## Cast
 
+How each person looks (appearance and signature outfit) is owned by [illustrations.md](illustrations.md#visual-canon).
+
 | Name | Age | Who | Personality and speech habits |
 | --- | --- | --- | --- |
 | **Sofia Moreno** | 28 | From Valencia, Spain. Programmeur at the IT company. Speaks Spanish and English, learning Dutch. Arrived di 1 september. | Curious, warm, a bit chaotic, often a little late. Says "Wacht even!", "Echt?", "Hoe zeg je … in het Nederlands?". Sometimes makes a realistic learner mistake in a dialogue; a friend then repeats the correct form naturally (the correct form must appear in the next turn, and a note or callout must point it out). Misses the sun of Valencia. |

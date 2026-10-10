@@ -1,15 +1,19 @@
 # Authentication
 
-The initial authentication model is deliberately small and suitable only for this trusted private deployment.
+The authentication model is deliberately small and suitable only for this deployment.
 
 ## Registration
 
-- Registration must originate from a valid group invitation.
-- Required fields are email, password, and display name.
+- Registration is open and immediate; no invitation or approval is required.
+- Registration requires email and password. It creates a signed session and an active account in one request.
+- Before any library route or protected course API is usable, a separate setup request must choose a case-insensitively unique username. The username is 3–30 ASCII letters, numbers, or underscores.
+- Avatar upload is offered prominently during setup but remains optional. The normal avatar endpoint is intentionally available before setup is complete.
 - Normalize email for case-insensitive uniqueness while retaining a display-safe form if desired.
 - Email verification and email changes are unavailable.
 - Passwords require at least six characters. There are no composition rules or scheduled expiration.
-- A registered account with no accepted membership can sign in only to the request-status experience.
+- A registered account whose setup is incomplete can sign in only to the setup experience.
+
+Migration `0020_global_accounts.sql` adds `users.username` and `users.onboarding_completed_at`, gives existing accounts collision-safe usernames, and treats them as already onboarded. New registrations use the reserved provisional display name `New learner` until setup succeeds.
 
 ## Password storage
 
@@ -35,9 +39,9 @@ Phase 2 uses the same password-change endpoint for forced and ordinary changes. 
 
 For account recovery in this private deployment, an operator may use the explicit-target CLI documented in [operations.md](operations.md) to set an existing user's password by normalized email. The tool accepts the password only through a hidden interactive prompt, stores a fresh PBKDF2 hash, clears `must_change_password`, and does not invalidate existing stateless sessions. This is a trusted operational capability: an operator with D1 access can gain access to the account.
 
-## Creator-generated password
+## Retired creator-generated password
 
-A creator may regenerate a password for any current member of their group. This means a creator can gain access to the member’s entire account, including other groups; the product knowingly accepts this risk temporarily.
+The former group-creator password regeneration endpoint is retained only for storage compatibility and is not reachable from the current shell. New flows must not depend on it.
 
 1. Generate a strong temporary password server-side.
 2. Store its password hash and set `must_change_password`.

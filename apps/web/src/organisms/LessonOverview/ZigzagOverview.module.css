@@ -1,0 +1,76 @@
+/* Desktop-only prototype: the page is exactly one screen tall. The trail fills the left column; the summary sits top right on
+   the page itself and the section panel is docked in the bottom-right corner, growing up over the summary when it is long. */
+.page{box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr) minmax(24rem,32rem);grid-template-rows:auto minmax(0,1fr);gap:var(--space-4) var(--space-8);height:100dvh;padding:var(--space-6) var(--page-gutter);overflow:hidden}
+
+.trail{position:relative;grid-row:1 / -1;grid-column:1;min-height:0}
+.road{position:absolute;inset:0;overflow:visible;pointer-events:none}
+.track,.done{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.track{stroke:var(--color-page-deep);stroke-width:12}
+.done{stroke:var(--color-support);stroke-width:12;transition:d var(--motion-standard) var(--ease-physical)}
+
+/* A waypoint is a small dot centred on its point on the trail; its label hangs under it and leans away from the nearer edge. */
+.waypoint{--node:2.75rem;position:absolute;display:block;width:0;height:0;margin:0;padding:0;font:inherit;color:inherit;background:none;border:0}
+button.waypoint{cursor:pointer}
+.node{position:absolute;top:0;left:0;display:grid;place-items:center;width:var(--node);height:var(--node);color:var(--color-foreground-muted);background:var(--color-surface-raised);border:2px solid var(--color-separator);border-radius:var(--radius-pill);box-shadow:inset 0 -3px 0 var(--color-page-deep);translate:-50% -50%;transition:transform var(--motion-press) var(--ease-physical),background-color var(--motion-standard),border-color var(--motion-standard)}
+.node svg{width:45%;height:45%;stroke-width:2.25}
+.waypoint[data-status="done"] .node{color:var(--color-surface-raised);background:var(--color-success);border-color:var(--color-success);box-shadow:inset 0 -3px 0 color-mix(in srgb,var(--color-success) 65%,var(--color-foreground))}
+.waypoint[data-status="current"]{--node:3.5rem}
+.waypoint[data-status="current"] .node{color:var(--color-action-text);background:var(--color-action);border-color:var(--color-action);box-shadow:inset 0 -4px 0 var(--color-active)}
+.waypoint[data-status="current"] .node::before{content:"";position:absolute;inset:-8px;z-index:-1;background:var(--color-action);border-radius:inherit;opacity:0;animation:halo 2.4s var(--ease-physical) infinite}
+
+/* Stops are painted in their category's vivid tone whatever their status: the trail's colour shows progress, a check badge marks
+   a finished stop, and the current stop is larger with a halo in its own tone. */
+.waypoint:not([data-marker]){--node:3.25rem}
+.waypoint[data-status="current"]:not([data-marker]){--node:4.25rem}
+.node[data-tone="yellow"]{--tone:var(--color-vivid-yellow)}
+.node[data-tone="orange"]{--tone:var(--color-vivid-orange)}
+.node[data-tone="red"]{--tone:var(--color-vivid-red)}
+.node[data-tone="pink"]{--tone:var(--color-vivid-pink)}
+.node[data-tone="violet"]{--tone:var(--color-vivid-violet)}
+.node[data-tone="blue"]{--tone:var(--color-vivid-blue)}
+.node[data-tone="teal"]{--tone:var(--color-vivid-teal)}
+.node[data-tone="green"]{--tone:var(--color-vivid-green)}
+.node[data-tone="slate"]{--tone:var(--color-vivid-slate)}
+.waypoint .node[data-tone]{color:var(--color-vivid-text);background:var(--tone);border-color:var(--tone);box-shadow:inset 0 -4px 0 color-mix(in srgb,var(--tone) 70%,var(--color-vivid-text-on-yellow))}
+.waypoint .node[data-tone="yellow"]{color:var(--color-vivid-text-on-yellow)}
+.waypoint .node[data-tone] svg{width:52%;height:52%;stroke-width:2.25}
+.waypoint[data-status="current"] .node[data-tone]::before{background:var(--tone)}
+/* Emoji bring their own colour, so the node is a soft wash of the tone with a ring in the full tone. The start and finish markers
+   take a plain ring. */
+.waypoint .node[data-emoji]{background:color-mix(in srgb,var(--tone,var(--color-separator)) 16%,var(--color-surface-raised));border:3px solid var(--tone,var(--color-separator));box-shadow:inset 0 -4px 0 color-mix(in srgb,var(--tone,var(--color-separator)) 30%,var(--color-surface-raised))}
+.waypoint[data-status="done"] .node[data-emoji]:not([data-tone]){background:var(--color-success-surface);border-color:var(--color-success)}
+.emoji{font-size:calc(var(--node) * .52)}
+.panelEmoji{margin-right:var(--space-2);font-size:var(--text-md);vertical-align:-0.3em}
+.check{position:absolute;right:-5px;bottom:-5px;display:grid;place-items:center;width:1.375rem;height:1.375rem;color:var(--color-surface-raised);background:var(--color-success);border:2px solid var(--color-page);border-radius:var(--radius-pill)}
+.waypoint .node .check svg{width:70%;height:70%}
+.waypoint[data-selected] .node{outline:2px solid var(--color-foreground);outline-offset:3px}
+
+.label{position:absolute;top:calc(var(--node) / 2 + var(--space-2));left:0;z-index:1;display:grid;gap:2px;width:max-content;max-width:12rem;padding:var(--space-1) var(--space-3);font-size:var(--type-metadata);font-weight:var(--weight-semibold);line-height:var(--line-title);text-align:left;background:var(--color-surface);border:var(--ring-hairline);border-radius:var(--radius-md);box-shadow:var(--shadow-card);opacity:0;pointer-events:none;translate:calc(var(--lean) * -100%) 0;transition:opacity var(--motion-standard) var(--ease-physical)}
+.eyebrow{font-family:var(--font-mono);font-size:var(--type-eyebrow);font-weight:var(--weight-regular);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
+.waypoint:hover,.waypoint:focus-visible{z-index:2}
+.waypoint:hover .label,.waypoint:focus-visible .label,.waypoint[data-status="current"] .label,.waypoint[data-selected] .label,.waypoint[data-marker] .label{opacity:1}
+.waypoint[data-marker] .label{background:none;border:0;box-shadow:none}
+.waypoint:focus-visible{outline:none}
+.waypoint:focus-visible .node{outline:2px solid var(--color-focus);outline-offset:3px}
+@media(hover:hover){button.waypoint:hover .node{transform:scale(1.15)}}
+
+.summary{display:grid;align-content:start;gap:var(--space-2);grid-row:1;grid-column:2;min-width:0;padding:var(--space-2) var(--space-1) 0}
+.summary .eyebrow{margin:0}
+.summary h1{margin:0;overflow:hidden;font-size:var(--type-card-title);line-height:var(--line-title);white-space:nowrap;text-overflow:ellipsis}
+.meter{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:var(--space-3);font-family:var(--font-mono);font-size:var(--type-eyebrow);font-weight:var(--weight-semibold)}
+.stats{display:flex;flex-wrap:wrap;gap:var(--space-1) var(--space-4);margin:0}
+.stats>div{display:flex;align-items:baseline;gap:var(--space-2)}
+.stats dt{font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
+.stats dd{margin:0;font-family:var(--font-mono);font-size:var(--type-eyebrow);font-weight:var(--weight-semibold)}
+.simulator{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:var(--space-3);padding-top:var(--space-2);font-family:var(--font-mono);font-size:var(--type-eyebrow);color:var(--color-foreground-muted);border-top:var(--ring-hairline)}
+.simulator input{min-width:0;accent-color:var(--color-action)}
+
+.panel{position:relative;z-index:1;display:grid;grid-template-rows:auto minmax(0,1fr);grid-row:1 / -1;grid-column:2;align-self:end;max-height:100%;min-height:0;overflow:hidden;background:var(--color-surface-raised);border:var(--ring-hairline);border-radius:var(--radius-xl);box-shadow:var(--shadow-floating)}
+.panelHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:var(--space-3);padding:var(--space-4) var(--space-5);border-bottom:var(--ring-hairline)}
+.panelHeader h2{margin:var(--space-1) 0 0;font-family:var(--font-display);font-size:var(--type-card-title);font-weight:var(--weight-medium);line-height:var(--line-title)}
+.panelBody{min-height:0;padding:var(--space-5);overflow-y:auto;overscroll-behavior:contain}
+.collapsed{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-4) var(--space-5)}
+.collapsed p{display:grid;gap:var(--space-1);margin:0;font-family:var(--font-display);font-size:var(--text-lg);line-height:var(--line-title)}
+
+@keyframes halo{0%{opacity:.35;transform:scale(.9)}70%,100%{opacity:0;transform:scale(1.5)}}
+@media(prefers-reduced-motion:reduce){.done,.node,.label{transition:none}.waypoint[data-status="current"] .node::before{animation:none}}

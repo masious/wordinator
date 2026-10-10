@@ -123,7 +123,7 @@ Every lesson lists the words it introduces in `vocabulary` blocks ("New words", 
 - ≥ 1 nested bullet list; ≥ 1 numbered list (procedure or rules); dividers between major sections.
 - Inline bold, italic, textColor, backgroundColor per the colour convention.
 - At most 1 link (stable reputable site: https://woordenlijst.org, https://www.ns.nl, https://www.knmi.nl). Optional.
-- `imageIdeas`: 1–3, each with `afterHeading` matching an existing heading text exactly.
+- `imageIdeas`: 1–3, each with `afterHeading` matching an existing heading text exactly. To have one generated, add `location`, `characters` and `action` as described in [illustrations.md](illustrations.md#scene-ideas).
 - ≤ 200 blocks, < 256 KB, `player.steps` 70–130 (aim 85–115).
 
 

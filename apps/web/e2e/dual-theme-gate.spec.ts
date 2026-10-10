@@ -1,9 +1,7 @@
 import { expect, test } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
-import { openEmptyJournal } from "./emptyJournal";
+import { E2E_CREATOR_EMAIL, E2E_PASSWORD } from "./global-setup";
 
 const storageKey = "wordinator:color-scheme";
-const userId = "10000000-0000-4000-8000-000000000001";
 const viewports = [
   { name: "narrow", width: 390, height: 844 },
   { name: "wide", width: 1440, height: 1000 },
@@ -44,22 +42,21 @@ test("explicit preference is accessible, persists on refresh, and synchronizes c
   await expect(page.getByRole("radio", { name: "Dark" }).first()).toBeChecked();
 
   await page.request.post("/api/auth/sign-in", { data: { email: E2E_CREATOR_EMAIL, password: E2E_PASSWORD } });
-  await page.goto(`/groups/${E2E_GROUP_ID}/settings`);
+  await page.goto("/settings");
   await expect(page.getByRole("radiogroup", { name: "Theme preference" })).toBeVisible();
   await expect(page.getByText("Dark preference · currently Dark")).toBeVisible();
 });
 
 test("production routes, previews, media, and overlays remain contained in both schemes", async ({ page }) => {
   await page.goto("/ui");
+  await expect(page.getByRole("heading", { name: "Wordinator UI workbench" })).toBeVisible();
   await page.request.post("/api/auth/sign-in", { data: { email: E2E_CREATOR_EMAIL, password: E2E_PASSWORD } });
   const routes = [
-    `/groups/${E2E_GROUP_ID}`,
-    `/groups/${E2E_GROUP_ID}/members`,
-    `/groups/${E2E_GROUP_ID}/members/${userId}`,
-    `/groups/${E2E_GROUP_ID}/notifications`,
-    `/groups/${E2E_GROUP_ID}/settings`,
-    `/groups/${E2E_GROUP_ID}/settings/group`,
-    `/groups/${E2E_GROUP_ID}/settings/members`,
+    "/journal",
+    "/notifications",
+    "/courses",
+    "/words",
+    "/settings",
     "/ui",
   ];
 
@@ -89,6 +86,7 @@ test("production routes, previews, media, and overlays remain contained in both 
 
 test("semantic contrast, focus, forced colors, and media treatment remain safe", async ({ page }) => {
   await page.goto("/ui");
+  await expect(page.getByRole("heading", { name: "Wordinator UI workbench" })).toBeVisible();
 
   for (const scheme of ["light", "dark"] as const) {
     await setPreference(page, scheme);
@@ -157,15 +155,5 @@ test("stable dual-theme visual baselines", async ({ browserName, page }) => {
       await expect(page.getByRole("heading", { name: "Wordinator UI workbench" })).toBeVisible();
       await expect(page).toHaveScreenshot(`${scheme}-dual-ui-${viewport.name}.png`, { animations: "disabled", fullPage: true });
     }
-  }
-
-  await page.request.post("/api/auth/sign-in", { data: { email: E2E_CREATOR_EMAIL, password: E2E_PASSWORD } });
-  await setPreference(page, "dark");
-  const journal = await openEmptyJournal(page);
-  for (const viewport of viewports) {
-    await page.setViewportSize(viewport);
-    await page.goto(journal.path);
-    await expect(page.getByRole("heading", { name: "Baseline Journal" })).toBeVisible();
-    await expect(page).toHaveScreenshot(`dark-journal-${viewport.name}.png`, { animations: "disabled", mask: journal.mask });
   }
 });

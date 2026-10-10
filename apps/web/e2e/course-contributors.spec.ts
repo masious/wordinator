@@ -1,21 +1,18 @@
-import { expect, test, type Page } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_INVITATION_TOKEN, E2E_PASSWORD } from "./global-setup";
+import { expect, test } from "@playwright/test";
+import { E2E_GROUP_ID } from "./global-setup";
+import { registerLearner, signIn } from "./auth";
 import { paragraph, seedLesson, openLesson } from "./lessonSeed";
 
 test("a member asks to contribute, edits the lesson draft, and the owner publishes it", async ({ browser }, testInfo) => {
   test.setTimeout(90_000);
   const suffix = `contributor-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
-  const helperName = `${testInfo.project.name} helper`;
+  const helperName = `helper_${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
   const helperEmail = `${suffix}@e2e.test`;
   const owner = await (await browser.newContext()).newPage();
   const helper = await (await browser.newContext()).newPage();
-  const signIn = async (page: Page, email: string, password: string) => {
-    await page.goto("/"); await page.getByLabel("Email").fill(email); await page.getByRole("textbox", { name: "Password" }).fill(password); await page.getByRole("button", { name: "Sign in" }).click();
-    await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
-  };
 
   // The owner prepares a published course with one published lesson through the API; the journey under test is contributing.
-  await signIn(owner, E2E_CREATOR_EMAIL, E2E_PASSWORD);
+  await signIn(owner);
   const api = async <T,>(path: string, body?: unknown, method = body === undefined ? "GET" : "POST"): Promise<T> => {
     const response = await owner.request.fetch(`/api/groups/${E2E_GROUP_ID}${path}`, { method, data: body });
     expect(response.ok()).toBe(true);
@@ -25,16 +22,10 @@ test("a member asks to contribute, edits the lesson draft, and the owner publish
   await api(`/courses/${course.id}/visibility`, { status: "published" });
   await seedLesson(owner, course.id, `${suffix} lesson`, [paragraph("De eerste zin.")]);
 
-  // The helper joins the group through the invitation, and the owner accepts them.
-  await helper.goto(`/invite/${E2E_INVITATION_TOKEN}`);
-  await helper.getByLabel("Display name").fill(helperName); await helper.getByLabel("Email").fill(helperEmail); await helper.getByRole("textbox", { name: "Password" }).fill("helper-password");
-  await helper.getByRole("button", { name: "Create account and request access" }).click();
-  await expect(helper.getByText("Waiting for approval")).toBeVisible();
-  const memberships = await api<{ pending: Array<{ id: string; displayName: string }> }>("/memberships");
-  const helperId = memberships.pending.find((entry) => entry.displayName === helperName)!.id;
-  await api(`/memberships/${helperId}`, { decision: "accept" }, "PATCH");
+  // The helper signs up and sets up their account; no approval stands between them and the library.
+  await registerLearner(helper, helperEmail, "helper-password", helperName);
 
-  const coursePage = `/groups/${E2E_GROUP_ID}/courses/${course.id}`;
+  const coursePage = `/courses/${course.id}`;
   await helper.goto(coursePage);
   await expect(helper.getByRole("button", { name: "Edit lesson 1" })).toHaveCount(0);
   await helper.getByRole("button", { name: "Ask to contribute" }).click();

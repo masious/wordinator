@@ -1,6 +1,6 @@
 import { expect, test } from "@playwright/test";
 import { resolve } from "node:path";
-import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
+import { E2E_CREATOR_EMAIL, E2E_PASSWORD } from "./global-setup";
 
 const output = resolve(import.meta.dirname, "../../../docs/visual-baselines");
 
@@ -20,12 +20,12 @@ test("capture pre-redesign wide and narrow references", async ({ browserName, pa
 
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Welcome back." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Start learning." })).toBeVisible();
   await capture("before-auth-wide.png");
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.reload();
-  await expect(page.getByRole("heading", { name: "Welcome back." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Start learning." })).toBeVisible();
   await capture("before-auth-narrow.png");
 
   await page.setViewportSize({ width: 1440, height: 1000 });
@@ -43,12 +43,12 @@ test("capture pre-redesign wide and narrow references", async ({ browserName, pa
   });
 
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.goto(`/groups/${E2E_GROUP_ID}`);
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
-  await capture("before-journal-wide.png");
+  await page.goto("/courses");
+  await expect(page.getByRole("heading", { name: "Courses", level: 1 })).toBeVisible();
+  await capture("before-library-wide.png");
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.reload();
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
-  await capture("before-journal-narrow.png");
+  await expect(page.getByRole("heading", { name: "Courses", level: 1 })).toBeVisible();
+  await capture("before-library-narrow.png");
 });

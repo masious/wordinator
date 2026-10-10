@@ -1,5 +1,11 @@
 # Profiles and settings
 
+## Current account setup
+
+Open registration is followed by a required first-use setup screen. A unique username is required; an avatar is optional. The avatar preview carries an overlaid circular edit button so upload is inviting without being presented as mandatory. Until setup completes, the router returns the account to `/` and protected course access is refused.
+
+The current settings destination is `/settings`. It is account-wide and contains profile, avatar, password, theme, and appearance controls. Group-private profile routes described below are retired: `/groups/:groupId/members/...` now redirects to `/courses`, and `/groups/:groupId/settings/...` redirects to `/settings`.
+
 ## Group-private profile
 
 A profile is visible only to current members of a shared active group. The route includes group context and an opaque user ID. It shows:

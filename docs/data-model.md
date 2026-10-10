@@ -2,17 +2,21 @@
 
 This is a conceptual relational model, not final migration syntax. The Drizzle schema and migrations must preserve these constraints.
 
+## Global-library migration state
+
+The product model is now accounts → courses → lessons, with one course library for the installation. `groups`, `memberships`, and `group_id` columns are legacy storage compatibility, not product tenancy. They remain temporarily so existing lesson documents, R2 media ownership, course progress, word bookmarks, and speech jobs are preserved during rollout. New features must not create or switch libraries, use invitation state, or grant behavior from membership lifecycle state.
+
 ## Identity and groups
 
 ### `users`
 
-Opaque ID, normalized unique email, password hash and parameters, display name, optional bio/avatar key, three quick-reaction emoji, `must_change_password`, and timestamps. There is no account-deletion state initially.
+Opaque ID, normalized unique email, password hash and parameters, case-insensitively unique nullable username, onboarding-completed timestamp, display name, optional bio/avatar key, three quick-reaction emoji, `must_change_password`, and timestamps. New registrations keep username and onboarding completion null until required setup; existing accounts are backfilled by migration `0020_global_accounts.sql`. There is no account-deletion state initially.
 
-### `groups`
+### Legacy `groups`
 
 Opaque ID, creator user ID, name, immutable language code (`nl` or `de` initially), optional icon key, invitation token/hash, creation/update timestamps, and nullable `deleted_at`.
 
-### `memberships`
+### Legacy `memberships`
 
 Group/user pair, lifecycle state, timestamps, and enough state to restore memberships active at group deletion. Enforce one row per group/user. The group’s creator has an active membership but creator authority is owned by `groups.creator_user_id`.
 
@@ -44,7 +48,7 @@ The [courses blueprint](courses.md) owns course behavior.
 
 ### `courses`
 
-Opaque ID, group ID, owner ID, title, summary, optional level, optional intended learner, optional cover key, status (`draft`, `published`, or `archived`), nullable first-published timestamp, and created/updated timestamps. The first-published timestamp is set once, together with the course post, and keeps later publications from creating another post. Migration `0012_course_feed_posts.sql` adds it and backfills it for courses that were already published, which therefore receive no retroactive post. A check constraint limits status to those three values. Owner display uses the live or group snapshot profile at read time, like post authors.
+Opaque ID, readable slug (unique per library record, never changed; see [readable URLs](courses.md#readable-urls)), group ID, owner ID, title, summary, optional level, optional intended learner, optional cover key, status (`draft`, `published`, or `archived`), nullable first-published timestamp, and created/updated timestamps. The first-published timestamp is set once, together with the course post, and keeps later publications from creating another post. Migration `0012_course_feed_posts.sql` adds it and backfills it for courses that were already published, which therefore receive no retroactive post. A check constraint limits status to those three values. Owner display uses the live or group snapshot profile at read time, like post authors.
 
 Migration `0009_course_shell.sql` adds the table and its library index.
 
@@ -52,7 +56,7 @@ Added in C10a (migration `0019_speech.sql`): a nullable `speech_cast` JSON colum
 
 ### `course_lessons`
 
-Opaque ID, group ID, course ID, title, optional goal, position, draft document (JSON text, not null), integer draft version (starting at 1), nullable published document (JSON text), nullable published timestamp, created-by and updated-by user IDs, and created/updated timestamps. Check constraints require both documents to be valid JSON. A lesson is published exactly when its published document is not null. Lesson numbers shown to readers are derived from position among the visible lessons and are never stored.
+Opaque ID, readable slug (unique within the course, never changed), group ID, course ID, title, optional goal, position, draft document (JSON text, not null), integer draft version (starting at 1), nullable published document (JSON text), nullable published timestamp, created-by and updated-by user IDs, and created/updated timestamps. Check constraints require both documents to be valid JSON. A lesson is published exactly when its published document is not null. Lesson numbers shown to readers are derived from position among the visible lessons and are never stored.
 
 The shared contracts own the [lesson document](courses.md#lesson-documents) shape, and the API reads stored documents through the contracts' parser. Every draft save increments the draft version. Publishing copies the draft to the published document, discarding copies the published document back into the draft (also incrementing the draft version, so open editors see a conflict), and unpublishing clears the published document. Title and goal edits and reordering do not change the draft version. Updated-by display uses the live or group snapshot profile at read time and is shown to the owner and contributors as editor attribution.
 
@@ -62,7 +66,11 @@ Migration `0010_course_lessons_blocks.sql` added lessons with per-row `course_bl
 
 ### `course_practices`
 
-Opaque ID (the practice block's ID in the document), group ID, course ID, lesson ID, and created timestamp. One anchor row per practice block ID found in either document of a lesson, so practice answer threads keep a real foreign key while the practice itself lives in JSON. Draft saves add anchors for new practice IDs and refuse IDs that belong to another lesson; publishing and discarding delete anchors, with their threads, whose practice is in neither document. Rows cascade from their course and lesson. Migration `0015_lesson_documents.sql` adds the table, its `(group_id, lesson_id)` index, and an anchor for every existing practice block.
+Opaque ID (the practice block's ID in the document), group ID, course ID, lesson ID, and created timestamp. One anchor row per practice block ID found in either document of a lesson, so practice progress keeps a real foreign key while the practice itself lives in JSON. Draft saves add anchors for new practice IDs and refuse IDs that belong to another lesson; publishing and discarding delete anchors, with their progress, whose practice is in neither document. Rows cascade from their course and lesson. Migration `0015_lesson_documents.sql` adds the table, its `(group_id, lesson_id)` index, and an anchor for every existing practice block.
+
+### `course_practice_progress`
+
+Practice ID, group ID, course ID, lesson ID, user ID, answered count, and updated timestamp, with primary key `(practice_id, user_id)` and an index on `(group_id, lesson_id)`. It records only how many questions of a [practice](courses.md#practice-answers) a learner has answered, never the answers, and saving keeps the highest count. Rows cascade from their practice anchor, course, and lesson. Migration `0022_course_practice_progress.sql` adds the table, turns each shared practice answer set into its author's row (the most items answered in any one set), and deletes every practice comment, its replies, response items, and reactions.
 
 ### `course_media`
 
@@ -104,13 +112,13 @@ At most one pending job per lesson. Lesson ID (primary key), group ID, course ID
 
 ### `comments`
 
-Opaque ID, group ID, nullable post ID, nullable practice block ID, author ID, nullable parent comment ID, plain body where applicable, created/updated timestamps, and a kind: `text`, `reading_response`, `fill_response`, or `practice_response`. A check constraint requires exactly one of post ID and block ID, so every comment belongs to one discussion target: a post or a practice block. Since migration `0015_lesson_documents.sql`, the block ID references `course_practices` and cascades from it. Parent comments must belong to the same target and themselves have no parent. Comments are indexed by `(group_id, post_id, parent_comment_id, created_at, id)` and `(group_id, block_id, parent_comment_id, created_at, id)`.
+Opaque ID, group ID, nullable post ID, nullable practice block ID, author ID, nullable parent comment ID, plain body where applicable, created/updated timestamps, and a kind: `text`, `reading_response`, `fill_response`, or `practice_response`. A check constraint requires exactly one of post ID and block ID, so every comment belongs to one discussion target: a post or a practice block. Since migration `0015_lesson_documents.sql`, the block ID references `course_practices` and cascades from it. Parent comments must belong to the same target and themselves have no parent. Comments are indexed by `(group_id, post_id, parent_comment_id, created_at, id)` and `(group_id, block_id, parent_comment_id, created_at, id)`. Since migration `0022_course_practice_progress.sql` no comment has a block ID and the API writes no `practice_response` comments; the column, kind, and constraint stay only because removing them would need another rebuild of `comments`.
 
 Migration `0011_course_practice_threads.sql` rebuilds `comments` with the block target and the new kind, and `0015_lesson_documents.sql` rebuilds it again to point the block target at `course_practices`. Because dropping a parent table can fire cascades, both migrations restore comments, response items, and pins from constraint-free copies after the rebuild.
 
 ### `comment_response_items`
 
-For structured reading, fill, and practice answers: comment ID, ordered position, optional prompt/question snapshot, answer text, skipped flag, and optional positive-match result. Snapshots preserve understandable historical answers if an author later edits questions or prompts. Practice answer sets always snapshot each item prompt and never store a match result; the learner's answer check is not persisted. A fill-in practice item answered blank by blank stores its blanks as one answer joined by ` · `.
+For structured reading and fill answers (and, before migration `0022`, practice answers): comment ID, ordered position, optional prompt/question snapshot, answer text, skipped flag, and optional positive-match result. Snapshots preserve understandable historical answers if an author later edits questions or prompts. Practice answer sets always snapshot each item prompt and never store a match result; the learner's answer check is not persisted. A fill-in practice item answered blank by blank stores its blanks as one answer joined by ` · `.
 
 ### Post pin
 
@@ -141,8 +149,8 @@ Opaque ID, group ID, recipient ID, actor ID, event type, optional post ID, optio
 - Comments are hard-deleted with replies, response items, and reactions.
 - Notifications survive target deletion.
 - Courses are never hard-deleted. Archiving sets status `archived`; restoring returns the course to `draft` so the owner chooses again when to publish. Archived courses keep their cover image. A course post stays when its course is archived and is deleted like any other post.
-- Lessons are hard-deleted with their documents, practice anchors, practice answers, replies, response items, the reactions on them, and their lesson images (rows and R2 objects). The API deletes the reactions and comments explicitly in the same batch because reaction targets have no foreign key, and deletes the R2 objects after the batch.
-- Removing a block from a lesson is an ordinary draft edit. A practice removed from both documents loses its anchor and thread at the next publish or discard, after the editor warns the owner; images referenced by neither document are cleaned up as described under `course_media`.
+- Lessons are hard-deleted with their documents, practice anchors, practice progress, and their lesson images (rows and R2 objects). The API deletes the R2 objects after the batch.
+- Removing a block from a lesson is an ordinary draft edit. A practice removed from both documents loses its anchor and progress at the next publish or discard, after the editor warns the owner when anyone has started it; images referenced by neither document are cleaned up as described under `course_media`.
 - Member departure never deletes authored content or reactions. Contributor departure or removal keeps their lessons and updated-by attribution. Lesson completions and positions also stay and are hidden while the member is not active.
 - Deleting a lesson deletes its completions and positions.
 - Records and images otherwise remain indefinitely.
@@ -150,6 +158,6 @@ Opaque ID, group ID, recipient ID, actor ID, event type, optional post ID, optio
 
 ## Indexing and isolation
 
-Index the feed by `(group_id, created_at, id)`, memberships by user and state, pending membership requests by group/state, profile posts by `(group_id, author_id, created_at, id)`, comments by post/parent/order and by block/parent/order, reactions by target, the course library by `(group_id, created_at, id)`, lessons by `(group_id, course_id, position)`, practice anchors by `(group_id, lesson_id)`, lesson media by `(group_id, lesson_id, created_at)`, course contributors by `(group_id, course_id, state)`, lesson completions by `(group_id, course_id, user_id)`, and notifications by `(recipient_id, group_id, created_at)` plus `(recipient_id, created_at)` for restricted status lookup.
+Index the feed by `(group_id, created_at, id)`, memberships by user and state, pending membership requests by group/state, profile posts by `(group_id, author_id, created_at, id)`, comments by post/parent/order and by block/parent/order, reactions by target, the course library by `(group_id, created_at, id)`, lessons by `(group_id, course_id, position)`, practice anchors and practice progress by `(group_id, lesson_id)`, lesson media by `(group_id, lesson_id, created_at)`, course contributors by `(group_id, course_id, state)`, lesson completions by `(group_id, course_id, user_id)`, and notifications by `(recipient_id, group_id, created_at)` plus `(recipient_id, created_at)` for restricted status lookup.
 
 Every tenant-owned table includes or can unambiguously derive `group_id`. Favor explicit `group_id` when it makes authorization and indexes safer, even if technically redundant.

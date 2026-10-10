@@ -6,7 +6,7 @@ import { join } from "node:path";
 import {
   collectLessonWords, findPublishProblems, flattenToSteps, lessonDocumentSchema, walkLessonBlocks, type LessonDocument,
 } from "../../../packages/contracts/src/lessonDocument";
-import { countBlanks, practicePayloadSchema } from "../../../packages/contracts/src/index";
+import { countBlanks, practicePayloadSchema, slugify } from "../../../packages/contracts/src/index";
 import { authoredDocument } from "./normalize";
 
 type Json = any;
@@ -76,6 +76,14 @@ function check(path: string): boolean {
 
 const q = (value: unknown) => value == null ? "NULL" : typeof value === "number" ? String(value) : `'${String(value).replace(/'/g, "''")}'`;
 
+// The title's slug, or the slug with a short ID suffix when another row in the scope already uses it (docs/courses.md#readable-urls).
+// Upserts never change an existing row's slug, so links stay valid when a title is edited.
+const slugSql = (table: "courses" | "course_lessons", scope: [column: string, value: string], id: string, title: string, fallback: string) => {
+  const base = slugify(title) || fallback;
+  const suffixed = `${base.slice(0, 53).replace(/-+$/, "")}-${id.replace(/-/g, "").slice(0, 6)}`;
+  return `(SELECT CASE WHEN EXISTS (SELECT 1 FROM ${table} WHERE ${scope[0]} = ${q(scope[1])} AND slug = ${q(base)} AND id <> ${q(id)}) THEN ${q(suffixed)} ELSE ${q(base)} END)`;
+};
+
 // course.json (or the manifest named on the command line, e.g. course.prod.json): { courseId, groupId, ownerId, positionOffset, create?: { title, summary, level, intendedLearner } }
 function sql(dir: string, manifest: string) {
   const course = JSON.parse(readFileSync(join(dir, manifest), "utf8"));
@@ -83,7 +91,7 @@ function sql(dir: string, manifest: string) {
   const out: string[] = [];
   if (course.create) {
     const c = course.create;
-    out.push(`INSERT OR IGNORE INTO courses (id, group_id, owner_id, title, summary, level, intended_learner, cover_key, status, first_published_at, created_at, updated_at) VALUES (${q(course.courseId)}, ${q(course.groupId)}, ${q(course.ownerId)}, ${q(c.title)}, ${q(c.summary)}, ${q(c.level)}, ${q(c.intendedLearner)}, NULL, 'draft', NULL, ${now}, ${now});`);
+    out.push(`INSERT OR IGNORE INTO courses (id, slug, group_id, owner_id, title, summary, level, intended_learner, cover_key, status, first_published_at, created_at, updated_at) VALUES (${q(course.courseId)}, ${slugSql("courses", ["group_id", course.groupId], course.courseId, c.title, "course")}, ${q(course.groupId)}, ${q(course.ownerId)}, ${q(c.title)}, ${q(c.summary)}, ${q(c.level)}, ${q(c.intendedLearner)}, NULL, 'draft', NULL, ${now}, ${now});`);
   }
   const files = readdirSync(dir).filter((name) => /^\d.*\.json$/.test(name)).sort();
   files.forEach((name, index) => {
@@ -91,7 +99,7 @@ function sql(dir: string, manifest: string) {
     const { file, document } = load(join(dir, name));
     const doc = JSON.stringify(lessonDocumentSchema.parse(document));
     const position = course.positionOffset + index;
-    out.push(`INSERT INTO course_lessons (id, group_id, course_id, title, goal, position, draft_doc, draft_version, published_doc, published_at, created_by, updated_by, created_at, updated_at) VALUES (${q(file.id)}, ${q(course.groupId)}, ${q(course.courseId)}, ${q(file.title)}, ${q(file.goal ?? null)}, ${position}, ${q(doc)}, 1, NULL, NULL, ${q(course.ownerId)}, ${q(course.ownerId)}, ${now}, ${now}) ON CONFLICT(id) DO UPDATE SET title=excluded.title, goal=excluded.goal, position=excluded.position, draft_doc=excluded.draft_doc, draft_version=course_lessons.draft_version+1, updated_by=excluded.updated_by, updated_at=excluded.updated_at;`);
+    out.push(`INSERT INTO course_lessons (id, slug, group_id, course_id, title, goal, position, draft_doc, draft_version, published_doc, published_at, created_by, updated_by, created_at, updated_at) VALUES (${q(file.id)}, ${slugSql("course_lessons", ["course_id", course.courseId], file.id, file.title, "lesson")}, ${q(course.groupId)}, ${q(course.courseId)}, ${q(file.title)}, ${q(file.goal ?? null)}, ${position}, ${q(doc)}, 1, NULL, NULL, ${q(course.ownerId)}, ${q(course.ownerId)}, ${now}, ${now}) ON CONFLICT(id) DO UPDATE SET title=excluded.title, goal=excluded.goal, position=excluded.position, draft_doc=excluded.draft_doc, draft_version=course_lessons.draft_version+1, updated_by=excluded.updated_by, updated_at=excluded.updated_at;`);
     for (const { block } of walkLessonBlocks(lessonDocumentSchema.parse(document).blocks)) {
       if (block.type === "practice") out.push(`INSERT OR IGNORE INTO course_practices (id, group_id, course_id, lesson_id, created_at) VALUES (${q(block.id)}, ${q(course.groupId)}, ${q(course.courseId)}, ${q(file.id)}, ${now});`);
     }

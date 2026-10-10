@@ -1,0 +1,8 @@
+{
+  "model": "@cf/black-forest-labs/flux-2-klein-9b",
+  "width": 1024,
+  "height": 768,
+  "refs": [],
+  "prompt": "Flat 2D cartoon illustration for a children's-book-style language course. Clean uniform dark-brown outlines, flat colours with at most one soft shadow tone, simple rounded shapes, simple friendly faces with small dot eyes, warm muted palette of cream, sage green, mustard, terracotta and dusty blue. Uncluttered composition, plain shapes, no textures. No text, no letters, no logos, no speech bubbles, no photorealism, no 3D rendering. Establishing shot of an empty location, no people. A small, cosy kitchen in a Dutch city flat. On the left a short counter with sage-green cabinets, white square wall tiles, an electric kettle and a small coffee machine. On the right a large window with a white frame, a few potted herbs on the sill, and a view of red-brick terraced houses across the street. In front of the window a small square light-wood table with two wooden chairs facing each other. Pale cream walls, warm morning light.",
+  "seed": 1868486060
+}

@@ -23,7 +23,7 @@ import { practiceFromBlock, PracticeSummary } from "./PracticeBlock";
 const LessonEditor = lazy(() => import("../LessonEditor/LessonEditor"));
 
 // The owner publishes; contributors edit every lesson draft and the details of unpublished lessons.
-type Scope = { groupId: string; courseId: string; accountId: string; owner: boolean; contribute: boolean; removable: boolean };
+type Scope = { groupId: string; courseId: string; courseSlug: string; accountId: string; owner: boolean; contribute: boolean; removable: boolean };
 
 const lessonsPath = ({ groupId, courseId }: Scope) => `/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/lessons`;
 const swap = (ids: string[], index: number, offset: -1 | 1) => {
@@ -42,8 +42,8 @@ function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" 
 }
 
 // Readers see the published document. Editors of a lesson that is not published yet see its draft, marked as a preview. A practice
-// shows only its first prompts; its answer set and thread open in a dialog. New words are not shown in the text: the lesson's
-// words sit in a panel beside it, where the words of the blocks on screen are highlighted.
+// shows only its first prompts; its answer set opens in a dialog that, beside the words panel, sits over the text. New words are
+// not shown in the text: the lesson's words sit in a panel beside it, where the words of the blocks on screen are highlighted.
 function LessonBody({ scope, lesson }: { scope: Scope; lesson: CourseLesson }) {
   const { t } = useTranslation();
   const document = playableDocument(lesson);
@@ -60,7 +60,8 @@ function LessonBody({ scope, lesson }: { scope: Scope; lesson: CourseLesson }) {
     <div ref={reading} className={styles.body}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
       <LessonDocument document={document} anchored vocabulary={false} renderPractice={(block) =>
-        <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.answerCounts)} />} />
+        <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.practiceProgress)}
+          published={lesson.document !== null} dock={hasWords ? reading : undefined} />} />
     </div>
     {hasWords && <LessonWords steps={steps} active={active} panelRef={panel} />}
   </div></SpeechScope></WordBookmarkScope>;
@@ -109,7 +110,7 @@ function LessonRow({ scope, summary, number, outline, completed, position }: {
     },
   });
   return <li className={styles.lesson}>
-    <Link className={styles.lessonLink} to="/groups/$groupId/courses/$courseId/lessons/$lessonId" params={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: summary.id }}
+    <Link className={styles.lessonLink} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug: scope.courseSlug, lessonSlug: summary.slug }}
       aria-label={t("courses.lessons.open", { number, title: summary.title })}>
       <span className={styles.lessonNumber}>{completed ? <span className={styles.check} role="img" aria-label={t("courses.progress.completed")}>✓</span> : number}</span>
       <span className={styles.lessonCopy}>
@@ -145,7 +146,7 @@ function LessonRow({ scope, summary, number, outline, completed, position }: {
 
 const lessonScope = (groupId: string, courseId: string, accountId: string, detail: CourseDetailResponse): Scope => {
   const { permissions } = detail.course;
-  return { groupId, courseId, accountId, owner: permissions.edit, contribute: permissions.contribute, removable: permissions.removeContent };
+  return { groupId, courseId, courseSlug: detail.course.slug, accountId, owner: permissions.edit, contribute: permissions.contribute, removable: permissions.removeContent };
 };
 
 // The course page's lesson list. Each lesson's content lives on its own page.
@@ -170,7 +171,7 @@ export function CourseLessons({ groupId, courseId, accountId, detail }: { groupI
       queryClient.setQueryData(lessonQueryOptions(groupId, courseId, data.lesson.id).queryKey, data);
       await queryClient.invalidateQueries({ queryKey: courseQueryOptions(groupId, courseId).queryKey });
       setAddOpen(false);
-      await navigate({ to: "/groups/$groupId/courses/$courseId/lessons/$lessonId", params: { groupId, courseId, lessonId: data.lesson.id } });
+      await navigate({ to: "/courses/$courseSlug/lessons/$lessonSlug", params: { courseSlug: detail.course.slug, lessonSlug: data.lesson.slug } });
     },
   });
   const addAction = scope.contribute && <Button onClick={() => { create.reset(); setAddOpen(true); }}>{t("courses.lessons.add")}</Button>;
@@ -217,7 +218,7 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
   const playable = data ? lessonSteps(data).length > 0 : false;
   const previous = outline[index - 1]; const next = outline[index + 1];
   const pagerLink = (target: CourseLessonSummary, label: string, className: string) =>
-    <Link className={className} to="/groups/$groupId/courses/$courseId/lessons/$lessonId" params={{ groupId, courseId, lessonId: target.id }}>{t(label, { title: target.title })}</Link>;
+    <Link className={className} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug: detail.course.slug, lessonSlug: target.slug }}>{t(label, { title: target.title })}</Link>;
   return <article className={styles.page} aria-labelledby="lesson-title">
     <header className={styles.lessonHeader}>
       <p className={styles.eyebrow}>{t("courses.lessons.number", { number })}</p>

@@ -1,0 +1,8 @@
+{
+  "model": "@cf/black-forest-labs/flux-2-klein-9b",
+  "width": 768,
+  "height": 1024,
+  "refs": [],
+  "prompt": "Flat 2D cartoon illustration for a children's-book-style language course. Clean uniform dark-brown outlines, flat colours with at most one soft shadow tone, simple rounded shapes, simple friendly faces with small dot eyes, warm muted palette of cream, sage green, mustard, terracotta and dusty blue. Uncluttered composition, plain shapes, no textures. No text, no letters, no logos, no speech bubbles, no photorealism, no 3D rendering. Character reference sheet: one single full-body figure standing, front view, relaxed friendly pose, arms by the sides, centred on a plain off-white background, nothing else in the picture. Noor, a 25-year-old Dutch woman: fair skin with light freckles, blue eyes, straight light-blonde hair in a high ponytail, round tortoiseshell glasses, tall and slender. Outfit: Long-sleeved Breton top with white and sage-green horizontal stripes, black jeans, dark-green canvas sneakers.",
+  "seed": 1503464790
+}

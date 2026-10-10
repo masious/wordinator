@@ -40,10 +40,10 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 
 ## C10c — Authoring
 
-- [ ] Vocabulary form: Pronunciation (IPA) field with validation message, and the word's audio status (ready with a play button, pending, failed) from `draftSpeech`.
-- [ ] Course details: cast editor listing the course's speakers (from its lessons' dialogues) with a voice select per speaker and a sample button per voice.
-- [ ] Tests: RTL for the IPA field, status display, and cast editor; Playwright for setting an IPA and seeing the status change after the job runs (with the worker stubbed).
-- [ ] Docs: `docs/courses.md` vocabulary form and course details, `docs/user-flows.md`, `docs/testing.md`, `docs/speech.md` and `docs/roadmap.md` status.
+- [x] Vocabulary form: Pronunciation (IPA) field with validation message, and the word's audio status (ready with a play button, pending, failed) from `draftSpeech`.
+- [x] Course details: cast editor listing the course's speakers (from its lessons' dialogues) with a voice select per speaker and a sample button per voice.
+- [x] Tests: RTL for the IPA field, status display, and cast editor; Playwright for setting an IPA and seeing the status change after the job runs (with the worker stubbed).
+- [x] Docs: `docs/courses.md` vocabulary form and course details, `docs/user-flows.md`, `docs/testing.md`, `docs/speech.md` and `docs/roadmap.md` status.
 
 ## Release
 

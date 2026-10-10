@@ -1,27 +1,27 @@
 import {
-  COMMENT_BODY_MAX, commentResponseSchema, countBlanks, okResponseSchema, practiceCheckResponseSchema, type PracticeCheckResponse, RESPONSE_ANSWER_MAX, splitPracticePayload, type DiscussionItem, type LearnerPracticePayload, type PracticeReference,
+  countBlanks, practiceCheckResponseSchema, type PracticeCheckResponse, type PracticeProgress, practiceProgressResponseSchema, RESPONSE_ANSWER_MAX, splitPracticePayload, type LearnerPracticePayload,
 } from "@wordinator/contracts";
 import { readPracticeBlock, type LessonBlockOf } from "@wordinator/contracts/lesson-document";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { type FormEvent, type KeyboardEvent, type ReactNode, type RefObject, useEffect, useRef, useState } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { type FormEvent, type KeyboardEvent, type ReactNode, type RefObject, useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { apiRequest, lessonQueryOptions, practiceDiscussionQueryOptions } from "../../api";
+import { apiRequest, lessonQueryOptions } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
-import { AdaptiveDialog, Avatar, Button, EmptyState, ErrorState, LabelChip, LoadingState, TextAreaField, TextField } from "../../ui";
-import ReactionBar from "../ReactionBar/ReactionBar";
+import { AdaptiveDialog, Button, TextAreaField, TextField } from "../../ui";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import styles from "./PracticeBlock.module.css";
 
-// A practice as readers see it: its block ID (the thread target), the prompts without authors' versions, and the answer count.
-export type Practice = { id: string; payload: LearnerPracticePayload; answerCount: number };
-export const practiceFromBlock = (block: LessonBlockOf<"practice">, answerCounts: Record<string, number>): Practice => ({
-  id: block.id, payload: splitPracticePayload(readPracticeBlock(block)).payload, answerCount: answerCounts[block.id] ?? 0,
+// A practice as readers see it: its block ID, the prompts without authors' versions, and who has answered how much of it.
+export type Practice = { id: string; payload: LearnerPracticePayload; progress: PracticeProgress };
+const NO_PROGRESS: PracticeProgress = { done: 0, started: 0, answered: null };
+export const practiceFromBlock = (block: LessonBlockOf<"practice">, progress: Record<string, PracticeProgress>): Practice => ({
+  id: block.id, payload: splitPracticePayload(readPracticeBlock(block)).payload, progress: progress[block.id] ?? NO_PROGRESS,
 });
 export type PracticeScope = { groupId: string; courseId: string; lessonId: string; accountId: string };
 type AnswerDraft = { version: 1; answers: string[] };
 
-// Answer and reply drafts follow the shared draft-key rules: account, group, draft kind, and target.
-export const practiceDraftKey = (accountId: string, groupId: string, kind: "practice-answer" | "reply", targetId: string) => `wordinator:draft:v1:${accountId}:${groupId}:${kind}:${targetId}`;
+// Answer drafts follow the shared draft-key rules: account, group, draft kind, and target. They are the only copy of the answers.
+export const practiceDraftKey = (accountId: string, groupId: string, kind: "practice-answer", targetId: string) => `wordinator:draft:v1:${accountId}:${groupId}:${kind}:${targetId}`;
 export function readAnswers(key: string, count: number): string[] {
   try {
     const value = JSON.parse(localStorage.getItem(key) ?? "null") as AnswerDraft | null;
@@ -33,13 +33,25 @@ export function storeAnswers(key: string, answers: string[]) {
   if (answers.some(Boolean)) localStorage.setItem(key, JSON.stringify({ version: 1, answers } satisfies AnswerDraft));
   else localStorage.removeItem(key);
 }
-function useStoredText(key: string) {
-  const [value, setValue] = useState(() => { try { return localStorage.getItem(key) ?? ""; } catch { return ""; } });
-  useEffect(() => { if (value) localStorage.setItem(key, value); else localStorage.removeItem(key); }, [key, value]);
-  return [value, setValue] as const;
-}
+export const countAnswered = (answers: readonly string[]) => answers.filter((answer) => answer.trim()).length;
 
 export const blockPath = (scope: PracticeScope, blockId: string) => `/api/groups/${encodeURIComponent(scope.groupId)}/courses/${encodeURIComponent(scope.courseId)}/lessons/${encodeURIComponent(scope.lessonId)}/blocks/${encodeURIComponent(blockId)}`;
+
+// Saves how many questions of a practice the viewer has answered, read from the local draft; the answers never leave the device.
+// The server keeps the highest count, so nothing is sent when the count is not above the known one. Previews record nothing.
+export function usePracticeProgress(scope: PracticeScope, published: boolean) {
+  const queryClient = useQueryClient();
+  const { accountId, groupId, courseId, lessonId } = scope;
+  return useCallback((practice: Practice) => {
+    if (!published) return;
+    const answered = countAnswered(readAnswers(practiceDraftKey(accountId, groupId, "practice-answer", practice.id), practice.payload.items.length));
+    const known = practice.progress.answered;
+    if (known === null ? answered === 0 : answered <= known) return;
+    const path = blockPath({ accountId, groupId, courseId, lessonId }, practice.id);
+    void apiRequest(`${path}/progress`, practiceProgressResponseSchema, { method: "PUT", body: JSON.stringify({ answered }) })
+      .then(() => queryClient.invalidateQueries({ queryKey: lessonQueryOptions(groupId, courseId, lessonId).queryKey }), () => undefined);
+  }, [accountId, courseId, groupId, lessonId, published, queryClient]);
+}
 
 // A fill-in item with several blanks is answered blank by blank. The blanks travel as one item answer joined by the separator
 // the author's version uses, so answer sets keep one entry per item.
@@ -110,7 +122,7 @@ export function AnswerField({ scope, blockId, item, prompt, label, description, 
   </div>;
 }
 
-// Learners see the instruction, optional passage, and prompts. Authors' versions arrive only with the revealed thread.
+// Learners see the instruction, optional passage, and prompts, never the authors' versions.
 // The answer dialog leaves the prompts out, because the answer set labels each field with its prompt.
 export function PracticeContent({ block, prompts = true }: { block: Practice; prompts?: boolean }) {
   const { t } = useTranslation();
@@ -129,15 +141,29 @@ export function PracticeContent({ block, prompts = true }: { block: Practice; pr
 // The lesson page lists at most this many prompts of a practice; the answer dialog shows them all.
 export const SUMMARY_PROMPTS = 3;
 
-// A practice on the lesson page: its instruction and first prompts, and an Answer action that opens the answer set, the
-// concealed thread, and any reading passage in a dialog.
-export function PracticeSummary({ scope, block }: { scope: PracticeScope; block: Practice }) {
+// The viewer's own state: done once their saved count reaches the current number of questions, otherwise what is left.
+function ownStatus(practice: Practice) {
+  const total = practice.payload.items.length;
+  return { done: (practice.progress.answered ?? 0) >= total, left: Math.max(total - (practice.progress.answered ?? 0), 0) };
+}
+
+// A practice on the lesson page: its instruction and first prompts, how many people are done and how many questions the viewer has
+// left, and an Answer action that opens the answer set and any reading passage in a dialog. `dock` keeps the dialog over the
+// reading column so the lesson's New words panel stays usable beside it.
+export function PracticeSummary({ scope, block, published, dock }: { scope: PracticeScope; block: Practice; published: boolean; dock?: RefObject<HTMLElement | null> }) {
   const { t } = useTranslation(); const [answering, setAnswering] = useState(false);
-  const { payload } = block; const more = payload.items.length - SUMMARY_PROMPTS;
+  const saveProgress = usePracticeProgress(scope, published);
+  const { payload } = block; const more = payload.items.length - SUMMARY_PROMPTS; const own = ownStatus(block);
+  // Closing the dialog in any way saves progress, exactly like its own button.
+  const close = () => { saveProgress(block); setAnswering(false); };
   return <div className={`${styles.practice} ${styles.summary}`}>
     <p className={styles.summaryHeader}>
       <span className={styles.eyebrow}>{t("courses.practice.label")}</span>
-      <span className={styles.summaryStatus}>{t("courses.practice.answerCount", { count: block.answerCount })}</span>
+      <span className={styles.summaryStatus}>
+        {t("courses.practice.peopleDone", { count: block.progress.done })}
+        {" · "}
+        {own.done ? <span className={styles.ownDone}>{t("courses.practice.youAreDone")}</span> : t("courses.practice.questionsLeft", { count: own.left })}
+      </span>
     </p>
     <p className={styles.instruction}><PlainText>{payload.instruction}</PlainText></p>
     <div className={styles.summaryBody}>
@@ -147,139 +173,30 @@ export function PracticeSummary({ scope, block }: { scope: PracticeScope; block:
       </div>
       <Button className={styles.summaryAnswer} onClick={() => setAnswering(true)}>{t("courses.practice.answer")}</Button>
     </div>
-    <AdaptiveDialog opened={answering} onClose={() => setAnswering(false)} title={t("courses.practice.dialogTitle")}>
+    <AdaptiveDialog opened={answering} onClose={close} title={t("courses.practice.dialogTitle")} dock={dock}>
       {answering && <div className={styles.dialogBody}>
         <PracticeContent block={block} prompts={false} />
-        <PracticeThread scope={scope} block={block} />
+        <AnswerSetComposer scope={scope} block={block} onDone={close} />
       </div>}
     </AdaptiveDialog>
   </div>;
 }
 
+// The answers stay in the local draft so the learner can come back and change them. Done (or Finish later, while some questions are
+// blank) closes the dialog, which saves the answered count.
 function AnswerSetComposer({ scope, block, onDone }: { scope: PracticeScope; block: Practice; onDone: () => void }) {
   const { t } = useTranslation();
   const key = practiceDraftKey(scope.accountId, scope.groupId, "practice-answer", block.id);
   const prompts = block.payload.items.map((item) => item.prompt);
   const [answers, setAnswers] = useState(() => readAnswers(key, prompts.length));
   useEffect(() => storeAnswers(key, answers), [answers, key]);
-  const publish = useMutation({
-    mutationFn: () => apiRequest(`${blockPath(scope, block.id)}/comments`, commentResponseSchema, { method: "POST", body: JSON.stringify({ kind: "practice_response", answers }) }),
-    onSuccess: () => { localStorage.removeItem(key); setAnswers(prompts.map(() => "")); onDone(); },
-  });
-  const submit = (event: FormEvent) => { event.preventDefault(); publish.mutate(); };
+  const complete = countAnswered(answers) === prompts.length;
+  const submit = (event: FormEvent) => { event.preventDefault(); onDone(); };
   return <form className={styles.composer} onSubmit={submit} aria-label={t("courses.practice.yourAnswers")}>
     <h4>{t("courses.practice.yourAnswers")}</h4>
     {prompts.map((prompt, index) => <AnswerField key={index} scope={scope} blockId={block.id} item={index} prompt={prompt} label={t("courses.practice.answerLabel", { number: index + 1, prompt })} value={answers[index] ?? ""} minRows={1}
       onChange={(text) => setAnswers((value) => value.map((entry, current) => current === index ? text : entry))} />)}
     <p className={styles.help}>{t("courses.practice.blankHelp")} {t("courses.practice.enterHelp")}</p>
-    <CourseErrorMessage error={publish.error} />
-    <div className={styles.actions}><Button type="submit" loading={publish.isPending}>{t("courses.practice.publish")}</Button></div>
+    <div className={styles.actions}><Button type="submit">{complete ? t("courses.practice.done") : t("courses.practice.finishLater")}</Button></div>
   </form>;
-}
-
-function ReplyComposer({ scope, block, parentId, onDone }: { scope: PracticeScope; block: Practice; parentId: string; onDone: () => void }) {
-  const { t } = useTranslation();
-  const [body, setBody] = useStoredText(practiceDraftKey(scope.accountId, scope.groupId, "reply", parentId));
-  const publish = useMutation({
-    mutationFn: () => apiRequest(`${blockPath(scope, block.id)}/comments`, commentResponseSchema, { method: "POST", body: JSON.stringify({ kind: "text", body, parentId }) }),
-    onSuccess: () => { setBody(""); onDone(); },
-  });
-  return <form className={styles.composer} onSubmit={(event) => { event.preventDefault(); publish.mutate(); }}>
-    <TextAreaField label={t("discussion.reply")} value={body} maxLength={COMMENT_BODY_MAX} autosize minRows={2} required onChange={(event) => setBody(event.currentTarget.value)} />
-    <CourseErrorMessage error={publish.error} />
-    <div className={styles.actions}><Button type="submit" loading={publish.isPending} disabled={!body.trim()}>{t("discussion.publishReply")}</Button></div>
-  </form>;
-}
-
-function EditEntry({ scope, block, item, onDone }: { scope: PracticeScope; block: Practice; item: DiscussionItem; onDone: () => void }) {
-  const { t } = useTranslation();
-  const [body, setBody] = useState(item.body ?? ""); const [answers, setAnswers] = useState(item.responseItems.map((entry) => entry.answer));
-  const save = useMutation({
-    mutationFn: () => apiRequest(`${blockPath(scope, block.id)}/comments/${encodeURIComponent(item.id)}`, commentResponseSchema, {
-      method: "PATCH", body: JSON.stringify(item.kind === "text" ? { kind: "text", body } : { kind: "practice_response", answers }),
-    }),
-    onSuccess: onDone,
-  });
-  return <form className={styles.composer} onSubmit={(event) => { event.preventDefault(); save.mutate(); }}>
-    {item.kind === "text"
-      ? <TextAreaField label={t("discussion.response")} value={body} maxLength={COMMENT_BODY_MAX} autosize minRows={2} required onChange={(event) => setBody(event.currentTarget.value)} />
-      : item.responseItems.map((entry, index) => <TextAreaField key={entry.position} label={t("courses.practice.answerLabel", { number: index + 1, prompt: entry.prompt ?? "" })} value={answers[index]} maxLength={RESPONSE_ANSWER_MAX} autosize minRows={1}
-        onChange={(event) => { const text = event.currentTarget.value; setAnswers((value) => value.map((answer, current) => current === index ? text : answer)); }} />)}
-    <CourseErrorMessage error={save.error} />
-    <div className={styles.actions}><Button variant="quiet" onClick={onDone}>{t("common.cancel")}</Button><Button type="submit" loading={save.isPending}>{t("common.save")}</Button></div>
-  </form>;
-}
-
-function ThreadEntry({ scope, block, item, quickReactions, refresh, reply = false }: {
-  scope: PracticeScope; block: Practice; item: DiscussionItem; quickReactions: string[]; refresh: () => void; reply?: boolean;
-}) {
-  const { t } = useTranslation(); const [replying, setReplying] = useState(false); const [editing, setEditing] = useState(false);
-  const entryPath = `${blockPath(scope, block.id)}/comments/${encodeURIComponent(item.id)}`;
-  const remove = useMutation({ mutationFn: () => apiRequest(entryPath, okResponseSchema, { method: "DELETE" }), onSuccess: refresh });
-  return <article id={`comment-${item.id}`} className={reply ? styles.reply : styles.entry}>
-    <header className={styles.entryHeader}>
-      <span className={styles.author}><Avatar name={item.author.displayName} />{item.author.displayName}</span>
-      <span className={styles.meta}>{new Date(item.createdAt).toLocaleString()} {item.edited && t("discussion.edited")}</span>
-    </header>
-    {editing ? <EditEntry scope={scope} block={block} item={item} onDone={() => { setEditing(false); refresh(); }} />
-      : item.kind === "text" ? <p className={styles.body}><PlainText>{item.body ?? ""}</PlainText></p>
-      : <dl className={styles.answerSet}>{item.responseItems.map((entry) => <div key={entry.position}>
-        <dt><PlainText>{entry.prompt ?? ""}</PlainText></dt>
-        <dd>{entry.skipped ? <span className={styles.muted}>{t("discussion.noAnswer")}</span> : <PlainText>{entry.answer}</PlainText>}</dd>
-      </div>)}</dl>}
-    <ReactionBar reactions={item.reactions} quickReactions={quickReactions} path={`${entryPath}/reactions`} onChanged={refresh} />
-    <div className={styles.entryActions}>
-      {item.permissions.reply && <Button variant="quiet" onClick={() => setReplying((value) => !value)}>{t("discussion.reply")}</Button>}
-      {item.permissions.edit && !editing && <Button variant="quiet" onClick={() => setEditing(true)}>{t("common.edit")}</Button>}
-      {item.permissions.delete && <Button variant="quiet" loading={remove.isPending} onClick={() => remove.mutate()}>{t("common.delete")}</Button>}
-    </div>
-    <CourseErrorMessage error={remove.error} />
-    {replying && <ReplyComposer scope={scope} block={block} parentId={item.id} onDone={() => { setReplying(false); refresh(); }} />}
-    {!!item.replies.length && <div className={styles.replies}>{item.replies.map((child) => <ThreadEntry key={child.id} scope={scope} block={block} item={child} quickReactions={quickReactions} refresh={refresh} reply />)}</div>}
-  </article>;
-}
-
-// The author's version is a reference for discussion, never a verdict.
-function ReferenceList({ reference }: { reference: PracticeReference }) {
-  const { t } = useTranslation();
-  return <section className={styles.reference} aria-label={t("courses.practice.reference")}>
-    <h4>{t("courses.practice.reference")}</h4>
-    <p className={styles.help}>{t("courses.practice.referenceHelp")}</p>
-    <ol>{reference.items.map((item, index) => <li key={index}>
-      <span className={styles.referencePrompt}><PlainText>{item.prompt}</PlainText></span>
-      <span>{item.authorsVersion.length ? <PlainText>{item.authorsVersion.map((entry) => entry ?? "—").join(" · ")}</PlainText> : <span className={styles.muted}>{t("courses.practice.noReference")}</span>}</span>
-      {item.note && <span className={styles.note}><PlainText>{item.note}</PlainText></span>}
-    </li>)}</ol>
-  </section>;
-}
-
-// Each visit starts concealed. Revealing fetches the thread and the reference; submitting an answer set reveals it too.
-export function PracticeThread({ scope, block }: { scope: PracticeScope; block: Practice }) {
-  const { t } = useTranslation(); const queryClient = useQueryClient();
-  const [revealed, setRevealed] = useState(false);
-  const discussion = useQuery({ ...practiceDiscussionQueryOptions(scope.groupId, scope.courseId, scope.lessonId, block.id), enabled: revealed });
-  const refresh = () => {
-    void queryClient.invalidateQueries({ queryKey: practiceDiscussionQueryOptions(scope.groupId, scope.courseId, scope.lessonId, block.id).queryKey });
-    void queryClient.invalidateQueries({ queryKey: lessonQueryOptions(scope.groupId, scope.courseId, scope.lessonId).queryKey });
-  };
-  const composer = <AnswerSetComposer scope={scope} block={block} onDone={() => { setRevealed(true); refresh(); }} />;
-  if (!revealed) return <section className={styles.concealed} aria-label={t("courses.practice.threadLabel")}>
-    <LabelChip>{t("discussion.spoilerLabel")}</LabelChip>
-    <h4>{t("discussion.answersHidden", { count: block.answerCount })}</h4>
-    <p className={styles.help}>{t("courses.practice.hiddenHelp")}</p>
-    {composer}
-    <Button variant="secondary" onClick={() => setRevealed(true)}>{t("discussion.reveal")}</Button>
-  </section>;
-  return <section className={styles.thread} aria-label={t("courses.practice.threadLabel")}>
-    <div className={styles.threadHeader}><h4>{t("discussion.answers")}</h4><Button variant="quiet" onClick={() => setRevealed(false)}>{t("discussion.conceal")}</Button></div>
-    {discussion.isPending ? <LoadingState label={t("discussion.loading")} />
-      : discussion.isError ? <ErrorState title={t("discussion.unavailable")} action={<Button onClick={() => void discussion.refetch()}>{t("common.retry")}</Button>} />
-      : <>
-        <ReferenceList reference={discussion.data.reference} />
-        {composer}
-        {discussion.data.items.length
-          ? <div className={styles.entries}>{discussion.data.items.map((item) => <ThreadEntry key={item.id} scope={scope} block={block} item={item} quickReactions={discussion.data.quickReactions} refresh={refresh} />)}</div>
-          : <EmptyState title={t("discussion.emptyTitle")}>{t("discussion.emptyBody")}</EmptyState>}
-      </>}
-  </section>;
 }

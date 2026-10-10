@@ -1,4 +1,4 @@
-import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, practiceDiscussionResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
+import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
 import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkPageSchema } from "@wordinator/contracts/lesson-document";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
@@ -101,6 +101,14 @@ export const coursesQueryOptions = (groupId: string) => infiniteQueryOptions({
   getNextPageParam: (page) => page.nextCursor ?? undefined,
 });
 
+// Course and lesson URL segments are slugs, or legacy IDs that redirect to them. Slugs never change, so the mapping caches for the session.
+export const courseRefQueryOptions = (groupId: string, courseRef: string, lessonRef?: string) => queryOptions({
+  queryKey: ["course-ref", groupId, courseRef, lessonRef ?? null] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/course-refs/${encodeURIComponent(courseRef)}${lessonRef ? `?lesson=${encodeURIComponent(lessonRef)}` : ""}`, courseRefResponseSchema),
+  staleTime: Infinity,
+  retry: false,
+});
+
 export const courseQueryOptions = (groupId: string, courseId: string) => queryOptions({
   queryKey: ["course", groupId, courseId] as const,
   queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}`, courseDetailResponseSchema),
@@ -156,8 +164,3 @@ export const lessonQueryOptions = (groupId: string, courseId: string, lessonId: 
   retry: false,
 });
 
-export const practiceDiscussionQueryOptions = (groupId: string, courseId: string, lessonId: string, blockId: string) => queryOptions({
-  queryKey: ["practice-discussion", groupId, blockId] as const,
-  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}/blocks/${encodeURIComponent(blockId)}/discussion`, practiceDiscussionResponseSchema),
-  retry: false,
-});

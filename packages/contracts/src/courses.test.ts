@@ -2,8 +2,7 @@ import { describe, expect, it } from "vitest";
 import fixture from "../../../test/fixtures/courses/dutch-foundations-part-iii.json";
 import {
   answerMatches, COURSE_DIALOGUE_TURNS_MAX, COURSE_PRACTICE_ITEMS_MAX, COURSE_SPEAKER_MAX, courseBlockContentSchema, courseBlockKindSchema, courseInputSchema,
-  createPracticeCommentRequestSchema, lessonInputSchema, practicePayloadSchema, reorderRequestSchema, splitPracticePayload, updateLessonRequestSchema,
-  updatePracticeCommentRequestSchema,
+  lessonInputSchema, practicePayloadSchema, practiceProgressRequestSchema, reorderRequestSchema, splitPracticePayload, updateLessonRequestSchema,
 } from ".";
 
 const fixtureBlocks = fixture.lessons.flatMap((lesson) => lesson.blocks);
@@ -76,10 +75,10 @@ describe("course block contracts", () => {
     expect(answerMatches({ prompt: "… een … keuken.", authorsVersion: ["Er is", null] }, "Er is")).toBe(false);
   });
 
-  it("accepts practice answer sets and plain-text replies only", () => {
-    expect(createPracticeCommentRequestSchema.parse({ kind: "practice_response", answers: ["Er is", ""] }).kind).toBe("practice_response");
-    expect(createPracticeCommentRequestSchema.safeParse({ kind: "practice_response", answers: [] }).success).toBe(false);
-    expect(createPracticeCommentRequestSchema.safeParse({ kind: "fill_response", answers: ["x"] }).success).toBe(false);
-    expect(updatePracticeCommentRequestSchema.parse({ kind: "text", body: "Goed!", parentId: crypto.randomUUID() })).toEqual({ kind: "text", body: "Goed!" });
+  it("accepts a practice progress count within the practice item limit", () => {
+    expect(practiceProgressRequestSchema.parse({ answered: 0 })).toEqual({ answered: 0 });
+    expect(practiceProgressRequestSchema.parse({ answered: 50 })).toEqual({ answered: 50 });
+    for (const answered of [-1, 1.5, 51, "2"]) expect(practiceProgressRequestSchema.safeParse({ answered }).success).toBe(false);
+    expect(practiceProgressRequestSchema.safeParse({}).success).toBe(false);
   });
 });

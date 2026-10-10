@@ -19,7 +19,7 @@ const notices = { items: [
 function response(body: unknown) { return new Response(JSON.stringify(body), { headers: { "content-type": "application/json" } }); }
 function renderPage() {
   const root = createRootRoute(); const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <NotificationsPage groupId={groupId} /> });
-  const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: [`/groups/${groupId}/notifications`] }) });
+  const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: ["/notifications"] }) });
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } });
   return render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
 }
@@ -39,7 +39,7 @@ describe("Phase 6 notifications UI", () => {
     expect(await screen.findByRole("heading", { name: "Notifications" })).toBeInTheDocument();
     expect(screen.getByText("Lin replied to you.")).toBeVisible();
     expect(screen.getByText("Content no longer available.")).toBeVisible();
-    expect(screen.getByRole("link", { name: /Lin asked to contribute to your course/ })).toHaveAttribute("href", `/groups/${groupId}/courses/70000000-0000-4000-8000-000000000001`);
+    expect(screen.getByRole("link", { name: /Lin asked to contribute to your course/ })).toHaveAttribute("href", `/courses/70000000-0000-4000-8000-000000000001`);
     fireEvent.click(screen.getByRole("button", { name: "Mark all as read" }));
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/notifications/read-all`, expect.objectContaining({ method: "POST" })));
   });

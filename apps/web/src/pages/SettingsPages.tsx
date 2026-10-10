@@ -48,7 +48,7 @@ function useSettingsShell(groupId: string) {
   return { session, shell };
 }
 
-export function AccountSettingsPage({ groupId }: { groupId: string }) {
+export function AccountSettingsPage({ groupId, global = false }: { groupId: string; global?: boolean }) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const { session, shell } = useSettingsShell(groupId);
@@ -81,7 +81,7 @@ export function AccountSettingsPage({ groupId }: { groupId: string }) {
   if (session.data?.status !== "signedIn") return null;
   if (shell.isError || settings.isError) return <GroupFrame groupId={groupId} session={session.data}><ErrorState title={t("settings.unavailable")}>{t("errors.generic")}</ErrorState></GroupFrame>;
 
-  return <SettingsFrame groupId={groupId} session={session.data} section="account" creator={shell.data.group.role === "creator"} eyebrow={t("settings.everyGroup")} intro={t("settings.accountIntro")}>
+  return <SettingsFrame groupId={groupId} session={session.data} section="account" creator={!global && shell.data.group.role === "creator"} eyebrow={global ? t("settings.accountEyebrow") : t("settings.everyGroup")} intro={t("settings.accountIntro")}>
     <div className={styles.settingsGrid}>
       <Surface className={styles.settingsPanel} tone="featured"><SectionHeader title={t("settings.profileTitle")} /><form className={styles.form} onSubmit={(event: FormEvent) => { event.preventDefault(); account.mutate(); }}>
         <TextField label={t("auth.email")} value={settings.data.email} disabled />
@@ -101,7 +101,7 @@ export function AccountSettingsPage({ groupId }: { groupId: string }) {
           <PasswordField label={t("auth.newPassword")} value={newPassword} minLength={6} onChange={(event) => setNewPassword(event.currentTarget.value)} required />
           <div className={styles.actions}><Button loading={password.isPending} type="submit">{t("settings.savePassword")}</Button><Message error={password.error} success={password.isSuccess} /></div>
         </form></Surface>
-        {!!session.data.deletedGroups.length && <Surface className={styles.settingsPanel} tone="inset"><SectionHeader title={t("settings.deletedGroups")} /><div className={styles.deletedList}>{session.data.deletedGroups.map((group) => <div className={styles.deletedRow} key={group.id}><div><strong>{group.name}</strong><span>{t("status.deleted")}</span></div>{group.role === "creator" && <Button variant="secondary" loading={restoreGroup.isPending} onClick={() => restoreGroup.mutate(group.id)}>{t("status.restore")}</Button>}</div>)}</div></Surface>}
+        {!global && !!session.data.deletedGroups.length && <Surface className={styles.settingsPanel} tone="inset"><SectionHeader title={t("settings.deletedGroups")} /><div className={styles.deletedList}>{session.data.deletedGroups.map((group) => <div className={styles.deletedRow} key={group.id}><div><strong>{group.name}</strong><span>{t("status.deleted")}</span></div>{group.role === "creator" && <Button variant="secondary" loading={restoreGroup.isPending} onClick={() => restoreGroup.mutate(group.id)}>{t("status.restore")}</Button>}</div>)}</div></Surface>}
       </div>
     </div>
   </SettingsFrame>;

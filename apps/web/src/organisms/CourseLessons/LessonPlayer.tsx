@@ -1,5 +1,5 @@
 import {
-  commentResponseSchema, courseProgressResponseSchema, lessonPositionResponseSchema, type CourseLessonSummary, type LessonPosition,
+  courseProgressResponseSchema, lessonPositionResponseSchema, type CourseLessonSummary, type LessonPosition,
 } from "@wordinator/contracts";
 import {
   flattenToSteps, lessonStepKey, resolveStepIndex, type CourseLesson, type LessonBlockOf, type LessonStep,
@@ -7,7 +7,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import { apiRequest, courseProgressQueryOptions, lessonQueryOptions, practiceDiscussionQueryOptions } from "../../api";
+import { apiRequest, courseProgressQueryOptions, lessonQueryOptions } from "../../api";
 import { Callout } from "../../molecules/Callout";
 import { PlainText } from "../../molecules/PlainText";
 import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
@@ -18,7 +18,7 @@ import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/Word
 import { runWords, WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import styles from "./LessonPlayer.module.css";
-import { AnswerField, type AnswerSubmit, blockPath, practiceDraftKey, practiceFromBlock, readAnswers, storeAnswers, type Practice } from "./PracticeBlock";
+import { AnswerField, type AnswerSubmit, practiceDraftKey, practiceFromBlock, readAnswers, storeAnswers, usePracticeProgress, type Practice } from "./PracticeBlock";
 
 // Readers play the published document. Editors preview the draft of a lesson that is not published yet; previews never count.
 export const playableDocument = (lesson: CourseLesson) => lesson.document ?? lesson.draft?.document ?? null;
@@ -57,33 +57,16 @@ export function QuestionPrompt({ block, item }: { block: Practice; item: number 
 }
 
 // Answers share the practice block's local draft, so a set started here can be finished in the lesson view and the reverse.
-function QuestionStep({ scope, lessonId, block, item, answers, onAnswer, shared, onShared, onNext, submitRef }: {
-  scope: PlayerScope; lessonId: string; block: Practice; item: number; answers: string[]; onAnswer: (value: string) => void; shared: boolean; onShared: () => void;
+function QuestionStep({ scope, lessonId, block, item, answers, onAnswer, onNext, submitRef }: {
+  scope: PlayerScope; lessonId: string; block: Practice; item: number; answers: string[]; onAnswer: (value: string) => void;
   onNext: () => void; submitRef: AnswerSubmit;
 }) {
-  const { t } = useTranslation(); const queryClient = useQueryClient();
-  const { payload } = block; const last = item === payload.items.length - 1;
-  const share = useMutation({
-    mutationFn: () => apiRequest(`${blockPath({ ...scope, lessonId }, block.id)}/comments`, commentResponseSchema, { method: "POST", body: JSON.stringify({ kind: "practice_response", answers }) }),
-    onSuccess: async () => {
-      onShared();
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: lessonQueryOptions(scope.groupId, scope.courseId, lessonId).queryKey }),
-        queryClient.invalidateQueries({ queryKey: practiceDiscussionQueryOptions(scope.groupId, scope.courseId, lessonId, block.id).queryKey }),
-      ]);
-    },
-  });
+  const { t } = useTranslation();
+  const { payload } = block;
   return <div className={styles.question}>
     <QuestionPrompt block={block} item={item} />
-    {shared
-      ? <p className={styles.shared} role="status">{t("courses.player.shared")}</p>
-      : <AnswerField key={item} scope={{ ...scope, lessonId }} blockId={block.id} item={item} prompt={payload.items[item]!.prompt} label={t("courses.player.yourAnswer")} description={t("courses.practice.enterHelp")}
-        value={answers[item] ?? ""} minRows={2} onChange={onAnswer} onAdvance={onNext} submitRef={submitRef} />}
-    {last && !shared && answers.some((entry) => entry.trim()) && <div className={styles.shareRow}>
-      <p className={styles.help}>{t("courses.player.shareHelp")}</p>
-      <Button variant="secondary" loading={share.isPending} onClick={() => share.mutate()}>{t("courses.player.share")}</Button>
-    </div>}
-    <CourseErrorMessage error={share.error} />
+    <AnswerField key={item} scope={{ ...scope, lessonId }} blockId={block.id} item={item} prompt={payload.items[item]!.prompt} label={t("courses.player.yourAnswer")} description={t("courses.practice.enterHelp")}
+      value={answers[item] ?? ""} minRows={2} onChange={onAnswer} onAdvance={onNext} submitRef={submitRef} />
   </div>;
 }
 
@@ -147,11 +130,14 @@ export const opensSection = (steps: readonly LessonStep[], index: number) => {
 };
 
 // One step on its stage. The caller supplies how a practice question is answered; everything else renders the same everywhere.
-export function StepStage({ step, opensSection = false, renderQuestion }: { step: LessonStep; opensSection?: boolean; renderQuestion: (step: QuestionStepOf) => ReactNode }) {
+// A caller that lists the words elsewhere turns off the New words panel below the step.
+export function StepStage({ step, opensSection = false, words = true, renderQuestion }: {
+  step: LessonStep; opensSection?: boolean; words?: boolean; renderQuestion: (step: QuestionStepOf) => ReactNode;
+}) {
   return <div className={styles.stage}>
     {step.heading && (opensSection ? <h3 className={styles.sectionTitle}>{step.heading}</h3> : <p className={styles.section}>{step.heading}</p>)}
     <StepContent step={step} renderQuestion={renderQuestion} />
-    {hasWordsPanel(step) && <NewWords words={step.words} />}
+    {words && hasWordsPanel(step) && <NewWords words={step.words} />}
   </div>;
 }
 
@@ -159,7 +145,7 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
   scope: PlayerScope; lesson: CourseLesson; position: LessonPosition | undefined; next: CourseLessonSummary | undefined; onNext: (lessonId: string) => void; onClose: () => void;
 }) {
   const { t } = useTranslation();
-  // Steps are fixed when the run starts, so a refetch (for example after sharing answers) never moves the reader.
+  // Steps are fixed when the run starts, so a refetch (for example after saving practice progress) never moves the reader.
   const [steps] = useState(() => lessonSteps(lesson));
   const [words] = useState(() => runWords(steps)); const [reviewing, setReviewing] = useState(false);
   // Words of the published document can be bookmarked in the panels and the recap; a preview's cannot.
@@ -183,18 +169,24 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
     if (lesson.published && current) savePosition(lessonStepKey(current));
   }, [index, lesson.published, savePosition, steps]);
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
-  const [shared, setShared] = useState<Record<string, boolean>>({});
   const finished = index >= steps.length; const step = steps[index];
+  // Leaving a question, by moving or by closing the player, saves how many questions of its practice are answered.
+  const saveProgress = usePracticeProgress({ ...scope, lessonId: lesson.id }, lesson.document !== null);
+  const practiceAt = (at: number) => { const current = steps[at]; return current?.kind === "practiceItem" ? practiceFromBlock(current.block, lesson.practiceProgress) : null; };
+  const practiceAtRef = useRef(practiceAt); practiceAtRef.current = practiceAt;
+  const left = useRef(index);
+  useEffect(() => {
+    const practice = practiceAtRef.current(left.current);
+    if (left.current !== index && practice) saveProgress(practice);
+    left.current = index;
+  }, [index, saveProgress]);
+  useEffect(() => () => { const practice = practiceAtRef.current(left.current); if (practice) saveProgress(practice); }, [saveProgress]);
   const draftKey = (practice: Practice) => practiceDraftKey(scope.accountId, scope.groupId, "practice-answer", practice.id);
   const answersFor = (practice: Practice) => answers[practice.id] ?? readAnswers(draftKey(practice), practice.payload.items.length);
   const answer = (practice: Practice, item: number, value: string) => {
     const nextAnswers = answersFor(practice).map((entry, position) => position === item ? value : entry);
     storeAnswers(draftKey(practice), nextAnswers);
     setAnswers((current) => ({ ...current, [practice.id]: nextAnswers }));
-  };
-  const markShared = (practice: Practice) => {
-    storeAnswers(draftKey(practice), []);
-    setShared((current) => ({ ...current, [practice.id]: true }));
   };
   // Next and Enter share one action. On a question with a filled, unchecked answer it shows the check's feedback first; the
   // next press moves on. Enter outside a field or control acts as Next, so pressing it repeatedly walks through the lesson.
@@ -235,10 +227,9 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
         {reviewing && <WordRecap words={words} doneLabel={t("courses.player.backToSummary")} onDone={() => setReviewing(false)} />}
       </>
       : <StepStage key={stageKey(step, index)} step={step} opensSection={opensSection(steps, index)} renderQuestion={(question) => {
-        const practice = practiceFromBlock(question.block, lesson.answerCounts);
+        const practice = practiceFromBlock(question.block, lesson.practiceProgress);
         return <QuestionStep scope={scope} lessonId={lesson.id} block={practice} item={question.itemIndex} answers={answersFor(practice)}
-          onAnswer={(value) => answer(practice, question.itemIndex, value)} shared={shared[practice.id] ?? false} onShared={() => markShared(practice)}
-          onNext={advance} submitRef={answerSubmit} />;
+          onAnswer={(value) => answer(practice, question.itemIndex, value)} onNext={advance} submitRef={answerSubmit} />;
       }} />}
     {!finished && <div ref={nav} className={styles.nav}>
       <Button variant="quiet" disabled={index === 0} onClick={() => setIndex((value) => value - 1)}>{t("common.back")}</Button>

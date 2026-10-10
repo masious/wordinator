@@ -1,13 +1,11 @@
 import { expect, test } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_PASSWORD } from "./global-setup";
+import { signIn } from "./auth";
 
 test("a member publishes, browses, edits, and deletes every Phase 3 post shape", async ({ page }, testInfo) => {
   const prefix = testInfo.project.name;
-  await page.goto("/");
-  await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL);
-  await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD);
-  await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
+  await signIn(page);
+  await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Journal" }).click();
+  await expect(page.getByRole("heading", { name: "Journal", level: 1 })).toBeVisible();
 
   const openComposer = async () => {
     await page.getByRole("button", { name: "Write something…" }).click();
@@ -67,8 +65,7 @@ test("a member publishes, browses, edits, and deletes every Phase 3 post shape",
   await page.getByRole("dialog").getByRole("button", { name: "Delete" }).click();
   await expect(page.getByText(`${prefix} wij … hier`)).toBeHidden();
 
-  await page.getByRole("button", { name: "Account menu" }).click();
-  await page.getByRole("menuitem", { name: "My profile" }).click();
+  await page.reload();
   await expect(page.getByText(sentence)).toBeVisible();
   await expect(page.getByText(question)).toBeVisible();
 });

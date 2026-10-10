@@ -14,7 +14,7 @@ const helper = { id: "10000000-0000-4000-8000-000000000002", displayName: "Bo", 
 const ownerPermissions = { edit: true, publish: true, archive: true, removeContent: true, contribute: true, requestContribution: false, leaveContribution: false, manageContributors: true };
 const readerPermissions = { edit: false, publish: false, archive: false, removeContent: false, contribute: false, requestContribution: true, leaveContribution: false, manageContributors: false };
 const course = (overrides: Record<string, unknown> = {}) => ({
-  id: courseId, groupId, title: "Deutsch für Anfänger", summary: "Erste Schritte\nmit Freunden", level: "A1 → early A2", intendedLearner: null, coverUrl: null,
+  id: courseId, slug: "deutsch-fur-anfanger", groupId, title: "Deutsch für Anfänger", summary: "Erste Schritte\nmit Freunden", level: "A1 → early A2", intendedLearner: null, coverUrl: null,
   status: "draft", owner: { id: ownerId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, speechCast: {}, contribution: null,
   permissions: ownerPermissions, ...overrides,
 });
@@ -70,7 +70,7 @@ describe("Course shell pages", () => {
   it("lists visible courses with draft labels and validates the create form", async () => {
     renderPage("library");
     expect(await screen.findByRole("heading", { name: "Courses", level: 1 })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Deutsch für Anfänger/ })).toHaveAttribute("href", `/groups/${groupId}/courses/${courseId}`);
+    expect(screen.getByRole("link", { name: /Deutsch für Anfänger/ })).toHaveAttribute("href", "/courses/deutsch-fur-anfanger");
     expect(screen.getByText("Draft")).toBeInTheDocument();
     fireEvent.click(screen.getAllByRole("button", { name: "New course" })[0]!);
     const submit = await screen.findByRole("button", { name: "Create draft" });

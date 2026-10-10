@@ -1,5 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_INVITATION_TOKEN, E2E_PASSWORD } from "./global-setup";
+import { expect, test } from "@playwright/test";
+import { registerLearner, signIn } from "./auth";
 import { courseApi, seedLesson, openLesson } from "./lessonSeed";
 
 test("an author writes a rich lesson in the editor, publishes it, and another member reads it", async ({ browser, browserName }, testInfo) => {
@@ -7,13 +7,9 @@ test("an author writes a rich lesson in the editor, publishes it, and another me
   test.fixme(browserName === "chromium", "Coloured word lost after the formatting-toolbar colour menu in Chromium; investigate.");
   test.setTimeout(120_000);
   const suffix = `authoring-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
-  const readerName = `${testInfo.project.name} reader`;
+  const readerName = `reader_${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
   const owner = await (await browser.newContext()).newPage();
   const reader = await (await browser.newContext()).newPage();
-  const signIn = async (page: Page) => {
-    await page.goto("/"); await page.getByLabel("Email").fill(E2E_CREATOR_EMAIL); await page.getByRole("textbox", { name: "Password" }).fill(E2E_PASSWORD); await page.getByRole("button", { name: "Sign in" }).click();
-    await expect(page.getByRole("heading", { name: "Alpha Journal" })).toBeVisible();
-  };
 
   // The course and an empty unpublished lesson come from the API; the journey under test is writing the lesson.
   await signIn(owner);
@@ -21,7 +17,7 @@ test("an author writes a rich lesson in the editor, publishes it, and another me
   const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Schrijven" });
   await api(`/courses/${course.id}/visibility`, { status: "published" });
   await seedLesson(owner, course.id, `${suffix} lesson`, [], { publish: false });
-  const coursePage = `/groups/${E2E_GROUP_ID}/courses/${course.id}`;
+  const coursePage = `/courses/${course.id}`;
 
   await owner.goto(coursePage);
   await openLesson(owner);
@@ -64,13 +60,8 @@ test("an author writes a rich lesson in the editor, publishes it, and another me
   await expect(bar.getByText("Unpublished", { exact: true })).toHaveCount(0);
   await bar.getByRole("button", { name: "Done editing" }).click();
 
-  // A second member joins through the invitation and reads the published lesson with its formatting.
-  await reader.goto(`/invite/${E2E_INVITATION_TOKEN}`);
-  await reader.getByLabel("Display name").fill(readerName); await reader.getByLabel("Email").fill(`${suffix}@e2e.test`); await reader.getByRole("textbox", { name: "Password" }).fill("reader-password");
-  await reader.getByRole("button", { name: "Create account and request access" }).click();
-  await expect(reader.getByText("Waiting for approval")).toBeVisible();
-  const memberships = await api<{ pending: Array<{ id: string; displayName: string }> }>("/memberships");
-  await api(`/memberships/${memberships.pending.find((entry) => entry.displayName === readerName)!.id}`, { decision: "accept" }, "PATCH");
+  // A second learner signs up, sets up their account, and reads the published lesson with its formatting.
+  await registerLearner(reader, `${suffix}@e2e.test`, "reader-password", readerName);
 
   await reader.goto(coursePage);
   await openLesson(reader);

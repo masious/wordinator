@@ -1,8 +1,10 @@
 # Discussions and reactions
 
+> Current scope: discussions live on journal post pages (`/journal/:postId`) in the one global library. Where this document says "group" or "group creator", read "the library" and its administrator (the bootstrap account); see [data-model.md](data-model.md#global-library-migration-state).
+
 ## Discussion structure
 
-A discussion belongs to exactly one target: a post or a course practice block. Every discussion is two levels deep:
+A discussion belongs to exactly one post. Every discussion is two levels deep:
 
 - Top-level comments or answers
 - Direct replies to a top-level item
@@ -57,14 +59,6 @@ The post author and group creator may set or replace one pin through `PUT /api/g
 
 Reaction toggles use an explicit desired `active` state, making retries idempotent. Post and comment payloads group reactions by normalized emoji and include the count, the current member’s state, and group-visible member identities. The three quick reactions come from account settings; valid custom emoji join the same summary.
 
-## Course practice threads
+## Course practices
 
-Each published practice block in a [course](courses.md#practice-answers) has its own answer thread built on the same comments, replies, and reactions.
-
-- Concealment is identical to posts: the thread starts concealed on every visit, shows its count, and is revealed by submitting or by explicit consent. Revealed state is not stored. On the [lesson page](courses.md#lesson-pages) the composer and thread live in the practice's Answer dialog, which starts concealed each time it opens.
-- A top-level answer is one ordered answer set covering every practice item, like a reading answer set. Blank entries render as “No answer”. Each entry snapshots its item prompt, so answers stay understandable after the practice is edited, and edits keep the snapshotted prompts.
-- Replies are plain text, one level deep. Reactions work on answers and replies.
-- There are no pins and nothing in a thread is marked as correct. The learner's private [answer check](courses.md#practice-answers) is never stored or shown to others.
-- The author's version and item notes are delivered with the revealed thread, as a reference for discussion. A learner's [answer check](courses.md#practice-answers) that misses also shows that one item's author's version, without its note.
-- Authors edit their own items; authors and the group creator delete them. Deleting a practice block or its lesson deletes the thread, response items, and reactions. Threads in archived courses cannot change.
-- Practice-thread activity creates no notifications yet; course notifications beyond contributor requests are deferred.
+Course practices have no discussion. Their answer threads were retired on 2026-10-10: answers stay private, and a practice records only how many of its questions each learner has answered. See [practice answers](courses.md#practice-answers).
