@@ -1,0 +1,198 @@
+{
+  "07-a-mijn-dag": {
+    "1": {
+      "location": "sofia-office",
+      "characters": [
+        "sofia",
+        "daan"
+      ],
+      "extras": [
+        "one colleague: a young man with curly red hair, round face and a plain grey sweater, sitting at a desk"
+      ],
+      "action": "Lunchtime in the office. Daan has just come in through the entrance, still holding his black bike helmet in one hand. Sofia sits at her desk by the window eating a sandwich and waves at him; the colleague sits at the desk next to hers, also eating a sandwich."
+    }
+  },
+  "07-b-ik-sta-vroeg-op": {
+    "0": {
+      "location": "noor-kitchen",
+      "characters": [
+        "noor",
+        "sofia"
+      ],
+      "action": "Saturday morning, a messy kitchen: dirty plates, pans and cups piled in and around the sink. Noor, wearing a red-and-white checked kitchen apron over her striped top, stands at the sink with a sponge and smiles. Sofia stands in the front of the picture, very sleepy, hair a bit messy, yawning, still in her clothes from the reference."
+    },
+    "1": {
+      "characters": [
+        "sofia"
+      ],
+      "action": "Sofia sits on the edge of a single bed in a small, simple rented room: a white wardrobe, a small desk with a laptop, a window with a plant, two moving boxes in a corner. She holds a phone to her ear and smiles happily, as if just invited somewhere."
+    }
+  },
+  "08-a-hoe-laat-is-het": {
+    "0": {
+      "characters": [
+        "sofia"
+      ],
+      "extras": [
+        "several travellers in the background walking with bags, all small and simplified"
+      ],
+      "action": "The big, busy main hall of Utrecht Centraal station: a high wavy white roof, plain shop fronts along the sides with blank coloured signs, travellers walking. Sofia runs through the hall towards the viewer, a bit stressed, holding her phone in her hand. Above her hangs one big round white station clock with black hands and no numbers, only twelve thick black hour marks: the long minute hand points exactly at the seventh mark (bottom left, where 7 would be) and the short hour hand points between the eighth and ninth marks, a little past the eighth; it shows twenty-five to nine."
+    },
+    "1": {
+      "text": true,
+      "action": "A clean, flat educational diagram, no people and nothing else in the picture: one big round clock face centred on a plain cream background, numbers 1 to 12 on the dial. The short hour hand points exactly halfway between 8 and 9; the long minute hand points straight down at 6. Around the outside of the dial runs a thick ring split into coloured arcs, and each label appears exactly once, written outside the ring next to its arc: a sage-green arc from 1 to 3 labelled \"over\" (right side, upper); a mustard arc from 4 to 5 labelled \"voor half\" (right side, lower); a short terracotta arc at 6 labelled \"half\" (bottom); a dusty-blue arc from 7 to 8 labelled \"over half\" (left side, lower); a light-green arc from 9 to 11 labelled \"voor\" (left side, upper). Below the clock, in a rounded box: \"half negen\". No other words or numbers anywhere."
+    }
+  },
+  "08-b-een-afspraak-maken": {
+    "0": {
+      "location": "sofia-office",
+      "characters": [
+        "daan",
+        "sofia"
+      ],
+      "action": "Daan sits at his very tidy desk, his paper agenda open in front of him, full of neat small lines, pen in hand, checking a date. Sofia leans over the desk from the other side with a friendly smile, asking him something."
+    },
+    "1": {
+      "location": "sofia-office",
+      "characters": [
+        "sofia"
+      ],
+      "extras": [
+        "a hairdresser shown in a round inset in the top-right corner: a man in his forties with short grey hair and a black salon apron, at a salon counter with a big open appointment book, holding a phone to his ear"
+      ],
+      "action": "Sofia sits at her desk by the window and holds her phone to her ear, talking politely. In the top-right corner, in a round inset framed by a thick outline, the hairdresser in his small salon answers the call."
+    }
+  },
+  "09-a-maandag-dinsdag": {
+    "0": {
+      "location": "noor-kitchen",
+      "characters": [
+        "sofia",
+        "noor"
+      ],
+      "action": "Evening. Sofia and Noor sit at the small square table by the window. A new paper agenda lies open between them on a month page; Noor leans over and points with one finger at a day in the bottom row, Sofia holds a pen and smiles. Two mugs of tea on the table."
+    },
+    "1": {
+      "text": true,
+      "action": "A close-up, seen from above, of an open paper diary lying on a light-wood table, no people. The left page has a small header \"september 2026\" and the right page \"oktober 2026\"; both pages are grids of days. Exactly three short handwritten notes in dark-blue ink, each in its own day box: \"za 19-9 Daan jarig!\" with a small drawn heart on the left page, \"vr 2-10 tentamen Noor\" and \"za 31-10 kamer\" circled in red on the right page. A pen lies next to the diary."
+    }
+  },
+  "09-b-mijn-week": {
+    "0": {
+      "location": "noor-kitchen",
+      "characters": [
+        "sofia",
+        "noor"
+      ],
+      "text": true,
+      "action": "Sofia and Noor sit opposite each other at the small square table by the window, each with her own open paper agenda, comparing their weeks. Sofia's agenda faces the viewer and on the Tuesday line it clearly reads \"Nederlandse les 19.00\"; the other lines are short wavy scribbles. Noor points at her own agenda."
+    },
+    "1": {
+      "characters": [
+        "daan",
+        "sofia",
+        "noor"
+      ],
+      "extras": [
+        "Lotte, a 30-year-old woman with a short brown pixie cut and a dark-red dress",
+        "an elderly woman with grey curls and a lilac cardigan",
+        "a middle-aged man with a bald head and a blue checked shirt"
+      ],
+      "action": "A Dutch birthday party in a cosy living room: chairs and a sofa arranged in a circle, a paper birthday garland of coloured flags (no letters) across the wall, a low table with a cake. Everybody sits in the circle holding coffee cups and small plates with cake. Daan, the birthday boy, stands and shakes Sofia's hand while Noor, next to Sofia, smiles; Lotte sits next to Daan's empty chair."
+    }
+  },
+  "14-a-waar-is-het": {
+    "0": {
+      "location": "sofia-living-room",
+      "text": true,
+      "action": "A clear, tidy educational picture of the furnished room, no people and no boxes. In front of the window stands a potted plant; the round table stands between the sofa and the window; the floor lamp stands next to the sofa; the round mirror hangs on the wall; the grey bin stands behind the open door; a tall plant stands in the empty corner. Small cream label tags with thin pointer lines mark exactly five spots: \"naast\" at the floor lamp, \"tussen\" at the table, \"aan\" at the mirror, \"achter\" at the bin, and \"in de hoek\" at the tall corner plant."
+    },
+    "1": {
+      "location": "sofia-living-room",
+      "characters": [
+        "sofia",
+        "noor",
+        "daan"
+      ],
+      "action": "Moving day chaos: brown cardboard moving boxes everywhere, some open, some stacked. Noor kneels next to the sofa opening a box. Daan bends down and points under the round table, where a brown handbag lies on the floor. Sofia stands in the middle of the room with her hands up, looking around, searching."
+    }
+  },
+  "15-a-mijn-buurt": {
+    "0": {
+      "location": "kanaalstraat",
+      "characters": [
+        "henk",
+        "sofia"
+      ],
+      "action": "Henk and Sofia walk side by side along the pavement towards the viewer, past the bakery and the supermarket; Henk points ahead at the shops, telling her about the street, and Sofia listens with interest. Henk wears a simple brown flat cap with his sweater."
+    },
+    "1": {
+      "characters": [
+        "sofia"
+      ],
+      "extras": [
+        "a library employee: a woman in her fifties with short curly black hair, brown skin, and a teal cardigan, standing behind the desk"
+      ],
+      "action": "Inside a small, cosy neighbourhood library: tall shelves with colourful book spines (no lettering), a reading table with a lamp. At the wooden front desk the library employee smiles and hands Sofia a small plastic library card; Sofia takes it happily."
+    }
+  },
+  "15-b-rechtdoor-en-dan-links": {
+    "0": {
+      "characters": [
+        "noor"
+      ],
+      "extras": [
+        "a few cyclists riding past, small and simplified"
+      ],
+      "action": "A busy crossroads in Lombok, Utrecht: traffic lights, a low brick bridge over a narrow canal, red-brick houses, bicycles everywhere, autumn trees. In the background a big white mosque with a dome and one tall slender minaret. Noor stands on the corner with her phone at her ear, looking around, a bit lost and confused."
+    },
+    "1": {
+      "location": "kanaalstraat",
+      "characters": [
+        "sofia",
+        "noor"
+      ],
+      "extras": [
+        "a tourist: a tall man in his sixties with a white beard, a beige bucket hat, a red rain jacket and a small backpack, holding an unfolded paper map"
+      ],
+      "action": "Three people stand on the pavement in the front of the picture, from left to right: Noor, Sofia, the tourist. Sofia, in the middle, is the one giving directions: she stretches out her right arm and points down the street towards the mosque. Noor stands quietly beside her with her hands at her sides, smiling, not pointing. The tourist holds his unfolded paper map and looks where Sofia points."
+    }
+  },
+  "16-a-met-de-tram-en-de-trein": {
+    "0": {
+      "characters": [
+        "daan",
+        "sofia"
+      ],
+      "text": true,
+      "action": "A platform at Utrecht Centraal station on a grey October morning, under a long modern roof. Daan stands calm and upright with a black laptop bag over his shoulder, waiting; Sofia hurries towards him along the platform, a bit out of breath. A yellow Dutch double-decker intercity train with a dark-blue front arrives. A big blue sign shows the platform number \"7\", and a departure board reads \"8.16 Amsterdam Centraal +5\"."
+    },
+    "1": {
+      "characters": [
+        "sofia",
+        "daan"
+      ],
+      "text": true,
+      "extras": [
+        "a train conductor: a woman in her forties with a dark-blue uniform jacket, a dark-blue cap and a small handheld card reader"
+      ],
+      "action": "Inside a Dutch train carriage: blue and yellow seats facing each other, big windows with green fields passing. Sofia sits on the left by the window; Daan, the bearded man with the navy jacket and grey hoodie, sits on the seat facing her on the right. The conductor stands in the aisle between them and looks at the bank card Sofia holds up; Daan holds up a blue ov-chipkaart. A small sign on the window reads \"stilte\"."
+    }
+  },
+  "16-b-ik-ga-een-fiets-kopen": {
+    "0": {
+      "characters": [
+        "sofia",
+        "daan"
+      ],
+      "action": "A small, simple office kitchen: a counter with a coffee machine and a sink, a small table where Sofia and Daan sit eating sandwiches. Through a big window behind them: a huge bicycle parking area full of hundreds of bikes. Daan looks surprised and points at the bikes outside the window; Sofia laughs."
+    },
+    "1": {
+      "characters": [
+        "ahmed",
+        "sofia"
+      ],
+      "action": "Inside a small bike shop: a wall with hanging tools, tyres and inner tubes, a few bikes in a row, a workbench. Ahmed holds a black second-hand Dutch city bike upright by the saddle and handlebar, smiling. Sofia stands next to it and rings its bell with her thumb, delighted."
+    }
+  }
+}

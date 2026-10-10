@@ -558,7 +558,7 @@ async function courseResponse(context: Context<AppEnvironment>, courseId: string
 
 type LessonRow = {
   id: string; slug: string; courseId: string; title: string; goal: string | null; position: number; published: number; publishedAt: number | null; changed: number;
-  updatedById: string; updatedByName: string; updatedAt: number; wordCount: number; practiceCount: number;
+  updatedById: string; updatedByName: string; updatedAt: number; wordCount: number; practiceCount: number; image: string | null;
 };
 type LessonDocumentRow = LessonRow & { draftDoc: string; draftVersion: number; publishedDoc: string | null };
 // Attributes the last editor, falling back to their group profile snapshot once they are no longer active.
@@ -568,7 +568,13 @@ const editorColumns = (table: string, alias: string) => `CASE WHEN em.state = 'a
 // What the published document offers for the course page's lesson actions: its words, read from the published word index, and its
 // practice blocks, at any depth. Unpublished lessons count none.
 const LESSON_COUNT_COLUMNS = `(SELECT COUNT(*) FROM course_lesson_words w WHERE w.lesson_id = l.id) AS wordCount,
-    (SELECT COUNT(*) FROM json_tree(l.published_doc) WHERE json_tree.key = 'type' AND json_tree.atom = 'practice') AS practiceCount`;
+    (SELECT COUNT(*) FROM json_tree(l.published_doc) WHERE json_tree.key = 'type' AND json_tree.atom = 'practice') AS practiceCount,
+    ${LESSON_IMAGE_COLUMN}`;
+// The first image block with a finished upload, in document order and at any depth, of the published document, or of the draft
+// while the lesson is unpublished (only editors see those). It is a JSON object of the stored R2 key and the alt text.
+const LESSON_IMAGE_COLUMN = `(SELECT json_object('key', json_extract(d.doc, t.path || '.props.url'), 'alt', json_extract(d.doc, t.path || '.props.name'))
+    FROM (SELECT COALESCE(l.published_doc, l.draft_doc) AS doc) d, json_tree(d.doc) t
+    WHERE t.key = 'type' AND t.atom = 'image' AND json_extract(d.doc, t.path || '.props.url') != '' ORDER BY t.id LIMIT 1) AS image`;
 // A lesson is published while it has a published document; `changed` tells editors the draft differs from it.
 const LESSON_COLUMNS = `l.id, l.slug, l.course_id AS courseId, l.title, l.goal, l.position, l.published_doc IS NOT NULL AS published, l.published_at AS publishedAt,
     (l.published_doc IS NOT NULL AND l.draft_doc != l.published_doc) AS changed, l.updated_by AS updatedById, l.updated_at AS updatedAt,
@@ -580,10 +586,15 @@ const LESSON_DOCUMENT_SELECT = `SELECT ${LESSON_COLUMNS}, l.draft_doc AS draftDo
 // The course owner and active contributors see unpublished lessons and drafts; everyone else sees published documents only.
 const seesCourseDrafts = (course: CourseRow, viewerId: string) => course.ownerId === viewerId || course.contributorState === "active";
 
-const presentLessonSummary = (row: LessonRow, editor: boolean): CourseLessonSummary => ({
+function presentLessonImage(raw: string | null, mediaBase: string) {
+  if (!raw) return null;
+  const { key, alt } = JSON.parse(raw) as { key: string; alt: string | null };
+  return { url: mediaUrlFromBase(mediaBase, key)!, alt: alt ?? "" };
+}
+const presentLessonSummary = (row: LessonRow, editor: boolean, mediaBase: string): CourseLessonSummary => ({
   id: row.id, slug: row.slug, position: row.position, title: row.title, goal: row.goal, published: Boolean(row.published), publishedAt: row.publishedAt,
   changed: editor && Boolean(row.changed), updatedBy: { id: row.updatedById, displayName: row.updatedByName }, updatedAt: row.updatedAt,
-  wordCount: row.wordCount, practiceCount: row.practiceCount,
+  wordCount: row.wordCount, practiceCount: row.practiceCount, image: presentLessonImage(row.image, mediaBase),
 });
 
 function storedDocument(raw: string, lessonId: string) {
@@ -645,7 +656,7 @@ async function presentLessons(binding: D1Database, course: CourseRow, viewerId: 
   return documents.map(({ row, draft, published, publishedSpeech, draftSpeech }) => {
     const ids = new Set([...(published ? collectPracticeIds(published) : []), ...(editor ? collectPracticeIds(draft) : [])]);
     return {
-      ...presentLessonSummary(row, editor),
+      ...presentLessonSummary(row, editor, mediaBase),
       document: published && expandImages(toLearnerDocument(published).document, mediaBase),
       practiceProgress: Object.fromEntries([...ids].map((id) => [id, progress[id]!])),
       draft: editor ? { document: expandImages(draft, mediaBase), version: row.draftVersion } : null,
@@ -1686,7 +1697,7 @@ app.get("/api/groups/:groupId/courses/:courseId", requireGroupAccess, async (con
   const lessons = await presentLessons(context.env.DB, found.row, user.id, preloaded, context.env.PUBLIC_MEDIA_BASE_URL, group.language);
   return context.json(courseDetailResponseSchema.parse({
     course: presentCourse(found.row, user.id, group.creatorUserId, context.env.PUBLIC_MEDIA_BASE_URL),
-    outline: outline.map((row) => presentLessonSummary(row, seesCourseDrafts(found.row, user.id))), lessons,
+    outline: outline.map((row) => presentLessonSummary(row, seesCourseDrafts(found.row, user.id), context.env.PUBLIC_MEDIA_BASE_URL)), lessons,
   }));
 });
 
@@ -1896,7 +1907,7 @@ app.put("/api/groups/:groupId/courses/:courseId/lessons/order", requireGroupAcce
   const reordered = await reorderLessons(context, found.row); if ("error" in reordered) return reordered.error;
   const user = context.get("user")!;
   const outline = await readOutline(context.env.DB, found.row, user.id);
-  return context.json(outlineResponseSchema.parse({ outline: outline.map((row) => presentLessonSummary(row, seesCourseDrafts(found.row, user.id))) }));
+  return context.json(outlineResponseSchema.parse({ outline: outline.map((row) => presentLessonSummary(row, seesCourseDrafts(found.row, user.id), context.env.PUBLIC_MEDIA_BASE_URL)) }));
 });
 
 const lessonPath = "/api/groups/:groupId/courses/:courseId/lessons/:lessonId";

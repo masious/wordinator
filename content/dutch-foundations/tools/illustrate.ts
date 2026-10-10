@@ -1,8 +1,9 @@
 // Story illustrations through Azure (Microsoft Foundry) FLUX.2 [pro] with multi-reference input. Run with apps/api/node_modules/.bin/tsx.
-// Needs AZURE_FLUX_ENDPOINT and AZURE_FLUX_API_KEY, from the environment or illustrations/.dev.vars; nothing is deployed and no database is touched.
+// Needs AZURE_FLUX_ENDPOINT and AZURE_FLUX_API_KEY (AZURE_FLUX_DEPLOYMENT when the deployment is not named FLUX.2-pro), from the environment, illustrations/.dev.vars or apps/api/.dev.vars; nothing is deployed and no database is touched.
 //   sheet <castId|locationId> [--count N]          reference-sheet candidates → illustrations/candidates/sheets/
 //   freeze <castId|locationId> <candidate.jpg>     adopt a candidate as the frozen reference (refs/<id>.png)
 //   scene <lesson.json> <imageIdeaIndex> [--count N]   scene candidates → illustrations/candidates/<lesson>/
+// Scene fields come from the lesson's imageIdea, overridden by illustrations/scenes.json[<lesson>][<index>] when present.
 import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
@@ -12,17 +13,19 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..", "illustrations"
 const read = (name: string) => JSON.parse(readFileSync(join(root, name), "utf8"));
 
 type Style = {
-  endpointPath: string; model: string; prompt: string;
+  endpointPath: string; model: string; prompt: string; noText: string; quotedText: string;
   scene: { width: number; height: number }; sheet: { width: number; height: number };
 };
 type Person = { name: string; label: string; appearance: string; outfit: string };
 type Place = { name: string; description: string };
-type ImageIdea = { afterHeading: string; description: string; alt: string; location?: string; characters?: string[]; action?: string };
+type SceneFields = { location?: string; characters?: string[]; extras?: string[]; action?: string; text?: boolean };
+type ImageIdea = SceneFields & { afterHeading: string; description: string; alt: string };
 type Request = { model: string; prompt: string; width: number; height: number; refs: string[] };
 
 const style: Style = read("style.json");
 const cast: Record<string, Person> = read("cast.json");
 const places: Record<string, Place> = read("locations.json");
+const scenes: Record<string, Record<string, SceneFields>> = existsSync(join(root, "scenes.json")) ? read("scenes.json") : {};
 
 // FLUX.2 [pro] on Foundry accepts at most eight reference images.
 const maxRefs = 8;
@@ -32,46 +35,74 @@ function sheetRequest(id: string): Request {
   const person = cast[id];
   if (person) return {
     model: style.model, ...style.sheet, refs: [],
-    prompt: `${style.prompt} Character reference sheet: one single full-body figure standing, front view, relaxed friendly pose, arms by the sides, centred on a plain off-white background, nothing else in the picture. ${person.appearance} Outfit: ${person.outfit}`,
+    prompt: `${style.prompt} ${style.noText} Character reference sheet: one single full-body figure standing, front view, relaxed friendly pose, arms by the sides, centred on a plain off-white background, nothing else in the picture. ${person.appearance} Outfit: ${person.outfit}`,
   };
   const place = places[id];
   if (place) return {
     model: style.model, ...style.scene, refs: [],
-    prompt: `${style.prompt} Establishing shot of an empty location, no people. ${place.description}`,
+    prompt: `${style.prompt} ${style.noText} Wide establishing shot of an empty location, no people, framed wide enough that every item in the description is visible and none is left out. ${place.description}`,
   };
   throw new Error(`unknown cast or location id: ${id}`);
 }
 
+// A scene has an optional frozen location (image 1) and frozen characters (the next images); one-off places and
+// unnamed extras (a conductor, a tourist) are described in the action instead.
 function sceneRequest(idea: ImageIdea): Request {
-  if (!idea.location || !idea.characters?.length || !idea.action) throw new Error("imageIdea needs location, characters and action");
-  const ids = [idea.location, ...idea.characters];
-  if (ids.length > maxRefs) throw new Error(`at most ${maxRefs - 1} characters per scene`);
+  if (!idea.action) throw new Error("imageIdea needs an action (in the lesson or in scenes.json)");
+  const characters = idea.characters ?? [];
+  const extras = idea.extras ?? [];
+  const ids = [...(idea.location ? [idea.location] : []), ...characters];
+  if (ids.length > maxRefs) throw new Error(`at most ${maxRefs} reference images per scene`);
   for (const id of ids) if (!existsSync(refPath(id))) throw new Error(`no frozen reference for ${id}; run sheet + freeze first`);
-  const place = places[idea.location];
-  if (!place) throw new Error(`unknown location id: ${idea.location}`);
-  // The BFL API numbers reference images from 1: the location is image 1, the characters images 2…n.
-  const people = idea.characters.map((id, i) => {
+  const parts = [style.prompt, idea.text ? style.quotedText : style.noText];
+  if (idea.location) {
+    const place = places[idea.location];
+    if (!place) throw new Error(`unknown location id: ${idea.location}`);
+    parts.push(`The scene takes place in the place from image 1; keep its layout, furniture, windows and colours exactly. ${place.description}`);
+  }
+  // The BFL API numbers reference images from 1.
+  const first = idea.location ? 2 : 1;
+  for (const [i, id] of characters.entries()) {
     const person = cast[id];
     if (!person) throw new Error(`unknown cast id: ${id}`);
-    return `${person.name} is ${person.label} from image ${i + 2}; keep her or his face, hair, accessories and outfit exactly as in image ${i + 2}. ${person.appearance} Outfit: ${person.outfit}`;
-  });
-  return {
-    model: style.model, ...style.scene, refs: ids.map(refPath),
-    prompt: `${style.prompt} The scene takes place in the room from image 1; keep its layout, furniture, window and colours exactly. ${place.description} ${people.join(" ")} ${idea.action} Exactly ${idea.characters.length} people in the picture; they use the room's existing furniture and nothing is added, so no extra chairs or objects; shown from the knees up or full body, same flat cartoon style as the reference images.`,
-  };
+    const n = first + i;
+    parts.push(`${person.name} is ${person.label} from image ${n}; keep her or his face, hair, accessories and outfit exactly as in image ${n}. ${person.appearance} Outfit: ${person.outfit}`);
+  }
+  parts.push(idea.action);
+  const people = characters.length + extras.length;
+  if (extras.length) parts.push(`Besides the named people there ${extras.length === 1 ? "is" : "are"} ${extras.join("; ")}; they look clearly different from the named people.`);
+  if (people === 0) parts.push("No people in the picture.");
+  else parts.push(`Exactly ${people} ${people === 1 ? "person" : "people"} in the picture${idea.location ? "; they use the existing furniture and nothing is added, so no extra chairs or objects" : ""}; shown from the knees up or full body, same flat cartoon style as the reference images.`);
+  if (characters.length > 1) parts.push("Every person wears only the clothes, colours and accessories from her or his own reference image; nothing is shared or swapped between people.");
+  return { model: style.model, ...style.scene, refs: ids.map(refPath), prompt: parts.join(" ") };
 }
 
 function credentials() {
-  const vars = join(root, ".dev.vars");
-  if (existsSync(vars)) process.loadEnvFile(vars);
-  const endpoint = process.env.AZURE_FLUX_ENDPOINT?.replace(/\/+$/, "");
+  // The API's .dev.vars already holds the other Azure keys; a local illustrations/.dev.vars takes precedence.
+  const files = [join(root, ".dev.vars"), join(root, "..", "..", "..", "apps", "api", ".dev.vars")];
+  for (const file of files) if (existsSync(file)) process.loadEnvFile(file);
+  // The BFL route lives at the resource root, so a project or /openai/v1 path on the endpoint is dropped.
+  const endpoint = process.env.AZURE_FLUX_ENDPOINT && new URL(process.env.AZURE_FLUX_ENDPOINT).origin;
   const key = process.env.AZURE_FLUX_API_KEY;
-  if (!endpoint || !key) throw new Error(`set AZURE_FLUX_ENDPOINT and AZURE_FLUX_API_KEY (environment or ${vars})`);
-  return { endpoint, key };
+  if (!endpoint || !key) throw new Error(`set AZURE_FLUX_ENDPOINT and AZURE_FLUX_API_KEY (environment, ${files.join(" or ")})`);
+  return { endpoint, key, deployment: process.env.AZURE_FLUX_DEPLOYMENT ?? style.model };
+}
+
+// Retries only network failures (dropped sockets); HTTP errors are returned to the caller.
+async function fetchWithRetry(url: string, init?: RequestInit, attempts = 4): Promise<Response> {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      return await fetch(url, init);
+    } catch (error) {
+      if (attempt >= attempts) throw error;
+      console.error(`network error, retrying (${attempt}/${attempts - 1})`);
+      await new Promise((resolve) => setTimeout(resolve, 2000 * attempt));
+    }
+  }
 }
 
 async function download(url: string) {
-  const response = await fetch(url);
+  const response = await fetchWithRetry(url);
   if (!response.ok) throw new Error(`image download failed: ${response.status}`);
   return Buffer.from(await response.arrayBuffer());
 }
@@ -92,7 +123,7 @@ async function imageFrom(result: Result, key: string): Promise<Buffer> {
   if (result.polling_url) {
     for (let attempt = 0; attempt < 120; attempt++) {
       await new Promise((resolve) => setTimeout(resolve, 1000));
-      const response = await fetch(result.polling_url, { headers: { Authorization: `Bearer ${key}` } });
+      const response = await fetchWithRetry(result.polling_url, { headers: { Authorization: `Bearer ${key}` } });
       if (!response.ok) throw new Error(`polling failed: ${response.status} ${(await response.text()).slice(0, 300)}`);
       const job = await response.json() as Result;
       if (job.status === "Ready" && job.result?.sample) return download(job.result.sample);
@@ -106,7 +137,7 @@ async function imageFrom(result: Result, key: string): Promise<Buffer> {
 }
 
 async function run(request: Request, outDir: string, stem: string, count: number) {
-  const { endpoint, key } = credentials();
+  const { endpoint, key, deployment } = credentials();
   mkdirSync(outDir, { recursive: true });
   const images = request.refs.map((path) => readFileSync(path).toString("base64"));
   // Continue numbering after earlier candidates so a rerun never overwrites them.
@@ -115,18 +146,24 @@ async function run(request: Request, outDir: string, stem: string, count: number
   for (const last = n + count - 1; n <= last; n++) {
     const seed = Math.floor(Math.random() * 2 ** 31);
     const body: Record<string, unknown> = {
-      model: request.model, prompt: request.prompt, width: request.width, height: request.height,
+      model: deployment, prompt: request.prompt, width: request.width, height: request.height,
       seed, output_format: "jpeg",
     };
     for (const [i, image] of images.entries()) body[i === 0 ? "input_image" : `input_image_${i + 1}`] = image;
     const started = Date.now();
-    const response = await fetch(`${endpoint}${style.endpointPath}`, {
+    const response = await fetchWithRetry(`${endpoint}${style.endpointPath}`, {
       method: "POST",
       headers: { "Content-Type": "application/json", Authorization: `Bearer ${key}` },
       body: JSON.stringify(body),
     });
     if (!response.ok) throw new Error(`request failed: ${response.status} ${(await response.text()).slice(0, 500)}`);
-    const image = await imageFrom(await response.json() as Result, key);
+    const result = await response.json() as Result & { stop_reason?: string };
+    // The safety filter refuses some harmless prompts at random; skip that candidate instead of ending the batch.
+    if (result.stop_reason === "refusal") {
+      console.error(`${stem}-${n}: refused by the safety filter, skipped`);
+      continue;
+    }
+    const image = await imageFrom(result, key);
     const extension = image[0] === 0xff && image[1] === 0xd8 ? "jpg" : "png";
     const file = join(outDir, `${stem}-${n}.${extension}`);
     writeFileSync(file, image);
@@ -157,8 +194,9 @@ async function main() {
   } else if (command === "scene" && args[0] && args[1]) {
     const lesson = JSON.parse(readFileSync(args[0], "utf8")) as { imageIdeas?: ImageIdea[] };
     const index = Number(args[1]);
-    const idea = lesson.imageIdeas?.[index];
-    if (!idea) throw new Error(`no imageIdeas[${index}] in ${args[0]}`);
+    const base = lesson.imageIdeas?.[index];
+    if (!base) throw new Error(`no imageIdeas[${index}] in ${args[0]}`);
+    const idea = { ...base, ...scenes[basename(args[0], ".json")]?.[String(index)] };
     await run(sceneRequest(idea), join(root, "candidates", basename(args[0], ".json")), `${index}-pro`, option("--count", 3));
   } else {
     console.error("usage: illustrate.ts sheet <id> [--count N] | freeze <id> <candidate.jpg> | scene <lesson.json> <index> [--count N]");

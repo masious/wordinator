@@ -3,5 +3,7 @@
   "model": "FLUX.2-pro",
   "scene": { "width": 1024, "height": 768 },
   "sheet": { "width": 768, "height": 1024 },
-  "prompt": "Flat 2D cartoon illustration for a children's-book-style language course. Clean uniform dark-brown outlines, flat colours with at most one soft shadow tone, simple rounded shapes, simple friendly faces with small dot eyes, warm muted palette of cream, sage green, mustard, terracotta and dusty blue. Clean, readable composition with plenty of simple everyday details drawn as plain shapes, no textures. No text, no letters, no logos, no speech bubbles, no photorealism, no 3D rendering."
+  "prompt": "Flat 2D cartoon illustration for a children's-book-style language course. Clean uniform dark-brown outlines, flat colours with at most one soft shadow tone, simple rounded shapes, simple friendly faces with small dot eyes, warm muted palette of cream, sage green, mustard, terracotta and dusty blue. Clean, readable composition with plenty of simple everyday details drawn as plain shapes, no textures.",
+  "noText": "No text, no letters, no logos, no speech bubbles, no photorealism, no 3D rendering.",
+  "quotedText": "The only text in the picture is the text given in quotes in this prompt, spelled exactly as written; no other text, no logos, no speech bubbles, no photorealism, no 3D rendering."
 }

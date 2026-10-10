@@ -480,6 +480,8 @@ export const courseLessonSummarySchema = z.object({
   // The published document's new words and practices, so the course page offers Review words and Practise again only where they
   // exist. Both are 0 for an unpublished lesson.
   wordCount: z.number().int().nonnegative(), practiceCount: z.number().int().nonnegative(),
+  // The first uploaded image of the published document (the draft's for an unpublished lesson), shown beside the lesson in the list.
+  image: z.object({ url: z.string(), alt: z.string() }).nullable(),
 });
 export type CourseLessonSummary = z.infer<typeof courseLessonSummarySchema>;
 // Resolves a course (and optionally a lesson) URL segment, either a slug or a legacy ID, to IDs and canonical slugs.
