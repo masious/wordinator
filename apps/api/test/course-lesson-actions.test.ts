@@ -1,6 +1,6 @@
 import { env, SELF } from "cloudflare:test";
 import { outlineResponseSchema } from "@wordinator/contracts";
-import { courseDetailResponseSchema } from "@wordinator/contracts/lesson-document";
+import { courseDetailResponseSchema, lessonImageUploadResponseSchema } from "@wordinator/contracts/lesson-document";
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   addLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, publishLesson, readLesson, request, resetDatabase, saveDraft, seedGroup, seedUser,
@@ -22,6 +22,16 @@ async function readCourse(path: string, cookie: string) {
   expect(response.status, await response.clone().text()).toBe(200);
   return courseDetailResponseSchema.parse(await response.json());
 }
+
+// A 3×2 PNG header is enough for the upload's type sniffing.
+const png = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 3, 0, 0, 0, 2]);
+async function uploadImage(lessonPathValue: string, cookie: string) {
+  const form = new FormData(); form.set("image", new File([png.slice().buffer as ArrayBuffer], "picture.png", { type: "image/png" }));
+  const response = await SELF.fetch(`https://wordinator.test${lessonPathValue}/images`, { method: "POST", headers: { cookie }, body: form });
+  expect(response.status).toBe(201);
+  return lessonImageUploadResponseSchema.parse(await response.json());
+}
+const images = (outline: { title: string; imageUrl: string | null }[]) => outline.map(({ title, imageUrl }) => [title, imageUrl]);
 
 async function setup() {
   const ownerId = await seedUser("owner"); const readerId = await seedUser("reader");
@@ -95,5 +105,21 @@ describe("Lesson action counts", () => {
     expect((await request(`${path}/archive`, owner, {})).status).toBe(200);
     expect((await request(path, reader)).status).toBe(404);
     expect(counts((await readCourse(path, owner)).outline)).toEqual([["Rich", 3, 2], ["Plain", 0, 0], ["Draft", 0, 0]]);
+  });
+
+  it("offers the first uploaded image of the published document, or of an unpublished lesson's draft to editors", async () => {
+    const { path, owner, reader, plain, draft } = await setup();
+    const first = await uploadImage(plain.path, owner); const second = await uploadImage(plain.path, owner);
+    const drafted = await uploadImage(draft.path, owner);
+    // Document order at any depth: the image inside the columns comes before the later top-level one.
+    await saveDraft(plain.path, owner, documentOf(blocks.paragraph("Tekst"), columns([blocks.image(first.url, "De tuin")], [blocks.paragraph("Rechts")]), blocks.image(second.url)),
+      (await readLesson(plain.path, owner)).draft!.version);
+    await saveDraft(draft.path, owner, documentOf(blocks.image("", ""), blocks.image(drafted.url, "De kat")), (await readLesson(draft.path, owner)).draft!.version);
+    // A draft image of a published lesson is not shown until it is published. The draft's unfinished upload is skipped.
+    expect(images((await readCourse(path, reader)).outline)).toEqual([["Rich", null], ["Plain", null]]);
+    expect(images((await readCourse(path, owner)).outline)).toEqual([["Rich", null], ["Plain", null], ["Draft", drafted.url]]);
+    await publishLesson(plain.path, owner, (await readLesson(plain.path, owner)).draft!.version);
+    expect(images((await readCourse(path, reader)).outline)).toEqual([["Rich", null], ["Plain", first.url]]);
+    expect((await readLesson(plain.path, reader)).imageUrl).toEqual(first.url);
   });
 });

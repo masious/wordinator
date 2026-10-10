@@ -19,9 +19,9 @@ const course = (edit: boolean, contribute = edit) => ({
   owner: { id: accountId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, speechCast: {}, contribution: !edit && contribute ? "active" as const : null,
   permissions: { edit, publish: edit, archive: edit, removeContent: edit, contribute, requestContribution: false, leaveContribution: !edit && contribute, manageContributors: edit },
 });
-const summary = (n: number, published = true, counts: { wordCount?: number; practiceCount?: number } = {}) => ({
+const summary = (n: number, published = true, counts: { wordCount?: number; practiceCount?: number; imageUrl?: string | null } = {}) => ({
   id: lessonId(n), slug: `lesson-title-${n}`, position: n - 1, title: `Lesson title ${n}`, goal: null, published, publishedAt: published ? 1 : null, changed: false, updatedBy: editor, updatedAt: 1,
-  wordCount: 0, practiceCount: 0, ...counts,
+  wordCount: 0, practiceCount: 0, imageUrl: null, ...counts,
 });
 const text = (value: string) => [{ type: "text" as const, text: value, styles: {} }];
 const example = (id: string, sentence: string, translation = ""): LessonTopBlock =>
@@ -96,6 +96,17 @@ describe("Course lessons", () => {
     expect(vi.mocked(fetch).mock.calls.map(([path]) => String(path)).sort()).toEqual([`/api/groups/${groupId}/courses/${courseId}/progress`, `/api/groups/${groupId}/courses/${courseId}/words`]);
     // A viewer with no finished words is not offered a recap.
     expect(screen.queryByRole("button", { name: "Review words" })).not.toBeInTheDocument();
+  });
+
+  it("shows a lesson's first image beside it, inside its link, and nothing for a lesson without one", async () => {
+    const imageUrl = "https://media.test/courses/c/lessons/l/garden.png";
+    renderLessons({ course: course(false), outline: [summary(1, true, { imageUrl }), summary(2)], lessons: [lesson(1), lesson(2)] });
+    const link = await screen.findByRole("link", { name: "Open lesson 1: Lesson title 1" });
+    // The link's label names the lesson, so the image is decorative.
+    const image = link.querySelector("img");
+    expect(image).toHaveAttribute("src", imageUrl);
+    expect(image).toHaveAttribute("alt", "");
+    expect(screen.getByRole("link", { name: "Open lesson 2: Lesson title 2" }).querySelector("img")).toBeNull();
   });
 
   it("renders one lesson's published document on its page with links to its neighbours", async () => {

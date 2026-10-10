@@ -243,6 +243,9 @@
   --width-modal-reading: 760px;
   --aspect-course-cover: 2 / 1;
   --width-course-card-min: 17rem;
+  /* A lesson's first image beside it in the course page's lesson list. */
+  --size-lesson-image: 7rem;
+  --aspect-lesson-image: 4 / 3;
   /* Word cards (C9a): every card has one height so a page of them can be fitted to the viewport. */
   --size-word-card: 15rem;
   --size-word-card-min: 15rem;
@@ -431,6 +434,7 @@
     --shell-clearance: var(--space-4);
     --card-inset: var(--space-4);
     --size-word-card: 12rem;
+    --size-lesson-image: 4.5rem;
     --mobile-dock-height: 64px;
     --type-page-title: 1.75rem;
     --type-section-title: 1.375rem;

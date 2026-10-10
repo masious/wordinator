@@ -25,7 +25,7 @@ const blocks = [1, 2, 3, 4].map(example);
 const layout = new Map(blocks.map((block, index) => [block.id, index * 900]));
 const document: LessonDocument = { schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks };
 const summary = (published: boolean) => ({
-  id: lessonId, slug: "lesson-1", position: 0, title: "Lesson 1", goal: null, published, publishedAt: published ? 1 : null, changed: false, updatedBy: user, updatedAt: 1, wordCount: 0, practiceCount: 0,
+  id: lessonId, slug: "lesson-1", position: 0, title: "Lesson 1", goal: null, published, publishedAt: published ? 1 : null, changed: false, updatedBy: user, updatedAt: 1, wordCount: 0, practiceCount: 0, imageUrl: null,
 });
 const lesson = (published = true): CourseLesson => ({
   ...summary(published), document: published ? document : null, practiceProgress: {}, draft: published ? null : { document, version: 1 }, speech: {}, draftSpeech: published ? null : {},

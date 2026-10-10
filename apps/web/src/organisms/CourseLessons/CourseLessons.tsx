@@ -120,6 +120,8 @@ function LessonRow({ scope, summary, number, outline, completed, saved, archived
       <Link className={styles.lessonLink} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug: scope.courseSlug, lessonSlug: summary.slug }}
         aria-label={t("courses.lessons.open", { number, title: summary.title })}>
         <span className={styles.lessonNumber}>{completed ? <span className={styles.check} role="img" aria-label={t("courses.progress.completed")}>✓</span> : number}</span>
+        {/* The link's label names the lesson, so its first image is decorative here. */}
+        {summary.imageUrl && <span className={styles.lessonImage}><img src={summary.imageUrl} alt="" loading="lazy" decoding="async" /></span>}
         <span className={styles.lessonCopy}>
           <span className={styles.lessonTitle}>{summary.title}</span>
           {summary.goal && <span className={styles.goal}>{summary.goal}</span>}
