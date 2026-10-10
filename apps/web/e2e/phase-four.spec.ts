@@ -1,10 +1,11 @@
 import { expect, test } from "@playwright/test";
 import { E2E_CREATOR_EMAIL, E2E_PASSWORD } from "./global-setup";
-import { registerLearner, signIn as signInAs, signOut as signOutOf } from "./auth";
+import { registerLearner, signIn as signInAs, signOut as signOutOf, uniqueTag } from "./auth";
 
+// Post bodies carry a per-run tag: a card left by an earlier run with the same text would be read before the new post renders.
 test("concealed answers, reading sets, replies, pins, and reactions work end to end", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
-  const suffix = `phase4-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`; const memberEmail = `${suffix}@e2e.test`; const memberPassword = "phase-four-member"; const memberName = `p4_${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
+  const suffix = `phase4-${uniqueTag(testInfo)}`; const memberEmail = `${suffix}@e2e.test`; const memberPassword = "phase-four-member"; const memberName = `p4_${uniqueTag(testInfo)}`;
   const signIn = async (email: string, password: string) => { await signInAs(page, email, password); await page.goto("/journal"); await expect(page.getByRole("heading", { name: "Journal", level: 1 })).toBeVisible(); };
   const signOut = () => signOutOf(page);
   await signIn(E2E_CREATOR_EMAIL, E2E_PASSWORD);

@@ -1,12 +1,13 @@
 import { expect, test } from "@playwright/test";
 import { E2E_GROUP_ID } from "./global-setup";
-import { registerLearner, signIn } from "./auth";
+import { registerLearner, signIn, uniqueTag } from "./auth";
 import { paragraph, seedLesson, openLesson } from "./lessonSeed";
+import { caretToEnd } from "./editor";
 
 test("a member asks to contribute, edits the lesson draft, and the owner publishes it", async ({ browser }, testInfo) => {
   test.setTimeout(90_000);
-  const suffix = `contributor-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
-  const helperName = `helper_${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
+  const suffix = `contributor-${uniqueTag(testInfo)}`;
+  const helperName = `helper_${uniqueTag(testInfo)}`;
   const helperEmail = `${suffix}@e2e.test`;
   const owner = await (await browser.newContext()).newPage();
   const helper = await (await browser.newContext()).newPage();
@@ -40,8 +41,7 @@ test("a member asks to contribute, edits the lesson draft, and the owner publish
   await openLesson(helper);
   await helper.getByRole("button", { name: "Edit lesson 1" }).click();
   const editor = helper.getByRole("textbox").filter({ hasText: "De eerste zin." });
-  await editor.getByText("De eerste zin.").click();
-  await helper.keyboard.press("End");
+  await caretToEnd(helper, editor.locator(".bn-inline-content").filter({ hasText: "De eerste zin." }));
   await helper.keyboard.press("Enter");
   await helper.keyboard.type("Een voorstel van de helper.");
   const bar = helper.getByRole("region", { name: "Lesson saving and publishing" });

@@ -2,8 +2,10 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./e2e",
-  fullyParallel: false,
-  workers: 1,
+  // Tests share one local worker and database, so each creates its own courses and tags its data with `uniqueTag`; tests that
+  // read the viewer's own growing lists register their own account. E2E_WORKERS overrides the worker count.
+  fullyParallel: true,
+  workers: Number(process.env.E2E_WORKERS) || (process.env.CI ? 2 : 4),
   use: { baseURL: "http://127.0.0.1:5174", trace: "on-first-retry" },
   webServer: [
     {

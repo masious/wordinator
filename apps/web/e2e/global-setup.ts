@@ -13,6 +13,8 @@ export default function globalSetup() {
   const root = resolve(import.meta.dirname, "../../..");
   const api = join(root, "apps/api");
   const persistencePath = "../../.wrangler/e2e";
+  // A seed lock left by an interrupted run (see speech.ts) would block every direct database write.
+  rmSync(join(root, ".wrangler/e2e/seed.lock"), { recursive: true, force: true });
   execFileSync("pnpm", ["exec", "wrangler", "d1", "migrations", "apply", "wordinator", "--local", "--persist-to", persistencePath], { cwd: api, stdio: "inherit" });
   const salt = Buffer.alloc(16, 7);
   const passwordHash = `pbkdf2_sha256$40000$${salt.toString("base64url")}$${pbkdf2Sync(E2E_PASSWORD, salt, 40_000, 32, "sha256").toString("base64url")}`;

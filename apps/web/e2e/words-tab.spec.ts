@@ -1,12 +1,13 @@
 import { expect, test } from "@playwright/test";
-import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
+import { registerAccount, uniqueTag } from "./auth";
+import { E2E_GROUP_ID } from "./global-setup";
 import { courseApi, example, openLesson, seedLesson, vocabulary } from "./lessonSeed";
 import { pageToWord } from "./wordRecap";
 
 test("a member bookmarks words on a lesson page and reviews them on the Words tab", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
-  const suffix = `words-tab-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
-  await page.request.post("/api/auth/sign-in", { data: { email: E2E_CREATOR_EMAIL, password: E2E_PASSWORD } });
+  const suffix = `words-tab-${uniqueTag(testInfo)}`;
+  await registerAccount(page, testInfo, "wordtab");
   const api = courseApi(page);
   const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Woorden" });
   await api(`/courses/${course.id}/visibility`, { status: "published" });

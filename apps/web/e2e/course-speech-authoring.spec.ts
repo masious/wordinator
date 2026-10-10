@@ -1,13 +1,14 @@
 import { expect, test } from "@playwright/test";
-import { signIn } from "./auth";
+import { signIn, uniqueTag } from "./auth";
 import { courseApi, openLesson, seedLesson, vocabulary } from "./lessonSeed";
 import { markSpeechReady, serveSpeech } from "./speech";
 
 // The worker is stubbed: clips are marked ready in the local database under the hashes it would use, and the editor's polling
-// picks the change up.
+// picks the change up. The page clock jumps to the next poll instead of waiting for it.
 test("an author sets a pronunciation and sees the word's audio go from pending to ready", async ({ page }, testInfo) => {
-  testInfo.setTimeout(90_000);
-  const suffix = `speech-authoring-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
+  testInfo.setTimeout(60_000);
+  const suffix = `speech-authoring-${uniqueTag(testInfo)}`;
+  await page.clock.install();
   await signIn(page);
   const played = await serveSpeech(page);
 
@@ -38,7 +39,8 @@ test("an author sets a pronunciation and sees the word's audio go from pending t
   // The job "runs": the overridden term's clip becomes ready, and the next poll shows it.
   const [word] = JSON.parse(String((words.props as { data: string }).data)).words as Array<Record<string, unknown>>;
   await markSpeechReady([{ ...words, props: { data: JSON.stringify({ words: [{ ...word, ipa: "ˈvoːrkoːmə" }] }) } }]);
-  await expect(block.getByText("Audio ready")).toBeVisible({ timeout: 30_000 });
+  await page.clock.runFor(15_000); // SPEECH_STATUS_POLL_MS in LessonEditor
+  await expect(block.getByText("Audio ready")).toBeVisible();
   await block.getByRole("button", { name: "Play pronunciation of voorkomen" }).click();
   await expect.poll(() => played.length).toBe(2);
   expect(played[0]).not.toBe(played[1]);

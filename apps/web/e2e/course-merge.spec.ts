@@ -1,28 +1,18 @@
 import { expect, test, type Page } from "@playwright/test";
-import { signIn } from "./auth";
+import { signIn, uniqueTag } from "./auth";
 import { courseApi, paragraph, seedLesson, openLesson } from "./lessonSeed";
+import { caretToEnd } from "./editor";
 
 const saved = (page: Page) => expect(page.getByRole("region", { name: "Lesson saving and publishing" }).getByRole("status").first()).toHaveText("Saved", { timeout: 10_000 });
-// Puts the caret at the end of the editor paragraph holding `text` and types. macOS has no End key for line ends, and a
-// click right after the editor re-renders can lose the key press, so the caret position is checked before typing.
-const lineEnd = process.platform === "darwin" ? "Meta+ArrowRight" : "End";
+// Puts the caret at the end of the editor paragraph holding `text` and types.
 async function append(page: Page, text: string, addition: string) {
-  const target = page.locator(".bn-editor .bn-inline-content").filter({ hasText: text });
-  await expect(async () => {
-    await target.click();
-    await page.keyboard.press(lineEnd);
-    expect(await target.evaluate((node) => {
-      const caret = getSelection()!.getRangeAt(0);
-      const before = document.createRange(); before.selectNodeContents(node); before.setEnd(caret.endContainer, caret.endOffset);
-      return before.toString().length === node.textContent!.length;
-    })).toBe(true);
-  }).toPass({ timeout: 5_000 });
+  await caretToEnd(page, page.locator(".bn-editor .bn-inline-content").filter({ hasText: text }));
   await page.keyboard.type(addition);
 }
 
 test("two editors of the same lesson merge by block and choose when both changed one block", async ({ browser }, testInfo) => {
   test.setTimeout(90_000);
-  const suffix = `merge-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
+  const suffix = `merge-${uniqueTag(testInfo)}`;
   const first = await (await browser.newContext()).newPage();
   const second = await (await browser.newContext()).newPage();
   await signIn(first); await signIn(second);

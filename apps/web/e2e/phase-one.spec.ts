@@ -1,9 +1,9 @@
 import { expect, test } from "@playwright/test";
 import { E2E_INVITATION_TOKEN } from "./global-setup";
-import { registerLearner, signOut } from "./auth";
+import { registerLearner, signOut, uniqueTag } from "./auth";
 
 test("a new person signs up, sets up a username, and lands in the one global library", async ({ page }, testInfo) => {
-  const suffix = testInfo.project.name.replaceAll(/[^a-z]/g, "");
+  const suffix = uniqueTag(testInfo);
   const email = `${suffix}-signup@e2e.test`;
   const username = `learner_${suffix}`;
 
@@ -77,8 +77,8 @@ test("a new person signs up, sets up a username, and lands in the one global lib
 });
 
 test("signing up again with a known email is refused", async ({ page }, testInfo) => {
-  const email = `${testInfo.project.name.replaceAll(/[^a-z]/g, "")}-repeat@e2e.test`;
-  await registerLearner(page, email, "member-password", `repeat_${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`);
+  const email = `${uniqueTag(testInfo)}-repeat@e2e.test`;
+  await registerLearner(page, email, "member-password", `repeat_${uniqueTag(testInfo)}`);
   await signOut(page);
   await page.getByLabel("Email").fill(email);
   await page.getByRole("textbox", { name: "Password" }).fill("member-password");

@@ -1,10 +1,24 @@
 import { execFileSync } from "node:child_process";
+import { mkdirSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
 import { expect, type Page, type TestInfo } from "@playwright/test";
 import type { LessonDocument } from "@wordinator/contracts/lesson-document";
 import { speechClipHash, speechItems } from "@wordinator/contracts/speech";
-import { signIn } from "./auth";
+import { signIn, uniqueTag } from "./auth";
 import { courseApi, dialogue, example, openLesson, seedLesson, vocabulary } from "./lessonSeed";
+
+// Parallel test workers writing the local database at once deadlock, so direct writes take this lock (a directory, created
+// atomically) one at a time. Global setup removes a lock left by an interrupted run.
+const SEED_LOCK = resolve(import.meta.dirname, "../../../.wrangler/e2e/seed.lock");
+async function withSeedLock(run: () => void) {
+  for (const started = Date.now(); ; await new Promise((done) => setTimeout(done, 100))) {
+    try { mkdirSync(SEED_LOCK); break; } catch (error) {
+      if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;
+      if (Date.now() - started > 60_000) throw new Error(`The e2e database seed lock is still held: ${SEED_LOCK}`);
+    }
+  }
+  try { run(); } finally { rmSync(SEED_LOCK, { recursive: true, force: true }); }
+}
 
 // Browser tests never call Azure, so a lesson's clips are marked ready directly in the local database, under the same hashes the
 // worker would use, and the browser is served a short generated WAV for every clip URL.
@@ -12,9 +26,9 @@ export async function markSpeechReady(blocks: Array<Record<string, unknown>>) {
   const items = speechItems({ schemaVersion: 2, blocks } as LessonDocument, null, "nl");
   const now = Date.now();
   const rows = await Promise.all(items.map(async (item) => `('${await speechClipHash(item)}','${item.voice}',${item.text.length},'ready',1,${now},${now})`));
-  execFileSync("pnpm", ["exec", "wrangler", "d1", "execute", "wordinator", "--local", "--persist-to", "../../.wrangler/e2e", "--command",
+  await withSeedLock(() => execFileSync("pnpm", ["exec", "wrangler", "d1", "execute", "wordinator", "--local", "--persist-to", "../../.wrangler/e2e", "--command",
     `INSERT OR REPLACE INTO speech_clips (hash,voice,characters,status,attempts,created_at,updated_at) VALUES ${rows.join(",")};`],
-  { cwd: resolve(import.meta.dirname, "../../api"), stdio: "ignore" });
+  { cwd: resolve(import.meta.dirname, "../../api"), stdio: "ignore", timeout: 30_000 }));
 }
 
 // One second of silence as 8 kHz, 16-bit mono PCM.
@@ -40,7 +54,7 @@ export async function serveSpeech(page: Page) {
 // A learner plays a word, an example, and a dialogue on the lesson page, and a word and a dialogue line in the player.
 export async function playLessonSpeech(page: Page, testInfo: TestInfo) {
   testInfo.setTimeout(60_000);
-  const suffix = `speech-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
+  const suffix = `speech-${uniqueTag(testInfo)}`;
   await signIn(page);
   const played = await serveSpeech(page);
 

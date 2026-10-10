@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
-import { signIn } from "./auth";
+import { signIn, uniqueTag } from "./auth";
 
 test("the redesigned journal preserves order and collapses cleanly on narrow screens", async ({ page }, testInfo) => {
-  const suffix = `batch5-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
+  const suffix = `batch5-${uniqueTag(testInfo)}`;
   const older = `${suffix} first journal entry`;
   const newer = `${suffix} ${"langwoord".repeat(70)}`;
 

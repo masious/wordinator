@@ -1,10 +1,10 @@
 import { expect, test } from "@playwright/test";
-import { signIn } from "./auth";
+import { signIn, uniqueTag } from "./auth";
 import { courseApi, openLesson, practice, seedLesson } from "./lessonSeed";
 
 test("a learner answers a practice, finishes it later, and is counted as done", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
-  const suffix = `practice-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
+  const suffix = `practice-${uniqueTag(testInfo)}`;
   await signIn(page);
 
   // Course content is authored through the API with the signed-in session; the journey under test is practising.

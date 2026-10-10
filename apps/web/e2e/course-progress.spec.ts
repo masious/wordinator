@@ -1,10 +1,10 @@
 import { expect, test } from "@playwright/test";
-import { signIn } from "./auth";
-import { courseApi, dialogue, example, practice, seedLesson } from "./lessonSeed";
+import { signIn, uniqueTag } from "./auth";
+import { courseApi, dialogue, example, openLesson, practice, seedLesson } from "./lessonSeed";
 
 test("a learner steps through a lesson, resumes it, and the course shows their progress", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
-  const suffix = `progress-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
+  const suffix = `progress-${uniqueTag(testInfo)}`;
   await signIn(page);
 
   const api = courseApi(page);
@@ -55,6 +55,8 @@ test("a learner steps through a lesson, resumes it, and the course shows their p
   await expect(page.getByRole("button", { name: "Start lesson 2" })).toBeVisible();
   await expect(page.getByText("1 of 2 lessons")).toBeVisible();
 
-  // The answer typed in the player stays as the practice draft in the lesson view.
-  await expect(page.getByLabel(/^1\. Turn left\./)).toHaveValue("Ga linksaf.");
+  // The answer typed in the player stays as the practice draft on the lesson page.
+  await openLesson(page);
+  await page.getByRole("button", { name: "Answer", exact: true }).click();
+  await expect(page.getByRole("dialog", { name: "Answer the practice" }).getByLabel(/^1\. Turn left\./)).toHaveValue("Ga linksaf.");
 });

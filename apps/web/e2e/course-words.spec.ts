@@ -1,13 +1,14 @@
 import { expect, test } from "@playwright/test";
 import { E2E_GROUP_ID } from "./global-setup";
-import { signIn } from "./auth";
+import { signIn, uniqueTag } from "./auth";
 import { courseApi, dialogue, example, paragraph, seedLesson, vocabulary, openLesson } from "./lessonSeed";
+import { caretToEnd } from "./editor";
 import { expectRecapFits, finishRecap, pageToWord } from "./wordRecap";
 
 // The learner journey seeds its lessons through the API like the other course specs; authoring words is covered below.
 test("a learner sees new words on the steps that introduce them and reviews them after finishing", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
-  const suffix = `words-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
+  const suffix = `words-${uniqueTag(testInfo)}`;
   await signIn(page);
 
   const api = courseApi(page);
@@ -87,7 +88,7 @@ test("a learner sees new words on the steps that introduce them and reviews them
 
 test("an author adds new words in the editor, fixes an empty meaning, and publishes them", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
-  const suffix = `words-editor-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
+  const suffix = `words-editor-${uniqueTag(testInfo)}`;
   await signIn(page);
   const api = courseApi(page);
   const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Woorden" });
@@ -97,8 +98,8 @@ test("an author adds new words in the editor, fixes an empty meaning, and publis
   await page.goto(`/courses/${course.id}`);
   await openLesson(page);
   await page.getByRole("button", { name: "Edit lesson 1" }).click();
-  await page.locator('.bn-editor [data-content-type="example"] .bn-inline-content').first().click();
-  await page.keyboard.press("End"); await page.keyboard.press("Enter");
+  await caretToEnd(page, page.locator('.bn-editor [data-content-type="example"] .bn-inline-content').first());
+  await page.keyboard.press("Enter");
   await page.keyboard.type("/words");
   await page.getByRole("option", { name: /^New words\b/ }).first().click();
   const block = page.getByRole("region", { name: "New words" });

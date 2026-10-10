@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { registerAccount } from "./auth";
 import { E2E_CREATOR_EMAIL, E2E_GROUP_ID, E2E_PASSWORD } from "./global-setup";
 import { courseApi, dialogue, example, openLesson, paragraph, practice, seedLesson, vocabulary } from "./lessonSeed";
 import { expectRecapFits, pageToWord } from "./wordRecap";
@@ -285,8 +286,9 @@ test("mobile lesson reader stacks columns", async ({ page }) => {
 });
 
 test("mobile Words tab opens from the dock and fits its cards without scrolling", async ({ page }, testInfo) => {
+  // A fresh account keeps other tests' bookmarks off this one's Words tab.
+  await registerAccount(page, testInfo, "mwords");
   const api = courseApi(page);
-  // The phone projects share the seeded account, so each bookmarks words of its own course.
   const courseTitle = `Bookmarked course ${testInfo.project.name}`;
   const { course } = await api<{ course: { id: string } }>("/courses", { title: courseTitle, summary: "Woorden" });
   await api(`/courses/${course.id}/visibility`, { status: "published" });

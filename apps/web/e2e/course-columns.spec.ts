@@ -1,6 +1,7 @@
 import { expect, test, type Locator, type Page } from "@playwright/test";
-import { signIn } from "./auth";
+import { signIn, uniqueTag } from "./auth";
 import { courseApi, paragraph, seedLesson, openLesson } from "./lessonSeed";
+import { caretToEnd } from "./editor";
 
 type Block = Record<string, unknown>;
 const columns = (...contents: Block[][]): Block => ({
@@ -26,7 +27,7 @@ const saved = (page: Page) => expect(page.getByRole("region", { name: "Lesson sa
 
 test("an author makes columns by slash item and by dragging, and they survive a reload", async ({ page }, testInfo) => {
   test.setTimeout(90_000);
-  const suffix = `columns-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
+  const suffix = `columns-${uniqueTag(testInfo)}`;
   await signIn(page);
   const api = courseApi(page);
   const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Kolommen" });
@@ -44,8 +45,8 @@ test("an author makes columns by slash item and by dragging, and they survive a 
   await saved(page);
 
   // The slash item adds three empty columns below the current column list, never inside it.
-  await editor.getByText("Links.").click();
-  await page.keyboard.press("End"); await page.keyboard.press("Enter");
+  await caretToEnd(page, editor.locator(".bn-inline-content").filter({ hasText: "Links." }));
+  await page.keyboard.press("Enter");
   await page.keyboard.type("/three");
   await expect(page.getByRole("option", { name: "Three columns" })).toBeVisible();
   await page.keyboard.press("Enter");
@@ -63,7 +64,7 @@ test("an author makes columns by slash item and by dragging, and they survive a 
 
 test("the editor refuses a fourth column and readers see the published columns", async ({ page }, testInfo) => {
   test.setTimeout(90_000);
-  const suffix = `fourth-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
+  const suffix = `fourth-${uniqueTag(testInfo)}`;
   await signIn(page);
   const api = courseApi(page);
   const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Kolommen" });

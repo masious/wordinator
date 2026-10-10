@@ -1,13 +1,13 @@
 import { expect, test } from "@playwright/test";
-import { registerLearner, signIn } from "./auth";
+import { registerLearner, signIn, uniqueTag } from "./auth";
 import { courseApi, seedLesson, openLesson } from "./lessonSeed";
 
 test("an author writes a rich lesson in the editor, publishes it, and another member reads it", async ({ browser, browserName }, testInfo) => {
   // Flaky in Chromium: after the colour menu closes, the coloured word is sometimes lost before publishing. Passes in WebKit.
   test.fixme(browserName === "chromium", "Coloured word lost after the formatting-toolbar colour menu in Chromium; investigate.");
   test.setTimeout(120_000);
-  const suffix = `authoring-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
-  const readerName = `reader_${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
+  const suffix = `authoring-${uniqueTag(testInfo)}`;
+  const readerName = `reader_${uniqueTag(testInfo)}`;
   const owner = await (await browser.newContext()).newPage();
   const reader = await (await browser.newContext()).newPage();
 

@@ -1,13 +1,14 @@
 import { expect, test } from "@playwright/test";
-import { signIn } from "./auth";
+import { signIn, uniqueTag } from "./auth";
 import { courseApi, openLesson, paragraph, seedLesson } from "./lessonSeed";
+import { caretToEnd } from "./editor";
 
 // A 4×4 opaque PNG, small enough to inline and real enough for the browser to decode and re-encode.
 const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAIAAAAmkwkpAAAAEElEQVR4nGM4UaEBRwzEcQBTUhaBGaoOzwAAAABJRU5ErkJggg==", "base64");
 
 test("an author uploads a lesson image, must add alt text, and readers see it", async ({ page }, testInfo) => {
   test.setTimeout(90_000);
-  const suffix = `images-${testInfo.project.name.replaceAll(/[^a-z]/g, "")}`;
+  const suffix = `images-${uniqueTag(testInfo)}`;
   await signIn(page);
   const api = courseApi(page);
   const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Beelden" });
@@ -17,8 +18,8 @@ test("an author uploads a lesson image, must add alt text, and readers see it", 
   await page.goto(`/courses/${course.id}`);
   await openLesson(page);
   await page.getByRole("button", { name: "Edit lesson 1" }).click();
-  await page.getByText("De keuken.").click();
-  await page.keyboard.press("End"); await page.keyboard.press("Enter");
+  await caretToEnd(page, page.locator(".bn-editor .bn-inline-content").filter({ hasText: "De keuken." }));
+  await page.keyboard.press("Enter");
   await page.keyboard.type("/image");
   await expect(page.getByRole("option", { name: "Image" })).toBeVisible();
   await page.keyboard.press("Enter");
