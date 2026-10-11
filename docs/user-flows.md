@@ -47,7 +47,7 @@
 5. The owner sees who last edited each lesson, reviews the draft, and publishes it.
 6. A contributor can stop contributing at any time, and the owner can remove a contributor after confirming. Either way their content stays, and they may ask again later.
 
-## Practise a lesson
+## Practice a lesson
 
 1. A member opens a published lesson's page. A practice block shows its instruction, its first three numbered prompts (with how many more there are), how many people are done with it, how many of its questions the member has left (or that they are done), and an Answer button. Fill-in prompts show `…` for each blank. Authors' versions and notes are not shown.
 2. Answer opens a dialog with the instruction, any reading passage, and one answer field per question, holding any answers the member typed before on this device. When the lesson has a New words panel and the screen is wide, the dialog sits on the left over the text and the panel stays usable on the right.
@@ -57,7 +57,7 @@
 
 ## Work through a lesson step by step
 
-1. At the top of the course page, above Manage course, a progress card shows the member's course percentage and one button: Continue lesson for the lesson they last moved in, otherwise Start lesson for the first lesson they have not finished, otherwise Practise again. A focused player opens with a progress bar and a step counter.
+1. At the top of the course page, above Manage course, a progress card shows the member's course percentage and one button: Continue lesson for the lesson they last moved in, otherwise Start lesson for the first lesson they have not finished, otherwise Practice again. A focused player opens with a progress bar and a step counter.
 2. Text, callouts, and example sentences arrive one step at a time; an example shows its translation and note. A section heading is the title of the section's first step, never a step of its own.
 3. Dialogue lines arrive one after another; earlier lines stay visible.
 4. Practice questions are asked one by one with a single answer field, or one field per blank for a fill-in question with several blanks. A bar above each question shows its position within the practice. Next checks a filled answer first: a match moves on at once, and a miss shows the author's version and moves on with the next press; an empty answer moves on at once. Enter does the same as Next, so pressing Enter repeatedly walks through the lesson. Answers are saved as the same browser draft the lesson page's answer dialog uses, and leaving a question saves how many of the practice's questions are answered.
@@ -65,7 +65,7 @@
 6. A step that introduces new words shows them in a New words panel below it, with term, forms, and meaning, and Show more for a word's example and note; a section that holds only words is a step of its own. After the last step, a run that had words offers Review words: a page of word cards sized to fit the screen, where Show meaning flips a card to its meaning and Show all flips the whole page; Back and Next move by a page, and Back to the summary returns to the completion screen.
 7. The finished lesson shows a check in the course's lesson list and Finished under its title, and the progress card moves on to the next unfinished lesson. The course's Progress panel shows the viewer's own percentage; a started lesson counts for the share of its steps already passed.
 8. Once a member has finished lessons with words, the course page offers Review words for all of them in lesson order, each repeated term once. Nothing in a recap is recorded.
-9. Each lesson in the course's lesson list also has its own actions (see [lesson actions](courses.md#lesson-actions)): Start, Continue at the saved step, or Start again for a finished lesson; Review words for that lesson's words when it has any; and Practise again when it has practices, which lists them with the member's own state and opens the chosen one's answer set.
+9. Each lesson in the course's lesson list also has its own actions (see [lesson actions](courses.md#lesson-actions)): Start, Continue at the saved step, or Start again for a finished lesson; Review words for that lesson's words when it has any; and Practice again when it has practices, which lists them with the member's own state and opens the chosen one's answer set.
 10. A member can bookmark any word of a published lesson, finished or not, with the bookmark icon beside it in a New words list, the lesson page's New words panel, or on a recap card; pressing it again removes the bookmark. A draft preview offers no bookmarks.
 11. Where a word, example, or dialogue line has audio ready, a speaker icon beside it plays it once; pressing it again stops it, and starting another clip stops the one playing. A dialogue's Play dialogue reads its lines in order in the speakers' voices, highlighting each line as it is spoken, with a progress bar of the conversation. The learner can pause and resume, stop, skip to the previous or next line, or press a line's segment of the bar to continue listening from there; in the player it reads only the lines shown so far. Items whose audio is not generated yet have no icon. Owners and contributors also hear a draft preview once its audio is ready.
 12. Owners and contributors can run an unpublished lesson as a preview; it does not count toward progress.
@@ -73,7 +73,7 @@
 
 In progress (C11): sharing works from the lesson page, the dialogs, and the player; share posts get their own journal cards in C11d. [Lesson shares](lesson-shares.md) owns the rules.
 
-1. On a published lesson's page, a member clicks an example or a dialogue and presses the Share button that appears. In the Answer or Practise again dialog, each question has its own Share button, except in a practice with a reading passage. The lesson player offers Share on example, dialogue, and question steps.
+1. On a published lesson's page, a member clicks an example or a dialogue and presses the Share button that appears. In the Answer or Practice again dialog, each question has its own Share button, except in a practice with a reading passage. The lesson player offers Share on example, dialogue, and question steps.
 2. A confirmation dialog previews the post and offers an optional note, already holding the example's note when it has one. Share publishes it; Cancel changes nothing.
 3. The journal shows the post, for example “Masoud shared a question from lesson 3 of Dutch Foundations 5 hours ago.” Friends react and comment as on any post.
 4. On a shared question's post page, anyone can type an answer and press Enter to see whether it matches the author's version, or see that version as a reference. The answer stays on their device.

@@ -7,7 +7,7 @@ import {
   signIn, word,
 } from "./courseApi";
 
-// The course page's per-lesson actions (Review words, Practise again) are offered from counts in the outline, so learners never
+// The course page's per-lesson actions (Review words, Practice again) are offered from counts in the outline, so learners never
 // load a lesson just to find out it has nothing to review.
 const practice = { instruction: "Vertaal.", items: [{ prompt: "There is a garden.", authorsVersion: ["Er is een tuin."] }, { prompt: "No." }] };
 const columns = (...children: unknown[][]) => ({

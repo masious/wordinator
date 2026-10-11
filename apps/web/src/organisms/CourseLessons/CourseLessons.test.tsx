@@ -367,7 +367,7 @@ describe("Course lessons", () => {
     expect(await screen.findByText("Next up: lesson 2, Lesson title 2.")).toBeInTheDocument();
     expect(screen.getByRole("progressbar", { name: "Your course progress" })).toHaveAttribute("aria-valuenow", "25");
     expect(screen.getByText("25%")).toBeInTheDocument();
-    expect(screen.getAllByRole("button", { name: /^(Start|Continue|Practise) lesson \d+( again)?$/ })).toHaveLength(1);
+    expect(screen.getAllByRole("button", { name: /^(Start|Continue|Practice) lesson \d+( again)?$/ })).toHaveLength(1);
     expect(screen.getByRole("button", { name: "Start lesson 2" })).toBeInTheDocument();
   });
 
@@ -375,7 +375,7 @@ describe("Course lessons", () => {
     const original = vi.mocked(fetch).getMockImplementation()!;
     vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") ? response(progress([lessonId(1), lessonId(2)])) : original(input, init));
     renderLessons({ course: course(false), outline: [1, 2].map((n) => summary(n)), lessons: [lesson(1), lesson(2)] });
-    expect(await screen.findByRole("button", { name: "Practise lesson 1 again" })).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: "Practice lesson 1 again" })).toBeInTheDocument();
     expect(screen.getByText("You have finished every lesson. Run through them again whenever you like.")).toBeInTheDocument();
   });
 
@@ -424,9 +424,9 @@ describe("Lesson actions", () => {
     renderLessons({ course: course(false), outline: [1, 2, 3].map((n) => summary(n)), lessons: [lesson(1, blocks), lesson(2, blocks), lesson(3, blocks)] });
     expect(await screen.findByRole("button", { name: "Start lesson 1 again: Lesson title 1" })).toHaveTextContent("Start again");
     expect(screen.getByRole("button", { name: "Start lesson 3: Lesson title 3" })).toHaveTextContent("Start");
-    // Lessons without words or practices offer nothing to review or practise.
+    // Lessons without words or practices offer nothing to review or practice.
     expect(screen.queryByRole("button", { name: /^Review the words of lesson/ })).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: /^Practise lesson \d+ again:/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /^Practice lesson \d+ again:/ })).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Continue lesson 2: Lesson title 2" }));
     const dialog = await screen.findByRole("dialog", { name: "Lesson 2 · Lesson title 2" });
     expect(within(dialog).getByText("Step 2 of 2")).toBeInTheDocument();
@@ -457,7 +457,7 @@ describe("Lesson actions", () => {
     expect(vi.mocked(fetch).mock.calls.some(([, init]) => init?.method === "PUT")).toBe(false);
   });
 
-  it("tells how many of a lesson's practices remain and when the viewer last practised it", async () => {
+  it("tells how many of a lesson's practices remain and when the viewer last practiced it", async () => {
     const original = vi.mocked(fetch).getMockImplementation()!;
     const practicedAt = Date.now() - 3 * 86_400_000;
     vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress")
@@ -470,7 +470,7 @@ describe("Lesson actions", () => {
     expect(within(first).getByText("3 days ago").tagName).toBe("TIME");
     const second = screen.getByRole("link", { name: "Open lesson 2: Lesson title 2" });
     expect(second).toHaveTextContent("All practices done");
-    // A lesson never practised has no last practice; one without practices shows neither.
+    // A lesson never practiced has no last practice; one without practices shows neither.
     const third = screen.getByRole("link", { name: "Open lesson 3: Lesson title 3" });
     expect(third).toHaveTextContent("1 practice remains");
     expect(third).not.toHaveTextContent("Last practice");
@@ -478,16 +478,16 @@ describe("Lesson actions", () => {
   });
 
   it("lists a lesson's practices with the viewer's state and opens the chosen one's answer set", async () => {
-    const practised = { ...lesson(1, [practice, dialogue, second]), practiceProgress: { [practice.id]: { done: 1, started: 1, answered: 2 }, [second.id]: { done: 0, started: 0, answered: null } } };
+    const practiced = { ...lesson(1, [practice, dialogue, second]), practiceProgress: { [practice.id]: { done: 1, started: 1, answered: 2 }, [second.id]: { done: 0, started: 0, answered: null } } };
     const original = vi.mocked(fetch).getMockImplementation()!;
     vi.mocked(fetch).mockImplementation(async (input, init) => {
       const path = String(input);
-      if (path.endsWith(`/lessons/${lessonId(1)}`)) return response({ lesson: practised });
+      if (path.endsWith(`/lessons/${lessonId(1)}`)) return response({ lesson: practiced });
       if (path.endsWith(`/blocks/${second.id}/progress`)) return response({ progress: { done: 1, started: 1, answered: 1 } });
       return original(input, init);
     });
     renderLessons({ course: course(false), outline: [summary(1, true, { practiceCount: 2 })], lessons: [lesson(1)] });
-    fireEvent.click(await screen.findByRole("button", { name: "Practise lesson 1 again: Lesson title 1" }));
+    fireEvent.click(await screen.findByRole("button", { name: "Practice lesson 1 again: Lesson title 1" }));
     const dialog = await screen.findByRole("dialog", { name: "Practices in lesson 1" });
     const first = await within(dialog).findByRole("button", { name: /Translate\./ });
     expect(first).toHaveTextContent("Done");
@@ -514,6 +514,6 @@ describe("Lesson actions", () => {
     const archived = { ...course(true), status: "archived" as const };
     renderLessons({ course: archived, outline: [summary(1, true, { wordCount: 1, practiceCount: 1 })], lessons: [lesson(1, [practice])] });
     expect(await screen.findByRole("button", { name: "Review the words of lesson 1: Lesson title 1" })).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Practise lesson 1 again: Lesson title 1" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Practice lesson 1 again: Lesson title 1" })).not.toBeInTheDocument();
   });
 });

@@ -55,7 +55,7 @@ Production (2026-10-08): 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported into
   - **Positional states** — basic — staan for upright/on a base, liggen for flat or lying, zitten for sitting or enclosed contents, and hangen for suspended objects.
   - **Action → state pairs** — basic — leggen → liggen; zetten → staan; zetten → zitten when seating someone; steken → zitten for putting a small object into a pocket or bag; hangen → hangen.
   - **Orientation changes meaning** — basic — "Ik zet de fles op tafel" leaves it upright; "Ik leg de fles op tafel" leaves it on its side.
-  - **er + positional verb** — basic — "Er staat een bank …", "Er ligt een vloerkleed …"; fronted place and question forms are recognised and practised.
+  - **er + positional verb** — basic — "Er staat een bank …", "Er ligt een vloerkleed …"; fronted place and question forms are recognised and practiced.
   - **Present tense** — reinforcement — ik leg/zet/steek/hang; singular forms ligt/staat/zit/hangt; plural forms leggen/zetten/zitten/hangen.
 - **Vocabulary**: de vensterbank, het schilderij, het kussen, het vloerkleed, de handdoek, de la, de kapstok, de jas, de fles, het glas, de plant, de plank, de zak, het pak, de melk; leggen, zetten, steken, staan, liggen, zitten, hangen, ophangen.
 - **Story facts**: Sunday 18 October; Henk brings Sofia a plant; Tijger explores a box, a cushion and the rug while Sofia finishes the living room; Noor calls and asks where household items are.
@@ -64,9 +64,9 @@ Production (2026-10-08): 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported into
 
 ## 14-a Waar is het? (accepted 2026-10-08)
 - **Grammar**:
-  - Prepositions of place — practised — in, op (on top of; floors: op de tweede verdieping), onder, boven, naast, tussen … en … (never of), voor (in front of; also for), achter, tegenover, bij, aan (fixed to a wall or ceiling: aan de muur, aan het plafond), in de hoek (van), links van / rechts van; preposition + article + noun
-  - Waar is / Waar zijn …? — practised — is + singular, zijn + plural; answers use is/zijn only (positional verbs deferred to 14-b, announced in an important callout and in two notes mentioning hangt)
-  - Pronouns for things — practised — de-word → hij, het-word → het, plural → ze; the pronoun follows the article, not the meaning; typical mistake "Het is …" for a de-word
+  - Prepositions of place — practiced — in, op (on top of; floors: op de tweede verdieping), onder, boven, naast, tussen … en … (never of), voor (in front of; also for), achter, tegenover, bij, aan (fixed to a wall or ceiling: aan de muur, aan het plafond), in de hoek (van), links van / rechts van; preposition + article + noun
+  - Waar is / Waar zijn …? — practiced — is + singular, zijn + plural; answers use is/zijn only (positional verbs deferred to 14-b, announced in an important callout and in two notes mentioning hangt)
+  - Pronouns for things — practiced — de-word → hij, het-word → het, plural → ze; the pronoun follows the article, not the meaning; typical mistake "Het is …" for a de-word
   - Inversion after a fronted place — basic — place + verb + subject ("In de keuken is de koelkast.", "Op de eerste verdieping woont Henk.")
   - er is / er zijn + place — basic (recycles 13) — for something new, with een/geen/a number, not with de/het; after a fronted place er is optional and usually left out ("In de woonkamer is een grote bank.")
 - **Vocabulary** (42 words in 10 vocabulary blocks): welkom, de sleutel, de voordeur, beneden, de meterkast, naast, de meter, links, de container, het afval, achter, tegenover, de trap, Dat klopt., de vraag, de verhuizing, al; de bank (sofa), de prullenbak, onder, boven, tussen … en …, voor (in front of; new meaning), bij (by, near; earlier bij Noor 07-a, bij het raam 11-b), aan (on a wall or ceiling; new use), de muur, links van, rechts van; de hoek; het kussen; het bed; de kast; de hijsbalk; de boekenkast; het plafond; verhuizen, de hele dag, de vloer, overal, de gang, zijn van, nog (still; new meaning). Used but not listed because the Part I/II ledgers already record them: de doos (10-b), de tafel, het raam (11-b), de lamp, de plant, het bord, de tas (12-a), de spiegel, de stoel, het gebouw, de lift (12-b), de koelkast (10-a), de telefoon, de deur, het boek, de badkamer (07-b), de woonkamer, de slaapkamer, de keuken (13), leeg, alleen, de rommel, in, op.
@@ -77,11 +77,11 @@ Production (2026-10-08): 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported into
 
 ## 15-a Mijn buurt (accepted 2026-10-08)
 - **Grammar**:
-  - kunnen — practised — ik kan, jij kunt/kan, u kunt, hij/zij kan, wij/jullie/zij kunnen; never *hij kunt*; jij-inversion t-drop: Kun je …? (Kan je …? common in speech); u keeps kunt (Kunt u …?).
-  - kunnen + infinitive at the end — practised — ability (Noor kan goed koken), possibility (In de Kanaalstraat kun je groente kopen), polite request (Kunt u mij helpen?); everything else stands between the two verbs; *Ik kan koken goed* / *Je kunt kopen groente* marked as mistakes.
+  - kunnen — practiced — ik kan, jij kunt/kan, u kunt, hij/zij kan, wij/jullie/zij kunnen; never *hij kunt*; jij-inversion t-drop: Kun je …? (Kan je …? common in speech); u keeps kunt (Kunt u …?).
+  - kunnen + infinitive at the end — practiced — ability (Noor kan goed koken), possibility (In de Kanaalstraat kun je groente kopen), polite request (Kunt u mij helpen?); everything else stands between the two verbs; *Ik kan koken goed* / *Je kunt kopen groente* marked as mistakes.
   - Separable infinitive after kunnen — basic — stays whole at the end: Je kunt hier je fiets ophalen.
-  - Negation with kunnen — practised — niet directly before the infinitive (Hier kun je niet pinnen); geen + noun (Hier kun je geen brood kopen).
-  - Place / daar / hier first with inversion — practised — Daar kun je boeken lenen.
+  - Negation with kunnen — practiced — niet directly before the infinitive (Hier kun je niet pinnen); geen + noun (Hier kun je geen brood kopen).
+  - Place / daar / hier first with inversion — practiced — Daar kun je boeken lenen.
   - kunnen + language without infinitive — intro (chunk) — Ik kan een beetje Nederlands.
   - Recycled: Is er … in de buurt? (13), naast/tegenover/boven (14-a), liggen for buildings (De bibliotheek ligt aan het plein), van … tot … opening hours, willen/mogen in the columnList.
 - **Vocabulary** (35 words, 8 blocks): Mooi weer, hè?; kunnen; de bakker; open; dicht (new meaning: closed); de moskee; het park; wandelen; lenen; vlakbij; het plein; het kanaal; de apotheek; Kunt u mij helpen?; helpen; ophalen; de wijk; de slager; de fietsenwinkel; de brug; de kerk; de halte; de bushalte; ver; halen; Welkom!; Geen probleem!; Wat kan ik voor u doen?; de pas (library card); Dat kan.; Ik kan een beetje Nederlands.; maken (new meaning: to fix, informal); Turks; Marokkaans; in de zon zitten.
@@ -93,12 +93,12 @@ Production (2026-10-08): 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported into
 ## 15-b Rechtdoor en dan links (accepted 2026-10-08)
 - **Grammar**:
   - Imperative (jij) — basic — stem = ik-form, no subject: Ga rechtdoor. Neem de tweede straat. Loop tot de brug. Spelling as the ik-form (loop, neem, bel, wacht with no extra t).
-  - Separable verbs in the imperative — practised — verb part first, prefix last: Steek de brug over. Stap hier uit. linksaf/rechtsaf slaan works the same way: Sla bij het stoplicht linksaf (Ga … linksaf also fine).
-  - Polite imperative — practised — stem + t + u, verb first: Gaat u rechtdoor. Neemt u de tweede straat rechts. Never -t without u (*Gaat rechtdoor*).
+  - Separable verbs in the imperative — practiced — verb part first, prefix last: Steek de brug over. Stap hier uit. linksaf/rechtsaf slaan works the same way: Sla bij het stoplicht linksaf (Ga … linksaf also fine).
+  - Polite imperative — practiced — stem + t + u, verb first: Gaat u rechtdoor. Neemt u de tweede straat rechts. Never -t without u (*Gaat rechtdoor*).
   - Softeners — intro — maar (Kijk maar., Bel me maar!) and even (Wacht even!).
   - zijn → Wees — chunk — Wees voorzichtig!
   - Negative imperative — basic — Ga niet links. Neem geen bus.
-  - Sequence words — practised — eerst, dan, daarna; a statement starting with dan inverts: Dan ziet u het station.
+  - Sequence words — practiced — eerst, dan, daarna; a statement starting with dan inverts: Dan ziet u het station.
   - Signs use the infinitive — intro (hint) — Niet roken. Niet parkeren.
 - **Vocabulary** (27 words, 12 blocks): weten (ik weet, jij weet, wij weten + noun only), de weg, het kruispunt, het stoplicht, oversteken (sep.), rechtdoor, voorbij, rechts, de fietser, Wees voorzichtig!, … minuten lopen; links; tot (new use: as far as); linksaf, rechtsaf, de rotonde, het zebrapad; linksaf slaan; uitstappen (sep., one example); maar (new use: softener); Bel me maar!; parkeren; oppassen (sep.); mevrouw, Hoe kom ik bij …?, Ik loop wel.; de route. Not re-listed (known from 14-a/14-b/15-a or Part I–II): de hoek, tegenover, het plein, de brug, het station, de halte, de bakker, de supermarkt, de moskee, de kerk, vlakbij, ver, kunnen, eerst, daarna, dan, ongeveer, lopen, nemen, bellen, wachten, straks, Pardon.
 - **Expressions**: Ik weet de weg niet. Hoe kom ik bij …? Pardon, waar is …? Is het ver? Het is vlakbij. Het is … minuten lopen. Wees voorzichtig! Bel me maar! Pas op voor de fietsers! Ik loop wel. Kijk maar. Wacht even! Met Sofia! Tot straks!
@@ -108,12 +108,12 @@ Production (2026-10-08): 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported into
 
 ## 16-a Met de tram en de trein (accepted 2026-10-08)
 - **Grammar**:
-  - Separable verbs, full picture — practised — conjugated part in position 1 or 2, prefix at the very end in statements (We stappen in Amsterdam over.), yes/no questions (Stap je hier uit?), question-word questions (Hoe laat komt de trein aan?), inversion after time or daarna (Om tien voor negen komt de trein in Amsterdam aan. Daarna checken we uit.) and the imperative (Check hier in. Kom op, stap in!); a met- or direction phrase may follow the prefix (Ik check in met mijn bankpas. In Amsterdam stappen we over op de tram. De trein rijdt door naar Amsterdam Centraal.); *Ik overstap* and *Overstappen we …?* marked as mistakes.
-  - Separable infinitive after kunnen/mogen — practised — stays one word at the end: Je kunt hier overstappen. Mag ik hier instappen?; *Je kunt hier stappen over* marked.
+  - Separable verbs, full picture — practiced — conjugated part in position 1 or 2, prefix at the very end in statements (We stappen in Amsterdam over.), yes/no questions (Stap je hier uit?), question-word questions (Hoe laat komt de trein aan?), inversion after time or daarna (Om tien voor negen komt de trein in Amsterdam aan. Daarna checken we uit.) and the imperative (Check hier in. Kom op, stap in!); a met- or direction phrase may follow the prefix (Ik check in met mijn bankpas. In Amsterdam stappen we over op de tram. De trein rijdt door naar Amsterdam Centraal.); *Ik overstap* and *Overstappen we …?* marked as mistakes.
+  - Separable infinitive after kunnen/mogen — practiced — stays one word at the end: Je kunt hier overstappen. Mag ik hier instappen?; *Je kunt hier stappen over* marked.
   - Polite imperative with a separable verb — basic (recycles 15-b) — Checkt u in Amsterdam ook uit.
   - Stress rule — basic — stressed prefixes (IN-, UIT-, OVER-, AAN-) split; be-, ge-, her-, ont-, ver-, er- are unstressed and never split: vertrekken, betalen, beginnen, herhalen, ontbijten; *Ik ver trek* marked.
   - Ten prefixes — basic — in-, uit-, over-, aan-, weg-, terug-, door-, op-, af-, mee-.
-  - met + transport — practised — met de trein/tram/bus/metro/fiets/auto; walking: lopend or lopen (no *met de voet*); vehicles rijden; TMP recycled (Maandag gaat Sofia met de bus naar kantoor.).
+  - met + transport — practiced — met de trein/tram/bus/metro/fiets/auto; walking: lopend or lopen (no *met de voet*); vehicles rijden; TMP recycled (Maandag gaat Sofia met de bus naar kantoor.).
   - Hint only: De trein komt aan om tien uur is heard in speech; teach prefix last.
 - **Vocabulary** (32 words, 9 vocabulary blocks): het perron, het spoor, inchecken, de bankpas, het poortje, de vertraging, overstappen, instappen, het probleem, Kom op!; uitchecken; rijden, doorrijden, wegrijden, doorlopen; herhalen; de metro; het kaartje, de ov-chipkaart, het openbaar vervoer, enkele reis, retour, de reis, Beste reizigers, de reiziger; de stiltecoupé, de spits; de conducteur, Hebt u een kaartje?, stil, Goede reis!; de laptop. Not re-listed (known): de tram, de bus (07-a, 09-b), de trein, het station, aankomen, vertrekken, rennen, op tijd, te laat, de klant, de planning (08-a), uitstappen (15-b), terugkomen (09-a), meenemen, weggaan (07-b), lopen (07-a), lopend (09-b), de halte (15-a), de fiets, de auto, de vergadering, nodig hebben, de vraag, duren.
 - **Expressions**: Hebt u een kaartje?; Ik check in met mijn bankpas.; Een retour / Een enkele reis Amsterdam, alstublieft.; Beste reizigers, de trein heeft vijf minuten vertraging.; Kunt u dat herhalen, alstublieft?; Van welk spoor?; Is er vertraging?; Kom op!; Goede reis!; Mag ik uw bankpas even zien?; Bel me maar! (recycled); Je hebt geen kaartje nodig. (recycled 10-b).
@@ -123,12 +123,12 @@ Production (2026-10-08): 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported into
 
 ## 16-b Ik ga een fiets kopen (accepted 2026-10-08)
 - **Grammar**:
-  - gaan + infinitive — practised — a form of gaan in position 2 (ik ga, jij gaat / ga je …?, u gaat, hij/zij gaat, wij/jullie/zij gaan), the infinitive at the very end, everything else in between; no naar or te before the infinitive (*Ik ga naar kopen* / *Ik ga kopen een fiets* marked as mistakes).
-  - Separable infinitive after gaan — practised — stays one word at the end: Ik ga morgen de fiets ophalen. Sofia gaat de fiets eerst uitproberen. (*Ik ga op halen* / *Ik ga haal op* marked as mistakes.)
+  - gaan + infinitive — practiced — a form of gaan in position 2 (ik ga, jij gaat / ga je …?, u gaat, hij/zij gaat, wij/jullie/zij gaan), the infinitive at the very end, everything else in between; no naar or te before the infinitive (*Ik ga naar kopen* / *Ik ga kopen een fiets* marked as mistakes).
+  - Separable infinitive after gaan — practiced — stays one word at the end: Ik ga morgen de fiets ophalen. Sofia gaat de fiets eerst uitproberen. (*Ik ga op halen* / *Ik ga haal op* marked as mistakes.)
   - One rule for gaan, kunnen, willen, mogen — basic — second verb is an infinitive at the end (important callout and numbered list).
-  - Time first + inversion — practised — Morgen ga ik een fiets kopen. Zaterdag gaan we fietsen. (*Morgen ik ga* marked.)
-  - Questions — practised — Ga je zaterdag fietsen? Wat ga je dit weekend doen?
-  - Negation — practised — niet just before the infinitive (Ik ga vanavond niet koken); geen + noun (Ik ga geen nieuwe fiets kopen).
+  - Time first + inversion — practiced — Morgen ga ik een fiets kopen. Zaterdag gaan we fietsen. (*Morgen ik ga* marked.)
+  - Questions — practiced — Ga je zaterdag fietsen? Wat ga je dit weekend doen?
+  - Negation — practiced — niet just before the infinitive (Ik ga vanavond niet koken); geen + noun (Ik ga geen nieuwe fiets kopen).
   - Two meanings of gaan — basic — gaan + place (movement, no infinitive) vs gaan + infinitive (plan), in a columnList; both together: Ik ga naar de fietsenwinkel lopen.
   - Present + time word for the future — basic (recycles 08-b/09-a) — Morgen koop ik een fiets.
   - Recycled: imperative (15-b: Neem een goed slot!, Fiets maar een rondje, Zet je fiets op slot!), Mag ik + infinitive, prices (12-b), hij for de fiets (14-a), deze/dit, lek → een lekke band.
@@ -140,12 +140,12 @@ Production (2026-10-08): 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported into
 
 ## 17-a Wat voor weer is het? (accepted 2026-10-08)
 - **Grammar**:
-  - Impersonal het with weather verbs — practised — het + stem + t (het regent, sneeuwt, waait, vriest, onweert, hagelt); inversion after time (Vandaag regent het. In de winter vriest het soms.); yes/no question verb first (Regent het?); never *Er regent* or *Het is regenen*; de zon schijnt has de zon as subject (not *het schijnt*).
-  - het is + adjective or number — practised — het is koud / bewolkt / mistig / droog / tien graden; no -e after is; also time and days (Het is laat. Het is maandag.), recycled from 08–09.
-  - graad → graden after a number — practised — tien graden, never *tien graad* (unlike tien uur, tien euro).
+  - Impersonal het with weather verbs — practiced — het + stem + t (het regent, sneeuwt, waait, vriest, onweert, hagelt); inversion after time (Vandaag regent het. In de winter vriest het soms.); yes/no question verb first (Regent het?); never *Er regent* or *Het is regenen*; de zon schijnt has de zon as subject (not *het schijnt*).
+  - het is + adjective or number — practiced — het is koud / bewolkt / mistig / droog / tien graden; no -e after is; also time and days (Het is laat. Het is maandag.), recycled from 08–09.
+  - graad → graden after a number — practiced — tien graden, never *tien graad* (unlike tien uur, tien euro).
   - worden — basic — ik word, jij wordt (word je?), u/hij/zij/het wordt, wij/jullie/zij worden; het wordt + adjective/number for the forecast (Morgen wordt het warm.).
-  - gaan + infinitive with weather verbs — practised (recycles 16-b) — Het gaat regenen. Gaat het zaterdag sneeuwen?; do not mix with worden (*Het wordt regenen* → Het gaat regenen).
-  - in de + season — practised — in de lente/zomer/herfst/winter, months without article (in november); *in zomer* → in de zomer.
+  - gaan + infinitive with weather verbs — practiced (recycles 16-b) — Het gaat regenen. Gaat het zaterdag sneeuwen?; do not mix with worden (*Het wordt regenen* → Het gaat regenen).
+  - in de + season — practiced — in de lente/zomer/herfst/winter, months without article (in november); *in zomer* → in de zomer.
   - er zijn + plural — recycled — Er zijn veel wolken vandaag; weather verb itself always het, never er.
 - **Vocabulary** (39 words, 12 blocks): het weer (new meaning; weer = again 07-b), Wat een weer!, regenen, waaien (waait · waaide/woei · gewaaid), nat, de regen, de regenjas, worden, de graad (graden), Wat voor weer is het?, schijnen, de zon (earlier only in the chunk in de zon zitten, 15-a), missen, de zomer, de paraplu (paraplu's), de wind; sneeuwen, vriezen, onweren, hagelen; de sneeuw; de wolk, de bui, de storm; de winter; bewolkt, mistig, de mist; droog; de temperatuur; het seizoen; de lente, de herfst; de weersverwachting, Er is geen slecht weer, alleen slechte kleding., Goed zo!, de buienradar, lekker weer, de kleding.
 - **Expressions**: Wat een weer!; Nou, nou!; Wat voor weer is het (morgen)? / Wat voor weer wordt het?; Hoe is het weer? (in a note); Mooi weer, hè? (recycled 15-a); Lekker weer!; Er is geen slecht weer, alleen slechte kleding.; Goed zo!; Fijne avond!; Nee hoor!; Brr (unglossed interjection).
@@ -155,10 +155,10 @@ Production (2026-10-08): 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported into
 
 ## 17-b Lekker weer (accepted 2026-10-11)
 - **Grammar**:
-  - Adjective before a noun — practised (recap of Part I) — -e with de-words and after de/het; no -e with een/geen/no article + singular het-word (een koude dag, een koud weekend, een harde wind, een lange wandeling).
-  - Adjective after zijn/worden — practised — never an ending (De dag is koud. Het wordt warm. De zee is kalm.); *De dag is koude* → De dag is koud.
-  - Adverb = base form — practised — same word as the adjective, never -e, no -ly (Het waait hard. Daan loopt snel. Sofia loopt langzaam. Het gaat goed.); *Hij fietst snelle* → Hij fietst snel; adjective → adverb transformation (De wind is hard. → Het waait hard.).
-  - Intensifiers heel, erg, best, een beetje, te — practised — right before the adjective/adverb, never inflected themselves; een heel koude dag (written standard; een hele koude dag noted as spoken); best = quite/fairly (false friend); te = too (recycles 12-b).
+  - Adjective before a noun — practiced (recap of Part I) — -e with de-words and after de/het; no -e with een/geen/no article + singular het-word (een koude dag, een koud weekend, een harde wind, een lange wandeling).
+  - Adjective after zijn/worden — practiced — never an ending (De dag is koud. Het wordt warm. De zee is kalm.); *De dag is koude* → De dag is koud.
+  - Adverb = base form — practiced — same word as the adjective, never -e, no -ly (Het waait hard. Daan loopt snel. Sofia loopt langzaam. Het gaat goed.); *Hij fietst snelle* → Hij fietst snel; adjective → adverb transformation (De wind is hard. → Het waait hard.).
+  - Intensifiers heel, erg, best, een beetje, te — practiced — right before the adjective/adverb, never inflected themselves; een heel koude dag (written standard; een hele koude dag noted as spoken); best = quite/fairly (false friend); te = too (recycles 12-b).
   - lekker as adjective and adverb — basic — lekker weer, De chocolademelk is lekker., Het is lekker warm., Vanavond slaap ik lekker.
 - **Vocabulary** (19 words, 5 blocks): het strand, de zee, de golf (wave; not het golf, the sport), het duin (also de duin), het zand; kalm, hard, langzaam, juist, zacht, het strandcafé, de wandeling; erg, best (quite, fairly); schuilen, nog steeds, de warme chocolademelk, Goed idee!; Tot snel!. Not re-listed (known): heel (very, 10-b), snel (07-b), goed, slecht, mooi, druk, rustig (Part I), lekker (07-a), lekker weer, nat, droog, de zon schijnt, waaien, regenen, worden, de bui (17-a), heerlijk, fijn (11-b), warm, koud, een beetje (10-b), te (08-a/12-b), vroeg, laat (07-a), wandelen (15-a), binnen, buiten, de ober (11-a), bijna (10-a), Goed plan! (16-b), Kom op! (16-a).
 - **Expressions**: Lekker weer!; Heerlijk, hè?; Goed plan.; Goed idee!; Kom op!; Lopen we naar …? / Nemen we nog een chocolademelk? (suggestion without zullen); Drie warme chocolademelk, graag!; Tot snel!; Hoi mam! / Liefs (recycled).
@@ -168,10 +168,10 @@ Production (2026-10-08): 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported into
 
 ## 18-a Kleren en kleuren (accepted 2026-10-11)
 - **Grammar**:
-  - Attributive adjective endings, full system — practised — adjective before a noun gets -e; the one exception is a singular het-word after een, geen or no article (een rood shirt, geen rood shirt, warm water); -e after het, dit/dat and possessives (het/dit/mijn rode shirt); de-words always -e (de/een/geen/mijn/deze rode jas); plurals always -e (rode jassen, geen grote schoenen).
+  - Attributive adjective endings, full system — practiced — adjective before a noun gets -e; the one exception is a singular het-word after een, geen or no article (een rood shirt, geen rood shirt, warm water); -e after het, dit/dat and possessives (het/dit/mijn rode shirt); de-words always -e (de/een/geen/mijn/deze rode jas); plurals always -e (rode jassen, geen grote schoenen).
   - Dit is / Dat is + een — basic — dit/dat as subject leaves een as the determiner, so the exception applies (Dit is een rood shirt.) vs attributive dit (Dit rode shirt is nieuw.).
-  - Spelling before -e — practised — long vowel loses a letter (groot → grote, geel → gele); short vowel doubles the consonant (wit → witte, dik → dikke, dun → dunne); s → z, f → v after a long vowel or ij (grijs → grijze, lief → lieve); paars → paarse (s stays after r); regular blauwe, groene, zwarte, bruine.
-  - No ending ever — practised — oranje, roze, material adjectives in -en (wollen, katoenen).
+  - Spelling before -e — practiced — long vowel loses a letter (groot → grote, geel → gele); short vowel doubles the consonant (wit → witte, dik → dikke, dun → dunne); s → z, f → v after a long vowel or ij (grijs → grijze, lief → lieve); paars → paarse (s stays after r); regular blauwe, groene, zwarte, bruine.
+  - No ending ever — practiced — oranje, roze, material adjectives in -en (wollen, katoenen).
   - Predicative and adverb — recycled (Part I, 17-b) — no ending (Deze trui is rood. De broek past goed.).
   - Colours as nouns — basic — Rood is mooi.; in het + colour (Hebt u deze trui ook in het blauw? Noor is vandaag in het blauw.); donker-/licht- shades follow the normal rules (een donkerblauwe jas, lichtgroene sjaals).
   - Separable aantrekken/uittrekken — recycled (16-a, 15-b imperative) — Sofia trekt de trui aan. Trek je jas maar uit.
@@ -183,10 +183,10 @@ Production (2026-10-08): 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported into
 
 ## 18-b Deze jas is warmer (accepted 2026-10-11)
 - **Grammar**:
-  - Comparative — practised — adjective + er (warm → warmer, klein → kleiner, lang → langer, goedkoop → goedkoper); spelling as with -e: double vowel letter becomes single (groot → groter), consonant doubles after a short vowel (dik → dikker, dun → dunner); after -r add -der (duur → duurder, ver → verder, lekker → lekkerder); *meer warm* / *duurer* avoided.
-  - dan after a comparative — practised — "Deze jas is warmer dan die jas."; *warmer als* marked as a mistake.
+  - Comparative — practiced — adjective + er (warm → warmer, klein → kleiner, lang → langer, goedkoop → goedkoper); spelling as with -e: double vowel letter becomes single (groot → groter), consonant doubles after a short vowel (dik → dikker, dun → dunner); after -r add -der (duur → duurder, ver → verder, lekker → lekkerder); *meer warm* / *duurer* avoided.
+  - dan after a comparative — practiced — "Deze jas is warmer dan die jas."; *warmer als* marked as a mistake.
   - Irregular comparatives — basic — goed → beter, veel → meer, weinig → minder (minder duur, minder kwaliteit).
-  - Equality — practised — even … als / net zo … als + base adjective ("Deze jas is even duur als die jas.", "Utrecht is net zo gezellig als Valencia."); negative niet zo … als.
+  - Equality — practiced — even … als / net zo … als + base adjective ("Deze jas is even duur als die jas.", "Utrecht is net zo gezellig als Valencia."); negative niet zo … als.
   - Comparative before a noun — basic — takes -e (de/een duurdere jas, de warmere jas); het-word after een/geen stays bare (een warmer vest), same exception as 18-a.
   - Demonstratives as pronouns with comparatives — intro — "Deze is warmer, maar die is mooier." (12-a recycled).
 - **Vocabulary** (16 words, 4 blocks): de kwaliteit, de keus, kiezen, twijfelen, vergelijken (inseparable), zwaar, licht (new meaning: light in weight; licht = bright 13-2, het licht 16-b), praktisch, dan (new use: than; dan = then 08-b), beter; meer, minder; even … als, net zo … als, niet zo … als; Die jas staat je goed. Not re-listed (known): de prijs, nemen, lang, kort, warm, koud, duur, goedkoop, mooi, lelijk, zwart, gezellig, missen, de regenjas, de winter, Spanje, Precies, Prima, meenemen; and all clothing/colour words from 18-a (de jas, de winterjas, de trui, de sjaal, het vest, dik, dun, donker-/blauw, passen, de maat, de paskamer, "Hij past goed.").

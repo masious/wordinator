@@ -103,7 +103,7 @@ function LessonForm({ initial, submitLabel, pending, error, onSubmit, onCancel }
 
 type LessonPractices = CourseProgressResponse["practices"][string];
 
-// How many of the lesson's published practices remain for the viewer, and when they last practised in it. Archived courses refuse
+// How many of the lesson's published practices remain for the viewer, and when they last practiced in it. Archived courses refuse
 // practice progress, so they show only the last practice.
 function PracticeActivity({ summary, practices, archived }: { summary: CourseLessonSummary; practices: LessonPractices | undefined; archived: boolean }) {
   const { t } = useTranslation();
@@ -121,7 +121,7 @@ function PracticeActivity({ summary, practices, archived }: { summary: CourseLes
 }
 
 // One entry of the course's lesson list. It links to the lesson page, reports where the reader stands, and offers the lesson's own
-// actions: play it, review its words, and practise again. `saved` is the viewer's saved position, also in a finished lesson.
+// actions: play it, review its words, and practice again. `saved` is the viewer's saved position, also in a finished lesson.
 function LessonRow({ scope, summary, number, outline, completed, saved, practices, archived, onPlay }: {
   scope: Scope; summary: CourseLessonSummary; number: number; outline: CourseLessonSummary[]; completed: boolean; saved: LessonPosition | undefined;
   practices: LessonPractices | undefined; archived: boolean; onPlay: (lessonId: string) => void;

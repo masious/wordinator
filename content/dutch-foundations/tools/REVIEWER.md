@@ -44,7 +44,7 @@ For each lesson, write `content/dutch-foundations/<part>/review/<NN-x>.md` with 
 
 ```markdown
 ## <NN-x> <Title>
-- **Grammar**: bullets, each "topic — depth (intro/basic/practised) — key rule as taught"
+- **Grammar**: bullets, each "topic — depth (intro/basic/practiced) — key rule as taught"
 - **Vocabulary**: new words with de/het (nouns), verbs as infinitives, other words
 - **Expressions**: fixed chunks taught or used
 - **Story facts**: facts this lesson establishes

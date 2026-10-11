@@ -27,12 +27,12 @@ All 12 lessons were imported into the local database on 2026-10-08 as unpublishe
 
 ## 07-a Mijn dag (accepted 2026-10-08)
 - **Grammar**:
-  - Present tense, full paradigm — practised — ik + stem, jij/u/hij/zij/het + stem + t, wij/jullie/zij + infinitive form ("plural = infinitive"); jullie always takes -en (*jullie werken*; *jullie werkt* marked as a mistake).
+  - Present tense, full paradigm — practiced — ik + stem, jij/u/hij/zij/het + stem + t, wij/jullie/zij + infinitive form ("plural = infinitive"); jullie always takes -en (*jullie werken*; *jullie werkt* marked as a mistake).
   - Plural spelling — basic — plural = infinitive, so singular spelling changes reverse (maak → maken, zit → zitten, leef → leven, lees → lezen).
   - Irregular singulars gaan, doen, staan, zien — basic — plural still the infinitive (wij gaan, wij doen).
   - Unstressed we/ze — basic — ze werkt = she, ze werken = they; the verb tells you which.
   - Inversion in plural questions — basic — "Werken jullie thuis?": no t-drop in the plural; only jij drops the t.
-  - Frequency adverbs — practised — subject + verb + altijd/meestal/vaak/soms/nooit/elke dag + rest; *Ik altijd ontbijt* → Ik ontbijt altijd.
+  - Frequency adverbs — practiced — subject + verb + altijd/meestal/vaak/soms/nooit/elke dag + rest; *Ik altijd ontbijt* → Ik ontbijt altijd.
   - 's ochtends / 's middags / 's avonds — basic — fixed chunks after the verb or at the end; sentences start with the subject.
   - Plural possessives — basic — ons + het-word singular, onze + de-word and plurals, jullie (your), hun (their); *onze huis* → ons huis.
   - ontbijten — intro — inseparable; stem ends in t, so no extra t (ik/jij/hij ontbijt).
@@ -44,9 +44,9 @@ All 12 lessons were imported into the local database on 2026-10-08 as unpublishe
 
 ## 07-b Ik sta vroeg op (accepted 2026-10-08)
 - **Grammar**:
-  - Separable verbs — practised — the conjugated part stands in the normal verb position; the prefix goes to the very end of the clause ("Ik sta vroeg op."); *Ik opsta vroeg* and *Ik sta op vroeg* are wrong.
+  - Separable verbs — practiced — the conjugated part stands in the normal verb position; the prefix goes to the very end of the clause ("Ik sta vroeg op."); *Ik opsta vroeg* and *Ik sta op vroeg* are wrong.
   - Middle field — basic — adverbs, time words and objects stand between verb part and prefix ("Ik was altijd af.", "Ik bel mijn moeder op.").
-  - Yes/no questions with separable verbs — practised — verb part first, prefix still last ("Kom je mee?"); jij/je t-drop applies.
+  - Yes/no questions with separable verbs — practiced — verb part first, prefix still last ("Kom je mee?"); jij/je t-drop applies.
   - Question words — basic — question word + verb part + subject + … + prefix ("Wanneer kom je thuis?", "Wie wast af?"); wanneer is new.
   - Plural and infinitive — basic — infinitive written as one word; plural uses the infinitive form, split ("Wij staan vroeg op."); jullie takes -en (*jullie wast af* marked as a mistake).
   - Stress — intro — separable prefixes are stressed (OPstaan); be-, ver-, ont-, her-, ge-, er- are unstressed and never split (ik ontbijt, Sofia betaalt).
@@ -58,13 +58,13 @@ All 12 lessons were imported into the local database on 2026-10-08 as unpublishe
 
 ## 08-a Hoe laat is het? (accepted 2026-10-08)
 - **Grammar**:
-  - Asking/telling the time — practised — "Hoe laat is het?" "Het is … uur."; uur stays singular after a number (drie uur, not *drie uren*)
+  - Asking/telling the time — practiced — "Hoe laat is het?" "Het is … uur."; uur stays singular after a number (drie uur, not *drie uren*)
   - een uur vs één uur — basic — een uur = an hour, één uur = one o'clock (accents when unclear)
-  - half — practised — half + next hour: half negen = 8:30 (false friend with British "half nine")
-  - Quarters — practised — kwart over acht (8:15), kwart voor negen (8:45); never *kwart na*
-  - Minutes around the half hour — practised — :05–:15 over; :20–:25 voor half; :35–:40 over half; :45–:55 voor; twintig over acht noted as heard alternative
+  - half — practiced — half + next hour: half negen = 8:30 (false friend with British "half nine")
+  - Quarters — practiced — kwart over acht (8:15), kwart voor negen (8:45); never *kwart na*
+  - Minutes around the half hour — practiced — :05–:15 over; :20–:25 voor half; :35–:40 over half; :45–:55 voor; twintig over acht noted as heard alternative
   - 12-hour speech vs 24-hour timetables — basic — 's ochtends/'s middags/'s avonds/'s nachts in speech; "achttien uur dertig", 17.35 uur in timetables; written 8.30 or 8:30; don't read digits in speech
-  - om + time — practised — subject + verb + om + time (+ prefix); Hoe laat + verb + subject; short answer "Om tien uur." No inversion after time (08-b)
+  - om + time — practiced — subject + verb + om + time (+ prefix); Hoe laat + verb + subject; short answer "Om tien uur." No inversion after time (08-b)
   - Separable/inseparable with times — basic (recycled) — aankomen (aan at end), opstaan, thuiskomen, weggaan; vertrekken inseparable
 - **Vocabulary**: het uur, de minuut (minuten), het kwartier, de klok, het horloge, de tijd, de trein, het station, de vergadering, de pauze, de klant (client; introduced here), de planning (schedule), het ontbijt (recycled); beginnen, stoppen, vertrekken, aankomen, wachten (op), rennen; kwart, half, over, voor, precies, ongeveer, rond, vroeg, 's nachts; op tijd, te laat
 - **Expressions**: Hoe laat is het? Het is … uur. Je bent te laat! Om … uur. op tijd, te laat; een uur pauze; een pauze van een kwartier; toch? (tag); Echt?; Lekker!; Precies!; Prima.
@@ -74,10 +74,10 @@ All 12 lessons were imported into the local database on 2026-10-08 as unpublishe
 
 ## 08-b Een afspraak maken (accepted 2026-10-08)
 - **Grammar**:
-  - om / van … tot / tot / tussen … en … — practised — om + clock time; van negen tot vijf (never *van … naar*); tot = until and "Tot morgen/dan/straks!"; tussen twaalf en één
-  - Inversion after a time (V2) — practised — time + verb + subject + rest: "Om acht uur begin ik." "Morgen heb ik tijd."; a name/noun subject moves behind the verb as one block
-  - je/jij after the verb drops -t — practised — "Morgen werk je thuis." (-t stays with hij/zij/name: "Morgen werkt Daan thuis."); stressed "begin jij" possible
-  - Separable verbs with inversion — practised — prefix stays at the end: "Om zeven uur sta ik op." "Vanavond spreek ik met Noor af."
+  - om / van … tot / tot / tussen … en … — practiced — om + clock time; van negen tot vijf (never *van … naar*); tot = until and "Tot morgen/dan/straks!"; tussen twaalf en één
+  - Inversion after a time (V2) — practiced — time + verb + subject + rest: "Om acht uur begin ik." "Morgen heb ik tijd."; a name/noun subject moves behind the verb as one block
+  - je/jij after the verb drops -t — practiced — "Morgen werk je thuis." (-t stays with hij/zij/name: "Morgen werkt Daan thuis."); stressed "begin jij" possible
+  - Separable verbs with inversion — practiced — prefix stays at the end: "Om zeven uur sta ik op." "Vanavond spreek ik met Noor af."
   - Other first elements — basic — dan, daarna, vandaag, morgen, vanmiddag, vanavond; dus at sentence start in the model answer only (glossed)
 - **Vocabulary**: de afspraak, afspreken (sep.), de kapper, de tandarts, de huisarts, de vergadering, de teamvergadering, de lunch, de lunchpauze, de agenda, de kapsalon, het project; tijd hebben, vrij, plaats (Hebt u plaats?), passen (Past dat? Dat past (niet)), knippen, lunchen (recycled); prima, helaas, jammer, overmorgen, vanmiddag, vanavond, straks, later, eerder, dan, daarna, dus; de klant is recycled from 08-a (reminder gloss only)
 - **Expressions**: Heb je morgen tijd? Ben je … vrij? Ik heb het druk. Ik kijk even in mijn agenda. Jammer. Is half een goed? Past dat? Dat past. Dat is goed. Prima. Hebt u … plaats? Ik bel voor een afspraak. Met + name (on the phone). Alleen knippen, alstublieft. Graag gedaan. Tot morgen! Tot dan! Tot straks! Tot donderdag! Hoi allemaal. Lunchen we samen? (suggestion without zullen)
@@ -87,12 +87,12 @@ All 12 lessons were imported into the local database on 2026-10-08 as unpublishe
 
 ## 09-a Maandag, dinsdag… (accepted 2026-10-08)
 - **Grammar**:
-  - Days and months — practised — lowercase in Dutch, also mid-sentence; agenda abbreviations ma, di, wo, do, vr, za, zo.
-  - Ordinal numbers — practised — 1–19 number + de, from 20 number + ste; irregular eerste, derde, achtste; written 1e/2e/20e (also 1ste).
-  - Dates — practised — cardinal before the month (zestien september); de + ordinal without the month (de zestiende); "De hoeveelste is het vandaag?", "Welke dag is het vandaag?"; day first in writing (16-9-2026); year 2026 = tweeduizend zesentwintig.
-  - op / in / om — practised — op + day or date, in + month, year or het weekend, om + clock time; "zaterdag" without op is common in speech; no preposition before vandaag, morgen, deze/volgende/elke week.
-  - jarig zijn — practised — "Ik ben op 23 april jarig", not *Ik heb verjaardag*.
-  - Inversion after a time expression — practised (recycled from 08-b) — "Op zaterdag geeft Daan een feest."
+  - Days and months — practiced — lowercase in Dutch, also mid-sentence; agenda abbreviations ma, di, wo, do, vr, za, zo.
+  - Ordinal numbers — practiced — 1–19 number + de, from 20 number + ste; irregular eerste, derde, achtste; written 1e/2e/20e (also 1ste).
+  - Dates — practiced — cardinal before the month (zestien september); de + ordinal without the month (de zestiende); "De hoeveelste is het vandaag?", "Welke dag is het vandaag?"; day first in writing (16-9-2026); year 2026 = tweeduizend zesentwintig.
+  - op / in / om — practiced — op + day or date, in + month, year or het weekend, om + clock time; "zaterdag" without op is common in speech; no preposition before vandaag, morgen, deze/volgende/elke week.
+  - jarig zijn — practiced — "Ik ben op 23 april jarig", not *Ik heb verjaardag*.
+  - Inversion after a time expression — practiced (recycled from 08-b) — "Op zaterdag geeft Daan een feest."
   - Separable terugkomen — basic (recycled) — "Fleur komt op 1 november terug."
 - **Vocabulary**: maandag–zondag, januari–december; de dag, de week, de maand, de datum, de agenda (planner / diary), de verjaardag, de taart; het weekend, het jaar, het feest, het tentamen; vandaag, morgen, overmorgen, deze week, volgende week, elke week; jarig, vrij, eerst; terugkomen, trakteren (op), zoeken; ordinals eerste … eenendertigste.
 - **Expressions**: De hoeveelste is het vandaag? — Het is de zestiende.; Welke dag is het vandaag?; Wanneer ben je jarig?; Ik ben op … jarig.; Gefeliciteerd met Daan!; Succes!; trakteren op taart; dat is (that is) as a fixed chunk ("Dat is een zaterdag", "In 2027 is dat een vrijdag"); Het druk hebben (recycled).
@@ -102,9 +102,9 @@ All 12 lessons were imported into the local database on 2026-10-08 as unpublishe
 
 ## 09-b Mijn week (accepted 2026-10-08)
 - **Grammar**:
-  - Time – manner – place after the verb — practised — "Ik ga morgen met de trein naar Amsterdam."; time before place (English mirror order is wrong); manner = met de bus/trein/tram/fiets, lopend, samen, alleen; samen before met de tram.
-  - Two time expressions — practised — general before specific: "op dinsdag om zeven uur", "elke week op woensdag".
-  - Inversion with a time expression first — practised (recycled from 08-b) — time + verb + subject + rest; only one element before the verb; second time expression stays after the subject.
+  - Time – manner – place after the verb — practiced — "Ik ga morgen met de trein naar Amsterdam."; time before place (English mirror order is wrong); manner = met de bus/trein/tram/fiets, lopend, samen, alleen; samen before met de tram.
+  - Two time expressions — practiced — general before specific: "op dinsdag om zeven uur", "elke week op woensdag".
+  - Inversion with a time expression first — practiced (recycled from 08-b) — time + verb + subject + rest; only one element before the verb; second time expression stays after the subject.
   - Separable verbs in TMP sentences — basic (recycled) — prefix at the very end: thuiskomen, meekomen, afspreken, meenemen.
   - Habitual vs one-off — intro — elke maandag / op maandag (habit), deze week, volgende week; "zaterdag" without op = this Saturday.
   - Present tense for the future — intro — "Ik ga morgen naar Amsterdam."
@@ -116,11 +116,11 @@ All 12 lessons were imported into the local database on 2026-10-08 as unpublishe
 
 ## 10-a Boodschappen (accepted 2026-10-08)
 - **Grammar**:
-  - Plural -en — practised — most nouns add -en (boek → boeken, ui → uien, supermarkt → supermarkten); irregular eieren, kinderen
-  - Plural -s / 's — practised — -el, -em, -en, -er, -je add -s (appels, komkommers, broodjes); long a, o, u, i, y add 's (paprika's, foto's, menu's, pizza's); appelen is old-fashioned; aardappelen and aardappels both correct
-  - Spelling changes with -en — practised — keep the vowel sound: double the consonant after a short vowel (flessen, koppen, pannen, boodschappen); aa/ee/oo/uu written single (tomaten, peren, broden, bonen, uren, bananen); f → v, s → z after a long vowel or ui (druiven, kazen, huizen)
-  - All plurals take de — practised — het ei → de eieren, het broodje → de broodjes
-  - een has no plural; geen = not a / not any with singular, plural and uncountable nouns — practised
+  - Plural -en — practiced — most nouns add -en (boek → boeken, ui → uien, supermarkt → supermarkten); irregular eieren, kinderen
+  - Plural -s / 's — practiced — -el, -em, -en, -er, -je add -s (appels, komkommers, broodjes); long a, o, u, i, y add 's (paprika's, foto's, menu's, pizza's); appelen is old-fashioned; aardappelen and aardappels both correct
+  - Spelling changes with -en — practiced — keep the vowel sound: double the consonant after a short vowel (flessen, koppen, pannen, boodschappen); aa/ee/oo/uu written single (tomaten, peren, broden, bonen, uren, bananen); f → v, s → z after a long vowel or ui (druiven, kazen, huizen)
+  - All plurals take de — practiced — het ei → de eieren, het broodje → de broodjes
+  - een has no plural; geen = not a / not any with singular, plural and uncountable nouns — practiced
   - Uncountables (de melk, de boter, de rijst, de kaas, het water, het fruit) — basic — no plural, no een; kazen = whole cheeses / kinds
   - Plural subject + plural verb (De appels zijn duur.); adjective + -e before a plural (grote tomaten) — basic
   - Recycled: inversion after time (Om half zes doen we…), op + day/date, meenemen / meekomen, hoe laat / half zes, wie + singular verb
@@ -132,11 +132,11 @@ All 12 lessons were imported into the local database on 2026-10-08 as unpublishe
 
 ## 10-b Hoeveel heb je nodig? (accepted 2026-10-08)
 - **Grammar**:
-  - Units stay singular after a number — practised — twee kilo, drie liter, 200 gram, twee pond, vijf euro, vijf uur
-  - Containers and pieces pluralise — practised — twee flessen, drie pakken, twee zakken, vier stukken, twee blikken, twee dozen, twee glazen (glas → glazen irregular)
-  - No van / "of" after a unit or container — practised — een fles water, een kilo appels, een pak melk, een kop koffie, een stuk kaas, een glas wijn
-  - Quantity words — practised — veel, weinig, genoeg, een beetje (+ uncountable), een paar (+ plural), hoeveel (+ plural or uncountable, = how much / how many)
-  - nodig hebben — practised — subject + hebben + thing + nodig; nodig goes to the end like a separable prefix; questions Heb je … nodig? Hoeveel … heb je nodig?; with inversion after time
+  - Units stay singular after a number — practiced — twee kilo, drie liter, 200 gram, twee pond, vijf euro, vijf uur
+  - Containers and pieces pluralise — practiced — twee flessen, drie pakken, twee zakken, vier stukken, twee blikken, twee dozen, twee glazen (glas → glazen irregular)
+  - No van / "of" after a unit or container — practiced — een fles water, een kilo appels, een pak melk, een kop koffie, een stuk kaas, een glas wijn
+  - Quantity words — practiced — veel, weinig, genoeg, een beetje (+ uncountable), een paar (+ plural), hoeveel (+ plural or uncountable, = how much / how many)
+  - nodig hebben — practiced — subject + hebben + thing + nodig; nodig goes to the end like a separable prefix; questions Heb je … nodig? Hoeveel … heb je nodig?; with inversion after time
   - Diminutives — intro (vocabulary rule) — -je/-tje/-pje make things small and are always het; plural -s (het kopje, het blokje, het eitje, het broodje)
   - een pond = 500 gram = een halve kilo; een half pond = 250 gram; een halve liter, een kwart liter — basic — halve with de kilo / de liter, half with het pond (Part I adjective rule after een)
 - **Vocabulary**: de kilo, het pond, de gram, de liter, de fles, het pak, de zak, het stuk, de doos, het blik, het glas (glazen), de kop, het kopje, het blok, het blokje, het kaasblokje, het eitje, de bitterbal (bitterballen), de mosterd, de boterham, het recept, de tortilla, de olijfolie, het zout, de peper, de pan, het mes, de kant, de stoel, de mens (mensen), de persoon (per persoon), de snack, de chips; verbs nodig hebben, gebruiken, snijden, bakken, mengen, doen (in de pan), duren, klaarmaken, meenemen; other: veel, weinig, genoeg, een beetje, een paar, hoeveel, half/halve, een kwart liter, ander(e), alleen, warm, koud
@@ -147,11 +147,11 @@ All 12 lessons were imported into the local database on 2026-10-08 as unpublishe
 
 ## 11-a In het café (accepted 2026-10-08)
 - **Grammar**:
-  - willen — practised — ik/hij/zij wil (no -t), jij wilt (also wil; Wil je/jij? in questions), u wilt (Wilt u?), wij/jullie/zij willen; *hij wilt* flagged
-  - mogen — practised — ik/jij/u/hij/zij mag (never *magt*), wij/jullie/zij mogen; also 3rd person and plural (Mag Daan ook een glas water? Jullie mogen binnen of buiten zitten.)
-  - modal + noun — practised — Mag ik de kaart? Ik wil graag een cappuccino.
+  - willen — practiced — ik/hij/zij wil (no -t), jij wilt (also wil; Wil je/jij? in questions), u wilt (Wilt u?), wij/jullie/zij willen; *hij wilt* flagged
+  - mogen — practiced — ik/jij/u/hij/zij mag (never *magt*), wij/jullie/zij mogen; also 3rd person and plural (Mag Daan ook een glas water? Jullie mogen binnen of buiten zitten.)
+  - modal + noun — practiced — Mag ik de kaart? Ik wil graag een cappuccino.
   - modal + infinitive at the end — basic — modal in position 2 (1 in yes/no question), infinitive last: Ik wil graag bestellen. Mag ik betalen? Vandaag wil Sofia op het terras lunchen.
-  - polite ordering — practised — graag directly after wil; Mag ik …?, Ik neem …, Voor mij een …, Doe mij maar … (chunk); *Ik wil bestellen graag* flagged
+  - polite ordering — practiced — graag directly after wil; Mag ik …?, Ik neem …, Voor mij een …, Doe mij maar … (chunk); *Ik wil bestellen graag* flagged
 - **Vocabulary**: het café, de kaart (menu), het menu (set menu), de ober, de serveerster, het terras, de koffie, de cappuccino, de thee, de (verse) muntthee, gewone thee, de jus d'orange, de cola, het water, het kraanwater, het glas (glazen), het kopje, de kop (een kop tomatensoep), de suiker, de melk, de tosti (ham-kaas), het broodje kaas/ham, de soep, de tomatensoep, de appeltaart, de slagroom, het koekje, de bar; willen, mogen, bestellen, nemen, zitten, lunchen, kosten, krijgen, betalen; buiten, binnen, gratis, zonder, lekker, aan de Oudegracht, aan het water, aan de bar, aan tafel
 - **Expressions**: Ik wil graag …; Mag ik …?; Ik neem …; Voor mij een …, alstublieft; Doe mij maar …; Wat mag het zijn?; Wat wilt u / willen jullie drinken?; Verder nog iets?; Ja, graag. / Nee, dank je/u.; Alsjeblieft/Alstublieft (here you are); nog een (another); Nee, dat is alles; Ja hoor!; Wacht even!; twee koffie; Hoeveel kost …?
 - **Story facts**: za 26 september, lunch at Café De Zwaluw (small café aan de Oudegracht, terrace by the water, open 10:00–18:00, coffee with a koekje, pay at the bar or at the table, tap water free). Noor serves; Sofia and Daan sit on the terrace at half one. Sofia: cappuccino, water, tosti ham-kaas, appeltaart met veel slagroom. Daan: verse muntthee (twice), water, broodje kaas, kop tomatensoep, no appeltaart. Menu prices in whole euros (koffie 3, cappuccino 4, tosti ham-kaas 6, appeltaart 4, slagroom 1 …).
@@ -160,11 +160,11 @@ All 12 lessons were imported into the local database on 2026-10-08 as unpublishe
 
 ## 11-b De rekening, alstublieft (accepted 2026-10-08)
 - **Grammar**:
-  - mogen for permission and requests — practised — Mag/Mogen + subject + … + infinitive?: Mag ik hier zitten? Mogen wij bij het raam zitten?; + noun: Mogen we de rekening?
-  - willen with u — practised — u wilt, no t-drop: Wilt u …?; *u wil* is spoken only; hij/zij wil
+  - mogen for permission and requests — practiced — Mag/Mogen + subject + … + infinitive?: Mag ik hier zitten? Mogen wij bij het raam zitten?; + noun: Mogen we de rekening?
+  - willen with u — practiced — u wilt, no t-drop: Wilt u …?; *u wil* is spoken only; hij/zij wil
   - u vs jij — basic — u with waiters/strangers/older unknown people, jij/jullie with friends and colleagues; u takes the jij/hij form (u wilt, u mag, u hebt/heeft, u bent); possessive uw
-  - alstublieft/alsjeblieft — practised — (1) please, (2) here you are; alstublieft to a waiter; dank u/je/jullie wel; graag gedaan
-  - negation with a modal — practised — geen + noun with een or no article (Ik wil geen vlees), niet before place and infinitive (Ik wil niet buiten zitten); *Ik wil niet vlees* flagged
+  - alstublieft/alsjeblieft — practiced — (1) please, (2) here you are; alstublieft to a waiter; dank u/je/jullie wel; graag gedaan
+  - negation with a modal — practiced — geen + noun with een or no article (Ik wil geen vlees), niet before place and infinitive (Ik wil niet buiten zitten); *Ik wil niet vlees* flagged
 - **Vocabulary**: het restaurant, de tafel, de reservering, reserveren, het raam, de persoon (voor vier personen), het voorgerecht, het hoofdgerecht, het nagerecht, het toetje, de soep, de salade, de vis, het vlees, de kip, de groente, de friet, de pasta, de wijn (rode, witte), het bier, de fles, de rekening, betalen, pinnen, contant, samen, apart, de fooi, het pinapparaat, het cijfer, het tentamen, de rest; vegetarisch, heerlijk, natuurlijk, fijn; roken, vragen (om), geven; weer (again, back), welk/welke
 - **Expressions**: Hebt u een reservering?; op naam van …; Mag ik …? / Mogen we …?; Wat wilt u drinken/eten?; Wilt u nog iets / nog een nagerecht?; Is alles goed?; Samen of apart?; Mag ik pinnen?; De rest is voor u (keep the change); Nog een fijne avond!; Eet smakelijk!; Proost!; Graag gedaan; Gefeliciteerd!; als voorgerecht/hoofdgerecht/toetje; aan het eind; Lief, hè?; Liefs; Nederlands betalen
 - **Story facts**: vr 2 oktober 2026: Noor has an oral university exam (het tentamen) and gets an 8. Dinner in a restaurant in the centre, table by the window, reservation for four in Daan's name (De Vries). Noor: witte wijn, kip met friet, appeltaart met slagroom. Daan: bier, vis, no dessert, koffie. Sofia: rode wijn, vis; pays by card. Lotte: vegetarian, rode wijn, pasta met groente; asks for the bill, pays cash and tips. They pay separately; Sofia, Daan and Lotte pay for Noor's meal. Noor writes to Fleur in Australia; Fleur is back in the Netherlands on 1 november.
@@ -173,10 +173,10 @@ All 12 lessons were imported into the local database on 2026-10-08 as unpublishe
 
 ## 12-a Deze of die? (accepted 2026-10-08)
 - **Grammar**:
-  - Demonstratives before a noun — practised — de-words and all plurals: deze (near) / die (far); het-words singular: dit (near) / dat (far)
+  - Demonstratives before a noun — practiced — de-words and all plurals: deze (near) / die (far); het-words singular: dit (near) / dat (far)
   - Demonstratives on their own — basic — choose by the noun meant: "Ik neem deze." "Ik wil graag dit." "Mag ik die?"
   - Presentative dit/dat + is/zijn — basic — dit/dat for every gender and for plurals when introducing or naming: "Dit is Henk." "Dat zijn zonnebloemen."
-  - Adjective after a demonstrative — practised — always -e: deze jonge kaas, dit oude boek, die mooie bloemen, dat grote stuk
+  - Adjective after a demonstrative — practiced — always -e: deze jonge kaas, dit oude boek, die mooie bloemen, dat grote stuk
   - Dat for a whole situation — intro — "Dat is lekker!" "Dat is goed."
   - Plural adjective without article — intro (in notes only) — "Dat zijn mooie zonnebloemen": -e before a plural
   - kosten — intro — "Wat kost dit? Dat kost vijf euro." (whole euros only)
@@ -188,10 +188,10 @@ All 12 lessons were imported into the local database on 2026-10-08 as unpublishe
 
 ## 12-b Wat kost dat? (accepted 2026-10-08)
 - **Grammar**:
-  - Prices — practised — decimal comma; say euros + euro + cents: €2,50 = twee euro vijftig, €0,99 = negenennegentig cent, €3,05 = drie euro vijf; "komma" only in maths; numbers above 100 as one word (honderdtwintig)
-  - euro/cent singular after a number — practised — twee euro, vijftig cent (like twee kilo)
-  - kost vs kosten — practised — one thing + kost, more things + kosten; the subject decides (een pond kaas kost, de bos zonnebloemen kost)
-  - Demonstrative + adjective -e — practised (recycles 12-a) — deze kleine lamp, dit mooie bord, die witte mokken; witte with double t
+  - Prices — practiced — decimal comma; say euros + euro + cents: €2,50 = twee euro vijftig, €0,99 = negenennegentig cent, €3,05 = drie euro vijf; "komma" only in maths; numbers above 100 as one word (honderdtwintig)
+  - euro/cent singular after a number — practiced — twee euro, vijftig cent (like twee kilo)
+  - kost vs kosten — practiced — one thing + kost, more things + kosten; the subject decides (een pond kaas kost, de bos zonnebloemen kost)
+  - Demonstrative + adjective -e — practiced (recycles 12-a) — deze kleine lamp, dit mooie bord, die witte mokken; witte with double t
   - te + adjective — basic — "Dat is te duur." (not ook)
   - Polite requests — basic — Mag ik …? / Ik wil graag …
   - u → jij switch — intro — "Zeg maar Henk!"

@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { signIn, uniqueTag } from "./auth";
 import { courseApi, example, practice, seedLesson, vocabulary } from "./lessonSeed";
 
-test("each lesson on the course page starts or continues, reviews its words, and practises again", async ({ page }, testInfo) => {
+test("each lesson on the course page starts or continues, reviews its words, and practices again", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
   const suffix = `actions-${uniqueTag(testInfo)}`;
   await signIn(page);
@@ -23,7 +23,7 @@ test("each lesson on the course page starts or continues, reviews its words, and
   // A lesson without words or practices offers only its start.
   await expect(page.getByRole("button", { name: `Start lesson 2: ${suffix} second` })).toBeVisible();
   await expect(page.getByRole("button", { name: `Review the words of lesson 2: ${suffix} second` })).toHaveCount(0);
-  await expect(page.getByRole("button", { name: `Practise lesson 2 again: ${suffix} second` })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: `Practice lesson 2 again: ${suffix} second` })).toHaveCount(0);
 
   // Review words shows the lesson's own words as cards.
   await page.getByRole("button", { name: `Review the words of lesson 1: ${first}` }).click();
@@ -33,8 +33,8 @@ test("each lesson on the course page starts or continues, reviews its words, and
   await page.keyboard.press("Escape");
   await expect(recap).toHaveCount(0);
 
-  // Practise again lists the lesson's practices and opens the chosen one's answer set.
-  await page.getByRole("button", { name: `Practise lesson 1 again: ${first}` }).click();
+  // Practice again lists the lesson's practices and opens the chosen one's answer set.
+  await page.getByRole("button", { name: `Practice lesson 1 again: ${first}` }).click();
   const practices = page.getByRole("dialog", { name: "Practices in lesson 1" });
   await expect(practices.getByRole("button", { name: /Vertaal\./ })).toContainText("1 question");
   await practices.getByRole("button", { name: /Maak een vraag\./ }).click();

@@ -18,7 +18,7 @@ describe("Phase 1 application entry", () => {
   it("offers immediate account creation with sign-in as the alternate path", async () => {
     const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
     render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
-    expect(await screen.findByRole("heading", { name: "Practise what you need." })).toBeVisible();
+    expect(await screen.findByRole("heading", { name: "Practice what you need." })).toBeVisible();
     const focus = screen.getByRole("region", { name: "Choose your focus" });
     for (const skill of ["Grammar", "Vocabulary", "Listening", "Progress"]) expect(within(focus).getByText(skill)).toBeVisible();
     expect(screen.getByRole("button", { name: "Create account" })).toBeVisible();

@@ -2,7 +2,7 @@
 
 ## Release definition
 
-The current release is an installable, connectivity-required web application for current Chrome and Safari. It serves committed Dutch and German learners who choose the skill they practise (see [what it is](what_is_it.md#who-it-is-for)). It exposes one global course library; courses remain the organizational layer above lessons.
+The current release is an installable, connectivity-required web application for current Chrome and Safari. It serves committed Dutch and German learners who choose the skill they practice (see [what it is](what_is_it.md#who-it-is-for)). It exposes one global course library; courses remain the organizational layer above lessons.
 
 **Desktop is the only target for new work.** New features are designed, laid out, and tested for desktop viewports only. Existing phone layouts (the slim header, dock, and full-screen surfaces) keep working and their `mobile-*` tests keep passing until phone support is discontinued by an explicit product change; new features do not add phone-specific layouts, behaviors, or tests, and must not be blocked on phone behavior.
 
@@ -18,7 +18,7 @@ The current release is an installable, connectivity-required web application for
 - Local browser drafts for every writing flow
 - Account profile, password, appearance, and avatar settings
 - Desktop-first warm editorial design and an English localization catalog
-- A signed-out home page that addresses the target learner and names the skills they can practise
+- A signed-out home page that addresses the target learner and names the skills they can practice
 - Progress measurement and interface guidance toward the next useful practice, without competitive mechanics
 - Installable PWA metadata with an internet-required offline fallback
 - Manual local/production setup, migration, deployment, backup, and restore procedures

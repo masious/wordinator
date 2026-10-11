@@ -6,7 +6,7 @@ One row per grammar topic: the outline topics of all 40 rows, plus topics the le
 
 **Status**
 
-- `covered` — taught and practised in a Wordinator lesson to the depth the outline intends.
+- `covered` — taught and practiced in a Wordinator lesson to the depth the outline intends.
 - `partial` — taught, but less deeply than intended, or only as a chunk; the notes say what remains.
 - `assumed` — Part I knowledge with no Wordinator lesson; learners are expected to know it.
 - `deferred` — deliberately postponed to a later row or part; the notes say where.

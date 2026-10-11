@@ -511,7 +511,7 @@ export function splitPracticePayload(payload: PracticePayload): { payload: Learn
 export const courseLessonSummarySchema = z.object({
   id: opaqueIdSchema, slug: slugSchema, position: z.number().int().nonnegative(), title: z.string(), goal: z.string().nullable(),
   published: z.boolean(), publishedAt: z.number().int().nullable(), changed: z.boolean(), updatedBy: editorRefSchema, updatedAt: z.number().int(),
-  // The published document's new words and practices, so the course page offers Review words and Practise again only where they
+  // The published document's new words and practices, so the course page offers Review words and Practice again only where they
   // exist. Both are 0 for an unpublished lesson.
   wordCount: z.number().int().nonnegative(), practiceCount: z.number().int().nonnegative(),
   // The first uploaded image of the published document (the draft's for an unpublished lesson), shown beside the lesson in the list.

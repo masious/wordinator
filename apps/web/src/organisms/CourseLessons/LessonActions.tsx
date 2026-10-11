@@ -15,7 +15,7 @@ import styles from "./LessonActions.module.css";
 import { AnswerSetComposer, practiceFromBlock, PracticeContent, usePracticeProgress, type Practice } from "./PracticeBlock";
 
 // What the lesson's play action does for this viewer. An unpublished lesson (only editors see one) plays as a preview from the
-// start; a saved position resumes, also in a finished lesson practised again; a finished lesson otherwise starts again.
+// start; a saved position resumes, also in a finished lesson practiced again; a finished lesson otherwise starts again.
 export type PlayAction = "preview" | "continue" | "again" | "start";
 export const playAction = (lesson: Pick<CourseLessonSummary, "published">, completed: boolean, position: LessonPosition | undefined): PlayAction =>
   !lesson.published ? "preview" : position ? "continue" : completed ? "again" : "start";
@@ -77,8 +77,8 @@ function PracticeList({ scope, lesson, selected, onSelect }: { scope: PlayerScop
   </li>)}</ol>;
 }
 
-// Per-lesson actions on the course page: play (Start, Continue, Start again, or Preview), Review words, and Practise again. Review
-// words and Practise again show only when the published lesson has words or practices; Practise again is left out of archived
+// Per-lesson actions on the course page: play (Start, Continue, Start again, or Preview), Review words, and Practice again. Review
+// words and Practice again show only when the published lesson has words or practices; Practice again is left out of archived
 // courses, which refuse practice progress.
 export function LessonActions({ scope, summary, number, completed, position, archived, onPlay }: {
   scope: PlayerScope; summary: CourseLessonSummary; number: number; completed: boolean; position: LessonPosition | undefined; archived: boolean;
@@ -97,7 +97,7 @@ export function LessonActions({ scope, summary, number, completed, position, arc
     <Button variant={action === "continue" || action === "start" ? "secondary" : "quiet"} onClick={() => onPlay(summary.id)}
       aria-label={t(`courses.lessonActions.${action}Named`, named)}>{t(`courses.lessonActions.${action}`)}</Button>
     {words && <Button variant="quiet" onClick={() => setReviewing(true)} aria-label={t("courses.lessonActions.reviewWordsNamed", named)}>{t("courses.lessonActions.reviewWords")}</Button>}
-    {practices && <Button variant="quiet" onClick={() => setPractising(true)} aria-label={t("courses.lessonActions.practiseNamed", named)}>{t("courses.lessonActions.practise")}</Button>}
+    {practices && <Button variant="quiet" onClick={() => setPractising(true)} aria-label={t("courses.lessonActions.practiceNamed", named)}>{t("courses.lessonActions.practice")}</Button>}
     <AdaptiveDialog opened={reviewing} onClose={() => setReviewing(false)} title={t("courses.lessonActions.wordsTitle", named)}>
       {reviewing && <LoadedLesson scope={scope} lessonId={summary.id}>{(lesson) => <LessonRecap scope={scope} lesson={lesson} onDone={() => setReviewing(false)} />}</LoadedLesson>}
     </AdaptiveDialog>

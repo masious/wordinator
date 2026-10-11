@@ -64,7 +64,7 @@ Build: `practice` kind; learner payloads without authors' versions or notes; com
 | `docs/architecture.md` | Add practice discussion endpoints and the rule that learner block payloads never include authors' versions. |
 | `docs/security-and-privacy.md` | Note that concealment of authors' versions is spoiler protection, not authorization, consistent with post answers. |
 | `docs/testing.md` | Add tests that learner payloads omit authors' versions, prompt snapshots survive edits, and block deletion cascades. Add a Playwright path answering a practice and revealing the thread. |
-| `docs/user-flows.md` | Add "Practise a lesson". |
+| `docs/user-flows.md` | Add "Practice a lesson". |
 | `docs/roadmap.md` | Mark C3 complete. |
 
 Done in C3: migration `0011_course_practice_threads.sql` rebuilds `course_blocks` and `comments`. The thread endpoints live under `.../blocks/:blockId/` (`discussion`, `comments`), and editors receive authors' versions as a separate `reference`. Practice drafts use the draft kind `practice-answer`, and practice threads create no notifications; `docs/courses.md` records these decisions and the instruction and answer-entry limits.

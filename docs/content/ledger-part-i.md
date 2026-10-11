@@ -4,7 +4,7 @@ Owner: content coordinator. Part of the [content docs](index.md).
 
 Part I (outline rows 1–6) has **no lessons in the app**. Learners are assumed to have done an equivalent course. Everything here is **assumed, not taught by Wordinator**. Parts II–III may use it freely. A future Part I course must teach at least this (see [gaps.md](gaps.md)).
 
-Depth key: **intro** = met once with simple examples; **basic** = rule stated and practised in simple sentences; **solid** = practised in several contexts and mistakes addressed.
+Depth key: **intro** = met once with simple examples; **basic** = rule stated and practiced in simple sentences; **solid** = practiced in several contexts and mistakes addressed.
 
 ## Grammar (assumed)
 

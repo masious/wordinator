@@ -10,8 +10,8 @@ The target learner:
 
 - is learning **Dutch** (the primary language) or **German**;
 - is already committed: they study regularly and do not need to be persuaded, entertained, or retained with game mechanics;
-- knows what they want to practise and expects the app to get out of the way and let them do it;
-- practises at a **desktop** computer with a keyboard and a large screen.
+- knows what they want to practice and expects the app to get out of the way and let them do it;
+- practices at a **desktop** computer with a keyboard and a large screen.
 
 Wordinator is not a public network, professional course provider, tutoring marketplace, or native-speaker matching service. Registration is open and immediate (see [authentication](authentication.md)); the community is small and the content is member-authored.
 
@@ -21,7 +21,7 @@ New work is designed and verified for desktop viewports only. Mobile phones are 
 
 ## What learners do
 
-1. Choose the skill they want to practise and open a course or lesson aimed at it in the global [course library](courses.md).
+1. Choose the skill they want to practice and open a course or lesson aimed at it in the global [course library](courses.md).
 2. Work through lessons: restricted rich text, practice blocks, new words, and synthesized [lesson speech](speech.md) for listening.
 3. Collect and review words in the Words tab (see [words](words.md)).
 4. Track progress: lesson and practice progress show what is finished and what comes next.
@@ -35,7 +35,7 @@ Wordinator should feel like a calm, focused study desk: modern, warm, tactile, a
 
 ## Why build it
 
-General courses and apps decide what the learner practises next and pad sessions with motivation mechanics. Committed learners who already know their weak spots need a place where they pick the skill, practise it directly, and see their progress—with material written by people learning the same language.
+General courses and apps decide what the learner practices next and pad sessions with motivation mechanics. Committed learners who already know their weak spots need a place where they pick the skill, practice it directly, and see their progress—with material written by people learning the same language.
 
 ## Business context
 

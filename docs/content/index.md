@@ -29,5 +29,5 @@ The 40-row curriculum is [`content/dutch-foundations/outline.md`](../../content/
 ## Rules
 
 - Briefs never override the ledgers: if a lesson deviates from its brief, the ledger records what it actually teaches and later briefs adapt.
-- A topic is `covered` only when an accepted lesson practises it; planned work stays `missing (planned: …)` in the topic map.
+- A topic is `covered` only when an accepted lesson practices it; planned work stays `missing (planned: …)` in the topic map.
 - Do not edit `content/dutch-foundations/part-iii/existing/`; record its defects in the ledger instead.

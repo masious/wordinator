@@ -20,12 +20,12 @@ test("capture pre-redesign wide and narrow references", async ({ browserName, pa
 
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Practise what you need." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Practice what you need." })).toBeVisible();
   await capture("before-auth-wide.png");
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.reload();
-  await expect(page.getByRole("heading", { name: "Practise what you need." })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Practice what you need." })).toBeVisible();
   await capture("before-auth-narrow.png");
 
   await page.setViewportSize({ width: 1440, height: 1000 });
