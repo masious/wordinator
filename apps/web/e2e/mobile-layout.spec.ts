@@ -321,3 +321,28 @@ test("mobile Words tab opens from the dock and fits its cards without scrolling"
   expect(next!.y + next!.height).toBeLessThanOrEqual(dock!.y);
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-words-tab.png` });
 });
+
+test("mobile share dialog and share post page stay within the viewport", async ({ page }) => {
+  const api = courseApi(page);
+  const tag = `${test.info().project.name}-${Date.now()}`;
+  const { course } = await api<{ course: { id: string } }>("/courses", { title: `Share course ${tag}`, summary: "Shares." });
+  await api(`/courses/${course.id}/visibility`, { status: "published" });
+  await seedLesson(page, course.id, "Shares", [
+    example(`Er is een heel lang balkon aan de achterkant van het huis ${tag}.`, "There is a very long balcony at the back of the house.", "Er is = there is."),
+    dialogue([{ speaker: "Anna", text: "Is er een tuin achter het huis?" }, { speaker: "Bram", text: "Nee, maar er is een groot balkon." }]),
+  ]);
+  await page.goto(`/courses/${course.id}`);
+  await openLesson(page);
+  await page.getByText(`Er is een heel lang balkon aan de achterkant van het huis ${tag}.`).click();
+  await page.getByRole("button", { name: "Share this example" }).click();
+  const dialog = page.getByRole("dialog", { name: "Share an example" });
+  await expect(dialog.getByLabel(/Your note/)).toBeVisible();
+  await expectNoHorizontalOverflow(page, "share dialog");
+  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-share-dialog.png` });
+  await dialog.getByRole("button", { name: "Share", exact: true }).click();
+  await page.getByRole("link", { name: "Already shared. Open the post" }).click();
+  await expect(page).toHaveURL(/\/journal\/[^/]+$/);
+  await expect(page.getByRole("link", { name: /Open the lesson/ })).toBeVisible();
+  await expectNoHorizontalOverflow(page, "share post page");
+  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-share-post.png` });
+});

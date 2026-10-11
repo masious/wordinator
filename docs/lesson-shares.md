@@ -1,6 +1,6 @@
 # Lesson shares
 
-> Approved product change (C11, 2026-10-11). In progress: the contracts, the `post_lesson_shares` table, and the lesson read's `myShares` (C11a), the share endpoint, share post reads, and note editing (C11b), and the web share actions and confirmation (C11c) are in place; share posts in the journal (C11d) are not yet. [LESSON_SHARES_PLAN.md](../LESSON_SHARES_PLAN.md) holds the delivery steps.
+> Approved product change (C11, 2026-10-11). In progress: the contracts, the `post_lesson_shares` table, and the lesson read's `myShares` (C11a), the share endpoint, share post reads, and note editing (C11b), the web share actions and confirmation (C11c), and share posts in the journal with the answer check and note editing (C11d) are in place; the local Storybook (C11e) is not yet. [LESSON_SHARES_PLAN.md](../LESSON_SHARES_PLAN.md) holds the delivery steps.
 
 A learner can share a piece of a lesson to the [journal](posts-and-feed.md) so friends can see it, react, and talk about it. A share is a journal post of type `lesson_share`; the post rules in [posts and feed](posts-and-feed.md#lesson-share) own its card, and this document owns what can be shared and how.
 
@@ -37,7 +37,7 @@ The server builds every snapshot itself from the published document. It never ac
 
 ## Where to share
 
-- **Lesson page.** Clicking an example or dialogue block selects it and reveals its Share button; clicking elsewhere or Escape clears the selection. Clicks on the block's own controls (speaker buttons, the dialogue transport, links) do not select it. Keyboard users focus the block and press Enter. There is no hover-only affordance, so touch behaves the same.
+- **Lesson page.** Clicking an example or dialogue block selects it and reveals its Share button; clicking elsewhere or Escape clears the selection. It clears on the click, not on the press, so the collapsing Share row never moves the control being clicked. Clicks on the block's own controls (speaker buttons, the dialogue transport, links) do not select it. Keyboard users focus the block and press Enter. There is no hover-only affordance, so touch behaves the same.
 - **Answer dialog and Practise again.** Each question has its own Share button. Questions are not shared from the practice summary on the lesson page.
 - **Lesson player.** Example, dialogue, and question steps offer Share; a dialogue's steps share the whole dialogue.
 - A question of a practice with a passage shows a disabled Share with the reason.
@@ -51,11 +51,11 @@ The note is the only part of a share that can be edited later. Deleting follows 
 
 ## Answer check
 
-A shared question's post page offers the lesson's [answer check](courses.md#practice-answers): one field per blank for fill-in items, Enter to check, "Matches the author's version" on a match, and the author's version as a reference on a miss, never marked wrong. It uses the contracts' `answerMatches` and `blankMatches`, so it agrees with the lesson. The snapshot carries the author's version as published at share time; a question with no author's version has nothing to check against.
+A shared question's post page offers the lesson's [answer check](courses.md#practice-answers): one field per blank for fill-in items, Enter (or the Check button, for touch) to check, "Matches the author's version" on a match, and the author's version as a reference on a miss, never marked wrong. It uses the contracts' `answerMatches` and `blankMatches`, so it agrees with the lesson. The snapshot carries the author's version as published at share time; a question with no author's version has nothing to check against.
 
 The check runs in the browser. The answer is never sent or stored on the server, is never shown to anyone else, and counts toward no progress. It is kept as a local draft (draft kind `share-answer`, with the post as target) under the [draft-key rules](posts-and-feed.md#composer-and-drafts). The web shows the author's version only after a miss, which prevents accidental spoilers and is not authorization.
 
-The feed card shows only the instruction and prompt, because its byline and preview form one link and cannot contain fields. Comments on a share are ordinary visible comments: there is no concealed answer thread.
+The feed card shows only the instruction and prompt; answering happens on the post page. A question whose author's version is incomplete says there is nothing to check against and offers no field. In the feed, only a share's byline links to the post, so the piece's speech controls and links stay usable on the card ([lesson share card](posts-and-feed.md#lesson-share)). Comments on a share are ordinary visible comments: there is no concealed answer thread.
 
 ## API
 

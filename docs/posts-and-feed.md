@@ -67,7 +67,7 @@ Approved product change (C11, 2026-10-11); see [lesson shares](lesson-shares.md)
 - Pinning: unavailable
 - Deletion: like any post; the sharer may then share the same piece again
 
-The card links to the lesson only while the viewer can open it. On the post page the shared piece is shown in full.
+In the feed only the byline is the link to the post: the shared piece follows it outside the link, because an example's speech button and links and a dialogue's transport cannot sit inside a link. The feed card never links to the lesson. On the post page the shared piece is shown in full with a link to the lesson while the viewer can open it, and a question adds its answer check. The note is revealed on the post page like any post's notes.
 
 ## Composer and drafts
 
@@ -90,7 +90,7 @@ Phase 4 implements the remaining writing drafts with `wordinator:draft:v1:<accou
 - Infinite loading for older pages
 - No ranking, search, filtering, or feed pinning
 - Cards show a byline sentence naming author, type, and relative time (for example “Ada asked a question 20 minutes ago.”), a suitable content preview, and reactions: a vertical rail beside the card at `48em` and wider, a footer row below it on narrower screens
-- The byline and preview form one link to the post's detail page; the actions menu and reaction rail sit beside that link, never inside it. Authored URLs are not linked inside feed cards, and notes are revealed on the detail page
+- The byline and preview form one link to the post's detail page (a [lesson share](#lesson-share) links its byline only); the actions menu and reaction rail sit beside that link, never inside it. Authored URLs are not linked inside feed cards, and notes are revealed on the detail page
 - Comment/answer and reaction counts live in the card's actions menu. At `48em` and wider cards have no footer; below `48em` a footer shows the comment/answer count beside the reaction row. The menu shows no view count
 - Long content uses “Read more” to navigate to the canonical detail page; it does not expand inline
 - Comments and answers never expand inside the feed

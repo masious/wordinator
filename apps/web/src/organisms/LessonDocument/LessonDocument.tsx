@@ -325,8 +325,9 @@ type Selection = { selected: string | null; select: (id: string | null) => void;
 const SelectionContext = createContext<Selection | null>(null);
 
 // Clicking a block, or pressing Enter on it, selects it and reveals its share action (docs/lesson-shares.md#where-to-share). Clicks
-// on its own controls (speaker buttons, the dialogue transport, links) do not select it. Escape or a press anywhere outside the
-// block clears the selection, except inside a dialog, so the share confirmation keeps it.
+// on its own controls (speaker buttons, the dialogue transport, links) do not select it. Escape or a click anywhere outside the
+// block clears the selection, except inside a dialog, so the share confirmation keeps it. It clears on click rather than on press:
+// the share row collapses when it clears, and clearing on press would move whatever is below it before the click lands.
 const INTERACTIVE = "a, button, input, textarea, select, summary, [role=slider], [contenteditable]";
 function SelectableBlock({ block, children }: { block: ShareableBlock; children: ReactNode }) {
   const { t } = useTranslation();
@@ -336,15 +337,17 @@ function SelectableBlock({ block, children }: { block: ShareableBlock; children:
   const element = useRef<HTMLDivElement>(null);
   useEffect(() => {
     if (!selected) return;
-    const onPointerDown = (event: PointerEvent) => {
+    const onDocumentClick = (event: globalThis.MouseEvent) => {
       const target = event.target instanceof Element ? event.target : null;
       if (target && (element.current?.contains(target) || target.closest("[role=dialog], .mantine-Modal-root"))) return;
+      // A click that selects another block has already moved the selection there.
+      if (target?.closest(`.${styles.selectable}`) && !target.closest(INTERACTIVE)) return;
       select(null);
     };
     const onKeyDown = (event: globalThis.KeyboardEvent) => { if (event.key === "Escape" && !event.defaultPrevented) select(null); };
-    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("click", onDocumentClick);
     document.addEventListener("keydown", onKeyDown);
-    return () => { document.removeEventListener("pointerdown", onPointerDown); document.removeEventListener("keydown", onKeyDown); };
+    return () => { document.removeEventListener("click", onDocumentClick); document.removeEventListener("keydown", onKeyDown); };
   }, [select, selected]);
   const onClick = (event: MouseEvent<HTMLDivElement>) => {
     const target = event.target instanceof Element ? event.target.closest(INTERACTIVE) : null;

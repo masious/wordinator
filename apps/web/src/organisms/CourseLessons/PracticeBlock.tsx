@@ -28,7 +28,8 @@ export type PracticeScope = { groupId: string; courseId: string; lessonId: strin
 type AnswerDraft = { version: 1; answers: string[] };
 
 // Answer drafts follow the shared draft-key rules: account, group, draft kind, and target. They are the only copy of the answers.
-export const practiceDraftKey = (accountId: string, groupId: string, kind: "practice-answer", targetId: string) => `wordinator:draft:v1:${accountId}:${groupId}:${kind}:${targetId}`;
+// A shared question's answer check keeps its single answer the same way, as a `share-answer` draft.
+export const practiceDraftKey = (accountId: string, groupId: string, kind: "practice-answer" | "share-answer", targetId: string) => `wordinator:draft:v1:${accountId}:${groupId}:${kind}:${targetId}`;
 export function readAnswers(key: string, count: number): string[] {
   try {
     const value = JSON.parse(localStorage.getItem(key) ?? "null") as AnswerDraft | null;

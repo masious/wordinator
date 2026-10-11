@@ -111,7 +111,7 @@ describe("Lesson shares", () => {
     fireEvent.click(within(await block("Dialogue")).getByText("Nee."));
     expect(screen.queryByRole("button", { name: "Share this example" })).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Share this dialogue" })).toBeInTheDocument();
-    fireEvent.pointerDown(screen.getByRole("heading", { name: "Mijn huis", level: 1 }));
+    fireEvent.click(screen.getByRole("heading", { name: "Mijn huis", level: 1 }));
     expect(screen.queryByRole("button", { name: "Share this dialogue" })).not.toBeInTheDocument();
   });
 

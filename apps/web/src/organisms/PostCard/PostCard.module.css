@@ -55,6 +55,9 @@
 }
 
 
+/* A lesson share's piece sits below its byline link in the feed, across the card's full width. */
+.share { grid-column: 1 / -1; grid-row: 2; min-width: 0; padding-top: var(--space-5); }
+
 .postBody { max-width: 64ch; font-size: var(--type-post-body); line-height: var(--line-post-body); }
 .postBody a { color: var(--color-foreground); text-decoration-color: var(--color-action); text-underline-offset: 3px; }
 .questions { display: grid; gap: var(--space-3); margin: 0; padding: var(--space-5) var(--space-5) var(--space-5) var(--space-10); background: var(--color-info-soft); border-radius: var(--radius-lg); }
@@ -96,5 +99,6 @@ white-space: pre-wrap; overflow-wrap: anywhere; line-height: var(--line-body); }
   .postCard { grid-template-columns: minmax(0, 1fr); gap: var(--space-4); padding: var(--card-inset); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
   .cardLink,
   .cardContent { gap: var(--space-4); }
+  .share { padding-top: var(--space-4); }
   .postBody { max-width: none; }
 }

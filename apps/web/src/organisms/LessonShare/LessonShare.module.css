@@ -28,3 +28,8 @@
 .prompt{margin:0;font-size:var(--type-authored);line-height:var(--line-body);white-space:pre-wrap;overflow-wrap:anywhere}
 .unavailable{padding:var(--space-5);color:var(--color-foreground-muted);background:var(--color-muted);border:var(--ring-hairline);border-radius:var(--radius-lg)}
 .open{display:inline-flex;align-items:center;justify-self:start;gap:var(--space-2);font-weight:var(--weight-semibold);color:var(--color-foreground)}
+
+/* A share post on the feed card and post page. */
+.check{display:grid;gap:var(--space-3);min-width:0;padding:var(--space-4) var(--space-5);border:var(--ring-hairline);border-radius:var(--radius-md)}
+.check h2{margin:0}
+.checkButton{justify-self:start}

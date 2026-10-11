@@ -78,11 +78,13 @@ Notes (2026-10-11): the share action and dialog are in `apps/web/src/organisms/L
 
 ## C11d — Web: share posts in the journal
 
-- [ ] `PostCard` variants for the three kinds: example (sentence via `InlineText`, translation, note, speaker button), dialogue (turns with the existing `DialogueControls`, unavailable state), question (instruction and prompt, blanks as `…`). The note follows the existing post-notes concealment. Link to the lesson only while it is available.
-- [ ] Post page: the same content in full; the question kind adds the answer field(s) and check, reusing the practice answer components (per-blank fields, Enter to check, Matches the author's version, the author's version on a miss), with the `share-answer` local draft.
-- [ ] Composer: never offers `lesson_share`; the edit flow for a share post edits only the note.
-- [ ] RTL for each card and detail variant, including unavailable and fallback bylines; the answer check matches and misses with the shared matcher and sends no request.
-- [ ] Playwright: share an example from the lesson page, see it in the journal and open it; share a question from the Answer dialog, answer it on the post page, see a match; Already shared on a second attempt; `mobile-layout.spec.ts` for the share dialog and the share post page.
+- [x] `PostCard` variants for the three kinds: example (sentence via `InlineText`, translation, note, speaker button), dialogue (turns with the existing `DialogueControls`, unavailable state), question (instruction and prompt, blanks as `…`). The note follows the existing post-notes concealment. Link to the lesson only while it is available.
+- [x] Post page: the same content in full; the question kind adds the answer field(s) and check, reusing the practice answer components (per-blank fields, Enter to check, Matches the author's version, the author's version on a miss), with the `share-answer` local draft.
+- [x] Composer: never offers `lesson_share`; the edit flow for a share post edits only the note.
+- [x] RTL for each card and detail variant, including unavailable and fallback bylines; the answer check matches and misses with the shared matcher and sends no request.
+- [x] Playwright: share an example from the lesson page, see it in the journal and open it; share a question from the Answer dialog, answer it on the post page, see a match; Already shared on a second attempt; `mobile-layout.spec.ts` for the share dialog and the share post page.
+
+Notes (2026-10-11): in the feed only the share's byline is the link to the post and the piece follows it outside the link, since an example's speech button and inline links and a dialogue's transport cannot nest in a link; the feed card never links to the lesson, the post page does while `source.linked`. The post page's check adds a Check button beside Enter for touch, and a question with an incomplete author's version shows a note instead of a field. `practiceDraftKey` takes the `share-answer` kind. Editing a share post opens `ShareNoteForm` (`LessonShare/LessonSharePost.tsx`) instead of the composer, which already offered neither system type. Playwright found a C11c bug: the lesson page cleared a block's selection on `pointerdown`, so the Share row collapsed and moved the clicked control (Answer) before the click landed; it now clears on `click`. Tests: `apps/web/src/organisms/LessonShare/LessonSharePost.test.tsx`, `apps/web/e2e/lesson-shares.spec.ts`, and a share case in `apps/web/e2e/mobile-layout.spec.ts`.
 
 ## C11e — Storybook (local only)
 

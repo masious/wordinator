@@ -25,7 +25,8 @@ import {
 } from "lucide-react";
 import { PlainText } from "../../molecules/PlainText";
 import CoursePostPreview from "./CoursePostPreview";
-import { LessonShareByline } from "../LessonShare/LessonSharePreview";
+import { LessonShareByline, LessonSharePreview } from "../LessonShare/LessonSharePreview";
+import { ShareAnswerCheck, ShareNoteForm } from "../LessonShare/LessonSharePost";
 import styles from "./PostCard.module.css";
 
 function relativeTime(value: number) {
@@ -82,6 +83,7 @@ export default function PostCard({
     compact && post.body.length > 360
       ? `${post.body.slice(0, 360)}…`
       : post.body;
+  const share = post.lessonShare;
   const byline = (
     <header className={styles.postHeader}>
       <Avatar
@@ -111,7 +113,7 @@ export default function PostCard({
   const content = (
     <>
       {byline}
-      {post.course ? (
+      {share ? null : post.course ? (
         <CoursePostPreview course={post.course} groupId={groupId} linked={!compact} />
       ) : (
         <div className={styles.postBody}>
@@ -148,18 +150,26 @@ export default function PostCard({
     <article className={styles.postShell}>
       <div className={styles.postCard}>
         <div className={styles.main}>
-          {/* In the feed the whole card body is one link; the actions menu sits beside it so controls never nest inside it. */}
+          {/* In the feed the whole card body is one link; the actions menu sits beside it so controls never nest inside it.
+              A lesson share's piece has its own speech controls and links, so only its byline is the link and the piece follows it. */}
           {compact ? (
-            <Link
-              className={styles.cardLink}
-              to="/journal/$postId"
-              params={{ postId: post.id }}
-            >
-              {content}
-            </Link>
+            <>
+              <Link
+                className={styles.cardLink}
+                to="/journal/$postId"
+                params={{ postId: post.id }}
+              >
+                {content}
+              </Link>
+              {share && <div className={styles.share}><LessonSharePreview share={share} /></div>}
+            </>
           ) : (
             <div className={styles.cardContent}>
               {content}
+              {share && <LessonSharePreview share={share} link />}
+              {share?.kind === "question" && session.data?.status === "signedIn" && (
+                <ShareAnswerCheck postId={post.id} groupId={groupId} accountId={session.data.user.id} question={share.question} />
+              )}
               {post.type === "reading" && (
                 <ol className={styles.questions}>
                   {post.questions.map((question) => (
@@ -254,9 +264,20 @@ export default function PostCard({
         <AdaptiveDialog
           opened={editing}
           onClose={() => setEditing(false)}
-          title={t("posts.editTitle")}
+          title={share ? t("lessonShares.editTitle") : t("posts.editTitle")}
         >
-          {session.data?.status === "signedIn" && (
+          {share ? (
+            <ShareNoteForm
+              post={post}
+              groupId={groupId}
+              onCancel={() => setEditing(false)}
+              onDone={() => {
+                setEditing(false);
+                void queryClient.invalidateQueries({ queryKey: ["posts", groupId] });
+                void queryClient.invalidateQueries({ queryKey: ["post", groupId, post.id] });
+              }}
+            />
+          ) : session.data?.status === "signedIn" && (
             <ComposerForm
               groupId={groupId}
               session={session.data}

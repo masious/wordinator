@@ -830,7 +830,14 @@ export const resources = {
         submit: "Share",
         question: "Question",
         dialogueUnavailable: "This dialogue is no longer available.",
-        openLesson: "Open the lesson"
+        openLesson: "Open the lesson",
+        tryIt: "Try it",
+        answerLabel: "Your answer",
+        answerHelp: "Press Enter to compare it with the author’s version. Your answer stays on this device.",
+        check: "Check",
+        noAuthorsVersion: "This question has no author’s version to check against.",
+        editTitle: "Edit note",
+        editHelp: "Only the note can change; the shared piece stays as it was shared."
       },
       errors: {
         generic: "Something went wrong. Try again.",
