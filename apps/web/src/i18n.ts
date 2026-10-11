@@ -634,7 +634,15 @@ export const resources = {
           example: "Play the example sentence",
           turn: "Play line {{number}}, {{speaker}}",
           playDialogue: "Play dialogue",
+          pauseDialogue: "Pause dialogue",
+          resumeDialogue: "Resume dialogue",
+          previousLine: "Previous line",
+          nextLine: "Next line",
           stopDialogue: "Stop dialogue",
+          dialogueProgress: "Dialogue progress",
+          lineOf: "Line {{number}} of {{total}}, {{speaker}}",
+          notStarted: "Not started",
+          count: "{{number}} / {{total}}",
           failed: "The audio could not be played. Try again."
         },
         progress: {

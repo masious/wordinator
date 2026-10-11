@@ -12,12 +12,12 @@ import {
   type StyledText,
   type VocabularyWord,
 } from "@wordinator/contracts/lesson-document";
-import { createContext, Fragment, useContext, useId, useState, type CSSProperties, type ReactNode } from "react";
+import { createContext, Fragment, useContext, useId, useState, type CSSProperties, type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import { Square, Volume2 } from "lucide-react";
+import { Pause, Play, SkipBack, SkipForward, Square } from "lucide-react";
 import { Callout } from "../../molecules/Callout";
 import { PlainText } from "../../molecules/PlainText";
-import { playSpeech, SpeechButton, SpeechFailure, stopSpeech, useSpeechFailure, useSpeechPlayback, useSpeechResolver, useSpeechUrl, useStopSpeechOnUnmount } from "../../molecules/Speech";
+import { pauseSpeech, playSpeech, resumeSpeech, SpeechButton, SpeechFailure, stopSpeech, useSpeechElapsed, useSpeechFailure, useSpeechPlayback, useSpeechResolver, useSpeechUrl, useStopSpeechOnUnmount } from "../../molecules/Speech";
 import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
 import styles from "./LessonDocument.module.css";
 
@@ -113,8 +113,8 @@ export function ExampleBlock({
   );
 }
 
-// The player passes `upTo` to show the turns read so far, and Play dialogue plays only those. Each turn with a ready clip has its
-// own speaker button; while Play dialogue runs, the turn being spoken is marked.
+// The player passes `upTo` to show the turns read so far, and the dialogue plays only those. Each turn with a ready clip has its
+// own speaker button; while the dialogue plays or is paused, the turn being spoken is marked.
 export function DialogueBlock({
   block,
   upTo,
@@ -126,8 +126,6 @@ export function DialogueBlock({
   const resolve = useSpeechResolver();
   const owner = `dialogue:${block.id}`;
   const playback = useSpeechPlayback(owner);
-  useStopSpeechOnUnmount(owner);
-  const [failed, setFailed] = useSpeechFailure(playback?.status);
   const turns = readDialogueTurns(block)
     .slice(0, upTo === undefined ? undefined : upTo + 1)
     .map((turn, index) => ({ ...turn, index, speech: resolve(`turn:${block.id}:${index}`) }));
@@ -135,23 +133,7 @@ export function DialogueBlock({
   const speaking = playback && playback.status !== "error" ? ready[playback.index]?.index : undefined;
   return (
     <div className={styles.dialogue}>
-      {ready.length > 0 && (
-        <span className={styles.playDialogueWrap}>
-          <button
-            type="button"
-            className={styles.playDialogue}
-            onClick={() => {
-              setFailed(false);
-              if (playback) stopSpeech();
-              else playSpeech(owner, ready.map((turn) => turn.speech!));
-            }}
-          >
-            {playback ? <Square aria-hidden="true" className={styles.playIcon} /> : <Volume2 aria-hidden="true" className={styles.playIcon} />}
-            {playback ? t("courses.speech.stopDialogue") : t("courses.speech.playDialogue")}
-          </button>
-          {failed && <SpeechFailure />}
-        </span>
-      )}
+      {ready.length > 0 && <DialogueControls owner={owner} turns={ready.map((turn) => ({ speaker: turn.speaker, url: turn.speech! }))} />}
       <ol className={styles.turns}>
         {turns.map((turn) => (
           <li
@@ -165,6 +147,80 @@ export function DialogueBlock({
           </li>
         ))}
       </ol>
+    </div>
+  );
+}
+
+// Plays a dialogue's ready turns in order (docs/speech.md#playback): play, pause, and resume; previous and next line; stop; and a
+// progress bar with one segment per line, which is also a slider that starts the dialogue at the line pressed or keyed to.
+function DialogueControls({ owner, turns }: { owner: string; turns: ReadonlyArray<{ speaker: string; url: string }> }) {
+  const { t } = useTranslation();
+  const playback = useSpeechPlayback(owner);
+  const elapsed = useSpeechElapsed(owner);
+  useStopSpeechOnUnmount(owner);
+  const [failed, setFailed] = useSpeechFailure(playback?.status);
+  const urls = turns.map((turn) => turn.url);
+  const total = turns.length;
+  const active = playback && playback.status !== "error" ? playback : null;
+  const current = active ? active.index : -1;
+  const paused = active?.status === "paused";
+  const goTo = (index: number) => {
+    setFailed(false);
+    playSpeech(owner, urls, Math.min(total - 1, Math.max(0, index)));
+  };
+  const toggle = () => {
+    setFailed(false);
+    if (!active) playSpeech(owner, urls);
+    else if (paused) resumeSpeech();
+    else pauseSpeech();
+  };
+  const label = !active ? t("courses.speech.playDialogue") : paused ? t("courses.speech.resumeDialogue") : t("courses.speech.pauseDialogue");
+  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    const target = { ArrowLeft: current - 1, ArrowDown: current - 1, ArrowRight: current + 1, ArrowUp: current + 1, Home: 0, End: total - 1 }[event.key];
+    if (target === undefined) return;
+    event.preventDefault();
+    if (target >= 0 && target !== current) goTo(target);
+  };
+  const onBarClick = (event: MouseEvent<HTMLDivElement>) => {
+    const box = event.currentTarget.getBoundingClientRect();
+    if (box.width > 0) goTo(Math.floor(((event.clientX - box.left) / box.width) * total));
+  };
+  return (
+    <div className={styles.dialogueControls}>
+      <button type="button" className={styles.transport} aria-label={t("courses.speech.previousLine")} disabled={!active} onClick={() => goTo(current - 1)}>
+        <SkipBack aria-hidden="true" className={styles.playIcon} />
+      </button>
+      <span className={styles.playDialogueWrap}>
+        <button type="button" className={styles.playDialogue} aria-label={label} aria-busy={active?.status === "loading" || undefined} onClick={toggle}>
+          {active && !paused ? <Pause aria-hidden="true" className={styles.playIcon} /> : <Play aria-hidden="true" className={styles.playIcon} />}
+        </button>
+        {failed && <SpeechFailure />}
+      </span>
+      <button type="button" className={styles.transport} aria-label={t("courses.speech.nextLine")} disabled={!active || current >= total - 1} onClick={() => goTo(current + 1)}>
+        <SkipForward aria-hidden="true" className={styles.playIcon} />
+      </button>
+      <button type="button" className={styles.transport} aria-label={t("courses.speech.stopDialogue")} disabled={!active} onClick={() => { setFailed(false); stopSpeech(); }}>
+        <Square aria-hidden="true" className={styles.playIcon} />
+      </button>
+      <div
+        className={styles.dialogueProgress}
+        role="slider"
+        tabIndex={0}
+        aria-label={t("courses.speech.dialogueProgress")}
+        aria-valuemin={0}
+        aria-valuemax={total}
+        aria-valuenow={current + 1}
+        aria-valuetext={active ? t("courses.speech.lineOf", { number: current + 1, total, speaker: turns[current]!.speaker }) : t("courses.speech.notStarted")}
+        onKeyDown={onKeyDown}
+        onClick={onBarClick}
+      >
+        {turns.map((turn, index) => (
+          <span key={index} className={styles.segment} data-current={index === current || undefined}>
+            <span className={styles.segmentFill} style={{ transform: `scaleX(${index < current ? 1 : index === current ? elapsed : 0})` }} />
+          </span>
+        ))}
+      </div>
+      <span className={styles.dialogueCount} aria-hidden="true">{t("courses.speech.count", { number: current + 1, total })}</span>
     </div>
   );
 }

@@ -25,10 +25,23 @@
 .turns li{display:grid;grid-template-columns:minmax(2.5rem,max-content) minmax(0,1fr) auto;gap:var(--space-3);align-items:baseline;margin-inline:calc(var(--space-2) * -1);padding-inline:var(--space-2);border-radius:var(--radius-sm);transition:background-color var(--motion-standard) var(--ease-physical)}
 .turns li.speaking{background:var(--color-highlight-soft)}
 .turns li>:last-child:not(.line){align-self:center}
-.playDialogueWrap{position:relative;justify-self:start}
-.playDialogue{display:inline-flex;align-items:center;gap:var(--space-2);min-height:var(--touch-target);margin-block:calc((var(--touch-target) - 1lh) / -2);padding:0;background:none;border:0;color:var(--color-foreground-muted);font:inherit;font-size:var(--type-metadata);font-weight:var(--weight-semibold);cursor:pointer}
-.playDialogue:hover{color:var(--color-foreground)}
-.playDialogue:focus-visible{outline:var(--border-strong);outline-offset:2px;border-radius:var(--radius-sm)}
+/* Dialogue transport: previous, play/pause, next, stop, a segmented progress slider, and a mono line count. Icon buttons keep a full
+   touch target while negative margins hold the row to the height of the bar. */
+.dialogueControls{display:grid;grid-template-columns:auto auto auto auto minmax(0,1fr) auto;align-items:center;gap:var(--space-1);margin-block:calc(var(--space-2) * -1)}
+.playDialogueWrap{position:relative;display:inline-flex}
+.transport,.playDialogue{display:inline-grid;place-items:center;min-width:var(--touch-target);min-height:var(--touch-target);padding:0;color:var(--color-foreground-muted);background:none;border:0;border-radius:var(--radius-pill);cursor:pointer;transition:color var(--motion-press) var(--ease-physical),background-color var(--motion-press) var(--ease-physical),transform var(--motion-press) var(--ease-physical)}
+.playDialogue{color:var(--color-foreground);background:var(--color-highlight-soft)}
+.transport:hover:not(:disabled){color:var(--color-foreground)}
+.transport:active:not(:disabled),.playDialogue:active{transform:scale(.92)}
+.transport:disabled{opacity:.4;cursor:default}
+.transport:focus-visible,.playDialogue:focus-visible{outline:var(--border-strong);outline-offset:-4px}
+.playDialogue[aria-busy="true"] .playIcon{animation:pulse var(--motion-reveal) var(--ease-physical) infinite alternate}
+.dialogueProgress{display:flex;align-items:center;gap:3px;min-height:var(--touch-target);margin-inline-start:var(--space-2);border-radius:var(--radius-sm);cursor:pointer;touch-action:manipulation}
+.dialogueProgress:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.segment{flex:1 1 0;min-width:2px;height:6px;overflow:hidden;background:var(--color-wash-strong);border-radius:var(--radius-pill);pointer-events:none}
+.segmentFill{display:block;width:100%;height:100%;background:var(--color-action);transform-origin:left;transition:transform var(--motion-standard) linear}
+.dialogueCount{min-width:4ch;margin-inline-start:var(--space-2);font-family:var(--font-mono);font-size:var(--type-metadata);color:var(--color-foreground-muted);text-align:end;font-variant-numeric:tabular-nums}
+@keyframes pulse{from{opacity:1}to{opacity:.35}}
 .playIcon{width:var(--size-icon-control);height:var(--size-icon-control);stroke-width:1.5}
 .spoken{display:flex;align-items:center;gap:var(--space-2);margin:0;min-width:0}
 .spoken>:first-child{flex:1 1 auto;min-width:0}
@@ -63,5 +76,5 @@
 .text-blue{color:var(--color-lesson-blue-text)}.surface-blue{background:var(--color-lesson-blue-surface)}
 .text-purple{color:var(--color-lesson-purple-text)}.surface-purple{background:var(--color-lesson-purple-surface)}
 .text-pink{color:var(--color-lesson-pink-text)}.surface-pink{background:var(--color-lesson-pink-surface)}
-@media(prefers-reduced-motion:reduce){.turns li{transition:none}}
+@media(prefers-reduced-motion:reduce){.turns li,.transport,.playDialogue,.segmentFill{transition:none}.playDialogue[aria-busy="true"] .playIcon{animation:none;opacity:.6}}
 @media(max-width:48em){.columns{grid-template-columns:minmax(0,1fr)}}

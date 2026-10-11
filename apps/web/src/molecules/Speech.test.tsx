@@ -93,32 +93,107 @@ describe("Lesson speech playback", () => {
     expect(HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(3);
   });
 
-  it("plays a dialogue's ready turns in order, marking the turn being spoken, and stops", () => {
+  it("plays a dialogue's ready turns in order, marking the turn being spoken, and stops at the end", () => {
     const turn = (index: number) => `turn:${id(22)}:${index}`;
     renderWith({ [turn(0)]: clip("t0"), [turn(2)]: clip("t2") });
     const lines = ["Hallo!", "Hoi.", "Tot ziens."].map((line) => screen.getByText(line).closest("li")!);
+    const progress = screen.getByRole("slider", { name: "Dialogue progress" });
+    expect(progress).toHaveAttribute("aria-valuetext", "Not started");
+    expect(screen.getByRole("button", { name: "Previous line" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Stop dialogue" })).toBeDisabled();
     fireEvent.click(screen.getByRole("button", { name: "Play dialogue" }));
     expect(src()).toBe(clip("t0"));
     expect(lines[0]).toHaveAttribute("aria-current", "true");
+    expect(progress).toHaveAttribute("aria-valuetext", "Line 1 of 2, Anna");
     end();
     // The second turn has no clip, so the third follows.
     expect(src()).toBe(clip("t2"));
     expect(lines[0]).not.toHaveAttribute("aria-current");
     expect(lines[2]).toHaveAttribute("aria-current", "true");
+    expect(screen.getByRole("button", { name: "Next line" })).toBeDisabled();
     end();
     expect(src()).toBeNull();
     expect(screen.getByRole("button", { name: "Play dialogue" })).toBeInTheDocument();
-    // Pressing it again while it plays stops it.
+    expect(progress).toHaveAttribute("aria-valuetext", "Not started");
+    // Stop ends it at once, playing or paused, and the next play starts from the first line.
     fireEvent.click(screen.getByRole("button", { name: "Play dialogue" }));
+    end();
     fireEvent.click(screen.getByRole("button", { name: "Stop dialogue" }));
     expect(src()).toBeNull();
-    expect(lines[0]).not.toHaveAttribute("aria-current");
-    // Another speaker button stops it too.
+    expect(lines[2]).not.toHaveAttribute("aria-current");
+    expect(progress).toHaveAttribute("aria-valuetext", "Not started");
+    fireEvent.click(screen.getByRole("button", { name: "Play dialogue" }));
+    fireEvent.click(screen.getByRole("button", { name: "Pause dialogue" }));
+    fireEvent.click(screen.getByRole("button", { name: "Stop dialogue" }));
+    expect(src()).toBeNull();
+    expect(screen.getByRole("button", { name: "Play dialogue" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Play dialogue" }));
+    expect(src()).toBe(clip("t0"));
+    act(() => stopSpeech());
+    // Another speaker button stops it.
     fireEvent.click(screen.getByRole("button", { name: "Play dialogue" }));
     fireEvent.click(within(lines[2]!).getByRole("button", { name: "Play line 3, Anna" }));
     expect(src()).toBe(clip("t2"));
     expect(lines[2]).not.toHaveAttribute("aria-current");
     expect(screen.getByRole("button", { name: "Play dialogue" })).toBeInTheDocument();
+  });
+
+  it("pauses and resumes a dialogue where it was", () => {
+    renderWith({ [`turn:${id(22)}:0`]: clip("t0"), [`turn:${id(22)}:1`]: clip("t1") });
+    fireEvent.click(screen.getByRole("button", { name: "Play dialogue" }));
+    end();
+    expect(src()).toBe(clip("t1"));
+    fireEvent.click(screen.getByRole("button", { name: "Pause dialogue" }));
+    expect(HTMLMediaElement.prototype.pause).toHaveBeenCalled();
+    // The paused line stays marked and its clip stays loaded.
+    expect(screen.getByText("Hoi.").closest("li")).toHaveAttribute("aria-current", "true");
+    expect(src()).toBe(clip("t1"));
+    fireEvent.click(screen.getByRole("button", { name: "Resume dialogue" }));
+    expect(src()).toBe(clip("t1"));
+    expect(screen.getByRole("button", { name: "Pause dialogue" })).toBeInTheDocument();
+    expect(HTMLMediaElement.prototype.play).toHaveBeenCalledTimes(3);
+  });
+
+  it("moves to the previous, next, or a chosen line and carries on from there", () => {
+    const urls = { [`turn:${id(22)}:0`]: clip("t0"), [`turn:${id(22)}:1`]: clip("t1"), [`turn:${id(22)}:2`]: clip("t2") };
+    renderWith(urls);
+    const progress = screen.getByRole("slider", { name: "Dialogue progress" });
+    fireEvent.click(screen.getByRole("button", { name: "Play dialogue" }));
+    fireEvent.click(screen.getByRole("button", { name: "Next line" }));
+    expect(src()).toBe(clip("t1"));
+    fireEvent.click(screen.getByRole("button", { name: "Previous line" }));
+    expect(src()).toBe(clip("t0"));
+    // Previous on the first line starts it again.
+    fireEvent.click(screen.getByRole("button", { name: "Previous line" }));
+    expect(src()).toBe(clip("t0"));
+    // A jump from a paused dialogue plays.
+    fireEvent.click(screen.getByRole("button", { name: "Pause dialogue" }));
+    fireEvent.keyDown(progress, { key: "End" });
+    expect(src()).toBe(clip("t2"));
+    expect(screen.getByRole("button", { name: "Pause dialogue" })).toBeInTheDocument();
+    fireEvent.keyDown(progress, { key: "ArrowLeft" });
+    expect(src()).toBe(clip("t1"));
+    end();
+    expect(src()).toBe(clip("t2"));
+    // Pressing the bar starts at the line under the pointer, also before the dialogue has started.
+    act(() => stopSpeech());
+    vi.spyOn(progress, "getBoundingClientRect").mockReturnValue({ left: 0, width: 300, top: 0, right: 300, bottom: 44, height: 44, x: 0, y: 0, toJSON: () => ({}) });
+    fireEvent.click(progress, { clientX: 150 });
+    expect(src()).toBe(clip("t1"));
+    expect(progress).toHaveAttribute("aria-valuetext", "Line 2 of 3, Ben");
+  });
+
+  it("fills the progress bar through finished lines and the current clip", () => {
+    renderWith({ [`turn:${id(22)}:0`]: clip("t0"), [`turn:${id(22)}:1`]: clip("t1") });
+    const fills = () => [...screen.getByRole("slider").querySelectorAll<HTMLElement>("span > span")].map((fill) => fill.style.transform);
+    expect(fills()).toEqual(["scaleX(0)", "scaleX(0)"]);
+    fireEvent.click(screen.getByRole("button", { name: "Play dialogue" }));
+    end();
+    Object.defineProperty(player!, "duration", { configurable: true, value: 2 });
+    Object.defineProperty(player!, "currentTime", { configurable: true, value: 1 });
+    act(() => { player!.dispatchEvent(new Event("timeupdate")); });
+    expect(fills()).toEqual(["scaleX(1)", "scaleX(0.5)"]);
+    expect(screen.getByText("2 / 2")).toBeInTheDocument();
   });
 
   it("plays only the turns shown so far in the player", () => {

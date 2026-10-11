@@ -37,6 +37,7 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 - [x] Dialogues: a button per turn and Play dialogue with the current turn marked, in the reader and the player.
 - [x] Tests: RTL for hidden buttons while not ready, one clip at a time, Play dialogue order and stop; Playwright playing a word, an example, and a dialogue on desktop and mobile, with `mobile-layout.spec.ts` unchanged.
 - [x] Docs: `docs/design-system.md` speaker button, `docs/user-flows.md`, `docs/testing.md`.
+- [x] Dialogue transport (2026-10-11): pause and resume, stop, previous and next line, and a segmented progress slider that starts any line; RTL and Playwright cover them.
 
 ## C10c — Authoring
 

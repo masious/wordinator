@@ -79,7 +79,7 @@ export async function playLessonSpeech(page: Page, testInfo: TestInfo) {
   await sentence.click();
   await expect(sentence).toHaveAttribute("aria-pressed", "true");
   await expect(sentence).toHaveAttribute("aria-pressed", "false");
-  // Play dialogue marks each line in turn, then offers to play again.
+  // Play dialogue marks each line in turn, then offers to play again; pausing keeps the line, and the bar starts at a chosen line.
   await page.getByRole("button", { name: "Play dialogue" }).click();
   const first = page.getByRole("listitem").filter({ hasText: "Hallo!" }); const second = page.getByRole("listitem").filter({ hasText: "Hoi, hoe gaat het?" });
   await expect(first).toHaveAttribute("aria-current", "true");
@@ -87,6 +87,16 @@ export async function playLessonSpeech(page: Page, testInfo: TestInfo) {
   await expect(page.getByRole("button", { name: "Play dialogue" })).toBeVisible();
   await expect(second).not.toHaveAttribute("aria-current");
   expect(played).toHaveLength(4);
+  const progress = page.getByRole("slider", { name: "Dialogue progress" });
+  const box = (await progress.boundingBox())!;
+  await progress.click({ position: { x: box.width * 0.9, y: box.height / 2 } });
+  await expect(second).toHaveAttribute("aria-current", "true");
+  await page.getByRole("button", { name: "Pause dialogue" }).click();
+  await expect(page.getByRole("button", { name: "Resume dialogue" })).toBeVisible();
+  await expect(second).toHaveAttribute("aria-current", "true");
+  await page.getByRole("button", { name: "Resume dialogue" }).click();
+  await expect(page.getByRole("button", { name: "Play dialogue" })).toBeVisible();
+  await expect(second).not.toHaveAttribute("aria-current");
 
   // In the player, a word plays from the step's New words panel and a line from the dialogue stage.
   await page.getByRole("link", { name: /^Back to / }).click();

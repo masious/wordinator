@@ -24,6 +24,7 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [LESSON_EDITOR_PLAN.md](../LESSON_EDITOR_PLAN.md) | Course lesson editor (C7) delivery steps, status, and release procedure |
 | [WORDS_PLAN.md](../WORDS_PLAN.md) | Word cards, bookmarks, and Words tab (C9) delivery steps, status, and release procedure |
 | [SPEECH_PLAN.md](../SPEECH_PLAN.md) | Lesson speech (C10) delivery steps, status, and release procedure |
+| [LESSON_SHARES_PLAN.md](../LESSON_SHARES_PLAN.md) | Lesson shares and post Storybook (C11) decisions, delivery steps, status, and release procedure |
 | [architecture.md](architecture.md) | Runtime topology, monorepo boundaries, client/server responsibilities, and API conventions |
 | [data-model.md](data-model.md) | Conceptual entities, relationships, constraints, retention, and deletion semantics |
 | [security-and-privacy.md](security-and-privacy.md) | Security baseline, privacy boundaries, tradeoffs, and deferred work |

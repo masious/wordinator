@@ -6,12 +6,16 @@ import styles from "./Speech.module.css";
 
 // Lesson speech playback (docs/speech.md#playback). One audio element serves the whole page, so one clip plays at a time:
 // starting any clip stops the current one. A playback has an owner (the button or dialogue that started it) and a queue of clip
-// URLs played in order; Play dialogue queues its turns, every other button queues one clip.
-export type SpeechPlayback = { owner: string; index: number; status: "loading" | "playing" | "error" };
+// URLs played in order; a dialogue queues its turns and can pause, resume, and start at any turn, every other button queues one clip.
+export type SpeechPlayback = { owner: string; index: number; status: "loading" | "playing" | "paused" | "error" };
 
 let audio: HTMLAudioElement | null = null;
 let queue: readonly string[] = [];
 let playback: SpeechPlayback | null = null;
+// How far the current clip has played, from 0 to 1. Kept apart from `playback` so its frequent updates re-render only the
+// components that show it.
+let elapsed = 0;
+const elapsedListeners = new Set<() => void>();
 // Raised on every start and stop, so a play() promise or media event of an earlier clip never touches the current one.
 let generation = 0;
 const listeners = new Set<() => void>();
@@ -21,6 +25,12 @@ function publish(next: SpeechPlayback | null) {
   for (const listener of listeners) listener();
 }
 
+function publishElapsed(next: number) {
+  if (next === elapsed) return;
+  elapsed = next;
+  for (const listener of elapsedListeners) listener();
+}
+
 function element() {
   if (audio) return audio;
   audio = new Audio();
@@ -28,8 +38,13 @@ function element() {
   audio.addEventListener("playing", () => {
     if (playback?.status === "loading") publish({ ...playback, status: "playing" });
   });
+  audio.addEventListener("timeupdate", () => {
+    const duration = audio?.duration ?? 0;
+    if (playback && Number.isFinite(duration) && duration > 0) publishElapsed(Math.min(1, audio!.currentTime / duration));
+  });
   audio.addEventListener("ended", () => {
     if (!playback || playback.status === "error") return;
+    publishElapsed(1);
     if (playback.index + 1 < queue.length) start(playback.owner, playback.index + 1);
     else stopSpeech();
   });
@@ -48,6 +63,7 @@ function start(owner: string, index: number) {
   const run = ++generation;
   const player = element();
   publish({ owner, index, status: "loading" });
+  publishElapsed(0);
   player.src = queue[index]!;
   // An interrupted play() rejects with AbortError; that is a stop, not a failure.
   player.play().catch((error: unknown) => {
@@ -55,11 +71,28 @@ function start(owner: string, index: number) {
   });
 }
 
-// Plays `urls` in order for `owner`, stopping whatever plays now.
-export function playSpeech(owner: string, urls: readonly string[]) {
-  if (!urls.length) return;
+// Plays `urls` in order for `owner` from `from`, stopping whatever plays now.
+export function playSpeech(owner: string, urls: readonly string[], from = 0) {
+  if (!urls[from]) return;
   queue = urls;
-  start(owner, 0);
+  start(owner, from);
+}
+
+// Pauses the current clip where it is; `resumeSpeech` carries on from there and through the rest of the queue.
+export function pauseSpeech() {
+  if (!playback || (playback.status !== "loading" && playback.status !== "playing")) return;
+  generation += 1;
+  audio?.pause();
+  publish({ ...playback, status: "paused" });
+}
+
+export function resumeSpeech() {
+  if (playback?.status !== "paused" || !audio) return;
+  const run = ++generation;
+  publish({ ...playback, status: "loading" });
+  audio.play().catch((error: unknown) => {
+    if (!(error instanceof DOMException && error.name === "AbortError")) fail(run);
+  });
 }
 
 export function stopSpeech() {
@@ -71,6 +104,7 @@ export function stopSpeech() {
     audio.load();
   }
   publish(null);
+  publishElapsed(0);
 }
 
 const subscribe = (listener: () => void) => {
@@ -83,6 +117,18 @@ const snapshot = () => playback;
 export function useSpeechPlayback(owner: string) {
   const current = useSyncExternalStore(subscribe, snapshot, snapshot);
   return current?.owner === owner ? current : null;
+}
+
+const subscribeElapsed = (listener: () => void) => {
+  elapsedListeners.add(listener);
+  return () => { elapsedListeners.delete(listener); };
+};
+const elapsedSnapshot = () => elapsed;
+
+// How far the owner's current clip has played, from 0 to 1; 0 while the owner plays nothing.
+export function useSpeechElapsed(owner: string) {
+  const value = useSyncExternalStore(subscribeElapsed, elapsedSnapshot, elapsedSnapshot);
+  return useSpeechPlayback(owner) ? value : 0;
 }
 
 // Stops the owner's playback when the component that started it unmounts, such as a player step moving on.
