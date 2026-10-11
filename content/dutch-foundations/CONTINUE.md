@@ -16,7 +16,7 @@ Repo: `/Users/jsninja/myworkspace/2wordinator`. Read `CLAUDE.md` and `content/du
 
 ## Part priority (user's order, 2026-10-10)
 
-Work on parts in this order: **Part II → Part III → Part IV → Part V → Part VI → Part VII → Part I last.** Part II is finished; finish Part III (Batch B) next. Parts IV onward need briefs and a ledger before workers start (see `docs/content/index.md#workflow`).
+Work on parts in this order: **Part II → Part III → Part IV → Part V → Part VI → Part VII → Part I last.** Part II is finished; Part III is written and imported locally (production import of Batch B pending). Part IV is next. Parts IV onward need briefs and a ledger before workers start (see `docs/content/index.md#workflow`).
 
 ## Agent models (cost)
 
@@ -25,7 +25,7 @@ Use the cheapest model that does the job: coordinator and workers on `sonnet`; r
 ## Batches (the user's rule: finish a batch completely before starting the next)
 
 - **Batch A:** 16-a, 16-b and 17-a. **Done** (reviewed, docs updated, local and production import).
-- **Batch B:** 17-b, 18-a and 18-b: write, review, docs, local import. Wait for the user's go before starting.
+- **Batch B:** 17-b, 18-a and 18-b. **Done locally** (written, reviewed, docs updated, local import at positions 9–11, 2026-10-11). Not yet in production.
 - **Then stop** and ask the user whether to import Batch B into production. Never write to production without the user's explicit yes in that turn.
 
 Decisions already made (in `part-iii/REVIEW-NOTES.md`; tell Batch B's coordinator):
@@ -83,7 +83,14 @@ A batch is finished when every one of these is true:
    npx wrangler d1 execute wordinator --local --file=<scratchpad>/part-iii.sql
    ```
 
-   The SQL upserts every Part III lesson file as an unpublished draft at positions 2+, in file-name order, and adds practice anchors. Existing drafts get `draft_version + 1`. Verify with a `select position, title` query.
+   The full file is now too big for one `wrangler d1 execute` (`SQLITE_TOOBIG`). Split it into one file per lesson and run each in turn:
+
+   ```bash
+   awk -v d=<scratchpad> '/^INSERT INTO course_lessons/{n++} {print > sprintf("%s/chunk-%02d.sql", d, n)}' <scratchpad>/part-iii.sql
+   for f in <scratchpad>/chunk-*.sql; do npx wrangler d1 execute wordinator --local --file=$f; done
+   ```
+
+   Use the same split for the production SQL, with `--remote`. The SQL upserts every Part III lesson file as an unpublished draft at positions 2+, in file-name order, and adds practice anchors. Existing drafts get `draft_version + 1`. Verify with a `select position, title` query.
 3. Note the import in `docs/content/ledger-part-iii.md` (the "Local database" line).
 4. Report to the user briefly and wait.
 

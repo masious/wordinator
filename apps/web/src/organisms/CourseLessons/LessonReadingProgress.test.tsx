@@ -31,7 +31,7 @@ const lesson = (published = true): CourseLesson => ({
   ...summary(published), document: published ? document : null, practiceProgress: {}, draft: published ? null : { document, version: 1 }, speech: {}, draftSpeech: published ? null : {}, myShares: {},
 });
 const position = (n: number) => ({ lessonId, stepKey: blockId(n), stepIndex: n - 1, passedSteps: n - 1, totalSteps: 4, updatedAt: 1 });
-const progress = (completed: string[] = [], positions: unknown[] = []) => ({ publishedLessons: 1, completedLessonIds: completed, positions, participants: [{ user, completedLessons: completed.length, percent: 0 }] });
+const progress = (completed: string[] = [], positions: unknown[] = []) => ({ publishedLessons: 1, completedLessonIds: completed, positions, practices: {}, participants: [{ user, completedLessons: completed.length, percent: 0 }] });
 
 function response(body: unknown) { return new Response(JSON.stringify(body), { status: 200, headers: { "content-type": "application/json" } }); }
 let served = progress();

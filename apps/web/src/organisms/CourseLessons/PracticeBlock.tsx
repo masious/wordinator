@@ -5,7 +5,7 @@ import { readPracticeBlock, type LessonBlockOf } from "@wordinator/contracts/les
 import { useQueryClient } from "@tanstack/react-query";
 import { type FocusEvent, type FormEvent, type KeyboardEvent, type ReactNode, type RefObject, useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { apiRequest, lessonQueryOptions } from "../../api";
+import { apiRequest, courseProgressQueryOptions, lessonQueryOptions } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { AdaptiveDialog, Button, TextAreaField, TextField } from "../../ui";
@@ -57,7 +57,9 @@ export function usePracticeProgress(scope: PracticeScope, published: boolean) {
     if (known === null ? answered === 0 : answered <= known) return;
     const path = blockPath({ accountId, groupId, courseId, lessonId }, practice.id);
     void apiRequest(`${path}/progress`, practiceProgressResponseSchema, { method: "PUT", body: JSON.stringify({ answered }) })
-      .then(() => queryClient.invalidateQueries({ queryKey: lessonQueryOptions(groupId, courseId, lessonId).queryKey }), () => undefined);
+      // The course page counts done practices and the last practice time from the course progress.
+      .then(() => Promise.all([lessonQueryOptions(groupId, courseId, lessonId), courseProgressQueryOptions(groupId, courseId)]
+        .map(({ queryKey }) => queryClient.invalidateQueries({ queryKey }))), () => undefined);
   }, [accountId, courseId, groupId, lessonId, published, queryClient]);
 }
 

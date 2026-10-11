@@ -5,8 +5,12 @@
 .lessonLink:hover .lessonTitle{text-decoration:underline}
 .lessonLink:focus-visible{outline:var(--border-strong);outline-offset:2px;border-radius:var(--radius-sm)}
 .lessonNumber{min-width:2ch;font-family:var(--font-mono);font-size:var(--type-metadata);color:var(--color-foreground-muted)}
-.lessonImage{flex:none;align-self:flex-start;width:var(--size-lesson-image);aspect-ratio:var(--aspect-lesson-image);overflow:hidden;background:var(--color-muted);border:var(--ring-hairline);border-radius:var(--radius-md)}
-.lessonImage img{display:block;width:100%;height:100%;object-fit:cover}
+/* A lesson's first image covers the card's full height along its left edge and fades into the card, so the text beside it stays
+   on the card's own colour; it sits under the card's content. The card clips it to its rounded corners; the image may be cropped. */
+.withImage{position:relative;isolation:isolate;overflow:hidden;padding-inline-start:calc(var(--size-lesson-image) - var(--space-6))}
+.lessonImage{position:absolute;inset-block:0;left:0;z-index:-1;width:var(--size-lesson-image);
+  mask-image:linear-gradient(to right,#000 35%,transparent);-webkit-mask-image:linear-gradient(to right,#000 35%,transparent)}
+.lessonImage img{display:block;width:100%;height:100%;object-fit:cover;object-position:left center}
 .lessonCopy{display:grid;gap:var(--space-1);min-width:0}
 .lessonTitle{font-family:var(--font-display);font-size:var(--type-card-title);font-weight:var(--weight-medium);line-height:var(--line-title);overflow-wrap:anywhere}
 .page{display:grid;gap:var(--space-6);min-width:0}
@@ -24,6 +28,9 @@
 .next::after{content:" →"}
 .start{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3);margin-top:var(--space-2)}
 .position{font:var(--type-metadata)/1 var(--font-mono);color:var(--color-foreground-muted)}
+.practices{font-size:var(--type-metadata);font-weight:var(--weight-semibold);color:var(--color-foreground)}
+.practicesDone{font-size:var(--type-metadata);font-weight:var(--weight-semibold);color:var(--color-success)}
+.lastPractice{font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 .recap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3)}
 .recap p{margin:0}
 .completed{font-size:var(--type-metadata);font-weight:var(--weight-semibold);color:var(--color-success)}

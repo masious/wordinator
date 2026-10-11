@@ -39,8 +39,8 @@ const doc = (blocks: LessonTopBlock[]): LessonDocument => ({ schemaVersion: LESS
 const lesson = (n: number, blocks: LessonTopBlock[] = [], { published = true, editing = false } = {}): CourseLesson => ({
   ...summary(n, published), document: published ? doc(blocks) : null, practiceProgress: {}, draft: editing ? { document: doc(blocks), version: 1 } : null, speech: {}, draftSpeech: editing ? {} : null, myShares: {},
 });
-const progress = (completedLessonIds: string[], positions: unknown[] = []) => ({
-  publishedLessons: 4, completedLessonIds, positions,
+const progress = (completedLessonIds: string[], positions: unknown[] = [], practices: Record<string, { done: number; practicedAt: number }> = {}) => ({
+  publishedLessons: 4, completedLessonIds, positions, practices,
   participants: [{ user: { id: accountId, displayName: "Ada", avatarUrl: null }, completedLessons: completedLessonIds.length, percent: completedLessonIds.length * 25 }],
 });
 
@@ -55,6 +55,8 @@ function renderWithRouter(page: ReactNode) {
 }
 // The course page renders the resume action above the lesson list; both read the same progress query.
 let served: CourseLesson[] = [];
+// Lessons the default server has recorded as finished, so a later progress read still reports them.
+let finished: string[] = [];
 const renderLessons = (detail: CourseDetailResponse) => { served = detail.lessons; return renderWithRouter(<>
   <CourseResume groupId={groupId} courseId={courseId} accountId={accountId} outline={detail.outline} />
   <CourseLessons groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} />
@@ -65,12 +67,12 @@ const renderLesson = (detail: CourseDetailResponse, id = lessonId(1)) =>
 const lessonFour = lesson(4, [example("50000000-0000-4000-8000-000000000004", "Ik stap over.")]);
 
 beforeEach(() => {
-  localStorage.clear(); served = [];
+  localStorage.clear(); served = []; finished = [];
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
-    if (path.endsWith("/progress")) return response(progress([]));
+    if (path.endsWith("/progress")) return response(progress(finished));
     if (path.endsWith("/words")) return response({ words: [] });
-    if (path.endsWith("/completion") && init?.method === "PUT") return response(progress([lessonId(1)]));
+    if (path.endsWith("/completion") && init?.method === "PUT") { finished = [lessonId(1)]; return response(progress(finished)); }
     if (path.endsWith("/position") && init?.method === "PUT") {
       return response({ position: { lessonId: lessonId(1), stepKey: JSON.parse(String(init.body)).stepKey, stepIndex: 0, passedSteps: 0, totalSteps: 1, updatedAt: 1 } });
     }
@@ -455,6 +457,26 @@ describe("Lesson actions", () => {
     expect(vi.mocked(fetch).mock.calls.some(([, init]) => init?.method === "PUT")).toBe(false);
   });
 
+  it("tells how many of a lesson's practices remain and when the viewer last practised it", async () => {
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    const practicedAt = Date.now() - 3 * 86_400_000;
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress")
+      ? response(progress([], [], { [lessonId(1)]: { done: 1, practicedAt }, [lessonId(2)]: { done: 2, practicedAt } })) : original(input, init));
+    const outline = [summary(1, true, { practiceCount: 3 }), summary(2, true, { practiceCount: 2 }), summary(3, true, { practiceCount: 1 }), summary(4)];
+    renderLessons({ course: course(false), outline, lessons: [lesson(1), lesson(2), lesson(3)] });
+    const first = await screen.findByRole("link", { name: "Open lesson 1: Lesson title 1" });
+    await waitFor(() => expect(first).toHaveTextContent("2 practices remain"));
+    expect(first).toHaveTextContent("Last practice 3 days ago");
+    expect(within(first).getByText("3 days ago").tagName).toBe("TIME");
+    const second = screen.getByRole("link", { name: "Open lesson 2: Lesson title 2" });
+    expect(second).toHaveTextContent("All practices done");
+    // A lesson never practised has no last practice; one without practices shows neither.
+    const third = screen.getByRole("link", { name: "Open lesson 3: Lesson title 3" });
+    expect(third).toHaveTextContent("1 practice remains");
+    expect(third).not.toHaveTextContent("Last practice");
+    expect(screen.getByRole("link", { name: "Open lesson 4: Lesson title 4" })).not.toHaveTextContent(/practice/i);
+  });
+
   it("lists a lesson's practices with the viewer's state and opens the chosen one's answer set", async () => {
     const practised = { ...lesson(1, [practice, dialogue, second]), practiceProgress: { [practice.id]: { done: 1, started: 1, answered: 2 }, [second.id]: { done: 0, started: 0, answered: null } } };
     const original = vi.mocked(fetch).getMockImplementation()!;
@@ -481,6 +503,8 @@ describe("Lesson actions", () => {
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/blocks/${second.id}/progress`,
       expect.objectContaining({ method: "PUT", body: JSON.stringify({ answered: 1 }) })));
     expect(await within(dialog).findByRole("button", { name: /Translate\./ })).toBeInTheDocument();
+    // The course progress is read again, so the lesson's remaining practices and last practice update.
+    await waitFor(() => expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith(`/courses/${courseId}/progress`)).length).toBeGreaterThan(1));
   });
 
   it("previews an editor's unpublished lesson and leaves practising out of archived courses", async () => {

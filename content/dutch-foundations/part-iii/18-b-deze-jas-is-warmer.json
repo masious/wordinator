@@ -12,7 +12,7 @@
     },
     {
       "type": "paragraph",
-      "content": "It is Saturday 14 November, later the same day as the clothes shopping trip. Sofia must choose between two winter coats, and Noor and the shop assistant help her compare them.",
+      "content": "It is still Saturday 14 November, in the clothes shop from the last lesson. Sofia likes the dark-blue winter coat, but there is also a cheaper black coat, and Noor and the shop assistant help her compare them. Later, Sofia comes home to Kastanjestraat 14, where Henk is in the hallway.",
       "id": "60f65354-681d-408e-9969-63b64208b9cc"
     },
     {
@@ -22,7 +22,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Colours in this lesson: the new comparative form is bold, sometimes highlighted in yellow. Subjects are green, the finite verb is blue, de-forms (deze, die) are pink and het-forms (dit, dat) are brown.",
+      "content": "Colours in this lesson: the new comparative form is bold, sometimes highlighted in yellow. In the first example the subject is green and the finite verb is blue. de-forms (deze, die, the -e ending with de-words) are pink and het-forms are brown. A wrong form is in italic grey, followed by the correct one.",
       "id": "819da1de-7bdd-4494-9d46-35887e4412ae"
     },
     {
@@ -30,12 +30,12 @@
       "props": {
         "level": 2
       },
-      "content": "Story: In de jassenwinkel",
+      "content": "Story: Zwart of donkerblauw?",
       "id": "f77922b2-28f5-4312-8221-29ab5bf6b471"
     },
     {
       "type": "paragraph",
-      "content": "Sofia, Noor and the Verkoopster (shop assistant) are in a clothes shop in the centre of Utrecht. Sofia must choose between a black coat and a dark-blue coat.",
+      "content": "Sofia, Noor and the Verkoopster (shop assistant) are still in the clothes shop in the centre of Utrecht. Before Sofia pays for the dark-blue coat, the Verkoopster shows her a cheaper black coat. Now Sofia must choose.",
       "id": "b1717de4-1e91-4553-b99e-399434abbcf6"
     },
     {
@@ -44,11 +44,11 @@
         "turns": [
           {
             "speaker": "Verkoopster",
-            "text": "Deze zwarte jas is goedkoper, maar deze donkerblauwe jas is warmer."
+            "text": "Deze jas is warmer dan die jas."
           },
           {
             "speaker": "Sofia",
-            "text": "Welke jas is langer?"
+            "text": "Maar die is goedkoper. Welke jas is langer?"
           },
           {
             "speaker": "Verkoopster",
@@ -60,11 +60,11 @@
           },
           {
             "speaker": "Verkoopster",
-            "text": "Ja, deze jas is dikker en zwaarder. Hij is ook warmer dan die jas."
+            "text": "Ja, de kwaliteit is beter. Maar hij is ook zwaarder."
           },
           {
             "speaker": "Sofia",
-            "text": "Maar de blauwe jas is duurder. Ik twijfel."
+            "text": "En de blauwe jas is duurder. Ik twijfel."
           },
           {
             "speaker": "Noor",
@@ -72,11 +72,11 @@
           },
           {
             "speaker": "Verkoopster",
-            "text": "Die blauwe jas is ook heel mooi."
+            "text": "De blauwe jas is ook heel mooi."
           },
           {
             "speaker": "Sofia",
-            "text": "Ik vergelijk de prijzen. De blauwe jas kost honderdtwintig euro, de zwarte kost tachtig euro."
+            "text": "Ik vergelijk de prijzen. De blauwe jas kost honderdtwintig euro en de zwarte jas kost tachtig euro."
           },
           {
             "speaker": "Noor",
@@ -158,6 +158,13 @@
               "note": "New use. Earlier dan = then, next (08-b, 15-b): Tot dan!",
               "example": "Deze jas is warmer dan die jas.",
               "id": "9d708d99-9cd7-4114-92f9-0742fbcb1c23"
+            },
+            {
+              "term": "beter",
+              "meaning": "better (comparative of goed)",
+              "note": "Irregular: not goeder.",
+              "example": "Deze jas is beter dan mijn oude jas.",
+              "id": "1f9602aa-9d0e-4f44-9638-149184fb7b1b"
             }
           ]
         }
@@ -173,7 +180,7 @@
       "props": {
         "level": 2
       },
-      "content": "De vergelijkende vorm: adjectief + er",
+      "content": "The comparative: adjective + er",
       "id": "754e6d27-b858-4325-8c83-34f9f75cb229"
     },
     {
@@ -181,7 +188,7 @@
       "props": {
         "level": 3
       },
-      "content": "Een vergelijking maken",
+      "content": "Making a comparison",
       "id": "d5e3677e-f66a-404e-84f8-7bdec4a548f3"
     },
     {
@@ -225,7 +232,7 @@
       "type": "example",
       "props": {
         "translation": "The blue coat is bigger than the black coat.",
-        "note": "groot → groter: the long oo stays single before -er, like groot → grote in the previous lesson."
+        "note": "groot → groter: the double oo is written as one o before -er, like groot → grote in the previous lesson."
       },
       "content": [
         "De blauwe jas is ",
@@ -245,7 +252,7 @@
       "props": {
         "level": 3
       },
-      "content": "Spelling: dubbele letters",
+      "content": "Spelling changes",
       "id": "40d9a4bd-a9d4-4652-8fd1-3796e684c342"
     },
     {
@@ -255,7 +262,7 @@
     },
     {
       "type": "bulletListItem",
-      "content": "Long vowel stays single",
+      "content": "Double vowel letter becomes single",
       "children": [
         {
           "type": "bulletListItem",
@@ -264,7 +271,7 @@
         },
         {
           "type": "bulletListItem",
-          "content": "mooi → mooier",
+          "content": "goedkoop → goedkoper",
           "id": "69946c62-b046-4985-a303-9bc8c15c2e52"
         }
       ],
@@ -339,7 +346,7 @@
       "props": {
         "level": 3
       },
-      "content": "Woorden die al op -r eindigen",
+      "content": "Adjectives that end in -r",
       "id": "262bef74-1c47-4fcb-a2ad-498d865bc2a0"
     },
     {
@@ -397,7 +404,7 @@
       "props": {
         "level": 3
       },
-      "content": "Overzicht: adjectief, vergelijkend, voorbeeld",
+      "content": "Overview: adjective, comparative, example",
       "id": "d69b2570-6141-469c-a7a6-cec2d06885d8"
     },
     {
@@ -411,7 +418,7 @@
               "props": {
                 "level": 3
               },
-              "content": "Adjectief",
+              "content": "Adjective",
               "id": "1ad2a8c9-7a9e-42e4-bc38-b2292510753a"
             },
             {
@@ -460,7 +467,7 @@
               "props": {
                 "level": 3
               },
-              "content": "Vergelijkend",
+              "content": "Comparative",
               "id": "76c57306-52ad-4d57-b634-910f1f7001b0"
             },
             {
@@ -509,7 +516,7 @@
               "props": {
                 "level": 3
               },
-              "content": "Voorbeeld",
+              "content": "Example",
               "id": "a21742ae-064d-4b36-8315-c73598fe5cb3"
             },
             {
@@ -554,6 +561,30 @@
       "id": "c7e604a0-fe96-4890-8985-f41b1997b7f8"
     },
     {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "meer",
+              "meaning": "more (comparative of veel)",
+              "note": "Irregular: not veeler.",
+              "example": "Deze winkel heeft meer jassen.",
+              "id": "fa6598f7-ea1a-45d9-9f8f-a0efe9b45ba4"
+            },
+            {
+              "term": "minder",
+              "meaning": "less, fewer (comparative of weinig)",
+              "note": "Irregular: not weiniger.",
+              "example": "Deze jas heeft minder kwaliteit.",
+              "id": "cd01207c-7179-48b6-8505-08fa01160835"
+            }
+          ]
+        }
+      },
+      "id": "fc8bf775-9fc3-41f3-a0f8-d2b7789c3cb2"
+    },
+    {
       "type": "numberedListItem",
       "content": "Pick the two things you compare.",
       "id": "776ec765-593f-46c4-a5c0-56dc49540a2c"
@@ -582,7 +613,7 @@
       "props": {
         "level": 2
       },
-      "content": "Onregelmatige vormen: beter, meer, minder",
+      "content": "Irregular forms: beter, meer, minder",
       "id": "a8ee3852-960a-4e99-8c1c-e5a73ccb5395"
     },
     {
@@ -631,7 +662,7 @@
     {
       "type": "example",
       "props": {
-        "translation": "This coat has less quality than that coat.",
+        "translation": "This coat is of lower quality than that coat.",
         "note": "weinig → minder (irregular, not weiniger)."
       },
       "content": [
@@ -657,37 +688,6 @@
       "id": "8e66bf42-835c-442b-a38f-d32436903e24"
     },
     {
-      "type": "vocabulary",
-      "props": {
-        "data": {
-          "words": [
-            {
-              "term": "beter",
-              "meaning": "better (comparative of goed)",
-              "note": "Irregular: not goeder.",
-              "example": "Deze jas is beter dan mijn oude jas.",
-              "id": "1f9602aa-9d0e-4f44-9638-149184fb7b1b"
-            },
-            {
-              "term": "meer",
-              "meaning": "more (comparative of veel)",
-              "note": "Irregular: not veeler.",
-              "example": "Deze winkel heeft meer jassen.",
-              "id": "fa6598f7-ea1a-45d9-9f8f-a0efe9b45ba4"
-            },
-            {
-              "term": "minder",
-              "meaning": "less, fewer (comparative of weinig)",
-              "note": "Irregular: not weiniger.",
-              "example": "Deze jas heeft minder kwaliteit.",
-              "id": "cd01207c-7179-48b6-8505-08fa01160835"
-            }
-          ]
-        }
-      },
-      "id": "a8be2d0e-d84d-4c6e-bd58-d84f1f54ee03"
-    },
-    {
       "type": "divider",
       "id": "337aabaa-629c-4c9a-b712-93eba7f1f334"
     },
@@ -711,7 +711,13 @@
         "note": "even + adjective + als; the adjective does not change."
       },
       "content": [
-        "Deze jas is ",
+        {
+          "text": "Deze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " jas is ",
         {
           "text": "even duur als",
           "styles": {
@@ -719,7 +725,14 @@
             "backgroundColor": "yellow"
           }
         },
-        " die jas."
+        " ",
+        {
+          "text": "die",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " jas."
       ],
       "id": "9d78408e-ff03-484e-8337-18a93d647950"
     },
@@ -775,36 +788,91 @@
             "bold": true
           }
         },
-        ", like any other adjective: de duurdere jas, een duurdere jas. Exception: a het-word after een or geen has no -e, even in the comparative: ",
+        ", like any other adjective: ",
+        {
+          "text": "de duurdere jas",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ", ",
+        {
+          "text": "een duurdere jas",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ". Exception: a het-word after een or geen has no -e, even in the comparative: ",
         {
           "text": "een warmer vest",
           "styles": {
-            "italic": true
+            "bold": true,
+            "textColor": "brown"
           }
         },
-        " (not een warmere vest) — the same exception as for -e with een."
+        " (not ",
+        {
+          "text": "een warmere vest",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ") — the same exception as for -e with een."
       ],
       "id": "cd668a45-49c0-4f27-bf1c-98278a59e320"
     },
     {
       "type": "example",
       "props": {
-        "translation": "I buy a more expensive scarf, but it is indeed warmer.",
+        "translation": "I'm buying a more expensive scarf. It is warmer too.",
         "note": "Comparative before a noun takes -e: duur → duurdere sjaal (de-word)."
       },
       "content": [
         "Ik koop een ",
         {
-          "type": "text",
           "text": "duurdere",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow",
+            "textColor": "pink"
+          }
+        },
+        " sjaal. Hij is ook warmer."
+      ],
+      "id": "b42a7cda-7560-4a89-bd6d-48f8475879e9"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Deze",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " is ",
+        {
+          "text": "warmer",
           "styles": {
             "bold": true,
             "backgroundColor": "yellow"
           }
         },
-        " sjaal, maar hij is wel warmer."
+        ", maar ",
+        {
+          "text": "die",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " is mooier."
       ],
-      "id": "b42a7cda-7560-4a89-bd6d-48f8475879e9"
+      "props": {
+        "translation": "This one is warmer, but that one is nicer.",
+        "note": "deze and die on their own mean 'this one' and 'that one' (12-a). They work well with comparatives: no need to repeat jas."
+      },
+      "id": "b17254ef-0201-42be-b952-0b45f2c0fd6c"
     },
     {
       "type": "vocabulary",
@@ -848,7 +916,7 @@
     },
     {
       "type": "paragraph",
-      "content": "Sofia walks home in her new coat. Henk is in the hallway of Kastanjestraat 14 with his cat Tijger.",
+      "content": "Sofia comes home in her new coat. The first cold winter days are here. Henk is in the hallway of Kastanjestraat 14 with his cat Tijger.",
       "id": "fbc86e4e-cc40-496a-8f47-58513c105e0d"
     },
     {
@@ -861,7 +929,7 @@
           },
           {
             "speaker": "Sofia",
-            "text": "Dank je, Henk! Ik kies deze donkerblauwe jas. Hij is warmer dan mijn oude regenjas."
+            "text": "Dank je, Henk! Deze donkerblauwe jas is nieuw. Hij is warmer dan mijn regenjas."
           },
           {
             "speaker": "Henk",
@@ -889,7 +957,7 @@
           },
           {
             "speaker": "Henk",
-            "text": "Dat is heel goed. Welkom thuis, Sofia!"
+            "text": "Dan kan de winter komen! Welkom thuis, Sofia!"
           },
           {
             "speaker": "Sofia",
@@ -976,7 +1044,7 @@
               "authorsVersion": [
                 "groter"
               ],
-              "note": "groot → groter: the long oo stays single."
+              "note": "groot → groter: the double oo is written as one o before -er."
             },
             {
               "prompt": "Deze jas is … dan die jas. (duur)",
@@ -1026,7 +1094,7 @@
           "instruction": "Complete the dialogues. Fill in one word per blank.",
           "items": [
             {
-              "prompt": "Sofia: Deze jas is … dan die jas. (warm) / Noor: En hij is ook … dan de zwarte sjaal. (lang)",
+              "prompt": "Sofia: Deze jas is … dan die jas. (warm) / Noor: En hij is ook … dan de zwarte jas. (lang)",
               "authorsVersion": [
                 "warmer",
                 "langer"
@@ -1045,7 +1113,7 @@
                 "als",
                 "minder"
               ],
-              "note": "minder duur = less expensive."
+              "note": "minder duur = less expensive. Also correct, but two words: niet zo duur."
             },
             {
               "prompt": "Sofia: Utrecht is … dan Valencia. (koud) / Henk: En de winter is ook … dan in Spanje. (lang)",
@@ -1059,14 +1127,16 @@
               "authorsVersion": [
                 "als",
                 "minder"
-              ]
+              ],
+              "note": "niet zo … als for 'not as … as'. Second blank: minder warm = less warm. Also correct, but two words: niet zo warm."
             },
             {
-              "prompt": "Noor: Mijn appartement is … dan jouw appartement. (klein) / Sofia: Ja, maar het is net zo … als het jouwe. (gezellig)",
+              "prompt": "Noor: Mijn appartement is … dan jouw appartement. (klein) / Sofia: Ja, maar het is net zo … als mijn appartement. (gezellig)",
               "authorsVersion": [
                 "kleiner",
                 "gezellig"
-              ]
+              ],
+              "note": "net zo … als takes the base form: gezellig, not gezelliger."
             }
           ]
         }
@@ -1159,25 +1229,29 @@
               "prompt": "Deze trui is dik. Die trui is dun.",
               "authorsVersion": [
                 "Deze trui is dikker dan die trui."
-              ]
+              ],
+              "note": "Also fine: Die trui is dunner dan deze trui."
             },
             {
               "prompt": "Mijn fiets is klein. Jouw fiets is groot.",
               "authorsVersion": [
                 "Jouw fiets is groter dan mijn fiets."
-              ]
+              ],
+              "note": "Also fine: Mijn fiets is kleiner dan jouw fiets."
             },
             {
               "prompt": "Deze jas kost vijftig euro. Die jas kost ook vijftig euro.",
               "authorsVersion": [
                 "Deze jas is even duur als die jas."
-              ]
+              ],
+              "note": "Equal: even + base adjective + als. Also fine: Deze jas is net zo duur als die jas."
             },
             {
               "prompt": "Utrecht is gezellig. Valencia is ook gezellig.",
               "authorsVersion": [
                 "Utrecht is net zo gezellig als Valencia."
-              ]
+              ],
+              "note": "Also fine: Utrecht is even gezellig als Valencia."
             },
             {
               "prompt": "Deze winkel heeft veel jassen. Die winkel heeft weinig jassen.",
@@ -1334,7 +1408,7 @@
           "instruction": "Read the notes about the two coats. Answer the questions in Dutch.",
           "passage": {
             "title": "Twee jassen vergelijken",
-            "content": "Jas 1: zwart\nPrijs: tachtig euro\nLengte: kort\nGewicht: licht\nKwaliteit: goed\n\nJas 2: donkerblauw\nPrijs: honderdtwintig euro\nLengte: lang\nGewicht: zwaar\nKwaliteit: heel goed. Deze jas is warmer dan jas 1.\n\nSofia kiest jas 2, de donkerblauwe jas. Hij is duurder en zwaarder, maar ook warmer en langer dan de zwarte jas. Noor zegt: 'De zwarte jas is ook mooi!' Maar voor Sofia is de blauwe kleur mooier.\n\nThuis zegt Henk: 'Die jas staat je goed!' Sofia is heel blij. Haar appartement in Lombok is klein, maar gezellig. Het is kleiner dan het huis van haar moeder in Valencia. Maar het appartement is net zo gezellig als dat huis. Utrecht is nu haar thuis."
+            "content": "Jas 1: zwart\nPrijs: tachtig euro\nDe jas is kort en licht.\nKwaliteit: goed\n\nJas 2: donkerblauw\nPrijs: honderdtwintig euro\nDe jas is lang en zwaar.\nKwaliteit: heel goed. Deze jas is warmer dan jas 1.\n\nSofia kiest jas 2, de donkerblauwe jas. Hij is duurder en zwaarder, maar ook warmer en langer dan de zwarte jas. Noor zegt: 'De zwarte jas is ook mooi!' Maar voor Sofia is de blauwe jas mooier.\n\nThuis zegt Henk: 'Die jas staat je goed!' Sofia is heel blij. Haar appartement in Lombok is klein, maar gezellig. Het is kleiner dan het huis van haar moeder in Valencia. Maar het appartement is net zo gezellig als dat huis. Utrecht is nu haar thuis."
           },
           "items": [
             {
@@ -1401,7 +1475,7 @@
             {
               "prompt": "Compare two things you own in 3–4 sentences.",
               "authorsVersion": [
-                "Mijn zwarte fiets is goedkoper dan een nieuwe fiets. Hij is ook net zo snel. Mijn oude regenjas is dunner dan mijn nieuwe winterjas, maar de winterjas is warmer. Ik kies nu altijd de winterjas."
+                "Mijn zwarte fiets is goedkoper dan een nieuwe fiets, maar hij is net zo snel. Mijn regenjas is dunner dan mijn nieuwe winterjas. De winterjas is warmer en ook mooier. Ik kies nu altijd de winterjas."
               ],
               "note": "Model answer. Check: comparative with dan, and even … als or net zo … als at least once."
             }
@@ -1456,7 +1530,7 @@
   ],
   "imageIdeas": [
     {
-      "afterHeading": "Story: In de jassenwinkel",
+      "afterHeading": "Story: Zwart of donkerblauw?",
       "description": "Inside a clothes shop in the centre of Utrecht: Sofia holds up a black coat and a dark-blue coat side by side to compare them, while Noor and the Verkoopster look on.",
       "alt": "Sofia comparing a black coat and a dark-blue coat in a clothes shop."
     },

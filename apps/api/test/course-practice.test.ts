@@ -1,5 +1,5 @@
 import { env } from "cloudflare:test";
-import { practiceProgressResponseSchema } from "@wordinator/contracts";
+import { courseProgressResponseSchema, practiceProgressResponseSchema } from "@wordinator/contracts";
 import { courseDetailResponseSchema, readPracticeBlock, type LessonBlockOf } from "@wordinator/contracts/lesson-document";
 import { beforeEach, describe, expect, it } from "vitest";
 import fixture from "../../../test/fixtures/courses/dutch-foundations-part-iii.json";
@@ -118,6 +118,31 @@ describe("Course practices and practice progress API", () => {
     await republish(setup, blocks.practice(changed, setup.block.id));
     expect((await readLesson(setup.lessonPath, reader)).practiceProgress).toEqual({ [setup.block.id]: { done: 0, started: 2, answered: 2 } });
     expect(await saveProgress(setup, reader, 3)).toEqual({ done: 1, started: 2, answered: 3 });
+  });
+
+  it("reports the viewer's done practices and last practice time per published lesson in the course progress", async () => {
+    const ownerId = await seedUser("owner"); const readerId = await seedUser("reader");
+    const groupId = await seedGroup("alpha", ownerId); await join(groupId, readerId);
+    const setup = await publishedPractice("owner", groupId); const reader = await signIn("reader");
+    const second = blocks.practice(fillPractice);
+    await republish(setup, blocks.practice(fillPractice, setup.block.id), blocks.paragraph("Tussendoor"), second);
+    const practices = async (cookie: string) =>
+      courseProgressResponseSchema.parse(await (await request(`${coursePath(groupId, setup.courseId)}/progress`, cookie)).json()).practices;
+    const savedAt = async () => (await env.DB.prepare("SELECT MAX(updated_at) AS at FROM course_practice_progress WHERE user_id = ?").bind(readerId).first<{ at: number }>())!.at;
+
+    expect(await practices(reader)).toEqual({});
+    // A started practice is not done but is practice; another person's progress never counts.
+    await saveProgress(setup, reader, 1); await saveProgress(setup, setup.owner, 2);
+    expect(await practices(reader)).toEqual({ [setup.lessonId]: { done: 0, practicedAt: await savedAt() } });
+    await saveProgress(setup, reader, 2);
+    expect((await practices(reader))[setup.lessonId]?.done).toBe(1);
+    expect((await request(`${setup.lessonPath}/blocks/${second.id}/progress`, reader, { answered: 2 }, "PUT")).status).toBe(200);
+    expect(await practices(reader)).toEqual({ [setup.lessonId]: { done: 2, practicedAt: await savedAt() } });
+
+    // Adding questions to the published practice moves it back from done.
+    const changed = { instruction: "Nieuw", items: [{ prompt: "… een tuin." }, { prompt: "… twee balkons." }, { prompt: "… een lift?" }] };
+    await republish(setup, blocks.practice(changed, setup.block.id), second);
+    expect((await practices(reader))[setup.lessonId]?.done).toBe(1);
   });
 
   it("rejects invalid counts, draft-only practices, archived courses, and anonymous requests", async () => {

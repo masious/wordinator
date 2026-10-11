@@ -43,7 +43,23 @@
             "textColor": "brown"
           }
         },
-        "-word articles and forms are brown, and the new ending (or its absence) is bold, sometimes highlighted yellow. A wrong form is shown ",
+        "-word articles and forms are brown, and the new ending (or its absence) is bold, sometimes highlighted yellow. In the verb examples, the verb is ",
+        {
+          "text": "blue",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " and a prefix sent to the end is ",
+        {
+          "text": "red",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        ". A wrong form is shown ",
         {
           "text": "in italic grey",
           "styles": {
@@ -85,23 +101,23 @@
           },
           {
             "speaker": "Noor",
-            "text": "Dat is niet genoeg voor de winter hier. Je hebt een dikke trui nodig, een warme winterjas en misschien een nieuw shirt."
+            "text": "Dat is niet genoeg voor de winter hier. Je hebt een dikke trui nodig, een warme winterjas en ook een nieuw shirt."
           },
           {
             "speaker": "Sofia",
-            "text": "Ja! Ik heb zeker een rode shirt nodig."
+            "text": "Ja! En ik wil een rode shirt."
           },
           {
             "speaker": "Noor",
-            "text": "Een rood shirt, Sofia! Shirt is een het-woord. Na 'een' krijgt het geen -e."
+            "text": "Een rood shirt, Sofia! Shirt is een het-woord. Dus: een rood shirt, zonder -e."
           },
           {
             "speaker": "Sofia",
-            "text": "Oh ja, natuurlijk. Een rood shirt dan. En misschien ook nieuwe schoenen."
+            "text": "O ja, natuurlijk. Een rood shirt dan. En ik wil ook nieuwe schoenen."
           },
           {
             "speaker": "Noor",
-            "text": "Goed idee. Kom, we gaan naar het centrum! Daar vinden we vast mooie kleren voor jou."
+            "text": "Goed idee. Kom, we gaan naar het centrum! Daar zijn veel leuke kledingwinkels."
           }
         ]
       },
@@ -114,8 +130,8 @@
           "words": [
             {
               "term": "de kleren",
-              "meaning": "clothes (informal, always plural)",
-              "note": "Synonym of de kleding (glossed in 17-a); kleren is the everyday, informal word.",
+              "meaning": "clothes (always plural)",
+              "note": "The everyday word. de kleding (17-a) means the same but is a bit more formal: you see it in shops and on signs.",
               "example": "Ik heb genoeg kleren, toch?",
               "id": "06e553e0-2692-4de6-8404-cf731372f8da"
             },
@@ -145,7 +161,7 @@
               "term": "dun",
               "meaning": "thin (fabric, clothes, objects)",
               "note": "Doubles the n before -e, like dik: dunne.",
-              "example": "Deze zomerjas is heel dun.",
+              "example": "Deze jas is heel dun.",
               "id": "9b7277c7-7e76-40c5-bce4-087656e682d3"
             },
             {
@@ -154,6 +170,14 @@
               "note": "Doubles the k before -e: een dikke trui.",
               "example": "Deze trui is dik.",
               "id": "ea8ab0fa-da13-4f60-9097-3227853ef4d1"
+            },
+            {
+              "term": "de kledingwinkel",
+              "meaning": "clothes shop",
+              "forms": "de kledingwinkels",
+              "note": "Compound: de kleding (17-a) + de winkel (13).",
+              "example": "Daar zijn veel leuke kledingwinkels.",
+              "id": "1a35e188-b07b-47eb-b690-c33a4361be41"
             }
           ]
         }
@@ -235,6 +259,16 @@
       "id": "c7d29594-ba42-4cc2-b9cd-9fa66c71bda0"
     },
     {
+      "type": "bulletListItem",
+      "content": "de muts",
+      "id": "2aa9c69d-9962-4643-bcbb-e6c5d757fea6"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "de handschoen",
+      "id": "d5fa9b35-ab4b-4942-bb7a-a975a0fd2f6f"
+    },
+    {
       "type": "vocabulary",
       "props": {
         "data": {
@@ -255,14 +289,14 @@
               "term": "het vest",
               "meaning": "cardigan",
               "forms": "de vesten",
-              "note": "Not the English 'vest' (that is an undershirt, het hemd).",
+              "note": "False friend: not a (US) vest or waistcoat (het gilet), and not a (UK) vest or undershirt (het hemd).",
               "id": "b60c4389-1e34-4864-9e15-fbeca3f0351d"
             },
             {
               "term": "de broek",
               "meaning": "trousers, pants",
               "forms": "de broeken",
-              "note": "One pair is already singular in Dutch: een broek, not broeken.",
+              "note": "Singular in Dutch: een broek = a pair of trousers. de broeken = several pairs.",
               "id": "5d9ddec6-3d7a-441e-94fe-22ef049f5f5c"
             },
             {
@@ -308,6 +342,19 @@
               "meaning": "scarf",
               "forms": "de sjaals",
               "id": "a83223b6-4e6c-4afe-895f-f6e260464b58"
+            },
+            {
+              "term": "de muts",
+              "meaning": "hat, beanie (warm, knitted)",
+              "forms": "de mutsen",
+              "id": "26ff7b67-2e06-4757-ac14-f5ba43a7c0f8"
+            },
+            {
+              "term": "de handschoen",
+              "meaning": "glove",
+              "forms": "de handschoenen",
+              "note": "Compound: de hand + de schoen, literally a hand shoe.",
+              "id": "b0ba308f-1da6-480f-91e8-ba86a9f62f3f"
             }
           ]
         }
@@ -352,7 +399,8 @@
         {
           "text": "draagt",
           "styles": {
-            "bold": true
+            "bold": true,
+            "textColor": "blue"
           }
         },
         " een dunne jas."
@@ -370,7 +418,8 @@
         {
           "text": "trekt",
           "styles": {
-            "bold": true
+            "bold": true,
+            "textColor": "blue"
           }
         },
         " de nieuwe trui ",
@@ -392,7 +441,14 @@
         "note": "uit is the prefix; maar softens the imperative (15-b)."
       },
       "content": [
-        "Trek je jas maar ",
+        {
+          "text": "Trek",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " je jas maar ",
         {
           "text": "uit",
           "styles": {
@@ -450,21 +506,35 @@
     {
       "type": "paragraph",
       "content": [
-        "You already know that an adjective before a noun usually ends in ",
+        "You already know the basics (Part I, 12-a): ",
         {
-          "text": "-e",
+          "text": "de grote stad",
           "styles": {
-            "bold": true
+            "italic": true
           }
         },
-        " (12-a, 12-b): deze rode trui, dit witte shirt. Now you learn the ",
+        ", ",
+        {
+          "text": "het grote huis",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "een groot huis",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". Now you learn the ",
         {
           "text": "full",
           "styles": {
             "italic": true
           }
         },
-        " rule, with its one exception."
+        " rule, with its one exception and the spelling changes."
       ],
       "id": "089c7368-60ed-44b8-bdc6-0cf179a80388"
     },
@@ -783,15 +853,16 @@
     {
       "type": "bulletListItem",
       "content": [
-        "(no article) warm ",
+        "(no article) ",
         {
-          "text": "water",
+          "text": "warm",
           "styles": {
             "bold": true,
-            "textColor": "brown"
+            "textColor": "brown",
+            "backgroundColor": "yellow"
           }
         },
-        " (no -e: no article at all)"
+        " water (no -e: no article at all)"
       ],
       "id": "5ade7f5a-b5ce-45c4-bfa0-93948f9f3a77"
     },
@@ -802,7 +873,13 @@
         "note": "het rode shirt: het is definite, so the -e stays, even on a het-word."
       },
       "content": [
-        "Het ",
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " ",
         {
           "text": "rode",
           "styles": {
@@ -1255,7 +1332,8 @@
                 {
                   "text": "geen",
                   "styles": {
-                    "textColor": "pink"
+                    "textColor": "pink",
+                    "bold": true
                   }
                 },
                 " ",
@@ -1276,7 +1354,8 @@
                 {
                   "text": "mijn",
                   "styles": {
-                    "textColor": "pink"
+                    "textColor": "pink",
+                    "bold": true
                   }
                 },
                 " ",
@@ -1314,7 +1393,7 @@
     },
     {
       "type": "bulletListItem",
-      "content": "Long vowel written with one letter: one of the double letters disappears",
+      "content": "Long vowel written with two letters (oo, ee): one letter disappears",
       "children": [
         {
           "type": "bulletListItem",
@@ -1353,7 +1432,7 @@
     },
     {
       "type": "bulletListItem",
-      "content": "f → v, s → z after a long vowel",
+      "content": "f → v and s → z after a long vowel or ij",
       "children": [
         {
           "type": "bulletListItem",
@@ -1412,7 +1491,8 @@
           "text": "grote",
           "styles": {
             "bold": true,
-            "backgroundColor": "yellow"
+            "backgroundColor": "yellow",
+            "textColor": "pink"
           }
         },
         " trui past goed."
@@ -1431,7 +1511,8 @@
           "text": "witte",
           "styles": {
             "bold": true,
-            "backgroundColor": "yellow"
+            "backgroundColor": "yellow",
+            "textColor": "pink"
           }
         },
         " sjaal."
@@ -1450,7 +1531,8 @@
           "text": "grijze",
           "styles": {
             "bold": true,
-            "backgroundColor": "yellow"
+            "backgroundColor": "yellow",
+            "textColor": "pink"
           }
         },
         " broek."
@@ -1673,14 +1755,14 @@
     {
       "type": "paragraph",
       "content": [
-        "After is/zijn (predicative, 17-b) or describing how something is done (adverb), an adjective ",
+        "After is/zijn (predicative, Part I) or when it says how something is done (an adverb, 17-b), an adjective ",
         {
           "text": "never",
           "styles": {
             "italic": true
           }
         },
-        " takes -e — not even de-words."
+        " takes -e — not even with de-words."
       ],
       "id": "c62c7d95-080d-4cc6-88e1-fb77ed1249ba"
     },
@@ -1706,13 +1788,13 @@
     {
       "type": "example",
       "props": {
-        "translation": "That shirt is orange.",
-        "note": "Predicative: still bare (oranje never changes anyway)."
+        "translation": "The new trousers fit well.",
+        "note": "goed says how the trousers fit (an adverb, 17-b): no ending."
       },
       "content": [
-        "Dat shirt is ",
+        "De nieuwe broek past ",
         {
-          "text": "oranje",
+          "text": "goed",
           "styles": {
             "bold": true
           }
@@ -1757,37 +1839,51 @@
     {
       "type": "example",
       "props": {
-        "translation": "Red is nice, but I don't wear it often.",
+        "translation": "Red is nice, but I don't often wear red.",
         "note": "A colour used as a noun on its own."
       },
       "content": [
-        "Rood is mooi, maar ik draag het niet vaak."
+        {
+          "text": "Rood",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is mooi, maar ik draag niet vaak rood."
       ],
       "id": "661a3d26-6b9d-47c5-b692-e94084b0e670"
     },
     {
       "type": "example",
       "props": {
-        "translation": "Today Noor is wearing something in blue.",
-        "note": "in het + colour: a fixed way to say what colour someone wears."
+        "translation": "Today Noor is dressed in blue.",
+        "note": "in het + colour: a fixed way to say what colour someone wears, or to ask for a colour in a shop (Hebt u deze trui in het blauw?)."
       },
       "content": [
-        "Vandaag draagt Noor iets in het blauw."
+        "Noor is vandaag ",
+        {
+          "text": "in het blauw",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
       ],
       "id": "fc749dcb-2cba-4c5f-a6fe-d9ad289ab3d9"
     },
     {
       "type": "example",
       "props": {
-        "translation": "Sofia is buying a dark blue coat.",
+        "translation": "Henk has a dark blue coat.",
         "note": "donker- + blauw, then the normal -e rule: jas is a de-word."
       },
       "content": [
-        "Sofia koopt een ",
+        "Henk heeft een ",
         {
           "text": "donkerblauwe",
           "styles": {
             "bold": true,
+            "textColor": "pink",
             "backgroundColor": "yellow"
           }
         },
@@ -1802,7 +1898,15 @@
         "note": "licht- + groen; sjaals is plural, so -e on the adjective."
       },
       "content": [
-        "In de winkel liggen ook lichtgroene sjaals."
+        "In de winkel liggen ook ",
+        {
+          "text": "lichtgroene",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " sjaals."
       ],
       "id": "b373ff71-d40d-4ad3-a05b-65fc296c59f5"
     },
@@ -1845,7 +1949,7 @@
               "term": "donker- / licht-",
               "meaning": "dark- / light-, pale- (colour prefix)",
               "note": "Combine with a colour: donkerblauw, lichtgroen. licht already appeared in 13-2 meaning 'bright, full of light'; here it is a prefix for a pale shade.",
-              "example": "Sofia koopt een donkerblauwe jas.",
+              "example": "Henk heeft een donkerblauwe jas.",
               "id": "3083eb00-0eca-4d24-88a9-804159a2a0cf"
             }
           ]
@@ -1935,7 +2039,7 @@
           },
           {
             "speaker": "Noor",
-            "text": "Ja, graag! Mijn vriendin heeft een warme winterjas nodig, en misschien ook een trui."
+            "text": "Ja, graag! Mijn vriendin heeft een trui en een broek nodig, en ook een warme winterjas."
           },
           {
             "speaker": "Verkoopster",
@@ -1943,7 +2047,7 @@
           },
           {
             "speaker": "Sofia",
-            "text": "Maat 38, denk ik. Hebt u deze trui ook in het blauw?"
+            "text": "Ik heb maat 38. Hebt u deze trui ook in het blauw?"
           },
           {
             "speaker": "Verkoopster",
@@ -1951,27 +2055,27 @@
           },
           {
             "speaker": "Sofia",
-            "text": "Mooi! En wat kost deze spijkerbroek? Mag ik deze broek passen?"
+            "text": "Mooi! En deze zwarte spijkerbroek? Mag ik deze broek passen?"
           },
           {
             "speaker": "Verkoopster",
             "text": "Natuurlijk, de paskamer is achterin."
           },
           {
-            "speaker": "Noor",
-            "text": "Kijk, Sofia, deze jas is warm en niet te dik, en hij is heel mooi!"
-          },
-          {
             "speaker": "Sofia",
-            "text": "Ja, deze donkerblauwe jas is mooi! En de broek past ook goed."
+            "text": "De broek past goed! En de blauwe trui is lekker warm."
           },
           {
             "speaker": "Verkoopster",
-            "text": "Fijn! Wilt u de jas, de trui en de broek meenemen?"
+            "text": "Fijn! Wilt u de trui en de broek meenemen?"
           },
           {
             "speaker": "Sofia",
             "text": "Ja, graag! Dank u wel."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Kijk, Sofia, daar hangen de winterjassen!"
           }
         ]
       },
@@ -1999,7 +2103,7 @@
             {
               "term": "achterin",
               "meaning": "at the back (of a room, shop or building)",
-              "note": "Compound of achter + in.",
+              "note": "Compound of achter + in, written as one word when it stands alone. Before a noun, write two words: achter in de winkel.",
               "example": "De paskamer is achterin.",
               "id": "e07198fe-aaef-4525-a576-73b370c39a9f"
             },
@@ -2156,11 +2260,11 @@
               "note": "in het + colour (bare, like a noun): a fixed way to name a colour."
             },
             {
-              "prompt": "Verkoopster: Deze trui is … . (wollen)",
+              "prompt": "Verkoopster: Dit is een … trui. (wollen)",
               "authorsVersion": [
                 "wollen"
               ],
-              "note": "Material adjectives in -en never change."
+              "note": "Material adjectives in -en never change: een wollen trui, de wollen trui."
             },
             {
               "prompt": "Sofia: Ik zoek een … jas voor de winter. (warm)",
@@ -2170,12 +2274,12 @@
               "note": "jas is a de-word: always -e."
             },
             {
-              "prompt": "Verkoopster: Wilt u de jas even …? (aantrekken) / Sofia: Ja, en daarna trek ik de jas weer … . (uit)",
+              "prompt": "Verkoopster: Wilt u de jas even …? (aantrekken) / Sofia: Ja, en daarna trek ik de jas weer … . (uittrekken)",
               "authorsVersion": [
                 "aantrekken",
                 "uit"
               ],
-              "note": "aantrekken stays one word as an infinitive after a modal (wilt, 16-a); but in a main clause the prefix uit goes to the end on its own."
+              "note": "After a modal (wilt, 16-a) the infinitive aantrekken stays one word at the end. In a main clause with trek, the prefix uit goes to the end on its own."
             }
           ]
         }
@@ -2207,7 +2311,7 @@
               "authorsVersion": [
                 "Dit shirt is nieuw."
               ],
-              "note": "Predicative: nieuw stays bare, even before dit."
+              "note": "Predicative (after is): nieuw stays bare. Also possible as a question: Is dit shirt nieuw?"
             },
             {
               "prompt": "Put in order: trui / deze / blauwe / ik / wil",
@@ -2261,23 +2365,25 @@
           "instruction": "Rewrite each phrase as the instruction says.",
           "items": [
             {
-              "prompt": "Change de → een: het grijze vest",
+              "prompt": "Change het → een: het grijze vest",
               "authorsVersion": [
                 "een grijs vest"
               ],
               "note": "Indefinite het-word, singular: the -e disappears."
             },
             {
-              "prompt": "Change de → een: het witte overhemd",
+              "prompt": "Change het → een: het witte overhemd",
               "authorsVersion": [
                 "een wit overhemd"
-              ]
+              ],
+              "note": "Indefinite het-word, singular: the -e disappears. witte → wit: the double t goes."
             },
             {
-              "prompt": "Change de → een: het bruine shirt",
+              "prompt": "Change het → een: het bruine shirt",
               "authorsVersion": [
                 "een bruin shirt"
-              ]
+              ],
+              "note": "Indefinite het-word, singular: the -e disappears."
             },
             {
               "prompt": "Change to the plural: een rood shirt",
@@ -2301,10 +2407,11 @@
               "note": "The het-word exception only exists in the singular."
             },
             {
-              "prompt": "Change de → een: het dikke vest",
+              "prompt": "Change het → een: het dikke vest",
               "authorsVersion": [
                 "een dik vest"
-              ]
+              ],
+              "note": "Indefinite het-word, singular: the -e disappears. dikke → dik."
             }
           ]
         }
@@ -2329,20 +2436,22 @@
               "prompt": "I have a red sweater.",
               "authorsVersion": [
                 "Ik heb een rode trui."
-              ]
+              ],
+              "note": "trui is a de-word: rode, with -e."
             },
             {
               "prompt": "This is a new, white shirt.",
               "authorsVersion": [
                 "Dit is een nieuw, wit shirt."
               ],
-              "note": "Dit is the subject, so een is the real determiner of shirt: the exception still applies, no -e."
+              "note": "Dit is the subject, so een is the real determiner of shirt: the exception still applies, no -e. Also fine without the comma: een nieuw wit shirt."
             },
             {
               "prompt": "Noor is wearing a thick, green sweater.",
               "authorsVersion": [
                 "Noor draagt een dikke, groene trui."
-              ]
+              ],
+              "note": "trui is a de-word: both adjectives get -e (dik → dikke). Also fine without the comma: een dikke groene trui."
             },
             {
               "prompt": "I am looking for a purple scarf.",
@@ -2362,14 +2471,15 @@
               "prompt": "Do you have this shirt in orange?",
               "authorsVersion": [
                 "Hebt u dit shirt in het oranje?"
-              ]
+              ],
+              "note": "in het + colour. Also fine: Heb je dit shirt ook in het oranje? / Hebt u dit shirt in oranje?"
             },
             {
               "prompt": "She is buying a pair of black boots.",
               "authorsVersion": [
                 "Zij koopt een paar zwarte laarzen."
               ],
-              "note": "Plural: zwarte, always -e."
+              "note": "Plural: zwarte, always -e. een paar laarzen = a pair of boots (een paar can also mean a few, 10-b). Also fine: Ze koopt een paar zwarte laarzen."
             }
           ]
         }
@@ -2397,11 +2507,11 @@
               ]
             },
             {
-              "prompt": "Dit rode shirt is van mij.",
+              "prompt": "Dit rode shirt is nieuw.",
               "authorsVersion": [
-                "This red shirt is mine."
+                "This red shirt is new."
               ],
-              "note": "dit right before the noun: -e (not the exception)."
+              "note": "dit right before the noun: -e (not the exception). nieuw after is: no ending."
             },
             {
               "prompt": "We kopen een katoenen overhemd.",
@@ -2489,23 +2599,42 @@
             {
               "prompt": "Waar kun je kleren passen?",
               "authorsVersion": [
-                "In de paskamer achterin de winkel."
-              ]
+                "In de paskamer achter in de winkel."
+              ],
+              "note": "achter in de winkel: two words before a noun; achterin on its own is one word (De paskamer is achterin.)."
             },
             {
-              "prompt": "Hoeveel soorten jassen zijn er in de collectie?",
+              "prompt": "Welke jassen zijn er?",
               "authorsVersion": [
-                "Twee: een donkerblauwe winterjas en een rode jas."
-              ]
+                "Een donkerblauwe winterjas en een rode jas."
+              ],
+              "note": "Two coats: both de-words, so -e after een."
             }
           ],
           "passage": {
-            "title": "Wintercollectie — Kledingwinkel De Kastanje",
-            "content": "Jassen:\n- Donkerblauwe winterjas, maat S/M/L, € 89,95\n- Rode jas (dun, voor de herfst), maat M/L, € 49,50\n\nTruien:\n- Dikke wollen trui, grijs of bruin, maat S tot XL, € 39,95\n- Dunne katoenen trui, oranje of roze, maat S tot L, € 24,95\n\nBroeken en rokken:\n- Zwarte spijkerbroek, maat 36 tot 42, € 59,00\n- Grijze rok, maat 36 tot 40, € 34,50\n\nSchoenen:\n- Bruine laarzen, maat 37 tot 41, € 79,95\n\nU kunt alles passen in de paskamer achterin de winkel. Welke maat hebt u nodig?"
+            "title": "Wintercollectie — Kledingwinkel De Tulp",
+            "content": "Jassen:\n- Donkerblauwe winterjas, maat S/M/L, € 89,95\n- Rode jas (dun, voor de herfst), maat M/L, € 49,50\n\nTruien:\n- Dikke wollen trui, grijs of bruin, maat S tot XL, € 39,95\n- Dunne katoenen trui, oranje of roze, maat S tot L, € 24,95\n\nBroeken en rokken:\n- Zwarte spijkerbroek, maat 36 tot 42, € 59,00\n- Grijze rok, maat 36 tot 40, € 34,50\n\nSchoenen:\n- Bruine laarzen, maat 37 tot 41, € 79,95\n\nU kunt alles passen in de paskamer achter in de winkel. Welke maat hebt u nodig?"
           }
         }
       },
       "id": "2116c41c-5696-4f3a-a451-626e85e959a2"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de kleur",
+              "meaning": "colour",
+              "forms": "de kleuren",
+              "example": "In welke kleuren is de trui?",
+              "id": "322447be-18de-4e81-bf84-2adcc8bb083e"
+            }
+          ]
+        }
+      },
+      "id": "d1a05a3a-7781-429e-b2a3-6a0a3d6ec627"
     },
     {
       "type": "heading",
@@ -2585,15 +2714,15 @@
     },
     {
       "afterHeading": "Story: In de kledingwinkel",
-      "description": "Sofia trying on a dark blue winter coat in a clothing shop in the centre, with Noor nearby and a Verkoopster holding folded sweaters.",
-      "alt": "Sofia trying on a winter coat in a clothing shop, with Noor and the shop assistant.",
+      "description": "Sofia stepping out of the fitting room in a clothing shop in the centre, wearing black jeans and holding a blue woollen sweater, with Noor nearby and a Verkoopster folding sweaters.",
+      "alt": "Sofia trying on jeans in a clothing shop, with Noor and the shop assistant.",
       "location": "centrum-kledingwinkel",
       "characters": [
         "sofia",
         "noor",
         "verkoopster"
       ],
-      "action": "Sofia tries on a dark blue coat in front of a mirror; Noor gives a thumbs up; folded sweaters and a rack of clothes in the background."
+      "action": "Sofia comes out of the fitting room in black jeans, holding a blue sweater; Noor gives a thumbs up; the Verkoopster folds sweaters; a rack of winter coats in the background."
     }
   ],
   "id": "beb9c955-fc41-4eb5-a4a8-50f00367e988"

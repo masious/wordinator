@@ -6,7 +6,7 @@ What each Part III lesson **actually** teaches, recorded from the accepted lesso
 
 Course: "Dutch Foundations — Part III" (`content/dutch-foundations/part-iii/`, import position offset 2: the two existing row-13 lessons come first).
 
-Local database (2026-10-08): 14-a, 14-b, 15-a, 15-b, 16-a, 16-b and 17-a are imported into the Part III course as unpublished drafts at positions 2–8, after the two published row-13 lessons. In production, 14-b exists only as the standalone course "Leggen of zetten?".
+Local database (2026-10-11): 14-a, 14-b, 15-a, 15-b, 16-a, 16-b, 17-a, 17-b, 18-a and 18-b are imported into the Part III course as unpublished drafts at positions 2–11, after the two published row-13 lessons. In production, 14-b exists only as the standalone course "Leggen of zetten?".
 
 Production (2026-10-08): 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported into the Part III course as unpublished drafts at positions 2 and 4–8, using `part-iii/course.prod.json` with 14-b's statements removed from the SQL. By the user's decision, 14-b stays only in the standalone "Leggen of zetten?" course, so Part III has a gap at position 3. Do not run the unfiltered prod SQL: its 14-b upsert would move that lesson to position 3 inside the standalone course and overwrite its draft.
 
@@ -21,9 +21,9 @@ Production (2026-10-08): 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported into
 | 16-a-met-de-tram-en-de-trein.json | Met de tram en de trein | accepted |
 | 16-b-ik-ga-een-fiets-kopen.json | Ik ga een fiets kopen | accepted |
 | 17-a-wat-voor-weer-is-het.json | Wat voor weer is het? | accepted |
-| 17-b-lekker-weer.json | Lekker weer | planned |
-| 18-a-kleren-en-kleuren.json | Kleren en kleuren | planned |
-| 18-b-deze-jas-is-warmer.json | Deze jas is warmer | planned |
+| 17-b-lekker-weer.json | Lekker weer | accepted |
+| 18-a-kleren-en-kleuren.json | Kleren en kleuren | accepted |
+| 18-b-deze-jas-is-warmer.json | Deze jas is warmer | accepted |
 
 ## 13-1 Mijn huis (existing)
 
@@ -152,3 +152,45 @@ Production (2026-10-08): 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported into
 - **Story facts**: Monday 2 November, 18:00: Sofia cycles home from the office in the rain on her (second-hand) bike, meets Henk in the hallway of Kastanjestraat 14; she has no raincoat; Henk: tomorrow 8 degrees and rain; Valencia 20 degrees and sunny; Henk advises a raincoat, not an umbrella (wind). Sofia bought a raincoat on Tuesday 3 November (no scene). Wednesday 4 November Noor visits Sofia in Lombok; they plan Zandvoort with Daan on Saturday 7 November (17-b). Forecast: do 5 Nov fog in the morning, cloudy, 9°; vr 6 Nov rain all day, wind, showers, thunder in the evening, 10°; za 7 Nov sunny and dry in the morning, 12°, clouds and a shower in the afternoon; zo 8 Nov cold, light frost (0°) in the morning, then sun, 6° in the afternoon. Noor says the saying "Er is geen slecht weer, alleen slechte kleding." In Zandvoort it is always windy (Noor).
 - **Deviations from brief**: Saying is used by Noor in dialogue 2 and in the culture callout and summary. Extra glossed words: missen, de mist, de buienradar, Goed zo!, de kleding (more in 18-a). Not used: hard (17-b), the balcony (13), de regenbui (only in a note to de bui), zonnig as a drill word (known from 12-b). "Wat voor weer is het morgen?" is kept beside "Wat voor weer wordt het?" (both natural).
 - **Review log**: [17-a.md](../../content/dutch-foundations/part-iii/review/17-a.md)
+
+## 17-b Lekker weer (accepted 2026-10-11)
+- **Grammar**:
+  - Adjective before a noun — practised (recap of Part I) — -e with de-words and after de/het; no -e with een/geen/no article + singular het-word (een koude dag, een koud weekend, een harde wind, een lange wandeling).
+  - Adjective after zijn/worden — practised — never an ending (De dag is koud. Het wordt warm. De zee is kalm.); *De dag is koude* → De dag is koud.
+  - Adverb = base form — practised — same word as the adjective, never -e, no -ly (Het waait hard. Daan loopt snel. Sofia loopt langzaam. Het gaat goed.); *Hij fietst snelle* → Hij fietst snel; adjective → adverb transformation (De wind is hard. → Het waait hard.).
+  - Intensifiers heel, erg, best, een beetje, te — practised — right before the adjective/adverb, never inflected themselves; een heel koude dag (written standard; een hele koude dag noted as spoken); best = quite/fairly (false friend); te = too (recycles 12-b).
+  - lekker as adjective and adverb — basic — lekker weer, De chocolademelk is lekker., Het is lekker warm., Vanavond slaap ik lekker.
+- **Vocabulary** (19 words, 5 blocks): het strand, de zee, de golf (wave; not het golf, the sport), het duin (also de duin), het zand; kalm, hard, langzaam, juist, zacht, het strandcafé, de wandeling; erg, best (quite, fairly); schuilen, nog steeds, de warme chocolademelk, Goed idee!; Tot snel!. Not re-listed (known): heel (very, 10-b), snel (07-b), goed, slecht, mooi, druk, rustig (Part I), lekker (07-a), lekker weer, nat, droog, de zon schijnt, waaien, regenen, worden, de bui (17-a), heerlijk, fijn (11-b), warm, koud, een beetje (10-b), te (08-a/12-b), vroeg, laat (07-a), wandelen (15-a), binnen, buiten, de ober (11-a), bijna (10-a), Goed plan! (16-b), Kom op! (16-a).
+- **Expressions**: Lekker weer!; Heerlijk, hè?; Goed plan.; Goed idee!; Kom op!; Lopen we naar …? / Nemen we nog een chocolademelk? (suggestion without zullen); Drie warme chocolademelk, graag!; Tot snel!; Hoi mam! / Liefs (recycled).
+- **Story facts**: Saturday 7 November: Sofia, Noor and Daan take the train to Zandvoort, changing in Haarlem (no times). Morning: sunny, calm sea, almost no wind; Daan walks fast, Sofia slowly, Noor in between ("lekker rustig"); they walk on the beach towards the dunes. Afternoon: the wind blows hard and a heavy shower comes; they shelter in an unnamed strandcafé and drink hot chocolate served by an Ober. Noor writes her mother a message from the café; tomorrow will be dry again. No tram, no bike or raincoat mentioned.
+- **Deviations from brief**: Extra glossed words: het zand, schuilen, juist, nog steeds, Goed idee!, Tot snel!. "te druk voor mij" dropped (object pronoun off-limits until row 37). In the morning dialogue the wind is weak and Noor says it is often hard at the sea; the hard wind comes in the afternoon (keeps "de zee is kalm" consistent).
+- **Review log**: [17-b.md](../../content/dutch-foundations/part-iii/review/17-b.md)
+
+## 18-a Kleren en kleuren (accepted 2026-10-11)
+- **Grammar**:
+  - Attributive adjective endings, full system — practised — adjective before a noun gets -e; the one exception is a singular het-word after een, geen or no article (een rood shirt, geen rood shirt, warm water); -e after het, dit/dat and possessives (het/dit/mijn rode shirt); de-words always -e (de/een/geen/mijn/deze rode jas); plurals always -e (rode jassen, geen grote schoenen).
+  - Dit is / Dat is + een — basic — dit/dat as subject leaves een as the determiner, so the exception applies (Dit is een rood shirt.) vs attributive dit (Dit rode shirt is nieuw.).
+  - Spelling before -e — practised — long vowel loses a letter (groot → grote, geel → gele); short vowel doubles the consonant (wit → witte, dik → dikke, dun → dunne); s → z, f → v after a long vowel or ij (grijs → grijze, lief → lieve); paars → paarse (s stays after r); regular blauwe, groene, zwarte, bruine.
+  - No ending ever — practised — oranje, roze, material adjectives in -en (wollen, katoenen).
+  - Predicative and adverb — recycled (Part I, 17-b) — no ending (Deze trui is rood. De broek past goed.).
+  - Colours as nouns — basic — Rood is mooi.; in het + colour (Hebt u deze trui ook in het blauw? Noor is vandaag in het blauw.); donker-/licht- shades follow the normal rules (een donkerblauwe jas, lichtgroene sjaals).
+  - Separable aantrekken/uittrekken — recycled (16-a, 15-b imperative) — Sofia trekt de trui aan. Trek je jas maar uit.
+- **Vocabulary** (39 words, 7 blocks): de kleren, de trui, het shirt, de winterjas, dun, dik, de kledingwinkel; het T-shirt, het overhemd, het vest, de broek, de spijkerbroek, de rok, de jurk, de schoen, de laars (laarzen), de sok, de sjaal, de muts, de handschoen; dragen, aantrekken, uittrekken; oranje, roze, bruin, grijs, geel, groen, blauw, paars; wollen, katoenen, donker- / licht-; de maat, de paskamer, achterin, passen (new meaning: to try on; to fit from 08-a); de kleur (de kleuren) (added by the coordinator: used unglossed in the reading's "In welke kleuren is de dikke wollen trui?"). Known and not re-listed: de kleding (17-a), de jas (14-b), de regenjas (17-a), rood (10-a), wit, zwart (12-b), warm, koud, nieuw, lief, groot. de verkoopster is a speaker label only (storyline minor speaker), not a term.
+- **Expressions**: Kan ik u helpen?; Welke maat hebt u?; Ik heb maat 38.; Hebt u deze trui ook in het blauw?; Mag ik deze broek passen?; De paskamer is achterin.; Wilt u … meenemen?; lekker warm; Goed idee. (17-b); Dat klopt. (14-a).
+- **Story facts**: Saturday 14 November: in Sofia's bedroom Noor says Sofia has no warm coat; from Valencia Sofia only has a thin jacket and a red sweater. They go shopping in the centre. In a clothing shop ("Kledingwinkel De Tulp") the Verkoopster helps; Sofia wears size 38, tries on black jeans (they fit) and gets a blue woollen sweater; she takes the sweater and the jeans. The winter coat is not bought yet: the dialogue ends with Noor pointing at the winter coats, leading into 18-b.
+- **Deviations from brief**: de blouse not used. Reading is a shop catalogue page (Kledingwinkel De Tulp, renamed from "De Kastanje" to avoid confusion with Sofia's Kastanjestraat). Extra glossed words: de kledingwinkel, achterin, katoenen, de kleur. Comparatives and superlatives completely absent, reserved for 18-b.
+- **Review log**: [18-a.md](../../content/dutch-foundations/part-iii/review/18-a.md)
+
+## 18-b Deze jas is warmer (accepted 2026-10-11)
+- **Grammar**:
+  - Comparative — practised — adjective + er (warm → warmer, klein → kleiner, lang → langer, goedkoop → goedkoper); spelling as with -e: double vowel letter becomes single (groot → groter), consonant doubles after a short vowel (dik → dikker, dun → dunner); after -r add -der (duur → duurder, ver → verder, lekker → lekkerder); *meer warm* / *duurer* avoided.
+  - dan after a comparative — practised — "Deze jas is warmer dan die jas."; *warmer als* marked as a mistake.
+  - Irregular comparatives — basic — goed → beter, veel → meer, weinig → minder (minder duur, minder kwaliteit).
+  - Equality — practised — even … als / net zo … als + base adjective ("Deze jas is even duur als die jas.", "Utrecht is net zo gezellig als Valencia."); negative niet zo … als.
+  - Comparative before a noun — basic — takes -e (de/een duurdere jas, de warmere jas); het-word after een/geen stays bare (een warmer vest), same exception as 18-a.
+  - Demonstratives as pronouns with comparatives — intro — "Deze is warmer, maar die is mooier." (12-a recycled).
+- **Vocabulary** (16 words, 4 blocks): de kwaliteit, de keus, kiezen, twijfelen, vergelijken (inseparable), zwaar, licht (new meaning: light in weight; licht = bright 13-2, het licht 16-b), praktisch, dan (new use: than; dan = then 08-b), beter; meer, minder; even … als, net zo … als, niet zo … als; Die jas staat je goed. Not re-listed (known): de prijs, nemen, lang, kort, warm, koud, duur, goedkoop, mooi, lelijk, zwart, gezellig, missen, de regenjas, de winter, Spanje, Precies, Prima, meenemen; and all clothing/colour words from 18-a (de jas, de winterjas, de trui, de sjaal, het vest, dik, dun, donker-/blauw, passen, de maat, de paskamer, "Hij past goed.").
+- **Expressions**: Die jas staat je goed.; Ik twijfel.; Een goede keus!; Wilt u deze nu meenemen?; Mis je de zon?; Dan kan de winter komen!; Welkom thuis!; Ik ben hier nu thuis.
+- **Story facts**: Saturday 14 November, same shop visit as 18-a: before paying for the dark-blue coat, the Verkoopster shows Sofia a cheaper black coat. Black: €80, short, light, good quality. Dark blue: €120, long, thicker, heavier, warmer, better quality. Sofia compares, pays €120 (no discount) and chooses the dark-blue coat. She comes home to Kastanjestraat 14; Henk and Tijger are in the hallway; the coat is warmer than her raincoat (since 3 November). Utrecht is colder than Valencia and the winter longer; she misses the sun a little; her apartment is cosier than her old room at Noor's and smaller than the house in Valencia (her mother's house, reading) but just as cosy. This closes Part III: "Dan kan de winter komen! Welkom thuis, Sofia!" / "Ik ben hier nu thuis."
+- **Deviations from brief**: Brief's vocabulary items that 18-a owns (dik, dun, donkerblauw, zwart, "Hij past goed.") or that are already known (de prijs, nemen, lang, kort, warm, koud, duur, goedkoop, mooi, lelijk) are not listed here, by coordinator decision. The required closing line is kept verbatim (elliptic "net zo gezellig"); the full pattern appears elsewhere in the examples and reading. Off-limits checked: no superlatives, no omdat/subordinate clauses, no liever, no past tense, no object pronouns except the allowed chunk.
+- **Review log**: [18-b.md](../../content/dutch-foundations/part-iii/review/18-b.md)

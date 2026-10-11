@@ -72,3 +72,12 @@ Planned simplifications (from the briefs). Confirm or revise after each lesson i
 - **Weather past tense** (17-a): waaien's past forms (waaide/woei) appear in `forms` only; the past is row 25 onwards.
 - **worden** (17-a): present forms and "het wordt + adjective/number" only; other uses later.
 - **de regenbui** (17-a): only in a note to de bui; **de kleding** glossed in the saying, taught properly in 18-a.
+
+## Part III review follow-ups 17-b … 18-b (2026-10-11)
+
+- **Object pronouns** (17-b, 18-b): still avoided throughout; "te druk voor mij" (17-b brief) was dropped to plain "te druk", and 18-b's "Wilt u hem nu meenemen?" was rewritten with the demonstrative "deze". Row 37.
+- **graag / liever** (18-b): comparative "liever" (graag → liever) stays off-limits per the global list; 18-b uses "Ik twijfel." / "Ik kies …" instead. Row 19.
+- **Superlatives** (18-a, 18-b): both lessons stop at the comparative; no superlative forms appear anywhere in Part III. Row 32, Part VI.
+- **Independent possessives** ("het jouwe", "de mijne"): avoided in 18-b (a worker draft used "net zo … als het jouwe"; the reviewer replaced it with a full noun phrase). Not in the outline; flag for whichever Part IV/VI lesson introduces possessive pronouns as a system.
+- **te + infinitive**: a worker draft of 18-a briefly used "om te kijken"; the reviewer removed it. Confirms the off-limits list is still being tested against in practice, not just by convention. Row 34.
+- **dan vs toen/als**: 18-b's "dan" (than, after a comparative) is a new use of an already-known word (dan = then, 08-b/15-b); both uses now coexist and are distinguished by context and by note. Watch for confusion if a later lesson adds "als" (when/if, row 30).

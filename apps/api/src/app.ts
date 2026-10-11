@@ -2087,7 +2087,7 @@ app.get(lessonPath, requireGroupAccess, async (context) => {
 const PUBLISHED_POSITION_JOIN = "JOIN course_lessons l ON l.id = p.lesson_id AND l.group_id = p.group_id AND l.published_doc IS NOT NULL";
 async function progressResponse(context: Context<AppEnvironment>, course: CourseRow) {
   const db = context.env.DB; const viewerId = context.get("user")!.id;
-  const [published, mine, positions, members] = await Promise.all([
+  const [published, mine, positions, practices, members] = await Promise.all([
     db.prepare("SELECT COUNT(*) AS total FROM course_lessons WHERE group_id = ? AND course_id = ? AND published_doc IS NOT NULL").bind(course.groupId, course.id).first<{ total: number }>(),
     db.prepare("SELECT lesson_id AS lessonId FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND user_id = ? ORDER BY completed_at")
       .bind(course.groupId, course.id, viewerId).all<{ lessonId: string }>(),
@@ -2096,6 +2096,16 @@ async function progressResponse(context: Context<AppEnvironment>, course: Course
        FROM course_lesson_positions p ${PUBLISHED_POSITION_JOIN}
        WHERE p.group_id = ? AND p.course_id = ? AND p.user_id = ? ORDER BY p.updated_at DESC, p.lesson_id ASC`,
     ).bind(course.groupId, course.id, viewerId).all(),
+    // Each saved count is matched to its practice block in the published document (an `id` key's path is its block), and counts
+    // as done once it reaches that block's current number of questions.
+    db.prepare(
+      `SELECT p.lesson_id AS lessonId, MAX(p.updated_at) AS practicedAt,
+        SUM(EXISTS (SELECT 1 FROM json_tree(l.published_doc) t WHERE t.key = 'id' AND t.atom = p.practice_id
+          AND json_extract(l.published_doc, t.path || '.type') = 'practice'
+          AND p.answered >= json_array_length(json_extract(l.published_doc, t.path || '.props.data'), '$.items'))) AS done
+       FROM course_practice_progress p ${PUBLISHED_POSITION_JOIN}
+       WHERE p.group_id = ? AND p.course_id = ? AND p.user_id = ? GROUP BY p.lesson_id`,
+    ).bind(course.groupId, course.id, viewerId).all<{ lessonId: string; practicedAt: number; done: number }>(),
     db.prepare(
       `SELECT u.id, u.display_name AS displayName, u.avatar_key AS avatarKey,
         (SELECT COUNT(*) FROM course_lesson_completions clc JOIN course_lessons l ON l.id = clc.lesson_id AND l.group_id = clc.group_id AND l.published_doc IS NOT NULL
@@ -2115,6 +2125,7 @@ async function progressResponse(context: Context<AppEnvironment>, course: Course
     publishedLessons: total,
     completedLessonIds: mine.results.map((row) => row.lessonId),
     positions: positions.results,
+    practices: Object.fromEntries(practices.results.map(({ lessonId, done, practicedAt }) => [lessonId, { done, practicedAt }])),
     participants: members.results.map((row) => ({
       user: { id: row.id, displayName: row.displayName, avatarUrl: mediaUrl(context.env, row.avatarKey) },
       completedLessons: row.completed, percent: percent(row.completed + row.started),

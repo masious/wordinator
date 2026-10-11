@@ -23,7 +23,7 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | 3 | Regular present; spreken; verb position (V2, questions, jij t-drop) | Part I | 07-a, 08-b | assumed | |
 | 4 | hebben; numbers 0–100; question words | Part I | 07-a (wij hebben), 09-a (ordinals), 12-b (prices) | assumed | |
 | 5 | Possessives mijn/jouw/zijn/haar; de/het intro | Part I | 07-a (ons/onze, jullie, hun) | assumed | |
-| 6 | Adjectives; de/het + adjective basics | Part I | 13-2, 12-a, 18-a | assumed | Full ending system in 18-a. |
+| 6 | Adjectives; de/het + adjective basics | Part I | 13-2, 12-a, 18-a | assumed | Full ending system covered in 18-a. |
 | 7 | Present tense plural | 07-a | — | covered | |
 | 7 | Separable verbs (introduction) | 07-b | 15-b, 16-a | covered | Deepened in 16-a. |
 | 8 | Telling time | 08-a | — | covered | |
@@ -42,9 +42,9 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | 16 | Separable verbs in depth | 16-a | 16-b (separable infinitive after gaan) | covered | All positions, separable infinitive after kunnen/mogen, stress rule. Participles (ingecheckt) not taught. |
 | 16 | gaan + infinitive | 16-b | 17-a (Het gaat regenen.) | covered | |
 | 17 | Impersonal het (weather) | 17-a | — | covered | Weather verbs, het is + adjective, seasons with in de. |
-| 17 | Adjective vs adverb | — | — | missing (planned: 17-b) | |
-| 18 | Adjective endings; colours | — | — | missing (planned: 18-a) | |
-| 18 | Comparison (introduction) | — | — | missing (planned: 18-b) | Comparative + dan, even/net zo … als. Superlative deferred to row 32. |
+| 17 | Adjective vs adverb | 17-b | — | covered | Attributive -e, predicative/adverb bare form, intensifiers heel/erg/best/een beetje/te. |
+| 18 | Adjective endings; colours | 18-a | — | covered | Full -e rule with the een/geen/no-article + singular het-word exception; spelling changes; colours. |
+| 18 | Comparison (introduction) | 18-b | — | covered | Comparative + dan, irregulars (beter/meer/minder), even/net zo/niet zo … als. Superlative deferred to row 32. |
 | 19 | houden van, graag, infinitive constructions | — | — | missing | Part IV not written. "Ik wil graag", "Ja, graag" used as chunks from 11-a. |
 | 20 | Modal verbs + infinitive; infinitive at the end | — | — | missing | Part IV. willen/mogen (11), kunnen (15), gaan (16) already put an infinitive at the end; row 20 should systematise and add moeten. |
 | 21 | zullen; suggestions; requests | — | — | missing | Part IV. |
@@ -58,7 +58,7 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | 29 | Perfect vs simple past; sequencing words | — | — | missing | Part V. eerst/dan/daarna used in the present from 08-b/15-b. |
 | 30 | Subordinate clauses: omdat, dat, als | — | — | missing | Part VI. |
 | 31 | want vs omdat | — | — | missing | Part VI. |
-| 32 | Comparative and superlative | — | — | missing | Part VI. Comparative introduced in 18-b. |
+| 32 | Comparative and superlative | — | — | missing | Part VI. Comparative covered in 18-b; superlative still missing. |
 | 33 | Relative clauses die/dat | — | — | missing | Part VI. |
 | 34 | om … te; te + infinitive | — | — | missing | Part VI. "te + adjective" (too) from 12-b is a different structure. |
 | 35 | als, dan; zou/zouden | — | — | missing | Part VI. |
@@ -91,5 +91,5 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | worden ("het wordt koud") | 17-a | — | partial | Present forms and het wordt + adjective/number only; worden as passive/other uses later. |
 | met + transport; lopen vs rennen | 16-a | 16-b | covered | |
 | Seasons (in de lente/zomer/herfst/winter) | 17-a | — | covered | |
-| Intensifiers heel, erg, best, een beetje, te | — | — | missing (planned: 17-b) | |
-| Non-inflecting adjectives (oranje, roze, -en materials) | — | — | missing (planned: 18-a) | |
+| Intensifiers heel, erg, best, een beetje, te | 17-b | — | covered | |
+| Non-inflecting adjectives (oranje, roze, -en materials) | 18-a | — | covered | |

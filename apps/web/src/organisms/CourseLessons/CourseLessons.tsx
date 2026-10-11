@@ -1,13 +1,14 @@
 import {
-  COURSE_TEXT_MAX, COURSE_TITLE_MAX, okResponseSchema, outlineResponseSchema, type CourseLessonSummary, type LessonInput, type LessonPosition,
+  COURSE_TEXT_MAX, COURSE_TITLE_MAX, okResponseSchema, outlineResponseSchema, type CourseLessonSummary, type CourseProgressResponse, type LessonInput, type LessonPosition,
 } from "@wordinator/contracts";
 import { lessonResponseSchema, type CourseDetailResponse, type CourseLesson } from "@wordinator/contracts/lesson-document";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, lazy, Suspense, useCallback, useMemo, useRef, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, courseQueryOptions, courseWordsQueryOptions, lessonQueryOptions, wordBookmarksKey } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
+import { relativeTime } from "../../relativeTime";
 import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
 import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, SectionHeader, Surface, TextAreaField, TextField } from "../../ui";
 import { LessonDocument } from "../LessonDocument/LessonDocument";
@@ -100,11 +101,30 @@ function LessonForm({ initial, submitLabel, pending, error, onSubmit, onCancel }
   </form>;
 }
 
+type LessonPractices = CourseProgressResponse["practices"][string];
+
+// How many of the lesson's published practices remain for the viewer, and when they last practised in it. Archived courses refuse
+// practice progress, so they show only the last practice.
+function PracticeActivity({ summary, practices, archived }: { summary: CourseLessonSummary; practices: LessonPractices | undefined; archived: boolean }) {
+  const { t } = useTranslation();
+  const remaining = Math.max(0, summary.practiceCount - (practices?.done ?? 0));
+  const status = summary.practiceCount > 0 && !archived;
+  if (!status && !practices) return null;
+  return <>
+    {status && (remaining ? <span className={styles.practices}>{t("courses.lessonActions.practicesRemain", { count: remaining })}</span>
+      : <span className={styles.practicesDone}>{t("courses.lessonActions.practicesDone")}</span>)}
+    {practices && <span className={styles.lastPractice}>
+      <Trans i18nKey="courses.lessonActions.lastPractice" values={{ time: relativeTime(practices.practicedAt) }}
+        components={{ time: <time dateTime={new Date(practices.practicedAt).toISOString()} title={new Date(practices.practicedAt).toLocaleString()} /> }} />
+    </span>}
+  </>;
+}
+
 // One entry of the course's lesson list. It links to the lesson page, reports where the reader stands, and offers the lesson's own
 // actions: play it, review its words, and practise again. `saved` is the viewer's saved position, also in a finished lesson.
-function LessonRow({ scope, summary, number, outline, completed, saved, archived, onPlay }: {
+function LessonRow({ scope, summary, number, outline, completed, saved, practices, archived, onPlay }: {
   scope: Scope; summary: CourseLessonSummary; number: number; outline: CourseLessonSummary[]; completed: boolean; saved: LessonPosition | undefined;
-  archived: boolean; onPlay: (lessonId: string) => void;
+  practices: LessonPractices | undefined; archived: boolean; onPlay: (lessonId: string) => void;
 }) {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const [detailsOpen, setDetailsOpen] = useState(false); const [deleting, setDeleting] = useState(false);
@@ -130,7 +150,8 @@ function LessonRow({ scope, summary, number, outline, completed, saved, archived
     },
   });
   const position = completed ? undefined : saved;
-  return <li className={styles.lesson}>
+  const activity = summary.published && (summary.practiceCount > 0 || practices);
+  return <li className={summary.imageUrl ? `${styles.lesson} ${styles.withImage}` : styles.lesson}>
     <div className={styles.lessonMain}>
       <Link className={styles.lessonLink} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug: scope.courseSlug, lessonSlug: summary.slug }}
         aria-label={t("courses.lessons.open", { number, title: summary.title })}>
@@ -140,9 +161,10 @@ function LessonRow({ scope, summary, number, outline, completed, saved, archived
         <span className={styles.lessonCopy}>
           <span className={styles.lessonTitle}>{summary.title}</span>
           {summary.goal && <span className={styles.goal}>{summary.goal}</span>}
-          {(completed || position) && <span className={styles.start}>
+          {(completed || position || activity) && <span className={styles.start}>
             {completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
             {!completed && position && <span className={styles.position}>{t("courses.player.step", { current: position.stepIndex + 1, total: position.totalSteps })}</span>}
+            {activity && <PracticeActivity summary={summary} practices={practices} archived={archived} />}
           </span>}
         </span>
       </Link>
@@ -211,7 +233,7 @@ export function CourseLessons({ groupId, courseId, accountId, detail }: { groupI
     </Surface>}
     {outline.length
       ? <ol className={styles.lessonList}>{outline.map((lesson, index) => <LessonRow key={lesson.id} scope={scope} summary={lesson} number={index + 1} outline={outline}
-        completed={completed.has(lesson.id)} saved={positions.find((entry) => entry.lessonId === lesson.id)} archived={detail.course.status === "archived"} onPlay={setPlaying} />)}</ol>
+        completed={completed.has(lesson.id)} saved={positions.find((entry) => entry.lessonId === lesson.id)} practices={progress.data?.practices[lesson.id]} archived={detail.course.status === "archived"} onPlay={setPlaying} />)}</ol>
       : <Surface tone="quiet"><EmptyState title={t("courses.noLessonsTitle")} action={addAction || undefined}>{t("courses.noLessonsBody")}</EmptyState></Surface>}
     <AdaptiveDialog opened={reviewing && words.length > 0} onClose={() => setReviewing(false)} title={t("courses.words.recapTitle")}>
       {reviewing && <WordBookmarkScope resolve={recapTarget}>

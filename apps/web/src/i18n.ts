@@ -333,7 +333,11 @@ export const resources = {
           questions_one: "{{count}} question",
           questions_other: "{{count}} questions",
           practiceAnswered: "{{answered}} of {{total}} answered",
-          practiceDone: "Done"
+          practiceDone: "Done",
+          practicesRemain_one: "{{count}} practice remains",
+          practicesRemain_other: "{{count}} practices remain",
+          practicesDone: "All practices done",
+          lastPractice: "Last practice <time>{{time}}</time>"
         },
         callout: {
           change: "Change callout type and icon",

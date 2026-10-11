@@ -90,7 +90,7 @@ beforeEach(() => {
     const path = String(input);
     if (path === "/api/session") return response(session);
     if (path.endsWith("/lesson-shares")) return shareResponse();
-    if (path.endsWith("/progress")) return response({ publishedLessons: 1, completedLessonIds: [], positions: [], participants: [] });
+    if (path.endsWith("/progress")) return response({ publishedLessons: 1, completedLessonIds: [], positions: [], practices: {}, participants: [] });
     if (path.endsWith("/words")) return response({ words: [] });
     return response({ ok: true });
   }));

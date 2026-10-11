@@ -649,6 +649,10 @@ export const courseProgressResponseSchema = z.object({
   completedLessonIds: z.array(opaqueIdSchema),
   // The viewer's unfinished positions in currently published lessons, most recent first.
   positions: z.array(lessonPositionSchema),
+  // The viewer's practice activity in each currently published lesson they have saved practice progress in: how many of its
+  // published practices they have done (against each practice's current number of questions), which with the outline's practice
+  // count tells how many remain, and when they last saved progress in one of its practices.
+  practices: z.record(opaqueIdSchema, z.object({ done: z.number().int().nonnegative(), practicedAt: z.number().int() })),
   participants: z.array(courseParticipantProgressSchema),
 });
 export type CourseProgressResponse = z.infer<typeof courseProgressResponseSchema>;

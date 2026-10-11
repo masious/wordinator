@@ -27,21 +27,8 @@ import { PlainText } from "../../molecules/PlainText";
 import CoursePostPreview from "./CoursePostPreview";
 import { LessonShareByline, LessonSharePreview } from "../LessonShare/LessonSharePreview";
 import { ShareAnswerCheck, ShareNoteForm } from "../LessonShare/LessonSharePost";
+import { relativeTime } from "../../relativeTime";
 import styles from "./PostCard.module.css";
-
-function relativeTime(value: number) {
-  const seconds = Math.round((value - Date.now()) / 1_000);
-  const formatter = new Intl.RelativeTimeFormat("en", { numeric: "auto" });
-  const [amount, unit]: [number, Intl.RelativeTimeFormatUnit] =
-    Math.abs(seconds) < 60
-      ? [seconds, "second"]
-      : Math.abs(seconds) < 3_600
-        ? [Math.round(seconds / 60), "minute"]
-        : Math.abs(seconds) < 86_400
-          ? [Math.round(seconds / 3_600), "hour"]
-          : [Math.round(seconds / 86_400), "day"];
-  return formatter.format(amount, unit);
-}
 
 export default function PostCard({
   post,
