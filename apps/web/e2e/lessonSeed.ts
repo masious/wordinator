@@ -6,6 +6,7 @@ type Block = Record<string, unknown>;
 const plain = { textColor: "default", backgroundColor: "default" };
 const text = (value: string) => [{ type: "text", text: value, styles: {} }];
 export const paragraph = (value: string): Block => ({ id: crypto.randomUUID(), type: "paragraph", props: plain, content: text(value), children: [] });
+export const heading = (value: string, level: 1 | 2 | 3 = 2): Block => ({ id: crypto.randomUUID(), type: "heading", props: { ...plain, level }, content: text(value), children: [] });
 export const example = (sentence: string, translation = "", note = ""): Block => ({ id: crypto.randomUUID(), type: "example", props: { translation, note }, content: text(sentence), children: [] });
 export const dialogue = (turns: Array<{ speaker: string; text: string }>): Block => ({ id: crypto.randomUUID(), type: "dialogue", props: { turns: JSON.stringify(turns) }, children: [] });
 export const practice = (instruction: string, items: Array<{ prompt: string; authorsVersion?: string[]; note?: string }>): Block => ({

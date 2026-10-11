@@ -153,6 +153,22 @@ describe("Course lessons", () => {
     expect(observed.map((element) => element.getAttribute("data-block-id"))).toEqual([first.id, second.id]);
   });
 
+  it("lists the lesson's headings and practices in an index beside the text, and leaves it out with fewer than two", async () => {
+    const heading = (id: string, title: string): LessonTopBlock => ({ id, type: "heading", props: { textColor: "default", backgroundColor: "default", level: 2 }, content: text(title), children: [] });
+    renderLesson({ course: course(false), outline: [summary(1), summary(2)], lessons: [
+      lesson(1, [heading("50000000-0000-4000-8000-000000000031", "Wonen"), example("50000000-0000-4000-8000-000000000032", "Er is een balkon."), practice]),
+      lesson(2, [heading("50000000-0000-4000-8000-000000000033", "Alleen"), example("50000000-0000-4000-8000-000000000034", "Ik woon hier.")]),
+    ] });
+    const index = await screen.findByRole("navigation", { name: "In this lesson" });
+    expect(within(index).getAllByRole("button").map((entry) => entry.textContent)).toEqual(["Wonen", "Practice: Translate"]);
+    // The index needs no New words panel beside it.
+    expect(screen.queryByRole("complementary", { name: "New words" })).not.toBeInTheDocument();
+    cleanup();
+    renderLesson({ course: course(false), outline: [summary(1), summary(2)], lessons: [lesson(1), lesson(2, [heading("50000000-0000-4000-8000-000000000033", "Alleen"), example("50000000-0000-4000-8000-000000000034", "Ik woon hier.")])] }, lessonId(2));
+    expect(await screen.findByText("Ik woon hier.")).toBeInTheDocument();
+    expect(screen.queryByRole("navigation", { name: "In this lesson" })).not.toBeInTheDocument();
+  });
+
   it("shows a lesson outside the course outline as unavailable", async () => {
     renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1)] }, lessonId(4));
     expect(await screen.findByText("This lesson is not available.")).toBeInTheDocument();

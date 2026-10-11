@@ -69,7 +69,7 @@ test("an author writes a rich lesson in the editor, publishes it, and another me
   await expect(reader.locator("strong", { hasText: "belangrijk" })).toBeVisible();
   await expect(reader.getByText("rood", { exact: true })).toHaveClass(/text-red/);
   await expect(reader.getByText("Let op de lidwoorden.")).toBeVisible();
-  await expect(reader.getByText("Vertaal de zin.")).toBeVisible();
+  await expect(reader.getByText("Vertaal de zin.", { exact: true })).toBeVisible();
   await expect(reader.getByRole("listitem").filter({ hasText: "The kitchen is big." })).toBeVisible();
   await expect(reader.getByRole("button", { name: "Edit lesson 1" })).toHaveCount(0);
 });

@@ -293,6 +293,11 @@ export const resources = {
           next: "Next: {{title}}",
           pager: "Other lessons",
           readingProgress: "Lesson progress",
+          index: {
+            title: "In this lesson",
+            practice: "Practice: {{instruction}}",
+            practiceUntitled: "Practice"
+          },
           add: "Add lesson",
           addTitle: "Add a lesson",
           addSubmit: "Add unpublished lesson",
@@ -601,6 +606,8 @@ export const resources = {
           showLessAbout: "Show less about {{term}}",
           showAll: "Show all",
           hideAll: "Hide all",
+          highlighted_one: "{{count}} highlighted",
+          highlighted_other: "{{count}} highlighted",
           backToCourse: "Back to the course",
           search: {
             lessonLabel: "Search this lesson's words",

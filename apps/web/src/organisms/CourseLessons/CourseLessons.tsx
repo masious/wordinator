@@ -19,7 +19,8 @@ import { LessonActions } from "./LessonActions";
 import { LessonPlayer, lessonSteps, playableDocument } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
 import { LessonReadingProgress, type ReadingTracking } from "./LessonReadingProgress";
-import { LessonWords, useVisibleWords } from "./LessonWords";
+import { LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN } from "./LessonIndex";
+import { LessonWords, useVisibleWords, useWordsCollapsed } from "./LessonWords";
 import { practiceFromBlock, PracticeSummary } from "./PracticeBlock";
 
 // The editor and BlockNote load only when someone opens a lesson for editing.
@@ -45,29 +46,37 @@ function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" 
 }
 
 // Readers see the published document. Editors of a lesson that is not published yet see its draft, marked as a preview. A practice
-// shows only its first prompts; its answer set opens in a dialog that, beside the words panel, sits over the text. New words are
-// not shown in the text: the lesson's words sit in a panel beside it, where the words of the blocks on screen are highlighted.
+// shows only its first prompts; its answer set opens in a dialog that, beside the side column, sits over the text. New words are
+// not shown in the text: the side column holds the lesson's index (headings and practices, following the reader) and, below it,
+// a collapsible panel of the lesson's words, where the words of the blocks on screen are highlighted.
 function LessonBody({ scope, lesson, tracking }: { scope: Scope; lesson: CourseLesson; tracking: ReadingTracking }) {
   const { t } = useTranslation();
   const document = playableDocument(lesson);
   const steps = useMemo(() => lessonSteps(lesson), [lesson]);
-  const reading = useRef<HTMLDivElement>(null); const panel = useRef<HTMLElement>(null);
-  const active = useVisibleWords(reading, panel, steps);
+  const entries = useMemo(() => document ? lessonIndexEntries(document) : [], [document]);
+  const reading = useRef<HTMLDivElement>(null); const side = useRef<HTMLDivElement>(null);
+  const active = useVisibleWords(reading, side, steps);
+  const [wordsCollapsed, toggleWords] = useWordsCollapsed();
   // Only words of the published document can be bookmarked, so a draft preview shows no toggles.
   const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
   const speech = useMemo(() => lessonSpeech(lesson), [lesson]);
   const resolveSpeech = useCallback((key: string) => speech[key] ?? null, [speech]);
   if (!document || !steps.length) return <div className={styles.body}><p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p></div>;
   const hasWords = steps.some((step) => step.words.length > 0);
-  return <WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={hasWords ? styles.withWords : undefined}>
+  const hasIndex = entries.length >= LESSON_INDEX_MIN;
+  const hasSide = hasWords || hasIndex;
+  return <WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={hasSide ? styles.withSide : undefined}>
     <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} />
     <div ref={reading} className={styles.body}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
       <LessonDocument document={document} anchored vocabulary={false} renderPractice={(block) =>
         <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.practiceProgress)}
-          published={lesson.document !== null} dock={hasWords ? reading : undefined} />} />
+          published={lesson.document !== null} dock={hasSide ? reading : undefined} />} />
     </div>
-    {hasWords && <LessonWords steps={steps} active={active} panelRef={panel} groupId={scope.groupId} />}
+    {hasSide && <div ref={side} className={styles.side}>
+      {hasIndex && <LessonIndex entries={entries} reading={reading} side={side} fill={!hasWords || wordsCollapsed} />}
+      {hasWords && <LessonWords steps={steps} active={active} groupId={scope.groupId} collapsed={wordsCollapsed} onToggle={toggleWords} />}
+    </div>}
   </div></SpeechScope></WordBookmarkScope>;
 }
 

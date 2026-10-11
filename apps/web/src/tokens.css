@@ -246,6 +246,8 @@
   /* A lesson's first image beside it in the course page's lesson list. */
   --size-lesson-image: 7rem;
   --aspect-lesson-image: 4 / 3;
+  /* The lesson page's index beside the text scrolls on its own beyond this height while New words are open below it. */
+  --size-lesson-index-max: 40dvh;
   /* Word cards (C9a): every card has one height so a page of them can be fitted to the viewport. */
   --size-word-card: 15rem;
   --size-word-card-min: 15rem;

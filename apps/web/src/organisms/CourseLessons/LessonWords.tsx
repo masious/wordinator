@@ -1,5 +1,6 @@
 import { wordSearchKey, type LessonStep } from "@wordinator/contracts/lesson-document";
-import { type RefObject, useEffect, useMemo, useState } from "react";
+import { ChevronDown } from "lucide-react";
+import { type RefObject, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
 import { SpeechButton, useSpeechResolver } from "../../molecules/Speech";
@@ -32,8 +33,8 @@ export function wordAnchors(steps: readonly LessonStep[]): Map<string, Set<strin
   return anchors;
 }
 
-// Watches the anchored blocks inside `container` and returns the IDs of the words whose blocks are on screen. While the words
-// panel sticks near the top of the window, a block counts as on screen only below the panel's top.
+// Watches the anchored blocks inside `container` and returns the IDs of the words whose blocks are on screen. While the side
+// column (`panel`) sticks near the top of the window, a block counts as on screen only below the column's top.
 export function useVisibleWords(container: RefObject<HTMLElement | null>, panel: RefObject<HTMLElement | null>, steps: readonly LessonStep[]) {
   const anchors = useMemo(() => wordAnchors(steps), [steps]);
   const [visible, setVisible] = useState<ReadonlySet<string>>(() => new Set());
@@ -74,33 +75,54 @@ export function useRevealCurrent(panelRef: RefObject<HTMLElement | null>, highli
   }, [highlighted, panelRef]);
 }
 
+// Whether the viewer keeps the lesson page's New words panel collapsed. It is a per-device convenience, so storage that cannot be
+// read or written leaves the panel open.
+const COLLAPSED_KEY = "wordinator:ui:v1:lesson-words-collapsed";
+export function useWordsCollapsed() {
+  const [collapsed, setCollapsed] = useState(() => { try { return localStorage.getItem(COLLAPSED_KEY) === "1"; } catch { return false; } });
+  const toggle = useCallback(() => setCollapsed((value) => {
+    try { if (value) localStorage.removeItem(COLLAPSED_KEY); else localStorage.setItem(COLLAPSED_KEY, "1"); } catch { /* keep the choice for this visit only */ }
+    return !value;
+  }), []);
+  return [collapsed, toggle] as const;
+}
+
 // Every new word of a lesson, in the order the player introduces them, beside the reading column. Words whose blocks are on
 // screen are highlighted and brought into view. A search box filters the lesson's words by term, forms, or meaning; with a
-// library, the search can instead run across the whole library (see LessonWordSearch).
-export function LessonWords({ steps, active, panelRef, groupId }: {
-  steps: readonly LessonStep[]; active: ReadonlySet<string>; panelRef: RefObject<HTMLElement | null>; groupId?: string;
+// library, the search can instead run across the whole library (see LessonWordSearch). The panel collapses to its title, which
+// then counts the highlighted words.
+export function LessonWords({ steps, active, groupId, collapsed, onToggle }: {
+  steps: readonly LessonStep[]; active: ReadonlySet<string>; groupId?: string; collapsed: boolean; onToggle: () => void;
 }) {
   const { t } = useTranslation();
   const speech = useSpeechResolver();
+  const panelRef = useRef<HTMLElement>(null); const bodyId = useId();
   const words: RecapWord[] = useMemo(() => runWords(steps), [steps]);
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState<WordSearchMode>("lesson");
   const key = wordSearchKey(query);
   const shown = useMemo(() => key ? words.filter((word) => [word.term, word.meaning, word.forms ?? ""].some((value) => wordSearchKey(value).includes(key))) : words, [words, key]);
   const library = mode === "library" && Boolean(groupId);
-  useRevealCurrent(panelRef, library ? "" : shown.filter((word) => active.has(word.id)).map((word) => word.id).join(" "));
+  const highlighted = words.filter((word) => active.has(word.id)).length;
+  useRevealCurrent(panelRef, library || collapsed ? "" : shown.filter((word) => active.has(word.id)).map((word) => word.id).join(" "));
   if (!words.length) return null;
-  return <aside ref={panelRef} className={styles.panel} aria-label={t("courses.words.title")}>
-    <p className={styles.title} aria-hidden="true">{t("courses.words.title")}</p>
-    <WordSearchControls query={query} onQuery={setQuery} mode={groupId ? mode : null} onMode={setMode} />
-    {library && groupId ? <LibraryWordResults groupId={groupId} query={query} /> : <>
-      {key && !shown.length && <p className={styles.status} role="status">{t("courses.words.search.noLessonMatches")}</p>}
-      <ul className={styles.list}>{shown.map((word) => <li key={word.id} className={active.has(word.id) ? `${styles.word} ${styles.active}` : styles.word} aria-current={active.has(word.id) || undefined}>
-        <p className={styles.head}><span className={styles.term}>{word.term}</span>
-          <SpeechButton url={speech(`word:${word.id}`)} label={t("courses.speech.term", { term: word.term })} />{word.forms && <span className={styles.forms}>{word.forms}</span>}
-          <span className={styles.bookmark}><WordBookmarkToggle wordId={word.id} term={word.term} /></span></p>
-        <p className={styles.meaning}><PlainText>{word.meaning}</PlainText></p>
-      </li>)}</ul>
-    </>}
+  return <aside ref={panelRef} className={styles.panel} data-collapsed={collapsed || undefined} aria-label={t("courses.words.title")}>
+    <button type="button" className={styles.toggle} aria-expanded={!collapsed} aria-controls={collapsed ? undefined : bodyId} onClick={onToggle}>
+      <span className={styles.title}>{t("courses.words.title")}</span>
+      {collapsed && highlighted > 0 && <span className={styles.count}>{t("courses.words.highlighted", { count: highlighted })}</span>}
+      <ChevronDown aria-hidden="true" size={16} className={styles.chevron} />
+    </button>
+    {!collapsed && <div id={bodyId} className={styles.body}>
+      <WordSearchControls query={query} onQuery={setQuery} mode={groupId ? mode : null} onMode={setMode} />
+      {library && groupId ? <LibraryWordResults groupId={groupId} query={query} /> : <>
+        {key && !shown.length && <p className={styles.status} role="status">{t("courses.words.search.noLessonMatches")}</p>}
+        <ul className={styles.list}>{shown.map((word) => <li key={word.id} className={active.has(word.id) ? `${styles.word} ${styles.active}` : styles.word} aria-current={active.has(word.id) || undefined}>
+          <p className={styles.head}><span className={styles.term}>{word.term}</span>
+            <SpeechButton url={speech(`word:${word.id}`)} label={t("courses.speech.term", { term: word.term })} />{word.forms && <span className={styles.forms}>{word.forms}</span>}
+            <span className={styles.bookmark}><WordBookmarkToggle wordId={word.id} term={word.term} /></span></p>
+          <p className={styles.meaning}><PlainText>{word.meaning}</PlainText></p>
+        </li>)}</ul>
+      </>}
+    </div>}
   </aside>;
 }

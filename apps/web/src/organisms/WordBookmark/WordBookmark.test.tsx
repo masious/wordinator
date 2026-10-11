@@ -83,7 +83,7 @@ describe("Word bookmarks", () => {
   it("toggles on recap cards and in the lesson page panel without changing the highlight", async () => {
     const steps = flattenToSteps(published);
     renderWith(<LessonScope document={published}>
-      <LessonWords steps={steps} active={new Set([hund.id])} panelRef={{ current: null }} />
+      <LessonWords steps={steps} active={new Set([hund.id])} collapsed={false} onToggle={() => undefined} />
       <WordRecap words={[{ ...katze, forms: null, example: null, note: null }]} />
     </LessonScope>);
     const panel = screen.getByRole("complementary", { name: "New words" });
