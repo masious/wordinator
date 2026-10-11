@@ -16,7 +16,7 @@ const theme = createTheme({ components: { Menu: { defaultProps: { hideDetached: 
 const post: Post = {
   id: "30000000-0000-4000-8000-000000000001", groupId, type: "shared_sentence", body: "Goedemorgen", notes: null,
   author: { id: userId, displayName: "Ada", avatarUrl: null }, createdAt: 1, updatedAt: 1, edited: false,
-  questions: [], expectedAnswers: [], course: null, commentCount: 2, reactionCount: 3, reactions: [], permissions: { edit: true, delete: true },
+  questions: [], expectedAnswers: [], course: null, lessonShare: null, commentCount: 2, reactionCount: 3, reactions: [], permissions: { edit: true, delete: true },
 };
 
 function renderCard(permissions: Post["permissions"]) {

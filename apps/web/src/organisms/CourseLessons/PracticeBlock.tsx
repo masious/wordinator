@@ -3,12 +3,13 @@ import {
 } from "@wordinator/contracts";
 import { readPracticeBlock, type LessonBlockOf } from "@wordinator/contracts/lesson-document";
 import { useQueryClient } from "@tanstack/react-query";
-import { type FocusEvent, type FormEvent, type KeyboardEvent, type ReactNode, type RefObject, useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { type FocusEvent, type FormEvent, type KeyboardEvent, type ReactNode, type RefObject, useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, lessonQueryOptions } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { AdaptiveDialog, Button, TextAreaField, TextField } from "../../ui";
+import { PassageShareNote, ShareButton, type SharePiece } from "../LessonShare/LessonShare";
 import styles from "./PracticeBlock.module.css";
 
 // A practice as readers see it: its block ID, the prompts with the authors' versions the answer check needs (never rendered before
@@ -18,6 +19,11 @@ const NO_PROGRESS: PracticeProgress = { done: 0, started: 0, answered: null };
 export const practiceFromBlock = (block: LessonBlockOf<"practice">, progress: Record<string, PracticeProgress>): Practice => ({
   id: block.id, payload: splitPracticePayload(readPracticeBlock(block)).payload, progress: progress[block.id] ?? NO_PROGRESS,
 });
+// One question of a practice, as a lesson share piece. A practice with a reading passage cannot be shared.
+export const questionPiece = (practice: Practice, itemIndex: number): SharePiece => {
+  const { instruction, passage, items } = practice.payload; const item = items[itemIndex]!;
+  return { kind: "question", blockId: practice.id, itemIndex, instruction, prompt: item.prompt, authorsVersion: item.authorsVersion, passage: Boolean(passage) };
+};
 export type PracticeScope = { groupId: string; courseId: string; lessonId: string; accountId: string };
 type AnswerDraft = { version: 1; answers: string[] };
 
@@ -213,6 +219,7 @@ export function AnswerSetComposer({ scope, block, onDone }: { scope: PracticeSco
   useEffect(() => storeAnswers(key, answers), [answers, key]);
   const [active, setActive] = useState(() => { const blank = answers.findIndex((answer) => !answer.trim()); return blank < 0 ? questions.length - 1 : blank; });
   const form = useRef<HTMLFormElement>(null); const position = useRef<HTMLDivElement>(null);
+  const passageNote = useId();
   const focusQuestion = (index: number) => {
     const field = form.current?.querySelectorAll("[data-answer-field]")[index]?.querySelector<HTMLElement>("textarea, input");
     (field ?? form.current?.querySelector<HTMLElement>("button[type=submit]"))?.focus();
@@ -239,8 +246,13 @@ export function AnswerSetComposer({ scope, block, onDone }: { scope: PracticeSco
   return <form ref={form} className={styles.composer} onSubmit={submit} onFocus={onFocus} aria-label={t("courses.practice.yourAnswers")}>
     <div ref={position} className={styles.stickyPosition}><PracticePosition current={active + 1} total={questions.length} /></div>
     <h4>{t("courses.practice.yourAnswers")}</h4>
-    {questions.map((question, index) => <AnswerField key={index} question={question} label={t("courses.practice.answerLabel", { number: index + 1, prompt: question.prompt })} value={answers[index] ?? ""} minRows={1} initialFocus={index === initial}
-      onChange={(text) => setAnswers((value) => value.map((entry, current) => current === index ? text : entry))} onAdvance={() => focusQuestion(index + 1)} />)}
+    {/* Each question can be shared on its own, except in a reading practice (docs/lesson-shares.md#where-to-share). */}
+    {block.payload.passage && <PassageShareNote id={passageNote} />}
+    {questions.map((question, index) => <div key={index} className={styles.question}>
+      <AnswerField question={question} label={t("courses.practice.answerLabel", { number: index + 1, prompt: question.prompt })} value={answers[index] ?? ""} minRows={1} initialFocus={index === initial}
+        onChange={(text) => setAnswers((value) => value.map((entry, current) => current === index ? text : entry))} onAdvance={() => focusQuestion(index + 1)} />
+      <div className={styles.questionShare}><ShareButton piece={questionPiece(block, index)} label={t("lessonShares.shareNamed.question", { number: index + 1 })} describedBy={passageNote} /></div>
+    </div>)}
     <p className={styles.help}>{t("courses.practice.blankHelp")} {t("courses.practice.enterHelp")}</p>
     <div className={styles.actions}><Button type="submit">{complete ? t("courses.practice.done") : t("courses.practice.finishLater")}</Button></div>
   </form>;

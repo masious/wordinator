@@ -78,3 +78,9 @@
 .text-pink{color:var(--color-lesson-pink-text)}.surface-pink{background:var(--color-lesson-pink-surface)}
 @media(prefers-reduced-motion:reduce){.turns li,.transport,.playDialogue,.segmentFill{transition:none}.playDialogue[aria-busy="true"] .playIcon{animation:none;opacity:.6}}
 @media(max-width:48em){.columns{grid-template-columns:minmax(0,1fr)}}
+/* Lesson shares: on the lesson page an example or dialogue is selectable, and the selected one is outlined with its share action
+   below it (docs/lesson-shares.md#where-to-share). */
+.selectable{display:grid;gap:var(--space-2);min-width:0;border-radius:var(--radius-md);outline:var(--share-select-outline-width) solid transparent;outline-offset:var(--share-select-outline-offset);cursor:pointer;transition:outline-color var(--motion-standard) var(--ease-physical)}
+.selectable:focus-visible{outline-color:var(--color-focus)}
+.selectable[data-selected]{outline-color:var(--share-select-outline)}
+.selectedActions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:var(--space-2);cursor:auto}

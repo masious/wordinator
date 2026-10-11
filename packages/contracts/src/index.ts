@@ -79,7 +79,8 @@ export const FILL_EXPECTED_ANSWER_MAX = 500;
 export const postTypeSchema = z.enum(["shared_sentence", "question", "reading", "fill_in"]);
 export type PostType = z.infer<typeof postTypeSchema>;
 // Feed posts also include the system-created `course` type, which the composer never offers.
-export const feedPostTypeSchema = z.enum([...postTypeSchema.options, "course"]);
+// They also include `lesson_share`, created from a lesson (docs/lesson-shares.md).
+export const feedPostTypeSchema = z.enum([...postTypeSchema.options, "course", "lesson_share"]);
 export type FeedPostType = z.infer<typeof feedPostTypeSchema>;
 export const postBodySchema = z.string().trim().min(1).max(POST_BODY_MAX);
 export const postNotesSchema = z.string().trim().max(POST_NOTES_MAX).nullable().optional();
@@ -116,6 +117,8 @@ export type PostCourse = z.infer<typeof postCourseSchema>;
 export const postSchema = z.object({
   id: opaqueIdSchema, groupId: opaqueIdSchema, type: feedPostTypeSchema, body: z.string(), notes: z.string().nullable(),
   course: postCourseSchema.nullable(),
+  // Present exactly on `lesson_share` posts. Lazy because the share schemas are defined with the course contracts below.
+  lessonShare: z.lazy(() => postLessonShareSchema).nullable(),
   author: postAuthorSchema, createdAt: z.number().int(), updatedAt: z.number().int(), edited: z.boolean(),
   questions: z.array(z.object({ id: opaqueIdSchema, position: z.number().int().nonnegative(), text: z.string() })),
   expectedAnswers: z.array(z.object({ position: z.number().int().nonnegative(), text: z.string().nullable() })),
@@ -392,6 +395,37 @@ export const COURSE_RECAP_WORDS_MAX = 10_000;
 // Word bookmarks (C9b): a member holds at most this many per group, so every key fits one response.
 export const WORD_BOOKMARKS_MAX = 2_000;
 
+// Lesson inline content (docs/courses.md): bold, italic, the lesson palette, and safe links. Lesson documents use it for rich text,
+// and a shared example sentence keeps it in the journal (docs/lesson-shares.md).
+export const LESSON_LINK_MAX = 2_048;
+export const lessonColorSchema = z.enum(["default", "gray", "brown", "red", "orange", "yellow", "green", "blue", "purple", "pink"]);
+export type LessonColor = z.infer<typeof lessonColorSchema>;
+export const isSafeLessonHref = (value: string) => {
+  try {
+    const url = new URL(value);
+    return url.protocol === "http:" || url.protocol === "https:";
+  } catch {
+    return false;
+  }
+};
+
+// Styles are limited to bold, italic, and palette colours; underline, strike, and code are rejected.
+const textStylesSchema = z.strictObject({
+  bold: z.boolean().optional(), italic: z.boolean().optional(), textColor: lessonColorSchema.optional(), backgroundColor: lessonColorSchema.optional(),
+});
+const styledTextSchema = z.strictObject({ type: z.literal("text"), text: z.string().max(COURSE_BLOCK_TEXT_MAX), styles: textStylesSchema });
+const linkSchema = z.strictObject({
+  type: z.literal("link"),
+  href: z.string().max(LESSON_LINK_MAX).refine(isSafeLessonHref, "Links must use http or https."),
+  content: z.array(styledTextSchema).max(COURSE_BLOCK_TEXT_MAX),
+});
+export const inlineContentSchema = z.array(z.discriminatedUnion("type", [styledTextSchema, linkSchema])).max(COURSE_BLOCK_TEXT_MAX);
+export type InlineContent = z.infer<typeof inlineContentSchema>;
+export type StyledText = z.infer<typeof styledTextSchema>;
+
+export const inlineText = (content: InlineContent) =>
+  content.map((item) => item.type === "text" ? item.text : item.content.map((part) => part.text).join("")).join("");
+
 // Block payloads of the v1 per-row model. They remain the shape of practice and dialogue data inside lesson documents
 // and of the course fixture; `upgradeLegacyBlocks` in ./lessonDocument turns them into documents.
 const requiredBlockText = (max: number) => z.string().trim().min(1).max(max);
@@ -526,6 +560,75 @@ export function answerMatches(item: { prompt: string; authorsVersion: readonly (
   if (countBlanks(item.prompt)) { let blank = 0; candidates.push(item.prompt.replace(/…/g, () => entries[blank++] ?? "")); }
   return candidates.some((candidate) => normalizeAnswer(candidate) === given);
 }
+
+// Lesson shares (docs/lesson-shares.md). A learner shares an example, a dialogue, or one practice question to the journal as a
+// `lesson_share` post. Examples and questions are snapshots of the published block that the server builds; dialogues are references
+// read from the published document on every read.
+export const lessonShareKindSchema = z.enum(["example", "dialogue", "question"]);
+export type LessonShareKind = z.infer<typeof lessonShareKindSchema>;
+// `itemIndex` is sent only for a question. The note is the post's notes: plain text under the post notes limit.
+export const createLessonShareRequestSchema = z.strictObject({
+  courseId: opaqueIdSchema, lessonId: opaqueIdSchema, blockId: opaqueIdSchema,
+  itemIndex: z.number().int().nonnegative().max(COURSE_PRACTICE_ITEMS_MAX - 1).optional(),
+  note: postNotesSchema,
+});
+export type CreateLessonShareRequest = z.input<typeof createLessonShareRequestSchema>;
+// Only the note of a share post can be edited.
+export const updateLessonShareRequestSchema = z.strictObject({ type: z.literal("lesson_share"), notes: postNotesSchema });
+export type UpdateLessonShareRequest = z.input<typeof updateLessonShareRequestSchema>;
+
+// One share per person and piece. Practice items have no stable IDs, so a question is keyed by its block and its normalised
+// prompt rather than its position, which authors change by reordering.
+export const lessonShareKey = (piece: { blockId: string; prompt?: string | null }) =>
+  piece.prompt == null ? piece.blockId : `${piece.blockId}:${normalizeAnswer(piece.prompt)}`;
+export const lessonMySharesSchema = z.record(z.string(), opaqueIdSchema);
+export type LessonMyShares = z.infer<typeof lessonMySharesSchema>;
+
+export const speechClipHashSchema = z.string().regex(/^[0-9a-f]{64}$/);
+// The stored snapshots. An example keeps its sentence with its inline formatting and its example clip's hash (null when the
+// clip was not ready); a question keeps its practice's instruction, its prompt, and its author's version. Item notes are editor-only
+// and never part of a share.
+export const lessonShareExampleSnapshotSchema = z.strictObject({
+  content: inlineContentSchema.refine((content) => inlineText(content).length <= COURSE_SENTENCE_MAX, `Text is limited to ${COURSE_SENTENCE_MAX} characters.`),
+  translation: z.string().max(COURSE_SENTENCE_MAX).nullable(),
+  note: z.string().max(COURSE_NOTE_MAX).nullable(),
+  clipHash: speechClipHashSchema.nullable(),
+});
+export type LessonShareExampleSnapshot = z.infer<typeof lessonShareExampleSnapshotSchema>;
+export const lessonShareQuestionSnapshotSchema = z.strictObject({
+  instruction: z.string().max(COURSE_INSTRUCTION_MAX),
+  prompt: z.string().max(COURSE_SENTENCE_MAX),
+  authorsVersion: z.array(z.string().max(COURSE_AUTHORS_VERSION_MAX).nullable()).max(COURSE_PRACTICE_ITEMS_MAX),
+  itemIndex: z.number().int().nonnegative().max(COURSE_PRACTICE_ITEMS_MAX - 1),
+});
+export type LessonShareQuestionSnapshot = z.infer<typeof lessonShareQuestionSnapshotSchema>;
+
+// Where a share came from. While the viewer can open the lesson (`linked`), the lesson number, titles, and slugs are live;
+// otherwise the number and slugs are null and the titles are the ones saved at share time.
+export const lessonShareSourceSchema = z.object({
+  courseId: opaqueIdSchema, lessonId: opaqueIdSchema.nullable(), blockId: opaqueIdSchema, linked: z.boolean(),
+  courseTitle: z.string(), lessonTitle: z.string(), lessonNumber: z.number().int().positive().nullable(),
+  courseSlug: slugSchema.nullable(), lessonSlug: slugSchema.nullable(),
+});
+export type LessonShareSource = z.infer<typeof lessonShareSourceSchema>;
+// A dialogue is `available` while its block is in the published document of a published lesson in a course that is not archived;
+// otherwise its turns are null. `speech` maps the lesson's turn speech keys (`turn:{blockId}:{index}`) to ready clip URLs.
+export const postLessonShareSchema = z.discriminatedUnion("kind", [
+  z.object({
+    kind: z.literal("example"), source: lessonShareSourceSchema,
+    example: lessonShareExampleSnapshotSchema.omit({ clipHash: true }), speechUrl: z.url().nullable(),
+  }),
+  z.object({
+    kind: z.literal("dialogue"), source: lessonShareSourceSchema, available: z.boolean(),
+    turns: z.array(z.object({ speaker: z.string(), text: z.string() })).nullable(), speech: z.record(z.string(), z.url()),
+  }),
+  z.object({ kind: z.literal("question"), source: lessonShareSourceSchema, question: lessonShareQuestionSnapshotSchema }),
+]);
+export type PostLessonShare = z.infer<typeof postLessonShareSchema>;
+// A repeated share is refused with the existing post, so the client can link to it.
+export const lessonShareExistsErrorSchema = z.object({
+  error: z.object({ code: z.literal("LESSON_SHARE_EXISTS"), message: z.string() }), postId: opaqueIdSchema,
+});
 
 // Course progress counts the lessons a member finished in the lesson player among the currently published lessons,
 // plus the passed share of each published lesson they have started but not finished.

@@ -12,7 +12,7 @@ import {
   type StyledText,
   type VocabularyWord,
 } from "@wordinator/contracts/lesson-document";
-import { createContext, Fragment, useContext, useId, useState, type CSSProperties, type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
+import { createContext, Fragment, useContext, useEffect, useId, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { Pause, Play, SkipBack, SkipForward, Square } from "lucide-react";
 import { Callout } from "../../molecules/Callout";
@@ -24,6 +24,9 @@ import styles from "./LessonDocument.module.css";
 // Wordinator's own lesson renderer. Every piece of authored text becomes a React text node, so nothing is parsed as HTML;
 // links render only for http and https, and colours map to design tokens through fixed class names.
 export type PracticeRenderer = (block: LessonBlockOf<"practice">) => ReactNode;
+// The lesson page passes `renderShare` to make examples and dialogues selectable; it renders the selected block's share action.
+export type ShareableBlock = LessonBlockOf<"example"> | LessonBlockOf<"dialogue">;
+export type ShareRenderer = (block: ShareableBlock) => ReactNode;
 
 const join = (...names: Array<string | false | undefined>) =>
   names.filter(Boolean).join(" ") || undefined;
@@ -122,13 +125,27 @@ export function DialogueBlock({
   block: LessonBlockOf<"dialogue">;
   upTo?: number;
 }) {
+  return <DialogueTurns blockId={block.id} turns={readDialogueTurns(block)} upTo={upTo} />;
+}
+
+// A dialogue's turns with their speech, resolved in the current speech scope under the lesson's turn keys. A lesson share renders
+// a shared dialogue through this as well.
+export function DialogueTurns({
+  blockId,
+  turns: source,
+  upTo,
+}: {
+  blockId: string;
+  turns: ReadonlyArray<{ speaker: string; text: string }>;
+  upTo?: number;
+}) {
   const { t } = useTranslation();
   const resolve = useSpeechResolver();
-  const owner = `dialogue:${block.id}`;
+  const owner = `dialogue:${blockId}`;
   const playback = useSpeechPlayback(owner);
-  const turns = readDialogueTurns(block)
+  const turns = source
     .slice(0, upTo === undefined ? undefined : upTo + 1)
-    .map((turn, index) => ({ ...turn, index, speech: resolve(`turn:${block.id}:${index}`) }));
+    .map((turn, index) => ({ ...turn, index, speech: resolve(`turn:${blockId}:${index}`) }));
   const ready = turns.filter((turn) => turn.speech);
   const speaking = playback && playback.status !== "error" ? ready[playback.index]?.index : undefined;
   return (
@@ -304,6 +321,61 @@ function NewWord({ word }: { word: VocabularyWord }) {
 // blocks are on screen, and `vocabulary: false` leaves New words blocks out because the page lists them beside the text.
 type ReaderOptions = { anchored: boolean; vocabulary: boolean };
 const ReaderOptionsContext = createContext<ReaderOptions>({ anchored: false, vocabulary: true });
+type Selection = { selected: string | null; select: (id: string | null) => void; renderShare: ShareRenderer };
+const SelectionContext = createContext<Selection | null>(null);
+
+// Clicking a block, or pressing Enter on it, selects it and reveals its share action (docs/lesson-shares.md#where-to-share). Clicks
+// on its own controls (speaker buttons, the dialogue transport, links) do not select it. Escape or a press anywhere outside the
+// block clears the selection, except inside a dialog, so the share confirmation keeps it.
+const INTERACTIVE = "a, button, input, textarea, select, summary, [role=slider], [contenteditable]";
+function SelectableBlock({ block, children }: { block: ShareableBlock; children: ReactNode }) {
+  const { t } = useTranslation();
+  const selection = useContext(SelectionContext)!;
+  const { select } = selection;
+  const selected = selection.selected === block.id;
+  const element = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!selected) return;
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target instanceof Element ? event.target : null;
+      if (target && (element.current?.contains(target) || target.closest("[role=dialog], .mantine-Modal-root"))) return;
+      select(null);
+    };
+    const onKeyDown = (event: globalThis.KeyboardEvent) => { if (event.key === "Escape" && !event.defaultPrevented) select(null); };
+    document.addEventListener("pointerdown", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => { document.removeEventListener("pointerdown", onPointerDown); document.removeEventListener("keydown", onKeyDown); };
+  }, [select, selected]);
+  const onClick = (event: MouseEvent<HTMLDivElement>) => {
+    const target = event.target instanceof Element ? event.target.closest(INTERACTIVE) : null;
+    if (target && target !== event.currentTarget && event.currentTarget.contains(target)) return;
+    select(block.id);
+  };
+  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key !== "Enter" || event.target !== event.currentTarget) return;
+    event.preventDefault();
+    select(block.id);
+  };
+  return (
+    <div
+      ref={element}
+      className={styles.selectable}
+      data-selected={selected || undefined}
+      tabIndex={0}
+      role="group"
+      aria-label={t(`lessonShares.select.${block.type}`)}
+      onClick={onClick}
+      onKeyDown={onKeyDown}
+    >
+      {children}
+      {selected && <div className={styles.selectedActions}>{selection.renderShare(block)}</div>}
+    </div>
+  );
+}
+
+function Shareable({ block, children }: { block: ShareableBlock; children: ReactNode }) {
+  return useContext(SelectionContext) ? <SelectableBlock block={block}>{children}</SelectableBlock> : <>{children}</>;
+}
 
 // Document headings sit below the lesson title (an h2), so levels 1–3 render as h3–h5.
 const headingTags = { 1: "h3", 2: "h4", 3: "h5" } as const;
@@ -405,9 +477,9 @@ function Block({
         </Callout>
       );
     case "example":
-      return <ExampleBlock block={block} />;
+      return <Shareable block={block}><ExampleBlock block={block} /></Shareable>;
     case "dialogue":
-      return <DialogueBlock block={block} />;
+      return <Shareable block={block}><DialogueBlock block={block} /></Shareable>;
     case "practice":
       return <>{renderPractice?.(block)}</>;
     case "vocabulary":
@@ -506,19 +578,29 @@ export function LessonBlocks({
 export function LessonDocument({
   document,
   renderPractice,
+  renderShare,
   anchored = false,
   vocabulary = true,
 }: {
   document: LessonDocumentData;
   renderPractice?: PracticeRenderer;
+  renderShare?: ShareRenderer;
   anchored?: boolean;
   vocabulary?: boolean;
 }) {
+  const [selected, setSelected] = useState<string | null>(null);
+  const blocks = (
+    <div className={styles.document}>
+      <LessonBlocks blocks={document.blocks} renderPractice={renderPractice} />
+    </div>
+  );
   return (
     <ReaderOptionsContext.Provider value={{ anchored, vocabulary }}>
-      <div className={styles.document}>
-        <LessonBlocks blocks={document.blocks} renderPractice={renderPractice} />
-      </div>
+      {renderShare ? (
+        <SelectionContext.Provider value={{ selected, select: setSelected, renderShare }}>{blocks}</SelectionContext.Provider>
+      ) : (
+        blocks
+      )}
     </ReaderOptionsContext.Provider>
   );
 }

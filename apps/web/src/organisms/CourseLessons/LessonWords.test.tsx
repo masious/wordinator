@@ -73,7 +73,7 @@ describe("New words search", () => {
   });
 
   it("searches the library after typing pauses and links each match to the lesson that introduced it", async () => {
-    fetchMock.mockImplementation(async (path: string) => path.includes("cursor=")
+    fetchMock.mockImplementation(async (path: string) => path.endsWith("/word-bookmarks/keys") ? json({ keys: [] }) : path.includes("cursor=")
       ? json({ items: [result(3, "der Hundekuchen")], nextCursor: null })
       : json({ items: [result(1, "der Hund"), result(2, "hundert")], nextCursor: "next-page" }));
     renderPanel();
@@ -89,16 +89,18 @@ describe("New words search", () => {
     expect(fetchMock).toHaveBeenCalledTimes(1);
     expect(fetchMock.mock.calls[0]![0]).toBe(`/api/groups/${groupId}/word-search?q=hund`);
     expect(within(results).getAllByRole("listitem").map((item) => item.querySelector("span")?.textContent)).toEqual(["der Hund", "hundert"]);
-    const source = within(results).getAllByRole("link", { name: "Introduced in Animals (German basics). Open the lesson" })[0]!;
-    expect(source).toHaveAttribute("href", "/courses/german-basics/lessons/animals");
-    fireEvent.focus(source);
-    expect(await screen.findByText("German basics · Animals")).toBeInTheDocument();
+    // The lesson that introduced a match shows only once the match is opened.
+    expect(within(results).queryByRole("link")).not.toBeInTheDocument();
+    fireEvent.click(within(results).getByRole("button", { name: "Show more about der Hund" }));
+    expect(within(results).getByRole("link", { name: "Learnt in Animals (German basics)" })).toHaveAttribute("href", "/courses/german-basics/lessons/animals");
+    // An opened match can be bookmarked in the lesson that introduced it.
+    expect(await within(results).findByRole("button", { name: "Bookmark der Hund" })).toHaveAttribute("aria-pressed", "false");
     // The lesson's own words are not shown while searching the library.
     expect(within(panel).queryByText("de kat")).not.toBeInTheDocument();
 
     fireEvent.click(within(panel).getByRole("button", { name: "Show more matches" }));
     await waitFor(() => expect(within(results).getAllByRole("listitem")).toHaveLength(3));
-    expect(fetchMock.mock.calls[1]![0]).toBe(`/api/groups/${groupId}/word-search?q=hund&cursor=next-page`);
+    expect(fetchMock.mock.calls.map(([path]) => path)).toContain(`/api/groups/${groupId}/word-search?q=hund&cursor=next-page`);
     expect(within(panel).queryByRole("button", { name: "Show more matches" })).not.toBeInTheDocument();
 
     // Back to the lesson, the same query filters its own words.
@@ -117,6 +119,31 @@ describe("New words search", () => {
     expect(await within(panel).findByText("No word in the library matches your search.")).toBeInTheDocument();
     fireEvent.change(box, { target: { value: "giraffe" } });
     expect(await within(panel).findByRole("alert")).toHaveTextContent("The library could not be searched. Try again.");
+  });
+});
+
+describe("New words panel rows", () => {
+  it("shows the term, meaning, and pronunciation, and opens the forms, example, and note with the chevron", async () => {
+    const withDetails = flattenToSteps({ schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks: [{ ...vocabulary, props: { data: JSON.stringify({ words: [
+      { id: id(2), term: "de hond", meaning: "the dog", forms: "honden", example: "De hond slaapt.", note: "A common pet." },
+    ] }) } }] });
+    render(<MantineProvider><LessonWords steps={withDetails} active={new Set()} collapsed={false} onToggle={() => undefined} /></MantineProvider>);
+    const row = screen.getByRole("listitem");
+    expect(row).toHaveTextContent("de hond");
+    expect(row).toHaveTextContent("the dog");
+    expect(row).not.toHaveTextContent("honden");
+    expect(row).not.toHaveTextContent("De hond slaapt.");
+    const chevron = within(row).getByRole("button", { name: "Show more about de hond" });
+    expect(chevron).toHaveAttribute("aria-expanded", "false");
+    fireEvent.click(chevron);
+    expect(chevron).toHaveAttribute("aria-expanded", "true");
+    expect(chevron).toHaveAccessibleName("Show less about de hond");
+    expect(row).toHaveTextContent("honden");
+    expect(row).toHaveTextContent("De hond slaapt.");
+    expect(row).toHaveTextContent("A common pet.");
+    expect(within(row).queryByRole("link")).not.toBeInTheDocument();
+    fireEvent.click(chevron);
+    expect(row).not.toHaveTextContent("honden");
   });
 });
 

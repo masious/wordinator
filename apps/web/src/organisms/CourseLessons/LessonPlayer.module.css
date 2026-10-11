@@ -36,3 +36,4 @@
 @media(max-width:40em){.nav>*,.finishActions>*{flex:1}}
 .content{display:grid;gap:var(--space-4);min-width:0}
 .stageSlot{display:contents}
+.share{display:flex;justify-content:flex-end}

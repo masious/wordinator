@@ -28,7 +28,7 @@ const summary = (published: boolean) => ({
   id: lessonId, slug: "lesson-1", position: 0, title: "Lesson 1", goal: null, published, publishedAt: published ? 1 : null, changed: false, updatedBy: user, updatedAt: 1, wordCount: 0, practiceCount: 0, imageUrl: null,
 });
 const lesson = (published = true): CourseLesson => ({
-  ...summary(published), document: published ? document : null, practiceProgress: {}, draft: published ? null : { document, version: 1 }, speech: {}, draftSpeech: published ? null : {},
+  ...summary(published), document: published ? document : null, practiceProgress: {}, draft: published ? null : { document, version: 1 }, speech: {}, draftSpeech: published ? null : {}, myShares: {},
 });
 const position = (n: number) => ({ lessonId, stepKey: blockId(n), stepIndex: n - 1, passedSteps: n - 1, totalSteps: 4, updatedAt: 1 });
 const progress = (completed: string[] = [], positions: unknown[] = []) => ({ publishedLessons: 1, completedLessonIds: completed, positions, participants: [{ user, completedLessons: completed.length, percent: 0 }] });

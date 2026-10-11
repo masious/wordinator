@@ -2,12 +2,11 @@ import { wordSearchKey, type LessonStep } from "@wordinator/contracts/lesson-doc
 import { ChevronDown } from "lucide-react";
 import { type RefObject, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { PlainText } from "../../molecules/PlainText";
-import { SpeechButton, useSpeechResolver } from "../../molecules/Speech";
-import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
+import { useSpeechResolver } from "../../molecules/Speech";
 import { runWords, type RecapWord } from "../WordRecap/WordRecap";
 import { LibraryWordResults, WordSearchControls, type WordSearchMode } from "./LessonWordSearch";
 import styles from "./LessonWords.module.css";
+import { PanelWord } from "./PanelWord";
 
 // The blocks whose visibility lights up a step's words: the block the step shows, or every block of a prose step. A words-only
 // step (New words with nothing after them in their section) borrows the step before it, or the one after it at a lesson's start.
@@ -116,12 +115,8 @@ export function LessonWords({ steps, active, groupId, collapsed, onToggle }: {
       <WordSearchControls query={query} onQuery={setQuery} mode={groupId ? mode : null} onMode={setMode} />
       {library && groupId ? <LibraryWordResults groupId={groupId} query={query} /> : <>
         {key && !shown.length && <p className={styles.status} role="status">{t("courses.words.search.noLessonMatches")}</p>}
-        <ul className={styles.list}>{shown.map((word) => <li key={word.id} className={active.has(word.id) ? `${styles.word} ${styles.active}` : styles.word} aria-current={active.has(word.id) || undefined}>
-          <p className={styles.head}><span className={styles.term}>{word.term}</span>
-            <SpeechButton url={speech(`word:${word.id}`)} label={t("courses.speech.term", { term: word.term })} />{word.forms && <span className={styles.forms}>{word.forms}</span>}
-            <span className={styles.bookmark}><WordBookmarkToggle wordId={word.id} term={word.term} /></span></p>
-          <p className={styles.meaning}><PlainText>{word.meaning}</PlainText></p>
-        </li>)}</ul>
+        <ul className={styles.list}>{shown.map((word) => <PanelWord key={word.id} word={word} termSpeech={speech(`word:${word.id}`)} exampleSpeech={speech(`wordExample:${word.id}`)}
+          active={active.has(word.id)} className={active.has(word.id) ? `${styles.word} ${styles.active}` : styles.word} />)}</ul>
       </>}
     </div>}
   </aside>;

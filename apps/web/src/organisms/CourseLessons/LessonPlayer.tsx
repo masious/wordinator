@@ -14,11 +14,12 @@ import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { AdaptiveDialog, Button, ErrorState, LoadingState } from "../../ui";
 import { DialogueBlock, ExampleBlock, InlineText, LessonBlocks, NewWords } from "../LessonDocument/LessonDocument";
+import { LessonShareScope, ShareButton, useLessonShareScope, type SharePiece } from "../LessonShare/LessonShare";
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import { runWords, WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import styles from "./LessonPlayer.module.css";
-import { AnswerField, type AnswerSubmit, PracticePosition, practiceDraftKey, practiceFromBlock, readAnswers, storeAnswers, usePracticeProgress, type Practice } from "./PracticeBlock";
+import { AnswerField, type AnswerSubmit, PracticePosition, practiceDraftKey, practiceFromBlock, questionPiece, readAnswers, storeAnswers, usePracticeProgress, type Practice } from "./PracticeBlock";
 
 // Readers play the published document. Editors preview the draft of a lesson that is not published yet; previews never count.
 export const playableDocument = (lesson: CourseLesson) => lesson.document ?? lesson.draft?.document ?? null;
@@ -141,6 +142,16 @@ export function StepStage({ step, opensSection = false, words = true, renderQues
   </div>;
 }
 
+// What a step offers to share: its example, its whole dialogue, or its question (docs/lesson-shares.md#where-to-share).
+const stepSharePiece = (step: LessonStep, lesson: CourseLesson): SharePiece | null => {
+  switch (step.kind) {
+    case "example": return { kind: "example", block: step.block };
+    case "dialogueTurn": return { kind: "dialogue", block: step.block };
+    case "practiceItem": return questionPiece(practiceFromBlock(step.block, lesson.practiceProgress), step.itemIndex);
+    default: return null;
+  }
+};
+
 function Player({ scope, lesson, position, next, onNext, onClose }: {
   scope: PlayerScope; lesson: CourseLesson; position: LessonPosition | undefined; next: CourseLessonSummary | undefined; onNext: (lessonId: string) => void; onClose: () => void;
 }) {
@@ -217,7 +228,10 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [finished]);
   const percent = steps.length ? (Math.min(index, steps.length) / steps.length) * 100 : 100;
-  return <WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={styles.player}>
+  // Published lessons offer Share on example, dialogue, and question steps; previews offer none.
+  const share = useLessonShareScope(scope.groupId, scope.courseId, lesson);
+  const sharePiece = share && step ? stepSharePiece(step, lesson) : null;
+  return <LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={styles.player}>
     <div className={styles.status}>
       <span className={styles.stepLabel}>{finished ? t("courses.player.done") : t("courses.player.step", { current: index + 1, total: steps.length })}</span>
       <ProgressMeter value={percent} label={t("courses.player.progressLabel")} />
@@ -238,12 +252,12 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
         const practice = practiceFromBlock(question.block, lesson.practiceProgress);
         return <QuestionStep block={practice} item={question.itemIndex} answers={answersFor(practice)}
           onAnswer={(value) => answer(practice, question.itemIndex, value)} onNext={advanceFromAnswer} submitRef={answerSubmit} />;
-      }} /></div>}
+      }} />{sharePiece && <div className={styles.share}><ShareButton piece={sharePiece} label={t(`lessonShares.shareNamed.${sharePiece.kind}`, { number: step.kind === "practiceItem" ? step.itemIndex + 1 : undefined })} /></div>}</div>}
     {!finished && <div ref={nav} className={styles.nav}>
       <Button variant="quiet" disabled={index === 0} onClick={() => setIndex((value) => value - 1)}>{t("common.back")}</Button>
       <Button data-next data-autofocus onClick={forward}>{index === steps.length - 1 ? t("courses.player.finish") : t("common.next")}</Button>
     </div>}
-  </div></SpeechScope></WordBookmarkScope>;
+  </div></SpeechScope></WordBookmarkScope></LessonShareScope>;
 }
 
 // A focused, step-by-step run through one lesson. Each step of a published lesson is saved as the viewer's position, and finishing

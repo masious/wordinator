@@ -52,19 +52,36 @@ Expected-answer feedback occurs only after submission. Trim surrounding whitespa
 
 In the feed, the course card is part of the card's link to the post. On the post page, the course preview links to the course only while the viewer can open it: the course is published, or it is the viewer's own draft. Otherwise, including after archiving, the card says the course is unavailable and the post carries no course title, summary, level, or cover.
 
+### Lesson share
+
+Approved product change (C11, 2026-10-11); see [lesson shares](lesson-shares.md), which owns what can be shared and how.
+
+- Created from a lesson, never by the composer: a learner shares an example, a dialogue, or one practice question
+- Author: the sharer
+- Content: the shared piece, by kind. An example shows its sentence (with the lesson's inline formatting, rendered read-only by the lesson renderer), translation, note, and speech. A dialogue shows its current published turns with speech and the dialogue transport, or that it is no longer available. A question shows its practice's instruction and its prompt with blanks as `…`
+- Byline: names the kind and its lesson, for example “Masoud shared a question from lesson 3 of Dutch Foundations 5 hours ago.” The lesson number and course title are live while the lesson is visible, and otherwise the titles saved at share time
+- Notes: the sharer's optional note is the post's notes, concealed like any post's notes
+- Answering: a shared question's post page offers the private [answer check](lesson-shares.md#answer-check); answers are never posted
+- Editing: only the notes; the composer never offers this type, and the API refuses changes to the shared content (`409 POST_NOT_EDITABLE`)
+- Discussion: visible ordinary comments
+- Pinning: unavailable
+- Deletion: like any post; the sharer may then share the same piece again
+
+The card links to the lesson only while the viewer can open it. On the post page the shared piece is shown in full.
+
 ## Composer and drafts
 
 The feed begins with a one-line create prompt row (the member's avatar and "Write something…"). When it leaves the viewport, show a floating create action that opens the same flow. Use a centered modal on larger screens and a full-screen mobile composition surface with a sticky title bar and a sticky Discard/Publish bar that stays above the on-screen keyboard. Below `48em` the journal hero is dropped: the group name moves to the header and Create a group moves to the account menu and the More sheet. The [design system](design-system.md#responsive-behavior) owns the visual details.
 
-The post-type chooser is at the top. Maintain independent field state for each type during the session and map compatible values, such as notes and primary text, without erasing prior type state. Clear composer state only after successful publication or explicit discard.
+The post-type chooser is at the top; it offers neither system-created type (course and lesson share). Maintain independent field state for each type during the session and map compatible values, such as notes and primary text, without erasing prior type state. Clear composer state only after successful publication or explicit discard.
 
 Persist drafts in local storage for posts, comments, replies, standalone answers, fill-in responses, and reading-wizard responses. Keys must include account, group, target content where applicable, draft kind, and a schema version. A newer deployment may discard incompatible drafts. Drafts survive navigation and sign-out on the same browser.
 
-Phase 3 implements post-composer drafts with schema version `v1` and the key shape `wordinator:draft:v1:<account-id>:<group-id>:post:new`. One stored document contains independent state for all four composer post types; the system-created course type has no composer state. Switching to a type with no primary text or notes yet maps those compatible values from the current type without overwriting state already entered for the destination type. Publication and explicit discard remove the draft; closing the composer, navigation, and sign-out do not. Later writing flows use the same identity/version principles when their phases ship.
+Phase 3 implements post-composer drafts with schema version `v1` and the key shape `wordinator:draft:v1:<account-id>:<group-id>:post:new`. One stored document contains independent state for all four composer post types; the system-created course and lesson share types have no composer state. Switching to a type with no primary text or notes yet maps those compatible values from the current type without overwriting state already entered for the destination type. Publication and explicit discard remove the draft; closing the composer, navigation, and sign-out do not. Later writing flows use the same identity/version principles when their phases ship.
 
 Phase 4 implements the remaining writing drafts with `wordinator:draft:v1:<account-id>:<group-id>:<draft-kind>:<target-id>`. Draft kinds distinguish comments, replies, standalone answers, fill responses, and reading responses; reply targets are the parent comment and all other targets are the post. Reading drafts include the current wizard step. Empty drafts are not retained, and successful publication clears only the submitted draft.
 
-[Courses](courses.md#editing-model) add the draft kind `course-lesson-doc`, using the same key shape with the lesson ID as target, for an unsaved edit of a lesson document. A successful autosave or an explicit discard removes the draft. Practice answer sets use the draft kind `practice-answer` with the block ID as target, and practice replies use `reply` with the parent comment as target. Empty answer sets are not retained, and publishing clears the draft.
+[Courses](courses.md#editing-model) add the draft kind `course-lesson-doc`, using the same key shape with the lesson ID as target, for an unsaved edit of a lesson document. A successful autosave or an explicit discard removes the draft. Practice answer sets use the draft kind `practice-answer` with the block ID as target, and practice replies use `reply` with the parent comment as target. Empty answer sets are not retained, and publishing clears the draft. A shared question's answer check uses the draft kind `share-answer` with the post as target; it is never published, and an empty answer is not retained.
 
 ## Feed
 

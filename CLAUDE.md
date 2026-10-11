@@ -23,7 +23,7 @@ Documentation is part of the definition of done:
 - Uploaded R2 images are intentionally public-by-URL.
 - Answer concealment prevents accidental spoilers; it is not authorization.
 - User content is plain text, except course lessons. Preserve line breaks, escape output, and link only safe `http`/`https` URLs.
-- Course lessons are the one rich-content surface: BlockNote documents restricted by the shared contracts to bold, italic, a token-mapped text palette, and safe links, as defined in `docs/courses.md`. Do not extend rich text or the BlockNote editor to posts, comments, or other surfaces.
+- Course lessons are the one rich-content surface: BlockNote documents restricted by the shared contracts to bold, italic, a token-mapped text palette, and safe links, as defined in `docs/courses.md`. Do not extend rich text or the BlockNote editor to posts, comments, or other surfaces. The one exception is a shared example sentence in a lesson share post (`docs/lesson-shares.md`), which keeps its lesson formatting through the read-only lesson renderer; the share's note stays plain text.
 - No Tailwind.
 
 ## Planned repository shape

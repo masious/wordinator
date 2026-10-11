@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { signIn, uniqueTag } from "./auth";
 import { courseApi, openLesson, paragraph, seedLesson, vocabulary } from "./lessonSeed";
 
-// The New words panel filters the lesson's own words, or searches the library and links each match to its lesson.
+// The New words panel filters the lesson's own words, or searches the library; an opened match links to its lesson.
 test("a learner searches the lesson's words and the library from the New words panel", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
   const tag = `zoek${uniqueTag(testInfo)}`;
@@ -43,10 +43,11 @@ test("a learner searches the lesson's words and the library from the New words p
   await expect(results.getByRole("listitem")).toHaveText([new RegExp(`de hond ${tag}`), new RegExp(`de kat ${tag}`), new RegExp(`de trein ${tag}`), /het café/]);
   await expect(panel).not.toContainText("het geheim");
 
-  const source = results.getByRole("listitem").filter({ hasText: `de trein ${tag}` })
-    .getByRole("link", { name: `Introduced in ${tag} station (${tag} travel). Open the lesson` });
-  await source.hover();
-  await expect(page.getByText(`${tag} travel · ${tag} station`)).toBeVisible();
+  // The containing lesson shows once the word is opened.
+  const train = results.getByRole("listitem").filter({ hasText: `de trein ${tag}` });
+  await expect(train.getByRole("link")).toHaveCount(0);
+  await train.getByRole("button", { name: `Show more about de trein ${tag}` }).click();
+  const source = train.getByRole("link", { name: `Learnt in ${tag} station (${tag} travel)` });
   await source.click();
   await expect(page).toHaveURL(/\/lessons\/[^/]+$/);
   await expect(page.getByRole("heading", { name: `${tag} station` })).toBeVisible();

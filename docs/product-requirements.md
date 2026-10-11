@@ -26,7 +26,7 @@ The current release is an installable, connectivity-required web application for
 ## Global content rules
 
 - A course defines the context for its lessons. The application does not create separate workspaces per language.
-- User-generated content is plain text. Preserve line breaks and auto-link only `http`/`https` URLs. The one exception is course lessons, which use a restricted rich-text document owned by [courses](courses.md#lesson-documents): bold, italic, a fixed text palette, and `http`/`https` links only.
+- User-generated content is plain text. Preserve line breaks and auto-link only `http`/`https` URLs. The one exception is course lessons, which use a restricted rich-text document owned by [courses](courses.md#lesson-documents): bold, italic, a fixed text palette, and `http`/`https` links only. An example sentence shared to the journal as a [lesson share](lesson-shares.md) keeps that formatting, rendered read-only by the lesson renderer; posts, notes, and comments themselves stay plain text.
 - Optional notes exist on every post type, are hidden by default, and return to hidden on each visit.
 - Content limits are generous safeguards rather than learning constraints.
 - Authored and progress activity is attributed; there is no anonymous mode.

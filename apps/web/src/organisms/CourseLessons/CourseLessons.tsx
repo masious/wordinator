@@ -11,6 +11,7 @@ import { PlainText } from "../../molecules/PlainText";
 import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
 import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, SectionHeader, Surface, TextAreaField, TextField } from "../../ui";
 import { LessonDocument } from "../LessonDocument/LessonDocument";
+import { LessonShareScope, ShareButton, useLessonShareScope } from "../LessonShare/LessonShare";
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import { WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
@@ -61,15 +62,20 @@ function LessonBody({ scope, lesson, tracking }: { scope: Scope; lesson: CourseL
   const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
   const speech = useMemo(() => lessonSpeech(lesson), [lesson]);
   const resolveSpeech = useCallback((key: string) => speech[key] ?? null, [speech]);
+  // Examples and dialogues of a shareable lesson are selectable and reveal their Share action (docs/lesson-shares.md).
+  const share = useLessonShareScope(scope.groupId, scope.courseId, lesson);
   if (!document || !steps.length) return <div className={styles.body}><p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p></div>;
   const hasWords = steps.some((step) => step.words.length > 0);
   const hasIndex = entries.length >= LESSON_INDEX_MIN;
   const hasSide = hasWords || hasIndex;
-  return <WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={hasSide ? styles.withSide : undefined}>
+  return <LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={hasSide ? styles.withSide : undefined}>
     <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} />
     <div ref={reading} className={styles.body}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
-      <LessonDocument document={document} anchored vocabulary={false} renderPractice={(block) =>
+      <LessonDocument document={document} anchored vocabulary={false}
+        renderShare={share ? (block) => <ShareButton piece={block.type === "example" ? { kind: "example", block } : { kind: "dialogue", block }}
+          label={t(`lessonShares.shareNamed.${block.type}`)} /> : undefined}
+        renderPractice={(block) =>
         <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.practiceProgress)}
           published={lesson.document !== null} dock={hasSide ? reading : undefined} />} />
     </div>
@@ -77,7 +83,7 @@ function LessonBody({ scope, lesson, tracking }: { scope: Scope; lesson: CourseL
       {hasIndex && <LessonIndex entries={entries} reading={reading} side={side} fill={!hasWords || wordsCollapsed} />}
       {hasWords && <LessonWords steps={steps} active={active} groupId={scope.groupId} collapsed={wordsCollapsed} onToggle={toggleWords} />}
     </div>}
-  </div></SpeechScope></WordBookmarkScope>;
+  </div></SpeechScope></WordBookmarkScope></LessonShareScope>;
 }
 
 function LessonForm({ initial, submitLabel, pending, error, onSubmit, onCancel }: {

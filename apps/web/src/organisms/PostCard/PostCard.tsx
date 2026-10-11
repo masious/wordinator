@@ -25,6 +25,7 @@ import {
 } from "lucide-react";
 import { PlainText } from "../../molecules/PlainText";
 import CoursePostPreview from "./CoursePostPreview";
+import { LessonShareByline } from "../LessonShare/LessonSharePreview";
 import styles from "./PostCard.module.css";
 
 function relativeTime(value: number) {
@@ -89,7 +90,8 @@ export default function PostCard({
         size={32}
       />
       <p className={styles.byline}>
-        <Trans
+        {post.lessonShare ? <LessonShareByline share={post.lessonShare} name={post.author.displayName} time={relativeTime(post.createdAt)}
+          dateTime={new Date(post.createdAt).toISOString()} /> : <Trans
           i18nKey={`posts.byline.${post.type}`}
           values={{ name: post.author.displayName, time: relativeTime(post.createdAt) }}
           components={{
@@ -101,7 +103,7 @@ export default function PostCard({
               />
             ),
           }}
-        />
+        />}
         {post.edited && <span className={styles.edited}>{t("posts.edited")}</span>}
       </p>
     </header>

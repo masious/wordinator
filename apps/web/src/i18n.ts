@@ -624,8 +624,7 @@ export const resources = {
             noLibraryMatches: "No word in the library matches your search.",
             results: "Library matches",
             more: "Show more matches",
-            source: "{{course}} · {{lesson}}",
-            openSource: "Introduced in {{lesson}} ({{course}}). Open the lesson"
+            introducedIn: "Learnt in {{lesson}} ({{course}})"
           }
         },
         speech: {
@@ -669,14 +668,23 @@ export const resources = {
       },
       posts: {
         type: "Post type",
-        types: { shared_sentence: "Sentence", question: "Question", reading: "Reading", fill_in: "Fill in the blanks", course: "Course" },
+        types: { shared_sentence: "Sentence", question: "Question", reading: "Reading", fill_in: "Fill in the blanks", course: "Course", lesson_share: "Lesson share" },
         coursePublished: "Published a new course",
         byline: {
           shared_sentence: "<name>{{name}}</name> shared a sentence <time>{{time}}</time>.",
           question: "<name>{{name}}</name> asked a question <time>{{time}}</time>.",
           reading: "<name>{{name}}</name> shared a reading <time>{{time}}</time>.",
           fill_in: "<name>{{name}}</name> made a fill-in-the-blanks <time>{{time}}</time>.",
-          course: "<name>{{name}}</name> published a course <time>{{time}}</time>."
+          course: "<name>{{name}}</name> published a course <time>{{time}}</time>.",
+          // Lesson shares name their lesson by number while the viewer can open it, and otherwise by its title saved at share time.
+          lesson_share: {
+            example: "<name>{{name}}</name> shared an example from lesson {{number}} of {{course}} <time>{{time}}</time>.",
+            dialogue: "<name>{{name}}</name> shared a dialogue from lesson {{number}} of {{course}} <time>{{time}}</time>.",
+            question: "<name>{{name}}</name> shared a question from lesson {{number}} of {{course}} <time>{{time}}</time>.",
+            exampleUnlinked: "<name>{{name}}</name> shared an example from “{{lesson}}” in {{course}} <time>{{time}}</time>.",
+            dialogueUnlinked: "<name>{{name}}</name> shared a dialogue from “{{lesson}}” in {{course}} <time>{{time}}</time>.",
+            questionUnlinked: "<name>{{name}}</name> shared a question from “{{lesson}}” in {{course}} <time>{{time}}</time>."
+          }
         },
         openCourse: "Open course",
         courseUnavailable: "This course is no longer available.",
@@ -807,6 +815,23 @@ export const resources = {
         dark: "Dark",
         current: "{{preference}} preference · currently {{resolved}}"
       },
+      lessonShares: {
+        share: "Share",
+        shareNamed: { example: "Share this example", dialogue: "Share this dialogue", question: "Share question {{number}}" },
+        select: { example: "Example. Press Enter to show its Share button.", dialogue: "Dialogue. Press Enter to show its Share button." },
+        alreadyShared: "Already shared",
+        alreadySharedOpen: "Already shared. Open the post",
+        passageHelp: "Questions of a reading practice can’t be shared.",
+        dialogTitle: { example: "Share an example", dialogue: "Share a dialogue", question: "Share a question" },
+        intro: "Friends will see this in the journal, where they can react and comment.",
+        justNow: "just now",
+        note: "Your note",
+        noteHelp: "Optional. Like every post’s notes, it stays hidden until someone shows it on the post page.",
+        submit: "Share",
+        question: "Question",
+        dialogueUnavailable: "This dialogue is no longer available.",
+        openLesson: "Open the lesson"
+      },
       errors: {
         generic: "Something went wrong. Try again.",
         INVALID_CREDENTIALS: "Email or password is incorrect.",
@@ -854,6 +879,7 @@ export const resources = {
         VERSION_CONFLICT: "Someone saved a newer version first. Reload it before saving again.",
         LESSON_NOT_READY: "Finish the highlighted blocks before publishing.",
         LESSON_UNPUBLISHED: "This lesson is not published.",
+        LESSON_SHARE_NOT_SHAREABLE: "This can’t be shared any more. Reload the lesson and try again.",
         LESSON_IMAGE_INVALID: "Upload images to this lesson before adding them.",
         PRACTICE_ID_TAKEN: "A practice in this lesson belongs to another lesson. Remove it and add a new practice.",
         ORDER_STALE: "The order changed since it was loaded. It has been refreshed; try again.",

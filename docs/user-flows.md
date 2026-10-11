@@ -69,6 +69,16 @@
 10. A member can bookmark any word of a published lesson, finished or not, with the bookmark icon beside it in a New words list, the lesson page's New words panel, or on a recap card; pressing it again removes the bookmark. A draft preview offers no bookmarks.
 11. Where a word, example, or dialogue line has audio ready, a speaker icon beside it plays it once; pressing it again stops it, and starting another clip stops the one playing. A dialogue's Play dialogue reads its lines in order in the speakers' voices, highlighting each line as it is spoken, with a progress bar of the conversation. The learner can pause and resume, stop, skip to the previous or next line, or press a line's segment of the bar to continue listening from there; in the player it reads only the lines shown so far. Items whose audio is not generated yet have no icon. Owners and contributors also hear a draft preview once its audio is ready.
 12. Owners and contributors can run an unpublished lesson as a preview; it does not count toward progress.
+## Share a piece of a lesson
+
+In progress (C11): sharing works from the lesson page, the dialogs, and the player; share posts get their own journal cards in C11d. [Lesson shares](lesson-shares.md) owns the rules.
+
+1. On a published lesson's page, a member clicks an example or a dialogue and presses the Share button that appears. In the Answer or Practise again dialog, each question has its own Share button, except in a practice with a reading passage. The lesson player offers Share on example, dialogue, and question steps.
+2. A confirmation dialog previews the post and offers an optional note, already holding the example's note when it has one. Share publishes it; Cancel changes nothing.
+3. The journal shows the post, for example “Masoud shared a question from lesson 3 of Dutch Foundations 5 hours ago.” Friends react and comment as on any post.
+4. On a shared question's post page, anyone can type an answer and press Enter to see whether it matches the author's version, or see that version as a reference. The answer stays on their device.
+5. Sharing the same piece again shows Already shared with a link to the post.
+
 ## Create a post
 
 1. The member opens Journal, the third navigation tab (`/journal`), and taps the feed's "Write something…" prompt row or the floating create button shown after it scrolls away.

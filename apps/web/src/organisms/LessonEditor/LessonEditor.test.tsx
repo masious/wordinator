@@ -25,7 +25,7 @@ const conflict = (document: LessonDocument, version: number) => json({ error: { 
 const saved = (draftVersion: number) => json({ draftVersion, changed: true, updatedBy: editor, updatedAt: 2 });
 const lesson = (overrides: Partial<CourseLesson> = {}): CourseLesson => ({
   id: lessonId, slug: "mijn-huis", position: 0, title: "Mijn huis", goal: null, published: false, publishedAt: null, changed: false, updatedBy: editor, updatedAt: 1, wordCount: 0, practiceCount: 0, imageUrl: null,
-  document: null, practiceProgress: {}, draft: { document: doc("Het huis is groot."), version: 3 }, speech: {}, draftSpeech: {}, ...overrides,
+  document: null, practiceProgress: {}, draft: { document: doc("Het huis is groot."), version: 3 }, speech: {}, draftSpeech: {}, myShares: {}, ...overrides,
 });
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
 

@@ -1,0 +1,30 @@
+/* Lesson shares (docs/lesson-shares.md): the share action, the confirmation, and the shared piece as a post shows it. */
+.share{flex:none}
+.already{display:inline-flex;align-items:center;gap:var(--space-2);min-height:var(--touch-target);padding-inline:var(--space-3);font-size:var(--type-metadata);font-weight:var(--weight-semibold);color:var(--color-success);text-decoration:none;border-radius:var(--radius-pill)}
+.already:hover{text-decoration:underline}
+.already:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.unshareable{display:inline-flex;flex-wrap:wrap;align-items:center;gap:var(--space-2)}
+.help{margin:0;max-width:52ch;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+
+.form{display:grid;gap:var(--space-4);min-width:0}
+.card{display:grid;gap:var(--space-4);min-width:0;padding:var(--space-4);background:var(--color-share-card);border:var(--ring-hairline);border-radius:var(--radius-lg)}
+.byline{display:flex;align-items:center;gap:var(--space-3);min-width:0}
+.byline p{margin:0;min-width:0;color:var(--color-foreground-muted);font-size:var(--type-post-meta);line-height:var(--line-compact);overflow-wrap:anywhere}
+.byline time{font-family:var(--font-mono);white-space:nowrap}
+.author{color:var(--color-foreground);font:var(--weight-semibold) var(--type-post-author)/var(--line-compact) var(--font-sans)}
+.actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:var(--space-2)}
+@media(max-width:40em){.actions>*{flex:1}}
+
+.preview{display:grid;gap:var(--space-3);min-width:0}
+.example{display:grid;gap:var(--space-1);margin:0;padding:var(--space-4) var(--space-5);background:var(--color-support-soft);border-radius:var(--radius-md)}
+.spoken{display:flex;align-items:flex-start;gap:var(--space-2)}
+.sentence{flex:1;min-width:0;margin:0;font-size:var(--type-authored);font-weight:var(--weight-semibold);white-space:pre-wrap;overflow-wrap:anywhere}
+.translation{color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}
+.exampleNote{margin:var(--space-1) 0 0;font-size:var(--type-metadata);color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}
+.dialogue{display:grid;min-width:0;padding:var(--space-4) var(--space-5);background:var(--color-wash);border-radius:var(--radius-md)}
+.question{display:grid;gap:var(--space-2);padding:var(--space-4) var(--space-5);background:var(--color-surface-muted);border:var(--ring-hairline);border-radius:var(--radius-md)}
+.eyebrow{margin:0;font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
+.instruction{margin:0;font-weight:var(--weight-semibold);white-space:pre-wrap;overflow-wrap:anywhere}
+.prompt{margin:0;font-size:var(--type-authored);line-height:var(--line-body);white-space:pre-wrap;overflow-wrap:anywhere}
+.unavailable{padding:var(--space-5);color:var(--color-foreground-muted);background:var(--color-muted);border:var(--ring-hairline);border-radius:var(--radius-lg)}
+.open{display:inline-flex;align-items:center;justify-self:start;gap:var(--space-2);font-weight:var(--weight-semibold);color:var(--color-foreground)}

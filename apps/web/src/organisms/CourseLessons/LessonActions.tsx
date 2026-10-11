@@ -7,6 +7,7 @@ import { lessonQueryOptions } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
 import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
 import { AdaptiveDialog, Button, ErrorState, LoadingState } from "../../ui";
+import { LessonShareScope, useLessonShareScope } from "../LessonShare/LessonShare";
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import { runWords, WordRecap } from "../WordRecap/WordRecap";
 import { lessonSteps, type PlayerScope } from "./LessonPlayer";
@@ -59,10 +60,11 @@ function PracticeList({ scope, lesson, selected, onSelect }: { scope: PlayerScop
   const { t } = useTranslation();
   const practices = lessonPractices(lesson);
   const saveProgress = usePracticeProgress({ ...scope, lessonId: lesson.id }, lesson.document !== null);
-  if (selected) return <div className={styles.answering}>
+  const share = useLessonShareScope(scope.groupId, scope.courseId, lesson);
+  if (selected) return <LessonShareScope scope={share}><div className={styles.answering}>
     <PracticeContent block={selected} prompts={false} />
     <AnswerSetComposer scope={{ ...scope, lessonId: lesson.id }} block={selected} onDone={() => { saveProgress(selected); onSelect(null); }} />
-  </div>;
+  </div></LessonShareScope>;
   if (!practices.length) return <p className={styles.empty}>{t("courses.lessonActions.noPractices")}</p>;
   return <ol className={styles.practices}>{practices.map((practice, index) => <li key={practice.id}>
     <button type="button" className={styles.practice} onClick={() => onSelect(practice)}>

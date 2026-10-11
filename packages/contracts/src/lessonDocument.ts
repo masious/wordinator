@@ -2,8 +2,12 @@ import { z } from "zod";
 import {
   COURSE_BLOCK_TEXT_MAX, COURSE_BLOCKS_MAX, COURSE_HEADING_MAX, COURSE_NOTE_MAX, COURSE_PRELOADED_LESSONS, COURSE_RECAP_WORDS_MAX, COURSE_SENTENCE_MAX,
   COURSE_WORD_FORMS_MAX, COURSE_WORD_MEANING_MAX, COURSE_WORD_TERM_MAX, COURSE_WORDS_PER_BLOCK_MAX, courseLessonSummarySchema, courseSchema, dialoguePayloadSchema, editorRefSchema, opaqueIdSchema, paginationQuerySchema, practicePayloadSchema, practiceProgressSchema, splitPracticePayload, type PracticePayload,
-  WORD_BOOKMARKS_MAX, wordIpaSchema,
-  type PracticeReference,
+  lessonMySharesSchema, WORD_BOOKMARKS_MAX, wordIpaSchema,
+  type PracticeReference, inlineContentSchema, inlineText, lessonColorSchema, type InlineContent,
+} from "./index";
+// Inline content and the lesson palette live in the main contracts because shared example sentences reach journal posts.
+export {
+  inlineContentSchema, inlineText, isSafeLessonHref, LESSON_LINK_MAX, lessonColorSchema, type InlineContent, type LessonColor, type StyledText,
 } from "./index";
 
 // A lesson document is the subset of BlockNote's JSON (`{ id, type, props, content, children }`) that Wordinator accepts.
@@ -13,7 +17,6 @@ export const LESSON_DOCUMENT_BYTES_MAX = 256 * 1024;
 export const LESSON_LIST_DEPTH_MAX = 3;
 export const LESSON_COLUMNS_MIN = 2;
 export const LESSON_COLUMNS_MAX = 3;
-export const LESSON_LINK_MAX = 2_048;
 export const LESSON_IMAGE_URL_MAX = 2_048;
 export const LESSON_IMAGE_ALT_MAX = 200;
 export const LESSON_IMAGE_CAPTION_MAX = 1_000;
@@ -21,8 +24,6 @@ const PRACTICE_DATA_MAX = 200_000;
 const DIALOGUE_DATA_MAX = 100_000;
 const VOCABULARY_DATA_MAX = LESSON_DOCUMENT_BYTES_MAX;
 
-export const lessonColorSchema = z.enum(["default", "gray", "brown", "red", "orange", "yellow", "green", "blue", "purple", "pink"]);
-export type LessonColor = z.infer<typeof lessonColorSchema>;
 export const calloutVariantSchema = z.enum(["hint", "important", "warning", "grammar", "culture", "false-friend", "pronunciation"]);
 export type CalloutVariant = z.infer<typeof calloutVariantSchema>;
 // `auto` uses the variant's default icon. The names are lucide icons the web maps explicitly; nothing else is rendered.
@@ -32,31 +33,6 @@ export const calloutIconSchema = z.enum([
 ]);
 export type CalloutIcon = z.infer<typeof calloutIconSchema>;
 
-export const isSafeLessonHref = (value: string) => {
-  try {
-    const url = new URL(value);
-    return url.protocol === "http:" || url.protocol === "https:";
-  } catch {
-    return false;
-  }
-};
-
-// Styles are limited to bold, italic, and palette colours; underline, strike, and code are rejected.
-const textStylesSchema = z.strictObject({
-  bold: z.boolean().optional(), italic: z.boolean().optional(), textColor: lessonColorSchema.optional(), backgroundColor: lessonColorSchema.optional(),
-});
-const styledTextSchema = z.strictObject({ type: z.literal("text"), text: z.string().max(COURSE_BLOCK_TEXT_MAX), styles: textStylesSchema });
-const linkSchema = z.strictObject({
-  type: z.literal("link"),
-  href: z.string().max(LESSON_LINK_MAX).refine(isSafeLessonHref, "Links must use http or https."),
-  content: z.array(styledTextSchema).max(COURSE_BLOCK_TEXT_MAX),
-});
-export const inlineContentSchema = z.array(z.discriminatedUnion("type", [styledTextSchema, linkSchema])).max(COURSE_BLOCK_TEXT_MAX);
-export type InlineContent = z.infer<typeof inlineContentSchema>;
-export type StyledText = z.infer<typeof styledTextSchema>;
-
-export const inlineText = (content: InlineContent) =>
-  content.map((item) => item.type === "text" ? item.text : item.content.map((part) => part.text).join("")).join("");
 const limitText = (max: number) => (content: InlineContent) => inlineText(content).length <= max;
 const textContent = (max: number) => inlineContentSchema.refine(limitText(max), `Text is limited to ${max} characters.`);
 
@@ -515,6 +491,8 @@ export const courseLessonSchema = courseLessonSummarySchema.extend({
   draft: lessonDraftSchema.nullable(),
   speech: speechMapSchema,
   draftSpeech: draftSpeechSchema.nullable(),
+  // The viewer's own shares of this lesson (docs/lesson-shares.md): share key to post ID, so the share action can say Already shared.
+  myShares: lessonMySharesSchema,
 });
 export type CourseLesson = z.infer<typeof courseLessonSchema>;
 export const lessonResponseSchema = z.object({ lesson: courseLessonSchema });

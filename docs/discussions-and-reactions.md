@@ -13,7 +13,7 @@ Below `48em` each top-level item is one frame and replies are unframed rows behi
 
 Replies cannot themselves receive replies. Multiple top-level submissions by the same person are allowed. Order top-level items oldest-first and replies oldest-first, except for the pinned item rule below.
 
-Shared-sentence and [course post](posts-and-feed.md#course) comments are visible immediately. Question, reading, and fill-in top-level items are answers and begin concealed on each visit. The visible answer count is not a spoiler.
+Shared-sentence, [course post](posts-and-feed.md#course), and [lesson share](posts-and-feed.md#lesson-share) comments are visible immediately. Question, reading, and fill-in top-level items are answers and begin concealed on each visit. The visible answer count is not a spoiler.
 
 ## Concealment
 
@@ -31,7 +31,7 @@ The reading wizard shows one question at a time and displays progress. It permit
 
 ## Pinning
 
-Question, reading, and fill-in posts permit exactly one pinned top-level answer. The post author or group creator may pin, replace, or remove it. If the author leaves, the creator retains control. The pinned answer renders before all other answers regardless of age. Shared-sentence and course post comments cannot be pinned.
+Question, reading, and fill-in posts permit exactly one pinned top-level answer. The post author or group creator may pin, replace, or remove it. If the author leaves, the creator retains control. The pinned answer renders before all other answers regardless of age. Shared-sentence, course post, and lesson share comments cannot be pinned.
 
 ## Comment lifecycle
 
@@ -61,4 +61,4 @@ Reaction toggles use an explicit desired `active` state, making retries idempote
 
 ## Course practices
 
-Course practices have no discussion. Their answer threads were retired on 2026-10-10: answers stay private, and a practice records only how many of its questions each learner has answered. See [practice answers](courses.md#practice-answers).
+Course practices have no discussion. A practice question shared to the journal is discussed with ordinary visible comments on its [lesson share](lesson-shares.md) post, and its answer check publishes nothing. Their answer threads were retired on 2026-10-10: answers stay private, and a practice records only how many of its questions each learner has answered. See [practice answers](courses.md#practice-answers).

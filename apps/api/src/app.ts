@@ -59,15 +59,22 @@ import {
   type Notification,
   type Post,
   type PostInput,
+  type PostLessonShare,
+  createLessonShareRequestSchema,
+  dialoguePayloadSchema,
+  lessonShareExampleSnapshotSchema,
+  lessonShareKey,
+  lessonShareQuestionSnapshotSchema,
+  updateLessonShareRequestSchema,
   slugify,
   SLUG_MAX_LENGTH,
 } from "@wordinator/contracts";
 import {
-  collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
+  LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
   lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
   toLearnerDocument, walkLessonBlocks, type CourseLesson, type CourseWord, type LessonBlockOf, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
-import { dialogueSpeakers, voiceSampleItems, wordSpeechItems } from "@wordinator/contracts/speech";
+import { dialogueSpeakers, speechItems, voiceSampleItems, wordSpeechItems, type SpeechLanguage } from "@wordinator/contracts/speech";
 import { createDatabase, groups, memberships, users } from "@wordinator/db";
 import { and, asc, count, eq, inArray, isNull } from "drizzle-orm";
 import { Hono, type Context } from "hono";
@@ -287,8 +294,10 @@ async function hydratePosts(binding: D1Database, rows: PostRow[], userId: string
   const commentCounts = await binding.prepare(
     `SELECT post_id AS postId, COUNT(*) AS count FROM comments WHERE post_id IN (${placeholders}) GROUP BY post_id`,
   ).bind(...ids).all<{ postId: string; count: number }>();
+  const shares = await presentLessonShares(binding, rows.filter((row) => row.type === "lesson_share").map((row) => row.id), userId, mediaBase);
   return rows.map((row) => ({
     id: row.id, groupId: row.groupId, type: row.type, body: row.body, notes: row.notes, course: presentPostCourse(row, userId, mediaBase),
+    lessonShare: shares.get(row.id) ?? null,
     author: { id: row.authorId, displayName: row.displayName, avatarUrl: mediaUrlFromBase(mediaBase, row.avatarKey) },
     createdAt: row.createdAt, updatedAt: row.updatedAt, edited: row.updatedAt > row.createdAt,
     questions: questions.results.filter((question) => question.postId === row.id).map(({ id, position, text }) => ({ id, position, text })),
@@ -300,6 +309,80 @@ async function hydratePosts(binding: D1Database, rows: PostRow[], userId: string
     reactions: groupReactions(reactions.results, row.id, userId),
     permissions: { edit: row.authorId === userId && row.type !== "course", delete: row.authorId === userId || creatorUserId === userId },
   }));
+}
+
+// Lesson shares (docs/lesson-shares.md). One query reads the share rows of a page with their course, lesson, live lesson number,
+// and, for dialogues, the block's turns from the published document; one more reads the dialogue turn clips.
+type LessonShareRow = {
+  postId: string; kind: PostLessonShare["kind"]; courseId: string; lessonId: string | null; blockId: string; snapshot: string | null;
+  savedCourseTitle: string; savedLessonTitle: string; courseStatus: Course["status"]; courseOwnerId: string; courseTitle: string; courseSlug: string;
+  speechCast: string | null; language: SpeechLanguage; contributorState: ContributorState | null;
+  lessonTitle: string | null; lessonSlug: string | null; lessonPublished: number | null; lessonNumber: number | null; dialogueTurns: string | null;
+};
+const SHARE_BLOCK_TURNS = `(SELECT json_extract(l.published_doc, t.path || '.props.turns') FROM json_tree(l.published_doc) t
+    WHERE t.key = 'id' AND t.atom = s.block_id AND json_extract(l.published_doc, t.path || '.type') = 'dialogue' LIMIT 1)`;
+// Lessons are numbered among the published lessons of their course, as learners see them in the outline.
+const SHARE_LESSON_NUMBER = `(SELECT COUNT(*) FROM course_lessons o WHERE o.course_id = l.course_id AND o.published_doc IS NOT NULL
+    AND (o.position < l.position OR (o.position = l.position AND (o.created_at < l.created_at OR (o.created_at = l.created_at AND o.id <= l.id)))))`;
+
+// The viewer can open the lesson while it is published in a course that is not archived and that the viewer may see.
+const shareLinked = (row: LessonShareRow, viewerId: string) => row.lessonId !== null && Boolean(row.lessonPublished) && row.courseStatus !== "archived"
+  && (row.courseStatus === "published" || row.courseOwnerId === viewerId || row.contributorState === "active");
+
+function readShareTurns(raw: string | null) {
+  if (raw === null) return null;
+  try {
+    return dialoguePayloadSchema.shape.turns.safeParse(JSON.parse(raw)).data ?? null;
+  } catch {
+    return null;
+  }
+}
+
+async function presentLessonShares(binding: D1Database, postIds: string[], viewerId: string, mediaBase: string) {
+  const shares = new Map<string, PostLessonShare>();
+  if (!postIds.length) return shares;
+  const rows = await binding.prepare(
+    `SELECT s.post_id AS postId, s.kind, s.course_id AS courseId, s.lesson_id AS lessonId, s.block_id AS blockId, s.snapshot,
+      s.course_title AS savedCourseTitle, s.lesson_title AS savedLessonTitle,
+      co.status AS courseStatus, co.owner_id AS courseOwnerId, co.title AS courseTitle, co.slug AS courseSlug, co.speech_cast AS speechCast, g.language,
+      (SELECT cc.state FROM course_contributors cc WHERE cc.course_id = co.id AND cc.user_id = ?) AS contributorState,
+      l.title AS lessonTitle, l.slug AS lessonSlug, l.published_doc IS NOT NULL AS lessonPublished,
+      CASE WHEN l.published_doc IS NOT NULL THEN ${SHARE_LESSON_NUMBER} END AS lessonNumber,
+      CASE WHEN s.kind = 'dialogue' AND l.published_doc IS NOT NULL THEN ${SHARE_BLOCK_TURNS} END AS dialogueTurns
+     FROM post_lesson_shares s JOIN courses co ON co.id = s.course_id JOIN groups g ON g.id = s.group_id
+     LEFT JOIN course_lessons l ON l.id = s.lesson_id AND l.course_id = s.course_id
+     WHERE s.post_id IN (SELECT value FROM json_each(?))`,
+  ).bind(viewerId, jsonList(postIds)).all<LessonShareRow>();
+  // A dialogue's clips are the lesson's turn clips: the same keys, voices, and hashes as its speech items in the lesson.
+  const dialogues = await Promise.all(rows.results.map(async (row) => {
+    const turns = row.kind === "dialogue" && shareLinked(row, viewerId) ? readShareTurns(row.dialogueTurns) : null;
+    const block: LessonBlockOf<"dialogue"> = { id: row.blockId, type: "dialogue", props: { turns: JSON.stringify(turns) }, children: [] };
+    const document: LessonDocument = { schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks: turns ? [block] : [] };
+    return { turns, items: await hashSpeechItems(speechItems(document, storedSpeechCast(row.speechCast), row.language)) };
+  }));
+  const clips = await readClips(binding, dialogues.flatMap(({ items }) => items.map((item) => item.hash)));
+  const media = (key: string) => mediaUrlFromBase(mediaBase, key)!;
+  rows.results.forEach((row, index) => {
+    const linked = shareLinked(row, viewerId);
+    const source = {
+      courseId: row.courseId, lessonId: row.lessonId, blockId: row.blockId, linked,
+      courseTitle: linked ? row.courseTitle : row.savedCourseTitle, lessonTitle: linked ? row.lessonTitle! : row.savedLessonTitle,
+      lessonNumber: linked ? row.lessonNumber : null, courseSlug: linked ? row.courseSlug : null, lessonSlug: linked ? row.lessonSlug : null,
+    };
+    if (row.kind === "example") {
+      const { clipHash, ...example } = lessonShareExampleSnapshotSchema.parse(JSON.parse(row.snapshot!));
+      shares.set(row.postId, { kind: "example", source, example, speechUrl: clipHash ? clipUrl(media, clipHash) : null });
+    } else if (row.kind === "question") {
+      shares.set(row.postId, { kind: "question", source, question: lessonShareQuestionSnapshotSchema.parse(JSON.parse(row.snapshot!)) });
+    } else {
+      const { turns, items } = dialogues[index]!;
+      shares.set(row.postId, {
+        kind: "dialogue", source, available: turns !== null,
+        turns: turns && turns.map(({ speaker, text }) => ({ speaker, text })), speech: presentSpeech(items, clips, media),
+      });
+    }
+  });
+  return shares;
 }
 
 async function queryPosts(binding: D1Database, options: {
@@ -642,9 +725,10 @@ async function presentLessons(binding: D1Database, course: CourseRow, viewerId: 
   }));
   // The published practice sets the number of questions; a practice only in an editor's draft uses the draft's.
   const questions = new Map(documents.flatMap(({ draft, published }) => [...(editor ? practiceQuestions(draft) : []), ...(published ? practiceQuestions(published) : [])]));
-  const [progress, clips] = await Promise.all([
+  const [progress, clips, shares] = await Promise.all([
     practiceProgress(binding, course.groupId, viewerId, questions),
     readClips(binding, documents.flatMap(({ publishedSpeech, draftSpeech }) => [...publishedSpeech, ...draftSpeech].map((item) => item.hash))),
+    myLessonShares(binding, viewerId, rows.map((row) => row.id)),
   ]);
   const media = (key: string) => mediaUrlFromBase(mediaBase, key)!;
   return documents.map(({ row, draft, published, publishedSpeech, draftSpeech }) => {
@@ -656,8 +740,19 @@ async function presentLessons(binding: D1Database, course: CourseRow, viewerId: 
       draft: editor ? { document: expandImages(draft, mediaBase), version: row.draftVersion } : null,
       speech: presentSpeech(publishedSpeech, clips, media),
       draftSpeech: editor ? presentDraftSpeech(draftSpeech, clips, media) : null,
+      myShares: shares.get(row.id) ?? {},
     };
   });
+}
+
+// The viewer's lesson shares (docs/lesson-shares.md), as share key to post ID per lesson.
+async function myLessonShares(binding: D1Database, viewerId: string, lessonIds: string[]) {
+  const shares = new Map<string, Record<string, string>>();
+  if (!lessonIds.length) return shares;
+  const rows = await binding.prepare("SELECT lesson_id AS lessonId, share_key AS shareKey, post_id AS postId FROM post_lesson_shares WHERE author_id = ? AND lesson_id IN (SELECT value FROM json_each(?))")
+    .bind(viewerId, jsonList(lessonIds)).all<{ lessonId: string; shareKey: string; postId: string }>();
+  for (const row of rows.results) shares.set(row.lessonId, { ...shares.get(row.lessonId), [row.shareKey]: row.postId });
+  return shares;
 }
 
 async function readOutline(binding: D1Database, course: CourseRow, viewerId: string) {
@@ -1287,9 +1382,19 @@ app.patch("/api/groups/:groupId/posts/:postId", requireGroupAccess, async (conte
   if (!existing) return apiError(context, 404, "POST_NOT_FOUND", "This post is not available.");
   if (existing.authorId !== user.id) return apiError(context, 403, "POST_EDIT_FORBIDDEN", "Only the author can edit this post.");
   if (existing.type === "course") return apiError(context, 409, "POST_NOT_EDITABLE", "Course posts are created by the course and cannot be edited.");
+  const postId = context.req.param("postId");
+  // A lesson share edits only its note; its shared content and type never change, and no other post becomes a share.
+  if (existing.type === "lesson_share") {
+    const parsed = await parseJson(context, updateLessonShareRequestSchema.or(updatePostRequestSchema));
+    if ("response" in parsed) return parsed.response;
+    if (parsed.data.type !== "lesson_share") return apiError(context, 409, "POST_NOT_EDITABLE", "Only the note of a shared lesson piece can be edited.");
+    await context.env.DB.prepare("UPDATE posts SET notes = ?, updated_at = ? WHERE group_id = ? AND id = ?")
+      .bind(parsed.data.notes?.trim() || null, Math.max(Date.now(), existing.createdAt + 1), group.id, postId).run();
+    const response = await readPost(context.env.DB, group.id, postId, user.id, group.creatorUserId, context.env.PUBLIC_MEDIA_BASE_URL);
+    return context.json(postResponseSchema.parse({ post: response }));
+  }
   const parsed = await parseJson(context, updatePostRequestSchema);
   if ("response" in parsed) return parsed.response;
-  const postId = context.req.param("postId");
   await context.env.DB.batch([
     context.env.DB.prepare("DELETE FROM reading_questions WHERE post_id = ?").bind(postId),
     context.env.DB.prepare("DELETE FROM fill_expected_answers WHERE post_id = ?").bind(postId),
@@ -1316,9 +1421,74 @@ app.delete("/api/groups/:groupId/posts/:postId", requireGroupAccess, async (cont
     context.env.DB.prepare("DELETE FROM comments WHERE group_id = ? AND post_id = ?").bind(group.id, context.req.param("postId")),
     context.env.DB.prepare("DELETE FROM reading_questions WHERE post_id = ?").bind(context.req.param("postId")),
     context.env.DB.prepare("DELETE FROM fill_expected_answers WHERE post_id = ?").bind(context.req.param("postId")),
+    // Removing the share row frees its share key, so the sharer may share the same piece again.
+    context.env.DB.prepare("DELETE FROM post_lesson_shares WHERE post_id = ?").bind(context.req.param("postId")),
     context.env.DB.prepare("DELETE FROM posts WHERE group_id = ? AND id = ?").bind(group.id, context.req.param("postId")),
   ]);
   return context.json({ ok: true } as const);
+});
+
+// Shares an example, a dialogue, or one practice question of a published lesson to the journal (docs/lesson-shares.md).
+// The snapshot is built here from the published document; the request names the piece and never carries its content.
+app.post("/api/groups/:groupId/lesson-shares", requireGroupAccess, async (context) => {
+  const parsed = await parseJson(context, createLessonShareRequestSchema); if ("response" in parsed) return parsed.response;
+  const group = context.get("groupAccess"); const user = context.get("user")!; const db = context.env.DB;
+  const { courseId, lessonId, blockId, itemIndex } = parsed.data;
+  const course = await readCourseRow(db, user.id, group.id, courseId);
+  if (!course || !courseVisible(course, user.id, group.creatorUserId)) return apiError(context, 404, "COURSE_NOT_FOUND", "This course is not available.");
+  if (course.status === "archived") return apiError(context, 409, "COURSE_ARCHIVED", "Pieces of an archived course cannot be shared.");
+  const [lesson] = await readLessonRows(db, course, [lessonId]);
+  if (!lesson || (!lesson.published && !seesCourseDrafts(course, user.id))) return apiError(context, 404, "LESSON_NOT_FOUND", "This lesson is not available.");
+  const { published } = storedDocuments(lesson);
+  if (!published) return apiError(context, 409, "LESSON_UNPUBLISHED", "Only published lessons can be shared from.");
+  const notShareable = () => apiError(context, 422, "LESSON_SHARE_NOT_SHAREABLE", "This part of the lesson cannot be shared.");
+  const block = [...walkLessonBlocks(published.blocks)].find((entry) => entry.block.id === blockId)?.block;
+  let share: { kind: PostLessonShare["kind"]; snapshot: string | null; prompt?: string };
+  if (block?.type === "example" && itemIndex === undefined) {
+    // The example clip is kept only when it is ready; clips are never deleted, so the hash keeps playing the same audio.
+    const [item] = (await documentSpeechItems({ schemaVersion: published.schemaVersion, blocks: [block] }, null, group.language)).filter((entry) => entry.key === `example:${block.id}`);
+    const clip = item && (await readClips(db, [item.hash])).get(item.hash);
+    share = { kind: "example", snapshot: JSON.stringify(lessonShareExampleSnapshotSchema.parse({
+      content: block.content, translation: block.props.translation.trim() || null, note: block.props.note.trim() || null,
+      clipHash: clip?.status === "ready" ? item!.hash : null,
+    })) };
+  } else if (block?.type === "dialogue" && itemIndex === undefined) {
+    share = { kind: "dialogue", snapshot: null };
+  } else if (block?.type === "practice" && itemIndex !== undefined) {
+    // Item notes are editor-only and are not copied.
+    const practice = readPracticeBlock(block);
+    const item = practice.items[itemIndex];
+    if (practice.passage || !item) return notShareable();
+    share = { kind: "question", prompt: item.prompt, snapshot: JSON.stringify(lessonShareQuestionSnapshotSchema.parse({
+      instruction: practice.instruction, prompt: item.prompt, authorsVersion: item.authorsVersion, itemIndex,
+    })) };
+  } else return notShareable();
+  const shareKey = lessonShareKey({ blockId, prompt: share.prompt });
+  const existingShare = async () => (await db.prepare("SELECT post_id AS postId FROM post_lesson_shares WHERE author_id = ? AND share_key = ?")
+    .bind(user.id, shareKey).first<{ postId: string }>())?.postId;
+  const exists = (postId: string) => context.json({
+    error: { code: "LESSON_SHARE_EXISTS", message: "You have already shared this.", requestId: context.get("requestId") }, postId,
+  }, 409);
+  const earlier = await existingShare(); if (earlier) return exists(earlier);
+  const postId = crypto.randomUUID();
+  const latest = await db.prepare("SELECT MAX(created_at) AS createdAt FROM posts WHERE group_id = ?").bind(group.id).first<{ createdAt: number | null }>();
+  const now = Math.max(Date.now(), (latest?.createdAt ?? 0) + 1);
+  try {
+    await db.batch([
+      db.prepare("INSERT INTO posts (id, group_id, author_id, type, body, notes, created_at, updated_at) VALUES (?, ?, ?, 'lesson_share', '', ?, ?, ?)")
+        .bind(postId, group.id, user.id, parsed.data.note?.trim() || null, now, now),
+      db.prepare(`INSERT INTO post_lesson_shares (post_id, group_id, author_id, kind, course_id, lesson_id, block_id, item_index, share_key, snapshot, course_title, lesson_title, created_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+        .bind(postId, group.id, user.id, share.kind, course.id, lesson.id, blockId, share.kind === "question" ? itemIndex! : null, shareKey, share.snapshot, course.title, lesson.title, now),
+    ]);
+  } catch (error) {
+    // A concurrent share of the same piece lost the race to the unique index; the batch rolled back the post as well.
+    const concurrent = error instanceof Error && error.message.includes("UNIQUE") ? await existingShare() : undefined;
+    if (concurrent) return exists(concurrent);
+    throw error;
+  }
+  const post = await readPost(db, group.id, postId, user.id, group.creatorUserId, context.env.PUBLIC_MEDIA_BASE_URL);
+  return context.json(postResponseSchema.parse({ post }), 201);
 });
 
 app.get("/api/groups/:groupId/posts/:postId/discussion", requireGroupAccess, async (context) => {
@@ -1332,7 +1502,7 @@ app.get("/api/groups/:groupId/posts/:postId/discussion", requireGroupAccess, asy
   ]);
   return context.json(discussionResponseSchema.parse({
     items, count: items.reduce((count, item) => count + 1 + item.replies.length, 0),
-    concealed: post.type !== "shared_sentence" && post.type !== "course", quickReactions: [account!.one, account!.two, account!.three],
+    concealed: post.type !== "shared_sentence" && post.type !== "course" && post.type !== "lesson_share", quickReactions: [account!.one, account!.two, account!.three],
   }));
 });
 
@@ -1414,7 +1584,7 @@ app.put("/api/groups/:groupId/posts/:postId/pin", requireGroupAccess, async (con
   const group = context.get("groupAccess"); const user = context.get("user")!; const postId = context.req.param("postId");
   const post = await getPostFacts(context.env.DB, group.id, postId);
   if (!post) return apiError(context, 404, "POST_NOT_FOUND", "This post is not available.");
-  if (post.type === "shared_sentence" || post.type === "course") return apiError(context, 400, "PIN_UNAVAILABLE", "Comments on this post cannot be pinned.");
+  if (post.type === "shared_sentence" || post.type === "course" || post.type === "lesson_share") return apiError(context, 400, "PIN_UNAVAILABLE", "Comments on this post cannot be pinned.");
   if (post.authorId !== user.id && group.creatorUserId !== user.id) return apiError(context, 403, "PIN_FORBIDDEN", "Only the post author or group creator can pin an answer.");
   const previousPin = await context.env.DB.prepare("SELECT comment_id AS commentId FROM post_pins WHERE post_id = ?").bind(postId).first<{ commentId: string }>();
   if (!parsed.data.commentId) await context.env.DB.prepare("DELETE FROM post_pins WHERE post_id = ?").bind(postId).run();

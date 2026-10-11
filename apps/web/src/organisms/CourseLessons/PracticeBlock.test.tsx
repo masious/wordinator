@@ -33,7 +33,7 @@ const detail = (): CourseDetailResponse => ({
     permissions: { edit: false, publish: false, archive: false, removeContent: false, contribute: false, requestContribution: true, leaveContribution: false, manageContributors: false },
   },
   outline: [summary],
-  lessons: [{ ...summary, document, practiceProgress: { [blockId]: { done: 3, started: 4, answered: null } }, draft: null, speech: {}, draftSpeech: null }],
+  lessons: [{ ...summary, document, practiceProgress: { [blockId]: { done: 3, started: 4, answered: null } }, draft: null, speech: {}, draftSpeech: null, myShares: {} }],
 });
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
 // Renders the lesson page and opens the practice's answer dialog, which is closed by default.

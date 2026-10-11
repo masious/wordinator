@@ -37,7 +37,7 @@ const practice: LessonTopBlock = {
 const doc = (blocks: LessonTopBlock[]): LessonDocument => ({ schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks });
 // Readers receive the published document only; editors also receive the draft.
 const lesson = (n: number, blocks: LessonTopBlock[] = [], { published = true, editing = false } = {}): CourseLesson => ({
-  ...summary(n, published), document: published ? doc(blocks) : null, practiceProgress: {}, draft: editing ? { document: doc(blocks), version: 1 } : null, speech: {}, draftSpeech: editing ? {} : null,
+  ...summary(n, published), document: published ? doc(blocks) : null, practiceProgress: {}, draft: editing ? { document: doc(blocks), version: 1 } : null, speech: {}, draftSpeech: editing ? {} : null, myShares: {},
 });
 const progress = (completedLessonIds: string[], positions: unknown[] = []) => ({
   publishedLessons: 4, completedLessonIds, positions,

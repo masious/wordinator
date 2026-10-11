@@ -90,7 +90,7 @@ export const posts = sqliteTable(
     id: text("id").primaryKey(),
     groupId: text("group_id").notNull().references(() => groups.id),
     authorId: text("author_id").notNull().references(() => users.id),
-    type: text("type", { enum: ["shared_sentence", "question", "reading", "fill_in", "course"] }).notNull(),
+    type: text("type", { enum: ["shared_sentence", "question", "reading", "fill_in", "course", "lesson_share"] }).notNull(),
     body: text("body").notNull(),
     notes: text("notes"),
     // Set only on the system-created post announcing a course's first publication.
@@ -102,8 +102,40 @@ export const posts = sqliteTable(
     index("posts_group_feed_idx").on(table.groupId, table.createdAt, table.id),
     index("posts_group_author_idx").on(table.groupId, table.authorId, table.createdAt, table.id),
     uniqueIndex("posts_course_unique").on(table.courseId),
-    check("posts_type_check", sql`${table.type} in ('shared_sentence', 'question', 'reading', 'fill_in', 'course')`),
+    check("posts_type_check", sql`${table.type} in ('shared_sentence', 'question', 'reading', 'fill_in', 'course', 'lesson_share')`),
     check("posts_course_link_check", sql`(${table.type} = 'course') = (${table.courseId} IS NOT NULL)`),
+  ],
+);
+
+// A lesson share post's source (docs/lesson-shares.md, docs/data-model.md#post_lesson_shares). Examples and questions keep a JSON
+// snapshot that follows the contracts' schema for their kind; a dialogue has none and is read from the published document.
+export const postLessonShares = sqliteTable(
+  "post_lesson_shares",
+  {
+    postId: text("post_id").primaryKey().references(() => posts.id, { onDelete: "cascade" }),
+    groupId: text("group_id").notNull().references(() => groups.id),
+    authorId: text("author_id").notNull().references(() => users.id),
+    kind: text("kind", { enum: ["example", "dialogue", "question"] }).notNull(),
+    courseId: text("course_id").notNull().references(() => courses.id),
+    // Cleared when the lesson is deleted; the snapshot and the saved titles remain.
+    lessonId: text("lesson_id").references(() => courseLessons.id, { onDelete: "set null" }),
+    blockId: text("block_id").notNull(),
+    // The question's position at share time; questions only.
+    itemIndex: integer("item_index"),
+    // The contracts' `lessonShareKey`: one share per person and piece.
+    shareKey: text("share_key").notNull(),
+    snapshot: text("snapshot"),
+    courseTitle: text("course_title").notNull(),
+    lessonTitle: text("lesson_title").notNull(),
+    createdAt: integer("created_at").notNull(),
+  },
+  (table) => [
+    uniqueIndex("post_lesson_shares_author_key_unique").on(table.authorId, table.shareKey),
+    index("post_lesson_shares_author_lesson_idx").on(table.authorId, table.lessonId),
+    index("post_lesson_shares_lesson_idx").on(table.lessonId),
+    check("post_lesson_shares_kind_check", sql`${table.kind} in ('example', 'dialogue', 'question')`),
+    check("post_lesson_shares_item_check", sql`(${table.kind} = 'question') = (${table.itemIndex} IS NOT NULL)`),
+    check("post_lesson_shares_snapshot_check", sql`(${table.kind} = 'dialogue') = (${table.snapshot} IS NULL) AND (${table.snapshot} IS NULL OR json_valid(${table.snapshot}))`),
   ],
 );
 

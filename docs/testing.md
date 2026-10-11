@@ -56,6 +56,7 @@ Cover visible behavior rather than implementation details:
 - Lesson document rendering per block type, escaping of hostile text, unsafe links, and columns; the lesson editor's autosave, local document draft, three-way merge and side-by-side choices, paste repair, image dialog, column limits, and publish bar
 - Contributor panel requests, withdrawal, owner decisions, and confirmed removal; contributor editing of drafts without publish, discard, or reorder controls; contributor notification links
 - Lesson pages: the course page listing lessons as links without their content, one lesson's document with previous and next links, loading a lesson the course read did not preload, and an unavailable lesson; a practice listing at most three prompts with the rest counted and its answer set kept in a closed Answer dialog
+- Lesson shares: selecting an example or dialogue by click and keyboard reveals Share, controls inside the block do not select it, previews and archived courses offer no share, passage questions are not shareable, the note prefills only from an example's note, Already shared links to the post, each share card and post-page variant (available, unavailable, fallback byline), and the shared question's answer check matching and missing with no request
 - Practice summaries with the done count and the viewer's questions left or done state, the local answer draft, Finish later becoming Done once every question is answered, progress saved by Done and by closing the dialog (and not saved with no answers), no reveal or thread, the player saving progress when it leaves a question, and per-blank author's version fields in the editor; on-device answer checks with no request (a miss keeping focus and showing the version, a match moving focus to the next blank, question, Done, or player step, and items with nothing to check moving on), and the practice position bar following the focused question
 
 ### End-to-end tests — Playwright
@@ -71,6 +72,7 @@ Maintain a small critical suite for current Chromium and WebKit:
 7. A member asks to contribute, the owner accepts, the contributor edits a lesson draft that autosaves without a publish option, and the owner publishes it for readers.
 8. A learner starts a lesson, sees an example with its translation, sees dialogue lines arrive one at a time, answers a practice question and sees it checked against the author's version, finishes the lesson, and sees their course percentage, the next lesson's Start action, and their answer kept as the practice draft in the lesson page's Answer dialog.
 9. An author builds a lesson with headings, bold and coloured text, a callout, columns, an image with alt text, and a practice, publishes it, and another member reads it; two editors' concurrent edits merge.
+10. A learner shares an example from the lesson page and a question from the Answer dialog, finds both in the journal, answers the question on its post page and sees a match, and gets Already shared on a second attempt.
 
 ## Fixtures
 
@@ -113,6 +115,10 @@ Phase 0 establishes the runnable test layers used by later phases:
 - API integration tests run the Worker entry point in the Cloudflare Workers Vitest pool with an isolated D1 binding;
 - web component tests run React Testing Library in jsdom with Mantine browser APIs shimmed in shared setup;
 - Playwright starts both local applications and verifies `/api/health` through Vite in Chromium and WebKit.
+
+## Storybook
+
+Storybook (C11, planned) previews every journal post variant (feed card and post page, each available and unavailable state) and the lesson share dialog with contract-parsed fixtures. It is a local development tool only: it is not a release gate, runs in no test command or CI, and is never built for or deployed to production. The production `/ui` route remains the canonical, release-gated visual inventory described in the [design system](design-system.md). Stories for other features are optional.
 
 Use `pnpm test` for unit, component, and Workers integration tests. Use `pnpm test:e2e` for the browser harness after installing the configured Playwright browsers as described in [operations.md](operations.md).
 

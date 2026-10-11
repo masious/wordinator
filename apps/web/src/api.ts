@@ -3,7 +3,8 @@ import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSc
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 export class ApiError extends Error {
-  constructor(public readonly status: number, public readonly code: string, message: string) {
+  // `body` is the whole error response, for errors that carry more than a code, such as a repeated lesson share's post ID.
+  constructor(public readonly status: number, public readonly code: string, message: string, public readonly body?: unknown) {
     super(message);
   }
 }
@@ -16,7 +17,7 @@ export async function apiRequest<T>(path: string, schema: { parse(value: unknown
   const body: unknown = await response.json();
   if (!response.ok) {
     const parsed = apiErrorSchema.safeParse(body);
-    throw new ApiError(response.status, parsed.success ? parsed.data.error.code : "UNKNOWN_ERROR", parsed.success ? parsed.data.error.message : "Something went wrong.");
+    throw new ApiError(response.status, parsed.success ? parsed.data.error.code : "UNKNOWN_ERROR", parsed.success ? parsed.data.error.message : "Something went wrong.", body);
   }
   return schema.parse(body);
 }

@@ -89,6 +89,8 @@ describe("Word bookmarks", () => {
     const panel = screen.getByRole("complementary", { name: "New words" });
     const current = within(panel).getAllByRole("listitem").find((item) => item.getAttribute("aria-current"));
     expect(current).toHaveTextContent("der Hund");
+    // The bookmark toggle sits in a word's details, behind its chevron.
+    for (const term of ["der Hund", "die Katze"]) fireEvent.click(within(panel).getByRole("button", { name: `Show more about ${term}` }));
     const dog = within(panel).getByRole("button", { name: "Bookmark der Hund" });
     await waitFor(() => expect(dog).toHaveAttribute("aria-pressed", "true"));
     fireEvent.click(dog);

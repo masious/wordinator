@@ -28,9 +28,21 @@ Join request decisions and membership transitions should retain the facts needed
 
 ### `posts`
 
-Opaque ID, group ID, author ID, type, primary body, optional notes, nullable course ID, created/updated timestamps, and edited state derived from timestamps or stored explicitly. The primary body is sentence, question, paragraph, or fill prompt according to type. A check constraint limits type to `shared_sentence`, `question`, `reading`, `fill_in`, and `course`.
+Opaque ID, group ID, author ID, type, primary body, optional notes, nullable course ID, created/updated timestamps, and edited state derived from timestamps or stored explicitly. The primary body is sentence, question, paragraph, or fill prompt according to type. A check constraint limits type to `shared_sentence`, `question`, `reading`, `fill_in`, `course`, and `lesson_share`. Migration `0024_lesson_shares.sql` (C11a) adds `lesson_share` by rebuilding `posts` the way `0012` did, restoring the same children from constraint-free copies.
 
 A `course` post is system-created on a course's first publication. Its body is empty and its course ID links the course; a check constraint requires a course ID exactly when the type is `course`, and a unique index on course ID allows at most one post per course. Course reads use the live course row. Migration `0012_course_feed_posts.sql` rebuilds `posts` for the course link and type, restoring reading questions, expected answers, comments, response items, and pins from constraint-free copies.
+
+A `lesson_share` post has an empty body, its sharer's note in notes, and exactly one [`post_lesson_shares`](#post_lesson_shares) row.
+
+### `post_lesson_shares`
+
+Added in C11a by `0024_lesson_shares.sql` ([lesson shares](lesson-shares.md)). Post ID (primary key, cascading from the post), group ID, author ID (the sharer), kind (`example`, `dialogue`, or `question`), course ID, nullable lesson ID (set to null when the lesson is deleted), block ID, nullable item index (questions only, the item's position at share time), share key, snapshot (JSON text, null for a dialogue), course title and lesson title saved at share time, and created timestamp.
+
+- The share key is the contracts' `lessonShareKey`: the block ID for an example or dialogue, and `{blockId}:{prompt}` with the prompt normalised by `normalizeAnswer` for a question. A unique index on `(author_id, share_key)` allows one share per person and piece; deleting the post frees it.
+- The snapshot follows the contracts' schema for its kind. An example keeps its inline content, translation, note, and example clip hash; a question keeps the practice instruction, the prompt, the author's version list, and the item index. Item notes are never stored.
+- A dialogue has no snapshot and is read from the lesson's published document on every read.
+- Check constraints keep the row consistent: kind is one of the three, an item index is present exactly for a question, a snapshot is present exactly when the kind is not `dialogue`, and a snapshot is valid JSON.
+- Indexed by `lesson_id` for lesson deletion and by `(author_id, lesson_id)` for the lesson read's `myShares`.
 
 ### `reading_questions`
 
@@ -145,7 +157,8 @@ Opaque ID, group ID, recipient ID, actor ID, event type, optional post ID, optio
 ## Deletion and retention
 
 - Groups are soft-deleted through `deleted_at`; all group records remain recoverable.
-- Posts are hard-deleted with questions, expected answers, comments, response items, reactions, and pins.
+- Posts are hard-deleted with questions, expected answers, lesson share rows, comments, response items, reactions, and pins.
+- Deleting a lesson keeps its share posts: their lesson ID becomes null, snapshots stay readable, and dialogue shares become unavailable.
 - Comments are hard-deleted with replies, response items, and reactions.
 - Notifications survive target deletion.
 - Courses are never hard-deleted. Archiving sets status `archived`; restoring returns the course to `draft` so the owner chooses again when to publish. Archived courses keep their cover image. A course post stays when its course is archived and is deleted like any other post.
