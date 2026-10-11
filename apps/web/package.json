@@ -10,10 +10,14 @@
     "preview": "vite preview",
     "typecheck": "tsc -b",
     "test": "vitest run",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "storybook": "storybook dev --port 6006 --no-open",
+    "storybook:build": "storybook build --output-dir storybook-static",
+    "storybook:typecheck": "tsc -p tsconfig.storybook.json"
   },
   "devDependencies": {
     "@playwright/test": "latest",
+    "@storybook/react-vite": "^10.6.1",
     "@tanstack/router-plugin": "^1.168.41",
     "@testing-library/jest-dom": "latest",
     "@testing-library/react": "latest",
@@ -22,6 +26,7 @@
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "~5.0.4",
     "jsdom": "~27.0.1",
+    "storybook": "^10.6.1",
     "tsx": "^4.23.15",
     "vite": "~7.1.9",
     "vite-plugin-pwa": "latest",

@@ -88,11 +88,13 @@ Notes (2026-10-11): in the feed only the share's byline is the link to the post 
 
 ## C11e — Storybook (local only)
 
-- [ ] Add Storybook (latest, Vite builder, React) to `apps/web` with `pnpm --filter @wordinator/web storybook`. Decorators for Mantine with the app theme and `tokens.css`, the colour-scheme toggle, i18next, a memory TanStack router, and a fresh `QueryClient`. Speech uses static fixture URLs.
-- [ ] Fixtures built from the contracts' response schemas (parsed, so stories break when contracts change) for every post variant: shared sentence, question, reading, fill-in, course (available and unavailable), and the example, dialogue (available and unavailable), and question shares, each with and without a note, as a feed card and as a post page.
-- [ ] Stories for the share confirmation dialog (empty and prefilled note) and the Already shared button.
-- [ ] Keep it out of `typecheck`, `test`, `build`, and deploy: separate scripts and tsconfig include, and `storybook-static/` git-ignored.
-- [ ] Docs: `docs/testing.md` and `docs/operations.md` (how to run it locally).
+- [x] Add Storybook (latest, Vite builder, React) to `apps/web` with `pnpm --filter @wordinator/web storybook`. Decorators for Mantine with the app theme and `tokens.css`, the colour-scheme toggle, i18next, a memory TanStack router, and a fresh `QueryClient`. Speech uses static fixture URLs.
+- [x] Fixtures built from the contracts' response schemas (parsed, so stories break when contracts change) for every post variant: shared sentence, question, reading, fill-in, course (available and unavailable), and the example, dialogue (available and unavailable), and question shares, each with and without a note, as a feed card and as a post page.
+- [x] Stories for the share confirmation dialog (empty and prefilled note) and the Already shared button.
+- [x] Keep it out of `typecheck`, `test`, `build`, and deploy: separate scripts and tsconfig include, and `storybook-static/` git-ignored.
+- [x] Docs: `docs/testing.md` and `docs/operations.md` (how to run it locally).
+
+Notes (2026-10-11): Storybook 10.6 (`storybook`, `@storybook/react-vite`) with `.storybook/main.ts` and `preview.tsx`; stories live in `apps/web/stories`, outside `src`, so `tsc -b`, Vitest, and the Vite build never see them, and `tsconfig.storybook.json` backs a separate `storybook:typecheck`. The Vite config is reused without the PWA and route-generator plugins, and telemetry is off. Notes are a `note` control on every post story rather than doubled stories; share kinds also have explicit with-note page stories. The story's component reaches the memory router's single route through context, so changed controls re-render it without recreating the router. Speech uses one generated tone (`.storybook/public/fixtures/speech.wav`). All 34 stories were rendered in Chrome from the static build without errors. The previews showed the shared dialogue in two nested panels; the share wrapper no longer paints its own.
 
 ## Release
 

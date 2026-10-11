@@ -1,6 +1,6 @@
 # Lesson shares
 
-> Approved product change (C11, 2026-10-11). In progress: the contracts, the `post_lesson_shares` table, and the lesson read's `myShares` (C11a), the share endpoint, share post reads, and note editing (C11b), the web share actions and confirmation (C11c), and share posts in the journal with the answer check and note editing (C11d) are in place; the local Storybook (C11e) is not yet. [LESSON_SHARES_PLAN.md](../LESSON_SHARES_PLAN.md) holds the delivery steps.
+> Approved product change (C11, 2026-10-11). In progress: the contracts, the `post_lesson_shares` table, and the lesson read's `myShares` (C11a), the share endpoint, share post reads, and note editing (C11b), the web share actions and confirmation (C11c), share posts in the journal with the answer check and note editing (C11d), and the local Storybook of every post variant (C11e) are in place; the production release is not yet. [LESSON_SHARES_PLAN.md](../LESSON_SHARES_PLAN.md) holds the delivery steps.
 
 A learner can share a piece of a lesson to the [journal](posts-and-feed.md) so friends can see it, react, and talk about it. A share is a journal post of type `lesson_share`; the post rules in [posts and feed](posts-and-feed.md#lesson-share) own its card, and this document owns what can be shared and how.
 

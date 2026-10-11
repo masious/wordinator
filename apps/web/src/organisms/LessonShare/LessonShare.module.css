@@ -21,7 +21,7 @@
 .sentence{flex:1;min-width:0;margin:0;font-size:var(--type-authored);font-weight:var(--weight-semibold);white-space:pre-wrap;overflow-wrap:anywhere}
 .translation{color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}
 .exampleNote{margin:var(--space-1) 0 0;font-size:var(--type-metadata);color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}
-.dialogue{display:grid;min-width:0;padding:var(--space-4) var(--space-5);background:var(--color-wash);border-radius:var(--radius-md)}
+.dialogue{display:grid;min-width:0}
 .question{display:grid;gap:var(--space-2);padding:var(--space-4) var(--space-5);background:var(--color-surface-muted);border:var(--ring-hairline);border-radius:var(--radius-md)}
 .eyebrow{margin:0;font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
 .instruction{margin:0;font-weight:var(--weight-semibold);white-space:pre-wrap;overflow-wrap:anywhere}

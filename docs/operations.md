@@ -31,6 +31,16 @@ Do not implement an ambiguous `deploy` or `migrate` command that silently choose
 The Playwright harness uses the installed stable Chrome channel and Playwright WebKit. Before the first run, install WebKit with `pnpm --filter @wordinator/web exec playwright install webkit`. The configured critical harness runs both engines.
 Its D1 fixture is isolated under `.wrangler/e2e`; running `pnpm test:e2e` does not reset the ordinary local development database.
 
+## Storybook
+
+Storybook is a local preview of journal post variants ([testing](testing.md#storybook)); it is never deployed. From the repository root:
+
+- `pnpm --filter @wordinator/web storybook` — run it on `http://localhost:6006`
+- `pnpm --filter @wordinator/web storybook:build` — build the static preview into the ignored `apps/web/storybook-static/`
+- `pnpm --filter @wordinator/web storybook:typecheck` — type-check the stories and configuration, which `pnpm typecheck` leaves out
+
+It needs no API or database: every story uses contract-parsed fixtures.
+
 ## Local setup
 
 1. Run `pnpm install`.
