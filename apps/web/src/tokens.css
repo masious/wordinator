@@ -255,6 +255,8 @@
   /* Word cards (C9a): every card has one height so a page of them can be fitted to the viewport. */
   --size-word-card: 15rem;
   --size-word-card-min: 15rem;
+  /* The Words tab's lesson filter (C12a): wide enough for a lesson title and its count. */
+  --size-words-filter: 18rem;
   --lesson-column-gap: var(--space-6);
   --lesson-callout-icon: 1.25rem;
   /* Icon-only controls (bookmark, speaker): the glyph; the hit area is --touch-target. */

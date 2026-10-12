@@ -30,7 +30,7 @@ To read a lesson's text, use `python3 content/dutch-foundations/tools/dump.py <f
 
 Keep block and lesson IDs. Edit the JSON in place, with a uniquely named helper script if you need one (e.g. `rev-09a.py` in your session's scratchpad directory). Never run scripts you did not write in this task. Write only your own lesson files and your own review notes.
 
-After editing, run `apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/lesson.ts check <file>` from the repo root until it prints OK. The volume floor is at least 7 practice blocks and at least 45 items. Player steps must stay at or below 125.
+After editing, run `apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/lesson.ts check <file>` from the repo root until it prints OK. The volume floor is at least 7 practice blocks and at least 45 items. Player steps must stay at or below 125. Part I uses the lower targets in `docs/content/briefs-part-i.md` (player steps at or below 110).
 
 7. **New words.** Each lesson must have `vocabulary` blocks that follow `docs/content/style-guide.md#new-words`. If they are missing, add them. If they are present, check them:
    - every new word, glossed chunk and vocabulary-list item is listed once, directly after the block where it first appears

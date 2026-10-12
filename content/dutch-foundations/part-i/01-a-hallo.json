@@ -1,0 +1,2536 @@
+{
+  "title": "Hallo! Hoe gaat het?",
+  "goal": "Greet people and say goodbye, informally and formally; ask how someone is and answer; say who you are with ik ben and ik heet.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Hallo! Hoe gaat het?",
+      "id": "173f5d00-70a7-4fd3-9a97-8540ed940a78"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Sofia is from Spain and has a new job in Utrecht. Today she arrives in the Netherlands, and she will live in her friend Noor's flat for now. In this lesson you will learn to say hello and goodbye, ask how someone is, and say who you are.",
+          "styles": {}
+        }
+      ],
+      "id": "ef4ee70c-8a73-465b-8f09-a1fb2abea6b0"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "In this lesson, the subject of a sentence is ",
+          "styles": {}
+        },
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " and the verb is ",
+          "styles": {}
+        },
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ", like in ",
+          "styles": {}
+        },
+        {
+          "text": "Ik",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "ben",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " Sofia.",
+          "styles": {}
+        }
+      ],
+      "id": "233cc6b9-26e2-4c95-9982-c3a21e11bf1a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Welkom in Utrecht!",
+      "id": "76267f08-6f58-424f-ad6a-c799996e0474"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Sofia lands at Schiphol and takes the train to Utrecht Centraal. Noor is waiting for her at the station.",
+          "styles": {}
+        }
+      ],
+      "id": "4ac3824e-82c8-40b0-8dc9-edbc59982780"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Sofia! Hoi!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Noor!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Welkom in Utrecht!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je wel!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Hoe gaat het?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goed, dank je. Ik ben een beetje moe. En met jou?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Met mij gaat het heel goed!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Het station is groot!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, Utrecht Centraal is heel groot."
+          }
+        ]
+      },
+      "id": "93789fa6-846d-48bb-acee-133869206c44"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "hoi",
+              "meaning": "hi (informal)",
+              "example": "Hoi Noor!",
+              "id": "bff2d4b4-8bd6-4681-98d5-0ceca261077f"
+            },
+            {
+              "term": "Welkom (in …)!",
+              "meaning": "welcome (to …)!",
+              "example": "Welkom in Utrecht!",
+              "id": "37381ed9-ef0d-44ff-8491-dcd500eeaa50"
+            },
+            {
+              "term": "dank je (wel)",
+              "meaning": "thanks, thank you (informal)",
+              "example": "Dank je wel!",
+              "id": "d0f512db-3a53-4541-9941-71a166547661"
+            },
+            {
+              "term": "dank u (wel)",
+              "meaning": "thank you (formal)",
+              "example": "Dank u wel, meneer.",
+              "note": "The formal pair of dank je (wel).",
+              "id": "01d63d5f-a244-4ad5-84a7-785837ace43a"
+            },
+            {
+              "term": "Hoe gaat het?",
+              "meaning": "How are you? How's it going? (to anyone)",
+              "example": "Hoe gaat het?",
+              "id": "36947b6e-4609-4012-b2ac-513c60d27d11"
+            },
+            {
+              "term": "goed",
+              "meaning": "good, well",
+              "example": "Goed, dank je.",
+              "id": "1d01ab5a-314f-49a3-8f40-1a276a905ea3"
+            },
+            {
+              "term": "een beetje",
+              "meaning": "a little, a bit",
+              "example": "Ik ben een beetje moe.",
+              "id": "540e48b8-5645-4501-bae9-77d4a7b388df"
+            },
+            {
+              "term": "moe",
+              "meaning": "tired",
+              "example": "Ik ben een beetje moe.",
+              "id": "3742f717-96d0-4c46-be86-cecbc32c3f47"
+            },
+            {
+              "term": "en",
+              "meaning": "and",
+              "example": "En met jou?",
+              "note": "Joins a question or sentence to what came before.",
+              "id": "625e9f32-f446-4fcf-9d7e-5b058ab404c0"
+            },
+            {
+              "term": "En met jou?",
+              "meaning": "And you? (asking the same question back, informal)",
+              "example": "En met jou?",
+              "note": "Formal: En met u?",
+              "id": "72120d37-90b8-4063-b575-2c5728d5994e"
+            },
+            {
+              "term": "Met mij gaat het goed.",
+              "meaning": "I'm doing well.",
+              "example": "Met mij gaat het heel goed!",
+              "note": "Fixed word order; do not take it apart yet.",
+              "id": "4737db3d-a0cb-4483-8bbd-baa6e26cc313"
+            },
+            {
+              "term": "heel goed",
+              "meaning": "very good, very well",
+              "example": "Met mij gaat het heel goed!",
+              "id": "9685f013-14ae-4aaf-adda-a875c246aaa9"
+            },
+            {
+              "term": "het station",
+              "meaning": "the station",
+              "forms": "de stations",
+              "example": "Het station is groot!",
+              "id": "94a60d46-91e6-47f2-b995-ceba3ad69799"
+            },
+            {
+              "term": "groot",
+              "meaning": "big, large",
+              "example": "Utrecht Centraal is heel groot.",
+              "id": "59651767-adb4-48c4-8b78-d8e8b5e7a6ea"
+            },
+            {
+              "term": "ja",
+              "meaning": "yes",
+              "example": "Ja, Utrecht Centraal is heel groot.",
+              "id": "7f92eee7-ae0c-4284-bdc6-83db5b4c8977"
+            }
+          ]
+        }
+      },
+      "id": "ebcc5694-b25d-4441-aa29-024a1f9358d6"
+    },
+    {
+      "type": "divider",
+      "id": "1bcc26e0-bd3a-4550-8323-0e38f6a96f25"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Greetings and goodbyes",
+      "id": "a613316e-9761-4b29-8ce9-489aa78a1d78"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Greetings by time of day",
+      "id": "c766ae2a-c1a8-48a9-a2d9-9dcbeeb6d551"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Dutch has a different greeting for each part of the day. ",
+          "styles": {}
+        },
+        {
+          "text": "hallo",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " and ",
+          "styles": {}
+        },
+        {
+          "text": "hoi",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " work at any time, and ",
+          "styles": {}
+        },
+        {
+          "text": "dag",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " is both hello and goodbye — neutral, and fine with everyone.",
+          "styles": {}
+        }
+      ],
+      "id": "20388467-e9a3-4757-bc71-788d835163a6"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "goedemorgen",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "morning, until about noon. ",
+              "styles": {}
+            },
+            {
+              "text": "Goedemorgen!",
+              "styles": {
+                "italic": true
+              }
+            },
+            {
+              "text": " (to anyone)",
+              "styles": {}
+            }
+          ],
+          "id": "c71c768c-b177-4fa8-9891-64c68f55cb88"
+        }
+      ],
+      "id": "78cdfc8c-cc94-47cb-aac7-46f7ffbe1c99"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "goedemiddag",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "afternoon, until about six. ",
+              "styles": {}
+            },
+            {
+              "text": "Goedemiddag, mevrouw!",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "54f889a3-6d58-4e49-abd6-d6a830a259c8"
+        }
+      ],
+      "id": "7baafe43-7b5a-43a7-a703-717b98195e50"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "goedenavond",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "evening. ",
+              "styles": {}
+            },
+            {
+              "text": "Goedenavond!",
+              "styles": {
+                "italic": true
+              }
+            },
+            {
+              "text": " It never means \"good night\" — for that, use welterusten.",
+              "styles": {}
+            }
+          ],
+          "id": "32adb3dd-7776-4fbc-8c89-8a820c11fd6d"
+        }
+      ],
+      "id": "6f6c9a68-28bd-4a6e-8750-26b380964262"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "hallo / hoi",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "informal, any time of day. ",
+              "styles": {}
+            },
+            {
+              "text": "Hallo! Hoi!",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "9f6dbf43-b72e-42a0-8f7f-7909d8f304fb"
+        }
+      ],
+      "id": "8c88ec31-a471-4dcb-8b6f-87be3d1a041f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "dag",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "neutral — hello ",
+              "styles": {}
+            },
+            {
+              "text": "and",
+              "styles": {
+                "italic": true
+              }
+            },
+            {
+              "text": " goodbye, fine with everyone. ",
+              "styles": {}
+            },
+            {
+              "text": "Dag Noor!",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "730c787f-3b29-4ebe-8427-444b05002a6e"
+        }
+      ],
+      "id": "af297f86-0d32-4c25-af73-d9c7c15c04f0"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        {
+          "text": "g",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " and ",
+          "styles": {}
+        },
+        {
+          "text": "ch",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " are the same rough sound at the back of the throat: ",
+          "styles": {}
+        },
+        {
+          "text": "goed, goedemorgen, dag, gezellig",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": ". ",
+          "styles": {}
+        },
+        {
+          "text": "oe",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " sounds like English \"oo\" in \"food\": ",
+          "styles": {}
+        },
+        {
+          "text": "goed, hoe, doei",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "id": "2277ecbb-a907-4c4d-8293-6759fb8fa221"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "hallo",
+              "meaning": "hello (informal)",
+              "example": "Hallo!",
+              "id": "363318fd-7836-499a-87f6-51c5abe322cd"
+            },
+            {
+              "term": "dag",
+              "meaning": "hello and goodbye (neutral)",
+              "example": "Dag Noor!",
+              "note": "Works both ways — neutral, fine with everyone.",
+              "id": "e0824302-007f-48d0-a84d-8c4e06ae2b45"
+            },
+            {
+              "term": "goedemorgen",
+              "meaning": "good morning",
+              "example": "Goedemorgen!",
+              "note": "One word.",
+              "id": "b268fea0-d950-406c-bbc6-f7eceb1e61f0"
+            },
+            {
+              "term": "goedemiddag",
+              "meaning": "good afternoon",
+              "example": "Goedemiddag, mevrouw!",
+              "note": "One word.",
+              "id": "269e6b6b-3f3a-426f-8c70-33eb9bd0bf9b"
+            },
+            {
+              "term": "goedenavond",
+              "meaning": "good evening",
+              "example": "Goedenavond!",
+              "note": "One word. Never used at bedtime.",
+              "id": "300b6438-e6ff-4630-96f3-6c4dfd58b33a"
+            }
+          ]
+        }
+      },
+      "id": "42b9dddb-ce5c-4b0c-86e1-de07718eeb3c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Goodbyes",
+      "id": "c2c5822e-1e3a-4878-9cbd-b7e69aa23fbf"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "There are several ways to say goodbye: ",
+          "styles": {}
+        },
+        {
+          "text": "doei",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " is informal; ",
+          "styles": {}
+        },
+        {
+          "text": "tot ziens",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " is neutral to formal; ",
+          "styles": {}
+        },
+        {
+          "text": "tot straks",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " means \"see you later today\"; ",
+          "styles": {}
+        },
+        {
+          "text": "tot morgen",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " means \"see you tomorrow\"; ",
+          "styles": {}
+        },
+        {
+          "text": "welterusten",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " and ",
+          "styles": {}
+        },
+        {
+          "text": "slaap lekker",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " mean \"good night\", only at bedtime.",
+          "styles": {}
+        }
+      ],
+      "id": "dfc6be21-d936-4805-9b23-9a5df7ceba8a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Bye! See you tomorrow!",
+        "note": "doei is informal; use tot ziens with people you say u to."
+      },
+      "content": [
+        {
+          "text": "Doei! Tot morgen!",
+          "styles": {}
+        }
+      ],
+      "id": "9a609485-ec2d-4f81-b406-ad0d5758e3be"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Informal",
+              "id": "e2a7fa3e-6ba8-4208-a879-5524b73190a3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "hoi, doei",
+                  "styles": {}
+                }
+              ],
+              "id": "19761b80-4f81-47db-9202-1a9ad03f4359"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "dank je",
+                  "styles": {}
+                }
+              ],
+              "id": "1dfa1d31-86e1-4b84-8eb3-d52536424582"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Hoe gaat het met jou?",
+                  "styles": {}
+                }
+              ],
+              "id": "840496e9-9fa3-48fa-bd7a-1f600851f4ca"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jij / je",
+                  "styles": {}
+                }
+              ],
+              "id": "629072f4-288a-4a66-a86e-baaf6d2ba3bf"
+            }
+          ],
+          "id": "2193b4b6-c88b-482d-ba0a-caa3be494f7d"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Formal",
+              "id": "013a9c2b-f08a-4da4-aaa2-eca3b38a0bf6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "goedemorgen, tot ziens",
+                  "styles": {}
+                }
+              ],
+              "id": "de65be15-2c44-4efd-a7da-1e3cd018c613"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "dank u",
+                  "styles": {}
+                }
+              ],
+              "id": "6267907b-937a-4665-9adc-4a304d0f7e5a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Hoe gaat het met u?",
+                  "styles": {}
+                }
+              ],
+              "id": "e31c8145-22f6-4907-90b7-42764f05a7f4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "u",
+                  "styles": {}
+                }
+              ],
+              "id": "36c7d069-9148-4775-aeda-6404954d65f9"
+            }
+          ],
+          "id": "cd6a0129-7a23-4f47-b5ad-fe4fb0bfc818"
+        }
+      ],
+      "id": "61d16a2a-7417-440d-a84d-bddf36d2fe08"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "doei",
+              "meaning": "bye (informal)",
+              "example": "Doei! Tot morgen!",
+              "id": "2ca468e6-d61d-40b0-a3a6-2fefa1e39bc1"
+            },
+            {
+              "term": "tot ziens",
+              "meaning": "see you (neutral to formal)",
+              "example": "Tot ziens!",
+              "id": "b2b64a9d-fd56-4a06-8bed-a557ccfebe31"
+            },
+            {
+              "term": "tot straks",
+              "meaning": "see you later (today)",
+              "example": "Tot straks!",
+              "id": "49224fb0-57a0-4b82-ad47-9808bcc49e14"
+            },
+            {
+              "term": "tot morgen",
+              "meaning": "see you tomorrow",
+              "example": "Tot morgen!",
+              "id": "34910287-b7c0-410a-9599-4d1e1af48dfe"
+            },
+            {
+              "term": "welterusten",
+              "meaning": "good night (at bedtime)",
+              "example": "Welterusten!",
+              "id": "774b8504-1a9d-43d3-bd80-f18229ab6efe"
+            },
+            {
+              "term": "Slaap lekker!",
+              "meaning": "sleep well! (at bedtime)",
+              "example": "Slaap lekker!",
+              "note": "Same moment as welterusten; both are fine.",
+              "id": "d99d175b-1350-43cd-9354-a04d8b65edac"
+            }
+          ]
+        }
+      },
+      "id": "66add80d-f3a3-4842-95bc-272259b594c2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "How are you?",
+      "id": "c6967c0e-78e7-4d57-9c4a-bcdbf09737cc"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Hoe gaat het?",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " works with anyone. Add ",
+          "styles": {}
+        },
+        {
+          "text": "met jou",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " (informal) or ",
+          "styles": {}
+        },
+        {
+          "text": "met u",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " (formal) to ask \"and you specifically\". Return the question with ",
+          "styles": {}
+        },
+        {
+          "text": "En met jou?",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " or ",
+          "styles": {}
+        },
+        {
+          "text": "En met u?",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": ". Short answers: ",
+          "styles": {}
+        },
+        {
+          "text": "Goed, dank je/u.",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "Heel goed!",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "Prima.",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "Het gaat wel.",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " (so-so) ",
+          "styles": {}
+        },
+        {
+          "text": "Niet zo goed.",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "id": "025f8ba8-aaaa-4456-81ba-f6e5d90e0102"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is it going well? No, not so good.",
+        "note": "nee answers a yes/no question; Niet zo goed. is a fixed chunk (niet itself is explained later)."
+      },
+      "content": [
+        {
+          "text": "Gaat het goed? Nee, niet zo goed.",
+          "styles": {}
+        }
+      ],
+      "id": "447690b0-1c81-4c3a-8cf8-0918b2bd6a27"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "Met mij gaat het goed.",
+          "styles": {}
+        },
+        {
+          "text": " has a fixed word order. Learn it as a whole chunk for now — the word order behind it comes later.",
+          "styles": {}
+        }
+      ],
+      "id": "bc7d9272-f897-4c2b-872e-55fd5fffcbb0"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Hoe gaat het met jou?",
+              "meaning": "How are you? (informal, \"and you specifically\")",
+              "example": "Hoe gaat het met jou?",
+              "id": "154ea5e8-41cd-45a2-bba1-d805d0ceb9bf"
+            },
+            {
+              "term": "Hoe gaat het met u?",
+              "meaning": "How are you? (formal)",
+              "example": "Hoe gaat het met u?",
+              "id": "c011b9a3-5285-4f9b-8c10-03e82a65352a"
+            },
+            {
+              "term": "prima",
+              "meaning": "great, fine",
+              "example": "Prima, dank je.",
+              "id": "159f9cb4-141e-4242-88b5-db1efecd8e9c"
+            },
+            {
+              "term": "Het gaat wel.",
+              "meaning": "So-so, it's okay.",
+              "example": "Het gaat wel.",
+              "id": "0c0f2700-6a00-48ce-9942-a12e01f5e6a9"
+            },
+            {
+              "term": "Niet zo goed.",
+              "meaning": "Not so good.",
+              "example": "Gaat het goed? Nee, niet zo goed.",
+              "id": "b7a4cde1-0af5-47a6-9c6a-df536a35e554"
+            },
+            {
+              "term": "nee",
+              "meaning": "no",
+              "example": "Nee, niet zo goed.",
+              "id": "aa4fd645-ff10-434c-a5b5-0f0434118511"
+            }
+          ]
+        }
+      },
+      "id": "b8792332-eaab-4cb4-8684-bd4bed83ed8d"
+    },
+    {
+      "type": "divider",
+      "id": "382059ec-5df3-4313-bf3a-097b3d407a3b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "zijn: ik ben, jij bent, u bent, hij/zij is",
+      "id": "97161ca2-effb-4d26-abfc-c3c1d46a3ada"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " means \"to be\". These are its singular forms — the forms for wij, jullie and zij (plural) come in the next lesson.",
+          "styles": {}
+        }
+      ],
+      "id": "be1a4afe-81ac-4604-9ade-41408726ae35"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "ik ",
+          "styles": {}
+        },
+        {
+          "text": "ben",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": "  ·  jij/je ",
+          "styles": {}
+        },
+        {
+          "text": "bent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " (ben jij?)  ·  u ",
+          "styles": {}
+        },
+        {
+          "text": "bent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": "  ·  hij/zij/ze ",
+          "styles": {}
+        },
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ". A name works like hij/zij: ",
+          "styles": {}
+        },
+        {
+          "text": "Noor is moe.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "6a5d720f-3ee4-414d-b425-ae1483d8eef0"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Pronoun",
+              "id": "bef65cff-bd25-49df-834d-0e420fd38a78"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ik",
+                  "styles": {}
+                }
+              ],
+              "id": "7d613f7d-e08b-4467-b6f9-acb0f27749e2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jij / je",
+                  "styles": {}
+                }
+              ],
+              "id": "32d4807c-423c-4e3e-8a77-69c8e0bfa88b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "u",
+                  "styles": {}
+                }
+              ],
+              "id": "fccef6d5-083b-4896-8500-d4e07ce7d1c6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "hij",
+                  "styles": {}
+                }
+              ],
+              "id": "28f13bca-a035-44cd-84af-bbddab6d811b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "zij / ze",
+                  "styles": {}
+                }
+              ],
+              "id": "672a8341-6cea-45d0-961e-6502761cdbde"
+            }
+          ],
+          "id": "b5df3310-d71d-430e-b6d4-bc2194e04ede"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "zijn",
+              "id": "84ca2e24-ca5d-42d2-b8d2-3af9b4cfc696"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ben",
+                  "styles": {}
+                }
+              ],
+              "id": "04933ea7-1293-4604-a4a1-f36a4d5db7c1"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "bent",
+                  "styles": {}
+                }
+              ],
+              "id": "09c4f663-b981-4208-8892-8da749d6cd32"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "bent",
+                  "styles": {}
+                }
+              ],
+              "id": "d026196f-97e2-443b-b1ae-0ca09422a6e7"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "is",
+                  "styles": {}
+                }
+              ],
+              "id": "02789581-b4fa-47bb-a718-4faa9dc86254"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "is",
+                  "styles": {}
+                }
+              ],
+              "id": "6c1a0887-4ea4-48a3-a88b-8ec0fa43f03c"
+            }
+          ],
+          "id": "b0b2f096-02c4-43ed-a120-7563b17eb3d4"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Example",
+              "id": "615de023-4900-4676-8a5a-7560b91424e5"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Ik ben Sofia.",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "4eabdfb4-f675-4c09-a6ad-3e95fcd1d0c3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Jij bent moe.",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "5d905d26-4271-4220-a192-b5a2f2c2c4c1"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "U bent welkom.",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "d8275baa-117f-4838-88a8-26c5509d8602"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Hij is Daan.",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "be793d36-be3d-4ae6-9765-0d0b7ffed37c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Zij is de buurvrouw.",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "d8abb660-062b-4114-a061-14d539b3acbb"
+            }
+          ],
+          "id": "b9b2ae52-1be5-4a86-800a-efc261d9221c"
+        }
+      ],
+      "id": "a1631fd0-8657-4ed4-9419-7fc8f1d0fa4f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I am Sofia.",
+        "note": "ik + ben."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "ben",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": " Sofia.",
+          "styles": {}
+        }
+      ],
+      "id": "36b95207-3f7d-4811-bcf2-55e0a169f972"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You are tired.",
+        "note": "jij/je + bent."
+      },
+      "content": [
+        {
+          "text": "Jij",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "bent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " moe.",
+          "styles": {}
+        }
+      ],
+      "id": "a1c82a2b-a9a9-40c4-a923-d1ed8628b9f9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor is my friend.",
+        "note": "A name behaves like hij/zij, so is."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " mijn vriendin.",
+          "styles": {}
+        }
+      ],
+      "id": "99ed00ac-27f1-4f04-b033-ddf56e6cccd0"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de vriendin",
+              "meaning": "(girl)friend, female friend",
+              "forms": "de vriendinnen",
+              "example": "Noor is mijn vriendin.",
+              "note": "\"Girlfriend\" or \"female friend\" — context decides.",
+              "id": "72f433a9-e014-490f-8f25-553095693d2c"
+            }
+          ]
+        }
+      },
+      "id": "44a5eec0-f174-4f85-aafe-ef3398c85071"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik is",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        {
+          "text": " / ",
+          "styles": {}
+        },
+        {
+          "text": "Jij is",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        {
+          "text": " → ",
+          "styles": {}
+        },
+        {
+          "text": "Ik ben",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " / ",
+          "styles": {}
+        },
+        {
+          "text": "Jij bent",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "id": "6c9ba461-8660-4606-94fe-ff4b231e7398"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "jij, je and u",
+      "id": "2cde7715-309e-4ac5-9464-8c3b9e26720c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "je",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " is the normal, unstressed form: ",
+          "styles": {}
+        },
+        {
+          "text": "Hoe heet je?",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": ". ",
+          "styles": {}
+        },
+        {
+          "text": "jij",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " is stressed, for contrast: ",
+          "styles": {}
+        },
+        {
+          "text": "En jij?",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": ". ",
+          "styles": {}
+        },
+        {
+          "text": "u",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " is formal: strangers, older people, a counter or reception. ",
+          "styles": {}
+        },
+        {
+          "text": "Dutch people use jij a lot — friends, family, children, colleagues, often even the boss.",
+          "styles": {}
+        }
+      ],
+      "id": "84033fca-afe8-4bf4-910f-72173f65d145"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Saying your name",
+      "id": "13690580-d607-4918-888f-2ea7553cd8cf"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "To say who you are: ",
+          "styles": {}
+        },
+        {
+          "text": "Ik ben …",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " or ",
+          "styles": {}
+        },
+        {
+          "text": "Ik heet …",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": ". ",
+          "styles": {}
+        },
+        {
+          "text": "Mijn naam is …",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " is a bit more formal. To ask: ",
+          "styles": {}
+        },
+        {
+          "text": "Hoe heet je?",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " (informal), ",
+          "styles": {}
+        },
+        {
+          "text": "Hoe heet u?",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " (formal), or ",
+          "styles": {}
+        },
+        {
+          "text": "Wie ben jij?",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " (a fixed chunk).",
+          "styles": {}
+        }
+      ],
+      "id": "db9357f1-e2fc-4767-9229-9a101c43b6c4"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "My name is Sofia. / I'm called Sofia.",
+        "note": "heten is explained in a later lesson; for now, learn it as a chunk."
+      },
+      "content": [
+        {
+          "text": "Ik heet Sofia.",
+          "styles": {}
+        }
+      ],
+      "id": "6d36f586-7413-4374-b194-2351bf436237"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Who are you?",
+        "note": "A fixed chunk; asked at the door in the next story scene."
+      },
+      "content": [
+        {
+          "text": "Wie ben jij?",
+          "styles": {}
+        }
+      ],
+      "id": "a788f2d5-c16a-4de8-a417-6ed6795bb1ff"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "My name is Sofia Moreno.",
+        "note": "More formal than Ik heet …; mijn is a fixed chunk here."
+      },
+      "content": [
+        {
+          "text": "Mijn naam is Sofia Moreno.",
+          "styles": {}
+        }
+      ],
+      "id": "b6924ffb-eff5-42df-8afb-4194a722600e"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Ik heet …",
+              "meaning": "My name is … / I'm called …",
+              "example": "Ik heet Sofia.",
+              "id": "f96c5d2b-8b85-4940-a37b-a2187e0f131e"
+            },
+            {
+              "term": "Hoe heet je?",
+              "meaning": "What's your name? (informal)",
+              "example": "Hoe heet je?",
+              "id": "f15d3009-64c1-416a-948b-8aeacb8a2aa2"
+            },
+            {
+              "term": "Wie ben jij?",
+              "meaning": "Who are you?",
+              "example": "Wie ben jij?",
+              "id": "a0ccae49-6ba3-4aeb-99f6-3d543fcc9de0"
+            },
+            {
+              "term": "Mijn naam is …",
+              "meaning": "My name is … (more formal)",
+              "example": "Mijn naam is Sofia Moreno.",
+              "id": "12447e24-fbf1-4fdf-b8f1-61aa178222c1"
+            }
+          ]
+        }
+      },
+      "id": "f31f90c0-4892-4b31-8d20-2c89acd696d2"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Shake hands.",
+          "styles": {}
+        }
+      ],
+      "id": "284e8599-f968-4b5b-956e-663a3adc926b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Say your name: ",
+          "styles": {}
+        },
+        {
+          "text": "Ik ben …",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "8774acf3-9a6d-44b2-b5b7-cb30b7c4c3c7"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Answer: ",
+          "styles": {}
+        },
+        {
+          "text": "Aangenaam.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "48aa19c1-c178-4cea-80f2-7239614d159b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        {
+          "text": "When you meet someone new in the Netherlands, shake hands and say your first name. Friends and family often give three kisses on the cheek (right–left–right) or a hug. \"Hoe gaat het?\" usually gets a short answer.",
+          "styles": {}
+        }
+      ],
+      "id": "a66bf46a-4eb7-4f96-8e32-65c312d34d90"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Aangenaam.",
+              "meaning": "Nice to meet you.",
+              "example": "Aangenaam.",
+              "id": "ba2e8691-d3db-4908-827a-a936bbad1a64"
+            }
+          ]
+        }
+      },
+      "id": "4356da8b-69ad-4ee9-99a1-aa27ab8b5744"
+    },
+    {
+      "type": "divider",
+      "id": "9e35a46a-97a1-48d1-b23e-a7b25922d36b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: De buurvrouw",
+      "id": "de269a58-cae0-4681-9b10-564a5eb7f99b"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "In the afternoon, at the front door of Noor's flat, Sofia and Noor meet Noor's elderly neighbour, Els.",
+          "styles": {}
+        }
+      ],
+      "id": "78fd6e15-3020-4d46-a561-182ef2b62c9a"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Els",
+            "text": "Goedemiddag, Noor!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Hallo Els! Hoe gaat het met u?"
+          },
+          {
+            "speaker": "Els",
+            "text": "Prima, dank je. En wie ben jij?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goedemiddag. Ik ben Sofia."
+          },
+          {
+            "speaker": "Els",
+            "text": "Dag Sofia. Ik ben Els, de buurvrouw."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Aangenaam."
+          },
+          {
+            "speaker": "Els",
+            "text": "Aangenaam. Welkom in Utrecht!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank u wel."
+          },
+          {
+            "speaker": "Els",
+            "text": "Tot ziens!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Tot ziens!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Dag Els!"
+          }
+        ]
+      },
+      "id": "92ff6113-0a58-4eb6-96c2-fe5210b8e324"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de buurvrouw",
+              "meaning": "female neighbour",
+              "forms": "de buurvrouwen",
+              "example": "Ik ben Els, de buurvrouw.",
+              "id": "4e72281a-c678-4107-a156-f8cfe55a0656"
+            }
+          ]
+        }
+      },
+      "id": "bd14d29a-5bcc-42b7-986d-d6b7163ef602"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "From u to jij",
+      "id": "30067b72-0bd6-4ab1-a2e4-9af2d470f9f4"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "Noor and Sofia say ",
+          "styles": {}
+        },
+        {
+          "text": "u",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " to Els; Els says ",
+          "styles": {}
+        },
+        {
+          "text": "je",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " to them. Older people often say je to younger people, but you keep saying u until they offer jij ",
+          "styles": {}
+        },
+        {
+          "text": "(the next lesson has Zeg maar jij.)",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": ". Notice Noor even uses Els's first name together with u — that is normal in Dutch.",
+          "styles": {}
+        }
+      ],
+      "id": "8f816164-21b8-48fd-a69b-f4a31ea743db"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "At the end of the day",
+      "id": "c6d1931a-778c-474a-80ea-bbc61e0fccc2"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "That evening, before bed, Noor and Sofia say good night.",
+          "styles": {}
+        }
+      ],
+      "id": "857d7be5-359b-440b-a896-b5f2193d73aa"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sleep well!",
+        "note": "Said at bedtime, recycled from the Goodbyes section."
+      },
+      "content": [
+        {
+          "text": "Slaap lekker!",
+          "styles": {}
+        }
+      ],
+      "id": "1d4f0339-c881-4e94-859a-0b6e78eafaae"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Good night!",
+        "note": "Also fine instead of Slaap lekker!."
+      },
+      "content": [
+        {
+          "text": "Welterusten!",
+          "styles": {}
+        }
+      ],
+      "id": "81935c00-5031-4709-98cf-e88747b44aa6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "See you tomorrow!",
+        "note": "Sofia's first full day at work is tomorrow."
+      },
+      "content": [
+        {
+          "text": "Tot morgen!",
+          "styles": {}
+        }
+      ],
+      "id": "a9200593-9f77-4617-8c81-8a745a07a008"
+    },
+    {
+      "type": "divider",
+      "id": "358a8df1-5c57-4bd8-bb57-6f658cc7e81c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "50cc5476-0369-420f-a87f-6a36f2e4f617"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in ben, bent or is",
+      "id": "56dd8199-16a7-49f4-a4fe-35224d0f9faa"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in ben, bent or is. Example: Ik (zijn) Sofia → ben.",
+          "items": [
+            {
+              "prompt": "Ik … Sofia.",
+              "authorsVersion": [
+                "ben"
+              ],
+              "note": "ik → ben."
+            },
+            {
+              "prompt": "Jij … Noor.",
+              "authorsVersion": [
+                "bent"
+              ],
+              "note": "jij/je → bent."
+            },
+            {
+              "prompt": "U … Els.",
+              "authorsVersion": [
+                "bent"
+              ],
+              "note": "u → bent, the same as jij."
+            },
+            {
+              "prompt": "Noor … mijn vriendin.",
+              "authorsVersion": [
+                "is"
+              ],
+              "note": "A name works like hij/zij, so is."
+            },
+            {
+              "prompt": "Sofia … een beetje moe.",
+              "authorsVersion": [
+                "is"
+              ],
+              "note": "hij/zij or a name → is."
+            },
+            {
+              "prompt": "Hoe heet je? Ik … Sofia.",
+              "authorsVersion": [
+                "ben"
+              ],
+              "note": "ik → ben (Ik heet Sofia also works, but this drills zijn)."
+            },
+            {
+              "prompt": "Ze … de buurvrouw.",
+              "authorsVersion": [
+                "is"
+              ],
+              "note": "Ze (= Els) is hij/zij, so is."
+            }
+          ]
+        }
+      },
+      "id": "dbdde098-fd09-404c-b071-0a6f8ceb9505"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the dialogues",
+      "id": "10e4b367-9ae2-46db-98db-bb1d81ef757c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the short exchanges. Fill in one word per blank. Example: Hoe … het? → gaat.",
+          "items": [
+            {
+              "prompt": "Noor: Hoi Sofia! Hoe … het? / Sofia: Goed, … je. En met …?",
+              "authorsVersion": [
+                "gaat",
+                "dank",
+                "jou"
+              ],
+              "note": "Fixed chunks: Hoe gaat het?, dank je, En met jou?"
+            },
+            {
+              "prompt": "Receptioniste: Goedemorgen! Hoe gaat het met …? / Sofia: Goed, … u wel.",
+              "authorsVersion": [
+                "u",
+                "dank"
+              ],
+              "note": "Formal exchange: met u, dank u."
+            },
+            {
+              "prompt": "Els: Goedemiddag! / Noor: Hallo Els! Hoe gaat het met …? / Els: Prima, … je.",
+              "authorsVersion": [
+                "u",
+                "dank"
+              ],
+              "note": "Noor says u to Els; Els answers with dank je (she says je to younger people)."
+            },
+            {
+              "prompt": "Sofia: Ik … moe. / Noor: Welterusten! Slaap …!",
+              "authorsVersion": [
+                "ben",
+                "lekker"
+              ],
+              "note": "Ik ben; Slaap lekker! is a fixed goodnight chunk."
+            },
+            {
+              "prompt": "Noor: Tot ziens, Sofia! / Sofia: Doei! Tot …!",
+              "authorsVersion": [
+                "morgen"
+              ],
+              "note": "tot morgen = see you tomorrow."
+            }
+          ]
+        }
+      },
+      "id": "1491a127-798b-4b1e-82c9-fef42b9b0718"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "9dd29b58-b9ab-4df2-9411-6d2a19057f28"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the full sentence. Example: Sofia / is / moe → Sofia is moe.",
+          "items": [
+            {
+              "prompt": "Put in order: ben / ik / Sofia",
+              "authorsVersion": [
+                "Ik ben Sofia."
+              ],
+              "note": "Subject + verb + rest: Ik ben Sofia."
+            },
+            {
+              "prompt": "Put in order: moe / ben / een beetje / ik",
+              "authorsVersion": [
+                "Ik ben een beetje moe."
+              ],
+              "note": "ik always comes first in a statement."
+            },
+            {
+              "prompt": "Put in order: gaat / hoe / het",
+              "authorsVersion": [
+                "Hoe gaat het?"
+              ],
+              "note": "Question word first, then the verb."
+            },
+            {
+              "prompt": "Put in order: heet / ik / Noor",
+              "authorsVersion": [
+                "Ik heet Noor."
+              ],
+              "note": "Subject + verb + rest."
+            },
+            {
+              "prompt": "Put in order: is / Els / de buurvrouw",
+              "authorsVersion": [
+                "Els is de buurvrouw."
+              ],
+              "note": "Subject (Els) + verb (is) + rest."
+            }
+          ]
+        }
+      },
+      "id": "cf845fd2-b0bd-47b2-af76-55af8ec30961"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Informal to formal",
+      "id": "5259a8d2-4ef8-41d4-a83b-236b19072998"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each informal sentence in the formal form. Example: Hoi! → Goedemorgen! / Goedemiddag! / Goedenavond!",
+          "items": [
+            {
+              "prompt": "Hoi! (it is morning)",
+              "authorsVersion": [
+                "Goedemorgen!"
+              ],
+              "note": "hoi works any time; goedemorgen is time-specific and formal-friendly."
+            },
+            {
+              "prompt": "Doei!",
+              "authorsVersion": [
+                "Tot ziens!"
+              ],
+              "note": "Also fine: Dag! works for both registers."
+            },
+            {
+              "prompt": "Dank je wel.",
+              "authorsVersion": [
+                "Dank u wel."
+              ]
+            },
+            {
+              "prompt": "Hoe gaat het met jou?",
+              "authorsVersion": [
+                "Hoe gaat het met u?"
+              ]
+            },
+            {
+              "prompt": "Hoe heet je?",
+              "authorsVersion": [
+                "Hoe heet u?"
+              ]
+            },
+            {
+              "prompt": "Jij bent moe.",
+              "authorsVersion": [
+                "U bent moe."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "60ea3690-a2c1-4088-b44f-fad9a64d4137"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "4c699128-df64-423a-8c8f-770c03078e2a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "Hi! How are you?",
+              "authorsVersion": [
+                "Hoi! Hoe gaat het?"
+              ]
+            },
+            {
+              "prompt": "Good evening.",
+              "authorsVersion": [
+                "Goedenavond."
+              ]
+            },
+            {
+              "prompt": "My name is Sofia.",
+              "authorsVersion": [
+                "Mijn naam is Sofia."
+              ],
+              "note": "Also fine: Ik heet Sofia. / Ik ben Sofia."
+            },
+            {
+              "prompt": "I'm a bit tired.",
+              "authorsVersion": [
+                "Ik ben een beetje moe."
+              ]
+            },
+            {
+              "prompt": "Thank you. (formal)",
+              "authorsVersion": [
+                "Dank u wel."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "4735265e-7529-46b0-9dc5-d87534e8ce0e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "f88351f7-d5ab-401b-9099-6033f6f2cd70"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Met mij gaat het goed.",
+              "authorsVersion": [
+                "I'm doing well."
+              ]
+            },
+            {
+              "prompt": "Aangenaam.",
+              "authorsVersion": [
+                "Nice to meet you."
+              ]
+            },
+            {
+              "prompt": "Tot morgen!",
+              "authorsVersion": [
+                "See you tomorrow!"
+              ]
+            },
+            {
+              "prompt": "Noor is mijn vriendin.",
+              "authorsVersion": [
+                "Noor is my friend."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "28a071ab-9832-4a67-940a-7572a20f3d8a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Op Schiphol",
+      "id": "64de4f4f-3edc-4cf3-96cd-a827c738782c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "These are messages on Sofia's phone from this morning, before Noor met her at the station. New: ",
+          "styles": {}
+        },
+        {
+          "text": "op Schiphol",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " (at Schiphol, the airport), ",
+          "styles": {}
+        },
+        {
+          "text": "Nederland",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " (the Netherlands), ",
+          "styles": {}
+        },
+        {
+          "text": "straks",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " (soon, later today), ",
+          "styles": {}
+        },
+        {
+          "text": "Super!",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " (great!).",
+          "styles": {}
+        }
+      ],
+      "id": "8773e300-e3cd-4649-af7b-215b54cecdec"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the messages. Answer the questions in Dutch. One is Klopt dit? (true/false).",
+          "items": [
+            {
+              "prompt": "Waar is Sofia?",
+              "authorsVersion": [
+                "Op Schiphol. / Sofia is op Schiphol."
+              ]
+            },
+            {
+              "prompt": "Hoe gaat het met Sofia?",
+              "authorsVersion": [
+                "Goed. Ze is een beetje moe."
+              ]
+            },
+            {
+              "prompt": "Waar is Noor straks?",
+              "authorsVersion": [
+                "Op Utrecht Centraal."
+              ]
+            },
+            {
+              "prompt": "Klopt dit? Noor is op Schiphol.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Sofia is op Schiphol; Noor is straks op Utrecht Centraal."
+              ]
+            },
+            {
+              "prompt": "Welke twee manieren om afscheid te nemen staan in de berichtjes?",
+              "authorsVersion": [
+                "Tot straks! en Doei!"
+              ],
+              "note": "afscheid nemen = to say goodbye; answer: the two goodbyes used."
+            },
+            {
+              "prompt": "Is \"Doei!\" formeel of informeel?",
+              "authorsVersion": [
+                "Informeel."
+              ]
+            }
+          ],
+          "passage": {
+            "title": "Op Schiphol",
+            "content": "Sofia: Hoi Noor! Ik ben op Schiphol.\nNoor: Hoi Sofia! Welkom in Nederland! Hoe gaat het?\nSofia: Goed! Ik ben een beetje moe.\nNoor: Ik ben straks op Utrecht Centraal.\nSofia: Super! Tot straks!\nNoor: Tot straks! Doei!"
+          }
+        }
+      },
+      "id": "2f4c6e46-0e69-444c-be6c-ac2f5580dd23"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "9b025c47-489e-48dd-ba30-5e6e1b7503eb"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "You meet a new neighbour in the afternoon. Write 4–6 short lines: greet, say your name, ask how they are, say goodbye. Use u.",
+          "items": [
+            {
+              "prompt": "You meet a new neighbour in the afternoon. Write 4–6 short lines: greet, say your name, ask how they are, say goodbye. Use u.",
+              "authorsVersion": [
+                "Goedemiddag! / Buurman: Goedemiddag! Wie bent u? / Ik ben Sofia. / Buurman: Aangenaam. Ik heet Peter. / Aangenaam. Hoe gaat het met u? / Buurman: Goed, dank u. Tot ziens! / Tot ziens!"
+              ],
+              "note": "Model answer. de buurman = the (male) neighbour, the pair of de buurvrouw."
+            }
+          ]
+        }
+      },
+      "id": "7f4d6f44-80cd-4b38-89dd-56d5910966c9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "ff26135c-8056-4598-9b87-507360d25679"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Greetings by time of day: goedemorgen, goedemiddag, goedenavond; dag = hello and goodbye.",
+          "styles": {}
+        }
+      ],
+      "id": "5f27e57d-37fd-4b18-9d17-55ee4d0cedf6"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "zijn: ik ben, jij/u bent, hij/zij is.",
+          "styles": {}
+        }
+      ],
+      "id": "8e55ae9f-a751-4596-be8f-4839d0abf5e6"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "jij/je with friends and family, u for formal situations.",
+          "styles": {}
+        }
+      ],
+      "id": "9d2a2e18-e639-4f98-8aee-739d0d0ced43"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Word order: subject + verb + rest.",
+          "styles": {}
+        }
+      ],
+      "id": "1bc1e819-8704-4399-8a22-da2908bed4fd"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Welkom in Utrecht!",
+      "description": "Noor waves at Sofia, who has a suitcase, in the big hall of Utrecht Centraal.",
+      "alt": "Noor waving at Sofia, who is holding a suitcase, inside a big train station hall.",
+      "location": "utrecht-centraal",
+      "characters": [
+        "sofia",
+        "noor"
+      ],
+      "action": "Noor waves at Sofia across the station hall; Sofia smiles, a little tired, suitcase beside her."
+    },
+    {
+      "afterHeading": "Story: De buurvrouw",
+      "description": "At the front door of a brick flat in Utrecht-Oost, Sofia shakes hands with an elderly neighbour, Els, a woman of about seventy with short white hair, a lilac cardigan and reading glasses on a cord; Noor stands beside them.",
+      "alt": "Sofia shaking hands with an elderly neighbour at a front door, with Noor standing beside them.",
+      "characters": [
+        "sofia",
+        "noor"
+      ],
+      "action": "Sofia shakes hands with Els at the open front door; Noor stands beside Sofia, smiling."
+    }
+  ],
+  "id": "0438a057-b031-4e7a-ab6c-457a4d392dd6"
+}

@@ -127,7 +127,10 @@ export const resources = {
         unavailable: "Your words could not be loaded.",
         emptyTitle: "No bookmarked words yet",
         emptyBody: "Bookmark a word with the bookmark icon beside it in a lesson's New words or on a review card, and it appears here.",
-        source: "{{course}} · {{lesson}}"
+        source: "{{course}} · {{lesson}}",
+        filterLabel: "Lesson",
+        allLessons: "All lessons",
+        lessonOption: "{{lesson}} ({{count}})"
       },
       journal: {
         eyebrow: "Shared journal",

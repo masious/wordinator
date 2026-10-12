@@ -8,13 +8,14 @@ Everything the curriculum promises that is not (yet) fully taught in a Wordinato
 
 ### Part I — First Dutch (rows 1–6)
 
-No lessons in the app. Parts II–III assume everything in [ledger-part-i.md](ledger-part-i.md). A Part I course must cover at least that list, including two topics the outline does not name but later lessons rely on:
+Being written, lesson by lesson, starting with 01-a (user's priority, 2026-10-12). Plan in [briefs-part-i.md](briefs-part-i.md): 12 lessons (01-a … 06-b), full briefs for 01-a and 01-b, scope lines for the rest (each brief is written before its lesson). Story: the arrival week, di 1 – zo 6 september 2026 ([storyline.md](storyline.md#part-i-the-arrival-week)). No lesson is accepted yet, so Parts II–IV still rely on the target list in [ledger-part-i.md](ledger-part-i.md#target-what-part-i-must-teach). Open points:
 
-- **Negation niet/geen** at basic level (used from 07-a; 13-1 uses geen).
-- **Conjunctions en, maar, of** (used everywhere).
-- **jij-inversion t-drop** in questions (relied on in 07-a, 08-b).
-
-Part I should not introduce plural verb forms (07-a teaches them), clock times (08-a), or separable verbs (07-b).
+- **Course**: the user must create the Part I course in the app and give its ID before any import (`part-i/course.json` does not exist).
+- **Target items the outline does not name**, now planned: negation niet (03-b) and geen (04-b), conjunctions en/maar/of (03-a), jij-inversion t-drop (03-b; seen as a fact in 02-a). Check each against the accepted lesson.
+- **Must not take later topics**: plural verb forms (07-a; only zijn has plural forms in Part I), separable verbs (07-b), clock times (08-a), inversion after a fronted element (08-b), days/months/dates (09-a), noun plurals (10-a), demonstratives (12-a; "Dit is …" only as a chunk), colours (18-a). The full list is the [Part-I-wide off-limits](briefs-part-i.md#part-i-wide-off-limits).
+- **Lighter volume**: Part I lessons have their own targets ([Volume targets (Part I)](briefs-part-i.md#volume-targets-part-i)); `content/dutch-foundations/tools/WORKER.md` and `REVIEWER.md` still state the Parts II+ numbers (45 items, 85–120 steps), so worker and reviewer prompts for Part I must say that the Part I targets override them.
+- **Vocabulary overlap**: Part I may list basic words that Part II–IV lessons also list as new (de vriendin, de moeder, het kantoor, de fiets …). Each course has its own word list; accepted as a known overlap.
+- **Karin and Els have no frozen visual sheet**: Karin's spec is in `cast.json` but not frozen; Els is not in `cast.json`. Until they are, scenes describe them as `extras`.
 
 ### Part IV (rows 19–24)
 

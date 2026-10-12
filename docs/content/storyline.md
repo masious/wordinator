@@ -1,16 +1,16 @@
 # Dutch Foundations — storyline and cast
 
-Owner: content coordinator. Part of the [content docs](index.md). Every dialogue, reading passage and example in Parts II–IV follows this file.
+Owner: content coordinator. Part of the [content docs](index.md). Every dialogue, reading passage and example in Parts I–IV follows this file.
 
 
 ## Setting
 
 Utrecht, the Netherlands, from September to December 2026. The year matters for dates: **di 1 september 2026** is a Tuesday, **za 19 september** a Saturday, **za 17 oktober** a Saturday, **za 14 november** a Saturday, **di 17 november** a Tuesday, **za 5 december** a Saturday, **za 19 december** a Saturday; **vr 25 december** and **vr 1 januari 2027** are Fridays, **zo 3 januari 2027** a Sunday.
 
-Sofia Moreno, a young Spanish software developer, arrives in Utrecht for a new job. Part II follows her first weeks of everyday life while she rents a temporary room in her friend Noor's flat. The room is only free until **31 oktober** (Noor's sister Fleur comes back from Australia on 1 november), so Sofia must find her own place. At the Saturday market (row 12) the cheese seller Henk tells her that the apartment above his is for rent. Part III row 13 (existing lessons) is that apartment's listing: "Licht appartement met balkon", second floor, 72 m², big living room, small kitchen, two bedrooms, bathroom with shower, small sunny balcony, no garden, no garage, a lift, close to the centre. Part III follows her moving in (row 14), discovering the neighbourhood of Lombok (15), getting around (16), her first Dutch autumn (17), and buying winter clothes (18). Part IV (rows 19–24, mid-November to 18 December) follows her social life once she is settled: hobbies and her Dutch class (19), a deadline week and plans that collide (20), Noor's Sinterklaas idea and Sofia's own housewarming invitation (21), preparations and pakjesavond (22), Christmas leave and party preparations (23), and opinions at the housewarming and in the last Dutch class before she flies home to Valencia for Christmas (24).
+Sofia Moreno, a young Spanish software developer, arrives in Utrecht for a new job. Part I (rows 1–6) is her arrival week, di 1 – zo 6 september (see [Part I: the arrival week](#part-i-the-arrival-week)). Part II follows her first weeks of everyday life while she rents a temporary room in her friend Noor's flat. The room is only free until **31 oktober** (Noor's sister Fleur comes back from Australia on 1 november), so Sofia must find her own place. At the Saturday market (row 12) the cheese seller Henk tells her that the apartment above his is for rent. Part III row 13 (existing lessons) is that apartment's listing: "Licht appartement met balkon", second floor, 72 m², big living room, small kitchen, two bedrooms, bathroom with shower, small sunny balcony, no garden, no garage, a lift, close to the centre. Part III follows her moving in (row 14), discovering the neighbourhood of Lombok (15), getting around (16), her first Dutch autumn (17), and buying winter clothes (18). Part IV (rows 19–24, mid-November to 18 December) follows her social life once she is settled: hobbies and her Dutch class (19), a deadline week and plans that collide (20), Noor's Sinterklaas idea and Sofia's own housewarming invitation (21), preparations and pakjesavond (22), Christmas leave and party preparations (23), and opinions at the housewarming and in the last Dutch class before she flies home to Valencia for Christmas (24).
 
 Places (keep consistent):
-- **Noors appartement**: a small flat in the east of Utrecht (Utrecht-Oost). Sofia has one room ("mijn kamer"); they share the kitchen and the bathroom. From 1 november Fleur lives in that room.
+- **Noors appartement**: a small flat in the east of Utrecht (Utrecht-Oost). Sofia has one room ("mijn kamer"); they share the kitchen and the bathroom. From 1 november Fleur lives in that room. The elderly neighbour **Els** lives next door (Part I).
 - **Sofia's work**: a small IT company ("een klein IT-bedrijf") with an office ("het kantoor") near Utrecht Centraal. Work starts at nine.
 - **Café De Zwaluw**: fictional café on the Oudegracht where Noor works on Saturdays.
 - **De markt op het Vredenburg**: the real Saturday market in the centre. Henk's cheese stall ("de kaaskraam") is there.
@@ -27,21 +27,47 @@ How each person looks (appearance and signature outfit) is owned by [illustratio
 | --- | --- | --- | --- |
 | **Sofia Moreno** | 28 | From Valencia, Spain. Programmeur at the IT company. Speaks Spanish and English, learning Dutch. Arrived di 1 september. | Curious, warm, a bit chaotic, often a little late. Says "Wacht even!", "Echt?", "Hoe zeg je … in het Nederlands?". Sometimes makes a realistic learner mistake in a dialogue; a friend then repeats the correct form naturally (the correct form must appear in the next turn, and a note or callout must point it out). Misses the sun of Valencia. |
 | **Noor Bakker** | 25 | Dutch, from Groningen. Studies psychology at the university; works in Café De Zwaluw on Saturdays. Sofia's landlady-flatmate in Part II, her best friend afterwards. | Cheerful, chatty, informal, loves cooking. Says "Joh!", "Super!", "Lekker!", "Gezellig!". Always uses jij/je. |
-| **Daan de Vries** | 32 | Born in Utrecht. Sofia's colleague (senior programmeur). Has a girlfriend, **Lotte** (minor character, 30, teacher). Birthday **za 19 september** (turns 33). | Punctual, direct, organised, lives by his agenda, cycles everywhere and fast. Says "Prima.", "Precies.", "Kom op!", "Doe maar.". |
+| **Daan de Vries** | 32 | Born in Utrecht. Meets Sofia on her first working day, wo 2 september (01-b). Sofia's colleague (senior programmeur). Has a girlfriend, **Lotte** (minor character, 30, teacher). Birthday **za 19 september** (turns 33). | Punctual, direct, organised, lives by his agenda, cycles everywhere and fast. Says "Prima.", "Precies.", "Kom op!", "Doe maar.". |
 | **Henk** | 67 | Sells cheese at the Saturday market ("kaasboer"). Lives alone with his cat **Tijger** on the first floor of Kastanjestraat 14. | Friendly, jokey, talks about the weather all the time. At the stall: "Zo!", "Nou, nou!", "Alstublieft!". Sofia first says u to him; in 12-b he says "Zeg maar Henk!" and from then on they use jij. |
 | **Ingrid Visser** | 54 | Owner and landlady ("de verhuurder") of the Kastanjestraat apartment. | Formal, businesslike, friendly but brief. Always u. Says "Dat klopt.", "Prima.", "Alstublieft.". |
 | **Ahmed El Amrani** | 40 | Born and raised in Utrecht. Owns the bike shop in the Kanaalstraat ("de fietsenwinkel"). | Practical, relaxed, helpful. Says "Geen probleem!", "Kijk eens.", "Nou, kijk…". Uses jij with Sofia. |
 | **Fleur Bakker** | 27 | Noor's older sister, from Groningen. Back from a year in Australia on 1 november 2026; lives in Sofia's old room in Noor's flat. Loves surfing and sport, does not like cooking. Appears from 19-b. | Sporty, enthusiastic, a bit loud, says what she thinks. Says "Kom op!", "Te gek!", "Echt waar?". Uses jij with everyone. |
 | **Marieke** | 52 | Sofia's Dutch teacher ("de docent"), Tuesday class at the library in the centre. No surname in the lessons. Appears in 19-a and 24-b. | Patient, clear, encouraging; speaks slowly. Says "Heel goed!", "Nog een keer?", "Wie weet het?". Uses jij/jullie with the class ("Zeg maar jij."). |
 | **Piotr Kowalski** | 34 | Sofia's classmate, from Gdańsk, Poland. Elektricien; in Utrecht for two years; lives in Utrecht-Overvecht with his wife **Kasia** (minor character, 33, loves music). Loves football (FC Utrecht) and cooking Polish food (pierogi). Comes to Lombok by bus. | Friendly, a little shy at first, jokes about Dutch grammar ("Nederlands is moeilijk!"). Uses jij with Sofia. |
-| **Karin Smit** | 48 | Team leader ("de teamleider") of Sofia and Daan at the IT company. Appears in 20-a and 23-a. | Direct, calm, organised, friendly. Says "Prima.", "Dat mag.", "Afgesproken.". Everyone uses jij with her. |
+| **Karin Smit** | 48 | Team leader ("de teamleider") of Sofia and Daan at the IT company. Welcomes Sofia on her first day (01-b, "Zeg maar jij"); appears again in 20-a and 23-a. | Direct, calm, organised, friendly. Says "Prima.", "Dat mag.", "Afgesproken.". Everyone uses jij with her. |
+| **Els** | about 70 | Noor's neighbour in Utrecht-Oost. No surname in the lessons. Part I only (01-a, 05-b), with her granddaughter (about six) in 05-b. | Kind, a little curious. Says je to younger people; everyone says u to her (Noor: "Hallo Els! Hoe gaat het met u?"). |
 
-Minor or unnamed speakers allowed: "Ober", "Serveerster", "Verkoper", "Verkoopster", "Kapper", "Conducteur", "Toerist", "Collega", "Daans moeder", "Medewerkster" (library), "Lotte", "Cursist" (Dutch class, 19-a), "Badmeester" (swimming pool, 23-a), "Kasia" (24-a). Fleur was only mentioned (abroad) until 18-b; from 19-b she is a cast member.
+Minor or unnamed speakers allowed: "Ober", "Serveerster", "Verkoper", "Verkoopster", "Kapper", "Conducteur", "Toerist", "Collega", "Daans moeder", "Medewerkster" (library), "Lotte", "Cursist" (Dutch class, 19-a), "Badmeester" (swimming pool, 23-a), "Kasia" (24-a); in Part I also "Receptioniste" (office reception, 01-b) and "Verkoper" (phone shop, 04-a). Fleur was only mentioned (abroad) until 18-b; from 19-b she is a cast member.
+
+## Part I: the arrival week
+
+di 1 – zo 6 september 2026, the six days before Part II (07-a opens on ma 7 september). Sofia and Noor are already friends; Sofia moves into her room in Noor's flat and starts at the IT company. Only people she can meet in her first week appear: no Henk or Tijger (met in 12-a), Ingrid (12-b), Ahmed (15-a), Marieke or Piotr (19-a); Lotte and Fleur are only mentioned. Everything is told in the present, with short sentences and only Part I grammar (see [briefs-part-i.md](briefs-part-i.md#part-i-wide-off-limits)).
+
+Planned facts for Part I (binding for workers; move them into a dated "Fixed facts" paragraph when the lessons are accepted):
+- **Arrival** (01-a): di 1 september Sofia flies from Valencia to Schiphol and takes the train to Utrecht Centraal, where Noor meets her. In the afternoon they meet Els at the front door of Noor's flat. Sofia is tired.
+- **First working day** is **wo 2 september** (not the arrival day). Office reception (a Receptioniste, formal u); Karin Smit, the team leader, welcomes her and says "Zeg maar jij … zeg maar Karin."; Daan is a programmer in the same small team (Karin, Daan, Sofia). Karin welcomes Sofia in the team chat.
+- **Origins and homes** (02): Daan comes from Utrecht; Karin from Amersfoort; one Collega from Antwerpen (Belgium). Noor comes from Groningen and lives in Utrecht; her parents live in Groningen. Sofia lives "bij Noor" in Utrecht-Oost for now; her mother lives in Valencia.
+- **Languages** (03): at work Karin and Daan speak English with Sofia for now; Sofia speaks Spanish and English and is learning Dutch; Noor speaks Dutch with her at home and a little Spanish (they met in Valencia; details optional). Friday drinks at the office on vr 4 september.
+- **Phone and ages** (04): za 5 september Sofia gets a Dutch phone number (06-…, fixed by the 04-a worker). Ages: Sofia 28, Noor 25, Daan 32 (33 on za 19 september). Sofia has no bike (until 31 oktober); Noor has one.
+- **Family** (05): Sofia has one brother, Javier (31), in Valencia; her father is not mentioned. Noor's sister Fleur is in Australia until 1 november. Daan's girlfriend is Lotte, a teacher. Sofia calls her mother on Sunday morning (in Spanish, offstage).
+- **The city** (06): zo 6 september Noor shows Sofia the centre (de Dom, de Oudegracht); no market on Sunday. Part I ends that evening.
 
 ## Lesson-by-lesson story beats
 
 | File | Date (2026) | Beat | Characters |
 | --- | --- | --- | --- |
+| 01-a | di 1 sept | Arrival at Utrecht Centraal; Noor's flat; greeting the neighbour Els; "Slaap lekker!" | Sofia, Noor, Els |
+| 01-b | wo 2 sept, morning | First day at the office: reception, Karin ("Zeg maar jij"), Daan; Karin's welcome message | Sofia, Receptioniste, Karin, Daan |
+| 02-a | wo 2 sept, lunch | Lunch at the office: where is everyone from? | Sofia, Daan, Karin, Collega |
+| 02-b | wo 2 sept, evening | At home with Noor: who lives where | Sofia, Noor |
+| 03-a | do 3 sept | At the office: languages; Sofia learns Dutch | Sofia, Daan, Karin, Collega |
+| 03-b | vr 4 sept, afternoon | Friday drinks: colleagues ask Sofia questions | Sofia, Daan, Collega |
+| 04-a | za 5 sept, morning | Phone shop in the centre: a Dutch number, spelling her name | Sofia, Verkoper |
+| 04-b | za 5 sept, evening | At Noor's after her café shift: what Sofia has and doesn't have (no bike) | Sofia, Noor |
+| 05-a | zo 6 sept, morning | Family photos with Noor | Sofia, Noor |
+| 05-b | zo 6 sept, late morning | Els drops by with her granddaughter | Sofia, Noor, Els |
+| 06-a | zo 6 sept, afternoon | Walk through the centre with Noor | Sofia, Noor |
+| 06-b | zo 6 sept, evening | Sofia describes the city and the people of her first week; end of Part I | Sofia, Noor |
 | 07-a | week of ma 7 sept (Sofia's first full work week) | Sofia's normal day; life in Noor's flat; Sofia and Noor ("wij") compare routines; Daan's routine at work. | Sofia, Noor, Daan |
 | 07-b | za 12 – zo 13 sept | Weekend chores and going out: getting up, tidying, washing up, calling Sofia's mother, going out in the evening with Daan and Lotte. | Sofia, Noor, Daan, Lotte |
 | 08-a | ma 14 sept | Monday of her second full week at the office; train times; Sofia is late, Daan is always exactly on time; clocks and Dutch "half". | Sofia, Daan |

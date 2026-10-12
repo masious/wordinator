@@ -2,6 +2,8 @@
 
 Owner: content coordinator. Part of the [content docs](index.md). Binding for every lesson worker, together with [`content/dutch-foundations/README.md`](../../content/dutch-foundations/README.md) (file format, contract rules, commands).
 
+**Part I (rows 1–6, absolute beginners)** follows this guide with three replacements defined in [briefs-part-i.md](briefs-part-i.md): lighter volume targets ([Volume targets (Part I)](briefs-part-i.md#volume-targets-part-i), replacing the numbers in "Practice plan template", "Feature checklist" and "Worker requirements"), more English support ([English support for beginners](briefs-part-i.md#english-support-for-beginners)), and its own off-limits list ([Part-I-wide off-limits](briefs-part-i.md#part-i-wide-off-limits), replacing "Global off-limits for Parts II–III").
+
 
 ## Lesson skeleton
 
@@ -66,7 +68,7 @@ One rule per callout, 1–3 short sentences. Icons:
 
 ## Global off-limits for Parts II–III (later in the outline)
 
-Part IV lessons use the "Part-IV-wide off-limits" in [briefs-part-iv.md](briefs-part-iv.md#part-iv-wide-off-limits): it unlocks the row 19–24 grammar lesson by lesson and replaces the row-specific items below; everything else in this section still applies.
+Part I lessons use the [Part-I-wide off-limits](briefs-part-i.md#part-i-wide-off-limits) instead of this section. Part IV lessons use the "Part-IV-wide off-limits" in [briefs-part-iv.md](briefs-part-iv.md#part-iv-wide-off-limits): it unlocks the row 19–24 grammar lesson by lesson and replaces the row-specific items below; everything else in this section still applies.
 
 Never use these, not even in dialogues or reading passages, unless listed as an allowed chunk:
 
@@ -88,7 +90,7 @@ Imperatives before 15-b: only these fixed chunks: "Kijk!", "Wacht even!", "Kom b
 
 ## Practice plan template
 
-Every lesson: **at least 7 practice blocks and 45 items**, all with authors' versions. Recommended 8 blocks:
+Every lesson of Parts II+: **at least 7 practice blocks and 45 items**, all with authors' versions (Part I: see [its volume targets](briefs-part-i.md#volume-targets-part-i)). Recommended 8 blocks:
 
 | # | Type | Items |
 | --- | --- | --- |
@@ -118,6 +120,8 @@ Every lesson lists the words it introduces in `vocabulary` blocks ("New words", 
 
 ## Feature checklist (every lesson)
 
+Part I uses the lighter numbers in [briefs-part-i.md](briefs-part-i.md#volume-targets-part-i); the features themselves are the same.
+
 - One h1, several h2, several h3.
 - ≥ 2 dialogues (6–12 turns each, story characters), ≥ 10 examples with translations.
 - ≥ 4 callout variants (the brief lists the required ones), fitting icons.
@@ -132,7 +136,7 @@ Every lesson lists the words it introduces in `vocabulary` blocks ("New words", 
 
 ## Worker requirements (every lesson)
 
-These are pasted into every worker brief.
+These are pasted into every worker brief. For Part I lessons, replace the volume and step numbers with [Part I's volume targets](briefs-part-i.md#volume-targets-part-i).
 
 - **Volume**: at least 7 practice blocks and at least 45 practice items, all with authors' versions, and notes wherever there is a rule, an alternative answer or a typical mistake. Mix: fill-in (including multi-blank and dialogue-completion fill-ins); EN→NL translation; NL→EN translation; word order / sentence building; transformation; a reading passage with at least 6 questions set in the storyline; one free-production item.
 - **Dialogues and examples**: at least 2 dialogues (6–12 turns each, story characters as speakers) and at least 10 examples with translations, with notes where useful.

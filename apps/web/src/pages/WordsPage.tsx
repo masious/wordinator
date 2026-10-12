@@ -1,18 +1,26 @@
-import type { WordBookmark } from "@wordinator/contracts/lesson-document";
+import { opaqueIdSchema } from "@wordinator/contracts";
+import type { WordBookmark, WordBookmarkLesson } from "@wordinator/contracts/lesson-document";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useTranslation } from "react-i18next";
-import { sessionQueryOptions, wordBookmarksQueryOptions } from "../api";
+import { sessionQueryOptions, wordBookmarkLessonsQueryOptions, wordBookmarksQueryOptions } from "../api";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { WordBookmarkScope } from "../organisms/WordBookmark/WordBookmark";
 import { WordRecap, type RecapWord } from "../organisms/WordRecap/WordRecap";
-import { Button, EmptyState, ErrorState, LabelChip, LoadingState, PageHeader, Surface } from "../ui";
+import { Button, EmptyState, ErrorState, LabelChip, LoadingState, PageHeader, SelectField, Surface } from "../ui";
 import styles from "./WordsPage.module.css";
 
+// The route's search: `lesson` narrows the tab to one lesson's bookmarks (C12a); anything that is not a lesson ID is dropped.
+export function validateWordsSearch(search: Record<string, unknown>): { lesson?: string } {
+  const lesson = opaqueIdSchema.safeParse(search.lesson);
+  return lesson.success ? { lesson: lesson.data } : {};
+}
+
 const bookmarkKey = (lessonId: string, wordId: string) => `${lessonId}:${wordId}`;
+const ALL_LESSONS = "all";
 
 // Every bookmark this visit has shown, in the order first seen, with the latest text. A refetch after removing a bookmark leaves
-// its card in place (shown as not bookmarked), so the grid does not jump; leaving the page starts afresh.
+// its card in place (shown as not bookmarked), so the grid does not jump; leaving the page or changing the filter starts afresh.
 function useStableBookmarks(pages: readonly { items: readonly WordBookmark[] }[] | undefined) {
   const seen = useRef(new Map<string, WordBookmark>());
   return useMemo(() => {
@@ -21,12 +29,45 @@ function useStableBookmarks(pages: readonly { items: readonly WordBookmark[] }[]
   }, [pages]);
 }
 
-// The Words tab: the viewer's bookmarked words in this group, newest bookmark first, as word cards. Nothing here is scheduled,
-// scored, or counted; removing a bookmark is the only change it makes.
-export function WordsPage({ groupId }: { groupId: string }) {
+// The lesson filter's lessons (C12a). A lesson seen this visit stays listed after its last bookmark is removed, so the chosen
+// lesson's cards stay in place like any other removal; a lesson never seen is not available and falls back to All lessons.
+function useFilterLessons(groupId: string, lessonId: string | null, onLesson: (next: string | null, replace?: boolean) => void) {
+  const query = useQuery(wordBookmarkLessonsQueryOptions(groupId));
+  const seen = useRef(new Map<string, WordBookmarkLesson>());
+  const lessons = useMemo(() => {
+    const current = query.data?.lessons ?? [];
+    for (const entry of current) seen.current.set(entry.lesson.id, entry);
+    const kept = lessonId && !current.some((entry) => entry.lesson.id === lessonId) ? seen.current.get(lessonId) : undefined;
+    return kept ? [...current, { ...kept, count: 0 }] : current;
+  }, [query.data, lessonId]);
+  const settled = query.isSuccess && !query.isFetching;
+  useEffect(() => {
+    if (lessonId && settled && !seen.current.has(lessonId)) onLesson(null, true);
+  }, [lessonId, settled, onLesson]);
+  return lessons;
+}
+
+function LessonFilter({ lessons, lessonId, onLesson }: {
+  lessons: readonly WordBookmarkLesson[]; lessonId: string | null; onLesson: (next: string | null) => void;
+}) {
   const { t } = useTranslation();
-  const session = useQuery(sessionQueryOptions());
-  const list = useInfiniteQuery(wordBookmarksQueryOptions(groupId));
+  const data = useMemo(() => {
+    const groups = new Map<string, { group: string; items: Array<{ value: string; label: string }> }>();
+    for (const entry of lessons) {
+      const group = groups.get(entry.course.id) ?? { group: entry.course.title, items: [] };
+      group.items.push({ value: entry.lesson.id, label: t("words.lessonOption", { lesson: entry.lesson.title, count: entry.count }) });
+      groups.set(entry.course.id, group);
+    }
+    return [{ value: ALL_LESSONS, label: t("words.allLessons") }, ...groups.values()];
+  }, [lessons, t]);
+  return <SelectField className={styles.filter} label={t("words.filterLabel")} data={data} value={lessonId ?? ALL_LESSONS} allowDeselect={false}
+    onChange={(value) => onLesson(value && value !== ALL_LESSONS ? value : null)} />;
+}
+
+// One filter's cards; the page remounts it when the filter changes, which starts its stable list afresh.
+function BookmarkedWords({ groupId, lessonId }: { groupId: string; lessonId: string | null }) {
+  const { t } = useTranslation();
+  const list = useInfiniteQuery(wordBookmarksQueryOptions(groupId, lessonId ?? undefined));
   const bookmarks = useStableBookmarks(list.data?.pages);
   const words = useMemo<RecapWord[]>(() => bookmarks.map((item) => item.word), [bookmarks]);
   const sources = useMemo(() => new Map(bookmarks.map((item) => [bookmarkKey(item.lesson.id, item.word.id), item])), [bookmarks]);
@@ -40,18 +81,29 @@ export function WordsPage({ groupId }: { groupId: string }) {
   }, [bookmarks, groupId]);
   const { hasNextPage, isFetchingNextPage, fetchNextPage } = list;
   const onLoad = useCallback(() => { void fetchNextPage(); }, [fetchNextPage]);
-  if (session.isPending || list.isPending) return <main className={styles.center}><LoadingState label={t("words.loading")} /></main>;
+  if (list.isPending) return <LoadingState label={t("words.loading")} />;
+  if (list.isError) return <ErrorState title={t("words.unavailable")}><Button onClick={() => list.refetch()}>{t("common.retry")}</Button></ErrorState>;
+  if (!words.length) return <Surface tone="quiet"><EmptyState title={t("words.emptyTitle")}>{t("words.emptyBody")}</EmptyState></Surface>;
+  return <WordBookmarkScope resolve={resolve}>
+    <WordRecap words={words} source={source} more={{ hasMore: Boolean(hasNextPage), loading: isFetchingNextPage, onLoad }} />
+  </WordBookmarkScope>;
+}
+
+// The Words tab: the viewer's bookmarked words, newest bookmark first, as word cards, optionally of one lesson. Nothing here is
+// scheduled, scored, or counted; removing a bookmark is the only change it makes.
+export function WordsPage({ groupId, lessonId, onLesson }: {
+  groupId: string; lessonId: string | null; onLesson: (next: string | null, replace?: boolean) => void;
+}) {
+  const { t } = useTranslation();
+  const session = useQuery(sessionQueryOptions());
+  const lessons = useFilterLessons(groupId, lessonId, onLesson);
+  if (session.isPending) return <main className={styles.center}><LoadingState label={t("words.loading")} /></main>;
   if (session.data?.status !== "signedIn") return null;
   return <GroupFrame groupId={groupId} session={session.data}>
     <div className={styles.page}>
-      <PageHeader className={styles.header} eyebrow={<LabelChip>{t("words.eyebrow")}</LabelChip>} title={t("words.title")} intro={t("words.intro")} />
-      {list.isError
-        ? <ErrorState title={t("words.unavailable")}><Button onClick={() => list.refetch()}>{t("common.retry")}</Button></ErrorState>
-        : words.length
-          ? <WordBookmarkScope resolve={resolve}>
-            <WordRecap words={words} source={source} more={{ hasMore: Boolean(hasNextPage), loading: isFetchingNextPage, onLoad }} />
-          </WordBookmarkScope>
-          : <Surface tone="quiet"><EmptyState title={t("words.emptyTitle")}>{t("words.emptyBody")}</EmptyState></Surface>}
+      <PageHeader className={styles.header} eyebrow={<LabelChip>{t("words.eyebrow")}</LabelChip>} title={t("words.title")} intro={t("words.intro")}
+        actions={lessons.length ? <LessonFilter lessons={lessons} lessonId={lessonId} onLesson={onLesson} /> : undefined} />
+      <BookmarkedWords key={lessonId ?? ALL_LESSONS} groupId={groupId} lessonId={lessonId} />
     </div>
   </GroupFrame>;
 }

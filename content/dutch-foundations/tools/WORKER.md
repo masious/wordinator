@@ -18,7 +18,7 @@ You write one lesson file for the Dutch Foundations course in the Wordinator app
 7. One finished lesson as a model of depth and structure: `content/dutch-foundations/part-ii/12-b-wat-kost-dat.json`. Read it with `python3 content/dutch-foundations/tools/dump.py <file>`.
 
 ## Requirements
-- **Volume:** at least 7 practice blocks and at least 45 items. Every item has an authors' version. Add notes for rules, alternative answers and typical mistakes. Use the exercise mix from the style guide:
+- **Volume:** at least 7 practice blocks and at least 45 items (Part I: the lower targets in `docs/content/briefs-part-i.md` override these numbers). Every item has an authors' version. Add notes for rules, alternative answers and typical mistakes. Use the exercise mix from the style guide:
   - fill-in, including multi-blank and dialogue completion
   - EN→NL and NL→EN translation
   - word order
@@ -36,7 +36,7 @@ You write one lesson file for the Dutch Foundations course in the Wordinator app
   - at most one link
   - 1–3 `imageIdeas`
 - **New words:** `vocabulary` blocks that follow `docs/content/style-guide.md#new-words`. Each lesson needs 15–35 words, each placed directly after the block where it first appears.
-- **Limits:** player steps between 85 and 120.
+- **Limits:** player steps between 85 and 120 (Part I: 60–100, see `briefs-part-i.md`).
 - **Done** means `apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/lesson.ts check <your file>`, run from the repo root, prints `OK` with counts that meet the above.
 
 ## Rules

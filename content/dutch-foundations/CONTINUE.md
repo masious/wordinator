@@ -14,9 +14,13 @@ Repo: `/Users/jsninja/myworkspace/2wordinator`. Read `CLAUDE.md` and `content/du
   - **14-b is left out of production Part III by the user's decision.** It exists in production only as the standalone one-lesson course "Leggen of zetten?", lesson ID `e2b961ef-9449-4112-8b32-53fd8cec3135`, so production Part III has a gap at position 3. Every production Part III import must strip that ID from the SQL (see below).
   - 17-b, 18-a and 18-b are not written. Their briefs are in `docs/content/briefs-part-iii.md`.
 
-## Part priority (user's order, 2026-10-10)
+## Part priority (user's order, updated 2026-10-12)
 
-Work on parts in this order: **Part II → Part III → Part IV → Part V → Part VI → Part VII → Part I last.** Part II is finished; Part III is finished and published. Part IV is next. Parts IV onward need briefs and a ledger before workers start (see `docs/content/index.md#workflow`).
+**Part I now comes first**, starting with lesson 1. After Part I: finish Part IV, then Parts V → VI → VII. Parts II and III are finished and published.
+
+**No more batches (user, 2026-10-12):** work lesson by lesson. Each lesson goes write → review → verify → docs as soon as the previous step for it is done, without waiting for other lessons or for a batch go-ahead.
+
+**Part IV paused (2026-10-12):** 19-a, 19-b, 20-a are accepted. 20-b and 21-a are written but not reviewed (their worker notes may be missing from `part-iv/REVIEW-NOTES.md`). 21-b is not written. The course now exists: `part-iv/course.json` and `course.prod.json` were added by the user.
 
 ## Agent models (cost)
 

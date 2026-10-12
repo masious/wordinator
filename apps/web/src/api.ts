@@ -1,5 +1,5 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
-import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkPageSchema, wordSearchPageSchema } from "@wordinator/contracts/lesson-document";
+import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordSearchPageSchema } from "@wordinator/contracts/lesson-document";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 export class ApiError extends Error {
@@ -151,12 +151,22 @@ export const wordBookmarkKeysQueryOptions = (groupId: string) => queryOptions({
   retry: false,
 });
 
-// The Words tab's list: bookmarked words newest first, a hundred at a time.
-export const wordBookmarksQueryOptions = (groupId: string) => infiniteQueryOptions({
-  queryKey: [...wordBookmarksKey(groupId), "list"] as const,
+// The Words tab's list: bookmarked words newest first, a hundred at a time, optionally of one lesson (C12a).
+export const wordBookmarksQueryOptions = (groupId: string, lessonId?: string) => infiniteQueryOptions({
+  queryKey: [...wordBookmarksKey(groupId), "list", lessonId ?? null] as const,
   initialPageParam: undefined as string | undefined,
-  queryFn: ({ pageParam }) => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/word-bookmarks?limit=100${pageParam ? `&cursor=${encodeURIComponent(pageParam)}` : ""}`, wordBookmarkPageSchema),
+  queryFn: ({ pageParam }) => apiRequest(
+    `/api/groups/${encodeURIComponent(groupId)}/word-bookmarks?limit=100${lessonId ? `&lessonId=${encodeURIComponent(lessonId)}` : ""}${pageParam ? `&cursor=${encodeURIComponent(pageParam)}` : ""}`,
+    wordBookmarkPageSchema,
+  ),
   getNextPageParam: (page) => page.nextCursor ?? undefined,
+});
+
+// The lessons holding the viewer's visible bookmarks, with counts, for the Words tab's lesson filter (C12a).
+export const wordBookmarkLessonsQueryOptions = (groupId: string) => queryOptions({
+  queryKey: [...wordBookmarksKey(groupId), "lessons"] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/word-bookmarks/lessons`, wordBookmarkLessonsResponseSchema),
+  retry: false,
 });
 
 // Library word search (New words panel): published words of visible courses matching the query, twenty at a time.

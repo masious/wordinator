@@ -44,11 +44,13 @@ Notes (2026-10-09): the API reuses `courseWordsResponseSchema`'s `courseWordSche
 
 ## C9c — Words tab
 
-- [ ] Route `/groups/$groupId/words` with a small loader; TanStack infinite query over the bookmark list, fetching the next page when Next reaches the loaded end.
-- [ ] Navigation: desktop island destination with an icon; More sheet entry below `48em`, marking More current on the route.
-- [ ] Page: word cards with course and lesson on each card, newest first; unbookmarked cards stay in place until the page is left; empty state.
-- [ ] Tests: RTL for the page, empty state, unbookmark staying in place, loading the next page; Playwright for bookmarking in a lesson then reviewing it on the tab, desktop and mobile navigation, and `mobile-layout.spec.ts` for the route.
-- [ ] Docs: `docs/design-system.md` navigation and More sheet, `docs/architecture.md` web route, `docs/user-flows.md`, `docs/testing.md`, `docs/words.md` and `docs/roadmap.md` status.
+- [x] Route `/words` (originally `/groups/$groupId/words`) with a small loader; TanStack infinite query over the bookmark list, fetching the next page when Next reaches the loaded end.
+- [x] Navigation: desktop island destination with an icon; More sheet entry below `48em`, marking More current on the route.
+- [x] Page: word cards with course and lesson on each card, newest first; unbookmarked cards stay in place until the page is left; empty state.
+- [x] Tests: RTL for the page, empty state, unbookmark staying in place, loading the next page; Playwright for bookmarking in a lesson then reviewing it on the tab, desktop and mobile navigation, and `mobile-layout.spec.ts` for the route.
+- [x] Docs: `docs/design-system.md` navigation and More sheet, `docs/architecture.md` web route, `docs/user-flows.md`, `docs/testing.md`, `docs/words.md` and `docs/roadmap.md` status.
+
+Notes (2026-10-12): C9c shipped with the global-library flow at `/words` (`pages/WordsPage.tsx`, `WordsPage.test.tsx`, `e2e/words-tab.spec.ts`); this checklist was updated after the fact. Follow-up features (lesson filter, spoken reveal, Drill) are C12 in [DRILL_PLAN.md](DRILL_PLAN.md).
 
 ## Release
 

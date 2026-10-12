@@ -4,11 +4,11 @@ Content workspace for the "Dutch Foundations" courses. Lessons are authored as J
 
 | Path | Owner | Purpose |
 | --- | --- | --- |
-| `outline.md` | user | The 40-lesson curriculum. Part II = rows 7–12, Part III = rows 13–18, Part IV = rows 19–24. |
+| `outline.md` | user | The 40-lesson curriculum. Part I = rows 1–6, Part II = rows 7–12, Part III = rows 13–18, Part IV = rows 19–24. |
 | [`docs/content/`](../../docs/content/index.md) | coordinator | Curriculum docs: storyline and cast, style guide, per-lesson briefs, ledgers of what each lesson actually taught, topic map, and gaps. Start at `docs/content/index.md`. |
-| `part-ii/`, `part-iii/`, `part-iv/` | workers | One file per lesson: `NN-a-slug.json` (`NN` = outline row; `a`, `b` when a row is split). File-name order = lesson order. |
+| `part-i/`, `part-ii/`, `part-iii/`, `part-iv/` | workers | One file per lesson: `NN-a-slug.json` (`NN` = outline row; `a`, `b` when a row is split). File-name order = lesson order. |
 | `part-iii/existing/` | reference | The two lessons already in the course for row 13. Do not edit; do not re-cover them. |
-| `*/course.json` | — | Import manifest (course ID, local group/owner, position offset). Part IV has none yet: the user must create the Part IV course in the app and give its ID first (see [`ledger-part-iv.md`](../../docs/content/ledger-part-iv.md)). |
+| `*/course.json` | — | Import manifest (course ID, local group/owner, position offset). Part I has none yet: the user must create the Part I course in the app and give its ID first (see [`ledger-part-i.md`](../../docs/content/ledger-part-i.md)). |
 | `tools/lesson.ts` | — | Validator and SQL generator. |
 | `tools/normalize.ts` | — | Authoring shorthand → stored document; shared with the web app's dev-only lesson overview prototype. |
 | `illustrations/`, `tools/illustrate.ts` | — | Visual canon, frozen reference sheets and the Azure FLUX.2 [pro] generator for `imageIdeas`; see [`docs/content/illustrations.md`](../../docs/content/illustrations.md). |
@@ -59,7 +59,7 @@ Inline styles: `bold`, `italic`, `textColor`, `backgroundColor` with palette `de
 
 ## House style
 
-- Instruction and explanation language: **English**. Target language: Dutch at the level in the outline (A1 → early A2). Every Dutch sentence must be natural, correct Netherlands Dutch.
+- Instruction and explanation language: **English**. Target language: Dutch at the level in the outline (Part I: absolute beginners, with lighter volume targets in [`briefs-part-i.md`](../../docs/content/briefs-part-i.md#volume-targets-part-i); then A1 → early A2). Every Dutch sentence must be natural, correct Netherlands Dutch.
 - Do not use grammar that the ledgers (`docs/content/ledger-part-*.md`) have not introduced yet, except as a fixed, glossed chunk.
 - One rule per callout; keep paragraphs short. Bold the target form in examples; use one consistent colour per grammatical role within a lesson (e.g. verb = blue, subject = green, time = orange).
 - Each lesson stands alone inside the course storyline; recycle vocabulary and grammar from earlier lessons on purpose and say so in notes.

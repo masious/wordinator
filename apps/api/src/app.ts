@@ -70,7 +70,7 @@ import {
   SLUG_MAX_LENGTH,
 } from "@wordinator/contracts";
 import {
-  LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
+  LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
   lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
   toLearnerDocument, walkLessonBlocks, type CourseLesson, type CourseWord, type LessonBlockOf, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
@@ -2202,10 +2202,40 @@ app.get("/api/groups/:groupId/word-bookmarks/keys", requireGroupAccess, async (c
   return context.json(wordBookmarkKeysResponseSchema.parse({ keys: rows.results }));
 });
 
+// Lessons holding at least one visible bookmark of the viewer, with the count, for the Words tab's lesson filter (C12a): the
+// same joins as the list, so a hidden word is not counted. Courses come oldest first, so a course's parts read in order.
+app.get("/api/groups/:groupId/word-bookmarks/lessons", requireGroupAccess, async (context) => {
+  const group = context.get("groupAccess"); const user = context.get("user")!;
+  const visible = courseVisibleClause(user.id, group.creatorUserId);
+  const rows = await context.env.DB.prepare(
+    `SELECT c.id AS courseId, c.slug AS courseSlug, c.title AS courseTitle, l.id AS lessonId, l.slug AS lessonSlug, l.title AS lessonTitle, COUNT(*) AS count
+     FROM course_word_bookmarks b
+     JOIN course_lesson_words w ON w.group_id = b.group_id AND w.course_id = b.course_id AND w.lesson_id = b.lesson_id AND w.word_id = b.word_id
+     JOIN course_lessons l ON l.id = b.lesson_id AND l.group_id = b.group_id AND l.course_id = b.course_id AND l.published_doc IS NOT NULL
+     JOIN courses c ON c.id = b.course_id AND c.group_id = b.group_id
+     WHERE b.group_id = ? AND b.user_id = ? AND ${visible.sql}
+     GROUP BY c.id, l.id
+     ORDER BY c.created_at ASC, c.id ASC, l.position ASC, l.id ASC`,
+  ).bind(group.id, user.id, ...visible.values).all<{
+    courseId: string; courseSlug: string; courseTitle: string; lessonId: string; lessonSlug: string; lessonTitle: string; count: number;
+  }>();
+  return context.json(wordBookmarkLessonsResponseSchema.parse({
+    lessons: rows.results.map((row) => ({
+      course: { id: row.courseId, slug: row.courseSlug, title: row.courseTitle },
+      lesson: { id: row.lessonId, slug: row.lessonSlug, title: row.lessonTitle },
+      count: row.count,
+    })),
+  }));
+});
+
 // The viewer's bookmarked words, newest first, joined to the word index: a word no longer published, or in a course the viewer
-// can no longer see, is left out. The cursor is the bookmark time with the lesson and word IDs as a tie-break.
+// can no longer see, is left out. The cursor is the bookmark time with the lesson and word IDs as a tie-break. `lessonId`
+// narrows the list to one lesson (C12a); a lesson the viewer cannot see simply has no visible bookmarks.
 app.get("/api/groups/:groupId/word-bookmarks", requireGroupAccess, async (context) => {
   const parsed = wordBookmarksQuerySchema.safeParse(context.req.query());
+  if (!parsed.success && parsed.error.issues.some((issue) => issue.path[0] === "lessonId")) {
+    return apiError(context, 400, "INVALID_FILTER", "The lesson filter is invalid.");
+  }
   const cursor = decodeCursor(parsed.success ? parsed.data.cursor : undefined);
   const [cursorLesson, cursorWord, extra] = cursor ? cursor.id.split(" ") : [];
   if (!parsed.success || (parsed.data.cursor && (!cursor || !cursorLesson || !cursorWord || extra !== undefined))) {
@@ -2215,6 +2245,7 @@ app.get("/api/groups/:groupId/word-bookmarks", requireGroupAccess, async (contex
   const visible = courseVisibleClause(user.id, group.creatorUserId);
   const clauses = ["b.group_id = ?", "b.user_id = ?", visible.sql];
   const values: Array<string | number> = [group.id, user.id, ...visible.values];
+  if (parsed.data.lessonId) { clauses.push("b.lesson_id = ?"); values.push(parsed.data.lessonId); }
   if (cursor) { clauses.push("(b.created_at, b.lesson_id, b.word_id) < (?, ?, ?)"); values.push(cursor.createdAt, cursorLesson!, cursorWord!); }
   const rows = await context.env.DB.prepare(
     `SELECT b.created_at AS bookmarkedAt, w.word_id AS id, w.lesson_id AS lessonId, w.term, w.meaning, w.forms, w.example, w.note, w.ipa,

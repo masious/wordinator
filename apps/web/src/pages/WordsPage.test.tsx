@@ -4,7 +4,7 @@ import { createMemoryHistory, createRootRoute, createRoute, createRouter, Router
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../i18n";
-import { WordsPage } from "./WordsPage";
+import { validateWordsSearch, WordsPage } from "./WordsPage";
 
 // jsdom has no layout, so the cards' page size is set here.
 const fit = vi.hoisted(() => ({ value: { columns: 2, rows: 1 } }));
@@ -19,24 +19,41 @@ const item = (n: number, lesson = id(40)) => ({
 });
 const listPath = `/api/groups/${groupId}/word-bookmarks?limit=100`;
 const keysPath = `/api/groups/${groupId}/word-bookmarks/keys`;
+const lessonsPath = `/api/groups/${groupId}/word-bookmarks/lessons`;
+const lessonEntry = (lesson: string, count: number) => ({
+  course: { id: courseId, slug: "dutch-foundations", title: "Dutch foundations" }, lesson: { id: lesson, slug: `lesson-${lesson.slice(-2)}`, title: `Lesson ${lesson.slice(-2)}` }, count,
+});
+let lessons: ReturnType<typeof lessonEntry>[];
 let pages: Record<string, { items: unknown[]; nextCursor: string | null }>;
 let keys: Array<{ lessonId: string; wordId: string }>;
 
 function response(body: unknown) { return new Response(JSON.stringify(body), { headers: { "content-type": "application/json" } }); }
-function renderPage() {
-  const root = createRootRoute(); const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <WordsPage groupId={groupId} /> });
-  const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: [`/groups/${groupId}/words`] }) });
+// The page under a route that keeps the lesson filter in the URL, like the app's own `/words` route.
+function renderPage(initial = "/words") {
+  const root = createRootRoute();
+  const route = createRoute({
+    getParentRoute: () => root, path: "words", validateSearch: validateWordsSearch,
+    component: function Words() {
+      const { lesson } = route.useSearch(); const navigate = route.useNavigate();
+      return <WordsPage groupId={groupId} lessonId={lesson ?? null} onLesson={(next, replace = false) => { void navigate({ search: next ? { lesson: next } : {}, replace }); }} />;
+    },
+  });
+  const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: [initial] }) });
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } });
-  return render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
+  render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
+  return router;
 }
 
 beforeEach(() => {
   pages = { [listPath]: { items: [item(1), item(2), item(3, id(41))], nextCursor: null } };
+  pages[`${listPath}&lessonId=${id(41)}`] = { items: [item(3, id(41))], nextCursor: null };
+  lessons = [lessonEntry(id(40), 2), lessonEntry(id(41), 1)];
   keys = [item(1), item(2), item(3, id(41))].map((entry) => ({ lessonId: entry.lesson.id, wordId: entry.word.id }));
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
     if (path === "/api/session") return response(session);
     if (path === keysPath) return response({ keys });
+    if (path === lessonsPath) return response({ lessons });
     if (path in pages) return response(pages[path]);
     if (path.endsWith("/bookmark") && init?.method === "DELETE") {
       // The server forgets the bookmark, so a refetched list leaves it out.
@@ -49,11 +66,26 @@ beforeEach(() => {
 });
 afterEach(() => { cleanup(); vi.unstubAllGlobals(); fit.value = { columns: 2, rows: 1 }; });
 
+// Mantine keeps a Select's options mounted; the open one is found through the listbox its combobox controls.
+async function open(combobox: HTMLElement) {
+  fireEvent.click(combobox);
+  await waitFor(() => expect(combobox).toHaveAttribute("aria-expanded", "true"));
+  return within(document.getElementById(combobox.getAttribute("aria-controls")!)!);
+}
+async function options(combobox: HTMLElement) {
+  const names = (await open(combobox)).getAllByRole("option", { hidden: true }).map((option) => option.textContent);
+  fireEvent.keyDown(combobox, { key: "Escape" });
+  return names;
+}
+async function choose(combobox: HTMLElement, option: string) {
+  fireEvent.click((await open(combobox)).getByRole("option", { name: option, hidden: true }));
+}
+
 describe("Words tab", () => {
   it("shows bookmarked words newest first with their course and lesson", async () => {
     renderPage();
     expect(await screen.findByRole("heading", { name: "Your words" })).toBeInTheDocument();
-    expect(screen.getByText("Words 1–2 of 3")).toBeInTheDocument();
+    expect(await screen.findByText("Words 1–2 of 3")).toBeInTheDocument();
     const first = screen.getByRole("article", { name: "woord 1" });
     expect(first).toHaveTextContent("Dutch foundations · Lesson 40");
     expect(screen.getAllByRole("article").map((card) => card.getAttribute("aria-label"))).toEqual(["woord 1", "woord 2"]);
@@ -94,10 +126,58 @@ describe("Words tab", () => {
     expect(screen.getByRole("article", { name: "woord 3" })).toBeInTheDocument();
   });
 
-  it("explains how to bookmark when there is nothing yet", async () => {
-    pages = { [listPath]: { items: [], nextCursor: null } };
+  it("explains how to bookmark when there is nothing yet, without a lesson filter", async () => {
+    pages = { [listPath]: { items: [], nextCursor: null } }; lessons = [];
     renderPage();
     expect(await screen.findByText("No bookmarked words yet")).toBeInTheDocument();
     expect(screen.queryByRole("article")).not.toBeInTheDocument();
+    expect(screen.queryByRole("combobox", { name: "Lesson" })).not.toBeInTheDocument();
+  });
+
+  it("narrows the cards to one lesson through the filter and keeps it in the URL", async () => {
+    const router = renderPage();
+    await screen.findByRole("article", { name: "woord 1" });
+    const filter = await screen.findByRole("combobox", { name: "Lesson" });
+    expect(filter).toHaveValue("All lessons");
+    // Lessons are grouped by course, each with its bookmark count.
+    expect(await options(filter)).toEqual(["All lessons", "Lesson 40 (2)", "Lesson 41 (1)"]);
+    await choose(filter, "Lesson 41 (1)");
+    await waitFor(() => expect(router.state.location.search).toEqual({ lesson: id(41) }));
+    expect(await screen.findByText("Word 1 of 1")).toBeInTheDocument();
+    expect(screen.getAllByRole("article").map((card) => card.getAttribute("aria-label"))).toEqual(["woord 3"]);
+    expect(fetch).toHaveBeenCalledWith(`${listPath}&lessonId=${id(41)}`, expect.anything());
+    // Back to every lesson.
+    await choose(screen.getByRole("combobox", { name: "Lesson" }), "All lessons");
+    await waitFor(() => expect(router.state.location.search).toEqual({}));
+    expect(await screen.findByText("Words 1–2 of 3")).toBeInTheDocument();
+  });
+
+  it("keeps the chosen lesson and its card after its last bookmark is removed", async () => {
+    const router = renderPage(`/words?lesson=${id(41)}`);
+    const card = await screen.findByRole("article", { name: "woord 3" });
+    const toggle = within(card).getByRole("button", { name: "Bookmark woord 3" });
+    await waitFor(() => expect(toggle).toHaveAttribute("aria-pressed", "true"));
+    lessons = [lessonEntry(id(40), 2)]; pages[`${listPath}&lessonId=${id(41)}`] = { items: [], nextCursor: null };
+    fireEvent.click(toggle);
+    await waitFor(() => expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path) === lessonsPath).length).toBeGreaterThan(1));
+    await waitFor(() => expect(toggle).toHaveAttribute("aria-pressed", "false"));
+    expect(router.state.location.search).toEqual({ lesson: id(41) });
+    expect(screen.getByRole("article", { name: "woord 3" })).toBeInTheDocument();
+    expect(screen.getByRole("combobox", { name: "Lesson" })).toHaveValue("Lesson 41 (0)");
+  });
+
+  it("opens on the lesson named in the URL", async () => {
+    renderPage(`/words?lesson=${id(41)}`);
+    expect(await screen.findByRole("article", { name: "woord 3" })).toBeInTheDocument();
+    expect(await screen.findByRole("combobox", { name: "Lesson" })).toHaveValue("Lesson 41 (1)");
+  });
+
+  it("falls back to every lesson when the URL names a lesson that is not available", async () => {
+    const router = renderPage(`/words?lesson=${id(99)}`);
+    await waitFor(() => expect(router.state.location.search).toEqual({}));
+    expect(await screen.findByText("Words 1–2 of 3")).toBeInTheDocument();
+    // Anything that is not a lesson ID is dropped by the route.
+    await router.navigate({ to: "/words", search: { lesson: "nonsense" } as never });
+    expect(router.state.location.search).toEqual({});
   });
 });

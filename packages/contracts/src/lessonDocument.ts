@@ -539,7 +539,18 @@ export const wordBookmarkSchema = z.object({
 export type WordBookmark = z.infer<typeof wordBookmarkSchema>;
 export const wordBookmarkPageSchema = z.object({ items: z.array(wordBookmarkSchema), nextCursor: z.string().nullable() });
 export type WordBookmarkPage = z.infer<typeof wordBookmarkPageSchema>;
-export const wordBookmarksQuerySchema = paginationQuerySchema;
+// The Words tab may narrow the list to one lesson (C12a). An unknown or invisible lesson is an empty page, not an error.
+export const wordBookmarksQuerySchema = paginationQuerySchema.extend({ lessonId: opaqueIdSchema.optional() });
+export type WordBookmarksQuery = z.infer<typeof wordBookmarksQuerySchema>;
+// Lessons holding at least one visible bookmark, with the count, for the Words tab's lesson filter (C12a).
+export const wordBookmarkLessonSchema = z.object({
+  course: z.object({ id: opaqueIdSchema, slug: z.string(), title: z.string() }),
+  lesson: z.object({ id: opaqueIdSchema, slug: z.string(), title: z.string() }),
+  count: z.number().int().positive(),
+});
+export type WordBookmarkLesson = z.infer<typeof wordBookmarkLessonSchema>;
+export const wordBookmarkLessonsResponseSchema = z.object({ lessons: z.array(wordBookmarkLessonSchema) });
+export type WordBookmarkLessonsResponse = z.infer<typeof wordBookmarkLessonsResponseSchema>;
 
 // Word search (New words panel). A search key folds case, diacritics (by Unicode decomposition), ß, and runs of whitespace,
 // so "uber" finds "Über". The lesson panel filters its own words with it; the API stores the keys of indexed words and

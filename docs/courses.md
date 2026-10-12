@@ -15,7 +15,7 @@ Courses and lessons are addressed by slugs, not IDs: `/courses/dutch-foundations
 - An ID-based link (from older notifications, course feed cards, or bookmarks) redirects to the slug URL.
 - Migration `0021_course_slugs.sql` backfilled existing rows with the same folding where SQLite allows it; a title with any other character falls back to `course-<id prefix>`, and a repeated title keeps its plain slug on the oldest row and takes a short ID suffix on the others. The content tool (`content/dutch-foundations/tools/lesson.ts sql`) writes slugs the same way and never changes an existing row's slug.
 
-Status: delivered. C1 (course shell), C2 (lessons and content blocks), C3 (practice blocks; answer threads retired by [practice progress](#practice-answers)), C4 (feed presence), C5 (contributors), C6 (lesson player and progress), C6b (lesson positions), C7 (lesson editor; see [lesson documents](#lesson-documents)), and C8 (new words and recap; see [new words](#new-words-and-recap)) are complete. C9 ([word bookmarks and the Words tab](words.md)) is approved and planned. Delivery phases live in the [roadmap](roadmap.md#course-phases).
+Status: delivered. C1 (course shell), C2 (lessons and content blocks), C3 (practice blocks; answer threads retired by [practice progress](#practice-answers)), C4 (feed presence), C5 (contributors), C6 (lesson player and progress), C6b (lesson positions), C7 (lesson editor; see [lesson documents](#lesson-documents)), and C8 (new words and recap; see [new words](#new-words-and-recap)) are complete. C9 ([word bookmarks and the Words tab](words.md)) is delivered, and C12 ([Drill](words.md#drill)) is approved and planned. Delivery phases live in the [roadmap](roadmap.md#course-phases).
 
 ## Purpose
 
@@ -189,7 +189,7 @@ A vocabulary block is not a step of its own. Its words appear in a New words pan
 
 ### Word recap
 
-- Recap shows pages of [word cards](words.md#word-cards) (C9a) in the player shell: as many as fit without scrolling, each flipping in place to its meaning, example, and note. Nothing is graded, recorded, or counted. C9b adds [bookmarks](words.md#bookmarks) to the cards and the New words lists.
+- Recap shows pages of [word cards](words.md#word-cards) (C9a) in the player shell: as many as fit without scrolling, each flipping in place to its meaning, example, and note, and speaking the term as it reveals it (C12). Nothing is graded, recorded, or counted; grading belongs to [Drill](words.md#drill). C9b adds [bookmarks](words.md#bookmarks) to the cards and the New words lists.
 - **Lesson recap:** the player's completion screen offers Review words when the run had words. It uses the words of that run, once each in step order, so previews work too. Back to the summary returns to the completion screen.
 - **Course recap:** the course page offers Review words, with the word count, to a member who has finished at least one published lesson with words. It covers the currently published lessons the viewer has [finished](#progress), in lesson order and then document order. A term repeated across lessons (compared trimmed and case-insensitively) shows once, at its first occurrence.
 - **Lesson word review:** each lesson in the course page's list offers Review words when its published document has words (see [lesson actions](#lesson-actions)). It shows the same cards as the lesson recap, built from the lesson read the same way, whether or not the viewer has finished the lesson, and Back to the course closes it.
@@ -364,4 +364,3 @@ Courses are archived, not hard-deleted. The owner or group creator may archive a
 - Interactive role-play dialogues. Text-to-speech playback is [lesson speech](speech.md) (C10).
 - Feed posts for course updates
 - Course-specific notifications beyond contributor requests
-- Review scheduling for bookmarked words in the [Words tab](words.md#words-tab)

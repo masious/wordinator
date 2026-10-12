@@ -6,11 +6,11 @@ What each Part IV lesson **actually** teaches, recorded from the accepted lesson
 
 Course: "Dutch Foundations — Part IV" (`content/dutch-foundations/part-iv/`). Rows 19–24, two lessons per row, import position offset 0.
 
-**The course does not exist yet.** The user must create the Part IV course in the app and give its ID; the coordinator then writes `part-iv/course.json` (and `course.prod.json` for production). Until then no lesson can be imported.
+The Part IV course exists: `part-iv/course.json` (local) and `part-iv/course.prod.json` (production).
 
-Local database: not imported; course not created yet.
+Local database: not imported yet.
 
-Production: not imported; course not created yet.
+Production: not imported yet.
 
 | File | Title | Status |
 | --- | --- | --- |

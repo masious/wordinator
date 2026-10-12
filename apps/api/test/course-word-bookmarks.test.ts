@@ -1,6 +1,6 @@
 import { env, SELF } from "cloudflare:test";
 import { WORD_BOOKMARKS_MAX } from "@wordinator/contracts";
-import { wordBookmarkKeysResponseSchema, wordBookmarkPageSchema } from "@wordinator/contracts/lesson-document";
+import { wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema } from "@wordinator/contracts/lesson-document";
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   addLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, publishLesson, readLesson, request, resetDatabase, saveDraft, seedGroup, seedUser,
@@ -186,5 +186,78 @@ describe("Word bookmarks", () => {
     expect((await request(`/api/groups/${groupId}/word-bookmarks`, reader)).status).toBe(404);
     expect((await unbookmark(path, lesson.lesson.id, hund.id, reader)).status).toBe(404);
     expect(await env.DB.prepare("SELECT COUNT(*) AS total FROM course_word_bookmarks WHERE user_id = ?").bind(readerId).first()).toEqual({ total: 1 });
+  });
+});
+
+describe("Word bookmark lesson filter", () => {
+  async function lessons(groupId: string, cookie: string) {
+    const response = await request(`/api/groups/${groupId}/word-bookmarks/lessons`, cookie);
+    expect(response.status, await response.clone().text()).toBe(200);
+    return wordBookmarkLessonsResponseSchema.parse(await response.json()).lessons;
+  }
+  const summary = (entries: Awaited<ReturnType<typeof lessons>>) => entries.map((entry) => [entry.course.title, entry.lesson.title, entry.count]);
+
+  async function filterSetup() {
+    const base = await setup();
+    const { groupId, owner, course, path, hund, katze, lesson, reader } = base;
+    const brood = word("het brood");
+    const food = await addLesson(groupId, course.id, owner, "Food", { document: documentOf(blocks.vocabulary(brood)) });
+    const travelCourse = await createCourse(groupId, owner, true, { title: "Travel Dutch", summary: "On the road." });
+    // Courses list oldest first; make the order explicit rather than relying on two creations in the same millisecond.
+    await env.DB.prepare("UPDATE courses SET created_at = created_at + 1000 WHERE id = ?").bind(travelCourse.id).run();
+    const trein = word("de trein");
+    const travel = await addLesson(groupId, travelCourse.id, owner, "Stations", { document: documentOf(blocks.vocabulary(trein)) });
+    const travelPath = coursePath(groupId, travelCourse.id);
+    for (const [coursePathValue, lessonId, wordId] of [
+      [path, lesson.lesson.id, hund.id], [path, lesson.lesson.id, katze.id], [path, food.lesson.id, brood.id], [travelPath, travel.lesson.id, trein.id],
+    ] as const) expect((await bookmark(coursePathValue, lessonId, wordId, reader)).status).toBe(200);
+    return { ...base, food, travel, travelCourse, travelPath, brood, trein };
+  }
+
+  it("lists lessons with visible bookmarks in course and lesson order, with counts", async () => {
+    const { groupId, reader, owner, path, lesson, hund } = await filterSetup();
+    // Another account's bookmarks never count toward the reader's lessons.
+    await bookmark(path, lesson.lesson.id, hund.id, owner);
+    const entries = await lessons(groupId, reader);
+    expect(summary(entries)).toEqual([["Dutch foundations", "Animals", 2], ["Dutch foundations", "Food", 1], ["Travel Dutch", "Stations", 1]]);
+    expect(entries[0]!.course.slug).toBeTruthy();
+    expect(entries[0]!.lesson.slug).toBeTruthy();
+    expect(summary(await lessons(groupId, owner))).toEqual([["Dutch foundations", "Animals", 1]]);
+  });
+
+  it("narrows the list to one lesson and pages within it", async () => {
+    const { groupId, reader, lesson, food } = await filterSetup();
+    await env.DB.prepare("UPDATE course_word_bookmarks SET created_at = created_at - 1000 WHERE lesson_id = ? AND word_id IN (SELECT word_id FROM course_lesson_words WHERE term = 'der Hund')")
+      .bind(lesson.lesson.id).run();
+    const first = await list(groupId, reader, `?lessonId=${lesson.lesson.id}&limit=1`);
+    expect(first.items.map((item) => item.word.term)).toEqual(["die Katze"]);
+    const second = await list(groupId, reader, `?lessonId=${lesson.lesson.id}&limit=1&cursor=${encodeURIComponent(first.nextCursor!)}`);
+    expect(second.items.map((item) => item.word.term)).toEqual(["der Hund"]);
+    expect(second.nextCursor).toBeNull();
+    expect((await list(groupId, reader, `?lessonId=${food.lesson.id}`)).items.map((item) => item.word.term)).toEqual(["het brood"]);
+    // A lesson with no visible bookmarks of the viewer is an empty page, not an error.
+    expect(await list(groupId, reader, `?lessonId=${crypto.randomUUID()}`)).toEqual({ items: [], nextCursor: null });
+    const invalid = await request(`/api/groups/${groupId}/word-bookmarks?lessonId=not-an-id`, reader);
+    expect(invalid.status).toBe(400);
+    expect(await errorCode(invalid)).toBe("INVALID_FILTER");
+  });
+
+  it("leaves out hidden words and lessons of courses the viewer cannot see", async () => {
+    const { groupId, reader, owner, lesson, hund, travel, travelPath } = await filterSetup();
+    await republish(lesson.path, owner, documentOf(blocks.vocabulary(hund)));
+    expect(summary(await lessons(groupId, reader))).toEqual([["Dutch foundations", "Animals", 1], ["Dutch foundations", "Food", 1], ["Travel Dutch", "Stations", 1]]);
+    expect((await request(`${travelPath}/archive`, owner, {})).status).toBe(200);
+    expect(summary(await lessons(groupId, reader))).toEqual([["Dutch foundations", "Animals", 1], ["Dutch foundations", "Food", 1]]);
+    expect((await list(groupId, reader, `?lessonId=${travel.lesson.id}`)).items).toEqual([]);
+  });
+
+  it("denies the lessons read outside the library and to anonymous requests", async () => {
+    const { groupId } = await filterSetup();
+    await seedUser("outsider"); const outsider = await signIn("outsider");
+    const denied = await request(`/api/groups/${groupId}/word-bookmarks/lessons`, outsider);
+    expect(denied.status).toBe(404);
+    expect(await errorCode(denied)).toBe("GROUP_NOT_FOUND");
+    const anonymous = await SELF.fetch(`https://wordinator.test/api/groups/${groupId}/word-bookmarks/lessons`);
+    expect(anonymous.status).toBe(401);
   });
 });

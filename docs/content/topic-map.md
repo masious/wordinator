@@ -8,22 +8,22 @@ One row per grammar topic: the outline topics of all 40 rows, plus topics the le
 
 - `covered` — taught and practiced in a Wordinator lesson to the depth the outline intends.
 - `partial` — taught, but less deeply than intended, or only as a chunk; the notes say what remains.
-- `assumed` — Part I knowledge with no Wordinator lesson; learners are expected to know it.
+- `assumed` — Part I knowledge that later parts rely on and no accepted lesson teaches yet. While Part I is being written, these rows say `assumed (planned: …)`; they become `covered` or `partial` when the Part I lesson is accepted.
 - `deferred` — deliberately postponed to a later row or part; the notes say where.
 - `missing` — no lesson yet. While a part is being written, its rows show `missing (planned: …)` until the lesson is accepted.
 
-Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`; `19-a` … `24-b` = `part-iv/` (plan: [briefs-part-iv.md](briefs-part-iv.md)).
+Lesson IDs: `01-a` … `06-b` = `part-i/` (plan: [briefs-part-i.md](briefs-part-i.md)); `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`; `19-a` … `24-b` = `part-iv/` (plan: [briefs-part-iv.md](briefs-part-iv.md)).
 
 ## Outline topics
 
 | Row | Topic | Introduced | Reinforced | Status | Notes |
 | --- | --- | --- | --- | --- | --- |
-| 1 | zijn; personal pronouns; basic SVO | Part I | everywhere | assumed | No Part I lessons in the app. |
-| 2 | komen, wonen; present singular | Part I | 07-a | assumed | |
-| 3 | Regular present; spreken; verb position (V2, questions, jij t-drop) | Part I | 07-a, 08-b | assumed | |
-| 4 | hebben; numbers 0–100; question words | Part I | 07-a (wij hebben), 09-a (ordinals), 12-b (prices) | assumed | |
-| 5 | Possessives mijn/jouw/zijn/haar; de/het intro | Part I | 07-a (ons/onze, jullie, hun) | assumed | |
-| 6 | Adjectives; de/het + adjective basics | Part I | 13-2, 12-a, 18-a | assumed | Full ending system covered in 18-a. |
+| 1 | zijn; personal pronouns; basic SVO | Part I | everywhere | assumed (planned: 01-a, 01-b) | 01-a singular zijn and jij/u; 01-b full zijn, all pronouns, verb-first questions with zijn. |
+| 2 | komen, wonen; present singular | Part I | 07-a | assumed (planned: 02-a, 02-b) | 02-b: singular rule and stem spelling. |
+| 3 | Regular present; spreken; verb position (V2, questions, jij t-drop) | Part I | 07-a, 08-b | assumed (planned: 03-a, 03-b) | t-drop met as a fact in 02-a, taught in 03-b. |
+| 4 | hebben; numbers 0–100; question words | Part I | 07-a (wij hebben), 09-a (ordinals), 12-b (prices) | assumed (planned: 04-a, 04-b) | |
+| 5 | Possessives mijn/jouw/zijn/haar; de/het intro | Part I | 07-a (ons/onze, jullie, hun) | assumed (planned: 05-a, 05-b) | |
+| 6 | Adjectives; de/het + adjective basics | Part I | 13-2, 12-a, 18-a | assumed (planned: 06-a, 06-b) | Full ending system covered in 18-a. |
 | 7 | Present tense plural | 07-a | — | covered | |
 | 7 | Separable verbs (introduction) | 07-b | 15-b, 16-a | covered | Deepened in 16-a. |
 | 8 | Telling time | 08-a | — | covered | |
@@ -72,10 +72,15 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | 39 | Conjunctions; clause linking; register | — | — | missing | Part VII. |
 | 40 | Integrated word order | — | — | missing | Part VII. |
 
-## Topics beyond the outline (added by Parts II–IV)
+## Topics beyond the outline (added by Parts I–IV)
 
 | Topic | Introduced | Reinforced | Status | Notes |
 | --- | --- | --- | --- | --- |
+| Negation niet (basic) / geen + noun | Part I | 11-b, 15-a, 16-b | assumed (planned: 03-b niet, 04-b geen) | System in 20-b. |
+| Conjunctions en, maar, of (or) | Part I | everywhere | assumed (planned: 03-a) | |
+| Jobs without an article (Ik ben programmeur.) | Part I | — | assumed (planned: 01-b) | |
+| Greetings by register; jij vs u; u → jij (Zeg maar jij.) | Part I | 11-b, 12-b | assumed (planned: 01-a, 01-b) | 11-b systematises u vs jij in the restaurant. |
+| Alphabet and spelling a name | — | — | missing (planned: 04-a) | Not assumed by later parts. |
 | Frequency adverbs (altijd, vaak, soms, nooit) and their position | 07-a | — | covered | |
 | Plural possessives ons/onze, jullie, hun | 07-a | — | covered | |
 | 's ochtends / 's middags / 's avonds / 's nachts | 07-a | 08-a | covered | |

@@ -21,6 +21,8 @@ test("a member bookmarks words on a lesson page and reviews them on the Words ta
   await openLesson(page);
   const panel = page.getByRole("complementary", { name: "New words" });
   for (const term of [`het kaartje ${suffix}`, `het spoor ${suffix}`]) {
+    // The toggle sits in the word's details, behind its Show more chevron.
+    await panel.getByRole("button", { name: `Show more about ${term}` }).click();
     await panel.getByRole("button", { name: `Bookmark ${term}` }).click();
     await expect(panel.getByRole("button", { name: `Bookmark ${term}` })).toHaveAttribute("aria-pressed", "true");
   }
@@ -48,4 +50,13 @@ test("a member bookmarks words on a lesson page and reviews them on the Words ta
   // The cards and Back and Next fit the first screen.
   const next = await page.getByRole("button", { name: "Next" }).boundingBox();
   expect(next!.y + next!.height).toBeLessThanOrEqual(page.viewportSize()!.height);
+
+  // The lesson filter narrows the tab to one lesson and keeps it in the URL across a reload.
+  await page.getByRole("combobox", { name: "Lesson" }).click();
+  await page.getByRole("option", { name: `${lessonTitle} (1)` }).click();
+  await expect(page).toHaveURL(/\/words\?lesson=/);
+  await expect(page.getByRole("article", { name: `het spoor ${suffix}` })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole("combobox", { name: "Lesson" })).toHaveValue(`${lessonTitle} (1)`);
+  await expect(page.getByRole("article", { name: `het spoor ${suffix}` })).toBeVisible();
 });
