@@ -8,7 +8,7 @@
         "level": 1
       },
       "content": "Hallo! Hoe gaat het?",
-      "id": "173f5d00-70a7-4fd3-9a97-8540ed940a78"
+      "id": "cea97ba9-5261-4013-8f86-914968ddd1a3"
     },
     {
       "type": "paragraph",
@@ -18,7 +18,7 @@
           "styles": {}
         }
       ],
-      "id": "ef4ee70c-8a73-465b-8f09-a1fb2abea6b0"
+      "id": "daee946a-7a05-4a6d-b233-f266b9fddd17"
     },
     {
       "type": "paragraph",
@@ -70,7 +70,7 @@
           "styles": {}
         }
       ],
-      "id": "233cc6b9-26e2-4c95-9982-c3a21e11bf1a"
+      "id": "3a8098b6-6381-476e-a70c-72bb60a95f01"
     },
     {
       "type": "heading",
@@ -78,7 +78,7 @@
         "level": 2
       },
       "content": "Story: Welkom in Utrecht!",
-      "id": "76267f08-6f58-424f-ad6a-c799996e0474"
+      "id": "90f8bcc1-0e4e-46d2-88e3-700eb965c1a0"
     },
     {
       "type": "paragraph",
@@ -88,7 +88,7 @@
           "styles": {}
         }
       ],
-      "id": "4ac3824e-82c8-40b0-8dc9-edbc59982780"
+      "id": "59eee4ba-a20b-446e-866a-d60f91a0fb98"
     },
     {
       "type": "dialogue",
@@ -132,7 +132,7 @@
           }
         ]
       },
-      "id": "93789fa6-846d-48bb-acee-133869206c44"
+      "id": "6a948e36-f702-4a1e-ab2f-a84588d1b11a"
     },
     {
       "type": "vocabulary",
@@ -143,105 +143,107 @@
               "term": "hoi",
               "meaning": "hi (informal)",
               "example": "Hoi Noor!",
-              "id": "bff2d4b4-8bd6-4681-98d5-0ceca261077f"
+              "id": "507f0c11-369e-435a-8443-94e458649044"
             },
             {
               "term": "Welkom (in …)!",
               "meaning": "welcome (to …)!",
               "example": "Welkom in Utrecht!",
-              "id": "37381ed9-ef0d-44ff-8491-dcd500eeaa50"
+              "id": "9b32386d-89fe-4ee0-9f8b-5963a1787968"
             },
             {
               "term": "dank je (wel)",
               "meaning": "thanks, thank you (informal)",
               "example": "Dank je wel!",
-              "id": "d0f512db-3a53-4541-9941-71a166547661"
+              "id": "219b4918-ecd3-46c5-afc4-63bb6ad7f3df"
             },
             {
               "term": "dank u (wel)",
               "meaning": "thank you (formal)",
-              "example": "Dank u wel, meneer.",
+              "example": "Dank u wel.",
               "note": "The formal pair of dank je (wel).",
-              "id": "01d63d5f-a244-4ad5-84a7-785837ace43a"
+              "id": "875dd73f-9192-4e44-9061-ac6893b34bac"
             },
             {
               "term": "Hoe gaat het?",
               "meaning": "How are you? How's it going? (to anyone)",
               "example": "Hoe gaat het?",
-              "id": "36947b6e-4609-4012-b2ac-513c60d27d11"
+              "id": "0b41ad52-3d26-4b36-8e8d-36b0d571976f"
             },
             {
               "term": "goed",
               "meaning": "good, well",
               "example": "Goed, dank je.",
-              "id": "1d01ab5a-314f-49a3-8f40-1a276a905ea3"
+              "id": "467b23d3-6967-4fe4-9f24-30a5c845e244"
             },
             {
               "term": "een beetje",
               "meaning": "a little, a bit",
               "example": "Ik ben een beetje moe.",
-              "id": "540e48b8-5645-4501-bae9-77d4a7b388df"
+              "id": "014ac7b5-7124-4160-bd54-93357bab8398"
             },
             {
               "term": "moe",
               "meaning": "tired",
               "example": "Ik ben een beetje moe.",
-              "id": "3742f717-96d0-4c46-be86-cecbc32c3f47"
+              "id": "4e92d7a2-03a2-40f6-87ed-ce4c96d93fea"
             },
             {
               "term": "en",
               "meaning": "and",
               "example": "En met jou?",
               "note": "Joins a question or sentence to what came before.",
-              "id": "625e9f32-f446-4fcf-9d7e-5b058ab404c0"
+              "id": "cdffea3b-61f0-414b-8095-ccc7e651987c"
             },
             {
               "term": "En met jou?",
               "meaning": "And you? (asking the same question back, informal)",
               "example": "En met jou?",
-              "note": "Formal: En met u?",
-              "id": "72120d37-90b8-4063-b575-2c5728d5994e"
+              "note": "Formal: En met u? Shorter, informal: En jij?",
+              "id": "9295e18d-109c-4001-aca1-779f523d1a58"
             },
             {
               "term": "Met mij gaat het goed.",
               "meaning": "I'm doing well.",
               "example": "Met mij gaat het heel goed!",
               "note": "Fixed word order; do not take it apart yet.",
-              "id": "4737db3d-a0cb-4483-8bbd-baa6e26cc313"
+              "id": "7f570d8e-1a2e-4573-b023-dda2ed01cb38"
             },
             {
-              "term": "heel goed",
-              "meaning": "very good, very well",
-              "example": "Met mij gaat het heel goed!",
-              "id": "9685f013-14ae-4aaf-adda-a875c246aaa9"
+              "term": "heel",
+              "meaning": "very",
+              "example": "Utrecht Centraal is heel groot.",
+              "id": "a8e1ffff-b9bd-49c6-abee-2cfc1924201c",
+              "note": "Heel goed! = very good, very well."
             },
             {
               "term": "het station",
               "meaning": "the station",
               "forms": "de stations",
               "example": "Het station is groot!",
-              "id": "94a60d46-91e6-47f2-b995-ceba3ad69799"
+              "id": "0f6e2974-1d0e-41d6-89e0-7cb4c5bdc078",
+              "note": "Learn every noun with de or het. A later lesson (De of het?) explains why."
             },
             {
               "term": "groot",
               "meaning": "big, large",
               "example": "Utrecht Centraal is heel groot.",
-              "id": "59651767-adb4-48c4-8b78-d8e8b5e7a6ea"
+              "id": "3903c352-4e24-4231-9c08-c5b7ac5214e4"
             },
             {
               "term": "ja",
               "meaning": "yes",
               "example": "Ja, Utrecht Centraal is heel groot.",
-              "id": "7f92eee7-ae0c-4284-bdc6-83db5b4c8977"
+              "id": "91572d61-b242-42e8-ae2f-3c12bfd5a985"
             }
           ]
         }
       },
-      "id": "ebcc5694-b25d-4441-aa29-024a1f9358d6"
+      "id": "7cb36e57-a055-478f-8dfd-2c3dd510d432"
     },
     {
       "type": "divider",
-      "id": "1bcc26e0-bd3a-4550-8323-0e38f6a96f25"
+      "id": "2666fb51-43dc-4984-a874-0aab60590ef9"
     },
     {
       "type": "heading",
@@ -249,7 +251,7 @@
         "level": 2
       },
       "content": "Greetings and goodbyes",
-      "id": "a613316e-9761-4b29-8ce9-489aa78a1d78"
+      "id": "57ecd4c7-1d23-4599-b1f9-34205c712b47"
     },
     {
       "type": "heading",
@@ -257,7 +259,7 @@
         "level": 3
       },
       "content": "Greetings by time of day",
-      "id": "c766ae2a-c1a8-48a9-a2d9-9dcbeeb6d551"
+      "id": "124d4b8c-22b4-42ad-90d3-7670388f30bc"
     },
     {
       "type": "paragraph",
@@ -297,7 +299,7 @@
           "styles": {}
         }
       ],
-      "id": "20388467-e9a3-4757-bc71-788d835163a6"
+      "id": "7a85d157-1f90-468e-9479-179cbe99cd5c"
     },
     {
       "type": "bulletListItem",
@@ -328,10 +330,10 @@
               "styles": {}
             }
           ],
-          "id": "c71c768c-b177-4fa8-9891-64c68f55cb88"
+          "id": "676284a7-6988-4684-bdd0-a7faabcd8946"
         }
       ],
-      "id": "78cdfc8c-cc94-47cb-aac7-46f7ffbe1c99"
+      "id": "4abf3562-2767-435e-a1a0-0c8b17e08b57"
     },
     {
       "type": "bulletListItem",
@@ -352,16 +354,16 @@
               "styles": {}
             },
             {
-              "text": "Goedemiddag, mevrouw!",
+              "text": "Goedemiddag!",
               "styles": {
                 "italic": true
               }
             }
           ],
-          "id": "54f889a3-6d58-4e49-abd6-d6a830a259c8"
+          "id": "08640b91-243d-4f53-a8b3-8d050d941a9e"
         }
       ],
-      "id": "7baafe43-7b5a-43a7-a703-717b98195e50"
+      "id": "93b5cac7-8428-470b-92ba-bd13e058e180"
     },
     {
       "type": "bulletListItem",
@@ -392,10 +394,10 @@
               "styles": {}
             }
           ],
-          "id": "32adb3dd-7776-4fbc-8c89-8a820c11fd6d"
+          "id": "91f3b392-1365-42c7-86bf-f88872d02fd2"
         }
       ],
-      "id": "6f6c9a68-28bd-4a6e-8750-26b380964262"
+      "id": "1664cccd-8565-48ea-aa5b-e3871fd50b56"
     },
     {
       "type": "bulletListItem",
@@ -422,10 +424,10 @@
               }
             }
           ],
-          "id": "9f6dbf43-b72e-42a0-8f7f-7909d8f304fb"
+          "id": "1f40594a-9dc2-4c21-b96c-627d7e35a01f"
         }
       ],
-      "id": "8c88ec31-a471-4dcb-8b6f-87be3d1a041f"
+      "id": "19d576a6-2a4f-4a70-a9b7-b62fd2bd1303"
     },
     {
       "type": "bulletListItem",
@@ -462,10 +464,10 @@
               }
             }
           ],
-          "id": "730c787f-3b29-4ebe-8427-444b05002a6e"
+          "id": "8c6d1f3e-bda7-410a-a613-70351588194b"
         }
       ],
-      "id": "af297f86-0d32-4c25-af73-d9c7c15c04f0"
+      "id": "1c2a5bd2-770a-483d-83e8-383154cd45d8"
     },
     {
       "type": "callout",
@@ -525,7 +527,7 @@
           "styles": {}
         }
       ],
-      "id": "2277ecbb-a907-4c4d-8293-6759fb8fa221"
+      "id": "30a7d3cd-1289-4f28-b71f-592fba00d8df"
     },
     {
       "type": "vocabulary",
@@ -536,40 +538,40 @@
               "term": "hallo",
               "meaning": "hello (informal)",
               "example": "Hallo!",
-              "id": "363318fd-7836-499a-87f6-51c5abe322cd"
+              "id": "511dbbf4-74f4-4d52-8024-3f3d80fbbe27"
             },
             {
               "term": "dag",
               "meaning": "hello and goodbye (neutral)",
               "example": "Dag Noor!",
               "note": "Works both ways — neutral, fine with everyone.",
-              "id": "e0824302-007f-48d0-a84d-8c4e06ae2b45"
+              "id": "d77aea9a-efeb-47cd-956f-bf8c59c8c1b1"
             },
             {
               "term": "goedemorgen",
               "meaning": "good morning",
               "example": "Goedemorgen!",
               "note": "One word.",
-              "id": "b268fea0-d950-406c-bbc6-f7eceb1e61f0"
+              "id": "49892a98-cb9e-47f2-930c-b1be7324ee33"
             },
             {
               "term": "goedemiddag",
               "meaning": "good afternoon",
-              "example": "Goedemiddag, mevrouw!",
+              "example": "Goedemiddag!",
               "note": "One word.",
-              "id": "269e6b6b-3f3a-426f-8c70-33eb9bd0bf9b"
+              "id": "544cd83d-3c83-47f7-9f53-289107792c27"
             },
             {
               "term": "goedenavond",
               "meaning": "good evening",
               "example": "Goedenavond!",
               "note": "One word. Never used at bedtime.",
-              "id": "300b6438-e6ff-4630-96f3-6c4dfd58b33a"
+              "id": "3b0de89c-7a21-4cf5-84af-4bffd71ef67a"
             }
           ]
         }
       },
-      "id": "42b9dddb-ce5c-4b0c-86e1-de07718eeb3c"
+      "id": "70f8be20-06c5-4526-a8ad-330b74f2d75f"
     },
     {
       "type": "heading",
@@ -577,7 +579,7 @@
         "level": 3
       },
       "content": "Goodbyes",
-      "id": "c2c5822e-1e3a-4878-9cbd-b7e69aa23fbf"
+      "id": "922aae9d-9a3f-4653-adae-7f85de09902f"
     },
     {
       "type": "paragraph",
@@ -647,7 +649,7 @@
           "styles": {}
         }
       ],
-      "id": "dfc6be21-d936-4805-9b23-9a5df7ceba8a"
+      "id": "b52bb768-52b2-4cb1-944d-bd33d3cbd3f2"
     },
     {
       "type": "example",
@@ -661,7 +663,7 @@
           "styles": {}
         }
       ],
-      "id": "9a609485-ec2d-4f81-b406-ad0d5758e3be"
+      "id": "21939fa8-a544-49e7-a9e4-11fdfcaac245"
     },
     {
       "type": "columnList",
@@ -675,7 +677,7 @@
                 "level": 3
               },
               "content": "Informal",
-              "id": "e2a7fa3e-6ba8-4208-a879-5524b73190a3"
+              "id": "63140b4f-89f9-4897-a3ae-4ce1cdbfdbc6"
             },
             {
               "type": "bulletListItem",
@@ -685,7 +687,7 @@
                   "styles": {}
                 }
               ],
-              "id": "19761b80-4f81-47db-9202-1a9ad03f4359"
+              "id": "45e01f96-cc4b-412f-80fa-81bb3847face"
             },
             {
               "type": "bulletListItem",
@@ -695,7 +697,7 @@
                   "styles": {}
                 }
               ],
-              "id": "1dfa1d31-86e1-4b84-8eb3-d52536424582"
+              "id": "0785bfce-c191-4b4e-beeb-df2ac7c9eb48"
             },
             {
               "type": "bulletListItem",
@@ -705,7 +707,7 @@
                   "styles": {}
                 }
               ],
-              "id": "840496e9-9fa3-48fa-bd7a-1f600851f4ca"
+              "id": "9e7562c2-3581-4323-ae98-fa0fc8fcd992"
             },
             {
               "type": "bulletListItem",
@@ -715,10 +717,10 @@
                   "styles": {}
                 }
               ],
-              "id": "629072f4-288a-4a66-a86e-baaf6d2ba3bf"
+              "id": "261aaed8-ae44-4072-aa4c-21567fa12986"
             }
           ],
-          "id": "2193b4b6-c88b-482d-ba0a-caa3be494f7d"
+          "id": "4a51e805-f44e-437f-9716-66014b1b72a9"
         },
         {
           "type": "column",
@@ -729,7 +731,7 @@
                 "level": 3
               },
               "content": "Formal",
-              "id": "013a9c2b-f08a-4da4-aaa2-eca3b38a0bf6"
+              "id": "3c0d6f02-7cb0-4d71-8bce-2df5d635e8b0"
             },
             {
               "type": "bulletListItem",
@@ -739,7 +741,7 @@
                   "styles": {}
                 }
               ],
-              "id": "de65be15-2c44-4efd-a7da-1e3cd018c613"
+              "id": "6945c65d-c541-4b36-89af-29d22fed239f"
             },
             {
               "type": "bulletListItem",
@@ -749,7 +751,7 @@
                   "styles": {}
                 }
               ],
-              "id": "6267907b-937a-4665-9adc-4a304d0f7e5a"
+              "id": "b3ca3472-7a11-4dcf-88c2-0c274fcf9005"
             },
             {
               "type": "bulletListItem",
@@ -759,7 +761,7 @@
                   "styles": {}
                 }
               ],
-              "id": "e31c8145-22f6-4907-90b7-42764f05a7f4"
+              "id": "5857af3f-068c-4e07-be70-72cb431b9b59"
             },
             {
               "type": "bulletListItem",
@@ -769,13 +771,13 @@
                   "styles": {}
                 }
               ],
-              "id": "36c7d069-9148-4775-aeda-6404954d65f9"
+              "id": "aac43359-9289-448d-85de-336f2a9383b4"
             }
           ],
-          "id": "cd6a0129-7a23-4f47-b5ad-fe4fb0bfc818"
+          "id": "b080d56a-bcc9-4a44-a672-195e82425cef"
         }
       ],
-      "id": "61d16a2a-7417-440d-a84d-bddf36d2fe08"
+      "id": "d6940f63-88df-4d01-877a-2c052547ca6a"
     },
     {
       "type": "vocabulary",
@@ -786,43 +788,43 @@
               "term": "doei",
               "meaning": "bye (informal)",
               "example": "Doei! Tot morgen!",
-              "id": "2ca468e6-d61d-40b0-a3a6-2fefa1e39bc1"
+              "id": "b4e77c30-d886-4d4f-91a0-fe9e1c86eeb6"
             },
             {
               "term": "tot ziens",
               "meaning": "see you (neutral to formal)",
               "example": "Tot ziens!",
-              "id": "b2b64a9d-fd56-4a06-8bed-a557ccfebe31"
+              "id": "466e2197-a749-4abf-ac8e-349557114f84"
             },
             {
               "term": "tot straks",
               "meaning": "see you later (today)",
               "example": "Tot straks!",
-              "id": "49224fb0-57a0-4b82-ad47-9808bcc49e14"
+              "id": "ffdf60cc-4dd4-4aee-bd0b-c800f8130a3e"
             },
             {
               "term": "tot morgen",
               "meaning": "see you tomorrow",
               "example": "Tot morgen!",
-              "id": "34910287-b7c0-410a-9599-4d1e1af48dfe"
+              "id": "3a2f0a7d-00b5-42c0-8160-68457f16853b"
             },
             {
               "term": "welterusten",
               "meaning": "good night (at bedtime)",
               "example": "Welterusten!",
-              "id": "774b8504-1a9d-43d3-bd80-f18229ab6efe"
+              "id": "1eef2f0d-443c-4c3c-865e-3e297fa977d4"
             },
             {
               "term": "Slaap lekker!",
               "meaning": "sleep well! (at bedtime)",
               "example": "Slaap lekker!",
               "note": "Same moment as welterusten; both are fine.",
-              "id": "d99d175b-1350-43cd-9354-a04d8b65edac"
+              "id": "28a97f9c-e942-4182-9b45-76258b0f9463"
             }
           ]
         }
       },
-      "id": "66add80d-f3a3-4842-95bc-272259b594c2"
+      "id": "e419f1de-93d7-4491-8dbc-1cc3c82589fc"
     },
     {
       "type": "heading",
@@ -830,7 +832,7 @@
         "level": 2
       },
       "content": "How are you?",
-      "id": "c6967c0e-78e7-4d57-9c4a-bcdbf09737cc"
+      "id": "05c64181-86fc-48cb-9e10-d12d19520518"
     },
     {
       "type": "paragraph",
@@ -930,18 +932,14 @@
           "styles": {
             "italic": true
           }
-        },
-        {
-          "text": ".",
-          "styles": {}
         }
       ],
-      "id": "025f8ba8-aaaa-4456-81ba-f6e5d90e0102"
+      "id": "75dc0469-4446-4b1f-b570-444129b25d16"
     },
     {
       "type": "example",
       "props": {
-        "translation": "Is it going well? No, not so good.",
+        "translation": "Are you doing OK? No, not so good.",
         "note": "nee answers a yes/no question; Niet zo goed. is a fixed chunk (niet itself is explained later)."
       },
       "content": [
@@ -950,7 +948,7 @@
           "styles": {}
         }
       ],
-      "id": "447690b0-1c81-4c3a-8cf8-0918b2bd6a27"
+      "id": "b951ab4b-34bc-4534-a87a-00ccd88d0c1c"
     },
     {
       "type": "callout",
@@ -968,7 +966,7 @@
           "styles": {}
         }
       ],
-      "id": "bc7d9272-f897-4c2b-872e-55fd5fffcbb0"
+      "id": "5dce82b4-16bc-40c5-ba05-87caa3ad6ae6"
     },
     {
       "type": "vocabulary",
@@ -979,46 +977,46 @@
               "term": "Hoe gaat het met jou?",
               "meaning": "How are you? (informal, \"and you specifically\")",
               "example": "Hoe gaat het met jou?",
-              "id": "154ea5e8-41cd-45a2-bba1-d805d0ceb9bf"
+              "id": "12dac9d5-fb92-419f-a91d-5cfbb98d5585"
             },
             {
               "term": "Hoe gaat het met u?",
               "meaning": "How are you? (formal)",
               "example": "Hoe gaat het met u?",
-              "id": "c011b9a3-5285-4f9b-8c10-03e82a65352a"
+              "id": "6cf6b450-2ba2-4d5c-b741-15c903f85b17"
             },
             {
               "term": "prima",
               "meaning": "great, fine",
               "example": "Prima, dank je.",
-              "id": "159f9cb4-141e-4242-88b5-db1efecd8e9c"
+              "id": "2cad1e8e-06ab-4e42-9a27-9f7280bf021b"
             },
             {
               "term": "Het gaat wel.",
               "meaning": "So-so, it's okay.",
               "example": "Het gaat wel.",
-              "id": "0c0f2700-6a00-48ce-9942-a12e01f5e6a9"
+              "id": "d60d8f9a-fff0-4268-8200-11525afa0326"
             },
             {
               "term": "Niet zo goed.",
               "meaning": "Not so good.",
               "example": "Gaat het goed? Nee, niet zo goed.",
-              "id": "b7a4cde1-0af5-47a6-9c6a-df536a35e554"
+              "id": "e241389e-996b-44ff-8a7c-1672da7e30ac"
             },
             {
               "term": "nee",
               "meaning": "no",
               "example": "Nee, niet zo goed.",
-              "id": "aa4fd645-ff10-434c-a5b5-0f0434118511"
+              "id": "05e2614f-0738-4418-a9af-6fdb1cb6ac02"
             }
           ]
         }
       },
-      "id": "b8792332-eaab-4cb4-8684-bd4bed83ed8d"
+      "id": "bbf64e92-029c-4b47-a042-1daee77ec577"
     },
     {
       "type": "divider",
-      "id": "382059ec-5df3-4313-bf3a-097b3d407a3b"
+      "id": "2e17f927-568e-4f7a-9e52-5a8c43a1ada4"
     },
     {
       "type": "heading",
@@ -1026,7 +1024,7 @@
         "level": 2
       },
       "content": "zijn: ik ben, jij bent, u bent, hij/zij is",
-      "id": "97161ca2-effb-4d26-abfc-c3c1d46a3ada"
+      "id": "20cc70bc-a6af-438d-bcc1-ea4904d0719e"
     },
     {
       "type": "paragraph",
@@ -1043,7 +1041,7 @@
           "styles": {}
         }
       ],
-      "id": "be1a4afe-81ac-4604-9ade-41408726ae35"
+      "id": "d503d491-79d2-4a63-b28b-cb61d7c270f4"
     },
     {
       "type": "callout",
@@ -1075,7 +1073,7 @@
           }
         },
         {
-          "text": " (ben jij?)  ·  u ",
+          "text": "  ·  u ",
           "styles": {}
         },
         {
@@ -1107,7 +1105,7 @@
           }
         }
       ],
-      "id": "6a5d720f-3ee4-414d-b425-ae1483d8eef0"
+      "id": "c4fa4a1d-2a46-4e58-a8fd-627395804bac"
     },
     {
       "type": "columnList",
@@ -1121,60 +1119,105 @@
                 "level": 3
               },
               "content": "Pronoun",
-              "id": "bef65cff-bd25-49df-834d-0e420fd38a78"
+              "id": "2df83458-d11b-46cf-b0fd-5875a2467c47"
             },
             {
               "type": "bulletListItem",
               "content": [
                 {
                   "text": "ik",
-                  "styles": {}
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " I",
+                  "styles": {
+                    "italic": true
+                  }
                 }
               ],
-              "id": "7d613f7d-e08b-4467-b6f9-acb0f27749e2"
+              "id": "0c3e3dc5-e841-45a6-beda-bf49984b66aa"
             },
             {
               "type": "bulletListItem",
               "content": [
                 {
                   "text": "jij / je",
-                  "styles": {}
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " you (informal)",
+                  "styles": {
+                    "italic": true
+                  }
                 }
               ],
-              "id": "32d4807c-423c-4e3e-8a77-69c8e0bfa88b"
+              "id": "21937d4c-2933-4b11-b13c-dd8c42f8027a"
             },
             {
               "type": "bulletListItem",
               "content": [
                 {
                   "text": "u",
-                  "styles": {}
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " you (formal)",
+                  "styles": {
+                    "italic": true
+                  }
                 }
               ],
-              "id": "fccef6d5-083b-4896-8500-d4e07ce7d1c6"
+              "id": "0552ff86-0b99-47ae-b588-9350341895b4"
             },
             {
               "type": "bulletListItem",
               "content": [
                 {
                   "text": "hij",
-                  "styles": {}
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " he",
+                  "styles": {
+                    "italic": true
+                  }
                 }
               ],
-              "id": "28f13bca-a035-44cd-84af-bbddab6d811b"
+              "id": "58b26823-013d-4e7c-8b9a-869ef5701b60"
             },
             {
               "type": "bulletListItem",
               "content": [
                 {
                   "text": "zij / ze",
-                  "styles": {}
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " she",
+                  "styles": {
+                    "italic": true
+                  }
                 }
               ],
-              "id": "672a8341-6cea-45d0-961e-6502761cdbde"
+              "id": "eb575b4c-3544-40db-b523-1471475a1fae"
             }
           ],
-          "id": "b5df3310-d71d-430e-b6d4-bc2194e04ede"
+          "id": "cc0be2b2-5735-43b9-8a0b-e9eb558c82fa"
         },
         {
           "type": "column",
@@ -1185,7 +1228,7 @@
                 "level": 3
               },
               "content": "zijn",
-              "id": "84ca2e24-ca5d-42d2-b8d2-3af9b4cfc696"
+              "id": "41cff897-0b78-4338-a2ac-7abd57d4f60f"
             },
             {
               "type": "bulletListItem",
@@ -1195,7 +1238,7 @@
                   "styles": {}
                 }
               ],
-              "id": "04933ea7-1293-4604-a4a1-f36a4d5db7c1"
+              "id": "9c23b158-bddd-4c27-8ffa-344fb1f414a6"
             },
             {
               "type": "bulletListItem",
@@ -1205,7 +1248,7 @@
                   "styles": {}
                 }
               ],
-              "id": "09c4f663-b981-4208-8892-8da749d6cd32"
+              "id": "6686a935-5d37-48d7-9669-5720947406cc"
             },
             {
               "type": "bulletListItem",
@@ -1215,7 +1258,7 @@
                   "styles": {}
                 }
               ],
-              "id": "d026196f-97e2-443b-b1ae-0ca09422a6e7"
+              "id": "05c13363-4591-4d4e-aa52-22f08b7b0bc5"
             },
             {
               "type": "bulletListItem",
@@ -1225,7 +1268,7 @@
                   "styles": {}
                 }
               ],
-              "id": "02789581-b4fa-47bb-a718-4faa9dc86254"
+              "id": "66880df0-3fa2-4012-aa42-5d494c99cfb0"
             },
             {
               "type": "bulletListItem",
@@ -1235,10 +1278,10 @@
                   "styles": {}
                 }
               ],
-              "id": "6c1a0887-4ea4-48a3-a88b-8ec0fa43f03c"
+              "id": "d13b43cf-7966-4bc0-aa7b-33dd370f55a9"
             }
           ],
-          "id": "b0b2f096-02c4-43ed-a120-7563b17eb3d4"
+          "id": "bc77ffdc-e93d-4da5-8709-ee49763809b9"
         },
         {
           "type": "column",
@@ -1249,73 +1292,173 @@
                 "level": 3
               },
               "content": "Example",
-              "id": "615de023-4900-4676-8a5a-7560b91424e5"
+              "id": "e9efe36c-d207-4fb7-825b-06f238f623a3"
             },
             {
               "type": "bulletListItem",
               "content": [
                 {
-                  "text": "Ik ben Sofia.",
+                  "text": "Ik",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " ",
+                  "styles": {}
+                },
+                {
+                  "text": "ben",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                {
+                  "text": " Sofia. ",
+                  "styles": {}
+                },
+                {
+                  "text": "I am Sofia.",
                   "styles": {
                     "italic": true
                   }
                 }
               ],
-              "id": "4eabdfb4-f675-4c09-a6ad-3e95fcd1d0c3"
+              "id": "f66d5b0e-f8bb-4f57-b879-5198643ab818"
             },
             {
               "type": "bulletListItem",
               "content": [
                 {
-                  "text": "Jij bent moe.",
+                  "text": "Jij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " ",
+                  "styles": {}
+                },
+                {
+                  "text": "bent",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                {
+                  "text": " moe. ",
+                  "styles": {}
+                },
+                {
+                  "text": "You are tired.",
                   "styles": {
                     "italic": true
                   }
                 }
               ],
-              "id": "5d905d26-4271-4220-a192-b5a2f2c2c4c1"
+              "id": "0077f5b1-fe9b-4e8b-bab2-1266d2f7c385"
             },
             {
               "type": "bulletListItem",
               "content": [
                 {
-                  "text": "U bent welkom.",
+                  "text": "U",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " ",
+                  "styles": {}
+                },
+                {
+                  "text": "bent",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                {
+                  "text": " de buurvrouw. ",
+                  "styles": {}
+                },
+                {
+                  "text": "You are the neighbour.",
                   "styles": {
                     "italic": true
                   }
                 }
               ],
-              "id": "d8275baa-117f-4838-88a8-26c5509d8602"
+              "id": "7a33bb9f-533e-47b2-b1e1-97d49d955372"
             },
             {
               "type": "bulletListItem",
               "content": [
                 {
-                  "text": "Hij is Daan.",
+                  "text": "Hij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " ",
+                  "styles": {}
+                },
+                {
+                  "text": "is",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                {
+                  "text": " moe. ",
+                  "styles": {}
+                },
+                {
+                  "text": "He is tired.",
                   "styles": {
                     "italic": true
                   }
                 }
               ],
-              "id": "be793d36-be3d-4ae6-9765-0d0b7ffed37c"
+              "id": "ef244fe0-68f8-43ee-a282-2d2fd0c2db3c"
             },
             {
               "type": "bulletListItem",
               "content": [
                 {
-                  "text": "Zij is de buurvrouw.",
+                  "text": "Zij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " ",
+                  "styles": {}
+                },
+                {
+                  "text": "is",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                {
+                  "text": " mijn vriendin. ",
+                  "styles": {}
+                },
+                {
+                  "text": "She is my friend.",
                   "styles": {
                     "italic": true
                   }
                 }
               ],
-              "id": "d8abb660-062b-4114-a061-14d539b3acbb"
+              "id": "9f5ddf4b-7a74-4251-a6a7-94c4d9365203"
             }
           ],
-          "id": "b9b2ae52-1be5-4a86-800a-efc261d9221c"
+          "id": "f0584a5b-c0a0-4cf3-abec-1dfe873770de"
         }
       ],
-      "id": "a1631fd0-8657-4ed4-9419-7fc8f1d0fa4f"
+      "id": "e4f11879-a3e2-488e-9d12-df157ef75bf0"
     },
     {
       "type": "example",
@@ -1348,7 +1491,7 @@
           "styles": {}
         }
       ],
-      "id": "36b95207-3f7d-4811-bcf2-55e0a169f972"
+      "id": "042403b6-e1b3-41a8-a3e1-cfd29ae8d6d5"
     },
     {
       "type": "example",
@@ -1380,7 +1523,7 @@
           "styles": {}
         }
       ],
-      "id": "a1c82a2b-a9a9-40c4-a923-d1ed8628b9f9"
+      "id": "5ca057c1-a18b-47c0-b26f-920c7b93f904"
     },
     {
       "type": "example",
@@ -1412,7 +1555,7 @@
           "styles": {}
         }
       ],
-      "id": "99ed00ac-27f1-4f04-b033-ddf56e6cccd0"
+      "id": "cd0c0e97-1f55-4e8e-9730-c4a360fbbd48"
     },
     {
       "type": "vocabulary",
@@ -1425,12 +1568,12 @@
               "forms": "de vriendinnen",
               "example": "Noor is mijn vriendin.",
               "note": "\"Girlfriend\" or \"female friend\" — context decides.",
-              "id": "72f433a9-e014-490f-8f25-553095693d2c"
+              "id": "8ad53e1d-e7eb-428c-87d7-6491dd3c0a2d"
             }
           ]
         }
       },
-      "id": "44a5eec0-f174-4f85-aafe-ef3398c85071"
+      "id": "977e9838-52d5-464c-9565-bb3712ec1401"
     },
     {
       "type": "callout",
@@ -1482,7 +1625,7 @@
           "styles": {}
         }
       ],
-      "id": "6c9ba461-8660-4606-94fe-ff4b231e7398"
+      "id": "330f77ec-e4e6-4cae-9f14-b31e42ee3abe"
     },
     {
       "type": "heading",
@@ -1490,7 +1633,7 @@
         "level": 2
       },
       "content": "jij, je and u",
-      "id": "2cde7715-309e-4ac5-9464-8c3b9e26720c"
+      "id": "71b6a7be-4aab-44fb-ab38-053565bb9bb0"
     },
     {
       "type": "paragraph",
@@ -1550,7 +1693,7 @@
           "styles": {}
         }
       ],
-      "id": "84033fca-afe8-4bf4-910f-72173f65d145"
+      "id": "d7afecad-8a5f-4061-9db5-8d97a7ada96e"
     },
     {
       "type": "heading",
@@ -1558,7 +1701,7 @@
         "level": 2
       },
       "content": "Saying your name",
-      "id": "13690580-d607-4918-888f-2ea7553cd8cf"
+      "id": "4001ea1c-55fb-49fc-bce8-aaf850d9594f"
     },
     {
       "type": "paragraph",
@@ -1628,7 +1771,7 @@
           "styles": {}
         }
       ],
-      "id": "db9357f1-e2fc-4767-9229-9a101c43b6c4"
+      "id": "2d6a1890-5bdc-4e7e-b52e-12829bcfbba7"
     },
     {
       "type": "example",
@@ -1642,7 +1785,7 @@
           "styles": {}
         }
       ],
-      "id": "6d36f586-7413-4374-b194-2351bf436237"
+      "id": "901ee8fb-c05b-44b4-8594-53f572795b24"
     },
     {
       "type": "example",
@@ -1656,7 +1799,7 @@
           "styles": {}
         }
       ],
-      "id": "a788f2d5-c16a-4de8-a417-6ed6795bb1ff"
+      "id": "91688712-389e-413c-889a-ea91793996f1"
     },
     {
       "type": "example",
@@ -1670,7 +1813,7 @@
           "styles": {}
         }
       ],
-      "id": "b6924ffb-eff5-42df-8afb-4194a722600e"
+      "id": "8e859a01-11f7-4fcd-bdfc-e0a580c30a48"
     },
     {
       "type": "vocabulary",
@@ -1681,30 +1824,32 @@
               "term": "Ik heet …",
               "meaning": "My name is … / I'm called …",
               "example": "Ik heet Sofia.",
-              "id": "f96c5d2b-8b85-4940-a37b-a2187e0f131e"
+              "id": "8af13560-5aec-424d-bf10-7e255cabac43"
             },
             {
               "term": "Hoe heet je?",
               "meaning": "What's your name? (informal)",
               "example": "Hoe heet je?",
-              "id": "f15d3009-64c1-416a-948b-8aeacb8a2aa2"
+              "id": "6ea09a7a-b6ef-4d52-841e-d6eb59d84644",
+              "note": "Formal: Hoe heet u?"
             },
             {
               "term": "Wie ben jij?",
               "meaning": "Who are you?",
               "example": "Wie ben jij?",
-              "id": "a0ccae49-6ba3-4aeb-99f6-3d543fcc9de0"
+              "id": "e2256bd0-affb-4150-bb14-80a20ca17371",
+              "note": "A fixed question for now; ben jij is explained in the next lesson."
             },
             {
               "term": "Mijn naam is …",
               "meaning": "My name is … (more formal)",
               "example": "Mijn naam is Sofia Moreno.",
-              "id": "12447e24-fbf1-4fdf-b8f1-61aa178222c1"
+              "id": "c6747f74-46ba-4ac1-a4d2-07abb5e303f3"
             }
           ]
         }
       },
-      "id": "f31f90c0-4892-4b31-8d20-2c89acd696d2"
+      "id": "70f2c508-c027-4ef7-ba0f-aec139b3407d"
     },
     {
       "type": "numberedListItem",
@@ -1714,7 +1859,7 @@
           "styles": {}
         }
       ],
-      "id": "284e8599-f968-4b5b-956e-663a3adc926b"
+      "id": "3c7d522e-af3a-46ba-9d6c-ba69b1a517dd"
     },
     {
       "type": "numberedListItem",
@@ -1730,7 +1875,7 @@
           }
         }
       ],
-      "id": "8774acf3-9a6d-44b2-b5b7-cb30b7c4c3c7"
+      "id": "45ca7fa0-159d-4b5b-9c8e-fd5778cbbf6c"
     },
     {
       "type": "numberedListItem",
@@ -1746,7 +1891,7 @@
           }
         }
       ],
-      "id": "48aa19c1-c178-4cea-80f2-7239614d159b"
+      "id": "672669cd-f636-4426-a21b-78d282397c38"
     },
     {
       "type": "callout",
@@ -1760,7 +1905,7 @@
           "styles": {}
         }
       ],
-      "id": "a66bf46a-4eb7-4f96-8e32-65c312d34d90"
+      "id": "2793df0e-c9be-4dee-b158-4ef1577a28c7"
     },
     {
       "type": "vocabulary",
@@ -1771,16 +1916,16 @@
               "term": "Aangenaam.",
               "meaning": "Nice to meet you.",
               "example": "Aangenaam.",
-              "id": "ba2e8691-d3db-4908-827a-a936bbad1a64"
+              "id": "87fbfb8c-bcdb-482f-8fde-2778d36e6c87"
             }
           ]
         }
       },
-      "id": "4356da8b-69ad-4ee9-99a1-aa27ab8b5744"
+      "id": "a2d3bc37-5482-45ef-9adb-1d7bd74add13"
     },
     {
       "type": "divider",
-      "id": "9e35a46a-97a1-48d1-b23e-a7b25922d36b"
+      "id": "498b6e94-ab26-45e6-8ed7-179639d19904"
     },
     {
       "type": "heading",
@@ -1788,7 +1933,7 @@
         "level": 2
       },
       "content": "Story: De buurvrouw",
-      "id": "de269a58-cae0-4681-9b10-564a5eb7f99b"
+      "id": "68f878b3-12d2-46f9-ad87-14a1536e08db"
     },
     {
       "type": "paragraph",
@@ -1798,7 +1943,7 @@
           "styles": {}
         }
       ],
-      "id": "78fd6e15-3020-4d46-a561-182ef2b62c9a"
+      "id": "4ae2e541-539e-4fa2-b0ca-6d749f12d8c3"
     },
     {
       "type": "dialogue",
@@ -1850,7 +1995,7 @@
           }
         ]
       },
-      "id": "92ff6113-0a58-4eb6-96c2-fe5210b8e324"
+      "id": "4956d3c9-8385-44c8-b953-eb153084ecdb"
     },
     {
       "type": "vocabulary",
@@ -1862,12 +2007,12 @@
               "meaning": "female neighbour",
               "forms": "de buurvrouwen",
               "example": "Ik ben Els, de buurvrouw.",
-              "id": "4e72281a-c678-4107-a156-f8cfe55a0656"
+              "id": "c9b6ca06-5385-48e1-8042-ac67d1914e64"
             }
           ]
         }
       },
-      "id": "bd14d29a-5bcc-42b7-986d-d6b7163ef602"
+      "id": "8ba2ca15-71c7-4817-84c1-0b96f00e8a0a"
     },
     {
       "type": "heading",
@@ -1875,7 +2020,7 @@
         "level": 3
       },
       "content": "From u to jij",
-      "id": "30067b72-0bd6-4ab1-a2e4-9af2d470f9f4"
+      "id": "2fa499c1-139a-429d-919c-916118bb59af"
     },
     {
       "type": "callout",
@@ -1905,21 +2050,11 @@
           }
         },
         {
-          "text": " to them. Older people often say je to younger people, but you keep saying u until they offer jij ",
-          "styles": {}
-        },
-        {
-          "text": "(the next lesson has Zeg maar jij.)",
-          "styles": {
-            "italic": true
-          }
-        },
-        {
-          "text": ". Notice Noor even uses Els's first name together with u — that is normal in Dutch.",
+          "text": " to them. Older people often say je to younger people, but you keep saying u until they offer jij. The next lesson shows how people do that. Notice Noor even uses Els's first name together with u: that is normal in Dutch.",
           "styles": {}
         }
       ],
-      "id": "8f816164-21b8-48fd-a69b-f4a31ea743db"
+      "id": "e1a16def-ff45-4809-a559-cdfc92925a7f"
     },
     {
       "type": "heading",
@@ -1927,7 +2062,7 @@
         "level": 2
       },
       "content": "At the end of the day",
-      "id": "c6d1931a-778c-474a-80ea-bbc61e0fccc2"
+      "id": "94ae2403-fabf-45fe-858f-74b0475710d3"
     },
     {
       "type": "paragraph",
@@ -1937,7 +2072,7 @@
           "styles": {}
         }
       ],
-      "id": "857d7be5-359b-440b-a896-b5f2193d73aa"
+      "id": "837c5e41-0b2d-4e54-a2f8-94f39ef6ed95"
     },
     {
       "type": "example",
@@ -1951,7 +2086,7 @@
           "styles": {}
         }
       ],
-      "id": "1d4f0339-c881-4e94-859a-0b6e78eafaae"
+      "id": "bf42c218-7348-40a4-afbc-d829fbe5bd30"
     },
     {
       "type": "example",
@@ -1965,13 +2100,13 @@
           "styles": {}
         }
       ],
-      "id": "81935c00-5031-4709-98cf-e88747b44aa6"
+      "id": "f937a147-38a8-46a1-b893-11872ac9604f"
     },
     {
       "type": "example",
       "props": {
         "translation": "See you tomorrow!",
-        "note": "Sofia's first full day at work is tomorrow."
+        "note": "Sofia starts her new job tomorrow."
       },
       "content": [
         {
@@ -1979,11 +2114,11 @@
           "styles": {}
         }
       ],
-      "id": "a9200593-9f77-4617-8c81-8a745a07a008"
+      "id": "31b64670-09ce-4c34-bf69-50ea8c7c2f15"
     },
     {
       "type": "divider",
-      "id": "358a8df1-5c57-4bd8-bb57-6f658cc7e81c"
+      "id": "c46bf335-7809-4175-9fc3-da509da5461b"
     },
     {
       "type": "heading",
@@ -1991,7 +2126,7 @@
         "level": 2
       },
       "content": "Practice",
-      "id": "50cc5476-0369-420f-a87f-6a36f2e4f617"
+      "id": "084e9a7b-d01f-4986-8005-2b31e06083a1"
     },
     {
       "type": "heading",
@@ -1999,7 +2134,7 @@
         "level": 3
       },
       "content": "Fill in ben, bent or is",
-      "id": "56dd8199-16a7-49f4-a4fe-35224d0f9faa"
+      "id": "2cf457bf-da0c-4efe-9bc3-05d8c3e7cd1e"
     },
     {
       "type": "practice",
@@ -2047,19 +2182,19 @@
               "authorsVersion": [
                 "ben"
               ],
-              "note": "ik → ben (Ik heet Sofia also works, but this drills zijn)."
+              "note": "ik → ben. (Ik heet Sofia. also answers the question, but here you practice zijn.)"
             },
             {
               "prompt": "Ze … de buurvrouw.",
               "authorsVersion": [
                 "is"
               ],
-              "note": "Ze (= Els) is hij/zij, so is."
+              "note": "ze = zij (she, here Els) → is."
             }
           ]
         }
       },
-      "id": "dbdde098-fd09-404c-b071-0a6f8ceb9505"
+      "id": "ac925bab-d302-4c9e-b9c6-aeb4954b753e"
     },
     {
       "type": "heading",
@@ -2067,13 +2202,13 @@
         "level": 3
       },
       "content": "Complete the dialogues",
-      "id": "10e4b367-9ae2-46db-98db-bb1d81ef757c"
+      "id": "b112d9af-3ea4-4557-a86c-00df0b6b01c3"
     },
     {
       "type": "practice",
       "props": {
         "data": {
-          "instruction": "Complete the short exchanges. Fill in one word per blank. Example: Hoe … het? → gaat.",
+          "instruction": "Complete the short exchanges. Fill in one word per blank. Example: \"Hoe (blank) het?\" → gaat.",
           "items": [
             {
               "prompt": "Noor: Hoi Sofia! Hoe … het? / Sofia: Goed, … je. En met …?",
@@ -2085,12 +2220,12 @@
               "note": "Fixed chunks: Hoe gaat het?, dank je, En met jou?"
             },
             {
-              "prompt": "Receptioniste: Goedemorgen! Hoe gaat het met …? / Sofia: Goed, … u wel.",
+              "prompt": "Els: Goedemiddag, Sofia! Hoe gaat het? / Sofia: Goed, … u wel. En met …?",
               "authorsVersion": [
-                "u",
-                "dank"
+                "dank",
+                "u"
               ],
-              "note": "Formal exchange: met u, dank u."
+              "note": "Sofia says u to Els, so: dank u wel, En met u? (Els says je to Sofia, but Sofia stays formal.)"
             },
             {
               "prompt": "Els: Goedemiddag! / Noor: Hallo Els! Hoe gaat het met …? / Els: Prima, … je.",
@@ -2109,16 +2244,16 @@
               "note": "Ik ben; Slaap lekker! is a fixed goodnight chunk."
             },
             {
-              "prompt": "Noor: Tot ziens, Sofia! / Sofia: Doei! Tot …!",
+              "prompt": "Noor: Doei, Sofia! / Sofia: Doei! Tot …!",
               "authorsVersion": [
                 "morgen"
               ],
-              "note": "tot morgen = see you tomorrow."
+              "note": "tot morgen = see you tomorrow. Also fine: straks (later today)."
             }
           ]
         }
       },
-      "id": "1491a127-798b-4b1e-82c9-fef42b9b0718"
+      "id": "93c572d5-05c5-492c-9590-225377d1b3ad"
     },
     {
       "type": "heading",
@@ -2126,7 +2261,7 @@
         "level": 3
       },
       "content": "Word order",
-      "id": "9dd29b58-b9ab-4df2-9411-6d2a19057f28"
+      "id": "abd849f5-ca9d-4d19-8597-d7243f947b97"
     },
     {
       "type": "practice",
@@ -2146,7 +2281,7 @@
               "authorsVersion": [
                 "Ik ben een beetje moe."
               ],
-              "note": "ik always comes first in a statement."
+              "note": "Subject (ik) + verb (ben) + rest. een beetje goes before moe."
             },
             {
               "prompt": "Put in order: gaat / hoe / het",
@@ -2172,7 +2307,7 @@
           ]
         }
       },
-      "id": "cf845fd2-b0bd-47b2-af76-55af8ec30961"
+      "id": "b8de05ca-67dd-40b3-8cf8-dae74ed13543"
     },
     {
       "type": "heading",
@@ -2180,56 +2315,60 @@
         "level": 3
       },
       "content": "Informal to formal",
-      "id": "5259a8d2-4ef8-41d4-a83b-236b19072998"
+      "id": "06be6578-261a-4a98-bbe5-b9f495e10ebb"
     },
     {
       "type": "practice",
       "props": {
         "data": {
-          "instruction": "Rewrite each informal sentence in the formal form. Example: Hoi! → Goedemorgen! / Goedemiddag! / Goedenavond!",
+          "instruction": "Rewrite each informal sentence in the formal form. Example: Hoi! (it is afternoon) → Goedemiddag!",
           "items": [
             {
               "prompt": "Hoi! (it is morning)",
               "authorsVersion": [
                 "Goedemorgen!"
               ],
-              "note": "hoi works any time; goedemorgen is time-specific and formal-friendly."
+              "note": "hoi is informal; goedemorgen works with everyone in the morning. Also fine: Dag!"
             },
             {
               "prompt": "Doei!",
               "authorsVersion": [
                 "Tot ziens!"
               ],
-              "note": "Also fine: Dag! works for both registers."
+              "note": "Also fine: Dag! It works with everyone."
             },
             {
               "prompt": "Dank je wel.",
               "authorsVersion": [
                 "Dank u wel."
-              ]
+              ],
+              "note": "dank je → dank u."
             },
             {
               "prompt": "Hoe gaat het met jou?",
               "authorsVersion": [
                 "Hoe gaat het met u?"
-              ]
+              ],
+              "note": "met jou → met u."
             },
             {
               "prompt": "Hoe heet je?",
               "authorsVersion": [
                 "Hoe heet u?"
-              ]
+              ],
+              "note": "je → u. The verb heet stays the same."
             },
             {
               "prompt": "Jij bent moe.",
               "authorsVersion": [
                 "U bent moe."
-              ]
+              ],
+              "note": "u takes the same verb form as jij: bent."
             }
           ]
         }
       },
-      "id": "60ea3690-a2c1-4088-b44f-fad9a64d4137"
+      "id": "48ceef68-10a6-484b-8f86-21fe65599ce7"
     },
     {
       "type": "heading",
@@ -2237,25 +2376,27 @@
         "level": 3
       },
       "content": "Translate into Dutch",
-      "id": "4c699128-df64-423a-8c8f-770c03078e2a"
+      "id": "23c0ac89-07da-449d-8a00-d37488072cf7"
     },
     {
       "type": "practice",
       "props": {
         "data": {
-          "instruction": "Translate into Dutch.",
+          "instruction": "Translate into Dutch. Example: Good morning! → Goedemorgen!",
           "items": [
             {
               "prompt": "Hi! How are you?",
               "authorsVersion": [
                 "Hoi! Hoe gaat het?"
-              ]
+              ],
+              "note": "Also fine: Hallo! Hoe gaat het?"
             },
             {
               "prompt": "Good evening.",
               "authorsVersion": [
                 "Goedenavond."
-              ]
+              ],
+              "note": "goedenavond is one word. It is a greeting, not \"good night\"."
             },
             {
               "prompt": "My name is Sofia.",
@@ -2268,18 +2409,20 @@
               "prompt": "I'm a bit tired.",
               "authorsVersion": [
                 "Ik ben een beetje moe."
-              ]
+              ],
+              "note": "ik → ben; een beetje = a bit."
             },
             {
               "prompt": "Thank you. (formal)",
               "authorsVersion": [
                 "Dank u wel."
-              ]
+              ],
+              "note": "Formal: u. Also fine: Dank u."
             }
           ]
         }
       },
-      "id": "4735265e-7529-46b0-9dc5-d87534e8ce0e"
+      "id": "96e08e17-83b4-493c-a42e-442cc6a31b11"
     },
     {
       "type": "heading",
@@ -2287,42 +2430,46 @@
         "level": 3
       },
       "content": "Translate into English",
-      "id": "f88351f7-d5ab-401b-9099-6033f6f2cd70"
+      "id": "487bceed-8d54-4bd6-a140-ada839e6e8e9"
     },
     {
       "type": "practice",
       "props": {
         "data": {
-          "instruction": "Translate into natural English.",
+          "instruction": "Translate into natural English. Example: Hoe gaat het? → How are you?",
           "items": [
             {
               "prompt": "Met mij gaat het goed.",
               "authorsVersion": [
                 "I'm doing well."
-              ]
+              ],
+              "note": "A fixed chunk. Also fine: I'm fine. / I'm good."
             },
             {
               "prompt": "Aangenaam.",
               "authorsVersion": [
                 "Nice to meet you."
-              ]
+              ],
+              "note": "Said when you meet someone new. Also fine: Pleased to meet you."
             },
             {
               "prompt": "Tot morgen!",
               "authorsVersion": [
                 "See you tomorrow!"
-              ]
+              ],
+              "note": "tot morgen = see you tomorrow."
             },
             {
               "prompt": "Noor is mijn vriendin.",
               "authorsVersion": [
                 "Noor is my friend."
-              ]
+              ],
+              "note": "Also fine: Noor is my girlfriend. Context decides; here she is a friend."
             }
           ]
         }
       },
-      "id": "28a071ab-9832-4a67-940a-7572a20f3d8a"
+      "id": "4ee41cad-de1d-43f8-852f-40852958f804"
     },
     {
       "type": "heading",
@@ -2330,100 +2477,129 @@
         "level": 2
       },
       "content": "Reading: Op Schiphol",
-      "id": "64de4f4f-3edc-4cf3-96cd-a827c738782c"
+      "id": "d53848bf-1896-4593-875e-404c9b326f22"
     },
     {
       "type": "paragraph",
       "content": [
         {
-          "text": "These are messages on Sofia's phone from this morning, before Noor met her at the station. New: ",
+          "text": "These are messages on Sofia's phone from this morning, before Noor met her at the station. The new words are in the list below. The questions are in English; answer them in Dutch. ",
           "styles": {}
         },
         {
-          "text": "op Schiphol",
+          "text": "Klopt dit?",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " means ",
+          "styles": {}
+        },
+        {
+          "text": "Is this right?",
           "styles": {
             "italic": true
           }
         },
         {
-          "text": " (at Schiphol, the airport), ",
-          "styles": {}
-        },
-        {
-          "text": "Nederland",
-          "styles": {
-            "italic": true
-          }
-        },
-        {
-          "text": " (the Netherlands), ",
-          "styles": {}
-        },
-        {
-          "text": "straks",
-          "styles": {
-            "italic": true
-          }
-        },
-        {
-          "text": " (soon, later today), ",
-          "styles": {}
-        },
-        {
-          "text": "Super!",
-          "styles": {
-            "italic": true
-          }
-        },
-        {
-          "text": " (great!).",
+          "text": ".",
           "styles": {}
         }
       ],
-      "id": "8773e300-e3cd-4649-af7b-215b54cecdec"
+      "id": "5f227114-b399-4fe2-a8fb-914b682cf90d"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "op Schiphol",
+              "meaning": "at Schiphol (the airport near Amsterdam)",
+              "example": "Ik ben op Schiphol.",
+              "note": "In the same way: op Utrecht Centraal = at Utrecht Central station.",
+              "id": "e3473ea4-6610-4846-9e14-1214ddda3216"
+            },
+            {
+              "term": "Nederland",
+              "meaning": "the Netherlands",
+              "example": "Welkom in Nederland!",
+              "note": "No article in Dutch.",
+              "id": "d5fa985a-e398-4c81-8afc-234b0bc6ba8c"
+            },
+            {
+              "term": "straks",
+              "meaning": "soon, later today",
+              "example": "Ik ben straks op Utrecht Centraal.",
+              "note": "As in tot straks.",
+              "id": "2616f7b5-575d-49fc-ad99-8cbe6cc3c2c7"
+            },
+            {
+              "term": "Super!",
+              "meaning": "great!",
+              "example": "Super! Tot straks!",
+              "id": "46a670a1-b033-4742-96c9-dab093308dc5"
+            },
+            {
+              "term": "Klopt dit?",
+              "meaning": "Is this right? Is this true?",
+              "example": "Klopt dit? Noor is op Schiphol.",
+              "note": "Used in reading questions: answer Ja or Nee.",
+              "id": "c2a49167-ac72-4e74-9679-f22b94f1434c"
+            }
+          ]
+        }
+      },
+      "id": "67266ae7-e7e6-43e0-8675-fa137ff0c25d"
     },
     {
       "type": "practice",
       "props": {
         "data": {
-          "instruction": "Read the messages. Answer the questions in Dutch. One is Klopt dit? (true/false).",
+          "instruction": "Read the messages. Answer each question in Dutch; short answers are fine. Example: Who says Hoi Noor!? → Sofia.",
           "items": [
             {
-              "prompt": "Waar is Sofia?",
+              "prompt": "Where is Sofia?",
               "authorsVersion": [
-                "Op Schiphol. / Sofia is op Schiphol."
-              ]
+                "Op Schiphol."
+              ],
+              "note": "Also fine: Sofia is op Schiphol. / Ze is op Schiphol."
             },
             {
-              "prompt": "Hoe gaat het met Sofia?",
+              "prompt": "How is Sofia?",
               "authorsVersion": [
                 "Goed. Ze is een beetje moe."
-              ]
+              ],
+              "note": "ze = zij (she) → is. Also fine: Sofia is een beetje moe."
             },
             {
-              "prompt": "Waar is Noor straks?",
+              "prompt": "Where is Noor soon (straks)?",
               "authorsVersion": [
                 "Op Utrecht Centraal."
-              ]
+              ],
+              "note": "Also fine: Noor is straks op Utrecht Centraal."
             },
             {
               "prompt": "Klopt dit? Noor is op Schiphol.",
               "authorsVersion": [
-                "Nee, dat klopt niet. Sofia is op Schiphol; Noor is straks op Utrecht Centraal."
-              ]
-            },
-            {
-              "prompt": "Welke twee manieren om afscheid te nemen staan in de berichtjes?",
-              "authorsVersion": [
-                "Tot straks! en Doei!"
+                "Nee. Sofia is op Schiphol. Noor is straks op Utrecht Centraal."
               ],
-              "note": "afscheid nemen = to say goodbye; answer: the two goodbyes used."
+              "note": "Nee alone is fine; the rest explains why."
             },
             {
-              "prompt": "Is \"Doei!\" formeel of informeel?",
+              "prompt": "Which two goodbyes are in the messages?",
               "authorsVersion": [
-                "Informeel."
-              ]
+                "Tot straks! / Doei!"
+              ],
+              "note": "Sofia and Noor both say Tot straks!; Noor adds Doei!."
+            },
+            {
+              "prompt": "Is \"Doei!\" formal or informal?",
+              "authorsVersion": [
+                "Informal."
+              ],
+              "note": "doei is informal: use it with friends. The formal goodbye is tot ziens."
             }
           ],
           "passage": {
@@ -2432,7 +2608,7 @@
           }
         }
       },
-      "id": "2f4c6e46-0e69-444c-be6c-ac2f5580dd23"
+      "id": "19f0d0b3-29d2-4d3f-b0ae-409761ee209c"
     },
     {
       "type": "heading",
@@ -2440,25 +2616,25 @@
         "level": 2
       },
       "content": "Your turn",
-      "id": "9b025c47-489e-48dd-ba30-5e6e1b7503eb"
+      "id": "914c99a0-9b23-40c0-9d77-b1090c3de11c"
     },
     {
       "type": "practice",
       "props": {
         "data": {
-          "instruction": "You meet a new neighbour in the afternoon. Write 4–6 short lines: greet, say your name, ask how they are, say goodbye. Use u.",
+          "instruction": "Write a short conversation in Dutch. Follow the task below.",
           "items": [
             {
               "prompt": "You meet a new neighbour in the afternoon. Write 4–6 short lines: greet, say your name, ask how they are, say goodbye. Use u.",
               "authorsVersion": [
-                "Goedemiddag! / Buurman: Goedemiddag! Wie bent u? / Ik ben Sofia. / Buurman: Aangenaam. Ik heet Peter. / Aangenaam. Hoe gaat het met u? / Buurman: Goed, dank u. Tot ziens! / Tot ziens!"
+                "Jij: Goedemiddag! Ik ben Sofia. / Buurvrouw: Goedemiddag! Ik heet Anna. / Jij: Aangenaam. Hoe gaat het met u? / Buurvrouw: Goed, dank u. En met u? / Jij: Goed, dank u. Tot ziens! / Buurvrouw: Tot ziens!"
               ],
-              "note": "Model answer. de buurman = the (male) neighbour, the pair of de buurvrouw."
+              "note": "Model answer. You say u to the new neighbour (Hoe gaat het met u?, dank u). Also fine: Mijn naam is Anna. / Dag! instead of Tot ziens!"
             }
           ]
         }
       },
-      "id": "7f4d6f44-80cd-4b38-89dd-56d5910966c9"
+      "id": "78b5ee5f-03e0-46e6-9722-ddbe7f04a948"
     },
     {
       "type": "heading",
@@ -2466,7 +2642,7 @@
         "level": 2
       },
       "content": "Summary",
-      "id": "ff26135c-8056-4598-9b87-507360d25679"
+      "id": "9adb11a8-0523-4d49-aafd-bb3d34994ad5"
     },
     {
       "type": "numberedListItem",
@@ -2476,7 +2652,7 @@
           "styles": {}
         }
       ],
-      "id": "5f27e57d-37fd-4b18-9d17-55ee4d0cedf6"
+      "id": "b40fe8db-7306-4050-aad6-db160888aa46"
     },
     {
       "type": "numberedListItem",
@@ -2486,7 +2662,7 @@
           "styles": {}
         }
       ],
-      "id": "8e55ae9f-a751-4596-be8f-4839d0abf5e6"
+      "id": "772dec97-44cd-4c60-adac-830e8b2593ba"
     },
     {
       "type": "numberedListItem",
@@ -2496,7 +2672,7 @@
           "styles": {}
         }
       ],
-      "id": "9d2a2e18-e639-4f98-8aee-739d0d0ced43"
+      "id": "8639b6da-96a4-40ae-8378-224786f847fa"
     },
     {
       "type": "numberedListItem",
@@ -2506,7 +2682,7 @@
           "styles": {}
         }
       ],
-      "id": "1bc1e819-8704-4399-8a22-da2908bed4fd"
+      "id": "f90954e7-f58d-44b9-abef-03ba2e22235d"
     }
   ],
   "imageIdeas": [
@@ -2532,5 +2708,5 @@
       "action": "Sofia shakes hands with Els at the open front door; Noor stands beside Sofia, smiling."
     }
   ],
-  "id": "0438a057-b031-4e7a-ab6c-457a4d392dd6"
+  "id": "6852858d-86e6-441a-ac1b-175877ddf988"
 }

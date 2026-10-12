@@ -66,7 +66,7 @@ From the ledgers (summary only; the ledgers are binding):
 - **Pronouns**: subject pronouns; hij/het/ze for things as subjects (14-a); demonstratives (12-a). Object pronouns only in chunks (style guide list).
 - **Negation**: niet at the end, before adjectives, before the infinitive, before place; geen + noun. No system.
 - **Chunks already known**: Ik wil graag …, Ja, graag., Graag gedaan., Ik vind … lekker/leuk (main clause), Dat klopt., Goed idee!, Goed plan!, Kom op!, Wat leuk!, Ik twijfel., Die jas staat je goed., Kunt u mij helpen?, Bel me (maar)!, Ik zie je morgen.
-- **Story**: everything in [storyline.md](storyline.md) up to 18-b. Sofia cycles everywhere since November; no tram in Utrecht.
+- **Story**: everything in [storyline.md](storyline.md) up to 18-b. Sofia cycles everywhere since November; no tram in Lombok (a tram elsewhere in Utrecht is fine; see storyline.md).
 
 ### Part-IV-wide off-limits
 

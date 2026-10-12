@@ -20,6 +20,8 @@ Repo: `/Users/jsninja/myworkspace/2wordinator`. Read `CLAUDE.md` and `content/du
 
 **No more batches (user, 2026-10-12):** work lesson by lesson. Each lesson goes write → review → verify → docs as soon as the previous step for it is done, without waiting for other lessons or for a batch go-ahead.
 
+**Part I progress:** 01-a and 01-b accepted 2026-10-12 (written, reviewed, docs). 01-b is in production: imported 2026-10-12 as an unpublished draft at position 1 (8 practice anchors). Next: write the full brief for 02-a. Briefs for 02-a … 06-b must be written before each lesson. Production course exists (`part-i/course.prod.json`); 01-a imported there 2026-10-12 as an unpublished draft. No local course yet. Single-lesson prod import: see "New lessons only" below.
+
 **Part IV paused (2026-10-12):** 19-a, 19-b, 20-a are accepted. 20-b and 21-a are written but not reviewed (their worker notes may be missing from `part-iv/REVIEW-NOTES.md`). 21-b is not written. The course now exists: `part-iv/course.json` and `course.prod.json` were added by the user.
 
 ## Agent models (cost)
@@ -42,7 +44,7 @@ Planned in `docs/content/briefs-part-iv.md` (12 lessons, 19-a … 24-b). User de
 - **Then stop** and ask the user whether to import Batch B into production. Never write to production without the user's explicit yes in that turn.
 
 Decisions already made (in `part-iii/REVIEW-NOTES.md`; tell Batch B's coordinator):
-- There is no tram anywhere in Sofia's Utrecht. The only tram in the story is tram 2 in Amsterdam. The briefs still mention a Lombok tram; the user wants them left as they are, and the ledger records what the lessons actually do.
+- There is no tram in Lombok, so Sofia's trips from home are by bus, on foot or (from 31 October) by bike. Elsewhere in Utrecht a tram is fine: Noor and Sofia take the tram from Utrecht-Oost to Daan's party in 09-b (real Utrecht has the Uithoflijn through the east of the city). The tram in Amsterdam is tram 2 (16-a). (Narrowed by the user, 2026-10-12.) The briefs still mention a Lombok tram; the user wants them left as they are, and the ledger records what the lessons actually do.
 - The NS bike-on-train rush hours (weekdays 6:30–9:00 and 16:00–18:30) were checked by the user and are correct.
 - Sofia has no bike before Saturday 31 October. She bought a raincoat on Tuesday 3 November (17-a).
 
@@ -108,6 +110,15 @@ A batch is finished when every one of these is true:
 4. Report to the user briefly and wait.
 
 ## Production import (only after the user's explicit yes in that turn)
+
+**New lessons only (user, 2026-10-12).** Never re-send a lesson that is already in production. The upsert replaces its `draft_doc` with the file version, which discards everything the user added in the app (images, edits) from the draft. Generate the SQL, then keep only the lines that carry the new lessons' IDs (each lesson's `course_lessons` row and its `course_practices` rows all contain the lesson ID):
+
+```bash
+apps/api/node_modules/.bin/tsx content/dutch-foundations/tools/lesson.ts sql content/dutch-foundations/part-i course.prod.json | grep -F -e <new-lesson-id> > <scratchpad>/new.prod.sql
+```
+
+Check the line count (1 lesson row + its practice rows per new lesson), that it has no local group ID (`6c75c76c`), then run it with `--remote`. The same applies to local imports when the user has edited a local draft in the app.
+
 
 From the repo root, generate the SQL with the production manifest and strip 14-b. Without this, its upsert would overwrite 14-b's draft in the standalone course and set its position to 3:
 

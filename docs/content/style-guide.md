@@ -58,6 +58,7 @@ One rule per callout, 1–3 short sentences. Icons:
 - English explanations: friendly, plain, short sentences, no jargon without an example. Use the terms "subject", "verb", "prefix", "infinitive", "de-word", "het-word".
 - Dutch: natural Netherlands Dutch, A1 → early A2. Short sentences. Characters speak like real people (Noor informal, Ingrid formal).
 - Dialogue speakers: use the character's first name (e.g. "Sofia", "Henk", "Mevrouw Visser" is not used; use "Ingrid"). 6–12 turns per dialogue.
+- **Repetition is welcome (user, 2026-10-12):** repeat target forms, words and phrases freely across examples, dialogues, practice and later lessons. Repetition is how learners learn; do not cut content or vary wording just to avoid repeating it. (The once-per-lesson rule for New words cards still applies; repeated *use* of words is encouraged.)
 - Examples: Dutch sentence with the target form bold and coloured; translation in natural English; note when it explains or recycles something ("Recycles er is from row 13").
 - Practice notes: explain the rule, accept alternatives ("Also fine: …"), or flag a typical mistake. Write a note for every item where a rule applies. Notes are plain text.
 - Fill-in prompts: use `…` only for blanks. If a base form must be given, put it in brackets after the sentence: "Wij … om zeven uur op. (opstaan)". Authors' versions contain only the missing words, capitalised as they would appear in the sentence.

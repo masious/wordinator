@@ -1,5 +1,5 @@
 import type { CourseLesson } from "@wordinator/contracts/lesson-document";
-import { Square, Volume2 } from "lucide-react";
+import { Square, Volume2, VolumeX } from "lucide-react";
 import { createContext, useContext, useEffect, useId, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import styles from "./Speech.module.css";
@@ -200,4 +200,49 @@ export function SpeechButton({ url, label, owner, className }: { url: string | n
     </button>
     {failed && <SpeechFailure />}
   </span>;
+}
+
+// Whether revealing a word card or a drill card speaks its term (docs/words.md#word-cards). On by default and remembered on the
+// device; storage that cannot be read or written leaves it on for this visit.
+export const REVEAL_SOUND_STORAGE_KEY = "wordinator:reveal-sound:v1";
+const revealSoundListeners = new Set<() => void>();
+let revealSound: boolean | null = null;
+
+function readRevealSound() {
+  if (revealSound !== null) return revealSound;
+  try { revealSound = localStorage.getItem(REVEAL_SOUND_STORAGE_KEY) !== "off"; } catch { revealSound = true; }
+  return revealSound;
+}
+
+export function setRevealSound(on: boolean) {
+  revealSound = on;
+  try { localStorage.setItem(REVEAL_SOUND_STORAGE_KEY, on ? "on" : "off"); } catch { /* Kept for this visit only. */ }
+  for (const listener of revealSoundListeners) listener();
+}
+
+// Forgets the cached preference, so the next read comes from storage again. For tests.
+export function resetRevealSound() { revealSound = null; }
+
+const subscribeRevealSound = (listener: () => void) => {
+  revealSoundListeners.add(listener);
+  return () => { revealSoundListeners.delete(listener); };
+};
+
+export function useRevealSound() {
+  return useSyncExternalStore(subscribeRevealSound, readRevealSound, readRevealSound);
+}
+
+// Plays a revealed term for `owner` when the reveal sound is on and the clip is ready; otherwise the reveal stays silent.
+export function playRevealSpeech(owner: string, url: string | null | undefined) {
+  if (url && readRevealSound()) playSpeech(owner, [url]);
+}
+
+// The reveal sound toggle beside a recap's counter: pressed while revealing speaks the term.
+export function RevealSoundToggle() {
+  const { t } = useTranslation();
+  const on = useRevealSound();
+  return <button type="button" className={styles.button} aria-label={t("courses.speech.revealSound")} aria-pressed={on}
+    onClick={() => setRevealSound(!on)}>
+    {on ? <Volume2 aria-hidden="true" className={styles.icon} /> : <VolumeX aria-hidden="true" className={styles.icon} />}
+  </button>;
 }

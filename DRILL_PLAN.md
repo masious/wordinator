@@ -33,17 +33,21 @@ Notes (2026-10-12): courses in the filter come oldest first, so Part I precedes 
 
 ## C12b — Spoken reveal (web only)
 
-- [ ] `WordRecap`: Show meaning on one card plays the term clip through the shared `Speech` element when ready and the sound is on; Show all and Hide meaning play nothing; playing stops when the page changes.
-- [ ] Sound toggle beside the counter, stored per device in `localStorage` (`wordinator:reveal-sound:v1`), wrapped in try/catch with on as the fallback.
-- [ ] Tests: RTL for playing on reveal, silence for Show all, Hide meaning, a missing clip, and sound off, and the stored preference; a check that recap surfaces inherit it.
-- [ ] Docs: `docs/design-system.md` toggle placement, `docs/testing.md`.
+- [x] `WordRecap`: Show meaning on one card plays the term clip through the shared `Speech` element when ready and the sound is on; Show all and Hide meaning play nothing; playing stops when the page changes.
+- [x] Sound toggle beside the counter, stored per device in `localStorage` (`wordinator:reveal-sound:v1`), wrapped in try/catch with on as the fallback.
+- [x] Tests: RTL for playing on reveal, silence for Show all, Hide meaning, a missing clip, and sound off, and the stored preference; a check that recap surfaces inherit it.
+- [x] Docs: `docs/design-system.md` toggle placement, `docs/testing.md`.
+
+Notes (2026-10-12): the preference lives in `molecules/Speech.tsx` (`useRevealSound`, `playRevealSpeech`, `RevealSoundToggle`) so Drill cards reuse it. A spoken reveal plays under the card's term owner, so the term buttons show it as playing and the card's unmount on a page change stops it. The pre-existing `course-words.spec.ts` "an author adds new words" failure (forms expected in the New words panel) also fails on a clean tree and is not part of C12b.
 
 ## C12c — Drill contracts and data
 
-- [ ] Contracts: `WORD_DRILL_SESSION_SIZE`, the direction and result enums, `wordDrillQuerySchema`, `wordDrillDeckSchema`, `wordDrillGradeRequestSchema`, and the response.
-- [ ] Migration `0025_course_word_drill_states.sql` with `packages/db/src/schema.ts`, as in the data model.
-- [ ] Pure deck builder in `packages/db` (or the API), separate from SQL so it can be unit tested: tiers, the weaker direction for Mixed, one term key per session keeping the weakest, the session cap, random tie-breaks and shuffle through an injected random source.
-- [ ] Vitest for the deck builder and the box transitions (new → 2 on Got it, any → 1 on Again, capped at 5).
+- [x] Contracts: `WORD_DRILL_SESSION_SIZE`, the direction and result enums, `wordDrillQuerySchema`, `wordDrillDeckSchema`, `wordDrillGradeRequestSchema`, and the response.
+- [x] Migration `0025_course_word_drill_states.sql` with `packages/db/src/schema.ts`, as in the data model.
+- [x] Pure deck builder in `packages/db` (or the API), separate from SQL so it can be unit tested: tiers, the weaker direction for Mixed, one term key per session keeping the weakest, the session cap, random tie-breaks and shuffle through an injected random source.
+- [x] Vitest for the deck builder and the box transitions (new → 2 on Got it, any → 1 on Again, capped at 5).
+
+Notes (2026-10-12): the deck builder lives in `apps/api/src/wordDrill.ts` (the API already imports the contracts; `packages/db` stays schema-only) and is tested in the Workers suite, run on its own. The drill contracts sit beside word search in `@wordinator/contracts/lesson-document`, with `nextWordDrillBox` as the box rule the C12d upsert must match. The query's direction enum is `wordDrillModeSchema` (mixed, understand, produce); a card's is `wordDrillDirectionSchema`. Mixed picks the direction that ranks higher by deck priority, so box 1 counts as weaker than never drilled; `docs/words.md` now says so.
 
 ## C12d — Drill API
 

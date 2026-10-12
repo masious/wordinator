@@ -76,6 +76,18 @@ describe("Word recap", () => {
     expect(onDone).toHaveBeenCalledOnce();
   });
 
+  it("reveals the whole page with Show all without speaking", () => {
+    fit.value = { columns: 2, rows: 1 };
+    const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue(undefined);
+    const spoken = words.map((word, index) => ({ ...word, lessonId: id(9), speech: { term: `https://media.example/speech/${index}.mp3`, example: null } }));
+    renderRecap(spoken);
+    fireEvent.click(screen.getByRole("button", { name: "Show all" }));
+    expect(screen.getByText("the dog")).toBeInTheDocument();
+    expect(screen.getByText("the cat")).toBeInTheDocument();
+    expect(play).not.toHaveBeenCalled();
+    play.mockRestore();
+  });
+
   it("keeps the first word in view when the page size changes", () => {
     renderRecap(more);
     for (let step = 0; step < 3; step += 1) fireEvent.click(screen.getByRole("button", { name: "Next" }));

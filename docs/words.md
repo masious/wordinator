@@ -1,6 +1,6 @@
 # Words
 
-Status: C9 (word cards, bookmarks, and the Words tab) delivered; its release is tracked in [WORDS_PLAN.md](../WORDS_PLAN.md). C12 (lesson filter, spoken reveal, and Drill) is an approved product change (2026-10-12) in progress: C12a (lesson filter) is complete. Delivery is tracked in [DRILL_PLAN.md](../DRILL_PLAN.md). Phases are tracked in the [roadmap](roadmap.md#course-phases).
+Status: C9 (word cards, bookmarks, and the Words tab) delivered; its release is tracked in [WORDS_PLAN.md](../WORDS_PLAN.md). C12 (lesson filter, spoken reveal, and Drill) is an approved product change (2026-10-12) in progress: C12a (lesson filter) and C12b (spoken reveal) are complete. Delivery is tracked in [DRILL_PLAN.md](../DRILL_PLAN.md). Phases are tracked in the [roadmap](roadmap.md#course-phases).
 
 Words builds on [new words and recap](courses.md#new-words-and-recap). Lessons define words; this document owns how learners review them several at a time, bookmark them, come back to them in a Words tab, and drill them.
 
@@ -61,7 +61,7 @@ A session holds at most `WORD_DRILL_SESSION_SIZE` (20) cards, or fewer when fewe
 
 - **Weak words** draws from the learner's visible bookmarks. **Lesson** draws from every word of the lesson's published document, bookmarked or not, under the lesson read's visibility rules.
 - **One term per session.** Words are compared by their term's search key (`wordSearchKey`), and a session holds each key once, in one direction only. So a mixed session that asks for *vrij* never also asks for *free*, and *vrij* from two lessons appears once. Of words sharing a key, the weakest is kept.
-- **Direction.** In a single-direction session every card uses that direction. In a mixed session each word uses its weaker direction (lower box, then older or no last drill); ties are random.
+- **Direction.** In a single-direction session every card uses that direction. In a mixed session each word uses its weaker direction, the one that ranks higher by the priority below (so box 1 is weaker than never drilled, which is weaker than box 2); ties are random.
 - **Priority** for the card's direction, highest first: words last graded Again (box 1), then words never drilled in that direction, then box 2, 3, 4, 5. Within a tier, the longest since last drilled comes first, and ties are random. Weak words takes the first 20 by priority; Lesson takes the lesson's words in priority order up to 20.
 - The chosen cards are shuffled before the session starts, so a session's order does not reveal its priority.
 

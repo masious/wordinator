@@ -88,6 +88,8 @@ describe("Words tab", () => {
     expect(await screen.findByText("Words 1–2 of 3")).toBeInTheDocument();
     const first = screen.getByRole("article", { name: "woord 1" });
     expect(first).toHaveTextContent("Dutch foundations · Lesson 40");
+    // The Words tab's cards carry the shared reveal sound toggle.
+    expect(screen.getByRole("button", { name: "Speak words when revealed" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getAllByRole("article").map((card) => card.getAttribute("aria-label"))).toEqual(["woord 1", "woord 2"]);
     // The last page has no done action.
     fireEvent.click(screen.getByRole("button", { name: "Next" }));

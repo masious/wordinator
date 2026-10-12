@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../i18n";
 import { DialogueBlock, LessonDocument } from "../organisms/LessonDocument/LessonDocument";
 import { WordRecap } from "../organisms/WordRecap/WordRecap";
-import { lessonSpeech, SpeechScope, stopSpeech } from "./Speech";
+import { lessonSpeech, REVEAL_SOUND_STORAGE_KEY, resetRevealSound, SpeechScope, stopSpeech } from "./Speech";
 
 const id = (n: number) => `90000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const text = (value: string) => ({ type: "text" as const, text: value, styles: {} });
@@ -41,7 +41,7 @@ beforeEach(() => {
   vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => undefined);
   vi.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => undefined);
 });
-afterEach(() => { act(() => stopSpeech()); cleanup(); vi.restoreAllMocks(); });
+afterEach(() => { act(() => stopSpeech()); cleanup(); vi.restoreAllMocks(); localStorage.clear(); resetRevealSound(); });
 
 function renderWith(speech: Record<string, string> | null, node: ReactNode = <LessonDocument document={document} />) {
   return render(<MantineProvider>{speech ? <SpeechScope resolve={(key) => speech[key] ?? null}>{node}</SpeechScope> : node}</MantineProvider>);
@@ -244,5 +244,66 @@ describe("Lesson speech playback", () => {
     expect(lessonSpeech({ document: null, speech: {}, draftSpeech })).toEqual({ a: clip("a") });
     expect(lessonSpeech({ document, speech: { x: clip("x") }, draftSpeech })).toEqual({ x: clip("x") });
     expect(lessonSpeech({ document: null, speech: {}, draftSpeech: null })).toEqual({});
+  });
+});
+
+describe("Spoken reveal", () => {
+  const indexed = (word: { id: string; term: string; meaning: string }, term: string | null) => ({ ...word, lessonId: id(3), forms: null, example: null, note: null, speech: { term, example: null } });
+  const card = (term: string) => screen.getByRole("article", { name: term });
+  const toggle = () => screen.getByRole("button", { name: "Speak words when revealed" });
+
+  it("speaks the term when one card is revealed, and nothing on hiding it again", () => {
+    renderWith(null, <WordRecap words={[indexed(hund, clip("hund"))]} />);
+    expect(toggle()).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(within(card("der Hund")).getByRole("button", { name: "Show meaning" }));
+    expect(src()).toBe(clip("hund"));
+    // The term's own buttons show the spoken reveal as playing.
+    expect(screen.getAllByRole("button", { name: "Play pronunciation of der Hund", hidden: true })[0]).toHaveAttribute("aria-pressed", "true");
+    end();
+    vi.mocked(HTMLMediaElement.prototype.play).mockClear();
+    fireEvent.click(within(card("der Hund")).getByRole("button", { name: "Hide meaning" }));
+    expect(HTMLMediaElement.prototype.play).not.toHaveBeenCalled();
+  });
+
+  it("stays silent for a word without a ready clip", () => {
+    renderWith(null, <WordRecap words={[indexed(katze, null)]} />);
+    fireEvent.click(within(card("die Katze")).getByRole("button", { name: "Show meaning" }));
+    expect(HTMLMediaElement.prototype.play).not.toHaveBeenCalled();
+    expect(screen.getByText("the cat")).toBeInTheDocument();
+  });
+
+  it("stops the spoken reveal when the page changes", () => {
+    renderWith(null, <WordRecap words={[indexed(hund, clip("hund")), indexed(katze, clip("katze"))]} />);
+    fireEvent.click(within(card("der Hund")).getByRole("button", { name: "Show meaning" }));
+    expect(src()).toBe(clip("hund"));
+    fireEvent.click(screen.getByRole("button", { name: "Next" }));
+    expect(src()).toBeNull();
+    expect(HTMLMediaElement.prototype.pause).toHaveBeenCalled();
+  });
+
+  it("stays silent with the reveal sound off, remembers the choice, and shares it across recaps", () => {
+    renderWith(null, <><WordRecap words={[indexed(hund, clip("hund"))]} /><WordRecap words={[indexed(katze, clip("katze"))]} /></>);
+    const toggles = screen.getAllByRole("button", { name: "Speak words when revealed" });
+    fireEvent.click(toggles[0]!);
+    for (const button of toggles) expect(button).toHaveAttribute("aria-pressed", "false");
+    expect(localStorage.getItem(REVEAL_SOUND_STORAGE_KEY)).toBe("off");
+    fireEvent.click(within(card("die Katze")).getByRole("button", { name: "Show meaning" }));
+    expect(HTMLMediaElement.prototype.play).not.toHaveBeenCalled();
+    cleanup(); resetRevealSound();
+    renderWith(null, <WordRecap words={[indexed(hund, clip("hund"))]} />);
+    expect(toggle()).toHaveAttribute("aria-pressed", "false");
+    fireEvent.click(toggle());
+    expect(localStorage.getItem(REVEAL_SOUND_STORAGE_KEY)).toBe("on");
+    fireEvent.click(within(card("der Hund")).getByRole("button", { name: "Show meaning" }));
+    expect(src()).toBe(clip("hund"));
+  });
+
+  it("falls back to speaking when the stored preference cannot be read or written", () => {
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => { throw new Error("blocked"); });
+    vi.spyOn(Storage.prototype, "setItem").mockImplementation(() => { throw new Error("blocked"); });
+    renderWith(null, <WordRecap words={[indexed(hund, clip("hund"))]} />);
+    expect(toggle()).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(toggle());
+    expect(toggle()).toHaveAttribute("aria-pressed", "false");
   });
 });

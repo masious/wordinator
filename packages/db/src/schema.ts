@@ -448,6 +448,29 @@ export const courseWordBookmarks = sqliteTable(
   ],
 );
 
+// Drill states (C12): an account's latest Leitner box per word and direction; keys into `course_lesson_words` without a
+// foreign key to it, like bookmarks. No `group_id` (storage compatibility rule); see docs/data-model.md#course_word_drill_states.
+export const courseWordDrillStates = sqliteTable(
+  "course_word_drill_states",
+  {
+    userId: text("user_id").notNull().references(() => users.id),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    wordId: text("word_id").notNull(),
+    direction: text("direction", { enum: ["understand", "produce"] }).notNull(),
+    box: integer("box").notNull(),
+    lastResult: text("last_result", { enum: ["got", "again"] }).notNull(),
+    lastDrilledAt: integer("last_drilled_at").notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.userId, table.lessonId, table.wordId, table.direction] }),
+    index("course_word_drill_states_user_idx").on(table.userId, table.direction, table.box, table.lastDrilledAt),
+    check("course_word_drill_states_direction_check", sql`${table.direction} in ('understand', 'produce')`),
+    check("course_word_drill_states_result_check", sql`${table.lastResult} in ('got', 'again')`),
+    check("course_word_drill_states_box_check", sql`${table.box} BETWEEN 1 AND 5`),
+  ],
+);
+
 // Lesson speech (C10a): one row per synthesized clip, shared across groups; see docs/data-model.md#speech_clips.
 export const speechClips = sqliteTable(
   "speech_clips",

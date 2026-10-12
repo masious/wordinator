@@ -636,6 +636,7 @@ export const resources = {
         },
         speech: {
           term: "Play pronunciation of {{term}}",
+          revealSound: "Speak words when revealed",
           wordExample: "Play the example for {{term}}",
           example: "Play the example sentence",
           turn: "Play line {{number}}, {{speaker}}",

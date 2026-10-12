@@ -1,0 +1,2993 @@
+{
+  "title": "Wie ben jij?",
+  "goal": "Introduce yourself and others with the full verb zijn and all subject pronouns; ask yes/no questions with zijn; say your job.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Wie ben jij?",
+      "id": "1cfcb96b-93ed-4248-b085-e0d71171bcde"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Yesterday Sofia arrived in Utrecht. Today, Wednesday, is her first day at her new job: a small IT company near Utrecht Centraal. In this lesson you will introduce yourself and other people with every form of zijn, ask yes/no questions, and say your job.",
+          "styles": {}
+        }
+      ],
+      "id": "528d3f71-e76f-423d-9b2c-a15c85b89ec4"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "In this lesson, the subject is still ",
+          "styles": {}
+        },
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " and the verb is still ",
+          "styles": {}
+        },
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ", like in ",
+          "styles": {}
+        },
+        {
+          "text": "Wij",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "Ik",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "ben",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " Sofia.",
+          "styles": {}
+        }
+      ],
+      "id": "11a69a0e-6a46-4f2b-886a-e6e23fff7813"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: De eerste dag",
+      "id": "2c20d22c-d319-4132-b0ae-d6a925b7da3c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "It is Wednesday morning. Sofia arrives for her first day of work. First she waits at the reception; then the team leader, Karin, comes to meet her.",
+          "styles": {}
+        }
+      ],
+      "id": "4008ebba-969b-486d-b08f-fd257f812e0f"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Receptioniste",
+            "text": "Goedemorgen! Bent u Sofia Moreno?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, dat ben ik. Goedemorgen!"
+          },
+          {
+            "speaker": "Receptioniste",
+            "text": "Welkom! Een moment, alstublieft."
+          },
+          {
+            "speaker": "Karin",
+            "text": "Goedemorgen! Ik ben Karin Smit. Ik ben teamleider."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goedemorgen, mevrouw Smit. Aangenaam."
+          },
+          {
+            "speaker": "Karin",
+            "text": "Aangenaam! Zeg maar jij, hoor. En zeg maar Karin."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Oké, Karin!"
+          },
+          {
+            "speaker": "Karin",
+            "text": "Welkom in het team, Sofia. Hoe gaat het?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goed, dank je. Ik ben een beetje nerveus."
+          },
+          {
+            "speaker": "Karin",
+            "text": "Kijk, dit is Daan."
+          }
+        ]
+      },
+      "id": "fb1d3cb3-2f60-49b4-9d85-e129e87bb5ad"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de teamleider",
+              "meaning": "team leader",
+              "forms": "de teamleiders",
+              "example": "Ik ben teamleider.",
+              "note": "No article before a job: Ik ben teamleider, not een teamleider.",
+              "id": "b24ed33a-dcd3-4b27-a2e6-38c63432d7c1"
+            },
+            {
+              "term": "mevrouw",
+              "meaning": "Mrs., ma'am (formal address)",
+              "example": "Goedemorgen, mevrouw Smit.",
+              "note": "Used with u, often with a surname.",
+              "id": "c607e0ce-7b74-441e-b526-bdf2c6cbb752"
+            },
+            {
+              "term": "Ja, dat ben ik.",
+              "meaning": "Yes, that's me.",
+              "example": "Bent u Sofia Moreno? Ja, dat ben ik.",
+              "id": "d164dd4c-f048-4ba5-98e1-39a036c90395"
+            },
+            {
+              "term": "Een moment, alstublieft.",
+              "meaning": "One moment, please. (formal)",
+              "example": "Een moment, alstublieft.",
+              "id": "fabda648-0f8f-4c6e-928b-efbe58f9b910"
+            },
+            {
+              "term": "Zeg maar jij.",
+              "meaning": "You can say jij (to me). (an invitation to drop u)",
+              "example": "Zeg maar jij, hoor.",
+              "id": "e66b97c3-c742-47c8-9f60-d5cf4bd7a350"
+            },
+            {
+              "term": "hoor",
+              "meaning": "a soft, reassuring tag word (roughly \"you know\", \"OK\")",
+              "example": "Zeg maar jij, hoor.",
+              "note": "Very common in spoken Dutch; adds no real meaning on its own.",
+              "id": "043c24c4-560f-4e42-bf31-1bf602617db0"
+            },
+            {
+              "term": "Zeg maar + name",
+              "meaning": "Just call me + name.",
+              "example": "En zeg maar Karin.",
+              "note": "The same pattern as Zeg maar jij, with a first name instead.",
+              "id": "5cdddcea-bb6b-474c-891e-9561b353165d"
+            },
+            {
+              "term": "oké",
+              "meaning": "okay",
+              "example": "Oké, Karin!",
+              "id": "5fc8348d-7ab2-40c1-9cc5-03e8dd63cb0b"
+            },
+            {
+              "term": "het team",
+              "meaning": "the team",
+              "forms": "de teams",
+              "example": "Het team is klein.",
+              "id": "3bf39942-eb33-44ca-a2f7-84e8b0b8e5a1",
+              "note": "Learn every noun with de or het. Here het is the article (the), not the pronoun het (it)."
+            },
+            {
+              "term": "Welkom in het team!",
+              "meaning": "Welcome to the team!",
+              "example": "Welkom in het team, Sofia.",
+              "note": "Recycles Welkom (in …)! from the previous lesson.",
+              "id": "6b652540-8598-413e-943b-7777e5ffde7b"
+            },
+            {
+              "term": "nerveus",
+              "meaning": "nervous",
+              "example": "Ik ben een beetje nerveus.",
+              "id": "63007e6f-3b1d-4c5e-8c40-1e6fe6b43900"
+            },
+            {
+              "term": "Kijk!",
+              "meaning": "Look!",
+              "example": "Kijk, dit is Daan.",
+              "id": "0a337e14-fe50-460b-a0dd-e655e6d68490"
+            },
+            {
+              "term": "Dit is …",
+              "meaning": "This is … (introducing a person)",
+              "example": "Kijk, dit is Daan.",
+              "note": "dit/dat as a system comes much later; for now learn Dit is … as a chunk.",
+              "id": "09880e53-220f-4aef-8bb3-605db5e01183"
+            }
+          ]
+        }
+      },
+      "id": "8d760ed8-64c7-40dc-a0d9-649441cd5ac6"
+    },
+    {
+      "type": "divider",
+      "id": "4a665d48-16df-4252-8c1d-e10ed978e440"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "zijn: ik ben, jij bent, u bent, hij/zij is, wij/jullie/zij zijn",
+      "id": "0e21404c-d9a8-4d46-b9ea-75dcc6ad65dd"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "You already know the singular forms of ",
+          "styles": {}
+        },
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " (",
+          "styles": {}
+        },
+        {
+          "text": "ik ben, jij/je bent, u bent, hij/zij is",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": ") from the previous lesson. ",
+          "styles": {}
+        },
+        {
+          "text": "wij/we, jullie",
+          "styles": {}
+        },
+        {
+          "text": " and ",
+          "styles": {}
+        },
+        {
+          "text": "zij/ze",
+          "styles": {}
+        },
+        {
+          "text": " (plural) all take ",
+          "styles": {}
+        },
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "id": "222bf54b-80f4-4b80-b777-e9815004401a"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "ik ",
+          "styles": {}
+        },
+        {
+          "text": "ben",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": "  ·  jij/je ",
+          "styles": {}
+        },
+        {
+          "text": "bent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": "  ·  u ",
+          "styles": {}
+        },
+        {
+          "text": "bent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": "  ·  hij/zij/ze/het ",
+          "styles": {}
+        },
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": "  ·  wij/we ",
+          "styles": {}
+        },
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": "  ·  jullie ",
+          "styles": {}
+        },
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": "  ·  zij/ze ",
+          "styles": {}
+        },
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "id": "9d8c9162-bda4-4a8b-8700-566d0033f4ae"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Pronoun",
+              "id": "c3427837-01d4-4cba-a21f-f2e913a5e783"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ik",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " I",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "dcd8a678-aa10-4c1d-8947-1444c0d3850c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jij / je",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " you (informal)",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "07945e0e-8b2e-439b-9367-806598fe6861"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "u",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " you (formal)",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "ee4689ff-91a0-44c7-8bc3-4b390d6cd871"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "hij / zij / ze / het",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " he / she / it",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "7d024180-237b-4cbb-9824-70a95cc048cd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "wij / we",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " we",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "1bb671e0-6d2d-4c91-8532-386cba467140"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jullie",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " you (plural, informal)",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "6657c701-474c-4c29-bd3b-e6a713b5b64e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "zij / ze",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " they",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "20b97429-b3d8-4082-876c-4e52d81e1094"
+            }
+          ],
+          "id": "85db3190-e3f2-45b4-a18d-8e375cb628de"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "zijn",
+              "id": "82ce5a13-2083-4f91-bf20-ecac821c134c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ben",
+                  "styles": {}
+                }
+              ],
+              "id": "378a67dc-806d-4e25-a1c6-17cc6d4f273b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "bent",
+                  "styles": {}
+                }
+              ],
+              "id": "0bdd10d3-31d5-411f-87ab-155434f7c9bd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "bent",
+                  "styles": {}
+                }
+              ],
+              "id": "83d86e09-e114-495e-8f77-965081e5d0b4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "is",
+                  "styles": {}
+                }
+              ],
+              "id": "32ad3d8c-fcd1-4cc1-bc7f-bbaeec1fc012"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "zijn",
+                  "styles": {}
+                }
+              ],
+              "id": "3579ef2b-c227-427b-b803-00ca867f997e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "zijn",
+                  "styles": {}
+                }
+              ],
+              "id": "aa1be99f-ed3a-4f99-b9ef-7e4f34ddf787"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "zijn",
+                  "styles": {}
+                }
+              ],
+              "id": "1df3cd04-c11c-4464-b0d1-a3800fc6341d"
+            }
+          ],
+          "id": "2cf6eb93-0690-4b98-9c60-cfd087f018ca"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Example",
+              "id": "b8baf99e-aa47-4c6a-9acc-5e5420c6b529"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Ik",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " ",
+                  "styles": {}
+                },
+                {
+                  "text": "ben",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                {
+                  "text": " programmeur.",
+                  "styles": {}
+                }
+              ],
+              "id": "9c28a8a8-7f7a-455e-8f3f-60640e05be6f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Jij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " ",
+                  "styles": {}
+                },
+                {
+                  "text": "bent",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                {
+                  "text": " nieuw.",
+                  "styles": {}
+                }
+              ],
+              "id": "feb9de0b-cc19-4aae-a9c9-234255d636cb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "U",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " ",
+                  "styles": {}
+                },
+                {
+                  "text": "bent",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                {
+                  "text": " mevrouw Smit.",
+                  "styles": {}
+                }
+              ],
+              "id": "1e259302-5816-435e-8a62-2136b9475793"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Hij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " ",
+                  "styles": {}
+                },
+                {
+                  "text": "is",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                {
+                  "text": " programmeur.",
+                  "styles": {}
+                }
+              ],
+              "id": "197d82cc-911a-4723-aca8-25c61c759dbc"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Wij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " ",
+                  "styles": {}
+                },
+                {
+                  "text": "zijn",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                {
+                  "text": " een team.",
+                  "styles": {}
+                }
+              ],
+              "id": "6c084744-801f-4188-bc93-cad359e4145a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Jullie",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " ",
+                  "styles": {}
+                },
+                {
+                  "text": "zijn",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                {
+                  "text": " aardig.",
+                  "styles": {}
+                }
+              ],
+              "id": "6d1b0ab5-72eb-4c74-bb2a-185e1498b984"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Zij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                {
+                  "text": " ",
+                  "styles": {}
+                },
+                {
+                  "text": "zijn",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                {
+                  "text": " blij.",
+                  "styles": {}
+                }
+              ],
+              "id": "07797f36-4a47-469f-a09c-067551cf628a"
+            }
+          ],
+          "id": "307d4775-e3ce-415c-807e-c8311496e33a"
+        }
+      ],
+      "id": "087f94ff-5c6f-4d1d-92f2-d4ce34fade91"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de programmeur",
+              "meaning": "programmer",
+              "forms": "de programmeurs",
+              "example": "Ik ben ook programmeur.",
+              "note": "No een before a job: Ik ben programmeur. (Spanish works the same way: Soy programadora.)",
+              "id": "074ece94-fe81-4c3a-bee1-afd8556446a7"
+            },
+            {
+              "term": "nieuw",
+              "meaning": "new",
+              "example": "Jij bent nieuw.",
+              "id": "8bd32d6c-24d4-43e3-ba54-13528d868eec"
+            },
+            {
+              "term": "klein",
+              "meaning": "small",
+              "example": "Het team is klein.",
+              "id": "2a36d315-61cd-4461-8c84-f7a3eadae904"
+            },
+            {
+              "term": "aardig",
+              "meaning": "nice, kind",
+              "example": "Jullie zijn aardig.",
+              "id": "95ef137e-7ecf-4a7e-829f-b0e66fb90583"
+            },
+            {
+              "term": "blij",
+              "meaning": "happy, glad",
+              "example": "Zij zijn blij.",
+              "note": "Also in blij met jou (glad to have you), as in the second dialogue.",
+              "id": "1124a6c3-93a5-45bb-8e1b-5b19af4e1e55"
+            }
+          ]
+        }
+      },
+      "id": "3681c5ae-9ac4-4a23-a22f-c9f5269a1298"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We are a team.",
+        "note": "wij/we always takes zijn."
+      },
+      "content": [
+        {
+          "text": "Wij",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": " een team.",
+          "styles": {}
+        }
+      ],
+      "id": "a3d98cc0-2f57-44d8-acae-56b340ac9065"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You (all) are very nice.",
+        "note": "jullie always takes zijn, never bent."
+      },
+      "content": [
+        {
+          "text": "Jullie",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " heel aardig.",
+          "styles": {}
+        }
+      ],
+      "id": "55bc5dd0-8445-47eb-b875-b9a36d33b43e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Karin and Daan are nice. Daan and I are a team.",
+        "note": "Two names, or a name + ik, are plural: zijn. (Wij zijn een team. means the same as Daan en ik zijn een team.)"
+      },
+      "content": [
+        {
+          "text": "Karin en Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " aardig. ",
+          "styles": {}
+        },
+        {
+          "text": "Daan en ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " een team.",
+          "styles": {}
+        }
+      ],
+      "id": "ee57f198-4c58-470c-9c3b-9cb7b8367f96"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Wij is",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        {
+          "text": " / ",
+          "styles": {}
+        },
+        {
+          "text": "Jullie bent",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        {
+          "text": " → ",
+          "styles": {}
+        },
+        {
+          "text": "Wij zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " / ",
+          "styles": {}
+        },
+        {
+          "text": "Jullie zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "id": "757b91cc-9363-428a-9615-0e168d79a018"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Subject pronouns: wij, jullie, zij, het",
+      "id": "9e8ee632-2087-4b1d-a77b-c6d86de1fc5b"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Three more pronouns join ik/jij/je/u/hij/zij/ze from the last lesson: ",
+          "styles": {}
+        },
+        {
+          "text": "wij/we",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " (we), ",
+          "styles": {}
+        },
+        {
+          "text": "jullie",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " (you, plural informal) and ",
+          "styles": {}
+        },
+        {
+          "text": "zij/ze",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " (they). ",
+          "styles": {}
+        },
+        {
+          "text": "het",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " (it) is new too, as in ",
+          "styles": {}
+        },
+        {
+          "text": "Hoe gaat het?",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " (How is it going?). Do not use het for people. Just like jij/je, the long forms (jij, wij, zij) are stressed, for contrast or emphasis; the short forms (je, we, ze) are the normal, everyday ones.",
+          "styles": {}
+        }
+      ],
+      "id": "5b8b7539-8c03-4749-b12b-f3689052d658"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "jij / je",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " — you (informal)",
+          "styles": {}
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "je",
+              "styles": {
+                "bold": true
+              }
+            },
+            {
+              "text": " — unstressed, normal: ",
+              "styles": {}
+            },
+            {
+              "text": "Hoe heet je?",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "4084a685-06e7-42ce-b574-4a58851c6e62"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "jij",
+              "styles": {
+                "bold": true
+              }
+            },
+            {
+              "text": " — stressed, for contrast: ",
+              "styles": {}
+            },
+            {
+              "text": "En jij?",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "a3e3ed91-7eb7-416c-99c4-54d6184f1d0c"
+        }
+      ],
+      "id": "20c5f1f3-6ab6-4003-8f03-c832d6516c6e"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "wij / we",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " — we",
+          "styles": {}
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "we",
+              "styles": {
+                "bold": true
+              }
+            },
+            {
+              "text": " — unstressed, normal: ",
+              "styles": {}
+            },
+            {
+              "text": "We zijn een team.",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "77874560-d26d-4115-a3c2-172db0183f67"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "wij",
+              "styles": {
+                "bold": true
+              }
+            },
+            {
+              "text": " — stressed: ",
+              "styles": {}
+            },
+            {
+              "text": "Wij zijn blij met jou.",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "e4185f1e-8d2b-4d58-a1e0-23da5e82887b"
+        }
+      ],
+      "id": "f6204cfc-cd37-46a3-82cf-4f6adbf67160"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "zij / ze",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " — she or they",
+          "styles": {}
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "ze",
+              "styles": {
+                "bold": true
+              }
+            },
+            {
+              "text": " — unstressed, normal: ",
+              "styles": {}
+            },
+            {
+              "text": "Ze is nieuw.",
+              "styles": {
+                "italic": true
+              }
+            },
+            {
+              "text": " / ",
+              "styles": {}
+            },
+            {
+              "text": "Ze zijn aardig.",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "f8ff4c38-7cad-44fc-8384-4069ee0b5b1f"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "zij",
+              "styles": {
+                "bold": true
+              }
+            },
+            {
+              "text": " — stressed, for contrast: ",
+              "styles": {}
+            },
+            {
+              "text": "Daan is programmeur. Zij is teamleider.",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "45e444b2-c8c3-4123-92a6-50a805c8e5b5"
+        }
+      ],
+      "id": "d56ddd42-d4c8-4892-9198-a2181c5e87bc"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        {
+          "text": "ze",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " can mean ",
+          "styles": {}
+        },
+        {
+          "text": "she",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " or ",
+          "styles": {}
+        },
+        {
+          "text": "they",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " — the verb tells you which: ",
+          "styles": {}
+        },
+        {
+          "text": "ze ",
+          "styles": {}
+        },
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " (she) · ",
+          "styles": {}
+        },
+        {
+          "text": "ze ",
+          "styles": {}
+        },
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " (they).",
+          "styles": {}
+        }
+      ],
+      "id": "2b41f246-7c62-43cb-8aa6-47d7d951d720"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        {
+          "text": "ij",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " in ",
+          "styles": {}
+        },
+        {
+          "text": "jij, wij, zij",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " sounds roughly like English \"ay\" in \"say\", but shorter. Written ",
+          "styles": {}
+        },
+        {
+          "text": "ij",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " and ",
+          "styles": {}
+        },
+        {
+          "text": "ei",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " sound exactly the same: ",
+          "styles": {}
+        },
+        {
+          "text": "zij, mijn",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " — compare ",
+          "styles": {}
+        },
+        {
+          "text": "klein",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "id": "af656cf6-bb25-4890-b281-97a1c892cf99"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "A name can become a pronoun",
+      "id": "9c593dfc-a81a-45f3-ab03-e73db0e37809"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Statements still follow subject + verb + rest. A noun or a name can be replaced by a pronoun, and the verb stays the same form.",
+          "styles": {}
+        }
+      ],
+      "id": "1e31dc75-ae7e-482a-a338-54106487f313"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Karin is a team leader. → She is a team leader.",
+        "note": "One woman: ze is. (Daan is programmeur. → Hij is programmeur. works the same way.)"
+      },
+      "content": [
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " teamleider.",
+          "styles": {}
+        },
+        {
+          "text": " → ",
+          "styles": {}
+        },
+        {
+          "text": "Ze",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " teamleider.",
+          "styles": {}
+        }
+      ],
+      "id": "3968943a-0fe5-44c0-a20a-933a76ada808"
+    },
+    {
+      "type": "divider",
+      "id": "9e8074b2-fc58-4524-850b-23d0c6dc9272"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Yes/no questions with zijn",
+      "id": "9d097ae8-96ad-44ff-a38a-88774786856e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "In a yes/no question, the verb comes first, then the subject: ",
+          "styles": {}
+        },
+        {
+          "text": "Bent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "u",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " Sofia Moreno?",
+          "styles": {}
+        },
+        {
+          "text": " With jij/je, ",
+          "styles": {}
+        },
+        {
+          "text": "bent",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " loses its ",
+          "styles": {}
+        },
+        {
+          "text": "t",
+          "styles": {
+            "bold": true,
+            "italic": true
+          }
+        },
+        {
+          "text": ": ",
+          "styles": {}
+        },
+        {
+          "text": "Ben",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "jij",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " Daan?",
+          "styles": {}
+        }
+      ],
+      "id": "880e628c-83e6-4723-9855-93b44e32765e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you Sofia Moreno?",
+        "note": "Formal, with u: keeps bent."
+      },
+      "content": [
+        {
+          "text": "Bent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " Sofia Moreno?",
+          "styles": {}
+        }
+      ],
+      "id": "2c3e0ed4-1065-4e6b-9957-7751aa33b865"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you Daan?",
+        "note": "jij after the verb: bent → ben (no t). Same with je: Ben je moe?"
+      },
+      "content": [
+        {
+          "text": "Ben",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " Daan?",
+          "styles": {}
+        }
+      ],
+      "id": "1ca34904-b02e-4c7a-856f-d712f16ef0c6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you (plural) tired?",
+        "note": "jullie keeps zijn in a question too."
+      },
+      "content": [
+        {
+          "text": "Zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "jullie",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " moe?",
+          "styles": {}
+        }
+      ],
+      "id": "472f3b6d-9783-4e83-9b61-d7d3c47bee20"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Put the verb first.",
+          "styles": {}
+        }
+      ],
+      "id": "cec29788-3796-480c-93f3-97f9dbb20ed7"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Then the subject.",
+          "styles": {}
+        }
+      ],
+      "id": "28ec2979-150b-4ae0-9829-557dbd018b5b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Then the rest.",
+          "styles": {}
+        }
+      ],
+      "id": "b3701c62-3a67-46e9-bcf8-88e4e34172f3"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Short answers: ",
+          "styles": {}
+        },
+        {
+          "text": "Ja.",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "Ja, dat ben ik.",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "Nee hoor.",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " (Not yet ",
+          "styles": {}
+        },
+        {
+          "text": "niet",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " — that comes in a later lesson.)",
+          "styles": {}
+        }
+      ],
+      "id": "7f7c16ee-4dc6-4ebc-984c-32cecd0c4a71"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Nee hoor",
+              "meaning": "No (not at all) — a friendly, relaxed no",
+              "example": "Is het team groot? Nee hoor, het team is klein.",
+              "note": "Niet itself is explained in a later lesson; for now, answer with a fact or Nee hoor.",
+              "id": "ebfc92aa-4f2a-46a8-b08a-07421cda3bed"
+            }
+          ]
+        }
+      },
+      "id": "55d0c0fc-002a-461a-880c-1f7ef8cc1837"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Jobs without an article",
+      "id": "df34e53c-a40c-4a59-a31e-496ffcd4e12d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Say your job with zijn and no een: Ik ben programmeur, not Ik ben een programmeur.",
+          "styles": {}
+        }
+      ],
+      "id": "acba911a-018a-4a10-a4a8-6986211b576e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I am a programmer.",
+        "note": "No een before a job."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "programmeur",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "id": "13b6ad93-14da-48ad-85cc-c86072885504"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik ben een programmeur",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        {
+          "text": " → ",
+          "styles": {}
+        },
+        {
+          "text": "Ik ben programmeur",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "id": "51457ccb-4f9c-4eee-9e7f-66d8811daec9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Introducing someone: Dit is …",
+      "id": "cfe7c90a-3560-4cec-aaf0-9978a783df2a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "To introduce someone, say Dit is … and shake hands (recycled from the previous lesson).",
+          "styles": {}
+        }
+      ],
+      "id": "16f05d85-9e5d-4772-86a6-5fd1fe7c0a01"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Look, this is Daan.",
+        "note": "Dit is … is a fixed phrase for introducing someone."
+      },
+      "content": [
+        {
+          "text": "Kijk, ",
+          "styles": {}
+        },
+        {
+          "text": "dit is",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": " Daan.",
+          "styles": {}
+        }
+      ],
+      "id": "4d02a75e-c9c3-4731-a7dd-e30952adbaa4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "From u to jij: Zeg maar jij",
+      "id": "cf61b8b4-4f8c-4678-8a98-b292bc7620eb"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "At Dutch workplaces, most people quickly move from u to jij — often the older person or the person in charge offers it, with Zeg maar jij or Zeg maar + their name.",
+          "styles": {}
+        }
+      ],
+      "id": "b79b3da3-1f59-48c1-a0e5-90bcab025916"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You can say jij (to me), you know. And just call me Karin.",
+        "note": "Zeg maar + jij or a first name: the same inviting pattern."
+      },
+      "content": [
+        {
+          "text": "Zeg maar jij",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": ", hoor. En ",
+          "styles": {}
+        },
+        {
+          "text": "zeg maar Karin",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "id": "d0402316-b180-49ed-abdf-1231eeba99af"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        {
+          "text": "At many Dutch workplaces, everyone uses jij and first names, often even with the boss. Karin, the team leader, offers Sofia jij on her very first day — this is normal, not overly familiar.",
+          "styles": {}
+        }
+      ],
+      "id": "bcf0eb21-99fd-40f5-a3b3-08c31ad92068"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Question word + ben + jij also makes a fixed question you already know: ",
+          "styles": {}
+        },
+        {
+          "text": "Wie",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "ben",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " jij?",
+          "styles": {}
+        },
+        {
+          "text": " (",
+          "styles": {}
+        },
+        {
+          "text": "wie",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " = who). wie starts the question; ben jij is verb + subject, as in any yes/no question.",
+          "styles": {}
+        }
+      ],
+      "id": "18801824-890d-45f6-afa0-46abc62a0d97"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "wie",
+              "meaning": "who",
+              "example": "Wie ben jij?",
+              "note": "Already met as the fixed chunk Wie ben jij? in the previous lesson; now you can see why it is ben jij (verb first).",
+              "id": "586bc60c-24a1-48b6-a298-efce2ff9af21"
+            }
+          ]
+        }
+      },
+      "id": "fef61ca2-5cf0-40cc-b1fb-ea9345f5f23c"
+    },
+    {
+      "type": "divider",
+      "id": "b495df21-edaa-4b07-aa9d-a7cba3925cec"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Daan",
+      "id": "ff307cfb-b4cc-4ad2-a32d-1b6c23154599"
+    },
+    {
+      "type": "paragraph",
+      "content": "A little later, Daan comes to Sofia's desk to say hello.",
+      "id": "bf5eba78-d8d1-44aa-9e90-e41f56736349"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Hoi! Ik ben Daan. Ik ben ook programmeur."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Daan! Ik ben Sofia. Aangenaam."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Aangenaam! Ben jij nieuw in Utrecht?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ik ben hier nieuw. Is het team groot?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Nee hoor, het team is klein: Karin, jij en ik."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Jullie zijn heel aardig!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Dank je! Wij zijn blij met jou."
+          }
+        ]
+      },
+      "id": "ec2b67f2-c4fc-4251-bcb0-ab136e7ffc94"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "ook",
+              "meaning": "also, too",
+              "example": "Ik ben ook programmeur.",
+              "id": "a7f93be5-0564-4fd6-97c7-6e3937f68fda"
+            },
+            {
+              "term": "hier",
+              "meaning": "here",
+              "example": "Ik ben hier nieuw.",
+              "id": "4674cde7-8189-4f50-bee8-7204cd5c4bd1"
+            }
+          ]
+        }
+      },
+      "id": "e2a9e7c5-18cc-4263-b86c-871e288276d5"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "Sofia says ",
+          "styles": {}
+        },
+        {
+          "text": "jullie",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " because she means Daan and Karin together. ",
+          "styles": {}
+        },
+        {
+          "text": "Wij zijn blij met jou",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " = we are glad to have you (met jou as in En met jou?).",
+          "styles": {}
+        }
+      ],
+      "id": "ed351a3d-a7a4-440d-aef7-47184714b876"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "A few more office words",
+      "id": "b776bd4b-a800-405d-9f22-541deb1b2b9d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The IT company is small.",
+        "note": "bedrijf = company; IT-bedrijf is a compound: IT + bedrijf, written with a hyphen."
+      },
+      "content": [
+        {
+          "text": "Het IT-bedrijf",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " klein.",
+          "styles": {}
+        }
+      ],
+      "id": "e6264c2e-2dbe-43c5-983a-0e50364ca212"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The reception is big.",
+        "note": "Recycles groot from the previous lesson."
+      },
+      "content": [
+        {
+          "text": "De receptie",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " ",
+          "styles": {}
+        },
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " groot.",
+          "styles": {}
+        }
+      ],
+      "id": "8ca8dcca-207f-4b29-bcf7-0ab09bc86e2c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Good morning, madam. Good morning, sir.",
+        "note": "Formal: mevrouw for a woman, meneer for a man, often with the surname (mevrouw Smit). Use them with u."
+      },
+      "content": [
+        {
+          "text": "Goedemorgen, ",
+          "styles": {}
+        },
+        {
+          "text": "mevrouw",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": ". Goedemorgen, ",
+          "styles": {}
+        },
+        {
+          "text": "meneer",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "id": "25d7ce06-ede3-4689-bbb1-3cba3172a63b"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het bedrijf",
+              "meaning": "company, business",
+              "forms": "de bedrijven",
+              "example": "Het bedrijf is klein.",
+              "id": "5a3b5142-5591-4205-9d37-2c8cd4bc5987"
+            },
+            {
+              "term": "het IT-bedrijf",
+              "meaning": "IT company",
+              "example": "Het IT-bedrijf is klein.",
+              "note": "A compound word: IT + bedrijf.",
+              "id": "715ae5a4-b9a7-402e-8d32-bda34ff9ed07",
+              "forms": "de IT-bedrijven"
+            },
+            {
+              "term": "de receptie",
+              "meaning": "the reception (desk/area)",
+              "forms": "de recepties",
+              "example": "De receptie is groot.",
+              "id": "9ea484ff-0cc3-4568-ae3a-68c76cfa15e2"
+            },
+            {
+              "term": "meneer",
+              "meaning": "Mr., sir (formal address)",
+              "example": "Goedemorgen, meneer.",
+              "note": "The formal word for a man, as mevrouw is for a woman.",
+              "id": "3fd8639a-223f-4ca3-84f6-ed0a1f0be9f1"
+            }
+          ]
+        }
+      },
+      "id": "44c76a65-5579-4e1c-957a-23c49212a1fa"
+    },
+    {
+      "type": "divider",
+      "id": "0ee8cbc2-f83d-4787-af69-aea5da596a79"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "b4387da4-9d44-4d88-92fd-2b5ed646ccf0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in ben, bent, is or zijn",
+      "id": "49900038-7cde-4f26-b9cb-9398334536bd"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in ben, bent, is or zijn. Example: Ik (blank) Sofia. → ben",
+          "items": [
+            {
+              "prompt": "Wij … een team.",
+              "authorsVersion": [
+                "zijn"
+              ],
+              "note": "wij → zijn."
+            },
+            {
+              "prompt": "Jullie … aardig.",
+              "authorsVersion": [
+                "zijn"
+              ],
+              "note": "jullie → zijn."
+            },
+            {
+              "prompt": "Daan en Karin … blij.",
+              "authorsVersion": [
+                "zijn"
+              ],
+              "note": "Two names together are plural: zijn."
+            },
+            {
+              "prompt": "Sofia? Ze … nieuw.",
+              "authorsVersion": [
+                "is"
+              ],
+              "note": "ze = she (Sofia) → is."
+            },
+            {
+              "prompt": "… jij Daan?",
+              "authorsVersion": [
+                "Ben"
+              ],
+              "note": "Yes/no question with jij: ben, no t."
+            },
+            {
+              "prompt": "… u Sofia Moreno?",
+              "authorsVersion": [
+                "Bent"
+              ],
+              "note": "Yes/no question with u: bent."
+            },
+            {
+              "prompt": "Het team … klein.",
+              "authorsVersion": [
+                "is"
+              ],
+              "note": "het team (singular) → is."
+            },
+            {
+              "prompt": "Ik … programmeur.",
+              "authorsVersion": [
+                "ben"
+              ],
+              "note": "ik → ben. No een before the job."
+            }
+          ]
+        }
+      },
+      "id": "f254d3aa-1913-4a82-b065-97107cd55cd4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the dialogues",
+      "id": "af778eca-4713-4738-af4b-bf6e7a65eb15"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the short exchanges. Fill in one form of zijn per blank. Example: Sofia: Ik (blank) nerveus. → ben",
+          "items": [
+            {
+              "prompt": "Sofia: Goedemorgen! … u mevrouw Smit? / Karin: Ja, dat … ik. Zeg maar jij, hoor.",
+              "authorsVersion": [
+                "Bent",
+                "ben"
+              ],
+              "note": "Sofia still says u: Bent u mevrouw Smit? Karin answers with the fixed phrase Ja, dat ben ik."
+            },
+            {
+              "prompt": "Daan: … jij nieuw in Utrecht? / Sofia: Ja, ik … hier nieuw.",
+              "authorsVersion": [
+                "Ben",
+                "ben"
+              ],
+              "note": "Ben jij (question, t-drop) … ik ben (statement)."
+            },
+            {
+              "prompt": "Sofia: … het team groot? / Daan: Nee hoor, het team … klein.",
+              "authorsVersion": [
+                "Is",
+                "is"
+              ],
+              "note": "Both singular: is, is."
+            },
+            {
+              "prompt": "Daan: Wij … blij met jou. / Sofia: Dank je! Jullie … heel aardig.",
+              "authorsVersion": [
+                "zijn",
+                "zijn"
+              ],
+              "note": "wij and jullie both take zijn."
+            },
+            {
+              "prompt": "Receptioniste: … u Sofia Moreno? / Sofia: Ja, dat ben ik. Ik … een beetje nerveus.",
+              "authorsVersion": [
+                "Bent",
+                "ben"
+              ],
+              "note": "Bent u (question) … ik ben (statement)."
+            }
+          ]
+        }
+      },
+      "id": "30209fa5-7f81-481f-bab9-0660e9097f2e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "1119f0a4-5d73-477b-b225-265882c7c60a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the full sentence, with a capital letter and a question mark or full stop. Example: ben / ik / Sofia → Ik ben Sofia.",
+          "items": [
+            {
+              "prompt": "Put in order: jij / ben / Daan",
+              "authorsVersion": [
+                "Ben jij Daan?"
+              ],
+              "note": "Yes/no question: verb, then subject."
+            },
+            {
+              "prompt": "Put in order: is / teamleider / Karin",
+              "authorsVersion": [
+                "Karin is teamleider."
+              ],
+              "note": "Statement: subject, verb, rest."
+            },
+            {
+              "prompt": "Put in order: zijn / jullie / moe",
+              "authorsVersion": [
+                "Zijn jullie moe?"
+              ],
+              "note": "Verb first in a yes/no question."
+            },
+            {
+              "prompt": "Put in order: is / klein / het team",
+              "authorsVersion": [
+                "Het team is klein."
+              ],
+              "note": "Statement: subject (het team), verb, rest."
+            },
+            {
+              "prompt": "Put in order: ik / programmeur / ben",
+              "authorsVersion": [
+                "Ik ben programmeur."
+              ],
+              "note": "No een before the job."
+            }
+          ]
+        }
+      },
+      "id": "6b775626-f78a-4a36-9386-bafd787157eb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Transformation",
+      "id": "67d936b2-a5d5-4593-b202-b26e4578d4c5"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence. In 1 to 3, replace the name or names with a pronoun. In 4 to 6, turn the statement into a yes/no question. Examples: Daan is programmeur. → Hij is programmeur. / Jullie zijn moe. → Zijn jullie moe?",
+          "items": [
+            {
+              "prompt": "Karin is aardig.",
+              "authorsVersion": [
+                "Ze is aardig."
+              ],
+              "note": "One woman: ze is. Also fine: Zij is aardig."
+            },
+            {
+              "prompt": "Daan en Karin zijn blij.",
+              "authorsVersion": [
+                "Ze zijn blij."
+              ],
+              "note": "Two names → they: ze zijn. Also fine: Zij zijn blij."
+            },
+            {
+              "prompt": "Sofia en ik zijn nieuw.",
+              "authorsVersion": [
+                "Wij zijn nieuw."
+              ],
+              "note": "A name + ik → wij/we zijn. Also fine: We zijn nieuw."
+            },
+            {
+              "prompt": "Jij bent programmeur.",
+              "authorsVersion": [
+                "Ben jij programmeur?"
+              ],
+              "note": "Verb first, t-drop with jij."
+            },
+            {
+              "prompt": "U bent mevrouw Smit.",
+              "authorsVersion": [
+                "Bent u mevrouw Smit?"
+              ],
+              "note": "Verb first; u keeps bent."
+            },
+            {
+              "prompt": "Het team is klein.",
+              "authorsVersion": [
+                "Is het team klein?"
+              ],
+              "note": "Verb first."
+            }
+          ]
+        }
+      },
+      "id": "e842f390-32bf-4001-a403-25d8694caa4e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "7c9204bd-c395-4f5b-a390-ee1dc4108edf"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Example: I am tired. → Ik ben moe.",
+          "items": [
+            {
+              "prompt": "I am a programmer.",
+              "authorsVersion": [
+                "Ik ben programmeur."
+              ],
+              "note": "No een before a job."
+            },
+            {
+              "prompt": "Are you a programmer too?",
+              "authorsVersion": [
+                "Ben jij ook programmeur?"
+              ],
+              "note": "ook comes after the verb and subject. Also fine: Ben je ook programmeur? / Bent u ook programmeur? (formal)"
+            },
+            {
+              "prompt": "Karin is a team leader.",
+              "authorsVersion": [
+                "Karin is teamleider."
+              ],
+              "note": "No een before a job."
+            },
+            {
+              "prompt": "We are a team.",
+              "authorsVersion": [
+                "Wij zijn een team."
+              ],
+              "note": "Also fine: We zijn een team."
+            },
+            {
+              "prompt": "This is Daan.",
+              "authorsVersion": [
+                "Dit is Daan."
+              ],
+              "note": "Dit is … introduces a person."
+            }
+          ]
+        }
+      },
+      "id": "fb248eb8-889e-4c92-8943-a0571ed53c3e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "17b54617-34ac-4fc2-bd36-63b914865336"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English. Example: Ik ben nerveus. → I am nervous.",
+          "items": [
+            {
+              "prompt": "Ze zijn heel aardig.",
+              "authorsVersion": [
+                "They are very nice."
+              ],
+              "note": "ze + zijn = they. Also fine: They are very kind."
+            },
+            {
+              "prompt": "Ze is nieuw.",
+              "authorsVersion": [
+                "She is new."
+              ],
+              "note": "ze + is = she."
+            },
+            {
+              "prompt": "Ja, dat ben ik.",
+              "authorsVersion": [
+                "Yes, that's me."
+              ],
+              "note": "Fixed answer. Also fine: Yes, I am."
+            },
+            {
+              "prompt": "Zeg maar Karin.",
+              "authorsVersion": [
+                "Just call me Karin."
+              ],
+              "note": "Karin offers her first name. Also fine: You can call me Karin."
+            },
+            {
+              "prompt": "Is het team klein?",
+              "authorsVersion": [
+                "Is the team small?"
+              ],
+              "note": "Verb first: a yes/no question."
+            }
+          ]
+        }
+      },
+      "id": "1da26d5d-12bc-4c24-838e-04456b0f8770"
+    },
+    {
+      "type": "divider",
+      "id": "a97cce3f-fe6a-4646-a45a-f35b69972e2a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Welkom, Sofia!",
+      "id": "9dbd4574-62db-4fa9-ae62-deb652c95bb8"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "That afternoon, Karin writes a message in the team chat.",
+          "styles": {}
+        }
+      ],
+      "id": "8ab541db-e93c-45b6-a812-92cadac32bf5"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the team chat. Answer each question in Dutch; short answers are fine. Example: Who is new in the team? → Sofia.",
+          "items": [
+            {
+              "prompt": "Wie is Sofia?",
+              "authorsVersion": [
+                "Sofia is programmeur. Ze is nieuw."
+              ],
+              "note": "Also fine: Ze is programmeur. / Sofia Moreno."
+            },
+            {
+              "prompt": "Is Sofia programmeur?",
+              "authorsVersion": [
+                "Ja, ze is programmeur."
+              ],
+              "note": "Karin writes: Sofia is programmeur. Also fine: Ja."
+            },
+            {
+              "prompt": "Klopt dit? Het team is groot.",
+              "authorsVersion": [
+                "Nee, het team is klein."
+              ],
+              "note": "Daan writes: Het team is klein."
+            },
+            {
+              "prompt": "Who writes \"Hoi allemaal!\"?",
+              "authorsVersion": [
+                "Karin."
+              ],
+              "note": "Karin starts her message with Hoi allemaal! and ends it with Groetjes, Karin."
+            },
+            {
+              "prompt": "How is Sofia?",
+              "authorsVersion": [
+                "Ze is heel blij."
+              ],
+              "note": "Sofia writes: Ik ben heel blij. Answer with ze (she) + is."
+            },
+            {
+              "prompt": "What does Sofia say about Karin and Daan?",
+              "authorsVersion": [
+                "Jullie zijn heel aardig. / Ze zijn heel aardig."
+              ],
+              "note": "Sofia talks to them: jullie zijn. About them: ze zijn."
+            }
+          ],
+          "passage": {
+            "title": "Welkom, Sofia!",
+            "content": "Karin: Hoi allemaal! Dit is Sofia Moreno. Sofia is programmeur. Ze is nieuw in het team. Welkom, Sofia! Groetjes, Karin\nDaan: Welkom, Sofia! Het team is klein, maar heel gezellig.\nSofia: Dank jullie wel! Ik ben heel blij. Jullie zijn heel aardig."
+          }
+        }
+      },
+      "id": "c840773f-d8aa-40ab-addd-f6fdd911cff7"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Hoi allemaal",
+              "meaning": "Hi everyone",
+              "example": "Hoi allemaal! Dit is Sofia Moreno.",
+              "id": "f6c1c1ec-6802-41aa-b171-5883fdeccbfd"
+            },
+            {
+              "term": "maar",
+              "meaning": "but",
+              "example": "Het team is klein, maar heel gezellig.",
+              "note": "A conjunction, explained fully in a later lesson (maar, en, of); for now, learn its meaning.",
+              "id": "03e8eee4-20f7-4ce4-9e9f-96eebbe7130a"
+            },
+            {
+              "term": "gezellig",
+              "meaning": "nice, cosy, good company/atmosphere",
+              "example": "Het team is klein, maar heel gezellig.",
+              "note": "A very common Dutch word with no exact English translation.",
+              "id": "51ee468b-8222-4f3c-b2aa-978a39b21398"
+            },
+            {
+              "term": "Dank jullie wel!",
+              "meaning": "Thank you (to several people, informal)",
+              "example": "Dank jullie wel! Jullie zijn heel aardig.",
+              "note": "Like dank je wel from the previous lesson, with jullie for more than one person.",
+              "id": "5fbd158c-d1a7-4256-a0e2-a9c451e24a39"
+            },
+            {
+              "term": "Groetjes",
+              "meaning": "Best wishes, regards (informal sign-off)",
+              "example": "Groetjes, Karin",
+              "id": "733e4516-6f5a-48fd-8c6c-6ec766d6e329"
+            }
+          ]
+        }
+      },
+      "id": "18c393e6-8b66-46b7-8915-11b5e8ac7337"
+    },
+    {
+      "type": "divider",
+      "id": "e272fa05-6719-4ce8-b5f2-79db39db1f7a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "3a822709-ce6c-44d5-8b6a-ebcafb0037b2"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "It is your first day in a new class or job. Write 2-4 short sentences: greet, say your name and your job, and say something about the people with Jullie zijn.",
+          "items": [
+            {
+              "prompt": "Write 2-4 short sentences: greet, say your name and your job, and say something about the people.",
+              "authorsVersion": [
+                "Goedemorgen! Ik ben Sofia. Ik ben programmeur. Jullie zijn heel aardig!"
+              ],
+              "note": "Model answer by Sofia. Check: ben/bent/is/zijn, no een before the job, and jullie + zijn."
+            }
+          ]
+        }
+      },
+      "id": "dd356562-aaa3-4881-a45f-20678610a4d8"
+    },
+    {
+      "type": "divider",
+      "id": "dc1d8f5f-829d-4d1f-a962-29825dbb8690"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "895c3dea-a7c2-4531-8a8b-360939bfd0ea"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "zijn: ik ben, jij/je bent, u bent, hij/zij/het is, wij/jullie/zij zijn.",
+          "styles": {}
+        }
+      ],
+      "id": "2f671b4b-2106-4e32-ae99-b38c28b243d6"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "ze = she (",
+          "styles": {}
+        },
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ") or they (",
+          "styles": {}
+        },
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ").",
+          "styles": {}
+        }
+      ],
+      "id": "543aa066-17f5-4850-96a0-c717532498e8"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Questions: verb first; ",
+          "styles": {}
+        },
+        {
+          "text": "ben jij",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": " (no t).",
+          "styles": {}
+        }
+      ],
+      "id": "ef70013e-30ec-41a3-bf78-2f9a534467ef"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Ik ben programmeur",
+          "styles": {}
+        },
+        {
+          "text": " (no ",
+          "styles": {}
+        },
+        {
+          "text": "een",
+          "styles": {
+            "italic": true
+          }
+        },
+        {
+          "text": ").",
+          "styles": {}
+        }
+      ],
+      "id": "c11f40fb-0c4d-404c-8700-7945b7ab4a6c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "Zeg maar jij",
+          "styles": {}
+        },
+        {
+          "text": " / ",
+          "styles": {}
+        },
+        {
+          "text": "Zeg maar + name",
+          "styles": {}
+        },
+        {
+          "text": ": an invitation to drop u.",
+          "styles": {}
+        }
+      ],
+      "id": "c356ccc4-baa8-42b7-8fff-4de1daa0dbaf"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: De eerste dag",
+      "description": "Office reception near Utrecht Centraal: Karin, a calm, organised woman of about 48 with short brown hair and a blazer, shakes Sofia's hand; a receptionist, a man in his thirties with a beard and a light-blue shirt, sits behind a desk.",
+      "alt": "A team leader shakes a new employee's hand at an office reception desk.",
+      "characters": [
+        "sofia"
+      ],
+      "extras": [
+        "Karin, a team leader: a calm, organised woman of about 48 with short brown hair and a navy blazer",
+        "a receptionist: a man in his thirties with a beard and a light-blue shirt"
+      ],
+      "action": "A small, bright office reception near Utrecht Centraal with a white desk. Karin shakes Sofia's hand in front of the desk; the receptionist sits behind it and smiles."
+    },
+    {
+      "afterHeading": "Story: Daan",
+      "location": "sofia-office",
+      "characters": [
+        "sofia",
+        "daan"
+      ],
+      "action": "Daan and Sofia sit at a desk with two laptops, talking and smiling.",
+      "description": "Daan and Sofia at a desk with two laptops in a small, bright office.",
+      "alt": "Two colleagues sitting at a desk with laptops, talking."
+    }
+  ],
+  "id": "fa32b7b6-5ead-46ca-92d9-5a80ec7c855b"
+}

@@ -324,6 +324,7 @@ describe("Course lessons", () => {
     fireEvent.click(screen.getByRole("button", { name: "Review words" }));
     const dialog = await screen.findByRole("dialog", { name: "Review words" });
     expect(within(dialog).getByText("Word 1 of 2")).toBeInTheDocument();
+    expect(within(dialog).getByRole("button", { name: "Speak words when revealed" })).toBeInTheDocument();
     expect(within(dialog).getByRole("article", { name: "de hond" })).toHaveTextContent("de honden");
     fireEvent.click(within(dialog).getByRole("button", { name: "Next" }));
     fireEvent.click(within(dialog).getByRole("button", { name: "Back to the course" }));

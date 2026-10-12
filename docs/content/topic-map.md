@@ -18,9 +18,9 @@ Lesson IDs: `01-a` … `06-b` = `part-i/` (plan: [briefs-part-i.md](briefs-part-
 
 | Row | Topic | Introduced | Reinforced | Status | Notes |
 | --- | --- | --- | --- | --- | --- |
-| 1 | zijn; personal pronouns; basic SVO | Part I | everywhere | assumed (planned: 01-a, 01-b) | 01-a singular zijn and jij/u; 01-b full zijn, all pronouns, verb-first questions with zijn. |
+| 1 | zijn; personal pronouns; basic SVO | Part I | everywhere | covered | 01-a (accepted 2026-10-12): singular zijn (ik ben, jij/je bent, u bent, hij/zij is), pronouns ik/jij/je/u/hij/zij/ze, SVO in statements, question word first. 01-b (accepted 2026-10-12): full zijn table (wij/we, jullie, zij/ze, het added), all remaining subject pronouns, yes/no questions with zijn (verb first; jij/je bent → ben, as a fact for zijn only — generalised to every verb in 03-b), jobs without an article, "Dit is …" for people, u → jij ("Zeg maar jij."). |
 | 2 | komen, wonen; present singular | Part I | 07-a | assumed (planned: 02-a, 02-b) | 02-b: singular rule and stem spelling. |
-| 3 | Regular present; spreken; verb position (V2, questions, jij t-drop) | Part I | 07-a, 08-b | assumed (planned: 03-a, 03-b) | t-drop met as a fact in 02-a, taught in 03-b. |
+| 3 | Regular present; spreken; verb position (V2, questions, jij t-drop) | Part I | 07-a, 08-b | assumed (planned: 03-a, 03-b) | Yes/no inversion and the jij t-drop already taught for zijn only in 01-b (accepted 2026-10-12: Bent u …? Ben jij …?); t-drop also met as a fact in 02-a (komen); both generalised to every verb in 03-b. |
 | 4 | hebben; numbers 0–100; question words | Part I | 07-a (wij hebben), 09-a (ordinals), 12-b (prices) | assumed (planned: 04-a, 04-b) | |
 | 5 | Possessives mijn/jouw/zijn/haar; de/het intro | Part I | 07-a (ons/onze, jullie, hun) | assumed (planned: 05-a, 05-b) | |
 | 6 | Adjectives; de/het + adjective basics | Part I | 13-2, 12-a, 18-a | assumed (planned: 06-a, 06-b) | Full ending system covered in 18-a. |
@@ -78,8 +78,8 @@ Lesson IDs: `01-a` … `06-b` = `part-i/` (plan: [briefs-part-i.md](briefs-part-
 | --- | --- | --- | --- | --- |
 | Negation niet (basic) / geen + noun | Part I | 11-b, 15-a, 16-b | assumed (planned: 03-b niet, 04-b geen) | System in 20-b. |
 | Conjunctions en, maar, of (or) | Part I | everywhere | assumed (planned: 03-a) | |
-| Jobs without an article (Ik ben programmeur.) | Part I | — | assumed (planned: 01-b) | |
-| Greetings by register; jij vs u; u → jij (Zeg maar jij.) | Part I | 11-b, 12-b | assumed (planned: 01-a, 01-b) | 11-b systematises u vs jij in the restaurant. |
+| Jobs without an article (Ik ben programmeur.) | Part I | — | covered | 01-b (accepted 2026-10-12): Ik ben programmeur, Karin is teamleider; warning callout against *Ik ben een programmeur*. |
+| Greetings by register; jij vs u; u → jij (Zeg maar jij.) | Part I | 11-b, 12-b | covered | 01-a (accepted 2026-10-12) covers greetings/goodbyes by register and jij vs u (informal/formal pairs). 01-b (accepted 2026-10-12) adds the switch itself: "Zeg maar jij, hoor. En zeg maar Karin.", with a culture callout that jij and first names are normal at Dutch workplaces, even with the boss. 11-b systematises u vs jij in the restaurant. |
 | Alphabet and spelling a name | — | — | missing (planned: 04-a) | Not assumed by later parts. |
 | Frequency adverbs (altijd, vaak, soms, nooit) and their position | 07-a | — | covered | |
 | Plural possessives ons/onze, jullie, hun | 07-a | — | covered | |

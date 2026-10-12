@@ -52,6 +52,17 @@ Planned facts for Part I (binding for workers; move them into a dated "Fixed fac
 - **Family** (05): Sofia has one brother, Javier (31), in Valencia; her father is not mentioned. Noor's sister Fleur is in Australia until 1 november. Daan's girlfriend is Lotte, a teacher. Sofia calls her mother on Sunday morning (in Spanish, offstage).
 - **The city** (06): zo 6 september Noor shows Sofia the centre (de Dom, de Oudegracht); no market on Sunday. Part I ends that evening.
 
+Fixed facts from 01-a (accepted 2026-10-12), opening Part I:
+- di 1 september: Sofia flies from Valencia to Schiphol and messages Noor from there; she takes the train to Utrecht Centraal, where Noor meets her late morning. Sofia is a bit tired from the trip.
+- In the afternoon, at the front door of Noor's flat in Utrecht-Oost, they meet the neighbour Els ("de buurvrouw"). Noor and Sofia say u to Els; Els says je to them (confirmed: older people say je to younger people, who keep saying u until invited otherwise — not yet invited in Part I). Noor addresses Els by her first name together with u.
+- That evening Noor says "Slaap lekker!" to Sofia at bedtime; Sofia starts her new job the next morning (wo 2 september, 01-b).
+
+Fixed facts from 01-b (accepted 2026-10-12):
+- wo 2 september, morning: Sofia's first day at the small IT company near Utrecht Centraal. A Receptioniste (formal, u) welcomes her at reception. Karin Smit, the team leader, comes out to meet her: Sofia says "mevrouw Smit" and u; Karin answers "Zeg maar jij, hoor. En zeg maar Karin." Karin uses jij and first names with everyone, also with the people she manages — normal at Dutch workplaces, not overly familiar. Sofia is a bit nervous.
+- Karin introduces Daan ("Kijk, dit is Daan."), also a programmeur. The team is small: Karin, Daan and Sofia (no Henk in Part I).
+- A little later Daan comes to Sofia's desk to say hello; he asks whether she is new in Utrecht (she is).
+- That afternoon Karin welcomes Sofia in the team chat ("Hoi allemaal! Dit is Sofia Moreno. … Welkom, Sofia! Groetjes, Karin"); Daan replies that the team is small but very gezellig; Sofia thanks them both.
+
 ## Lesson-by-lesson story beats
 
 | File | Date (2026) | Beat | Characters |
@@ -104,7 +115,7 @@ Planned facts for Part I (binding for workers; move them into a dated "Fixed fac
 | 24-a | za 12 december | The housewarming: paella, pierogi, stamppot and Henk's cheese; opinions, agreeing and disagreeing. | Sofia, Henk, Noor, Fleur, Daan, Lotte, Piotr, Kasia |
 | 24-b | di 15 – vr 18 december | Last Dutch class before Christmas (opinions about the Netherlands); Friday evening goodbye to Henk and Tijger. Closes Part IV. | Sofia, Marieke, Piotr, Henk |
 
-Fixed story facts (never contradict): Sofia has no bike until za 31 oktober (16-b); before that she walks or takes the bus. There is no tram in Lombok or anywhere in Sofia's Utrecht; the only tram in the story is tram 2 in Amsterdam (16-a). Henk's cat is called Tijger. Henk has no surname in the lessons; Sofia calls him meneer, then Henk. Noor's flat has one bathroom and a small kitchen. Sofia's new apartment matches the row-13 listing exactly. Sofia's mother lives in Valencia (she calls her on Sundays). Daan always arrives early; Sofia is often a little late.
+Fixed story facts (never contradict): Sofia has no bike until za 31 oktober (16-b); before that she walks or takes the bus. There is no tram in Lombok, so Sofia's trips from home are by bus, on foot or (from 31 October) by bike. Elsewhere in Utrecht a tram is fine: Noor and Sofia take the tram from Utrecht-Oost to Daan's party in 09-b (real Utrecht has the Uithoflijn through the east of the city). The tram in Amsterdam is tram 2 (16-a). (Narrowed by the user, 2026-10-12.) Henk's cat is called Tijger. Henk has no surname in the lessons; Sofia calls him meneer, then Henk. Noor's flat has one bathroom and a small kitchen. Sofia's new apartment matches the row-13 listing exactly. Sofia's mother lives in Valencia (she calls her on Sundays). Daan always arrives early; Sofia is often a little late.
 
 Fixed facts from 16-a … 17-a (accepted 2026-10-08):
 - **16-a**: Sofia usually walks to the office; when late she takes the bus from the Kanaalstraat to Utrecht Centraal. di 27 oktober: train 8.16 from spoor 7, five minutes' delay, via Amsterdam Amstel to Amsterdam Centraal (~8.50), then tram 2 (stop in front of the station, ~15 min) to the client at 10.00; back at 15.00, in Utrecht 15.30. Daan has an ov-chipkaart; Sofia checks in with her bank card.

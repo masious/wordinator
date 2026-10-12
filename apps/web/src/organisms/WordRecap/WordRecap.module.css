@@ -1,5 +1,6 @@
 .recap{display:grid;gap:var(--space-5);min-width:0}
 .toolbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3);min-height:var(--control-height)}
+.status{display:inline-flex;align-items:center;gap:var(--space-4)}
 .counter{margin:0;color:var(--color-foreground-muted);font:var(--type-metadata)/1 var(--font-mono)}
 /* Columns no narrower than the minimum card width, at most three; every row is one card high. */
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(max(min(100%,var(--size-word-card-min)),calc((100% - 2 * var(--space-4)) / 3)),1fr));grid-auto-rows:var(--size-word-card);gap:var(--space-4);min-width:0}

@@ -196,6 +196,8 @@ Prefer the words in the ledger's target list. Parts II–IV already exist, and s
 
 ## Brief 01-b
 
+> **Note from 01-a's accepted lesson (2026-10-12)**: zijn (singular) and the pronouns ik/jij/je/u/hij/zij/ze were taught in 01-a's grammar callout and columnList, not as `vocabulary` ("New words") cards — do not expect them in 01-a's word list when recycling or pointing learners back to it. Inversion and "Zeg maar jij." were kept fully out of 01-a (no preview, no hint), so 01-b introduces both from scratch as planned. 01-a ended with 44 New words (4 over the 40 allowance), including op Schiphol, Nederland, straks, Super! and Klopt dit? as cards — treat these as known/recycled, not new, if 01-b's scene needs them.
+
 - **File**: `part-i/01-b-wie-ben-jij.json`
 - **Title**: Wie ben jij?
 - **Goal**: Introduce yourself and others with the full verb zijn and all subject pronouns; ask yes/no questions with zijn; say your job.
@@ -260,6 +262,8 @@ Prefer the words in the ledger's target list. Parts II–IV already exist, and s
 ## Briefs 02-a … 06-b
 
 To be written before each lesson, in the depth of the briefs above. Scope lines (binding for the plan):
+
+> **Note from 01-b's accepted lesson (2026-10-12)**: zijn (full table) and the remaining pronouns (wij/we, jullie, zij/ze, het) were taught in 01-b's grammar callout and columnList, not as `vocabulary` ("New words") cards, continuing 01-a's precedent — do not expect them in 01-b's word list. "Dit is …" stayed a chunk restricted to introducing **people only** (the brief's own limit, confirmed in review); 02-a does not extend it to places or things. Productive **niet** is still entirely absent in 01-b (only "Nee hoor" and corrective facts); 02-a introduces no niet either, so this stays untaught until 03-b as planned.
 
 - **02-a Waar kom je vandaan?** — `part-i/02-a-waar-kom-je-vandaan.json`. wo 2 september, lunch at the office with Daan, Karin and a Collega. komen uit + country/city; "Waar kom je vandaan?" / "Waar komt u vandaan?" (vandaan at the end; the t-drop in "kom je" is shown as a fact and explained in 03-b); ik kom, jij komt, u komt, hij/zij komt; countries (Nederland, Spanje, België, Duitsland, Engeland, Frankrijk, Italië, Polen, Marokko, Turkije …) and cities (Valencia, Utrecht, Groningen, Amsterdam); "Ik kom uit Valencia, in Spanje." Planned facts: Daan komt uit Utrecht; Karin komt uit Amersfoort; the Collega comes from Belgium (Antwerpen) and speaks Flemish Dutch (use in 03-a).
 - **02-b Ik woon in Utrecht** — `part-i/02-b-ik-woon-in-utrecht.json`. wo 2 september, evening at home with Noor. wonen in + place; the singular present rule (ik = stem; jij, u, hij, zij = stem + t); stem spelling: keep the vowel sound (wonen → woon, komen → kom, maken → maak, zitten → zit, leven → leef, reizen → reis), stems ending in -t take no extra t (heten → ik heet, hij heet; zitten → hij zit); "Ik woon bij Noor." (chunk). Facts: Noor komt uit Groningen, maar ze woont in Utrecht (maar glossed); Sofia woont nu bij Noor in Utrecht-Oost; Sofia's mother lives in Valencia. Singular subjects only.

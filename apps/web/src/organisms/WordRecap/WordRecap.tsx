@@ -1,8 +1,8 @@
 import type { CourseWord, LessonStep } from "@wordinator/contracts/lesson-document";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
-import { SpeechButton, useSpeechResolver } from "../../molecules/Speech";
+import { playRevealSpeech, RevealSoundToggle, SpeechButton, useSpeechResolver, useStopSpeechOnUnmount } from "../../molecules/Speech";
 import { Button } from "../../ui";
 import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
 import { measureFit, type GridFit } from "./fitGrid";
@@ -58,19 +58,23 @@ function WordCard({ word, source, shown, opened, onToggle }: { word: RecapWord; 
   const termSpeech = word.speech ? word.speech.term : resolve(`word:${word.id}`);
   const exampleSpeech = word.speech ? word.speech.example : resolve(`wordExample:${word.id}`);
   const termLabel = t("courses.speech.term", { term: word.term });
+  // Both term buttons and the reveal share one owner, so a spoken reveal shows as playing and stops when the card leaves the page.
+  const termOwner = useId();
+  useStopSpeechOnUnmount(termOwner);
+  const toggle = () => { if (!shown) playRevealSpeech(termOwner, termSpeech); onToggle(); };
   return <article className={`${styles.card} ${shown ? styles.flipped : ""}`} aria-label={word.term}>
     <div className={styles.faces}>
       <div className={`${styles.face} ${styles.front}`} aria-hidden={shown || undefined} inert={shown}>
         {source && <p className={styles.source}>{source}</p>}
         <p className={styles.term}>{word.term}</p>
-        <SpeechButton url={termSpeech} label={termLabel} />
+        <SpeechButton url={termSpeech} label={termLabel} owner={termOwner} />
         {word.forms && <p className={styles.forms}>{word.forms}</p>}
       </div>
       {/* The back stays empty until first revealed, so nothing is spoiled; it then keeps its text to show while flipping back. */}
       <div className={`${styles.face} ${styles.back}`} aria-hidden={!shown || undefined} inert={!shown} tabIndex={shown ? 0 : undefined}>
         {opened && <>
           <p className={styles.backTerm}>{word.term}{word.forms && <span className={styles.forms}> · {word.forms}</span>}
-            <SpeechButton url={termSpeech} label={termLabel} className={styles.speech} /></p>
+            <SpeechButton url={termSpeech} label={termLabel} owner={termOwner} className={styles.speech} /></p>
           <p className={styles.meaning}><PlainText>{word.meaning}</PlainText></p>
           {word.example && <p className={styles.example}><PlainText>{word.example}</PlainText>
             <SpeechButton url={exampleSpeech} label={t("courses.speech.wordExample", { term: word.term })} className={styles.speech} /></p>}
@@ -79,7 +83,7 @@ function WordCard({ word, source, shown, opened, onToggle }: { word: RecapWord; 
       </div>
     </div>
     <div className={styles.footer}>
-      <Button variant="secondary" onClick={onToggle}>{shown ? t("courses.words.hideMeaning") : t("courses.words.showMeaning")}</Button>
+      <Button variant="secondary" onClick={toggle}>{shown ? t("courses.words.hideMeaning") : t("courses.words.showMeaning")}</Button>
       <span className={styles.bookmark}><WordBookmarkToggle wordId={word.id} lessonId={word.lessonId} term={word.term} /></span>
     </div>
   </article>;
@@ -89,9 +93,10 @@ function WordCard({ word, source, shown, opened, onToggle }: { word: RecapWord; 
 export type MoreWords = { hasMore: boolean; loading: boolean; onLoad: () => void };
 
 // Pages of word cards sized to fit without scrolling. Each card flips in place to reveal its meaning, example, and note, and Show
-// all reveals the page. Back and Next move by a page; the last page offers the done action when there is one. With `more`, the
-// next words load while the reader is a page away from the end, and the total is not shown until every word has loaded. Nothing is
-// graded, recorded, or counted. Callers render it only when there is at least one word.
+// all reveals the page. Revealing one card speaks its term while the reveal sound is on; Show all and Hide meaning stay silent.
+// Back and Next move by a page; the last page offers the done action when there is one. With `more`, the next words load while
+// the reader is a page away from the end, and the total is not shown until every word has loaded. Nothing is graded, recorded,
+// or counted. Callers render it only when there is at least one word.
 export function WordRecap({ words, doneLabel, onDone, source, more }: {
   words: readonly RecapWord[]; doneLabel?: string; onDone?: () => void; source?: (word: RecapWord) => string | null; more?: MoreWords;
 }) {
@@ -123,7 +128,7 @@ export function WordRecap({ words, doneLabel, onDone, source, more }: {
     : page.length > 1 ? t("courses.words.range", { first: start + 1, last: end, total: words.length }) : t("courses.words.counter", { current: start + 1, total: words.length });
   return <div className={styles.recap} ref={recapRef}>
     <div className={styles.toolbar}>
-      <p className={styles.counter}>{counter}</p>
+      <span className={styles.status}><p className={styles.counter}>{counter}</p><RevealSoundToggle /></span>
       {page.length > 1 && <Button variant="quiet" onClick={() => reveal(page.map(wordKey), !allShown)}>
         {allShown ? t("courses.words.hideAll") : t("courses.words.showAll")}
       </Button>}
