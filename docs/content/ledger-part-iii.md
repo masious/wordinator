@@ -8,7 +8,7 @@ Course: "Dutch Foundations — Part III" (`content/dutch-foundations/part-iii/`,
 
 Local database (2026-10-11): 14-a, 14-b, 15-a, 15-b, 16-a, 16-b, 17-a, 17-b, 18-a and 18-b are imported into the Part III course as unpublished drafts at positions 2–11, after the two published row-13 lessons. In production, 14-b exists only as the standalone course "Leggen of zetten?".
 
-Production (2026-10-08): 14-a, 15-a, 15-b, 16-a, 16-b and 17-a are imported into the Part III course as unpublished drafts at positions 2 and 4–8, using `part-iii/course.prod.json` with 14-b's statements removed from the SQL. By the user's decision, 14-b stays only in the standalone "Leggen of zetten?" course, so Part III has a gap at position 3. Do not run the unfiltered prod SQL: its 14-b upsert would move that lesson to position 3 inside the standalone course and overwrite its draft.
+Production (2026-10-11): 14-a, 15-a, 15-b, 16-a, 16-b, 17-a, 17-b, 18-a and 18-b are in the Part III course at positions 2 and 4–11, all published, imported with `part-iii/course.prod.json` with 14-b's statements removed from the SQL. By the user's decision, 14-b stays only in the standalone "Leggen of zetten?" course, so Part III has a gap at position 3. Do not run the unfiltered prod SQL: its 14-b upsert would move that lesson to position 3 inside the standalone course and overwrite its draft.
 
 | File | Title | Status |
 | --- | --- | --- |

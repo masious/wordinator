@@ -1,0 +1,1943 @@
+{
+  "title": "Ik zwem liever",
+  "goal": "Say what you like doing with graag, what you don't like with niet graag, and what you prefer with liever; combine gaan, komen, blijven and leren with a bare infinitive.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Ik zwem liever",
+      "id": "1a6ee732-eb3f-432c-a25d-d315a368fec6"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It's Sunday afternoon, 22 November. Daan goes skating every winter weekend, and today he takes Sofia, Noor, Lotte and Noor's sister Fleur along. Sofia has never skated before. In this lesson you say what you like doing (",
+        {
+          "text": "graag",
+          "styles": {
+            "bold": true
+          }
+        },
+        "), what you don't like (",
+        {
+          "text": "niet graag",
+          "styles": {
+            "bold": true
+          }
+        },
+        "), and what you prefer (",
+        {
+          "text": "liever",
+          "styles": {
+            "bold": true
+          }
+        },
+        "). You also use ",
+        {
+          "text": "gaan",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "komen",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "blijven",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "leren",
+          "styles": {
+            "bold": true
+          }
+        },
+        " with another verb."
+      ],
+      "id": "65502b36-0c47-4854-82d2-6d37d89de374"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: the finite verb is ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", an infinitive sent to the end is ",
+        {
+          "text": "red",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ", subjects are ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", a time expression is ",
+        {
+          "text": "orange",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ", and the new form of the lesson is ",
+        {
+          "text": "bold",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "8270ecfe-8626-4b22-b4d8-091bed01252d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Op de ijsbaan",
+      "id": "6b20a47d-3d22-4f62-ad96-bb59810c218e"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Sofia has never skated. Daan skates fast and well; Sofia keeps falling. Lotte comes to watch. Sofia meets Fleur for the first time: she is Noor's older sister, back from a year in Australia, and now lives in Sofia's old room at Noor's flat."
+      ],
+      "id": "989bdbb2-4b7d-4963-9c4d-ec73c44b0ee9"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Fleur",
+            "text": "Hoi Sofia! Ik ben Fleur, de zus van Noor. Ik woon nu in jouw oude kamer!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Fleur! Welkom terug! Surf je nog veel?"
+          },
+          {
+            "speaker": "Fleur",
+            "text": "Ja, ik surf heel graag! Maar Utrecht heeft geen zee. Dus schaats ik!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Kom op, Sofia! Nog een rondje!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wacht even! Ik val heel vaak. Schaatsen is best eng!"
+          },
+          {
+            "speaker": "Fleur",
+            "text": "Schaats je graag, Sofia?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik zwem liever! Zwemmen is veel makkelijker."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Je bent nog een beginner. Het gaat al beter!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Oké, nog één rondje. Maar daarna heb ik liever warme chocolademelk!"
+          },
+          {
+            "speaker": "Fleur",
+            "text": "Goed idee! Maar ik schaats eerst nog even."
+          }
+        ]
+      },
+      "id": "9e1e3451-1eef-4e10-8408-41932db38d5b"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de ijsbaan",
+              "meaning": "the ice rink",
+              "forms": "de ijsbanen",
+              "example": "We fietsen naar de ijsbaan.",
+              "id": "578844fd-1c0d-489e-b603-65ed64349e73"
+            },
+            {
+              "term": "vallen",
+              "meaning": "to fall",
+              "forms": "valt · viel · gevallen",
+              "example": "Ik val heel vaak, maar het gaat al beter.",
+              "id": "de9f1fa5-824e-4233-a20d-b470e8e755a7"
+            },
+            {
+              "term": "schaatsen",
+              "meaning": "to skate",
+              "forms": "schaatst · schaatste · geschaatst",
+              "example": "Sofia leert schaatsen.",
+              "note": "Like zwemmen (19-a), the infinitive can also be a het-noun: Schaatsen is moeilijk.",
+              "id": "1b8a20ea-1634-4f61-beeb-07a92e127b4f"
+            },
+            {
+              "term": "de schaats",
+              "meaning": "the (ice) skate",
+              "forms": "de schaatsen",
+              "example": "Daan heeft nieuwe schaatsen.",
+              "note": "Same spelling as the verb schaatsen; the sentence tells them apart.",
+              "id": "76c6a9d7-77e4-4e65-9572-6f01ed55e38c"
+            },
+            {
+              "term": "eng",
+              "meaning": "scary",
+              "example": "Schaatsen is best eng, vindt Sofia.",
+              "id": "40050988-de7c-4812-b7c8-8bbdedbf97eb"
+            },
+            {
+              "term": "surfen",
+              "meaning": "to surf",
+              "forms": "surft · surfte · gesurft",
+              "example": "Fleur surft heel graag.",
+              "id": "c586a689-0985-4ef8-a973-ce9090ccf404"
+            },
+            {
+              "term": "graag",
+              "meaning": "to like (doing something); gladly",
+              "example": "Ik schaats graag.",
+              "note": "New use. Known from Ja, graag! (07-a) and Ik wil graag … (11-a); now used after any verb.",
+              "id": "4e24dec4-8074-4453-8856-2373c756042b"
+            },
+            {
+              "term": "liever",
+              "meaning": "rather, prefer",
+              "example": "Ik zwem liever.",
+              "note": "The irregular comparative of graag, like goed → beter.",
+              "id": "86c6a759-9812-4cd3-8df8-bba435838c84"
+            },
+            {
+              "term": "de beginner",
+              "meaning": "the beginner",
+              "forms": "de beginners",
+              "example": "Sofia is nog een beginner.",
+              "id": "1111fe5d-5874-4f18-b976-1bd25ee20e79"
+            },
+            {
+              "term": "Het gaat al beter!",
+              "meaning": "It's already going better! / You're improving!",
+              "example": "Je bent nog een beginner. Het gaat al beter!",
+              "note": "Glossed chunk with beter (18-b).",
+              "id": "d7147d9d-d888-456a-92b6-4ca81b8b7855"
+            }
+          ]
+        }
+      },
+      "id": "cdbb10b6-e31b-43b8-876f-93e5995bb345"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "IJs in Nederland",
+      "id": "d1ceeae0-13c4-481f-8899-7b54956b5068"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Ice rinks (ijsbanen) are open all winter, and many Dutch people skate there at the weekend. Natural ice on canals and lakes (",
+        {
+          "text": "natuurijs",
+          "styles": {
+            "bold": true
+          }
+        },
+        ") is rare nowadays, because Dutch winters are often too mild."
+      ],
+      "id": "2ee0af1a-01ec-489f-8947-938844a157b6"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "Natuurijs (ice on canals and lakes) is rare in the Netherlands now. The famous ",
+        {
+          "text": "Elfstedentocht",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (a 200 km skating tour past eleven Frisian cities) can only happen on thick natuurijs — the last time was in 1997. But every region has an ijsbaan, open all winter."
+      ],
+      "id": "512f76ef-5111-4953-8006-1899b3cbb575"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het ijs",
+              "meaning": "the ice",
+              "example": "Sofia valt vaak op het ijs.",
+              "id": "07e9cb75-411f-4380-8e40-0bcdd6b4b491"
+            },
+            {
+              "term": "het natuurijs",
+              "meaning": "natural ice (on canals and lakes)",
+              "example": "Dit jaar is er geen natuurijs; het is te warm.",
+              "id": "c1f2ec85-4dfb-4605-8712-2b29ee8072dc"
+            },
+            {
+              "term": "de Elfstedentocht",
+              "meaning": "the Eleven Cities Tour: a famous (and rare) 200 km skating race on natural ice in Friesland",
+              "note": "Culture. Last held in 1997.",
+              "id": "071bd942-90d5-4910-bc4f-3fbf4aae5bf1"
+            }
+          ]
+        }
+      },
+      "id": "86454b71-ad24-4d6a-b505-930df22257a3"
+    },
+    {
+      "type": "divider",
+      "id": "da5f0103-be43-47c5-92d7-161f42893ad0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Graag: wat je leuk doet",
+      "id": "22875c08-66b3-4e3c-8e1f-119e2bc0baa6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "graag na het werkwoord",
+      "id": "3f3f65b8-e187-4002-9368-482701370c46"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "graag",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means to like doing something. It stands right after the finite verb (or after the subject, when something else comes first)."
+      ],
+      "id": "71ad9454-832b-433e-8bc1-4277d28862c9"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "formula: subject + ",
+        {
+          "text": "verb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " + ",
+        {
+          "text": "graag",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " + (the rest). After a fronted element: element + verb + subject + graag + rest."
+      ],
+      "id": "f820313d-5840-47b7-96f4-a78bf0d6a4c5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I like skating.",
+        "note": ""
+      },
+      "content": [
+        {
+          "text": "Ik ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "schaats",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "graag",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "4c93da46-9912-414f-a78d-b01c3917fb0f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Fleur likes surfing.",
+        "note": ""
+      },
+      "content": [
+        {
+          "text": "Fleur ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "surft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "graag",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "4fd40354-8202-4250-8a15-bcb93d50664c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "On Sundays I like to sleep in.",
+        "note": "A fronted element (op zondag) is followed by the verb, then the subject, then graag."
+      },
+      "content": [
+        {
+          "text": "Op zondag ",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        {
+          "text": "slaap",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " ik ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "graag",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " lang."
+      ],
+      "id": "d0c5a15b-396d-4cb5-9f35-0fdd45143efa"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Ik wil graag … of ik … graag?",
+      "id": "5d5bd697-5eb8-4802-b7b3-6b3a7fa7e5b9"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Ik wil graag … (= I would like …) is a wish for now. Ik … graag (= I like …) is a general liking. Compare them with liever, for a preference, in the three columns below."
+      ],
+      "id": "1c7b04bc-96ae-445c-b3d6-d5f417acad3f"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Ik wil graag …",
+              "id": "6156c5ff-d54f-4900-b068-94764e2d9322"
+            },
+            {
+              "type": "paragraph",
+              "content": "(would like)",
+              "id": "399d338c-c9e9-4e2e-a075-c7fcc103322d"
+            },
+            {
+              "type": "example",
+              "props": {
+                "translation": "I'd like hot chocolate.",
+                "note": ""
+              },
+              "content": [
+                "Ik wil graag ",
+                "warme chocolademelk",
+                "."
+              ],
+              "id": "261fd516-7f89-4b21-a128-9a6ea389e91d"
+            }
+          ],
+          "id": "fa93d0f9-2ea3-4b79-88d5-f6f383d71173"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Ik … graag",
+              "id": "fb48cfae-02b3-42d0-a2a0-867a353d3329"
+            },
+            {
+              "type": "paragraph",
+              "content": "(like)",
+              "id": "a9c8a6b7-a281-4d11-b103-f93873af01ce"
+            },
+            {
+              "type": "example",
+              "props": {
+                "translation": "I like swimming.",
+                "note": ""
+              },
+              "content": [
+                "Ik zwem ",
+                {
+                  "text": "graag",
+                  "styles": {
+                    "bold": true,
+                    "backgroundColor": "yellow"
+                  }
+                },
+                "."
+              ],
+              "id": "e3e51cc2-432b-414c-8fb8-8a4e0f011901"
+            }
+          ],
+          "id": "8fcb5764-edb1-4c6d-8eae-545ff7c7165a"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Ik … liever",
+              "id": "6a25d079-dc54-4cce-84a1-0f87cee98b0b"
+            },
+            {
+              "type": "paragraph",
+              "content": "(prefer)",
+              "id": "086ea6c6-b4dc-4a12-908c-5ef7c92d2d2d"
+            },
+            {
+              "type": "example",
+              "props": {
+                "translation": "I'd rather swim.",
+                "note": ""
+              },
+              "content": [
+                "Ik zwem ",
+                {
+                  "text": "liever",
+                  "styles": {
+                    "bold": true,
+                    "backgroundColor": "yellow"
+                  }
+                },
+                "."
+              ],
+              "id": "6476f08e-8208-4992-b179-7db6bfb4fc47"
+            }
+          ],
+          "id": "931f7368-672b-4c9d-a014-61dfc89c3253"
+        }
+      ],
+      "id": "d6a4d376-86d5-419c-944f-57b724c8974a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "niet graag",
+      "id": "aba9ce29-2992-4dfd-b6bc-dc006d122f19"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Put ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " right before graag."
+      ],
+      "id": "4f834531-71a7-465c-88ec-821ebdba2f18"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Fleur doesn't like cooking.",
+        "note": ""
+      },
+      "content": [
+        {
+          "text": "Fleur ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "kookt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " niet ",
+        {
+          "text": "graag",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "623b7ba8-2fb7-4538-93ca-9417027f71bd"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik graag schaats.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik schaats graag. (graag comes after the verb, never before it.) And: ",
+        {
+          "text": "Ik zwem meer graag.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik zwem liever. (there is no meer graag: use liever.)"
+      ],
+      "id": "259ee2b0-e53b-4bf9-8722-6a1456cdcc86"
+    },
+    {
+      "type": "divider",
+      "id": "2f40009b-0f35-472a-844f-1fb318d63eab"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Liever: je voorkeur zeggen",
+      "id": "4448f3f1-6075-4b97-9337-9950d22442fa"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "liever … dan …",
+      "id": "e7460bcb-0830-42e9-ba38-33185c936b85"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "liever",
+          "styles": {
+            "bold": true
+          }
+        },
+        " works just like graag, but it says what you prefer. Add ",
+        {
+          "text": "dan",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (never als!) to compare two things."
+      ],
+      "id": "bdd2999f-a9ed-4ace-ae0a-8923c524449e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'd rather swim.",
+        "note": ""
+      },
+      "content": [
+        {
+          "text": "Ik ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "zwem",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "liever",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "294a185f-f912-4e5a-b865-d15f142c8215"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'd rather drink tea than coffee.",
+        "note": ""
+      },
+      "content": [
+        {
+          "text": "Ik ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "drink",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "liever",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " thee dan koffie."
+      ],
+      "id": "5730f458-6e9c-4032-92a1-273c5b4dfc09"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'd rather go swimming than skating.",
+        "note": ""
+      },
+      "content": [
+        {
+          "text": "Ik ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "ga",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "liever",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": " zwemmen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        " dan schaatsen."
+      ],
+      "id": "f2b373a9-c65c-4da3-9909-46376fac8e1d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "liever also works with hebben, for things: ",
+        {
+          "text": "Ik heb liever thee.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (= I'd prefer tea.)"
+      ],
+      "id": "04347d13-798c-49dd-90cf-ba627e8dd6bd"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "graag → liever is an irregular comparative, just like goed → beter. There is no graager; the whole word changes."
+      ],
+      "id": "8413e6aa-8bc7-4fa1-a551-7a25958976b0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Liever niet",
+      "id": "c2b0e923-a13e-4bce-8bf2-d658a9c5c87c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "A short, polite way to decline: ",
+        {
+          "text": "Liever niet.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (= I'd rather not.)"
+      ],
+      "id": "cd18f0fb-4396-4ebd-8475-3b7a387e590e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Another lap, Sofia?",
+        "note": "Daan at the ice rink."
+      },
+      "content": [
+        "Nog een rondje, Sofia?"
+      ],
+      "id": "fe088b39-8953-46d1-bdef-3021d1f4f32c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'd rather not, thanks!",
+        "note": ""
+      },
+      "content": [
+        {
+          "text": "Liever niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ", dank je!"
+      ],
+      "id": "fed95281-12dc-4b37-93b6-c96763d23a7b"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Liever niet.",
+              "meaning": "I'd rather not. / Rather not.",
+              "example": "Liever niet, dank je!",
+              "id": "e7c371a2-c457-434b-a2c4-d62a27a2e16f"
+            }
+          ]
+        }
+      },
+      "id": "88133292-7f0a-4289-8f97-26cc25adfe39"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Graag, houden van of vinden … leuk?",
+      "id": "0521a375-dbb1-4954-8fa8-45a5095337c8"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "There are three ways to say you like an activity. They all work; graag is the most everyday one."
+      ],
+      "id": "cc82e564-362f-4978-8340-cd65d50e9ce3"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "graag + verb",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "Ik schaats graag.",
+              "styles": {
+                "bold": true
+              }
+            }
+          ],
+          "id": "68eab91b-bc69-48dd-a352-c65a683ffb63"
+        }
+      ],
+      "id": "6286e38a-500f-47a8-ac1d-86ef2bfe5f19"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "houden van + activity (19-a)",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Ik hou van schaatsen.",
+          "id": "b9e81685-6a96-42c6-b68b-a9935c343a96"
+        }
+      ],
+      "id": "d3be4677-968d-4c83-99c4-634139885856"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "vinden + activity + adjective (19-a)",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Ik vind schaatsen leuk.",
+          "id": "b1064559-91b8-46e7-bf8a-e7c438cb6c90"
+        }
+      ],
+      "id": "dc1f2136-39e7-4e84-b789-eab7cca15e14"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I like skating.",
+        "note": "Three natural ways to say the same thing. As in 19-a, houden van is the strongest and vinden … leuk gives your opinion; graag is the everyday way."
+      },
+      "content": [
+        "Ik schaats graag. = Ik hou van schaatsen. ≈ Ik vind schaatsen leuk."
+      ],
+      "id": "a1dc6483-7d1e-40a0-80ab-43303a22f76c"
+    },
+    {
+      "type": "divider",
+      "id": "692cfde4-9a9e-4d4c-9a6b-5cda3cec8ffa"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Nog een werkwoord erbij: gaan, komen, blijven, leren",
+      "id": "64fd9ebc-070d-4960-97a0-7d216e70e3e5"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Like a modal or gaan (16-b), these four verbs take a second verb at the very end, with no te in between."
+      ],
+      "id": "35b31870-6a68-4561-8cca-0d69940def9a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "The finite verb (gaan, komen, blijven or leren) stands in position 2 (position 1 in a yes/no question).",
+      "id": "5bf3a2b8-bdd4-4246-8bec-9111a67068c8"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Everything else — object, time, place — comes in the middle.",
+      "id": "0e877597-1052-4944-9f5f-9d6126e8adc9"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "The second verb (an infinitive, just like after a modal) goes to the very end.",
+      "id": "3ab277d8-c67f-4307-b7cd-32a7893decb2"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "Four verbs, one pattern: ",
+        {
+          "text": "gaan",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "komen",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "blijven",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "leren",
+          "styles": {
+            "bold": true
+          }
+        },
+        " all send the second verb to the end, with no te — exactly like a modal."
+      ],
+      "id": "56c3d174-bd84-4a7b-b63e-792f34d6b075"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We're going skating.",
+        "note": ""
+      },
+      "content": [
+        {
+          "text": "We ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "gaan",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " schaatsen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "0aa85f23-b749-4652-8f7d-6e9f150b47f7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you coming for dinner?",
+        "note": "komen + infinitive: coming to do something."
+      },
+      "content": [
+        {
+          "text": "Kom",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " je ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "eten",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "9b048ab9-2ecf-46c8-81e5-8d55a16a25d7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Lotte is coming to watch.",
+        "note": "kijken recycles tv kijken (07-a)."
+      },
+      "content": [
+        {
+          "text": "Lotte ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " kijken",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "59dc90f3-9f36-4e2f-be95-7c0c94eeb4e3"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Will you stay for dinner?",
+        "note": "blijven + infinitive: staying to do something."
+      },
+      "content": [
+        {
+          "text": "Blijf",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " je ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "eten",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "8ee89ad7-6836-4f7e-80e6-91814d99a3dc"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Fleur is staying home.",
+        "note": "blijven + place also works, without an infinitive."
+      },
+      "content": [
+        {
+          "text": "Fleur ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "blijft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " thuis",
+        "."
+      ],
+      "id": "23b3cda5-54df-4b6a-8978-e550a2a6403b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia is learning to skate.",
+        "note": "leren + infinitive: learning to do something."
+      },
+      "content": [
+        {
+          "text": "Sofia ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "leert",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " schaatsen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "260dfa0a-d12c-44be-bdb4-a746082a03df"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik leer te schaatsen.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik leer schaatsen. And: ",
+        {
+          "text": "Kom je te eten?",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Kom je eten? (never te with these four verbs.)"
+      ],
+      "id": "d554128a-0c26-47b7-843e-d9fb435018b7"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "blijven",
+              "meaning": "to stay",
+              "forms": "blijft · bleef · gebleven",
+              "example": "Fleur blijft vanavond thuis.",
+              "id": "f9355fd4-a66c-477e-900e-efcaf8e132d7"
+            },
+            {
+              "term": "leren",
+              "meaning": "to learn (to do something)",
+              "forms": "leert · leerde · geleerd",
+              "example": "Sofia leert schaatsen.",
+              "note": "New use: leren + infinitive = to learn to do something.",
+              "id": "75a11dc3-9c92-424a-bffc-40533b7490e4"
+            },
+            {
+              "term": "Kom je kijken?",
+              "meaning": "Are you coming to watch?",
+              "example": "Lotte komt kijken.",
+              "id": "fbcf66ef-d18d-4057-a07d-6bed7b404b0d"
+            },
+            {
+              "term": "Blijf je eten?",
+              "meaning": "Will you stay for dinner?",
+              "example": "Blijf je eten? Ik maak pasta.",
+              "id": "f49606dc-3bde-49a2-9521-1735186fc7c9"
+            }
+          ]
+        }
+      },
+      "id": "10257ab3-46c3-4e4d-aa01-d182e2504350"
+    },
+    {
+      "type": "divider",
+      "id": "6e3e2eb7-39e7-4efc-ad09-6847a9bdabe3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Warme chocolademelk bij Noor",
+      "id": "fa54398a-1ffc-4a4e-84d0-ea526820fa3f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "After skating, Daan and Lotte cycle home. Sofia goes with Noor and Fleur to their flat to warm up. Noor cooks (as always); Fleur, it turns out, does not like cooking at all — she prefers sport."
+      ],
+      "id": "86b42e48-efca-44ad-b873-61d91bee3e3c"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Kom binnen! Wil je warme chocolademelk, Sofia?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, heel graag! Ik ben moe van het schaatsen."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Blijf je eten? Ik maak pasta."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, graag!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "En jij, Fleur? Blijf je ook eten?"
+          },
+          {
+            "speaker": "Fleur",
+            "text": "Ja, graag! Ik blijf vanavond lekker thuis."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Noor kookt heel graag. En jij, Fleur?"
+          },
+          {
+            "speaker": "Fleur",
+            "text": "Ik? Nee, ik kook niet graag. Ik sport liever!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Dat klopt! Fleur surft, schaatst en fietst, maar ze kookt nooit."
+          },
+          {
+            "speaker": "Fleur",
+            "text": "Nee, ik eet liever! Noor kookt en ik was af."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Deze chocolademelk is heel lekker! En ik zwem veel liever dan ik schaats."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Maar het gaat al beter met het schaatsen, hè?"
+          }
+        ]
+      },
+      "id": "f5c01e2d-2070-4237-b7a0-8a9003cb7856"
+    },
+    {
+      "type": "divider",
+      "id": "ec37c955-41b7-44c5-adcf-61b4bf7726db"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "d3a9514e-4a59-4c74-ba62-76cabddb3dea"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in graag or liever",
+      "id": "555e1aea-30b2-4ee8-a2dd-a7482cd2a7b0"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in graag or liever.",
+          "items": [
+            {
+              "prompt": "Ik zwem … . Ik vind zwemmen heel leuk.",
+              "authorsVersion": [
+                "graag"
+              ],
+              "note": "A simple liking, no comparison: graag, right after the verb. Not: Ik graag zwem."
+            },
+            {
+              "prompt": "Fleur surft … . Ze houdt van de zee.",
+              "authorsVersion": [
+                "graag"
+              ],
+              "note": "graag stands right after the verb."
+            },
+            {
+              "prompt": "Ik drink … thee dan koffie.",
+              "authorsVersion": [
+                "liever"
+              ],
+              "note": "dan compares two things: liever … dan …, not graag."
+            },
+            {
+              "prompt": "Ik lees … . Ik heb veel boeken.",
+              "authorsVersion": [
+                "graag"
+              ],
+              "note": "A plain liking: graag."
+            },
+            {
+              "prompt": "Schaatsen? Nee, ik zwem … .",
+              "authorsVersion": [
+                "liever"
+              ],
+              "note": "Sofia turns down skating and says what she prefers: liever."
+            },
+            {
+              "prompt": "Wij fietsen … naar de ijsbaan. Fietsen is gezond.",
+              "authorsVersion": [
+                "graag"
+              ],
+              "note": "A plain liking: graag, right after the verb."
+            },
+            {
+              "prompt": "Koffie of thee? Sofia drinkt … thee.",
+              "authorsVersion": [
+                "liever"
+              ],
+              "note": "A choice between two things: liever."
+            },
+            {
+              "prompt": "Hou je van sport? Ja, ik sport heel … !",
+              "authorsVersion": [
+                "graag"
+              ],
+              "note": "A plain liking: heel graag = really like."
+            }
+          ]
+        }
+      },
+      "id": "8aca2b26-c822-49c3-b2a7-f2a680dde220"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Dialogue completion",
+      "id": "29919976-97c1-4bec-bd64-8ec4dc550a53"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the dialogues. Fill in one word per blank.",
+          "items": [
+            {
+              "prompt": "Fleur: Schaats je …, Sofia? / Sofia: Nee, ik zwem ….",
+              "authorsVersion": [
+                "graag",
+                "liever"
+              ],
+              "note": "graag in the question, liever for Sofia's preference."
+            },
+            {
+              "prompt": "Daan: Ik ga … schaatsen! / Sofia: Ik ga … zwemmen … schaatsen.",
+              "authorsVersion": [
+                "graag",
+                "liever",
+                "dan"
+              ],
+              "note": "liever … dan … compares two activities."
+            },
+            {
+              "prompt": "Noor: … je ook eten, Fleur? (blijven) / Fleur: Ja, …! Ik blijf vanavond thuis.",
+              "authorsVersion": [
+                "Blijf",
+                "graag"
+              ],
+              "note": "Blijf je …? with t-drop (not Blijft je). Ja, graag! = yes, please."
+            },
+            {
+              "prompt": "Fleur: Ik kook niet …. En jij, Noor? / Noor: Ik kook heel ….",
+              "authorsVersion": [
+                "graag",
+                "graag"
+              ],
+              "note": "Fleur dislikes cooking; Noor loves it."
+            },
+            {
+              "prompt": "Noor: Wil je koffie, Sofia? / Sofia: … niet, dank je. Ik heb … thee.",
+              "authorsVersion": [
+                "Liever",
+                "liever"
+              ],
+              "note": "Liever niet = I'd rather not. Ik heb liever thee = I'd prefer tea (hebben liever for things)."
+            }
+          ]
+        }
+      },
+      "id": "68c4f409-c435-4a87-8e80-ac0118d97eaa"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "d752b480-f1d4-4639-bbef-9bf9235ce294"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: graag / ik / zwem",
+              "authorsVersion": [
+                "Ik zwem graag."
+              ],
+              "note": "Subject + verb + graag."
+            },
+            {
+              "prompt": "Put in order: wil / ik / graag / chocolademelk",
+              "authorsVersion": [
+                "Ik wil graag chocolademelk."
+              ],
+              "note": "Ik wil graag … = I would like …"
+            },
+            {
+              "prompt": "Put in order: op zondag / ik / slaap / graag / lang",
+              "authorsVersion": [
+                "Op zondag slaap ik graag lang."
+              ],
+              "note": "Fronted time + verb + subject + graag + rest."
+            },
+            {
+              "prompt": "Put in order: ga / ik / graag / zwemmen",
+              "authorsVersion": [
+                "Ik ga graag zwemmen."
+              ],
+              "note": "graag after the finite verb; the infinitive stays at the end."
+            },
+            {
+              "prompt": "Put in order: liever / thee / ik / drink / koffie / dan",
+              "authorsVersion": [
+                "Ik drink liever thee dan koffie."
+              ],
+              "note": "liever right after the verb, dan before the second thing."
+            },
+            {
+              "prompt": "Put in order: niet / Fleur / graag / kookt",
+              "authorsVersion": [
+                "Fleur kookt niet graag."
+              ],
+              "note": "niet stands right before graag."
+            },
+            {
+              "prompt": "Put in order: schaatsen / leert / Sofia",
+              "authorsVersion": [
+                "Sofia leert schaatsen."
+              ],
+              "note": "leren + infinitive at the end, like a modal."
+            }
+          ]
+        }
+      },
+      "id": "8d855bc2-6a16-449b-84ff-7e876c78ca71"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Transformation",
+      "id": "b65255bf-ff0e-4ba7-88d1-e97e3e68b9dd"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence as instructed.",
+          "items": [
+            {
+              "prompt": "Ik hou van dansen. (graag) →",
+              "authorsVersion": [
+                "Ik dans graag."
+              ],
+              "note": "houden van + activity (19-a) ≈ graag + verb."
+            },
+            {
+              "prompt": "Ik hou van zwemmen. (graag) →",
+              "authorsVersion": [
+                "Ik zwem graag."
+              ],
+              "note": "houden van + activity (19-a) ≈ graag + verb."
+            },
+            {
+              "prompt": "Ik vind koffie lekker, maar thee vind ik lekkerder. (liever) →",
+              "authorsVersion": [
+                "Ik drink liever thee dan koffie."
+              ],
+              "note": "A comparative opinion becomes a liever … dan … sentence."
+            },
+            {
+              "prompt": "Noor kookt. (+ graag) →",
+              "authorsVersion": [
+                "Noor kookt graag."
+              ],
+              "note": "Add graag right after the verb."
+            },
+            {
+              "prompt": "Fleur kookt. (+ niet graag) →",
+              "authorsVersion": [
+                "Fleur kookt niet graag."
+              ],
+              "note": "niet stands right before graag."
+            },
+            {
+              "prompt": "Zwemmen is leuker dan schaatsen. (ik, liever) →",
+              "authorsVersion": [
+                "Ik zwem liever dan schaatsen."
+              ],
+              "note": "The infinitive schaatsen works as a noun after dan (an activity as a noun, as in 19-a). Also fine: Ik zwem liever dan ik schaats. / Ik ga liever zwemmen dan schaatsen."
+            },
+            {
+              "prompt": "Ik schaats. (+ niet graag) →",
+              "authorsVersion": [
+                "Ik schaats niet graag."
+              ],
+              "note": "niet stands right before graag."
+            }
+          ]
+        }
+      },
+      "id": "2a45496e-3dd4-4ffd-b4af-b18f64a26710"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "92c7c504-1a11-4b55-943e-3941403eeeec"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "I like skating.",
+              "authorsVersion": [
+                "Ik schaats graag."
+              ],
+              "note": "graag right after the verb."
+            },
+            {
+              "prompt": "I would rather swim.",
+              "authorsVersion": [
+                "Ik zwem liever."
+              ],
+              "note": "liever = prefer."
+            },
+            {
+              "prompt": "Are you staying for dinner?",
+              "authorsVersion": [
+                "Blijf je eten?"
+              ],
+              "note": "blijven + infinitive, no te. Also fine: Blijf jij eten?"
+            },
+            {
+              "prompt": "Lotte is coming to watch.",
+              "authorsVersion": [
+                "Lotte komt kijken."
+              ],
+              "note": "komen + infinitive, no te."
+            },
+            {
+              "prompt": "Sofia is learning to skate.",
+              "authorsVersion": [
+                "Sofia leert schaatsen."
+              ],
+              "note": "leren + infinitive, no te."
+            },
+            {
+              "prompt": "I'd rather have tea than coffee.",
+              "authorsVersion": [
+                "Ik heb liever thee dan koffie."
+              ],
+              "note": "hebben liever = to prefer to have. Also fine: Ik drink liever thee dan koffie."
+            },
+            {
+              "prompt": "Fleur doesn't like cooking.",
+              "authorsVersion": [
+                "Fleur kookt niet graag."
+              ],
+              "note": "niet right before graag."
+            }
+          ]
+        }
+      },
+      "id": "ae7c7e86-598c-4691-9e1b-d9c91bc280e1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "7e5cea1c-76c6-4436-bd5c-b30a72b6d1d8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Ik val vaak, maar het gaat al beter.",
+              "authorsVersion": [
+                "I fall often, but it's already getting better."
+              ]
+            },
+            {
+              "prompt": "Fleur surft heel graag.",
+              "authorsVersion": [
+                "Fleur loves surfing."
+              ],
+              "note": "Also fine: Fleur likes surfing a lot."
+            },
+            {
+              "prompt": "Liever niet, dank je.",
+              "authorsVersion": [
+                "I'd rather not, thanks."
+              ]
+            },
+            {
+              "prompt": "Hij leert schaatsen.",
+              "authorsVersion": [
+                "He is learning to skate."
+              ]
+            },
+            {
+              "prompt": "Wij gaan graag naar de ijsbaan.",
+              "authorsVersion": [
+                "We like going to the ice rink."
+              ]
+            },
+            {
+              "prompt": "Ik blijf vanavond liever thuis.",
+              "authorsVersion": [
+                "I'd rather stay home tonight."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "08086168-b8d3-4814-be17-e2a4bbc9fc9b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: een berichtje aan mama",
+      "id": "1f250baa-b6f3-4373-9424-73a883ef31db"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "After the ice rink, Sofia writes her mother a message about the afternoon."
+      ],
+      "id": "191ccd85-37d1-4d9a-b0c5-464c6701b65a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the message. Answer the questions in Dutch.",
+          "items": [
+            {
+              "prompt": "Wie gaat er naar de ijsbaan?",
+              "authorsVersion": [
+                "Daan, Lotte, Noor, Fleur en Sofia."
+              ],
+              "note": "All five names from the first line."
+            },
+            {
+              "prompt": "Schaatst Sofia graag?",
+              "authorsVersion": [
+                "Nee, ze zwemt liever."
+              ],
+              "note": "She falls a lot and prefers swimming."
+            },
+            {
+              "prompt": "Wie is Fleur?",
+              "authorsVersion": [
+                "Fleur is de zus van Noor en woont nu in Sofia's oude kamer."
+              ],
+              "note": "Either half of the sentence alone is also fine."
+            },
+            {
+              "prompt": "Wat doet Fleur graag?",
+              "authorsVersion": [
+                "Ze surft graag en ze sport graag."
+              ],
+              "note": "From the message's second paragraph: surft heel graag, sporten wel."
+            },
+            {
+              "prompt": "Klopt dit? Fleur kookt heel graag.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Fleur kookt niet graag."
+              ],
+              "note": "True/false check: the opposite is true."
+            },
+            {
+              "prompt": "Klopt dit? Fleur blijft niet eten.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Fleur blijft ook eten."
+              ],
+              "note": "True/false check: Ik blijf eten, en Fleur ook."
+            },
+            {
+              "prompt": "Wanneer gaat Sofia weer zwemmen?",
+              "authorsVersion": [
+                "Op woensdag."
+              ],
+              "note": "Also fine: Woensdag. Recycles 09-b: Sofia swims on Wednesdays at 7.00."
+            }
+          ],
+          "passage": {
+            "title": "Een berichtje aan mama",
+            "content": "Hoi mama!\nVandaag gaan we naar de ijsbaan: Daan, Lotte, Noor, Fleur en ik. Daan schaatst heel goed, maar ik val vaak! Schaatsen is best eng, en ik zwem veel liever.\nFleur is nieuw: ze is de zus van Noor en woont nu in mijn oude kamer. Ze is terug uit Australië en surft heel graag. Koken vindt ze niet leuk, maar sporten wel!\nNa het schaatsen gaan we naar Noor. Nu drinken we warme chocolademelk, en Noor maakt pasta. Ik blijf eten, en Fleur ook. Noor kookt en Fleur wast af!\nHet gaat al beter met het schaatsen, maar ik zwem liever. Woensdag ga ik weer zwemmen!\nLiefs,\nSofia"
+          }
+        }
+      },
+      "id": "16a77efc-eb42-40ea-89d0-2d21879147d8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "3ea02b00-a7cc-41fb-bb8c-d6dde8689306"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences: what you like doing, what you don't like doing, and what you prefer.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about what you like doing, what you don't like doing, and what you prefer.",
+              "authorsVersion": [
+                "Ik zwem heel graag. Ik schaats niet graag; ik val vaak! Ik drink liever thee dan koffie. In het weekend blijf ik graag thuis en lees ik een boek."
+              ],
+              "note": "A model answer by Sofia. Any correct, on-topic answer with graag/liever is fine."
+            }
+          ]
+        }
+      },
+      "id": "f43413ed-77e6-4611-ba50-b23c1ec1851a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "c6d4cee9-d9ca-4d03-bcae-8e8aa8642a19"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "graag (like to) stands right after the finite verb: Ik schaats graag.",
+      "children": [
+        {
+          "type": "numberedListItem",
+          "content": "niet graag: niet right before graag — Fleur kookt niet graag.",
+          "id": "f3acd7db-cce6-42f6-aa70-675f0efc3676"
+        }
+      ],
+      "id": "ba541d67-263a-43b3-b4a8-1a4ce543e5f8"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "liever (prefer) works the same way, with dan to compare: Ik zwem liever dan ik schaats. / Ik drink liever thee dan koffie.",
+      "id": "a788f2f2-ab5f-4dd0-91be-7608821405a3"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Liever niet. is a short, polite way to say no.",
+      "id": "51d2a9fd-5652-40a8-8501-f65f2f820313"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "gaan, komen, blijven and leren all send a second verb to the very end, with no te: Sofia leert schaatsen. Blijf je eten?",
+      "id": "552038b2-c622-48dd-a181-191f6c614f79"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "graag, houden van and vinden … leuk are three natural ways to say you like an activity.",
+      "id": "8b0adbf9-5113-42e8-a505-cd4c4aa1e201"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Op de ijsbaan",
+      "description": "An outdoor ice rink in Utrecht on a cold, bright winter afternoon. Daan skates fast and confidently; Sofia wobbles and is about to fall; Fleur, in a coral sports jacket, skates energetically nearby.",
+      "alt": "Friends skating at an outdoor ice rink in winter."
+    },
+    {
+      "afterHeading": "Story: Warme chocolademelk bij Noor",
+      "description": "Noor's kitchen table with three mugs of warm chocolate milk. Sofia, Noor and Fleur sit together, relaxed after skating, still in their winter coats.",
+      "alt": "Three friends drinking hot chocolate at a kitchen table."
+    }
+  ],
+  "id": "1968eaee-4d53-48b9-9acc-b4803f493d6c"
+}

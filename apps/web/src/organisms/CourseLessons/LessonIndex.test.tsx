@@ -18,13 +18,13 @@ const practice = (n: number, instruction: string): LessonTopBlock => ({
 const document = (blocks: LessonTopBlock[]): LessonDocument => ({ schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks });
 
 describe("lesson index entries", () => {
-  it("lists top-level headings and every practice in reading order, and leaves out every other block", () => {
+  it("lists top-level level-1 and level-2 headings and every practice in reading order, and leaves out every other block", () => {
     const entries = lessonIndexEntries(document([
       practice(1, "Warm up"),
       heading(2, 2, "Greetings"), paragraph(3, "Hallo!"), example(4), practice(5, "Translate\ninto   English. Use the polite form."),
       heading(6, 3, "Formal"), heading(7, 2, "  "),
       { id: blockId(8), type: "columnList", props: {}, content: undefined, children: [
-        { id: blockId(9), type: "column", props: { width: 1 }, content: undefined, children: [heading(10, 3, "Left") as never] },
+        { id: blockId(9), type: "column", props: { width: 1 }, content: undefined, children: [heading(10, 2, "Left") as never] },
         { id: blockId(11), type: "column", props: { width: 1 }, content: undefined, children: [practice(12, "Fill in") as never] },
       ] } as unknown as LessonTopBlock,
     ]));
@@ -34,9 +34,9 @@ describe("lesson index entries", () => {
       // The highest heading level in the lesson is depth 0, whatever its level.
       { id: blockId(2), kind: "heading", text: "Greetings", depth: 0 },
       { id: blockId(5), kind: "practice", text: "Translate into English", depth: 1 },
-      { id: blockId(6), kind: "heading", text: "Formal", depth: 1 },
+      // Level-3 headings are left out, so a practice after one stays under the heading before it.
       // A heading inside a column titles only its column; a practice there is still listed.
-      { id: blockId(12), kind: "practice", text: "Fill in", depth: 2 },
+      { id: blockId(12), kind: "practice", text: "Fill in", depth: 1 },
     ]);
   });
 

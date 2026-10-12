@@ -25,12 +25,12 @@ const instruction = (block: Parameters<typeof readPracticeBlock>[0]) => {
   try { return shortInstruction(readPracticeBlock(block).instruction); } catch { return ""; }
 };
 
-// Headings and practices in reading order. Headings inside columns title only their column, so they are left out, as are empty
-// headings; practices inside columns are kept.
+// Headings and practices in reading order. Level-3 headings are too fine for the index, and headings inside columns title only
+// their column, so both are left out, as are empty headings; practices inside columns are kept.
 export function lessonIndexEntries(document: LessonDocument): LessonIndexEntry[] {
   const found: Array<{ id: string; kind: "heading" | "practice"; text: string; level: number | null }> = [];
   for (const { block, depth } of walkLessonBlocks(document.blocks)) {
-    if (block.type === "heading" && depth === 0) {
+    if (block.type === "heading" && depth === 0 && block.props.level !== 3) {
       const text = inlineText(block.content).replace(/\s+/g, " ").trim();
       if (text) found.push({ id: block.id, kind: "heading", text, level: block.props.level });
     } else if (block.type === "practice") found.push({ id: block.id, kind: "practice", text: instruction(block), level: null });

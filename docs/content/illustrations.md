@@ -23,6 +23,8 @@ All under [`content/dutch-foundations/illustrations/`](../../content/dutch-found
 
 Frozen on 2026-10-11 (FLUX.2 [pro]): characters `sofia`, `noor`, `daan`, `henk`, `ingrid` and `ahmed`; places `noor-kitchen`, `sofia-office`, `sofia-living-room` and `kanaalstraat`. Each `refs/<id>.json` records the candidate's prompt and seed.
 
+In `cast.json` but not frozen yet (Part IV, added 2026-10-11): `fleur` (coral sports jacket, sun-bleached messy bun; Noor's freckles and blue eyes but no glasses), `marieke` (curly auburn hair, dark-red glasses, plum dress), `piotr` (sandy-blond buzz cut, burgundy padded jacket) and `karin` (short dark hair with a silver streak, black glasses, charcoal turtleneck). Run `sheet` and `freeze` for each before any Part IV scene is generated.
+
 Rules for writing specs, learned while generating the sheets:
 
 - A base `outfit` holds only what the person always wears. Situational items go in the scene's `action`; Henk's dark-blue apron at his market stall is one example. Otherwise every sheet draws them.

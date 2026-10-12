@@ -1,0 +1,1838 @@
+{
+  "title": "Donderdag kan ik niet",
+  "goal": "Put niet in the right place, choose between niet and geen, use wel for contrast, and start a sentence with any element followed by inversion.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Donderdag kan ik niet",
+      "id": "509acf05-617a-4e87-a18f-4032a9c9ad4b"
+    },
+    {
+      "type": "paragraph",
+      "props": {},
+      "content": [
+        "It is Wednesday 25 November. Sofia and Daan are in the middle of deadline week (from 20-a): the app must be ready for the client presentation on Friday 27 November. ",
+        "Noor calls Sofia to plan a film night, but Sofia's week is full. ",
+        "In this lesson you will say what you ",
+        {
+          "text": "can't",
+          "styles": {
+            "italic": true
+          }
+        },
+        " do and offer another day, correct a misunderstanding, and start a sentence with any word you like."
+      ],
+      "id": "de9936d3-4686-4235-a4de-cf56fa3e1802"
+    },
+    {
+      "type": "paragraph",
+      "props": {},
+      "content": [
+        "Colours in this lesson: ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " and ",
+        {
+          "text": "wel",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " are bold; the finite verb is also blue; a wrong sentence is ",
+        {
+          "text": "italic",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ", always followed by the correct one."
+      ],
+      "id": "c920cca6-1036-4eec-9a21-a7fa5f48a54a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Noor phones",
+      "id": "4403e008-407b-4f38-b955-6bb80d50c40f"
+    },
+    {
+      "type": "paragraph",
+      "props": {},
+      "content": "It is Wednesday evening. Noor calls Sofia about the weekend.",
+      "id": "2660edb4-effa-4558-9edc-2859a74cf147"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Hoi Sofia! Heb je dit weekend al plannen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, nog niet. Hoezo?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Gaan we naar de film? Er is een nieuwe film in de bioscoop: \"De Lange Zomer\"."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Die film ken ik niet. Is hij goed?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Heel goed, zegt iedereen! De voorstelling is donderdagavond om acht uur. Kun je dan?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Donderdag kan ik niet. Dan moet ik overwerken voor de deadline."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Oké. Misschien kan ik vrijdag. Ik kijk even in mijn agenda... Nee, vrijdag kan ik ook niet. Dan is het feestje van mijn vriendin."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Donderdag niet, en vrijdag ook niet!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Kom je zaterdag eten? Fleur en ik koken pasta."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, heel graag!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "En zondag gaan we naar de film, om drie uur in het centrum!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goed idee! Niet donderdag, maar zondag. Dat komt goed."
+          }
+        ]
+      },
+      "id": "3723dd9b-b89e-42f4-96b7-1923c9ff3e15"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de bioscoop",
+              "meaning": "cinema",
+              "forms": "de bioscopen",
+              "example": "Er is een nieuwe film in de bioscoop.",
+              "id": "ae7f69ee-67fa-48d2-8fd2-8b68273e7aab"
+            },
+            {
+              "term": "de voorstelling",
+              "meaning": "screening, showing (of a film)",
+              "forms": "de voorstellingen",
+              "example": "De voorstelling is om acht uur.",
+              "id": "9e08cc30-60b3-4e96-89da-e2e0e76bfb0a"
+            },
+            {
+              "term": "kennen",
+              "meaning": "to know (a person or thing; be familiar with)",
+              "forms": "kent · kende · gekend",
+              "example": "Die film ken ik niet.",
+              "note": "Different from weten (to know a fact, 15-b): kennen is for people, places and things.",
+              "id": "bd6028b5-984a-4d0b-8b2a-ce85b4f93db0"
+            },
+            {
+              "term": "misschien",
+              "meaning": "maybe, perhaps",
+              "example": "Misschien kan ik vrijdag.",
+              "id": "375634b9-2dbe-4a1d-aa61-42869f7078bc"
+            },
+            {
+              "term": "nog niet",
+              "meaning": "not yet",
+              "example": "Nee, nog niet.",
+              "id": "e43940bd-e905-448a-8090-304ada5e97f9"
+            },
+            {
+              "term": "ook niet",
+              "meaning": "not ... either",
+              "example": "Vrijdag kan ik ook niet.",
+              "id": "dc32f0de-4710-43d5-b5e2-0e619850aea7"
+            },
+            {
+              "term": "Niet …, maar …",
+              "meaning": "Not …, but … (to correct something)",
+              "example": "Niet donderdag, maar zondag.",
+              "id": "0c153d7e-c6f2-4b23-ad9b-3a76e794c6f4"
+            },
+            {
+              "term": "Dat komt goed.",
+              "meaning": "That'll work out. / That's fine.",
+              "id": "b066b0a6-f9e7-4d9e-89fd-fe2f5872f21b"
+            }
+          ]
+        }
+      },
+      "id": "e3b18322-96b4-48fb-b7ce-ebbf8fff2f97"
+    },
+    {
+      "type": "divider",
+      "id": "9cce843f-798e-4ed9-9c46-0cc4fcccfc98"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "niet: where does it go?",
+      "id": "c054d62e-e1fd-43cd-8367-18f85cd7a44c"
+    },
+    {
+      "type": "paragraph",
+      "props": {},
+      "content": [
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " moves around the sentence. The rule: it stands at the very end, unless something keeps it company."
+      ],
+      "id": "33f7162d-1965-449d-b573-9ec5a81b9886"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "niet at the end",
+      "id": "b785819b-8b8d-48f3-b110-beaa407309b0"
+    },
+    {
+      "type": "paragraph",
+      "props": {},
+      "content": "When niet just negates the verb and nothing else needs to be said, it goes at the very end of the sentence.",
+      "id": "d815d1de-3a82-48b6-824d-34a2cb8afec6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm not working on Friday.",
+        "note": "niet is the last word: nothing follows."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "werk",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " vrijdag ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "7295acf9-c8fd-4571-af28-d385439201f9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I can't on Thursday.",
+        "note": "A short, complete answer: the modal and niet are enough."
+      },
+      "content": [
+        "Donderdag ",
+        {
+          "text": "kan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ik ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "38853aad-d808-4489-b83c-6402ef76e35e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "Formula: ",
+        {
+          "text": "subject + verb + … + niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". When there is nothing left to add, niet is the last word."
+      ],
+      "id": "2773d769-697d-41fa-a653-253c7729ecc8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "niet stays after: objects, time, short adverbs",
+      "id": "1e474aec-5170-40e1-880e-2a01a0b47606"
+    },
+    {
+      "type": "paragraph",
+      "props": {},
+      "content": "A definite object (de/het/die/mijn + noun, or a name), a time word, or a short adverb like vandaag or morgen comes before niet.",
+      "id": "48c2f879-635e-4dd7-9d42-1c62fa73e55f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm not seeing Noor today.",
+        "note": "A name (Noor) and a time word (vandaag) both come before niet."
+      },
+      "content": [
+        "Ik zie ",
+        {
+          "text": "Noor",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "vandaag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "a422fec4-f15b-4398-9659-2aa41a70ad4e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I can't find the mistake.",
+        "note": "de fout is a definite de-word object, so it comes before niet."
+      },
+      "content": [
+        "Ik vind ",
+        {
+          "text": "de fout",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "41ea44dd-b2fd-4119-bdac-6ed661563daa"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "niet comes before: adjectives, place, infinitive, prefix, nodig",
+      "id": "b1264cd8-555b-4f08-8da6-005921b21c0d"
+    },
+    {
+      "type": "paragraph",
+      "props": {},
+      "content": "In every other case, niet jumps in front of the thing it negates.",
+      "id": "2dc7cfa5-301e-47b5-90e0-ff143930879e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "That's not nice.",
+        "note": "niet stands right before the adjective leuk."
+      },
+      "content": [
+        "Dat is ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "leuk",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "80a663ad-731f-44c9-844c-ec7d6d3c3089"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm not going to the cinema.",
+        "note": "niet stands before a place phrase with a preposition."
+      },
+      "content": [
+        "Ik ga ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "naar de bioscoop",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "91df46d6-c0f3-4c3d-8cf7-b9debb34ac43"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I can't come on Thursday.",
+        "note": "niet stands before the infinitive at the end (recycles the modal pattern from 20-a)."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "kan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " donderdag ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "komen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "37511f3d-7c92-49b6-ac71-dbd34d4d6a05"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm not coming along.",
+        "note": "niet stands before the separable prefix mee (meekomen)."
+      },
+      "content": [
+        "Ik kom ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "mee",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "fc1f6c7f-e152-412e-a89d-8934a6e63a0e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I don't need this ticket.",
+        "note": "nodig behaves like a separable prefix: niet stands right before it (recycles 10-b)."
+      },
+      "content": [
+        "Ik heb dit kaartje ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " nodig."
+      ],
+      "id": "5f070a1d-72d9-4798-acba-d65387257eec"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "The niet rules in one line: 1) nothing left to say → niet at the end. 2) a definite object, a name, or a time word → niet comes after it. 3) an adjective, a place phrase, an infinitive, a prefix, or nodig → niet comes right before it."
+      ],
+      "id": "5641b7a6-5ff6-462f-8211-3a1aece13eeb"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "niet after",
+              "id": "49222957-9c0e-4d86-a82c-902a4b61dfd0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "a definite object",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "Ik vind de fout niet.",
+                  "id": "c6768a74-5ab8-45b5-a218-ec9f08d92fb8"
+                }
+              ],
+              "id": "73c792c3-2049-4be2-965e-78980b75f50d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "a time word",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "Ik zie Noor vandaag niet.",
+                  "id": "9947fecb-1253-4ec1-a272-7e96034f3dbd"
+                }
+              ],
+              "id": "195e5b09-8ccb-4325-824b-f9e81c12e291"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "a name",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "Ik zie Noor niet.",
+                  "id": "248f6478-c6b6-492f-b1f7-d0ab51610fd2"
+                }
+              ],
+              "id": "b9c474bd-821e-42c4-8e4c-7e53b501a0d6"
+            }
+          ],
+          "id": "d8ca59d9-f0bc-4eb9-b26d-e084b9976b82"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "niet before",
+              "id": "0e3ca206-9bd7-4a87-88b7-62fc4ab4fb40"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "an adjective",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "Dat is niet leuk.",
+                  "id": "61a35f1a-07cb-4668-82fb-9ae2b9550f29"
+                }
+              ],
+              "id": "8c736358-d5c7-4302-b2b6-b3ce078805b7"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "a place phrase",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "Ik ga niet naar de bioscoop.",
+                  "id": "eb2f7ca4-9355-4cde-a958-8c8456e9c35c"
+                }
+              ],
+              "id": "e6771f64-7c64-4958-9b6c-e255a6041e04"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "the infinitive",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "Ik kan niet komen.",
+                  "id": "90726aba-b2f0-4d0d-b0d0-5c653e2c8405"
+                }
+              ],
+              "id": "c25aed86-d979-46df-970b-1af67f134058"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "a prefix or nodig",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "Ik kom niet mee.",
+                  "id": "418ed948-3f67-40b3-8799-7f717ad9ce7b"
+                },
+                {
+                  "type": "bulletListItem",
+                  "content": "Ik heb dit niet nodig.",
+                  "id": "5613fbc1-c1fc-4ec8-ac77-a81280232a13"
+                }
+              ],
+              "id": "3a115c35-c196-45ca-93fe-05b4023a47a4"
+            }
+          ],
+          "id": "f82cb286-c755-4030-ada8-378e2d4feec5"
+        }
+      ],
+      "id": "42329767-931d-4ac7-ad25-cf23dc782dff"
+    },
+    {
+      "type": "divider",
+      "id": "094aa81e-45ab-4c73-bb7d-8754d9bdf4dc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "niet or geen?",
+      "id": "46afc7c1-7866-4c5f-ad00-fb1317297ff7"
+    },
+    {
+      "type": "paragraph",
+      "props": {},
+      "content": [
+        "Use ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " instead of niet when the positive sentence has een or no article at all."
+      ],
+      "id": "8325b35a-9c68-4abc-bb97-6f12f0b6b8ab"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I have no time.",
+        "note": "geen + tijd: tijd has no article, so niet cannot be used."
+      },
+      "content": [
+        "Ik heb ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " tijd."
+      ],
+      "id": "6aca9e2b-ec3a-48b9-a04e-54e265667dab"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I don't need a ticket.",
+        "note": "een kaartje → geen kaartje."
+      },
+      "content": [
+        "Ik heb ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " kaartje nodig."
+      ],
+      "id": "3c058490-f243-4a8c-842c-06843c326c2d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I don't have the ticket.",
+        "note": "Contrast: het kaartje is definite (a specific ticket), so it takes niet, not geen."
+      },
+      "content": [
+        "Ik heb ",
+        {
+          "text": "het kaartje",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        " ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "9517ac43-2b5d-4a1e-a3dd-e0934a547640"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik heb niet tijd.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik heb ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " tijd. tijd has no article, so niet is wrong here."
+      ],
+      "id": "2e59d37d-47aa-4aae-a83f-5a3b4eb6fe18"
+    },
+    {
+      "type": "divider",
+      "id": "d2c05813-0fbc-4b13-a8b7-c332cd7623cd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Thursday evening at the office",
+      "id": "3f6c36e8-8dc4-43e6-8ecd-9ea45a9ef0b2"
+    },
+    {
+      "type": "paragraph",
+      "props": {},
+      "content": "Thursday 26 November, late. Sofia and Daan are still at the office, testing the app before Friday's presentation.",
+      "id": "6e4bd3c2-18f4-4900-a9e8-95c0dd5c3578"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Sofia, we testen de app nog een keer vanavond. Morgen moet alles klaar zijn."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Oké. Ik start de test op mijn computer... Hmm, het werkt nog niet."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Wat is het probleem?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik weet het niet. Ik vind de fout niet."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ik kijk even mee. Welke knop werkt niet?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Deze knop hier. De knop doet het niet."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ah, ik zie de fout! Een moment..."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En nu?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Probeer het opnieuw."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nu werkt het wel! Gelukkig!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Mooi. Dan zijn we klaar voor vrijdag."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Eindelijk! Ik ga naar huis. Tot morgen, Daan!"
+          }
+        ]
+      },
+      "id": "51338ed7-7e0e-4a61-87f4-1ac75e6c4f02"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de fout",
+              "meaning": "mistake, error",
+              "forms": "de fouten",
+              "example": "Ik vind de fout niet.",
+              "id": "83dbd389-4f2a-46e4-b291-a2d11755d9d6"
+            },
+            {
+              "term": "de knop",
+              "meaning": "button",
+              "forms": "de knoppen",
+              "example": "Deze knop werkt niet.",
+              "id": "dfd4046b-3c76-4c60-9e1c-ab3ff1eda30c"
+            },
+            {
+              "term": "de test",
+              "meaning": "test",
+              "forms": "de tests",
+              "example": "We testen de app nog een keer.",
+              "id": "241ea69e-4fa2-4aaa-98f4-b559058468cb"
+            },
+            {
+              "term": "de computer",
+              "meaning": "computer",
+              "forms": "de computers",
+              "example": "Ik start de test op mijn computer.",
+              "id": "45b78e1e-269d-4f55-80da-c1b9918c8d19"
+            },
+            {
+              "term": "opnieuw",
+              "meaning": "again, once more",
+              "example": "Probeer het opnieuw.",
+              "id": "fe0e47f2-468a-423d-8524-375c7e0dde0b"
+            },
+            {
+              "term": "werken",
+              "meaning": "to work, to function",
+              "example": "Het werkt nog niet.",
+              "note": "New meaning. werken is already known as 'to have a job'. About a thing: werken = to function.",
+              "id": "47efe1c2-43a1-4f7d-a35c-c46ac6ea451b"
+            },
+            {
+              "term": "doen",
+              "meaning": "to work, to function (informal, about a thing)",
+              "example": "De knop doet het niet.",
+              "note": "New meaning. doen is already known as 'to do'. (Niet) doen about a machine or button = it does(n't) work.",
+              "id": "ebd56b79-06b8-4e30-9ceb-197a7600e15b"
+            },
+            {
+              "term": "Gelukkig!",
+              "meaning": "Luckily! / Phew!",
+              "id": "18d5e562-a9d3-4ce3-8a73-77e25d13d67b"
+            }
+          ]
+        }
+      },
+      "id": "06480488-27ee-4d62-83b6-231cfc4e89be"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Niet …, maar … and wel",
+      "id": "6f0a6546-d688-412d-89e2-246651fb3a5b"
+    },
+    {
+      "type": "paragraph",
+      "props": {},
+      "content": "Use niet … maar … to correct something. Use wel as the positive answer to an earlier niet.",
+      "id": "783a980c-1270-4005-bbd2-ba077b657786"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Not Thursday, but Sunday.",
+        "note": "niet stands right before the thing you correct."
+      },
+      "content": [
+        {
+          "text": "Niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " donderdag, ",
+        {
+          "text": "maar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " zondag."
+      ],
+      "id": "f15fee65-8815-4cbe-9b3e-c60b2e7c7b60"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm not going Friday, but Sunday.",
+        "note": "Same pattern inside a full sentence."
+      },
+      "content": [
+        "Ik ga ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " vrijdag, ",
+        {
+          "text": "maar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " zondag."
+      ],
+      "id": "dcf8da65-30f1-49e0-afd7-4d36e14cdeac"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I can't on Thursday, but I can on Sunday.",
+        "note": "wel is the positive counterpart of niet: it confirms what you can do."
+      },
+      "content": [
+        "Donderdag kan ik niet, maar zondag kan ik ",
+        {
+          "text": "wel",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "ccc0c9a1-a50e-4920-b2e2-070d76c49942"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Now it does work!",
+        "note": "wel answers an earlier 'het werkt niet': it confirms the positive."
+      },
+      "content": [
+        "Nu werkt het ",
+        {
+          "text": "wel",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "!"
+      ],
+      "id": "ab988016-3411-4ef5-9e6b-24d7f3d5292c"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "wel",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is how Dutch answers its own niet: 'Donderdag kan ik niet, maar zondag kan ik wel.' Think of wel as a stressed 'yes, really'."
+      ],
+      "id": "354e945f-69c2-419d-8875-23051789627e"
+    },
+    {
+      "type": "divider",
+      "id": "a2570705-cd71-4029-b292-6c271e7a1705"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Any element first + inversion",
+      "id": "b0f8fdd6-ab8b-4e92-962a-63e5d504129e"
+    },
+    {
+      "type": "paragraph",
+      "props": {},
+      "content": "You already know that a sentence can start with ik or a time word, with the verb in position 2 (08-b). Any single element can go first this way: a time word, a place, an object, dat, or a word like misschien. Only one element goes before the verb; the subject follows it.",
+      "id": "f42eb825-b3d5-499c-a625-ba94b771f894"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Time first",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Donderdag kan ik niet.",
+          "id": "b87c4cab-06e8-47f8-bd55-a1349cede835"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Zondag gaan we naar de film.",
+          "id": "6755b17c-5ae3-4cde-87f8-d0d0a2911f85"
+        }
+      ],
+      "id": "042f95eb-3b08-4e43-81ad-8b91b9cc7e87"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Object first",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Die film ken ik niet.",
+          "id": "54aaa281-97d3-40a4-8606-a5b2b9490465"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Dit kaartje heb ik al.",
+          "id": "13d5ea22-d330-4d87-bea9-34a785652889"
+        }
+      ],
+      "id": "94c84ff6-92db-4334-98a0-9a65b37d68a0"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Dat first",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Dat weet ik niet.",
+          "id": "97d3e680-cc0e-4bd0-a5dd-42ed2a5d9370"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Dat komt goed.",
+          "id": "f72c1f53-49a0-4f6f-9cc0-67e233ae558f"
+        }
+      ],
+      "id": "5b8e2091-de2f-4908-8b9a-e7d974560b70"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Place or misschien first",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "In het centrum is een goede bioscoop.",
+          "id": "0385c09b-53ef-45b5-a989-c1b532520352"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Misschien kan Fleur ook komen.",
+          "id": "8e0c8b7f-612d-4736-8485-ffe490035097"
+        }
+      ],
+      "id": "d4b00db0-7757-443c-95b2-7a8e7da0a821"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I don't know that film.",
+        "note": "Object first, then the verb, then the subject ik; niet stays at the end."
+      },
+      "content": [
+        {
+          "text": "Die film",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "ken",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ik niet."
+      ],
+      "id": "6a1100a4-8fb4-4297-9938-9bd5acde6812"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Maybe Fleur can come too.",
+        "note": "misschien first, then the verb kan, then the subject Fleur."
+      },
+      "content": [
+        {
+          "text": "Misschien",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "kan",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Fleur ook komen."
+      ],
+      "id": "6c1c3fc4-92a3-4b20-8e3e-f64b835e654e"
+    },
+    {
+      "type": "paragraph",
+      "props": {},
+      "content": "Turning down a day and offering another usually follows the same four steps:",
+      "id": "588dff1d-0c2f-4bce-b023-e42b17b44052"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Say you can't: Donderdag kan ik niet.",
+      "id": "7c498969-0108-48d5-9921-3b5c8d0567d0"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Give the reason as a second sentence (no omdat): Dan moet ik overwerken.",
+      "id": "3cd8357a-ed9e-4703-83a7-2875456541af"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Correct if needed: Niet donderdag, maar zondag.",
+      "id": "6f0b9d96-b8b0-4e4c-b8e9-cccaf6b3b85f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Confirm the positive: Zondag kan ik wel!",
+      "id": "c6eaf319-04a3-44f4-a8cb-eb544b5a8e39"
+    },
+    {
+      "type": "divider",
+      "id": "a69a733d-42fa-4adf-8d73-d62d45749445"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "f025449d-c703-4fa8-91dd-d9dd79b06298"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Where does niet go?",
+      "id": "4ac119e0-4687-48b1-b2ee-303854e0dbcf"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in niet in the right place.",
+          "items": [
+            {
+              "prompt": "Ik ken die film … .",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "Nothing follows the verb's meaning here: niet at the end."
+            },
+            {
+              "prompt": "Ik zie Noor vandaag … .",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "Noor (a name) and vandaag (time) both come before niet."
+            },
+            {
+              "prompt": "Dat is … duur.",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "niet before the adjective duur."
+            },
+            {
+              "prompt": "Ik ga … naar de bioscoop.",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "niet before the place phrase naar de bioscoop."
+            },
+            {
+              "prompt": "Ik kan donderdag … komen. (komen)",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "niet before the infinitive at the end."
+            },
+            {
+              "prompt": "Ik kom … mee.",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "niet before the separable prefix mee."
+            },
+            {
+              "prompt": "Ik heb dit kaartje … nodig.",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "niet before nodig, like a prefix."
+            },
+            {
+              "prompt": "Ik ga … vaak naar de film.",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "niet before the adverb vaak."
+            },
+            {
+              "prompt": "De knop doet het … .",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "Nothing follows: niet at the end."
+            },
+            {
+              "prompt": "Ik vind de fout … .",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "de fout is a definite object, so it comes before niet."
+            },
+            {
+              "prompt": "Dit kaartje heb ik … .",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "The object (dit kaartje) is already fronted, so niet is the last word."
+            },
+            {
+              "prompt": "Ik kan vrijdag … komen. (komen)",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "Also fine: ik kan vrijdag niet. (without komen, niet simply ends the sentence)."
+            }
+          ]
+        }
+      },
+      "id": "42a967c1-88a6-464a-9227-05abca6d47f0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Dialogue: say no, say yes",
+      "id": "ee99c036-e589-46d6-b0df-4ad628262772"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the dialogues. Fill in one word per blank: niet, geen or wel.",
+          "items": [
+            {
+              "prompt": "Noor: Kun je donderdag? / Sofia: Donderdag kan ik … . Dan moet ik overwerken.",
+              "authorsVersion": [
+                "niet"
+              ]
+            },
+            {
+              "prompt": "Sofia: En vrijdag, kun jij dan? / Noor: Nee, vrijdag kan ik ook … . Dan is het feestje van mijn vriendin.",
+              "authorsVersion": [
+                "niet"
+              ]
+            },
+            {
+              "prompt": "Noor: Zaterdag dan? Kom je eten? / Sofia: Zaterdag kan ik … ! Heel graag.",
+              "authorsVersion": [
+                "wel"
+              ],
+              "note": "wel confirms the positive, against the niet of donderdag and vrijdag."
+            },
+            {
+              "prompt": "Daan: Heb je de fout al gevonden? / Sofia: Nee, ik vind de fout … . En de test werkt … .",
+              "authorsVersion": [
+                "niet",
+                "niet"
+              ]
+            },
+            {
+              "prompt": "Noor: Heb je nog een kaartje nodig voor de film? / Sofia: Nee, ik heb … kaartje nodig. De voorstelling is gratis.",
+              "authorsVersion": [
+                "geen"
+              ],
+              "note": "geen kaartje: een kaartje has no article left in the negative."
+            },
+            {
+              "prompt": "Sofia: Werkt de app nu? / Daan: Ja, nu werkt het … ! Gelukkig.",
+              "authorsVersion": [
+                "wel"
+              ],
+              "note": "wel confirms the positive after 'werkt het niet?'."
+            }
+          ]
+        }
+      },
+      "id": "5f5d58a9-b5de-4859-82d8-cbd3a33d4b67"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "ff54c600-8716-460f-b2b2-2128dd3a8d48"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Start with the underlined idea in your head; write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: ken / die film / ik / niet",
+              "authorsVersion": [
+                "Die film ken ik niet."
+              ],
+              "note": "Object first, then the verb, then the subject."
+            },
+            {
+              "prompt": "Put in order: weet / dat / ik / niet",
+              "authorsVersion": [
+                "Dat weet ik niet."
+              ],
+              "note": "dat first, then the verb, then ik."
+            },
+            {
+              "prompt": "Put in order: kan / donderdag / niet / ik",
+              "authorsVersion": [
+                "Donderdag kan ik niet."
+              ],
+              "note": "Time word first (08-b, deepened)."
+            },
+            {
+              "prompt": "Put in order: is / in het centrum / een goede bioscoop",
+              "authorsVersion": [
+                "In het centrum is een goede bioscoop."
+              ],
+              "note": "Place phrase first; the subject (een goede bioscoop) follows the verb."
+            },
+            {
+              "prompt": "Put in order: kan / Fleur / misschien / ook komen",
+              "authorsVersion": [
+                "Misschien kan Fleur ook komen."
+              ],
+              "note": "misschien first, then kan, then the subject Fleur."
+            },
+            {
+              "prompt": "Put in order: wil / ik / die film / graag zien",
+              "authorsVersion": [
+                "Die film wil ik graag zien."
+              ],
+              "note": "Object first; graag stays right before the infinitive zien (19-b)."
+            },
+            {
+              "prompt": "Put in order: gaan / zondag / wij / naar de film",
+              "authorsVersion": [
+                "Zondag gaan wij naar de film."
+              ],
+              "note": "Time word first, inversion: gaan before wij."
+            }
+          ]
+        }
+      },
+      "id": "baa4c1b9-aa18-4100-b33b-7b9b16aa958d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Transformation: positive to negative",
+      "id": "91038d9a-744f-4e4e-8c93-748309670563"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence as negative. Use niet or geen. The last item is different: move the object to the front.",
+          "items": [
+            {
+              "prompt": "Ik kan donderdag werken.",
+              "authorsVersion": [
+                "Ik kan donderdag niet werken."
+              ],
+              "note": "niet before the infinitive werken."
+            },
+            {
+              "prompt": "Ik heb tijd.",
+              "authorsVersion": [
+                "Ik heb geen tijd."
+              ],
+              "note": "tijd has no article: geen, not niet."
+            },
+            {
+              "prompt": "Ik ken deze film.",
+              "authorsVersion": [
+                "Ik ken deze film niet."
+              ],
+              "note": "deze film is a definite object: niet comes after it."
+            },
+            {
+              "prompt": "Dit is leuk.",
+              "authorsVersion": [
+                "Dit is niet leuk."
+              ],
+              "note": "niet before the adjective leuk."
+            },
+            {
+              "prompt": "Ik kom mee.",
+              "authorsVersion": [
+                "Ik kom niet mee."
+              ],
+              "note": "niet before the separable prefix mee."
+            },
+            {
+              "prompt": "Ik heb een kaartje nodig.",
+              "authorsVersion": [
+                "Ik heb geen kaartje nodig."
+              ],
+              "note": "een kaartje → geen kaartje; geen still comes before nodig."
+            },
+            {
+              "prompt": "Rewrite with the object first: Ik wil die film zien.",
+              "authorsVersion": [
+                "Die film wil ik zien."
+              ],
+              "note": "Front the object: verb (wil) in position 2, subject ik after it, zien stays at the end."
+            }
+          ]
+        }
+      },
+      "id": "593c5fc4-fc59-4c19-9a57-feded9253773"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "130b0f47-9be2-4bb8-ac64-f1abc5d9f879"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "I can't come on Thursday.",
+              "authorsVersion": [
+                "Ik kan donderdag niet komen."
+              ]
+            },
+            {
+              "prompt": "I don't know that film.",
+              "authorsVersion": [
+                "Ik ken die film niet."
+              ],
+              "note": "kennen, not weten: a film is a thing you're familiar with."
+            },
+            {
+              "prompt": "I have no time this week.",
+              "authorsVersion": [
+                "Ik heb deze week geen tijd."
+              ]
+            },
+            {
+              "prompt": "Not Thursday, but Sunday.",
+              "authorsVersion": [
+                "Niet donderdag, maar zondag."
+              ]
+            },
+            {
+              "prompt": "On Sunday I can.",
+              "authorsVersion": [
+                "Zondag kan ik wel."
+              ],
+              "note": "wel for a positive answer after a niet."
+            },
+            {
+              "prompt": "Maybe Fleur can come too.",
+              "authorsVersion": [
+                "Misschien kan Fleur ook komen."
+              ]
+            },
+            {
+              "prompt": "The button doesn't work.",
+              "authorsVersion": [
+                "De knop werkt niet."
+              ],
+              "note": "Also fine: De knop doet het niet."
+            }
+          ]
+        }
+      },
+      "id": "3952cec8-500d-49eb-b866-e9a1ee262a4d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "777af51a-90a7-4a21-a3ee-386cc365a73c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Ik vind de fout niet.",
+              "authorsVersion": [
+                "I can't find the mistake."
+              ]
+            },
+            {
+              "prompt": "De test werkt nog niet.",
+              "authorsVersion": [
+                "The test doesn't work yet."
+              ]
+            },
+            {
+              "prompt": "Niet donderdag, maar zondag.",
+              "authorsVersion": [
+                "Not Thursday, but Sunday."
+              ]
+            },
+            {
+              "prompt": "Nu werkt het wel!",
+              "authorsVersion": [
+                "Now it does work!"
+              ]
+            },
+            {
+              "prompt": "Ik heb geen kaartje nodig.",
+              "authorsVersion": [
+                "I don't need a ticket."
+              ]
+            },
+            {
+              "prompt": "Misschien kan Fleur ook komen.",
+              "authorsVersion": [
+                "Maybe Fleur can come too."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "d7b9ed18-0b76-42c6-8681-70e5ba1ae5c3"
+    },
+    {
+      "type": "divider",
+      "id": "10aa3192-46b0-42bc-8d58-347af06e58f8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: the cinema programme and Noor's message",
+      "id": "74389e50-0469-4414-984c-ddfed63e2112"
+    },
+    {
+      "type": "paragraph",
+      "props": {},
+      "content": "Noor sends Sofia the cinema programme and a message with the plan. New words: het programma (the programme), draaien (new meaning: to be showing, of a film).",
+      "id": "012fd490-2315-430b-9958-f42fa3059110"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het programma",
+              "meaning": "the programme",
+              "forms": "de programma's",
+              "id": "e47f44c2-eafa-46b1-b6a2-a71868340bde"
+            },
+            {
+              "term": "draaien",
+              "meaning": "to be showing (a film), to play",
+              "forms": "draait · draaide · gedraaid",
+              "note": "New meaning. draaien (to turn) is not yet known; here it only means 'a film is showing'.",
+              "id": "49cf9b3b-61ef-412d-9b00-03a620ee2011"
+            }
+          ]
+        }
+      },
+      "id": "779aa04a-2d9f-41ab-8174-12436427e5ff"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the programme and the message. Answer the questions in Dutch.",
+          "items": [
+            {
+              "prompt": "Hoe laat is de voorstelling van De Lange Zomer op donderdag?",
+              "authorsVersion": [
+                "Om acht uur. / Om 20.00 uur."
+              ]
+            },
+            {
+              "prompt": "Welke film draait er op vrijdag om 21.15 uur?",
+              "authorsVersion": [
+                "Winterlicht."
+              ]
+            },
+            {
+              "prompt": "Kan Sofia donderdag naar de film?",
+              "authorsVersion": [
+                "Nee, donderdag kan ze niet. Ze moet overwerken."
+              ]
+            },
+            {
+              "prompt": "Kan Noor vrijdag?",
+              "authorsVersion": [
+                "Nee, vrijdag kan Noor niet. Dan is het feestje van haar vriendin."
+              ]
+            },
+            {
+              "prompt": "Klopt dit? Noor en Fleur koken zaterdag boerenkool.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Noor en Fleur koken pasta."
+              ]
+            },
+            {
+              "prompt": "Hoe laat komt Sofia zaterdag eten?",
+              "authorsVersion": [
+                "Om zes uur."
+              ]
+            },
+            {
+              "prompt": "Welke voorstelling kiezen Sofia en Noor op zondag?",
+              "authorsVersion": [
+                "De voorstelling van drie uur. / De voorstelling van 15.00 uur."
+              ]
+            },
+            {
+              "prompt": "Wie koopt de kaartjes?",
+              "authorsVersion": [
+                "Noor koopt de kaartjes."
+              ]
+            }
+          ],
+          "passage": {
+            "title": "Het programma en het berichtje van Noor",
+            "content": "BIOSCOOP CENTRUM – week 48\nDonderdag 26 november\n20.00 De Lange Zomer\n\nVrijdag 27 november\n19.00 De Lange Zomer\n21.15 Winterlicht\n\nZondag 29 november\n15.00 De Lange Zomer\n17.30 Winterlicht\n\nBerichtje van Noor, woensdag 25 november, 21.40 uur:\nHoi Sofia! Donderdag kan jij niet, en vrijdag kan ik niet. Dat komt goed: kom je zaterdag om zes uur eten? Fleur en ik koken pasta. En zondag gaan we naar De Lange Zomer, de voorstelling van drie uur, in het centrum! Ik koop de kaartjes. Tot zaterdag!\nGroetjes, Noor"
+          }
+        }
+      },
+      "id": "d9a240ce-8e69-46ff-8cdd-9ab6d145ae79"
+    },
+    {
+      "type": "divider",
+      "id": "066c9a4a-f08d-4562-a927-822171bc181a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "9f8a6712-40bc-4609-bc36-44f0f91b9ec3"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about what you can't do this week and what you can do. Use niet, geen and wel.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about what you can't do this week and what you can do.",
+              "authorsVersion": [
+                "Deze week kan ik niet naar de sportschool. Ik moet veel werken. Maandag en dinsdag kan ik niet, maar woensdag kan ik wel! Dan ga ik graag zwemmen."
+              ],
+              "note": "Model answer. Check: niet/geen in the right place, wel as the positive answer."
+            }
+          ]
+        }
+      },
+      "id": "18325c9b-945a-4d0d-8c0c-583e4c738186"
+    },
+    {
+      "type": "divider",
+      "id": "ffef7d16-7fd7-40c4-9fef-c210390d07bc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "9b174fb1-76d3-41a2-8470-f9f379b0b249"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Nothing left to say → niet at the end: Ik werk vrijdag niet.",
+      "id": "1812bae9-fe3f-4967-85f0-6493946f9892"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "A definite object, a name or a time word → niet comes after it: Ik vind de fout niet.",
+      "id": "3100f597-a53d-4df4-b84a-2cd2baae8819"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "An adjective, a place phrase, an infinitive, a prefix or nodig → niet comes before it: Ik kan niet komen.",
+      "id": "5820fc5c-f1c4-48d5-908a-751f8ecddba3"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "geen replaces niet + een, and goes with nouns without an article: Ik heb geen tijd.",
+      "id": "2b9aa271-586f-4699-98f8-964326980880"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Niet …, maar … corrects something: Niet donderdag, maar zondag.",
+      "id": "b5a4733d-60cc-4c9a-bb68-e1586d41262a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "wel is the positive answer to an earlier niet: Zondag kan ik wel!",
+      "id": "8ded5fff-5227-49dd-b615-2da561f0ddf7"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Any single element can start the sentence; the verb follows it, then the subject: Die film ken ik niet.",
+      "id": "782a9f4d-7cdb-47c9-91c8-e8e0a0e93d9c"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Noor phones",
+      "description": "Sofia sits on her bed in her Lombok apartment in the evening, phone to her ear and smiling, with a wall calendar showing late November and Thursday and Friday marked busy.",
+      "alt": "Sofia on the phone in her bedroom in the evening, a calendar on the wall.",
+      "location": "Sofia's bedroom, Kastanjestraat 14, Lombok, Utrecht",
+      "characters": "Sofia",
+      "action": "Sofia sits on her bed calling Noor, phone to her ear, smiling, looking at a wall calendar"
+    },
+    {
+      "afterHeading": "Story: Thursday evening at the office",
+      "description": "Sofia and Daan at their desks in the IT office late in the evening, laptop screens open, dark windows behind them, Daan pointing at Sofia's screen.",
+      "alt": "Sofia and Daan working late at the office, looking at a laptop screen together.",
+      "location": "Sofia and Daan's office near Utrecht Centraal",
+      "characters": "Sofia, Daan",
+      "action": "Daan leans over and points at Sofia's laptop screen while she looks at it, office lit, dark windows"
+    }
+  ],
+  "id": "1d6f379c-c817-4df4-90a7-72556435b24e"
+}

@@ -10,9 +10,9 @@ One row per grammar topic: the outline topics of all 40 rows, plus topics the le
 - `partial` — taught, but less deeply than intended, or only as a chunk; the notes say what remains.
 - `assumed` — Part I knowledge with no Wordinator lesson; learners are expected to know it.
 - `deferred` — deliberately postponed to a later row or part; the notes say where.
-- `missing` — no lesson yet. While Parts II–III are being written, rows show `missing (planned: …)` until the lesson is accepted.
+- `missing` — no lesson yet. While a part is being written, its rows show `missing (planned: …)` until the lesson is accepted.
 
-Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`.
+Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`; `19-a` … `24-b` = `part-iv/` (plan: [briefs-part-iv.md](briefs-part-iv.md)).
 
 ## Outline topics
 
@@ -45,12 +45,16 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | 17 | Adjective vs adverb | 17-b | — | covered | Attributive -e, predicative/adverb bare form, intensifiers heel/erg/best/een beetje/te. |
 | 18 | Adjective endings; colours | 18-a | — | covered | Full -e rule with the een/geen/no-article + singular het-word exception; spelling changes; colours. |
 | 18 | Comparison (introduction) | 18-b | — | covered | Comparative + dan, irregulars (beter/meer/minder), even/net zo/niet zo … als. Superlative deferred to row 32. |
-| 19 | houden van, graag, infinitive constructions | — | — | missing | Part IV not written. "Ik wil graag", "Ja, graag" used as chunks from 11-a. |
-| 20 | Modal verbs + infinitive; infinitive at the end | — | — | missing | Part IV. willen/mogen (11), kunnen (15), gaan (16) already put an infinitive at the end; row 20 should systematise and add moeten. |
-| 21 | zullen; suggestions; requests | — | — | missing | Part IV. |
-| 22 | aan het + infinitive | — | — | missing | Part IV. |
-| 23 | kunnen, mogen, moeten, hoeven | — | — | missing | Part IV. kunnen and mogen already taught (15-a, 11). |
-| 24 | vinden dat, denken dat; subordinate clauses intro | — | — | missing | Part IV. "Ik vind … lekker/leuk" used as a simple main-clause chunk earlier. |
+| 19 | houden van; infinitive as a het-noun; vinden + activity + adjective | 19-a | — | covered | "Ik vind … lekker/leuk" used as a main-clause chunk earlier; full vinden pattern practiced here. |
+| 19 | graag (liking), liever; infinitive constructions with gaan/komen/blijven/leren | 19-b | — | covered | "Ik wil graag", "Ja, graag" used as chunks from 11-a. het liefst deferred to row 32. |
+| 20 | Modal verbs + infinitive (system); moeten; modal + direction without infinitive; two infinitives at the end (intro) | 20-a | — | covered | Consolidates willen/mogen (11), kunnen (15), gaan (16-b). Two infinitives at the end is recognition-only (intro), deepened in later rows. |
+| 21 | zullen for suggestions and offers (Zullen we …? Zal ik …?); Laten we …; reacting | — | — | missing (planned: 21-a) | Future/promise zullen deferred to row 36. |
+| 21 | Invitations and arrangements (with object pronouns) | — | — | missing (planned: 21-b) | |
+| 22 | aan het + infinitive | — | — | missing (planned: 22-a, 22-b) | 22-b adds questions/negation, bezig zijn met, zitten/staan/liggen te. |
+| 23 | kunnen, mogen, moeten contrasted; mogen niet | — | — | missing (planned: 23-a) | kunnen and mogen already taught (15-a, 11). |
+| 23 | hoeven + niet + te; moeten ↔ niet hoeven | — | — | missing (planned: 23-b) | |
+| 24 | Opinions in main clauses (vinden + object + adjective, Ik denk het wel, het eens zijn) | — | — | missing (planned: 24-a) | |
+| 24 | vinden/denken/hopen/zeggen + dat; subordinate clause intro (verb last) | — | — | missing (planned: 24-b) | Only dat-clauses; omdat/als/want in Part VI. |
 | 25 | Perfect with hebben | — | — | missing | Part V. No past tense anywhere in Parts II–III. |
 | 26 | Perfect with zijn | — | — | missing | Part V. |
 | 27 | Irregular participles; ge- rules | — | — | missing | Part V. |
@@ -58,17 +62,17 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | 29 | Perfect vs simple past; sequencing words | — | — | missing | Part V. eerst/dan/daarna used in the present from 08-b/15-b. |
 | 30 | Subordinate clauses: omdat, dat, als | — | — | missing | Part VI. |
 | 31 | want vs omdat | — | — | missing | Part VI. |
-| 32 | Comparative and superlative | — | — | missing | Part VI. Comparative covered in 18-b; superlative still missing. |
+| 32 | Comparative and superlative | — | — | missing | Part VI. Comparative covered in 18-b; superlative still missing, including het liefst (19-b stops at liever). |
 | 33 | Relative clauses die/dat | — | — | missing | Part VI. |
-| 34 | om … te; te + infinitive | — | — | missing | Part VI. "te + adjective" (too) from 12-b is a different structure. |
+| 34 | om … te; te + infinitive | — | — | missing | Part VI. "te + adjective" (too) from 12-b is a different structure. Planned partial uses: hoeven … te (23-b), zitten/staan/liggen te (22-b). |
 | 35 | als, dan; zou/zouden | — | — | missing | Part VI. |
-| 36 | Present vs gaan vs zullen for the future | — | — | missing | Part VI. Present + time word and gaan + infinitive taught in 08–09 and 16-b. |
-| 37 | Object pronouns; polite zou | — | — | missing | Part VII. Some object pronouns used as chunks (see style guide). |
+| 36 | Present vs gaan vs zullen for the future | — | — | missing | Part VI. Present + time word and gaan + infinitive taught in 08–09 and 16-b; zullen for suggestions/offers planned in 21-a. |
+| 37 | Object pronouns; polite zou | — | — | missing | Part VII. Object pronouns for people and things planned at basic depth in 21-b (moved earlier); row 37 adds hen/hun, er- forms and polite zou. |
 | 38 | Reflexive verbs; formal requests | — | — | missing | Part VII. Daily-routine reflexives (zich aankleden) deliberately avoided in 07. |
 | 39 | Conjunctions; clause linking; register | — | — | missing | Part VII. |
 | 40 | Integrated word order | — | — | missing | Part VII. |
 
-## Topics beyond the outline (added by Parts II–III)
+## Topics beyond the outline (added by Parts II–IV)
 
 | Topic | Introduced | Reinforced | Status | Notes |
 | --- | --- | --- | --- | --- |
@@ -80,7 +84,7 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | jarig zijn, birthday customs | 09-a | 09-b | covered | |
 | Units singular after numbers; no "of" in quantities | 10-b | — | covered | |
 | nodig hebben | 10-b | — | covered | |
-| Diminutives (-je, always het) | 10-b | — | covered | Vocabulary rule only; formation (-tje, -pje, -etje) not systematic. |
+| Diminutives (-je, always het) | 10-b | — | covered | Vocabulary rule only; formation planned in 21-a (row below). |
 | u vs jij register; alstublieft/alsjeblieft | 11-b | — | covered | |
 | Prices, euros and cents | 12-b | — | covered | |
 | te + adjective (too) | 12-b | — | covered | |
@@ -93,3 +97,10 @@ Lesson IDs: `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`
 | Seasons (in de lente/zomer/herfst/winter) | 17-a | — | covered | |
 | Intensifiers heel, erg, best, een beetje, te | 17-b | — | covered | |
 | Non-inflecting adjectives (oranje, roze, -en materials) | 18-a | — | covered | |
+| Position of niet (system); niet … maar; wel for contrast | — | — | missing (planned: 20-b) | Parts II–III used only simple niet rules. 24-b applies them in dat-clauses. |
+| Any element first + inversion (objects, dat, prepositional phrases) | — | — | missing (planned: 20-b) | Time/place/dan first covered in 08-b, 14-a, 15-a. Integration in row 40. |
+| Diminutive formation (-je, -tje, -pje, -etje) | — | — | missing (planned: 21-a) | Completes the 10-b vocabulary rule. |
+| Object pronouns for things (hem/het/ze) | — | — | missing (planned: 21-b) | Subject forms hij/het/ze covered in 14-a. |
+| zin hebben in + noun | — | — | missing (planned: 21-a) | "zin hebben om … te" is row 34. |
+| bezig zijn met | — | — | missing (planned: 22-b) | |
+| al + present for a period up to now (Ik woon al twee jaar …) | — | — | missing (planned: 19-a) | Intro chunk. |

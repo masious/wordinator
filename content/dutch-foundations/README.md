@@ -4,11 +4,11 @@ Content workspace for the "Dutch Foundations" courses. Lessons are authored as J
 
 | Path | Owner | Purpose |
 | --- | --- | --- |
-| `outline.md` | user | The 40-lesson curriculum. Part II = rows 7–12, Part III = rows 13–18. |
+| `outline.md` | user | The 40-lesson curriculum. Part II = rows 7–12, Part III = rows 13–18, Part IV = rows 19–24. |
 | [`docs/content/`](../../docs/content/index.md) | coordinator | Curriculum docs: storyline and cast, style guide, per-lesson briefs, ledgers of what each lesson actually taught, topic map, and gaps. Start at `docs/content/index.md`. |
-| `part-ii/`, `part-iii/` | workers | One file per lesson: `NN-a-slug.json` (`NN` = outline row; `a`, `b` when a row is split). File-name order = lesson order. |
+| `part-ii/`, `part-iii/`, `part-iv/` | workers | One file per lesson: `NN-a-slug.json` (`NN` = outline row; `a`, `b` when a row is split). File-name order = lesson order. |
 | `part-iii/existing/` | reference | The two lessons already in the course for row 13. Do not edit; do not re-cover them. |
-| `*/course.json` | — | Import manifest (course ID, local group/owner, position offset). |
+| `*/course.json` | — | Import manifest (course ID, local group/owner, position offset). Part IV has none yet: the user must create the Part IV course in the app and give its ID first (see [`ledger-part-iv.md`](../../docs/content/ledger-part-iv.md)). |
 | `tools/lesson.ts` | — | Validator and SQL generator. |
 | `tools/normalize.ts` | — | Authoring shorthand → stored document; shared with the web app's dev-only lesson overview prototype. |
 | `illustrations/`, `tools/illustrate.ts` | — | Visual canon, frozen reference sheets and the Azure FLUX.2 [pro] generator for `imageIdeas`; see [`docs/content/illustrations.md`](../../docs/content/illustrations.md). |

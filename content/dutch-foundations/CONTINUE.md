@@ -16,16 +16,25 @@ Repo: `/Users/jsninja/myworkspace/2wordinator`. Read `CLAUDE.md` and `content/du
 
 ## Part priority (user's order, 2026-10-10)
 
-Work on parts in this order: **Part II → Part III → Part IV → Part V → Part VI → Part VII → Part I last.** Part II is finished; Part III is written and imported locally (production import of Batch B pending). Part IV is next. Parts IV onward need briefs and a ledger before workers start (see `docs/content/index.md#workflow`).
+Work on parts in this order: **Part II → Part III → Part IV → Part V → Part VI → Part VII → Part I last.** Part II is finished; Part III is finished and published. Part IV is next. Parts IV onward need briefs and a ledger before workers start (see `docs/content/index.md#workflow`).
 
 ## Agent models (cost)
 
 Use the cheapest model that does the job: coordinator and workers on `sonnet`; reviewers on `opus`, because they are the Dutch-correctness gate.
 
-## Batches (the user's rule: finish a batch completely before starting the next)
+## Part IV (rows 19–24)
+
+Planned in `docs/content/briefs-part-iv.md` (12 lessons, 19-a … 24-b). User decisions are in `part-iv/REVIEW-NOTES.md`. The course does not exist yet, so batches stop after docs: no import until the user gives the course ID. Use the Part III coordinator prompt below with `part-iv` paths, `briefs-part-iv.md`, `ledger-part-iv.md`, and `terms.py` over `part-iii/*.json part-iii/existing/*.json part-iv/*.json`.
+
+- **Batch A:** 19-a, 19-b, 20-a. **Done** (written, reviewed, docs updated, 2026-10-11). Not imported: no course ID yet.
+- **Batch B:** 20-b, 21-a, 21-b.
+- **Batch C:** 22-a, 22-b, 23-a.
+- **Batch D:** 23-b, 24-a, 24-b.
+
+## Part III batches (the user's rule: finish a batch completely before starting the next)
 
 - **Batch A:** 16-a, 16-b and 17-a. **Done** (reviewed, docs updated, local and production import).
-- **Batch B:** 17-b, 18-a and 18-b. **Done locally** (written, reviewed, docs updated, local import at positions 9–11, 2026-10-11). Not yet in production.
+- **Batch B:** 17-b, 18-a and 18-b. **Done** (written, reviewed, docs updated; local and production import at positions 9–11, 2026-10-11; published in production).
 - **Then stop** and ask the user whether to import Batch B into production. Never write to production without the user's explicit yes in that turn.
 
 Decisions already made (in `part-iii/REVIEW-NOTES.md`; tell Batch B's coordinator):

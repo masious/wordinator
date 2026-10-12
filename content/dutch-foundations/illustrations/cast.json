@@ -34,5 +34,29 @@
     "label": "the man with short black hair, a black beard and a dark-green work jacket",
     "appearance": "Ahmed, a 40-year-old Dutch-Moroccan man: medium-brown skin, short black hair, neat black beard, friendly smile, medium build.",
     "outfit": "Dark-green work jacket with rolled-up sleeves over a grey T-shirt, dark work trousers, black boots."
+  },
+  "fleur": {
+    "name": "Fleur",
+    "label": "the sporty young woman with a sun-bleached messy bun and a coral sports jacket",
+    "appearance": "Fleur, a 27-year-old Dutch woman: sun-tanned light skin with freckles, blue eyes, sun-bleached dark-blonde hair in a messy bun, no glasses, athletic build, big open smile.",
+    "outfit": "Coral-pink zip-up sports jacket over a white T-shirt, black leggings, grey running shoes."
+  },
+  "marieke": {
+    "name": "Marieke",
+    "label": "the woman with curly auburn hair, red glasses and a plum dress",
+    "appearance": "Marieke, a 52-year-old Dutch woman: light skin, shoulder-length curly auburn hair with a few grey strands, rectangular dark-red glasses, warm patient smile, average build.",
+    "outfit": "Long plum-purple knitted dress over dark tights, a mustard-and-sage patterned scarf, brown ankle boots."
+  },
+  "piotr": {
+    "name": "Piotr",
+    "label": "the stocky man with a sandy-blond buzz cut and a burgundy padded jacket",
+    "appearance": "Piotr, a 34-year-old Polish man: light skin with rosy cheeks, very short sandy-blond buzz cut, clean-shaven, broad shoulders, stocky build, shy friendly smile.",
+    "outfit": "Burgundy padded jacket over a dark-blue T-shirt, light-blue jeans, grey sneakers."
+  },
+  "karin": {
+    "name": "Karin",
+    "label": "the woman with short cropped dark hair, black glasses and a charcoal turtleneck",
+    "appearance": "Karin, a 48-year-old Dutch woman: light skin, short cropped dark-brown hair with a silver streak at the front, black rectangular glasses, small silver stud earrings, calm direct expression, slim build.",
+    "outfit": "Charcoal-grey knitted turtleneck jumper, black trousers, white leather sneakers."
   }
 }

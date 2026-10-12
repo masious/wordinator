@@ -1,0 +1,1899 @@
+{
+  "title": "Ik moet werken",
+  "goal": "Talk about obligations and a busy week with moeten, and see willen, kunnen, mogen, moeten and gaan as one 'second verb at the end' system.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Ik moet werken",
+      "id": "c2839622-1f32-4db6-b726-bb3d62d2d7d4"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Monday 23 and Tuesday 24 November. Sofia's IT company has a deadline this week: the client from Amsterdam (lesson 16-a) needs a new app by Friday. In this lesson you will learn ",
+        {
+          "text": "moeten",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (must, have to) and see how it joins ",
+        {
+          "text": "willen",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "kunnen",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "mogen",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and ",
+        {
+          "text": "gaan",
+          "styles": {
+            "italic": true
+          }
+        },
+        " in one system."
+      ],
+      "id": "265949f6-dd7b-4b16-bd05-9e36564b8b07"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: the ",
+        {
+          "text": "modal verb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " is blue, an ",
+        {
+          "text": "infinitive sent to the end",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        " is red, the ",
+        {
+          "text": "subject",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " is green, a ",
+        {
+          "text": "time word",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " is orange and a ",
+        {
+          "text": "place or direction",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " is purple."
+      ],
+      "id": "9d10b2a3-62af-4ba5-9dc8-7c39a5903148"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Karin's Monday meeting",
+      "id": "f7ce3e19-3d9a-4684-91ab-a2522a9abe92"
+    },
+    {
+      "type": "paragraph",
+      "content": "Karin Smit is Sofia and Daan's teamleider (team leader) at the IT company. On Monday morning she calls a short meeting: the team has a big deadline this week.",
+      "id": "0982704d-7e4f-40f2-8918-b336a518cd11"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de teamleider",
+              "meaning": "team leader",
+              "forms": "de teamleiders",
+              "example": "Karin is de teamleider van Sofia en Daan.",
+              "id": "cd24727b-ef94-420a-b354-ed8a99997154"
+            }
+          ]
+        }
+      },
+      "id": "b8468ea0-b654-4a65-8b32-cc376b3045d9"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Karin",
+            "text": "Goedemorgen! We hebben een deadline: we moeten vrijdag klaar zijn met de app voor de klant in Amsterdam."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Oké. De presentatie is vrijdag om twee uur, toch?"
+          },
+          {
+            "speaker": "Karin",
+            "text": "Precies. Daan, jij moet de app nog testen."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Prima. Ik moet ook nog twee taken afmaken."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En ik? Wat moet ik doen?"
+          },
+          {
+            "speaker": "Karin",
+            "text": "Jij moet de nieuwe schermen afmaken, Sofia. Kun je donderdag lang werken?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, dat kan. De app moet op tijd klaar zijn!"
+          },
+          {
+            "speaker": "Karin",
+            "text": "Mooi. Ik moet de presentatie nog voorbereiden."
+          },
+          {
+            "speaker": "Daan",
+            "text": "We moeten dit echt samen doen. Het wordt een drukke week!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dat klopt! Kom op, we moeten beginnen!"
+          }
+        ]
+      },
+      "id": "5dd31ae4-d15c-459e-b33d-f262de3b1502"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de deadline",
+              "meaning": "deadline",
+              "forms": "de deadlines",
+              "example": "We hebben een deadline: vrijdag!",
+              "id": "d0acf338-9121-4bc4-8491-75197d73f602"
+            },
+            {
+              "term": "de app",
+              "meaning": "app, application",
+              "forms": "de apps",
+              "example": "We maken een nieuwe app voor de klant.",
+              "id": "8590d243-3a19-4f96-89e3-d92db73d1a7d"
+            },
+            {
+              "term": "de presentatie",
+              "meaning": "presentation",
+              "forms": "de presentaties",
+              "example": "De presentatie is vrijdag om twee uur.",
+              "id": "94b91518-b165-4dfb-928d-959a782953ec"
+            },
+            {
+              "term": "testen",
+              "meaning": "to test",
+              "forms": "test · testte · getest",
+              "example": "Daan test de app.",
+              "id": "ba16f36a-7335-4fec-b590-7fcf9239eaf6"
+            },
+            {
+              "term": "de taak",
+              "meaning": "task",
+              "forms": "de taken",
+              "example": "Daan moet nog twee taken afmaken.",
+              "id": "aaccff48-fcbe-435b-ac1d-0f16462dd6ee"
+            },
+            {
+              "term": "afmaken",
+              "meaning": "to finish (something)",
+              "forms": "maakt af · maakte af · afgemaakt",
+              "note": "Separable: the prefix af goes to the end. After a modal the whole infinitive afmaken stays at the end.",
+              "example": "Ik moet de schermen afmaken.",
+              "id": "7c71096d-9069-4977-bf6a-140493cd08bf"
+            },
+            {
+              "term": "het scherm",
+              "meaning": "screen",
+              "forms": "de schermen",
+              "example": "Ik maak de nieuwe schermen af.",
+              "id": "4821696e-11cb-46bd-a211-aceba1a4e27c"
+            },
+            {
+              "term": "voorbereiden",
+              "meaning": "to prepare",
+              "forms": "bereidt voor · bereidde voor · voorbereid",
+              "note": "Separable: Karin bereidt de presentatie voor. After a modal it stays whole: Karin moet de presentatie voorbereiden.",
+              "example": "Karin moet de presentatie nog voorbereiden.",
+              "id": "02ad9407-4fd2-4119-8cf5-e5c5f1776f93"
+            },
+            {
+              "term": "Wat moet ik doen?",
+              "meaning": "What do I have to do?",
+              "example": "En ik? Wat moet ik doen?",
+              "id": "37d9dc91-1d90-4642-b1c3-c93cb9e091e2"
+            }
+          ]
+        }
+      },
+      "id": "79c5ca5c-e3b9-46b6-a67b-c218e3759799"
+    },
+    {
+      "type": "divider",
+      "id": "688f3bf7-2b6b-4bea-b588-3c0aa16f8553"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "moeten",
+      "id": "3bb0b687-43d8-436b-aa13-6d6c53ae7af7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Conjugation",
+      "id": "e2007a7e-5191-4ab5-afc4-5994d090c009"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "ik ",
+        {
+          "text": "moet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "ea745434-8dd6-4864-8846-fc0dcb0d14d6"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "jij ",
+        {
+          "text": "moet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " / ",
+        {
+          "text": "moet je …?",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "bfb9f166-9bca-4337-a010-5e272c9b4715"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "u ",
+        {
+          "text": "moet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "b5b47c85-906e-46e0-9b6d-e9d48b5c0682"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "hij / zij ",
+        {
+          "text": "moet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "10e660bb-7fc1-49e0-b469-9facbd5da7f1"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "wij / jullie / zij ",
+        {
+          "text": "moeten",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "1bfc51d0-a1c1-4410-b9a4-587ad15aa9dd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I have to work."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "moet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "werken",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "4cb76a36-257d-4012-b386-54a50fc97576"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you have to work tomorrow?",
+        "note": "No extra -t to drop: jij moet stays moet."
+      },
+      "content": [
+        {
+          "text": "Moet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " je morgen ",
+        {
+          "text": "werken",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "9b16e729-faa3-40a3-8745-646a0ca28a7c"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "moeten",
+              "meaning": "must, to have to",
+              "forms": "moet · moest · gemoeten",
+              "example": "Ik moet werken.",
+              "id": "72969a04-904e-46bd-91c2-736207a95051"
+            }
+          ]
+        }
+      },
+      "id": "9b025121-6904-4110-979f-90829bf44317"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "moeten = must, have to. Like kunnen and mogen, the verb is the same for ik/jij/u/hij/zij: moet. Only wij/jullie/zij add -en: moeten.",
+      "id": "720296de-ba29-4579-81a6-39a12b0b56df"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "hij moeten",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "hij moet",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". hij/zij never takes -en."
+      ],
+      "id": "89c18f60-a576-463c-a172-c2b2f33a0f70"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You must see that film!",
+        "note": "moeten can also be a strong tip, not a real obligation."
+      },
+      "content": [
+        "Je ",
+        {
+          "text": "moet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " die film ",
+        {
+          "text": "zien",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "!"
+      ],
+      "id": "4a767920-adc9-4513-885a-93662eb574ce"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Je moet die film zien!",
+              "meaning": "You must see that film! (a strong tip)",
+              "note": "moeten is also used for a strong recommendation, not only an obligation.",
+              "id": "cb9712ff-0f3d-4416-b8bb-0689aaaf503e"
+            }
+          ]
+        }
+      },
+      "id": "7f874b3c-dcfe-4898-b2c6-65499fb970e1"
+    },
+    {
+      "type": "divider",
+      "id": "454c272e-6165-4b01-9f75-500d4ba8c9b9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "moeten + infinitive at the end",
+      "id": "5801b1cb-1e70-4617-9cdb-daaa58f5adf6"
+    },
+    {
+      "type": "paragraph",
+      "content": "Like kunnen, willen, mogen and gaan, moeten sends the other verb to the very end of the sentence, as an infinitive.",
+      "id": "c6756e52-0bf2-4e25-a73b-c68dfcc07d8b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I have to work late on Thursday."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "moet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " donderdag lang ",
+        {
+          "text": "werken",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "b5d360e1-9fdc-448f-9464-a031b483fada"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We have to finish the app on Friday.",
+        "note": "afmaken is separable; the whole infinitive stays together at the end."
+      },
+      "content": [
+        "We ",
+        {
+          "text": "moeten",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " de app vrijdag ",
+        {
+          "text": "afmaken",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "ab5c02aa-68a1-4d78-a35b-167c09b6b6ab"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik moet werken morgen",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Ik moet morgen werken",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". The infinitive stays at the very end; morgen does not come after it."
+      ],
+      "id": "1692c6fc-2b58-40ab-8c42-8894a9b41659"
+    },
+    {
+      "type": "divider",
+      "id": "33029a89-8172-4c85-8d75-cc95b177b71a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "One system: five verbs, one rule",
+      "id": "e9c97f8c-7d9b-457e-8c34-c18658f6ecff"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "One rule for five verbs: willen, kunnen, mogen, moeten and gaan. The finite verb goes in position 2 (position 1 in a yes/no question); the infinitive goes all the way to the end; everything else (time, object, and the subject after inversion) stands in between.",
+      "id": "8f0842a3-8bcb-48f8-97c4-fe19b6684c4f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "The finite verb (wil, kan, mag, moet, ga …) goes in position 2.",
+      "id": "a811fa93-58b8-4a9e-84c8-1cc1eb1c4fef"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Time, object (and the subject after inversion) stand in the middle.",
+      "id": "7d4f2dae-256c-421e-b889-559a67450af2"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "The infinitive goes all the way to the end.",
+      "id": "96fa40a3-fc64-4271-8856-95985391b334"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " …"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "wil",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " ",
+            {
+              "text": "werken",
+              "styles": {
+                "textColor": "red"
+              }
+            },
+            "."
+          ],
+          "id": "b28e02e6-940a-467c-8538-23498aebc22e"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "kan",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " ",
+            {
+              "text": "werken",
+              "styles": {
+                "textColor": "red"
+              }
+            },
+            "."
+          ],
+          "id": "a17d09e0-2606-4b49-a968-925c68394ba0"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "mag",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " ",
+            {
+              "text": "werken",
+              "styles": {
+                "textColor": "red"
+              }
+            },
+            "."
+          ],
+          "id": "8694ebb6-a875-48b8-976d-196009eafd39"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "moet",
+              "styles": {
+                "textColor": "blue",
+                "bold": true
+              }
+            },
+            " ",
+            {
+              "text": "werken",
+              "styles": {
+                "textColor": "red"
+              }
+            },
+            "."
+          ],
+          "id": "7ef1afb4-d823-415a-904f-f3f020e17797"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "ga",
+              "styles": {
+                "textColor": "blue"
+              }
+            },
+            " ",
+            {
+              "text": "werken",
+              "styles": {
+                "textColor": "red"
+              }
+            },
+            "."
+          ],
+          "id": "1ed21ea5-711f-4ba8-9478-388ac823c439"
+        }
+      ],
+      "id": "40f4a033-863e-40fb-bff7-cfb67b15c2b3"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I have to work overtime on Thursday.",
+        "note": "Time word first, so inversion: moet comes before ik."
+      },
+      "content": [
+        {
+          "text": "Donderdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "moet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "overwerken",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "b9fccc18-0843-4424-863b-e92cf924c6cc"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "overwerken",
+              "meaning": "to work overtime",
+              "forms": "werkt over · werkte over · overgewerkt",
+              "note": "Separable, like overstappen (16-a): the prefix over- is stressed and splits off in a normal sentence.",
+              "example": "Donderdag moet ik overwerken.",
+              "id": "1cd00df2-e097-448a-9eea-f0d2bf773010"
+            }
+          ]
+        }
+      },
+      "id": "48500ca1-c97a-4d2b-9e37-a8a5c09c3cba"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "With an infinitive",
+              "id": "7d6a2c44-cc83-46f6-9769-5b1f7d5955ee"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik moet werken.",
+              "id": "6f35d36b-c762-4a9a-a7aa-df625dce07a4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik wil zwemmen.",
+              "id": "7fdd5497-9949-4d7e-9abd-426b31919e5f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik kan koken.",
+              "id": "cad6dffb-6955-46d2-88e8-f82b57b1e182"
+            }
+          ],
+          "id": "a3c40e57-2548-49e1-a71a-98466e052336"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "With a place (no infinitive)",
+              "id": "cd5d3b2b-474c-4359-985b-6f29a93e444b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik moet naar de tandarts.",
+              "id": "386e5413-095e-48ca-982e-2a4177fd2dab"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik wil naar huis.",
+              "id": "919820cc-5fca-4ab4-9f76-2c4c9908c7bd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Mag ik naar buiten?",
+              "id": "6d005a2b-ac25-462a-91d8-e3d6dad31486"
+            }
+          ],
+          "id": "1c1dea69-20ad-4915-a74e-390899e21aaf"
+        }
+      ],
+      "id": "b4f76a3d-cd84-4098-8e12-7a4f8821d26c"
+    },
+    {
+      "type": "divider",
+      "id": "b53e71dd-07a1-473f-bbc8-d6b6d82dbfee"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Modal + direction: no infinitive",
+      "id": "0ab7f987-73e0-444e-812b-26bf434ea5f7"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "After a modal, Dutch often drops gaan before a place or direction: Ik moet naar de tandarts (= I have to go to the dentist). The place word alone is enough.",
+      "id": "dc6b9619-5b49-4c58-bb5b-c07558e49943"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I have to go to the dentist."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "moet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "naar de tandarts",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "794cb5ad-3c87-4fff-8bc6-890e3281c3af"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I want to go home."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "wil",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "naar huis",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "fe075a51-0c2b-42df-8227-4bb6d25a2863"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "May I go outside?"
+      },
+      "content": [
+        {
+          "text": "Mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ik ",
+        {
+          "text": "naar buiten",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "?"
+      ],
+      "id": "aec570c3-1201-4e5e-9ea2-956e7d46c0bd"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "naar buiten",
+              "meaning": "outside, out (direction)",
+              "example": "Mag ik naar buiten?",
+              "id": "4d4ebac0-2827-47a2-8f51-26a1889af711"
+            }
+          ]
+        }
+      },
+      "id": "77ea04af-b433-4100-a0e4-40208f0acda6"
+    },
+    {
+      "type": "divider",
+      "id": "e0ba1440-d3f6-4834-a5c2-e2cdb8f2d96d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Two verbs at the end (a first look)",
+      "id": "83a9b7f8-240d-41ea-99e6-500fa6a4ff71"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sometimes a modal and gaan work together: the modal is still in position 2, then gaan, then the main infinitive, right at the end. You only need to recognise this pattern for now.",
+      "id": "1f77ae9e-8fd6-4418-b14a-5ea93c06b5d0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I want to go swimming tonight.",
+        "note": "wil in position 2, then gaan, then the main infinitive at the very end."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "wil",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " vanavond ",
+        {
+          "text": "gaan",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        " ",
+        {
+          "text": "zwemmen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "473ab9b5-55f5-4040-b8d2-83813e970cbd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We have to go and test (it) in a bit."
+      },
+      "content": [
+        "We ",
+        {
+          "text": "moeten",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " straks ",
+        {
+          "text": "gaan",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        " ",
+        {
+          "text": "testen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "31cef40f-d1a7-4e45-988b-4b36b0c09909"
+    },
+    {
+      "type": "divider",
+      "id": "2c43b043-2769-491b-8398-53c16f5b51e8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "nog + moeten: still have to",
+      "id": "a78200d5-8547-455e-95ac-7adfd4af015a"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "nog with moeten means still have to. You already know nog = still from lesson 14-a (de boeken zijn nog in de dozen); here nog goes with a verb instead of a place.",
+      "id": "aab32e1e-6b04-4900-8432-47697332419f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I still have to make a presentation."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "moet",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "nog",
+          "styles": {
+            "bold": true
+          }
+        },
+        " een presentatie ",
+        {
+          "text": "maken",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "c5c7f4aa-ee1b-4c1a-96e4-86f74ff46e4b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan still has to finish two tasks."
+      },
+      "content": [
+        "Daan ",
+        {
+          "text": "moet",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "nog",
+          "styles": {
+            "bold": true
+          }
+        },
+        " twee taken ",
+        {
+          "text": "afmaken",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "70c7f899-301b-459f-bf60-b8d6a963439b"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "nog",
+              "meaning": "still (have to do something)",
+              "note": "New use: nog = still (14-a, with a place: de boeken zijn nog in de dozen). Here nog goes with a verb: nog moeten = still have to.",
+              "example": "Ik moet nog een presentatie maken.",
+              "id": "a281c8b3-249c-4a06-bd95-055377813dd3"
+            }
+          ]
+        }
+      },
+      "id": "6422e473-b5ec-41a3-a9bc-9c63a08f609f"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": "Dutch workplaces run on the agenda: meetings start exactly on time, many people leave at five o'clock even in a busy week, and part-time work (vier dagen werken) is very common.",
+      "id": "b47419c0-d33b-4bf4-8b54-677d6da4137e"
+    },
+    {
+      "type": "divider",
+      "id": "65333f33-38fc-4a61-89e3-46241071befb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Tuesday evening — Sofia calls Noor",
+      "id": "ff67cd9b-057e-41e6-8162-a6bfb2fcbfe8"
+    },
+    {
+      "type": "paragraph",
+      "content": "On Tuesday evening, after her Dutch class, Sofia phones Noor. Her agenda this week is very full.",
+      "id": "c517f3fa-e30b-422b-8618-48d11d5dd81f"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Hoi Sofia! Alles goed?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Noor! Ja, maar ik heb het heel druk. Ik moet nog zo veel doen!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Wat moet je doen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik moet de nieuwe schermen nog afmaken en ik moet de app ook testen, met Daan."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Dat is veel!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja! En vrijdag hebben we de presentatie voor de klant."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Joh, wat druk! Gaan we deze week naar de film?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik wil wel, maar ik moet eerst in mijn agenda kijken."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Oké, geen probleem. Welke dag kun je niet?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Donderdag kan ik niet. Dan moet ik overwerken."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Oké, we praten morgen verder!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Tot morgen!"
+          }
+        ]
+      },
+      "id": "dcedacdc-c1a0-4a5e-8ba7-6508aa0b788a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "zo veel",
+              "meaning": "so much",
+              "example": "Ik moet nog zo veel doen!",
+              "id": "6d57e406-1c51-44c6-80e7-18c440c41aeb"
+            },
+            {
+              "term": "Dat is veel!",
+              "meaning": "That's a lot!",
+              "example": "Dat is veel!",
+              "id": "dc96046b-d369-4a57-a5af-b60d47a5eda9"
+            },
+            {
+              "term": "We praten morgen verder!",
+              "meaning": "We'll talk more tomorrow!",
+              "example": "Oké, we praten morgen verder!",
+              "id": "0a014987-8873-4f30-a1f5-2fa9c88ffd63"
+            }
+          ]
+        }
+      },
+      "id": "9768d1b5-9dd0-48c4-9d51-deacdcccf6e1"
+    },
+    {
+      "type": "divider",
+      "id": "89e0f8d9-9119-49fb-b3c1-fcfa610abb3d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "43089767-987f-4a5e-8f70-27dea7988f31"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Conjugate and choose the right modal",
+      "id": "e7b64744-602a-4128-80ff-722ca9ed9961"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the right form of moeten, or of the modal given in brackets.",
+          "items": [
+            {
+              "prompt": "Ik … morgen hard werken. (moeten)",
+              "authorsVersion": [
+                "moet"
+              ],
+              "note": "ik moet, no extra -t."
+            },
+            {
+              "prompt": "… jij vandaag ook werken? (moeten)",
+              "authorsVersion": [
+                "Moet"
+              ],
+              "note": "Yes/no question: moet comes first."
+            },
+            {
+              "prompt": "Karin … de presentatie nog voorbereiden. (moeten)",
+              "authorsVersion": [
+                "moet"
+              ],
+              "note": "Karin = zij: moet."
+            },
+            {
+              "prompt": "Wij … de app deze week afmaken. (moeten)",
+              "authorsVersion": [
+                "moeten"
+              ],
+              "note": "wij/jullie/zij always take moeten."
+            },
+            {
+              "prompt": "Jullie … deze week hard werken. (moeten)",
+              "authorsVersion": [
+                "moeten"
+              ],
+              "note": "jullie: moeten."
+            },
+            {
+              "prompt": "De app … vrijdag klaar zijn. (moeten)",
+              "authorsVersion": [
+                "moet"
+              ],
+              "note": "De app is one thing (it), so moet."
+            },
+            {
+              "prompt": "… Daan en Sofia donderdag overwerken? (moeten)",
+              "authorsVersion": [
+                "Moeten"
+              ],
+              "note": "Plural subject in a question: Moeten, not Moet."
+            },
+            {
+              "prompt": "Sofia … een beetje Nederlands. (kunnen)",
+              "authorsVersion": [
+                "kan"
+              ],
+              "note": "Recycles kunnen (15-a): the same one-verb-at-the-end system as moeten."
+            },
+            {
+              "prompt": "We … om negen uur beginnen. (moeten)",
+              "authorsVersion": [
+                "moeten"
+              ],
+              "note": "we/wij: moeten."
+            },
+            {
+              "prompt": "Jij … de schermen afmaken, Sofia. (moeten)",
+              "authorsVersion": [
+                "moet"
+              ],
+              "note": "jij moet: no -en, no extra -t."
+            }
+          ]
+        }
+      },
+      "id": "4e1d0189-4c24-4301-a3d7-9d86fbfdf639"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "In the meeting",
+      "id": "bdc0d81c-f5f6-4496-b08e-b24c0656d84b"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the dialogues. Fill in one word per blank.",
+          "items": [
+            {
+              "prompt": "Karin: We … vrijdag klaar zijn. / Daan: Oké, dat … .",
+              "authorsVersion": [
+                "moeten",
+                "kan"
+              ],
+              "note": "Dat kan. = that's possible (recycles 15-a)."
+            },
+            {
+              "prompt": "Sofia: Wat … ik doen? / Karin: Jij … de schermen afmaken.",
+              "authorsVersion": [
+                "moet",
+                "moet"
+              ],
+              "note": "ik moet, jij moet: the same form."
+            },
+            {
+              "prompt": "Daan: … jij donderdag ook overwerken? / Sofia: Ja, ik … lang werken.",
+              "authorsVersion": [
+                "Moet",
+                "moet"
+              ],
+              "note": "Yes/no question: Moet comes first."
+            },
+            {
+              "prompt": "Noor: Wat … je deze week doen? / Sofia: Ik … heel veel doen!",
+              "authorsVersion": [
+                "moet",
+                "moet"
+              ],
+              "note": "je and ik both take moet."
+            },
+            {
+              "prompt": "Karin: Jullie … de app testen. / Daan: Dat … we doen.",
+              "authorsVersion": [
+                "moeten",
+                "kunnen"
+              ],
+              "note": "jullie moeten; we kunnen (recycles 15-a)."
+            },
+            {
+              "prompt": "Sofia: … ik vrijdag vrij? / Karin: Nee, vrijdag … je werken.",
+              "authorsVersion": [
+                "Mag",
+                "moet"
+              ],
+              "note": "mogen = permission, moeten = obligation: two different verbs in the same system."
+            }
+          ]
+        }
+      },
+      "id": "1c2677e7-ab25-444f-95a1-c9d0009da22a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "b2a7d10a-3456-4493-9c71-f668ed412848"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the correct order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: moet / Sofia / de schermen / afmaken",
+              "authorsVersion": [
+                "Sofia moet de schermen afmaken."
+              ],
+              "note": "Modal in position 2, infinitive at the end."
+            },
+            {
+              "prompt": "Put in order: moeten / wij / de app / testen",
+              "authorsVersion": [
+                "Wij moeten de app testen."
+              ],
+              "note": "Also fine: We moeten de app testen."
+            },
+            {
+              "prompt": "Put in order: overwerken / donderdag / moet / Daan",
+              "authorsVersion": [
+                "Donderdag moet Daan overwerken."
+              ],
+              "note": "Time word first, then the verb (inversion)."
+            },
+            {
+              "prompt": "Put in order: moet / ik / naar de tandarts",
+              "authorsVersion": [
+                "Ik moet naar de tandarts."
+              ],
+              "note": "Modal + place: no gaan needed."
+            },
+            {
+              "prompt": "Put in order: mag / ik / naar buiten / ?",
+              "authorsVersion": [
+                "Mag ik naar buiten?"
+              ],
+              "note": "Yes/no question: the verb comes first."
+            },
+            {
+              "prompt": "Put in order: moet / Karin / de presentatie / nog / voorbereiden",
+              "authorsVersion": [
+                "Karin moet de presentatie nog voorbereiden."
+              ],
+              "note": "nog comes before the object here; the infinitive stays last."
+            },
+            {
+              "prompt": "Put in order: gaan / vanavond / wil / ik / zwemmen",
+              "authorsVersion": [
+                "Ik wil vanavond gaan zwemmen."
+              ],
+              "note": "Two verbs at the end: gaan, then the main infinitive."
+            }
+          ]
+        }
+      },
+      "id": "349dcf52-b180-4b28-877b-f5fb9e42f82e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Rewrite",
+      "id": "c9dccb3f-3f79-4336-81ee-d38f16776404"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite with moeten, or drop gaan where a modal is followed by a place.",
+          "items": [
+            {
+              "prompt": "Ik werk donderdag lang.",
+              "authorsVersion": [
+                "Ik moet donderdag lang werken."
+              ],
+              "note": "moet in position 2, werken at the end."
+            },
+            {
+              "prompt": "Sofia test de app.",
+              "authorsVersion": [
+                "Sofia moet de app testen."
+              ],
+              "note": "test → moet … testen."
+            },
+            {
+              "prompt": "Wij maken de presentatie af.",
+              "authorsVersion": [
+                "Wij moeten de presentatie afmaken."
+              ],
+              "note": "Separable: maken … af → afmaken, whole, at the end."
+            },
+            {
+              "prompt": "Daan werkt donderdag over.",
+              "authorsVersion": [
+                "Daan moet donderdag overwerken."
+              ],
+              "note": "werkt … over → overwerken, whole, at the end."
+            },
+            {
+              "prompt": "Ik moet naar de tandarts gaan.",
+              "authorsVersion": [
+                "Ik moet naar de tandarts."
+              ],
+              "note": "Modal + place: drop gaan."
+            },
+            {
+              "prompt": "Zij wil naar huis gaan.",
+              "authorsVersion": [
+                "Zij wil naar huis."
+              ],
+              "note": "Modal + place: drop gaan."
+            },
+            {
+              "prompt": "Sofia wil woensdag naar het zwembad gaan.",
+              "authorsVersion": [
+                "Sofia wil woensdag naar het zwembad."
+              ],
+              "note": "Modal + place: drop gaan."
+            }
+          ]
+        }
+      },
+      "id": "b247ebed-8f76-438a-954c-7e1c978be0b5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "ecca0465-ba9c-4892-be1f-b410a608bc7f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "I have to work tomorrow.",
+              "authorsVersion": [
+                "Ik moet morgen werken."
+              ],
+              "note": "The infinitive goes after morgen, at the very end."
+            },
+            {
+              "prompt": "Do you have to work on Thursday? (jij)",
+              "authorsVersion": [
+                "Moet je donderdag werken?"
+              ],
+              "note": "Also fine: Moet jij donderdag werken?"
+            },
+            {
+              "prompt": "We still have to finish the app.",
+              "authorsVersion": [
+                "Wij moeten de app nog afmaken."
+              ],
+              "note": "Also fine: We moeten de app nog afmaken. / Wij moeten nog de app afmaken."
+            },
+            {
+              "prompt": "I have to go to the dentist.",
+              "authorsVersion": [
+                "Ik moet naar de tandarts."
+              ],
+              "note": "No gaan after a modal + place."
+            },
+            {
+              "prompt": "May I go outside?",
+              "authorsVersion": [
+                "Mag ik naar buiten?"
+              ]
+            },
+            {
+              "prompt": "Karin still has to prepare the presentation.",
+              "authorsVersion": [
+                "Karin moet de presentatie nog voorbereiden."
+              ],
+              "note": "Separable voorbereiden stays whole after moet."
+            },
+            {
+              "prompt": "I want to go swimming tonight.",
+              "authorsVersion": [
+                "Ik wil vanavond gaan zwemmen."
+              ],
+              "note": "Also fine: Ik wil vanavond zwemmen."
+            }
+          ]
+        }
+      },
+      "id": "a3fbfbdd-e771-47bb-b00a-c584e9c44615"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "e92a67f1-f50e-45f6-925b-c26c183c9775"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Ik moet donderdag overwerken.",
+              "authorsVersion": [
+                "I have to work overtime on Thursday."
+              ],
+              "note": "Also fine: I must work overtime on Thursday."
+            },
+            {
+              "prompt": "We moeten de app testen.",
+              "authorsVersion": [
+                "We have to test the app."
+              ],
+              "note": "Also fine: We must test the app."
+            },
+            {
+              "prompt": "Mag ik naar buiten?",
+              "authorsVersion": [
+                "May I go outside?"
+              ]
+            },
+            {
+              "prompt": "Ik heb het druk. Ik moet nog zo veel doen!",
+              "authorsVersion": [
+                "I'm busy. I still have so much to do!"
+              ],
+              "note": "Also fine: I'm busy. I've still got so much to do!"
+            },
+            {
+              "prompt": "Donderdag kan ik niet. Dan moet ik overwerken.",
+              "authorsVersion": [
+                "I can't on Thursday. Then I have to work overtime."
+              ],
+              "note": "Two sentences give the reason; no omdat/want yet."
+            },
+            {
+              "prompt": "Kom op, we moeten beginnen!",
+              "authorsVersion": [
+                "Come on, we have to start!"
+              ],
+              "note": "Also fine: Come on, we've got to start!"
+            }
+          ]
+        }
+      },
+      "id": "137f108e-1103-4c40-8700-b972057a21f4"
+    },
+    {
+      "type": "divider",
+      "id": "043612fc-c6cf-470b-8159-e91f9e74623f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Daan's weekly plan",
+      "id": "53dc1838-3d90-444b-9ceb-1f2e61149124"
+    },
+    {
+      "type": "paragraph",
+      "content": "Daan writes the weekplanning (weekly plan) for the team, so everyone knows what they must do before Friday.",
+      "id": "decb034f-4058-4c89-8e58-ccb37d9be3d9"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de weekplanning",
+              "meaning": "weekly plan, schedule",
+              "forms": "de weekplanningen",
+              "example": "Daan maakt de weekplanning voor het team.",
+              "id": "d72a25e8-4452-4b91-999c-44c8f0d9e6d3"
+            }
+          ]
+        }
+      },
+      "id": "50d97768-5f11-41ab-9d02-b7d975be7738"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the weekly plan. Answer the questions in Dutch.",
+          "passage": {
+            "title": "Weekplanning (23–27 november)",
+            "content": "Maandag: vergadering met Karin, Daan en Sofia. Vrijdag moet de app klaar zijn voor de klant in Amsterdam.\nDinsdag: Daan test de app. Sofia maakt de nieuwe schermen af. 's Avonds heeft Sofia Nederlandse les.\nWoensdag: Sofia zwemt om zeven uur. Daarna werkt ze aan de taken voor de app.\nDonderdag: Daan en Sofia werken over. Ze testen de app nog een keer.\nVrijdag: Om twee uur is de presentatie voor de klant. Dan moet het resultaat klaar zijn!"
+          },
+          "items": [
+            {
+              "prompt": "Wat moet er vrijdag klaar zijn?",
+              "authorsVersion": [
+                "De app, voor de klant in Amsterdam."
+              ],
+              "note": "Also fine: De app."
+            },
+            {
+              "prompt": "Wie test de app op dinsdag?",
+              "authorsVersion": [
+                "Daan."
+              ]
+            },
+            {
+              "prompt": "Wat doet Sofia op dinsdagavond?",
+              "authorsVersion": [
+                "Ze heeft Nederlandse les."
+              ]
+            },
+            {
+              "prompt": "Hoe laat zwemt Sofia op woensdag?",
+              "authorsVersion": [
+                "Om zeven uur."
+              ]
+            },
+            {
+              "prompt": "Wie werkt er donderdag over?",
+              "authorsVersion": [
+                "Daan en Sofia."
+              ]
+            },
+            {
+              "prompt": "Hoe laat is de presentatie op vrijdag?",
+              "authorsVersion": [
+                "Om twee uur."
+              ]
+            },
+            {
+              "prompt": "Klopt dit? Karin test de app.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Daan test de app."
+              ],
+              "note": "Also fine: Nee, Daan test de app."
+            },
+            {
+              "prompt": "Klopt dit? Het resultaat moet vrijdag klaar zijn.",
+              "authorsVersion": [
+                "Ja, dat klopt."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "0f878593-4f29-492d-b684-8e45d37b6be0"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "nog een keer",
+              "meaning": "once more, again",
+              "example": "Ze testen de app nog een keer.",
+              "id": "de09b378-a400-4dff-80fd-f4fe23450ddb"
+            },
+            {
+              "term": "het resultaat",
+              "meaning": "result",
+              "forms": "de resultaten",
+              "example": "Vrijdag moet het resultaat klaar zijn!",
+              "id": "7a83dc4d-dca5-40d4-86d7-ce183cbcb39a"
+            }
+          ]
+        }
+      },
+      "id": "cde714f4-da74-4d4a-b5a7-52a5cd6423dc"
+    },
+    {
+      "type": "divider",
+      "id": "b380e452-2359-42aa-ade5-bc4d03bb1a20"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "cc408658-f13c-4a9a-8bd1-882634ec7f25"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about what you have to do and what you want to do this week.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about what you have to do and what you want to do this week.",
+              "authorsVersion": [
+                "Deze week moet ik veel doen. Ik moet een presentatie maken en ik moet ook hard werken. Donderdag moet ik overwerken. Maar in het weekend wil ik gaan zwemmen!"
+              ],
+              "note": "Model answer. Check: moet/wil + infinitive at the very end; wil + gaan + infinitive is also fine."
+            }
+          ]
+        }
+      },
+      "id": "1ebe33b7-79d4-4c00-8b11-bfdb3021f210"
+    },
+    {
+      "type": "divider",
+      "id": "c0c03aa9-050a-4390-a65b-3aa2c37d5819"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "abb06111-8ea6-4313-a5b9-3d74d217959d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "moeten: ik/jij/u/hij/zij moet, wij/jullie/zij moeten.",
+      "id": "a0e644ce-42a5-4320-94ba-a106776c1e67"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "The infinitive goes all the way to the end: Ik moet de app testen.",
+      "id": "c66eb40f-5e22-480a-95fd-25b71dbb6935"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "One system, five verbs: willen, kunnen, mogen, moeten, gaan — finite verb in position 2, infinitive at the very end.",
+      "id": "b56c1dca-a921-40ac-9bd8-2f9e3eba80ed"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "After a modal + a place, gaan disappears: Ik moet naar de tandarts.",
+      "id": "59cbbaaa-9346-4b1c-bb2b-7652b004eeae"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Two verbs at the end are possible: modal + gaan + infinitive, as in Ik wil vanavond gaan zwemmen.",
+      "id": "60df55b2-684b-4025-b131-1d0ba5588613"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "nog + moeten = still have to: Ik moet nog een presentatie maken.",
+      "id": "9729d54a-d421-4335-8438-0cce5f27ac1c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Give a reason as a second sentence, not with omdat: Donderdag kan ik niet. Dan moet ik overwerken.",
+      "id": "22d25d5a-1f45-4256-84cf-5c55751130fd"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Karin's Monday meeting",
+      "description": "Karin Smit, Daan and Sofia at a small meeting table in a bright IT office near Utrecht Centraal; a whiteboard behind them shows 'vrijdag 14.00' and a simple weekly planning grid.",
+      "alt": "A team leader and two colleagues having a short meeting in an office."
+    },
+    {
+      "afterHeading": "Reading: Daan's weekly plan",
+      "description": "A desk with a printed weekly planning sheet (maandag–vrijdag) pinned up next to a laptop, in an Utrecht office setting.",
+      "alt": "A printed weekly planning sheet pinned above a desk with a laptop."
+    }
+  ],
+  "id": "48f7eca1-bb95-4962-95ce-72f023742ca1"
+}

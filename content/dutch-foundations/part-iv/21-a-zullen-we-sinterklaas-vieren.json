@@ -1,0 +1,1960 @@
+{
+  "title": "Zullen we Sinterklaas vieren?",
+  "goal": "Make suggestions and offers with zullen and Laten we, react to them, and form diminutives.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Zullen we Sinterklaas vieren?",
+      "id": "c021b2c4-793f-4ffa-add9-24f8e80519e3"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It's Saturday 28 November, evening. Sofia, Noor and Fleur are having dinner together at Noor's flat, and Noor has an idea for December."
+      ],
+      "id": "ea480c42-3448-448f-8186-608ad491a242"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In this lesson you will make ",
+        {
+          "text": "suggestions",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "offers",
+          "styles": {
+            "bold": true
+          }
+        },
+        " with ",
+        {
+          "text": "zullen",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", say ",
+        {
+          "text": "Laten we …!",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", react to a suggestion, and form ",
+        {
+          "text": "diminutives",
+          "styles": {
+            "bold": true
+          }
+        },
+        " like ",
+        {
+          "text": "een filmpje",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and ",
+        {
+          "text": "een cadeautje",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "72f9f6be-b64a-46fd-9815-3b2e6e78fa5a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: the conjugated verb (",
+        {
+          "text": "zullen",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "zal",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ") is blue, the infinitive that moves to the end is ",
+        {
+          "text": "red",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ", and the new diminutive ending is bold."
+      ],
+      "id": "477b9c9b-92e0-45d4-9faa-29e678eda1d1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: dinner at Noor's flat",
+      "id": "d1f6702b-e143-4422-9c2a-205db4ca434e"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Sofia, Noor and Fleur are at the table. Noor has an idea."
+      ],
+      "id": "f1e3315a-ab72-40a9-9a6e-24786a6b70dc"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Zullen we op vijf december Sinterklaas vieren? Met Daan en Lotte?"
+          },
+          {
+            "speaker": "Fleur",
+            "text": "Ja, leuk! Zullen we ook lootjes trekken?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Lootjes trekken? Wat is dat precies?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Je trekt een naam met de app. Dat is geheim! Je maakt een surprise en je schrijft een gedicht."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Gezellig! En een cadeautje erbij?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, maximaal twintig euro."
+          },
+          {
+            "speaker": "Fleur",
+            "text": "Zal ik de afwas doen? Dan trekken jullie de lootjes."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goed idee! En zullen we daarna een filmpje kijken?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, gezellig! Ik bel Daan straks even."
+          }
+        ]
+      },
+      "id": "eae94847-b72f-454a-ab21-f0f0305c1fd0"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Zullen we …?",
+              "meaning": "Shall we …? (a suggestion to do something together)",
+              "example": "Zullen we Sinterklaas vieren?",
+              "note": "The infinitive goes all the way to the end, like the other modals: Zullen we naar de film gaan?",
+              "id": "aa99fde6-a26f-49be-b989-f39bfa275eae"
+            },
+            {
+              "term": "Zal ik …?",
+              "meaning": "Shall I …? (an offer to do something)",
+              "example": "Zal ik de afwas doen?",
+              "id": "8ab5f199-5033-415a-8867-9f11ccdb9981"
+            },
+            {
+              "term": "vieren",
+              "meaning": "to celebrate",
+              "forms": "viert · vierde · gevierd",
+              "example": "We vieren Sinterklaas op vijf december.",
+              "id": "ccb42b01-1d2d-4091-a88c-350e5ba9f6ee"
+            },
+            {
+              "term": "Sinterklaas",
+              "meaning": "a Dutch festival on 5 December; friends and family give each other small, creative presents",
+              "id": "02adb9f5-4569-4982-bc64-f35d965cd354"
+            },
+            {
+              "term": "lootjes trekken",
+              "meaning": "to draw lots (to find out in secret who gives whom a present)",
+              "forms": "trekt · trok · getrokken",
+              "example": "We trekken lootjes met een app.",
+              "id": "e30cfac7-6c6e-4e69-8c2d-ee92cebfd6b6"
+            },
+            {
+              "term": "het lot / het lootje",
+              "meaning": "the lot, the little paper (or app entry) with a name on it",
+              "forms": "de loten / de lootjes",
+              "note": "Irregular diminutive: the short o of lot becomes a long oo in lootje.",
+              "id": "b8b044f1-2df7-4840-ab2a-7787dccbff0a"
+            },
+            {
+              "term": "geheim",
+              "meaning": "secret",
+              "example": "Wie je hebt, is geheim!",
+              "id": "0a21e99e-f388-4d9f-90b3-ce9b7a90ea5d"
+            },
+            {
+              "term": "de surprise",
+              "meaning": "a present built into or disguised as something funny or creative",
+              "note": "False friend: de surprise is not just any surprise. At Sinterklaas it is one specific, handmade kind of present.",
+              "id": "d2c67f4d-bc33-4389-9fcf-c8dc216f8616"
+            },
+            {
+              "term": "het gedicht",
+              "meaning": "the poem",
+              "forms": "de gedichten",
+              "example": "Iedereen schrijft een gedicht.",
+              "id": "99ce8eed-59d3-480f-b43c-88f8e1670a77"
+            },
+            {
+              "term": "het cadeautje",
+              "meaning": "the (little) present",
+              "forms": "de cadeautjes",
+              "note": "Diminutive of het cadeau (09-b): -tje after a vowel. Still always het, like cadeau itself.",
+              "id": "a5475b01-4a67-46fe-96da-f20287b2c421"
+            },
+            {
+              "term": "maximaal",
+              "meaning": "at most, maximum",
+              "example": "Het cadeautje kost maximaal twintig euro.",
+              "id": "fd426e6c-0b5e-4765-a98b-631d4a83e4b9"
+            },
+            {
+              "term": "het filmpje",
+              "meaning": "a film or video to watch together, something fun on the screen",
+              "forms": "de filmpjes",
+              "note": "Diminutive of de film: -pje after -lm. It is not necessarily a short film.",
+              "id": "e7f7fe09-9a75-4bd9-8bb8-bcce9f6d3773"
+            }
+          ]
+        }
+      },
+      "id": "52017f5f-1336-4b49-bf64-a79695837c24"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Later trekt Sofia een lootje: Daan! Ze zegt het niet. Het is geheim."
+      ],
+      "id": "d76143a6-428e-41e1-8dea-5ac3ddc738dd"
+    },
+    {
+      "type": "divider",
+      "id": "9b112fff-0fba-4252-816c-000f8af40c67"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Zullen we …? — making a suggestion",
+      "id": "41ebd323-b26a-41ff-b145-28de0ed7c479"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Use ",
+        {
+          "text": "zullen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " with ",
+        {
+          "text": "we",
+          "styles": {
+            "bold": true
+          }
+        },
+        " to suggest doing something together. The second verb is an ",
+        {
+          "text": "infinitive",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        ", and it goes all the way to the end of the sentence — exactly like ",
+        {
+          "text": "kunnen",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "mogen",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "moeten",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and ",
+        {
+          "text": "gaan",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (20-a)."
+      ],
+      "id": "89020efa-7497-4260-9da4-dddf69ed0e87"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Shall we go to the cinema?",
+        "note": "The infinitive gaan stands at the very end, after naar de film."
+      },
+      "content": [
+        {
+          "text": "Zullen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " we naar de film ",
+        {
+          "text": "gaan",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "a155a7c3-7ff8-44ce-bebb-56e723086581"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Shall we watch a film?",
+        "note": "filmpje = a nice film to watch, not necessarily a short one."
+      },
+      "content": [
+        {
+          "text": "Zullen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " we een ",
+        {
+          "text": "filmpje",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "kijken",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "62a1a2b1-8434-4330-9580-fdadd59f544f"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "Zullen we + infinitief?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = Shall we …? The conjugated verb zullen stands in position 2, the infinitive at the very end, exactly like the modals you already know."
+      ],
+      "id": "96871d7f-c09b-47e2-b9ca-b2a380acb914"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Zal ik …? — offering to help",
+      "id": "c7afd3f4-f043-4a2c-b9ac-8be033595267"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Use ",
+        {
+          "text": "zal",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " with ",
+        {
+          "text": "ik",
+          "styles": {
+            "bold": true
+          }
+        },
+        " to offer to do something for someone. Same word order: the infinitive goes to the end."
+      ],
+      "id": "3918670d-f573-47f9-8831-a2dbb57a7e60"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Shall I do the washing-up?",
+        "note": "Recycles de afwas (07-b)."
+      },
+      "content": [
+        {
+          "text": "Zal",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ik de afwas ",
+        {
+          "text": "doen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "312f34f8-c1c0-4645-977f-eed525f8c7f1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Shall I bring wine?",
+        "note": "meenemen is separable, but it stays one word at the end, just like after a modal."
+      },
+      "content": [
+        {
+          "text": "Zal",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ik wijn ",
+        {
+          "text": "meenemen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "f3420f8d-4d57-4902-a811-3f6921237da4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Laten we …! — let's …!",
+      "id": "91e56877-8366-4e69-b8af-5f4a4bd79ff1"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Laten we + infinitief! is a fixed chunk for a strong suggestion, like English Let's …! Only this one use of laten in this lesson."
+      ],
+      "id": "b9a8f79b-0a60-40f0-9dcf-c05f2bbfd824"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Let's start at seven o'clock!",
+        "note": "An exclamation, not a question: no question mark, and the infinitive still goes to the end."
+      },
+      "content": [
+        {
+          "text": "Laten we",
+          "styles": {
+            "bold": true
+          }
+        },
+        " om zeven uur ",
+        {
+          "text": "beginnen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "!"
+      ],
+      "id": "a6fa5c14-1094-447a-bac2-2af4a62cbd00"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Laten we …!",
+              "meaning": "Let's …!",
+              "example": "Laten we om zeven uur beginnen!",
+              "note": "A fixed chunk; no other use of laten in this lesson.",
+              "id": "d216c271-3b00-4829-a05b-3b9ae7882cd8"
+            }
+          ]
+        }
+      },
+      "id": "e5d0abdf-91e4-4620-bd7f-b557d13a7534"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Other ways to suggest",
+      "id": "1e500e53-7661-4422-ae17-b68f84655649"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You already know two other ways to suggest something, without zullen:"
+      ],
+      "id": "4e2f592a-fe0b-4256-bfe6-517f600145d1"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "A plain question",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": Gaan we zondag naar de film? (08-b, 17-b)"
+      ],
+      "id": "b54decf6-ebe1-4a54-b78b-5ac4d5ecb083"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "zin hebben in",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + noun: Heb je zin in een biertje?"
+      ],
+      "id": "5f4706be-bfab-4e98-a184-355fbeba9bb5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you feel like a beer?",
+        "note": "biertje = a casual beer among friends, not literally a small one."
+      },
+      "content": [
+        "Heb je ",
+        {
+          "text": "zin in",
+          "styles": {
+            "bold": true
+          }
+        },
+        " een ",
+        {
+          "text": "biertje",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "?"
+      ],
+      "id": "6d2249aa-a187-47b2-bcd0-c6c370347ebd"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "zin hebben in",
+              "meaning": "to feel like (doing or having something)",
+              "forms": "heeft zin in · had zin in · zin gehad in",
+              "example": "Ik heb zin in een biertje.",
+              "id": "7e00eafb-1f73-48ab-ad16-4e668dbe4744"
+            },
+            {
+              "term": "Heb je zin in …?",
+              "meaning": "Do you feel like …?",
+              "example": "Heb je zin in een pepernoot?",
+              "id": "432bf547-7d71-4b74-b960-e0d12756af90"
+            }
+          ]
+        }
+      },
+      "id": "736ddd04-6336-47de-b268-27cd4743d6c1"
+    },
+    {
+      "type": "divider",
+      "id": "2a25dc21-1367-4b73-8047-6fb7c8119e9c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reacting to a suggestion",
+      "id": "53c401e0-3886-4d0f-a08e-37468c847565"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You can accept, hesitate, refuse or change a suggestion:"
+      ],
+      "id": "e22b461c-440a-4147-90ae-d977eb3a6909"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Goed idee! (16-b)",
+      "id": "1aa0b8ab-adbf-471d-878f-f5d241c6e1f0"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Leuk!",
+      "id": "ca23b6c0-d692-4256-8ce8-6f3432c3c445"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Ja, gezellig!",
+      "id": "ded7c78b-f357-47ec-9b78-968bac68217d"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Prima. (20-a)",
+      "id": "ed12141b-d1d9-4518-b188-07ac1b3818ff"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Zin in!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (= Ik heb er zin in!)"
+      ],
+      "id": "2498e6ee-ead9-45a2-a5be-761e950984fa"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Zeker!",
+      "id": "c1436eda-24c3-4779-914c-08838b238061"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Liever niet. (19-b)",
+      "id": "2d3d10fe-cbee-4aef-a563-f1e4a501b620"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Nee, dat kan ik niet.",
+      "id": "9bd9dae5-d07c-4a7d-98ce-e59d75dad517"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Misschien. (20-b)",
+      "id": "ab93d1d5-1aa1-4a62-a9ff-c1922a18e648"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Liever zondag. (liever, 19-b)",
+      "id": "3e930e92-c2eb-4844-8e93-956ee329756e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Rather not, thanks! I don't have time.",
+        "note": "A polite refusal; recycled from 19-b."
+      },
+      "content": [
+        {
+          "text": "Liever niet",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", dank je! Ik heb geen tijd."
+      ],
+      "id": "5c81a53e-fddd-42c0-9120-e5639c3edf6a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Zin in!",
+              "meaning": "Sounds good!, I'm up for it!",
+              "id": "df01872e-734d-4d26-b846-c699db9d3036"
+            },
+            {
+              "term": "Zeker!",
+              "meaning": "Certainly!, For sure!",
+              "id": "4385710c-41de-4c22-ad70-8da380d5f134"
+            }
+          ]
+        }
+      },
+      "id": "787ebbd4-a10b-4a82-b62d-da10241290d5"
+    },
+    {
+      "type": "divider",
+      "id": "db454fda-f77a-47fd-ad5c-16c0efc88bc2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Sinterklaas for adults",
+      "id": "c1ae12ac-74cb-4fd9-b60f-c1761e0f260a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Among adult friends, Sinterklaas works differently than for children. Nobody gets a present from every guest — everyone draws one name and makes one present for that person. Sofia, Noor, Fleur, Daan and Lotte already drew their lootjes at dinner. Now what happens before the evening itself?"
+      ],
+      "id": "28c35b90-dc56-45ff-b968-273eef85a745"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Je trekt een lootje met de app. Wie je hebt, is geheim.",
+      "id": "766c5410-d0c8-4056-a8f9-49e92c3e2a72"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Je schrijft een gedicht voor die persoon.",
+      "id": "33eebbca-599c-4906-84d5-23ead2beb17d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Je maakt een ",
+        {
+          "text": "surprise",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": een cadeautje van maximaal twintig euro, in een leuke vorm."
+      ],
+      "id": "f5815201-ad4a-4f46-8ba2-09505a6563be"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Op vijf december is het de ",
+        {
+          "text": "pakjesavond",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": iedereen leest het gedicht voor en maakt de surprise open."
+      ],
+      "id": "cc398748-63cf-44ad-95fb-207c61176aff"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "Sinterklaas voor volwassenen draait om lootjes, een gedicht en een surprise — een leuk, zelfgemaakt cadeau, geen grote uitgaven. Pepernoten en een chocoladeletter horen er ook bij. Zwarte Piet speelt bij dit feestje onder vrienden geen rol."
+      ],
+      "id": "5ec90eeb-dee9-4eec-b31d-39c949d0143a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "That's a nice little present!",
+        "note": "een + het-word stays without -e: een leuk cadeautje, not een leuke cadeautje."
+      },
+      "content": [
+        "Dat is een leuk ",
+        {
+          "text": "cadeautje",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "!"
+      ],
+      "id": "1f2ab64b-f36e-4ca5-8cc9-0f54a280cae1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We draw lots using the app.",
+        "note": "trekken is a regular verb: ik trek, jij/u trekt, wij/jullie/zij trekken."
+      },
+      "content": [
+        "We ",
+        {
+          "text": "trekken",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " lootjes met de app."
+      ],
+      "id": "d962cef3-d2d6-4634-9783-6aa84648cbf7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "May I have a pepernoot?",
+        "note": "pepernoot already ends in -t, so the diminutive just adds -je: pepernootje, not pepernoottje."
+      },
+      "content": [
+        "Mag ik een ",
+        {
+          "text": "pepernootje",
+          "styles": {
+            "bold": true
+          }
+        },
+        "?"
+      ],
+      "id": "f14f8e71-5144-4f17-bc63-b6e3b205dcc4"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        {
+          "text": "de surprise",
+          "styles": {
+            "bold": true
+          }
+        },
+        " looks like English surprise, but at Sinterklaas it means one specific thing: a present built into or hidden inside something you make yourself, often with a joke. Say ",
+        {
+          "text": "Wat een verrassing!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " for a general surprise."
+      ],
+      "id": "6944a0dc-29d2-4b41-973c-5c802aa368db"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What a surprise! That's nice!",
+        "note": "de verrassing = any surprise; de surprise (above) is the one specific Sinterklaas present-with-a-joke."
+      },
+      "content": [
+        "Wat een ",
+        {
+          "text": "verrassing",
+          "styles": {
+            "bold": true
+          }
+        },
+        "! Dat is leuk!"
+      ],
+      "id": "e2cf0425-4996-4c98-8452-bcbde8b91981"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de verrassing",
+              "meaning": "a surprise (in the ordinary sense)",
+              "forms": "de verrassingen",
+              "id": "80325fe7-2ec3-42a5-8793-5f13e8467d64"
+            }
+          ]
+        }
+      },
+      "id": "3a78f6b3-1027-4800-a19a-d4a828adc257"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Noor maakt pepernoten en warme chocolademelk, en Fleur koopt voor iedereen een chocoladeletter. Bij een surprise hoort soms ook een klein briefje met een grapje. Het wordt een gezellig feestje!"
+      ],
+      "id": "c8a9651c-119c-4e12-8dfa-a4057e272831"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het briefje",
+              "meaning": "the little note",
+              "forms": "de briefjes",
+              "example": "Bij de surprise hoort soms een briefje.",
+              "id": "526bfe9e-32c4-4087-9fab-0abc1c47a45d"
+            },
+            {
+              "term": "de pepernoot",
+              "meaning": "a small spiced biscuit eaten around Sinterklaas",
+              "forms": "de pepernoten",
+              "note": "Diminutive het pepernootje is also common (see the example above).",
+              "id": "b6c56cf9-88c6-4d84-a193-b2be54584447"
+            },
+            {
+              "term": "de chocoladeletter",
+              "meaning": "a large chocolate letter, usually the first letter of your name",
+              "forms": "de chocoladeletters",
+              "id": "bd6722f1-5398-4bb0-a288-7fa604472a9e"
+            },
+            {
+              "term": "het biertje",
+              "meaning": "a (casual) beer",
+              "forms": "de biertjes",
+              "note": "Diminutive of het bier: -tje after -r. It just means 'a beer', said in a relaxed way.",
+              "id": "8f050717-5ee0-4535-ad30-cb81d7b1887e"
+            },
+            {
+              "term": "de pakjesavond",
+              "meaning": "the evening of 5 December, when everyone opens their surprise and reads the poem aloud",
+              "id": "51b2c3b1-ee58-421c-b5e5-0538a6ebd918"
+            },
+            {
+              "term": "het feestje",
+              "meaning": "a small, casual party",
+              "forms": "de feestjes",
+              "note": "Diminutive of het feest (09-b): feest already ends in -t, so just add -je.",
+              "id": "6f5b3018-6253-4720-8d89-147ea820be20"
+            }
+          ]
+        }
+      },
+      "id": "f8885fbe-8704-4a3e-9847-521aac71be5b"
+    },
+    {
+      "type": "divider",
+      "id": "55863ef7-1d52-4b39-b3c2-134a9228dc41"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Making something small and friendly: diminutives",
+      "id": "c675c4db-602d-40ea-a140-1b5b1497d62e"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "A Dutch diminutive is a noun with -je, -tje, -pje or -etje added. It can mean literally small, but it often just means friendly, casual, or 'a nice little …'. You already know het spelletje (19-a): spel + letje, with the l doubled because of the short e. Now you know why."
+      ],
+      "id": "4b39db0e-3487-4ee1-b488-dfb9ed4e5a6a"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "A diminutive is ",
+        {
+          "text": "always het",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", even if the noun itself is a de-word (de stoel → het stoeltje). The plural always ends in ",
+        {
+          "text": "-s",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (de stoeltjes, de cadeautjes)."
+      ],
+      "id": "0b0497c5-95ee-4122-800c-cc71d0e52981"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "-je",
+              "id": "34f95fde-9e9e-4db6-9296-d44e6186f3ba"
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                "After most consonants:"
+              ],
+              "id": "6c8d64fa-4b70-40a3-94af-ed6ea57f4de9"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "het boek → het boekje",
+              "id": "2a417941-1eb9-429c-bcc8-20fbf027eee4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "het pak → het pakje",
+              "id": "2e0bf849-b97e-4d15-ad24-2fa57c9e681a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "het gedicht → het gedichtje",
+              "id": "8e22d13c-24e8-4e78-b892-33423217a8a2"
+            }
+          ],
+          "id": "6aed623f-50cf-4f36-b520-7623b08fdc93"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "-tje",
+              "id": "16d2fc33-4251-4f7d-a688-14a07f805436"
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                "After a vowel, or after -l/-n/-r/-w following a long vowel or diphthong:"
+              ],
+              "id": "5400d0f9-3e16-495b-bd1a-c93dcc15ec8e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "het cadeau → het cadeautje",
+              "id": "6d49ac1a-5144-4e7b-8760-f128df26781e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de stoel → het stoeltje",
+              "id": "0d8815d2-a61b-4c03-a8a4-dfd2f5bb7edd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de pan → het pannetje",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": [
+                    {
+                      "text": "Careful",
+                      "styles": {
+                        "italic": true
+                      }
+                    },
+                    ": de pan is short a + n, so this one is actually -etje below, not -tje — see next column."
+                  ],
+                  "id": "37dba53c-038c-4202-a977-d94122c0bd4b"
+                }
+              ],
+              "id": "baf7737c-fc2a-4379-9478-fa21a4eb68b0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Woorden op -t krijgen gewoon -je:",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "de pepernoot → het pepernootje",
+                  "id": "8953724f-f523-4894-87f5-712b60937be1"
+                }
+              ],
+              "id": "8273c61a-d4a9-496e-86a0-b1a2d62dd644"
+            }
+          ],
+          "id": "f2f38010-d4c1-4b37-92e9-00a9fa6c8f88"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "-pje / -etje",
+              "id": "bb2f60b1-32f6-42bf-ab3e-9d49029442b8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "-pje na -m/-lm/-rm na een lange klinker:",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "de film → het filmpje",
+                  "id": "6f0ddda6-4eeb-45f8-be57-36a1832f6e33"
+                }
+              ],
+              "id": "a47edfe5-3894-4630-94e1-5873bb571202"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "-etje na een korte klinker + l/m/n/ng/r:",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "de pan → het pannetje",
+                  "id": "b4598c80-e543-48eb-84ab-2204bc89bf36"
+                }
+              ],
+              "id": "84bf2254-7552-40fb-b024-fc4b7263c022"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Onregelmatig:",
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "het lot → het lootje",
+                  "id": "601ddce9-2dbd-475d-804e-1c368cc4b51c"
+                }
+              ],
+              "id": "8009cc4d-11d6-4c5a-84c1-75d90a57cf89"
+            }
+          ],
+          "id": "0c5f4087-46a8-40bc-a026-99d718d2ee8c"
+        }
+      ],
+      "id": "4e85688a-1160-4be8-bb89-355d970199a0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm wrapping the little present.",
+        "note": "inpakken is separable: pak … in."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "pak",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " het cadeautje ",
+        {
+          "text": "in",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "79777cb1-a94a-4ee5-b62b-98af67363ea5"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "inpakken",
+              "meaning": "to wrap (a present)",
+              "forms": "pakt in · pakte in · ingepakt",
+              "example": "Ik pak het cadeautje in.",
+              "id": "16d4bade-522a-4411-9f16-a987af2c0879"
+            }
+          ]
+        }
+      },
+      "id": "9b9fffdf-2989-41ef-802c-d0647d5a7026"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "A diminutive is not always about size. ",
+        {
+          "text": "een filmpje kijken",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = watching something fun, ",
+        {
+          "text": "een biertje",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = a casual beer, ",
+        {
+          "text": "een feestje",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = a relaxed little party. The ending often just makes a word sound friendly."
+      ],
+      "id": "5ddb1ac5-540a-47d5-a2ba-7563b1e9e26a"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "de cadeautje",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "het cadeautje",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Every diminutive is het, even de stoel → het stoeltje and de pan → het pannetje."
+      ],
+      "id": "568673e0-7fbb-4303-9df5-a5bfdc5a9bad"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The surprise is a secret, but the present isn't.",
+        "note": "maar joins two main clauses, as always."
+      },
+      "content": [
+        "De surprise is geheim, ",
+        {
+          "text": "maar",
+          "styles": {
+            "italic": true
+          }
+        },
+        " het cadeautje niet."
+      ],
+      "id": "195f9ab9-4d3c-4b72-858f-3533c6ff69fc"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's maximum twenty euros per person.",
+        "note": "per persoon recycles 10-b."
+      },
+      "content": [
+        "Het is ",
+        {
+          "text": "maximaal",
+          "styles": {
+            "bold": true
+          }
+        },
+        " twintig euro per persoon."
+      ],
+      "id": "7139f615-dcd7-449d-a6da-dc9ce78ecce7"
+    },
+    {
+      "type": "divider",
+      "id": "ee079ed2-c8fd-4f76-9350-5b9c5e5c8ee0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Noor calls Daan",
+      "id": "54c3be49-8bc9-40f3-84fb-ba7b193c9c48"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "After dinner, Noor calls Daan to tell him the plan."
+      ],
+      "id": "70d792ef-47e9-4869-9621-43c9bb34c870"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Hoi Daan! Op vijf december vieren we Sinterklaas bij mij. Heb je zin in een gezellige avond?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Zeker! Komen Sofia en Fleur ook?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, en Lotte ook. Zullen we om zeven uur beginnen?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Prima. Laten we om zeven uur beginnen, dan is er genoeg tijd."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Goed. Zal ik wijn meenemen, of doe jij dat liever?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Nee, zal ik wijn meenemen? Ik heb toch een fles staan."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Gezellig! Tot vijf december dan!"
+          }
+        ]
+      },
+      "id": "46154010-d8f6-4991-b135-15d0f2521b33"
+    },
+    {
+      "type": "divider",
+      "id": "5f10ab6b-e9ce-4a5f-a0b9-759012c4d2a6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "1cd9d2af-f081-4002-8e28-876158c77e6e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in zal, zult or zullen",
+      "id": "599a5635-4962-47ff-b929-a1dd661cdf8e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in zal, zult or zullen.",
+          "items": [
+            {
+              "prompt": "… we vanavond een filmpje kijken?",
+              "authorsVersion": [
+                "Zullen"
+              ],
+              "note": "Zullen we + infinitief? = a suggestion."
+            },
+            {
+              "prompt": "… ik de tafel dekken?",
+              "authorsVersion": [
+                "Zal"
+              ],
+              "note": "Zal ik + infinitief? = an offer."
+            },
+            {
+              "prompt": "Jij … toch ook komen, hè?",
+              "authorsVersion": [
+                "zult"
+              ],
+              "note": "jij zult; zal is also common in speech: jij zal."
+            },
+            {
+              "prompt": "Wij … op vijf december Sinterklaas vieren.",
+              "authorsVersion": [
+                "zullen"
+              ],
+              "note": "wij/jullie/zij zullen."
+            },
+            {
+              "prompt": "… u ook een gedicht schrijven?",
+              "authorsVersion": [
+                "Zult"
+              ],
+              "note": "u zult, never u zal in writing."
+            },
+            {
+              "prompt": "… Noor en Fleur de lootjes trekken?",
+              "authorsVersion": [
+                "Zullen"
+              ],
+              "note": "Plural subject Noor en Fleur: zullen."
+            }
+          ]
+        }
+      },
+      "id": "b43b8792-82d6-43be-9d42-8086e82cc9a2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Make the diminutive",
+      "id": "7ec45713-f158-44b8-a58e-6130211ce585"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Make the diminutive of the noun. Don't forget the article.",
+          "items": [
+            {
+              "prompt": "Make the diminutive: het boek",
+              "authorsVersion": [
+                "het boekje"
+              ],
+              "note": "-je after most consonants."
+            },
+            {
+              "prompt": "Make the diminutive: het pak",
+              "authorsVersion": [
+                "het pakje"
+              ],
+              "note": "-je after most consonants; the meaning shifts from carton to little package."
+            },
+            {
+              "prompt": "Make the diminutive: het cadeau",
+              "authorsVersion": [
+                "het cadeautje"
+              ],
+              "note": "-tje after a vowel."
+            },
+            {
+              "prompt": "Make the diminutive: de stoel",
+              "authorsVersion": [
+                "het stoeltje"
+              ],
+              "note": "-tje after -l following a long vowel; always het."
+            },
+            {
+              "prompt": "Make the diminutive: de pan",
+              "authorsVersion": [
+                "het pannetje"
+              ],
+              "note": "-etje after a short vowel + single n; the n doubles (pan → pannetje)."
+            },
+            {
+              "prompt": "Make the diminutive: de pepernoot",
+              "authorsVersion": [
+                "het pepernootje"
+              ],
+              "note": "Ends in -t, so just add -je: pepernootje, not pepernoottje."
+            },
+            {
+              "prompt": "Make the diminutive: het lot",
+              "authorsVersion": [
+                "het lootje"
+              ],
+              "note": "Irregular: the short o becomes a long oo."
+            }
+          ]
+        }
+      },
+      "id": "0f461fe8-71ca-4e45-bd12-920597107370"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the dialogues",
+      "id": "0fb14469-9701-42ff-b76a-abe6416d2c8c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the dialogues. Fill in one word per blank.",
+          "items": [
+            {
+              "prompt": "Noor: … we een filmpje kijken? / Sofia: Goed …!",
+              "authorsVersion": [
+                "Zullen",
+                "idee"
+              ],
+              "note": "Zullen we …? and the fixed reaction Goed idee!"
+            },
+            {
+              "prompt": "Fleur: … ik de afwas doen? / Noor: Nee, dat … ik wel.",
+              "authorsVersion": [
+                "Zal",
+                "doe"
+              ],
+              "note": "Zal ik …? as an offer; Noor answers with ik doe."
+            },
+            {
+              "prompt": "Daan: … we om zeven uur beginnen? / Noor: Ja, …!",
+              "authorsVersion": [
+                "Zullen",
+                "gezellig"
+              ],
+              "note": "Zullen we …? and the reaction Ja, gezellig!"
+            },
+            {
+              "prompt": "Sofia: Heb je … in een pepernoot? / Piotr: Ja, graag!",
+              "authorsVersion": [
+                "zin"
+              ],
+              "note": "zin hebben in."
+            },
+            {
+              "prompt": "Noor: … we lootjes trekken? / Fleur: … niet, ik wil geen surprise maken.",
+              "authorsVersion": [
+                "Zullen",
+                "Liever"
+              ],
+              "note": "Zullen we …? and the polite refusal Liever niet."
+            }
+          ]
+        }
+      },
+      "id": "6a6c28fe-4dda-4ece-8b07-f8dcbb8a87a2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "42be12ce-8348-4fd4-9224-bbcb930a769e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the correct order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: we / vieren / zullen / Sinterklaas / ?",
+              "authorsVersion": [
+                "Zullen we Sinterklaas vieren?"
+              ],
+              "note": "Zullen we + … + infinitief + ?"
+            },
+            {
+              "prompt": "Put in order: ik / de afwas / zal / doen / ?",
+              "authorsVersion": [
+                "Zal ik de afwas doen?"
+              ],
+              "note": "Zal ik + … + infinitief + ?"
+            },
+            {
+              "prompt": "Put in order: we / beginnen / laten / om zeven uur",
+              "authorsVersion": [
+                "Laten we om zeven uur beginnen!"
+              ],
+              "note": "Laten we + … + infinitief + !; not Laten we gaan om zeven uur."
+            },
+            {
+              "prompt": "Put in order: trekken / jullie / de lootjes / zullen / ?",
+              "authorsVersion": [
+                "Zullen jullie de lootjes trekken?"
+              ],
+              "note": "Zullen jullie + … + infinitief + ?"
+            },
+            {
+              "prompt": "Put in order: wijn / ik / zal / meenemen / ?",
+              "authorsVersion": [
+                "Zal ik wijn meenemen?"
+              ],
+              "note": "The separable infinitive meenemen stays whole at the end."
+            },
+            {
+              "prompt": "Put in order: een filmpje / we / kijken / zullen / ?",
+              "authorsVersion": [
+                "Zullen we een filmpje kijken?"
+              ],
+              "note": "Zullen we + … + infinitief + ?"
+            }
+          ]
+        }
+      },
+      "id": "c9117f94-0f14-448b-9b27-c490a5729271"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Transform into a suggestion or an offer",
+      "id": "4c7daa3f-e8b0-45ad-af48-900e711e544c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence as a suggestion with Zullen we …? or an offer with Zal ik …?.",
+          "items": [
+            {
+              "prompt": "Gaan we naar de film?",
+              "authorsVersion": [
+                "Zullen we naar de film gaan?"
+              ],
+              "note": "Question → suggestion with zullen; the infinitive moves to the end."
+            },
+            {
+              "prompt": "Ik kook vanavond.",
+              "authorsVersion": [
+                "Zal ik vanavond koken?"
+              ],
+              "note": "Statement → offer with zal ik."
+            },
+            {
+              "prompt": "Gaan we lootjes trekken?",
+              "authorsVersion": [
+                "Zullen we lootjes trekken?"
+              ]
+            },
+            {
+              "prompt": "Ik maak koffie.",
+              "authorsVersion": [
+                "Zal ik koffie maken?"
+              ]
+            },
+            {
+              "prompt": "Gaan we naar de ijsbaan?",
+              "authorsVersion": [
+                "Zullen we naar de ijsbaan gaan?"
+              ],
+              "note": "Recycles de ijsbaan (19-b)."
+            },
+            {
+              "prompt": "Ik neem de trein.",
+              "authorsVersion": [
+                "Zal ik de trein nemen?"
+              ]
+            },
+            {
+              "prompt": "Gaan we vanavond zwemmen?",
+              "authorsVersion": [
+                "Zullen we vanavond zwemmen?"
+              ]
+            }
+          ]
+        }
+      },
+      "id": "a7ef469d-027b-4c96-810d-e0164b880864"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "47ecb040-888d-46ff-998d-c78ddd776858"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "Shall we celebrate Sinterklaas together?",
+              "authorsVersion": [
+                "Zullen we samen Sinterklaas vieren?"
+              ]
+            },
+            {
+              "prompt": "Shall I bring wine?",
+              "authorsVersion": [
+                "Zal ik wijn meenemen?"
+              ]
+            },
+            {
+              "prompt": "Let's start at seven o'clock!",
+              "authorsVersion": [
+                "Laten we om zeven uur beginnen!"
+              ]
+            },
+            {
+              "prompt": "Do you feel like a beer?",
+              "authorsVersion": [
+                "Heb je zin in een biertje?"
+              ]
+            },
+            {
+              "prompt": "It's a secret!",
+              "authorsVersion": [
+                "Het is geheim!"
+              ]
+            },
+            {
+              "prompt": "The present costs maximum twenty euros.",
+              "authorsVersion": [
+                "Het cadeautje kost maximaal twintig euro."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "66ae52a5-65d2-485a-ab24-7b52577a7729"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "093ef514-b969-4a42-91ec-1a71d262ed84"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Zullen we een filmpje kijken?",
+              "authorsVersion": [
+                "Shall we watch a film?"
+              ]
+            },
+            {
+              "prompt": "Zal ik de afwas doen?",
+              "authorsVersion": [
+                "Shall I do the washing-up?"
+              ]
+            },
+            {
+              "prompt": "Ik trek een lootje. Dat is geheim!",
+              "authorsVersion": [
+                "I'm drawing a lot. That's a secret!"
+              ]
+            },
+            {
+              "prompt": "Heb je zin in een pepernootje?",
+              "authorsVersion": [
+                "Do you feel like a pepernoot (a little spiced biscuit)?"
+              ]
+            },
+            {
+              "prompt": "Dat is een leuk cadeautje!",
+              "authorsVersion": [
+                "That's a nice little present!"
+              ]
+            }
+          ]
+        }
+      },
+      "id": "9b298467-f421-4f0f-9350-95e85b94c464"
+    },
+    {
+      "type": "divider",
+      "id": "5cbbca13-5d2b-4d09-973d-d3dbc9a87300"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Sinterklaas bij Noor",
+      "id": "4b452336-cc1e-4378-a82a-3889c31333ed"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Noor's message. Answer the questions in Dutch.",
+          "items": [
+            {
+              "prompt": "Wanneer vieren ze Sinterklaas?",
+              "authorsVersion": [
+                "Op zaterdag 5 december, vanaf 19.00 uur."
+              ]
+            },
+            {
+              "prompt": "Bij wie vieren ze het?",
+              "authorsVersion": [
+                "Bij Noor."
+              ]
+            },
+            {
+              "prompt": "Hoe trekken ze de lootjes?",
+              "authorsVersion": [
+                "Met een app."
+              ]
+            },
+            {
+              "prompt": "Wat kost het cadeautje maximaal?",
+              "authorsVersion": [
+                "Maximaal twintig euro."
+              ]
+            },
+            {
+              "prompt": "Wat maakt iedereen, naast het gedicht?",
+              "authorsVersion": [
+                "Een surprise."
+              ]
+            },
+            {
+              "prompt": "Wat maakt Noor voor de avond?",
+              "authorsVersion": [
+                "Pepernoten en warme chocolademelk."
+              ]
+            },
+            {
+              "prompt": "Klopt dit? Iedereen vertelt wie ze hebben.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Het is geheim."
+              ],
+              "note": "Noor writes: niemand vertelt wie ze hebben."
+            }
+          ],
+          "passage": {
+            "title": "Sinterklaas bij Noor",
+            "content": "Hoi allemaal!\nOp zaterdag 5 december vieren we Sinterklaas bij mij, vanaf 19.00 uur. Daan, Lotte, Fleur en Sofia komen ook.\nWe trekken de lootjes al met de app. Dat is geheim: niemand vertelt wie ze hebben!\nIedereen schrijft een gedicht en maakt een surprise. Het cadeautje kost maximaal twintig euro.\nIk maak pepernoten en warme chocolademelk. Fleur koopt een chocoladeletter voor iedereen.\nHeb je zin in een biertje? Neem er gerust een mee.\nTot vijf december!\nGroetjes, Noor"
+          }
+        }
+      },
+      "id": "b86c465c-90f3-4200-b499-b4a574684e22"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "6081ba57-631c-46fb-9bd1-ccc7940b9989"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences: suggest a plan for the weekend to a friend and offer to do something.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences: suggest a plan for the weekend to a friend and offer to do something.",
+              "authorsVersion": [
+                "Zullen we zaterdag samen koken? Heb je zin in een filmpje daarna? Zal ik de boodschappen doen? Laten we om zes uur beginnen!"
+              ],
+              "note": "Model answer. Check: Zullen we / Zal ik + infinitief at the end; Laten we + infinitief + !."
+            }
+          ]
+        }
+      },
+      "id": "12b83656-0ae2-4c2a-b0e9-547fff53e167"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "ecba3e85-0390-4fea-983d-145da513a467"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Remember:"
+      ],
+      "id": "ce625838-ac13-4609-a3a5-520642c45794"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Zullen we + infinitief? = a suggestion: Zullen we lootjes trekken?",
+      "id": "ab4f69f9-6d26-4705-9224-419a7d7921a9"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Zal ik + infinitief? = an offer: Zal ik wijn meenemen?",
+      "id": "42c86a94-34b5-46fc-a137-94b95c1f4e20"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Laten we + infinitief! = Let's …!: Laten we om zeven uur beginnen!",
+      "id": "1343980d-2045-4c62-bb79-40543b40bdec"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "React with Goed idee!, Zin in!, Zeker!, Misschien. or Liever niet.",
+      "id": "7ac82b10-c1d5-4d60-b1d2-dc419e1eec11"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "A diminutive (-je/-tje/-pje/-etje) is always het, plural -s: het cadeautje, de cadeautjes.",
+      "id": "7c98ea2d-1ca0-4dac-8971-09c0064ca5c7"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Sinterklaas for adults: trek een lootje, schrijf een gedicht, maak een surprise — op de pakjesavond, 5 december.",
+      "id": "db7fd395-e444-40d3-a4b0-e0cf3438ab03"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: dinner at Noor's flat",
+      "description": "Sofia, Noor and Fleur sit around the dinner table in Noor's kitchen, plates nearly empty. Noor holds up her phone, showing a simple name-drawing app on the screen; a small bowl of pepernoten sits on the table.",
+      "alt": "Three friends at a dinner table, one showing a phone app to the others.",
+      "location": "noor-kitchen",
+      "characters": [
+        "sofia",
+        "noor",
+        "fleur"
+      ],
+      "action": "Noor holds up her phone to show the lootjes-drawing app; Sofia and Fleur lean in to look; a small bowl of pepernoten sits on the table."
+    },
+    {
+      "afterHeading": "Making something small and friendly: diminutives",
+      "description": "A cosy still-life on a wooden table: a small bowl of pepernoten, a chocolate letter S, a small wrapped present and a folded handwritten note, no people, no text visible.",
+      "alt": "A bowl of pepernoten, a chocolate letter, a small wrapped present and a folded note on a table.",
+      "action": "A cosy flat-lay on a wooden table: a small bowl of pepernoten, a chocolate letter shaped like an S, one small wrapped present with ribbon, and a folded handwritten note beside it. No people.",
+      "text": false
+    }
+  ],
+  "id": "09088377-b15c-498b-9d93-a5ea2bdd4597"
+}

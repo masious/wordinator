@@ -1,0 +1,1816 @@
+{
+  "title": "Ik hou van zwemmen",
+  "goal": "Talk about hobbies and free time with houden van, an activity as a noun, and vinden + activity + adjective.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Ik hou van zwemmen",
+      "id": "72030365-2ebe-4ac5-a7e2-039b10f91d61"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Tuesday 17 November. Sofia has Dutch class at the library in the centre, from 19.00 to 21.00 — she cycles there now. In this lesson you say what you love doing with houden van, use an activity as a noun (het zwemmen), and say what you find fun, boring or hard with vinden.",
+      "id": "1ea787d7-7c0e-4446-ba20-d147d10bf356"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: subjects are ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", the verb is ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", and the new form of the lesson is bold, sometimes with a yellow highlight."
+      ],
+      "id": "63e7a7a2-9a64-470f-ba90-e85001e697c9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Wat doe je in je vrije tijd?",
+      "id": "58aaa998-035e-4d17-b2c8-381acb1c83ed"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sofia's Dutch teacher is Marieke, de docent. Every Tuesday she teaches a group of cursisten (students in the course), including Sofia and her classmate Piotr. Tonight Marieke asks about hobby's (hobbies) and vrije tijd (free time).",
+      "id": "8524ddf6-25c2-4013-930a-288548c417b8"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de docent",
+              "meaning": "the teacher (of adults)",
+              "forms": "de docenten",
+              "example": "Marieke is de docent van de Nederlandse les.",
+              "id": "488d7d62-759a-4c99-8660-2aa3df6274d5"
+            },
+            {
+              "term": "de cursist",
+              "meaning": "the student, course participant",
+              "forms": "de cursisten",
+              "example": "Sofia en Piotr zijn cursisten.",
+              "id": "0dc108b4-aa69-48de-ad28-06903bac471c"
+            },
+            {
+              "term": "de hobby",
+              "meaning": "the hobby",
+              "forms": "de hobby's",
+              "example": "Wat is je hobby?",
+              "id": "5bba0b4d-c667-4cd7-81a5-ed5d60381bbe"
+            },
+            {
+              "term": "de vrije tijd",
+              "meaning": "free time",
+              "example": "Wat doe je in je vrije tijd?",
+              "id": "fd5d8589-f174-4784-b9e8-f973daae8e81"
+            }
+          ]
+        }
+      },
+      "id": "340f625e-a8d3-46b8-a256-c1d3bd2ab86f"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Marieke",
+            "text": "Goedenavond, allemaal! Vanavond praten we over hobby's. Wat doe je in je vrije tijd, Sofia?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik hou van zwemmen en dansen."
+          },
+          {
+            "speaker": "Marieke",
+            "text": "Wat leuk! Zwem je in een club?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik zwem alleen, elke woensdag om zeven uur."
+          },
+          {
+            "speaker": "Marieke",
+            "text": "En jij, Piotr? Wat is jouw hobby?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ik hou van voetbal! Ik voetbal in een club, en elke zaterdag speel ik een wedstrijd. Ik kijk ook voetbal op tv."
+          },
+          {
+            "speaker": "Marieke",
+            "text": "Houd je ook van koken?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ja! Maar ik vind Nederlands moeilijk."
+          },
+          {
+            "speaker": "Marieke",
+            "text": "Nederlands is niet makkelijk, maar je doet het heel goed! En jij? Wat is je hobby?"
+          },
+          {
+            "speaker": "Cursist",
+            "text": "Ik hou van tekenen. Ik vind tekenen heel leuk."
+          },
+          {
+            "speaker": "Marieke",
+            "text": "Mooi! Volgende week praten we meer over muziek en sport."
+          }
+        ]
+      },
+      "id": "1b267d5e-e204-4d70-a925-fcf1515c6035"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "praten",
+              "meaning": "to talk",
+              "forms": "praat · praatte · gepraat",
+              "example": "Vanavond praten we over hobby's.",
+              "id": "0e4eb9cf-7717-4796-8232-798081d8f415"
+            },
+            {
+              "term": "houden van",
+              "meaning": "to love, to like (a thing, an activity or a person)",
+              "forms": "houdt van · hield van · gehouden van",
+              "example": "Ik hou van zwemmen.",
+              "id": "01ad61d2-0bc3-4764-a367-ca4a464d0cc4"
+            },
+            {
+              "term": "de club",
+              "meaning": "the club, society",
+              "forms": "de clubs",
+              "example": "Zwem je in een club?",
+              "id": "633d33d0-0f0e-4a68-8d15-aa7e15c23656"
+            },
+            {
+              "term": "voetballen",
+              "meaning": "to play football",
+              "forms": "voetbalt · voetbalde · gevoetbald",
+              "id": "fd509c11-ee6c-4d5e-ae15-ce87833c7f1c",
+              "example": "Ik voetbal in een club."
+            },
+            {
+              "term": "het voetbal",
+              "meaning": "football (the sport)",
+              "example": "Ik hou van voetbal.",
+              "id": "f6266e71-fbdd-493c-9893-623dd5fb0247"
+            },
+            {
+              "term": "spelen",
+              "meaning": "to play",
+              "forms": "speelt · speelde · gespeeld",
+              "example": "Elke zaterdag speel ik een wedstrijd.",
+              "id": "b1e3c027-0b84-4eb6-a9ee-954d0782e7d8"
+            },
+            {
+              "term": "de wedstrijd",
+              "meaning": "the match",
+              "forms": "de wedstrijden",
+              "example": "Elke zaterdag speel ik een wedstrijd.",
+              "id": "1c7bbfc6-a5aa-4f69-934c-e711599036a9"
+            },
+            {
+              "term": "vinden",
+              "meaning": "to find, to think (an opinion)",
+              "forms": "vindt · vond · gevonden",
+              "note": "Known as the chunk ‘Ik vind … leuk/lekker’; this lesson teaches the full pattern and conjugation.",
+              "id": "c17740e1-bef2-4137-b87f-cf3707a097c2"
+            },
+            {
+              "term": "makkelijk",
+              "meaning": "easy",
+              "example": "Nederlands is niet makkelijk.",
+              "id": "5ad72ec8-a97c-42a6-bc03-65fba5484547"
+            },
+            {
+              "term": "tekenen",
+              "meaning": "to draw",
+              "forms": "tekent · tekende · getekend",
+              "id": "e66f2508-1080-4408-860a-845506ebfaf5"
+            },
+            {
+              "term": "dansen",
+              "meaning": "to dance",
+              "forms": "danst · danste · gedanst",
+              "id": "266880ee-280d-40b8-8153-cf13e7e44529"
+            }
+          ]
+        }
+      },
+      "id": "48506afe-2d56-4f2e-8fb9-aac1fb412ff9"
+    },
+    {
+      "type": "divider",
+      "id": "7fbe1026-3211-4d83-af1d-ceccbc62f601"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Houden van + een ding",
+      "id": "1dc7833c-ec5b-43eb-b515-4ac8c8b66de3"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "houden van",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means ",
+        {
+          "text": "to love",
+          "styles": {
+            "italic": true
+          }
+        },
+        " or ",
+        {
+          "text": "to like a lot",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". Use it with a noun: a thing, an activity or a person. Conjugation: ik hou or houd, jij houdt, u houdt, hij/zij houdt, wij/jullie/zij houden. When je or jij comes after the verb, the -t drops (t-drop, as with every verb): Hou je …? / Houd jij …? Hou and houd are both fine there. Note the dt spelling: hij houdt."
+      ],
+      "id": "6320adbe-5b7d-476c-a5f2-043305c3f886"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "houden (van)",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "ik hou van · ik houd van (both standard)",
+          "id": "db19bce7-8df4-431c-974d-8a5b39296710"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "jij houdt van — question: Hou je / Houd je …? and Hou jij / Houd jij …? (no -t)",
+          "id": "d599c563-32ba-4f25-9d94-3b5d3b9ac925"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "u houdt van",
+          "id": "820822d2-4589-4a91-9a80-2bcf1ab294b0"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "hij/zij houdt van",
+          "id": "fef287e9-ccff-4017-a6f0-d9fb66142b9d"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "wij/jullie/zij houden van",
+          "id": "f959c0dc-e903-4e94-953e-f76e44de3a1d"
+        }
+      ],
+      "id": "f4eb418f-ed8d-4ccd-9bfd-77ccc48b6f83"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I love music.",
+        "note": "hou van is the most common spoken form."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "hou",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "van",
+          "styles": {
+            "bold": true
+          }
+        },
+        " muziek."
+      ],
+      "id": "0c3184ee-eed7-4306-90bd-dd89731e2315"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Piotr loves football.",
+        "note": "hij/zij-form: houdt, with -dt."
+      },
+      "content": [
+        {
+          "text": "Piotr",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "houdt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "van",
+          "styles": {
+            "bold": true
+          }
+        },
+        " voetbal."
+      ],
+      "id": "bc1c2fc4-8cbd-4f6c-bb5e-f66b58860073"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "houden van",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + noun = to love / to like a lot: Ik hou van muziek. Piotr houdt van voetbal. The noun always follows van."
+      ],
+      "id": "534c8937-92fe-49c5-8b0f-0c045d9747c0"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik hou zwemmen",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik hou van zwemmen (van is never left out). And watch the spelling: ",
+        {
+          "text": "hij houd",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → hij houdt (with -dt)."
+      ],
+      "id": "8a8d742c-4139-4b3b-b220-4b8f05c32712"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": "houden looks like English ‘to hold’, and sometimes it is: Daan houdt de deur open. But houden van means to love or to like — not to hold something.",
+      "id": "9ba3be28-d967-46d7-afbb-8c6370a5b08e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Houden van + een persoon",
+      "id": "cdafeb4f-9aa0-44d9-a05c-a9911215e048"
+    },
+    {
+      "type": "paragraph",
+      "content": "houden van also means to love a person, for family or romance. No object pronoun yet — that is 21-b. Use a noun instead:",
+      "id": "734f170d-4ffe-4d89-b9ff-7adb5fccd9dd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I love my family.",
+        "note": "houden van + person = romantic or family love."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "hou",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "van",
+          "styles": {
+            "bold": true
+          }
+        },
+        " mijn familie."
+      ],
+      "id": "2b3510f8-c3f2-4365-92c5-6640dc27a07b"
+    },
+    {
+      "type": "divider",
+      "id": "77b47b67-d3aa-4af5-924d-b8c349e85abd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Houden van + een activiteit",
+      "id": "e2348c03-c5c2-467d-b000-fe3e1e385774"
+    },
+    {
+      "type": "paragraph",
+      "content": "An infinitive can work as a noun in Dutch. It is always a het-word: het zwemmen, het dansen. So houden van + an infinitive means to love doing that activity, and the infinitive-as-noun can even be the subject of a sentence.",
+      "id": "73e56ea2-3fda-4c9c-a01b-1cc241e9711a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I love swimming.",
+        "note": "zwemmen here is a het-noun: het zwemmen."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "hou",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " van ",
+        {
+          "text": "zwemmen",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "3d518969-8fd3-457f-a691-e2d1f5965a56"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you love dancing?",
+        "note": "t-drop: with je or jij after the verb there is no -t. Hou je …? / Houd jij …? are all fine."
+      },
+      "content": [
+        {
+          "text": "Houd",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "van",
+          "styles": {
+            "bold": true
+          }
+        },
+        " dansen?"
+      ],
+      "id": "8494fcf1-dcaa-490a-b761-80ec428e61cb"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Swimming is healthy.",
+        "note": "zwemmen as subject: no article needed."
+      },
+      "content": [
+        {
+          "text": "Zwemmen",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " gezond."
+      ],
+      "id": "565aad90-3fe9-4efd-9b43-e7639dc5d47c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Cooking is fun.",
+        "note": "Recycles koken (07-a). The activity is the subject."
+      },
+      "content": [
+        {
+          "text": "Koken",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " leuk."
+      ],
+      "id": "4a200eaf-1c43-4fe7-bac6-41b1bb04c391"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "gezond",
+              "meaning": "healthy",
+              "example": "Zwemmen is gezond.",
+              "id": "1c46d16e-ba4a-4c40-837a-ad836985653a"
+            }
+          ]
+        }
+      },
+      "id": "7afe0b34-7f68-4bb9-afed-7f09eed73525"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "Two ways to say you like an activity: houden van + infinitive (Ik hou van zwemmen, strong) and vinden + activity + leuk (Ik vind zwemmen leuk, an opinion). A third, simpler way follows in the next lesson.",
+      "id": "1693ac6f-5882-47f8-8922-bfd17d52a005"
+    },
+    {
+      "type": "divider",
+      "id": "7bc4643a-1f48-4337-9613-41242f74a7bc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Vinden: Ik vind tekenen leuk",
+      "id": "7a44602c-9f40-44ec-8cd0-bb49f0be5405"
+    },
+    {
+      "type": "paragraph",
+      "content": "You already know Ik vind … leuk/lekker as a chunk. Now use vinden with any activity and any adjective: Ik vind tekenen leuk. Piotr vindt Nederlands moeilijk. The adjective stays at the end with no -e (recycles the predicative rule, 17-b).",
+      "id": "cd0438da-9558-4edd-b766-5d6a473fe6fa"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I find drawing fun.",
+        "note": "vinden + activity + adjective: the adjective comes last."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "vind",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " tekenen ",
+        {
+          "text": "leuk",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "e32db351-b05b-40eb-9143-fe10acea4afa"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Piotr finds Dutch difficult.",
+        "note": "vindt with -dt, like houdt."
+      },
+      "content": [
+        {
+          "text": "Piotr",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "vindt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " Nederlands ",
+        {
+          "text": "moeilijk",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "7e64be2c-401f-4c8d-9eda-6b1f225efe07"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you find football boring?",
+        "note": "Question: verb first, then je, no -t (t-drop)."
+      },
+      "content": [
+        {
+          "text": "Vind",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " voetbal ",
+        {
+          "text": "saai",
+          "styles": {
+            "bold": true
+          }
+        },
+        "?"
+      ],
+      "id": "67d3293b-0edc-443c-9847-eea1f8693f2f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I find the museum interesting."
+      },
+      "content": "Ik vind het museum interessant.",
+      "id": "778b0364-e882-4fd0-82ca-7adfc0b5748d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Shall we go to a concert? I find concerts fun.",
+        "note": "Gaan we …? is a simple way to suggest something, with no extra grammar needed."
+      },
+      "content": "Gaan we naar een concert? Ik vind concerten leuk.",
+      "id": "8952b10a-a0e8-49d3-97d0-d497c9dcd89c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I find football exciting."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "vind",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " voetbal ",
+        {
+          "text": "spannend",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "295be33f-e349-44bc-a051-7ea7f4aaf479"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I find photography fun, but I find painting hard."
+      },
+      "content": "Ik vind fotograferen leuk, maar ik vind schilderen moeilijk.",
+      "id": "072b5068-6a99-4d0e-92c2-0d0180c6ec59"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "saai",
+              "meaning": "boring",
+              "id": "1830faf4-54b9-46b9-b374-c31da78ab231"
+            },
+            {
+              "term": "interessant",
+              "meaning": "interesting",
+              "id": "ffd63dfb-5577-41bc-9dc4-64f303e74e34"
+            },
+            {
+              "term": "spannend",
+              "meaning": "exciting",
+              "id": "34520aac-b40e-4a57-bb93-15dda2910ed7"
+            },
+            {
+              "term": "het museum",
+              "meaning": "the museum",
+              "forms": "de musea",
+              "id": "9b5f9413-f089-471e-9eba-cfc1b5633ce3"
+            },
+            {
+              "term": "het concert",
+              "meaning": "the concert",
+              "forms": "de concerten",
+              "id": "04787078-9a80-4770-bfad-8587ff22d30b"
+            },
+            {
+              "term": "fotograferen",
+              "meaning": "to photograph, to do photography",
+              "forms": "fotografeert · fotografeerde · gefotografeerd",
+              "id": "7d7937e3-f7d0-4412-b8d9-79f86fd3f577"
+            },
+            {
+              "term": "schilderen",
+              "meaning": "to paint",
+              "forms": "schildert · schilderde · geschilderd",
+              "id": "f92119c3-7941-491a-8a35-2a884789bca1"
+            }
+          ]
+        }
+      },
+      "id": "864e05da-da94-4258-a0b6-87c76f5a56b0"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "houden van + noun",
+              "id": "afddc1cd-4644-4dff-91d7-88137b51ffb9"
+            },
+            {
+              "type": "example",
+              "props": {
+                "translation": "I love music."
+              },
+              "content": [
+                {
+                  "text": "Ik",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "hou",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "van",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " muziek."
+              ],
+              "id": "e3461746-624e-4ede-98bd-e6eb80451df2"
+            }
+          ],
+          "id": "efb7c683-776e-47af-958e-42254c4cc3b0"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "houden van + activity",
+              "id": "cc37da99-76aa-4866-a612-46484b79f1a3"
+            },
+            {
+              "type": "example",
+              "props": {
+                "translation": "I love dancing."
+              },
+              "content": [
+                {
+                  "text": "Ik",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "hou",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "van",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " dansen."
+              ],
+              "id": "03c664a4-dffe-4093-b7c2-f925bfb5efeb"
+            }
+          ],
+          "id": "cb4ec553-5140-49e4-9cc7-07dc71e03bc3"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "vinden + activity + adjective",
+              "id": "7ea14a6a-5b8e-41b6-9891-247b0e2398b2"
+            },
+            {
+              "type": "example",
+              "props": {
+                "translation": "I find dancing fun."
+              },
+              "content": [
+                {
+                  "text": "Ik",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "vind",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " dansen ",
+                {
+                  "text": "leuk",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                "."
+              ],
+              "id": "92d9a16a-ee30-4a3c-a19e-3d800cb2afd0"
+            }
+          ],
+          "id": "c00f1e72-4b16-486f-8408-a2e8678deb11"
+        }
+      ],
+      "id": "f81153c7-4045-4bb1-91a7-34d76e4c7899"
+    },
+    {
+      "type": "divider",
+      "id": "4fa66fa7-0924-42b0-8bb8-001a84d6d196"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Vragen over je vrije tijd",
+      "id": "d1aafac4-da3a-46e0-a42b-dc80cedabc2b"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Wat doe je in je vrije tijd?",
+      "id": "50e2e57f-640a-4b59-903a-304cdf06b7ff"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Wat is je hobby? — Heb je een hobby?",
+      "id": "6b002b2c-4533-4319-beea-467fc3a16cb5"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Wat is je ",
+        {
+          "text": "lievelingsfilm",
+          "styles": {
+            "bold": true
+          }
+        },
+        "? (lievelings- + noun, written as one word: your favourite …)"
+      ],
+      "id": "02f25ce2-b83a-435c-891c-2dcddf30e844"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de sport",
+              "meaning": "the sport",
+              "forms": "de sporten",
+              "example": "Voetbal is een leuke sport.",
+              "id": "44106e0d-b2b8-428b-8317-97dc5b74b715"
+            },
+            {
+              "term": "lievelings-",
+              "meaning": "favourite (fixed prefix + noun, one word)",
+              "example": "Wat is je lievelingsfilm?",
+              "id": "b7dd4956-6ac8-4d61-95a2-0144bd5aa7ba"
+            }
+          ]
+        }
+      },
+      "id": "438146b4-a47d-4ad8-a427-43a114457f17"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "Many Dutch people do a sport in a club, often called ",
+        {
+          "text": "een vereniging",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": a voetbalclub, a zwemclub, a korfbalclub (korfbal is a Dutch team sport, a bit like basketball). Piotr plays football in a small amateur club. FC Utrecht, the city's professional football club, is his lievelingsclub: he watches its matches."
+      ],
+      "id": "cd0568fc-5761-4819-8756-49c880c6d11f"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de vereniging",
+              "meaning": "the club, association (for sport, music, hobbies)",
+              "forms": "de verenigingen",
+              "example": "Piotr speelt voetbal bij een vereniging.",
+              "id": "3ed8fc8f-0147-4249-ade6-fdac2f3d5f93"
+            }
+          ]
+        }
+      },
+      "id": "a2b55c4a-8eca-425b-bf29-01107a64ba4b"
+    },
+    {
+      "type": "divider",
+      "id": "d308ff41-0100-4762-8d20-2e0976cb7594"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Ik woon al twee jaar in Utrecht",
+      "id": "19e0d356-cb10-4c4f-b491-8ddf515fb207"
+    },
+    {
+      "type": "paragraph",
+      "content": "Dutch uses the plain present with al + a period of time to say something has been true up to now. English uses ‘have lived’; Dutch just says woon. This is a fixed chunk for now; the full system is for a later part.",
+      "id": "88caf342-4bee-4330-95da-177913539578"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I have lived in Utrecht for two years.",
+        "note": "Present tense + al twee jaar, not a past tense."
+      },
+      "content": [
+        "Ik woon ",
+        {
+          "text": "al twee jaar",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " in Utrecht."
+      ],
+      "id": "716c5b71-4d53-4070-b880-9eb750ced253"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "al",
+              "meaning": "already; with a period of time: for … (up to now)",
+              "example": "Ik woon al twee jaar in Utrecht.",
+              "note": "New use: al + a period of time with the present tense, for something still true now (14-a/14-b only had al = already).",
+              "id": "1a40881c-7df7-4063-ae3b-c6b1c120760a"
+            }
+          ]
+        }
+      },
+      "id": "98998e13-a03e-4777-bf95-878456bbdc1c"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "Think of al + period as ‘already for …’: the thing started earlier and is still true now, so Dutch keeps the present tense.",
+      "id": "423ddd3c-b87d-474c-8627-a872c1f50a6f"
+    },
+    {
+      "type": "divider",
+      "id": "59579d4d-7628-476b-81c3-2c03f98c69a3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: After class, at the bike racks",
+      "id": "a97bbb04-de33-4a76-b0bf-989828a3fb35"
+    },
+    {
+      "type": "paragraph",
+      "content": "After class, Sofia and Piotr walk outside together and keep talking about their free time.",
+      "id": "6b7f441d-4556-418f-a4e2-eb0b8598e2ad"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Piotr",
+            "text": "Ik woon al twee jaar in Utrecht."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Al twee jaar! Vind je Utrecht leuk?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ja, heel leuk. En mijn vrouw Kasia ook. Zij houdt van muziek: zij speelt gitaar en zingt in een koor."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wat leuk! Ik hou ook van muziek. En ik hou van dansen."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Dans je in een club?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik dans thuis. En wat doe jij nog in je vrije tijd?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ik puzzel soms, en ik doe spelletjes met mijn collega's."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Spelletjes? Wat leuk!"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ja, ik vind spelletjes heel leuk. En jij?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik vind spelletjes een beetje saai. Nou, tot volgende week, Piotr!"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Tot volgende week, Sofia!"
+          }
+        ]
+      },
+      "id": "df630847-fb54-45f1-8a68-3a6ef5e47d5d"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de gitaar",
+              "meaning": "the guitar",
+              "forms": "de gitaren",
+              "example": "Kasia speelt gitaar.",
+              "id": "e492e495-90b5-4aa7-87dc-56034f1b5466"
+            },
+            {
+              "term": "gitaar spelen",
+              "meaning": "to play guitar",
+              "forms": "speelt gitaar · speelde gitaar · gitaar gespeeld",
+              "id": "1c5d5137-282c-4f6a-85dd-5800469f7730"
+            },
+            {
+              "term": "het koor",
+              "meaning": "the choir",
+              "forms": "de koren",
+              "example": "Zij zingt in een koor.",
+              "id": "1086badc-d5f0-4917-804b-0ed0dea24e4e"
+            },
+            {
+              "term": "zingen",
+              "meaning": "to sing",
+              "forms": "zingt · zong · gezongen",
+              "id": "d6b1561f-561c-434d-bfc2-81831fb0bbea"
+            },
+            {
+              "term": "puzzelen",
+              "meaning": "to do puzzles (jigsaws, crosswords)",
+              "forms": "puzzelt · puzzelde · gepuzzeld",
+              "id": "dc8134c2-11ed-4378-8077-c16484f4e76f",
+              "example": "Ik puzzel soms."
+            },
+            {
+              "term": "het spelletje",
+              "meaning": "the game (a board game or card game)",
+              "forms": "de spelletjes",
+              "id": "e50c087b-c883-4fb3-905a-3985bc805877",
+              "example": "Ik vind spelletjes heel leuk."
+            },
+            {
+              "term": "spelletjes doen",
+              "meaning": "to play games",
+              "example": "Ik doe spelletjes met mijn collega's.",
+              "id": "97e2589d-af8e-41fb-92c1-fdf336490c4e"
+            }
+          ]
+        }
+      },
+      "id": "856dac2c-e2c1-4827-a272-3c4578f9c1e3"
+    },
+    {
+      "type": "divider",
+      "id": "0ec53076-996f-42e1-bcbb-2f960593a97f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "ba03d090-d98f-4f89-a1e6-f976fa8278ed"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Conjugate houden (van) and vinden",
+      "id": "f8b55787-8759-40b1-bbc2-6da53d3c4521"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct form of houden (van) or vinden.",
+          "items": [
+            {
+              "prompt": "Ik … van muziek. (houden)",
+              "authorsVersion": [
+                "hou"
+              ],
+              "note": "Ik hou van …; Ik houd van … is also correct and standard."
+            },
+            {
+              "prompt": "Piotr … van voetbal. (houden)",
+              "authorsVersion": [
+                "houdt"
+              ],
+              "note": "hij/zij-form: houdt, with -dt."
+            },
+            {
+              "prompt": "… jij van dansen? (houden)",
+              "authorsVersion": [
+                "Houd"
+              ],
+              "note": "Also fine: Hou jij van dansen? t-drop: with jij or je after the verb there is no -t, whether you write jij or je. Hou and Houd are both fine."
+            },
+            {
+              "prompt": "Wij … van puzzelen. (houden)",
+              "authorsVersion": [
+                "houden"
+              ],
+              "note": "Plural: houden."
+            },
+            {
+              "prompt": "Jullie … van voetbal, toch? (houden)",
+              "authorsVersion": [
+                "houden"
+              ],
+              "note": "jullie + houden, never houdt."
+            },
+            {
+              "prompt": "Ik … zwemmen heel gezond. (vinden)",
+              "authorsVersion": [
+                "vind"
+              ],
+              "note": "ik-form: vind, no -t."
+            },
+            {
+              "prompt": "… jij Nederlands moeilijk? (vinden)",
+              "authorsVersion": [
+                "Vind"
+              ],
+              "note": "Question with jij: Vind jij …? No -t (t-drop), as with houden."
+            },
+            {
+              "prompt": "Sofia en Piotr … Utrecht leuk. (vinden)",
+              "authorsVersion": [
+                "vinden"
+              ],
+              "note": "Plural subject (Sofia en Piotr = zij): vinden."
+            }
+          ]
+        }
+      },
+      "id": "43a87898-6f84-475d-a54e-a823beb68b2b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Dialogue completion",
+      "id": "145d8e37-c179-4aef-8009-af9581044d66"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the dialogues. Fill in one word per blank.",
+          "items": [
+            {
+              "prompt": "Marieke: Wat … jij in je vrije tijd? (doen) / Sofia: Ik … van zwemmen en dansen. (houden)",
+              "authorsVersion": [
+                "doe",
+                "hou"
+              ],
+              "note": "Ik houd van … is also fine for the second blank."
+            },
+            {
+              "prompt": "Marieke: … je van voetbal, Piotr? (houden) / Piotr: Ja, ik … van voetbal en koken. (houden)",
+              "authorsVersion": [
+                "Houd",
+                "hou"
+              ],
+              "note": "First blank: question with je after the verb, so no -t: Houd je (also fine: Hou je). Second blank: statement, ik hou (also fine: ik houd)."
+            },
+            {
+              "prompt": "Sofia: … jij Nederlands moeilijk? (vinden) / Piotr: Ja, ik … Nederlands heel moeilijk. (vinden)",
+              "authorsVersion": [
+                "Vind",
+                "vind"
+              ],
+              "note": "Question: Vind jij (no -t). Statement: ik vind."
+            },
+            {
+              "prompt": "Marieke: Wat is jouw …? (hobby) / Cursist: Ik … van tekenen. (houden)",
+              "authorsVersion": [
+                "hobby",
+                "hou"
+              ]
+            },
+            {
+              "prompt": "Piotr: Elke zaterdag speel ik een …. (match) / Sofia: Speel je in een …? (club)",
+              "authorsVersion": [
+                "wedstrijd",
+                "club"
+              ],
+              "note": "de wedstrijd = the match; de club. After elke zaterdag the verb comes first, then ik (inversion)."
+            },
+            {
+              "prompt": "Marieke: … je een hobby? (hebben) / Sofia: Ja, ik … van zwemmen. (houden)",
+              "authorsVersion": [
+                "Heb",
+                "hou"
+              ],
+              "note": "Heb je …? (t-drop with je). Second blank: also fine: houd."
+            }
+          ]
+        }
+      },
+      "id": "57f055e8-4bbd-43f1-accc-5dd516f3fe97"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "a7b2c0b2-3c3c-4d07-affd-dcc83ffc0db1"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: van / Piotr / voetbal / houdt",
+              "authorsVersion": [
+                "Piotr houdt van voetbal."
+              ]
+            },
+            {
+              "prompt": "Put in order: leuk / ik / tekenen / vind",
+              "authorsVersion": [
+                "Ik vind tekenen leuk."
+              ]
+            },
+            {
+              "prompt": "Put in order: van / muziek / hou / ik",
+              "authorsVersion": [
+                "Ik hou van muziek."
+              ]
+            },
+            {
+              "prompt": "Put in order: gezond / is / zwemmen",
+              "authorsVersion": [
+                "Zwemmen is gezond."
+              ]
+            },
+            {
+              "prompt": "Put in order: Nederlands / Piotr / vindt / moeilijk",
+              "authorsVersion": [
+                "Piotr vindt Nederlands moeilijk."
+              ]
+            },
+            {
+              "prompt": "Put in order: van / houd / jij / dansen / ?",
+              "authorsVersion": [
+                "Houd jij van dansen?"
+              ],
+              "note": "Also fine: Hou jij van dansen?"
+            },
+            {
+              "prompt": "Put in order: saai / voetbal / vindt / Kasia",
+              "authorsVersion": [
+                "Kasia vindt voetbal saai."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "6c78389a-3bbc-46b2-961c-074aa58d2908"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Transformation",
+      "id": "7ea5da76-e929-4287-ad03-762b9f0e009b"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence as instructed, using houden van or vinden.",
+          "items": [
+            {
+              "prompt": "Zwemmen is leuk. (ik, vinden)",
+              "authorsVersion": [
+                "Ik vind zwemmen leuk."
+              ]
+            },
+            {
+              "prompt": "Ik hou van koken. (make it a question with jij)",
+              "authorsVersion": [
+                "Houd jij van koken?"
+              ],
+              "note": "Verb first, then jij; no -t (t-drop). Also fine: Hou jij van koken? or Houd je / Hou je van koken?"
+            },
+            {
+              "prompt": "Ik hou van muziek. (dansen)",
+              "authorsVersion": [
+                "Ik hou van dansen."
+              ],
+              "note": "Noun → activity: houden van + infinitive."
+            },
+            {
+              "prompt": "Tekenen is moeilijk. (Piotr, vinden)",
+              "authorsVersion": [
+                "Piotr vindt tekenen moeilijk."
+              ]
+            },
+            {
+              "prompt": "Ik hou van voetbal. (make it a question with jij)",
+              "authorsVersion": [
+                "Houd jij van voetbal?"
+              ],
+              "note": "Verb first, then jij; no -t (t-drop). Also fine: Hou jij van voetbal?"
+            },
+            {
+              "prompt": "Ik hou van sport. (zwemmen)",
+              "authorsVersion": [
+                "Ik hou van zwemmen."
+              ]
+            },
+            {
+              "prompt": "Fietsen is gezond. (wij, vinden)",
+              "authorsVersion": [
+                "Wij vinden fietsen gezond."
+              ],
+              "note": "Plural: vinden. The adjective stays at the end with no -e. Also fine: We vinden fietsen gezond."
+            }
+          ]
+        }
+      },
+      "id": "bb74ee44-2846-4ef8-87ad-338738d30d27"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "577a33e9-94c1-436c-9ecc-cc5c124b24e6"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "I love swimming.",
+              "authorsVersion": [
+                "Ik hou van zwemmen."
+              ],
+              "note": "Also fine: Ik houd van zwemmen."
+            },
+            {
+              "prompt": "Piotr loves football.",
+              "authorsVersion": [
+                "Piotr houdt van voetbal."
+              ]
+            },
+            {
+              "prompt": "Do you (jij) love dancing?",
+              "authorsVersion": [
+                "Houd jij van dansen?"
+              ],
+              "note": "Also fine: Hou jij van dansen? No -t after the verb when jij follows (t-drop)."
+            },
+            {
+              "prompt": "I find Dutch difficult.",
+              "authorsVersion": [
+                "Ik vind Nederlands moeilijk."
+              ]
+            },
+            {
+              "prompt": "What is your hobby?",
+              "authorsVersion": [
+                "Wat is je hobby?"
+              ],
+              "note": "Also fine: Wat is jouw hobby? (stressed)"
+            },
+            {
+              "prompt": "I have lived in Utrecht for two years.",
+              "authorsVersion": [
+                "Ik woon al twee jaar in Utrecht."
+              ],
+              "note": "Present tense, not a past tense."
+            },
+            {
+              "prompt": "Swimming is healthy.",
+              "authorsVersion": [
+                "Zwemmen is gezond."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "421f5cce-f6ab-4f55-b5f8-138c0c76a710"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "7edaed00-2e07-49ba-96f1-ab578f80cbe9"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Ik hou van mijn familie.",
+              "authorsVersion": [
+                "I love my family."
+              ]
+            },
+            {
+              "prompt": "Vind je voetbal saai?",
+              "authorsVersion": [
+                "Do you find football boring?"
+              ]
+            },
+            {
+              "prompt": "Zij zingt in een koor.",
+              "authorsVersion": [
+                "She sings in a choir."
+              ]
+            },
+            {
+              "prompt": "Ik vind musea interessant.",
+              "authorsVersion": [
+                "I find museums interesting."
+              ]
+            },
+            {
+              "prompt": "Wat is je lievelingsfilm?",
+              "authorsVersion": [
+                "What is your favourite film?"
+              ]
+            },
+            {
+              "prompt": "Piotr speelt elke zaterdag een wedstrijd.",
+              "authorsVersion": [
+                "Piotr plays a match every Saturday."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "0a398c3d-9d98-4edc-b183-c215a063eb64"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Mijn vrije tijd",
+      "id": "5461445c-f3e9-41c5-8510-39c5efb59532"
+    },
+    {
+      "type": "paragraph",
+      "content": "For homework, Piotr wrote a short text for Marieke's class about his free time.",
+      "id": "ffdb07b0-b79c-40aa-b565-e31c59dccd94"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Piotr's text and answer the questions in Dutch.",
+          "passage": {
+            "title": "Mijn vrije tijd",
+            "content": "Ik hou van voetbal. Ik speel in een kleine club. Elke zaterdag speel ik een wedstrijd. FC Utrecht is mijn lievelingsclub: op zondag kijk ik vaak voetbal op tv. Ik vind voetbal heel leuk en gezond.\nIk hou ook van koken. Ik kook vaak lekker eten. Ik vind koken heel leuk, maar ik vind Nederlands moeilijk! 'De' en 'het' zijn echt moeilijk.\nMijn vrouw Kasia houdt van muziek. Zij zingt in een koor en speelt gitaar. Zij vindt voetbal saai, maar ik vind voetbal spannend!\nSoms gaan we naar een concert. Ik vind concerten interessant. In de pauze doen mijn collega's en ik soms spelletjes. Ik puzzel ook. Puzzelen is rustig en leuk."
+          },
+          "items": [
+            {
+              "prompt": "Wat zijn de hobby's van Piotr?",
+              "authorsVersion": [
+                "Voetbal en koken."
+              ],
+              "note": "Also fine: Hij houdt van voetbal en koken. Puzzelen is also right."
+            },
+            {
+              "prompt": "Wat is de lievelingsclub van Piotr?",
+              "authorsVersion": [
+                "FC Utrecht."
+              ],
+              "note": "Piotr plays in a small club; FC Utrecht is his favourite club. Also fine: Zijn lievelingsclub is FC Utrecht."
+            },
+            {
+              "prompt": "Vindt Piotr Nederlands makkelijk?",
+              "authorsVersion": [
+                "Nee, hij vindt Nederlands moeilijk."
+              ],
+              "note": "Especially 'de' and 'het'."
+            },
+            {
+              "prompt": "Houdt Kasia van voetbal?",
+              "authorsVersion": [
+                "Nee, zij vindt voetbal saai. Zij houdt van muziek."
+              ]
+            },
+            {
+              "prompt": "Wat doet Kasia in haar vrije tijd?",
+              "authorsVersion": [
+                "Zij zingt in een koor en speelt gitaar."
+              ],
+              "note": "Also fine: Zij speelt gitaar en zingt in een koor."
+            },
+            {
+              "prompt": "Klopt dit? Piotr vindt voetbal saai.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Piotr vindt voetbal spannend."
+              ],
+              "note": "Kasia vindt voetbal saai, niet Piotr."
+            },
+            {
+              "prompt": "Wat doen Piotr en zijn collega's soms in de pauze?",
+              "authorsVersion": [
+                "Zij doen spelletjes."
+              ],
+              "note": "Also fine: Ze doen spelletjes."
+            }
+          ]
+        }
+      },
+      "id": "54002ff2-8fdd-43d4-a46b-779c0a958f94"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "8612708f-1bc2-41ca-a81b-0283a4a3b2cd"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about your free time: what you love, and what you find boring.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about your free time: what you love, and what you find boring.",
+              "authorsVersion": [
+                "Ik hou van lezen en fotograferen. Ik vind puzzelen ook leuk. Ik vind voetbal een beetje saai. Mijn hobby is fotograferen."
+              ],
+              "note": "Model answer. Check: houden van + noun/infinitive, vinden + activity + adjective (no -e on the adjective)."
+            }
+          ]
+        }
+      },
+      "id": "d75106b0-3465-4aef-bd06-06044ef28086"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "41b3ea32-7407-408c-998d-0ac43aa0f682"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "houden van + noun/activity = to love, to like a lot: Ik hou van zwemmen.",
+      "id": "2a36c548-c567-49c2-8c37-5c204ceb08d4"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "houden: ik hou/houd, jij houdt, u houdt, hij/zij houdt, wij/jullie/zij houden. Never forget van.",
+      "id": "be2aba45-b1be-4ec6-94e8-ed95ebff6858"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "An infinitive works as a het-noun: het zwemmen. Zwemmen is gezond.",
+      "id": "cf89d5a0-f18c-42b6-800d-fe303d649824"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "vinden + activity + adjective: Ik vind tekenen leuk. The adjective gets no -e at the end.",
+      "id": "c45c4451-c2fa-4e2e-b84c-bd6c22696293"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "houden van + a person = to love (family or romance): Ik hou van mijn familie.",
+      "id": "8a87a06d-5c99-470f-9455-d00235862b25"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "al + a period + present tense = ‘have done something for …’: Ik woon al twee jaar in Utrecht.",
+      "id": "c47a3632-10de-430d-a3ee-bc49d92f085d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Not yet: other ways to say you like something, obligations, suggestions, object pronouns, dat-clauses and the past tense all follow in later lessons.",
+      "id": "0cd3cea6-1ddb-4d06-9814-2dd086b3afd1"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Wat doe je in je vrije tijd?",
+      "description": "An evening Dutch class at the library in the centre of Utrecht: Marieke, the teacher, stands at a small whiteboard; Sofia and Piotr sit at a table with notebooks, talking about hobbies.",
+      "alt": "A teacher and two students talking in an evening language class at a library."
+    },
+    {
+      "afterHeading": "Story: After class, at the bike racks",
+      "description": "Outside the library in the dark, Sofia unlocks her black bike at the bike racks while Piotr stands next to her; they are still talking, library windows lit behind them.",
+      "alt": "Two people talking at the bike racks outside a library in the evening."
+    },
+    {
+      "afterHeading": "Reading: Mijn vrije tijd",
+      "description": "A small home scene: Piotr in an FC Utrecht shirt with a football under his arm, while Kasia sits nearby playing guitar.",
+      "alt": "A man with a football and a woman playing guitar at home."
+    }
+  ],
+  "id": "f9c38b8e-6629-4763-924e-c3a62a6c1d96"
+}

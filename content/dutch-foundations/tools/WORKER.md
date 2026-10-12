@@ -12,6 +12,7 @@ You write one lesson file for the Dutch Foundations course in the Wordinator app
    - `docs/content/ledger-part-i.md`
    - `docs/content/ledger-part-ii.md`
    - `docs/content/ledger-part-iii.md`
+   - every later part's ledger up to your own (for example `ledger-part-iv.md`)
 
    Recycle this material on purpose, and do not re-teach it as new.
 7. One finished lesson as a model of depth and structure: `content/dutch-foundations/part-ii/12-b-wat-kost-dat.json`. Read it with `python3 content/dutch-foundations/tools/dump.py <file>`.

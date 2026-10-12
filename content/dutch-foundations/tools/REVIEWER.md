@@ -6,9 +6,9 @@ You review and fix lesson files for the Dutch Foundations course. You are a care
 - `content/dutch-foundations/README.md`: format, contract rules, commands.
 - `docs/content/style-guide.md`: binding conventions, especially the colour table and the off-limits grammar.
 - `docs/content/storyline.md`: cast, places, dates and fixed facts.
-- Your lessons' briefs in `docs/content/briefs-part-ii.md` or `briefs-part-iii.md`.
+- Your lessons' briefs in `docs/content/briefs-part-<part>.md` (`ii`, `iii`, `iv`, …).
 - `docs/content/ledger-part-i.md`: Part I knowledge assumed by later parts.
-- Your lessons' sections in `content/dutch-foundations/part-ii/REVIEW-NOTES.md`: the workers' own doubts. Resolve each one.
+- Your lessons' sections in `content/dutch-foundations/<part>/REVIEW-NOTES.md`: the workers' own doubts. Resolve each one.
 
 To read a lesson's text, use `python3 content/dutch-foundations/tools/dump.py <file>` if it works, otherwise jq.
 

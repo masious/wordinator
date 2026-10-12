@@ -66,6 +66,8 @@ One rule per callout, 1–3 short sentences. Icons:
 
 ## Global off-limits for Parts II–III (later in the outline)
 
+Part IV lessons use the "Part-IV-wide off-limits" in [briefs-part-iv.md](briefs-part-iv.md#part-iv-wide-off-limits): it unlocks the row 19–24 grammar lesson by lesson and replaces the row-specific items below; everything else in this section still applies.
+
 Never use these, not even in dialogues or reading passages, unless listed as an allowed chunk:
 
 - **Past tenses**: perfect (`heb gedaan`, `ben gegaan`) and simple past (`was`, `had`, `ging`). Rows 25–29. Includes "Hoe was het?", "Dat was het", "gisteren" sentences.
