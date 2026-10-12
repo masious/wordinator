@@ -4,7 +4,10 @@
 /* A compact header leaves the viewport to the cards. */
 .header.header{padding-block:0}
 .header h1{max-width:none;font-size:var(--text-4xl)}
-/* The lesson filter sits in the header's action slot, aligned with the intro's last line. */
-.filter{width:min(100%,var(--size-words-filter))}
+/* The lesson filter and the Drill button sit in the header's action slot, aligned with the intro's last line. */
+.actions{display:flex;align-items:flex-end;gap:var(--space-3);min-width:0}
+/* The button keeps its width and lines up with the select's control inside its bezel. */
+.actions>button{flex:none;margin-bottom:var(--space-1)}
+.filter{flex:0 1 var(--size-words-filter);min-width:0}
 /* On phones the intro gives way to the cards; the empty state still explains how to bookmark. */
 @media(max-width:48em){.page{gap:var(--space-4)}.header h1{font-size:var(--text-3xl)}.header p{display:none}}

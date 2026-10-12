@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useCallback } from "react";
+import type { WordDrillSettings } from "../api";
 import { requireLibrary } from "../libraryRoute";
 import { validateWordsSearch, WordsPage } from "../pages/WordsPage";
 
@@ -17,5 +18,6 @@ function WordsRoute() {
   const onLesson = useCallback((next: string | null, replace = false) => {
     void navigate({ search: next ? { lesson: next } : {}, replace });
   }, [navigate]);
-  return <WordsPage groupId={groupId} lessonId={lesson ?? null} onLesson={onLesson} />;
+  const onDrill = useCallback((settings: WordDrillSettings) => { void navigate({ to: "/words/drill", search: settings }); }, [navigate]);
+  return <WordsPage groupId={groupId} lessonId={lesson ?? null} onLesson={onLesson} onDrill={onDrill} />;
 }

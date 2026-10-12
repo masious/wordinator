@@ -4,6 +4,7 @@ import { createMemoryHistory, createRootRoute, createRoute, createRouter, Router
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../i18n";
+import { validateWordDrillSearch } from "./WordDrillPage";
 import { validateWordsSearch, WordsPage } from "./WordsPage";
 
 // jsdom has no layout, so the cards' page size is set here.
@@ -35,10 +36,13 @@ function renderPage(initial = "/words") {
     getParentRoute: () => root, path: "words", validateSearch: validateWordsSearch,
     component: function Words() {
       const { lesson } = route.useSearch(); const navigate = route.useNavigate();
-      return <WordsPage groupId={groupId} lessonId={lesson ?? null} onLesson={(next, replace = false) => { void navigate({ search: next ? { lesson: next } : {}, replace }); }} />;
+      return <WordsPage groupId={groupId} lessonId={lesson ?? null} onLesson={(next, replace = false) => { void navigate({ search: next ? { lesson: next } : {}, replace }); }}
+        onDrill={(settings) => { void navigate({ to: "/words/drill", search: settings }); }} />;
     },
   });
-  const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: [initial] }) });
+  // Start lands on the drill route; its page has its own tests.
+  const drill = createRoute({ getParentRoute: () => root, path: "words/drill", validateSearch: validateWordDrillSearch, component: () => <p>Drill page</p> });
+  const router = createRouter({ routeTree: root.addChildren([route, drill]), history: createMemoryHistory({ initialEntries: [initial] }) });
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } });
   render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
   return router;
@@ -181,5 +185,51 @@ describe("Words tab", () => {
     // Anything that is not a lesson ID is dropped by the route.
     await router.navigate({ to: "/words", search: { lesson: "nonsense" } as never });
     expect(router.state.location.search).toEqual({});
+  });
+});
+
+describe("Drill setup", () => {
+  it("starts a mixed Weak words drill by default, with directions named after the library language", async () => {
+    const router = renderPage();
+    await screen.findByRole("article", { name: "woord 1" });
+    fireEvent.click(screen.getByRole("button", { name: "Drill" }));
+    const dialog = await screen.findByRole("dialog", { name: "Drill words" });
+    expect(within(dialog).getByRole("radio", { name: "Weak words" })).toBeChecked();
+    expect(within(dialog).getByRole("radio", { name: "Mixed" })).toBeChecked();
+    expect(within(dialog).getByRole("radio", { name: "Understand Dutch" })).toBeInTheDocument();
+    expect(within(dialog).getByRole("radio", { name: "Produce Dutch" })).toBeInTheDocument();
+    // The lesson select shows only for a lesson drill.
+    expect(within(dialog).queryByRole("combobox", { name: "Lesson to drill" })).not.toBeInTheDocument();
+    fireEvent.click(within(dialog).getByRole("button", { name: "Start" }));
+    await waitFor(() => expect(router.state.location.pathname).toBe("/words/drill"));
+    expect(router.state.location.search).toEqual({ source: "weak", direction: "mixed" });
+    expect(await screen.findByText("Drill page")).toBeInTheDocument();
+  });
+
+  it("drills the filter's lesson by default, in the chosen direction", async () => {
+    const router = renderPage(`/words?lesson=${id(41)}`);
+    await screen.findByRole("article", { name: "woord 3" });
+    fireEvent.click(screen.getByRole("button", { name: "Drill" }));
+    const dialog = await screen.findByRole("dialog", { name: "Drill words" });
+    fireEvent.click(within(dialog).getByRole("radio", { name: "Lesson" }));
+    const select = within(dialog).getByRole("combobox", { name: "Lesson to drill" });
+    expect(select).toHaveValue("Lesson 41");
+    await choose(select, "Lesson 40");
+    fireEvent.click(within(dialog).getByRole("radio", { name: "Produce Dutch" }));
+    fireEvent.click(within(dialog).getByRole("button", { name: "Start" }));
+    await waitFor(() => expect(router.state.location.pathname).toBe("/words/drill"));
+    expect(router.state.location.search).toEqual({ source: "lesson", lesson: id(40), direction: "produce" });
+  });
+
+  it("disables Weak words with an explanation while there are no visible bookmarks", async () => {
+    pages = { [listPath]: { items: [], nextCursor: null } }; lessons = [];
+    renderPage();
+    await screen.findByText("No bookmarked words yet");
+    fireEvent.click(screen.getByRole("button", { name: "Drill" }));
+    const dialog = await screen.findByRole("dialog", { name: "Drill words" });
+    expect(within(dialog).getByRole("radio", { name: "Weak words" })).toBeDisabled();
+    expect(within(dialog).getByRole("radio", { name: "Lesson" })).toBeDisabled();
+    expect(dialog).toHaveTextContent("Bookmark words in a lesson first; your weak words come from your bookmarks.");
+    expect(within(dialog).getByRole("button", { name: "Start" })).toBeDisabled();
   });
 });

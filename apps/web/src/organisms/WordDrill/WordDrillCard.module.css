@@ -1,0 +1,29 @@
+/* One drill card at a time: a word card at drill size. Its height stays fixed; long text scrolls inside the face. */
+.card{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:var(--space-5);width:100%;height:var(--size-drill-card);padding:var(--card-inset);background:var(--color-words-card);border:var(--ring-hairline);border-radius:var(--radius-xl);box-shadow:var(--shadow-card),var(--shadow-inset-highlight);perspective:1600px;animation:cardIn var(--motion-standard) var(--ease-physical)}
+.card:focus-visible{outline:var(--border-strong);outline-offset:4px}
+.faces{display:grid;min-height:0;min-width:0;transform-style:preserve-3d;transition:transform var(--motion-standard) var(--ease-physical)}
+.flipped .faces{transform:rotateY(180deg)}
+.face{grid-area:1/1;display:grid;align-content:start;align-content:safe center;justify-items:center;gap:var(--space-3);min-height:0;min-width:0;overflow-y:auto;text-align:center;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+/* WebKit ignores backface-visibility on scrolling faces, so each face also switches visibility halfway through the flip. */
+.front,.back{transition:visibility 0s linear calc(var(--motion-standard) / 2)}
+.back{transform:rotateY(180deg);visibility:hidden}
+.flipped .front{visibility:hidden}
+.flipped .back{visibility:visible}
+.back:focus-visible{outline:var(--border-strong);outline-offset:2px;border-radius:var(--radius-sm)}
+.face p{margin:0;color:var(--color-foreground);overflow-wrap:anywhere}
+.prompt.prompt,.source.source{font:var(--type-metadata)/1.3 var(--font-mono);color:var(--color-foreground-muted);text-transform:uppercase;letter-spacing:.04em}
+.source.source{text-transform:none;letter-spacing:0}
+.term{font-family:var(--font-display);font-size:var(--text-4xl);line-height:var(--line-title)}
+.meaningPrompt{font-family:var(--font-display);font-size:var(--text-3xl);line-height:var(--line-title);white-space:pre-wrap}
+.backTerm{font-family:var(--font-display);font-size:var(--text-3xl);line-height:var(--line-title)}
+.face .forms,.face .note{color:var(--color-foreground-muted);white-space:pre-wrap}
+.meaning{justify-self:stretch;padding-top:var(--space-3);border-top:var(--ring-hairline);font-size:var(--type-authored);font-weight:var(--weight-semibold);white-space:pre-wrap}
+.example{font-style:italic;white-space:pre-wrap}
+.note{font-size:var(--type-metadata)}
+/* The blank keeps the example's rhythm: an underline about one short word wide. */
+.blank{display:inline-block;width:4em;height:1em;vertical-align:baseline;border-bottom:var(--border-strong)}
+.speech{margin-inline-start:var(--space-2)}
+.actions{display:flex;justify-content:center;gap:var(--space-3)}
+.key{margin-inline-start:var(--space-2);padding:0 var(--space-1);font:var(--type-metadata)/1.4 var(--font-mono);color:inherit;opacity:.7;border:var(--ring-hairline);border-radius:var(--radius-sm)}
+@keyframes cardIn{from{opacity:0;transform:translateY(var(--space-2))}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.card{animation:none}.faces,.front,.back{transition:none}}

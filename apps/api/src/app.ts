@@ -70,7 +70,7 @@ import {
   SLUG_MAX_LENGTH,
 } from "@wordinator/contracts";
 import {
-  LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
+  LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, WORD_DRILL_BOX_MAX, nextWordDrillBox, wordDrillDeckSchema, wordDrillDirectionSchema, wordDrillGradeRequestSchema, wordDrillGradeResponseSchema, wordDrillQuerySchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
   lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
   toLearnerDocument, walkLessonBlocks, type CourseLesson, type CourseWord, type LessonBlockOf, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
@@ -88,6 +88,7 @@ import {
   clipUrl, courseSpeechJobsStatement, documentSpeechItems, hashSpeechItems, presentDraftSpeech, presentSpeech, readClips, runSpeechJobs,
   SPEECH_DRAFT_DELAY_MS, speechJobStatement, storedSpeechCast,
 } from "./speech";
+import { buildWordDrillDeck, type WordDrillState } from "./wordDrill";
 
 export type Bindings = Env & { MEDIA: R2Bucket; PUBLIC_MEDIA_BASE_URL: string };
 type Language = "nl" | "de";
@@ -2332,6 +2333,100 @@ app.get("/api/groups/:groupId/word-search", requireGroupAccess, async (context) 
   }));
 });
 
+// Drill (C12d, docs/words.md#drill). A lesson drill names its lesson without its course, so the lesson is resolved here under
+// the lesson read's rules: a visible course, and a published lesson unless the viewer sees the course's drafts. Every miss is
+// the same 404, whether the lesson, its course, or the viewer's access is missing.
+async function drillLesson(context: Context<AppEnvironment>, lessonId: string) {
+  const group = context.get("groupAccess"); const user = context.get("user")!; const db = context.env.DB;
+  const missing = { error: apiError(context, 404, "LESSON_NOT_FOUND", "This lesson is not available.") };
+  const located = await db.prepare("SELECT course_id AS courseId FROM course_lessons WHERE group_id = ? AND id = ?").bind(group.id, lessonId).first<{ courseId: string }>();
+  const course = located ? await readCourseRow(db, user.id, group.id, located.courseId) : null;
+  if (!course || !courseVisible(course, user.id, group.creatorUserId)) return missing;
+  const [lesson] = await readLessonRows(db, course, [lessonId]);
+  if (!lesson || (!lesson.published && !seesCourseDrafts(course, user.id))) return missing;
+  return { course };
+}
+
+// The deck: eligible indexed words (Weak words: the viewer's visible bookmarks, like the bookmark list; Lesson: the lesson's
+// published words) with the viewer's states in both directions, ordered and capped by the pure deck builder. Rows of words
+// no longer in the index are skipped, never deleted. Speech is attached to the chosen cards only.
+type DrillRow = IndexedWord & {
+  termKey: string | null; courseId: string; courseSlug: string; courseTitle: string; lessonSlug: string; lessonTitle: string;
+  understandBox: number | null; understandAt: number | null; produceBox: number | null; produceAt: number | null;
+};
+const drillState = (box: number | null, at: number | null): WordDrillState | undefined => box === null || at === null ? undefined : { box, lastDrilledAt: at };
+
+app.get("/api/groups/:groupId/word-drill", requireGroupAccess, async (context) => {
+  const parsed = wordDrillQuerySchema.safeParse(context.req.query());
+  if (!parsed.success) return apiError(context, 400, "INVALID_DRILL", "The drill settings are invalid.");
+  const group = context.get("groupAccess"); const user = context.get("user")!; const db = context.env.DB;
+  let source: { sql: string; values: Array<string | number> };
+  if (parsed.data.source === "lesson") {
+    const lesson = await drillLesson(context, parsed.data.lessonId!); if ("error" in lesson) return lesson.error;
+    source = { sql: "w.group_id = ? AND w.course_id = ? AND w.lesson_id = ?", values: [group.id, lesson.course.id, parsed.data.lessonId!] };
+  } else {
+    const visible = courseVisibleClause(user.id, group.creatorUserId);
+    source = {
+      sql: `w.group_id = ? AND ${visible.sql} AND EXISTS (SELECT 1 FROM course_word_bookmarks b
+        WHERE b.group_id = w.group_id AND b.course_id = w.course_id AND b.lesson_id = w.lesson_id AND b.word_id = w.word_id AND b.user_id = ?)`,
+      values: [group.id, ...visible.values, user.id],
+    };
+  }
+  const state = (alias: string, direction: string) =>
+    `LEFT JOIN course_word_drill_states ${alias} ON ${alias}.user_id = ? AND ${alias}.course_id = w.course_id AND ${alias}.lesson_id = w.lesson_id
+       AND ${alias}.word_id = w.word_id AND ${alias}.direction = '${direction}'`;
+  const rows = await db.prepare(
+    `SELECT w.word_id AS id, w.lesson_id AS lessonId, w.term, w.meaning, w.forms, w.example, w.note, w.ipa, w.term_key AS termKey,
+       c.id AS courseId, c.slug AS courseSlug, c.title AS courseTitle, l.slug AS lessonSlug, l.title AS lessonTitle,
+       u.box AS understandBox, u.last_drilled_at AS understandAt, p.box AS produceBox, p.last_drilled_at AS produceAt
+     FROM course_lesson_words w
+     JOIN course_lessons l ON l.id = w.lesson_id AND l.group_id = w.group_id AND l.course_id = w.course_id AND l.published_doc IS NOT NULL
+     JOIN courses c ON c.id = w.course_id AND c.group_id = w.group_id
+     ${state("u", "understand")}
+     ${state("p", "produce")}
+     WHERE ${source.sql}`,
+  ).bind(user.id, user.id, ...source.values).all<DrillRow>();
+  const deck = buildWordDrillDeck(rows.results.map((row) => ({
+    row, termKey: row.termKey ?? wordSearchKey(row.term),
+    states: { understand: drillState(row.understandBox, row.understandAt), produce: drillState(row.produceBox, row.produceAt) },
+  })), parsed.data.direction, Math.random);
+  const spoken = await withWordSpeech(db, deck.map((entry) => entry.candidate.row), group.language, context.env.PUBLIC_MEDIA_BASE_URL);
+  return context.json(wordDrillDeckSchema.parse({
+    cards: spoken.map(({ termKey: _termKey, courseId, courseSlug, courseTitle, lessonSlug, lessonTitle, understandBox: _ub, understandAt: _ua, produceBox: _pb, produceAt: _pa, ...word }, index) => ({
+      word, direction: deck[index]!.direction,
+      course: { id: courseId, slug: courseSlug, title: courseTitle }, lesson: { id: word.lessonId, slug: lessonSlug, title: lessonTitle },
+    })),
+  }));
+});
+
+// A card's first grade in a session. One statement checks that the word is in the lesson's published index for this course
+// and moves the box by `nextWordDrillBox` (insert: a new word; update: an existing state); no row back means no such word.
+app.put(`${lessonPath}/words/:wordId/drill/:direction`, requireGroupAccess, async (context) => {
+  const direction = wordDrillDirectionSchema.safeParse(context.req.param("direction"));
+  let body: unknown;
+  try { body = JSON.parse(await context.req.text()); } catch { body = undefined; }
+  const grade = wordDrillGradeRequestSchema.safeParse(body);
+  if (!direction.success || !grade.success) return apiError(context, 400, "INVALID_DRILL", "This grade is invalid.");
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  const result = grade.data.result;
+  const saved = await context.env.DB.prepare(
+    `INSERT INTO course_word_drill_states (user_id, course_id, lesson_id, word_id, direction, box, last_result, last_drilled_at)
+     SELECT ?, w.course_id, w.lesson_id, w.word_id, ?, ?, ?, ?
+     FROM course_lesson_words w
+     JOIN course_lessons l ON l.id = w.lesson_id AND l.group_id = w.group_id AND l.course_id = w.course_id AND l.published_doc IS NOT NULL
+     WHERE w.group_id = ? AND w.course_id = ? AND w.lesson_id = ? AND w.word_id = ?
+     ON CONFLICT (user_id, lesson_id, word_id, direction) DO UPDATE SET
+       box = CASE WHEN excluded.last_result = 'again' THEN 1 ELSE MIN(course_word_drill_states.box + 1, ?) END,
+       last_result = excluded.last_result, last_drilled_at = excluded.last_drilled_at
+     RETURNING box`,
+  ).bind(
+    context.get("user")!.id, direction.data, nextWordDrillBox(null, result), result, Date.now(),
+    found.row.groupId, found.row.id, context.req.param("lessonId"), context.req.param("wordId"), WORD_DRILL_BOX_MAX,
+  ).first<{ box: number }>();
+  if (!saved) return apiError(context, 404, "WORD_NOT_FOUND", "This word is not available.");
+  return context.json(wordDrillGradeResponseSchema.parse({ box: saved.box }));
+});
+
 // Finishing a published lesson in the lesson player records it once; repeating the lesson keeps the first completion time.
 app.put(`${lessonPath}/completion`, requireGroupAccess, async (context) => {
   const found = await visibleCourse(context); if ("error" in found) return found.error;
@@ -2387,7 +2482,8 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
   const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id; const db = context.env.DB;
   const media = await db.prepare("SELECT key FROM course_media WHERE group_id = ? AND lesson_id = ?").bind(groupId, lessonId).all<{ key: string }>();
-  // Lessons are hard-deleted with their practice progress, completions, positions, word index rows, word bookmarks, speech job, and images.
+  // Lessons are hard-deleted with their practice progress, completions, positions, word index rows, word bookmarks, drill
+  // states, speech job, and images.
   await db.batch([
     db.prepare("DELETE FROM course_practice_progress WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_practices WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
@@ -2396,6 +2492,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
     db.prepare("DELETE FROM course_lesson_positions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lesson_words WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_word_bookmarks WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
+    db.prepare("DELETE FROM course_word_drill_states WHERE course_id = ? AND lesson_id = ?").bind(courseId, lessonId),
     db.prepare("DELETE FROM speech_jobs WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lessons WHERE group_id = ? AND course_id = ? AND id = ?").bind(groupId, courseId, lessonId),
   ]);

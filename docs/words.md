@@ -1,6 +1,6 @@
 # Words
 
-Status: C9 (word cards, bookmarks, and the Words tab) delivered; its release is tracked in [WORDS_PLAN.md](../WORDS_PLAN.md). C12 (lesson filter, spoken reveal, and Drill) is an approved product change (2026-10-12) in progress: C12a (lesson filter) and C12b (spoken reveal) are complete. Delivery is tracked in [DRILL_PLAN.md](../DRILL_PLAN.md). Phases are tracked in the [roadmap](roadmap.md#course-phases).
+Status: C9 (word cards, bookmarks, and the Words tab) delivered; its release is tracked in [WORDS_PLAN.md](../WORDS_PLAN.md). C12 (lesson filter, spoken reveal, and Drill) is an approved product change (2026-10-12) in progress: C12a (lesson filter), C12b (spoken reveal), C12c (drill contracts and data), C12d (drill API), and C12e (drill web) are complete; the release is pending. Delivery is tracked in [DRILL_PLAN.md](../DRILL_PLAN.md). Phases are tracked in the [roadmap](roadmap.md#course-phases).
 
 Words builds on [new words and recap](courses.md#new-words-and-recap). Lessons define words; this document owns how learners review them several at a time, bookmark them, come back to them in a Words tab, and drill them.
 
@@ -53,7 +53,7 @@ The Drill button opens a small dialog with two choices and Start:
 - **Words.** Weak words (the default) shuffles the learner's bookmarked words, weakest first; Lesson drills every word of one lesson, chosen from a lesson select that defaults to the Words tab's current filter. Weak words is disabled, with a line explaining how to bookmark, while the learner has no visible bookmarks.
 - **Direction.** Mixed (the default), Understand *language* (term → meaning), or Produce *language* (meaning → term), where *language* is the library's language (Dutch or German).
 
-Start opens `/words/drill?source=weak|lesson&lesson=<lessonId>&direction=mixed|understand|produce`. The drill page is desktop-only, like other new work.
+Start opens `/words/drill?source=weak|lesson&lesson=<lessonId>&direction=mixed|understand|produce`. Unknown settings fall back to Weak words and Mixed, and `lesson` is kept only for a lesson drill. The Lesson choice is disabled while the filter lists no lesson. The drill page is desktop-only, like other new work. A lesson the viewer cannot read shows that the lesson is not available, with Back to words.
 
 ### The deck
 
@@ -67,12 +67,13 @@ A session holds at most `WORD_DRILL_SESSION_SIZE` (20) cards, or fewer when fewe
 
 ### A card
 
-- **Understand:** the front shows the term (and forms) with its speaker button. **Produce:** the front shows the meaning, the course and lesson names as context, and the example with the term replaced by a blank when the example contains it; it shows no forms and no term audio.
+- **Understand:** the front shows the term (and forms) with its speaker button. **Produce:** the front shows the meaning, the course and lesson names as context, and the example with the term replaced by a blank when the example contains it; it shows no forms and no term audio. The example is compared by search key (`wordSearchKey`), every occurrence is blanked, and a term that starts with an article (*de*, *het*, *een*, *der*, *die*, *das*, and the other German forms) is also looked for without it, so *het kaartje* blanks *kaartje*. Inflected forms are not looked for. When the term is not found, the front leaves the example out, since an inflected or separated form (*Ik bel mijn moeder* for *bellen*, *Ik pak het in* for *inpakken*) would give the answer away; the back still shows it. See [Deferred](#deferred) for wider matching.
 - Show answer flips the card in place, like a [word card](#word-cards), and always reveals the full word: term, forms, meaning, example, and note. Revealing plays the term's audio in both directions, under the same sound toggle as word cards.
 - Once revealed, two buttons grade the card: **Again** and **Got it**. Keyboard: Space reveals; `1` is Again and `2` is Got it.
 - **Again** puts the card back three to five cards later in the session (at the end when fewer remain). **Got it** retires it. The session ends when every card has been retired.
 - Only a card's **first** grade in a session is recorded; repeats after Again only retire the card. The grade is saved as soon as it is given, so leaving midway loses nothing.
 - A mono counter shows cards retired of the session total. There is no timer.
+- A grade that cannot be saved does not stop the session: a quiet line says how many answers were not saved, with Try again, and stays on the summary until they are.
 - A card whose word disappears mid-session (edited out or unpublished) still finishes from the session's copy; its grade is refused and ignored.
 
 ### End of session
@@ -86,6 +87,13 @@ A short summary says how many cards were Got it on the first try and how many ne
 - Boxes only order decks. There are no due dates, intervals, or overdue counts.
 - State is a reference like a bookmark: it survives removing and re-adding a bookmark, an author's edits to the word, and the word's temporary removal; deleting the lesson or course deletes it.
 - **Private.** State belongs to one account, is never shown to anyone (including its owner, beyond deck order and the end-of-session summary), and creates no notifications or feed activity. Only the latest state is stored, never a history of answers.
+
+### Deferred
+
+Blanking misses many examples. A rough count over the Dutch course content on 2026-10-12 found 915 words with an example: the term (without a leading article) appears in 581; the word's forms would add about 95, and matching single words by a shared start (*bel* and *bellen*, *blijft* and *blijven*) about 70 more. About 170 would still miss: phrases with punctuation or `…` (*Zullen we …?*), conjugated phrases (*zin hebben in* → *Ik heb zin in*), and separable verbs (*inpakken* → *Ik pak het cadeautje in*). Ideas, cheapest first:
+
+- **Match more automatically:** also look for the word's forms (split on `·`), ignore punctuation and `…` when matching phrases, and for single words accept an example word sharing a long enough start with the term or a form. The shared-start rule can now and then blank a similar but unrelated word, which is harmless on a practice card.
+- **Mark the blank in the content:** let the author mark the word's span in the example (for example `Ik [bel] mijn moeder`, `Ik [pak] het cadeautje [in]`), stored with the word. Exact for every case, but it changes the lesson document contract, the editor, and the published word index, and needs a backfill pass over existing lessons.
 
 ## Word search
 
@@ -107,8 +115,8 @@ The routes still sit under `/api/groups/:groupId/...`, where `groupId` is the in
 - `GET .../word-bookmarks/keys` returns `{ keys: [{ lessonId, wordId }] }`, every bookmark key of the viewer (bounded by the limit). The web keeps it as one query that marks toggles on every surface and updates it optimistically.
 - `GET .../word-bookmarks?cursor=&lessonId=` returns the visible bookmarks, newest first, with the word, course and lesson IDs and titles, and the bookmark time, as `(created_at, lesson_id, word_id)` cursor pages. `lessonId` (C12) limits the page to one lesson; a lesson the viewer cannot see returns an empty page, and a malformed one `400 INVALID_FILTER`.
 - `GET .../word-bookmarks/lessons` (C12) returns `{ lessons: [{ course: { id, slug, title }, lesson: { id, slug, title }, count }] }`: each lesson holding at least one visible bookmark (`wordBookmarkLessonsResponseSchema`), oldest course first and then by lesson position, with its visible bookmark count. It feeds the lesson filter and the drill setup.
-- `GET .../word-drill?source=weak|lesson&lessonId=&direction=mixed|understand|produce` (C12) returns `{ cards: [{ word, direction, course: { id, slug, title }, lesson: { id, slug, title } }] }`: the shuffled deck built by the [deck rules](#the-deck), each word with its `speech`. `lessonId` is required for `source=lesson` and refused otherwise (`400 INVALID_DRILL`). An empty deck is `{ cards: [] }`.
-- `PUT .../courses/:courseId/lessons/:lessonId/words/:wordId/drill/:direction` (C12) with `{ result: "got" | "again" }` records a first grade and returns the new `{ box }`. `404 WORD_NOT_FOUND` unless the word is in the lesson's published index and the course is visible. It is not idempotent: each call moves the box, so the web sends one per card per session.
+- `GET .../word-drill?source=weak|lesson&lessonId=&direction=mixed|understand|produce` (C12) returns `{ cards: [{ word, direction, course: { id, slug, title }, lesson: { id, slug, title } }] }`: the shuffled deck built by the [deck rules](#the-deck), each word with its `speech`. `lessonId` is required for `source=lesson` and refused otherwise (`400 INVALID_DRILL`, also for unknown settings). A lesson the viewer cannot read (missing, unpublished for a learner, or in a course they cannot see) is `404 LESSON_NOT_FOUND`. An empty deck is `{ cards: [] }`.
+- `PUT .../courses/:courseId/lessons/:lessonId/words/:wordId/drill/:direction` (C12) with `{ result: "got" | "again" }` records a first grade and returns the new `{ box }`. An unknown direction or a malformed body is `400 INVALID_DRILL`; a course the viewer cannot see is `404 COURSE_NOT_FOUND`, and a word not in the lesson's published index for that course `404 WORD_NOT_FOUND`, writing nothing. It is not idempotent: each call moves the box, so the web sends one per card per session.
 - The course words response carries each word's `lessonId` so the course recap can toggle bookmarks.
 - `GET .../word-search?q=&cursor=&limit=` ([word search](#word-search)) returns `{ items: [{ word, course: { id, slug, title }, lesson: { id, slug, title } }], nextCursor }` (`wordSearchPageSchema`). `q` is 1–100 characters after trimming (`WORD_SEARCH_QUERY_MAX`), `limit` defaults to 20 and is at most 50 (`WORD_SEARCH_PAGE_MAX`); otherwise `400 INVALID_SEARCH`. A query whose key is empty returns no matches. The cursor names the last word returned (`400 INVALID_CURSOR` when malformed); a page after a word that no longer matches is empty.
 

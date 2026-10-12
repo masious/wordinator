@@ -1,11 +1,12 @@
 import { opaqueIdSchema } from "@wordinator/contracts";
 import type { WordBookmark, WordBookmarkLesson } from "@wordinator/contracts/lesson-document";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { sessionQueryOptions, wordBookmarkLessonsQueryOptions, wordBookmarksQueryOptions } from "../api";
+import { sessionQueryOptions, wordBookmarkLessonsQueryOptions, wordBookmarksQueryOptions, type WordDrillSettings } from "../api";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { WordBookmarkScope } from "../organisms/WordBookmark/WordBookmark";
+import { WordDrillSetup } from "../organisms/WordDrill/WordDrillSetup";
 import { WordRecap, type RecapWord } from "../organisms/WordRecap/WordRecap";
 import { Button, EmptyState, ErrorState, LabelChip, LoadingState, PageHeader, SelectField, Surface } from "../ui";
 import styles from "./WordsPage.module.css";
@@ -90,20 +91,27 @@ function BookmarkedWords({ groupId, lessonId }: { groupId: string; lessonId: str
 }
 
 // The Words tab: the viewer's bookmarked words, newest bookmark first, as word cards, optionally of one lesson. Nothing here is
-// scheduled, scored, or counted; removing a bookmark is the only change it makes.
-export function WordsPage({ groupId, lessonId, onLesson }: {
-  groupId: string; lessonId: string | null; onLesson: (next: string | null, replace?: boolean) => void;
+// scheduled, scored, or counted; removing a bookmark is the only change it makes. Drill opens the drill setup (C12e).
+export function WordsPage({ groupId, lessonId, onLesson, onDrill }: {
+  groupId: string; lessonId: string | null; onLesson: (next: string | null, replace?: boolean) => void; onDrill: (settings: WordDrillSettings) => void;
 }) {
   const { t } = useTranslation();
   const session = useQuery(sessionQueryOptions());
   const lessons = useFilterLessons(groupId, lessonId, onLesson);
+  const [drillOpen, setDrillOpen] = useState(false);
   if (session.isPending) return <main className={styles.center}><LoadingState label={t("words.loading")} /></main>;
   if (session.data?.status !== "signedIn") return null;
+  const libraryLanguage = session.data.groups[0]?.language;
   return <GroupFrame groupId={groupId} session={session.data}>
     <div className={styles.page}>
       <PageHeader className={styles.header} eyebrow={<LabelChip>{t("words.eyebrow")}</LabelChip>} title={t("words.title")} intro={t("words.intro")}
-        actions={lessons.length ? <LessonFilter lessons={lessons} lessonId={lessonId} onLesson={onLesson} /> : undefined} />
+        actions={<div className={styles.actions}>
+          {lessons.length > 0 && <LessonFilter lessons={lessons} lessonId={lessonId} onLesson={onLesson} />}
+          <Button variant="secondary" onClick={() => setDrillOpen(true)}>{t("words.drill")}</Button>
+        </div>} />
       <BookmarkedWords key={lessonId ?? ALL_LESSONS} groupId={groupId} lessonId={lessonId} />
     </div>
+    <WordDrillSetup opened={drillOpen} onClose={() => setDrillOpen(false)} lessons={lessons} lessonId={lessonId}
+      language={libraryLanguage ? t(`languages.${libraryLanguage}`) : ""} onStart={(settings) => { setDrillOpen(false); onDrill(settings); }} />
   </GroupFrame>;
 }

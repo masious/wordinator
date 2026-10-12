@@ -1,5 +1,5 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
-import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordSearchPageSchema } from "@wordinator/contracts/lesson-document";
+import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 export class ApiError extends Error {
@@ -167,6 +167,19 @@ export const wordBookmarkLessonsQueryOptions = (groupId: string) => queryOptions
   queryKey: [...wordBookmarksKey(groupId), "lessons"] as const,
   queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/word-bookmarks/lessons`, wordBookmarkLessonsResponseSchema),
   retry: false,
+});
+
+// A drill session's deck (C12e). Each session fetches its deck once: `run` tells sessions with the same settings apart, so Drill
+// again draws a fresh deck, and the deck is never refetched in the background or kept once the session's page is left.
+export type WordDrillSettings = { source: WordDrillSource; lesson?: string; direction: WordDrillMode };
+export const wordDrillQueryOptions = (groupId: string, settings: WordDrillSettings, run: number) => queryOptions({
+  queryKey: ["word-drill", groupId, settings.source, settings.lesson ?? null, settings.direction, run] as const,
+  queryFn: () => apiRequest(
+    `/api/groups/${encodeURIComponent(groupId)}/word-drill?source=${settings.source}${settings.source === "lesson" && settings.lesson ? `&lessonId=${encodeURIComponent(settings.lesson)}` : ""}&direction=${settings.direction}`,
+    wordDrillDeckSchema,
+  ),
+  staleTime: Infinity, gcTime: 0, retry: false,
+  refetchOnMount: false, refetchOnWindowFocus: false, refetchOnReconnect: false,
 });
 
 // Library word search (New words panel): published words of visible courses matching the query, twenty at a time.

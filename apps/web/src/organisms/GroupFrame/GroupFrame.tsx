@@ -44,7 +44,8 @@ export function GroupFrame({ children, session }: PropsWithChildren<{ groupId: s
   });
   const coursesActive = pathname === "/courses" || pathname.startsWith("/courses/");
   const coursesLink = <Link aria-current={coursesActive ? "page" : undefined} className={styles.navItem} to="/courses"><NavLabel icon="courses">{t("nav.courses")}</NavLabel></Link>;
-  const wordsLink = <Link aria-current={pathname === "/words" ? "page" : undefined} className={styles.navItem} to="/words"><NavLabel icon="words">{t("nav.words")}</NavLabel></Link>;
+  const wordsActive = pathname === "/words" || pathname.startsWith("/words/");
+  const wordsLink = <Link aria-current={wordsActive ? "page" : undefined} className={styles.navItem} to="/words"><NavLabel icon="words">{t("nav.words")}</NavLabel></Link>;
   const journalActive = pathname === "/journal" || pathname.startsWith("/journal/");
   const journalLink = <Link aria-current={journalActive ? "page" : undefined} className={styles.navItem} to="/journal"><NavLabel icon="journal">{t("nav.journal")}</NavLabel></Link>;
   const notificationsLink = <Link aria-current={pathname === "/notifications" ? "page" : undefined} className={styles.navItem} to="/notifications"><NavLabel icon="notifications">{t("nav.notifications")}</NavLabel></Link>;

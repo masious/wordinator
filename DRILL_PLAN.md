@@ -51,21 +51,25 @@ Notes (2026-10-12): the deck builder lives in `apps/api/src/wordDrill.ts` (the A
 
 ## C12d — Drill API
 
-- [ ] `GET .../word-drill`: load eligible words (visible bookmarks, or the lesson's published index under lesson read visibility) with their drill states in both directions, build the deck, attach `speech`, course, and lesson.
-- [ ] `PUT .../lessons/:lessonId/words/:wordId/drill/:direction`: check the word in the published index and course visibility, upsert the box in one statement, return `{ box }`.
-- [ ] Lesson deletion removes drill states explicitly in its batch.
-- [ ] Workers tests: anonymous and incomplete-onboarding refusal, another account's states never read or written, invisible and draft courses `404`, unpublished and missing words refused, `400 INVALID_DRILL`, deck tiers and term-key uniqueness over real rows, state kept after unbookmarking, lesson and course deletion, the Leitner transitions through the route.
+- [x] `GET .../word-drill`: load eligible words (visible bookmarks, or the lesson's published index under lesson read visibility) with their drill states in both directions, build the deck, attach `speech`, course, and lesson.
+- [x] `PUT .../lessons/:lessonId/words/:wordId/drill/:direction`: check the word in the published index and course visibility, upsert the box in one statement, return `{ box }`.
+- [x] Lesson deletion removes drill states explicitly in its batch.
+- [x] Workers tests: anonymous and incomplete-onboarding refusal, another account's states never read or written, invisible and draft courses `404`, unpublished and missing words refused, `400 INVALID_DRILL`, deck tiers and term-key uniqueness over real rows, state kept after unbookmarking, lesson and course deletion, the Leitner transitions through the route.
+
+Notes (2026-10-12): a lesson drill names only its lesson, so the API resolves the lesson's course and applies the lesson read's rules; every miss, including an invisible course, is `404 LESSON_NOT_FOUND`. Archived courses follow the bookmark list (visible to their owner and the library creator). The grade validates the direction and body first (`400 INVALID_DRILL`), then the course (`404 COURSE_NOT_FOUND`), and its single upsert selects from the published index, so a word not there writes nothing and is `404 WORD_NOT_FOUND`; like a bookmark, grading is allowed in an archived course the viewer can still see. Course deletion relies on the foreign-key cascade (there is no course delete route); the Workers reset clears the table and the Playwright reset reaches it through the course cascade.
 
 ## C12e — Drill web
 
-- [ ] Setup dialog from a Drill button on `WordsPage`: Weak words / Lesson (lesson select from the facet, defaulting to the filter), Mixed / Understand / Produce labelled with the library language; Weak words disabled with no bookmarks.
-- [ ] Route `/words/drill` (`routes/words_.drill.tsx`) validating its search params; the deck query is fetched once per session and not refetched in the background.
-- [ ] Drill card: Understand and Produce fronts (blanked example via `wordSearchKey` matching), flip in place with reduced motion respected, reveal audio under the shared sound toggle, Again / Got it, Space, `1`, `2`.
-- [ ] Session queue: requeue after Again, first grade sent once per card with a quiet retry message on failure, counter, a word gone mid-session finishing locally.
-- [ ] Summary with Drill again and Back to words; empty deck state.
-- [ ] All copy through i18next; tokens from `docs/design-system.md`; desktop only.
-- [ ] Tests: RTL for setup, both fronts, reveal audio, grading and requeue, single first grade, keyboard, summary, failure message; Playwright `words-drill.spec.ts` for bookmarking words, a mixed session that never shows a term twice, and Weak words starting with a word graded Again.
-- [ ] Docs: `docs/architecture.md` routes and API, `docs/user-flows.md`, `docs/testing.md`, `docs/design-system.md`, `docs/words.md` and `docs/roadmap.md` status.
+- [x] Setup dialog from a Drill button on `WordsPage`: Weak words / Lesson (lesson select from the facet, defaulting to the filter), Mixed / Understand / Produce labelled with the library language; Weak words disabled with no bookmarks.
+- [x] Route `/words/drill` (`routes/words_.drill.tsx`) validating its search params; the deck query is fetched once per session and not refetched in the background.
+- [x] Drill card: Understand and Produce fronts (blanked example via `wordSearchKey` matching), flip in place with reduced motion respected, reveal audio under the shared sound toggle, Again / Got it, Space, `1`, `2`.
+- [x] Session queue: requeue after Again, first grade sent once per card with a quiet retry message on failure, counter, a word gone mid-session finishing locally.
+- [x] Summary with Drill again and Back to words; empty deck state.
+- [x] All copy through i18next; tokens from `docs/design-system.md`; desktop only.
+- [x] Tests: RTL for setup, both fronts, reveal audio, grading and requeue, single first grade, keyboard, summary, failure message; Playwright `words-drill.spec.ts` for bookmarking words, a mixed session that never shows a term twice, and Weak words starting with a word graded Again.
+- [x] Docs: `docs/architecture.md` routes and API, `docs/user-flows.md`, `docs/testing.md`, `docs/design-system.md`, `docs/words.md` and `docs/roadmap.md` status.
+
+Notes (2026-10-12): the session queue and the blanked example are pure functions in `organisms/WordDrill/drillSession.ts`; the card, setup, and page live beside it and in `pages/WordDrillPage.tsx`. The deck query is keyed by a session counter (`gcTime: 0`, never refetched), so Drill again draws a fresh deck. Blanking also tries the term without a leading article (*het kaartje* blanks *kaartje*), now in `docs/words.md`. A failed grade shows a quiet unsaved count with Try again; any `404` grade is ignored. The Lesson choice is disabled when the filter lists no lesson, so with no bookmarks the setup cannot start. The Words nav item stays current on `/words/drill`. Adds `--size-drill-card`. A Produce front leaves the example out when the term is not found in it (an inflected form would spoil the answer); wider matching ideas are under [Deferred](docs/words.md#deferred).
 
 ## Release
 
