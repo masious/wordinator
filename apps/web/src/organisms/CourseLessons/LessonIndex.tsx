@@ -5,8 +5,9 @@ import { useRevealCurrent } from "./LessonWords";
 import styles from "./LessonIndex.module.css";
 
 // One line of a lesson's index: a heading, or a practice under the heading before it. `depth` indents it: the document's
-// highest heading level is depth 0, and a practice sits one step deeper than its heading.
-export type LessonIndexEntry = { id: string; kind: "heading" | "practice"; text: string; depth: number };
+// highest heading level is depth 0, and a practice sits one step deeper than its heading. A `titled` practice is named by the
+// level-3 heading right above it; its `id` is that heading's, so the index follows and jumps to the title.
+export type LessonIndexEntry = { id: string; kind: "heading" | "practice"; text: string; depth: number; titled?: true };
 
 // The index shows only when it has at least this many entries; one entry tells the reader nothing.
 export const LESSON_INDEX_MIN = 2;
@@ -26,14 +27,21 @@ const instruction = (block: Parameters<typeof readPracticeBlock>[0]) => {
 };
 
 // Headings and practices in reading order. Level-3 headings are too fine for the index, and headings inside columns title only
-// their column, so both are left out, as are empty headings; practices inside columns are kept.
+// their column, so both are left out, as are empty headings; practices inside columns are kept. A top-level practice right below
+// a non-empty level-3 heading takes that heading as its name; any other practice is named by its instruction.
 export function lessonIndexEntries(document: LessonDocument): LessonIndexEntry[] {
-  const found: Array<{ id: string; kind: "heading" | "practice"; text: string; level: number | null }> = [];
+  const found: Array<Omit<LessonIndexEntry, "depth"> & { level: number | null }> = [];
+  let title: { id: string; text: string } | null = null;
   for (const { block, depth } of walkLessonBlocks(document.blocks)) {
-    if (block.type === "heading" && depth === 0 && block.props.level !== 3) {
+    if (depth > 0) { if (block.type === "practice") found.push({ id: block.id, kind: "practice", text: instruction(block), level: null }); continue; }
+    const above = title; title = null;
+    if (block.type === "heading") {
       const text = inlineText(block.content).replace(/\s+/g, " ").trim();
-      if (text) found.push({ id: block.id, kind: "heading", text, level: block.props.level });
-    } else if (block.type === "practice") found.push({ id: block.id, kind: "practice", text: instruction(block), level: null });
+      if (block.props.level === 3) title = text ? { id: block.id, text } : null;
+      else if (text) found.push({ id: block.id, kind: "heading", text, level: block.props.level });
+    } else if (block.type === "practice") {
+      found.push(above ? { ...above, kind: "practice", titled: true, level: null } : { id: block.id, kind: "practice", text: instruction(block), level: null });
+    }
   }
   const top = Math.min(...found.flatMap((entry) => entry.level ?? []));
   let section = -1;
@@ -100,7 +108,7 @@ export function LessonIndex({ entries, reading, side, fill }: {
     <ol className={styles.list}>{entries.map((entry, index) => <li key={entry.id}>
       <button type="button" className={styles.entry} data-kind={entry.kind} data-passed={index < current || undefined}
         style={{ "--index-depth": entry.depth } as CSSProperties} aria-current={index === current ? "location" : undefined} onClick={() => jump(entry.id)}>
-        {entry.kind === "practice"
+        {entry.kind === "practice" && !entry.titled
           ? entry.text ? t("courses.lessons.index.practice", { instruction: entry.text }) : t("courses.lessons.index.practiceUntitled")
           : entry.text}
       </button>

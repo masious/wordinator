@@ -15,7 +15,8 @@ test("the lesson index follows the reader, jumps to an entry, and sits above a c
   await seedLesson(page, course.id, `${suffix} lesson`, [
     heading("Greetings"), ...section("Groet"), vocabulary({ term: "hallo", meaning: "hello" }),
     practice("Translate into English", [{ prompt: "Hallo", authorsVersion: ["Hello"] }]),
-    heading("Small talk", 3), ...section("Praat"), vocabulary({ term: "het weer", meaning: "the weather" }),
+    // A level-3 heading right above a practice names it in the index, without the Practice prefix.
+    heading("Small talk", 3), practice("Answer the questions about the weather.", [{ prompt: "Regent het?", authorsVersion: ["Ja"] }]), ...section("Praat"), vocabulary({ term: "het weer", meaning: "the weather" }),
     heading("Goodbyes"), ...section("Dag"),
   ]);
 

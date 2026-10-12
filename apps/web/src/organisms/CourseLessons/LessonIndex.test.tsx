@@ -40,6 +40,25 @@ describe("lesson index entries", () => {
     ]);
   });
 
+  it("names a top-level practice by the level-3 heading right above it, and falls back to its instruction otherwise", () => {
+    const entries = lessonIndexEntries(document([
+      heading(1, 2, "Practice"), heading(2, 3, "Fill  in\nthe verb"), practice(3, "Fill in the correct form."),
+      // Something between the heading and the practice, or an empty heading, leaves the practice named by its instruction.
+      heading(4, 3, "At breakfast"), paragraph(5, "Look."), practice(6, "Answer the questions."),
+      heading(7, 3, " "), practice(8, "Translate."),
+      heading(9, 2, "Your turn"), practice(10, "Write about your day."),
+    ]));
+    expect(entries).toEqual([
+      { id: blockId(1), kind: "heading", text: "Practice", depth: 0 },
+      // A titled practice takes the heading's id, so the index follows and jumps to the title.
+      { id: blockId(2), kind: "practice", text: "Fill in the verb", depth: 1, titled: true },
+      { id: blockId(6), kind: "practice", text: "Answer the questions", depth: 1 },
+      { id: blockId(8), kind: "practice", text: "Translate", depth: 1 },
+      { id: blockId(9), kind: "heading", text: "Your turn", depth: 0 },
+      { id: blockId(10), kind: "practice", text: "Write about your day", depth: 1 },
+    ]);
+  });
+
   it("names a practice by the first sentence of its instruction", () => {
     expect(shortInstruction("Fill in staat, ligt, zit or hangt. Start with the object's position.")).toBe("Fill in staat, ligt, zit or hangt");
     expect(shortInstruction("Complete both blanks: first the action, then the result.")).toBe("Complete both blanks");
@@ -113,6 +132,21 @@ describe("LessonIndex", () => {
     // The last entry is current at the bottom of the page, even below the line.
     await scroll(2200);
     expect(buttons[2]).toHaveAttribute("aria-current", "location");
+  });
+
+  it("shows a practice titled by its heading without the Practice prefix", () => {
+    const titled: LessonIndexEntry[] = [
+      { id: blockId(1), kind: "heading", text: "Practice", depth: 0 },
+      { id: blockId(2), kind: "practice", text: "Fill in the verb", depth: 1, titled: true },
+    ];
+    function Titled() {
+      const reading = useRef<HTMLDivElement>(null); const side = useRef<HTMLDivElement>(null);
+      return <><div ref={reading} /><div ref={side}><LessonIndex entries={titled} reading={reading} side={side} fill={false} /></div></>;
+    }
+    render(<Titled />);
+    const buttons = within(screen.getByRole("navigation", { name: "In this lesson" })).getAllByRole("button");
+    expect(buttons.map((button) => button.textContent)).toEqual(["Practice", "Fill in the verb"]);
+    expect(buttons[1]).toHaveAttribute("data-kind", "practice");
   });
 
   it("scrolls the page to an entry when it is chosen", async () => {
