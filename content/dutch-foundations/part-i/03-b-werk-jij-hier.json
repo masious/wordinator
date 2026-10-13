@@ -1,0 +1,2631 @@
+{
+  "title": "Werk jij hier?",
+  "goal": "Put the verb in the right place in Dutch statements and questions, drop the t after every verb when je/jij follows it, and say what is not so with niet.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Werk jij hier?",
+      "id": "13b593cf-1d38-453d-9370-756962d4bf40"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Friday afternoon, the end of Sofia's first week at work, and the office has drinks. Everyone wants to ask the new colleague something. In this lesson you will learn where the verb goes in Dutch statements and questions, how to ask a question with every verb, and how to say “not” with ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "2b8c0b3d-e490-44da-9359-05bc1e8d60d4"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: ",
+        {
+          "text": "subjects",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " are green, ",
+        {
+          "text": "verbs",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " are blue, ",
+        {
+          "text": "places",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " are purple, and ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is bold."
+      ],
+      "id": "7ec384b8-7cc1-451c-aa8c-7f562b8a5fb4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Het is borrel!",
+      "id": "d5cd65e6-147b-470c-9fbc-a8dd9820931d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Friday afternoon. Sofia is still at her laptop. Daan comes to her desk.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "94c682fa-a1e0-46b2-a6c0-33d418a2417e"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Sofia, werk je nog? Het is borrel!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Borrel? Hoe zeg je “borrel” in het Engels?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "“Drinks”. De borrel is heel Nederlands! Wat drink je?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wijn, graag. En jij? Drink jij ook wijn?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Nee, ik drink bier. Proost!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Proost! Lekker!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ben je moe?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik ben niet moe. Ik ben blij!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Super! En het werk? Is het werk moeilijk?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, het werk is niet moeilijk. Maar Nederlands is moeilijk!"
+          }
+        ]
+      },
+      "id": "19df46bf-8da8-4e91-9a47-b89cad0cf78c"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "nog",
+              "meaning": "still",
+              "example": "Werk je nog?",
+              "id": "858e7568-a974-46d3-a342-8c62482d6dbc"
+            },
+            {
+              "term": "de borrel",
+              "meaning": "drinks with colleagues or friends, an informal get-together (often on Friday afternoon)",
+              "forms": "de borrels",
+              "id": "b76d244a-d34e-4d5a-b45c-19e63f3ff90d"
+            },
+            {
+              "term": "Het is borrel!",
+              "meaning": "It's drinks time!",
+              "note": "het here is for the situation, like Hoe gaat het? (01-a).",
+              "id": "a6e300c5-49f1-4861-95f5-a6f13e0a1040",
+              "example": "Sofia, werk je nog? Het is borrel!"
+            },
+            {
+              "term": "Wat drink je?",
+              "meaning": "What are you drinking?",
+              "note": "A fixed question. wat as a question word on its own comes in 04-b.",
+              "id": "43d17687-8746-4365-b24f-d29ab7389155",
+              "example": "Wat drink je? — Wijn, graag."
+            },
+            {
+              "term": "de wijn",
+              "meaning": "wine",
+              "id": "726c15f5-97a5-4e21-83a4-454adda4ce74",
+              "example": "Wijn, graag."
+            },
+            {
+              "term": "het bier",
+              "meaning": "beer",
+              "id": "7e8f5603-d58b-49e8-a42d-c27c535496aa",
+              "example": "Daan drinkt bier."
+            },
+            {
+              "term": "Proost!",
+              "meaning": "Cheers!",
+              "id": "5c92e766-583b-4bd6-938c-9307bc25e2e4",
+              "example": "Nee, ik drink bier. Proost!"
+            },
+            {
+              "term": "Lekker!",
+              "meaning": "Tasty!, Nice!",
+              "note": "01-a used lekker in Slaap lekker!, a different use.",
+              "id": "6bddca37-a529-43cf-9dfc-21ff5ab89616",
+              "example": "Proost! Lekker!"
+            },
+            {
+              "term": "niet",
+              "meaning": "not",
+              "note": "01-a's Niet zo goed. was a fixed chunk — this is the word itself.",
+              "id": "7451d453-2447-4a00-8f85-e67b1c593eb5",
+              "example": "Nee, ik ben niet moe."
+            }
+          ]
+        }
+      },
+      "id": "919681e0-262a-400e-8413-041ea87740f2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "It's drinks time! What are you drinking? — Wine, please.",
+        "note": "Repeats dialogue 1's opening lines."
+      },
+      "content": [
+        "Het is borrel!",
+        " Wat drink je? — ",
+        "Wijn, graag."
+      ],
+      "id": "889c8fd4-313e-455c-88d4-61a9b36e7fbd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you drinking wine too? — No, I'm drinking beer. The colleague is drinking water.",
+        "note": "jij right after the verb; the right fact instead of niet (as since 02-a)."
+      },
+      "content": [
+        "Drink jij ook wijn? — Nee, ik drink bier. De collega drinkt water."
+      ],
+      "id": "b263ca31-ff72-4583-a089-565e8b16a76a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het water",
+              "meaning": "water",
+              "id": "f1357ce3-c2df-47e2-a5ef-0bac122b78d3",
+              "example": "De collega drinkt water."
+            }
+          ]
+        }
+      },
+      "id": "3b1e7f87-1100-4145-a261-3dbf1627bb84"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Coffee? — No, thank you.",
+        "note": "Nee, dank je. is the polite way to turn down an offer, next to Ja, graag! (02-b)."
+      },
+      "content": [
+        "Koffie? — Nee, dank je."
+      ],
+      "id": "d8fcde88-db27-4de2-8e9e-d5b4acf2f407"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Nee, dank je.",
+              "meaning": "No, thank you (the polite answer to an offer)",
+              "example": "Koffie? — Nee, dank je.",
+              "id": "0db7d86a-309b-4f85-86a6-c1c7559d6ba5"
+            }
+          ]
+        }
+      },
+      "id": "9eb1675c-09d3-4ee9-afd7-17f5491580d4"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "Many Dutch offices have a ",
+        {
+          "text": "vrijdagmiddagborrel",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": drinks together on Friday afternoon, around five, with beer, wine, soft drinks and snacks such as bitterballen (fried meat balls). You say “Proost!” and chat about the week — it is heel gezellig.",
+        " Dutch people also ask quite direct questions, like “Woon je alleen?” — that is friendly, not rude."
+      ],
+      "id": "d6c669f9-9c9d-4d0c-80e5-eec44385fc0e"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de vrijdagmiddagborrel",
+              "meaning": "the Friday-afternoon office drinks",
+              "note": "vrijdag = Friday, middag = afternoon; days of the week are taught later (09-a).",
+              "id": "83dd1e5c-67e9-455c-8d7a-ea781da9f4e2"
+            },
+            {
+              "term": "alleen",
+              "meaning": "alone, on your own",
+              "id": "2b1c4804-9355-4562-9d3b-f166526363ac",
+              "example": "Woon je alleen? — Nee, ik woon bij Noor."
+            }
+          ]
+        }
+      },
+      "id": "59e6d61d-312b-43fd-9c30-4c80afcb326f"
+    },
+    {
+      "type": "divider",
+      "id": "300afaf0-6bf2-4ca5-bad1-9f52829165f4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Where does the verb go?",
+      "id": "7c5c8954-1b61-4328-8d0c-98d2772c8dc9"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "auto"
+      },
+      "content": [
+        "Three sentence types, three word orders. Statement: ",
+        {
+          "text": "subject",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " + ",
+        {
+          "text": "verb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " + rest. Yes/no question: ",
+        {
+          "text": "verb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " + ",
+        {
+          "text": "subject",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " + rest? Question word: question word + ",
+        {
+          "text": "verb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " + ",
+        {
+          "text": "subject",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " + rest?"
+      ],
+      "id": "4a459d08-c37a-4c9b-9f26-2a38a08b1889"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Statements: subject + verb + rest",
+      "id": "d3047b65-ce79-4f77-a1f0-0b5be12d86a5"
+    },
+    {
+      "type": "paragraph",
+      "content": "In a Dutch statement the subject comes first, with the finite verb right behind it, so the verb is the second part of the sentence. The subject can be one word or several: Karin, het werk, de collega. Little words like ook, niet, een beetje and thuis come after the verb — never between the subject and the verb. Later lessons put other words first; the verb then still stays second.",
+      "id": "ec934094-2504-4406-a9d0-f6f1b967ae50"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I work at an IT company.",
+        "note": "Recycles werken bij (02-b)."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "werk",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " bij een IT-bedrijf."
+      ],
+      "id": "34f1b915-2543-4b41-9f8b-16d02f19e4a1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan drinks beer.",
+        "note": ""
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "drinkt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " bier."
+      ],
+      "id": "b4e34504-0316-48e2-a854-133476957c81"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I also live in Utrecht.",
+        "note": "ook comes right after the verb, never between the subject and the verb."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woon",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ook ",
+        {
+          "text": "in Utrecht",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "f170efb2-d27e-42e0-982c-0ac7bd9c4cac"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "auto"
+      },
+      "content": [
+        {
+          "text": "Ik ook woon in Utrecht.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        "Ik woon ook in Utrecht.",
+        " Also: ",
+        {
+          "text": "Jij werk hier.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        "Jij werkt hier.",
+        " (jij before the verb keeps the t.)"
+      ],
+      "id": "1f1e721f-44d6-4b20-b411-e721e54f2e63"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Yes/no questions: verb first",
+      "id": "c12d21c1-8f1e-4dc7-b6a9-9cf7f180ae17"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In a yes/no question the finite verb comes first, then the subject, then the rest — now with every verb, not only zijn, komen, wonen and spreken."
+      ],
+      "id": "46573d7f-18bb-44e9-b540-bcd78acc8910"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you work here? — Yes, I work here, at the office.",
+        "note": "Verb first, then jij; the t drops. op kantoor = at the office (no article)."
+      },
+      "content": [
+        {
+          "text": "Werk",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " hier? — Ja, ik werk hier, ",
+        {
+          "text": "op kantoor",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "2e2c3640-9a40-431e-b2ba-5a822fe32a50"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "op kantoor",
+              "meaning": "at the office",
+              "note": "No article: op kantoor, not op het kantoor.",
+              "id": "d45582e9-4e2c-48cd-9447-c5fba923731a",
+              "example": "Nee, ik werk op kantoor."
+            }
+          ]
+        }
+      },
+      "id": "649255a3-9dc1-47fc-988e-af9ddb85a422"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you work here, sir? — Yes, I work here.",
+        "note": "u always keeps the t."
+      },
+      "content": [
+        {
+          "text": "Werkt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " hier, meneer? — Ja, ik werk hier."
+      ],
+      "id": "e9661486-acfa-4396-8893-8a6afec9cf84"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you reading a book in Dutch? — Yes!",
+        "note": "jij after the verb: no t; z → s stays (lees)."
+      },
+      "content": [
+        {
+          "text": "Lees",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een boek in het Nederlands? — Ja!"
+      ],
+      "id": "51a05062-be1b-48fe-8919-6201dbb9472f"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "auto"
+      },
+      "content": [
+        "Dutch has no helper verb like English “do”: ",
+        {
+          "text": "Doe je werken hier?",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        "Werk je hier?"
+      ],
+      "id": "254b329d-172c-4a3d-9404-1058ecc18047"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Question word + verb + subject",
+      "id": "a734f47f-3a4c-46d3-8191-0926d6a80675"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "After a question word, the verb comes right behind it, then the subject."
+      ],
+      "id": "80785c37-c144-43bc-a701-e7fa7373b968"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where do you work? — At an IT company.",
+        "note": ""
+      },
+      "content": [
+        "Waar ",
+        {
+          "text": "werk",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "? — Bij een IT-bedrijf."
+      ],
+      "id": "356ffe8a-aacc-4f88-8374-318f45cc04ae"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where do you live? — I live in the centre.",
+        "note": ""
+      },
+      "content": [
+        "Waar ",
+        {
+          "text": "woon",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "? — Ik woon ",
+        {
+          "text": "in het centrum",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "8018b513-ac08-481d-9672-3939f8825234"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How is the work? — Good!",
+        "note": ""
+      },
+      "content": [
+        "Hoe ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het werk",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "? — Goed!"
+      ],
+      "id": "a0c53077-21a5-48ca-a823-48a34e74ab2b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Who speaks French? — The colleague.",
+        "note": "wie as the subject: the verb follows it directly and stays singular."
+      },
+      "content": [
+        {
+          "text": "Wie",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "spreekt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Frans? — De collega."
+      ],
+      "id": "75536b36-c4d2-4448-a294-f2961aa23e56"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Statement",
+              "id": "714dcfeb-538b-400e-81d9-bf6c8a84bba4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Jij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "werkt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " hier."
+              ],
+              "id": "3a86976f-2e5e-49b3-a2d2-6734704fdab4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Je",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "woont",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "in Utrecht",
+                  "styles": {
+                    "textColor": "purple"
+                  }
+                },
+                "."
+              ],
+              "id": "5464c2b3-2283-4726-88a0-e460e40284c6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "U",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "werkt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "thuis",
+                  "styles": {
+                    "textColor": "purple"
+                  }
+                },
+                "."
+              ],
+              "id": "775d83a9-9a28-40f4-8479-01cf50dd8232"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Daan",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "drinkt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " bier."
+              ],
+              "id": "bbec608a-ade5-423a-bb7a-17f16d4419a0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Het werk",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "is",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " goed."
+              ],
+              "id": "55b2524f-30ba-4f1a-bd3f-ab8c774fb257"
+            }
+          ],
+          "id": "724bc689-fc00-4d84-a5ee-aece961de5f8"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Yes/no question",
+              "id": "739b556d-1fd3-4265-b03b-ef468a589d17"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Werk",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "jij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " hier?"
+              ],
+              "id": "d0d69530-cab4-40c9-81e4-c16245ec0349"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Woon",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "je",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "in Utrecht",
+                  "styles": {
+                    "textColor": "purple"
+                  }
+                },
+                "?"
+              ],
+              "id": "3957b1ac-4048-47a6-a46a-347c00ccb16d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Werkt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "u",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "thuis",
+                  "styles": {
+                    "textColor": "purple"
+                  }
+                },
+                "?"
+              ],
+              "id": "ec114752-7413-4b60-833f-4752fea9c298"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Drinkt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "Daan",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " bier?"
+              ],
+              "id": "1b50b696-e10b-4ec5-91f3-d1d347a9a5eb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Is",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "het werk",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " goed?"
+              ],
+              "id": "e386fa93-8b19-4973-94a3-2a6a40ad408d"
+            }
+          ],
+          "id": "c8ed8191-d0ec-43fc-a7e9-0e35a270f4c7"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Question word",
+              "id": "88a0d631-832d-44e7-8dee-ef508e01a94f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Waar ",
+                {
+                  "text": "werk",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "jij",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                "?"
+              ],
+              "id": "46e87a35-df04-43c7-950c-c9d8efdf290b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Waar ",
+                {
+                  "text": "woon",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "je",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                "?"
+              ],
+              "id": "45ea4943-4093-4f7a-9cd1-9ea4bf7cfe09"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Waar ",
+                {
+                  "text": "werkt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "u",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                "?"
+              ],
+              "id": "b4f5fd3c-2340-4ead-8c87-fa5ad302b223"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "Wie",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                " ",
+                {
+                  "text": "drinkt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " bier?"
+              ],
+              "id": "114e840f-9440-4d86-8b70-b53daea64418"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Hoe ",
+                {
+                  "text": "is",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "het werk",
+                  "styles": {
+                    "textColor": "green"
+                  }
+                },
+                "?"
+              ],
+              "id": "ba7de38c-fb36-4799-881f-bb200e9226f4"
+            }
+          ],
+          "id": "809fed49-836a-4e33-8345-44a61e1383ce"
+        }
+      ],
+      "id": "670ff2f2-0b45-4f71-9646-2820113649ba"
+    },
+    {
+      "type": "divider",
+      "id": "f5307e20-5975-4621-8b3c-251aa5314f9f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "No t when je/jij follows the verb",
+      "id": "75af664e-9c3a-46df-a2d2-58f08fd34326"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "auto"
+      },
+      "content": [
+        "When ",
+        {
+          "text": "je",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "jij",
+          "styles": {
+            "bold": true
+          }
+        },
+        " comes right behind the verb, the verb is just the stem: werk je, woon jij, drink je, spreek je. After u, hij, zij or a name the stem keeps its t: werkt u, werkt hij, werkt Karin. And jij before the verb also keeps the t: jij werkt.",
+        " A stem that already ends in t keeps it: ",
+        {
+          "text": "eet je",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", heet je, zit je."
+      ],
+      "id": "3c757af3-8165-4123-9d3c-21484cff0fef"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you still working? — No, I'm not working.",
+        "note": "je right after the verb: no t. nog = still."
+      },
+      "content": [
+        {
+          "text": "Werk",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " nog? — Nee, ik werk ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "619d2a24-1bbc-460c-a9f5-e723a6f426ea"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you live in the centre? — No, I don't live in the centre. I live in Utrecht-Oost.",
+        "note": "jij after the verb: no t. niet right before the place (a preview of the next section)."
+      },
+      "content": [
+        {
+          "text": "Woon",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "in het centrum",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "? — Nee, ik woon ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "in het centrum",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". Ik woon ",
+        {
+          "text": "in Utrecht-Oost",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "82c052e2-c1fe-4e99-b00d-b364526a0379"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you eating a sandwich?",
+        "note": "The stem already ends in t, so no extra t — like hij heet (02-b)."
+      },
+      "content": [
+        {
+          "text": "Eet",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een boterham?"
+      ],
+      "id": "efeb7463-cc74-4ee4-8667-f410a63f7445"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you studying psychology, Noor? — Yes, I'm studying psychology.",
+        "note": "je right after the verb: no t."
+      },
+      "content": [
+        {
+          "text": "Studeer",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " psychologie, Noor? — Ja, ik studeer psychologie."
+      ],
+      "id": "653769cd-879d-4401-b283-358fee2d9b70"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "auto"
+      },
+      "content": [
+        {
+          "text": "Werkt jij hier?",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        "Werk jij hier?",
+        " Also: ",
+        {
+          "text": "Ik ben moe niet.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        "Ik ben niet moe."
+      ],
+      "id": "0f303c4c-4dfd-4d71-98e5-018ade0c6ba0"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "auto"
+      },
+      "content": [
+        "ie in niet, wie, bier is a short, clear “ee” as in English “see” — never like English “eye” or “pie”. Dutch w (werk, wie, wijn, water, woon) is softer than English w: let your top teeth touch your lower lip lightly, between an English v and w."
+      ],
+      "id": "5c1216c8-75e4-4c57-90d5-19a1e34dcc58"
+    },
+    {
+      "type": "divider",
+      "id": "13ed2b70-42f3-4a2b-b496-deabc2ec6538"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Where does niet go?",
+      "id": "8d4bddef-89ec-4243-b78a-b95704fd63d8"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "auto"
+      },
+      "content": [
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " has three places: at the ",
+        {
+          "text": "end",
+          "styles": {
+            "bold": true
+          }
+        },
+        " when nothing follows the verb; before an ",
+        {
+          "text": "adjective",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (or a word like snel, ver, moeilijk); before a ",
+        {
+          "text": "place",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (in/uit/bij + place, thuis, op kantoor)."
+      ],
+      "id": "d94e9a6f-a3fa-4e98-9ce5-1833518ac510"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Only a verb, nothing after it: ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " goes at the end. ",
+        "Ik werk ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "96ff96e4-0ccc-4fe4-b2e4-8640a50b62dc"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Before an adjective (or snel, ver, moeilijk): ",
+        "Ik ben ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " moe."
+      ],
+      "id": "80fd6300-0d94-4283-95cb-e582849975f9"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Before a place (in/uit/bij + place, thuis, op kantoor): ",
+        "Ik woon ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " in het centrum."
+      ],
+      "id": "e84b9ae8-b187-4206-b1cf-15853ac0d0d2"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Never between the subject and the verb: not ",
+        {
+          "text": "Ik niet werk",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        "."
+      ],
+      "id": "ff7ef171-466b-4572-9341-4ffd31ebd74f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you tired? — No, I'm not tired. I'm happy!",
+        "note": "niet before the adjective moe. Questions put niet in the same places: Ben je niet moe? = Aren’t you tired?"
+      },
+      "content": [
+        "Ben je moe? — Nee, ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " moe. Ik ben blij!"
+      ],
+      "id": "56e0fca4-10c8-42f5-882e-c2e40d54a7d8"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where is Karin? — Karin isn't coming. She works at home, in Amersfoort.",
+        "note": "komt niet: only a verb, so niet goes at the end. komen here means ‘to come’, a new use of komen (02-a taught komen uit)."
+      },
+      "content": [
+        "Waar is Karin? — ",
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Ze werkt ",
+        {
+          "text": "thuis",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ", ",
+        {
+          "text": "in Amersfoort",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "efcb2529-82bf-4a2d-b4d4-102037c5827a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is Utrecht-Oost far? — No, it's not far.",
+        "note": "het here is for the distance, like Hoe gaat het?"
+      },
+      "content": [
+        "Is Utrecht-Oost ver? — Nee, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ver."
+      ],
+      "id": "d9da2104-b2c8-46a6-a5b6-17520e101929"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you live alone? — No, I live with Noor.",
+        "note": "A direct but friendly question (culture note above). Nee + the right fact: bij Noor."
+      },
+      "content": [
+        "Woon je alleen? — Nee, ik woon ",
+        {
+          "text": "bij Noor",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "40797768-a3da-4a0a-a144-495c1bb6829b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "He doesn't come from the Netherlands. He comes from Belgium. I don't live in Amsterdam.",
+        "note": "niet before the place (uit + country, in + city), then the right fact. Recycles komen uit (02-a)."
+      },
+      "content": [
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "uit Nederland",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". Hij komt ",
+        {
+          "text": "uit België",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ". ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woon",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "in Amsterdam",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "ca3e75cd-6d18-4a97-93dc-71c16730f3a7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor doesn't speak fast with me.",
+        "note": "niet before snel, a word like an adjective here. met mij recycled from 01-a."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "spreekt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " snel met mij."
+      ],
+      "id": "394fee94-1cc3-46dd-b042-bbc983c5d5ea"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Dutch isn't easy.",
+        "note": "makkelijk is the opposite of moeilijk (03-a)."
+      },
+      "content": [
+        {
+          "text": "Nederlands",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " makkelijk."
+      ],
+      "id": "1e929c0b-8a7f-4e08-baad-312cdf28bac1"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "makkelijk",
+              "meaning": "easy",
+              "note": "Opposite of moeilijk (03-a).",
+              "id": "158ba26e-ad0f-431c-94a5-113f31438af4",
+              "example": "Nederlands is niet makkelijk."
+            }
+          ]
+        }
+      },
+      "id": "96ec3bcc-8883-488b-84ed-ec14ceccb9a8"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Ja",
+              "id": "b8cbc3ad-c31c-414e-a99b-7f76f906bc12"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ja, ik ben moe.",
+              "id": "1025f669-5c4d-4736-8419-094bcab824d1"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ja, ik woon in het centrum.",
+              "id": "90284e62-569b-4f5c-868f-aee20c1fc1d0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ja, Karin komt.",
+              "id": "ad140209-d014-4f97-b600-26ce48939c89"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ja, het is ver.",
+              "id": "ca0bf15f-21f3-464b-9bf5-63c1b12bc165"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ja, hij komt uit Nederland.",
+              "id": "8b87b2bb-efe7-428a-a9f5-7a30dbad933d"
+            }
+          ],
+          "id": "dfe3e1df-3d01-4d77-bf7b-48b2107bb68b"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Nee (with niet)",
+              "id": "126eec82-a7af-4398-94a1-cc7bacdea435"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Nee, ik ben ",
+                {
+                  "text": "niet",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " moe."
+              ],
+              "id": "906c23db-fd41-448d-9392-f9b2a625b020"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Nee, ik woon ",
+                {
+                  "text": "niet",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " ",
+                {
+                  "text": "in het centrum",
+                  "styles": {
+                    "textColor": "purple"
+                  }
+                },
+                "."
+              ],
+              "id": "6f96bfd1-7541-4127-b696-276faa9db82e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Nee, Karin komt ",
+                {
+                  "text": "niet",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                "."
+              ],
+              "id": "1e7c8574-7e0e-41fc-a0bb-a0a507cfcf0b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Nee, het is ",
+                {
+                  "text": "niet",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " ver."
+              ],
+              "id": "5dc5f915-ec53-4eb8-9b6a-38bc02d0230b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Nee, hij komt ",
+                {
+                  "text": "niet",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " ",
+                {
+                  "text": "uit Nederland",
+                  "styles": {
+                    "textColor": "purple"
+                  }
+                },
+                "."
+              ],
+              "id": "659be703-5a9d-4a99-8c69-b962f0e685cf"
+            }
+          ],
+          "id": "84a7729f-acef-4d3a-a7b6-67f0ebd5b602"
+        }
+      ],
+      "id": "26e94415-96c6-436b-94db-a796c1849fca"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Answering: Ja, … + the full sentence; Nee, … + the sentence with niet, or the right fact (as since 02-a), often both. In the answer, jij/je becomes ik and the verb changes back to the ik-form. To say “not a” or “no” + a noun (no wine, not a programmer), Dutch uses another word, which comes in lesson 04-b. For now, say what is true: ",
+        {
+          "text": "Ik drink niet wijn.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Nee, ik drink bier."
+      ],
+      "id": "0a548fa5-c87f-422f-afb3-3d199bf15f47"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you work here, sir? — Yes, I work here.",
+        "note": "u → ik; short answers like Ja. and Nee hoor. are fine too."
+      },
+      "content": [
+        "Werkt u hier, meneer? — Ja, ik werk hier."
+      ],
+      "id": "a4282b2d-afa4-4ee5-8db1-04bfc79dfe9c"
+    },
+    {
+      "type": "divider",
+      "id": "b24bc257-b894-4308-bb99-73735e2c98e5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Woon jij in het centrum?",
+      "id": "b8c6e271-0491-4ddb-a5a1-8f195e72480e"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "The colleague from Antwerpen comes over with a glass of water.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "3a98dc4d-0900-4ed3-a06c-4b5eb3b490f4"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Collega",
+            "text": "Dag Sofia! Proost!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Proost! Waar is Karin?"
+          },
+          {
+            "speaker": "Collega",
+            "text": "Karin komt niet. Ze werkt thuis, in Amersfoort."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ah, oké. Werk jij ook thuis?"
+          },
+          {
+            "speaker": "Collega",
+            "text": "Nee, ik werk op kantoor. Woon jij in het centrum?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik woon niet in het centrum. Ik woon in Utrecht-Oost, bij Noor."
+          },
+          {
+            "speaker": "Collega",
+            "text": "Is Utrecht-Oost ver?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, het is niet ver. En jij? Waar woon jij?"
+          },
+          {
+            "speaker": "Collega",
+            "text": "Ik woon in het centrum. Spreek je Nederlands met Noor?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, thuis. Noor spreekt niet snel met mij!"
+          }
+        ]
+      },
+      "id": "0ff122f3-dc28-4ff8-ba08-07f2463fac8f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Questions at the borrel",
+      "id": "ef401740-a54e-463c-b904-951ba17d698a"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Daan",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Werk je nog?",
+          "id": "16965087-f1cc-47a9-b829-b05dcca713fe"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Wat drink je?",
+          "id": "f3a91cb7-b609-4252-8fe6-c4aa4316f69c"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Ben je moe?",
+          "id": "2dcdc447-2be4-4454-b0a4-fb6d82afbf18"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Is het werk moeilijk?",
+          "id": "f59c4a60-88f8-4398-9851-a04714271bd9"
+        }
+      ],
+      "id": "f12eb625-2c92-4e0f-bced-c2ff54a8b266"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "De collega",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Woon jij in het centrum?",
+          "id": "804fb76b-dfaa-44fa-ac9f-b4956c473dea"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Is Utrecht-Oost ver?",
+          "id": "7dac74d0-2d46-49a7-94d5-5b8b9ea54b27"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Spreek je Nederlands met Noor?",
+          "id": "a42e7562-47a2-4f4f-bd0c-f6dc5c0ca4bc"
+        }
+      ],
+      "id": "881d6ca9-efdd-4012-85a3-adb9c44d473a"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Sofia",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Drink jij ook wijn?",
+          "id": "463d6345-b842-4dae-bbab-c6eb9255fd7c"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Waar is Karin?",
+          "id": "1cd51099-1a85-4be3-b9ad-9a58125e8a66"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Werk jij ook thuis?",
+          "id": "05ad2e89-6694-4944-b424-6cf07d8212d3"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Waar woon jij?",
+          "id": "a278e3fa-4c30-4d87-a7fb-fcd045b8f300"
+        }
+      ],
+      "id": "9ff03493-ebc7-469c-aceb-5909582c4f7e"
+    },
+    {
+      "type": "divider",
+      "id": "15e0f313-75ff-43ae-8755-283b4706258b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "cd8121a8-4e55-4b75-b6a7-b2a651e32d7a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in the verb, with or without t",
+      "id": "7d1a2579-1450-4d8b-a423-978e7041868a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct form of the verb in brackets. Example: … jij hier? (werken) → Werk",
+          "items": [
+            {
+              "prompt": "… jij hier? (werken)",
+              "authorsVersion": [
+                "Werk"
+              ],
+              "note": "jij right after the verb: the t drops."
+            },
+            {
+              "prompt": "Waar … je? (wonen)",
+              "authorsVersion": [
+                "woon"
+              ],
+              "note": "je right after the verb: no t."
+            },
+            {
+              "prompt": "… Daan bier? (drinken)",
+              "authorsVersion": [
+                "Drinkt"
+              ],
+              "note": "A name works like hij/zij: keeps the t."
+            },
+            {
+              "prompt": "Jij … snel. (leren)",
+              "authorsVersion": [
+                "leert"
+              ],
+              "note": "jij before the verb: the t stays."
+            },
+            {
+              "prompt": "… je een boterham? (eten)",
+              "authorsVersion": [
+                "Eet"
+              ],
+              "note": "The stem already ends in t, so no extra t."
+            }
+          ]
+        }
+      },
+      "id": "4491e1da-7856-4832-9b70-14e3c05e0175"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Make it negative with niet",
+      "id": "bf9b06e4-af96-4aab-a495-2632343e5298"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence with niet. Example: Ik werk. → Ik werk niet.",
+          "items": [
+            {
+              "prompt": "Ik werk.",
+              "authorsVersion": [
+                "Ik werk niet."
+              ],
+              "note": "Only a verb: niet goes at the end."
+            },
+            {
+              "prompt": "Ik ben moe.",
+              "authorsVersion": [
+                "Ik ben niet moe."
+              ],
+              "note": "Before an adjective: niet comes right before it."
+            },
+            {
+              "prompt": "Ik woon in het centrum.",
+              "authorsVersion": [
+                "Ik woon niet in het centrum."
+              ],
+              "note": "Before a place: niet comes right before it."
+            },
+            {
+              "prompt": "Karin komt.",
+              "authorsVersion": [
+                "Karin komt niet."
+              ],
+              "note": "Only a verb: niet goes at the end."
+            },
+            {
+              "prompt": "Hij komt uit Nederland.",
+              "authorsVersion": [
+                "Hij komt niet uit Nederland."
+              ],
+              "note": "Before a place (uit + country)."
+            }
+          ]
+        }
+      },
+      "id": "0fcfeffb-8916-4718-8f5e-48083efb33a8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Make a yes/no question",
+      "id": "1a8f9dc0-28e8-4d1d-8f79-47b4f5e183bf"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Turn the statement into a yes/no question. Example: Hij werkt hier. → Werkt hij hier?",
+          "items": [
+            {
+              "prompt": "Jij werkt hier.",
+              "authorsVersion": [
+                "Werk jij hier?"
+              ],
+              "note": "Verb first; jij after the verb loses the t."
+            },
+            {
+              "prompt": "Je woont in Utrecht-Oost.",
+              "authorsVersion": [
+                "Woon je in Utrecht-Oost?"
+              ],
+              "note": "je after the verb: no t."
+            },
+            {
+              "prompt": "U werkt thuis.",
+              "authorsVersion": [
+                "Werkt u thuis?"
+              ],
+              "note": "u keeps the t."
+            },
+            {
+              "prompt": "Jij leest een boek.",
+              "authorsVersion": [
+                "Lees jij een boek?"
+              ],
+              "note": "jij after the verb: no t; z → s stays (lees)."
+            },
+            {
+              "prompt": "Je studeert psychologie.",
+              "authorsVersion": [
+                "Studeer je psychologie?"
+              ],
+              "note": "je after the verb: no t."
+            }
+          ]
+        }
+      },
+      "id": "b38a62e7-d34f-4f65-9702-36573dd005a4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "91bebd15-92f3-4527-8880-1af479e7a8c9"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the full sentence. Example: ben / ik / moe → Ik ben moe.",
+          "items": [
+            {
+              "prompt": "Put in order: niet / ik / moe / ben",
+              "authorsVersion": [
+                "Ik ben niet moe."
+              ],
+              "note": "Subject + verb + niet + adjective."
+            },
+            {
+              "prompt": "Put in order: jij / waar / woon",
+              "authorsVersion": [
+                "Waar woon jij?"
+              ],
+              "note": "Question word + verb + subject."
+            },
+            {
+              "prompt": "Put in order: werk / thuis / je / ook",
+              "authorsVersion": [
+                "Werk je ook thuis?"
+              ],
+              "note": "Verb first; ook and thuis come after the subject."
+            },
+            {
+              "prompt": "Put in order: woon / niet / ik / in Amsterdam",
+              "authorsVersion": [
+                "Ik woon niet in Amsterdam."
+              ],
+              "note": "Subject + verb + niet + place."
+            }
+          ]
+        }
+      },
+      "id": "557a25af-f8b7-4f0f-94fb-ab22aa05639e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Answer the question",
+      "id": "74692550-4488-4b45-a146-1e8115085b93"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Answer with the cue in brackets. Example: Werk je hier? (ja) → Ja, ik werk hier.",
+          "items": [
+            {
+              "prompt": "Woon jij in Amsterdam? (nee)",
+              "authorsVersion": [
+                "Nee, ik woon niet in Amsterdam."
+              ],
+              "note": "jij → ik; niet before the place."
+            },
+            {
+              "prompt": "Ben je moe? (nee)",
+              "authorsVersion": [
+                "Nee, ik ben niet moe."
+              ],
+              "note": "je → ik; niet before the adjective."
+            },
+            {
+              "prompt": "Werk je bij een IT-bedrijf? (ja)",
+              "authorsVersion": [
+                "Ja, ik werk bij een IT-bedrijf."
+              ],
+              "note": "je → ik."
+            },
+            {
+              "prompt": "Komt Karin? (nee)",
+              "authorsVersion": [
+                "Nee, Karin komt niet."
+              ],
+              "note": "Also fine: Nee, ze komt niet."
+            }
+          ]
+        }
+      },
+      "id": "5ca317d3-3f47-4405-92f6-387a07eba9a6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Dialogue completion",
+      "id": "f3309520-6d83-4e30-b85b-088b38bbf5a3"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the exchanges. Fill in one word per blank. Example: Daan: Werk je nog? / Sofia: Nee, ik werk …. → niet",
+          "items": [
+            {
+              "prompt": "Daan: … je nog? / Sofia: Nee, ik werk ….",
+              "authorsVersion": [
+                "Werk",
+                "niet"
+              ],
+              "note": "Werk je: the t drops after je. niet: only a verb, so niet goes at the end."
+            },
+            {
+              "prompt": "Collega: … jij in het centrum? / Sofia: Nee, ik woon … in het centrum.",
+              "authorsVersion": [
+                "Woon",
+                "niet"
+              ],
+              "note": "Woon jij: the t drops. niet before the place (in het centrum)."
+            },
+            {
+              "prompt": "Sofia: … u hier, meneer? / Meneer: Ja, ik … hier, op kantoor.",
+              "authorsVersion": [
+                "Werkt",
+                "werk"
+              ],
+              "note": "u keeps the t (Werkt); ik is always the stem (werk)."
+            }
+          ]
+        }
+      },
+      "id": "06fc7113-5a19-481c-9c67-310a70283328"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "be4a00dc-e55c-488e-938e-d04908ac2480"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Example: I work here. → Ik werk hier.",
+          "items": [
+            {
+              "prompt": "Do you work here?",
+              "authorsVersion": [
+                "Werk jij hier?"
+              ],
+              "note": "Also fine: Werk je hier? / Werkt u hier?"
+            },
+            {
+              "prompt": "Where do you live?",
+              "authorsVersion": [
+                "Waar woon je?"
+              ],
+              "note": "Also fine: Waar woon jij? / Waar woont u?"
+            },
+            {
+              "prompt": "I'm not tired.",
+              "authorsVersion": [
+                "Ik ben niet moe."
+              ],
+              "note": "niet before the adjective, not Ik ben moe niet."
+            },
+            {
+              "prompt": "Karin isn't coming.",
+              "authorsVersion": [
+                "Karin komt niet."
+              ],
+              "note": "Only a verb: niet at the end."
+            }
+          ]
+        }
+      },
+      "id": "4435b3b0-007b-42ac-a9b0-85fe975f90e8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "80b0b0ae-f14f-49b9-beab-837978ef11e8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English. Example: Ik woon in Utrecht. → I live in Utrecht.",
+          "items": [
+            {
+              "prompt": "Werk je nog?",
+              "authorsVersion": [
+                "Are you still working?"
+              ],
+              "note": "nog = still."
+            },
+            {
+              "prompt": "Ik woon niet in het centrum, maar het is niet ver.",
+              "authorsVersion": [
+                "I don't live in the centre, but it's not far."
+              ],
+              "note": "maar = but, a contrast."
+            },
+            {
+              "prompt": "Woon je alleen?",
+              "authorsVersion": [
+                "Do you live alone?"
+              ],
+              "note": "alleen = alone."
+            }
+          ]
+        }
+      },
+      "id": "9708fc02-b784-4112-af3c-3c2daebcc5c6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Werk je nog?",
+      "id": "a845316f-e6f7-4a67-a6c6-9f10a53280dc"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Sofia's chat with Noor during the borrel. daar = there."
+      ],
+      "id": "7f3ff44d-245c-43df-b16c-37bac602d3ea"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "daar",
+              "meaning": "there",
+              "id": "bdbcb3a1-005b-4782-a176-c6f23b2b37b9",
+              "example": "Is Karin daar ook?"
+            }
+          ]
+        }
+      },
+      "id": "cde4f414-bff6-497e-952c-bd6544b55fe3"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the chat and answer in Dutch; short answers are fine. Klopt dit? = Is this right? Example: Wie drinkt wijn? → Sofia.",
+          "items": [
+            {
+              "prompt": "Werkt Sofia nog?",
+              "authorsVersion": [
+                "Nee, ze werkt niet. Het is borrel."
+              ],
+              "note": "Sofia: 'Nee, ik werk niet. Het is borrel op kantoor!'"
+            },
+            {
+              "prompt": "Wie drinkt bier?",
+              "authorsVersion": [
+                "Daan."
+              ],
+              "note": "Sofia: 'Daan drinkt bier.'"
+            },
+            {
+              "prompt": "Komt Karin?",
+              "authorsVersion": [
+                "Nee, Karin komt niet."
+              ],
+              "note": "Also fine: Nee, ze komt niet."
+            },
+            {
+              "prompt": "Waar werkt Karin?",
+              "authorsVersion": [
+                "Thuis, in Amersfoort."
+              ],
+              "note": "Sofia: 'Ze werkt thuis, in Amersfoort.'"
+            },
+            {
+              "prompt": "Klopt dit? Nederlands is makkelijk.",
+              "authorsVersion": [
+                "Nee, Nederlands is niet makkelijk."
+              ],
+              "note": "Model answers to Klopt dit? start Ja. or Nee, … + the right fact."
+            },
+            {
+              "prompt": "Is Sofia moe?",
+              "authorsVersion": [
+                "Nee, ze is niet moe. Ze is heel blij."
+              ],
+              "note": "Sofia: 'Nee, ik ben niet moe. Ik ben heel blij!'"
+            }
+          ],
+          "passage": {
+            "title": "Werk je nog?",
+            "content": "Noor: Hoi Sofia! Werk je nog?\nSofia: Nee, ik werk niet. Het is borrel op kantoor!\nNoor: Gezellig! Wat drink je?\nSofia: Wijn. Daan drinkt bier.\nNoor: En Karin? Is Karin daar ook?\nSofia: Nee, Karin komt niet. Ze werkt thuis, in Amersfoort.\nNoor: Spreek je Nederlands met Daan?\nSofia: Ja! Met Daan en met de collega uit België. Nederlands is niet makkelijk, maar het is gezellig!\nNoor: Super! Ben je moe?\nSofia: Nee, ik ben niet moe. Ik ben heel blij!\nNoor: Ik ben thuis. Tot straks!\nSofia: Tot straks!"
+          }
+        }
+      },
+      "id": "d4882f92-d319-404c-9226-ea01fbe731b2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "ad7bdac1-413f-4ca2-ae5d-71b46c6c6aec"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "You are at drinks with a new colleague. Write 2–4 short sentences: two questions (one yes/no question, one with waar, wie or hoe) and one or two sentences about yourself with niet.",
+          "items": [
+            {
+              "prompt": "You are at drinks with a new colleague. Write 2–4 short sentences: two questions (one yes/no question, one with waar, wie or hoe) and one or two sentences about yourself with niet.",
+              "authorsVersion": [
+                "Werk jij ook thuis? Waar woon jij? Ik woon niet in het centrum. Ik woon in Utrecht-Oost."
+              ],
+              "note": "Model answer by Sofia. Also fine with u: Werkt u …?; niet before a place, after the verb."
+            }
+          ]
+        }
+      },
+      "id": "84b41f50-1a35-41e9-8222-bf0e2893cdfe"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "d0f133e2-a69f-4986-a4d4-597ad4106054"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Statement: subject + verb + rest — the verb is second.",
+      "id": "37d8c4a1-58ca-4d04-8d58-95680f53f181"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Yes/no question: verb first (Werk jij hier?). Question word + verb + subject (Waar woon je?).",
+      "id": "603ddda9-9932-4706-9c2d-d0cc16b5670e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "je/jij after the verb: no t (werk je, drink jij); u, hij, zij keep it (werkt u); eet je keeps its stem t.",
+      "id": "f6947419-6feb-4374-9329-9462f4d27370"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "niet: at the end (Ik werk niet.), before an adjective (Ik ben niet moe.), before a place (Ik woon niet in Amsterdam.) — never between subject and verb.",
+      "id": "cbb4f13a-122d-475e-9a71-8f63f48ee201"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Answer: Ja, … / Nee, … niet … / Nee, + the right fact.",
+      "id": "568642f1-f5be-480a-8b28-f5758925bcd6"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Het is borrel!",
+      "description": "Friday drinks in the office; Daan, holding a beer, hands Sofia a glass of white wine at her desk with her laptop still open; colleagues with drinks and a plate of bitterballen in the background.",
+      "alt": "Two colleagues with drinks at a desk in an office, laptop open.",
+      "location": "sofia-office",
+      "characters": [
+        "sofia",
+        "daan"
+      ]
+    },
+    {
+      "afterHeading": "Story: Woon jij in het centrum?",
+      "description": "Sofia (a glass of white wine) and the colleague from Antwerpen (a glass of water; a man in his forties with short grey-brown hair, a neat beard and a dark-green sweater) chatting and laughing at a high table.",
+      "alt": "Two colleagues chatting at a high table with drinks in an office.",
+      "location": "sofia-office",
+      "characters": [
+        "sofia"
+      ]
+    }
+  ],
+  "id": "418383d4-5250-452b-9b21-71636eb048ab"
+}

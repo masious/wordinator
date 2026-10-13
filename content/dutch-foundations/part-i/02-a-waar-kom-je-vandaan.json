@@ -1,0 +1,2539 @@
+{
+  "title": "Waar kom je vandaan?",
+  "goal": "Ask where someone is from and say where you are from with komen uit; use the singular forms of komen; name countries and cities and say where a city is.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Waar kom je vandaan?",
+      "id": "67ac33a2-2fb9-4597-9ebf-7c8b2a51028b"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "This morning Sofia met Karin and Daan at the office. Now it is lunchtime, and everyone asks the new colleague the same question: ",
+        {
+          "text": "where are you from?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " In this lesson you will learn to ask where someone is from, say where you are from with the verb ",
+        {
+          "text": "komen",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", and name countries and cities."
+      ],
+      "id": "9250248a-987c-4874-9202-9cc43540543f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: ",
+        {
+          "text": "subjects",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        " are green, ",
+        {
+          "text": "verbs",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " are blue, and ",
+        {
+          "text": "place words",
+          "styles": {
+            "textColor": "purple",
+            "bold": true
+          }
+        },
+        " like ",
+        {
+          "text": "uit Spanje",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " and ",
+        {
+          "text": "in Nederland",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " are purple."
+      ],
+      "id": "8731899d-c9a0-4808-a0d0-0a453a76b419"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Waar kom je vandaan?",
+      "id": "ff9de80c-ad8d-4a99-ab4a-ac9304cc4a2d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "It is lunchtime. Sofia, Daan and Karin eat together at a table in the office.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "1531ad2f-038c-404e-b37a-15d78aee55f9"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Sofia, waar kom je vandaan?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik kom uit Spanje, uit Valencia."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ah, Valencia! Is Valencia groot?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, Valencia is heel groot. En jij, Daan? Waar kom jij vandaan?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ik kom uit Utrecht. Utrecht is gezellig!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Karin, kom jij ook uit Utrecht?"
+          },
+          {
+            "speaker": "Karin",
+            "text": "Nee, ik kom uit Amersfoort."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Amersfoort? Waar is Amersfoort?"
+          },
+          {
+            "speaker": "Karin",
+            "text": "Amersfoort is in Nederland, heel dichtbij."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Amersfoort is klein. Utrecht is groot!"
+          }
+        ]
+      },
+      "id": "9829c512-a078-4f9b-9a7b-17c07dd1cfff"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "waar",
+              "meaning": "where",
+              "example": "Waar kom je vandaan?",
+              "note": "waar starts a question; see the grammar box below.",
+              "id": "46c2e605-77de-4ff5-bb0e-8046f25ed917"
+            },
+            {
+              "term": "komen",
+              "meaning": "to come",
+              "forms": "komt · kwam · gekomen",
+              "example": "Ik kom uit Spanje.",
+              "id": "aa6620bf-43a9-4d16-9968-7fd42cac8275"
+            },
+            {
+              "term": "uit",
+              "meaning": "from (origin)",
+              "example": "Ik kom uit Spanje.",
+              "note": "Not van: komen uit, never komen van.",
+              "id": "744005a2-a478-4b89-b75b-85b7286c16a0"
+            },
+            {
+              "term": "in",
+              "meaning": "in (a city or country)",
+              "example": "Amersfoort is in Nederland.",
+              "note": "Also inside the chunk Welkom in … (01-a); here it names a place: in + country or city.",
+              "id": "78986de6-ed63-47ac-977a-edb5d58322d8"
+            },
+            {
+              "term": "Waar kom je vandaan?",
+              "meaning": "Where are you from? (informal)",
+              "example": "Sofia, waar kom je vandaan?",
+              "note": "vandaan always comes at the very end of the question.",
+              "id": "926cbda5-2dcf-489a-99e2-897b1f4ab813"
+            },
+            {
+              "term": "Spanje",
+              "meaning": "Spain",
+              "example": "Ik kom uit Spanje.",
+              "id": "765f2297-8b59-47e5-8720-412a63828b4e"
+            },
+            {
+              "term": "dichtbij",
+              "meaning": "close by, nearby",
+              "example": "Amersfoort is heel dichtbij.",
+              "note": "Amersfoort is a real city of about 160,000 people, not far from Utrecht.",
+              "id": "4479432d-8a82-402d-a688-dcbbb28cbb2b"
+            }
+          ]
+        }
+      },
+      "id": "ed05875c-3ac8-4744-9223-5c20b806c847"
+    },
+    {
+      "type": "divider",
+      "id": "61c48623-aa77-4b52-ac14-46583a645ae3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "komen uit + a place",
+      "id": "65b77dc7-409a-4764-a918-b5393eb62867"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "komen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " + ",
+        {
+          "text": "uit",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + a country or city: ik ",
+        {
+          "text": "kom",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", jij/je ",
+        {
+          "text": "komt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", u ",
+        {
+          "text": "komt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", hij/zij ",
+        {
+          "text": "komt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ". Only ik has no t; everyone else adds t."
+      ],
+      "id": "ac9fdfbb-5233-49ca-b7f0-014980671acf"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Pronoun",
+              "id": "052dd56b-4450-4df2-8435-eb89dfd854c3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "ik",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                }
+              ],
+              "id": "70db89d4-883d-453d-958d-f316542f3475"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jij / je",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                }
+              ],
+              "id": "06e479a6-379e-4acf-845d-647071275d56"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "u",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                }
+              ],
+              "id": "e9918e19-4f00-4381-86a7-0a7ec6ddb1e1"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "hij",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                }
+              ],
+              "id": "ab8a6a69-fb5d-45ea-8f0f-d85faf7f9d85"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "zij / ze",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "green"
+                  }
+                }
+              ],
+              "id": "e3affe9f-4cde-4e98-8f7d-e6b2ef108aa4"
+            }
+          ],
+          "id": "e62110e7-77ab-4d91-aa03-6ad62c650609"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "komen",
+              "id": "9fc3ff4e-418f-4135-9dfe-545da980efbd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "kom",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "e8e352ec-7ffe-4949-a8d4-e91e3c29ed99"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "komt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "baafacf3-8948-4a27-b010-1c4ad880537b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "komt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "9e6f1551-72c6-41da-aa9e-f4a61245d55f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "komt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "9a2c8318-3273-4b41-b85c-10bceca24a9a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "komt",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                }
+              ],
+              "id": "2f5b8028-e53c-42da-8330-fd29885e7172"
+            }
+          ],
+          "id": "86f57835-8944-482c-af70-5bd7332988a0"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Example",
+              "id": "df5abdd0-a119-4e30-9cf2-6a8737fc264a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik kom uit Spanje.",
+              "id": "d2f46408-92b7-4faa-b271-cc288e894da8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Jij komt uit Valencia.",
+              "id": "1097b36a-434a-42f5-9b56-77c4dcfc37a8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "U komt uit Engeland.",
+              "id": "c221bdb2-ffdc-4d45-aedc-ace1f4dfb255"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Daan komt uit Utrecht.",
+              "id": "b955fb1b-4481-4fe9-99c4-d87f06783f8d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Karin komt uit Amersfoort.",
+              "id": "15a92994-2173-43af-9d8c-70e0ba926b40"
+            }
+          ],
+          "id": "1b081017-bff9-4d55-bea1-a7b559e2b45c"
+        }
+      ],
+      "id": "a13bc23f-ac6a-49bd-a5d3-bba44b41b5c2"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Engeland",
+              "meaning": "England",
+              "example": "U komt uit Engeland.",
+              "note": "Everyday Dutch for England, and loosely for the UK.",
+              "id": "62d3a588-6dd1-4068-8c02-3f0101058f52"
+            }
+          ]
+        }
+      },
+      "id": "d2116d73-318e-46e3-9c8f-b891d8a6a1f8"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I come from Spain.",
+        "note": "ik kom: no t."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "kom",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uit Spanje",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "cb0f9659-984b-4161-a326-9ca231353429"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I come from Valencia, in Spain.",
+        "note": "Both city and country: uit Valencia, in Spanje."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "kom",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uit Valencia, in Spanje",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "e54263fa-8abf-4a62-af72-81084911781a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan comes from Utrecht.",
+        "note": "A name works like hij: komt."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uit Utrecht",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "34d4b6bb-d706-4f54-9faf-23ded0e783c0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Karin is from Amersfoort.",
+        "note": "A name works like zij: komt."
+      },
+      "content": [
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uit Amersfoort",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "503d69ad-f839-420e-81cd-93404b281f42"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "He's from Belgium, from Antwerp.",
+        "note": "Country and city: uit België, uit Antwerpen. Antwerpen = Antwerp, a big city in Belgium."
+      },
+      "content": [
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uit België, uit Antwerpen",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "6a3d308b-de71-4075-b7fb-708113d8f45b"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "België",
+              "meaning": "Belgium",
+              "example": "Hij komt uit België, uit Antwerpen.",
+              "id": "11fe57d1-b875-4603-b9bf-22165814ae9e"
+            }
+          ]
+        }
+      },
+      "id": "7be9a892-4cc2-4ae7-9baa-3c21496da49e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "megaphone"
+      },
+      "content": [
+        "Say ",
+        {
+          "text": "uit",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", never ",
+        {
+          "text": "van",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ", for where you come from: ",
+        {
+          "text": "Ik kom uit Spanje.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " English \"from\" and Spanish \"de\" both tempt van — but komen always takes uit."
+      ],
+      "id": "8e895a59-989a-45da-9eb8-dcd306d51429"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik komt uit Spanje.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik ",
+        {
+          "text": "kom",
+          "styles": {
+            "bold": true
+          }
+        },
+        " uit Spanje. Only ik has no t; jij, u, hij and zij all add t: ",
+        {
+          "text": "jij komt, u komt, hij komt",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "fb5b93a4-a6b6-4792-9685-cc164770c139"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Waar kom je vandaan? / Waar komt u vandaan?",
+      "id": "b6998e7d-5bee-4353-bca7-efc138860d00"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Start with ",
+        {
+          "text": "waar",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", then the verb, then the person, and ",
+        {
+          "text": "vandaan",
+          "styles": {
+            "bold": true
+          }
+        },
+        " at the very end. It works like ",
+        {
+          "text": "Hoe heet je?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and ",
+        {
+          "text": "Wie ben jij?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " from the earlier lessons: the question word comes first."
+      ],
+      "id": "93952c1c-29ed-4c2d-9905-8c9d93355f29"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where are you from? (informal)",
+        "note": "Informal, with je: kom, no t."
+      },
+      "content": [
+        "Waar ",
+        {
+          "text": "kom",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " vandaan?"
+      ],
+      "id": "9909d8a5-76b8-4c11-87bc-f6036584d432"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where are you from, sir? — I'm from England.",
+        "note": "Formal: komt u, and vandaan still at the end."
+      },
+      "content": [
+        "Waar ",
+        {
+          "text": "komt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " vandaan, meneer? — ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "kom",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uit Engeland",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "a9c91729-f6f6-4530-bac7-e9f469ff89d2"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Waar komt u vandaan?",
+              "meaning": "Where are you from? (formal)",
+              "example": "Waar komt u vandaan, meneer?",
+              "note": "Same word order as Waar kom je vandaan?, but with komt and u.",
+              "id": "29bac32b-5ebc-44e9-b784-fb9fb9d155b4"
+            }
+          ]
+        }
+      },
+      "id": "7095e48d-e171-4844-a498-422ecda169a1"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Start with waar.",
+      "id": "f64b8761-c325-45c8-9e66-216d228d3e02"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Then the verb: kom (with je/jij) or komt (with u, hij, zij or a name).",
+      "id": "c63a7982-e127-4e6f-88b6-c50387b36c67"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Then the person.",
+      "id": "60059497-c5b1-4781-8036-0ca6e105370e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "End with vandaan and a question mark.",
+      "id": "50afe9b9-9c66-408b-a9b4-5652f9b24500"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "The t-drop: kom je / kom jij",
+      "id": "15e1670a-6609-41bf-91bc-c2dfdba345b6"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "When ",
+        {
+          "text": "je/jij",
+          "styles": {
+            "bold": true
+          }
+        },
+        " comes ",
+        {
+          "text": "right after",
+          "styles": {
+            "italic": true
+          }
+        },
+        " the verb, the t disappears: ",
+        {
+          "text": "kom je, kom jij",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ". But before the verb, or with u/hij/zij, the t stays: ",
+        {
+          "text": "jij komt, u komt, hij komt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ". This is exactly like ",
+        {
+          "text": "ben jij",
+          "styles": {
+            "italic": true
+          }
+        },
+        " from the previous lesson (bent → ben)."
+      ],
+      "id": "af8d57a5-ee6e-4bfe-bf90-ad8bb2ac05f4"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you from Utrecht too? — No, I'm from Amersfoort.",
+        "note": "kom jij: jij right after the verb, so no t."
+      },
+      "content": [
+        {
+          "text": "Kom",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ook uit Utrecht? — Nee, ik kom uit Amersfoort."
+      ],
+      "id": "dbddf824-366b-4646-a373-30b98c3bba61"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You come from Valencia.",
+        "note": "jij before the verb: komt keeps its t."
+      },
+      "content": [
+        {
+          "text": "Jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " uit Valencia."
+      ],
+      "id": "c94e3b5d-b452-4638-a673-e05897ebf19e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "kom je / kom jij",
+          "styles": {
+            "bold": true
+          }
+        },
+        " works just like ",
+        {
+          "text": "ben je / ben jij",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": komt → kom, bent → ben, only when je/jij comes right after the verb."
+      ],
+      "id": "a8650bb0-0c3d-41eb-84e6-70af7e559fc6"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Waar komt je vandaan?",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Waar ",
+        {
+          "text": "kom",
+          "styles": {
+            "bold": true
+          }
+        },
+        " je vandaan? And never put ",
+        {
+          "text": "vandaan",
+          "styles": {
+            "italic": true
+          }
+        },
+        " first: ",
+        {
+          "text": "Waar vandaan kom je?",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " is wrong too."
+      ],
+      "id": "05ff8725-4fe2-4e07-ad39-9d707fce5b21"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Statement",
+              "id": "21d9d5a3-cbd5-4d84-b0b6-8f442fbd38ad"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Jij komt uit Spanje.",
+              "id": "e3d99cb8-d85e-4c19-a6eb-e07f5484c4de"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "U komt uit België.",
+              "id": "df0a485a-1807-4c92-8860-9c14b9bc45b8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Hij komt uit Utrecht.",
+              "id": "b26de0d3-3cc0-4ef6-9973-830e2292beac"
+            }
+          ],
+          "id": "b331f905-8c0e-47f2-ae37-2b3c8d509178"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Question",
+              "id": "ff2c44ad-b73b-4e33-975e-397e67563f7b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Kom jij uit Spanje? / Waar kom jij vandaan?",
+              "id": "69a34cfc-6240-4598-ab6d-bab91fa009d1"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Komt u uit België? / Waar komt u vandaan?",
+              "id": "16c66aa9-60dc-4a0c-8d74-749afda5ced0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Komt hij uit Utrecht? / Waar komt hij vandaan?",
+              "id": "a2a16e12-2114-4a8f-bbda-c125de87516f"
+            }
+          ],
+          "id": "c31d56e9-2ccf-4591-973c-3d93098ca58a"
+        }
+      ],
+      "id": "7700982d-2bed-4166-bdc7-49dba68e9172"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Yes/no questions with komen",
+      "id": "64674608-21b6-4aea-a765-8c9780941446"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Just like with zijn, the verb comes first: ",
+        {
+          "text": "Kom jij uit Spanje?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " To answer, say ",
+        {
+          "text": "Ja, …",
+          "styles": {
+            "bold": true
+          }
+        },
+        " or ",
+        {
+          "text": "Nee, …",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and then the right fact."
+      ],
+      "id": "3c8a6c87-0eef-4cab-a7ad-2a090cb11247"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is Karin from Utrecht? — No, she's from Amersfoort.",
+        "note": "Nee + the right fact. Karin → ze (she)."
+      },
+      "content": [
+        {
+          "text": "Komt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "uit Utrecht",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "? — Nee, ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uit Amersfoort",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "fceefbce-1c00-4642-9dae-78db4f446d74"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where is he from? — From Belgium.",
+        "note": "A short answer can be just uit + the country."
+      },
+      "content": [
+        "Waar ",
+        {
+          "text": "komt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " vandaan? — ",
+        {
+          "text": "Uit België",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "541771ac-8e13-4b44-921a-52c5f215116a"
+    },
+    {
+      "type": "divider",
+      "id": "76ab14f2-2fd2-4745-ae6d-c28bc4ce3d14"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Countries and cities",
+      "id": "06c34f3d-3e74-4b61-98b7-0d1093d9f28c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Country and city names start with a capital letter. A ",
+        {
+          "text": "land",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (country) is bigger than a ",
+        {
+          "text": "stad",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (city): Spanje is een land, Valencia is een stad. Dutch has its own spelling for some foreign cities: Londen ",
+        {
+          "text": "(London)",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", Parijs ",
+        {
+          "text": "(Paris)",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", Berlijn ",
+        {
+          "text": "(Berlin)",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "5664cdf3-f380-4f39-ac5b-5a25c1d0e930"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Spain is a country.",
+        "note": "het land."
+      },
+      "content": [
+        {
+          "text": "Spanje",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " een ",
+        {
+          "text": "land",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "c8fe220a-48af-4ba2-8df4-f0701eb7a893"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Valencia is a city in Spain.",
+        "note": "de stad; in + country."
+      },
+      "content": [
+        {
+          "text": "Valencia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " een ",
+        {
+          "text": "stad",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "in Spanje",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "78033d83-10d2-44c0-907b-51f8131d790a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het land",
+              "meaning": "country, land",
+              "forms": "de landen",
+              "example": "Spanje is een land.",
+              "id": "e9b074cb-d8d6-4b21-9c5b-d2b18634bf3b"
+            },
+            {
+              "term": "de stad",
+              "meaning": "city, town",
+              "forms": "de steden",
+              "example": "Valencia is een stad in Spanje.",
+              "id": "cd50b906-ff0e-4a4c-8225-832557d6dba7"
+            }
+          ]
+        }
+      },
+      "id": "a078c06b-f17d-4cf8-8b43-b843da63a643"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where is Amersfoort? — Amersfoort is in the Netherlands, very close by.",
+        "note": "waar on its own = where. Where a city is: in + the country. Say Amersfoort again; do not replace a city with a pronoun."
+      },
+      "content": [
+        "Waar ",
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Amersfoort",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "? — ",
+        {
+          "text": "Amersfoort",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in Nederland",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ", heel dichtbij."
+      ],
+      "id": "aec4343c-2a58-4b68-9ac4-cbc0a4e954f6"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Nederland",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Utrecht, Amsterdam, Amersfoort, Groningen",
+          "id": "7d912dc4-4f38-4731-9e86-64499f41c965"
+        }
+      ],
+      "id": "a1f31f89-4c74-4af7-bfd5-4ef0d8cf6e85"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "België",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "Antwerpen ",
+            {
+              "text": "(Antwerp)",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "d8ce99f4-52e6-44bd-b423-06ac73c7273a"
+        }
+      ],
+      "id": "de4bc03e-c52f-4f67-a7d8-8b5b64179a0d"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Spanje",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Valencia",
+          "id": "c3475086-3f86-406e-b3b7-aaedd1cea6b4"
+        }
+      ],
+      "id": "1cc9de5c-9241-4987-ad24-a2808a37c6c5"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Duitsland",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "Berlijn ",
+            {
+              "text": "(Berlin)",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "5a99649e-08d0-4c44-9d2b-62f5e47cdaac"
+        }
+      ],
+      "id": "f58a794f-af6b-49d6-8290-59185f61917e"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Engeland",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "Londen ",
+            {
+              "text": "(London)",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "608bdf36-2614-4777-a471-b1d347f4fcb9"
+        }
+      ],
+      "id": "9079ce85-92a8-40cf-bfd5-50c4d46d8157"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Frankrijk",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "Parijs ",
+            {
+              "text": "(Paris)",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "43ac0efb-128e-4940-960f-b00f3ac1afc2"
+        }
+      ],
+      "id": "20c96556-ce80-455d-ba74-2216d1f0987f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Italië",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Rome",
+          "id": "af27b173-b015-4a56-97fd-6ae2bbffa31a"
+        }
+      ],
+      "id": "a6c1ca58-e283-4bf1-8268-4a6741a77010"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Polen",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "Warschau ",
+            {
+              "text": "(Warsaw)",
+              "styles": {
+                "italic": true
+              }
+            }
+          ],
+          "id": "848bec36-065d-4793-bb52-7ffa0b461eec"
+        }
+      ],
+      "id": "5e3b2bb5-7f50-4d85-b849-d3aad51c164b"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Marokko",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Rabat",
+          "id": "7b599cda-72e0-44e4-8b08-2712ef23f666"
+        }
+      ],
+      "id": "8ee92b69-53a8-42e2-8f4f-611248bd21b5"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Turkije",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Ankara",
+          "id": "83cb9b85-ace6-494e-9e1e-cfea9a218a29"
+        }
+      ],
+      "id": "e01bdda9-1b2e-447b-94b9-4e3f7bdcccd6"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Duitsland",
+              "meaning": "Germany",
+              "example": "Berlijn is in Duitsland.",
+              "id": "b5696c15-4d9d-4698-82e7-487b3549071d"
+            },
+            {
+              "term": "Frankrijk",
+              "meaning": "France",
+              "example": "Parijs is in Frankrijk.",
+              "id": "60d59c67-cf57-477a-8991-c20f608ca3e5"
+            },
+            {
+              "term": "Italië",
+              "meaning": "Italy",
+              "example": "Rome is in Italië.",
+              "id": "6ee2b73c-2be0-4993-94be-43e50d4a454d"
+            },
+            {
+              "term": "Polen",
+              "meaning": "Poland",
+              "example": "Warschau is in Polen.",
+              "id": "53ede2c5-8ea1-4ec5-a760-80eb63daa0f5"
+            },
+            {
+              "term": "Marokko",
+              "meaning": "Morocco",
+              "example": "Rabat is in Marokko.",
+              "id": "8db3890f-9eb5-4166-8178-7d70c8476c68"
+            },
+            {
+              "term": "Turkije",
+              "meaning": "Turkey",
+              "example": "Ankara is in Turkije.",
+              "id": "371959d1-a8ae-4fea-9994-02742fe9c77a"
+            }
+          ]
+        }
+      },
+      "id": "36a1fe21-a133-48f9-8509-4664256e6360"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        {
+          "text": "Nederland",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is the country; ",
+        {
+          "text": "Holland",
+          "styles": {
+            "italic": true
+          }
+        },
+        " is really only two of its twelve provinces. Utrecht and Amersfoort are not in Holland. Dutch is also spoken in the north of Belgium (Flanders), so a colleague from Antwerpen speaks Dutch too."
+      ],
+      "id": "6c6bf86d-8364-41a2-86b7-3fc602c1813a"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        {
+          "text": "ui",
+          "styles": {
+            "bold": true
+          }
+        },
+        " in uit and Duitsland has no English sound: say \"ow\" (as in \"house\") with rounded lips and your tongue forward. The dots in ",
+        {
+          "text": "België, Italië",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (a trema) start a new syllable: Bel-gi-ë, I-ta-li-ë — never Belgie."
+      ],
+      "id": "e60c85fa-08ef-4cee-85ae-4d6a8b3b2ccb"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        {
+          "text": "ver",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means far, the opposite of ",
+        {
+          "text": "dichtbij",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (close by). It does not mean “very”: “very” is ",
+        {
+          "text": "heel",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "f8c09a28-d831-42d8-a5b2-5c84321b6af8"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "ver",
+              "meaning": "far",
+              "example": "Is Amersfoort ver? — Nee, heel dichtbij.",
+              "note": "Opposite of dichtbij.",
+              "id": "e746d750-798f-4f36-8692-a2aa3bb1d561"
+            }
+          ]
+        }
+      },
+      "id": "1cd8eceb-2987-4028-9d1c-68e124e96f3c"
+    },
+    {
+      "type": "divider",
+      "id": "eb28c8cc-1543-4615-b0f5-d5bdbb542e87"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Een collega uit België",
+      "id": "0252db54-7c92-4a1c-b33b-3f0f73be476b"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "A colleague from another team sits down at the table.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "efddff30-7b23-463e-99a3-e4b4cebf2adb"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Collega",
+            "text": "Hoi allemaal! Eet smakelijk!"
+          },
+          {
+            "speaker": "Karin",
+            "text": "Dank je! Hoe gaat het?"
+          },
+          {
+            "speaker": "Collega",
+            "text": "Goed, dank je. Ben jij Sofia?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, dat ben ik! Hoi!"
+          },
+          {
+            "speaker": "Collega",
+            "text": "Welkom! Waar kom je vandaan?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik kom uit Valencia, in Spanje. En jij? Kom jij ook uit Utrecht?"
+          },
+          {
+            "speaker": "Collega",
+            "text": "Nee hoor, ik kom uit België, uit Antwerpen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Echt? Karin komt uit Amersfoort en Daan komt uit Utrecht."
+          },
+          {
+            "speaker": "Collega",
+            "text": "En jij komt uit Valencia! Het bedrijf is klein, maar internationaal."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Precies!"
+          }
+        ]
+      },
+      "id": "842e37f9-62b5-4583-8081-26bbdddc48b6"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Eet smakelijk!",
+              "meaning": "Enjoy your meal!",
+              "example": "Hoi allemaal! Eet smakelijk!",
+              "note": "Said when people start eating; a fixed chunk, not a verb lesson.",
+              "id": "110d17ee-4b3c-4d6b-995b-ca61bab97101"
+            },
+            {
+              "term": "de collega",
+              "meaning": "colleague",
+              "forms": "de collega's",
+              "example": "De collega komt uit België.",
+              "id": "d94991d4-7b89-4aaf-9458-fb6cf08655f1"
+            },
+            {
+              "term": "Echt?",
+              "meaning": "Really?",
+              "example": "Echt? Karin komt uit Amersfoort.",
+              "id": "3a5f33fd-bd1f-4df8-ac4f-f385d41b4f3a"
+            },
+            {
+              "term": "Precies!",
+              "meaning": "Exactly!",
+              "example": "Het bedrijf is klein, maar internationaal. — Precies!",
+              "note": "Daan's habit.",
+              "id": "b4e2f4e9-f935-47ce-836c-af4b9768a8c3"
+            },
+            {
+              "term": "internationaal",
+              "meaning": "international",
+              "example": "Het bedrijf is klein, maar internationaal.",
+              "id": "631a3c40-058f-4f61-bb75-18095d515cf0"
+            }
+          ]
+        }
+      },
+      "id": "376a3c3f-eea9-4f38-a736-2608490e00b2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "zijn and komen together",
+      "id": "8b227b6f-2a64-4424-ba9a-78771e859e20"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Put zijn and komen side by side to say who someone is and where they are from. Use one person per sentence."
+      ],
+      "id": "c070dea7-c173-435c-a448-7e0de0c73a58"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This is Daan. He's a programmer. He's from Utrecht.",
+        "note": "Dit is … introduces a person (01-b); jobs without een; then komen uit."
+      },
+      "content": [
+        "Dit is Daan. ",
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " programmeur. ",
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uit Utrecht",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "f48c425f-8476-4b90-a02a-76b3861f6e96"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you Sofia? — Yes, that's me!",
+        "note": "ben jij has no t, just like kom jij (01-b)."
+      },
+      "content": [
+        {
+          "text": "Ben",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " Sofia? — Ja, dat ben ik!"
+      ],
+      "id": "37915e4c-ce2f-4f50-b7f1-0fac79114d80"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Karin is from Amersfoort and Daan is from Utrecht.",
+        "note": "Two people: two short sentences joined with en, each with komt."
+      },
+      "content": [
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uit Amersfoort",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " en ",
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uit Utrecht",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "c3fdecc3-947d-49a6-945c-27a1180effb9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The company is small, but international.",
+        "note": "maar = but (01-b)."
+      },
+      "content": [
+        {
+          "text": "Het bedrijf",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " klein, maar internationaal."
+      ],
+      "id": "5495e174-a020-4b32-b595-257e10db0c7a"
+    },
+    {
+      "type": "divider",
+      "id": "938761b3-50a3-4f08-950a-83415b5efd40"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "31827893-906f-4113-ba41-053c9f0e3c63"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in kom or komt",
+      "id": "b07d2106-57d9-424a-933d-292fd245c34f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in kom or komt. Example: Ik (komen) uit Valencia. → kom",
+          "items": [
+            {
+              "prompt": "Ik … uit Spanje.",
+              "authorsVersion": [
+                "kom"
+              ],
+              "note": "ik → kom, no t."
+            },
+            {
+              "prompt": "Daan … uit Utrecht.",
+              "authorsVersion": [
+                "komt"
+              ],
+              "note": "A name works like hij: komt."
+            },
+            {
+              "prompt": "Karin … uit Amersfoort.",
+              "authorsVersion": [
+                "komt"
+              ],
+              "note": "A name works like zij: komt."
+            },
+            {
+              "prompt": "U … uit België.",
+              "authorsVersion": [
+                "komt"
+              ],
+              "note": "u always takes komt."
+            },
+            {
+              "prompt": "Jij … uit Valencia.",
+              "authorsVersion": [
+                "komt"
+              ],
+              "note": "jij before the verb keeps the t: komt."
+            },
+            {
+              "prompt": "Waar … je vandaan?",
+              "authorsVersion": [
+                "kom"
+              ],
+              "note": "je right after the verb: no t."
+            },
+            {
+              "prompt": "… jij ook uit Utrecht?",
+              "authorsVersion": [
+                "Kom"
+              ],
+              "note": "jij right after the verb in a question: no t."
+            }
+          ]
+        }
+      },
+      "id": "676dea82-978b-4a6e-8b88-418e1837acdd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the dialogues",
+      "id": "f379f767-3609-43e6-93a8-03022cdb61eb"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the short exchanges. Fill in one word per blank. Example: Sofia: Waar … jij vandaan? → kom",
+          "items": [
+            {
+              "prompt": "Daan: Waar kom je …? / Sofia: Ik kom … Spanje.",
+              "authorsVersion": [
+                "vandaan",
+                "uit"
+              ],
+              "note": "vandaan at the end of the question; uit before the country."
+            },
+            {
+              "prompt": "Sofia: Waar … u vandaan, meneer? / Meneer: Ik kom … Engeland.",
+              "authorsVersion": [
+                "komt",
+                "uit"
+              ],
+              "note": "Formal: komt u. uit before the country."
+            },
+            {
+              "prompt": "Collega: … jij Sofia? / Sofia: Ja, dat … ik. Ik … uit Valencia.",
+              "authorsVersion": [
+                "Ben",
+                "ben",
+                "kom"
+              ],
+              "note": "Recycles zijn (01-b) alongside komen."
+            },
+            {
+              "prompt": "Sofia: Waar … Amersfoort? / Karin: Amersfoort is … Nederland.",
+              "authorsVersion": [
+                "is",
+                "in"
+              ],
+              "note": "is for location; in + country."
+            }
+          ]
+        }
+      },
+      "id": "f2b2b32d-002f-4716-b63e-604fcd2d1e8f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "b0ee7d9b-f8ba-4911-a21c-ec8f96a07c10"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the full sentence, with a capital letter and a question mark or full stop. Example: ben / Sofia / ik → Ik ben Sofia.",
+          "items": [
+            {
+              "prompt": "Put in order: kom / uit / ik / Spanje",
+              "authorsVersion": [
+                "Ik kom uit Spanje."
+              ],
+              "note": "Subject first, then the verb, then uit + the country."
+            },
+            {
+              "prompt": "Put in order: vandaan / kom / waar / je",
+              "authorsVersion": [
+                "Waar kom je vandaan?"
+              ],
+              "note": "waar first, then kom, then je, then vandaan at the very end."
+            },
+            {
+              "prompt": "Put in order: komt / uit / Daan / Utrecht",
+              "authorsVersion": [
+                "Daan komt uit Utrecht."
+              ],
+              "note": "A name works like hij/zij: komt."
+            },
+            {
+              "prompt": "Put in order: u / waar / vandaan / komt",
+              "authorsVersion": [
+                "Waar komt u vandaan?"
+              ],
+              "note": "waar first, then komt, then u, then vandaan at the end."
+            },
+            {
+              "prompt": "Put in order: jij / ook / kom / uit Utrecht",
+              "authorsVersion": [
+                "Kom jij ook uit Utrecht?"
+              ],
+              "note": "jij right after the verb: kom, no t."
+            }
+          ]
+        }
+      },
+      "id": "82556d2c-9ad6-4c79-a8bb-1979a2b1ab90"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Transformation",
+      "id": "774c1f37-f0cd-4ed6-9ba1-69ce19e0d462"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence. In 1 to 3, make a question with Waar … vandaan? In 4 to 5, make a yes/no question. In 6, replace the name with a pronoun. Example: Hij komt uit Italië. → Waar komt hij vandaan?",
+          "items": [
+            {
+              "prompt": "Daan komt uit Utrecht.",
+              "authorsVersion": [
+                "Waar komt Daan vandaan?"
+              ],
+              "note": "A name keeps komt in the question too."
+            },
+            {
+              "prompt": "Jij komt uit Valencia.",
+              "authorsVersion": [
+                "Waar kom jij vandaan?"
+              ],
+              "note": "jij right after the verb: komt → kom."
+            },
+            {
+              "prompt": "U komt uit Polen.",
+              "authorsVersion": [
+                "Waar komt u vandaan?"
+              ],
+              "note": "u always keeps komt, even in a question."
+            },
+            {
+              "prompt": "Jij komt uit Engeland.",
+              "authorsVersion": [
+                "Kom jij uit Engeland?"
+              ],
+              "note": "jij right after the verb: komt → kom."
+            },
+            {
+              "prompt": "Karin komt uit Amersfoort.",
+              "authorsVersion": [
+                "Komt Karin uit Amersfoort?"
+              ],
+              "note": "A name keeps komt in a yes/no question."
+            },
+            {
+              "prompt": "Sofia komt uit Spanje.",
+              "authorsVersion": [
+                "Ze komt uit Spanje."
+              ],
+              "note": "One woman: ze (recycles 01-b)."
+            }
+          ]
+        }
+      },
+      "id": "f908bc97-69ac-4877-b74b-b41d38f6064e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "bfdcdf29-1e73-45d5-aeac-4a35f334e88d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Example: I am from Valencia. → Ik kom uit Valencia.",
+          "items": [
+            {
+              "prompt": "Where are you from?",
+              "authorsVersion": [
+                "Waar kom je vandaan?"
+              ],
+              "note": "Also fine: Waar komt u vandaan? (formal)"
+            },
+            {
+              "prompt": "I am from Spain.",
+              "authorsVersion": [
+                "Ik kom uit Spanje."
+              ],
+              "note": "Not Ik ben uit Spanje: use komen, not zijn."
+            },
+            {
+              "prompt": "Daan is from Utrecht.",
+              "authorsVersion": [
+                "Daan komt uit Utrecht."
+              ],
+              "note": "Use komen, not zijn, for where someone is from."
+            },
+            {
+              "prompt": "Are you from Belgium too?",
+              "authorsVersion": [
+                "Kom jij ook uit België?"
+              ],
+              "note": "Also fine: Komt u ook uit België? (formal)"
+            },
+            {
+              "prompt": "Valencia is a city in Spain.",
+              "authorsVersion": [
+                "Valencia is een stad in Spanje."
+              ],
+              "note": "de stad; in + the country."
+            }
+          ]
+        }
+      },
+      "id": "174dc43a-7504-4e60-9980-13448f692dea"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "eaacb4d6-ba03-42e8-9aec-e79aa77b86dc"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English. Example: Ik kom uit Spanje. → I come from Spain.",
+          "items": [
+            {
+              "prompt": "Waar komt u vandaan?",
+              "authorsVersion": [
+                "Where are you from?"
+              ],
+              "note": "Formal, with u."
+            },
+            {
+              "prompt": "Hij komt uit Antwerpen, in België.",
+              "authorsVersion": [
+                "He comes from Antwerp, in Belgium."
+              ],
+              "note": "Antwerpen = Antwerp in English."
+            },
+            {
+              "prompt": "Amersfoort is heel dichtbij.",
+              "authorsVersion": [
+                "Amersfoort is very close by."
+              ],
+              "note": "dichtbij = close by, nearby."
+            },
+            {
+              "prompt": "Het bedrijf is klein, maar internationaal.",
+              "authorsVersion": [
+                "The company is small, but international."
+              ],
+              "note": "maar = but (recycled from 01-b)."
+            }
+          ]
+        }
+      },
+      "id": "5379c33a-47b6-4f0a-9e8a-f0ca93e62416"
+    },
+    {
+      "type": "divider",
+      "id": "48b57c3e-f8d2-4bbd-a85e-3605d3c0bef4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Het team: wie is wie?",
+      "id": "254d64a2-ee4a-4e34-a630-bc66d258bf81"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "After lunch, Sofia reads the team page on the company website. ",
+        {
+          "text": "wie is wie",
+          "styles": {
+            "italic": true
+          }
+        },
+        " means ",
+        {
+          "text": "“who's who”",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "e1391e9b-1852-4f2c-8444-a0f2b59c7a75"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the team page. Answer each question in Dutch; short answers are fine. Example: Wie komt uit Valencia? → Sofia.",
+          "passage": {
+            "title": "Het team: wie is wie?",
+            "content": "Karin Smit is teamleider. Ze komt uit Amersfoort. Amersfoort is een stad in Nederland, heel dichtbij.\nDaan de Vries is programmeur. Hij komt uit Utrecht. Utrecht is groot en gezellig.\nSofia Moreno is ook programmeur. Ze is nieuw in het team. Ze komt uit Valencia, in Spanje.\nHet team is klein, maar internationaal!"
+          },
+          "items": [
+            {
+              "prompt": "Waar komt Karin vandaan?",
+              "authorsVersion": [
+                "Uit Amersfoort."
+              ],
+              "note": "The page says: Ze komt uit Amersfoort. Also fine: Ze komt uit Amersfoort."
+            },
+            {
+              "prompt": "Wie komt uit Utrecht?",
+              "authorsVersion": [
+                "Daan."
+              ],
+              "note": "The page says about Daan: Hij komt uit Utrecht."
+            },
+            {
+              "prompt": "Wie is teamleider?",
+              "authorsVersion": [
+                "Karin."
+              ],
+              "note": "The page says: Karin Smit is teamleider."
+            },
+            {
+              "prompt": "Klopt dit? Amersfoort is in België.",
+              "authorsVersion": [
+                "Nee, Amersfoort is in Nederland."
+              ],
+              "note": "The page says: Amersfoort is een stad in Nederland."
+            },
+            {
+              "prompt": "Klopt dit? Amersfoort is ver.",
+              "authorsVersion": [
+                "Nee, Amersfoort is heel dichtbij."
+              ],
+              "note": "The page says: heel dichtbij (close by), not ver (far)."
+            },
+            {
+              "prompt": "Wie is nieuw in het team?",
+              "authorsVersion": [
+                "Sofia."
+              ],
+              "note": "The page says about Sofia: Ze is nieuw in het team."
+            }
+          ]
+        }
+      },
+      "id": "81ddfc2c-c454-43c1-909a-8c12f36d859d"
+    },
+    {
+      "type": "divider",
+      "id": "09658c82-fdd6-4013-bacc-4f157260aa3c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "528ce429-c925-4363-bd5a-dca935531f61"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 2-4 short sentences: say who you are and your job, say where you are from (city and country), and ask someone where they are from.",
+          "items": [
+            {
+              "prompt": "Write 2-4 short sentences: say who you are and your job, say where you are from, and ask someone where they are from.",
+              "authorsVersion": [
+                "Hoi! Ik ben Sofia. Ik ben programmeur. Ik kom uit Valencia, in Spanje. En jij? Waar kom jij vandaan?"
+              ],
+              "note": "Model answer by Sofia. Also fine with u: Waar komt u vandaan?"
+            }
+          ]
+        }
+      },
+      "id": "3198255a-4b2c-495d-9fd9-40e272abf39d"
+    },
+    {
+      "type": "divider",
+      "id": "19b9b1ff-b82a-4ef1-8496-29805a1b7fd8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "78417496-a652-469b-9cd1-b390d872ee67"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Ik kom uit + city/country (uit, not van).",
+      "id": "01af4481-1adc-4d81-871c-5c9b488756bd"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "ik kom; jij, u, hij, zij komt.",
+      "id": "45dff76a-c1a0-4f26-b14d-8a085a595470"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Waar kom je vandaan? / Waar komt u vandaan? (vandaan at the end).",
+      "id": "bca4a387-772c-48f0-a2ff-68a52386eb05"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "kom je / kom jij: no t when je/jij comes right after the verb (like ben jij).",
+      "id": "da8c2102-da12-4d85-bbfd-cdff4594f03c"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Waar kom je vandaan?",
+      "location": "sofia-office",
+      "characters": [
+        "sofia",
+        "daan"
+      ],
+      "extras": [
+        "Karin, a team leader: a calm, organised woman of about 48 with short dark hair with a silver streak, black glasses and a charcoal turtleneck"
+      ],
+      "action": "Lunchtime at a table in the office. Sofia, Daan and Karin eat sandwiches together; Sofia talks with her hands.",
+      "description": "Sofia, Daan and Karin having lunch together at a table in the office, with sandwiches and mugs.",
+      "alt": "Three colleagues eating lunch together at an office table."
+    },
+    {
+      "afterHeading": "Story: Een collega uit België",
+      "extras": [
+        "a man in his forties with short grey-brown hair, a neat beard and a dark-green sweater"
+      ],
+      "action": "A man in his forties sits down at the lunch table with a lunch box and waves to the others.",
+      "description": "A colleague from another team joins the lunch table with his own lunch box.",
+      "alt": "A man joining colleagues at a lunch table."
+    }
+  ],
+  "id": "0b7c2f52-c34b-4aea-bbb5-27548b7cd46f"
+}

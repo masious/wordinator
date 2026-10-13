@@ -1,0 +1,3171 @@
+{
+  "title": "De of het?",
+  "goal": "Know that Dutch nouns are either de-words or het-words; use een (and geen, mijn, haar …) with both; learn the rules of thumb (people mostly de but het kind/het meisje, all plurals de, -je words het, languages het, compounds by the last part); tell het = the from het = it.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "De of het?",
+      "id": "832d1bd2-fcf5-4f34-99cc-6e53dbc1eaf6"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is still Sunday morning, after Sofia and Noor looked at family photos. Els, Noor's elderly neighbour, comes round with her granddaughter — and a six-year-old turns out to be a very strict Dutch teacher. In this lesson you will learn why Dutch has two words for “the”, de and het, a few rules of thumb that help you choose, and why you should learn every noun with its article.",
+      "id": "4f731aa2-ce89-4926-91a5-6dcf8a6cd3e0"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " and de-words are ",
+        {
+          "text": "pink",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        ", ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        " and het-words are ",
+        {
+          "text": "brown",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " (new from this lesson); ",
+        {
+          "text": "een",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", the possessives and the target forms are ",
+        {
+          "text": "bold",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "48eaf9df-552f-4d7f-a164-81898ead0758"
+    },
+    {
+      "type": "divider",
+      "id": "aeaea1e4-5430-4204-8c3d-a0f00fa5fa97"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Oma Els",
+      "id": "5065210b-9f52-4ac4-8e47-eb5c763928c8"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Sunday, late morning. Els, the neighbour, is at the door with her six-year-old granddaughter.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "114c07b1-3d3e-4697-a7f4-b22a62f6c271"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Els",
+            "text": "Goedemorgen, Noor! Goedemorgen, Sofia!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goedemorgen, Els! Is dit uw kleindochter?"
+          },
+          {
+            "speaker": "Els",
+            "text": "Ja! Dit is Tess."
+          },
+          {
+            "speaker": "Tess",
+            "text": "Hoi! Ik ben zes!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Tess! Ik ben Sofia. Ik ben achtentwintig."
+          },
+          {
+            "speaker": "Tess",
+            "text": "Achtentwintig? Oud!"
+          },
+          {
+            "speaker": "Els",
+            "text": "Tess! Achtentwintig is niet oud."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Een kopje thee, Els? En jij, Tess?"
+          },
+          {
+            "speaker": "Els",
+            "text": "Ja, graag."
+          },
+          {
+            "speaker": "Tess",
+            "text": "Water, graag! En een koekje, alsjeblieft!"
+          }
+        ]
+      },
+      "id": "5203240a-24b5-4a14-ab22-074c799c10bf"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het kopje",
+              "meaning": "cup",
+              "forms": "de kopjes",
+              "example": "Een kopje thee, Els?",
+              "id": "981abecc-e64f-45ac-a33e-53454af35990"
+            },
+            {
+              "term": "een kopje thee",
+              "meaning": "a cup of tea",
+              "id": "bd9a4da7-c9ab-471c-a104-af2b33acbdbe"
+            },
+            {
+              "term": "het koekje",
+              "meaning": "biscuit, cookie",
+              "forms": "de koekjes",
+              "example": "En een koekje, alsjeblieft!",
+              "id": "3f57a2d1-982a-434c-a3dd-12f4ef82fa80"
+            },
+            {
+              "term": "alsjeblieft",
+              "meaning": "please (informal); also “here you are” when you hand something over",
+              "note": "alstublieft is formal (01-b: “Een moment, alstublieft.”).",
+              "example": "Alsjeblieft, Tess!",
+              "id": "7ff12c9b-3bf5-41c6-b6ca-252809bd5e1b"
+            }
+          ]
+        }
+      },
+      "id": "47a1ad59-d2e4-4896-9af3-f20d1bdadc21"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Els, is this your granddaughter? — Yes! This is Tess.",
+        "note": "Is dit …? is the yes/no question form of Dit is … (01-b), verb first (03-b); people only, a chunk. uw = your, formal (05-a)."
+      },
+      "content": [
+        "Els, is dit uw kleindochter? — Ja! Dit is Tess."
+      ],
+      "id": "c3a1e23d-034a-4eab-95c3-af32f33cb27f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "A cup of tea, Els? — Yes, please.",
+        "note": "een kopje thee = a cup of tea, what you offer a visitor. het kopje is a -je word, so a het-word (rules of thumb below)."
+      },
+      "content": [
+        "Een ",
+        {
+          "text": "kopje",
+          "styles": {
+            "bold": true
+          }
+        },
+        " thee, Els? — Ja, graag."
+      ],
+      "id": "cd780a46-ca79-49d7-89d5-1f003eba36e8"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Twenty-eight is not old.",
+        "note": "Els's answer to Tess's cheeky joke. niet before an adjective (03-b); Noor said the same in 04-a."
+      },
+      "content": [
+        "Achtentwintig is ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " oud."
+      ],
+      "id": "413d9603-8921-4b21-ae56-a85ea1694ed5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Water, please! And a biscuit, please!",
+        "note": "Tess is a child, so she says jij/je to everyone. alsjeblieft = please (informal); Els and Sofia would say alstublieft to someone they call u."
+      },
+      "content": [
+        "Water, graag! En een koekje, alsjeblieft!"
+      ],
+      "id": "4972ebd3-738d-4017-b92c-474b94dc5c5e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "auto"
+      },
+      "content": [
+        "Children say jij/je to everyone, and adults say je to children. Tess calls Els ",
+        {
+          "text": "oma",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "(grandma)",
+          "styles": {
+            "italic": true
+          }
+        },
+        " — that is also what she says straight to her: “Oma!”. A visit comes with “een kopje thee” and often one koekje from the tin — just one, politely."
+      ],
+      "id": "828bfa60-e989-4271-b94a-0ffd97cd012f"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de oma",
+              "meaning": "grandma",
+              "forms": "de oma's",
+              "note": "also what children call her: “Oma!”",
+              "id": "02988236-bf01-480d-93bc-57429fe7e012",
+              "example": "Els is de oma van Tess."
+            }
+          ]
+        }
+      },
+      "id": "b13ac10c-b7b0-42fe-bf43-e375ece1ee83"
+    },
+    {
+      "type": "divider",
+      "id": "bca6adb7-9336-4db0-add4-c0068639e86c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "De and het: two words for ‘the’",
+      "id": "e819c631-d6ea-4c30-8d8c-08c5a34ca034"
+    },
+    {
+      "type": "paragraph",
+      "content": "English has one word, “the”. Spanish el/la follows masculine and feminine. Dutch does neither: every noun is either a de-word or a het-word, and you simply learn which one with the word — de covers what Spanish splits into el and la (de man, de vrouw), and het is a third group on its own (het huis, het boek). The question every learner (and teacher) asks is exactly the title of this lesson: De of het?",
+      "id": "1ae214d8-0ea8-49d1-be5b-5946e6c4dfb5"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de",
+              "meaning": "the (for de-words, and for every plural)",
+              "id": "ed3be612-8d76-4d49-ae8c-d90a682df07a"
+            },
+            {
+              "term": "het",
+              "meaning": "the (for het-words); also “it” in Hoe gaat het? (01-b)",
+              "id": "443e7136-f72a-4478-8ea5-4001829b6575"
+            },
+            {
+              "term": "De of het?",
+              "meaning": "“de or het?” — the question you ask about every new noun",
+              "example": "Huis: de of het?",
+              "id": "4af3a0bf-efe7-4887-a63e-3e038f0f72a6"
+            },
+            {
+              "term": "het huis",
+              "meaning": "house",
+              "forms": "de huizen",
+              "example": "Het huis is oud.",
+              "id": "75c008bf-39b5-4705-842f-cffe062276ed"
+            }
+          ]
+        }
+      },
+      "id": "96455eab-f058-4ceb-9306-e5d937319426"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "auto"
+      },
+      "content": [
+        "Spanish gender does not help here: ",
+        {
+          "text": "la casa",
+          "styles": {
+            "italic": true
+          }
+        },
+        " → ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        " huis; ",
+        {
+          "text": "el libro",
+          "styles": {
+            "italic": true
+          }
+        },
+        " → ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        " boek; ",
+        {
+          "text": "la ciudad",
+          "styles": {
+            "italic": true
+          }
+        },
+        " → ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " stad. de = el and la together."
+      ],
+      "id": "18a007ac-4a23-4ce7-be72-7f89de6f0406"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The city is small, but the country is big.",
+        "note": "Often there is no reason you can see: de stad, but het land. Learn each card."
+      },
+      "content": [
+        {
+          "text": "De",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " stad is klein, maar ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        " land is groot."
+      ],
+      "id": "aef001e6-449a-4797-a181-553fb4d839bc"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The phone is new, but the house is old.",
+        "note": "de telefoon (04-a) and het huis: no pattern connects them — just learn the card."
+      },
+      "content": [
+        {
+          "text": "De",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " telefoon is nieuw, maar ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " huis is oud."
+      ],
+      "id": "384ce606-a86e-46fe-9070-1708ff30a0d5"
+    },
+    {
+      "type": "divider",
+      "id": "2aeff566-bf71-4528-9ad3-8598db4e4723"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: De of het?",
+      "id": "e2a97ad4-c661-4707-97d5-e31f3bbd8372"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "At the kitchen table. Tess knows that Sofia is learning Dutch.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "46694c35-71b4-4d31-bc7d-e34bd78f9916"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Tess",
+            "text": "Sofia, spreek jij Nederlands?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Een beetje. Ik leer Nederlands."
+          },
+          {
+            "speaker": "Tess",
+            "text": "Huis: de of het?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "De huis?"
+          },
+          {
+            "speaker": "Tess",
+            "text": "Nee! Het huis!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Oké, het huis. En meisje? De meisje?"
+          },
+          {
+            "speaker": "Tess",
+            "text": "Nee! Het meisje! Ik ben een meisje."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Het meisje? Maar de vrouw!"
+          },
+          {
+            "speaker": "Els",
+            "text": "Ja. De vrouw, de man, de jongen. Maar het meisje en het kind."
+          },
+          {
+            "speaker": "Tess",
+            "text": "Nederlands is makkelijk!"
+          }
+        ]
+      },
+      "id": "598b41a4-cdd2-4ba7-95da-d5aedd31a393"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het meisje",
+              "meaning": "girl",
+              "forms": "de meisjes",
+              "note": "a -je word, so het — but the pronoun follows the person: ze.",
+              "example": "Het meisje heet Tess.",
+              "id": "a04ec621-36c5-4972-a788-1c7500864afc"
+            },
+            {
+              "term": "het kind",
+              "meaning": "child",
+              "forms": "de kinderen",
+              "note": "het, but the pronoun follows the person: hij or ze.",
+              "id": "ba666e54-f642-4eeb-a103-c42f82410071"
+            },
+            {
+              "term": "de jongen",
+              "meaning": "boy",
+              "forms": "de jongens",
+              "id": "bcef7e3a-2792-4885-ad32-97bb347187f2"
+            }
+          ]
+        }
+      },
+      "id": "73101ba2-2942-4765-a85c-b425b5723298"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "House: de or het? — Het huis!",
+        "note": "Tess's quiz question: a word, then De of het? Ask it about every new noun."
+      },
+      "content": [
+        "Huis: ",
+        {
+          "text": "de of het?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " — ",
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " huis!"
+      ],
+      "id": "1515713e-e5a3-463d-8078-eaf3df3bfd8b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "“De” house? — No! The house!",
+        "note": "Sofia's learner mistake (grey), corrected at once in the next line: het huis."
+      },
+      "content": [
+        {
+          "text": "De huis?",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " — Nee! ",
+        {
+          "text": "Het",
+          "styles": {
+            "bold": true,
+            "textColor": "brown",
+            "backgroundColor": "yellow"
+          }
+        },
+        " huis!"
+      ],
+      "id": "d4f163cb-8c10-4c8b-aecb-073dc33b9e03"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The girl! I am a girl.",
+        "note": "een works for both de- and het-words: een meisje (grammar below)."
+      },
+      "content": [
+        {
+          "text": "Het",
+          "styles": {
+            "bold": true,
+            "textColor": "brown",
+            "backgroundColor": "yellow"
+          }
+        },
+        " meisje! Ik ben een meisje."
+      ],
+      "id": "2d0f2d3a-325f-40c5-a424-90b244ce791b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The woman, the man, the boy. But the girl and the child.",
+        "note": "Els's key line: most people words are de, but het meisje and het kind are the two important exceptions."
+      },
+      "content": [
+        {
+          "text": "De",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " vrouw, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " man, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " jongen. Maar ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true,
+            "textColor": "brown",
+            "backgroundColor": "yellow"
+          }
+        },
+        " meisje en ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        " kind."
+      ],
+      "id": "0af15b99-4600-4ca7-bcb7-4daf16ad5baa"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "auto"
+      },
+      "content": [
+        "Tess never thinks about de or het — she simply knows each word with its article. That is the goal: ",
+        {
+          "text": "learn every noun with de or het",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "e334ba89-c5b6-4b6b-b161-1d07eb04eab5"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "auto"
+      },
+      "content": [
+        {
+          "text": "de huis",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "het huis",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        "; ",
+        {
+          "text": "de meisje",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "het meisje",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        "; ",
+        {
+          "text": "de kind",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "het kind",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        ". And for a person: ",
+        {
+          "text": "Het meisje is zes. Het heet Tess.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " meisje is zes. ",
+        {
+          "text": "Ze heet Tess.",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        " Use ze or hij for a person, not het."
+      ],
+      "id": "10d49a34-88d3-4b74-a191-6e6f0825d4d9"
+    },
+    {
+      "type": "divider",
+      "id": "724428ee-0b25-4166-8bb8-6e38f4155de4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "een and geen work for both",
+      "id": "21f5a111-3816-4709-9ecd-7d6a745c67c3"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "een ",
+        {
+          "text": "(a/an)",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and geen ",
+        {
+          "text": "(no/not a)",
+          "styles": {
+            "italic": true
+          }
+        },
+        " do not care whether the noun is de or het — they work for both: een fiets, een huis; geen fiets, geen huis. So “Ik heb een fiets.” and “Tess heeft een konijn.” never need a de/het choice."
+      ],
+      "id": "7142f8be-c460-490e-87b4-67e223b9830f"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het konijn",
+              "meaning": "rabbit",
+              "forms": "de konijnen",
+              "example": "Het konijn van Tess heet Pluis.",
+              "id": "a9e759cf-4989-44d6-95a4-1b54dfc2d703"
+            }
+          ]
+        }
+      },
+      "id": "6e29f3ad-2e30-4d49-8cdf-995e2a5338d2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "the bike → a bike → my bike  /  the house → a house → my house",
+        "note": "een replaces de or het; a possessive (05-a) replaces them too, the same way."
+      },
+      "content": [
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " fiets → ",
+        {
+          "text": "een",
+          "styles": {
+            "bold": true
+          }
+        },
+        " fiets → mijn fiets  /  ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " huis → ",
+        {
+          "text": "een",
+          "styles": {
+            "bold": true
+          }
+        },
+        " huis → mijn huis"
+      ],
+      "id": "3ebe58c5-961d-45d0-a1ea-db4e4966da9c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor has a bike. Sofia has no bike.",
+        "note": "Recycles 04-b: geen replaces een. Sofia still has no bike."
+      },
+      "content": [
+        "Noor heeft een fiets. Sofia heeft ",
+        {
+          "text": "geen",
+          "styles": {
+            "bold": true
+          }
+        },
+        " fiets."
+      ],
+      "id": "c818b9f4-ff8e-4426-befa-c138db3d5e6f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Tess has a rabbit. The rabbit is called Pluis.",
+        "note": "A new story fact: Tess's rabbit is called Pluis. The second sentence repeats the noun (het konijn), not “Het is…” (14-a)."
+      },
+      "content": [
+        "Tess heeft ",
+        {
+          "text": "een",
+          "styles": {
+            "bold": true
+          }
+        },
+        " konijn. ",
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " konijn heet Pluis."
+      ],
+      "id": "0f85a6e9-454f-411c-a4a3-d7e8a033cdfe"
+    },
+    {
+      "type": "divider",
+      "id": "ecfce096-6204-4324-915e-79dcc01481a3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Rules of thumb",
+      "id": "b4514852-4d1f-4f4e-9cc0-a8b5519160de"
+    },
+    {
+      "type": "paragraph",
+      "content": "There is rarely a reason you can see for de or het — but a few facts help you guess. Learn them as facts, not as things to work out.",
+      "id": "e2820ce4-fc82-4575-a5f9-745abb080145"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "People words are mostly de",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " man, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " vrouw, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " jongen, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " vriend, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " vriendin, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " broer, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " zus, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " moeder, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " vader, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " oma, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " kleindochter, ",
+        {
+          "text": "de buurman",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " buurvrouw, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " collega, and jobs (",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " programmeur, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " kok, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " lerares). Two important exceptions: ",
+        {
+          "text": "het kind",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        " and ",
+        {
+          "text": "het meisje",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        ". For a person, the pronoun follows the person, not the article."
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            {
+              "text": "Het",
+              "styles": {
+                "textColor": "brown"
+              }
+            },
+            " meisje heet Tess. ",
+            {
+              "text": "Ze",
+              "styles": {
+                "bold": true,
+                "textColor": "green"
+              }
+            },
+            " is zes. (never ",
+            {
+              "text": "Het is zes",
+              "styles": {
+                "italic": true,
+                "backgroundColor": "gray"
+              }
+            },
+            ")"
+          ],
+          "id": "e9ed628c-08fc-4a27-bea4-ddbaedf6d361"
+        }
+      ],
+      "id": "572c9349-d9d6-47f3-8d77-e8bd95392c90"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "All plurals are de",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", also the plural of a het-word: ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " kind → ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " kinderen, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " meisje → ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " meisjes, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " huis → ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " huizen, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " boek → ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " boeken; ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " ouders (05-a). Look at the plural on every card — it always starts with de. (How to make a plural is lesson 10-a; here only the fact.)"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "Mijn ouders zijn in Groningen. (A plural subject takes only zijn in Part I.)"
+          ],
+          "id": "029149b0-0545-4a49-9532-a3b7278d6c55"
+        }
+      ],
+      "id": "92bc90fc-9fc9-42b5-a951-cb88ef725d3a"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Words ending in -je are always het",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " meisje, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " kopje, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " koekje. These are small, “little” words; lesson 10-b shows how they are made — here only the fact, no new -je word is formed."
+      ],
+      "id": "bb6c98d8-63f6-4990-8b13-a0df45eb516f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Languages are het",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (03-a): ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " Nederlands, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " Spaans, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " Engels — “Hoe zeg je … in ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " Nederlands?”. But the word for language itself is a de-word: ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " taal."
+      ],
+      "id": "9f7f7405-b1a6-498e-b852-a42c50fe068f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "In a compound, the last part decides",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " telefoon + ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " nummer → ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        " telefoonnummer; ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " telefoon + ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " winkel → ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " telefoonwinkel; ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " IT-bedrijf; ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " fietsstad; ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " kleindochter (all known words; compounds are one word, 04-a)."
+      ],
+      "id": "331905ff-d9af-4b02-b727-e2a4477ab4a6"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "Most nouns are de",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (about two in three). When you have to guess, guess de — but better: learn the card."
+      ],
+      "id": "59328e7d-f8dd-4829-a07c-119fcdaa73b0"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de buurman",
+              "meaning": "(male) neighbour",
+              "forms": "de buren (also de buurmannen)",
+              "note": "the male counterpart of de buurvrouw (01-a); stays unnamed and offstage.",
+              "id": "95d14a7b-9f47-44bc-92c2-68ccd2ace9c2"
+            }
+          ]
+        }
+      },
+      "id": "bceccdd9-8499-4b53-9c87-e0aa8a277088"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "auto"
+      },
+      "content": [
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " fiets → ",
+        {
+          "text": "een",
+          "styles": {
+            "bold": true
+          }
+        },
+        " fiets, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " huis → ",
+        {
+          "text": "een",
+          "styles": {
+            "bold": true
+          }
+        },
+        " huis; mijn fiets, mijn huis. And: every plural: ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        "."
+      ],
+      "id": "e4db3098-e31b-40ca-9fac-14772429eac2"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "auto"
+      },
+      "content": [
+        {
+          "text": "All plurals are de",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " kind → ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " kinderen; ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " ouders), and ",
+        {
+          "text": "-je words are always het",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " meisje, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " kopje, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " koekje)."
+      ],
+      "id": "20c73e2b-d9b7-4cdc-a965-e1a484157980"
+    },
+    {
+      "type": "divider",
+      "id": "1391e82e-a0f7-4d1d-b545-d864e1f75d57"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Learn every noun with its article",
+      "id": "91d08760-8298-415d-8f08-dfe188a9f691"
+    },
+    {
+      "type": "paragraph",
+      "content": "Since 01-a every card has shown de or het — now you know why. Learn “het huis”, not just “huis”; say it aloud with the article.",
+      "id": "440ca0f5-a1f0-44a5-aa7f-9a109893271d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Read the card: de or het?"
+      ],
+      "id": "633321a2-f8f9-48e3-a017-d56e250b10b3"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Say it with the article: ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " huis, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " fiets."
+      ],
+      "id": "ac9ba5ad-7872-4940-b2dd-c2ee92647ab4"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Check the rules of thumb: a person? a -je word? a plural? a language? a compound?"
+      ],
+      "id": "2b3617c4-2d61-428f-824e-6113adcfc2a3"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "With een, geen or a possessive, nothing changes: een huis, mijn huis."
+      ],
+      "id": "c3d8b89a-eace-4d2d-89e5-16ef8b02dc1f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Tess also lives in Utrecht-Oost, but not in Noor's street. Her school is also in Utrecht-Oost.",
+        "note": "New story fact. van + person (05-a): de straat van Noor = her street; haar school (possessive, no de/het needed)."
+      },
+      "content": [
+        "Tess woont ook in Utrecht-Oost, maar niet in ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " straat van Noor. Haar ",
+        {
+          "text": "school",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is ook in Utrecht-Oost."
+      ],
+      "id": "92c7ed1e-73d9-4a36-b8fd-df9dfb0b411d"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de straat",
+              "meaning": "street",
+              "forms": "de straten",
+              "id": "20f464da-09b7-4d66-aabf-f2031db57f64"
+            },
+            {
+              "term": "de school",
+              "meaning": "school",
+              "forms": "de scholen",
+              "id": "6262d933-630f-43bf-b6a4-684705a8e570"
+            }
+          ]
+        }
+      },
+      "id": "5ad82710-75d0-48dc-a739-502d5710f088"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "The big sort",
+      "id": "abaace85-37ed-48e4-ba2b-0d3e97e0bb8a"
+    },
+    {
+      "type": "paragraph",
+      "content": "Nouns from 01-a … 05-a and from this lesson, sorted. You should recognise almost every word — that is the point.",
+      "id": "1823199e-8f9c-4aec-b1ae-b19587553dc9"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "de",
+              "id": "135ef0bf-15fd-4f1a-ab9b-ec7838f96fe3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "People: ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " man, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " vrouw, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " jongen, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " moeder, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " broer, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " zus, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " oma, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " vriendin, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " buurvrouw, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " buurman, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " collega, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " teamleider, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " programmeur, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " verkoper"
+              ],
+              "id": "c6003d18-68d3-4c6d-8ec5-ff570b5073e1"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Food and drink: ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " koffie, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " thee, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " melk, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " wijn, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " kaas, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " boterham"
+              ],
+              "id": "cd1354db-e395-4dac-939c-55ed60c8b610"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Things: ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " fiets, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " bus, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " trein, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " auto, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " telefoon, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " laptop, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " foto, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " naam, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " taal, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " vraag"
+              ],
+              "id": "2be73a80-2caa-45c2-a49f-25f5ee56a8f6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Places: ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " stad, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " straat, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " school, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " receptie, ",
+                {
+                  "text": "de",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " telefoonwinkel"
+              ],
+              "id": "26da9836-d89b-4138-82bf-1ea2bf581bad"
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                {
+                  "text": "Plural: always de (de kinderen, de meisjes, de huizen, de boeken, de ouders).",
+                  "styles": {
+                    "italic": true
+                  }
+                }
+              ],
+              "id": "8898af39-5a70-4e25-b5a5-bd191bf9e89b"
+            }
+          ],
+          "id": "08adc7d7-c400-4499-88a4-4d638a13dfc1"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "het",
+              "id": "b5e196c8-cad7-45a8-9e41-2bdfdb1280cc"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "People: ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " kind, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " meisje"
+              ],
+              "id": "bcfebcc8-ac63-483b-b1ec-3309adf43f0f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Food and drink: ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " water, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " bier, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " kopje, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " koekje"
+              ],
+              "id": "caed2172-b03a-44f5-98c6-bbc35d36e5f5"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Things: ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " huis, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " boek, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " nummer, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " telefoonnummer, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " woord, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " alfabet, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " jaar, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " konijn"
+              ],
+              "id": "72ae6a83-77cc-4ee1-9f4f-6b09e4c81663"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Work: ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " werk, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " team, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " bedrijf, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " IT-bedrijf"
+              ],
+              "id": "f21d2154-7360-459b-a81d-4152f6e499f0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Places: ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " station, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " centrum, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " café, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " land, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " noorden"
+              ],
+              "id": "c74a1e28-075c-45e4-b1c4-a2ec8fa92c33"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Languages: ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " Nederlands, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " Spaans, ",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " Engels"
+              ],
+              "id": "352d0c4f-ef04-46f9-8125-e91f6c3a2cab"
+            }
+          ],
+          "id": "f5565759-167f-41a2-a212-6a41fc51a352"
+        }
+      ],
+      "id": "d209857a-97b6-4d23-a148-c8b4ea59cac7"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "auto"
+      },
+      "content": [
+        "In a compound, the last part decides (",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " telefoonnummer, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " telefoonwinkel). Most nouns are de (about two in three) — when you must guess, guess de, but better: learn the card."
+      ],
+      "id": "a452d3e0-ad80-471a-8886-5ca795ea91ba"
+    },
+    {
+      "type": "divider",
+      "id": "01e162b0-0389-444c-b781-b2e4c80d6af0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "When the de/het question disappears",
+      "id": "304a974b-7356-4c2b-8419-08e4df4e659f"
+    },
+    {
+      "type": "paragraph",
+      "content": "With een, geen and the possessives (05-a) there is nothing to choose: een huis / een fiets; geen huis / geen fiets; mijn huis / mijn fiets; haar konijn; uw kleindochter; je naam. The possessive replaces de/het, just like een does. With van, the article stays — you still need it: “het huis van Els” → “haar huis”; “de fiets van Noor” → “haar fiets”; “het konijn van Tess” → “haar konijn”. (Lessons 06-b and 07-a need de/het again, so learn the article even for words you mostly use with mijn or een.)",
+      "id": "be118f80-5a64-44d0-9bc3-3bca9df10041"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Tess's rabbit is called Pluis. = Her rabbit is called Pluis.",
+        "note": "van keeps the article (het konijn); the possessive drops it (haar konijn, never het haar konijn)."
+      },
+      "content": [
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " konijn van Tess heet Pluis. = Haar konijn heet Pluis."
+      ],
+      "id": "2f503162-db05-47d1-b3aa-f5eebe11ac45"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Tess's mother is Els's daughter.",
+        "note": "New story fact: Tess's (unnamed) mother is Els's daughter. van + person twice (05-a)."
+      },
+      "content": [
+        {
+          "text": "De",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " moeder van Tess is ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " dochter van Els."
+      ],
+      "id": "11c7ab52-fbbd-4a1d-bc74-b270503b40c9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Els is Tess's grandma.",
+        "note": "English 's → van + person (05-a), and van keeps the article: de oma van Tess = haar oma."
+      },
+      "content": [
+        "Els is ",
+        {
+          "text": "de oma",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " van Tess."
+      ],
+      "id": "df837237-31f0-4ba8-b0a8-e14d4ac96800"
+    },
+    {
+      "type": "divider",
+      "id": "f923d3a5-792c-46c4-9013-ee16e7da7361"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "het = the, het = it",
+      "id": "71ec8e16-47de-4dcb-8db1-250c6336c8ef"
+    },
+    {
+      "type": "paragraph",
+      "content": "Before a noun, het is the article: het huis, het meisje (brown). On its own as the subject, het is “it” (01-b): Hoe gaat het? Het gaat wel. Het is borrel! Is het ver? — Nee, het is niet ver. In Part I this “it” is only for the situation, the time or the distance in these known phrases. For a person, use hij or ze even after het kind / het meisje. For a thing, repeat the noun for now (het = it for things comes in 14-a).",
+      "id": "5a5ea656-51c6-43c7-8378-75fd68d836ee"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The girl is called Tess. She is six.",
+        "note": "Het meisje = the article (het, brown); but the pronoun for a person is ze, never het."
+      },
+      "content": [
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " meisje heet Tess. ",
+        {
+          "text": "Ze",
+          "styles": {
+            "bold": true,
+            "textColor": "green"
+          }
+        },
+        " is zes."
+      ],
+      "id": "1843d8fe-abd8-4b0a-9d20-2bbba4063205"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How are you? — Good! / The girl is six.",
+        "note": "Same word, two jobs: het = it only in known phrases like Hoe gaat het?; het = the before a noun."
+      },
+      "content": [
+        "Hoe gaat het? — Goed! (",
+        {
+          "text": "het",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = it)   /   ",
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " meisje is zes. (",
+        {
+          "text": "het",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = the)"
+      ],
+      "id": "d3458703-1d96-4466-a6ec-6c8f0ada416a"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "het = the",
+              "id": "85bc0364-f0d9-4d94-bcba-c4134d638e77"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " huis"
+              ],
+              "id": "b914dab9-678f-488a-83d7-306070fb0b4e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " meisje"
+              ],
+              "id": "90b76061-0fbf-420f-a30d-f4a4f7a48791"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " kind"
+              ],
+              "id": "78b2fc94-cd6f-4918-9bbf-82f6de685a43"
+            }
+          ],
+          "id": "9b1ef45f-5be2-4b65-a270-4643da0d09e9"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "het = it",
+              "id": "68d38a38-b857-4e51-828d-94ce97a25033"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Hoe gaat het?"
+              ],
+              "id": "ba9edcd5-9094-439d-9d4a-1be613eccef8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Het is borrel!"
+              ],
+              "id": "da00cacc-ddc3-4043-9b7a-601126ca48f7"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Het is niet ver."
+              ],
+              "id": "2a44aed9-f78c-4f7d-a83f-9b3512f4befd"
+            }
+          ],
+          "id": "91f45735-d669-44f3-951a-535746665c1d"
+        }
+      ],
+      "id": "5d9453db-1bbd-43b2-9628-a4371ca3b332"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "auto"
+      },
+      "content": [
+        "de is a short, weak “duh” (the same weak e as at the end of moeder); het is a weak “ut” — the h is often not heard, and in chat or speech you see/hear ",
+        {
+          "text": "'t",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ('t huis, Hoe gaat 't?; recognition only). -je sounds like “yuh” (Dutch j = English y, 04-a), and sj in meisje sounds like English “sh”: “MAY-shuh”."
+      ],
+      "id": "d98c946a-5c92-4bf2-9a14-f43112a51cc0"
+    },
+    {
+      "type": "divider",
+      "id": "ffb3594f-4346-49f9-9df5-bc7fc99b86b1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Wie is wie bij Tess?",
+      "id": "cd15138a-4f1d-4e59-9378-1d9c3cd16293"
+    },
+    {
+      "type": "paragraph",
+      "content": "Who is who? The visit in short, with the words of this lesson:",
+      "id": "1458a957-533f-4036-b1b1-776b60bdabbf"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Els — ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " buurvrouw van Noor, ongeveer zeventig"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "haar kleindochter: Tess, zes"
+          ],
+          "id": "1fdc0780-b418-4c68-a966-84b1ddd35032"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "haar dochter: ",
+            {
+              "text": "de",
+              "styles": {
+                "textColor": "pink"
+              }
+            },
+            " moeder van Tess"
+          ],
+          "id": "0e62f063-f3b3-4f9a-b1ab-bfd8b79b1575"
+        }
+      ],
+      "id": "f12d7fdc-1dc1-4ab8-a2c1-ddda5c3cfea6"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Tess"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "haar konijn: Pluis"
+          ],
+          "id": "291b0a7c-bbf9-4ca5-a503-ff4bc773d297"
+        }
+      ],
+      "id": "3047b238-34be-4b64-8510-855c882c3301"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "My parents are in Groningen.",
+        "note": "Recycled from 05-a: de ouders, the one plural noun, only with zijn in Part I."
+      },
+      "content": [
+        "Mijn ouders zijn in Groningen."
+      ],
+      "id": "bce5e223-76ad-4f0e-bb5f-120590c14c56"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How do you say “casa” in Dutch? — Huis. The house.",
+        "note": "Recycled from 03-a: Hoe zeg je … in het Nederlands? The answer adds the article: het huis."
+      },
+      "content": [
+        "Hoe zeg je “casa” in ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " Nederlands? — Huis. ",
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " huis."
+      ],
+      "id": "aac3fd09-e853-4b03-a94e-79467c546900"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Here you are, Tess!",
+        "note": "Here alsjeblieft means “here you are”: Noor says it when she hands Tess her koekje. Tess used the other meaning, “please”, in dialogue 1."
+      },
+      "content": [
+        "Alsjeblieft, Tess!"
+      ],
+      "id": "9781bef6-cc5e-44f2-9aff-6c0d764fb611"
+    },
+    {
+      "type": "divider",
+      "id": "15e32087-19ec-4de5-9462-d591c9bfd9aa"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "64fa1156-5a31-465c-b628-96a9db888176"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P1: De of het?",
+      "id": "0c501932-fc4d-49a5-b500-632f763a394b"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in de or het. Example: ___ man → de (a person).",
+          "items": [
+            {
+              "prompt": "… fiets.",
+              "authorsVersion": [
+                "de"
+              ],
+              "note": "a thing, no rule — but you know de fiets (04-b)."
+            },
+            {
+              "prompt": "… huis.",
+              "authorsVersion": [
+                "het"
+              ],
+              "note": "no rule you can see — learn the card."
+            },
+            {
+              "prompt": "… meisje.",
+              "authorsVersion": [
+                "het"
+              ],
+              "note": "a -je word: always het."
+            },
+            {
+              "prompt": "… station.",
+              "authorsVersion": [
+                "het"
+              ],
+              "note": "no rule — het station is a word from 01-a: learn the card."
+            },
+            {
+              "prompt": "… collega.",
+              "authorsVersion": [
+                "de"
+              ],
+              "note": "a person: de."
+            },
+            {
+              "prompt": "… nummer.",
+              "authorsVersion": [
+                "het"
+              ],
+              "note": "no rule — het nummer is a word from 04-a: learn the card."
+            }
+          ]
+        }
+      },
+      "id": "7ba29307-f789-4f00-a67a-4f168cd30380"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P2: Which rule?",
+      "id": "996adb4d-1ca4-41d9-ac9f-d15f75708678"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Name the article and the rule. Example: Nederlands → het (a language).",
+          "items": [
+            {
+              "prompt": "kinderen — which article, and why?",
+              "authorsVersion": [
+                "de — a plural noun."
+              ],
+              "note": "All plurals are de, also for a het-word: het kind → de kinderen."
+            },
+            {
+              "prompt": "koekje — which article, and why?",
+              "authorsVersion": [
+                "het — a -je word."
+              ],
+              "note": "Words ending in -je are always het."
+            },
+            {
+              "prompt": "Spaans — which article, and why?",
+              "authorsVersion": [
+                "het — a language."
+              ],
+              "note": "Languages are het (03-a)."
+            },
+            {
+              "prompt": "telefoonnummer — which article, and why?",
+              "authorsVersion": [
+                "het — a compound; the last part decides (het nummer)."
+              ],
+              "note": "de telefoon + het nummer → het telefoonnummer."
+            }
+          ]
+        }
+      },
+      "id": "3fea40ce-cb48-4f7c-b40f-97ae5d17165b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P3: Fill in de, het or een",
+      "id": "641f8b9a-1c42-403c-ae94-6c130e78571f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in de, het or een. Example: Ik heb ___ fiets. → een",
+          "items": [
+            {
+              "prompt": "… meisje heet Tess.",
+              "authorsVersion": [
+                "Het"
+              ],
+              "note": "a -je word: het."
+            },
+            {
+              "prompt": "Tess heeft … konijn.",
+              "authorsVersion": [
+                "een"
+              ],
+              "note": "een works for both de- and het-words."
+            },
+            {
+              "prompt": "… oma van Tess heet Els.",
+              "authorsVersion": [
+                "De"
+              ],
+              "note": "a person: de."
+            },
+            {
+              "prompt": "Noor heeft … fiets, maar Sofia heeft geen fiets.",
+              "authorsVersion": [
+                "een"
+              ],
+              "note": "een, then geen replaces it for Sofia (04-b)."
+            },
+            {
+              "prompt": "… moeder van Tess is … dochter van Els.",
+              "authorsVersion": [
+                "De",
+                "de"
+              ],
+              "note": "both words are people: de, twice."
+            }
+          ]
+        }
+      },
+      "id": "f7845926-48c2-4b17-aca3-bcedb2db5e28"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P4: Possessive or van",
+      "id": "e457ddac-859d-4d1c-adea-0f0acdc368e2"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite as shown. Example: Haar moeder woont in Groningen. (Noor) → De moeder van Noor woont in Groningen.",
+          "items": [
+            {
+              "prompt": "Rewrite with a possessive: het huis van Els",
+              "authorsVersion": [
+                "haar huis"
+              ],
+              "note": "van keeps the article; the possessive drops it."
+            },
+            {
+              "prompt": "Rewrite with a possessive: de fiets van Noor",
+              "authorsVersion": [
+                "haar fiets"
+              ],
+              "note": "Noor is a woman, so haar."
+            },
+            {
+              "prompt": "Rewrite with van: Haar konijn heet Pluis. (Tess)",
+              "authorsVersion": [
+                "Het konijn van Tess heet Pluis."
+              ],
+              "note": "with van the article comes back: het konijn."
+            },
+            {
+              "prompt": "Rewrite with van: Zijn vriendin is lerares. (Daan)",
+              "authorsVersion": [
+                "De vriendin van Daan is lerares."
+              ],
+              "note": "with van the article comes back: de vriendin."
+            }
+          ]
+        }
+      },
+      "id": "4d70461d-988e-4547-b881-2eb1cf79217c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P5: Plural = de",
+      "id": "2a6a21f4-8ae4-4171-b492-2b7e2372da7f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "The plural is given; fill in only the article. Example: het boek → ___ boeken → de",
+          "items": [
+            {
+              "prompt": "het kind → … kinderen",
+              "authorsVersion": [
+                "de"
+              ],
+              "note": "every plural is de, even for a het-word."
+            },
+            {
+              "prompt": "het meisje → … meisjes",
+              "authorsVersion": [
+                "de"
+              ],
+              "note": "every plural is de, even for a het-word."
+            },
+            {
+              "prompt": "het huis → … huizen",
+              "authorsVersion": [
+                "de"
+              ],
+              "note": "every plural is de, even for a het-word."
+            }
+          ]
+        }
+      },
+      "id": "1d417ec8-c913-4b3a-9478-c0297b09f81e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P6: het, ze or hij?",
+      "id": "48490b38-ce48-4c09-ac8e-ca3389a56d5e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in het, ze or hij. Example: Noor is de vriendin van Sofia. ___ is 25. → Ze",
+          "items": [
+            {
+              "prompt": "Hoe gaat …? — Goed!",
+              "authorsVersion": [
+                "het"
+              ],
+              "note": "het = it, only in known phrases like Hoe gaat het?"
+            },
+            {
+              "prompt": "Het meisje is zes. … heet Tess.",
+              "authorsVersion": [
+                "Ze"
+              ],
+              "note": "a person: ze, never het."
+            },
+            {
+              "prompt": "Het konijn heet Pluis. … konijn is klein.",
+              "authorsVersion": [
+                "Het"
+              ],
+              "note": "a thing: repeat the noun (het konijn), not “Het is”."
+            },
+            {
+              "prompt": "Javier is de broer van Sofia. … is kok.",
+              "authorsVersion": [
+                "Hij"
+              ],
+              "note": "a person: hij."
+            }
+          ]
+        }
+      },
+      "id": "a30dc137-8e43-4b8b-b7ec-581c94e157d4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P7: Dialogue completion",
+      "id": "0c08b223-287a-4424-b08b-90595bd562d9"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in one word per blank. Example: Tess: Bus: de of het? / Sofia: ___ bus! → De",
+          "items": [
+            {
+              "prompt": "Tess: Fiets: de of het? / Sofia: … fiets!",
+              "authorsVersion": [
+                "De"
+              ],
+              "note": "de fiets, known since 04-b."
+            },
+            {
+              "prompt": "Noor: Een … thee, Els? / Els: Ja, graag.",
+              "authorsVersion": [
+                "kopje"
+              ],
+              "note": "een kopje thee, from dialogue 1."
+            },
+            {
+              "prompt": "Tess: En een koekje, …! / Noor: Alsjeblieft, Tess!",
+              "authorsVersion": [
+                "alsjeblieft"
+              ],
+              "note": "alsjeblieft = please (informal). Noor answers with the same word: here it means “here you are”."
+            }
+          ]
+        }
+      },
+      "id": "35327e08-b8d8-4099-8f28-e6bff9675ecd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P8: Translate into Dutch",
+      "id": "a4bb1604-efa9-4643-a614-5e2f25289d68"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Example: The house is old. → Het huis is oud.",
+          "items": [
+            {
+              "prompt": "The girl is six.",
+              "authorsVersion": [
+                "Het meisje is zes."
+              ],
+              "note": "het meisje: a -je word."
+            },
+            {
+              "prompt": "Tess has a rabbit.",
+              "authorsVersion": [
+                "Tess heeft een konijn."
+              ],
+              "note": "a rabbit = een konijn: een works for de- and het-words alike."
+            },
+            {
+              "prompt": "Els is Tess's grandma.",
+              "authorsVersion": [
+                "Els is de oma van Tess."
+              ],
+              "note": "English 's → Dutch van + person (05-a): de oma van Tess. Also fine: Els is haar oma. (when it is clear who haar is)"
+            }
+          ]
+        }
+      },
+      "id": "18d5963b-d9ec-4a3f-b3cb-f8c9f7671d70"
+    },
+    {
+      "type": "divider",
+      "id": "d13354fe-a9bb-45ff-8ad8-0c1c791cf356"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Tess en oma Els",
+      "id": "daed0be7-2808-4336-bf46-b14a6200b6ad"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's note and answer the questions in Dutch; short answers are fine. Hoe oud = how old; Waar = where; Wie = who; Hoe heet = what is the name of; Klopt dit? = is this right? Example: Wie is Tess? → De kleindochter van Els.",
+          "items": [
+            {
+              "prompt": "Wie is Els?",
+              "authorsVersion": [
+                "De buurvrouw van Noor."
+              ]
+            },
+            {
+              "prompt": "Hoe oud is Tess?",
+              "authorsVersion": [
+                "Zes. / Ze is zes."
+              ]
+            },
+            {
+              "prompt": "Wie is de moeder van Tess?",
+              "authorsVersion": [
+                "De dochter van Els."
+              ]
+            },
+            {
+              "prompt": "Waar woont Tess?",
+              "authorsVersion": [
+                "In Utrecht-Oost."
+              ]
+            },
+            {
+              "prompt": "Hoe heet het konijn van Tess?",
+              "authorsVersion": [
+                "Pluis. / Haar konijn heet Pluis."
+              ]
+            },
+            {
+              "prompt": "Klopt dit? Tess drinkt thee.",
+              "authorsVersion": [
+                "Nee, ze drinkt water. / Nee, ze drinkt geen thee."
+              ]
+            }
+          ],
+          "passage": {
+            "title": "Tess en oma Els",
+            "content": "Els is de buurvrouw van Noor. Ze is ongeveer zeventig.\nHaar kleindochter heet Tess. Tess is zes. De moeder van Tess is de dochter van Els.\nTess woont ook in Utrecht-Oost, maar niet in de straat van Noor. Haar school is ook in Utrecht-Oost.\nTess heeft een konijn. Het konijn heet Pluis.\nEls drinkt thee. Tess drinkt geen thee: ze drinkt water. Ze eet een koekje.\nTess spreekt heel goed Nederlands. Ze is nu mijn lerares! Het huis, het meisje, het kind, de fiets … Nederlands is moeilijk!"
+          }
+        }
+      },
+      "id": "91bd34f4-6011-4ac7-b9a4-8c7c9bd6effa"
+    },
+    {
+      "type": "divider",
+      "id": "5c9fd37b-3c4f-48e1-8b12-18a7f62440ec"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "0c90ce47-945f-45dc-86b3-5fedb0be7806"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 2–4 short sentences about things and people in your life. Use one de-word and one het-word with de/het, and one noun with een, geen or mijn.",
+          "items": [
+            {
+              "prompt": "Write 2–4 short sentences about things and people in your life. Use one de-word and one het-word with de/het, and one noun with een, geen or mijn.",
+              "authorsVersion": [
+                "Het huis van Noor is in Utrecht-Oost. De buurvrouw heet Els. Ik heb een laptop, maar ik heb geen fiets."
+              ],
+              "note": "Model answer by Sofia. Plurals only with zijn (Mijn ouders zijn …); colour the articles if you like (de pink, het brown)."
+            }
+          ]
+        }
+      },
+      "id": "6655683e-f431-49bb-9e90-8e74c6c7d1ee"
+    },
+    {
+      "type": "divider",
+      "id": "d8608f05-5b13-4b54-9c83-882533e30ea4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "479703ed-f4b0-4502-b0c8-320ff99c7a57"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Two articles: de and het; every noun has one — learn it with the noun (",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " huis, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " fiets)."
+      ],
+      "id": "22661243-e0d9-45e2-b8a9-599d2d42b25d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "een (and geen, mijn, haar …) work for both: een huis, een fiets, mijn huis."
+      ],
+      "id": "7409d9f9-6930-4a47-9bb7-74a7a3e56eb9"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "People words are mostly de, but ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " kind, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " meisje (and then hij/ze for the person)."
+      ],
+      "id": "813f85c7-c7dd-43f4-8b8e-58116032a7b3"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "All plurals are de: ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " kinderen, ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " ouders."
+      ],
+      "id": "8ff0e3a0-0f15-49ad-9127-b7b89914075e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "-je words are het: ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " meisje, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " kopje, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " koekje."
+      ],
+      "id": "117a89be-c779-4fec-82eb-da26eed314f6"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "het + noun = the; Hoe gaat het? = it."
+      ],
+      "id": "db61df41-4cb2-462d-b094-0326a2cf2c49"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Oma Els",
+      "description": "Late Sunday morning in Noor's kitchen; Els sits at the table with a cup of tea, a six-year-old girl beside her holding a biscuit, Noor pouring tea, Sofia smiling at the girl.",
+      "alt": "Els and her granddaughter at the kitchen table with Noor and Sofia.",
+      "location": "noor-kitchen",
+      "characters": [
+        "sofia",
+        "noor"
+      ],
+      "extras": [
+        "Els, a woman of about seventy with short white hair, a lilac cardigan and reading glasses on a cord (as in 01-a)",
+        "Tess, a girl of six with two blond braids, a striped T-shirt and a gap-toothed grin"
+      ]
+    },
+    {
+      "afterHeading": "Story: De of het?",
+      "description": "The same kitchen table; Tess holds up one finger like a strict teacher, Sofia laughs with her hands up, Els smiles.",
+      "alt": "Tess quizzing Sofia on de and het at the kitchen table.",
+      "location": "noor-kitchen",
+      "characters": [
+        "sofia",
+        "noor"
+      ],
+      "extras": [
+        "Els, a woman of about seventy with short white hair, a lilac cardigan and reading glasses on a cord (as in 01-a)",
+        "Tess, a girl of six with two blond braids, a striped T-shirt and a gap-toothed grin"
+      ]
+    }
+  ],
+  "id": "9a783abe-9dce-4d4e-8da2-69d56f1be019"
+}

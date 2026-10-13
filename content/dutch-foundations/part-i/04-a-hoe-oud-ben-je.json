@@ -1,0 +1,3279 @@
+{
+  "title": "Hoe oud ben je?",
+  "goal": "Count from 0 to 100, ask and say someone's age with zijn, say and understand a Dutch phone number, and spell a name with the Dutch letter names.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Hoe oud ben je?",
+      "id": "30c8a94b-76bd-426a-96a4-c23db543085e"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Saturday morning, 5 September, Sofia's first weekend in Utrecht. She still has her Spanish phone (",
+        {
+          "text": "de telefoon",
+          "styles": {
+            "bold": true
+          }
+        },
+        ") and wants a Dutch number, so she goes to a phone shop (",
+        {
+          "text": "de telefoonwinkel",
+          "styles": {
+            "bold": true
+          }
+        },
+        ") in the centre, where a shop assistant (",
+        {
+          "text": "de verkoper",
+          "styles": {
+            "bold": true
+          }
+        },
+        ") helps her. In this lesson you will learn the Dutch numbers from 0 to 100, say how old you are, give a phone number, and spell your name."
+      ],
+      "id": "ac9dc24f-7bba-4c9e-b78c-ba97c5a1626a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de telefoon",
+              "meaning": "telephone, phone",
+              "forms": "de telefoons",
+              "id": "b2890925-76ce-42df-b7f1-615b2cbe4f52"
+            },
+            {
+              "term": "de telefoonwinkel",
+              "meaning": "phone shop",
+              "forms": "de telefoonwinkels",
+              "note": "telefoon + winkel, written as one word (like vrijdagmiddagborrel, 03-b).",
+              "id": "7cb0da48-6b6f-4d07-82e6-d8d1efcbdfaf"
+            },
+            {
+              "term": "de verkoper",
+              "meaning": "shop assistant, salesman",
+              "forms": "de verkopers",
+              "note": "a woman is de verkoopster.",
+              "id": "1eebd1e7-5454-4c86-88d0-39a886156142"
+            }
+          ]
+        }
+      },
+      "id": "a9e8fc74-bbf7-40c0-9a3d-eda948c9ae98"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: ",
+        {
+          "text": "subjects",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        " are green, ",
+        {
+          "text": "verbs",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " are blue, and ",
+        {
+          "text": "new numbers",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and the new forms of this lesson are bold. A wrong form is shown like ",
+        {
+          "text": "this",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ", always followed by the right one."
+      ],
+      "id": "0ffa061b-8f55-4ac1-9a73-490be5214921"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: In de telefoonwinkel",
+      "id": "94d8ccad-2414-4aae-91b2-55ccac3d433b"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Saturday morning. Sofia is in a phone shop in the centre of Utrecht.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "0a1fa55d-7d2b-4211-835c-2794a277c4b6"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Verkoper",
+            "text": "Goedemorgen!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goedemorgen! Ik zoek een simkaart. Ik spreek een beetje Nederlands."
+          },
+          {
+            "speaker": "Verkoper",
+            "text": "Prima! Hoe heet u?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Sofia Moreno."
+          },
+          {
+            "speaker": "Verkoper",
+            "text": "Moreno? Hoe schrijft u dat?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "M-O-R-E-N-O."
+          },
+          {
+            "speaker": "Verkoper",
+            "text": "Dank u. Het nummer is nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Pardon? Nog een keer, alstublieft. Langzaam!"
+          },
+          {
+            "speaker": "Verkoper",
+            "text": "Nul zes – drie acht – twee twee – één negen – zeven vier."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Super! Dank u wel!"
+          }
+        ]
+      },
+      "id": "f71d12a9-ab1e-4086-88cf-03701435fa17"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "zoeken",
+              "meaning": "to look for",
+              "forms": "zoekt · zocht · gezocht",
+              "example": "Ik zoek een simkaart.",
+              "id": "5b704de4-65ca-4d6c-a38b-3709ddedcf21"
+            },
+            {
+              "term": "de simkaart",
+              "meaning": "SIM card",
+              "forms": "de simkaarten",
+              "id": "72648451-385e-460b-9e4c-4ffcfa86e15e"
+            },
+            {
+              "term": "het nummer",
+              "meaning": "number",
+              "forms": "de nummers",
+              "example": "Het nummer is nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig.",
+              "id": "6c9becd8-b5c0-49d0-863f-b1df337c3585"
+            },
+            {
+              "term": "Hoe schrijft u dat?",
+              "meaning": "How do you spell/write that? (formal)",
+              "note": "dat is part of the chunk; the informal form is Hoe schrijf je dat?",
+              "id": "ffa1fca7-d9f8-4274-a0d9-3d381ed51123"
+            },
+            {
+              "term": "Pardon?",
+              "meaning": "Sorry? What did you say?",
+              "id": "7fa1a33f-6714-4332-86da-f371f7cbd3c8"
+            },
+            {
+              "term": "Nog een keer, alstublieft.",
+              "meaning": "Once more, please.",
+              "note": "nog meant 'still' in 03-b; here it means 'again'.",
+              "id": "b9ce29ed-c443-41d9-8ac0-9cc56d0bd043"
+            },
+            {
+              "term": "langzaam",
+              "meaning": "slow, slowly",
+              "note": "the opposite of snel (03-a).",
+              "id": "e0ab7fa3-5771-4712-8f2d-8946fb86ecc7"
+            },
+            {
+              "term": "één",
+              "meaning": "one (stressed form)",
+              "note": "een is 'a/an' and the unstressed 'one'; één is written with accents when the number must stand out, as in a phone number read digit by digit.",
+              "id": "7595164e-561d-4e5e-af26-1b8d95670038"
+            }
+          ]
+        }
+      },
+      "id": "3397f54c-f790-4bed-8655-9d5a038f8c64"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm looking for a SIM card.",
+        "note": "zoeken follows 02-b's rule: ik zoek, jij/u/hij zoekt (oe is two letters, nothing to double)."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "zoek",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " een simkaart."
+      ],
+      "id": "f4fc4fe8-1637-45d9-93f3-595037b3a519"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What's your name? — Sofia Moreno.",
+        "note": "Hoe heet u? recycles 01-a: u at a shop counter."
+      },
+      "content": [
+        "Hoe ",
+        {
+          "text": "heet",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "? — Sofia Moreno."
+      ],
+      "id": "6dc3f6a7-895e-499e-b7f3-6520aefb0e58"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How do you spell that? — M-O-R-E-N-O.",
+        "note": "u keeps the t: schrijft (03-b). Sofia says the Dutch letter names: em – oo – er – ee – en – oo."
+      },
+      "content": [
+        "Hoe ",
+        {
+          "text": "schrijft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " dat? — M-O-R-E-N-O."
+      ],
+      "id": "0329cab1-3830-4b15-b616-89f073b5471d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The number is zero six, thirty-eight, twenty-two, nineteen, seventy-four.",
+        "note": "The number in pairs after 06: 06-38221974."
+      },
+      "content": [
+        {
+          "text": "Het nummer",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "2c720d87-5b27-437b-81c0-a6af848321b7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sorry? Once more, please. Slowly!",
+        "note": "Pardon? = sorry, what did you say?; langzaam is the opposite of snel (03-a)."
+      },
+      "content": [
+        "Pardon? ",
+        {
+          "text": "Nog een keer",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", alstublieft. ",
+        {
+          "text": "Langzaam",
+          "styles": {
+            "bold": true
+          }
+        },
+        "!"
+      ],
+      "id": "c0abb25d-17ee-4f87-af0a-436f8a880a80"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Zero six – three eight – two two – one nine – seven four.",
+        "note": "The same number read digit by digit; 1 is said één here, stressed."
+      },
+      "content": [
+        {
+          "text": "Nul zes – drie acht – twee twee – één negen – zeven vier",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "5925e0bf-1e7a-4694-9209-a4d04fd2d334"
+    },
+    {
+      "type": "divider",
+      "id": "84fb9b99-9c1b-4357-a338-a037c029ee60"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Numbers 0–100",
+      "id": "9f90b4ec-7a7a-4ec3-a3f3-eddedc5d941c"
+    },
+    {
+      "type": "paragraph",
+      "content": "Dutch numbers are mostly regular, but 21–99 go in a surprising order, and a few numbers have small spelling traps. Learn them well: you will use them for ages, phone numbers and, later, prices.",
+      "id": "0781d907-929a-4157-a30c-5c0d4c0c906e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "0–20 and the tens",
+      "id": "0c55d6b5-3d05-47d4-9292-f4cbb68c4dc5"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Learn ",
+        {
+          "text": "elf",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "twaalf",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (11, 12) by heart. 13–19 are a unit + tien, but three have a spelling trap: it is ",
+        {
+          "text": "dertien",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "veertien",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", not ",
+        {
+          "text": "drietien",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " or ",
+        {
+          "text": "viertien",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ", and ",
+        {
+          "text": "achttien",
+          "styles": {
+            "bold": true
+          }
+        },
+        " has two t's (acht + tien)."
+      ],
+      "id": "0943086f-ad75-4699-95a8-a1292d6a285b"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "dertien",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (13), not ",
+        {
+          "text": "drietien",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "the unit is der-, not drie-"
+          ],
+          "id": "38bec6ec-7f66-4ba2-a817-bfa330b3b129"
+        }
+      ],
+      "id": "e7c06801-3ed8-441a-942d-7a3ce4b06551"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "veertien",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (14), not ",
+        {
+          "text": "viertien",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "the unit is veer-, not vier-"
+          ],
+          "id": "b38b2921-6655-4cbc-9fef-e5a81eedbc65"
+        }
+      ],
+      "id": "00ae4e3b-e41b-46ba-9af2-dcdae17b45b8"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        {
+          "text": "achttien",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (18), not ",
+        {
+          "text": "achtien",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        }
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "acht + tien: both t's stay"
+          ],
+          "id": "a1522f8c-2b30-4279-8964-a34152e776a4"
+        }
+      ],
+      "id": "15ab190b-83ca-48b6-963a-e16bdd1e6528"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "The tens follow the same pattern: ",
+        {
+          "text": "dertig",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (30) and ",
+        {
+          "text": "veertig",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (40) also use der- and veer-, and ",
+        {
+          "text": "tachtig",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (80) starts with t (",
+        {
+          "text": "achtig",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " is wrong). ",
+        {
+          "text": "honderd",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is 100: Dutch just says honderd, with no een in front."
+      ],
+      "id": "f85ee150-3ca6-4963-99b2-3f0cb18ea1fd"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "0–10",
+              "id": "e7127a35-1c76-43b0-ab24-5c23960e84d3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "nul (0)",
+              "id": "ac1bdc21-6f9a-49bc-a63e-230e3f708282"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "een (1)",
+              "id": "03586c6b-f676-48c8-8bfa-6068ae5b7681"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "twee (2)",
+              "id": "03081117-c250-4ef6-9197-82bf4aa911f6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "drie (3)",
+              "id": "408e06d0-0762-43e7-a08b-45272f93677a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "vier (4)",
+              "id": "4ba3a16a-4c7b-46b4-9de7-fc985d3983dd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "vijf (5)",
+              "id": "22126180-36d4-4e9b-92fc-a0918396ab1a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zes (6)",
+              "id": "7d4a3d3b-51b7-427a-a3cc-d4fa33ce5637"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zeven (7)",
+              "id": "a13b3575-7739-40dd-8d36-87061143666c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "acht (8)",
+              "id": "0f8f57cb-344f-4d8e-82d6-25453f71edde"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "negen (9)",
+              "id": "f9fe90c7-e11b-4e48-a6ec-9fc071e5f27c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "tien (10)",
+              "id": "1d1f5168-8660-4fdc-b26d-77bb3e5e4d04"
+            }
+          ],
+          "id": "95fe312f-c816-471f-8028-09bbfaf3b683"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "11–20",
+              "id": "d84d2da3-97e5-42dd-adf8-1f8fd84c7a36"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "elf (11)",
+              "id": "a8e74488-81de-48cc-8e91-8fa9bf661e48"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "twaalf (12)",
+              "id": "1ce9065d-d170-44c9-b12c-401b3d4137ad"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "dertien",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (13)"
+              ],
+              "id": "d4d1a043-2ecb-4263-9b54-4dfa58e64eff"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "veertien",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (14)"
+              ],
+              "id": "fe805980-516f-4af5-ab19-eb2f4ac51644"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "vijftien (15)",
+              "id": "c9c2ba0c-cacc-4be8-8829-eef1e0331ff2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zestien (16)",
+              "id": "86425bf2-4431-4a5d-965e-e96ed88dc1f1"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zeventien (17)",
+              "id": "6b7845fc-e991-47e6-b21f-c95dd1f74061"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "achttien",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (18)"
+              ],
+              "id": "329e7f08-bd29-4601-8f33-da33951b425f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "negentien (19)",
+              "id": "87fc979f-6c02-4ebc-ae28-3e0531434fdf"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "twintig (20)",
+              "id": "7382f21f-89ff-45a3-9c9c-5e0f0f5a6d4f"
+            }
+          ],
+          "id": "475d1426-811f-43bb-a3e5-4a8316b9a0cd"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Tens",
+              "id": "77d8e11f-6161-413a-a906-702c878413b2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "tien (10)",
+              "id": "17107420-5b4d-404b-b4d2-0aaace3ed591"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "twintig (20)",
+              "id": "8b9461c0-657f-4c5c-b132-ec511804b8af"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "dertig",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (30)"
+              ],
+              "id": "043c19aa-ecdb-46fc-a813-a6f1200d3572"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "veertig",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (40)"
+              ],
+              "id": "26de0fb2-e61a-45b8-81ea-f2383eecebb9"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "vijftig (50)",
+              "id": "c5311c6e-50b8-4c53-a859-1f4d53723529"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zestig (60)",
+              "id": "a7feb259-2309-494d-b7f1-5c95313b65eb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zeventig (70)",
+              "id": "7cadfa28-0ef9-46d7-9276-5ba55404cf80"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "tachtig",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " (80)"
+              ],
+              "id": "e50f5586-f041-41c9-b261-aea908904d73"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "negentig (90)",
+              "id": "c819b3df-fd50-4e79-8998-4a84b680c691"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "honderd (100)",
+              "id": "064b7bd5-65f7-4a6e-bd27-2002401e34ba"
+            }
+          ],
+          "id": "a4237354-e62e-4712-8b13-cbda37182871"
+        }
+      ],
+      "id": "b291302a-47ea-40de-bca1-cac05fbde33e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "21–99: unit + en + ten, one word",
+      "id": "bad44e5d-055c-411b-ae3c-b85c543004f1"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "From 21 to 99, Dutch says the unit first, then ",
+        {
+          "text": "en",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", then the ten, all as one word: ",
+        {
+          "text": "eenentwintig",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " (1 + en + 20), ",
+        {
+          "text": "vierendertig",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "vijfenveertig",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". English goes the other way (\"twenty-one\"), and so does Spanish (\"veintiuno\"), which is why Spanish speakers sometimes say ",
+        {
+          "text": "twintigeen",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " by mistake. Also wrong: ",
+        {
+          "text": "een en twintig",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " (it is one word)."
+      ],
+      "id": "69d9e2b8-87a6-4a4f-8d0a-085a766e20d1"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "After twee and drie the en gets two dots (a trema): ",
+        {
+          "text": "tweeëntwintig",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "drieëndertig",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "tweeëndertig",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". The dots show that a new syllable starts (twee-en-twin-tig), just like in België (02-a). Without them it is wrong: ",
+        {
+          "text": "tweeentwintig",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ". No trema anywhere else: vierentwintig, vijfentwintig."
+      ],
+      "id": "0afc5f11-77e6-4bc6-aac1-50e74cb46447"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Say the unit (een, twee, drie …)."
+      ],
+      "id": "33077220-19d4-47b0-a54c-aca21a9d9da4"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Add en (ën after twee or drie: tweeën-, drieën-)."
+      ],
+      "id": "7e50c003-1c5d-4051-8df1-86fff0966bab"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Add the ten (twintig, dertig …)."
+      ],
+      "id": "b746a79e-386c-4237-b690-193f91fe0563"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Write it all as one word: eenentwintig, tweeëntwintig."
+      ],
+      "id": "1005e7b4-6fb7-4635-b546-68ccf011f566"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "21–99: unit + ",
+        {
+          "text": "en",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + ten, written as one word: ",
+        {
+          "text": "eenentwintig",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "vierendertig",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". After twee and drie, en gets a trema: ",
+        {
+          "text": "tweeëntwintig",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "drieëndertig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "36bca821-e261-41a8-9cf3-cd7cbf559b74"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Twenty-one, twenty-two, thirty-three.",
+        "note": "The trema (ë) comes only after twee and drie."
+      },
+      "content": [
+        {
+          "text": "Eenentwintig, tweeëntwintig, drieëndertig.",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "b3726dd6-ed8b-4602-a027-b69f159d2db0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sixty-four is 64. Forty-six is 46.",
+        "note": "A common mix-up: the unit always comes first (vier + en + zestig)."
+      },
+      "content": [
+        {
+          "text": "Vierenzestig",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " 64. ",
+        {
+          "text": "Zesenveertig",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " 46."
+      ],
+      "id": "1c123c4b-1268-43c3-ba74-6aed5a281b4e"
+    },
+    {
+      "type": "divider",
+      "id": "01ede82e-24b6-4f93-b4dd-52b04e6ba16f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Hoe oud ben je?",
+      "id": "effff781-77f1-4439-8457-d994c404a230"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Dutch says your age with ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " (to be), like English \"I am 28\": ",
+        {
+          "text": "Hoe oud ben je?",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " (informal), Hoe oud bent u? (formal), Hoe oud is Daan? Answer: Ik ben achtentwintig. / Ik ben 28 ",
+        {
+          "text": "jaar",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". The word jaar (year) stays singular after a number: 28 jaar, never ",
+        {
+          "text": "28 jaren",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ". ",
+        {
+          "text": "ongeveer",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means ",
+        {
+          "text": "about",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": Els is ongeveer zeventig. ",
+        {
+          "text": "oud",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "old",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") is an adjective after zijn: Ik ben oud! Achtentwintig is niet oud. To correct a wrong guess, give the right fact, with no niet before the number: Ben jij zevenentwintig? — Nee, ik ben achtentwintig."
+      ],
+      "id": "3cd6ccc4-83d7-4158-8a86-5b5ff45225e4"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Sofia",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "28, achtentwintig",
+          "id": "81f584bb-a294-4594-9959-42234cd36fd2"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "komt uit Valencia",
+          "id": "eb3d3ba9-03a9-4eeb-9c81-39d6e279dab2"
+        }
+      ],
+      "id": "99382cb2-5c79-4f89-bd57-7dfeed2b56d0"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Noor",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "25, vijfentwintig",
+          "id": "73036d0b-eed6-4c2c-be9c-b493bdd4760b"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "studeert psychologie",
+          "id": "c41e9da2-4fdd-47fe-ac1b-b773b53b86e0"
+        }
+      ],
+      "id": "5f13b88e-ee67-4a16-92fe-f265298c7498"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Daan",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "32, tweeëndertig",
+          "id": "0c919094-074a-4ad3-8a79-4e6b5b751728"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "is programmeur",
+          "id": "00ea8744-989a-49c6-8897-a071cff18269"
+        }
+      ],
+      "id": "6026a511-98bc-4bb3-a4c3-ae019447515c"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Karin",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "48, achtenveertig",
+          "id": "35ed6b2a-7139-44da-bd3c-3f5921b0f97e"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "woont in Amersfoort",
+          "id": "9e609788-f28c-4905-b88e-2d40a5d743f3"
+        }
+      ],
+      "id": "e84892d6-156f-4b38-9f3e-a376c6dd6676"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Els",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "ongeveer 70, zeventig",
+          "id": "1a3ec377-bd43-44de-904b-bbf6b6a6eb05"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "is de buurvrouw",
+          "id": "ad4c055b-e6b8-46b2-a67f-b83e1fca28c3"
+        }
+      ],
+      "id": "66f0ec31-b1a4-4c0c-ae46-1f119e743ded"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "hoe oud",
+              "meaning": "how old",
+              "id": "0d89ca7c-29f9-4574-bca4-ec9e87b1da8f"
+            },
+            {
+              "term": "Hoe oud ben je?",
+              "meaning": "How old are you? (informal)",
+              "id": "0ceb7d50-949a-49e6-b055-4782bd50b61c"
+            },
+            {
+              "term": "Hoe oud bent u?",
+              "meaning": "How old are you? (formal)",
+              "id": "4d4ba9eb-4df6-4339-99c5-4d61a6eaa339"
+            },
+            {
+              "term": "oud",
+              "meaning": "old",
+              "id": "a13b3ce9-68cd-4477-a4a1-de4ae5baa9eb"
+            },
+            {
+              "term": "het jaar",
+              "meaning": "year",
+              "forms": "de jaren",
+              "note": "stays singular right after a number: 28 jaar.",
+              "id": "d9a7f1c3-e0f8-43d0-a2f4-6f09339a1504"
+            },
+            {
+              "term": "Ik ben … jaar.",
+              "meaning": "I am … (years old).",
+              "note": "jaar is optional: Ik ben 28. / Ik ben 28 jaar.",
+              "id": "08b22699-5044-4c09-94a4-f073fdc27bd8"
+            },
+            {
+              "term": "ongeveer",
+              "meaning": "about, approximately",
+              "id": "0d358348-e9eb-4029-8f82-cd05168901d5"
+            }
+          ]
+        }
+      },
+      "id": "5efd4712-4adb-4766-8124-a4fa037a7a5d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        {
+          "text": "Hoe oud ben je?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " — ",
+        {
+          "text": "Ik ben 28 (jaar).",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Dutch uses zijn for age, not hebben, and jaar stays singular after a number."
+      ],
+      "id": "90254a77-853e-4b14-8ee9-8ca0d816cd3a"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik heb 28 jaar",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik ben 28 jaar (zijn, not hebben; hebben comes in 04-b). Also: ",
+        {
+          "text": "twintigeen",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → eenentwintig (the unit always comes first)."
+      ],
+      "id": "c4879e89-68c7-4265-b023-3a3e9b78496f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How old are you? — I'm twenty-eight.",
+        "note": "ben jij loses its t (01-b, 03-b). Also fine: Ik ben 28 jaar."
+      },
+      "content": [
+        "Hoe oud ",
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "? — ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "achtentwintig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "dbd05df2-52b8-4564-a869-2d1d9ee42661"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you twenty-seven? — No, I'm twenty-eight.",
+        "note": "Correct a number with the right fact, not with niet."
+      },
+      "content": [
+        {
+          "text": "Ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "zevenentwintig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "? — Nee, ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "achtentwintig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "18825d40-c1e5-4b73-9fcf-bb028afa7dc0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm twenty-five.",
+        "note": "Noor's age. vijf + en + twintig, no trema."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "vijfentwintig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "972ea68e-27bd-4371-b360-cc8f293e9650"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Els is about seventy.",
+        "note": "ongeveer = about. Els is the neighbour (01-a)."
+      },
+      "content": [
+        {
+          "text": "Els",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ongeveer zeventig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "c309e1bb-d4ee-44f9-8bf8-a1ee3b6bf1e6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Twenty-eight isn't old!",
+        "note": "niet before the adjective oud (03-b)."
+      },
+      "content": [
+        {
+          "text": "Achtentwintig",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " niet oud!"
+      ],
+      "id": "eb5bfc32-378a-4d77-ba6f-199fc937b55a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Karin is forty-eight. She comes from Amersfoort.",
+        "note": "A name, then a pronoun (01-b); komen uit recycles 02-a."
+      },
+      "content": [
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "achtenveertig",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "Ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " uit Amersfoort."
+      ],
+      "id": "657cf4ce-7b85-4e54-8181-e20e89cd397c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan is thirty-two and he lives in Utrecht.",
+        "note": "tweeëndertig: a trema after twee. Two sentences joined with en (03-a)."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "tweeëndertig",
+          "styles": {
+            "bold": true
+          }
+        },
+        " en ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in Utrecht."
+      ],
+      "id": "154d17f4-a6d2-4473-9aae-e6b9258964da"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How old are you, madam?",
+        "note": "Formal. Correct Dutch, but people rarely ask an older stranger their age."
+      },
+      "content": [
+        "Hoe oud ",
+        {
+          "text": "bent",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", mevrouw?"
+      ],
+      "id": "9f75e3e4-8d0a-411f-9b2d-242d2c74bb0c"
+    },
+    {
+      "type": "divider",
+      "id": "e2958761-44ce-4df4-9b0e-745c2fc2de7c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Phone numbers",
+      "id": "7725e876-1de6-4e4a-9108-841fb2c296a4"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Dutch mobile numbers start with ",
+        {
+          "text": "06",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and have eight more digits, written 06-38221974 or 06 38 22 19 74. People say them ",
+        {
+          "text": "in pairs",
+          "styles": {
+            "bold": true
+          }
+        },
+        " after 06 (nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig) or ",
+        {
+          "text": "digit by digit",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (nul zes, drie acht, twee twee, één negen, zeven vier). Both are normal, and 0 is always nul. Utrecht landlines start with 030 (nul dertig); the emergency number is 112, said één één twee. When it goes too fast: Pardon? Nog een keer, alstublieft. Langzaam, alstublieft. Giving your own number: ",
+        {
+          "text": "Mijn nummer is",
+          "styles": {
+            "bold": true
+          }
+        },
+        " 06-… or ",
+        {
+          "text": "Mijn telefoonnummer is",
+          "styles": {
+            "bold": true
+          }
+        },
+        " …"
+      ],
+      "id": "94116abb-8be5-4892-b4bc-f9fe27601b76"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het telefoonnummer",
+              "meaning": "phone number",
+              "forms": "de telefoonnummers",
+              "note": "telefoon + nummer, one word.",
+              "id": "9e63ecf5-9c68-4e74-8262-d237dcf6bae2"
+            },
+            {
+              "term": "Mijn nummer is …",
+              "meaning": "My number is …",
+              "example": "Mijn nummer is nu 06-38221974.",
+              "note": "mijn as a chunk (possessives come in 05-a).",
+              "id": "349080e1-0027-417e-a1c1-0808207e4c19"
+            }
+          ]
+        }
+      },
+      "id": "b021fde7-29b3-4847-b0a8-1fc82e006095"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": "Dutch mobile numbers always start with 06; Utrecht's area code is 030. The emergency number is 112, said digit by digit: één één twee. Asking a friend's or colleague's age is normal in the Netherlands, but people rarely ask an older stranger Hoe oud bent u?",
+      "id": "1ba56dce-a01c-4468-9524-ef9808eecde3"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "112: one one two.",
+        "note": "The emergency number, always said digit by digit."
+      },
+      "content": [
+        "112: ",
+        {
+          "text": "één één twee",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "556a3a5f-2aff-46e9-8990-aabc5d350885"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "My number is now 06-38221974.",
+        "note": "nu recycles 02-b. Say it: nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig."
+      },
+      "content": [
+        {
+          "text": "Mijn nummer",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " nu ",
+        {
+          "text": "06-38221974",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "03a78826-91bf-402d-8de1-2ade2b7f81f5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Name: Sofia Moreno · Age: 28 · Phone number: 06-38221974",
+        "note": "A short form, as in the phone shop. de leeftijd = age."
+      },
+      "content": [
+        "Naam: Sofia Moreno · ",
+        {
+          "text": "Leeftijd",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": 28 · Telefoonnummer: 06-38221974"
+      ],
+      "id": "5b98c019-c7ba-49b0-a8f1-571ed2ea1cf2"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de naam",
+              "meaning": "name",
+              "forms": "de namen",
+              "note": "Mijn naam is … was a chunk in 01-a; naam is now its own word.",
+              "id": "6f4fc623-b659-4f90-bbe3-a0f0dbe8272a"
+            },
+            {
+              "term": "de leeftijd",
+              "meaning": "age",
+              "id": "94a6e51f-70e2-4bb4-a763-2282a4453f14"
+            }
+          ]
+        }
+      },
+      "id": "c97f553c-65b1-4e82-b3c7-89fbcd375d49"
+    },
+    {
+      "type": "divider",
+      "id": "7924db40-e63f-47ef-ba3f-b1f024d6d751"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "The alphabet and spelling",
+      "id": "bca5d54f-725a-450e-b4b5-ebac54a6013d"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "The Dutch alphabet (",
+        {
+          "text": "het alfabet",
+          "styles": {
+            "bold": true
+          }
+        },
+        ") has the same 26 letters (",
+        {
+          "text": "de letter",
+          "styles": {
+            "bold": true
+          }
+        },
+        ") as English, but the letter names sound different. The vowels' names are their long sounds: Dutch e sounds like English \"A\", Dutch i like English \"E\". Asking someone to spell: ",
+        {
+          "text": "Hoe schrijf je dat?",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " (informal) / Hoe schrijft u dat? (formal). Answering: the letters one by one (Moreno: em – oo – er – ee – en – oo)."
+      ],
+      "id": "9b999ac3-d210-4b22-a6c7-6fcd53e5d029"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "met een hoofdletter",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means ",
+        {
+          "text": "with a capital letter",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": Je schrijft Utrecht met een hoofdletter. Names: Mijn ",
+        {
+          "text": "voornaam",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is Sofia. Mijn ",
+        {
+          "text": "achternaam",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is Moreno. Compounds such as telefoonwinkel, telefoonnummer and simkaart are written as one word. When spelling, Dutch people call the letters ij and ei by name: ",
+        {
+          "text": "lange ij",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "long ij",
+          "styles": {
+            "italic": true
+          }
+        },
+        ") and ",
+        {
+          "text": "korte ei",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (",
+        {
+          "text": "short ei",
+          "styles": {
+            "italic": true
+          }
+        },
+        "): schrijven has the lange ij, klein has the korte ei. Learn these two names as fixed names only."
+      ],
+      "id": "cb4ee88f-a1d9-4d6d-9439-e29ae5457ad6"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Say your name."
+      ],
+      "id": "5e1b3740-a760-4414-98c0-244369050576"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Spell it letter by letter."
+      ],
+      "id": "cc5c5740-0bf4-412c-b4ab-a108baf1c65d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Say \"met een hoofdletter\" where needed."
+      ],
+      "id": "daee55f1-86ff-46a5-a8bb-48e186d47368"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het alfabet",
+              "meaning": "alphabet",
+              "id": "98d87d53-0041-4150-860f-24df99a72c4a"
+            },
+            {
+              "term": "de letter",
+              "meaning": "letter",
+              "forms": "de letters",
+              "id": "dcc6ce65-e466-4d23-befe-37bbe47be12e"
+            },
+            {
+              "term": "Hoe schrijf je dat?",
+              "meaning": "How do you spell/write that? (informal)",
+              "id": "7f3f59c7-a4bf-419d-b6b8-c1995ca42015"
+            },
+            {
+              "term": "de hoofdletter",
+              "meaning": "capital letter",
+              "forms": "de hoofdletters",
+              "id": "192d0b6e-674a-4c34-b0cd-2cfae483a13a"
+            },
+            {
+              "term": "de voornaam",
+              "meaning": "first name",
+              "forms": "de voornamen",
+              "id": "ba1aab7a-8665-4dd2-b5c3-16c1a15abb32"
+            },
+            {
+              "term": "de achternaam",
+              "meaning": "surname, last name",
+              "forms": "de achternamen",
+              "id": "2c527af4-1939-4f01-a41a-9ced58d816e7"
+            },
+            {
+              "term": "lange ij / korte ei",
+              "meaning": "'long ij' / 'short ei': the names of the letters ij and ei when you spell",
+              "example": "Schrijven: met een lange ij.",
+              "note": "Two fixed letter names only, not a model for adjective + noun (06-b).",
+              "id": "e6a86417-4cb3-4688-be36-9f07c7287eb0"
+            }
+          ]
+        }
+      },
+      "id": "a28b22c3-f8d3-41a2-8e8f-5e5c5b7cf55b"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "A–I",
+              "id": "aeb76ff2-014e-42ac-9fe4-2b31e5d0a038"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "a",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – aa (\"ah\", long)"
+              ],
+              "id": "d2ad46e0-9fc6-487f-8a97-7b8e21632974"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "b",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – bee (\"bay\")"
+              ],
+              "id": "1c4f7a82-f765-4703-88e8-f909b3724410"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "c",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – cee (\"say\")"
+              ],
+              "id": "28f253a7-8786-4621-befb-f59b1617c3ff"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "d",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – dee (\"day\")"
+              ],
+              "id": "1c5aabdb-b682-4453-83d3-001e497b09f0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "e",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – ee (English \"A\")"
+              ],
+              "id": "87d94703-f504-4ec4-8c49-90de8af9812c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "f",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – ef (\"ef\")"
+              ],
+              "id": "8132b0e0-19ce-4f1f-b2fc-2ad0075c9953"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "g",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – gee (throat g + \"ay\")"
+              ],
+              "id": "67761789-6496-4d7c-9c01-dcbe3377affd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "h",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – haa (\"hah\")"
+              ],
+              "id": "b2a30f79-6ee0-4121-85b1-9ccf3b3bca92"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "i",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – ie (English \"E\")"
+              ],
+              "id": "51bcf5dd-b9d2-42eb-81bf-7771ba329c2a"
+            }
+          ],
+          "id": "0242879b-b611-4a8b-ae9b-194aad16e1b5"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "J–R",
+              "id": "f4271139-d537-48a0-b7b6-44ac18e90fb0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "j",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – jee (\"yay\")"
+              ],
+              "id": "1a069ba8-4cff-495c-acc3-35aebc4ff34c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "k",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – kaa (\"kah\")"
+              ],
+              "id": "e59e5d5c-c168-4968-8705-79561f8d5482"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "l",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – el (\"el\")"
+              ],
+              "id": "62c00c01-613e-4c40-b680-e788b88bdfbc"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "m",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – em (\"em\")"
+              ],
+              "id": "be48d494-c925-4da6-94fb-8759333f1eaf"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "n",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – en (\"en\")"
+              ],
+              "id": "34a57932-dd99-4562-862b-c2713707592b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "o",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – oo (\"oh\")"
+              ],
+              "id": "011b3a73-a666-4cf9-afca-304721133756"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "p",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – pee (\"pay\")"
+              ],
+              "id": "d4cdbddf-e7d4-42ad-8045-45283858e3bd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "q",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – kuu (k + French \"u\")"
+              ],
+              "id": "bf80c07e-f346-4e74-b183-deddb0d2c030"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "r",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – er (\"air\", short)"
+              ],
+              "id": "f33762ec-7c46-487d-8293-208d06f3321e"
+            }
+          ],
+          "id": "1f2accd2-5a45-4d04-bfea-7673567c1828"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "S–Z",
+              "id": "475639dd-2d96-4732-86e0-66368e24d3c6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "s",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – es (\"ess\")"
+              ],
+              "id": "be292f94-673d-482d-aec8-bd066ed66cf0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "t",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – tee (\"tay\")"
+              ],
+              "id": "e076d23b-2a63-4da3-842e-8439f377c61b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "u",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – uu (French \"u\")"
+              ],
+              "id": "5d8839ab-455a-475b-9e40-b18db618277f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "v",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – vee (\"vay\")"
+              ],
+              "id": "f4377641-a31b-4221-b144-6f07382cb447"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "w",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – wee (soft \"way\", see 03-b)"
+              ],
+              "id": "f39fd4dc-65e5-467b-88d7-0473dd17c7cb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "x",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – iks (\"iks\")"
+              ],
+              "id": "576f9068-8130-436c-8e86-4ee582211992"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "y",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – ij, or i-grec / griekse ij (like ij)"
+              ],
+              "id": "1239769e-4950-43de-94b4-59e58e8e1edf"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "z",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                " – zet (\"zet\")"
+              ],
+              "id": "f4f6f420-28e6-4966-86e5-ff29a809eeb9"
+            }
+          ],
+          "id": "947d990f-805e-46a7-8f03-5c570b1683a0"
+        }
+      ],
+      "id": "9bea9653-99ea-4637-ab11-fe35fc68cfb8"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": "The vowels' letter names are their long sounds: a \"aa\", e \"ee\" (English \"A\"!), i \"ie\" (English \"E\"!), o \"oo\", u \"uu\". g is \"gee\" and j is \"jee\" (\"yay\"). Second sound: -tig in twintig, dertig, veertig ends in the throat g/ch from 01-a (\"twin-tich\"), and the stress is on the first part: TWIN-tig, but EEN-en-twin-tig.",
+      "id": "cc701d86-f975-453c-8a53-61df8a2a4896"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "een",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means ",
+        {
+          "text": "a/an",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (een simkaart) and also ",
+        {
+          "text": "one",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", said short and unstressed (\"un\"). When it clearly means the number one, write ",
+        {
+          "text": "één",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and stress it (\"ayn\"): één woord, één negen."
+      ],
+      "id": "27e53488-77a0-4534-96c3-be6d65134055"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You write Utrecht with a capital letter.",
+        "note": "je here means people in general. Cities, countries and languages always take a capital letter."
+      },
+      "content": [
+        {
+          "text": "Je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "schrijft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Utrecht ",
+        {
+          "text": "met een hoofdletter",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "a8b8dc37-3765-4964-b7ae-5fca2711f996"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "\"Telefoonwinkel\" is one word.",
+        "note": "één, with accents, because it clearly means the number one."
+      },
+      "content": [
+        "\"Telefoonwinkel\" ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "één",
+          "styles": {
+            "bold": true
+          }
+        },
+        " woord."
+      ],
+      "id": "867d5a93-1066-43e3-87c5-7d53de76df00"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het woord",
+              "meaning": "word",
+              "forms": "de woorden",
+              "id": "15daa012-9b08-4e57-a45a-a55708e58421"
+            }
+          ]
+        }
+      },
+      "id": "0a5273bd-cb54-42cb-9891-e0b23540d092"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "My first name is Sofia. My surname is Moreno.",
+        "note": "mijn as a chunk (01-a)."
+      },
+      "content": [
+        {
+          "text": "Mijn voornaam",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Sofia. ",
+        {
+          "text": "Mijn achternaam",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Moreno."
+      ],
+      "id": "b05bd737-4b05-404a-b595-9f75b239b6c1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How do you spell that? — N-O-O-R.",
+        "note": "schrijf je loses its t (03-b). Noor has a double o: say oo twice."
+      },
+      "content": [
+        "Hoe ",
+        {
+          "text": "schrijf",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " dat? — ",
+        {
+          "text": "En – oo – oo – er",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "640daa0f-ab82-43d7-94c7-a31a6d855b3b"
+    },
+    {
+      "type": "divider",
+      "id": "2c577c32-96c7-4a88-854f-592059c55142"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Hoe oud ben jij?",
+      "id": "f5774e42-0108-41f8-b449-09e257543199"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Late morning. Sofia is back at Noor's flat. Noor works in the café later today.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "4ac18d76-8f13-4494-b88c-416cabb322af"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Noor, kijk! Mijn nummer is nu 06-38221974."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Super! Nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, precies! En kijk, Daan schrijft: “Super!”"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Daan, de collega? Hoe oud is Daan?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hij is tweeëndertig."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En jij? Ben jij zevenentwintig?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik ben achtentwintig. Ik ben oud!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Nee hoor! Achtentwintig is niet oud. Ik ben vijfentwintig."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En Els? Hoe oud is Els?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Els is ongeveer zeventig."
+          }
+        ]
+      },
+      "id": "79748e03-1da2-4485-8c72-81b0d6f1189e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How old is Daan? — He's thirty-two.",
+        "note": "A name works like hij (01-a); jaar is optional."
+      },
+      "content": [
+        "Hoe oud ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "? — ",
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "tweeëndertig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "012578ff-5b6c-4be1-8601-a36d0fb0b2a8"
+    },
+    {
+      "type": "divider",
+      "id": "3b87b419-fee3-42ff-af8b-bd5137523341"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "22494e8b-d6a6-4eba-853f-e6643f396b94"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Write the number in words",
+      "id": "159efd91-4365-4e2e-9472-a8a7351187c1"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write the number in words. Example: 15 → vijftien",
+          "items": [
+            {
+              "prompt": "13",
+              "authorsVersion": [
+                "dertien"
+              ],
+              "note": "Not drietien: the unit is der-."
+            },
+            {
+              "prompt": "18",
+              "authorsVersion": [
+                "achttien"
+              ],
+              "note": "Two t's: acht + tien."
+            },
+            {
+              "prompt": "21",
+              "authorsVersion": [
+                "eenentwintig"
+              ],
+              "note": "Unit + en + ten, one word."
+            },
+            {
+              "prompt": "22",
+              "authorsVersion": [
+                "tweeëntwintig"
+              ],
+              "note": "A trema after twee: tweeën-."
+            },
+            {
+              "prompt": "40",
+              "authorsVersion": [
+                "veertig"
+              ],
+              "note": "Not viertig: the ten is veer-, like veertien."
+            },
+            {
+              "prompt": "88",
+              "authorsVersion": [
+                "achtentachtig"
+              ],
+              "note": "acht + en + tachtig; tachtig starts with t, not a-."
+            }
+          ]
+        }
+      },
+      "id": "d16091e4-3d4e-4f38-a5ee-1e738146d14e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Write the number in digits",
+      "id": "e70ab7d7-afbc-4a36-8935-3d0b3633f2de"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write the number in digits. Example: vijftien → 15",
+          "items": [
+            {
+              "prompt": "vijfenzestig",
+              "authorsVersion": [
+                "65"
+              ],
+              "note": "Unit first (vijf), then the ten (zestig)."
+            },
+            {
+              "prompt": "drieënnegentig",
+              "authorsVersion": [
+                "93"
+              ],
+              "note": "A trema after drie: drieën-."
+            },
+            {
+              "prompt": "zeventien",
+              "authorsVersion": [
+                "17"
+              ],
+              "note": "Unit + tien, no trap here."
+            },
+            {
+              "prompt": "tachtig",
+              "authorsVersion": [
+                "80"
+              ],
+              "note": "Starts with t, not a-."
+            }
+          ]
+        }
+      },
+      "id": "8f10f9ba-9c84-49e0-a3e1-1d5d1527a42e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Answer: how old is …?",
+      "id": "c06f5396-1163-4571-ae96-7396f48a760c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Answer in a full sentence, with the age in words. Example: Hoe oud is Karin? (48) → Karin is achtenveertig.",
+          "items": [
+            {
+              "prompt": "Hoe oud is Sofia? (28)",
+              "authorsVersion": [
+                "Sofia is achtentwintig."
+              ],
+              "note": "Also fine: Ze is achtentwintig (jaar). zijn, not hebben."
+            },
+            {
+              "prompt": "Hoe oud is Noor? (25)",
+              "authorsVersion": [
+                "Noor is vijfentwintig."
+              ],
+              "note": "Also fine: Ze is vijfentwintig (jaar). vijf + en + twintig, no trema."
+            },
+            {
+              "prompt": "Hoe oud is Daan? (32)",
+              "authorsVersion": [
+                "Hij is tweeëndertig."
+              ],
+              "note": "Also fine: Daan is tweeëndertig (jaar). A trema after twee."
+            },
+            {
+              "prompt": "Hoe oud is Els? (about 70)",
+              "authorsVersion": [
+                "Els is ongeveer zeventig."
+              ],
+              "note": "ongeveer = about; jaar is optional and stays singular."
+            }
+          ]
+        }
+      },
+      "id": "47cb814d-1271-4be5-922b-bffbc04e4a10"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in the verb",
+      "id": "42f2e015-3914-4dda-baa1-9d569674ba12"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct form of zijn or schrijven. Example: Hoe oud (zijn) Daan? → is",
+          "items": [
+            {
+              "prompt": "Hoe oud … je? (zijn)",
+              "authorsVersion": [
+                "ben"
+              ],
+              "note": "bent loses its t when je comes right after it: ben je (01-b)."
+            },
+            {
+              "prompt": "Hoe oud … u? (zijn)",
+              "authorsVersion": [
+                "bent"
+              ],
+              "note": "u always takes bent, also after the verb."
+            },
+            {
+              "prompt": "Hoe … u dat? (schrijven)",
+              "authorsVersion": [
+                "schrijft"
+              ],
+              "note": "u keeps the t (03-b)."
+            },
+            {
+              "prompt": "Hoe … je dat? (schrijven)",
+              "authorsVersion": [
+                "schrijf"
+              ],
+              "note": "je right after the verb: the t drops (03-b)."
+            }
+          ]
+        }
+      },
+      "id": "1181384e-eaec-481b-a87d-0c8e74a802b6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Say the phone number",
+      "id": "f3bbb493-2219-409c-a5e7-a70d532e6a70"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write the number in words: a 06 number in pairs after 06, 112 digit by digit. Example: 06-12345678 → nul zes, twaalf, vierendertig, zesenvijftig, achtenzeventig",
+          "items": [
+            {
+              "prompt": "06-38221974",
+              "authorsVersion": [
+                "nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig"
+              ],
+              "note": "Also fine digit by digit: nul zes, drie acht, twee twee, één negen, zeven vier."
+            },
+            {
+              "prompt": "06-87654321",
+              "authorsVersion": [
+                "nul zes, zevenentachtig, vijfenzestig, drieënveertig, eenentwintig"
+              ],
+              "note": "Invented number for this practice. 87 = zeven + en + tachtig; 43 = drie + ën + veertig. Also fine digit by digit."
+            },
+            {
+              "prompt": "112",
+              "authorsVersion": [
+                "één één twee"
+              ],
+              "note": "The emergency number is always said digit by digit."
+            }
+          ]
+        }
+      },
+      "id": "82b65352-5e73-4e25-96f8-1a8cd94af43d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Spell it with Dutch letter names",
+      "id": "c8258ecb-f75a-4fb4-b672-ba2d33391fdc"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Spell the word with the Dutch letter names. Example: Sofia → es – oo – ef – ie – aa",
+          "items": [
+            {
+              "prompt": "Noor",
+              "authorsVersion": [
+                "en – oo – oo – er"
+              ],
+              "note": "n = en, o = oo, r = er. Noor has a double o: say oo twice."
+            },
+            {
+              "prompt": "Daan",
+              "authorsVersion": [
+                "dee – aa – aa – en"
+              ],
+              "note": "Double a: say aa twice."
+            },
+            {
+              "prompt": "Utrecht",
+              "authorsVersion": [
+                "uu – tee – er – ee – cee – haa – tee"
+              ],
+              "note": "u = uu, e = ee. The ch at the end is two letters: cee – haa."
+            }
+          ]
+        }
+      },
+      "id": "689eb981-adde-4acf-8bba-c292135b4d3c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Dialogue completion",
+      "id": "9a6622d2-78a2-4d8d-8491-0314ff022c7d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the exchanges. Fill in one word per blank. Example: Verkoper: Hoe … u? / Sofia: Sofia Moreno. → heet",
+          "items": [
+            {
+              "prompt": "Verkoper: Hoe … u? / Sofia: Sofia Moreno.",
+              "authorsVersion": [
+                "heet"
+              ],
+              "note": "Hoe heet u? recycles 01-a."
+            },
+            {
+              "prompt": "Sofia: Pardon? Nog een …, alstublieft. / Verkoper: Nul zes – drie acht – twee twee – één negen – zeven vier.",
+              "authorsVersion": [
+                "keer"
+              ],
+              "note": "Nog een keer, alstublieft is a fixed chunk; the Verkoper repeats the number digit by digit."
+            },
+            {
+              "prompt": "Noor: Hoe … ben jij? / Sofia: Ik ben … jaar. (28)",
+              "authorsVersion": [
+                "oud",
+                "achtentwintig"
+              ],
+              "note": "Hoe oud ben jij?; the age in words: acht + en + twintig."
+            }
+          ]
+        }
+      },
+      "id": "e3fe35cd-84e6-474b-b75b-26fff04117d7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "ead642a4-6f67-4db7-9072-5763f754f899"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Example: I am 25. → Ik ben vijfentwintig.",
+          "items": [
+            {
+              "prompt": "How old are you?",
+              "authorsVersion": [
+                "Hoe oud ben je?"
+              ],
+              "note": "Also fine: Hoe oud ben jij? / Hoe oud bent u?"
+            },
+            {
+              "prompt": "I'm 28.",
+              "authorsVersion": [
+                "Ik ben achtentwintig."
+              ],
+              "note": "Also fine: Ik ben achtentwintig jaar. / Ik ben 28. Dutch uses zijn for age, not hebben."
+            },
+            {
+              "prompt": "How do you spell that?",
+              "authorsVersion": [
+                "Hoe schrijf je dat?"
+              ],
+              "note": "Also fine: Hoe schrijft u dat?"
+            },
+            {
+              "prompt": "Again, please. Slowly!",
+              "authorsVersion": [
+                "Nog een keer, alstublieft. Langzaam!"
+              ],
+              "note": "Both fixed chunks from this lesson."
+            }
+          ]
+        }
+      },
+      "id": "0049f0dd-0d71-4c8b-af0e-cb82c9795cd4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "0bcb5d30-9e59-4cc7-b6c4-30b33794b953"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English. Example: Ik ben vijfentwintig. → I'm twenty-five.",
+          "items": [
+            {
+              "prompt": "Els is ongeveer zeventig.",
+              "authorsVersion": [
+                "Els is about seventy."
+              ],
+              "note": "ongeveer = about."
+            },
+            {
+              "prompt": "Moreno is mijn achternaam.",
+              "authorsVersion": [
+                "Moreno is my surname."
+              ],
+              "note": "de achternaam = surname."
+            },
+            {
+              "prompt": "Achtentwintig is niet oud!",
+              "authorsVersion": [
+                "Twenty-eight isn't old!"
+              ],
+              "note": "niet before the adjective."
+            }
+          ]
+        }
+      },
+      "id": "2b5c3daa-954e-45b9-a3db-e8da0dddeccb"
+    },
+    {
+      "type": "divider",
+      "id": "f35cfc21-b0ee-4ab2-a62c-c80cf35b5fcd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Mijn nummer is nu …",
+      "id": "3eacf43f-139c-4dcf-84c9-f96a5470462e"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sofia's message to the team chat on Saturday morning, written from the phone shop. She makes one spelling mistake (telefoon winkel), and Daan corrects it in the next message.",
+      "id": "cdf215bf-5386-43c3-a8e9-c3a0604195dc"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the team chat and answer in Dutch; short answers are fine. Waar is …? = Where is …?; Hoe zeg je …? = How do you say …?; Hoe schrijf je …? = How do you spell …?; Wie schrijft …? = Who writes …?; Klopt dit? = Is this right? Example: Wie schrijft “Super!”? → Daan.",
+          "items": [
+            {
+              "prompt": "Waar is Sofia?",
+              "authorsVersion": [
+                "In het centrum, in een telefoonwinkel."
+              ],
+              "note": "Sofia: 'Ik ben in het centrum, in een telefoon winkel.'"
+            },
+            {
+              "prompt": "Hoe zeg je 06-38221974?",
+              "authorsVersion": [
+                "Nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig."
+              ],
+              "note": "Also fine digit by digit."
+            },
+            {
+              "prompt": "Hoe schrijf je “telefoonwinkel”?",
+              "authorsVersion": [
+                "Eén woord: t-e-l-e-f-o-o-n-w-i-n-k-e-l."
+              ],
+              "note": "Daan: “En telefoonwinkel is één woord.” Eén takes its capital E at the start of a sentence."
+            },
+            {
+              "prompt": "Klopt dit? Sofia schrijft “telefoonwinkel” goed.",
+              "authorsVersion": [
+                "Nee, ze schrijft “telefoon winkel”. Het is één woord."
+              ],
+              "note": "Answer Klopt dit? with Ja. or Nee, + the right fact. Sofia writes it as two words; it is one word."
+            },
+            {
+              "prompt": "Waar is Karin?",
+              "authorsVersion": [
+                "Thuis, in Amersfoort."
+              ],
+              "note": "Karin: 'Ik ben thuis, in Amersfoort.'"
+            },
+            {
+              "prompt": "Wie schrijft “Nederlands is moeilijk!”?",
+              "authorsVersion": [
+                "Sofia."
+              ],
+              "note": "Sofia writes this after Daan's correction."
+            }
+          ],
+          "passage": {
+            "title": "Mijn nummer is nu …",
+            "content": "Sofia: Hoi allemaal! Ik ben in het centrum, in een telefoon winkel. Mijn nummer is nu 06-38221974. Groetjes, Sofia\nDaan: Hoi Sofia! Super! Nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig?\nSofia: Ja, precies!\nDaan: Heel goed! En “telefoonwinkel” is één woord: t-e-l-e-f-o-o-n-w-i-n-k-e-l.\nSofia: Oké, dank je! Nederlands is moeilijk!\nKarin: Nee hoor, je schrijft heel goed Nederlands! Ik ben thuis, in Amersfoort. Groetjes, Karin"
+          }
+        }
+      },
+      "id": "71938b7a-cfc3-4988-87b5-490abba19a2d"
+    },
+    {
+      "type": "divider",
+      "id": "04df7399-facd-4bc3-bbbb-14dcac7872b8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "21e43cc2-c118-4d84-85a2-b24850a5d013"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 2–4 short sentences: your name and how to spell it, your age, and a phone number (you may invent one).",
+          "items": [
+            {
+              "prompt": "Write 2–4 short sentences: your name and how to spell it, your age, and a phone number (you may invent one).",
+              "authorsVersion": [
+                "Ik heet Sofia Moreno. Moreno: M-O-R-E-N-O. Ik ben achtentwintig jaar. Mijn nummer is 06-38221974."
+              ],
+              "note": "Model answer by Sofia. Also fine: Mijn achternaam is …; digits or words for the age; no real phone number needed."
+            }
+          ]
+        }
+      },
+      "id": "23c60fa6-fbd2-4ea8-94d3-15e20fdfc045"
+    },
+    {
+      "type": "divider",
+      "id": "2e337521-e112-4e03-b7c2-c40349e67dd8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "adc69420-78b8-4e07-817e-30460908cd14"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "0–20: learn elf, twaalf by heart; watch dertien, veertien, achttien.",
+      "id": "4c821e8e-c9b2-4364-be3d-6220469e5729"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Tens: twintig, dertig, veertig … tachtig, negentig, honderd.",
+      "id": "c255fb7b-5ec1-4a85-944a-c9adf7cf0b75"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "21–99: unit + en + ten, one word (eenentwintig); a trema after twee and drie (tweeëntwintig).",
+      "id": "2656f3ea-b17f-4d98-ac8b-d2683eb0cd40"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Hoe oud ben je? — Ik ben 28 (jaar): zijn, not hebben; jaar stays singular.",
+      "id": "01ad6928-e59b-484d-955f-4fae03267f4c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Phone numbers: 06 + eight digits, in pairs or digit by digit; Pardon? Nog een keer, alstublieft.",
+      "id": "b2a1735d-9167-4040-b006-36ed5e18fd77"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Hoe schrijf je dat? — spell with the Dutch letter names (e = “ee”, i = “ie”).",
+      "id": "48404b28-4618-421d-b396-5c86bb8a3474"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: In de telefoonwinkel",
+      "characters": [
+        "sofia"
+      ],
+      "extras": [
+        "the Verkoper, a young man in his early twenties with short curly black hair and a dark-blue shop polo shirt"
+      ],
+      "action": "A small phone shop in the centre of Utrecht, phones on display on the wall behind the counter. Sofia at the counter spells her name, counting the letters on her fingers; the Verkoper types on a tablet. Exactly two people. No text, no visible numbers.",
+      "description": "Sofia spelling her name to a shop assistant at the counter of a small phone shop.",
+      "alt": "A customer spelling her name to a shop assistant at a phone shop counter."
+    },
+    {
+      "afterHeading": "Story: Hoe oud ben jij?",
+      "location": "noor-kitchen",
+      "characters": [
+        "sofia",
+        "noor"
+      ],
+      "action": "Noor's kitchen, late morning. Sofia shows Noor her phone screen; Noor laughs.",
+      "description": "Sofia showing Noor her new Dutch phone number in the kitchen.",
+      "alt": "Two friends looking at a phone screen together in a kitchen."
+    }
+  ],
+  "id": "e35b7c30-bf75-4f63-8ba7-38a5f036b171"
+}

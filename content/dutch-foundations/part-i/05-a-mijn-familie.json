@@ -1,0 +1,3238 @@
+{
+  "title": "Mijn familie",
+  "goal": "Say whose someone or something is with the possessives mijn, jouw/je, uw, zijn and haar; use van + person and switch between the two; name the people in a family; ask and answer questions about someone's family.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Mijn familie",
+      "id": "254bb923-5334-467a-ae0c-208f1abf9509"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Sunday morning, Sofia's first Sunday in Utrecht. She has just called her mother in Valencia, as she does every Sunday. Now she and Noor look at photos of their families. In this lesson you will learn to say ",
+        {
+          "text": "my",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "your",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "his",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "her",
+          "styles": {
+            "bold": true
+          }
+        },
+        " in Dutch, to say whose something is with ",
+        {
+          "text": "van",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", and the words for the people in your family."
+      ],
+      "id": "58097759-5034-4535-8750-e457d6af9704"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: ",
+        {
+          "text": "subjects",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        " are green, ",
+        {
+          "text": "verbs",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " are blue, and ",
+        {
+          "text": "mijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "je",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "jouw",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "uw",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "haar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "van",
+          "styles": {
+            "bold": true
+          }
+        },
+        " are bold. A wrong form is shown like ",
+        {
+          "text": "this",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ", always followed by the right one."
+      ],
+      "id": "18a653be-7be6-4db3-91b6-7c87c9a3c7c2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Mijn familie",
+      "id": "28af0998-7a45-496c-829a-aa243000093e"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Sunday morning. Sofia has just called her mother in Valencia. Noor comes into the kitchen.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "56dfb1fe-ae7e-4307-815b-3f5b53fb9281"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Goedemorgen! Hoe gaat het met je moeder?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goed, dank je! Kijk, een foto van mijn familie."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Wie is dit?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dit is mijn moeder. Ze heet Carmen."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En wie is de man op de foto?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dit is mijn broer, Javier."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Hoe oud is je broer?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hij is eenendertig. Hij is kok."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Woont je broer ook in Valencia?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja. Mijn familie woont in Valencia."
+          }
+        ]
+      },
+      "id": "07403220-104c-4c6b-996a-4a165d91dd7e"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de familie",
+              "meaning": "family (also: relatives)",
+              "note": "takes a singular verb: mijn familie woont (grammar below).",
+              "example": "Mijn familie woont in Valencia.",
+              "id": "37225c83-436e-461f-ba68-be75a0f4309b"
+            },
+            {
+              "term": "de foto",
+              "meaning": "photo",
+              "forms": "de foto's",
+              "example": "Kijk, een foto van mijn familie.",
+              "id": "0722fc5e-cae6-4115-8834-44833eeffb1b"
+            },
+            {
+              "term": "op de foto",
+              "meaning": "in the photo",
+              "note": "Dutch says \"on\" the photo, not \"in\".",
+              "example": "Wie is de man op de foto?",
+              "id": "4d10b4f6-a61d-4deb-88d6-247b2b8db0f3"
+            },
+            {
+              "term": "Wie is dit?",
+              "meaning": "Who is this?",
+              "note": "the question that goes with \"Dit is …\" (01-b); people only.",
+              "example": "Wie is dit? — Dit is mijn moeder.",
+              "id": "4c665614-315b-465d-af68-cd15187331bf"
+            },
+            {
+              "term": "van",
+              "meaning": "of; 's (belonging to)",
+              "note": "de zus van Noor = Noor's sister (grammar below); also \"of\": een foto van mijn familie.",
+              "example": "Een foto van mijn familie.",
+              "id": "3b1ae87c-a065-4469-a431-9d8d96c13486"
+            },
+            {
+              "term": "de man",
+              "meaning": "man; also: husband",
+              "forms": "de mannen",
+              "example": "Wie is de man op de foto?",
+              "id": "2054b8d5-be68-4a65-a52a-40c70e97faa6"
+            },
+            {
+              "term": "de broer",
+              "meaning": "brother",
+              "forms": "de broers",
+              "example": "Dit is mijn broer, Javier.",
+              "id": "4109e9ed-9c5a-46b0-b6e1-9527378b6e57"
+            },
+            {
+              "term": "de kok",
+              "meaning": "cook",
+              "forms": "de koks",
+              "example": "Hij is kok.",
+              "id": "95f32bc8-6206-42e0-a178-fd5091e1cc05"
+            }
+          ]
+        }
+      },
+      "id": "e8b2c587-00b4-4598-b8c0-8d11d93e4061"
+    },
+    {
+      "type": "divider",
+      "id": "97820271-6ebb-4941-a2ec-49ca2a2bf060"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "mijn, jouw/je, uw, zijn, haar",
+      "id": "15f32d6a-b7f6-40e3-8277-afc218b86da4"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Dutch has a different word for ",
+        {
+          "text": "my",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "your",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "his",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "her",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", and none of them ever changes for the noun that follows: ik → ",
+        {
+          "text": "mijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (my), jij/je → ",
+        {
+          "text": "jouw / je",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (your, informal), u → ",
+        {
+          "text": "uw",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (your, formal), hij → ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (his), zij/ze → ",
+        {
+          "text": "haar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (her). A possessive goes right ",
+        {
+          "text": "before the noun",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", in the place of de, het or een: mijn broer, je zus, haar ouders. So ",
+        {
+          "text": "de mijn moeder",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → mijn moeder, and ",
+        {
+          "text": "een mijn broer",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → mijn broer. ",
+        {
+          "text": "One form works for every noun",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", even a plural one: mijn broer, mijn zus, mijn familie, mijn nummer, mijn ouders (Spanish changes mi to mis; Dutch always says mijn). A name works like hij or zij: Daan → zijn vriendin, Noor → haar zus. Now you know what ",
+        {
+          "text": "je",
+          "styles": {
+            "bold": true
+          }
+        },
+        " means in \"Wat is je nummer?\" (04-b): je = your."
+      ],
+      "id": "bf3f8b7c-9e22-493f-bd60-665d10f67506"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de zus",
+              "meaning": "sister",
+              "forms": "de zussen",
+              "example": "Heb jij een broer of een zus?",
+              "id": "bed0dc20-648e-4667-9797-a8a7ddb60610"
+            },
+            {
+              "term": "de ouders",
+              "meaning": "parents",
+              "note": "a plural word (vader + moeder); in Part I only used with zijn (grammar below); Spanish padres.",
+              "example": "Mijn ouders zijn in Groningen.",
+              "id": "c302c617-266d-434f-80f9-3de786b056e5"
+            }
+          ]
+        }
+      },
+      "id": "26bfdfba-e51c-4043-9b25-3aa714a91528"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Pronoun",
+              "id": "dceb1775-7805-43f1-88a1-d455619a4c9d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "ik",
+              "id": "ea773c8f-a8b4-4f00-8952-75c34d3a8dde"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "jij / je",
+              "id": "eedeb0f6-2a3a-4b02-be41-480f332883f3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "u",
+              "id": "bc751967-d6de-4e88-a8ba-44393f539275"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "hij",
+              "id": "a7b9575a-19d8-416e-9cd8-c9dca21ac8cb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zij / ze",
+              "id": "45432ed2-cdda-49c1-ac2f-71ceb23c5d0c"
+            }
+          ],
+          "id": "1560511c-6c65-4e7e-83dc-e21008f33f06"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Possessive",
+              "id": "ba2e637d-31cf-4281-8191-09b3d485059e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "mijn",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "fad41c6d-0473-4ab4-bbe9-70ea51dd78d0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "jouw / je",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "461b217b-fb85-431f-907e-b2d2f3d2944e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "uw",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "e7678843-b56d-4675-95cc-6d734c3f24f4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "zijn",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "5fb54724-2659-4499-b6c8-90eacce7c10d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "haar",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "3adbc073-7c3f-4fcf-ae58-644dbf6c7860"
+            }
+          ],
+          "id": "272238fe-c755-467f-9383-1d834bdfc792"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Example",
+              "id": "e957ef96-4c16-42b7-b154-29414cc7f9bb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Mijn broer heet Javier.",
+              "id": "cf82dc3c-6e29-4422-9760-64e89a2cc83b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Hoe heet je zus? En jouw familie?",
+              "id": "63801d95-2cde-473e-9545-e4b6774af0bb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Hoe heet uw kleindochter?",
+              "id": "39ba587a-f854-45b5-bc5a-c5fe484303de"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Zijn vriendin heet Lotte.",
+              "id": "ae193433-8b7e-446b-869c-ef3513788e2a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Haar zus is in Australië.",
+              "id": "bcd50b68-baec-456b-802b-82a1bb8b2f3d"
+            }
+          ],
+          "id": "9860826a-05aa-4e1a-a41d-9744205fad7a"
+        }
+      ],
+      "id": "0b2ec249-8f92-4925-a9be-0de3b2d9f31e"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de kleindochter",
+              "meaning": "granddaughter",
+              "forms": "de kleindochters",
+              "note": "klein + dochter, one word, like telefoonwinkel (04-a).",
+              "example": "Ze komt straks, met haar kleindochter.",
+              "id": "d76942f6-c940-4e16-8e72-7a2818d4746f"
+            },
+            {
+              "term": "Australië",
+              "meaning": "Australia",
+              "note": "trema, like België (02-a).",
+              "example": "Fleur is nu in Australië.",
+              "id": "ed4f819c-9e4e-4f4e-bc5a-cb4b6048b566"
+            }
+          ]
+        }
+      },
+      "id": "534045db-0bca-44d7-82fc-ffa668ad13d6"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "ik → ",
+        {
+          "text": "mijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", jij/je → ",
+        {
+          "text": "jouw / je",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", u → ",
+        {
+          "text": "uw",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", hij → ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", zij/ze → ",
+        {
+          "text": "haar",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". One form for every noun: mijn broer, mijn zus, mijn ouders — no de/het/een in front."
+      ],
+      "id": "882c415f-4f7e-49d3-ac98-528019f7ae31"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "je",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is the normal, unstressed form: Hoe heet je broer? Wat is je nummer? Hoe gaat het met je moeder? ",
+        {
+          "text": "jouw",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is stressed, for contrast, just like jij vs je in 01-a: Mijn moeder woont in Valencia. En jouw moeder? En jouw familie, Noor? Both are correct in writing; when you are not sure, write je. Do not mix up ",
+        {
+          "text": "jou",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (you, after met: met jou, 01-a) and ",
+        {
+          "text": "jouw",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (your): ",
+        {
+          "text": "Hoe heet jou broer?",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Hoe heet je/jouw broer? je on its own is \"you\" right before or after a verb (Heb je een zus?) and \"your\" right before a noun (Hoe heet je zus?) — the noun after it tells you which."
+      ],
+      "id": "c401d774-e565-466b-a450-bb82153c721c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How is your mother? — Good, thanks!",
+        "note": "je = your before a noun; 01-a's \"Hoe gaat het met jou?\" used jou, a different word, after met."
+      },
+      "content": [
+        "Hoe ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " met ",
+        {
+          "text": "je",
+          "styles": {
+            "bold": true
+          }
+        },
+        " moeder? — Goed, dank je!"
+      ],
+      "id": "62df32d2-9283-4ade-b4d6-c9c0fb05538c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Look, a photo of my family.",
+        "note": "van here = of (grammar below)."
+      },
+      "content": [
+        "Kijk, een foto ",
+        {
+          "text": "van",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "mijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " familie."
+      ],
+      "id": "5a2fcf1b-0b2b-4e24-bcf3-b1a2a1536b17"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Who is this? — This is my mother. She's called Carmen.",
+        "note": "Key line from the first dialogue. Wie is dit? asks for a person; the answer uses Dit is … (01-b) and mijn = my."
+      },
+      "content": [
+        "Wie ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " dit? — Dit ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "mijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " moeder. ",
+        {
+          "text": "Ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "heet",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Carmen."
+      ],
+      "id": "a071e21d-921a-4d88-94e9-bd582be76ef7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "And who is the man in the photo? — This is my brother, Javier.",
+        "note": "op de foto = in the photo (Dutch says on the photo)."
+      },
+      "content": [
+        "En wie ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "de man",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " op de foto? — Dit ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "mijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " broer, Javier."
+      ],
+      "id": "db543b21-9870-4835-abce-7b69c5afa917"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How old is your brother? — He's thirty-one. He's a cook.",
+        "note": "je = your before a noun. Age goes with zijn, not hebben (04-a); no een before a job (01-b)."
+      },
+      "content": [
+        "Hoe oud ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " broer",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "? — ",
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " eenendertig. ",
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " kok."
+      ],
+      "id": "cfc84dbf-6311-48f4-8593-615a9445abea"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Does your brother live in Valencia too? — Yes. My family lives in Valencia.",
+        "note": "woont keeps its t: je broer is not jij. de familie is one word, so the verb is singular: woont."
+      },
+      "content": [
+        {
+          "text": "Woont",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " broer",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ook in Valencia? — Ja. ",
+        {
+          "text": "Mijn",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " familie",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in Valencia."
+      ],
+      "id": "00fc757e-8020-4375-9c2a-a9262fcf9681"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "My mother lives in Valencia. And your mother? — My mother lives in Groningen.",
+        "note": "jouw = stressed, for contrast with mijn."
+      },
+      "content": [
+        {
+          "text": "Mijn",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " moeder",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in Valencia. En ",
+        {
+          "text": "jouw",
+          "styles": {
+            "bold": true
+          }
+        },
+        " moeder? — ",
+        {
+          "text": "Mijn",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " moeder",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in Groningen."
+      ],
+      "id": "ac23ac2b-99b0-43ca-84e8-ca82a72d18d9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "And your family, Noor? Do you have a brother or a sister? — I have a sister.",
+        "note": "Key lines from the second dialogue. jouw = stressed, for contrast after Sofia's own family. Say een broer of een zus: plurals come later."
+      },
+      "content": [
+        "En ",
+        {
+          "text": "jouw",
+          "styles": {
+            "bold": true
+          }
+        },
+        " familie, Noor? ",
+        {
+          "text": "Heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een broer of een zus? — ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " een zus."
+      ],
+      "id": "52fe4602-ce73-4f31-b21e-1d2a9011521a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "zijn and haar follow the owner",
+      "id": "ff9fb747-b2b4-4ce1-9721-2d25603004a6"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "haar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " do not depend on the noun that follows — they depend on ",
+        {
+          "text": "who owns it",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". A man or a boy owns something → ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". A woman or a girl owns something → ",
+        {
+          "text": "haar",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Javier (a man) → zijn moeder, zijn zus (even though zus is a woman — his sister Sofia); Els (a woman) → haar kleindochter. Spanish su covers his, her, their and your (formal); Dutch has to choose: zijn, haar or uw — think of the owner. ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " also has a second, completely different job: it is also the verb ",
+        {
+          "text": "are",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (Mijn ouders zijn in Groningen.). Only the position tells the two apart: right before a noun = his; in the verb's place = are."
+      ],
+      "id": "fd35d434-3bf9-4729-baba-66c4ccf55519"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = his (right before a noun: Zijn vriendin is lerares.) and ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = are (the verb: Mijn ouders zijn in Groningen.)."
+      ],
+      "id": "1e37751c-1f74-45b1-8f8f-7061d3089083"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de lerares",
+              "meaning": "teacher (a woman)",
+              "forms": "de leraressen",
+              "note": "a man: de leraar.",
+              "example": "Zijn vriendin is lerares.",
+              "id": "593b49fe-fd7f-4ef9-a473-b9c769b37a81"
+            }
+          ]
+        }
+      },
+      "id": "0e5a7dc1-0184-46ff-86ba-8a471e30f7b0"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Noor en zijn zus",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Noor en haar zus. ",
+        {
+          "text": "Hoe heet jou broer?",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → je/jouw broer. ",
+        {
+          "text": "de zus de Noor",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → de zus van Noor."
+      ],
+      "id": "8aabc105-49a5-41b3-85b7-12aad3550e17"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "Spanish ",
+        {
+          "text": "su",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = zijn, haar or uw in Dutch — think of the owner: a man → zijn, a woman → haar, someone you say u to → uw. In speech you will hear z'n and d'r for zijn/haar; in writing use zijn and haar. With a name you may also see -s, like Noors zus or Daans moeder (no apostrophe; after a vowel with one: Sofia's broer) — but \"de zus van Noor\" is the normal spoken form; this is recognition only."
+      ],
+      "id": "e40875ad-7f36-4026-8472-68e1d4742d52"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Fleur is Noor's sister. = Fleur is her sister.",
+        "note": "van and the possessive say the same thing (grammar below)."
+      },
+      "content": [
+        {
+          "text": "Fleur",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " de zus ",
+        {
+          "text": "van",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Noor. = ",
+        {
+          "text": "Fleur",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "haar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " zus."
+      ],
+      "id": "931cf0fb-6b05-41a2-a55f-e9ebbb0d9df4"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan has a girlfriend. His girlfriend is called Lotte. She's a teacher.",
+        "note": "Daan (a man) owns, so zijn."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "heeft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " een vriendin. ",
+        {
+          "text": "Zijn",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " vriendin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "heet",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Lotte. ",
+        {
+          "text": "Ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " lerares."
+      ],
+      "id": "7a04d12c-87e2-47aa-97f4-1f98ade3aa71"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Javier and his sister",
+        "note": "Javier is a man, so zijn — even though \"zijn zus\" is Sofia, a woman."
+      },
+      "content": [
+        "Javier en ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " zus"
+      ],
+      "id": "a392c191-9b59-476c-86df-7aec2e53ce7c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Her mother lives in Groningen. Her father too.",
+        "note": "ook = also (01-b); no plural verb — two sentences, both singular."
+      },
+      "content": [
+        {
+          "text": "Haar",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " moeder",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in Groningen. ",
+        {
+          "text": "Haar",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " vader",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ook."
+      ],
+      "id": "68411413-ef7a-45a0-8566-41b0c93d8dc1"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de vader",
+              "meaning": "father",
+              "forms": "de vaders",
+              "example": "Haar moeder woont in Groningen. Haar vader ook.",
+              "id": "2f30e1cb-1a05-4784-a974-7a9565b90334"
+            }
+          ]
+        }
+      },
+      "id": "e104b8db-c71f-41e9-b78e-195aeb117b7f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "uw: your, formal",
+      "id": "c813e3a0-4c6f-44c3-848d-f271c569501f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "uw",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = your, formal, used with u: Els, hoe heet uw kleindochter? Wat is uw naam, mevrouw? ",
+        {
+          "text": "uw",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is not the same word as ",
+        {
+          "text": "u",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": u = you, uw = your. Sofia says u to Els (01-a), so she says uw too."
+      ],
+      "id": "aaeb6a78-7a34-436d-beb2-2bac3864beef"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Els, what's your granddaughter called?",
+        "note": "u → uw, like Els in 01-a."
+      },
+      "content": [
+        "Els, hoe ",
+        {
+          "text": "heet",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uw",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " kleindochter",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "?"
+      ],
+      "id": "c7d95eae-4b25-4e2d-be9c-89129353a034"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What is your name, madam? — Moreno.",
+        "note": "mevrouw (01-b); a counter-style question, as the Verkoper might ask (04-a)."
+      },
+      "content": [
+        "Wat ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uw",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " naam",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", mevrouw? — Moreno."
+      ],
+      "id": "5e82bd34-d83e-401b-8d89-dd0e7953ccd3"
+    },
+    {
+      "type": "divider",
+      "id": "9b9eb595-01c9-4e91-b0d0-647b8dc9fa80"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: De zus van Noor",
+      "id": "aa3acdbf-c87f-4907-8eee-b88a074a1907"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Now Noor shows Sofia a photo on her phone.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "947d26bf-b497-4991-9654-1cb8e9cd2f5b"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "En jouw familie, Noor? Heb jij een broer of een zus?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ik heb een zus. Kijk, dit is Fleur!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Woont je zus in Groningen, bij je ouders?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Nee. Mijn ouders zijn in Groningen, maar Fleur is nu in Australië."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Australië? Echt? Hoe oud is ze?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Zevenentwintig. Ze surft heel goed!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Super! En Els? Heeft Els familie in Utrecht?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja! Ze komt straks, met haar kleindochter."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Haar kleindochter? Hoe oud is ze?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ongeveer zes. Gezellig!"
+          }
+        ]
+      },
+      "id": "24873c7d-412f-4493-9b5b-74afab98926b"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "surfen",
+              "meaning": "to surf",
+              "forms": "surft · surfte · gesurft",
+              "example": "Ze surft heel goed!",
+              "id": "b18097a5-9708-43f8-a8d0-0d0f4c681064"
+            }
+          ]
+        }
+      },
+      "id": "57275fce-c691-4a61-b811-b3b4d811e84a"
+    },
+    {
+      "type": "divider",
+      "id": "4b9441a6-e1d9-44d6-8cae-f2975564337a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "de zus van Noor = haar zus",
+      "id": "6e5fd464-577b-4798-b46a-da865692f148"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You can say whose something is in two ways. With a name, use ",
+        {
+          "text": "van",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": de zus ",
+        {
+          "text": "van",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Noor (Noor's sister), de vriendin van Daan (Daan's girlfriend), de moeder van Sofia, het nummer van Daan. The formula is ",
+        {
+          "text": "de/het + noun + van + person",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (numbered list below). Keep the article from the word's card — de zus, het nummer (05-b explains de and het) — but with a possessive, the article disappears: de zus van Noor → ",
+        {
+          "text": "haar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " zus (",
+        {
+          "text": "de haar zus",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → haar zus). Spanish \"la hermana de Noor\" tempts ",
+        {
+          "text": "de zus de Noor",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → de zus van Noor: Dutch always uses ",
+        {
+          "text": "van",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". van also means ",
+        {
+          "text": "of",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": een foto van mijn familie = a photo of my family."
+      ],
+      "id": "232c6ba2-c28c-4a87-83e4-962352a9b320"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "de/het + noun"
+      ],
+      "id": "f4d427e4-811a-47d8-82f9-3e6e0c5653c4"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "van",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "2e62c4fe-54c2-41cc-91b4-c761cf5a1a26"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "the person: ",
+        {
+          "text": "de zus van Noor",
+          "styles": {
+            "italic": true
+          }
+        },
+        " → switch to ",
+        {
+          "text": "haar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " zus"
+      ],
+      "id": "d2e3e002-04df-43cd-bec4-45fb25bd071c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is Lotte Daan's wife? — No, she's his girlfriend.",
+        "note": "de man/de vrouw also mean husband/wife with van or a possessive (grammar below)."
+      },
+      "content": [
+        {
+          "text": "Is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Lotte",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " de vrouw ",
+        {
+          "text": "van",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Daan? — Nee, ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " vriendin."
+      ],
+      "id": "0c22f762-79de-48da-8fc6-fe5e45bb57d2"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de vrouw",
+              "meaning": "woman; also: wife",
+              "forms": "de vrouwen",
+              "example": "Is Lotte de vrouw van Daan?",
+              "id": "356d00bc-a6d9-406e-ac9e-fd79e9bda390"
+            }
+          ]
+        }
+      },
+      "id": "23f0fc44-2658-49ec-95ab-84053e57d1d7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is Daan your boyfriend? — No! Daan is my colleague.",
+        "note": "de vriend can mean friend or boyfriend, like de vriendin in 01-a; de collega (02-a)."
+      },
+      "content": [
+        {
+          "text": "Is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "bold": true
+          }
+        },
+        " vriend? — Nee! ",
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "mijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " collega."
+      ],
+      "id": "72df5f0f-462d-4377-ad19-a6447bb477d1"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de vriend",
+              "meaning": "friend; also: boyfriend",
+              "forms": "de vrienden",
+              "note": "like de vriendin in 01-a: context decides (friend or boyfriend).",
+              "example": "Is Daan je vriend? — Nee! Daan is mijn collega.",
+              "id": "144a6b2d-9983-4479-b081-cff23cdf381c"
+            }
+          ]
+        }
+      },
+      "id": "9f971153-10b4-490e-a7a0-6929795a0ee0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Els is coming later, with her granddaughter. — Her granddaughter? How old is she?",
+        "note": "Key lines from the second dialogue. met haar kleindochter = with her granddaughter (Els is a woman, so haar); in the question, ze means the granddaughter, not Els."
+      },
+      "content": [
+        {
+          "text": "Els",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " straks, met ",
+        {
+          "text": "haar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " kleindochter. — ",
+        {
+          "text": "Haar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " kleindochter? Hoe oud ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "?"
+      ],
+      "id": "846c88f8-1ecb-4922-85b6-18afd003ad44"
+    },
+    {
+      "type": "divider",
+      "id": "4f5b9b09-9110-4598-b8ea-58a7882d151d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Family and people words",
+      "id": "0c574e80-f5d1-4e55-b836-806c4b30ea05"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "de vader / de moeder, de broer / de zus, de zoon / de dochter, de man / de vrouw, de vriend / de vriendin, and de familie: all the people in your family. ",
+        {
+          "text": "de man / de vrouw",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = man / woman, and with a possessive or van, husband / wife: Is Lotte de vrouw van Daan? — Nee, ze is zijn vriendin. ",
+        {
+          "text": "de vriend / de vriendin",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = (boy)friend / (girl)friend — context decides, like in 01-a: Noor is mijn vriendin (friend); Lotte is de vriendin van Daan (girlfriend). Joke: Is Daan je vriend? — Nee! Daan is mijn collega. ",
+        {
+          "text": "de familie",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = the family, also the wider family (relatives); it is one word, so it takes a ",
+        {
+          "text": "singular",
+          "styles": {
+            "bold": true
+          }
+        },
+        " verb: ",
+        {
+          "text": "Mijn familie wonen",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Mijn familie ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true
+          }
+        },
+        " in Valencia. de kleindochter = granddaughter; de kok = cook; de lerares = a woman teacher (a man is de leraar)."
+      ],
+      "id": "42c1631b-82c4-4caa-ba76-247edc79e85a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de zoon",
+              "meaning": "son",
+              "forms": "de zonen",
+              "example": "Mijn moeder heeft een zoon en een dochter.",
+              "id": "b8d7bc9d-f6eb-4b74-9376-00086c4aa7f3"
+            },
+            {
+              "term": "de dochter",
+              "meaning": "daughter",
+              "forms": "de dochters",
+              "example": "Sofia is de dochter van Carmen.",
+              "id": "91c205b1-eea2-4d3d-8bd7-3720518e47cb"
+            }
+          ]
+        }
+      },
+      "id": "4e78810b-1156-4319-a347-05faeca7b672"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Man",
+              "id": "3de460be-9c73-44da-bdeb-f4d6b809177b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de vader",
+              "id": "fb1f2820-0e5c-4564-b965-ff5ab4040579"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de broer",
+              "id": "0cd2f614-b033-4e90-8394-5a109fca48f5"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de zoon",
+              "id": "39751243-a3f4-4852-87c8-d240e62dcf6e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de man",
+              "id": "7958be23-f3d1-4e19-aa20-359671d6a0c1"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de vriend",
+              "id": "c846ef0d-f94e-4dee-a225-a3cfa335923c"
+            }
+          ],
+          "id": "90600b7d-f552-4a1c-a36d-f1775113c6b9"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Woman",
+              "id": "906e555e-ddf9-4e73-9d2f-cbdcc0c04764"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de moeder",
+              "id": "23751280-7b01-4414-a161-3476386af564"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de zus",
+              "id": "73c9493b-bb2c-4f46-9e67-ad34a38aa639"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de dochter",
+              "id": "8a778b46-278b-44dc-98b4-fe04a30252d3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de vrouw",
+              "id": "a1f7d99f-2285-455d-9356-d916d396957b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de vriendin",
+              "id": "7ff2546b-edf0-4774-9755-6c3bd5a9e9de"
+            }
+          ],
+          "id": "5625f4cb-461e-4039-9932-a4ee5383c20b"
+        }
+      ],
+      "id": "2996f9b0-19f8-4d90-82c0-b779108d49a0"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "de ouders",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = de vader + de moeder: a plural word. In Part I a plural subject only works with ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": Mijn ouders ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " in Groningen. Haar ouders zijn heel aardig. ",
+        {
+          "text": "Mijn ouders woont",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Mijn ouders zijn in Groningen. For \"live\", use two singular sentences instead: Haar moeder woont in Groningen. Haar vader ook. (The plural form of other verbs comes in lesson 07-a.) Memory tip: ouders looks like English \"older(s)\" — ouder means older."
+      ],
+      "id": "c68bdb0c-93a3-4546-87c2-c6ff87a7c172"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        "Spanish ",
+        {
+          "text": "padres",
+          "styles": {
+            "italic": true
+          }
+        },
+        ": not ",
+        {
+          "text": "vaders",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "de ouders",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Spanish ",
+        {
+          "text": "parientes",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (relatives): not ",
+        {
+          "text": "ouders",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "familie",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "bdcce501-cacb-455e-a147-aaed609f7341"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Does your sister live in Groningen, with your parents? — No. My parents are in Groningen, but Fleur is in Australia now.",
+        "note": "Key lines from the second dialogue. Mijn ouders is a plural subject, so the verb is zijn (never a plural verb in Part I); bij + person (02-b), now with a possessive."
+      },
+      "content": [
+        {
+          "text": "Woont",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " zus",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " in Groningen, bij ",
+        {
+          "text": "je",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ouders? — Nee. ",
+        {
+          "text": "Mijn",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " ouders",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in Groningen, maar ",
+        {
+          "text": "Fleur",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " nu in Australië."
+      ],
+      "id": "9ba69aa7-5e0a-403d-888a-fe3da634f33c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "My mother has a son and a daughter: Javier and me.",
+        "note": "recycles hebben (04-b)."
+      },
+      "content": [
+        {
+          "text": "Mijn",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " moeder",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "heeft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " een zoon en een dochter: Javier en ik."
+      ],
+      "id": "b1c7a622-4280-4f67-9dc4-1eb5d0280dad"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "His girlfriend is a teacher. / My parents are in Groningen.",
+        "note": "zijn = his in the first sentence, are in the second — only the position tells you which."
+      },
+      "content": [
+        {
+          "text": "Zijn",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " vriendin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " lerares. / ",
+        {
+          "text": "Mijn",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " ouders",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " in Groningen."
+      ],
+      "id": "8c65e5fd-db86-44a2-9578-3796c4cdc521"
+    },
+    {
+      "type": "divider",
+      "id": "36e859bb-df4c-4c27-8440-47a39fe8482c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Asking about someone's family",
+      "id": "61e23fdc-50dd-4477-9f95-569f3d2aa41e"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Put everything Part I has taught together to ask about a family, step by step:"
+      ],
+      "id": "dc94b5b2-bde6-4c69-9ac0-33f623da9335"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Heb jij een broer of een zus? — Ja, ik heb een broer. / Nee, ik heb geen zus."
+      ],
+      "id": "2c732ceb-e610-44a3-b37b-92d4fca3c612"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Hoe heet je broer? — Javier."
+      ],
+      "id": "5d9f9d7a-4cb4-4308-9349-63fda445c1b3"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Hoe oud is hij? — Eenendertig."
+      ],
+      "id": "024a7f36-f588-437d-9776-32dff1becf2c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Waar woont hij? — In Valencia."
+      ],
+      "id": "5f723d2b-7be5-42f7-a6b1-f81b5aee235a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Wie is wie?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " — everyone's family, so far:"
+      ],
+      "id": "b20992f8-1ec9-4111-8522-5d29257fc349"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Sofia",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "haar moeder: Carmen, 58, Valencia",
+          "id": "68212503-bebb-4b97-8523-a0d8746108e4"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "haar broer: Javier, 31, kok, Valencia",
+          "id": "85e00c69-24f3-40e6-9b8d-b1e6090b980e"
+        }
+      ],
+      "id": "db54b3be-3902-458c-9cff-64ce56213456"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Noor",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "haar zus: Fleur, 27, nu in Australië",
+          "id": "e9660f21-87c6-4f42-a6c0-382f47b04cb6"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "haar ouders: in Groningen",
+          "id": "b3b326f1-16bf-4bab-a611-d34642fcc938"
+        }
+      ],
+      "id": "d2ed9e40-22d1-4444-a8c7-9ceccd0830cf"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Daan",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "zijn vriendin: Lotte, lerares",
+          "id": "7d2a0431-6f54-46af-b906-2f82bf46d69c"
+        }
+      ],
+      "id": "4ba9406a-4b0b-4312-9572-6924d21b6f4c"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Els",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "haar kleindochter: ongeveer zes",
+          "id": "99eb796b-1255-4909-b069-17169ed06d2c"
+        }
+      ],
+      "id": "b934121a-c246-4301-b475-2b46a9468460"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "In the Netherlands, \"mijn vriend\" / \"mijn vriendin\" is also the normal word for a partner, even for adults. Many couples live together without being married — Daan and Lotte live together (07-a), but Lotte is his vriendin, not his vrouw. Showing family photos on your phone and asking \"Hoe gaat het met je moeder?\" is normal, friendly small talk."
+      ],
+      "id": "dddd35b9-b3b9-4ab5-92e0-ee1d57e08430"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        "ou in vrouw, oud, ouders sounds like English \"ow\" in \"how\" (the au in Australië is the same sound). ",
+        "Dutch ",
+        {
+          "text": "z",
+          "styles": {
+            "bold": true
+          }
+        },
+        " in zus, zoon, zijn, zes is a real buzzing z, like English \"zoo\" — not Spanish s: \"zus\" is not \"sus\"."
+      ],
+      "id": "5fc588cc-18b2-4964-9f65-8dcda491b079"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Does Javier have a wife? — No, he doesn't have a wife. He lives alone.",
+        "note": "alleen = alone (03-b); geen before vrouw (04-b)."
+      },
+      "content": [
+        {
+          "text": "Heeft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Javier",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een vrouw? — Nee, ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "heeft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " geen vrouw. ",
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " alleen."
+      ],
+      "id": "f2ee6cdb-7461-4cd3-9aa7-6ae5a21bd217"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Does your mother speak Dutch? — No, she doesn't speak Dutch. She speaks Spanish.",
+        "note": "geen before a language (04-b)."
+      },
+      "content": [
+        {
+          "text": "Spreekt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " moeder",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " Nederlands? — Nee, ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "spreekt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " geen Nederlands. ",
+        {
+          "text": "Ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "spreekt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Spaans."
+      ],
+      "id": "5989fe27-3ab0-499a-b120-929448fc4226"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How do you spell Javier? — J, a, v, i, e, r.",
+        "note": "Here je = you (it stands next to the verb), not your. The Dutch j sounds like English y; alphabet names from 04-a."
+      },
+      "content": [
+        "Hoe ",
+        {
+          "text": "schrijf",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " Javier? — Jee, aa, vee, ie, ee, er."
+      ],
+      "id": "acb72859-819a-4369-a7e8-0676e30777fd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How much is twenty-eight plus three? — Thirty-one.",
+        "note": "Javier is three years older than Sofia; numbers from 04-a/04-b."
+      },
+      "content": [
+        "Hoeveel ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "achtentwintig plus drie",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "? — Eenendertig."
+      ],
+      "id": "e43ca7b2-6a86-4d03-aa4c-680895e2ddde"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What's your number? — 06-38221974.",
+        "note": "je = your, now explained (grammar above); the number from 04-a."
+      },
+      "content": [
+        "Wat ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        {
+          "text": " nummer",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "? — Nul zes, achtendertig, tweeëntwintig, negentien, vierenzeventig."
+      ],
+      "id": "6370248a-cc70-4ae1-b60a-f6e5164a351a"
+    },
+    {
+      "type": "divider",
+      "id": "fbeed0e5-a210-499d-8074-f21bc73458cf"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "0a35d118-7a50-49fe-b154-ba55e5aacfd1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in mijn, je/jouw, uw, zijn or haar",
+      "id": "84d41128-685f-4d0e-bc76-4433cfcd266c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in mijn, je, jouw, uw, zijn or haar. Example: Ik heb een moeder. ___ moeder woont in Valencia. → Mijn",
+          "items": [
+            {
+              "prompt": "Ik heb een broer. … broer heet Javier.",
+              "authorsVersion": [
+                "Mijn"
+              ],
+              "note": "ik → mijn."
+            },
+            {
+              "prompt": "Noor heeft een zus. … zus heet Fleur.",
+              "authorsVersion": [
+                "Haar"
+              ],
+              "note": "Noor (a woman) owns → haar."
+            },
+            {
+              "prompt": "Daan heeft een vriendin. … vriendin heet Lotte.",
+              "authorsVersion": [
+                "Zijn"
+              ],
+              "note": "Daan (a man) owns → zijn."
+            },
+            {
+              "prompt": "Els, hoe heet … kleindochter?",
+              "authorsVersion": [
+                "uw"
+              ],
+              "note": "Sofia says u to Els, so uw."
+            },
+            {
+              "prompt": "Mijn moeder woont in Valencia. En … moeder, Noor?",
+              "authorsVersion": [
+                "jouw"
+              ],
+              "note": "jouw = stressed, for contrast. In speech je is also heard."
+            }
+          ]
+        }
+      },
+      "id": "8b67f651-a9b4-47c8-a188-8fad0454fd51"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "zijn or haar?",
+      "id": "2036abb7-d5de-40e2-863d-74d0224f5fb0"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in zijn or haar. The owner decides, not the noun. Example: Javier is kok. ___ moeder heet Carmen. → Zijn",
+          "items": [
+            {
+              "prompt": "Noor woont in Utrecht. … ouders zijn in Groningen.",
+              "authorsVersion": [
+                "Haar"
+              ],
+              "note": "Noor (a woman) owns."
+            },
+            {
+              "prompt": "Javier is kok. … zus is programmeur.",
+              "authorsVersion": [
+                "Zijn"
+              ],
+              "note": "Javier (a man) is the owner, even though zus is a woman."
+            },
+            {
+              "prompt": "Fleur is in Australië. … zus Noor woont in Utrecht.",
+              "authorsVersion": [
+                "Haar"
+              ],
+              "note": "Fleur (a woman) owns."
+            },
+            {
+              "prompt": "Daan woont in Utrecht. … vriendin is lerares.",
+              "authorsVersion": [
+                "Zijn"
+              ],
+              "note": "Daan (a man) owns."
+            }
+          ]
+        }
+      },
+      "id": "9918c84a-02b0-4833-b423-afc21a1bebf8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "van or a possessive?",
+      "id": "0e1eb761-d510-43d7-9b21-0fd0a10d975d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence as shown. Example: Haar moeder woont in Groningen. (Noor) → De moeder van Noor woont in Groningen.",
+          "items": [
+            {
+              "prompt": "Rewrite with van: Haar zus is in Australië. (Noor)",
+              "authorsVersion": [
+                "De zus van Noor is in Australië."
+              ],
+              "note": "van keeps the article: de zus."
+            },
+            {
+              "prompt": "Rewrite with van: Zijn vriendin is lerares. (Daan)",
+              "authorsVersion": [
+                "De vriendin van Daan is lerares."
+              ],
+              "note": "Spanish \"de\" tempts de vriendin de Daan — Dutch uses van."
+            },
+            {
+              "prompt": "Rewrite with van: Haar broer is kok. (Sofia)",
+              "authorsVersion": [
+                "De broer van Sofia is kok."
+              ],
+              "note": "van keeps the article: de broer van Sofia. Sofia is a woman, so haar broer."
+            },
+            {
+              "prompt": "Rewrite with zijn or haar: De moeder van Sofia heet Carmen.",
+              "authorsVersion": [
+                "Haar moeder heet Carmen."
+              ],
+              "note": "the possessive replaces the article: haar moeder, not de haar moeder."
+            },
+            {
+              "prompt": "Rewrite with zijn or haar: De ouders van Noor zijn in Groningen.",
+              "authorsVersion": [
+                "Haar ouders zijn in Groningen."
+              ],
+              "note": "Noor is a woman, so haar; ouders keeps zijn (plural + zijn)."
+            }
+          ]
+        }
+      },
+      "id": "30af540d-9afd-4822-aaeb-79a6a59c9c2e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Dialogue completion",
+      "id": "0365d8a2-dd2e-4665-a78f-52a8f0f99a72"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in one word per blank. Example: Noor: Hoe heet ___ moeder? / Sofia: Carmen. → je",
+          "items": [
+            {
+              "prompt": "Noor: Heb jij een … of een zus? / Sofia: Ik heb een broer. … broer heet Javier.",
+              "authorsVersion": [
+                "broer",
+                "Mijn"
+              ],
+              "note": "een broer of een zus: one of each (no plural); Sofia answers about herself, so mijn broer."
+            },
+            {
+              "prompt": "Sofia: Hoe oud is … zus? / Noor: … zus is zevenentwintig.",
+              "authorsVersion": [
+                "je",
+                "Mijn"
+              ],
+              "note": "je = your (also fine: jouw); Noor answers about her own sister, so mijn."
+            },
+            {
+              "prompt": "Noor: Spreekt je moeder Nederlands? / Sofia: Nee, ze spreekt … Nederlands.",
+              "authorsVersion": [
+                "geen"
+              ],
+              "note": "a language has no article, so geen (04-b)."
+            },
+            {
+              "prompt": "Sofia: Woont Fleur bij … ouders? / Noor: Nee, ze is … in Australië.",
+              "authorsVersion": [
+                "je",
+                "nu"
+              ],
+              "note": "bij je ouders (02-b's bij + person, now with a possessive; also fine: jouw); nu = now (02-b)."
+            }
+          ]
+        }
+      },
+      "id": "420a68be-7302-4006-a947-6fe50c04f0df"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Family words",
+      "id": "d7e0b038-f489-4524-897c-447838714fcd"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the family word. Example: Sofia is de ___ van Javier. → zus",
+          "items": [
+            {
+              "prompt": "De vader en de moeder zijn de …",
+              "authorsVersion": [
+                "ouders"
+              ],
+              "note": "de vader + de moeder = de ouders."
+            },
+            {
+              "prompt": "Javier is de … van Sofia.",
+              "authorsVersion": [
+                "broer"
+              ],
+              "note": "Javier is a man → broer."
+            },
+            {
+              "prompt": "Sofia is de … van Carmen.",
+              "authorsVersion": [
+                "dochter"
+              ],
+              "note": "Sofia is Carmen's daughter, not her sister."
+            }
+          ]
+        }
+      },
+      "id": "92b4287e-905a-4dd7-8bca-2dae308b6992"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Ask the question",
+      "id": "a52b364c-11ee-4774-91cc-0dc6b18a04c7"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write the Dutch question. Example: Ask Noor her sister's name. → Hoe heet je zus?",
+          "items": [
+            {
+              "prompt": "Ask Sofia her brother's name.",
+              "authorsVersion": [
+                "Hoe heet je broer?"
+              ],
+              "note": "Also fine: Hoe heet jouw broer?"
+            },
+            {
+              "prompt": "Ask Noor if she has a brother or a sister.",
+              "authorsVersion": [
+                "Heb jij een broer of een zus?"
+              ],
+              "note": "Also fine: Heb je een broer of een zus?"
+            },
+            {
+              "prompt": "Ask Els (u) how old her granddaughter is.",
+              "authorsVersion": [
+                "Hoe oud is uw kleindochter?"
+              ],
+              "note": "u → uw, like Els."
+            }
+          ]
+        }
+      },
+      "id": "8306b635-a576-4c49-ac89-1ceb194c7d78"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Answer with Nee",
+      "id": "490fc482-2671-40af-b553-e13e16e29fb0"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Answer with Nee and the right fact, in a full sentence. Example: Heeft Sofia een fiets? (nee) → Nee, ze heeft geen fiets.",
+          "items": [
+            {
+              "prompt": "Heeft Javier een vrouw? (nee)",
+              "authorsVersion": [
+                "Nee, hij heeft geen vrouw."
+              ],
+              "note": "een vrouw → geen vrouw (04-b)."
+            },
+            {
+              "prompt": "Spreekt de moeder van Sofia Nederlands? (nee)",
+              "authorsVersion": [
+                "Nee, ze spreekt geen Nederlands."
+              ],
+              "note": "a language has no article → geen."
+            },
+            {
+              "prompt": "Is Fleur in Groningen? (nee — Australië)",
+              "authorsVersion": [
+                "Nee, ze is in Australië."
+              ],
+              "note": "Also fine: Nee, ze is niet in Groningen. Ze is in Australië."
+            }
+          ]
+        }
+      },
+      "id": "4dd49490-9450-4820-86b7-b223f81461ce"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "3f1ad85f-689e-45ad-ac1c-f24ac7d1749f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Example: My mother lives in Valencia. → Mijn moeder woont in Valencia.",
+          "items": [
+            {
+              "prompt": "My brother is called Javier.",
+              "authorsVersion": [
+                "Mijn broer heet Javier."
+              ],
+              "note": "heten (02-b)."
+            },
+            {
+              "prompt": "Her sister is in Australia.",
+              "authorsVersion": [
+                "Haar zus is in Australië."
+              ],
+              "note": "haar before a noun = her."
+            },
+            {
+              "prompt": "Daan's girlfriend is a teacher.",
+              "authorsVersion": [
+                "De vriendin van Daan is lerares."
+              ],
+              "note": "Also fine: Zijn vriendin is lerares. No een before a job (01-b)."
+            },
+            {
+              "prompt": "How old is your mother?",
+              "authorsVersion": [
+                "Hoe oud is je moeder?"
+              ],
+              "note": "Also fine: … jouw moeder? / … uw moeder?"
+            }
+          ]
+        }
+      },
+      "id": "641cad81-912a-4f6c-abf7-8c420f67a97a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "06ebbe1d-0f5b-4c06-bcc5-838d68017dcb"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English. Example: Haar zus is in Australië. → Her sister is in Australia.",
+          "items": [
+            {
+              "prompt": "Zijn vriendin is lerares.",
+              "authorsVersion": [
+                "His girlfriend is a teacher."
+              ],
+              "note": "zijn = his here."
+            },
+            {
+              "prompt": "Mijn ouders zijn in Groningen.",
+              "authorsVersion": [
+                "My parents are in Groningen."
+              ],
+              "note": "zijn = are here."
+            }
+          ]
+        }
+      },
+      "id": "174421d3-55cb-4452-8052-042ae6712b2e"
+    },
+    {
+      "type": "divider",
+      "id": "01a8bddd-1841-4588-bd42-5b17b7846090"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Wie is wie?",
+      "id": "ebc760e8-8266-435c-a753-903e294d8c80"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Sunday morning, after the photos. Sofia writes a short note in Dutch on her phone, for practice.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "b7103854-6b57-44a2-9424-46b7ee519b12"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's note and answer the questions in Dutch; short answers are fine. Hoe heet = what is the name of; Hoe oud = how old; Waar = where; Wie = who; Klopt dit? = Is this right? Example: Waar woont de familie van Sofia? → In Valencia.",
+          "items": [
+            {
+              "prompt": "Hoe heet de moeder van Sofia?",
+              "authorsVersion": [
+                "Carmen. / Haar moeder heet Carmen."
+              ]
+            },
+            {
+              "prompt": "Hoe oud is Javier?",
+              "authorsVersion": [
+                "Eenendertig. / Hij is eenendertig."
+              ]
+            },
+            {
+              "prompt": "Is Javier programmeur?",
+              "authorsVersion": [
+                "Nee, hij is kok."
+              ]
+            },
+            {
+              "prompt": "Waar is de zus van Noor?",
+              "authorsVersion": [
+                "In Australië. / Haar zus is nu in Australië."
+              ]
+            },
+            {
+              "prompt": "Wie is Lotte?",
+              "authorsVersion": [
+                "De vriendin van Daan. / Zijn vriendin."
+              ]
+            },
+            {
+              "prompt": "Klopt dit? Javier heeft een vrouw.",
+              "authorsVersion": [
+                "Nee, hij heeft geen vrouw. Hij woont alleen."
+              ],
+              "note": "Model answers to Klopt dit? start with Ja. or Nee, … + the right fact."
+            }
+          ],
+          "passage": {
+            "title": "Wie is wie?",
+            "content": "Mijn familie woont in Valencia. Mijn moeder heet Carmen. Ze is achtenvijftig. Ze spreekt geen Nederlands.\nMijn broer heet Javier. Hij is eenendertig en hij is kok. Hij heeft geen vrouw. Hij woont alleen.\nNoor heeft een zus. Haar zus heet Fleur. Fleur is zevenentwintig en ze is nu in Australië. De ouders van Noor zijn in Groningen.\nDaan heeft een vriendin. Zijn vriendin heet Lotte. Ze is lerares.\nEn Els? Ze komt straks, met haar kleindochter. Gezellig!"
+          }
+        }
+      },
+      "id": "edee6364-fdd6-4634-9ec2-b2d8517b31b4"
+    },
+    {
+      "type": "divider",
+      "id": "55756383-9ad8-4622-b1c0-5c16e2d6251a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "133b75df-cf74-4c8d-b376-5a603e8cecff"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 2–4 short sentences about your family or a friend's family: names, ages, where they live. Use mijn, zijn or haar.",
+          "items": [
+            {
+              "prompt": "Write 2–4 short sentences about your family or a friend's family: names, ages, where they live. Use mijn, zijn or haar.",
+              "authorsVersion": [
+                "Mijn familie woont in Valencia. Mijn moeder heet Carmen. Mijn broer heet Javier. Hij is eenendertig en hij is kok."
+              ],
+              "note": "Model answer by Sofia. One person per sentence (no plural verbs yet): Mijn ouders zijn … also works, with zijn. Ik heb geen broer. and Mijn vader heet … are fine for your own family."
+            }
+          ]
+        }
+      },
+      "id": "d1ad6c1c-9e02-4b36-ba79-02f0182b5809"
+    },
+    {
+      "type": "divider",
+      "id": "778446e1-a6f2-4f58-ae0b-ab85e9bba28f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "823ca359-ecbd-4c64-b5f2-df52600ab4cb"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "mijn (my), je/jouw (your), uw (your, formal), zijn (his), haar (her) — one form for every noun, no de/het in front."
+      ],
+      "id": "69640965-414c-400a-bfbc-f42d11a04a62"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "zijn/haar: the owner decides (Noor en haar zus, Javier en zijn zus)."
+      ],
+      "id": "f7e9647a-ecd9-4e6d-9d5d-71f65fccf878"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "de zus van Noor = Noor's sister = haar zus."
+      ],
+      "id": "a50f7bcb-5d91-42a7-beb6-b21a30bacefe"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Family: de vader, de moeder, de ouders, de broer, de zus, de zoon, de dochter, de man, de vrouw, de vriend(in)."
+      ],
+      "id": "998fb59c-dad1-4519-aa51-295890440fbd"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Plural subjects only with zijn for now: Mijn ouders zijn in Groningen. Mijn familie woont in Valencia (singular)."
+      ],
+      "id": "3b826691-ab62-440f-ab9c-f12ea856bd06"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Mijn familie",
+      "description": "Sunday morning in Noor's kitchen; Sofia holds out her phone to show Noor a photo (screen not visible), a cup of koffie met melk and a cup of tea on the table; Noor in a relaxed Sunday outfit, smiling.",
+      "alt": "Sofia showing Noor a photo on her phone at the kitchen table.",
+      "location": "noor-kitchen",
+      "characters": [
+        "sofia",
+        "noor"
+      ]
+    },
+    {
+      "afterHeading": "Story: De zus van Noor",
+      "description": "The same kitchen; Noor shows Sofia her phone (screen not visible), Sofia leans in, surprised and laughing.",
+      "alt": "Noor showing Sofia a photo on her phone, Sofia laughing.",
+      "location": "noor-kitchen",
+      "characters": [
+        "sofia",
+        "noor"
+      ]
+    }
+  ],
+  "id": "616dfccd-4ba2-4f34-b69e-c8c9df4b0bbd"
+}

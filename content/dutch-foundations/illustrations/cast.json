@@ -58,5 +58,11 @@
     "label": "the woman with short cropped dark hair, black glasses and a charcoal turtleneck",
     "appearance": "Karin, a 48-year-old Dutch woman: light skin, short cropped dark-brown hair with a silver streak at the front, black rectangular glasses, small silver stud earrings, calm direct expression, slim build.",
     "outfit": "Charcoal-grey knitted turtleneck jumper, black trousers, white leather sneakers."
+  },
+  "lotte": {
+    "name": "Lotte",
+    "label": "the young woman with a short brown pixie cut and a dark-red dress",
+    "appearance": "Lotte, a 30-year-old Dutch woman: light skin with rosy cheeks, green eyes, short chestnut-brown pixie cut, no glasses, small silver hoop earrings, petite build, gentle warm smile.",
+    "outfit": "Dark-red knee-length dress with long sleeves, black tights, black ankle boots; often a cream-coloured wool coat over it outdoors."
   }
 }

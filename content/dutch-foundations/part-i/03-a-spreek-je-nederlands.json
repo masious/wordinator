@@ -1,0 +1,2844 @@
+{
+  "title": "Spreek je Nederlands?",
+  "goal": "Say which languages you speak with spreken, name languages and nationalities, ask how to say something in Dutch, and join words and sentences with en, maar and of.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Spreek je Nederlands?",
+      "id": "9c4c607f-e430-43df-8770-0ed279f0146f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Sofia's second day at the IT company. Her colleagues speak English with her, but she wants to learn Dutch fast. In this lesson you will learn to talk about the languages you speak, say your nationality, ask how to say something in Dutch, and join sentences with ",
+        {
+          "text": "en",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "maar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and ",
+        {
+          "text": "of",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "cc36e415-e774-45ac-934b-ce333a864458"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: ",
+        {
+          "text": "subjects",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " are green, ",
+        {
+          "text": "verbs",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " are blue, like before. New forms are ",
+        {
+          "text": "bold",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "f97a4887-28af-45b8-a96f-253232d86828"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Spreek je Nederlands?",
+      "id": "8903d624-2747-428d-889e-3cd629f37f30"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Thursday morning. Sofia and Daan are at the coffee machine in the office. Sofia wants to practise, so Daan speaks Dutch with her."
+      ],
+      "id": "127462fb-fddb-4433-8464-1b1cc78bb5ac"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Goedemorgen, Sofia! Koffie?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, graag! Hoe zeg je \"café con leche\" in het Nederlands?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Koffie met melk."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Koffie met melk. Dank je! Daan, spreek jij Spaans?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Nee, ik spreek Nederlands en Engels. En een beetje Duits."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik spreek Spaans en Engels. En ik leer Nederlands!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Super! Spreek je Nederlands of Engels met Karin?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Engels. Nederlands is moeilijk!"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ja, een beetje. Maar jij leert snel!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je! Ik lees een boek in het Nederlands."
+          }
+        ]
+      },
+      "id": "525accbe-8104-4a5a-963a-d08a41d4a73c"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de koffie",
+              "meaning": "coffee",
+              "example": "Ik drink koffie met melk.",
+              "id": "334b2f30-1ce3-4c01-a41b-8d6a5961114c"
+            },
+            {
+              "term": "koffie met melk",
+              "meaning": "coffee with milk",
+              "note": "met = with: here a drink with something in it (koffie met melk, thee met melk). In 02-b, met de trein was how you travel.",
+              "id": "0e99e0f9-905a-44e7-93b6-c7e5c94d9f47"
+            },
+            {
+              "term": "Hoe zeg je … in het Nederlands?",
+              "meaning": "How do you say … in Dutch?",
+              "example": "Hoe zeg je 'thank you' in het Nederlands?",
+              "note": "zeggen is not a verb you learn yet — learn this whole question as a chunk.",
+              "id": "d3a57fbc-a20e-4537-99bf-f1802e58ced1"
+            },
+            {
+              "term": "het Nederlands",
+              "meaning": "Dutch (the language)",
+              "example": "Ik schrijf in het Nederlands.",
+              "note": "No het after spreken, leren, lezen or schrijven: Ik spreek Nederlands, not *Ik spreek het Nederlands*.",
+              "id": "e7d54d76-27d0-4138-8fa5-6c88e4c592d1"
+            },
+            {
+              "term": "de melk",
+              "meaning": "milk",
+              "id": "45d9b561-ba60-4a29-9a4c-a9ab06b711e2"
+            },
+            {
+              "term": "spreken",
+              "meaning": "to speak",
+              "forms": "spreekt · sprak · gesproken",
+              "example": "Ik spreek Spaans en Engels.",
+              "note": "spreek je / spreek jij lose the t, like ben jij, kom jij, woon jij — but spreekt u, spreekt hij keep it.",
+              "id": "2ca993e6-7dd7-4b3e-b7c0-85721e5414cb"
+            },
+            {
+              "term": "het Spaans",
+              "meaning": "Spanish (the language)",
+              "example": "Ik spreek Spaans.",
+              "note": "Also the adjective: Spaans = Spanish.",
+              "id": "2a0f197c-213e-4d50-b785-1e88aeaef9a7"
+            },
+            {
+              "term": "het Engels",
+              "meaning": "English (the language)",
+              "example": "Ik spreek Engels met Karin.",
+              "id": "bfc6ddb6-4f2a-4583-a1a2-7a2c0d27089a"
+            },
+            {
+              "term": "het Duits",
+              "meaning": "German (the language)",
+              "example": "Daan spreekt een beetje Duits.",
+              "id": "36730868-192e-4838-b9cb-9d7877291258"
+            },
+            {
+              "term": "leren",
+              "meaning": "to learn",
+              "forms": "leert · leerde · geleerd",
+              "example": "Ik leer Nederlands.",
+              "note": "Not studeren (02-b): studeren is for a subject at university.",
+              "id": "371b5bb1-4822-45c2-9671-85829acf7e47"
+            },
+            {
+              "term": "of",
+              "meaning": "or",
+              "example": "Koffie of thee?",
+              "id": "69181a0f-c6fc-4cad-9843-c3ac099440af"
+            },
+            {
+              "term": "moeilijk",
+              "meaning": "difficult",
+              "example": "Nederlands is moeilijk!",
+              "id": "c66fec76-1ccb-4205-b72f-ea283f68b1e6"
+            },
+            {
+              "term": "snel",
+              "meaning": "fast, quickly",
+              "example": "Jij leert snel!",
+              "id": "7f0a0008-f436-42d7-a0c2-1a602a15ee4b"
+            },
+            {
+              "term": "lezen",
+              "meaning": "to read",
+              "forms": "leest · las · gelezen",
+              "example": "Ik lees een boek.",
+              "id": "bcfdfd89-4b4a-4e6c-8748-7d2d8d5f0e9e"
+            },
+            {
+              "term": "het boek",
+              "meaning": "book",
+              "forms": "de boeken",
+              "example": "Ik lees een boek in het Nederlands.",
+              "id": "b6b60e9c-7f60-4009-8a76-fe6d0db0082e"
+            }
+          ]
+        }
+      },
+      "id": "05547c4f-499c-4120-8a3c-a1911fb506ac"
+    },
+    {
+      "type": "divider",
+      "id": "e04f53e7-f165-4dc7-8603-a99dae2bc9ab"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Talking about languages",
+      "id": "753f90b2-e771-4472-bb62-1aff56d1627e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "spreken + language",
+      "id": "c08ebe96-ffb1-4654-91b9-441614fd1a8b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "spreken",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ": ik ",
+        {
+          "text": "spreek",
+          "styles": {
+            "bold": true
+          }
+        },
+        " · jij/je, u, hij/zij ",
+        {
+          "text": "spreekt",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". When je or jij comes right after the verb, the t goes: ",
+        {
+          "text": "Spreek je",
+          "styles": {
+            "italic": true
+          }
+        },
+        " Nederlands? ",
+        {
+          "text": "Spreek jij",
+          "styles": {
+            "italic": true
+          }
+        },
+        " Spaans? — like ben jij, kom jij, woon jij. ",
+        {
+          "text": "Spreekt u",
+          "styles": {
+            "italic": true
+          }
+        },
+        " Engels? and ",
+        {
+          "text": "Spreekt Karin",
+          "styles": {
+            "italic": true
+          }
+        },
+        " Frans? keep the t."
+      ],
+      "id": "e6b97f54-eac5-4480-9eb4-6ebfb7ce8e4b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I speak Spanish and English."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "spreek",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " Spaans en Engels."
+      ],
+      "id": "eb2d6bda-095e-41ca-9a07-35e224799e84"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I speak a little Dutch."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "spreek",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "een beetje",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Nederlands."
+      ],
+      "id": "4e2a2483-faec-44d7-a27e-307dbb509b97"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you speak Dutch? — A little.",
+        "note": "je comes right after the verb: no t. Also fine: Spreek jij Nederlands?"
+      },
+      "content": [
+        {
+          "text": "Spreek",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " Nederlands? — Een beetje."
+      ],
+      "id": "2e7a5eb0-a090-4ff8-a12c-114df371c8d4"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you speak English, madam? — Yes, a little.",
+        "note": "u always keeps the t."
+      },
+      "content": [
+        {
+          "text": "Spreekt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " Engels, mevrouw? — Ja, een beetje."
+      ],
+      "id": "83989266-3ce1-4941-9d64-f0c3df8163be"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan speaks Dutch and English. And a little German.",
+        "note": "Daan works like hij: stem + t. Daan's answer in dialogue 1."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "spreekt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " Nederlands en Engels. En een beetje Duits."
+      ],
+      "id": "d639c575-2590-4281-924e-63fe6dfad872"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Languages are het-words: ",
+        {
+          "text": "in het Nederlands",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "in het Spaans",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (05-b explains de and het). After spreken and leren there is no article: ",
+        {
+          "text": "Ik leer het Nederlands",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Ik leer Nederlands.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " A language always starts with a capital letter: ",
+        {
+          "text": "nederlands",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Nederlands",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "c2d419f1-2e97-40d0-a9ea-f4f30ae9c27d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Flemish is Dutch too.",
+        "note": "Vlaams is the Dutch spoken in Flanders, the north of Belgium. It is not a separate language: in Belgium its official name is also Nederlands."
+      },
+      "content": [
+        {
+          "text": "Vlaams",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ook ",
+        {
+          "text": "Nederlands",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "5bd20b88-4322-4904-8efd-46a76e39dbc9"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het Vlaams",
+              "meaning": "Flemish",
+              "example": "Vlaams is ook Nederlands.",
+              "note": "Not a separate language: the Dutch spoken in Flanders, Belgium.",
+              "id": "7d1bae3c-61e8-4ccc-b9fe-23de23c0bf51"
+            }
+          ]
+        }
+      },
+      "id": "555d68df-2a3e-4f82-96e4-aaeb974fb126"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Saying your nationality",
+      "id": "f2597e15-b00d-465a-b1be-b719ca81ec01"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "After zijn, a nationality takes no article, like a job (01-b). Everyone can say ",
+        {
+          "text": "Ik ben Spaans.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " A woman can also say ",
+        {
+          "text": "Ik ben Spaanse.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " For a man: ",
+        {
+          "text": "Hij is Spanjaard.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " The language never takes -e: ",
+        {
+          "text": "Ik spreek Spaanse",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Ik spreek Spaans.",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "ae890adf-fcce-4095-8c48-ce0999054b21"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de Spanjaard / de Spaanse",
+              "meaning": "a Spaniard (man) / a Spanish woman",
+              "example": "Ik ben Spaanse.",
+              "id": "3eaef32f-5963-4621-8677-e3203aaeae50"
+            }
+          ]
+        }
+      },
+      "id": "8b9647a2-c456-499d-9ea2-229438c8309b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm Spanish. (a woman speaking)",
+        "note": "Also fine: Ik ben Spaans. (everyone). Not *Ik ben een Spaanse*: no een, like jobs."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Spaanse",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "6755af99-e3cc-4d53-8df8-45f9411135ca"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan is Dutch (a man). Karin is Dutch (a woman)."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Nederlander",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Nederlandse",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "97d4a737-1afe-4fa1-9b09-2dce5191d23a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de Nederlander / de Nederlandse",
+              "meaning": "a Dutchman / a Dutch woman",
+              "example": "Daan is Nederlander. Karin is Nederlandse.",
+              "id": "54046e6e-7355-487f-891f-59b96b1c7667"
+            }
+          ]
+        }
+      },
+      "id": "4a95b467-dede-41ad-99f8-862dd9dc38ca"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "He is German, but he lives in the Netherlands.",
+        "note": "Recycles wonen (02-b) and maar for a contrast."
+      },
+      "content": [
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Duitser",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", maar ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in Nederland."
+      ],
+      "id": "31620ca6-3dc9-4eef-bd95-443488d2e810"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de Duitser / de Duitse",
+              "meaning": "a German (man) / a German (woman)",
+              "example": "Hij is Duitser, maar hij woont in Nederland.",
+              "id": "6031ddeb-932e-4f79-be21-57900afe524e"
+            }
+          ]
+        }
+      },
+      "id": "64ca8fd9-e75b-456e-9fd4-0d759a0ff906"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The colleague comes from Antwerp. He's Belgian.",
+        "note": "Recycles komen uit (02-a). A Belgian woman: Ze is Belgische."
+      },
+      "content": [
+        {
+          "text": "De collega",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " uit Antwerpen. ",
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Belg",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "1de5de70-ee14-49e6-88bb-89e489f39d4a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de Belg / de Belgische",
+              "meaning": "a Belgian (man) / a Belgian (woman)",
+              "example": "Hij is Belg. Hij komt uit Antwerpen.",
+              "note": "Like jobs (01-b): no een.",
+              "id": "750b67ef-270f-4fd8-ae03-fd422f55b29e"
+            }
+          ]
+        }
+      },
+      "id": "1ec17f57-83f5-45cb-983c-c3c1dc5302a5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Spanish is my language.",
+        "note": "mijn + noun is still a chunk (05-a explains possessives properly)."
+      },
+      "content": [
+        {
+          "text": "Spaans",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " mijn ",
+        {
+          "text": "taal",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "bd3c853d-453f-4d28-abbc-b78da76508fe"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de taal",
+              "meaning": "language",
+              "forms": "de talen",
+              "example": "Spaans is mijn taal.",
+              "id": "dd710ade-55b0-42c7-9b01-3b5353149b94"
+            }
+          ]
+        }
+      },
+      "id": "157d66f4-d79f-4da5-b4ba-6b1d233b22b6"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Land",
+              "id": "1e802e40-2f15-442d-a0f2-76dac998832c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Nederland",
+              "id": "13ab41e8-616e-44e5-9a7f-3678bb32d6c0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Spanje",
+              "id": "635ae0ca-fd85-4c4d-a3a1-c941a0384b9e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "België",
+              "id": "f4238f08-e59e-41fa-a455-2635680ec508"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Duitsland",
+              "id": "f610593d-650d-4310-b090-1966a7c353bb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Engeland",
+              "id": "e5418763-c85d-454d-bd9b-72faeb798925"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Frankrijk",
+              "id": "a1e66226-34a3-4907-bd69-3b2499d3ff9d"
+            }
+          ],
+          "id": "273bafd9-243b-4eb2-8598-54aa1980ec1a"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Taal",
+              "id": "b4146aca-b367-4681-b15f-c0b8dd3c9759"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Nederlands",
+              "id": "a07dc0f4-73e2-44c4-8be4-423698e95e16"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Spaans",
+              "id": "8913797e-6933-40ea-a036-83a57896a1ba"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Nederlands (Vlaams), Frans",
+              "id": "10346afc-f546-41a4-9d3c-677f28703cc8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Duits",
+              "id": "d1abdcde-86a1-4b00-81ba-9d21d9218b5b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Engels",
+              "id": "55e4307a-3164-4d40-8a16-4b963caeff0e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Frans",
+              "id": "4e58c1ab-e2db-427d-87ea-eff52501ed24"
+            }
+          ],
+          "id": "9983c45c-f109-4ac2-82d4-8c7888ac692f"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Ik ben …",
+              "id": "6079939b-b377-4821-bd22-ce9861b67f3b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Nederlands · Nederlander / Nederlandse",
+              "id": "0458247d-768e-4142-91ea-1f5cfa4e1e7f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Spaans · Spanjaard / Spaanse",
+              "id": "8b53c5f2-c4b7-4216-bd3d-c3dee2f07a5c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Belg / Belgische",
+              "id": "c9210af0-127d-4b13-b3b3-fc256663de1c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Duits · Duitser / Duitse",
+              "id": "bf040c66-704b-404a-a292-efb8a89c713c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Engels",
+              "id": "515b415f-2d1b-4d26-be0e-1b31ffba07e6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Frans",
+              "id": "dd3f1bf5-3a05-4d06-9f68-aa66c156a6e3"
+            }
+          ],
+          "id": "5eeebfd7-8532-4346-8376-18923e409093"
+        }
+      ],
+      "id": "d6b624f4-c74f-4c70-a775-d9a10468a2cf"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het Frans",
+              "meaning": "French (the language)",
+              "example": "Hij spreekt ook Frans en Engels.",
+              "id": "9f8798bc-3200-4f3a-8a2d-74fa7c5373f5"
+            }
+          ]
+        }
+      },
+      "id": "0593762f-cc28-4fda-beb9-9c200961c6cd"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Hoe zeg je … in het Nederlands?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " = How do you say … in Dutch? It is Sofia's favourite question from now on. Learn it as one chunk (the verb zeggen comes later) and answer with the word only. Turn it around to teach your own language: ",
+        {
+          "text": "Hoe zeg je 'gezellig' in het Spaans?",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "3af17de4-7a91-46cb-9afd-65f90bc65123"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How do you say \"café con leche\" in Dutch? — Coffee with milk.",
+        "note": "in het Nederlands = in Dutch, with het. Not *in Nederlands*."
+      },
+      "content": [
+        "Hoe zeg je \"café con leche\" ",
+        {
+          "text": "in het Nederlands",
+          "styles": {
+            "bold": true
+          }
+        },
+        "? — Koffie met melk."
+      ],
+      "id": "15770447-3bf1-4fa2-8307-265491ac2557"
+    },
+    {
+      "type": "divider",
+      "id": "c6ee5903-6880-4d1d-a6bd-d72ab9afddc4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Vlaams is ook Nederlands",
+      "id": "a73e7bae-2262-4977-b514-cac70edf3d76"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Lunchtime. Sofia sits with Karin. The colleague from Antwerpen joins them again."
+      ],
+      "id": "bf759651-0199-4b73-9e00-f71419ee29d0"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Collega",
+            "text": "Dag Sofia! Dag Karin! Eet smakelijk!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je! Ik eet een boterham met kaas. Heel Nederlands!"
+          },
+          {
+            "speaker": "Collega",
+            "text": "Ja! Sofia, spreek jij Nederlands?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Een beetje. Ik leer Nederlands. En jij? Spreek jij Vlaams?"
+          },
+          {
+            "speaker": "Collega",
+            "text": "Ja, ik ben Belg. Vlaams is ook Nederlands."
+          },
+          {
+            "speaker": "Karin",
+            "text": "En hij spreekt ook Frans en Engels."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Echt? Ik ben Spaanse. Ik spreek Spaans en Engels."
+          },
+          {
+            "speaker": "Karin",
+            "text": "Ik spreek Engels met Sofia. Maar ze leert Nederlands!"
+          },
+          {
+            "speaker": "Collega",
+            "text": "Super! Sofia, hoe zeg je \"Eet smakelijk!\" in het Spaans?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "¡Que aproveche!"
+          }
+        ]
+      },
+      "id": "e264684b-437c-4f0b-8b31-487a9b87465a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "eten",
+              "meaning": "to eat",
+              "forms": "eet · at · gegeten",
+              "example": "Karin eet een boterham met kaas.",
+              "note": "Stem ends in t, so no extra t: ik eet, hij eet — like heten (02-b).",
+              "id": "b7d1d246-bc29-41ef-99a8-4c84b5e6379d"
+            },
+            {
+              "term": "de boterham",
+              "meaning": "a slice of bread with something on it; sandwich",
+              "forms": "de boterhammen",
+              "example": "Ik eet een boterham met kaas.",
+              "note": "The classic Dutch office lunch.",
+              "id": "51656385-3d87-4c2b-9bac-f15f20594b79"
+            },
+            {
+              "term": "de kaas",
+              "meaning": "cheese",
+              "example": "een boterham met kaas",
+              "id": "47467136-9ca7-4901-8488-4ed356415d26"
+            },
+            {
+              "term": "Heel Nederlands!",
+              "meaning": "Very Dutch!",
+              "example": "Ik eet een boterham met kaas. Heel Nederlands!",
+              "note": "heel (01-a) + Nederlands, the adjective: like heel groot.",
+              "id": "2d227ebb-5739-4883-9bd0-04aee58b9af1"
+            }
+          ]
+        }
+      },
+      "id": "40cb007b-038b-4f86-b4cd-fd982da566ef"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How do you say \"Eet smakelijk!\" in Spanish? — ¡Que aproveche! (Enjoy your meal!)",
+        "note": "The chunk turned around: in het Spaans."
+      },
+      "content": [
+        "Hoe zeg je \"Eet smakelijk!\" ",
+        {
+          "text": "in het Spaans",
+          "styles": {
+            "bold": true
+          }
+        },
+        "? — ¡Que aproveche!"
+      ],
+      "id": "9fc1a981-3c14-403e-b978-2df3cf4a04b8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Talen in het team",
+      "id": "9cf7a0fa-d6aa-425e-9a8d-c61cd655c6f0"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Sofia",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Spaans, Engels, een beetje Nederlands",
+          "id": "64e79aa3-bdb2-46a2-ad74-4e5cd2b9a69c"
+        }
+      ],
+      "id": "f4c62bcd-1eb5-4317-b317-d5b6b55d1f0f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Daan",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Nederlands, Engels, een beetje Duits",
+          "id": "5a125170-1e51-4888-a618-c37507e13230"
+        }
+      ],
+      "id": "30899dd6-7390-4bc6-912e-002422eabd2c"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Karin",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Nederlands, Engels",
+          "id": "ce6b1e88-606c-4fb4-b985-04ab108567b4"
+        }
+      ],
+      "id": "c6b1d4e2-1477-4101-9085-567ee0fef6fd"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "de collega",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Nederlands (Vlaams), Frans, Engels",
+          "id": "1dc22467-477b-4e2e-ad87-41163e3c718e"
+        }
+      ],
+      "id": "144e84de-6fe4-44aa-a907-db34ae4aa48a"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Noor",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Nederlands, Engels, een beetje Spaans",
+          "id": "19f86217-16e6-4478-952f-a12c1f9d0261"
+        }
+      ],
+      "id": "85dd55a8-4830-41d4-8121-709058d07629"
+    },
+    {
+      "type": "divider",
+      "id": "23dda7ca-4116-4ec7-b8a1-1fbf8cd427e7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "More verbs, same rule",
+      "id": "9f84e676-d998-454c-8b86-5c0333866e71"
+    },
+    {
+      "type": "callout",
+      "content": [
+        "Same rule as 02-b: ik = stem; jij/u/hij/zij = stem + t. ",
+        {
+          "text": "spreken",
+          "styles": {
+            "italic": true
+          }
+        },
+        " → ",
+        {
+          "text": "spreek",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (long e → ee) · ",
+        {
+          "text": "leren",
+          "styles": {
+            "italic": true
+          }
+        },
+        " → ",
+        {
+          "text": "leer",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (ee) · ",
+        {
+          "text": "lezen",
+          "styles": {
+            "italic": true
+          }
+        },
+        " → ",
+        {
+          "text": "lees",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (ee, z → s) · ",
+        {
+          "text": "schrijven",
+          "styles": {
+            "italic": true
+          }
+        },
+        " → ",
+        {
+          "text": "schrijf",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (v → f) · ",
+        {
+          "text": "drinken",
+          "styles": {
+            "italic": true
+          }
+        },
+        " → ",
+        {
+          "text": "drink",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (just drop -en) · ",
+        {
+          "text": "eten",
+          "styles": {
+            "italic": true
+          }
+        },
+        " → ",
+        {
+          "text": "eet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (ee; the stem ends in t, so no extra t)."
+      ],
+      "id": "41b74981-65fe-4ab6-b114-44bb448fb1b6",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      }
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "schrijven",
+              "meaning": "to write",
+              "forms": "schrijft · schreef · geschreven",
+              "example": "Ik schrijf in het Nederlands.",
+              "note": "v → f in the stem (02-b's spelling rule); ij stays.",
+              "id": "0ae56116-e131-4996-9a14-7dfaf7917391"
+            },
+            {
+              "term": "drinken",
+              "meaning": "to drink",
+              "forms": "drinkt · dronk · gedronken",
+              "example": "Noor drinkt thee. Ik drink koffie met melk.",
+              "id": "dc1094af-70ca-44e6-bbe3-0f7360f4a38c"
+            }
+          ]
+        }
+      },
+      "id": "a2c07950-ff87-4167-97e5-cb4cbea0595e"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Infinitive",
+              "id": "7354b4a8-9437-444e-a29f-7d1e3e57d244"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "spreken",
+              "id": "3e50d56f-8f25-4b73-8e3a-edb16e45b60a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "leren",
+              "id": "ae410fe7-230d-440f-97bb-e35094620818"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "lezen",
+              "id": "c5461d83-f466-4cc8-8431-dd27bfa26c51"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "schrijven",
+              "id": "f76b0e94-3558-4807-8b0a-adf8e2bc65d4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "drinken",
+              "id": "66e4e31e-7bc5-4889-809d-2217683be3a2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "eten",
+              "id": "2938c140-cb27-420a-a5dc-43a644cc51ac"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "werken",
+              "id": "52cdb732-4274-4ef5-ab49-9a14b62be7dd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "studeren",
+              "id": "47ae9ef3-4a94-4dd3-ae13-a550ffd8c435"
+            }
+          ],
+          "id": "4e8c0012-ce2b-4d96-befb-332eb05be87a"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "ik",
+              "id": "3f484475-9cfc-41dd-b11d-48e83e9cb010"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "spreek",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "c9ba6df9-3575-4d62-96d4-b088636b5e8d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "leer",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "e8645bf8-bc49-42cc-8453-05f0c5e10e56"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "lees",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "76f4815b-2ffb-472c-b87d-df49b41e08d7"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "schrijf",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "8dae6337-ffae-4bb2-b73f-c8bb4ae85acf"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "drink",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "3e0ff11d-cebf-4d77-a293-c761ae487fbd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "eet",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "ad2c21fb-5438-4599-8951-95ad82b309a1"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "werk",
+              "id": "da4cbee9-9eed-4738-818e-30cf9d040df2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "studeer",
+              "id": "e1fdb860-98e9-45f9-8387-d513cf779f13"
+            }
+          ],
+          "id": "09b67429-eb0a-4f2c-9526-06ac9386799e"
+        },
+        {
+          "type": "column",
+          "props": {
+            "width": 1
+          },
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "jij / u / hij / zij",
+              "id": "ddeb04b3-e5b7-4e51-a29a-cc59f77feb54"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "spreekt",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "e29a7e46-1063-4202-8ab7-07f5c52b11ca"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "leert",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "e0d6e89a-afbf-447a-a649-b9a5f05209a2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "leest",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "fd2ff056-ac9c-4b3b-a007-9659408f2993"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "schrijft",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "ebf79cf0-2d6b-46cc-bf27-73d4f7c04ffd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "drinkt",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "b5f7bfd8-c09a-4c37-a3eb-f5beb7fdb8bd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                {
+                  "text": "eet",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "id": "afb853f8-037e-4338-b2dc-5ab20bc884c4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "werkt",
+              "id": "b27bfd2f-de70-49b9-9a54-583d2be9dac0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "studeert",
+              "id": "fa44094a-1060-42c6-8a6b-3cb189fff7e9"
+            }
+          ],
+          "id": "1816f4cb-1be4-4814-9076-1ad47c220a70"
+        }
+      ],
+      "id": "8fc1f989-a902-469d-9798-e19851c15423"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "A stem that already ends in t adds nothing: ik ",
+        {
+          "text": "eet",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", hij ",
+        {
+          "text": "eet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " — exactly like heten (02-b): ik heet, hij heet."
+      ],
+      "id": "c78de90a-57e4-4a76-a4ff-521930894892"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm learning Dutch.",
+        "note": "Dutch has no -ing form: one present tense covers 'I learn' and 'I'm learning'."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "leer",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " Nederlands."
+      ],
+      "id": "cad9ac18-6d57-4473-a38a-e532ba5c3574"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "But you're learning fast!",
+        "note": "jij comes before the verb here, so the t stays: jij leert."
+      },
+      "content": [
+        "Maar ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "leert",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " snel!"
+      ],
+      "id": "53349fae-5fed-4482-a64d-53123f1b33d1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan is reading a book. I'm reading a book in Dutch."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "leest",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " een boek. ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "lees",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " een boek in het Nederlands."
+      ],
+      "id": "b905d046-362e-4c92-a63b-e874631a7278"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I write in Dutch."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "schrijf",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " in het Nederlands."
+      ],
+      "id": "a85c69e0-077a-427a-9b9b-f2c832cdf246"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor drinks tea. I drink coffee with milk."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "drinkt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " thee. ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "drink",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " koffie met melk."
+      ],
+      "id": "5482b135-3265-4698-a676-0d461b150447"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Karin is eating a cheese sandwich."
+      },
+      "content": [
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "eet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " een boterham met kaas."
+      ],
+      "id": "9084633c-e753-4f16-ba3d-078d94d6dcee"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor studies psychology. Sofia is learning Dutch.",
+        "note": "studeren = study a subject at university; leren = learn a language or skill on your own."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "studeert",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " psychologie. ",
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "leert",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " Nederlands."
+      ],
+      "id": "5d2ff9a5-dc7c-4364-b395-3b3086f1dddb"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        {
+          "text": "leren",
+          "styles": {
+            "bold": true
+          }
+        },
+        " vs ",
+        {
+          "text": "studeren",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": learning a language or skill by yourself is ",
+        {
+          "text": "leren",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (Ik leer Nederlands.); studying a subject at university is ",
+        {
+          "text": "studeren",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (Noor studeert psychologie.). For learning on your own: ",
+        {
+          "text": "Ik studeer Nederlands",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Ik leer Nederlands.",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "de207b1b-1645-455b-9047-ff24e1e36140"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        {
+          "text": "sch",
+          "styles": {
+            "bold": true
+          }
+        },
+        " at the start of a word (schrijven) is s + the throat ch from goedemorgen/dag (01-a), never English \"sh\". At the end, in -ische (Belgische), you hear only s: \"Bel-gie-se\". Long ",
+        {
+          "text": "ee",
+          "styles": {
+            "bold": true
+          }
+        },
+        " in spreek, leer, lees, eet sounds longer than the short ",
+        {
+          "text": "e",
+          "styles": {
+            "bold": true
+          }
+        },
+        " in Engels, werk (02-b's long/short vowels)."
+      ],
+      "id": "3445004f-bec7-46a0-83be-20194e241037"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik spreek Spaanse",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Ik spreek Spaans.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (the language never takes -e) ",
+        {
+          "text": "Hij eett",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Hij eet.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (stem already ends in t: no extra t)"
+      ],
+      "id": "226ef184-f09b-454f-90b1-f50c832b4de2"
+    },
+    {
+      "type": "divider",
+      "id": "ade48950-eb2d-4233-afb2-0939cf215c68"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Joining words and sentences: en, maar, of",
+      "id": "19d2db62-b627-424b-afcf-dae4d82703c4"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "en",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = and (adds one thing to another)."
+      ],
+      "id": "0ef36f7f-728c-4ae0-9a31-78428f6cbf30"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "maar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = but (a contrast; usually a comma before it)."
+      ],
+      "id": "5aff0c95-ec8a-4aca-83aa-df3dd47c4f07"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "of",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = or (a choice)."
+      ],
+      "id": "48f00914-ee0a-4291-acea-61407b33469a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "After en, maar and of: subject + verb + rest, as always — the word order never changes."
+      ],
+      "id": "e5ff974c-96db-49b8-8d7b-bcf2e26615d6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Coffee or tea?"
+      },
+      "content": [
+        "Koffie ",
+        {
+          "text": "of",
+          "styles": {
+            "bold": true
+          }
+        },
+        " thee?"
+      ],
+      "id": "0da78568-8f61-4bab-90f6-e5f34aa42959"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Karin speaks Dutch, but she speaks English with Sofia."
+      },
+      "content": [
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "spreekt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Nederlands, ",
+        {
+          "text": "maar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "spreekt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Engels met Sofia."
+      ],
+      "id": "4be6459f-c7a1-49a1-8e4b-6b221ec1b8ad"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "He comes from Belgium, but he lives in Utrecht.",
+        "note": "Recycles komen uit (02-a) and wonen (02-b). After maar: subject + verb, as always."
+      },
+      "content": [
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " uit België, ",
+        {
+          "text": "maar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " in Utrecht."
+      ],
+      "id": "3bce5fd1-403c-41e4-8694-1de6b1581286"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I read a book and Noor drinks tea.",
+        "note": "Two full sentences joined with en — no plural verb (07-a)."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "lees",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " een boek ",
+        {
+          "text": "en",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "drinkt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " thee."
+      ],
+      "id": "d56de6a1-0d6a-4551-880c-481ddd6a14fe"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "Many Dutch people speak very good English and switch to it as soon as they hear an accent. Saying \"",
+        {
+          "text": "Ik leer Nederlands.",
+          "styles": {
+            "italic": true
+          }
+        },
+        "\" often keeps the conversation in Dutch. In Belgium, Dutch (Vlaams) is spoken in the north (Vlaanderen = Flanders, with Antwerpen), French in the south, and German in a small area in the east. Flemish Dutch sounds a little different, and Flemish speakers say \"Dag!\" as hello a lot."
+      ],
+      "id": "d4510928-9ffa-4ea5-916d-377658bd6e1a"
+    },
+    {
+      "type": "divider",
+      "id": "b271404c-f91b-41b0-a8f1-acd309ed167d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "140bb4ee-4539-4b7c-b732-fc21412c9077"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in the verb",
+      "id": "fab8bdfc-c238-41c8-8ee3-3cf905031cb9"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct form of the verb in brackets. Example: Ik (wonen) in Utrecht → woon.",
+          "items": [
+            {
+              "prompt": "Ik … Spaans. (spreken)",
+              "authorsVersion": [
+                "spreek"
+              ],
+              "note": "ik = stem, no t."
+            },
+            {
+              "prompt": "Sofia … Nederlands. (leren)",
+              "authorsVersion": [
+                "leert"
+              ],
+              "note": "Sofia works like hij/zij: stem + t."
+            },
+            {
+              "prompt": "Daan … een boek. (lezen)",
+              "authorsVersion": [
+                "leest"
+              ],
+              "note": "Double ee, and z → s: lees + t = leest."
+            },
+            {
+              "prompt": "Ik … koffie met melk. (drinken)",
+              "authorsVersion": [
+                "drink"
+              ],
+              "note": "ik = stem, no t."
+            },
+            {
+              "prompt": "Karin … een boterham. (eten)",
+              "authorsVersion": [
+                "eet"
+              ],
+              "note": "The stem already ends in t, so no extra t."
+            },
+            {
+              "prompt": "… u Engels? (spreken)",
+              "authorsVersion": [
+                "Spreekt"
+              ],
+              "note": "u always keeps the t, even in a question."
+            }
+          ]
+        }
+      },
+      "id": "eac7b0c1-ccc4-4e06-8f09-b43e2b841a53"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Stem spelling",
+      "id": "13452127-c927-4832-a60f-f9d23b7b7bbb"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write the ik-form and the jij/u/hij/zij-form. Example: wonen → woon, woont.",
+          "items": [
+            {
+              "prompt": "spreken: ik … / hij …",
+              "authorsVersion": [
+                "spreek",
+                "spreekt"
+              ],
+              "note": "The long e is doubled in the stem (spre-ken → spreek); add t for hij: spreekt."
+            },
+            {
+              "prompt": "lezen: ik … / zij …",
+              "authorsVersion": [
+                "lees",
+                "leest"
+              ],
+              "note": "Double the long e (lees); z → s stays before the t (leest)."
+            },
+            {
+              "prompt": "schrijven: ik … / hij …",
+              "authorsVersion": [
+                "schrijf",
+                "schrijft"
+              ],
+              "note": "v → f at the end of the stem; ij never changes."
+            },
+            {
+              "prompt": "eten: ik … / zij …",
+              "authorsVersion": [
+                "eet",
+                "eet"
+              ],
+              "note": "Double the long e; the stem already ends in t, so no extra t."
+            }
+          ]
+        }
+      },
+      "id": "df84c0ca-fe01-4c57-b7bb-35fa07cb720e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Languages and nationalities",
+      "id": "b2789f6d-e4e3-49cd-845d-0f4b3afdde9c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the missing language or nationality. Example: Noor komt uit Nederland. Ze spreekt (the language) → Nederlands.",
+          "items": [
+            {
+              "prompt": "Sofia komt uit Spanje. Ze spreekt ….",
+              "authorsVersion": [
+                "Spaans"
+              ],
+              "note": "The language, no article."
+            },
+            {
+              "prompt": "De collega komt uit België. Hij is ….",
+              "authorsVersion": [
+                "Belg"
+              ],
+              "note": "A nationality, like a job: no een. Also fine: Belgisch (the adjective)."
+            },
+            {
+              "prompt": "Daan komt uit Utrecht. Hij is ….",
+              "authorsVersion": [
+                "Nederlander"
+              ],
+              "note": "Also fine: Nederlands."
+            },
+            {
+              "prompt": "Karin komt uit Amersfoort. Ze is ….",
+              "authorsVersion": [
+                "Nederlandse"
+              ],
+              "note": "Also fine: Nederlands."
+            },
+            {
+              "prompt": "Sofia is Spaanse. Ze spreekt ….",
+              "authorsVersion": [
+                "Spaans"
+              ],
+              "note": "The language is always Spaans, never Spaanse."
+            }
+          ]
+        }
+      },
+      "id": "2b27434b-412c-41c1-a5ef-666b8f933792"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "en, maar or of",
+      "id": "05410ea4-3ec8-404e-80c2-d25170e8ea55"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in en (and), maar (but) or of (or). Example: Noor (and) Sofia → en.",
+          "items": [
+            {
+              "prompt": "Koffie … thee?",
+              "authorsVersion": [
+                "of"
+              ],
+              "note": "A choice between two things."
+            },
+            {
+              "prompt": "Ik spreek Spaans … Engels.",
+              "authorsVersion": [
+                "en"
+              ],
+              "note": "Adds one language to another."
+            },
+            {
+              "prompt": "Karin spreekt Nederlands, … ze spreekt Engels met Sofia.",
+              "authorsVersion": [
+                "maar"
+              ],
+              "note": "A contrast: comma before maar."
+            },
+            {
+              "prompt": "Hij komt uit België, … hij woont in Utrecht.",
+              "authorsVersion": [
+                "maar"
+              ],
+              "note": "Origin vs where he lives now: a contrast."
+            },
+            {
+              "prompt": "Spreek je Nederlands … Engels met Karin?",
+              "authorsVersion": [
+                "of"
+              ],
+              "note": "A choice, inside a question."
+            }
+          ]
+        }
+      },
+      "id": "c176dff9-fb96-4460-b270-0d0b8cdf23ab"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Dialogue completion",
+      "id": "d9bb1bc6-e907-4619-95af-f5f34a205eb7"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the exchanges. Fill in one word per blank. Example: Karin: Hoe gaat het? / Sofia: Goed, dank (you)! → je.",
+          "items": [
+            {
+              "prompt": "Collega: Spreek … Nederlands? / Sofia: Een …. Ik leer Nederlands.",
+              "authorsVersion": [
+                "je",
+                "beetje"
+              ],
+              "note": "Also fine: jij for the first blank."
+            },
+            {
+              "prompt": "Sofia: Hoe … je 'coffee' in het Nederlands? / Daan: …!",
+              "authorsVersion": [
+                "zeg",
+                "Koffie"
+              ],
+              "note": "zeggen is part of the chunk, not a verb you drill."
+            },
+            {
+              "prompt": "Sofia: … u Engels, mevrouw? / Mevrouw: Ja, een ….",
+              "authorsVersion": [
+                "Spreekt",
+                "beetje"
+              ],
+              "note": "u keeps the t."
+            },
+            {
+              "prompt": "Collega: Waar kom je vandaan? / Sofia: Ik kom … Spanje. Ik ben ….",
+              "authorsVersion": [
+                "uit",
+                "Spaanse"
+              ],
+              "note": "Also fine for the second blank: Spaans."
+            }
+          ]
+        }
+      },
+      "id": "40c3315c-7384-40eb-b121-48afd2d34c31"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "eed2e966-da40-4a18-9058-85f4805c30e5"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the full sentence. Example: woon / ik / in Utrecht → Ik woon in Utrecht.",
+          "items": [
+            {
+              "prompt": "Put in order: spreek / ik / een beetje / Nederlands",
+              "authorsVersion": [
+                "Ik spreek een beetje Nederlands."
+              ],
+              "note": "Subject + verb + rest."
+            },
+            {
+              "prompt": "Put in order: je / Nederlands / spreek",
+              "authorsVersion": [
+                "Spreek je Nederlands?"
+              ],
+              "note": "Yes/no question: verb first."
+            },
+            {
+              "prompt": "Put in order: zeg / hoe / je / 'thank you' / in het Nederlands",
+              "authorsVersion": [
+                "Hoe zeg je 'thank you' in het Nederlands?"
+              ],
+              "note": "Question word first, then the verb."
+            },
+            {
+              "prompt": "Put in order: eet / Karin / een boterham met kaas",
+              "authorsVersion": [
+                "Karin eet een boterham met kaas."
+              ],
+              "note": "Subject + verb + rest."
+            }
+          ]
+        }
+      },
+      "id": "4f38e0c8-bc89-4ba7-b5fb-e76c90b6bfff"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "414222fa-a053-4c9a-9924-340e27307451"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Example: I come from Spain. → Ik kom uit Spanje.",
+          "items": [
+            {
+              "prompt": "I speak Spanish and English.",
+              "authorsVersion": [
+                "Ik spreek Spaans en Engels."
+              ],
+              "note": "No article before the languages."
+            },
+            {
+              "prompt": "Do you speak Dutch?",
+              "authorsVersion": [
+                "Spreek je Nederlands?"
+              ],
+              "note": "Also fine: Spreekt u Nederlands?"
+            },
+            {
+              "prompt": "I'm learning Dutch.",
+              "authorsVersion": [
+                "Ik leer Nederlands."
+              ],
+              "note": "Not studeer: leren is for learning on your own."
+            },
+            {
+              "prompt": "How do you say 'gracias' in Dutch?",
+              "authorsVersion": [
+                "Hoe zeg je 'gracias' in het Nederlands?"
+              ],
+              "note": "The fixed chunk, with the word to translate inside quotes."
+            }
+          ]
+        }
+      },
+      "id": "dfc7eb3a-d72a-4330-89c3-7544e79f04ab"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "e82fb0b7-5bb8-41a8-be28-8114dde70149"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English. Example: Ik woon in Utrecht. → I live in Utrecht.",
+          "items": [
+            {
+              "prompt": "Ik spreek een beetje Duits.",
+              "authorsVersion": [
+                "I speak a little German."
+              ],
+              "note": "een beetje = a little; Duits = German (the language)."
+            },
+            {
+              "prompt": "Hij is Belg, maar hij woont in Utrecht.",
+              "authorsVersion": [
+                "He's Belgian, but he lives in Utrecht."
+              ],
+              "note": "maar = but, a contrast."
+            },
+            {
+              "prompt": "Noor drinkt thee en ze leest een boek.",
+              "authorsVersion": [
+                "Noor is drinking tea and reading a book."
+              ],
+              "note": "en joins two full sentences. Also fine: Noor drinks tea and she reads a book."
+            }
+          ]
+        }
+      },
+      "id": "523451c2-600d-4a40-9ebf-8f4a28029797"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Hoi Noor!",
+      "id": "55b77d3d-bbec-445b-8625-c2578af05fe6"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's first chat message in Dutch to Noor, and Noor's replies. Answer the questions in Dutch; short answers are fine. wie = who, waar = where, Klopt dit? = Is this right? Example: Wie woont bij Noor? → Sofia.",
+          "items": [
+            {
+              "prompt": "Wie schrijft in het Nederlands?",
+              "authorsVersion": [
+                "Sofia."
+              ],
+              "note": "Sofia: 'Kijk, ik schrijf in het Nederlands!'"
+            },
+            {
+              "prompt": "Wie spreekt Engels met Sofia?",
+              "authorsVersion": [
+                "Karin en Daan."
+              ],
+              "note": "Two names as a short answer — no plural verb needed."
+            },
+            {
+              "prompt": "Klopt dit? Sofia leest een boek in het Engels.",
+              "authorsVersion": [
+                "Nee, ze leest een boek in het Nederlands."
+              ],
+              "note": "Model answers to Klopt dit? start Ja. or Nee, … + the right fact."
+            },
+            {
+              "prompt": "Klopt dit? Noor spreekt een beetje Spaans.",
+              "authorsVersion": [
+                "Ja."
+              ],
+              "note": "Noor: 'Ik spreek een beetje Spaans!'"
+            },
+            {
+              "prompt": "Waar spreekt Noor Nederlands met Sofia?",
+              "authorsVersion": [
+                "Thuis."
+              ],
+              "note": "Noor: 'Ik spreek thuis Nederlands met jou.'"
+            },
+            {
+              "prompt": "Wie leert Nederlands?",
+              "authorsVersion": [
+                "Sofia."
+              ],
+              "note": "Sofia: 'Maar ik leer Nederlands.'"
+            }
+          ],
+          "passage": {
+            "title": "Hoi Noor!",
+            "content": "Sofia: Hoi Noor! Kijk, ik schrijf in het Nederlands!\nNoor: Super, Sofia! Heel goed!\nSofia: Karin spreekt Engels met mij. Daan spreekt ook Engels met mij. Maar ik leer Nederlands. Ik lees een boek in het Nederlands.\nNoor: Echt? Ik spreek thuis Nederlands met jou. Of Spaans? Ik spreek een beetje Spaans!\nSofia: Nederlands, alsjeblieft! En een beetje Spaans.\nNoor: Oké! Hoe zeg je \"gezellig\" in het Spaans?\nSofia: Moeilijk! Gezellig is heel Nederlands.\nNoor: Ja, echt! Tot straks!"
+          }
+        }
+      },
+      "id": "34087886-bda4-485d-88aa-720320aa089c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "522933fa-6018-4721-b052-7c554d6f5539"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 2–4 short sentences: where you come from, which languages you speak, which language you are learning, and one sentence with maar.",
+          "items": [
+            {
+              "prompt": "Write 2–4 short sentences: where you come from, which languages you speak, which language you are learning, and one sentence with maar.",
+              "authorsVersion": [
+                "Ik kom uit Spanje. Ik ben Spaanse. Ik spreek Spaans en Engels. Ik leer Nederlands. Nederlands is moeilijk, maar ik leer snel!"
+              ],
+              "note": "Model answer by Sofia. Also fine: Ik ben Spaans., een beetje Nederlands."
+            }
+          ]
+        }
+      },
+      "id": "650e03eb-d746-43de-bebf-bf2984689dc7"
+    },
+    {
+      "type": "divider",
+      "id": "6446c34d-2a8f-49a8-aa27-37bbdbed0bca"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "b9314af2-2f17-465b-8d63-7318a393f624"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Ik spreek Spaans (en een beetje Nederlands); Spreek je …? (no t) — Spreekt u …?"
+      ],
+      "id": "ad067bd7-9cc4-4575-8819-56a729b44dd6"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Languages: Nederlands, Spaans, Engels, Duits, Frans — capital letter, no article after spreken, 'in het Nederlands'."
+      ],
+      "id": "849e437d-7285-412e-b282-fa5afb0212e9"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Ik ben Spaans / Spaanse / Spanjaard — no een; the language is always Spaans."
+      ],
+      "id": "4c5a458e-ad10-4433-be76-90e202446a43"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Same rule, new verbs: spreek, leer, lees, schrijf, drink, eet (no extra t)."
+      ],
+      "id": "24cb3767-61e6-43c1-8a9d-58232465c8b0"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "en = and, maar = but, of = or; the word order stays the same."
+      ],
+      "id": "db7ee01f-41a0-4104-be7f-30cdded6b549"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Spreek je Nederlands?",
+      "description": "At the office coffee machine, Daan hands Sofia a mug of milky coffee; Sofia holds a small book.",
+      "alt": "Two colleagues at an office coffee machine, one holding a book.",
+      "location": "sofia-office",
+      "characters": [
+        "sofia",
+        "daan"
+      ]
+    },
+    {
+      "afterHeading": "Story: Vlaams is ook Nederlands",
+      "description": "Lunch table in the office: Sofia eats a cheese sandwich while Karin and a colleague from Antwerpen (a man in his forties with short grey-brown hair, a neat beard and a dark-green sweater) laugh with her.",
+      "alt": "Three colleagues laughing together at a lunch table in an office.",
+      "location": "sofia-office",
+      "characters": [
+        "sofia"
+      ]
+    }
+  ],
+  "id": "6724ef8e-ce0f-4725-b0ae-f87fb46f8c3d"
+}

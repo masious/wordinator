@@ -1,0 +1,2950 @@
+{
+  "title": "Ik woon in Utrecht",
+  "goal": "Say where you live with wonen (in + place, bij + person); learn the general singular present-tense rule (ik = stem, jij/u/hij/zij = stem + t) and how to spell the stem; use it with wonen, komen, werken, studeren, heten, maken and reizen.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Ik woon in Utrecht",
+      "id": "87ddafff-1769-4965-bd88-b91f745d2eaf"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is the evening of Sofia's first working day. She is back at Noor's flat, and Noor wants to hear everything. In this lesson you will learn to say where you live with the verb wonen, and you will learn the rule that most Dutch verbs follow in the present tense.",
+      "id": "edecb9a0-3284-4512-b0d3-43596cc0436f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: ",
+        {
+          "text": "subjects",
+          "styles": {
+            "textColor": "green",
+            "bold": true
+          }
+        },
+        " are green, ",
+        {
+          "text": "verbs",
+          "styles": {
+            "textColor": "blue",
+            "bold": true
+          }
+        },
+        " are blue, place words like ",
+        {
+          "text": "in Utrecht",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " and ",
+        {
+          "text": "bij Noor",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " are purple, and ",
+        {
+          "text": "met de trein",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        " (by train) is gray."
+      ],
+      "id": "13849a9f-c9b8-468f-9d72-4ed7f114346e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Wie woont waar?",
+      "id": "68dd7300-1ccf-4161-8455-047e94240027"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is evening. Sofia comes home from her first day at work. Noor is in the kitchen.",
+      "id": "a4cc9bcf-9374-4d45-b561-c34a727ef998"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Hoi Sofia! Hoe is het werk?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goed! Het team is klein, maar heel aardig."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Super! Wie is de teamleider?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Karin. Ze komt uit Amersfoort en ze woont ook in Amersfoort."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En ze werkt in Utrecht?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja. Ze reist met de trein."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En Daan? Waar woont Daan?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Daan komt uit Utrecht en hij woont in Utrecht."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En de collega uit België?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hij komt uit Antwerpen, maar hij woont in Utrecht."
+          }
+        ]
+      },
+      "id": "67d2fbbb-1e0c-4970-aa06-5fb4435376e1"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het werk",
+              "meaning": "work, the job",
+              "example": "Hoe is het werk?",
+              "id": "4675e063-bd6f-40f7-9874-859dc20c4d9c"
+            },
+            {
+              "term": "Hoe is het werk?",
+              "meaning": "How's the job? (chunk with zijn)",
+              "id": "1a492d2e-a423-4d79-ba8f-dcfb7eab701b"
+            },
+            {
+              "term": "wonen",
+              "meaning": "to live (have your home somewhere)",
+              "forms": "woont · woonde · gewoond",
+              "example": "Ik woon in Utrecht.",
+              "id": "6b183000-ec03-4680-a861-87e044897e4a"
+            },
+            {
+              "term": "werken",
+              "meaning": "to work",
+              "forms": "werkt · werkte · gewerkt",
+              "example": "Ze werkt in Utrecht.",
+              "id": "19ced47b-a97d-4c91-91d7-2cf11cac32f1"
+            },
+            {
+              "term": "reizen",
+              "meaning": "to travel",
+              "forms": "reist · reisde · gereisd",
+              "example": "Ze reist met de trein.",
+              "id": "39ec9f31-bdc9-44f9-b7c1-8f32d33317b9"
+            },
+            {
+              "term": "de trein",
+              "meaning": "train",
+              "forms": "de treinen",
+              "id": "84548e6f-86e0-4aee-b8e2-abbd61e25692"
+            },
+            {
+              "term": "met de trein",
+              "meaning": "by train",
+              "id": "147008d5-8bd9-450c-be6e-f9d77f6fc901"
+            }
+          ]
+        }
+      },
+      "id": "4191ea6a-5124-4ed5-ad70-4d2461d12a47"
+    },
+    {
+      "type": "divider",
+      "id": "4d707a52-50c9-4f33-81d5-8556b476563f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "wonen in + place, bij + person",
+      "id": "cf997e5b-4cd0-4142-9603-accfef5be62e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "wonen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " = to live (have your home). ",
+        {
+          "text": "komen uit",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is where you are ",
+        {
+          "text": "from",
+          "styles": {
+            "italic": true
+          }
+        },
+        "; ",
+        {
+          "text": "wonen in",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is where you live ",
+        {
+          "text": "now",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". The two can differ, as with Noor: she comes from Groningen, but she lives in Utrecht."
+      ],
+      "id": "bd007a20-5c69-4c87-82a4-f7d24c9d9616"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I live in Utrecht.",
+        "note": "wonen + in + city."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woon",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in Utrecht",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "0d16298f-3318-4463-9a1e-b3928ca70ecf"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I live at Noor's, in Utrecht-Oost.",
+        "note": "bij + person = at someone's home. Utrecht-Oost = the east of Utrecht."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woon",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "bij Noor",
+          "styles": {
+            "bold": true,
+            "textColor": "purple"
+          }
+        },
+        ", ",
+        {
+          "text": "in Utrecht-Oost",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "888c491f-5d5f-41b6-b2e8-a62b9205b415"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "bij",
+              "meaning": "at (someone's home); also used in werken bij",
+              "example": "Ik woon bij Noor.",
+              "id": "946553d1-1e4f-4fab-bff0-f39811bc54b7"
+            }
+          ]
+        }
+      },
+      "id": "578f7d38-cc1c-4a71-9a15-cb08e54fb28d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where do you live? — I live in Utrecht-Oost.",
+        "note": "Informal: woon je, no t."
+      },
+      "content": [
+        "Waar ",
+        {
+          "text": "woon",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "? — ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woon",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in Utrecht-Oost",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "186c095e-f495-42c2-8dda-261297195d86"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Waar woon je?",
+              "meaning": "Where do you live? (informal)",
+              "id": "ecea5eaf-10b5-42d9-9e16-f70ad8a9c438"
+            }
+          ]
+        }
+      },
+      "id": "f7f63bed-81b7-4b4b-b58c-61b3841b7dc6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where do you live, ma'am? — I live in Amersfoort.",
+        "note": "Formal: woont u."
+      },
+      "content": [
+        "Waar ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", mevrouw? — ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woon",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in Amersfoort",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "64acae67-cce1-48cc-8d55-eaf59ac8e5ef"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Waar woont u?",
+              "meaning": "Where do you live? (formal)",
+              "id": "462065d9-767c-478a-84d4-2780b7d78395"
+            }
+          ]
+        }
+      },
+      "id": "e1e049ae-fe9e-41f4-ad6f-e6c91c57f231"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Karin comes from Amersfoort, and she also lives in Amersfoort.",
+        "note": "komen uit next to wonen in: the core contrast of this lesson."
+      },
+      "content": [
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uit Amersfoort",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " en ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ook ",
+        {
+          "text": "in Amersfoort",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "0a6d99c9-5524-45e3-8fe3-e6a5ae05332b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan comes from Utrecht, and he lives in Utrecht.",
+        "note": "Dialogue 1. Here komen uit and wonen in give the same city."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uit Utrecht",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " en ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in Utrecht",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "0036ddf5-10fd-473d-9bad-fdb5b47c0e30"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor comes from Groningen, but she lives in Utrecht.",
+        "note": "The lesson's key contrast, recycled from the dialogues."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uit Groningen",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ", maar ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in Utrecht",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "b9b6e540-23e7-4890-b6ba-2ab49589983b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I work for an IT company.",
+        "note": "werken bij + company is a chunk; werken in + city uses in."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "werk",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "bij een IT-bedrijf",
+          "styles": {
+            "bold": true,
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "6546593f-34d2-41cc-80a2-769fbd006d07"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Ik werk bij …",
+              "meaning": "I work for … (a company, chunk: werken bij + company)",
+              "id": "56c613f1-737d-4975-abe0-f5f266badc43"
+            }
+          ]
+        }
+      },
+      "id": "9fc4632e-db94-4654-82a1-3cfea0059f08"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia is at home.",
+        "note": "zijn, recycled from 01-a; thuis = at home."
+      },
+      "content": [
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "thuis",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "07197d3a-34c1-4b73-8e2f-bb2facf8c219"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "thuis",
+              "meaning": "at home",
+              "example": "Sofia is thuis.",
+              "id": "73c2cd14-fd3a-4a74-9d17-04288b0cd809"
+            }
+          ]
+        }
+      },
+      "id": "305289ed-f115-4bd1-8fa9-848286f4e5c4"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "My mother lives in Valencia.",
+        "note": "mijn as a chunk (01-a); de moeder is new, full family words come in 05-a."
+      },
+      "content": [
+        {
+          "text": "Mijn moeder",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in Valencia",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "6e022ef1-0daa-44e4-9309-b1f9248bf814"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de moeder",
+              "meaning": "mother",
+              "forms": "de moeders",
+              "note": "Full family words (vader, broer, zus …) come in 05-a.",
+              "id": "a7770780-245b-4849-89ba-7e361751d5a1"
+            }
+          ]
+        }
+      },
+      "id": "5ab06738-e4ce-4eaa-aba9-6005272a5bfe"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "For now, say the name of a city again instead of using a word for it: ",
+        {
+          "text": "Is Groningen ver? — Ja, Groningen is ver.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Words for “it” with places and things come in a later lesson."
+      ],
+      "id": "54470b4f-84d6-4592-b7bd-c6de5ddd498f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "The present-tense rule",
+      "id": "81a5da61-00e7-45a7-9a1c-c3dabdb81c48"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "Formula: ",
+        {
+          "text": "ik = stem",
+          "styles": {
+            "bold": true
+          }
+        },
+        " · ",
+        {
+          "text": "jij/je, u, hij, zij/ze = stem + t",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". The stem is the verb minus -en (spelling below): wonen → woon, werken → werk. A name works like hij/zij, and komen (02-a) works the same way: ik kom, jij komt."
+      ],
+      "id": "86d8c553-41d2-41d7-abd9-39a3f8d0c33e"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Almost every Dutch verb follows this rule. ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is the big exception: ik ben, jij bent, hij is. Plural forms (we live, they live) come in lesson 07-a; for two people, use two sentences joined with en."
+      ],
+      "id": "2d0bb1a9-c391-4613-9883-89f2948f5e47"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I live, you live, you live (formal), he lives, she lives.",
+        "note": "wonen worked out: only ik has no t."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woon",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "u",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "zij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "87335a69-b236-4f1f-b8ac-e42ef41bb717"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I work for an IT company; Noor works in a café.",
+        "note": "werken: ik werk, jij/u/hij/zij werkt."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "werk",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "bij een IT-bedrijf",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "; ",
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "werkt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in een café",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "267b998f-e516-40b4-8d7f-fed22fc6282b"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het café",
+              "meaning": "café",
+              "forms": "de cafés",
+              "example": "Noor werkt in een café.",
+              "id": "61a10de5-969d-4f4a-84ba-9861dd2fbc9f"
+            }
+          ]
+        }
+      },
+      "id": "865ca11c-a0ee-405e-95b4-77e982bf1236"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan lives in Utrecht and Karin lives in Amersfoort.",
+        "note": "Two people, two sentences joined with en; each keeps the t-form. The plural verb comes in 07-a."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in Utrecht",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " en ",
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in Amersfoort",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "07fbcfca-6b2a-4059-af8c-f693f307bf21"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In a question, the t goes when je/jij comes right after the verb, exactly like ben jij and kom jij: ",
+        {
+          "text": "Waar woon je? Waar woon jij nu?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " But with u, hij, zij or a name, the t stays: ",
+        {
+          "text": "Waar woont u? Woont Karin in Amersfoort?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " For now this is true for zijn, komen and wonen; lesson 03-b shows it for other verbs."
+      ],
+      "id": "59687de9-bb07-4811-adde-9dd15c4ddaa0"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "nu",
+              "meaning": "now",
+              "example": "Waar woon jij nu?",
+              "id": "9ae82648-985c-45ea-bfd3-3c579f7e80e7"
+            }
+          ]
+        }
+      },
+      "id": "b62b3604-f592-4824-bdf2-d3b3fc55fbab"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where do you live? (informal, no t)",
+        "note": "je right after the verb: woon, not woont."
+      },
+      "content": [
+        "Waar ",
+        {
+          "text": "woon",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "?"
+      ],
+      "id": "be7d8256-0b09-4d3c-afe4-a1554b723467"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where do you live now? (Noor is joking; she knows.)",
+        "note": "woon jij: jij right after the verb, no t."
+      },
+      "content": [
+        "Waar ",
+        {
+          "text": "woon",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "jij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " nu?"
+      ],
+      "id": "d5480634-2202-434f-8fab-4da6cf716f7f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Does Karin live in Amersfoort?",
+        "note": "A name keeps the t, even in a question."
+      },
+      "content": [
+        {
+          "text": "Woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "in Amersfoort",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "?"
+      ],
+      "id": "f2a103ab-e1f7-419d-b91a-d2264ff5a9f3"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik woont",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Ik woon",
+          "styles": {
+            "bold": true
+          }
+        },
+        "; ",
+        {
+          "text": "Hij woon",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Hij woont",
+          "styles": {
+            "bold": true
+          }
+        },
+        "; ",
+        {
+          "text": "Waar woont je?",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "Waar woon je?",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ik never adds the t, and the t goes when je/jij comes right after the verb."
+      ],
+      "id": "138a91c4-c6ca-4883-8489-106fd8c0f6e4"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Pronoun",
+              "id": "d10931dd-fb9d-4423-a510-42f82bd8d5d6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "ik",
+              "id": "7b671815-c536-4c42-8a4d-0a0d40ed5978"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "jij / je",
+              "id": "648ef527-a0c3-46a4-bbf8-2b578f5dfc52"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "u",
+              "id": "3b13df15-c65b-409e-9ce4-5b8dc5e02a99"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "hij",
+              "id": "219ed8c4-56a3-4519-ab54-254d715c8024"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zij / ze",
+              "id": "0340a601-3e9c-4ea7-b530-dec45a08d695"
+            }
+          ],
+          "id": "77d04cba-45cc-4662-864c-ccf7950ff0a0"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "wonen",
+              "id": "2d8fd5f1-2b78-4467-a49f-91767597708d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "woon",
+              "id": "428b4d65-dfec-4354-bc0c-a9e94a95a3fa"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "woont",
+              "id": "bddb4733-7f7a-456e-a157-8ec0b13518f9"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "woont",
+              "id": "464eb09f-d497-4320-88df-c2f778ea5c7e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "woont",
+              "id": "de49b396-da48-435d-97a6-9d571a9f8058"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "woont",
+              "id": "da21ebdd-1442-4056-9863-4108c4d36eb2"
+            }
+          ],
+          "id": "891c02f2-3803-4e53-8ed0-9e6224652880"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Example",
+              "id": "5334038f-209f-4859-be84-d9d77d779cbf"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik woon bij Noor.",
+              "id": "f1312e62-2159-4bba-8161-4545e40c0e25"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Jij woont in Utrecht-Oost.",
+              "id": "2d6681aa-8d38-4b33-a756-e86e0006e2d9"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "U woont in Amersfoort.",
+              "id": "f1284870-370e-4dc2-a1bf-15a0beec6d30"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Daan woont in Utrecht.",
+              "id": "3911db29-567e-4324-b279-2c2fc128f469"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Noor woont in Utrecht.",
+              "id": "9974904c-6d2a-474d-8899-591058366874"
+            }
+          ],
+          "id": "a5ffdab9-bdb6-45d6-8420-dec5eebea259"
+        }
+      ],
+      "id": "3640d75a-35bc-4bf8-8aa5-e490bf68c325"
+    },
+    {
+      "type": "divider",
+      "id": "f56689ef-c127-40f6-9be9-d88968fb5512"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Spelling the stem",
+      "id": "4aeb4712-ef90-47cc-806a-0ab572ce4f57"
+    },
+    {
+      "type": "paragraph",
+      "content": "The stem is the infinitive minus -en; it is also the ik-form. Five spelling steps, each with one example:",
+      "id": "1773220c-a88f-4dd0-b53b-e9ad96572a9f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Remove -en: werken → ",
+        {
+          "text": "werk",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "19d72373-e80d-4c76-9b22-3d45f1c5ee40"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "If the last vowel sounds long and is written with one letter, write it double: wo-nen → ",
+        {
+          "text": "woon",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ma-ken → ",
+        {
+          "text": "maak",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", he-ten → ",
+        {
+          "text": "heet",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", stu-de-ren → ",
+        {
+          "text": "studeer",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "8c37ec40-dcea-4686-ac8f-4f435d125d5f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "If the infinitive has a double consonant before -en, write one: zitten → ",
+        {
+          "text": "zit",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "261abda6-209d-4119-9e32-b470f8567265"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "A Dutch word never ends in v or z: v → f, z → s. leven → ",
+        {
+          "text": "leef",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (the long e is doubled too), reizen → ",
+        {
+          "text": "reis",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "0fc6b54e-56e5-4823-b37f-bdb355e8acbb"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Add t for jij, u, hij and zij: jij maakt, hij leeft, zij reist, Noor studeert. If the stem already ends in t, add nothing: ik heet, hij heet; ik zit, hij zit."
+      ],
+      "id": "aa7fdad7-d99a-4a27-9ada-211d231a4993"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "maken",
+              "meaning": "to make",
+              "forms": "maakt · maakte · gemaakt",
+              "example": "Ik maak thee.",
+              "id": "97eb9a74-d3da-492a-9c42-90f27bd62b0a"
+            },
+            {
+              "term": "studeren",
+              "meaning": "to study (at university)",
+              "forms": "studeert · studeerde · gestudeerd",
+              "example": "Noor studeert psychologie.",
+              "id": "12429b0d-5fe2-4b0a-bae8-a6609cc554b2"
+            },
+            {
+              "term": "heten",
+              "meaning": "to be called, to be named",
+              "forms": "heet · heette · geheten",
+              "note": "Ik heet … and Hoe heet je? were chunks in 01-a; this is the full verb.",
+              "id": "8b2c253d-e4f4-4922-928e-8c72f12abb0f"
+            },
+            {
+              "term": "zitten",
+              "meaning": "to sit, to be sitting",
+              "forms": "zit · zat · gezeten",
+              "note": "Forms only here; positional verbs in sentences are 14-b.",
+              "id": "ea56b940-50fc-4803-94f0-1ddbc3160e14"
+            },
+            {
+              "term": "leven",
+              "meaning": "to be alive",
+              "forms": "leeft · leefde · geleefd",
+              "note": "Not the same as wonen (to live somewhere) — see the false-friend callout.",
+              "id": "df04a24f-3fc9-47a1-8493-80020a7df8cb"
+            }
+          ]
+        }
+      },
+      "id": "37ca860a-77ce-4ab0-8557-6034df018022"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "Stem ends in t? Add nothing: ",
+        {
+          "text": "ik heet, hij heet; ik zit, hij zit",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Never ",
+        {
+          "text": "hij heett",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " or ",
+        {
+          "text": "hij zitt",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        "."
+      ],
+      "id": "8cde77a4-37ee-427a-8c0b-c1187f6986af"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "komen is an exception: the o sounds long in ko-men but short in ",
+        {
+          "text": "kom",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", so there is no double o. Learn it as it is: ik kom, jij komt."
+      ],
+      "id": "9ab0c222-3081-4e37-80bc-e56e5e04df6b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        "Long vowels: ",
+        {
+          "text": "aa",
+          "styles": {
+            "bold": true
+          }
+        },
+        " sounds like the a in father (maak), ",
+        {
+          "text": "ee",
+          "styles": {
+            "bold": true
+          }
+        },
+        " like the ay in day (heet), ",
+        {
+          "text": "oo",
+          "styles": {
+            "bold": true
+          }
+        },
+        " like the o in go (woon). One vowel letter before a final consonant is short: kom, werk, zit. The double letter only keeps the long sound the infinitive already has: wo-nen → woon."
+      ],
+      "id": "0b1ae315-d724-428f-8640-4a7ae14b7ca4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "heten, now as a verb",
+      "id": "5f4d41b8-95d2-4cdb-a3a4-9b223227cfb1"
+    },
+    {
+      "type": "paragraph",
+      "content": "Ik heet … and Hoe heet je? were fixed chunks in 01-a; now you know the whole verb: ik heet, jij/je heet, u heet, hij/zij heet. The stem already ends in t, so there is no extra t and no t-drop to hear.",
+      "id": "3255f6ad-905d-4448-b084-683ac8964ddf"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What's his name? — His name is Daan.",
+        "note": "heet: no extra t anywhere, ik heet and hij heet look the same."
+      },
+      "content": [
+        "Hoe ",
+        {
+          "text": "heet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        "? — ",
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "heet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " Daan."
+      ],
+      "id": "7e4f17c2-7d66-41ac-ab5c-806628d5b929"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "More verbs: maken, studeren, reizen, zitten, leven",
+      "id": "10780faf-dc5e-44a4-a46e-3b2f8b88e3cc"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I'm making tea. Do you want some too? — Yes, please!",
+        "note": "maak = stem of maken (double vowel). Dialogue 2."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "maak",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " thee. Jij ook? — Ja, graag!"
+      ],
+      "id": "c55f8694-8069-4b3d-a588-b0f232a02a46"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de thee",
+              "meaning": "tea",
+              "example": "Ik maak thee.",
+              "id": "5c84c9c7-a678-4a89-aa70-df148f3218fb"
+            },
+            {
+              "term": "Ja, graag!",
+              "meaning": "Yes, please!",
+              "id": "7d1cb071-54ba-4cf1-9e31-65a873eadb22"
+            }
+          ]
+        }
+      },
+      "id": "d551d419-3a6a-4fa2-82aa-1eec6759efcf"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor studies psychology.",
+        "note": "studeert = stem studeer + t."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "studeert",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " psychologie."
+      ],
+      "id": "5d85bb0d-79a9-48f4-a026-ef4c06157a35"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de psychologie",
+              "meaning": "psychology",
+              "example": "Noor studeert psychologie.",
+              "id": "b686b8a0-a900-49e2-a425-26a4708c9a0b"
+            }
+          ]
+        }
+      },
+      "id": "a84667d5-9a16-47df-b9ce-21e61e849c2d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "She travels by train.",
+        "note": "reist = stem reis (z → s) + t. Ze = Karin (dialogue 1)."
+      },
+      "content": [
+        {
+          "text": "Ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "reist",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "met de trein",
+          "styles": {
+            "textColor": "gray"
+          }
+        },
+        "."
+      ],
+      "id": "01975256-2ca7-4946-9f1a-6fad3aefa945"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Infinitive",
+              "id": "0183aa47-ae78-48fe-b6a1-282e5d815042"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "wonen",
+              "id": "859f75a0-74c9-4d5c-a19a-27a6e4c0047a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "werken",
+              "id": "b1e84a12-8df6-4865-b091-cae62c318730"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "komen",
+              "id": "57daad6b-07e2-4b8e-b6c8-7a0da9255714"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "maken",
+              "id": "99c059e4-4f34-465e-8e76-982f601afc06"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "studeren",
+              "id": "a3efcd2f-6f47-4cd2-ac10-18d6e44987e9"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "heten",
+              "id": "ea48c60d-3ac9-4c8b-af36-287ce5985581"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zitten",
+              "id": "a6a4fe21-a0fc-4094-bcf0-d5e00f03c2e3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "leven",
+              "id": "a65e8a22-2073-4497-98bd-248ed08b7812"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "reizen",
+              "id": "2aa1d564-46ad-4e10-817a-24ef717c3fe2"
+            }
+          ],
+          "id": "6f83f68f-4e55-489a-b4f0-2dee90962feb"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "ik (stem)",
+              "id": "95989f38-4dcf-470e-9d3c-43b9c9460a52"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "woon",
+              "id": "4be79062-5e8b-4161-b5f1-ece7c3a24f59"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "werk",
+              "id": "51d1652f-2ea3-4ac1-b384-1f57703f5294"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "kom",
+              "id": "8a88f9de-f5d0-4066-8990-1803d8d32050"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "maak",
+              "id": "380478e7-ed7a-4279-957d-292c966b1502"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "studeer",
+              "id": "bebc4326-e7e3-4a73-8d83-494b8d4bb096"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "heet",
+              "id": "625b9460-6d72-4ce2-891f-25d5507b58a3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zit",
+              "id": "d8bd5feb-d15b-45bc-a883-b615b7b1f95a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "leef",
+              "id": "3a56bf6a-55da-41c1-ae36-76253a814ecb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "reis",
+              "id": "6e11bac5-3e78-42fe-992a-3be9b461240f"
+            }
+          ],
+          "id": "957c9ff3-d9b0-4c45-871d-3e28af10e6f3"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "jij/u/hij/zij",
+              "id": "d9582e0a-839f-48d5-a28f-94cec8aeb7ea"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "woont",
+              "id": "7bc7d7ff-c293-446b-97f1-a3868135b0cd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "werkt",
+              "id": "ecc6626f-d067-48ff-9208-ffec3a218ce2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "komt",
+              "id": "a2660d79-5317-4d2e-bba7-54b2a1dfa7f3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "maakt",
+              "id": "87e663ee-d5d0-48db-ae3f-2e8ef89e5657"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "studeert",
+              "id": "b5537c10-a074-47b9-8c39-6241727ff67d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "heet",
+              "id": "fe20cb46-6fe3-4c67-9dbe-cd7b46351a91"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zit",
+              "id": "d7cc6473-9b73-4972-9d75-2aeced21d307"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "leeft",
+              "id": "16892a1d-ea79-423f-aef1-8f17243efc51"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "reist",
+              "id": "1843068d-8052-49ee-86ce-ea653f48f3f1"
+            }
+          ],
+          "id": "d64edca3-da48-4e07-a878-ba298ff344f5"
+        }
+      ],
+      "id": "07c2d9d9-7bfb-4be1-8490-abd4ea964ae9"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        "English ",
+        {
+          "text": "\"to live\"",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and Spanish ",
+        {
+          "text": "\"vivir\"",
+          "styles": {
+            "italic": true
+          }
+        },
+        " tempt ",
+        {
+          "text": "Ik leef in Utrecht.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " For your home, Dutch uses wonen: ",
+        {
+          "text": "Ik woon in Utrecht.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " leven only means to be alive: ik leef, hij leeft."
+      ],
+      "id": "0d03082b-bc82-495a-a382-d035cd7a5051"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "Utrecht and Groningen are both big student cities: Utrecht University is one of the largest in the Netherlands, and Groningen, in the north, is a well-known student city about two hours away by train. Many students live in a shared flat or rent a room in someone's home, like Sofia at Noor's."
+      ],
+      "id": "8e450086-78e3-4a2f-b831-2ee5ad572a72"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Wie woont waar?",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Sofia",
+          "children": [
+            {
+              "type": "bulletListItem",
+              "content": "komt uit Valencia",
+              "id": "52bab462-93a9-4b73-949d-fa3a30f8209f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "woont in Utrecht-Oost, bij Noor",
+              "id": "4a865049-483e-47b1-b9ed-20b8f1d8e314"
+            }
+          ],
+          "id": "3f9d0ca8-c5d3-4bb1-86fd-c2c9dd8a42c1"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Noor",
+          "children": [
+            {
+              "type": "bulletListItem",
+              "content": "komt uit Groningen",
+              "id": "c67d0b1a-1924-4a05-b862-689c99932b0a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "woont in Utrecht",
+              "id": "fe8980d5-9ad4-4dc0-9d4a-25a33a49d468"
+            }
+          ],
+          "id": "24680525-c997-4cdf-ae32-3e6a472b96b3"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Daan",
+          "children": [
+            {
+              "type": "bulletListItem",
+              "content": "komt uit Utrecht",
+              "id": "a667eea2-3920-4d00-8957-2ee99054b835"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "woont in Utrecht",
+              "id": "301abeb7-fe8e-47d8-ab2d-70106bf03298"
+            }
+          ],
+          "id": "1fac4085-0cad-476f-b3fa-0152ce543cf9"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Karin",
+          "children": [
+            {
+              "type": "bulletListItem",
+              "content": "komt uit Amersfoort",
+              "id": "05da830e-4829-4bff-bd56-e892d70dd212"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "woont in Amersfoort",
+              "id": "848a919f-7726-4645-85e5-e5481b356746"
+            }
+          ],
+          "id": "5e9d2b8b-da7a-4236-97c3-bcd67e659012"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "de collega",
+          "children": [
+            {
+              "type": "bulletListItem",
+              "content": "komt uit Antwerpen",
+              "id": "d61e6fee-12d7-420e-89b1-1aa533a9d91b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "woont in Utrecht",
+              "id": "a378e207-31ef-4743-b9bf-e3f89ccf2d77"
+            }
+          ],
+          "id": "29f892da-385d-4c2b-995a-fc2a110564a4"
+        }
+      ],
+      "id": "ccb61033-abb7-45bd-a6e3-1bc9df431321"
+    },
+    {
+      "type": "divider",
+      "id": "3dd581cc-1f42-4d81-97f9-f753362be8a9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Noor uit Groningen",
+      "id": "23d1a583-7f0a-439a-a0c8-3922da8b2942"
+    },
+    {
+      "type": "paragraph",
+      "content": "Noor makes tea. Now Sofia asks the questions.",
+      "id": "c7b36819-46da-4442-a934-27835f8bea2f"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Ik maak thee. Jij ook?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, graag! Noor, kom jij uit Utrecht?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Nee, ik kom uit Groningen. Maar ik woon in Utrecht."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Groningen? Is Groningen ver?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, ver. Groningen is in het noorden."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En jij studeert hier, in Utrecht."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, ik studeer psychologie. En ik werk in een café, in het centrum."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Echt? Gezellig!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "En jij, Sofia? Waar woon jij nu?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik woon in Utrecht-Oost. Bij Noor!"
+          }
+        ]
+      },
+      "id": "1a17dbcf-3147-4421-98dc-e31c52d7eba5"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het noorden",
+              "meaning": "the north",
+              "example": "Groningen is in het noorden.",
+              "id": "38c0ad9f-c893-4ddc-af6f-d8e95db35f50"
+            },
+            {
+              "term": "het centrum",
+              "meaning": "the centre (of a city)",
+              "example": "Het café is in het centrum.",
+              "id": "a707e8aa-f896-46f0-b655-a99a62a149c3"
+            }
+          ]
+        }
+      },
+      "id": "fbeba139-2bf3-4cc1-91d0-048b33466275"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "Noor already knows the answer when she asks Waar woon jij nu? — she is joking. woon jij loses its t, just like kom jij and ben jij.",
+      "id": "0611ff18-c08f-4951-a7b8-2e68e9eef802"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "zijn, komen and wonen together",
+      "id": "010b092d-d3a2-4d37-b56f-cdfc4eb41d32"
+    },
+    {
+      "type": "paragraph",
+      "content": "Put zijn, komen and wonen side by side to tell a short story about one person at a time.",
+      "id": "98d92cb6-a875-4131-b356-29837ff0bfa4"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This is Els. She's the neighbour. She lives here too.",
+        "note": "Dit is … for people (01-b); zijn + wonen, recycled."
+      },
+      "content": [
+        "Dit is Els. ",
+        {
+          "text": "Ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " de buurvrouw. ",
+        {
+          "text": "Ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "hier",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        " ook."
+      ],
+      "id": "0e642de2-0a2b-4c86-934b-3a807b25881d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan is a programmer. He lives in Utrecht.",
+        "note": "A job without een (01-b), then wonen in."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " programmeur. ",
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in Utrecht",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "28fdf901-95fa-41c7-8c65-a89a564a2e88"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "He comes from Antwerp, but he lives in Utrecht.",
+        "note": "The Collega: komen uit vs. wonen in."
+      },
+      "content": [
+        {
+          "text": "Hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "komt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "uit Antwerpen",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        ", maar ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in Utrecht",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "a5c0f844-4a13-49ee-8369-8d7e5004611e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor works in a café in the centre.",
+        "note": "Dialogue 2. werken in + place; werken bij + company."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "werkt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in een café, in het centrum",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "105e1c35-2d30-4bc4-8e88-0bb4c08cb586"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is Groningen far? — Yes. Groningen is in the north.",
+        "note": "Dialogue 2. Say the city name again."
+      },
+      "content": [
+        "Is Groningen ver? — Ja. ",
+        {
+          "text": "Groningen",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "in het noorden",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "7c2b41b0-0e00-4fcd-b455-bd1256c266d5"
+    },
+    {
+      "type": "divider",
+      "id": "548ada6d-2fec-4c6e-897f-e76808002f63"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "6d624f60-66ae-4fc3-896f-af6bdd18259e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in the verb",
+      "id": "c8811944-737a-4f0c-b938-fbfad53f3a79"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct form of the verb in brackets. Example: Sofia (komen) uit Spanje. → komt",
+          "items": [
+            {
+              "prompt": "Ik … in Utrecht. (wonen)",
+              "authorsVersion": [
+                "woon"
+              ],
+              "note": "ik = the stem, no t."
+            },
+            {
+              "prompt": "Noor … in Utrecht. (wonen)",
+              "authorsVersion": [
+                "woont"
+              ],
+              "note": "A name works like zij: woont."
+            },
+            {
+              "prompt": "Waar … je? (wonen)",
+              "authorsVersion": [
+                "woon"
+              ],
+              "note": "je right after the verb: no t."
+            },
+            {
+              "prompt": "Waar … u? (wonen)",
+              "authorsVersion": [
+                "woont"
+              ],
+              "note": "u always keeps the t."
+            },
+            {
+              "prompt": "Ik … bij een IT-bedrijf. (werken)",
+              "authorsVersion": [
+                "werk"
+              ],
+              "note": "ik = the stem: werk."
+            },
+            {
+              "prompt": "Hij … Daan. (heten)",
+              "authorsVersion": [
+                "heet"
+              ],
+              "note": "The stem already ends in t: no extra t, hij heet looks like ik heet."
+            }
+          ]
+        }
+      },
+      "id": "75ddc5a5-dc1c-4600-9fe3-a0494bdd08b5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Stem spelling",
+      "id": "84125838-dafb-4d6b-b8fe-f9873a08ef1b"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Give the ik-form and the jij/hij-form of each verb. Example: wonen → ik woon, hij woont",
+          "items": [
+            {
+              "prompt": "maken: ik … / hij …",
+              "authorsVersion": [
+                "maak",
+                "maakt"
+              ],
+              "note": "Long vowel written double in the stem: maak."
+            },
+            {
+              "prompt": "studeren: ik … / zij …",
+              "authorsVersion": [
+                "studeer",
+                "studeert"
+              ],
+              "note": "Long vowel written double: studeer."
+            },
+            {
+              "prompt": "zitten: ik … / hij …",
+              "authorsVersion": [
+                "zit",
+                "zit"
+              ],
+              "note": "Double consonant becomes single in the stem; the stem already ends in t, so hij zit has no extra t."
+            },
+            {
+              "prompt": "leven: ik … / hij …",
+              "authorsVersion": [
+                "leef",
+                "leeft"
+              ],
+              "note": "v → f at the end of the stem, and the long e is written double: leef, leeft."
+            },
+            {
+              "prompt": "reizen: ik … / zij …",
+              "authorsVersion": [
+                "reis",
+                "reist"
+              ],
+              "note": "z → s at the end of the stem: reis."
+            }
+          ]
+        }
+      },
+      "id": "12429698-2138-4100-8880-2d19d4ff9018"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the dialogues",
+      "id": "b61406e1-1ca7-4bf8-86a4-e3625aca5e3a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the short exchanges. Fill in one word per blank. Example: Sofia: Ik (blank) uit Spanje. → kom",
+          "items": [
+            {
+              "prompt": "Noor: Waar … Daan? / Sofia: Daan … in Utrecht.",
+              "authorsVersion": [
+                "woont",
+                "woont"
+              ],
+              "note": "A name keeps the t both times."
+            },
+            {
+              "prompt": "Sofia: Waar … u, mevrouw? / Mevrouw: Ik … in Amersfoort.",
+              "authorsVersion": [
+                "woont",
+                "woon"
+              ],
+              "note": "Formal: woont u; but ik always keeps the stem, woon."
+            },
+            {
+              "prompt": "Noor: Ik … thee. Jij ook? / Sofia: Ja, …!",
+              "authorsVersion": [
+                "maak",
+                "graag"
+              ],
+              "note": "maak = ik-form of maken; Ja, graag! = Yes, please!"
+            },
+            {
+              "prompt": "Collega: Waar … jij? / Sofia: Ik woon … Noor, in Utrecht-Oost.",
+              "authorsVersion": [
+                "woon",
+                "bij"
+              ],
+              "note": "woon jij: jij right after the verb, no t; bij + person = at someone's place."
+            },
+            {
+              "prompt": "Noor: Waar kom je vandaan? / Sofia: Ik … uit Valencia, maar ik … nu in Utrecht.",
+              "authorsVersion": [
+                "kom",
+                "woon"
+              ],
+              "note": "komen uit = where you are from; wonen in = where you live now. With ik both verbs are just the stem."
+            }
+          ]
+        }
+      },
+      "id": "c5121ca2-a2e7-4e72-9956-54e4f132874e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "7049383b-50e4-431a-a5a5-9b98d719a75f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the full sentence, with a capital letter and a question mark or full stop. Example: kom / ik / uit Spanje → Ik kom uit Spanje.",
+          "items": [
+            {
+              "prompt": "Put in order: woon / ik / in Utrecht",
+              "authorsVersion": [
+                "Ik woon in Utrecht."
+              ],
+              "note": "Subject + verb + rest."
+            },
+            {
+              "prompt": "Put in order: je / waar / woon",
+              "authorsVersion": [
+                "Waar woon je?"
+              ],
+              "note": "waar first, then woon, then je: no t."
+            },
+            {
+              "prompt": "Put in order: psychologie / studeert / Noor",
+              "authorsVersion": [
+                "Noor studeert psychologie."
+              ],
+              "note": "Subject + verb + rest."
+            },
+            {
+              "prompt": "Put in order: met de trein / Karin / reist",
+              "authorsVersion": [
+                "Karin reist met de trein."
+              ],
+              "note": "A name keeps the t: reist."
+            }
+          ]
+        }
+      },
+      "id": "13b8fe9d-7c21-46b4-9c6d-7533c5447757"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Transformation",
+      "id": "815bede9-ca3f-4b3d-9f58-f2a3cfee4184"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence with the new subject in brackets, keeping the verb form correct. Example: Ik kom uit Spanje. (Sofia) → Sofia komt uit Spanje.",
+          "items": [
+            {
+              "prompt": "Ik woon in Utrecht. (Noor)",
+              "authorsVersion": [
+                "Noor woont in Utrecht."
+              ],
+              "note": "A name takes the t-form: woont."
+            },
+            {
+              "prompt": "Ik werk in een café. (Noor)",
+              "authorsVersion": [
+                "Noor werkt in een café."
+              ],
+              "note": "werk → werkt."
+            },
+            {
+              "prompt": "Ik reis met de trein. (Karin)",
+              "authorsVersion": [
+                "Karin reist met de trein."
+              ],
+              "note": "reis → reist."
+            },
+            {
+              "prompt": "Daan woont in Utrecht. (ik)",
+              "authorsVersion": [
+                "Ik woon in Utrecht."
+              ],
+              "note": "woont → woon, no t for ik."
+            },
+            {
+              "prompt": "Noor studeert psychologie. (ik)",
+              "authorsVersion": [
+                "Ik studeer psychologie."
+              ],
+              "note": "studeert → studeer."
+            }
+          ]
+        }
+      },
+      "id": "c9dc6b51-39de-442c-a1c0-fc4c5249a821"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "6811614c-7d37-487b-9cae-82b985b794fd"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Example: I come from Spain. → Ik kom uit Spanje.",
+          "items": [
+            {
+              "prompt": "Where do you live?",
+              "authorsVersion": [
+                "Waar woon je?"
+              ],
+              "note": "Also fine: Waar woont u? (formal)"
+            },
+            {
+              "prompt": "I live at Noor's.",
+              "authorsVersion": [
+                "Ik woon bij Noor."
+              ],
+              "note": "Not Ik woon in Noor: a person needs bij."
+            },
+            {
+              "prompt": "Karin lives in Amersfoort, but she works in Utrecht.",
+              "authorsVersion": [
+                "Karin woont in Amersfoort, maar ze werkt in Utrecht."
+              ],
+              "note": "Karin and ze both take the t-form: woont, werkt. Not plural: one person."
+            },
+            {
+              "prompt": "My mother lives in Valencia.",
+              "authorsVersion": [
+                "Mijn moeder woont in Valencia."
+              ],
+              "note": "mijn moeder works like zij: woont. Not leeft: wonen is for where someone lives."
+            }
+          ]
+        }
+      },
+      "id": "562c5ca0-3317-4d34-991c-be0565fae623"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "49343440-0ce1-44aa-80e7-300a17ff9b24"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English. Example: Ik kom uit Spanje. → I come from Spain.",
+          "items": [
+            {
+              "prompt": "Noor komt uit Groningen, maar ze woont in Utrecht.",
+              "authorsVersion": [
+                "Noor comes from Groningen, but she lives in Utrecht."
+              ],
+              "note": "komen uit vs. wonen in."
+            },
+            {
+              "prompt": "Waar woont u?",
+              "authorsVersion": [
+                "Where do you live?"
+              ],
+              "note": "Formal, with u."
+            },
+            {
+              "prompt": "Hij heet Daan en hij werkt in Utrecht.",
+              "authorsVersion": [
+                "His name is Daan and he works in Utrecht."
+              ],
+              "note": "heet = is called/named."
+            }
+          ]
+        }
+      },
+      "id": "ec706dbf-7b07-4946-bf26-84bd57edb092"
+    },
+    {
+      "type": "divider",
+      "id": "7a645e24-2f74-4be4-8312-0123660dd530"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Over mij",
+      "id": "60446e68-0171-4aa9-a77b-d0633b28cb21"
+    },
+    {
+      "type": "paragraph",
+      "content": "That evening, Sofia writes a short text for her own entry on the team page from 02-a. Over mij means about me.",
+      "id": "ce62c717-152a-4938-b919-bdd59d6a6ef4"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Over mij",
+              "meaning": "About me",
+              "id": "af39d8df-6f6d-4c40-95ae-e605ce290dfb"
+            }
+          ]
+        }
+      },
+      "id": "9ec701aa-2991-4d6c-8853-b1f54f7db246"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's text. Answer each question in Dutch; short answers are fine. Klopt dit? means Is this right? Example: Wie is programmeur? → Sofia.",
+          "passage": {
+            "title": "Over mij",
+            "content": "Hoi! Ik ben Sofia Moreno. Ik ben programmeur. Ik werk bij een IT-bedrijf in Utrecht.\nIk kom uit Spanje, uit Valencia. Mijn moeder woont in Valencia.\nIk woon nu in Utrecht-Oost, bij mijn vriendin Noor. Noor komt uit Groningen, maar ze woont in Utrecht. Ze studeert psychologie en ze werkt in een café.\nUtrecht is groot en gezellig. Ik ben heel blij in Utrecht!"
+          },
+          "items": [
+            {
+              "prompt": "Waar werkt Sofia?",
+              "authorsVersion": [
+                "Bij een IT-bedrijf in Utrecht."
+              ],
+              "note": "The text says: Ik werk bij een IT-bedrijf in Utrecht."
+            },
+            {
+              "prompt": "Waar komt Sofia vandaan?",
+              "authorsVersion": [
+                "Uit Valencia, in Spanje."
+              ],
+              "note": "The text says: Ik kom uit Spanje, uit Valencia."
+            },
+            {
+              "prompt": "Where does Sofia's mother live?",
+              "authorsVersion": [
+                "In Valencia."
+              ],
+              "note": "The text says: Mijn moeder woont in Valencia."
+            },
+            {
+              "prompt": "Waar woont Sofia?",
+              "authorsVersion": [
+                "In Utrecht-Oost, bij Noor."
+              ],
+              "note": "The text says: Ik woon nu in Utrecht-Oost, bij mijn vriendin Noor."
+            },
+            {
+              "prompt": "Klopt dit? Noor woont in Groningen.",
+              "authorsVersion": [
+                "Nee, Noor komt uit Groningen. Ze woont in Utrecht."
+              ],
+              "note": "The text says: Noor komt uit Groningen, maar ze woont in Utrecht."
+            },
+            {
+              "prompt": "Wie studeert psychologie?",
+              "authorsVersion": [
+                "Noor."
+              ],
+              "note": "The text says: Ze studeert psychologie."
+            },
+            {
+              "prompt": "Klopt dit? Noor werkt in een café.",
+              "authorsVersion": [
+                "Ja."
+              ],
+              "note": "The text says: Ze studeert psychologie en ze werkt in een café. Also fine: Ja, ze werkt in een café."
+            }
+          ]
+        }
+      },
+      "id": "2202b90d-939f-406e-b752-720da3907f50"
+    },
+    {
+      "type": "divider",
+      "id": "ac6154e1-b64d-4eba-88dc-e39f6bde96b6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "c877da2f-8c67-4570-ab55-98a0bdf71084"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 2–4 short sentences: where you come from, where you live now, and where you work or study.",
+          "items": [
+            {
+              "prompt": "Write 2–4 short sentences: where you come from, where you live now, and where you work or study.",
+              "authorsVersion": [
+                "Ik kom uit Valencia, in Spanje. Ik woon nu in Utrecht, bij Noor. Ik werk bij een IT-bedrijf."
+              ],
+              "note": "Model answer by Sofia. Also fine: Ik studeer in …, Ik werk in …"
+            }
+          ]
+        }
+      },
+      "id": "7d5f5eef-cc7c-47e6-a094-8cb6cfe3f8d3"
+    },
+    {
+      "type": "divider",
+      "id": "a71c9740-2cef-41f0-a7ba-276a139f70b5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "72b7bef6-dcf1-428b-892c-44739c3905df"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Ik woon in + place; ik woon bij + person.",
+      "id": "9b0bc8cc-2009-483f-b258-8857677ba1a2"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "komen uit = where you are from; wonen in = where you live now.",
+      "id": "4c3bcc80-138a-4122-8e71-8de949b2fb6f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "ik = the stem; jij, u, hij, zij = the stem + t (stem already ends in t: no extra t).",
+      "id": "f4d44705-2bd1-46f3-9377-1c4ed24b4163"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Spelling the stem: double the long vowel (woon), single consonant (zit), v → f, z → s (leef, reis).",
+      "id": "3bb8a987-c384-465a-b8dc-868fa9479ab7"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Waar woon je? (no t) — Waar woont u? (keeps the t)",
+      "id": "2082d6cb-c713-4906-908f-a5fcf42d894b"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Wie woont waar?",
+      "location": "noor-kitchen",
+      "characters": [
+        "sofia",
+        "noor"
+      ],
+      "action": "Evening in Noor's kitchen. Sofia, just home with her work bag over her shoulder, talks and counts on her fingers; Noor listens at the counter.",
+      "description": "Sofia telling Noor about her first day at work in Noor's kitchen, in the evening.",
+      "alt": "Two friends talking in a kitchen in the evening."
+    },
+    {
+      "afterHeading": "Story: Noor uit Groningen",
+      "location": "noor-kitchen",
+      "characters": [
+        "sofia",
+        "noor"
+      ],
+      "action": "Noor pours tea into two mugs on the kitchen counter; Sofia laughs.",
+      "description": "Noor making tea for herself and Sofia in the kitchen.",
+      "alt": "Someone pouring tea into two mugs in a kitchen."
+    }
+  ],
+  "id": "dc632cc3-539f-4cb5-b913-cbaee0ec27b4"
+}
