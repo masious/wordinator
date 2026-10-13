@@ -32,7 +32,9 @@ test("a member asks to contribute, edits the lesson draft, and the owner publish
   await helper.getByRole("button", { name: "Ask to contribute" }).click();
   await expect(helper.getByText("Your request is waiting for the course owner.")).toBeVisible();
 
+  // Requests wait on the owner's manage page, which the course page links to.
   await owner.goto(coursePage);
+  await owner.getByRole("button", { name: "Manage course" }).click();
   await owner.getByRole("button", { name: `Accept ${helperName} as a contributor` }).click();
   await expect(owner.getByRole("button", { name: `Remove ${helperName} as a contributor` })).toBeVisible();
 

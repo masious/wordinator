@@ -48,21 +48,22 @@
             "textColor": "brown"
           }
         },
-        " (new from this lesson); ",
-        {
-          "text": "een",
-          "styles": {
-            "bold": true
-          }
-        },
-        ", the possessives and the target forms are ",
+        " (new from this lesson); een, geen and the target form of an example are ",
         {
           "text": "bold",
           "styles": {
             "bold": true
           }
         },
-        "."
+        "; a mistake is ",
+        {
+          "text": "grey and italic",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " and always followed by the right form."
       ],
       "id": "48eaf9df-552f-4d7f-a164-81898ead0758"
     },
@@ -153,7 +154,8 @@
             {
               "term": "een kopje thee",
               "meaning": "a cup of tea",
-              "id": "bd9a4da7-c9ab-471c-a104-af2b33acbdbe"
+              "id": "bd9a4da7-c9ab-471c-a104-af2b33acbdbe",
+              "example": "Een kopje thee, Els? — Ja, graag."
             },
             {
               "term": "het koekje",
@@ -165,7 +167,7 @@
             {
               "term": "alsjeblieft",
               "meaning": "please (informal); also “here you are” when you hand something over",
-              "note": "alstublieft is formal (01-b: “Een moment, alstublieft.”).",
+              "note": "alstublieft is the formal form (01-b: “Een moment, alstublieft.”). alsjeblieft already appeared once, without a card, in 03-a (“Nederlands, alsjeblieft!”).",
               "example": "Alsjeblieft, Tess!",
               "id": "7ff12c9b-3bf5-41c6-b6ca-252809bd5e1b"
             }
@@ -300,12 +302,14 @@
             {
               "term": "de",
               "meaning": "the (for de-words, and for every plural)",
-              "id": "ed3be612-8d76-4d49-ae8c-d90a682df07a"
+              "id": "ed3be612-8d76-4d49-ae8c-d90a682df07a",
+              "example": "De vrouw, de man, de jongen."
             },
             {
               "term": "het",
               "meaning": "the (for het-words); also “it” in Hoe gaat het? (01-b)",
-              "id": "443e7136-f72a-4478-8ea5-4001829b6575"
+              "id": "443e7136-f72a-4478-8ea5-4001829b6575",
+              "example": "Nee! Het huis!"
             },
             {
               "term": "De of het?",
@@ -520,13 +524,15 @@
               "meaning": "child",
               "forms": "de kinderen",
               "note": "het, but the pronoun follows the person: hij or ze.",
-              "id": "ba666e54-f642-4eeb-a103-c42f82410071"
+              "id": "ba666e54-f642-4eeb-a103-c42f82410071",
+              "example": "De vrouw, de man, de jongen. Maar het meisje en het kind."
             },
             {
               "term": "de jongen",
               "meaning": "boy",
               "forms": "de jongens",
-              "id": "bcef7e3a-2792-4885-ad32-97bb347187f2"
+              "id": "bcef7e3a-2792-4885-ad32-97bb347187f2",
+              "example": "De vrouw, de man, de jongen."
             }
           ]
         }
@@ -1563,13 +1569,15 @@
               "term": "de straat",
               "meaning": "street",
               "forms": "de straten",
-              "id": "20f464da-09b7-4d66-aabf-f2031db57f64"
+              "id": "20f464da-09b7-4d66-aabf-f2031db57f64",
+              "example": "Tess woont niet in de straat van Noor."
             },
             {
               "term": "de school",
               "meaning": "school",
               "forms": "de scholen",
-              "id": "6262d933-630f-43bf-b6a4-684705a8e570"
+              "id": "6262d933-630f-43bf-b6a4-684705a8e570",
+              "example": "Haar school is ook in Utrecht-Oost."
             }
           ]
         }

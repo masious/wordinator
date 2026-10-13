@@ -16,7 +16,14 @@
 .term{min-width:0;font-weight:var(--weight-semibold);overflow-wrap:anywhere}
 .forms{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted);overflow-wrap:anywhere}
 .meaning{margin:0;font-size:var(--type-metadata);white-space:pre-wrap;overflow-wrap:anywhere}
-@media(max-width:64em){.panel{overflow:visible}.word{opacity:1}.count{display:none}}
+/* Narrow screens fix the panel at the bottom of the window, above the mobile dock, as a one-row bar; opened, it grows upward into
+   a sheet that scrolls on its own under its title. */
+.bar{--bar-bottom:calc(var(--navigation-offset) + env(safe-area-inset-bottom, 0px));position:fixed;right:var(--page-gutter);bottom:var(--bar-bottom);left:var(--page-gutter);z-index:var(--z-floating-action);width:min(calc(100% - (var(--page-gutter) * 2)),34rem);max-height:min(60dvh,32rem);margin-inline:auto;padding-top:0;border:var(--ring-hairline);box-shadow:var(--shadow-floating)}
+.bar .toggle{position:sticky;top:0;z-index:1;padding-top:var(--space-2);background:var(--color-words-surface)}
+.bar[data-collapsed]{padding-bottom:0}
+.bar[data-collapsed] .toggle{padding-top:0}
+.bar[data-collapsed] .chevron{transform:rotate(180deg)}
+@media(max-width:48em){.bar{--bar-bottom:calc(var(--mobile-dock-clearance) + var(--space-2))}}
 @media(prefers-reduced-motion:reduce){.word,.chevron,.expand svg{transition:none}}
 /* The chevron that opens a word's details: a compact icon with a full touch target kept out of the row height. */
 .expand{display:inline-grid;place-items:center;flex:none;min-width:var(--touch-target);min-height:var(--touch-target);margin:calc((var(--touch-target) - 1.5rem) / -2);margin-left:auto;padding:0;color:var(--color-foreground-muted);background:none;border:0;border-radius:var(--radius-pill);cursor:pointer;transition:color var(--motion-press) var(--ease-physical)}

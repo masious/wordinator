@@ -9,6 +9,7 @@
     "test:e2e": "pnpm --filter @wordinator/web test:e2e",
     "build": "pnpm -r build",
     "db:generate": "pnpm --filter @wordinator/db generate",
+    "db:studio": "pnpm --filter @wordinator/db studio",
     "db:migrate:local": "pnpm --filter @wordinator/api db:migrate:local",
     "db:migrate:remote": "pnpm --filter @wordinator/api db:migrate:remote",
     "bootstrap": "node scripts/bootstrap.mjs",

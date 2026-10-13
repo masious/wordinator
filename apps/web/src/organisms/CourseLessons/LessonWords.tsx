@@ -89,9 +89,9 @@ export function useWordsCollapsed() {
 // Every new word of a lesson, in the order the player introduces them, beside the reading column. Words whose blocks are on
 // screen are highlighted and brought into view. A search box filters the lesson's words by term, forms, or meaning; with a
 // library, the search can instead run across the whole library (see LessonWordSearch). The panel collapses to its title, which
-// then counts the highlighted words.
-export function LessonWords({ steps, active, groupId, collapsed, onToggle }: {
-  steps: readonly LessonStep[]; active: ReadonlySet<string>; groupId?: string; collapsed: boolean; onToggle: () => void;
+// then counts the highlighted words. As a `bar` (narrow screens) it is fixed at the bottom of the window and opens upward.
+export function LessonWords({ steps, active, groupId, collapsed, onToggle, bar = false }: {
+  steps: readonly LessonStep[]; active: ReadonlySet<string>; groupId?: string; collapsed: boolean; onToggle: () => void; bar?: boolean;
 }) {
   const { t } = useTranslation();
   const speech = useSpeechResolver();
@@ -105,7 +105,7 @@ export function LessonWords({ steps, active, groupId, collapsed, onToggle }: {
   const highlighted = words.filter((word) => active.has(word.id)).length;
   useRevealCurrent(panelRef, library || collapsed ? "" : shown.filter((word) => active.has(word.id)).map((word) => word.id).join(" "));
   if (!words.length) return null;
-  return <aside ref={panelRef} className={styles.panel} data-collapsed={collapsed || undefined} aria-label={t("courses.words.title")}>
+  return <aside ref={panelRef} className={bar ? `${styles.panel} ${styles.bar}` : styles.panel} data-collapsed={collapsed || undefined} aria-label={t("courses.words.title")}>
     <button type="button" className={styles.toggle} aria-expanded={!collapsed} aria-controls={collapsed ? undefined : bodyId} onClick={onToggle}>
       <span className={styles.title}>{t("courses.words.title")}</span>
       {collapsed && highlighted > 0 && <span className={styles.count}>{t("courses.words.highlighted", { count: highlighted })}</span>}

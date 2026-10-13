@@ -22,6 +22,7 @@ Run these commands from the repository root:
 - `pnpm --filter @wordinator/web deploy` and `pnpm --filter @wordinator/api deploy` — deploy one app after production resource IDs and routes are configured
 - `pnpm db:generate` — generate a reviewed Drizzle migration after a schema change
 - `pnpm db:migrate:local` — apply committed migrations to local D1
+- `pnpm db:studio` — open Drizzle Studio on the local D1 SQLite file (most recently written file under `apps/api/.wrangler/state/v3/d1`); run `pnpm db:migrate:local` first
 - `pnpm db:migrate:remote` — apply committed migrations to production D1 explicitly
 - `pnpm bootstrap --local` or `pnpm bootstrap --remote` — create the first account and the single course-library record against one explicit target
 - `pnpm set-password --local <email>` or `pnpm set-password --remote <email>` — replace an existing account password against one explicit target

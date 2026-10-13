@@ -1,0 +1,3298 @@
+{
+  "title": "Utrecht is mooi",
+  "goal": "Describe places and people with an adjective after zijn (no ending): opposites, heel/erg/een beetje, niet, en/maar, lang vs hoog, Hoe is …?",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": [
+        "Utrecht is mooi"
+      ],
+      "id": "8ec1dd64-cc61-4c36-9474-447062751edc"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Sunday afternoon, the last day of Sofia's first week in Utrecht. Noor shows her the old centre of the city. ",
+        "In this lesson you will learn to say what places and people are like: big or small, old or new, busy or quiet — and to make it stronger with ",
+        {
+          "text": "heel",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and ",
+        {
+          "text": "erg",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", or weaker with ",
+        {
+          "text": "een beetje",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "6abcf44c-2109-44c8-9ff1-f464de036f9b"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: subjects are ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " and verbs are ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " (as before); ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " and ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " stay pink and brown where the article matters (05-b). The adjective, the new target form, is simply ",
+        {
+          "text": "bold",
+          "styles": {
+            "bold": true
+          }
+        },
+        " — it has no ending to colour yet."
+      ],
+      "id": "3a0b37a8-63eb-4d83-8536-d000a2b80359"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": [
+        "Story: De Domtoren"
+      ],
+      "id": "0b78680a-d1cf-4a1a-95d4-24537efa21a8"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Sunday afternoon. Noor leaves her bike at home, because Sofia has none, and they walk into the centre. Noor stops and points up at a very tall tower.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "c774d773-73f4-4901-85da-2fe28a764272"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Kijk, Sofia! De Domtoren!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "De Domtoren is heel hoog!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja. En heel oud."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En erg mooi!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Is Valencia ook mooi?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, Valencia is heel mooi. Maar Valencia is groot en druk."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En Utrecht?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Het centrum is klein, maar gezellig."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Klein? De Domtoren is niet klein!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee! De Domtoren is heel groot."
+          }
+        ]
+      },
+      "id": "70706f95-c3ca-41d4-ab09-7788001a83f1"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "hoog",
+              "meaning": "tall, high",
+              "note": "for buildings and towers; for people use lang",
+              "id": "7ab4e698-a3a9-4628-88f7-c1175c32f712",
+              "example": "De Domtoren is heel hoog!"
+            },
+            {
+              "term": "mooi",
+              "meaning": "beautiful, nice, pretty",
+              "id": "e4151f08-ecba-4e14-bd17-11419aca8682",
+              "example": "Valencia is heel mooi."
+            },
+            {
+              "term": "erg",
+              "meaning": "very (like heel, a little stronger)",
+              "id": "77898274-7ebb-4c4e-bce4-16ccf7fa3429",
+              "example": "De Domtoren is erg mooi."
+            },
+            {
+              "term": "druk",
+              "meaning": "busy",
+              "note": "a street, a city, also a person's week",
+              "id": "1ed62be4-293e-49c8-91e1-2143308ea1e4",
+              "example": "Valencia is groot en druk."
+            },
+            {
+              "term": "de toren",
+              "meaning": "tower",
+              "forms": "de torens",
+              "id": "bc29330b-e6bc-441b-836d-db9f7f15c907",
+              "note": "de Domtoren = the Dom tower: a compound, so de from de toren",
+              "example": "De Domtoren is heel oud."
+            }
+          ]
+        }
+      },
+      "id": "7319a195-a8a1-48a7-b783-53cc0fcba4ef"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "“De Domtoren” literally means “the Dom tower”: ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " ",
+        {
+          "text": "toren",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = the tower. It is a compound word, so, like ",
+        {
+          "text": "het telefoonnummer",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and ",
+        {
+          "text": "de telefoonwinkel",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (04-a), the last part decides the article (05-b): ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " toren, so ",
+        {
+          "text": "de",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        " Domtoren."
+      ],
+      "id": "57e9a89c-f10e-4f0b-90e1-45a67f2e5740"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Look, Sofia! The Dom tower! — The Dom tower is very tall! — Yes. And very old.",
+        "note": "Kijk! (01-b). Kijk, de Domtoren! — not Dit is de Domtoren: Dit is … stays for people. heel goes right before the adjective (see “heel, erg, een beetje” below); oud = old (04-a)."
+      },
+      "content": [
+        "Kijk, Sofia! De Domtoren! — ",
+        {
+          "text": "De Domtoren",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " heel ",
+        {
+          "text": "hoog",
+          "styles": {
+            "bold": true
+          }
+        },
+        "! — Ja. En heel ",
+        {
+          "text": "oud",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "4f75cd0b-9b2e-4bd5-8bc1-81c481922cce"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Valencia is very beautiful. But Valencia is big and busy.",
+        "note": "Two adjectives joined with en (see “Two adjectives” below); repeat the city's name — never het for a place (05-b)."
+      },
+      "content": [
+        {
+          "text": "Valencia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " heel ",
+        {
+          "text": "mooi",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Maar ",
+        {
+          "text": "Valencia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "groot",
+          "styles": {
+            "bold": true
+          }
+        },
+        " en ",
+        {
+          "text": "druk",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "1a36c0f5-dd58-4e5d-abc0-348662e35d16"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Small? The Dom tower is not small!",
+        "note": "Noor's joke: niet goes directly before the adjective (03-b; see “niet + adjective” below)."
+      },
+      "content": [
+        "Klein? ",
+        {
+          "text": "De Domtoren",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "niet klein",
+          "styles": {
+            "bold": true
+          }
+        },
+        "!"
+      ],
+      "id": "49a3ba88-23e0-48e0-84d8-7ec50f25d90f"
+    },
+    {
+      "type": "divider",
+      "id": "9ac7a3e1-b0a3-4279-91d2-54dd93cd46c3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": [
+        "Adjectives after zijn: no ending"
+      ],
+      "id": "7545b0ab-ae71-4bcc-88a5-850ed3b2b584"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In Dutch an adjective after ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " never takes an ending, whoever or whatever the subject is: subject + ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " + adjective."
+      ],
+      "id": "370ae0f9-472b-4d2d-be2c-de0f6f5612e5"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "Subject",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " + ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " + (heel / erg / een beetje / niet +) adjective — ",
+        {
+          "text": "De stad",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " heel ",
+        {
+          "text": "mooi",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " niet ",
+        {
+          "text": "moe",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "5b1741a3-b8ea-412c-941f-e9c71202731e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        "The adjective after ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " never changes: ",
+        {
+          "text": "De",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " stad is ",
+        {
+          "text": "mooi",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " huis is ",
+        {
+          "text": "mooi",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Tess is ",
+        {
+          "text": "blij",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Mijn ouders zijn ",
+        {
+          "text": "aardig",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". A ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        "-word, a ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        "-word, a person or a plural — the same form, always."
+      ],
+      "id": "7e40ddf9-c678-4dcd-9823-be88264ca290"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The city is beautiful. / The centre is busy. / My parents are kind.",
+        "note": "No ending after zijn, ever: not mooie, not aardige."
+      },
+      "content": [
+        {
+          "text": "De stad",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "mooi",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". / ",
+        {
+          "text": "Het centrum",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "druk",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". / ",
+        {
+          "text": "Mijn ouders",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "aardig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "53a58605-c8b7-4b0e-8427-465dca72da69"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Spanish changes the adjective with the noun (",
+        {
+          "text": "bonito, bonita, bonitos, bonitas",
+          "styles": {
+            "italic": true
+          }
+        },
+        "); Dutch never does, after ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". The adjective also works alone, as a short reaction: ",
+        {
+          "text": "Mooi!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Leuk!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Gezellig!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (01-b) ",
+        {
+          "text": "Lekker!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (03-b) ",
+        {
+          "text": "Niet slecht!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (= not bad — real praise in Dutch)."
+      ],
+      "id": "dd59a02a-1e3f-4b57-9c5a-e741d51e19c5"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "slecht",
+              "meaning": "bad",
+              "id": "9cc80bb3-6ccd-45e0-bc1a-c3cf32d50150",
+              "example": "Mijn Nederlands is niet slecht!"
+            },
+            {
+              "term": "Niet slecht!",
+              "meaning": "Not bad!",
+              "note": "a real compliment in Dutch, not a weak one",
+              "id": "c3f92be4-412a-4fc3-bbf5-76ffaae1ef8c",
+              "example": "Niet slecht, Sofia!"
+            },
+            {
+              "term": "leuk",
+              "meaning": "fun, nice",
+              "note": "for people, places and work",
+              "id": "1b1c4d2d-5f72-49a0-a01b-c8cf7700bc03",
+              "example": "Hoe is het werk? — Leuk!"
+            }
+          ]
+        }
+      },
+      "id": "756d8df0-9de2-444a-9a39-085624b43c0c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You already know this pattern: ",
+        {
+          "text": "Ik ben een beetje moe",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (01-a), ",
+        {
+          "text": "Het station is groot!",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (01-a), ",
+        {
+          "text": "Het team is klein, maar heel aardig",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (02-b), ",
+        {
+          "text": "Achtentwintig is niet oud",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (04-a) — all of it is ",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true
+          }
+        },
+        " + adjective, no ending. Next lesson the adjective gets an ",
+        {
+          "text": "-e",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", but only when it stands ",
+        {
+          "text": "before",
+          "styles": {
+            "italic": true
+          }
+        },
+        " a noun (06-b)."
+      ],
+      "id": "e88a080a-0548-4692-8eff-389853857fd7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": [
+        "Opposites"
+      ],
+      "id": "b113848d-f961-4e37-8725-208f315f2388"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Learn the common adjectives in pairs. Two words mean “tall”: ",
+        {
+          "text": "lang",
+          "styles": {
+            "bold": true
+          }
+        },
+        " for people (Daan is lang), ",
+        {
+          "text": "hoog",
+          "styles": {
+            "bold": true
+          }
+        },
+        " for buildings and towers (De Domtoren is hoog). The opposite of lang is ",
+        {
+          "text": "kort",
+          "styles": {
+            "bold": true
+          }
+        },
+        " for things (De straat is kort.), but a person who is not tall is ",
+        {
+          "text": "klein",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", never kort. And ",
+        {
+          "text": "oud",
+          "styles": {
+            "bold": true
+          }
+        },
+        " has two opposites: ",
+        {
+          "text": "nieuw",
+          "styles": {
+            "bold": true
+          }
+        },
+        " for things, ",
+        {
+          "text": "jong",
+          "styles": {
+            "bold": true
+          }
+        },
+        " for people."
+      ],
+      "id": "9f1a5ab4-0df3-4222-a881-e9dfae044562"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "lang",
+              "meaning": "long; for people: tall",
+              "id": "5fa9dc18-de48-4f7c-bfba-638320c3475f",
+              "note": "never hoog for a person: Daan is lang",
+              "example": "Daan is aardig en heel lang!"
+            },
+            {
+              "term": "jong",
+              "meaning": "young",
+              "id": "e72a4b85-18bb-4c2f-8ef9-cd162f32ca85",
+              "note": "the opposite of oud for people; for things it is nieuw",
+              "example": "Tess is jong."
+            },
+            {
+              "term": "kort",
+              "meaning": "short",
+              "id": "efbfe3f7-85d3-461a-afea-82be56b682a3",
+              "note": "for things (a street, a canal); a person who is not tall is klein, never kort",
+              "example": "De straat van Noor is kort."
+            }
+          ]
+        }
+      },
+      "id": "7a045fe7-62d2-4e79-92ed-45a13898869b"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": [
+                "Adjective"
+              ],
+              "id": "e2514c8c-c975-4afe-bffc-d2b8d05c95d0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "groot"
+              ],
+              "id": "88112d7f-31fd-4c71-9968-966e867b3242"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "oud (things)"
+              ],
+              "id": "560fb5e7-2700-4a65-93c6-0e0758de592b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "oud (people)"
+              ],
+              "id": "f742ea8f-5310-41f2-b19d-55c83d55457d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "mooi"
+              ],
+              "id": "150070e4-abea-4b94-84e6-3e4c3191b09d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "druk"
+              ],
+              "id": "84c24982-581b-48cc-a94b-88208f43123b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "lang (things)"
+              ],
+              "id": "cd5d0a81-7213-476f-9e37-e449eda1d281"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "goed"
+              ],
+              "id": "18612182-afc3-4e92-8374-5cc25721608c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "makkelijk"
+              ],
+              "id": "17e21b82-d930-492e-9b1d-1dfa6ee3295b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "snel"
+              ],
+              "id": "b0f055bc-450e-487d-a5c5-c1fb04a0734e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "ver"
+              ],
+              "id": "a0638ee2-071b-49af-b2ef-6026e26d9f33"
+            }
+          ],
+          "id": "3ad8a889-3165-43e5-8a55-64f460f7cec1"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": [
+                "Opposite"
+              ],
+              "id": "b88c9f79-5e7d-47ca-a226-e3b138c7e1bc"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "klein"
+              ],
+              "id": "1e3a32bb-f65b-4879-8708-9efe53472afd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "nieuw"
+              ],
+              "id": "651c43e5-96ba-4f07-a0a7-a05f72bfdf21"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "jong"
+              ],
+              "id": "cf9f36f0-4a92-4ed9-9000-fef4cf3451bb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "lelijk"
+              ],
+              "id": "4515f21a-e19e-4ffd-a620-4d0c80df849e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "rustig"
+              ],
+              "id": "d7a443dc-75fc-4fd6-867b-f80e9e0d0902"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "kort"
+              ],
+              "id": "8d18680f-0ea2-4403-a676-6ba9fec056ed"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "slecht"
+              ],
+              "id": "d084a7b9-7e22-4573-8485-d49fd4fd1d30"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "moeilijk"
+              ],
+              "id": "a74c8745-291f-4d9d-b033-6c93119b4022"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "langzaam"
+              ],
+              "id": "4a5c69ae-9b24-4dea-9938-eb8450f1072c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "dichtbij"
+              ],
+              "id": "60e9ffbb-ecd7-4c11-926f-1ed6938c206f"
+            }
+          ],
+          "id": "c97a192f-af65-42cf-8d48-055301f7c7ec"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": [
+                "Example"
+              ],
+              "id": "0d5fa9f4-7b07-409c-83f3-bd51704f2915"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "De Domtoren is groot. Het centrum is klein."
+              ],
+              "id": "c6be6de3-69b6-442e-82f7-8ff9f6d3c9b5"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "De Domtoren is oud. Het station is nieuw."
+              ],
+              "id": "2b9e69ed-18f6-4dde-aeec-fc7c8288e4bc"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Els is niet jong. Tess is jong."
+              ],
+              "id": "8c86f430-fb38-4a0f-bbf9-fa4d2df68b3b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Is het station lelijk? — Nee!"
+              ],
+              "id": "f9a492d7-2ff5-4833-a46e-f3c32ae82e3f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Het centrum is druk. Utrecht-Oost is rustig."
+              ],
+              "id": "cedcae9c-653c-44dc-b35b-378487f55f3b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "De Oudegracht is lang. De straat van Noor is kort."
+              ],
+              "id": "3d564183-3fa5-406f-8457-65e7c75e3d4f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Het werk is goed. Mijn Nederlands is niet slecht!"
+              ],
+              "id": "5d9d3678-d3c4-4de1-a6ae-37897b76d9c9"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Het werk is makkelijk. Nederlands is moeilijk."
+              ],
+              "id": "1c934e90-1a9d-41fb-b012-a9156a92b627"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Sofia leert snel. Daan spreekt langzaam."
+              ],
+              "id": "f1fc56dc-2e63-4a94-9ad9-40958c3a37c4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Valencia is ver. Het centrum is dichtbij."
+              ],
+              "id": "ae57d77e-0716-4666-b226-d96ed7150e01"
+            }
+          ],
+          "id": "ecd500cb-3843-4352-b299-1ef63e044ed3"
+        }
+      ],
+      "id": "7c0e864a-39fb-4a82-8aea-5377c0bf5d71"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "lelijk",
+              "meaning": "ugly",
+              "id": "d793cd30-ca37-4efa-a1a5-d8b2409adc16",
+              "example": "Het station is niet lelijk."
+            },
+            {
+              "term": "rustig",
+              "meaning": "quiet, calm",
+              "note": "not “rustic” — false friend",
+              "id": "82bdbee7-728b-4d4f-afe1-c03e7a202ff3",
+              "example": "Utrecht-Oost is rustig."
+            },
+            {
+              "term": "de gracht",
+              "meaning": "canal",
+              "forms": "de grachten",
+              "note": "de Oudegracht = the old canal in the centre of Utrecht",
+              "id": "72738ce3-a5c3-4962-9768-102301f0e49c",
+              "example": "De Oudegracht is lang en mooi."
+            }
+          ]
+        }
+      },
+      "id": "2c12d159-6600-4b88-8e31-cd0464b7514d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        {
+          "text": "rustig",
+          "styles": {
+            "bold": true
+          }
+        },
+        " does not mean “rustic” — it means ",
+        {
+          "text": "quiet, calm",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (Utrecht-Oost is rustig.). ",
+        "And remember: Spanish adjectives change with the noun (",
+        {
+          "text": "bonito/bonita/bonitos",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), Dutch ones after zijn never do."
+      ],
+      "id": "55fa4607-c483-4a1c-b8dd-d48f31021e14"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Beautiful! / Nice! / Cosy! / Not bad!",
+        "note": "The adjective alone, as a short reaction to something you see or hear."
+      },
+      "content": [
+        {
+          "text": "Mooi!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Leuk!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Gezellig!",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Niet slecht!",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "5c33f836-46b3-4433-b08d-127361348e6c"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        "The ending ",
+        {
+          "text": "-lijk",
+          "styles": {
+            "italic": true
+          }
+        },
+        " in ",
+        {
+          "text": "lelijk",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", ",
+        {
+          "text": "makkelijk",
+          "styles": {
+            "italic": true
+          }
+        },
+        " and ",
+        {
+          "text": "moeilijk",
+          "styles": {
+            "italic": true
+          }
+        },
+        " is a weak “luk” (“LAY-luk”, “MAK-uh-luk”), not “like”. And ",
+        {
+          "text": "eu",
+          "styles": {
+            "italic": true
+          }
+        },
+        " in ",
+        {
+          "text": "leuk",
+          "styles": {
+            "italic": true
+          }
+        },
+        " is a new sound: round your lips as for “oo” and say “e” (like French ",
+        {
+          "text": "peu",
+          "styles": {
+            "italic": true
+          }
+        },
+        "), not “loo-k”."
+      ],
+      "id": "3f9dd270-b5bd-406c-9698-5692f82b810c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": [
+        "heel, erg, een beetje: stronger or weaker"
+      ],
+      "id": "e24e962f-ccc7-4e6d-926a-5dc056c7fbe4"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Put ",
+        {
+          "text": "heel",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (very, the everyday word), ",
+        {
+          "text": "erg",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (very, a little stronger) or ",
+        {
+          "text": "een beetje",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (a bit) directly before the adjective: subject + ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " + heel/erg/een beetje + adjective."
+      ],
+      "id": "d2b0b5a2-4593-466e-a400-23f8a22d3a04"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The Dom tower is very tall. (both fine)",
+        "note": "heel and erg both mean “very”; heel is more common in speech."
+      },
+      "content": [
+        {
+          "text": "De Domtoren",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "heel",
+          "styles": {
+            "bold": true
+          }
+        },
+        " hoog. / ",
+        {
+          "text": "De Domtoren",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "erg",
+          "styles": {
+            "bold": true
+          }
+        },
+        " hoog."
+      ],
+      "id": "8e54f303-e08e-48dd-bc45-66b8ce52461f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you tired? — A bit tired. But I'm very happy!",
+        "note": "Sofia's answer in the story; the full sentence is Ik ben een beetje moe. een beetje suits a small complaint (moe, druk, moeilijk); for a compliment, say heel, not een beetje."
+      },
+      "content": [
+        {
+          "text": "Ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " moe? — ",
+        {
+          "text": "Een beetje",
+          "styles": {
+            "bold": true
+          }
+        },
+        " moe. Maar ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "heel",
+          "styles": {
+            "bold": true
+          }
+        },
+        " blij!"
+      ],
+      "id": "5225f4a7-c4a0-42ce-a414-89013b2aa5db"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "lang",
+          "styles": {
+            "bold": true
+          }
+        },
+        " for people, ",
+        {
+          "text": "hoog",
+          "styles": {
+            "bold": true
+          }
+        },
+        " for buildings; a person who is not tall is ",
+        {
+          "text": "klein",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", never kort. ",
+        {
+          "text": "een beetje",
+          "styles": {
+            "bold": true
+          }
+        },
+        " goes with small complaints (een beetje moe, een beetje druk); ",
+        {
+          "text": "heel",
+          "styles": {
+            "bold": true
+          }
+        },
+        " goes with compliments: ",
+        {
+          "text": "een beetje mooi",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → heel mooi."
+      ],
+      "id": "cd65c4b3-28ce-4a2a-9788-e28ca6320c69"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Amersfoort isn't very big.",
+        "note": "niet heel + adjective (= not very …) is fine; heel and erg themselves never change."
+      },
+      "content": [
+        {
+          "text": "Amersfoort",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " niet ",
+        {
+          "text": "heel",
+          "styles": {
+            "bold": true
+          }
+        },
+        " groot."
+      ],
+      "id": "1b419e63-77ec-478b-a5b9-e3ec6219b056"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "De stad is mooie.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → De stad is ",
+        {
+          "text": "mooi",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "Utrecht is mooi heel.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Utrecht is ",
+        {
+          "text": "heel mooi",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "Daan is hoog.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Daan is ",
+        {
+          "text": "lang",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "61ac747d-5966-407c-a2f0-44be2557a237"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": [
+        "niet + adjective"
+      ],
+      "id": "a8168045-5d2c-4256-8370-be0989cd2e56"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " goes directly before the adjective, never between subject and verb (03-b). Answer ",
+        {
+          "text": "no",
+          "styles": {
+            "italic": true
+          }
+        },
+        " with ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true
+          }
+        },
+        " and often the opposite too."
+      ],
+      "id": "4f278a80-cb72-4abb-be8b-e6754f151b09"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is the station ugly? — No, the station isn't ugly. The station is new.",
+        "note": "niet before the adjective; the opposite answers the question fully."
+      },
+      "content": [
+        "Is het station lelijk? — Nee, ",
+        {
+          "text": "het station",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "niet lelijk",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "Het station",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "nieuw",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "f98eaa8d-b979-46a2-89e0-d375c04ef160"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Utrecht-Oost isn't busy. Utrecht-Oost is quiet.",
+        "note": "niet comes right before the adjective (03-b), never after it, and never geen: *Utrecht is geen mooi* is wrong — geen stays for een-nouns (04-b)."
+      },
+      "content": [
+        {
+          "text": "Utrecht-Oost",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "niet druk",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". ",
+        {
+          "text": "Utrecht-Oost",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "rustig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "2c10ac6d-9bd5-467d-a5c3-00cd62554c9c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": [
+        "Two adjectives: en / maar"
+      ],
+      "id": "bbbc952e-ea86-4a86-a2dd-6334a76ab9c8"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Join two adjectives with ",
+        {
+          "text": "en",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (and, no contrast) or ",
+        {
+          "text": "maar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (but, a contrast — comma before maar, 03-a). ",
+        "This is also how you say two things about a thing without ",
+        {
+          "text": "het",
+          "styles": {
+            "italic": true
+          }
+        },
+        " (05-b): repeat the noun or join the adjectives."
+      ],
+      "id": "5ac7bcfc-9745-475b-b86c-e2f794c2f5a9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The Dom tower is tall and old.",
+        "note": "Two facts, no contrast: en."
+      },
+      "content": [
+        {
+          "text": "De Domtoren",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " hoog ",
+        {
+          "text": "en",
+          "styles": {
+            "bold": true
+          }
+        },
+        " oud."
+      ],
+      "id": "57b50b66-c0ff-4f38-bde4-a315ec69da85"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The centre is small, but cosy.",
+        "note": "A contrast: comma before maar."
+      },
+      "content": [
+        {
+          "text": "Het centrum",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " klein",
+        {
+          "text": ", maar",
+          "styles": {
+            "bold": true
+          }
+        },
+        " gezellig."
+      ],
+      "id": "aac51737-bc16-46cd-8d75-3fa081228a75"
+    },
+    {
+      "type": "divider",
+      "id": "76c299c8-2ae1-4539-a28e-333ce75e10fd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": [
+        "Story: De Oudegracht"
+      ],
+      "id": "498ea5ea-b634-462a-bf16-a96d3975b5c7"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Later, Sofia and Noor sit by the Oudegracht, the old canal. They pass Café De Zwaluw, where Noor works on Saturdays. Noor asks about Sofia's week.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "6085a66d-f026-46e1-bfd7-fa90958649f5"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "En, Sofia? Hoe is het werk?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Leuk! Het team is klein, maar heel aardig."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Is Karin aardig?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, Karin is heel aardig. En Daan is aardig en heel lang!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Lang? Ik ben ook lang!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja! En ik ben niet lang."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En Tess? Tess is lief!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Lief, maar streng! Ze is nu mijn lerares."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En jij? Ben je moe?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Een beetje moe. Maar ik ben heel blij!"
+          }
+        ]
+      },
+      "id": "2aa46af8-21f8-479e-ae64-43c26010211a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "lief",
+              "meaning": "sweet, kind",
+              "note": "children, animals, kind people",
+              "id": "55f7f4b4-1a33-46db-92f5-09b879cdea60",
+              "example": "Tess is lief, maar streng!"
+            },
+            {
+              "term": "streng",
+              "meaning": "strict",
+              "id": "910879fd-cb6d-41f4-b46f-9abb8c71496d",
+              "example": "Lief, maar streng!"
+            }
+          ]
+        }
+      },
+      "id": "2becb3de-0cc4-4b69-b139-a4b2b538b786"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "map-pin"
+      },
+      "content": [
+        "The ",
+        {
+          "text": "Domtoren",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is the tallest church tower in the Netherlands (about 112 metres) and stands alone because a storm destroyed the middle of the church in 1674. The ",
+        {
+          "text": "Oudegracht",
+          "styles": {
+            "bold": true
+          }
+        },
+        " is special to Utrecht: its wharves sit right at water level, with cafés and terraces below street level. On Sundays the shops in the centre are open — but there is no market on Sundays."
+      ],
+      "id": "87a005bb-72fe-4f81-8c12-b61095e58307"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "How's work? — Fun! The team is small, but very nice.",
+        "note": "Hoe is …? asks what something is like (see “Asking what someone or something is like” below); Sofia's line from 02-b, recycled."
+      },
+      "content": [
+        "Hoe is het werk? — ",
+        {
+          "text": "Leuk",
+          "styles": {
+            "bold": true
+          }
+        },
+        "! Het team is klein, maar heel aardig."
+      ],
+      "id": "7a8ee13d-e977-4c7a-aa93-de2e325702d4"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan is kind and very tall! — Tall? I'm tall too! — Yes! And I'm not tall.",
+        "note": "lang for a person's height (never hoog); ook after the verb (03-b); niet right before the adjective."
+      },
+      "content": [
+        "Daan is aardig en heel ",
+        {
+          "text": "lang",
+          "styles": {
+            "bold": true
+          }
+        },
+        "! — Lang? ",
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ook ",
+        {
+          "text": "lang",
+          "styles": {
+            "bold": true
+          }
+        },
+        "! — Ja! En ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "niet lang",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "c25d741a-e324-47e4-9b40-5924a305f82f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Tess is sweet, but strict! She's my teacher now.",
+        "note": "Sofia's joke about Tess's de/het quiz (05-b); ze for a person, never het."
+      },
+      "content": [
+        "Tess is ",
+        {
+          "text": "lief",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", maar ",
+        {
+          "text": "streng",
+          "styles": {
+            "bold": true
+          }
+        },
+        "! Ze is nu mijn lerares."
+      ],
+      "id": "3769200f-1b3b-4f40-b34a-b798aabcfcc0"
+    },
+    {
+      "type": "divider",
+      "id": "8541f154-aad8-47fa-8837-7be71367f4f6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": [
+        "Asking what someone or something is like"
+      ],
+      "id": "c69f750d-1295-4834-a20e-a7f21856465a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Hoe is",
+          "styles": {
+            "bold": true
+          }
+        },
+        " …? asks what something or someone is like (recycles ",
+        {
+          "text": "Hoe is het werk?",
+          "styles": {
+            "italic": true
+          }
+        },
+        " from 02-b). For a yes/no question, put the verb first (03-b): ",
+        {
+          "text": "Is",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Karin aardig?"
+      ],
+      "id": "7a892213-0f20-44ad-af7e-6108b1061c01"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What's Valencia like? — Very beautiful! / What's the team like? — Small, but very nice.",
+        "note": "Hoe is …? + an adjective in the answer."
+      },
+      "content": [
+        "Hoe is Valencia? — Heel ",
+        {
+          "text": "mooi",
+          "styles": {
+            "bold": true
+          }
+        },
+        "! / Hoe is het team? — Klein, maar heel aardig."
+      ],
+      "id": "b58d5c43-196f-45ed-904c-2c0d264f4200"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is Utrecht-Oost busy? — No, Utrecht-Oost is quiet.",
+        "note": "Yes/no question, verb first (03-b); the opposite answers it."
+      },
+      "content": [
+        "Is Utrecht-Oost druk? — Nee, Utrecht-Oost is ",
+        {
+          "text": "rustig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "c9c21679-754f-4319-9e9a-35f79781ea87"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is Karin kind? — Yes, Karin is very kind.",
+        "note": "Sofia and Noor in the story. A yes/no question: verb first, the adjective at the end."
+      },
+      "content": [
+        {
+          "text": "Is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "aardig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "? — Ja, ",
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " heel ",
+        {
+          "text": "aardig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "99aeb12b-5229-4e53-967e-5124fd2ec3ca"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "A note: “Hoe is Karin?” can also mean “how is she doing?” — context decides. “Hoe gaat het met Karin?” (01-a) only ever asks how she is doing."
+      ],
+      "id": "8fb9750c-c9a0-413f-b2e1-1345d269de95"
+    },
+    {
+      "type": "divider",
+      "id": "236d52a0-34eb-4c51-97bf-71dcbfbd75fc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": [
+        "Describing people and places"
+      ],
+      "id": "ab841e9f-b873-451c-84b8-480e4a6b676c"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Here are the adjectives of this lesson, sorted by what they usually describe. A few fit both: ",
+        {
+          "text": "oud",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "lang",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "leuk",
+          "styles": {
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "gezellig",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "ddb9ab44-ed0b-4a10-92e1-6363e5d5ec24"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": [
+                "Places"
+              ],
+              "id": "f9616793-7961-43b9-a2ef-0d28373f1100"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "mooi"
+              ],
+              "id": "04b991d3-4f65-4ff3-b922-f37ce626656d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "lelijk"
+              ],
+              "id": "781d8930-cc3c-4412-b98a-781a69f50261"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "groot"
+              ],
+              "id": "546b9559-18e2-49c6-a9bc-101c02bffddd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "klein"
+              ],
+              "id": "84b6e02f-b2f3-4911-a0cd-912de222d080"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "oud"
+              ],
+              "id": "b41f2de8-c202-4fbd-b461-10a1e00673e8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "nieuw"
+              ],
+              "id": "de6de0cb-8eb1-4737-8f5a-2e45713ba86e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "druk"
+              ],
+              "id": "ef993667-ee0d-4357-9acd-e492cd59695e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "rustig"
+              ],
+              "id": "72081cf1-6793-4517-90fa-661fb7a108bb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "hoog"
+              ],
+              "id": "30c8b493-7c69-4a00-a80c-0c92c5a4c44c"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "lang"
+              ],
+              "id": "c1026775-36cb-47ae-b492-1c86108b46df"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "kort"
+              ],
+              "id": "8d89a52a-e3b2-4ef5-b558-3e94bc474547"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "gezellig"
+              ],
+              "id": "03bd6c0d-90eb-45b8-8690-46aecc19ba08"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "ver"
+              ],
+              "id": "1d8054d2-1533-4831-82e6-c39be70c2740"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "dichtbij"
+              ],
+              "id": "60cdd722-90f0-48a5-92b7-dbe87bb3c25c"
+            }
+          ],
+          "id": "0a5735f9-9982-4c04-a455-a09208e00a13"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": [
+                "People"
+              ],
+              "id": "80811e16-85f8-4882-8a64-c2d5262ae420"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "aardig"
+              ],
+              "id": "76e603ae-3aac-41f8-a981-ad15e31dfdd2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "lief"
+              ],
+              "id": "bf496fb9-bd03-4a1a-98f8-a411e97c24ce"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "leuk"
+              ],
+              "id": "cf006899-9548-4ae0-9f9a-26f851958904"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "streng"
+              ],
+              "id": "395e63d9-dd88-41ef-94c5-bf00c4f547ec"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "blij"
+              ],
+              "id": "1225fd92-cbb8-4828-b2f9-1e304add234f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "moe"
+              ],
+              "id": "6bdbc5e2-d759-44f6-8ce5-f85fe4225dfa"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "nerveus"
+              ],
+              "id": "b03f20da-42b8-4ee2-832f-fcc68a89c500"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "jong"
+              ],
+              "id": "236c7bd0-3333-4fd5-9e2c-fb665d05e410"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "oud"
+              ],
+              "id": "8234b65a-693d-4808-8142-19eedb1771eb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "lang"
+              ],
+              "id": "1054e812-503e-47b2-8ccb-79d3e5cbaf66"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "snel"
+              ],
+              "id": "b00210fa-78ec-44af-ab23-bcdb111dd85c"
+            }
+          ],
+          "id": "bded4033-5a4e-4efe-aacb-24814444cf8c"
+        }
+      ],
+      "id": "04ee020b-53a9-4a45-9b3e-741d40a50109"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Sofia's Utrecht so far:"
+      ],
+      "id": "e421d4bf-ada6-449b-a164-daf05dada6e3"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "de Domtoren"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "hoog"
+          ],
+          "id": "0655ffc2-da28-4e28-85d2-3a5a2c1d2fa3"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "oud"
+          ],
+          "id": "91051d82-e4b6-4135-bab9-76e9e6829900"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "erg mooi"
+          ],
+          "id": "67bfa9ef-9e79-44d1-89b8-67a84e684d40"
+        }
+      ],
+      "id": "b49e499c-0e2a-440b-83a9-9689238ecb8c"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "de Oudegracht"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "lang"
+          ],
+          "id": "4c4d3dc3-9d37-4f49-be03-faedbb29e383"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "mooi"
+          ],
+          "id": "6daf5054-46d8-4219-9b5c-aa41870db0b6"
+        }
+      ],
+      "id": "516766fb-6660-4243-9d80-53904cff672d"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "het centrum"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "klein"
+          ],
+          "id": "5b17abd8-f971-4d71-98e5-9b662841db87"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "gezellig"
+          ],
+          "id": "ae30e4c9-4e98-4515-8b92-ae93ca4b90da"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "druk"
+          ],
+          "id": "0f21b06f-0ada-4335-b068-fc8364efe094"
+        }
+      ],
+      "id": "eb3000b1-e6a9-4a0c-92ee-533e297d3caa"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Utrecht-Oost"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "rustig"
+          ],
+          "id": "774e37c2-4789-4ce0-a7b0-5d5cbb11cdb8"
+        }
+      ],
+      "id": "2763b037-1030-4c78-8c54-54b9ad639d64"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Café De Zwaluw"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "klein"
+          ],
+          "id": "067a143a-50f9-49fa-9c6d-3349a17cff76"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "gezellig"
+          ],
+          "id": "e435dcc0-fa1e-40b5-8818-e3d14d14a1b6"
+        }
+      ],
+      "id": "3325e423-9618-4b7d-8d3f-fb954b868dce"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "The people of Sofia's week:"
+      ],
+      "id": "ec626a5c-d332-48d7-aef2-c2c9a229ca08"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Karin"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "heel aardig"
+          ],
+          "id": "2cdb5b26-a59c-4591-9dde-766e23986c9b"
+        }
+      ],
+      "id": "04364599-50cf-4af5-b987-2cf2d19f664d"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Daan"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "aardig"
+          ],
+          "id": "f44fafa0-90da-49ad-bb1b-3919bb7f5148"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "heel lang"
+          ],
+          "id": "1937eb98-d5d2-4afd-958a-e84f1b640983"
+        }
+      ],
+      "id": "a6568280-3eea-47ee-8fe3-d89a48f18507"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Noor"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "ook lang"
+          ],
+          "id": "1d1e2da7-5a94-4894-9f06-1ed6f63d1932"
+        }
+      ],
+      "id": "e24695ec-14a7-4655-a31d-93bed3eb4b45"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Sofia"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "niet lang"
+          ],
+          "id": "852ebb89-edef-4fe0-b2d5-1f97abbc7dab"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een beetje moe"
+          ],
+          "id": "abf12b61-4b1d-455a-abca-e3fea6b715c7"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "heel blij"
+          ],
+          "id": "185ce836-aeb4-4042-9d7f-98fbfd3ae157"
+        }
+      ],
+      "id": "18568191-7e85-4666-a56c-8852b4595087"
+    },
+    {
+      "type": "bulletListItem",
+      "content": [
+        "Tess"
+      ],
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "lief, maar streng"
+          ],
+          "id": "b24dbba4-2c1e-4e5d-9bb1-491fccb0a3c5"
+        }
+      ],
+      "id": "df87c9d1-6269-4b25-b763-3ce525a16673"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Describe something in three steps:"
+      ],
+      "id": "fdd7c4bf-441f-4069-8bbc-ff833a61f3b6"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "The subject: de stad, het centrum, Daan."
+      ],
+      "id": "b56afcb7-7ee8-4aba-8faa-8ae0ebae3a89"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ": is (ben, bent, zijn)."
+      ],
+      "id": "6cf073e3-74d0-48c6-9ee0-c439acbe873c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "heel / erg / een beetje / niet + the adjective: … is heel mooi."
+      ],
+      "id": "c6c322aa-8266-403c-9435-c8563c3ee3fd"
+    },
+    {
+      "type": "divider",
+      "id": "ac3bf5da-0e04-4b88-9bf3-44aaf58dc154"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": [
+        "Practice"
+      ],
+      "id": "e5815cdb-c701-452d-a630-776a036127b7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": [
+        "Opposites"
+      ],
+      "id": "9173732f-3d8c-45d2-b3df-e99805d6d458"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Give the opposite. Example: goed ↔ ___ → slecht",
+          "items": [
+            {
+              "prompt": "groot ↔ …",
+              "authorsVersion": [
+                "klein"
+              ]
+            },
+            {
+              "prompt": "druk ↔ …",
+              "authorsVersion": [
+                "rustig"
+              ]
+            },
+            {
+              "prompt": "mooi ↔ …",
+              "authorsVersion": [
+                "lelijk"
+              ]
+            },
+            {
+              "prompt": "lang ↔ …",
+              "authorsVersion": [
+                "kort"
+              ],
+              "note": "For things: lang ↔ kort (De straat is kort.). A person who is not tall is klein, never kort."
+            },
+            {
+              "prompt": "oud ↔ … (a person)",
+              "authorsVersion": [
+                "jong"
+              ],
+              "note": "People: oud ↔ jong. For a thing, the opposite is nieuw."
+            }
+          ]
+        }
+      },
+      "id": "a4f56b55-3973-4d8d-9389-b4f95ced466f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": [
+        "Nee + niet + the opposite"
+      ],
+      "id": "f1862069-00ca-4447-a671-60ebb7133ef7"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Answer no, then give the opposite. Example: Is het huis klein? → Nee, het huis is niet klein. Het huis is groot.",
+          "items": [
+            {
+              "prompt": "Is Utrecht-Oost druk?",
+              "authorsVersion": [
+                "Nee, Utrecht-Oost is niet druk. Utrecht-Oost is rustig."
+              ]
+            },
+            {
+              "prompt": "Is het station oud?",
+              "authorsVersion": [
+                "Nee, het station is niet oud. Het station is nieuw."
+              ]
+            },
+            {
+              "prompt": "Is Tess oud?",
+              "authorsVersion": [
+                "Nee, Tess is niet oud. Ze is jong."
+              ],
+              "note": "A person: use ze, not het."
+            },
+            {
+              "prompt": "Is Sofia lang?",
+              "authorsVersion": [
+                "Nee, Sofia is niet lang."
+              ]
+            },
+            {
+              "prompt": "Is het centrum groot?",
+              "authorsVersion": [
+                "Nee, het centrum is niet groot. Het centrum is klein."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "a9ab6d3b-bec5-4cf0-bc8b-32db12170e6b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": [
+        "heel, erg or een beetje"
+      ],
+      "id": "f58b9a7a-95da-46e5-8ca5-4f8a4d5d00a8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in heel, erg or een beetje, as the English word asks. Example: Ik ben ___ blij. (very) → heel",
+          "items": [
+            {
+              "prompt": "De Domtoren is … hoog. (very)",
+              "authorsVersion": [
+                "heel"
+              ],
+              "note": "Also fine: erg."
+            },
+            {
+              "prompt": "Ik ben … moe. (a bit)",
+              "authorsVersion": [
+                "een beetje"
+              ]
+            },
+            {
+              "prompt": "Karin is … aardig. (very)",
+              "authorsVersion": [
+                "heel"
+              ],
+              "note": "Also fine: erg."
+            },
+            {
+              "prompt": "Het centrum is … druk. (a bit)",
+              "authorsVersion": [
+                "een beetje"
+              ]
+            },
+            {
+              "prompt": "Nederlands is … moeilijk. (a bit)",
+              "authorsVersion": [
+                "een beetje"
+              ],
+              "note": "Always directly before the adjective."
+            }
+          ]
+        }
+      },
+      "id": "912a5e5b-446d-46c0-84b9-9cc276532794"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": [
+        "Word order"
+      ],
+      "id": "390b3100-f5e5-417d-8935-ef6c4da52ad8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in the right order. Example: is / klein / het huis → Het huis is klein.",
+          "items": [
+            {
+              "prompt": "is / mooi / heel / de stad",
+              "authorsVersion": [
+                "De stad is heel mooi."
+              ],
+              "note": "Statement: subject + verb + heel + adjective."
+            },
+            {
+              "prompt": "lang / Daan / is / heel",
+              "authorsVersion": [
+                "Daan is heel lang."
+              ],
+              "note": "heel right before the adjective, never after it."
+            },
+            {
+              "prompt": "gezellig / het café / klein, maar / is",
+              "authorsVersion": [
+                "Het café is klein, maar gezellig."
+              ],
+              "note": "Comma before maar."
+            },
+            {
+              "prompt": "Utrecht-Oost / rustig / is / ?",
+              "authorsVersion": [
+                "Is Utrecht-Oost rustig?"
+              ],
+              "note": "Yes/no question: verb first."
+            }
+          ]
+        }
+      },
+      "id": "25a78392-cc8d-4205-8e0b-ec19e576a29a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": [
+        "Dialogue completion"
+      ],
+      "id": "3b20f9ea-f993-4687-8df8-a48d98795fc1"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the missing word or words. Example: Noor: Is het café klein? / Sofia: Ja, maar heel ___! → gezellig",
+          "items": [
+            {
+              "prompt": "Noor: Is Valencia ook …? / Sofia: Ja, Valencia is heel mooi.",
+              "authorsVersion": [
+                "mooi"
+              ],
+              "note": "From dialogue 1; after zijn, no ending."
+            },
+            {
+              "prompt": "Noor: Is Utrecht-Oost druk? / Sofia: Nee, Utrecht-Oost is …",
+              "authorsVersion": [
+                "rustig"
+              ],
+              "note": "The opposite of druk."
+            },
+            {
+              "prompt": "Noor: Ben je moe? / Sofia: … moe. Maar ik ben heel blij.",
+              "authorsVersion": [
+                "Een beetje"
+              ],
+              "note": "Two words: een beetje (a bit); capital E at the start of the answer."
+            },
+            {
+              "prompt": "Noor: Daan is lang. / Sofia: Ja. En ik ben … lang.",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "niet right before the adjective."
+            }
+          ]
+        }
+      },
+      "id": "b68a401a-50eb-42b7-a477-4cedeb3fbdac"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": [
+        "Klopt dit?"
+      ],
+      "id": "5a1bd2bd-96e5-45d6-87a3-b9e0ca3a45ae"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Is this right? Answer with Ja or Nee + the right fact. Example: De Domtoren is klein. → Nee, de Domtoren is groot.",
+          "items": [
+            {
+              "prompt": "Daan is lang.",
+              "authorsVersion": [
+                "Ja."
+              ],
+              "note": "Sofia: Daan is aardig en heel lang."
+            },
+            {
+              "prompt": "De Domtoren is nieuw.",
+              "authorsVersion": [
+                "Nee, de Domtoren is oud."
+              ]
+            },
+            {
+              "prompt": "Utrecht-Oost is druk.",
+              "authorsVersion": [
+                "Nee, Utrecht-Oost is rustig."
+              ]
+            },
+            {
+              "prompt": "Tess is lief, maar streng.",
+              "authorsVersion": [
+                "Ja."
+              ],
+              "note": "Sofia's joke about Tess's de/het quiz."
+            }
+          ]
+        }
+      },
+      "id": "df15939b-b7c7-40b5-bb3a-ee4fadf15907"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": [
+        "Translate into Dutch"
+      ],
+      "id": "fe7ca56f-0bbb-4dc9-94d4-349ab215047d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Example: The house is big. → Het huis is groot.",
+          "items": [
+            {
+              "prompt": "The city is very beautiful.",
+              "authorsVersion": [
+                "De stad is heel mooi."
+              ],
+              "note": "Also fine: De stad is erg mooi."
+            },
+            {
+              "prompt": "I'm a bit tired.",
+              "authorsVersion": [
+                "Ik ben een beetje moe."
+              ]
+            },
+            {
+              "prompt": "Daan is tall.",
+              "authorsVersion": [
+                "Daan is lang."
+              ],
+              "note": "Not hoog — that's for buildings."
+            },
+            {
+              "prompt": "The café is small but cosy.",
+              "authorsVersion": [
+                "Het café is klein, maar gezellig."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "bd647337-0706-48a3-be04-11e4486feb28"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": [
+        "Translate into English"
+      ],
+      "id": "627d9cf0-beac-4fc4-ab30-26950f2018d1"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into English. Example: Het huis is groot. → The house is big.",
+          "items": [
+            {
+              "prompt": "Niet slecht!",
+              "authorsVersion": [
+                "Not bad!"
+              ],
+              "note": "Real praise in Dutch."
+            },
+            {
+              "prompt": "Utrecht-Oost is niet druk, maar rustig.",
+              "authorsVersion": [
+                "Utrecht-Oost isn't busy, it's quiet."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "8edb7373-fc4a-48e1-ba7c-41f24ce85b87"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": [
+        "Reading: Hoi team!"
+      ],
+      "id": "8e99db2d-391e-4596-8fe7-f820568ba2aa"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Sofia posts a photo of the Domtoren in the team chat. Daan and Karin reply — Karin is at home in Amersfoort.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "6d2085da-e1d9-48e0-a6b6-f4e11268594d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the team chat and answer in Dutch; short answers are fine. Hoe is = what something is like; Waar = where; Wie = who; Klopt dit? = is this right?",
+          "items": [
+            {
+              "prompt": "Waar is Sofia?",
+              "authorsVersion": [
+                "In het centrum."
+              ],
+              "note": "Also fine: In het centrum, met Noor."
+            },
+            {
+              "prompt": "Hoe is de Domtoren?",
+              "authorsVersion": [
+                "Heel oud en heel hoog."
+              ]
+            },
+            {
+              "prompt": "Is het centrum rustig?",
+              "authorsVersion": [
+                "Nee, het centrum is een beetje druk."
+              ]
+            },
+            {
+              "prompt": "Hoe is Utrecht-Oost?",
+              "authorsVersion": [
+                "Rustig."
+              ]
+            },
+            {
+              "prompt": "Klopt dit? Amersfoort is groot.",
+              "authorsVersion": [
+                "Nee, Amersfoort is klein."
+              ],
+              "note": "Also fine: Nee, Amersfoort is niet groot."
+            },
+            {
+              "prompt": "Wie is met Sofia in het centrum?",
+              "authorsVersion": [
+                "Noor."
+              ]
+            }
+          ],
+          "passage": {
+            "title": "Hoi team!",
+            "content": "Sofia: Hoi team! Ik ben in het centrum, met Noor. Kijk, de Domtoren!\nDaan: Mooi! De Domtoren is heel oud en heel hoog.\nSofia: Ja! Utrecht is erg mooi. Het centrum is gezellig, maar een beetje druk.\nDaan: Utrecht-Oost is niet druk. Utrecht-Oost is rustig.\nKarin: Amersfoort is ook mooi, hoor! En heel rustig.\nDaan: Amersfoort is klein, Karin!\nKarin: Klein, maar gezellig!\nSofia: Utrecht is mooi. En Amersfoort is ook mooi! Groetjes, Sofia"
+          }
+        }
+      },
+      "id": "bd469ddf-086e-4d1e-afa0-61664e37173b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": [
+        "Your turn"
+      ],
+      "id": "48b17360-0e63-4a02-8d29-abb5bed1470f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 2–4 short sentences about your town or city and one person you know. Use zijn + an adjective, and heel, een beetje or niet.",
+          "items": [
+            {
+              "prompt": "Write 2–4 short sentences about your town or city and one person you know. Use zijn + an adjective, and heel, een beetje or niet.",
+              "authorsVersion": [
+                "Valencia is groot en heel mooi. Het centrum is druk, maar gezellig. Mijn broer Javier is heel aardig."
+              ],
+              "note": "Model answer by Sofia. After zijn the adjective has no ending; for a city, repeat the name instead of het."
+            }
+          ]
+        }
+      },
+      "id": "c44d78ce-d86f-484a-983e-953a788db423"
+    },
+    {
+      "type": "divider",
+      "id": "76c7405a-df5e-4a3c-9984-f29012f252c9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": [
+        "Summary"
+      ],
+      "id": "038c0704-5e77-4837-870b-516572cbf94c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "After zijn the adjective never changes: De stad is mooi. Het centrum is druk. Mijn ouders zijn aardig."
+      ],
+      "id": "704d33d6-0f23-45f7-98f0-ff9e652b80f6"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "heel / erg (very), een beetje (a bit) and niet (not) go right before the adjective: heel mooi, een beetje moe, niet lang."
+      ],
+      "id": "36ae1381-b906-44b3-ab22-a2ce4ee6090a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Learn adjectives in pairs: groot/klein, oud/nieuw, oud/jong, mooi/lelijk, druk/rustig, lang/kort, goed/slecht."
+      ],
+      "id": "c486b44b-f272-48ae-a1d9-32e50f989f13"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "lang = tall for people, hoog = tall for buildings."
+      ],
+      "id": "ff145c42-0409-4700-bb12-655e5eff7666"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Two adjectives: groot en druk; klein, maar gezellig."
+      ],
+      "id": "7dd73e25-c749-444d-aa04-afff93998af0"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Ask: Hoe is …? / Is … mooi?"
+      ],
+      "id": "ca66882d-ce2a-4551-a4be-c8ca37525118"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: De Domtoren",
+      "description": "Sunday afternoon on the square at the foot of the Domtoren, the tall Gothic brick-and-stone church tower of Utrecht seen from below; Noor points up, Sofia looks up with her head tilted back, other people walking around.",
+      "alt": "Noor points up at the Domtoren while Sofia looks up.",
+      "characters": [
+        "sofia",
+        "noor"
+      ]
+    },
+    {
+      "afterHeading": "Story: De Oudegracht",
+      "description": "The two friends sit on the edge of a low canal wharf by the Oudegracht, old brick houses and a small arched bridge behind them, a café terrace on the wharf (no name visible); Noor laughing, Sofia talking with her hands.",
+      "alt": "Sofia and Noor sit by the Oudegracht canal.",
+      "characters": [
+        "sofia",
+        "noor"
+      ]
+    }
+  ],
+  "id": "47530bbb-9c13-4def-9955-3c75467670bb"
+}

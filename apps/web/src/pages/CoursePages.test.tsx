@@ -4,7 +4,7 @@ import { createMemoryHistory, createRootRoute, createRoute, createRouter, Router
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../i18n";
-import { CourseLibraryPage, CoursePage } from "./CoursePages";
+import { CourseLibraryPage, CoursePage, ManageCoursePage } from "./CoursePages";
 
 const groupId = "20000000-0000-4000-8000-000000000001";
 const ownerId = "10000000-0000-4000-8000-000000000001";
@@ -24,9 +24,10 @@ const sample = (voice: string) => `https://media.test/speech/${voice}.mp3`;
 let speechCast: () => Response;
 
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
-function renderPage(page: "library" | "course") {
+function renderPage(page: "library" | "course" | "manage") {
   const root = createRootRoute();
-  const route = createRoute({ getParentRoute: () => root, path: "$", component: () => page === "library" ? <CourseLibraryPage groupId={groupId} /> : <CoursePage groupId={groupId} courseId={courseId} /> });
+  const route = createRoute({ getParentRoute: () => root, path: "$", component: () => page === "library" ? <CourseLibraryPage groupId={groupId} />
+    : page === "course" ? <CoursePage groupId={groupId} courseId={courseId} /> : <ManageCoursePage groupId={groupId} courseId={courseId} /> });
   const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: [`/groups/${groupId}/courses`] }) });
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } });
   return render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
@@ -81,10 +82,19 @@ describe("Course shell pages", () => {
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses`, expect.objectContaining({ method: "POST", body: JSON.stringify({ title: "Niederländisch", summary: "Kurz", level: null, intendedLearner: null }) })));
   });
 
-  it("lets the owner publish and requires confirmation before archiving", async () => {
+  it("keeps management off the owner's course page behind a Manage course button", async () => {
     renderPage("course");
     expect(await screen.findByRole("heading", { name: "Deutsch für Anfänger", level: 1 })).toBeInTheDocument();
     expect(screen.getByText(/Erste Schritte/)).toHaveTextContent("Erste Schritte mit Freunden");
+    expect(screen.getByRole("button", { name: "Manage course" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Publish course" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Contributors" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Progress" })).not.toBeInTheDocument();
+  });
+
+  it("lets the owner publish and requires confirmation before archiving", async () => {
+    renderPage("manage");
+    expect(await screen.findByRole("heading", { name: "Manage course", level: 1 })).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Publish course" }));
     expect(await screen.findByRole("button", { name: "Return to draft" })).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Archive course" }));
@@ -100,7 +110,15 @@ describe("Course shell pages", () => {
     current = course({ status: "published", owner: { id: "10000000-0000-4000-8000-000000000009", displayName: "Lin", avatarUrl: null }, permissions: readerPermissions });
     renderPage("course");
     expect(await screen.findByText("By Lin")).toBeInTheDocument();
-    expect(screen.queryByRole("heading", { name: "Manage course" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Manage course" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Requests" })).not.toBeInTheDocument();
+  });
+
+  it("shows readers no management tools on the manage page", async () => {
+    current = course({ status: "published", owner: { id: "10000000-0000-4000-8000-000000000009", displayName: "Lin", avatarUrl: null }, permissions: readerPermissions });
+    renderPage("manage");
+    expect(await screen.findByText("Only the course owner and its contributors can manage this course.")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Edit details" })).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Requests" })).not.toBeInTheDocument();
   });
 
@@ -116,7 +134,7 @@ describe("Course shell pages", () => {
 
   it("shows the owner pending contributor requests to accept and current contributors to remove", async () => {
     contributors = { active: [{ user: helper, state: "active", requestedAt: 1, decidedAt: 2 }], pending: [{ user: { ...helper, id: "10000000-0000-4000-8000-000000000003", displayName: "Cy" }, state: "pending", requestedAt: 3, decidedAt: null }] };
-    renderPage("course");
+    renderPage("manage");
     fireEvent.click(await screen.findByRole("button", { name: "Accept Cy as a contributor" }));
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/contributors/10000000-0000-4000-8000-000000000003`, expect.objectContaining({ method: "PATCH", body: JSON.stringify({ decision: "accept" }) })));
     fireEvent.click(screen.getByRole("button", { name: "Remove Bo as a contributor" }));
@@ -127,7 +145,7 @@ describe("Course shell pages", () => {
 
   it("lets the owner give speakers voices in the course details, with a sample for each ready voice", async () => {
     current = course({ speechCast: { anna: "de-DE-ConradNeural" } });
-    renderPage("course");
+    renderPage("manage");
     fireEvent.click(await screen.findByRole("button", { name: "Edit details" }));
     const dialog = await screen.findByRole("dialog", { name: "Edit course" });
     const voices = await within(dialog).findByRole("list", { name: "Voices" });
@@ -149,7 +167,7 @@ describe("Course shell pages", () => {
 
   it("keeps the current cast when the cast editor cannot load, and says when no dialogue has speakers", async () => {
     speechCast = () => response({ error: { code: "COURSE_EDIT_FORBIDDEN", message: "No." } }, 403);
-    renderPage("course");
+    renderPage("manage");
     fireEvent.click(await screen.findByRole("button", { name: "Edit details" }));
     const dialog = await screen.findByRole("dialog", { name: "Edit course" });
     expect(await within(dialog).findByText("The dialogue voices could not be loaded. Saving keeps the current voices.")).toBeInTheDocument();
@@ -158,7 +176,7 @@ describe("Course shell pages", () => {
     expect(JSON.parse(String(vi.mocked(fetch).mock.calls.find(([, init]) => init?.method === "PATCH")![1]!.body))).not.toHaveProperty("speechCast");
     cleanup();
     speechCast = () => response({ speakers: [], voices: [{ voice: "de-DE-KatjaNeural", sample: null }] });
-    renderPage("course");
+    renderPage("manage");
     fireEvent.click(await screen.findByRole("button", { name: "Edit details" }));
     expect(await screen.findByText("No dialogue in this course has a speaker yet.")).toBeInTheDocument();
   });

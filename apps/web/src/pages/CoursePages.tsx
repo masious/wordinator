@@ -8,9 +8,8 @@ import { apiRequest, courseQueryOptions, coursesQueryOptions, courseSpeechCastQu
 import { PlainText } from "../molecules/PlainText";
 import { CourseContributors } from "../organisms/CourseContributors/CourseContributors";
 import { CourseErrorMessage as ErrorMessage } from "../organisms/CourseLessons/CourseErrorMessage";
-import { CourseLessons, LessonView } from "../organisms/CourseLessons/CourseLessons";
+import { CourseLessons, CourseLessonTools, LessonView } from "../organisms/CourseLessons/CourseLessons";
 import { CourseResume } from "../organisms/CourseLessons/CourseResume";
-import { CourseProgress } from "../organisms/CourseProgress/CourseProgress";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { SpeechCastFields } from "../organisms/SpeechCast/SpeechCastFields";
 import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, MetadataRow, PageHeader, SectionHeader, Surface, TextAreaField, TextField } from "../ui";
@@ -99,23 +98,13 @@ export function CourseLibraryPage({ groupId }: { groupId: string }) {
   </div></GroupFrame>;
 }
 
+// Owners, contributors, and the site creator (who may archive or remove content) each have something to manage.
+const canManage = ({ permissions }: Course) => permissions.edit || permissions.archive || permissions.manageContributors || permissions.contribute || permissions.removeContent;
+
 export function CoursePage({ groupId, courseId }: { groupId: string; courseId: string }) {
-  const { t } = useTranslation(); const queryClient = useQueryClient();
-  const [editOpen, setEditOpen] = useState(false); const [archiveOpen, setArchiveOpen] = useState(false);
+  const { t } = useTranslation(); const navigate = useNavigate();
   const session = useQuery(sessionQueryOptions());
   const course = useQuery(courseQueryOptions(groupId, courseId));
-  const refresh = async () => { await Promise.all([queryClient.invalidateQueries({ queryKey: ["course", groupId, courseId] }), queryClient.invalidateQueries({ queryKey: ["courses", groupId] })]); };
-  const applied = async ({ course: next }: { course: Course }) => {
-    queryClient.setQueryData(courseQueryOptions(groupId, courseId).queryKey, (current: CourseDetailResponse | undefined) => current && { ...current, course: next });
-    await Promise.all([queryClient.invalidateQueries({ queryKey: ["course", groupId, courseId] }), queryClient.invalidateQueries({ queryKey: ["courses", groupId] })]);
-  };
-  const edit = useMutation({
-    mutationFn: (input: UpdateCourseInput) => apiRequest(coursePath(groupId, courseId), courseResponseSchema, { method: "PATCH", body: json(input) }),
-    onSuccess: async (data) => { await applied(data); setEditOpen(false); },
-  });
-  const visibility = useMutation({ mutationFn: (status: "draft" | "published") => apiRequest(`${coursePath(groupId, courseId)}/visibility`, courseResponseSchema, { method: "POST", body: json({ status }) }), onSuccess: applied });
-  const archive = useMutation({ mutationFn: () => apiRequest(`${coursePath(groupId, courseId)}/archive`, courseResponseSchema, { method: "POST" }), onSuccess: async (data) => { await applied(data); setArchiveOpen(false); } });
-  const restore = useMutation({ mutationFn: () => apiRequest(`${coursePath(groupId, courseId)}/restore`, courseResponseSchema, { method: "POST" }), onSuccess: applied });
   if (session.isPending || course.isPending) return <main className={shellStyles.center}><LoadingState label={t("courses.loadingCourse")} /></main>;
   if (session.data?.status !== "signedIn") return null;
   const back = <Link className={styles.back} to="/courses">{t("courses.backToLibrary")}</Link>;
@@ -134,12 +123,48 @@ export function CoursePage({ groupId, courseId }: { groupId: string; courseId: s
           <span>{t("courses.ownerLabel", { name: data.owner.displayName })}</span>
         </MetadataRow>
         {data.intendedLearner && <div className={styles.learner}><h2>{t("courses.fields.intendedLearner")}</h2><p><PlainText>{data.intendedLearner}</PlainText></p></div>}
+        {canManage(data) && <Button variant="secondary" onClick={() => void navigate({ to: "/courses/$courseSlug/manage", params: { courseSlug: data.slug } })}>{t("courses.manageTitle")}</Button>}
       </div>
     </article>
     {archived && <Surface tone="quiet"><EmptyState title={t("courses.archivedTitle")}>{t("courses.archivedBody")}</EmptyState></Surface>}
     <CourseResume groupId={groupId} courseId={courseId} accountId={session.data.user.id} outline={course.data.outline} />
+    {/* The owner manages contributors on the manage page; everyone else asks, withdraws, or leaves here. */}
+    {!archived && !data.permissions.manageContributors && <CourseContributors groupId={groupId} course={data} />}
+    <CourseLessons groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} />
+  </div></GroupFrame>;
+}
+
+// Course details, visibility, archiving, the cover, and contributors live on their own page, away from the reader's course page.
+export function ManageCoursePage({ groupId, courseId }: { groupId: string; courseId: string }) {
+  const { t } = useTranslation(); const queryClient = useQueryClient();
+  const [editOpen, setEditOpen] = useState(false); const [archiveOpen, setArchiveOpen] = useState(false);
+  const session = useQuery(sessionQueryOptions());
+  const course = useQuery(courseQueryOptions(groupId, courseId));
+  const refresh = async () => { await Promise.all([queryClient.invalidateQueries({ queryKey: ["course", groupId, courseId] }), queryClient.invalidateQueries({ queryKey: ["courses", groupId] })]); };
+  const applied = async ({ course: next }: { course: Course }) => {
+    queryClient.setQueryData(courseQueryOptions(groupId, courseId).queryKey, (current: CourseDetailResponse | undefined) => current && { ...current, course: next });
+    await refresh();
+  };
+  const edit = useMutation({
+    mutationFn: (input: UpdateCourseInput) => apiRequest(coursePath(groupId, courseId), courseResponseSchema, { method: "PATCH", body: json(input) }),
+    onSuccess: async (data) => { await applied(data); setEditOpen(false); },
+  });
+  const visibility = useMutation({ mutationFn: (status: "draft" | "published") => apiRequest(`${coursePath(groupId, courseId)}/visibility`, courseResponseSchema, { method: "POST", body: json({ status }) }), onSuccess: applied });
+  const archive = useMutation({ mutationFn: () => apiRequest(`${coursePath(groupId, courseId)}/archive`, courseResponseSchema, { method: "POST" }), onSuccess: async (data) => { await applied(data); setArchiveOpen(false); } });
+  const restore = useMutation({ mutationFn: () => apiRequest(`${coursePath(groupId, courseId)}/restore`, courseResponseSchema, { method: "POST" }), onSuccess: applied });
+  if (session.isPending || course.isPending) return <main className={shellStyles.center}><LoadingState label={t("courses.loadingCourse")} /></main>;
+  if (session.data?.status !== "signedIn") return null;
+  if (course.isError) return <GroupFrame groupId={groupId} session={session.data}><ErrorState title={t("courses.courseUnavailable")} action={<Link className={styles.back} to="/courses">{t("courses.backToLibrary")}</Link>} /></GroupFrame>;
+  const data = course.data.course; const archived = data.status === "archived";
+  const back = <Link className={styles.back} to="/courses/$courseSlug" params={{ courseSlug: data.slug }}>{t("courses.lessons.backToCourse", { title: data.title })}</Link>;
+  // The API enforces every action; a viewer without any of them only sees why there is nothing here.
+  if (!canManage(data)) return <GroupFrame groupId={groupId} session={session.data}><ErrorState title={t("courses.manageUnavailable")} action={back} /></GroupFrame>;
+  return <GroupFrame groupId={groupId} session={session.data}><div className={styles.stack}>
+    {back}
+    <PageHeader eyebrow={<StatusChip status={data.status} />} title={t("courses.manageTitle")} intro={data.title} />
+    {archived && <Surface tone="quiet"><EmptyState title={t("courses.archivedTitle")}>{t("courses.archivedBody")}</EmptyState></Surface>}
     {(data.permissions.edit || data.permissions.archive) && <Surface className={styles.tools} tone="featured">
-      <SectionHeader title={t("courses.manageTitle")} description={data.status === "draft" ? t("courses.draftHelp") : undefined} />
+      <SectionHeader title={t("courses.detailsTitle")} description={data.status === "draft" ? t("courses.draftHelp") : undefined} />
       <div className={styles.toolActions}>
         {data.permissions.edit && <Button variant="secondary" onClick={() => setEditOpen(true)}>{t("courses.edit")}</Button>}
         {data.permissions.publish && (data.status === "draft"
@@ -152,9 +177,8 @@ export function CoursePage({ groupId, courseId }: { groupId: string; courseId: s
       <ErrorMessage error={visibility.error ?? restore.error} />
       {data.permissions.edit && <div className={styles.coverTools}><h3>{t("courses.coverTitle")}</h3><ImageUpload shape="wide" currentUrl={data.coverUrl} name={data.title} uploadPath={`${coursePath(groupId, courseId)}/cover`} removePath={`${coursePath(groupId, courseId)}/cover`} onChanged={refresh} /></div>}
     </Surface>}
-    {!archived && <CourseProgress groupId={groupId} courseId={courseId} accountId={session.data.user.id} />}
-    {!archived && <CourseContributors groupId={groupId} course={data} />}
-    <CourseLessons groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} />
+    {!archived && data.permissions.manageContributors && <CourseContributors groupId={groupId} course={data} />}
+    {(data.permissions.contribute || data.permissions.removeContent) && <CourseLessonTools groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} />}
     <AdaptiveDialog opened={editOpen} onClose={() => setEditOpen(false)} title={t("courses.editTitle")}>
       {editOpen && <CourseForm initial={data} submitLabel={t("common.save")} pending={edit.isPending} error={edit.error} onSubmit={(input) => edit.mutate(input)} onCancel={() => setEditOpen(false)} />}
     </AdaptiveDialog>

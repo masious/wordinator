@@ -1,5 +1,10 @@
 this file isn't meant for agents. don't read it if you're an agent.
 
+[ ] UI redesign
+[ ] course page
+[ ] mobile-friendly
+
+
 [ ] hide wordpanel and highlight with hovercard
 [ ] speech: Daan is female and sofia male! voices are not interactive and excited! no background noise
 [ ] voice for reading practices

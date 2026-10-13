@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { useState } from "react";
 import { describe, expect, it } from "vitest";
 import { theme } from "../theme";
-import { AdaptiveDialog, ArrowIcon, Button, ConfirmDialog, FieldHelp, NavigationItem, Surface } from ".";
+import { AdaptiveDialog, ArrowIcon, Button, ButtonGroup, ConfirmDialog, FieldHelp, NavigationItem, Surface } from ".";
 
 function renderWithTheme(node: React.ReactNode) {
   return render(<MantineProvider theme={theme}>{node}</MantineProvider>);
@@ -15,6 +15,14 @@ describe("reusable UI contracts", () => {
 
     expect(screen.getByRole("button", { name: "Unavailable" })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Saving" })).toBeDisabled();
+  });
+
+  it("names attached button groups and keeps each member a button", () => {
+    renderWithTheme(<ButtonGroup label="Lesson actions"><Button>Continue</Button><Button variant="secondary">Review words</Button></ButtonGroup>);
+
+    const group = screen.getByRole("group", { name: "Lesson actions" });
+    expect(group).toContainElement(screen.getByRole("button", { name: "Continue" }));
+    expect(group).toContainElement(screen.getByRole("button", { name: "Review words" }));
   });
 
   it("renders nested surfaces, icon islands, and active navigation semantics", () => {

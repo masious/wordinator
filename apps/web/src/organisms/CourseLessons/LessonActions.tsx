@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { lessonQueryOptions } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
 import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
-import { AdaptiveDialog, Button, ErrorState, LoadingState } from "../../ui";
+import { AdaptiveDialog, Button, ButtonGroup, ErrorState, LoadingState } from "../../ui";
 import { LessonShareScope, useLessonShareScope } from "../LessonShare/LessonShare";
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import { runWords, WordRecap } from "../WordRecap/WordRecap";
@@ -93,11 +93,13 @@ export function LessonActions({ scope, summary, number, completed, position, arc
   const words = summary.wordCount > 0; const practices = summary.practiceCount > 0 && !archived;
   // Closing the practice dialog in any way saves the open answer set's progress, as on the lesson page.
   const closePractices = () => { if (selected) saveProgress(selected); setSelected(null); setPractising(false); };
-  return <div className={styles.actions} role="group" aria-label={t("courses.lessonActions.label", named)}>
-    <Button variant={action === "continue" || action === "start" ? "secondary" : "quiet"} onClick={() => onPlay(summary.id)}
-      aria-label={t(`courses.lessonActions.${action}Named`, named)}>{t(`courses.lessonActions.${action}`)}</Button>
-    {words && <Button variant="quiet" onClick={() => setReviewing(true)} aria-label={t("courses.lessonActions.reviewWordsNamed", named)}>{t("courses.lessonActions.reviewWords")}</Button>}
-    {practices && <Button variant="quiet" onClick={() => setPractising(true)} aria-label={t("courses.lessonActions.practiceNamed", named)}>{t("courses.lessonActions.practice")}</Button>}
+  return <>
+    <ButtonGroup className={styles.actions} label={t("courses.lessonActions.label", named)}>
+      <Button variant={action === "continue" || action === "start" ? "secondary" : "quiet"} onClick={() => onPlay(summary.id)}
+        aria-label={t(`courses.lessonActions.${action}Named`, named)}>{t(`courses.lessonActions.${action}`)}</Button>
+      {words && <Button variant="quiet" onClick={() => setReviewing(true)} aria-label={t("courses.lessonActions.reviewWordsNamed", named)}>{t("courses.lessonActions.reviewWords")}</Button>}
+      {practices && <Button variant="quiet" onClick={() => setPractising(true)} aria-label={t("courses.lessonActions.practiceNamed", named)}>{t("courses.lessonActions.practice")}</Button>}
+    </ButtonGroup>
     <AdaptiveDialog opened={reviewing} onClose={() => setReviewing(false)} title={t("courses.lessonActions.wordsTitle", named)}>
       {reviewing && <LoadedLesson scope={scope} lessonId={summary.id}>{(lesson) => <LessonRecap scope={scope} lesson={lesson} onDone={() => setReviewing(false)} />}</LoadedLesson>}
     </AdaptiveDialog>
@@ -106,5 +108,5 @@ export function LessonActions({ scope, summary, number, completed, position, arc
         {(lesson) => <PracticeList scope={scope} lesson={lesson} selected={selected} onSelect={setSelected} />}
       </LoadedLesson>}
     </AdaptiveDialog>
-  </div>;
+  </>;
 }

@@ -23,6 +23,7 @@ import { Route as InviteTokenRouteImport } from './routes/invite.$token'
 import { Route as JournalPostIdRouteImport } from './routes/journal_.$postId'
 import { Route as OverviewLessonSlugRouteImport } from './routes/overview.$lessonSlug'
 import { Route as WordsDrillRouteImport } from './routes/words_.drill'
+import { Route as CoursesCourseSlugManageRouteImport } from './routes/courses_.$courseSlug_.manage'
 import { Route as GroupsGroupIdCoursesRouteImport } from './routes/groups.$groupId_.courses'
 import { Route as GroupsGroupIdMembersRouteImport } from './routes/groups.$groupId_.members'
 import { Route as GroupsGroupIdNotificationsRouteImport } from './routes/groups.$groupId_.notifications'
@@ -105,6 +106,11 @@ const OverviewLessonSlugRoute = OverviewLessonSlugRouteImport.update({
 const WordsDrillRoute = WordsDrillRouteImport.update({
   id: '/words_/drill',
   path: '/words/drill',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoursesCourseSlugManageRoute = CoursesCourseSlugManageRouteImport.update({
+  id: '/courses_/$courseSlug_/manage',
+  path: '/courses/$courseSlug/manage',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GroupsGroupIdCoursesRoute = GroupsGroupIdCoursesRouteImport.update({
@@ -198,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/journal/$postId': typeof JournalPostIdRoute
   '/overview/$lessonSlug': typeof OverviewLessonSlugRoute
   '/words/drill': typeof WordsDrillRoute
+  '/courses/$courseSlug/manage': typeof CoursesCourseSlugManageRoute
   '/groups/$groupId/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId/notifications': typeof GroupsGroupIdNotificationsRoute
@@ -227,6 +234,7 @@ export interface FileRoutesByTo {
   '/journal/$postId': typeof JournalPostIdRoute
   '/overview/$lessonSlug': typeof OverviewLessonSlugRoute
   '/words/drill': typeof WordsDrillRoute
+  '/courses/$courseSlug/manage': typeof CoursesCourseSlugManageRoute
   '/groups/$groupId/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId/notifications': typeof GroupsGroupIdNotificationsRoute
@@ -257,6 +265,7 @@ export interface FileRoutesById {
   '/journal_/$postId': typeof JournalPostIdRoute
   '/overview/$lessonSlug': typeof OverviewLessonSlugRoute
   '/words_/drill': typeof WordsDrillRoute
+  '/courses_/$courseSlug_/manage': typeof CoursesCourseSlugManageRoute
   '/groups/$groupId_/courses': typeof GroupsGroupIdCoursesRoute
   '/groups/$groupId_/members': typeof GroupsGroupIdMembersRoute
   '/groups/$groupId_/notifications': typeof GroupsGroupIdNotificationsRoute
@@ -288,6 +297,7 @@ export interface FileRouteTypes {
     | '/journal/$postId'
     | '/overview/$lessonSlug'
     | '/words/drill'
+    | '/courses/$courseSlug/manage'
     | '/groups/$groupId/courses'
     | '/groups/$groupId/members'
     | '/groups/$groupId/notifications'
@@ -317,6 +327,7 @@ export interface FileRouteTypes {
     | '/journal/$postId'
     | '/overview/$lessonSlug'
     | '/words/drill'
+    | '/courses/$courseSlug/manage'
     | '/groups/$groupId/courses'
     | '/groups/$groupId/members'
     | '/groups/$groupId/notifications'
@@ -346,6 +357,7 @@ export interface FileRouteTypes {
     | '/journal_/$postId'
     | '/overview/$lessonSlug'
     | '/words_/drill'
+    | '/courses_/$courseSlug_/manage'
     | '/groups/$groupId_/courses'
     | '/groups/$groupId_/members'
     | '/groups/$groupId_/notifications'
@@ -376,6 +388,7 @@ export interface RootRouteChildren {
   JournalPostIdRoute: typeof JournalPostIdRoute
   OverviewLessonSlugRoute: typeof OverviewLessonSlugRoute
   WordsDrillRoute: typeof WordsDrillRoute
+  CoursesCourseSlugManageRoute: typeof CoursesCourseSlugManageRoute
   GroupsGroupIdCoursesRoute: typeof GroupsGroupIdCoursesRoute
   GroupsGroupIdMembersRoute: typeof GroupsGroupIdMembersRoute
   GroupsGroupIdNotificationsRoute: typeof GroupsGroupIdNotificationsRoute
@@ -491,6 +504,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WordsDrillRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/courses_/$courseSlug_/manage': {
+      id: '/courses_/$courseSlug_/manage'
+      path: '/courses/$courseSlug/manage'
+      fullPath: '/courses/$courseSlug/manage'
+      preLoaderRoute: typeof CoursesCourseSlugManageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/groups/$groupId_/courses': {
       id: '/groups/$groupId_/courses'
       path: '/groups/$groupId/courses'
@@ -600,6 +620,7 @@ const rootRouteChildren: RootRouteChildren = {
   JournalPostIdRoute: JournalPostIdRoute,
   OverviewLessonSlugRoute: OverviewLessonSlugRoute,
   WordsDrillRoute: WordsDrillRoute,
+  CoursesCourseSlugManageRoute: CoursesCourseSlugManageRoute,
   GroupsGroupIdCoursesRoute: GroupsGroupIdCoursesRoute,
   GroupsGroupIdMembersRoute: GroupsGroupIdMembersRoute,
   GroupsGroupIdNotificationsRoute: GroupsGroupIdNotificationsRoute,

@@ -6,7 +6,7 @@ import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-li
 import type { ReactNode } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
-import { CourseLessons, LessonView } from "./CourseLessons";
+import { CourseLessons, CourseLessonTools, LessonView } from "./CourseLessons";
 import { CourseResume } from "./CourseResume";
 
 const groupId = "20000000-0000-4000-8000-000000000001";
@@ -155,6 +155,39 @@ describe("Course lessons", () => {
     expect(observed.map((element) => element.getAttribute("data-block-id"))).toEqual([first.id, second.id]);
   });
 
+  it("moves the new words to a bar at the bottom of narrow screens that starts collapsed and opens on the highlighted words", async () => {
+    const word = (n: number, term: string) => ({ id: `70000000-0000-4000-8000-00000000000${n}`, term, meaning: `meaning of ${term}` });
+    const vocabulary = (n: number, ...words: unknown[]): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000002${n}`, type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [] });
+    const first = example("50000000-0000-4000-8000-000000000011", "De hond blaft.");
+    const second = example("50000000-0000-4000-8000-000000000012", "De kat slaapt.");
+    vi.stubGlobal("IntersectionObserver", class {
+      constructor(private readonly callback: IntersectionObserverCallback) {}
+      observe(target: Element) { this.callback([{ target, isIntersecting: target.getAttribute("data-block-id") === first.id } as IntersectionObserverEntry], this as unknown as IntersectionObserver); }
+      disconnect() { /* nothing to release */ }
+    });
+    // A desktop choice to keep the panel open does not open the bar.
+    localStorage.removeItem("wordinator:ui:v1:lesson-words-collapsed");
+    const matchMedia = vi.spyOn(window, "matchMedia").mockImplementation((query: string) => ({
+      matches: query === "(max-width: 64em)", media: query, onchange: null, addEventListener: vi.fn(), removeEventListener: vi.fn(),
+      addListener: vi.fn(), removeListener: vi.fn(), dispatchEvent: vi.fn(),
+    }));
+    try {
+      renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [first, vocabulary(1, word(1, "de hond")), second, vocabulary(2, word(2, "de kat"))])] });
+      const panel = await screen.findByRole("complementary", { name: "New words" });
+      // The bar renders straight into the body, outside the page.
+      expect(panel.parentElement).toBe(document.body);
+      const toggle = within(panel).getByRole("button", { name: /^New words/ });
+      expect(toggle).toHaveAttribute("aria-expanded", "false");
+      await waitFor(() => expect(toggle).toHaveTextContent("1 highlighted"));
+      expect(within(panel).queryByText("de hond")).not.toBeInTheDocument();
+      fireEvent.click(toggle);
+      expect(toggle).toHaveAttribute("aria-expanded", "true");
+      expect(within(panel).getByText("de hond").closest("li")).toHaveAttribute("aria-current", "true");
+      expect(within(panel).getByText("de kat").closest("li")).not.toHaveAttribute("aria-current");
+      expect(localStorage.getItem("wordinator:ui:v1:lesson-words-collapsed")).toBeNull();
+    } finally { matchMedia.mockRestore(); }
+  });
+
   it("lists the lesson's headings and practices in an index beside the text, and leaves it out with fewer than two", async () => {
     const heading = (id: string, title: string): LessonTopBlock => ({ id, type: "heading", props: { textColor: "default", backgroundColor: "default", level: 2 }, content: text(title), children: [] });
     renderLesson({ course: course(false), outline: [summary(1), summary(2)], lessons: [
@@ -181,6 +214,23 @@ describe("Course lessons", () => {
     expect(await screen.findByText("Een concept.")).toBeInTheDocument();
     expect(screen.getAllByText("Unpublished").length).toBeGreaterThan(0);
     expect(screen.getByRole("button", { name: "Edit lesson 1" })).toBeInTheDocument();
+  });
+
+  it("keeps lesson management off the course page and offers it in the manage list", async () => {
+    const detail = { course: course(true), outline: [summary(1), summary(2, false)], lessons: [] };
+    renderLessons(detail);
+    expect(await screen.findByRole("link", { name: "Open lesson 2: Lesson title 2" })).toBeInTheDocument();
+    expect(screen.getByText("Unpublished")).toBeInTheDocument();
+    for (const name of ["Add lesson", "Edit details", "Move lesson 1 down", "Delete lesson 1"]) expect(screen.queryByRole("button", { name })).not.toBeInTheDocument();
+    cleanup();
+    renderWithRouter(<CourseLessonTools groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} />);
+    expect(await screen.findByRole("button", { name: "Add lesson" })).toBeInTheDocument();
+    expect(screen.getAllByRole("button", { name: "Edit details" })).toHaveLength(2);
+    expect(screen.getByRole("button", { name: "Move lesson 1 up" })).toBeDisabled();
+    fireEvent.click(screen.getByRole("button", { name: "Move lesson 1 down" }));
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(expect.stringMatching(/\/lessons\/order$/), expect.objectContaining({ method: "PUT" })));
+    fireEvent.click(screen.getByRole("button", { name: "Delete lesson 2" }));
+    expect(await screen.findByRole("dialog", { name: "Delete this lesson?" })).toBeInTheDocument();
   });
 
   it("lets a contributor edit content but not reorder or change details of a published lesson", async () => {

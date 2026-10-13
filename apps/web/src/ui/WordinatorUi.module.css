@@ -27,6 +27,13 @@
 .danger { --button-surface: var(--color-danger-surface); --button-ink: var(--color-danger-text); }
 .iconIsland { display: inline-grid; place-items: center; width: 30px; height: 30px; margin-block: -5px; margin-right: -12px; background: var(--color-wash-strong); border: var(--ring-hairline); border-radius: 50%; transition: transform var(--motion-standard) var(--ease-physical); }
 .button:hover .iconIsland { transform: translate(3px, -1px) scale(1.05); }
+/* Attached buttons: the group owns the pill shadow and lift, so members drop their own elevation and never move apart; hover adds a wash over each variant's surface instead. */
+.buttonGroup { width: fit-content; max-width: 100%; border-radius: var(--radius-pill); box-shadow: var(--shadow-card); transition: transform var(--motion-press) var(--ease-physical), box-shadow var(--motion-press) var(--ease-physical); }
+.buttonGroup:has(.button:hover:not(:disabled, [data-disabled])) { transform: translateY(-2px); box-shadow: var(--shadow-raised); }
+.buttonGroup .button { position: relative; box-shadow: var(--shadow-inset-highlight); }
+.buttonGroup .button:hover:not(:disabled, [data-disabled]) { transform: none; box-shadow: var(--shadow-inset-highlight); background-image: linear-gradient(var(--color-wash-strong), var(--color-wash-strong)); }
+.buttonGroup .button:active:not(:disabled, [data-disabled]) { transform: none; box-shadow: var(--shadow-pressed); }
+.buttonGroup .button:focus-visible { z-index: 1; }
 .lineIcon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.25; }
 .iconButton { --button-surface: var(--color-highlight-soft); --button-ink: var(--color-foreground); min-width: var(--touch-target); min-height: var(--touch-target); color: var(--button-ink); background: var(--button-surface); border: var(--ring-hairline); box-shadow: var(--shadow-card), var(--shadow-inset-highlight); transition: transform var(--motion-press) var(--ease-physical); }
 .iconButton:hover:not(:disabled, [data-disabled]) { color: var(--button-ink); background: var(--button-surface); transform: translateY(-2px) rotate(3deg); box-shadow: var(--shadow-raised); }

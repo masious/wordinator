@@ -6,6 +6,7 @@ import {
   ArrowIcon,
   Avatar,
   Button,
+  ButtonGroup,
   CheckboxField,
   ConfirmDialog,
   EmptyState,
@@ -122,6 +123,18 @@ export function UiWorkbench() {
                 <div className={styles.row}>
                   <Button size="sm">{t("ui.small")}</Button><Button size="md">{t("ui.medium")}</Button><Button size="lg">{t("ui.large")}</Button>
                   <IconButton label={t("ui.smallIcon")} size="sm"><StarIcon /></IconButton><IconButton label={t("ui.largeIcon")} size="lg"><StarIcon /></IconButton>
+                </div>
+                <div className={styles.row}>
+                  <ButtonGroup label={t("ui.groupLesson")}>
+                    <Button>{t("ui.groupContinue")}</Button>
+                    <Button variant="secondary">{t("ui.groupReview")}</Button>
+                    <Button variant="secondary">{t("ui.groupPractice")}</Button>
+                  </ButtonGroup>
+                  <ButtonGroup label={t("ui.groupView")}>
+                    <Button size="sm" variant="secondary">{t("ui.groupDay")}</Button>
+                    <Button size="sm" variant="secondary">{t("ui.groupWeek")}</Button>
+                    <Button size="sm" disabled variant="secondary">{t("ui.groupMonth")}</Button>
+                  </ButtonGroup>
                 </div>
               </div>
             </Surface>

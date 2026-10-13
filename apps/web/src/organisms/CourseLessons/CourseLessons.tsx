@@ -2,9 +2,11 @@ import {
   COURSE_TEXT_MAX, COURSE_TITLE_MAX, okResponseSchema, outlineResponseSchema, type CourseLessonSummary, type CourseProgressResponse, type LessonInput, type LessonPosition,
 } from "@wordinator/contracts";
 import { lessonResponseSchema, type CourseDetailResponse, type CourseLesson } from "@wordinator/contracts/lesson-document";
+import { useMediaQuery } from "@mantine/hooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, lazy, Suspense, useCallback, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import { Trans, useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, courseQueryOptions, courseWordsQueryOptions, lessonQueryOptions, wordBookmarksKey } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
@@ -50,7 +52,9 @@ function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" 
 // Readers see the published document. Editors of a lesson that is not published yet see its draft, marked as a preview. A practice
 // shows only its first prompts; its answer set opens in a dialog that, beside the side column, sits over the text. New words are
 // not shown in the text: the side column holds the lesson's index (headings and practices, following the reader) and, below it,
-// a collapsible panel of the lesson's words, where the words of the blocks on screen are highlighted.
+// a collapsible panel of the lesson's words, where the words of the blocks on screen are highlighted. Narrow screens move the
+// panel to a bar at the bottom of the window that starts collapsed on every lesson; it renders into the body so the shell's entry
+// transform cannot pin it to the page.
 function LessonBody({ scope, lesson, tracking }: { scope: Scope; lesson: CourseLesson; tracking: ReadingTracking }) {
   const { t } = useTranslation();
   const document = playableDocument(lesson);
@@ -59,6 +63,9 @@ function LessonBody({ scope, lesson, tracking }: { scope: Scope; lesson: CourseL
   const reading = useRef<HTMLDivElement>(null); const side = useRef<HTMLDivElement>(null);
   const active = useVisibleWords(reading, side, steps);
   const [wordsCollapsed, toggleWords] = useWordsCollapsed();
+  const bar = useMediaQuery("(max-width: 64em)", undefined, { getInitialValueInEffect: false });
+  const [barOpen, setBarOpen] = useState(false);
+  const toggleBar = useCallback(() => setBarOpen((open) => !open), []);
   // Only words of the published document can be bookmarked, so a draft preview shows no toggles.
   const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
   const speech = useMemo(() => lessonSpeech(lesson), [lesson]);
@@ -69,7 +76,9 @@ function LessonBody({ scope, lesson, tracking }: { scope: Scope; lesson: CourseL
   const hasWords = steps.some((step) => step.words.length > 0);
   const hasIndex = entries.length >= LESSON_INDEX_MIN;
   const hasSide = hasWords || hasIndex;
-  return <LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={hasSide ? styles.withSide : undefined}>
+  const words = hasWords && <LessonWords steps={steps} active={active} groupId={scope.groupId} bar={bar}
+    collapsed={bar ? !barOpen : wordsCollapsed} onToggle={bar ? toggleBar : toggleWords} />;
+  return <LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={hasSide ? styles.withSide : undefined} data-words-bar={(bar && hasWords) || undefined}>
     <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} />
     <div ref={reading} className={styles.body}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
@@ -80,10 +89,11 @@ function LessonBody({ scope, lesson, tracking }: { scope: Scope; lesson: CourseL
         <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.practiceProgress)}
           published={lesson.document !== null} dock={hasSide ? reading : undefined} />} />
     </div>
-    {hasSide && <div ref={side} className={styles.side}>
-      {hasIndex && <LessonIndex entries={entries} reading={reading} side={side} fill={!hasWords || wordsCollapsed} />}
-      {hasWords && <LessonWords steps={steps} active={active} groupId={scope.groupId} collapsed={wordsCollapsed} onToggle={toggleWords} />}
+    {(hasIndex || (words && !bar)) && <div ref={side} className={styles.side}>
+      {hasIndex && <LessonIndex entries={entries} reading={reading} side={side} fill={!hasWords || bar || wordsCollapsed} />}
+      {!bar && words}
     </div>}
+    {bar && words && createPortal(words, window.document.body)}
   </div></SpeechScope></WordBookmarkScope></LessonShareScope>;
 }
 
@@ -122,10 +132,39 @@ function PracticeActivity({ summary, practices, archived }: { summary: CourseLes
 
 // One entry of the course's lesson list. It links to the lesson page, reports where the reader stands, and offers the lesson's own
 // actions: play it, review its words, and practice again. `saved` is the viewer's saved position, also in a finished lesson.
-function LessonRow({ scope, summary, number, outline, completed, saved, practices, archived, onPlay }: {
-  scope: Scope; summary: CourseLessonSummary; number: number; outline: CourseLessonSummary[]; completed: boolean; saved: LessonPosition | undefined;
+function LessonRow({ scope, summary, number, completed, saved, practices, archived, onPlay }: {
+  scope: Scope; summary: CourseLessonSummary; number: number; completed: boolean; saved: LessonPosition | undefined;
   practices: LessonPractices | undefined; archived: boolean; onPlay: (lessonId: string) => void;
 }) {
+  const { t } = useTranslation();
+  const position = completed ? undefined : saved;
+  const activity = summary.published && (summary.practiceCount > 0 || practices);
+  return <li className={summary.imageUrl ? `${styles.lesson} ${styles.withImage}` : styles.lesson}>
+    <div className={styles.lessonMain}>
+      <Link className={styles.lessonLink} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug: scope.courseSlug, lessonSlug: summary.slug }}
+        aria-label={t("courses.lessons.open", { number, title: summary.title })}>
+        <span className={styles.lessonNumber}>{completed ? <span className={styles.check} role="img" aria-label={t("courses.progress.completed")}>✓</span> : number}</span>
+        {/* The link's label names the lesson, so its first image is decorative here. */}
+        {summary.imageUrl && <span className={styles.lessonImage}><img src={summary.imageUrl} alt="" loading="lazy" decoding="async" /></span>}
+        <span className={styles.lessonCopy}>
+          <span className={styles.lessonTitle}>{summary.title}</span>
+          {summary.goal && <span className={styles.goal}>{summary.goal}</span>}
+          {(completed || position || activity) && <span className={styles.start}>
+            {completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
+            {!completed && position && <span className={styles.position}>{t("courses.player.step", { current: position.stepIndex + 1, total: position.totalSteps })}</span>}
+            {activity && <PracticeActivity summary={summary} practices={practices} archived={archived} />}
+          </span>}
+        </span>
+      </Link>
+      <LessonActions scope={scope} summary={summary} number={number} completed={completed} position={saved} archived={archived} onPlay={onPlay} />
+    </div>
+    {/* Editors still see which lessons readers cannot see yet; changing lessons happens on the manage page. */}
+    {scope.contribute && (!summary.published || summary.changed) && <div className={styles.blockTools}><StateChips lesson={summary} /></div>}
+  </li>;
+}
+
+// One lesson on the manage page: its details, place in the outline, and deletion. Reading and practising stay on the course page.
+function ManagedLessonRow({ scope, summary, number, outline }: { scope: Scope; summary: CourseLessonSummary; number: number; outline: CourseLessonSummary[] }) {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const [detailsOpen, setDetailsOpen] = useState(false); const [deleting, setDeleting] = useState(false);
   const courseKey = courseQueryOptions(scope.groupId, scope.courseId).queryKey;
@@ -149,28 +188,15 @@ function LessonRow({ scope, summary, number, outline, completed, saved, practice
       await queryClient.invalidateQueries({ queryKey: courseKey });
     },
   });
-  const position = completed ? undefined : saved;
-  const activity = summary.published && (summary.practiceCount > 0 || practices);
-  return <li className={summary.imageUrl ? `${styles.lesson} ${styles.withImage}` : styles.lesson}>
+  return <li className={styles.lesson}>
     <div className={styles.lessonMain}>
       <Link className={styles.lessonLink} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug: scope.courseSlug, lessonSlug: summary.slug }}
         aria-label={t("courses.lessons.open", { number, title: summary.title })}>
-        <span className={styles.lessonNumber}>{completed ? <span className={styles.check} role="img" aria-label={t("courses.progress.completed")}>✓</span> : number}</span>
-        {/* The link's label names the lesson, so its first image is decorative here. */}
-        {summary.imageUrl && <span className={styles.lessonImage}><img src={summary.imageUrl} alt="" loading="lazy" decoding="async" /></span>}
-        <span className={styles.lessonCopy}>
-          <span className={styles.lessonTitle}>{summary.title}</span>
-          {summary.goal && <span className={styles.goal}>{summary.goal}</span>}
-          {(completed || position || activity) && <span className={styles.start}>
-            {completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
-            {!completed && position && <span className={styles.position}>{t("courses.player.step", { current: position.stepIndex + 1, total: position.totalSteps })}</span>}
-            {activity && <PracticeActivity summary={summary} practices={practices} archived={archived} />}
-          </span>}
-        </span>
+        <span className={styles.lessonNumber}>{number}</span>
+        <span className={styles.lessonCopy}><span className={styles.lessonTitle}>{summary.title}</span></span>
       </Link>
-      <LessonActions scope={scope} summary={summary} number={number} completed={completed} position={saved} archived={archived} onPlay={onPlay} />
     </div>
-    {(scope.contribute || scope.removable) && <div className={styles.blockTools}>
+    <div className={styles.blockTools}>
       <StateChips lesson={summary} />
       <div className={styles.toolButtons}>
         {canEditDetails(scope, summary) && <Button variant="quiet" onClick={() => { update.reset(); setDetailsOpen(true); }}>{t("courses.lessons.editDetails")}</Button>}
@@ -181,7 +207,7 @@ function LessonRow({ scope, summary, number, outline, completed, saved, practice
         {scope.removable && <Button variant="quiet" onClick={() => setDeleting(true)} aria-label={t("courses.lessons.deleteNamed", { number })}>{t("courses.delete")}</Button>}
       </div>
       <CourseErrorMessage error={move.error} />
-    </div>}
+    </div>
     <AdaptiveDialog opened={detailsOpen} onClose={() => setDetailsOpen(false)} title={t("courses.lessons.editTitle")}>
       {detailsOpen && <LessonForm initial={summary} submitLabel={t("common.save")} pending={update.isPending} error={update.error}
         onSubmit={(input) => update.mutate(input)} onCancel={() => setDetailsOpen(false)} />}
@@ -199,10 +225,9 @@ const lessonScope = (groupId: string, courseId: string, accountId: string, detai
 
 // The course page's lesson list. Each lesson's content lives on its own page.
 export function CourseLessons({ groupId, courseId, accountId, detail }: { groupId: string; courseId: string; accountId: string; detail: CourseDetailResponse }) {
-  const { t } = useTranslation(); const queryClient = useQueryClient(); const navigate = useNavigate();
+  const { t } = useTranslation(); const queryClient = useQueryClient();
   const scope = lessonScope(groupId, courseId, accountId, detail);
   const { outline } = detail;
-  const [addOpen, setAddOpen] = useState(false);
   const progress = useQuery(courseProgressQueryOptions(groupId, courseId));
   const completed = new Set(progress.data?.completedLessonIds ?? []);
   // Saved steps, shown on each started lesson and resumed by its Continue action.
@@ -214,6 +239,34 @@ export function CourseLessons({ groupId, courseId, accountId, detail }: { groupI
   const [reviewing, setReviewing] = useState(false);
   // Every recap word comes from the published index and carries its lesson, so each can be bookmarked there.
   const recapTarget = useCallback((_wordId: string, lessonId?: string) => lessonId ? { groupId, courseId, lessonId } : null, [groupId, courseId]);
+  return <section className={styles.index} aria-label={t("courses.lessons.outline")}>
+    <SectionHeader title={t("courses.lessons.outline")}
+      description={outline.length ? t("courses.lessons.outlineCount", { count: outline.length }) : undefined} />
+    {words.length > 0 && <Surface tone="quiet" className={styles.recap}>
+      <p>{t("courses.words.courseHelp", { count: words.length })}</p>
+      <Button variant="secondary" onClick={() => setReviewing(true)}>{t("courses.words.review")}</Button>
+    </Surface>}
+    {outline.length
+      ? <ol className={styles.lessonList}>{outline.map((lesson, index) => <LessonRow key={lesson.id} scope={scope} summary={lesson} number={index + 1}
+        completed={completed.has(lesson.id)} saved={positions.find((entry) => entry.lessonId === lesson.id)} practices={progress.data?.practices[lesson.id]} archived={detail.course.status === "archived"} onPlay={setPlaying} />)}</ol>
+      : <Surface tone="quiet"><EmptyState title={t("courses.noLessonsTitle")}>{t("courses.noLessonsBody")}</EmptyState></Surface>}
+    <AdaptiveDialog opened={reviewing && words.length > 0} onClose={() => setReviewing(false)} title={t("courses.words.recapTitle")}>
+      {reviewing && <WordBookmarkScope resolve={recapTarget}>
+        <WordRecap words={words} doneLabel={t("courses.words.backToCourse")} onDone={() => setReviewing(false)} />
+      </WordBookmarkScope>}
+    </AdaptiveDialog>
+    <LessonPlayer scope={scope} lessonId={playing} outline={outline} positions={positions} onChangeLesson={setPlaying}
+      onClose={() => { setPlaying(null); refreshAfterPlaying(queryClient, groupId, courseId); }} />
+  </section>;
+}
+
+// One lesson on its own page: its blocks, with editing for contributors, and links to the neighbouring lessons.
+// The manage page's lesson list: add lessons, edit their details, reorder, and delete. Lesson content is edited on each lesson's page.
+export function CourseLessonTools({ groupId, courseId, accountId, detail }: { groupId: string; courseId: string; accountId: string; detail: CourseDetailResponse }) {
+  const { t } = useTranslation(); const queryClient = useQueryClient(); const navigate = useNavigate();
+  const scope = lessonScope(groupId, courseId, accountId, detail);
+  const { outline } = detail;
+  const [addOpen, setAddOpen] = useState(false);
   const create = useMutation({
     mutationFn: (input: LessonInput) => apiRequest(lessonsPath(scope), lessonResponseSchema, { method: "POST", body: JSON.stringify(input) }),
     onSuccess: async (data) => {
@@ -227,28 +280,15 @@ export function CourseLessons({ groupId, courseId, accountId, detail }: { groupI
   return <section className={styles.index} aria-label={t("courses.lessons.outline")}>
     <SectionHeader title={t("courses.lessons.outline")}
       description={outline.length ? t("courses.lessons.outlineCount", { count: outline.length }) : undefined} action={outline.length ? addAction || undefined : undefined} />
-    {words.length > 0 && <Surface tone="quiet" className={styles.recap}>
-      <p>{t("courses.words.courseHelp", { count: words.length })}</p>
-      <Button variant="secondary" onClick={() => setReviewing(true)}>{t("courses.words.review")}</Button>
-    </Surface>}
     {outline.length
-      ? <ol className={styles.lessonList}>{outline.map((lesson, index) => <LessonRow key={lesson.id} scope={scope} summary={lesson} number={index + 1} outline={outline}
-        completed={completed.has(lesson.id)} saved={positions.find((entry) => entry.lessonId === lesson.id)} practices={progress.data?.practices[lesson.id]} archived={detail.course.status === "archived"} onPlay={setPlaying} />)}</ol>
+      ? <ol className={styles.lessonList}>{outline.map((lesson, index) => <ManagedLessonRow key={lesson.id} scope={scope} summary={lesson} number={index + 1} outline={outline} />)}</ol>
       : <Surface tone="quiet"><EmptyState title={t("courses.noLessonsTitle")} action={addAction || undefined}>{t("courses.noLessonsBody")}</EmptyState></Surface>}
-    <AdaptiveDialog opened={reviewing && words.length > 0} onClose={() => setReviewing(false)} title={t("courses.words.recapTitle")}>
-      {reviewing && <WordBookmarkScope resolve={recapTarget}>
-        <WordRecap words={words} doneLabel={t("courses.words.backToCourse")} onDone={() => setReviewing(false)} />
-      </WordBookmarkScope>}
-    </AdaptiveDialog>
-    <LessonPlayer scope={scope} lessonId={playing} outline={outline} positions={positions} onChangeLesson={setPlaying}
-      onClose={() => { setPlaying(null); refreshAfterPlaying(queryClient, groupId, courseId); }} />
     <AdaptiveDialog opened={addOpen} onClose={() => setAddOpen(false)} title={t("courses.lessons.addTitle")}>
       {addOpen && <LessonForm submitLabel={t("courses.lessons.addSubmit")} pending={create.isPending} error={create.error} onSubmit={(input) => create.mutate(input)} onCancel={() => setAddOpen(false)} />}
     </AdaptiveDialog>
   </section>;
 }
 
-// One lesson on its own page: its blocks, with editing for contributors, and links to the neighbouring lessons.
 export function LessonView({ groupId, courseId, accountId, detail, lessonId, dataUpdatedAt }: {
   groupId: string; courseId: string; accountId: string; detail: CourseDetailResponse; lessonId: string; dataUpdatedAt: number;
 }) {

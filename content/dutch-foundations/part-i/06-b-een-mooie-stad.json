@@ -1,0 +1,2446 @@
+{
+  "title": "Een mooie stad",
+  "goal": "Put an adjective before a noun at the basic level: -e with de-words (after de and een), -e after het, no -e after een + het-word; groot → grote as the only spelling change; describe the city and people of Sofia's first week, closing Part I.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Een mooie stad",
+      "id": "b84ecd10-6a08-40f5-bcaa-2c6e3b47dd95"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Sunday evening, the end of Sofia's first week in Utrecht. Back at Noor's flat, she shows Noor the photos from their walk and looks back on the whole week. Tomorrow a new week starts. ",
+        "In this lesson you will learn to put an adjective ",
+        {
+          "text": "before",
+          "styles": {
+            "italic": true
+          }
+        },
+        " a noun — ",
+        {
+          "text": "een mooi",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        {
+          "text": "e",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " stad, ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " ",
+        {
+          "text": "grote",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " station, ",
+        {
+          "text": "een klein",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " café — and when it gets an ",
+        {
+          "text": "-e",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". At the end you will read Sofia's own story of her first week."
+      ],
+      "id": "06652741-7398-483e-b299-77ad07afb484"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours in this lesson: ",
+        {
+          "text": "subjects",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " and ",
+        {
+          "text": "verbs",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " where word order matters; ",
+        {
+          "text": "de-word phrases pink",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " (de, and the adjective's -e with a de-word); ",
+        {
+          "text": "het-word phrases brown",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " (het, and the adjective with a het-word). The ",
+        {
+          "text": "-e",
+          "styles": {
+            "bold": true
+          }
+        },
+        " itself is always ",
+        {
+          "text": "bold",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "73a8bb65-eb51-4eee-b3be-bc1b80d1d09d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Een mooie stad",
+      "id": "4556b739-ee29-4052-ac98-18c2e9ad5714"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Sunday evening, back at Noor's flat. Noor makes tea. Sofia shows Noor her photos of the walk.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "55a6be8f-13e4-4d9b-a819-f92f4654bbf1"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Ik maak thee. Jij ook?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, graag! Kijk, een foto van de Domtoren."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Mooie foto! De oude toren is heel mooi."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja. Utrecht is een mooie stad!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "En kijk: Café De Zwaluw!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "De Zwaluw is een klein café, maar heel gezellig."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En hier: het grote station."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Utrecht Centraal is een groot station. En mooi!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Mooi? Het grote station is niet mooi!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja hoor! Utrecht Centraal is een mooi station!"
+          }
+        ]
+      },
+      "id": "e52fe5e2-f87c-4456-a5e2-259547219f69"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Notice: ",
+          "styles": {
+            "bold": true
+          }
+        },
+        "the adjective changes depending on where it stands. After ",
+        {
+          "text": "is",
+          "styles": {
+            "italic": true
+          }
+        },
+        " it never changes (06-a): “Het station is ",
+        {
+          "text": "mooi",
+          "styles": {
+            "bold": true
+          }
+        },
+        ".” Before the noun it usually gets ",
+        {
+          "text": "-e",
+          "styles": {
+            "bold": true
+          }
+        },
+        ": “de oude toren”, “een mooi",
+        {
+          "text": "e",
+          "styles": {
+            "bold": true
+          }
+        },
+        " stad”. But “een mooi station” has no -e — that contrast is this whole lesson."
+      ],
+      "id": "9dd597c4-9298-4a91-9053-7d122c7d0282"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Mooie foto!",
+              "meaning": "Nice photo! (a short exclamation; de foto → -e, no article)",
+              "example": "Kijk, een foto van de Domtoren. — Mooie foto!",
+              "id": "7f1d0cfd-b166-43b2-ac62-962a1172dd8d"
+            },
+            {
+              "term": "Ja hoor!",
+              "meaning": "oh yes (it is) — contradicting a “no” (the pair of Nee hoor, 01-b)",
+              "example": "Het grote station is niet mooi! — Ja hoor! Het is een mooi station!",
+              "id": "2702f45f-8ba1-49a8-9773-7c25f3481c7b"
+            }
+          ]
+        }
+      },
+      "id": "ad12f946-07e6-4bb4-a23b-7eba74c526e0"
+    },
+    {
+      "type": "divider",
+      "id": "d8daf474-2b12-46c4-8ea0-13dfae050347"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Adjective before a noun",
+      "id": "2e7549a8-d268-462f-a11f-c8cdf786983a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Two places for an adjective",
+      "id": "3cbb811e-7fc5-4936-a3e1-7a9d572dd3ce"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You already know the adjective ",
+        {
+          "text": "after",
+          "styles": {
+            "italic": true
+          }
+        },
+        " zijn: “De stad is mooi.” (06-a). Now you put it ",
+        {
+          "text": "before",
+          "styles": {
+            "italic": true
+          }
+        },
+        " a noun, like in English (“a beautiful city”), not like Spanish (“una ciudad bonita”: adjective after). Before a noun the adjective usually takes ",
+        {
+          "text": "-e",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "47d10adc-fe6a-4d70-83a4-654aa5c0a58d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        "Formula: ",
+        {
+          "text": "article + adjective + noun",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". “De stad is mooi.” → “Utrecht is ",
+        {
+          "text": "een mooi",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        {
+          "text": "e",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " stad.” “Het café is klein.” → “",
+        {
+          "text": "het klein",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        {
+          "text": "e",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        " café”."
+      ],
+      "id": "f9a053a2-9c67-479a-9faa-3da42e48fdb3"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "After zijn",
+              "id": "26719c55-2768-4ce4-94d2-ebe02a897aa6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "De stad is mooi.",
+              "id": "bb46619d-e730-4443-9799-e49cafd3129e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Het station is groot.",
+              "id": "f695edf8-4d7b-4541-b3c9-3f5d268c9fc6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Het café is klein.",
+              "id": "13461816-8300-4d9c-9a77-821f6d308a3b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Karin is aardig.",
+              "id": "53da0e0f-d3ec-4c82-b65f-6da8714c3266"
+            }
+          ],
+          "id": "535b101b-d47a-473a-a65a-d27a4e1d131f"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Before a noun",
+              "id": "4f66c184-f170-409e-b96c-8f91706f68a0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Utrecht is ",
+                {
+                  "text": "een mooi",
+                  "styles": {
+                    "textColor": "pink",
+                    "bold": true
+                  }
+                },
+                {
+                  "text": "e",
+                  "styles": {
+                    "textColor": "pink",
+                    "bold": true
+                  }
+                },
+                " stad."
+              ],
+              "id": "6d67967a-a0be-40a0-965f-50fed4d11ecd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "",
+                {
+                  "text": "het",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " ",
+                {
+                  "text": "grote",
+                  "styles": {
+                    "textColor": "brown",
+                    "bold": true
+                  }
+                },
+                " station / ",
+                {
+                  "text": "een groot",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " station"
+              ],
+              "id": "04382d19-da09-43d2-8fa9-681389663e42"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "",
+                {
+                  "text": "een klein",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " café, maar heel gezellig"
+              ],
+              "id": "64a47311-77fb-46f7-a9e1-8cef2926183d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "Karin is ",
+                {
+                  "text": "een aardig",
+                  "styles": {
+                    "textColor": "pink",
+                    "bold": true
+                  }
+                },
+                {
+                  "text": "e",
+                  "styles": {
+                    "textColor": "pink",
+                    "bold": true
+                  }
+                },
+                " teamleider."
+              ],
+              "id": "cf8cc462-0c85-4580-b03b-577339eb7a46"
+            }
+          ],
+          "id": "2c6fd8f6-1bb5-4f62-a439-48fe65e645fe"
+        }
+      ],
+      "id": "80097b29-b71a-4e95-87d8-1968e4023833"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "a beautiful city",
+        "note": "de stad → -e"
+      },
+      "content": [
+        {
+          "text": "een mooi",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        {
+          "text": "e",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        " stad"
+      ],
+      "id": "11b0450a-00e1-4228-985b-33d1abc4515f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "a small café",
+        "note": "het café → no -e after een"
+      },
+      "content": [
+        {
+          "text": "een klein",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " café"
+      ],
+      "id": "2a728c22-f623-445b-8962-fa8c987020cb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "The rule: de-word or het-word?",
+      "id": "be3a76b9-0a96-4aef-bc33-d76664a72a34"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Everything depends on the noun's article (05-b). Check the card before you choose:"
+      ],
+      "id": "b2351afa-1624-44c1-ad1d-814527da43e1"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": [
+        {
+          "text": "de-word: always -e",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (de ",
+        {
+          "text": "mooie",
+          "styles": {
+            "bold": true
+          }
+        },
+        " stad, een ",
+        {
+          "text": "mooie",
+          "styles": {
+            "bold": true
+          }
+        },
+        " stad). ",
+        {
+          "text": "het-word: -e after het, no -e after een",
+          "styles": {
+            "bold": true
+          }
+        },
+        " (het ",
+        {
+          "text": "kleine",
+          "styles": {
+            "bold": true
+          }
+        },
+        " café, but een ",
+        {
+          "text": "klein",
+          "styles": {
+            "italic": true
+          }
+        },
+        " café, no -e)."
+      ],
+      "id": "32c3e8c5-b955-438c-b8b5-f8f4a7751644"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Formula: ",
+        {
+          "text": "before a noun: always -e — except een + het-word",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". A de-word (or a plural) always has -e; a het-word has -e only after ",
+        {
+          "text": "het",
+          "styles": {
+            "italic": true
+          }
+        },
+        ", never after ",
+        {
+          "text": "een",
+          "styles": {
+            "italic": true
+          }
+        },
+        "."
+      ],
+      "id": "38a8c4cf-24a7-4190-b527-8d8845fe716f"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "de-word",
+              "id": "6f341ac0-ed2c-4439-b69a-8532f765b376"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "de stad → ",
+                {
+                  "text": "de mooie stad",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                },
+                " → ",
+                {
+                  "text": "een mooie stad",
+                  "styles": {
+                    "textColor": "pink"
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "always -e",
+                  "id": "0016d9b6-585d-434d-b340-89817f311bf8"
+                }
+              ],
+              "id": "e1052696-be3d-4bb3-a9d4-47b527076422"
+            }
+          ],
+          "id": "b26d911d-e5b0-43f6-937b-1a785cd9d96d"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "het-word",
+              "id": "c73412eb-f5b8-47ec-9dab-c1b22ded5b8a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": [
+                "het café → ",
+                {
+                  "text": "het kleine café",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                },
+                " → ",
+                {
+                  "text": "een klein café",
+                  "styles": {
+                    "textColor": "brown"
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "type": "bulletListItem",
+                  "content": "-e after het, no -e after een",
+                  "id": "ed4ddcde-6774-4c73-b089-0011a4064fef"
+                }
+              ],
+              "id": "1491eb6e-4cf3-459a-9c12-fac7c046c4d0"
+            }
+          ],
+          "id": "8696e188-eb52-4be0-9341-28c2307f9210"
+        }
+      ],
+      "id": "20fc3d1d-c97d-4c35-a96e-8d9a53349e56"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Nested examples with known nouns",
+          "styles": {
+            "bold": true
+          }
+        },
+        " — notice every de-word gets -e, every het-word loses it after een:"
+      ],
+      "id": "fbfc4ec7-42f6-4409-8c8b-8f0467196070"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "de-words (always -e)",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "de mooie stad / een mooie stad"
+          ],
+          "id": "f23db85f-e9f9-4f02-94ce-cfd729a3a2e0"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "de oude toren"
+          ],
+          "id": "b8c97ffe-5f1e-4987-9b7c-23c88e59cb3b"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een goede vriendin"
+          ],
+          "id": "9a238733-d4c7-4638-9c32-bcdeace0bb31"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een aardige collega"
+          ],
+          "id": "baea1a26-3405-4200-8528-31b130d8f8ed"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een leuke man"
+          ],
+          "id": "da79106b-1c9b-4cae-8dc3-b7f76f19a688"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een rustige straat"
+          ],
+          "id": "5481a04e-293e-4b93-9c75-595840af0957"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een oude fiets"
+          ],
+          "id": "61aa118f-9ec0-4545-b68b-d970f40a2c57"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een strenge lerares"
+          ],
+          "id": "f4519ad6-3398-4609-9d70-d40772d7ccd9"
+        }
+      ],
+      "id": "31fde09b-b58e-4cfa-bbc4-6c9ea2847c6a"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "het-words (-e after het, no -e after een)",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": [
+            "het grote station / een groot station"
+          ],
+          "id": "8e71af97-abcc-421d-810c-d893c3c2ad48"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "het kleine café / een klein café"
+          ],
+          "id": "2eab9f81-7258-4b16-95e5-3c2c114a63eb"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een klein IT-bedrijf"
+          ],
+          "id": "b9df0ef8-a004-4ae6-8490-82ef84b787b0"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een leuk team"
+          ],
+          "id": "c27e3f89-c173-4125-b8e5-c71ee5b122f4"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een grappig meisje"
+          ],
+          "id": "046c5278-7ae0-4196-85a9-8426124b4411"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een klein konijn"
+          ],
+          "id": "1625c1f1-06b5-4957-ae5e-3fda0fa6a14c"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een nieuw telefoonnummer"
+          ],
+          "id": "62ff7e57-c3e5-4e29-9677-14467901e802"
+        },
+        {
+          "type": "bulletListItem",
+          "content": [
+            "een oud huis / het oude huis"
+          ],
+          "id": "e6cd3802-48cd-47ea-bca4-9943b5a376cc"
+        }
+      ],
+      "id": "73fe6d92-0c86-42ea-a5a1-9ea82dd243cc"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        "Learning de and het pays off: ",
+        {
+          "text": "de stad",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " → ",
+        {
+          "text": "een mooie stad",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        "; ",
+        {
+          "text": "het huis",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " → ",
+        {
+          "text": "een mooi huis",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        "."
+      ],
+      "id": "c6ea5685-975e-4ac1-bbd7-e971052ea62f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Plural: ",
+          "styles": {
+            "bold": true
+          }
+        },
+        "all plurals are de-words (05-b), so before a plural the adjective always has -e, as a fact: ",
+        {
+          "text": "het oude huis",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " → ",
+        {
+          "text": "de oude huizen",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "6ac8ec88-74e8-4e12-9edd-086661962276"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "the old house → the old houses",
+        "note": "plural: always -e (a fact for now; 10-a teaches plural sentences)"
+      },
+      "content": [
+        {
+          "text": "het oude huis",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " → ",
+        {
+          "text": "de oude huizen",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        }
+      ],
+      "id": "5c6e9991-a066-435d-ac20-ea7fdb4620fe"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Possessives with an adjective",
+      "id": "1e2610f3-9d9d-492d-a7e9-6b6924437d6a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "A de-word keeps its -e after a possessive too, because de-words ",
+        {
+          "text": "always",
+          "styles": {
+            "italic": true
+          }
+        },
+        " take -e: ",
+        "Javier is ",
+        {
+          "text": "mijn grote broer",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ". Fleur is ",
+        {
+          "text": "haar grote zus",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ". Lotte is ",
+        {
+          "text": "zijn aardige vriendin",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "223a92c9-f9ae-4da9-9560-e664e59688b1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Javier is my big (= older) brother.",
+        "note": "de broer → -e, also after mijn; the idiom is practiced again in P4 (de kleine zus van Fleur)."
+      },
+      "content": [
+        "Javier is ",
+        {
+          "text": "mijn grote broer",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "dcb3fb19-e3c0-4403-b405-7309bcefbe97"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": [
+        {
+          "text": "de grote broer / de kleine zus",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = older brother / younger sister — an idiom, not a comparative. Javier (31) is Sofia's (28) grote broer; Noor (25) is Fleur's (27) kleine zus."
+      ],
+      "id": "57891eaa-1c81-4966-a83f-1c8585a570bc"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "With a het-word this lesson uses only ",
+        {
+          "text": "het",
+          "styles": {
+            "italic": true
+          }
+        },
+        " or ",
+        {
+          "text": "een",
+          "styles": {
+            "italic": true
+          }
+        },
+        " before the adjective. Possessive + adjective + het-word (",
+        {
+          "text": "mijn nieuwe nummer",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ") comes later, in lesson 18-a."
+      ],
+      "id": "8f9495b6-6643-4c5b-af55-d5c4cf981b31"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Spelling: groot → grote",
+      "id": "3271b004-496d-4718-90eb-87d21693a9f0"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "When -e is added, a long vowel written with two letters keeps its long sound with only one letter (like wonen → ik woon, 02-b, but backwards): ",
+        {
+          "text": "groot → grote",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "7ac505e9-9d0f-43fc-bfed-44afe2fd5eda"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": [
+        {
+          "text": "grote",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = “GROH-tuh” — the o stays long, even with one letter. ",
+        {
+          "text": "groote",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " is always wrong."
+      ],
+      "id": "52d89fc7-5365-49b3-9ef2-90fe0e9f058a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Every other adjective in this lesson simply adds -e: klein → kleine, oud → oude, mooi → mooie, leuk → leuke, aardig → aardige, nieuw → nieuwe, rustig → rustige, goed → goede, gezellig → gezellige, streng → strenge, grappig → grappige, vriendelijk → vriendelijke, vrolijk → vrolijke. A few adjectives change their spelling in other ways — lesson 18-a shows them; for now ",
+        {
+          "text": "druk, lief, hoog, snel, slim, internationaal, nerveus",
+          "styles": {
+            "bold": true
+          }
+        },
+        " stay after zijn only."
+      ],
+      "id": "e8f33573-42ed-4ddc-8926-86ca78e9e7df"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Adjective: -e or not?",
+      "id": "b5f5c64f-2a6c-47a6-9b1e-58b4bbf4cd44"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Is the adjective after zijn (or alone)? → no ending: De stad is mooi. Mooi!",
+      "id": "a9761180-f684-4c38-9eed-63bfedc38368"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Is it before a noun? → look at the noun: de or het? (05-b)",
+      "id": "9c327134-8a4a-4ba5-b2dc-08feaba891d0"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "A de-word (or a plural) → -e: ",
+        {
+          "text": "een mooie stad",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "de mooie stad",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ", ",
+        {
+          "text": "mijn grote broer",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "75ec82f6-527e-425a-b669-0ad121c7e942"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "A het-word → -e after het (",
+        {
+          "text": "het kleine café",
+          "styles": {
+            "textColor": "brown",
+            "bold": true
+          }
+        },
+        "), no -e after een (",
+        {
+          "text": "een klein café",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        ")."
+      ],
+      "id": "dd04b4ad-af3b-440a-8e86-284ed11aaa73"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "een mooi stad",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → een ",
+        {
+          "text": "mooie",
+          "styles": {
+            "bold": true
+          }
+        },
+        " stad. ",
+        {
+          "text": "een kleine café",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → een ",
+        {
+          "text": "klein",
+          "styles": {
+            "bold": true
+          }
+        },
+        " café. ",
+        {
+          "text": "groote",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "grote",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "17f47722-9baa-4121-90be-9d95df830724"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": [
+        "Dutch ",
+        {
+          "text": "slim",
+          "styles": {
+            "bold": true
+          }
+        },
+        " = clever (“Tess is heel slim.”), not English “slim”. And Spanish word order is backwards: “una ciudad bonita” → Dutch puts the adjective ",
+        {
+          "text": "before",
+          "styles": {
+            "italic": true
+          }
+        },
+        " the noun: een mooie stad."
+      ],
+      "id": "f3fa0495-841d-4e6e-87a3-2613c3a65002"
+    },
+    {
+      "type": "divider",
+      "id": "71c87acc-5831-4e17-b172-03dd44297133"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Aardige mensen",
+      "id": "f999f019-a491-404b-aa55-b75b10ec1087"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Later that evening. Noor asks Sofia about the people of her first week.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "248e3fc4-205f-4fe5-ac1a-691b41ac7261"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "En de mensen? Hoe zijn de mensen hier?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Heel aardig! Ik heb een leuk team."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Is Karin een goede teamleider?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, Karin is een goede teamleider. En Daan is een aardige collega."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En de collega uit Antwerpen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hij is ook aardig. Een leuke man!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "En Tess?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Tess is een grappig meisje. Maar een strenge lerares!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "En ik?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Jij bent een goede vriendin, Noor. Ik ben heel blij in Utrecht."
+          }
+        ]
+      },
+      "id": "97374d97-dfd9-4411-b959-f28055f4845f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Notice: ",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "de mensen",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " is a plural word (like de ouders, 05-a), so in Part I it only appears with zijn: “Hoe ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " de mensen?” — never ",
+        {
+          "text": "aardige mensen",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " yet (that needs 10-a/18-a). And almost all of Sofia's people words are de-words, so they all get -e — only “een leuk team” (het team) and “een grappig meisje” (het meisje) have none."
+      ],
+      "id": "f6e28a6b-5641-405b-a8aa-4b4ec50858e1"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de mensen",
+              "meaning": "the people (a plural word, like de ouders: in Part I only with zijn; the singular de mens comes later)",
+              "example": "Hoe zijn de mensen hier? — Heel aardig!",
+              "id": "81edd126-d07d-42b4-888e-20d2bf50c7fe"
+            },
+            {
+              "term": "grappig",
+              "meaning": "funny",
+              "example": "Tess is een grappig meisje.",
+              "id": "608afde3-25f2-49b9-be6c-caa3726e3c06"
+            }
+          ]
+        }
+      },
+      "id": "e6f88000-cff2-42a8-8377-2ca6067c1beb"
+    },
+    {
+      "type": "divider",
+      "id": "cc3ee7d5-6c64-4428-b015-49049e8696e1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Describing people and the city of the week",
+      "id": "358e21c9-0d19-4d67-a7de-2ef623acb3a3"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Now describe the people and places of Sofia's whole arrival week with ",
+        {
+          "text": "zijn + een + adjective + noun",
+          "styles": {
+            "italic": true
+          }
+        },
+        ":"
+      ],
+      "id": "b1dcf6ed-a65d-4b4d-b74a-613de571b2ff"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Karin is a good team leader.",
+        "note": "de teamleider → -e"
+      },
+      "content": [
+        "Karin is ",
+        {
+          "text": "een goede teamleider",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "e50176e1-58c9-4283-980f-f9d81c844316"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan is a kind colleague.",
+        "note": "de collega → -e"
+      },
+      "content": [
+        "Daan is ",
+        {
+          "text": "een aardige collega",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "e533854a-b6ef-449a-81da-a395e3eabf96"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The shop assistant is a friendly man. The receptionist is a friendly woman.",
+        "note": "de man, de vrouw → -e (04-a, 01-b)"
+      },
+      "content": [
+        "De verkoper is ",
+        {
+          "text": "een vriendelijke man",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ". De receptioniste is ",
+        {
+          "text": "een vriendelijke vrouw",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "582c9f7d-7148-45f0-a583-f5419b9c5cd1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor is a cheerful friend.",
+        "note": "de vriendin → -e"
+      },
+      "content": [
+        "Noor is ",
+        {
+          "text": "een vrolijke vriendin",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "a6671a76-452b-4e1d-9ec9-e001356189c0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Utrecht is a beautiful city. Utrecht-Oost is a quiet district.",
+        "note": "de stad, de wijk → -e"
+      },
+      "content": [
+        "Utrecht is ",
+        {
+          "text": "een mooie stad",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        ". Utrecht-Oost is ",
+        {
+          "text": "een rustige wijk",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "bc1ae5f8-3c0e-4119-ba00-77aa879deda3"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor lives in a quiet street.",
+        "note": "de straat → -e; the het-word point (een klein IT-bedrijf) is practiced in P1 and P7."
+      },
+      "content": [
+        "Noor woont in ",
+        {
+          "text": "een rustige straat",
+          "styles": {
+            "textColor": "pink",
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "b81480c5-aa6d-4a1a-b2dc-28e67238566f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Utrecht Centraal is a big building.",
+        "note": "het gebouw → no -e after een"
+      },
+      "content": [
+        "Utrecht Centraal is ",
+        {
+          "text": "een groot gebouw",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        "."
+      ],
+      "id": "db8590c2-c5e7-4892-840a-5755bc35a9b4"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Two adjectives before one noun (",
+        {
+          "text": "een kleine, gezellige stad",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ") is left for later; a second adjective after the noun is fine in speech: “een klein café, maar heel gezellig.” And things still take a repeated noun, never ",
+        {
+          "text": "het",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " for “it” (14-a): not ",
+        {
+          "text": "Het is een mooie stad",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ", but “Utrecht is een mooie stad.”"
+      ],
+      "id": "cdbf4f7a-6a77-4bc9-919c-19bf3b2e5fd2"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de grote broer / de kleine zus",
+              "meaning": "big (= older) brother / little (= younger) sister — no comparative",
+              "example": "Javier is mijn grote broer. Noor is de kleine zus van Fleur.",
+              "id": "9724f0cf-fbb5-4045-9208-37ca27781cfe"
+            },
+            {
+              "term": "de wijk",
+              "meaning": "district, part of a city",
+              "forms": "de wijken",
+              "example": "Utrecht-Oost is een rustige wijk.",
+              "id": "806879f9-df78-4c8a-bec0-4de2a72c4b2b"
+            },
+            {
+              "term": "het gebouw",
+              "meaning": "the building",
+              "forms": "de gebouwen",
+              "note": "also a Part III 13 card — known overlap",
+              "example": "Utrecht Centraal is een groot gebouw.",
+              "id": "7b8550ea-9247-4862-bd91-d38f4aad2f08"
+            },
+            {
+              "term": "vriendelijk",
+              "meaning": "friendly",
+              "example": "De verkoper is een vriendelijke man.",
+              "id": "8b38412d-bd14-42d2-bfda-9a91c89f8a40"
+            },
+            {
+              "term": "de receptioniste",
+              "meaning": "the receptionist (woman)",
+              "forms": "de receptionistes",
+              "example": "De receptioniste is een vriendelijke vrouw.",
+              "id": "96a1dd56-e051-43f6-b19c-dbaef5f8f6c7"
+            }
+          ]
+        }
+      },
+      "id": "2b2a6f37-6737-498c-a727-00c4f6c6d100"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": [
+        "“Gezellig” once more: Sofia's week in one Dutch word — the borrel (03-b), tea at Noor's (02-b, 05-b), the small café (06-a). Sunday evening in Dutch homes is usually a quiet evening before the work week begins."
+      ],
+      "id": "254ad4e5-26f2-487f-b0b3-1b9b33565ba5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Sofia's week, once more",
+      "id": "2fc58695-8ac2-442a-9590-3a6f9ce6f2e6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "A good week! — And a good start!",
+        "note": "de week → -e; het begin → no -e. The same -e/no -e pair as 06-a's walk: “Een mooie wandeling!”"
+      },
+      "content": [
+        "Een goede week! — En een goed begin!"
+      ],
+      "id": "afec87e8-1819-485a-8ddf-adbf66129232"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de wandeling",
+              "meaning": "the walk",
+              "forms": "de wandelingen",
+              "note": "also a Part IV 17-b card — known overlap",
+              "example": "Een mooie wandeling! — Ja, een mooie wandeling.",
+              "id": "e23191b1-3ebb-4d0a-87d1-ad8802af80a6"
+            },
+            {
+              "term": "de week",
+              "meaning": "the week",
+              "forms": "de weken",
+              "note": "also a Part II 09-a card — known overlap",
+              "example": "Een goede week!",
+              "id": "45033135-fc79-4a38-b5a7-49d2d3148f90"
+            },
+            {
+              "term": "het begin",
+              "meaning": "the start, the beginning",
+              "example": "Een goed begin! (het begin, no -e after een)",
+              "id": "c12bfad3-6434-4d27-af15-4e0a2ede7a8f"
+            }
+          ]
+        }
+      },
+      "id": "e2fccdb7-aa77-4dc2-984f-655817b560a8"
+    },
+    {
+      "type": "divider",
+      "id": "c5e5cdc1-7995-40d3-be81-582a6152844c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Wie is wie? Sofia's first week",
+      "id": "5df482cc-7d3a-486b-9436-177855d1e652"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Noor",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "een goede vriendin, 25, studeert psychologie, een vrolijke vriendin",
+          "id": "f7c98a53-5c24-483b-a228-ef22b550feb7"
+        }
+      ],
+      "id": "d6fa7bcf-8b89-46b8-8469-5ef4956d68fa"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Karin",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "een goede teamleider, 48, Amersfoort",
+          "id": "f3d003c4-c9f4-4415-a532-0fb64cff3e42"
+        }
+      ],
+      "id": "3418ff0b-15cc-44cd-b9e8-3e5b238fa4fd"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Daan",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "een aardige collega, 32, heel lang",
+          "id": "f5da6a2e-b534-405a-a299-431895a9aea8"
+        }
+      ],
+      "id": "ab3fb497-fc58-4027-9086-8640f9aeae7a"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "de collega uit Antwerpen",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "een leuke man, spreekt Vlaams",
+          "id": "4b14bd17-76b3-457e-9064-663cb0697e56"
+        }
+      ],
+      "id": "0ded194d-2bfc-4f4e-9e20-966cef0fe235"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Els",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "de buurvrouw, een vriendelijke vrouw, ongeveer zeventig",
+          "id": "db6edf43-c50f-4254-b323-ecceccbf6366"
+        }
+      ],
+      "id": "87248014-c6aa-4a4b-bd3e-0dce65fbb256"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Tess",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "een grappig meisje, zes, heel slim, een klein konijn: Pluis",
+          "id": "1054f977-69dc-4337-8147-dfc9e7e7c398"
+        }
+      ],
+      "id": "3fd30981-c934-4c96-858e-d239ac6b50d9"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Javier",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "mijn grote broer, kok in Valencia",
+          "id": "b5ff9948-2fa4-4f7e-a5c4-d90513b34d3b"
+        }
+      ],
+      "id": "f0c5b0db-95fd-405f-815e-4470e752cd1a"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Fleur",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "de grote zus van Noor, in Australië",
+          "id": "7603de28-d745-498f-8463-a9e7055bf1fb"
+        }
+      ],
+      "id": "4d9abe2a-3a6b-4127-9167-3ff53943f209"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "This was Sofia's first week — and yours.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " Before bed, Sofia writes a note on her phone, “Mijn week in Utrecht”, telling the whole arrival week in the present tense."
+      ],
+      "id": "752ac85f-38de-418a-8540-1b8d8e8e18fe"
+    },
+    {
+      "type": "divider",
+      "id": "952ed1a1-13fc-4370-8be0-5b92bdc6c695"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Mijn week in Utrecht",
+      "id": "296fc2b4-19d6-4744-8e9d-760738f110aa"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's note and answer in Dutch (English gloss: Sofia writes about her whole first week). Short answers are fine.",
+          "items": [
+            {
+              "prompt": "Waar komt Sofia vandaan?",
+              "authorsVersion": [
+                "Uit Valencia."
+              ],
+              "note": "Ik kom uit Valencia (first line)."
+            },
+            {
+              "prompt": "Hoe is Valencia?",
+              "authorsVersion": [
+                "Een grote stad."
+              ],
+              "note": "Also fine: Valencia is groot. (either the attributive or the predicative answer)"
+            },
+            {
+              "prompt": "Wie is Els?",
+              "authorsVersion": [
+                "De buurvrouw."
+              ],
+              "note": "Also fine: Een vriendelijke vrouw. (Els is de buurvrouw. Ze is een vriendelijke vrouw.)"
+            },
+            {
+              "prompt": "Klopt dit? Sofia werkt bij een groot IT-bedrijf.",
+              "authorsVersion": [
+                "Nee, ze werkt bij een klein IT-bedrijf."
+              ],
+              "note": "Correct the fact; do not say “dat klopt niet”."
+            },
+            {
+              "prompt": "Heeft Sofia een fiets?",
+              "authorsVersion": [
+                "Nee, ze heeft geen fiets."
+              ],
+              "note": "Daan heeft een fiets, maar ik heb geen fiets."
+            },
+            {
+              "prompt": "Hoe is het centrum van Utrecht?",
+              "authorsVersion": [
+                "Druk, maar gezellig."
+              ],
+              "note": "Het centrum is druk, maar gezellig."
+            }
+          ],
+          "passage": {
+            "title": "Mijn week in Utrecht",
+            "content": "Ik ben Sofia Moreno. Ik ben achtentwintig en ik kom uit Valencia. Valencia is een grote stad in Spanje.\nIk woon nu in Utrecht, bij Noor. Noor is een goede vriendin. Ze woont in een rustige straat in Utrecht-Oost. Els is de buurvrouw. Ze is een vriendelijke vrouw.\nIk werk bij een klein IT-bedrijf. Karin is de teamleider en Daan is een aardige collega. Daan heeft een fiets, maar ik heb geen fiets.\nIk heb een nieuw telefoonnummer. Ik spreek een beetje Nederlands. Nederlands is een moeilijke taal!\nUtrecht is een mooie stad. De Domtoren is heel oud en heel hoog. Het centrum is druk, maar gezellig.\nIk heb een nieuw leven in een mooie stad. Ik ben heel blij!"
+          }
+        }
+      },
+      "id": "fa050cc3-47bf-4f24-9607-de14335b980a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het leven",
+              "meaning": "life (the noun)",
+              "forms": "de levens",
+              "note": "leven as a verb = to be alive, 02-b",
+              "example": "Ik heb een nieuw leven in een mooie stad.",
+              "id": "5a91058d-826c-4f37-a8b0-8afef0964e41"
+            },
+            {
+              "term": "vrolijk",
+              "meaning": "cheerful",
+              "example": "Noor is een vrolijke vriendin.",
+              "id": "109bbde7-4816-4517-90ca-e19bd2e999d4"
+            },
+            {
+              "term": "slim",
+              "meaning": "clever",
+              "note": "false friend: not English “slim”",
+              "example": "Tess is heel slim.",
+              "id": "e4368646-346f-465a-8235-7fbf23cd8339"
+            }
+          ]
+        }
+      },
+      "id": "b18894df-6c06-4aa5-9d7f-e0e64fa24860"
+    },
+    {
+      "type": "divider",
+      "id": "a2235d8f-bafe-465c-9fbd-11a639dee7fc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "87fa7ae5-205e-447d-ada1-f4be7b8b1c5d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P1: -e or no -e?",
+      "id": "c2d12f54-8965-4a0d-9a74-a526575481cb"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the right form of the adjective in brackets.",
+          "items": [
+            {
+              "prompt": "Utrecht is een … stad. (mooi)",
+              "authorsVersion": [
+                "mooie"
+              ],
+              "note": "de stad → -e. Example: Daan is een … collega. (aardig) → aardige (de collega)."
+            },
+            {
+              "prompt": "De Zwaluw is een … café. (klein)",
+              "authorsVersion": [
+                "klein"
+              ],
+              "note": "het café, een + het-word → no -e."
+            },
+            {
+              "prompt": "het … station (groot)",
+              "authorsVersion": [
+                "grote"
+              ],
+              "note": "het station, after het → -e; groot → grote."
+            },
+            {
+              "prompt": "Utrecht Centraal is een … station. (groot)",
+              "authorsVersion": [
+                "groot"
+              ],
+              "note": "het station, een + het-word → no -e."
+            },
+            {
+              "prompt": "de … toren (oud)",
+              "authorsVersion": [
+                "oude"
+              ],
+              "note": "de toren → -e."
+            },
+            {
+              "prompt": "Ik werk bij een … IT-bedrijf. (klein)",
+              "authorsVersion": [
+                "klein"
+              ],
+              "note": "het IT-bedrijf, een + het-word → no -e."
+            },
+            {
+              "prompt": "Karin is een … teamleider. (goed)",
+              "authorsVersion": [
+                "goede"
+              ],
+              "note": "de teamleider → -e."
+            }
+          ]
+        }
+      },
+      "id": "c000d2ac-e625-41bd-a953-c51978555be4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P2: Rewrite with een",
+      "id": "7832f0d6-7e4b-4d4c-9b39-2b9ef5b26555"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each phrase with een instead of de or het.",
+          "items": [
+            {
+              "prompt": "de mooie stad",
+              "authorsVersion": [
+                "een mooie stad"
+              ],
+              "note": "de-word: -e stays."
+            },
+            {
+              "prompt": "het oude huis",
+              "authorsVersion": [
+                "een oud huis"
+              ],
+              "note": "het-word: -e is lost after een."
+            },
+            {
+              "prompt": "het kleine café",
+              "authorsVersion": [
+                "een klein café"
+              ],
+              "note": "het-word: -e is lost after een."
+            },
+            {
+              "prompt": "de goede vriendin",
+              "authorsVersion": [
+                "een goede vriendin"
+              ],
+              "note": "de-word: -e stays."
+            }
+          ]
+        }
+      },
+      "id": "3e3b836d-48da-48df-b61a-e7b9d57158d8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P3: After zijn → before the noun",
+      "id": "7142af8b-ecb4-4d4a-8160-95fdfd05bfe9"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Turn the sentence with zijn into an adjective before the noun, using the words given.",
+          "items": [
+            {
+              "prompt": "De stad is mooi. (Utrecht / een)",
+              "authorsVersion": [
+                "Utrecht is een mooie stad."
+              ],
+              "note": "After zijn no ending; before the noun, de-word → -e."
+            },
+            {
+              "prompt": "Het café is klein. (De Zwaluw / een)",
+              "authorsVersion": [
+                "De Zwaluw is een klein café."
+              ],
+              "note": "het-word, een → no -e."
+            },
+            {
+              "prompt": "Het station is groot. (het)",
+              "authorsVersion": [
+                "het grote station"
+              ],
+              "note": "het-word, het → -e; groot → grote."
+            },
+            {
+              "prompt": "De straat is rustig. (Noor woont in een …)",
+              "authorsVersion": [
+                "Noor woont in een rustige straat."
+              ],
+              "note": "de-word → -e."
+            },
+            {
+              "prompt": "Het meisje is grappig. (Tess / een)",
+              "authorsVersion": [
+                "Tess is een grappig meisje."
+              ],
+              "note": "het-word, een → no -e."
+            }
+          ]
+        }
+      },
+      "id": "79c30583-9a06-4bb5-9981-6b485dd95b03"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P4: Big brother, little sister",
+      "id": "b4f6ac75-5394-40e3-a838-ad8f458d23a1"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the adjective. Example: Mijn broer is … (groot) → mijn grote broer.",
+          "items": [
+            {
+              "prompt": "Javier is … broer. (mijn, groot)",
+              "authorsVersion": [
+                "mijn grote broer"
+              ],
+              "note": "de broer → -e, also after mijn; groot → grote; grote broer = older brother."
+            },
+            {
+              "prompt": "Noor is de … zus van Fleur. (klein)",
+              "authorsVersion": [
+                "kleine"
+              ],
+              "note": "de zus → -e; kleine zus = younger sister."
+            },
+            {
+              "prompt": "Fleur is de … zus van Noor. (groot)",
+              "authorsVersion": [
+                "grote"
+              ],
+              "note": "de zus → -e; grote zus = older sister."
+            }
+          ]
+        }
+      },
+      "id": "3fb6d30e-8246-41c6-b97c-081ac396ecd2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P5: Find the mistake",
+      "id": "19450499-c03a-44ec-9e74-965f83c4848e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Find and correct the mistake. Name the rule in your head: de-word → -e; een + het-word → no -e; groot → grote; after zijn no ending.",
+          "items": [
+            {
+              "prompt": "Utrecht is een mooi stad.",
+              "authorsVersion": [
+                "Utrecht is een mooie stad."
+              ],
+              "note": "de-word → -e."
+            },
+            {
+              "prompt": "Kijk, het groot station!",
+              "authorsVersion": [
+                "Kijk, het grote station!"
+              ],
+              "note": "het + adjective → -e; groot → grote."
+            },
+            {
+              "prompt": "De Zwaluw is een kleine café.",
+              "authorsVersion": [
+                "De Zwaluw is een klein café."
+              ],
+              "note": "een + het-word → no -e."
+            },
+            {
+              "prompt": "De stad is mooie.",
+              "authorsVersion": [
+                "De stad is mooi."
+              ],
+              "note": "after zijn: no ending."
+            }
+          ]
+        }
+      },
+      "id": "c798d8f5-b7ea-4259-9dcf-5206e99f74f0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P6: Word order",
+      "id": "4569127f-ce18-4235-ba1d-cd68a5f3b73b"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Capital letter and full stop.",
+          "items": [
+            {
+              "prompt": "Put in order: stad / een / Utrecht / is / mooie",
+              "authorsVersion": [
+                "Utrecht is een mooie stad."
+              ],
+              "note": "Article + adjective + noun, after the verb."
+            },
+            {
+              "prompt": "Put in order: heeft / een / fiets / Noor / oude",
+              "authorsVersion": [
+                "Noor heeft een oude fiets."
+              ],
+              "note": "Article + adjective + noun."
+            },
+            {
+              "prompt": "Put in order: is / mijn / Javier / broer / grote",
+              "authorsVersion": [
+                "Javier is mijn grote broer."
+              ],
+              "note": "Possessive + adjective + noun."
+            },
+            {
+              "prompt": "Put in order: werk / ik / bij / IT-bedrijf / klein / een",
+              "authorsVersion": [
+                "Ik werk bij een klein IT-bedrijf."
+              ],
+              "note": "Article + adjective + noun, after bij."
+            }
+          ]
+        }
+      },
+      "id": "c6c8e3eb-89a1-4735-a3e9-42ee3dbba624"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "P7: Translate into Dutch",
+      "id": "4f75004a-d3bf-4b43-8992-3550765c4245"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "Utrecht is a beautiful city.",
+              "authorsVersion": [
+                "Utrecht is een mooie stad."
+              ],
+              "note": "de stad → -e."
+            },
+            {
+              "prompt": "I have a nice team.",
+              "authorsVersion": [
+                "Ik heb een leuk team."
+              ],
+              "note": "het team → no -e after een."
+            },
+            {
+              "prompt": "Noor is a good friend.",
+              "authorsVersion": [
+                "Noor is een goede vriendin."
+              ],
+              "note": "de vriendin → -e."
+            },
+            {
+              "prompt": "the big station",
+              "authorsVersion": [
+                "het grote station"
+              ],
+              "note": "het station, after het → -e; groot → grote."
+            }
+          ]
+        }
+      },
+      "id": "390bdbbc-9fdf-48eb-8970-bbc7dcc318be"
+    },
+    {
+      "type": "divider",
+      "id": "a8ab34a3-c1da-4cda-ae7d-5b6774f40a8c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "3d60ca57-86e3-4fe3-8eb2-2ef70b9352fb"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write your own sentences. A model answer by Sofia is given.",
+          "items": [
+            {
+              "prompt": "Write 2–4 short sentences about your city and one or two people in your life. Use one de-word and one het-word with an adjective before the noun.",
+              "authorsVersion": [
+                "Valencia is een grote stad. Valencia heeft een oud centrum. Javier is mijn grote broer. Hij is een goede kok."
+              ],
+              "note": "de stad → -e (grote stad); het centrum, een → no -e (oud centrum); mijn + de-word → -e (grote broer); after zijn no ending (is een goede kok). Possessive + het-word + adjective (mijn oude huis) comes in lesson 18-a — use een or het with het-words for now."
+            }
+          ]
+        }
+      },
+      "id": "07eb2c87-3062-4ab0-b6cf-c11d7a543ba6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sleep well, Sofia! — Good night!",
+        "note": "Noor's words on Sofia's very first night (01-a) — and on her last evening of Part I."
+      },
+      "content": [
+        "Slaap lekker, Sofia! — Welterusten!"
+      ],
+      "id": "89bd0653-f155-4930-9b27-e3ccd8f8ad48"
+    },
+    {
+      "type": "divider",
+      "id": "76e89bb6-2870-4aaf-bcc6-259ff12f5823"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "2eb9672b-9deb-412e-98cd-840ba289ba07"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "After zijn: no ending — ",
+        {
+          "text": "De stad is mooi.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "bbd9eec4-9e7a-4d41-98d2-f8f22dc031d5"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "Before a noun: -e — ",
+        {
+          "text": "de mooie stad, een mooie stad, het kleine café.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "8f3610f4-5735-4690-b58c-b274854531f8"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "The one exception: ",
+        {
+          "text": "een + het-word",
+          "styles": {
+            "bold": true
+          }
+        },
+        " — ",
+        {
+          "text": "een klein café, een mooi station.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "f3912b11-7588-4da2-aef3-907d6591fc89"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "De-words always -e, also after mijn, haar…: ",
+        {
+          "text": "mijn grote broer.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " Plurals always -e."
+      ],
+      "id": "7b04a108-987e-4e6b-bd1f-d70543def7e3"
+    },
+    {
+      "type": "numberedListItem",
+      "content": [
+        "groot → grote (the long o keeps one letter)."
+      ],
+      "id": "1679e6f9-f9e5-41ef-867f-3ad4e297fe46"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "You have finished Part I: you can greet people, say who you are, where you come from and live, what you speak, have and do, talk about your family, and describe places and people. On Monday Sofia's first full week at work begins — Part II.",
+          "styles": {
+            "italic": true
+          }
+        }
+      ],
+      "id": "9e714c96-b566-4053-abc4-61b6f3a7881a"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: Een mooie stad",
+      "description": "Sunday evening in Noor's kitchen; two cups of tea on the table, Sofia holds out her phone to Noor (screen not visible), both laughing, the window dark behind them, warm lamp light.",
+      "alt": "Sofia shows Noor her phone over tea in Noor's kitchen.",
+      "location": "noor-kitchen",
+      "characters": [
+        "sofia",
+        "noor"
+      ]
+    },
+    {
+      "afterHeading": "Story: Aardige mensen",
+      "description": "The same kitchen a little later; Sofia types on her phone at the table, smiling, Noor in the doorway waving good night.",
+      "alt": "Sofia writing a note on her phone as Noor says good night.",
+      "location": "noor-kitchen",
+      "characters": [
+        "sofia",
+        "noor"
+      ]
+    }
+  ],
+  "id": "aa911a30-f6f4-416d-88ec-a787e16951bd"
+}
