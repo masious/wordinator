@@ -1,11 +1,6 @@
 .actions{flex:none}
-/* Phones: the group takes its own full-width row under the lesson link and shares it by label length; a label that still
-   does not fit wraps to a second line instead of being cut off. */
-@media(max-width:40em){
-  .actions{flex:1 1 100%;width:100%}
-  .actions>*{flex:1 1 auto;min-width:min-content;height:auto;padding-inline:var(--space-3)}
-  .actions :global(.mantine-Button-label){white-space:normal;overflow-wrap:normal;text-align:center;line-height:var(--line-compact)}
-}
+/* Phones: the group takes its own full-width row under the lesson link; the shared group shares it between the actions. */
+@media(max-width:40em){.actions{flex:1 1 100%;width:100%}}
 .empty{margin:0;color:var(--color-foreground-muted)}
 .practices{display:grid;gap:var(--space-2);margin:0;padding:0;list-style:none}
 .practice{display:flex;align-items:baseline;gap:var(--space-3);width:100%;min-height:var(--touch-target);padding:var(--space-3) var(--space-4);font:inherit;color:var(--color-foreground);text-align:start;cursor:pointer;background:var(--color-bezel);border:var(--ring-hairline);border-radius:var(--radius-md);transition:background-color var(--motion-standard) var(--ease-physical)}

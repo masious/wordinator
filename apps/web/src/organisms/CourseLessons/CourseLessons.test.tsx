@@ -227,6 +227,7 @@ describe("Course lessons", () => {
     expect(await screen.findByRole("button", { name: "Add lesson" })).toBeInTheDocument();
     expect(screen.getAllByRole("button", { name: "Edit details" })).toHaveLength(2);
     expect(screen.getByRole("button", { name: "Move lesson 1 up" })).toBeDisabled();
+    expect(within(screen.getByRole("group", { name: "Manage lesson 1: Lesson title 1" })).getAllByRole("button")).toHaveLength(4);
     fireEvent.click(screen.getByRole("button", { name: "Move lesson 1 down" }));
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(expect.stringMatching(/\/lessons\/order$/), expect.objectContaining({ method: "PUT" })));
     fireEvent.click(screen.getByRole("button", { name: "Delete lesson 2" }));

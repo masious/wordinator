@@ -34,6 +34,12 @@
 .buttonGroup .button:hover:not(:disabled, [data-disabled]) { transform: none; box-shadow: var(--shadow-inset-highlight); background-image: linear-gradient(var(--color-wash-strong), var(--color-wash-strong)); }
 .buttonGroup .button:active:not(:disabled, [data-disabled]) { transform: none; box-shadow: var(--shadow-pressed); }
 .buttonGroup .button:focus-visible { z-index: 1; }
+/* Phones: members share the group's width by label length and wrap a label that does not fit onto two lines rather than cutting it
+   or pushing the page sideways; a word never breaks. */
+@media (max-width: 40em) {
+  .buttonGroup .button { flex: 1 1 auto; min-width: min-content; height: auto; padding-inline: var(--space-3); }
+  .buttonGroup .button :global(.mantine-Button-label) { white-space: normal; overflow-wrap: normal; text-align: center; line-height: var(--line-compact); }
+}
 .lineIcon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.25; }
 .iconButton { --button-surface: var(--color-highlight-soft); --button-ink: var(--color-foreground); min-width: var(--touch-target); min-height: var(--touch-target); color: var(--button-ink); background: var(--button-surface); border: var(--ring-hairline); box-shadow: var(--shadow-card), var(--shadow-inset-highlight); transition: transform var(--motion-press) var(--ease-physical); }
 .iconButton:hover:not(:disabled, [data-disabled]) { color: var(--button-ink); background: var(--button-surface); transform: translateY(-2px) rotate(3deg); box-shadow: var(--shadow-raised); }

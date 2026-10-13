@@ -12,7 +12,7 @@ import { apiRequest, courseProgressQueryOptions, courseQueryOptions, courseWords
 import { PlainText } from "../../molecules/PlainText";
 import { relativeTime } from "../../relativeTime";
 import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
-import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, SectionHeader, Surface, TextAreaField, TextField } from "../../ui";
+import { AdaptiveDialog, Button, ButtonGroup, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, SectionHeader, Surface, TextAreaField, TextField } from "../../ui";
 import { LessonDocument } from "../LessonDocument/LessonDocument";
 import { LessonShareScope, ShareButton, useLessonShareScope } from "../LessonShare/LessonShare";
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
@@ -198,14 +198,14 @@ function ManagedLessonRow({ scope, summary, number, outline }: { scope: Scope; s
     </div>
     <div className={styles.blockTools}>
       <StateChips lesson={summary} />
-      <div className={styles.toolButtons}>
+      <ButtonGroup className={styles.managedTools} label={t("courses.lessons.toolsNamed", { number, title: summary.title })}>
         {canEditDetails(scope, summary) && <Button variant="quiet" onClick={() => { update.reset(); setDetailsOpen(true); }}>{t("courses.lessons.editDetails")}</Button>}
         {scope.owner && <>
           <Button variant="quiet" disabled={number === 1} onClick={() => move.mutate(-1)} aria-label={t("courses.lessons.moveUpNamed", { number })}>{t("courses.moveUp")}</Button>
           <Button variant="quiet" disabled={number === outline.length} onClick={() => move.mutate(1)} aria-label={t("courses.lessons.moveDownNamed", { number })}>{t("courses.moveDown")}</Button>
         </>}
         {scope.removable && <Button variant="quiet" onClick={() => setDeleting(true)} aria-label={t("courses.lessons.deleteNamed", { number })}>{t("courses.delete")}</Button>}
-      </div>
+      </ButtonGroup>
       <CourseErrorMessage error={move.error} />
     </div>
     <AdaptiveDialog opened={detailsOpen} onClose={() => setDetailsOpen(false)} title={t("courses.lessons.editTitle")}>

@@ -50,6 +50,9 @@
 .line{font-size:var(--type-authored);white-space:pre-wrap;overflow-wrap:anywhere}
 .blockTools{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2)}
 .toolButtons{display:flex;flex-wrap:wrap;gap:var(--space-1);margin-inline-start:auto}
+.managedTools{margin-inline-start:auto}
+/* Phones: the manage page's lesson tools take a full-width row; the shared group shares it between them. */
+@media(max-width:40em){.managedTools{flex:1 1 100%;width:100%}}
 .attribution{font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 .emptyLesson{margin:0;color:var(--color-foreground-muted)}
 .addBlock{padding:var(--card-inset)}

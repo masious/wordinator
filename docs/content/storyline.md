@@ -105,6 +105,14 @@ Fixed facts from 05-b (accepted 2026-10-13):
 - At the table Tess, who knows Sofia is learning Dutch, quizzes her on de/het ("Huis: de of het?"), corrects Sofia's *de huis* and *de meisje*; Els adds "De vrouw, de man, de jongen. Maar het meisje en het kind."; Tess declares "Nederlands is makkelijk!" Afterwards Sofia writes the note "Tess en oma Els" on her phone.
 - The buurman is unnamed and offstage (paired only with de buurvrouw as a vocabulary fact); Henk, Karin, Daan, the Collega, Lotte and Fleur do not appear; no bike (Sofia still has none) or tram.
 
+Fixed facts from 06-a (accepted 2026-10-13):
+- zo 6 september, afternoon, right after 05-b: Noor leaves her bike at home because Sofia has none, and they walk from Utrecht-Oost into the centre (no bus or tram). At the Domtoren, Sofia finds the tower heel hoog, heel oud and erg mooi; Valencia is heel mooi too, but groot en druk; the centre of Utrecht is klein, maar gezellig, and a bit busy that Sunday afternoon (shops open, no market). Utrecht-Oost is rustig.
+- They walk along the Oudegracht (lang, mooi) and pass Café De Zwaluw (klein, gezellig) without going in.
+- Noor asks about the week: the work is leuk; the team is klein, maar heel aardig; Karin is heel aardig; Daan is aardig en heel lang; Noor is also lang, Sofia is niet lang; Tess is lief, maar streng ("Ze is nu mijn lerares."); Sofia is een beetje moe, maar heel blij.
+- From the Domtoren, Sofia posts a photo in the team chat: Daan says the Domtoren is heel oud en heel hoog and that Utrecht-Oost is rustig; Karin, at home in Amersfoort, says Amersfoort is ook mooi en heel rustig; Daan teases that Amersfoort is klein; Karin answers "Klein, maar gezellig!" Karin and Daan appear only in the chat.
+- In the lesson's own opposites examples, "het station" (the station) is described as niet lelijk and nieuw — **note for 06-b**: 06-b's planned beat has Noor say Utrecht Centraal is not beautiful (Sofia disagreeing before Noor gives in); this must be reconciled against 06-a's "niet lelijk, nieuw" when 06-b is reviewed, so the two lessons do not contradict each other on the station's looks.
+- Sofia's brother Javier is heel aardig (used as the lesson's own model answer; his height is not a story fact). Henk, Els, Tess, Lotte, Fleur and the Collega do not appear in person; no weather.
+
 ## Lesson-by-lesson story beats
 
 | File | Date (2026) | Beat | Characters |

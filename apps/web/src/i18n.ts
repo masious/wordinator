@@ -359,6 +359,7 @@ export const resources = {
           moveUpNamed: "Move lesson {{number}} up",
           moveDownNamed: "Move lesson {{number}} down",
           deleteNamed: "Delete lesson {{number}}",
+          toolsNamed: "Manage lesson {{number}}: {{title}}",
           deleteTitle: "Delete this lesson?",
           deleteConfirm: "Delete “{{title}}” with its content, images, and practice answers? This cannot be undone.",
           fields: { title: "Lesson title", goal: "Goal" }
