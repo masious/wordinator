@@ -13,7 +13,7 @@ export const SPEECH_MAX_ATTEMPTS = 5;
 const SPEECH_RETRY_BASE_MS = 60 * 1000;
 const SPEECH_JOBS_PER_RUN = 10;
 const SPEECH_CLIPS_PER_RUN = 40;
-const SPEECH_TIMEOUT_MS = 15_000;
+export const SPEECH_TIMEOUT_MS = 15_000;
 const SPEECH_THROTTLE_MS = 60 * 1000;
 
 // ---- Azure client ----

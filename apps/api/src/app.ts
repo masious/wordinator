@@ -68,6 +68,7 @@ import {
   updateLessonShareRequestSchema,
   slugify,
   SLUG_MAX_LENGTH,
+  speechRecognitionTokenResponseSchema, SPEECH_RECOGNITION_TOKEN_TTL_MS,
 } from "@wordinator/contracts";
 import {
   LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, WORD_DRILL_BOX_MAX, nextWordDrillBox, wordDrillDeckSchema, wordDrillDirectionSchema, wordDrillGradeRequestSchema, wordDrillGradeResponseSchema, wordDrillQuerySchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
@@ -88,6 +89,7 @@ import {
   clipUrl, courseSpeechJobsStatement, documentSpeechItems, hashSpeechItems, presentDraftSpeech, presentSpeech, readClips, runSpeechJobs,
   SPEECH_DRAFT_DELAY_MS, speechJobStatement, storedSpeechCast,
 } from "./speech";
+import { azureRecognitionToken } from "./speechRecognition";
 import { buildWordDrillDeck, type WordDrillState } from "./wordDrill";
 
 export type Bindings = Env & { MEDIA: R2Bucket; PUBLIC_MEDIA_BASE_URL: string };
@@ -2355,6 +2357,20 @@ type DrillRow = IndexedWord & {
   understandBox: number | null; understandAt: number | null; produceBox: number | null; produceAt: number | null;
 };
 const drillState = (box: number | null, at: number | null): WordDrillState | undefined => box === null || at === null ? undefined : { box, lastDrilledAt: at };
+
+// A short-lived Azure token for the Microsoft recognizer of spoken answers (docs/words.md#recognizers). Members only; the key
+// stays a Worker secret and neither the key nor the token is logged.
+app.post("/api/groups/:groupId/speech-recognition/token", requireGroupAccess, async (context) => {
+  const { AZURE_SPEECH_KEY: key, AZURE_SPEECH_REGION: region } = context.env;
+  if (!key || !region) return apiError(context, 503, "SPEECH_RECOGNITION_UNAVAILABLE", "Microsoft speech recognition is not available.");
+  const token = await azureRecognitionToken(key, region)();
+  if (!token) {
+    logError("speech.recognition_token_failed", { requestId: context.get("requestId") });
+    return apiError(context, 503, "SPEECH_RECOGNITION_UNAVAILABLE", "Microsoft speech recognition is not available.");
+  }
+  context.header("Cache-Control", "no-store");
+  return context.json(speechRecognitionTokenResponseSchema.parse({ token, region, expiresAt: Date.now() + SPEECH_RECOGNITION_TOKEN_TTL_MS }));
+});
 
 app.get("/api/groups/:groupId/word-drill", requireGroupAccess, async (context) => {
   const parsed = wordDrillQuerySchema.safeParse(context.req.query());

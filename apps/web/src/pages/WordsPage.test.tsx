@@ -4,8 +4,23 @@ import { createMemoryHistory, createRootRoute, createRoute, createRouter, Router
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../i18n";
+import { resetRevealSound, setRevealSound, stopSpeech } from "../molecules/Speech";
+import { setRecognizer } from "../molecules/speechRecognition";
 import { validateWordDrillSearch } from "./WordDrillPage";
 import { validateWordsSearch, WordsPage } from "./WordsPage";
+
+// A stand-in for Microsoft's Speech SDK: the test decides what its next recognition returns.
+const azure = vi.hoisted(() => ({ configs: [] as Array<{ token: string; region: string; speechRecognitionLanguage?: string }>, next: null as unknown }));
+vi.mock("microsoft-cognitiveservices-speech-sdk", () => ({
+  SpeechConfig: { fromAuthorizationToken: (token: string, region: string) => { const config = { token, region }; azure.configs.push(config); return config; } },
+  AudioConfig: { fromDefaultMicrophoneInput: () => ({}) },
+  OutputFormat: { Detailed: 1 },
+  ResultReason: { NoMatch: 0, Canceled: 1, RecognizedSpeech: 3 },
+  CancellationErrorCode: { AuthenticationFailure: 1, Forbidden: 8 },
+  CancellationDetails: { fromResult: () => ({ ErrorCode: 4 }) },
+  PropertyId: { SpeechServiceResponse_JsonResult: "json" },
+  SpeechRecognizer: class { recognizeOnceAsync(done: (result: unknown) => void) { done(azure.next); } close() {} },
+}));
 
 // jsdom has no layout, so the cards' page size is set here.
 const fit = vi.hoisted(() => ({ value: { columns: 2, rows: 1 } }));
@@ -68,7 +83,7 @@ beforeEach(() => {
     return response({ ok: true });
   }));
 });
-afterEach(() => { cleanup(); vi.unstubAllGlobals(); fit.value = { columns: 2, rows: 1 }; });
+afterEach(() => { act(() => stopSpeech()); cleanup(); vi.unstubAllGlobals(); vi.restoreAllMocks(); fit.value = { columns: 2, rows: 1 }; localStorage.clear(); resetRevealSound(); });
 
 // Mantine keeps a Select's options mounted; the open one is found through the listbox its combobox controls.
 async function open(combobox: HTMLElement) {
@@ -235,6 +250,64 @@ describe("Saying a word", () => {
     expect(within(first).queryByRole("status")).not.toBeInTheDocument();
     FakeRecognition.last!.fail("no-speech");
     expect(within(first).getByRole("status")).toHaveTextContent("Didn't catch that. Try again.");
+  });
+
+  it("speaks the term after a spoken answer, right or wrong, unless the reveal sound is off", async () => {
+    pages[listPath] = { items: [{ ...item(1), word: { ...item(1).word, speech: { term: "https://media.example/woord1.mp3", example: null } } }], nextCursor: null };
+    const play = vi.spyOn(HTMLMediaElement.prototype, "play").mockImplementation(function (this: HTMLMediaElement) { this.dispatchEvent(new Event("playing")); return Promise.resolve(); });
+    vi.spyOn(HTMLMediaElement.prototype, "pause").mockImplementation(() => undefined);
+    vi.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => undefined);
+    renderPage();
+    const first = await screen.findByRole("article", { name: "woord 1" });
+    fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
+    FakeRecognition.last!.hear("woord 1");
+    expect(play).toHaveBeenCalledTimes(1);
+    fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
+    FakeRecognition.last!.hear("iets anders");
+    expect(play).toHaveBeenCalledTimes(2);
+    act(() => setRevealSound(false));
+    fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
+    FakeRecognition.last!.hear("woord 1");
+    expect(play).toHaveBeenCalledTimes(2);
+  });
+
+  it("listens through Microsoft when chosen, with a token from the API", async () => {
+    const getUserMedia = vi.fn(async () => ({ getTracks: () => [{ stop: vi.fn() }] }));
+    vi.stubGlobal("navigator", { ...navigator, mediaDevices: { getUserMedia } });
+    setRecognizer("microsoft");
+    const fetcher = vi.mocked(fetch);
+    const original = fetcher.getMockImplementation()!;
+    fetcher.mockImplementation(async (input, init) => String(input).endsWith("/speech-recognition/token")
+      ? response({ token: "azure-token", region: "germanywestcentral", expiresAt: Date.now() + 60_000 }) : original(input, init));
+    azure.configs = [];
+    azure.next = { reason: 3, text: "Woord 1.", properties: { getProperty: () => JSON.stringify({ NBest: [{ Display: "Woord 1.", Lexical: "woord een" }] }) } };
+    renderPage();
+    const first = await screen.findByRole("article", { name: "woord 1" });
+    fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
+    expect(await within(first).findByRole("status")).toHaveTextContent("Matches!You said “Woord 1.”");
+    expect(FakeRecognition.last).toBeNull();
+    expect(getUserMedia).toHaveBeenCalledWith({ audio: true });
+    expect(azure.configs).toEqual([{ token: "azure-token", region: "germanywestcentral", speechRecognitionLanguage: "nl-NL", outputFormat: 1 }]);
+    expect(fetcher.mock.calls.filter(([path]) => String(path).endsWith("/speech-recognition/token"))).toHaveLength(1);
+    expect(fetcher.mock.calls.find(([path]) => String(path).endsWith("/speech-recognition/token"))![1]?.method).toBe("POST");
+  });
+
+  it("says when Microsoft hears nothing or the microphone is blocked", async () => {
+    const getUserMedia = vi.fn(async () => ({ getTracks: () => [] }));
+    vi.stubGlobal("navigator", { ...navigator, mediaDevices: { getUserMedia } });
+    setRecognizer("microsoft");
+    const fetcher = vi.mocked(fetch);
+    const original = fetcher.getMockImplementation()!;
+    fetcher.mockImplementation(async (input, init) => String(input).endsWith("/speech-recognition/token")
+      ? response({ token: "azure-token", region: "germanywestcentral", expiresAt: Date.now() + 60_000 }) : original(input, init));
+    azure.next = { reason: 0 };
+    renderPage();
+    const first = await screen.findByRole("article", { name: "woord 1" });
+    fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
+    expect(await within(first).findByRole("status")).toHaveTextContent("Didn't catch that. Try again.");
+    getUserMedia.mockRejectedValueOnce(new DOMException("Denied", "NotAllowedError"));
+    fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
+    expect(await within(first).findByText(/The microphone is blocked/)).toBeInTheDocument();
   });
 
   it("offers no microphone where the browser cannot recognize speech", async () => {

@@ -144,7 +144,18 @@ export const resources = {
         failed: "Speech recognition isn't available right now.",
         match: "Matches!",
         miss: "Not quite",
-        heard: "You said “{{heard}}”"
+        heard: "You said “{{heard}}”",
+        recognizer: {
+          title: "Speech recognition",
+          description: "Who listens when you say a word aloud. Your browser's recognition may send audio to its maker (Google for Chrome); Microsoft sends it to Azure. Wordinator never keeps it.",
+          label: "Speech recognizer",
+          browser: "Browser",
+          microsoft: "Microsoft",
+          browserStatus: "Your browser listens on this device.",
+          microsoftStatus: "Microsoft Azure listens on this device.",
+          fallback: "This browser has no speech recognition of its own, so Microsoft Azure listens instead.",
+          none: "This browser cannot use a microphone, so speaking is not available."
+        }
       },
       drill: {
         eyebrow: "Words",

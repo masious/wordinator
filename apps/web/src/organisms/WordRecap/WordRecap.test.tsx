@@ -3,6 +3,7 @@ import { flattenToSteps, LESSON_DOCUMENT_SCHEMA_VERSION, lessonDocumentSchema } 
 import { act, cleanup, fireEvent, render, screen, within } from "@testing-library/react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
+import { SpeechRecognitionScope } from "../../molecules/speechRecognition";
 import { fitRows } from "./fitGrid";
 import { runWords, WordRecap, type RecapWord } from "./WordRecap";
 
@@ -126,13 +127,15 @@ describe("Word recap", () => {
 });
 
 describe("Saying words", () => {
-  it("is offered only where the caller passes a recognition locale", () => {
+  it("is offered only inside a recognition scope", () => {
     vi.stubGlobal("webkitSpeechRecognition", class {});
     try {
       renderRecap(words);
       expect(screen.queryByRole("button", { name: /^Say / })).not.toBeInTheDocument();
       cleanup();
-      render(<MantineProvider><WordRecap words={words} speechLocale="de-DE" /></MantineProvider>);
+      render(<MantineProvider><SpeechRecognitionScope locale="de-DE" token={{ get: () => Promise.reject(new Error("unused")), forget: () => undefined }}>
+        <WordRecap words={words} />
+      </SpeechRecognitionScope></MantineProvider>);
       expect(within(card(words[0]!.term)).getByRole("button", { name: `Say ${words[0]!.term}` })).toBeInTheDocument();
     } finally { vi.unstubAllGlobals(); }
   });

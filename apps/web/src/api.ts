@@ -1,4 +1,4 @@
-import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema } from "@wordinator/contracts";
+import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema, speechRecognitionTokenResponseSchema, type SpeechRecognitionTokenResponse } from "@wordinator/contracts";
 import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
@@ -199,3 +199,23 @@ export const lessonQueryOptions = (groupId: string, courseId: string, lessonId: 
   retry: false,
 });
 
+
+// Microsoft speech recognition tokens (docs/words.md#recognizers), one per library, reused until shortly before Azure expires it.
+// A refused token is forgotten, so the next listen asks for a new one.
+const recognitionTokens = new Map<string, Promise<SpeechRecognitionTokenResponse>>();
+export function speechRecognitionTokenSource(groupId: string) {
+  return {
+    get: async () => {
+      const cached = recognitionTokens.get(groupId);
+      if (cached) {
+        const token = await cached.catch(() => null);
+        if (token && token.expiresAt > Date.now()) return token;
+      }
+      const next = apiRequest(`/api/groups/${encodeURIComponent(groupId)}/speech-recognition/token`, speechRecognitionTokenResponseSchema, { method: "POST" });
+      recognitionTokens.set(groupId, next);
+      next.catch(() => { if (recognitionTokens.get(groupId) === next) recognitionTokens.delete(groupId); });
+      return next;
+    },
+    forget: () => { recognitionTokens.delete(groupId); },
+  };
+}

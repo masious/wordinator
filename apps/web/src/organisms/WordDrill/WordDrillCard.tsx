@@ -6,7 +6,7 @@ import { playRevealSpeech, SpeechButton, useStopSpeechOnUnmount } from "../../mo
 import { Button } from "../../ui";
 import { blankExample } from "./drillSession";
 import { ListenStatusLine, SpeakButton, SpokenVerdict } from "../../molecules/SpeakControls";
-import { speechRecognitionSupported, useSpokenAnswer, type SpokenAnswer } from "../../molecules/speechRecognition";
+import { useSpokenAnswer, type SpokenAnswer } from "../../molecules/speechRecognition";
 import styles from "./WordDrillCard.module.css";
 
 // Keys typed into a field, or pressed on a control that handles them itself, are not drill shortcuts.
@@ -28,8 +28,8 @@ function ProduceExample({ example, term }: { example: string; term: string }) {
 // under the shared reveal sound toggle; Again and Got it then grade it. Space reveals, 1 is Again, and 2 is Got it.
 // Where the browser recognizes speech, a Produce card can also be answered aloud (M): the answer reveals the card with what was
 // heard and whether it matched, and the learner still grades it (docs/words.md#spoken-answers).
-export function WordDrillCard({ card, language, recognitionLocale, revealed, autoFocus, onReveal, onGrade }: {
-  card: DrillCard; language: string; recognitionLocale: string | null; revealed: boolean; autoFocus: boolean;
+export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, onGrade }: {
+  card: DrillCard; language: string; revealed: boolean; autoFocus: boolean;
   onReveal: () => void; onGrade: (result: WordDrillResult) => void;
 }) {
   const { t } = useTranslation();
@@ -41,8 +41,8 @@ export function WordDrillCard({ card, language, recognitionLocale, revealed, aut
   const source = t("words.source", { course: card.course.title, lesson: card.lesson.title });
   const reveal = () => { if (revealed) return; playRevealSpeech(termOwner, word.speech.term); onReveal(); };
   const [answer, setAnswer] = useState<SpokenAnswer | null>(null);
-  const canSpeak = direction === "produce" && recognitionLocale !== null && speechRecognitionSupported();
-  const spoken = useSpokenAnswer(recognitionLocale ?? "", word.term, (heard) => { if (revealed) return; setAnswer(heard); reveal(); });
+  const spoken = useSpokenAnswer(word.term, (heard) => { if (revealed) return; setAnswer(heard); reveal(); });
+  const canSpeak = direction === "produce" && spoken.available;
   const listen = () => { if (canSpeak && !revealed) spoken.listen(); };
   const listening = spoken.status === "listening";
 

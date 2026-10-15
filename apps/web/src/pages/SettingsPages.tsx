@@ -5,6 +5,7 @@ import { type FormEvent, type PropsWithChildren, type ReactNode, useEffect, useS
 import { useTranslation } from "react-i18next";
 import { ApiError, apiRequest, groupQueryOptions, membershipsQueryOptions, sessionQueryOptions, settingsQueryOptions } from "../api";
 import { Avatar, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, PageHeader, PasswordField, SectionHeader, Surface, TextAreaField, TextField, ThemePreferenceControl } from "../ui";
+import { RecognizerPreferenceControl } from "../molecules/RecognizerPreferenceControl";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import shellStyles from "./PhaseOnePages.module.css";
 import { ImageUpload } from "./PhaseFivePages";
@@ -96,6 +97,7 @@ export function AccountSettingsPage({ groupId, global = false }: { groupId: stri
       </form></Surface>
       <div className={styles.settingsRail}>
         <Surface className={styles.settingsPanel} tone="inset"><ThemePreferenceControl /></Surface>
+        <Surface className={styles.settingsPanel} tone="inset"><RecognizerPreferenceControl /></Surface>
         <Surface className={styles.settingsPanel}><SectionHeader title={t("settings.passwordTitle")} /><form className={styles.form} onSubmit={(event) => { event.preventDefault(); password.mutate(); }}>
           <PasswordField label={t("settings.currentPassword")} value={currentPassword} minLength={6} onChange={(event) => setCurrentPassword(event.currentTarget.value)} required />
           <PasswordField label={t("auth.newPassword")} value={newPassword} minLength={6} onChange={(event) => setNewPassword(event.currentTarget.value)} required />

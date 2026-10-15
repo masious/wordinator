@@ -303,6 +303,11 @@ export const SPEECH_VOICES = {
 } as const satisfies Record<z.infer<typeof languageSchema>, readonly string[]>;
 export const speechVoiceSchema = z.enum([...SPEECH_VOICES.nl, ...SPEECH_VOICES.de]);
 export type SpeechVoice = z.infer<typeof speechVoiceSchema>;
+// Speech recognition (C13): a short-lived Azure token for the Microsoft recognizer of spoken answers (docs/words.md#recognizers).
+// Azure tokens last ten minutes; `expiresAt` leaves a minute's margin, after which the web asks for a new one.
+export const SPEECH_RECOGNITION_TOKEN_TTL_MS = 9 * 60 * 1000;
+export const speechRecognitionTokenResponseSchema = z.object({ token: z.string().min(1), region: z.string().regex(/^[a-z0-9]+$/), expiresAt: z.number().int() });
+export type SpeechRecognitionTokenResponse = z.infer<typeof speechRecognitionTokenResponseSchema>;
 export const speechNarrator = (language: z.infer<typeof languageSchema>): SpeechVoice => SPEECH_VOICES[language][0];
 // A word's pronunciation override: IPA letters and diacritics, stress and length marks, `.`, and spaces only, so it can never
 // carry markup into a synthesis request.

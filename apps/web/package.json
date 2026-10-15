@@ -51,6 +51,7 @@
     "i18next": "latest",
     "lottie-web": "^5.13.0",
     "lucide-react": "^1.52.0",
+    "microsoft-cognitiveservices-speech-sdk": "^1.52.0",
     "react": "latest",
     "react-dom": "latest",
     "react-easy-crop": "^6.2.4",

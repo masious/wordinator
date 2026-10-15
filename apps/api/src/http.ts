@@ -1,7 +1,7 @@
 import type { output, ZodType } from "zod";
 import type { Context } from "hono";
 
-export function apiError(context: Context, status: 400 | 401 | 403 | 404 | 409 | 413 | 422 | 429, code: string, message: string) {
+export function apiError(context: Context, status: 400 | 401 | 403 | 404 | 409 | 413 | 422 | 429 | 503, code: string, message: string) {
   return context.json({ error: { code, message, requestId: context.get("requestId") } }, status);
 }
 
