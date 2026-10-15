@@ -43,7 +43,12 @@ Lesson shares (C11, in progress; the API is in place; see [lesson shares](lesson
 
 ### Spoken drill answers
 
-[Spoken answers](words.md#spoken-answers) on drill cards and Words tab word cards (C13) use the browser's own Web Speech API. The browser decides where audio is recognized: Chrome and Edge send it to their vendor's speech service (Google, Microsoft), and Safari may use Apple's servers or the device. Accepted as a product decision on 2026-10-15: the learner chooses to speak by pressing the microphone button, the browser's microphone permission prompt is the consent, and what is spoken is a single word or drill answer. Wordinator never receives, sends, stores, or logs audio or transcripts; the match runs in the browser and only the learner's own grade is saved, as for any drill card. Listening stops after one utterance and when the card leaves the screen.
+[Spoken answers](words.md#spoken-answers) on drill cards and Words tab word cards (C13) are heard by one of two [recognizers](words.md#recognizers), chosen per device. Accepted as a product decision on 2026-10-15: the learner chooses to speak by pressing the microphone button, the browser's microphone permission prompt is the consent, and what is spoken is a single word or drill answer.
+
+- **Browser** (default): the browser's own Web Speech API decides where audio is recognized. Chrome and Edge send it to their vendor's speech service (Google, Microsoft), and Safari may use Apple's servers or the device.
+- **Microsoft**: the browser streams the audio straight to Microsoft Azure AI Speech in `germanywestcentral`, the same resource as [lesson speech](#lesson-speech). The Azure key stays a Worker secret; signed-in, onboarded members of the library get a ten-minute authorization token from `POST /api/groups/:groupId/speech-recognition/token`, sent with `Cache-Control: no-store` and never logged. Accepted limitation: the route is not rate limited, so a member could request tokens repeatedly and spend the Azure recognition quota; this is acceptable for a small trusted group and is the first thing to revisit if the group grows.
+
+Either way Wordinator never receives, sends, stores, or logs audio or transcripts; the match runs in the browser and only the learner's own drill grade is saved, as for any drill card. Listening stops after one utterance and when the card leaves the screen.
 
 ## Known accepted limitations
 

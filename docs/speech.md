@@ -100,4 +100,5 @@ Spoken lesson text is sent to Microsoft Azure AI Speech, and clips are public-by
 - `GET .../courses/:courseId/speech-cast` returns the cast editor's data: `speakers` (as listed under [dialogue cast](#dialogue-cast)) and `voices`, the group language's voices narrator first, each with its `sample` URL or `null` while not ready. It is owner only (`403 COURSE_EDIT_FORBIDDEN`), and a course outside the group is `404`.
 - No route accepts text to synthesize, and no route triggers synthesis directly.
 - Data lives in [`speech_clips`](data-model.md#speech_clips) and [`speech_jobs`](data-model.md#speech_jobs); the cast is a column of [`courses`](data-model.md#courses), and the IPA is part of the word payload and of [`course_lesson_words`](data-model.md#course_lesson_words).
+- Speech recognition of spoken answers is not synthesis and is owned by [words](words.md#recognizers); its Microsoft option uses the same Azure resource.
 - Azure is called through its REST endpoint from the Worker, with the key as the `AZURE_SPEECH_KEY` secret and the region as the `AZURE_SPEECH_REGION` variable; see [operations](operations.md).

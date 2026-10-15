@@ -60,7 +60,7 @@ Production needs:
 1. A D1 database bound to the API Worker.
 2. An R2 bucket configured for public object reads and bound to the API Worker.
 3. A strong cookie-signing secret stored with Wrangler secret management.
-4. An Azure AI Speech resource (currently in `germanywestcentral`), whose key is the `AZURE_SPEECH_KEY` Worker secret (`pnpm --filter @wordinator/api exec wrangler secret put AZURE_SPEECH_KEY`) and whose region is the `AZURE_SPEECH_REGION` variable in `apps/api/wrangler.jsonc`. Rotate the key in the Azure portal and put the new one; never commit it.
+4. An Azure AI Speech resource (currently in `germanywestcentral`), whose key is the `AZURE_SPEECH_KEY` Worker secret (`pnpm --filter @wordinator/api exec wrangler secret put AZURE_SPEECH_KEY`) and whose region is the `AZURE_SPEECH_REGION` variable in `apps/api/wrangler.jsonc`. The same key also issues the short-lived tokens of the Microsoft [speech recognizer](words.md#recognizers), so recognition usage counts against the same resource. Rotate the key in the Azure portal and put the new one; never commit it.
 5. An API Worker route for `/api/*` on the application hostname.
 6. A web Worker using Workers Static Assets with SPA fallback for all other routes.
 
