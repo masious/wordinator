@@ -15,7 +15,7 @@ Decisions agreed on 2026-10-15 now live in their owning documents (C14.0, comple
 
 The three open assumptions were adopted as decisions in C14.0: AI practices are visible to everyone who can read the lesson and removable by the owner and contributors; Drill's Weak words draws from word memory plus bookmarks (lowest recall first, never-reviewed words at 0.5, bookmarks as a tiebreak); native language, reply language, and goals live in a Tutor section in Settings, and the tutor may rewrite its own notes (the learner can clear them).
 
-Details C14.0 settled that were not in the agreed list (review before C14a):
+Details C14.0 and later phases settled beyond the agreed list (confirmed 2026-10-16):
 
 - The tutor is the one exception to desktop-first: same features and tests on phones.
 - Say it needs the Microsoft recognizer (assessment is Azure-only); with the browser recognizer it says so.
@@ -27,6 +27,7 @@ Details C14.0 settled that were not in the agreed list (review before C14a):
 - New account-level routes live under `/api/ai/...` and `/api/admin/...`; lesson-bound routes stay under the group compatibility prefix.
 - Default speech cap 5,000 characters per UTC day; turn cap 0–500, speech cap 0–100,000.
 - The tutor never receives the learner's username.
+- Weakness ranks by recall projected 7 days ahead (`WORD_WEAK_HORIZON_DAYS`), and a direction whose latest result is Again is capped at `WORD_LAPSE_RECALL` (0.4), so fresh mistakes rank before never-reviewed words (C14d).
 
 Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 
@@ -206,38 +207,34 @@ Delivered as a library layer in `apps/api/src/ai/` (no routes), migration `0027_
 Requested 2026-10-16. **Secondary priority:** it runs last, after C14j, and has its own tests and release step. It needs C14c (`progress_events`, lesson states), C14g (tutor completions), and C14h (AI practices).
 
 Decided 2026-10-16:
-- Each user's page shows their activities, and these are **publicly available**: signed-out visitors can read profiles and activity too.
+- Each user's page shows their activities. **Profiles and activity are visible to signed-in accounts that have completed setup only**, never to signed-out visitors, and pages send `noindex`. This replaces the earlier "publicly available" decision; the public-profile non-goal stays.
+- **No opt-out:** activity is always shown, and there is no Settings switch.
+- Only the fact that an activity happened is shown. **Answers, mistakes, scores, weak words, practice or test results, and conversations are never shown on profiles.**
 - The page shows the person's progress in every course they have started.
 - Small activities are reported, and repeats are combined, e.g. "Masoud completed 3 lessons and is on lesson 8/12 of Dutch Foundations".
 - Activity types:
   - lesson completed (marked "with the tutor" when the tutor recorded it);
   - course progress and course completed;
-  - answering AI-generated questions, both tutor components and AI practices on lesson pages (counts only, never the questions or answers);
+  - answering AI-generated questions, both tutor components and AI practices on lesson pages (counts only);
   - drill sessions.
+- A lesson reset removes that lesson's completion from the activity.
 
 **Conflicts to reconcile in the first step.** Each one reverses a recorded decision:
 - [profile pages are retired](docs/profiles-and-settings.md#profile-pages-retired);
-- "public profiles" is a [non-goal](docs/what_is_it.md#explicit-non-goals);
-- C14.0 made progress [private to the learner](docs/security-and-privacy.md#account-and-profile-privacy);
-- the [security baseline](docs/security-and-privacy.md) assumes every read is signed in.
-
-**Still to confirm:**
-- Whether a Settings switch lets a person hide their activity. Assumed: yes, on by default.
-- Whether profiles are indexable by search engines. Assumed: no, `noindex`.
-- A lesson reset removes that lesson's completion from the activity.
-- Answers, mistakes, weak words, scores, and conversations are never shown.
+- C14.0 made progress [private to the learner](docs/security-and-privacy.md#account-and-profile-privacy).
 
 - [ ] Docs and decisions:
-  - A new owner `docs/profiles-and-activity.md` covering the public profile route, activity types, grouping, visibility, the opt-out, reset, and what is never shown.
-  - Reverse the conflicting rules above in [what_is_it.md](docs/what_is_it.md), [security-and-privacy.md](docs/security-and-privacy.md) (public read surface, signed-out access, scraping), [courses.md](docs/courses.md#progress), [words.md](docs/words.md#word-memory), and [profiles-and-settings.md](docs/profiles-and-settings.md).
-  - Update [data-model.md](docs/data-model.md), [architecture.md](docs/architecture.md) (an unauthenticated route), [design-system.md](docs/design-system.md), [user-flows.md](docs/user-flows.md), [testing.md](docs/testing.md), and [roadmap.md](docs/roadmap.md).
+  - A new owner `docs/profiles-and-activity.md` covering the signed-in profile route, activity types, grouping, visibility, reset, and what is never shown.
+  - Reverse the conflicting rules above in [security-and-privacy.md](docs/security-and-privacy.md), [courses.md](docs/courses.md#progress), [words.md](docs/words.md#word-memory), and [profiles-and-settings.md](docs/profiles-and-settings.md).
+  - Update [what_is_it.md](docs/what_is_it.md) only to note signed-in profiles beside the unchanged public-profile non-goal.
+  - Update [data-model.md](docs/data-model.md), [architecture.md](docs/architecture.md), [design-system.md](docs/design-system.md), [user-flows.md](docs/user-flows.md), [testing.md](docs/testing.md), and [roadmap.md](docs/roadmap.md).
 - [ ] Profile page:
-  - `/people/:username`, readable signed out.
+  - `/people/:username`, for signed-in, set-up accounts.
   - Bylines (posts, comments, contributors, editor attribution) link to it.
   - The header shows the avatar, display name, `@username`, and bio. Email and quick reactions stay hidden.
   - A Courses section shows progress in each course started (percentage and "lesson N/M").
   - An Activity list, newest first, in cursor pages.
-- [ ] Activities are derived at read time from `progress_events`, lesson completions, positions, `practice_attempts` (sources `ai_chat` and `ai_practice`), and drill reviews, plus a new `progress_events` kind `course_completed` written when the last lesson completes. Activity reads never return answer text.
+- [ ] Activities are derived at read time from `progress_events`, lesson completions, positions, `practice_attempts` (sources `ai_chat` and `ai_practice`), and drill reviews, plus a new `progress_events` kind `course_completed` written when the last lesson completes. Activity reads return counts and names only, never answer text, results, or scores.
 - [ ] Grouping:
   - Consecutive activities of the same kind in the same course, with no other activity between them and within a UTC day, combine into one item.
   - Examples: "completed 3 lessons and is on lesson 8/12 of …", "answered 14 AI questions on Dutch Foundations", "drilled 40 words".
@@ -246,17 +243,13 @@ Decided 2026-10-16:
 - [ ] Visibility:
   - Archived or draft courses the viewer cannot see are named as "a course".
   - A reset or deleted lesson removes its completion item.
-  - The opt-out hides the Courses and Activity sections.
   - Pages send `noindex`.
-  - The public routes are rate limited or cached so they are cheap to scrape.
-- [ ] API (no auth required for the reads):
+- [ ] API (auth and completed setup required):
   - `GET /api/people/:username` returns the header and course progress.
   - `GET /api/people/:username/activity?cursor=` returns grouped pages.
-  - The settings read and update add `showActivity`.
 - [ ] Tests:
   - unit tests for grouping (repeats combined, another activity splits a group, day boundary, lesson N/M, AI-question counts);
-  - Workers tests for signed-out reads, the opt-out, reset removing an item, hidden courses anonymized, and no answers, emails, or private learning data in responses;
-  - RTL tests for the profile page, grouped items, byline links, and the Settings switch;
-  - Playwright: a completed lesson and answered AI questions appear grouped on the learner's profile, viewed signed out.
+  - Workers tests for signed-out and unfinished-setup refusal, reset removing an item, hidden courses anonymized, and no answers, results, scores, emails, or private learning data in responses;
+  - RTL tests for the profile page, grouped items, and byline links;
+  - Playwright: a completed lesson and answered AI questions appear grouped on the learner's profile, viewed by another signed-in account.
 - [ ] Release: type-check, all suites, production builds, local migrations; roadmap status.
-
