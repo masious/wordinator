@@ -665,3 +665,51 @@ export const speechUsage = sqliteTable(
     check("speech_usage_surface_check", sql`${table.surface} in ('ai_message')`),
   ],
 );
+
+// AI tutor (C14g): conversations, their messages, and tutor profiles; see docs/data-model.md#ai-tutor. Conversations are never
+// deleted. Message parts are JSON text validated by the contracts' `tutor` subpath.
+export const aiConversations = sqliteTable(
+  "ai_conversations",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    title: text("title").notNull().default(""),
+    archivedAt: integer("archived_at"),
+    createdAt: integer("created_at").notNull(),
+    updatedAt: integer("updated_at").notNull(),
+  },
+  (table) => [index("ai_conversations_user_archived_updated_idx").on(table.userId, table.archivedAt, table.updatedAt)],
+);
+
+export const aiMessages = sqliteTable(
+  "ai_messages",
+  {
+    id: text("id").primaryKey(),
+    conversationId: text("conversation_id").notNull().references(() => aiConversations.id, { onDelete: "cascade" }),
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    role: text("role", { enum: ["user", "assistant"] }).notNull(),
+    parts: text("parts").notNull(),
+    status: text("status", { enum: ["complete", "awaiting_user", "error"] }).notNull(),
+    provider: text("provider"),
+    model: text("model"),
+    createdAt: integer("created_at").notNull(),
+  },
+  (table) => [
+    index("ai_messages_conversation_created_idx").on(table.conversationId, table.createdAt, table.id),
+    check("ai_messages_role_check", sql`${table.role} in ('user', 'assistant')`),
+    check("ai_messages_status_check", sql`${table.status} in ('complete', 'awaiting_user', 'error')`),
+  ],
+);
+
+export const learnerProfiles = sqliteTable(
+  "learner_profiles",
+  {
+    userId: text("user_id").primaryKey().references(() => users.id, { onDelete: "cascade" }),
+    nativeLanguage: text("native_language").notNull().default("en"),
+    replyLanguage: text("reply_language", { enum: ["native", "target", "mixed"] }).notNull().default("native"),
+    goals: text("goals"),
+    tutorNotes: text("tutor_notes"),
+    updatedAt: integer("updated_at").notNull(),
+  },
+  (table) => [check("learner_profiles_reply_language_check", sql`${table.replyLanguage} in ('native', 'target', 'mixed')`)],
+);

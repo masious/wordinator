@@ -144,19 +144,19 @@ Audit only, never read to undo. ID, user ID, actor (`user` or `agent`), kind (`l
 
 ## AI tutor
 
-Added in C14; the [AI tutor](ai-tutor.md) owns behavior. No table has `group_id`.
+Added in C14; the [AI tutor](ai-tutor.md) owns behavior. No table has `group_id`. Migration `0029_ai_tutor.sql` (C14g) adds `ai_conversations`, `ai_messages`, and `learner_profiles`; their user foreign keys cascade.
 
 ### `ai_conversations`
 
-ID, user ID, title, nullable archived timestamp, and created/updated timestamps. Conversations are never deleted. Indexed by `(user_id, archived_at, updated_at)`.
+ID, user ID, title (empty until the first user message, then that message on one line cut to 80 characters), nullable archived timestamp, and created/updated timestamps. Conversations are never deleted. Each stored message moves `updated_at`; archiving does not. Indexed by `(user_id, archived_at, updated_at)`.
 
 ### `ai_messages`
 
-ID, conversation ID (cascading), user ID, role (`user` or `assistant`), parts (JSON text: `text`, `tool_call`, `tool_result`, `component`, and `confirmation` parts, validated by the contracts), status (`complete`, `awaiting_user`, or `error`), nullable provider and model, and created timestamp. Cursor-paginated by `(conversation_id, created_at, id)`. A component or confirmation part holds its tool call ID, payload, and once answered the answer and grade; it is answered at most once.
+ID, conversation ID (cascading), user ID, role (`user` or `assistant`, check-constrained), parts (JSON text validated by the contracts' `tutorStoredPartSchema`: `text` with its target-language `spans`, `tool_call`, `tool_result`, `component`, `confirmation`, and `error` parts), status (`complete`, `awaiting_user`, or `error`, check-constrained), nullable provider and model, and created timestamp (strictly after the conversation's previous message). Cursor-paginated by `(conversation_id, created_at, id)`. A user message is one text part. A `tool_result` part also stores the JSON the model received (`content`), a `component` part the full payload with its reference answer (`component`) beside its view, and a `confirmation` part the tool's arguments; the API never returns these three. A component or confirmation part holds its tool call ID and, once answered, the answer, the grade or outcome, and `answeredAt`; it is answered at most once, by a conditional update that also moves its message from `awaiting_user` to `complete`. A part that no longer fits the contracts is skipped on read.
 
 ### `learner_profiles`
 
-User ID (primary key), native language, reply language, nullable goals (plain text, at most 500 characters), nullable tutor notes (plain text, at most 2,000 characters), and updated timestamp. A missing row reads as the defaults.
+User ID (primary key), native language (default `en`), reply language (`native`, `target`, or `mixed`, default `native`, check-constrained), nullable goals (plain text, at most 500 characters), nullable tutor notes (plain text, at most 2,000 characters), and updated timestamp. A missing row reads as the defaults; the first save of either the learner's fields or the tutor's notes creates it.
 
 ### `ai_usage`
 

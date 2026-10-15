@@ -10,7 +10,8 @@
     "./ai": "./src/ai.ts",
     "./weak-words": "./src/weakWords.ts",
     "./learning": "./src/learning.ts",
-    "./admin": "./src/admin.ts"
+    "./admin": "./src/admin.ts",
+    "./tutor": "./src/tutor.ts"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

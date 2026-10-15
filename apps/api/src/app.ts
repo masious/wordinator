@@ -92,6 +92,8 @@ import {
 } from "./speech";
 import { azureRecognitionToken } from "./speechRecognition";
 import { adminRoutes } from "./admin";
+import { courseVisibleClause } from "./courseVisibility";
+import { tutorRoutes } from "./tutor";
 import { buildWordDrillDeck, type WordDrillMemory } from "./wordDrill";
 import { lessonMemoryKeys, memoryRebuildStatements, recordWordReviews } from "./learningData";
 import { completeLesson, readLessonProgress, resetLesson } from "./learning/progress";
@@ -966,6 +968,8 @@ app.use("/api/*", async (context, next) => {
 
 // Superuser analytics and AI settings (C14e).
 app.route("/api/admin", adminRoutes);
+// The AI tutor (C14g): conversations, streamed turns, on-demand speech, and the tutor profile.
+app.route("/api/ai", tutorRoutes);
 
 app.get("/api/health", (context) => context.json(healthResponseSchema.parse({ status: "ok", service: "wordinator-api" })));
 
@@ -1811,16 +1815,6 @@ app.patch("/api/groups/:groupId/memberships/:userId", requireGroupAccess, async 
   });
   return context.json({ ok: true } as const);
 });
-
-// The SQL form of `courseVisible` for course alias `c`: published courses, the viewer's own, archived ones for the group creator,
-// and drafts the viewer actively contributes to.
-function courseVisibleClause(userId: string, creatorUserId: string) {
-  return {
-    sql: `(c.status = 'published' OR c.owner_id = ? OR (c.status = 'archived' AND ? = ?)
-    OR (c.status = 'draft' AND EXISTS (SELECT 1 FROM course_contributors cc WHERE cc.course_id = c.id AND cc.user_id = ? AND cc.state = 'active')))`,
-    values: [userId, userId, creatorUserId, userId],
-  };
-}
 
 app.get("/api/groups/:groupId/courses", requireGroupAccess, async (context) => {
   const parsed = paginationQuerySchema.safeParse(context.req.query());

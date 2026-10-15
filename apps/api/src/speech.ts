@@ -209,6 +209,20 @@ export async function runSpeechSamples(env: SpeechEnv, options: Pick<SpeechRunOp
   return result;
 }
 
+// On-demand audio (docs/speech.md#on-demand-audio): the one synthesis on request. A ready clip is served from R2 as it is
+// (`cached`); otherwise the clip is claimed exactly as the worker claims it and synthesized within the request (`ready`). A clip
+// that another request or the worker holds (or that waits for a retry) is `pending`; a failed synthesis, or a clip that failed for
+// good, is `failed`.
+export type OnDemandClip = "cached" | "ready" | "pending" | "failed";
+export async function onDemandClip(env: SpeechEnv, item: HashedSpeechItem, synthesize: Synthesize, now: () => number = Date.now): Promise<OnDemandClip> {
+  const clip = (await readClips(env.DB, [item.hash])).get(item.hash);
+  if (clip?.status === "ready") return "cached";
+  if (clip?.status === "failed") return "failed";
+  if (!(await claimClip(env.DB, item, clip, now()))) return "pending";
+  const outcome = await synthesizeClaimed(env, item, synthesize, now);
+  return outcome.kind === "ready" ? "ready" : "failed";
+}
+
 type ClipOutcome = { kind: "ready" | "retry" | "failed" } | { kind: "throttled" | "unauthorized"; retryAfterMs: number | null };
 
 // Synthesizes a claimed clip and records the outcome: ready in R2, a counted failure with its retry delay (failed after the last
