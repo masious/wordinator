@@ -74,7 +74,7 @@
 
 ## Check progress and reset a lesson
 
-Planned (C14). [Courses](courses.md#lesson-progress-tab) owns the rules.
+C14 (the Progress tab and reset since C14c). [Courses](courses.md#lesson-progress-tab) owns the rules.
 
 1. On a course page the learner opens the Progress tab. It says whether the course is complete and lists each published lesson with its state (Not started, In progress, Completed, or Missed when they skipped it and went on), how far through its storyline they are, practices done, words reviewed, and AI practices.
 2. Reset on a lesson opens a confirmation listing what will be deleted: their place in the lesson, its completion, practice progress and answers, and the word reviews from that lesson. Confirming deletes them for good and refreshes the tab; words also learnt in another lesson stay known.

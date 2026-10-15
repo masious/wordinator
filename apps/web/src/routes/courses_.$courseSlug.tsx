@@ -1,9 +1,12 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { courseQueryOptions, courseRefQueryOptions } from "../api";
 import { requireLibrary } from "../libraryRoute";
+import { validateCourseSearch } from "../organisms/CourseLessons/CourseProgress";
 import { CoursePage } from "../pages/CoursePages";
 
 export const Route = createFileRoute("/courses_/$courseSlug")({
+  // `?tab=progress` opens the Progress tab; Lessons is the default.
+  validateSearch: validateCourseSearch,
   beforeLoad: ({ context }) => requireLibrary(context.queryClient),
   loader: async ({ context, params }) => {
     const ref = await context.queryClient.ensureQueryData(courseRefQueryOptions(context.groupId, params.courseSlug)).catch(() => null);
@@ -20,5 +23,6 @@ export const Route = createFileRoute("/courses_/$courseSlug")({
 function CourseRoute() {
   const { courseId } = Route.useLoaderData();
   const { groupId } = Route.useRouteContext();
-  return <CoursePage groupId={groupId} courseId={courseId} />;
+  const { tab } = Route.useSearch();
+  return <CoursePage groupId={groupId} courseId={courseId} tab={tab ?? "lessons"} />;
 }

@@ -41,6 +41,7 @@ import {
   WORD_BOOKMARKS_MAX,
   COURSE_PRELOADED_LESSONS,
   courseProgressResponseSchema,
+  lessonProgressResponseSchema,
   lessonPositionResponseSchema,
   createLessonRequestSchema,
   outlineResponseSchema,
@@ -92,6 +93,7 @@ import {
 import { azureRecognitionToken } from "./speechRecognition";
 import { buildWordDrillDeck, type WordDrillMemory } from "./wordDrill";
 import { lessonMemoryKeys, memoryRebuildStatements, recordWordReviews } from "./learningData";
+import { completeLesson, readLessonProgress, resetLesson } from "./learning/progress";
 import { recentResults } from "./wordMemory";
 
 export type Bindings = Env & { MEDIA: R2Bucket; PUBLIC_MEDIA_BASE_URL: string };
@@ -2143,6 +2145,13 @@ app.get("/api/groups/:groupId/courses/:courseId/progress", requireGroupAccess, a
   return progressResponse(context, found.row);
 });
 
+// The viewer's own state of each published lesson for the course page's Progress tab (C14, docs/courses.md#lesson-progress-tab).
+// A sibling of the course progress read, so the lesson list does not pay for the per-lesson counts.
+app.get("/api/groups/:groupId/courses/:courseId/progress/lessons", requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  return context.json(lessonProgressResponseSchema.parse(await readLessonProgress(context.env.DB, found.row, context.get("user")!.id)));
+});
+
 // The course word recap: words of the currently published lessons the viewer has finished, in lesson order and then document
 // order. A term repeated across lessons (trimmed, case-insensitive) is kept at its first occurrence. Course visibility applies.
 app.get("/api/groups/:groupId/courses/:courseId/words", requireGroupAccess, async (context) => {
@@ -2459,15 +2468,17 @@ app.put(`${lessonPath}/completion`, requireGroupAccess, async (context) => {
   if (found.row.status === "archived") return apiError(context, 409, "COURSE_ARCHIVED", "Restore this course before changing it.");
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
   if (!lesson.lesson.published) return apiError(context, 409, "LESSON_UNPUBLISHED", "Only published lessons count toward progress.");
-  const db = context.env.DB; const userId = context.get("user")!.id;
   // The finished lesson now counts whole, so its saved position is no longer needed.
-  await db.batch([
-    db.prepare(
-      `INSERT INTO course_lesson_completions (group_id, course_id, lesson_id, user_id, completed_at) VALUES (?, ?, ?, ?, ?)
-       ON CONFLICT (lesson_id, user_id) DO NOTHING`,
-    ).bind(found.row.groupId, found.row.id, lesson.lesson.id, userId, Date.now()),
-    db.prepare("DELETE FROM course_lesson_positions WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND user_id = ?").bind(found.row.groupId, found.row.id, lesson.lesson.id, userId),
-  ]);
+  await completeLesson(context.env.DB, { groupId: found.row.groupId, courseId: found.row.id, lessonId: lesson.lesson.id, userId: context.get("user")!.id }, { actor: "user" });
+  return progressResponse(context, found.row);
+});
+
+// Reset starts a lesson over for the viewer for real; see resetLesson for what it deletes and keeps (docs/courses.md#reset).
+app.post(`${lessonPath}/reset`, requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  if (found.row.status === "archived") return apiError(context, 409, "COURSE_ARCHIVED", "Restore this course before changing it.");
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  await resetLesson(context.env.DB, { groupId: found.row.groupId, courseId: found.row.id, lessonId: lesson.lesson.id, userId: context.get("user")!.id }, { actor: "user" });
   return progressResponse(context, found.row);
 });
 

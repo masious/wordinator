@@ -1,0 +1,25 @@
+.tabs{display:flex;gap:var(--space-2);padding:var(--space-1);width:fit-content;max-width:100%;background:var(--color-surface-muted);border:var(--ring-hairline);border-radius:var(--radius-pill)}
+.tabs a{display:inline-flex;align-items:center;min-height:var(--touch-target);padding:0 var(--space-5);border-radius:var(--radius-pill);color:var(--color-foreground-muted);font-weight:var(--weight-semibold);text-decoration:none;transition:background-color var(--motion-standard) var(--ease-out),color var(--motion-standard) var(--ease-out)}
+.tabs a:hover{color:var(--color-foreground)}
+.tabs a[aria-selected="true"]{background:var(--color-surface-raised);color:var(--color-foreground);box-shadow:var(--shadow-inset-highlight)}
+.tabs a:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.panel{display:grid;gap:var(--space-4);min-width:0}
+.courseLine{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-3);margin:0}
+.missed{font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.list{display:grid;gap:var(--space-2);margin:0;padding:0;list-style:none}
+/* Bezel rows like the lesson list: lesson, state chip, storyline meter, counts, and Reset at the end. */
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(6rem,10rem) auto auto;align-items:center;gap:var(--space-4);padding:var(--space-2) var(--card-inset);background:var(--color-bezel);border:var(--ring-hairline);border-radius:var(--radius-lg)}
+.lessonLink{display:flex;align-items:baseline;gap:var(--space-4);min-width:0;min-height:var(--touch-target);padding:var(--space-2) 0;color:var(--color-foreground);text-decoration:none}
+.lessonLink:hover .title{text-decoration:underline}
+.lessonLink:focus-visible{outline:var(--border-strong);outline-offset:2px;border-radius:var(--radius-sm)}
+.number{min-width:2ch;font-family:var(--font-mono);font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.title{font-family:var(--font-display);font-size:var(--type-card-title);font-weight:var(--weight-medium);line-height:var(--line-title);overflow-wrap:anywhere}
+.state{display:inline-flex;align-items:center;min-height:28px;padding:var(--space-1) var(--space-3);color:var(--color-foreground);background:var(--color-wash);border:var(--ring-hairline);border-radius:var(--radius-pill);font:var(--weight-medium) var(--type-metadata)/var(--line-compact) var(--font-mono);white-space:nowrap}
+.state[data-state="completed"]{background:var(--color-success-surface)}
+.state[data-state="in_progress"]{background:var(--color-highlight-soft)}
+.state[data-state="missed"]{background:var(--color-danger-surface)}
+.meter{min-width:0}
+.counts{display:flex;flex-wrap:wrap;gap:var(--space-3);font-family:var(--font-mono);font-size:var(--type-metadata);font-variant-numeric:tabular-nums;color:var(--color-foreground-muted);white-space:nowrap}
+button.reset{--button-ink:var(--color-danger-text)}
+.deleted{display:grid;gap:var(--space-1);margin:0;padding-inline-start:var(--space-5)}
+@media(max-width:62em){.row{grid-template-columns:minmax(0,1fr) auto;}.meter{grid-column:1/-1}}

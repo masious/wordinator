@@ -289,7 +289,8 @@ C14. The single course page gets two tabs: **Lessons** (the existing lesson list
 
 - The Progress tab opens with a course line (Course complete, or N of M lessons completed, with missed lessons counted separately) and lists every published lesson in order with: its number and title (linking to the lesson page), its [state](#lesson-states), storyline progress (a thin bar of the passed share, full when completed), practices done of total, words reviewed of total (lesson words whose term the viewer has [memory](words.md#word-memory) for, from any lesson), the number of [AI practices](#ai-practices) tagged to it, and **Reset**.
 - Nothing on the tab is shown to anyone but the viewer. Previews and unpublished lessons are left out, also for editors.
-- Values come from the course progress read; they refresh after a reset and the next time the course page shows them.
+- Values come from the lesson progress read, `GET .../courses/:courseId/progress/lessons` (`lessonProgressResponseSchema`): a sibling of the course progress read, so the lesson list does not pay for the per-lesson counts. It returns `complete`, the published, completed, and missed counts, and each published lesson in outline order with its state, `storylinePercent` (the passed share rounded down, 100 when completed), practices done of total (done as in [practice status](#lesson-actions)), words reviewed of total (index rows whose term key has a memory row for the viewer in either direction), `aiPracticeCount` (0 until [AI practices](#ai-practices) ship), and its practice block IDs, which a web reset uses to clear local drafts. Course visibility applies. They refresh after a reset and the next time the course page shows them.
+- Lesson numbers and titles follow the course page's lesson list. Archived courses show the tab without Reset.
 
 ### Reset
 
@@ -300,7 +301,8 @@ C14. Reset lets a learner start a lesson over for real.
 - **Where.** The Progress tab's Reset and a Reset lesson action on the lesson page each open a confirmation dialog that lists what will be deleted; confirming on the lesson page returns to the course's lesson list. The [AI tutor](ai-tutor.md#confirmation) can also reset a lesson after the learner confirms its card.
 - A reset from the web also clears the lesson's local `practice-answer` drafts on that device, since a draft would otherwise restore the practice progress the next time its dialog closes. Drafts on other devices are untouched; a reset from the tutor leaves every device's drafts.
 - Archived courses refuse reset (`409 COURSE_ARCHIVED`), and a lesson the viewer cannot read is `404`.
-- `POST .../lessons/:lessonId/reset` returns the course progress payload.
+- `POST .../lessons/:lessonId/reset` returns the course progress payload (`courseProgressResponseSchema`). The lesson page shows Reset lesson for a published lesson in a course that is not archived, also before the viewer has started it.
+- Completing a lesson writes a `progress_events` row (kind `lesson_completed`) only when it records a new completion. The tutor reuses the same completion and reset functions with actor `agent`.
 
 ### Lesson positions
 

@@ -140,7 +140,7 @@ ID, user ID, surface (`drill`, `word_card`, or `ai_chat`), reference text, nulla
 
 ### `progress_events`
 
-Audit only, never read to undo. ID, user ID, actor (`user` or `agent`), kind (`lesson_completed` or `lesson_reset`), course ID, lesson ID, nullable conversation ID, and created timestamp. Course and lesson IDs have no foreign key, so the audit outlives a deleted lesson. Indexed by `(user_id, created_at)`.
+Audit only, never read to undo. ID, user ID, actor (`user` or `agent`), kind (`lesson_completed` or `lesson_reset`), course ID, lesson ID, nullable conversation ID, and created timestamp. Course and lesson IDs have no foreign key, so the audit outlives a deleted lesson. A completion writes its row only when the completion is new (repeating a lesson writes none); every reset writes one. Indexed by `(user_id, created_at)`.
 
 ## AI tutor
 

@@ -71,11 +71,20 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 - [ ] Web: the lesson Answer dialog, Practice again, and the player record an attempt on each answer check; drill cards and Words tab word cards record Microsoft assessments. Local drafts stay as they are.
 - [ ] Tests: validation, ownership, visibility, matched re-derived; RTL that a check posts once and a failed post does not block the learner.
 
-## C14c — Lesson progress tab and reset
+## C14c — Lesson progress tab and reset (completed 2026-10-16)
 
-- [ ] API: a course progress read with derived lesson states (including missed), storyline share, practices done of total, words reviewed of total, AI practice count, and course completion. Add `POST .../lessons/:lessonId/reset`, which deletes in one batch, rebuilds affected memory rows, and writes a `progress_events` row.
-- [ ] Web: the Progress tab on the single course page with a confirm dialog for Reset. The lesson page gets a Reset button that confirms and returns to the course's lesson list.
-- [ ] Tests: the missed derivation, completion with missed lessons, reset scope (other lessons' reviews of a shared term survive), negative authorization; RTL for both reset entry points.
+- [x] API: a course progress read with derived lesson states (including missed), storyline share, practices done of total, words reviewed of total, AI practice count, and course completion. Add `POST .../lessons/:lessonId/reset`, which deletes in one batch, rebuilds affected memory rows, and writes a `progress_events` row.
+- [x] Web: the Progress tab on the single course page with a confirm dialog for Reset. The lesson page gets a Reset button that confirms and returns to the course's lesson list.
+- [x] Tests: the missed derivation, completion with missed lessons, reset scope (other lessons' reviews of a shared term survive), negative authorization; RTL for both reset entry points.
+
+### Notes
+
+- **A sibling read, not a wider one.** `GET .../courses/:courseId/progress/lessons` (`lessonProgressResponseSchema`) serves the Progress tab, so the course progress read the lesson list and the lesson page poll stays as cheap as before and its fixtures are unchanged. Reset returns the existing course progress payload; the web then invalidates the course key, which refreshes both reads.
+- **Helpers for the tutor (C14g)** in `apps/api/src/learning/progress.ts`, all trusting an already-authorized target `{ groupId, courseId, lessonId, userId }`: `readLessonProgress(db, { groupId, id }, userId)` returns the Progress tab payload (`complete`, `publishedLessons`, `completedLessons`, `missedLessons`, and per lesson `lessonId`, `slug`, `title`, `state`, `storylinePercent`, `practicesDone`/`practicesTotal`, `wordsReviewed`/`wordsTotal`, `aiPracticeCount`, `practiceIds`); `completeLesson(db, target, { actor, conversationId? })` (caller checks archived `409` and published `409 LESSON_UNPUBLISHED`); `resetLesson(db, target, { actor, conversationId? })` (caller checks archived and readability). The pure `deriveLessonStates` and `courseComplete` live in `apps/api/src/learning/lessonStates.ts`.
+- **AI practice seam.** `aiPracticeCounts(db, lessonIds)` in `progress.ts` returns an empty map, so `aiPracticeCount` is 0; C14h counts `ai_practice_lessons` rows there.
+- **Drafts.** The read carries each lesson's practice block IDs (from `course_practices`), and the lesson page reads them from the lesson's documents, so a web reset removes exactly that lesson's `practice-answer` drafts on the device.
+- **Words reviewed** counts index rows whose `term_key` has a memory row for the viewer; a row still without a term key (indexed before `0023` and not yet lazily keyed) counts as not reviewed.
+- The lesson page shows Reset lesson for any published lesson in a course that is not archived, even before the learner started it, since reviews and attempts can exist without a position.
 
 ## C14d — Weak words view
 

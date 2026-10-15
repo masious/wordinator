@@ -9,6 +9,7 @@ import { PlainText } from "../molecules/PlainText";
 import { CourseContributors } from "../organisms/CourseContributors/CourseContributors";
 import { CourseErrorMessage as ErrorMessage } from "../organisms/CourseLessons/CourseErrorMessage";
 import { CourseLessons, CourseLessonTools, LessonView } from "../organisms/CourseLessons/CourseLessons";
+import { coursePanelId, CourseProgressTab, CourseTabs, courseTabId, type CourseTab } from "../organisms/CourseLessons/CourseProgress";
 import { CourseResume } from "../organisms/CourseLessons/CourseResume";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { SpeechCastFields } from "../organisms/SpeechCast/SpeechCastFields";
@@ -101,7 +102,7 @@ export function CourseLibraryPage({ groupId }: { groupId: string }) {
 // Owners, contributors, and the site creator (who may archive or remove content) each have something to manage.
 const canManage = ({ permissions }: Course) => permissions.edit || permissions.archive || permissions.manageContributors || permissions.contribute || permissions.removeContent;
 
-export function CoursePage({ groupId, courseId }: { groupId: string; courseId: string }) {
+export function CoursePage({ groupId, courseId, tab = "lessons" }: { groupId: string; courseId: string; tab?: CourseTab }) {
   const { t } = useTranslation(); const navigate = useNavigate();
   const session = useQuery(sessionQueryOptions());
   const course = useQuery(courseQueryOptions(groupId, courseId));
@@ -130,7 +131,12 @@ export function CoursePage({ groupId, courseId }: { groupId: string; courseId: s
     <CourseResume groupId={groupId} courseId={courseId} accountId={session.data.user.id} courseSlug={course.data.course.slug} outline={course.data.outline} />
     {/* The owner manages contributors on the manage page; everyone else asks, withdraws, or leaves here. */}
     {!archived && !data.permissions.manageContributors && <CourseContributors groupId={groupId} course={data} />}
-    <CourseLessons groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} />
+    <CourseTabs courseSlug={data.slug} tab={tab} />
+    <div id={coursePanelId(tab)} role="tabpanel" aria-labelledby={courseTabId(tab)}>
+      {tab === "progress"
+        ? <CourseProgressTab groupId={groupId} courseId={courseId} accountId={session.data.user.id} courseSlug={data.slug} outline={course.data.outline} archived={archived} />
+        : <CourseLessons groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} />}
+    </div>
   </div></GroupFrame>;
 }
 

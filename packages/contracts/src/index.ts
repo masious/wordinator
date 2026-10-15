@@ -661,3 +661,25 @@ export const courseProgressResponseSchema = z.object({
   participants: z.array(courseParticipantProgressSchema),
 });
 export type CourseProgressResponse = z.infer<typeof courseProgressResponseSchema>;
+// C14 lesson progress (docs/courses.md#lesson-progress-tab): the viewer's own derived state of each currently published lesson,
+// in outline order, for the course page's Progress tab. States are derived at read time and never stored.
+export const lessonStateSchema = z.enum(["not_started", "in_progress", "completed", "missed"]);
+export type LessonState = z.infer<typeof lessonStateSchema>;
+export const lessonProgressSchema = z.object({
+  lessonId: opaqueIdSchema, slug: z.string(), title: z.string(), state: lessonStateSchema,
+  // The passed share of the lesson's steps as a whole percentage rounded down; 100 when completed.
+  storylinePercent: z.number().int().min(0).max(100),
+  practicesDone: z.number().int().nonnegative(), practicesTotal: z.number().int().nonnegative(),
+  // Lesson words whose term the viewer has word memory for, from any lesson.
+  wordsReviewed: z.number().int().nonnegative(), wordsTotal: z.number().int().nonnegative(),
+  aiPracticeCount: z.number().int().nonnegative(),
+  // The lesson's practice block IDs, so a reset on this device can clear their local answer drafts.
+  practiceIds: z.array(z.string().min(1).max(128)),
+});
+export type LessonProgress = z.infer<typeof lessonProgressSchema>;
+export const lessonProgressResponseSchema = z.object({
+  complete: z.boolean(), publishedLessons: z.number().int().nonnegative(),
+  completedLessons: z.number().int().nonnegative(), missedLessons: z.number().int().nonnegative(),
+  lessons: z.array(lessonProgressSchema),
+});
+export type LessonProgressResponse = z.infer<typeof lessonProgressResponseSchema>;

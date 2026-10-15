@@ -757,6 +757,39 @@ export const resources = {
           memberLabel: "Course progress for {{name}}",
           yourLabel: "Your course progress",
           completed: "Finished"
+        },
+        tabs: { label: "Course views", lessons: "Lessons", progress: "Progress" },
+        lessonProgress: {
+          title: "Your progress",
+          loading: "Loading your progress",
+          unavailable: "Your progress could not be loaded.",
+          emptyTitle: "No published lessons yet",
+          emptyBody: "Lessons appear here once they are published.",
+          complete: "Course complete",
+          completedOf: "{{completed}} of {{total}} lessons completed",
+          missed_one: "{{count}} lesson missed",
+          missed_other: "{{count}} lessons missed",
+          states: { not_started: "Not started", in_progress: "In progress", completed: "Completed", missed: "Missed" },
+          storylineLabel: "Storyline progress for lesson {{number}}",
+          practices: "Practices {{done}}/{{total}}",
+          words: "Words {{reviewed}}/{{total}}",
+          aiPractices: "AI practices {{count}}",
+          practicesLabel: "{{done}} of {{total}} practices done",
+          wordsLabel: "{{reviewed}} of {{total}} words reviewed",
+          aiPracticesLabel_one: "{{count}} AI practice",
+          aiPracticesLabel_other: "{{count}} AI practices"
+        },
+        reset: {
+          action: "Reset",
+          lessonAction: "Reset lesson",
+          actionNamed: "Reset lesson {{number}}: {{title}}",
+          title: "Reset this lesson?",
+          intro: "Start {{title}} over. This permanently deletes:",
+          position: "Your place in the lesson and its completion",
+          practices: "Your practice progress and checked answers, including answer drafts on this device",
+          reviews: "Your word reviews from this lesson; words you also learnt in other lessons stay known",
+          kept: "Bookmarks and pronunciation scores are kept. There is no undo.",
+          confirm: "Reset lesson"
         }
       },
       avatar: {

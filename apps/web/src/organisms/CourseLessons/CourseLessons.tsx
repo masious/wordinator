@@ -18,6 +18,7 @@ import { LessonShareScope, ShareButton, useLessonShareScope } from "../LessonSha
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import { WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
+import { LessonResetAction } from "./CourseProgress";
 import { LessonActions } from "./LessonActions";
 import { lessonSteps, playableDocument } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
@@ -293,7 +294,7 @@ export function CourseLessonTools({ groupId, courseId, accountId, detail }: { gr
 export function LessonView({ groupId, courseId, accountId, detail, lessonId, dataUpdatedAt, resume = false }: {
   groupId: string; courseId: string; accountId: string; detail: CourseDetailResponse; lessonId: string; dataUpdatedAt: number; resume?: boolean;
 }) {
-  const { t } = useTranslation();
+  const { t } = useTranslation(); const navigate = useNavigate();
   const scope = lessonScope(groupId, courseId, accountId, detail);
   const { outline } = detail; const index = outline.findIndex((entry) => entry.id === lessonId);
   const summary = outline[index];
@@ -309,6 +310,7 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
   const saved = progress.data?.positions.find((entry) => entry.lessonId === lessonId);
   const position = completed ? undefined : saved;
   const playable = data ? lessonSteps(data).length > 0 : false;
+  const resettable = Boolean(data?.published && data.document) && detail.course.status !== "archived";
   const previous = outline[index - 1]; const next = outline[index + 1];
   const pagerLink = (target: CourseLessonSummary, label: string, className: string) =>
     <Link className={className} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug: detail.course.slug, lessonSlug: target.slug }}>{t(label, { title: target.title })}</Link>;
@@ -317,9 +319,12 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
       <p className={styles.eyebrow}>{t("courses.lessons.number", { number })}</p>
       <h1 id="lesson-title">{current.title}</h1>
       {current.goal && <p className={styles.goal}><PlainText>{current.goal}</PlainText></p>}
-      {playable && !editing && (completed || position) && <div className={styles.start}>
-        {completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
-        {!completed && position && <span className={styles.position}>{t("courses.player.step", { current: position.stepIndex + 1, total: position.totalSteps })}</span>}
+      {/* Reset (C14) sits beside the saved step or Finished label, for published lessons in courses that are not archived. */}
+      {!editing && ((playable && (completed || position)) || resettable) && <div className={styles.start}>
+        {playable && completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
+        {playable && !completed && position && <span className={styles.position}>{t("courses.player.step", { current: position.stepIndex + 1, total: position.totalSteps })}</span>}
+        {resettable && data && <LessonResetAction groupId={groupId} courseId={courseId} accountId={accountId} lesson={data}
+          onReset={() => void navigate({ to: "/courses/$courseSlug", params: { courseSlug: detail.course.slug } })} />}
       </div>}
       {scope.contribute && <div className={styles.blockTools}>
         <StateChips lesson={current} />
