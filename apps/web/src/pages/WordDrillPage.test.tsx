@@ -157,6 +157,7 @@ describe("Spoken answers", () => {
     expect(recognition.started).toBe(true);
     expect(recognition.lang).toBe("nl-NL");
     expect(within(current()).getByRole("button", { name: /Listening/ })).toHaveAttribute("aria-pressed", "true");
+    expect(within(current()).getByRole("button", { name: /Listening/ })).toHaveAccessibleDescription("Click to stop");
     recognition.hear("Kaartje", "kaart je");
     expect(current()).toHaveTextContent("Heard “Kaartje” · matches");
     expect(current()).toHaveTextContent("the ticket");

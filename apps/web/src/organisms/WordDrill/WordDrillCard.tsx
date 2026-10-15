@@ -44,6 +44,8 @@ export function WordDrillCard({ card, language, recognitionLocale, revealed, aut
   const canSpeak = direction === "produce" && recognitionLocale !== null && speechRecognitionSupported();
   const spoken = useSpokenAnswer(recognitionLocale ?? "", word.term, (heard) => { if (revealed) return; setAnswer(heard); reveal(); });
   const listen = () => { if (canSpeak && !revealed) spoken.listen(); };
+  const listening = spoken.status === "listening";
+  const stopHint = useId();
 
   // A card after the first takes focus, so the keyboard and screen readers follow the session; the answer takes it once shown.
   useLayoutEffect(() => { if (autoFocus) cardRef.current?.focus({ preventScroll: true }); }, [autoFocus]);
@@ -98,10 +100,13 @@ export function WordDrillCard({ card, language, recognitionLocale, revealed, aut
         <Button variant="secondary" aria-keyshortcuts="1" onClick={() => onGrade("again")}>{t("drill.again")}<kbd className={styles.key} aria-hidden="true">1</kbd></Button>
         <Button aria-keyshortcuts="2" onClick={() => onGrade("got")}>{t("drill.got")}<kbd className={styles.key} aria-hidden="true">2</kbd></Button>
       </> : <>
-        {canSpeak && <Button variant="secondary" aria-keyshortcuts="M" aria-pressed={spoken.status === "listening"} onClick={listen}
-          trailingIcon={<Mic size={16} />}>
-          {spoken.status === "listening" ? t("drill.speak.listening") : t("drill.speak.start")}<kbd className={styles.key} aria-hidden="true">M</kbd>
-        </Button>}
+        {canSpeak && <span className={styles.speak} data-listening={listening || undefined}>
+          <Button variant="secondary" className={styles.speakButton} aria-keyshortcuts="M" aria-pressed={listening}
+            aria-describedby={listening ? stopHint : undefined} onClick={listen}>
+            <Mic className={styles.mic} size={16} aria-hidden="true" />{listening ? t("drill.speak.listening") : t("drill.speak.start")}<kbd className={styles.key} aria-hidden="true">M</kbd>
+          </Button>
+          {listening && <span id={stopHint} className={styles.stopHint}>{t("drill.speak.stopHint")}</span>}
+        </span>}
         <Button aria-keyshortcuts="Space" onClick={reveal}>{t("drill.showAnswer")}</Button>
       </>}
     </div>
