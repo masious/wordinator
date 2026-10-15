@@ -54,7 +54,7 @@ export function Button({ variant = "primary", className, children, trailingIcon,
 
 /** Attached buttons that act as one control: the pill clips the outer ends, inner seams are hairlines, and the group lifts as a whole. */
 export function ButtonGroup({ label, className, children, ...props }: Omit<MantineButtonGroupProps, "orientation"> & { label: string }) {
-  return <MantineButton.Group aria-label={label} className={`${styles.buttonGroup} ${className ?? ""}`} role="group" {...props}>{children}</MantineButton.Group>;
+  return <MantineButton.Group aria-label={label} className={`${styles.buttonGroup} ${className ?? ""}`} {...props}>{children}</MantineButton.Group>;
 }
 
 export function IconButton({ label, className, children, ...props }: ActionIconProps & Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof ActionIconProps | "aria-label"> & { label: string }) {
