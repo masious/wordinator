@@ -94,13 +94,13 @@ The tutor keeps its own **tutor notes** about the learner (plain text, at most 2
 ## Providers and fallback
 
 - The API calls models through one OpenAI-compatible chat-completions client with three configured targets: **OpenRouter**, **Cloudflare Workers AI** (its OpenAI-compatible endpoint through the `AI` binding), and **Microsoft Azure AI Foundry**. Anthropic models and agents are not used.
-- The default order is OpenRouter free models, then Workers AI, then Azure. A `429`, a `5xx`, or a timeout moves the turn to the next target; an invalid request does not. Only models that support tool calling may be configured.
+- The default order is OpenRouter free models, then Workers AI, then Azure. A `429`, a `5xx`, a refused key (`401`/`403`), a network failure, or a timeout moves the turn to the next target, as long as that target has not streamed any text yet; an invalid request does not, and neither does a failure after text has been streamed. A target turned off, or without its key or binding, is skipped. Only models that support tool calling may be configured.
 - The superuser sets the order and the model per target in the [AI settings](settings-and-administration.md#ai-settings). Each assistant message stores the provider and model that wrote it.
 - OpenRouter's free models may log prompts at the model host; see [security and privacy](security-and-privacy.md#ai-tutor).
 
 ## Usage and limits
 
-- **Daily turns.** Each account has at most 40 tutor turns per UTC day (one user message or one component or confirmation answer that resumes the model counts as a turn). The superuser can change the cap. The API checks it before the first model call and refuses with `429 AI_DAILY_LIMIT`; the composer then says when the limit resets and stays disabled until then.
+- **Daily turns.** Each account has at most 40 tutor turns per UTC day (one user message or one component or confirmation answer that resumes the model counts as a turn). The superuser can change the cap. The API checks it before the first model call and refuses with `429 AI_DAILY_LIMIT` and `resetsAt` (the next UTC midnight); the composer then says when the limit resets and stays disabled until then. A turn is counted by the `ai_usage` row of its first model request (marked as a turn start), whether or not the request succeeded; fallback attempts and the further model calls of the turn's tool loop are not counted again, and a turn that reached no provider is not counted.
 - **Speech.** On-demand audio has its own daily character cap per account; see [on-demand audio](speech.md#on-demand-audio).
 - **Metering.** Every model request writes an `ai_usage` row (provider, model, tokens in and out, cost, success), and every on-demand speech request a `speech_usage` row. The superuser sees both on the [analytics page](settings-and-administration.md#analytics).
 

@@ -160,7 +160,7 @@ User ID (primary key), native language, reply language, nullable goals (plain te
 
 ### `ai_usage`
 
-One row per model request, successful or not. ID, user ID, nullable conversation ID, provider, model, tokens in, tokens out, cost in micro-dollars, ok, and created timestamp. Indexed by `(user_id, created_at)` for the daily cap and `(created_at)` for analytics. Rows hold no prompt or answer text.
+One row per model request, successful or not (a fallback writes one row per provider tried). ID, user ID, nullable conversation ID (no foreign key; conversations are never deleted), provider (`openrouter`, `workers_ai`, or `azure`, check-constrained), model, turn start (whether the request is the first of a tutor turn; the [daily turn cap](ai-tutor.md#usage-and-limits) counts these rows), tokens in, tokens out, cost in micro-dollars, ok, and created timestamp. Indexed by `(user_id, created_at)` for the daily cap and `(created_at)` for analytics. Rows hold no prompt or answer text. Added in migration `0027_ai_usage.sql`.
 
 ### `ai_practices`
 
@@ -180,7 +180,7 @@ One row per synthesized clip, shared across groups because a clip is content-add
 
 ### `speech_usage`
 
-Added in C14 for [on-demand audio](speech.md#on-demand-audio). ID, user ID, surface (`ai_message` for now), clip hash, characters, cached (whether the clip was already ready), and created timestamp. Indexed by `(user_id, created_at)` for the daily character cap and `(created_at)` for analytics. Holds no text.
+Added in C14 for [on-demand audio](speech.md#on-demand-audio), migration `0027_ai_usage.sql`. ID, user ID, surface (`ai_message` for now, check-constrained), clip hash, characters, cached (whether the clip was already ready), and created timestamp. Indexed by `(user_id, created_at)` for the daily character cap and `(created_at)` for analytics. Holds no text.
 
 ### `speech_jobs`
 

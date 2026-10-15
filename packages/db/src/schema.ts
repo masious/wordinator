@@ -502,3 +502,46 @@ export const speechJobs = sqliteTable(
   },
   (table) => [index("speech_jobs_due_idx").on(table.dueAt)],
 );
+
+// AI tutor metering (C14f): one row per model request, successful or not; see docs/data-model.md#ai_usage. No prompt or
+// answer text. `turnStart` marks the first request of a tutor turn, which the daily turn cap counts.
+export const aiUsage = sqliteTable(
+  "ai_usage",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id),
+    conversationId: text("conversation_id"),
+    provider: text("provider", { enum: ["openrouter", "workers_ai", "azure"] }).notNull(),
+    model: text("model").notNull(),
+    turnStart: integer("turn_start", { mode: "boolean" }).notNull().default(false),
+    tokensIn: integer("tokens_in").notNull().default(0),
+    tokensOut: integer("tokens_out").notNull().default(0),
+    costMicroUsd: integer("cost_microusd").notNull().default(0),
+    ok: integer("ok", { mode: "boolean" }).notNull(),
+    createdAt: integer("created_at").notNull(),
+  },
+  (table) => [
+    index("ai_usage_user_created_idx").on(table.userId, table.createdAt),
+    index("ai_usage_created_idx").on(table.createdAt),
+    check("ai_usage_provider_check", sql`${table.provider} in ('openrouter', 'workers_ai', 'azure')`),
+  ],
+);
+
+// On-demand speech metering (C14f): one row per request, cache hits included; see docs/data-model.md#speech_usage. No text.
+export const speechUsage = sqliteTable(
+  "speech_usage",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id),
+    surface: text("surface", { enum: ["ai_message"] }).notNull(),
+    clipHash: text("clip_hash").notNull(),
+    characters: integer("characters").notNull(),
+    cached: integer("cached", { mode: "boolean" }).notNull(),
+    createdAt: integer("created_at").notNull(),
+  },
+  (table) => [
+    index("speech_usage_user_created_idx").on(table.userId, table.createdAt),
+    index("speech_usage_created_idx").on(table.createdAt),
+    check("speech_usage_surface_check", sql`${table.surface} in ('ai_message')`),
+  ],
+);

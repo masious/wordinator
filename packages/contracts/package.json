@@ -6,7 +6,8 @@
   "exports": {
     ".": "./src/index.ts",
     "./lesson-document": "./src/lessonDocument.ts",
-    "./speech": "./src/speech.ts"
+    "./speech": "./src/speech.ts",
+    "./ai": "./src/ai.ts"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

@@ -17,6 +17,9 @@
       "bucket_name": "wordinator-media"
     }
   ],
+  "ai": {
+    "binding": "AI"
+  },
   "triggers": {
     "crons": ["17 3 * * *", "* * * * *"]
   },

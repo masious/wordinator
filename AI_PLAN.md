@@ -84,12 +84,33 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 
 ## C14f — Provider layer and metering
 
-- [ ] One OpenAI-compatible chat-completions client with three configured targets: OpenRouter, Workers AI's OpenAI-compatible endpoint (via the `ai` binding), and Azure Foundry. Verify each target's tool-calling and streaming format with current docs before building.
-- [ ] Fallback through the configured order on 429, 5xx, or timeout. Only tool-calling models are allowed.
-- [ ] `ai_usage`: id, user_id, conversation_id, provider, model, tokens_in, tokens_out, cost_microusd, ok, created_at. Enforce the daily turn cap before the first model call.
-- [ ] `speech_usage`: id, user_id, surface (`ai_message`; later others), clip_hash, characters, cached (a cache hit costs nothing at Azure), created_at. A daily per-user character cap in `ai_settings`.
-- [ ] Secrets (`OPENROUTER_API_KEY`, `AZURE_AI_ENDPOINT`, `AZURE_AI_KEY`) are Worker secrets. Never log prompts, answers, or keys.
-- [ ] Tests: fallback order, cap refusal (`429 AI_DAILY_LIMIT`), usage recorded on success and failure, against a stubbed fetch; speech usage recorded for misses and cache hits.
+- [x] One OpenAI-compatible chat-completions client with three configured targets: OpenRouter, Workers AI's OpenAI-compatible endpoint (via the `ai` binding), and Azure Foundry. Verify each target's tool-calling and streaming format with current docs before building.
+- [x] Fallback through the configured order on 429, 5xx, or timeout. Only tool-calling models are allowed.
+- [x] `ai_usage`: id, user_id, conversation_id, provider, model, tokens_in, tokens_out, cost_microusd, ok, created_at. Enforce the daily turn cap before the first model call.
+- [x] `speech_usage`: id, user_id, surface (`ai_message`; later others), clip_hash, characters, cached (a cache hit costs nothing at Azure), created_at. A daily per-user character cap in `ai_settings`.
+- [x] Secrets (`OPENROUTER_API_KEY`, `AZURE_AI_ENDPOINT`, `AZURE_AI_KEY`) are Worker secrets. Never log prompts, answers, or keys.
+- [x] Tests: fallback order, cap refusal (`429 AI_DAILY_LIMIT`), usage recorded on success and failure, against a stubbed fetch; speech usage recorded for misses and cache hits.
+
+### Notes (C14f, 2026-10-16)
+
+Delivered as a library layer in `apps/api/src/ai/` (no routes), migration `0027_ai_usage.sql`, and the `@wordinator/contracts/ai` subpath. Tests: `apps/api/test/ai-provider.test.ts`, `apps/api/test/ai-metering.test.ts`, `packages/contracts/src/ai.test.ts`.
+
+**Verified formats.** `ctx7` could not reach its service from the sandbox, so these were checked on the providers' own pages:
+
+- OpenRouter ([streaming](https://openrouter.ai/docs/api-reference/streaming), [errors](https://openrouter.ai/docs/api/reference/errors-and-debugging.mdx)): `POST https://openrouter.ai/api/v1/chat/completions` with `Authorization: Bearer`, OpenAI request body. The stream sends SSE comment lines (`: OPENROUTER PROCESSING`) to be ignored; a mid-stream error is a chunk with a top-level `error` and `choices[0].finish_reason: "error"` under HTTP 200; the usage chunk repeats `finish_reason` and carries `usage.cost` (USD), which we store as the request's cost.
+- Azure AI Foundry ([v1 API](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/api-version-lifecycle)): `POST https://<resource>.services.ai.azure.com/openai/v1/chat/completions` (or `.openai.azure.com`), no `api-version`, `api-key` header, `model` is the deployment name. Standard OpenAI chunks; the first chunk may have empty `choices` (prompt filter results) and the `stream_options.include_usage` chunk has empty `choices`.
+- Workers AI ([OpenAI compatibility](https://developers.cloudflare.com/workers-ai/configuration/open-ai-compatibility/), [function calling](https://developers.cloudflare.com/workers-ai/features/function-calling/traditional/), [llama-4-scout](https://developers.cloudflare.com/workers-ai/models/llama-4-scout-17b-16e-instruct/), [qwen3](https://developers.cloudflare.com/workers-ai/models/qwen3-30b-a3b-fp8/), and the `workers-ai-provider` stream parser): the `/ai/v1/chat/completions` REST endpoint needs an account API token, so the binding is used instead: `env.AI.run(model, { messages, tools, stream: true })` with OpenAI-format messages and `{ type: "function", function }` tools, resolving to an SSE byte stream. Depending on the model, chunks are native (`{ response, tool_calls, usage }`, a tool call complete as `{ name, arguments }` with object arguments) or OpenAI chunks (`choices[0].delta`); the parser accepts both. The binding takes no abort signal and throws errors without an HTTP status (`3040` capacity, `5006`/`5007`/`8001` invalid input); invalid-input errors are treated as `400`, anything else as retryable. Assumption to recheck when C14g first runs against the real binding: the exact native chunk shape of the chosen model.
+
+**Decisions.**
+
+- **Fallback** moves on `429`, `5xx`, `408`, `401`/`403` (a refused key is that provider's configuration), network failure, a mid-stream error, or a timeout (20 s to the first event, 120 s in all), but only while the attempt has streamed no text; after text has been streamed, a failure ends the request with `AiRequestError(partial: true)`. Other `4xx` statuses throw `AiRequestError` without fallback. No provider configured, or all failed retryably: `AiUnavailableError` (`503 AI_UNAVAILABLE`).
+- **Turn counting.** `ai_usage.turn_start` marks the first model request of a turn. The tutor calls `assertDailyTurnCap` once per turn (a user message or a component/confirmation answer that resumes the model), then passes `turnStart: true` to the turn's first `streamChat` call and `false` to the further calls of its tool loop. Only the first attempt row carries the mark, so fallback attempts are not counted twice; a failed turn still counts; a turn that reached no provider writes no row and does not count.
+- **Speech cap** refuses a request when today's characters plus the request's would exceed the cap (cache hits count); call `assertDailySpeechCap` before serving and `recordSpeechUsage` after.
+- **Cost.** OpenRouter's reported `usage.cost` wins; otherwise `AI_MODEL_PRICES` in `apps/api/src/ai/usage.ts` (USD per million tokens; tokens × that is micro-USD), `:free` models cost 0, and an unlisted model is metered at 0. Azure entries are keyed by deployment name.
+- `conversation_id` has no foreign key (the conversations table is the tutor migration's, and conversations are never deleted).
+- Default models (superuser replaces them): `openai/gpt-oss-120b:free`, `@cf/meta/llama-4-scout-17b-16e-instruct`, and the Azure deployment `gpt-4.1-mini`.
+
+**Helper API for C14g (tutor) and C14e (admin):** `streamChat(request, options)` (async generator of `text`, `tool_call`, and a final `done` with provider, model, finish reason, usage), `completeChat`, `assertDailyTurnCap(db, userId, settings, now?)`, `assertDailySpeechCap(db, userId, settings, characters, now?)`, `recordSpeechUsage(db, input, now?)`, `readAiSettings(db)`, `writeAiSettings(db, settings, now?)`, and `aiErrorResponse(context, error)`; contracts export `aiSettingsSchema`, `DEFAULT_AI_SETTINGS`, `aiProviderSchema`, `aiLimitErrorSchema`, and the usage record schemas.
 
 ## C14g — Tutor API
 
