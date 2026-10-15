@@ -2367,11 +2367,11 @@ async function drillLesson(context: Context<AppEnvironment>, lessonId: string) {
 // in both directions, ordered and capped by the pure deck builder. Speech is attached to the chosen cards only.
 type DrillRow = IndexedWord & {
   termKey: string | null; courseId: string; courseSlug: string; courseTitle: string; lessonSlug: string; lessonTitle: string; bookmarked: number;
-  understandStability: number | null; understandAt: number | null; understandKnown: number | null;
-  produceStability: number | null; produceAt: number | null; produceKnown: number | null;
+  understandStability: number | null; understandAt: number | null; understandKnown: number | null; understandRecent: string | null;
+  produceStability: number | null; produceAt: number | null; produceKnown: number | null; produceRecent: string | null;
 };
-const drillMemory = (stability: number | null, at: number | null, known: number | null): WordDrillMemory | undefined =>
-  stability === null || at === null ? undefined : { stability, lastReviewedAt: at, knownOverride: known === 1 };
+const drillMemory = (stability: number | null, at: number | null, known: number | null, recent: string | null): WordDrillMemory | undefined =>
+  stability === null || at === null ? undefined : { stability, lastReviewedAt: at, knownOverride: known === 1, recent: recent ?? "" };
 
 // A short-lived Azure token for the Microsoft recognizer of spoken answers (docs/words.md#recognizers). Members only; the key
 // stays a Worker secret and neither the key nor the token is logged.
@@ -2412,8 +2412,8 @@ app.get("/api/groups/:groupId/word-drill", requireGroupAccess, async (context) =
     `SELECT w.word_id AS id, w.lesson_id AS lessonId, w.term, w.meaning, w.forms, w.example, w.note, w.ipa, w.term_key AS termKey,
        c.id AS courseId, c.slug AS courseSlug, c.title AS courseTitle, l.slug AS lessonSlug, l.title AS lessonTitle,
        EXISTS (SELECT 1 FROM course_word_bookmarks bm WHERE bm.user_id = ? AND bm.lesson_id = w.lesson_id AND bm.word_id = w.word_id) AS bookmarked,
-       u.stability AS understandStability, u.last_reviewed_at AS understandAt, u.known_override AS understandKnown,
-       p.stability AS produceStability, p.last_reviewed_at AS produceAt, p.known_override AS produceKnown
+       u.stability AS understandStability, u.last_reviewed_at AS understandAt, u.known_override AS understandKnown, u.recent AS understandRecent,
+       p.stability AS produceStability, p.last_reviewed_at AS produceAt, p.known_override AS produceKnown, p.recent AS produceRecent
      FROM course_lesson_words w
      JOIN course_lessons l ON l.id = w.lesson_id AND l.group_id = w.group_id AND l.course_id = w.course_id AND l.published_doc IS NOT NULL
      JOIN courses c ON c.id = w.course_id AND c.group_id = w.group_id
@@ -2424,15 +2424,15 @@ app.get("/api/groups/:groupId/word-drill", requireGroupAccess, async (context) =
   const deck = buildWordDrillDeck(rows.results.map((row) => ({
     row, termKey: row.termKey ?? wordSearchKey(row.term), bookmarked: row.bookmarked === 1,
     memory: {
-      understand: drillMemory(row.understandStability, row.understandAt, row.understandKnown),
-      produce: drillMemory(row.produceStability, row.produceAt, row.produceKnown),
+      understand: drillMemory(row.understandStability, row.understandAt, row.understandKnown, row.understandRecent),
+      produce: drillMemory(row.produceStability, row.produceAt, row.produceKnown, row.produceRecent),
     },
   })), parsed.data.direction, Math.random, Date.now());
   const spoken = await withWordSpeech(db, deck.map((entry) => entry.candidate.row), group.language, context.env.PUBLIC_MEDIA_BASE_URL);
   return context.json(wordDrillDeckSchema.parse({
     cards: spoken.map(({
       termKey: _termKey, courseId, courseSlug, courseTitle, lessonSlug, lessonTitle, bookmarked: _bookmarked,
-      understandStability: _us, understandAt: _ua, understandKnown: _uk, produceStability: _ps, produceAt: _pa, produceKnown: _pk, ...word
+      understandStability: _us, understandAt: _ua, understandKnown: _uk, understandRecent: _ur, produceStability: _ps, produceAt: _pa, produceKnown: _pk, produceRecent: _pr, ...word
     }, index) => ({
       word, direction: deck[index]!.direction,
       course: { id: courseId, slug: courseSlug, title: courseTitle }, lesson: { id: word.lessonId, slug: lessonSlug, title: lessonTitle },

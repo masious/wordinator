@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   compareWordWeakness, foldWordReview, rebuildWordMemory, recallProbability, recentResults, SEED_STABILITY_DAYS, WORD_DEFAULT_DIFFICULTY, WORD_NEW_RECALL,
-  WORD_WEAK_HORIZON_DAYS, wordWeakness,
+  WORD_LAPSE_RECALL, WORD_WEAK_HORIZON_DAYS, wordWeakness,
   type FoldableWordReview, type WordMemoryState,
 } from "../src/wordMemory";
 
@@ -107,6 +107,15 @@ describe("weakness ranking", () => {
     const order = [{ id: "stable", ...rank(stable, 100) }, { id: "new", ...rank(null, 100) }, { id: "failed", ...rank(failed, 100) }]
       .sort(compareWordWeakness).map((entry) => entry.id);
     expect(order).toEqual(["failed", "new", "stable"]);
+  });
+
+  it("ranks a word whose latest result is Again before never-reviewed words, even with stability left", () => {
+    const relapsed = foldAll([review("got", 0), review("got", 3), review("again", 100)])!;
+    expect(recallProbability(relapsed, (100 + WORD_WEAK_HORIZON_DAYS) * DAY)).toBeGreaterThan(WORD_NEW_RECALL);
+    expect(rank(relapsed, 100).recall).toBe(WORD_LAPSE_RECALL);
+    expect(compareWordWeakness(rank(relapsed, 100), rank(null, 100))).toBeLessThan(0);
+    const recovered = foldAll([review("got", 0), review("again", 50), review("got", 100)])!;
+    expect(rank(recovered, 100).recall).toBeGreaterThan(WORD_LAPSE_RECALL);
   });
 
   it("breaks ties of recall by the longest since last reviewed", () => {

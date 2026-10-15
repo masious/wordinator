@@ -101,9 +101,14 @@ export type WordMemoryKey = { userId: string; termKey: string; direction: WordDr
 export const WORD_WEAK_HORIZON_DAYS = 7;
 export type WordWeakness = { recall: number; lastReviewedAt: number };
 
-/** A row's weakness at `now`: recall `WORD_WEAK_HORIZON_DAYS` ahead (`WORD_NEW_RECALL` without a row), and its last review. */
-export function wordWeakness(state: Pick<WordMemoryState, "stability" | "lastReviewedAt"> | null | undefined, now: number): WordWeakness {
-  return { recall: recallProbability(state, now + WORD_WEAK_HORIZON_DAYS * DAY_MS), lastReviewedAt: state?.lastReviewedAt ?? Number.NEGATIVE_INFINITY };
+/** A word whose latest result is Again ranks at most here, below never-reviewed words, whatever stability it kept. */
+export const WORD_LAPSE_RECALL = 0.4;
+
+/** A row's weakness at `now`: recall `WORD_WEAK_HORIZON_DAYS` ahead (`WORD_NEW_RECALL` without a row, capped at `WORD_LAPSE_RECALL` after an Again), and its last review. */
+export function wordWeakness(state: (Pick<WordMemoryState, "stability" | "lastReviewedAt"> & { recent?: string }) | null | undefined, now: number): WordWeakness {
+  const projected = recallProbability(state, now + WORD_WEAK_HORIZON_DAYS * DAY_MS);
+  const recall = state?.recent?.endsWith("a") ? Math.min(projected, WORD_LAPSE_RECALL) : projected;
+  return { recall, lastReviewedAt: state?.lastReviewedAt ?? Number.NEGATIVE_INFINITY };
 }
 
 /** Weakest first: the lower projected recall, then the longer since last reviewed (never reviewed first). */

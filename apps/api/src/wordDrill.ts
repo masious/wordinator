@@ -5,7 +5,7 @@ import { compareWordWeakness, wordWeakness, type WordMemoryState } from "./wordM
 // Math.random, and decides every tie and the final shuffle; `now` is the time weakness (recall projected
 // WORD_WEAK_HORIZON_DAYS ahead, the ranking the Weak words view shares) is computed at.
 
-export type WordDrillMemory = Pick<WordMemoryState, "stability" | "lastReviewedAt" | "knownOverride">;
+export type WordDrillMemory = Pick<WordMemoryState, "stability" | "lastReviewedAt" | "knownOverride"> & { recent?: string };
 export type WordDrillCandidate = { termKey: string; bookmarked: boolean; memory: Partial<Record<WordDrillDirection, WordDrillMemory>> };
 export type WordDrillDeckEntry<T> = { candidate: T; direction: WordDrillDirection };
 

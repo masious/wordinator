@@ -8,7 +8,7 @@ import { compareWordWeakness, wordWeakness, type WordWeakness } from "./wordMemo
 
 type Visibility = { sql: string; values: Array<string | number> };
 type MemoryRow = {
-  termKey: string; direction: WordDrillDirection; lessonId: string; wordId: string; stability: number; lastReviewedAt: number; known: number;
+  termKey: string; direction: WordDrillDirection; lessonId: string; wordId: string; stability: number; lastReviewedAt: number; known: number; recent: string;
 };
 export type WeakWordOccurrence = {
   id: string; lessonId: string; term: string; meaning: string; forms: string | null; example: string | null; note: string | null; ipa: string | null;
@@ -47,7 +47,7 @@ export async function readWeakWords(db: D1Database, options: {
   const { userId, groupId, visible, cursor } = options;
   const at = cursor?.at ?? options.now;
   const memory = await db.prepare(
-    `SELECT term_key AS termKey, direction, lesson_id AS lessonId, word_id AS wordId, stability, last_reviewed_at AS lastReviewedAt, known_override AS known
+    `SELECT term_key AS termKey, direction, lesson_id AS lessonId, word_id AS wordId, stability, last_reviewed_at AS lastReviewedAt, known_override AS known, recent
      FROM word_memory WHERE user_id = ?`,
   ).bind(userId).all<MemoryRow>();
   if (!memory.results.length) return { rows: [], nextCursor: null, hasMemory: false };
