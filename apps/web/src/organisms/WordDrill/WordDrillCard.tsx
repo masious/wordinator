@@ -5,7 +5,7 @@ import { PlainText } from "../../molecules/PlainText";
 import { playRevealSpeech, SpeechButton, useStopSpeechOnUnmount } from "../../molecules/Speech";
 import { Button } from "../../ui";
 import { blankExample } from "./drillSession";
-import { ListenStatusLine, SpeakButton, SpokenVerdict } from "../../molecules/SpeakControls";
+import { AssessmentBreakdown, ListenStatusLine, SpeakButton, SpokenVerdict } from "../../molecules/SpeakControls";
 import { useSpokenAnswer, type SpokenAnswer } from "../../molecules/speechRecognition";
 import styles from "./WordDrillCard.module.css";
 
@@ -44,7 +44,6 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
   const spoken = useSpokenAnswer(word.term, (heard) => { if (revealed) return; setAnswer(heard); reveal(); });
   const canSpeak = direction === "produce" && spoken.available;
   const listen = () => { if (canSpeak && !revealed) spoken.listen(); };
-  const listening = spoken.status === "listening";
 
   // A card after the first takes focus, so the keyboard and screen readers follow the session; the answer takes it once shown.
   useLayoutEffect(() => { if (autoFocus) cardRef.current?.focus({ preventScroll: true }); }, [autoFocus]);
@@ -83,6 +82,7 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
       <div ref={backRef} className={`${styles.face} ${styles.back}`} aria-hidden={!revealed || undefined} inert={!revealed} tabIndex={revealed ? -1 : undefined}>
         {revealed && <>
           {answer && <SpokenVerdict answer={answer} />}
+          {answer?.assessment && <AssessmentBreakdown assessment={answer.assessment} />}
           <p className={styles.source}>{source}</p>
           <p className={styles.backTerm}>{word.term}<SpeechButton url={word.speech.term} label={termLabel} owner={termOwner} className={styles.speech} /></p>
           {word.forms && <p className={styles.forms}>{word.forms}</p>}
@@ -98,7 +98,7 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
         <Button variant="secondary" aria-keyshortcuts="1" onClick={() => onGrade("again")}>{t("drill.again")}<kbd className={styles.key} aria-hidden="true">1</kbd></Button>
         <Button aria-keyshortcuts="2" onClick={() => onGrade("got")}>{t("drill.got")}<kbd className={styles.key} aria-hidden="true">2</kbd></Button>
       </> : <>
-        {canSpeak && <SpeakButton listening={listening} onListen={listen} />}
+        {canSpeak && <SpeakButton state={spoken} onListen={listen} />}
         <Button aria-keyshortcuts="Space" onClick={reveal}>{t("drill.showAnswer")}</Button>
       </>}
     </div>

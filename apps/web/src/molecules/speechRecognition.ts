@@ -12,9 +12,19 @@ import { stopSpeech } from "./Speech";
 export const RECOGNITION_LOCALES = { nl: "nl-NL", de: "de-DE" } as const;
 
 export type Recognizer = "browser" | "microsoft";
-export type SpokenAnswer = { heard: string; matches: boolean };
-export type ListenStatus = "idle" | "listening" | "noSpeech" | "blocked" | "failed";
-type ListenOutcome = Exclude<ListenStatus, "listening">;
+// Microsoft's pronunciation assessment of an answer against the term (docs/words.md#pronunciation-assessment), scored 0–100.
+// Dutch and German get whole-answer and per-word scores; prosody, syllables, and phoneme names are English-only and not asked for.
+export type WordAssessment = { word: string; accuracy: number | null; error: "none" | "mispronunciation" | "omission" | "insertion" };
+export type PronunciationAssessment = { overall: number; accuracy: number; fluency: number; completeness: number; words: WordAssessment[] };
+// What a recognizer heard. Only a recognizer that assesses pronunciation (Microsoft) fills `assessment`; the browser's leaves it null.
+export type SpokenAnswer = { heard: string; matches: boolean; assessment: PronunciationAssessment | null };
+// While a listen runs it moves through phases (docs/words.md#listening-feedback): preparing (microphone, token, and connection),
+// listening (ready, waiting for speech), hearing (speech detected), and checking (speech ended, the answer is being worked out).
+export type ListenPhase = "preparing" | "listening" | "hearing" | "checking";
+export type ListenStatus = "idle" | ListenPhase | "noSpeech" | "blocked" | "failed";
+type ListenOutcome = Exclude<ListenStatus, ListenPhase>;
+export const isListening = (status: ListenStatus): status is ListenPhase =>
+  status === "preparing" || status === "listening" || status === "hearing" || status === "checking";
 
 // ---- Choosing a recognizer ----
 
@@ -46,13 +56,14 @@ export function useRecognizerPreference(): Recognizer {
 
 // The slice of the Web Speech API used here; TypeScript's DOM library does not declare it.
 type RecognitionAlternative = { readonly transcript: string };
-type RecognitionResultEvent = { readonly results: ArrayLike<ArrayLike<RecognitionAlternative>> };
+type RecognitionResultEvent = { readonly results: ArrayLike<ArrayLike<RecognitionAlternative> & { readonly isFinal?: boolean }> };
 type RecognitionErrorEvent = { readonly error: string };
 type Recognition = {
   lang: string; interimResults: boolean; continuous: boolean; maxAlternatives: number;
   onresult: ((event: RecognitionResultEvent) => void) | null;
   onerror: ((event: RecognitionErrorEvent) => void) | null;
   onend: (() => void) | null;
+  onaudiostart?: (() => void) | null; onspeechstart?: (() => void) | null; onspeechend?: (() => void) | null;
   start(): void; abort(): void; stop(): void;
 };
 type RecognitionConstructor = new () => Recognition;
@@ -99,21 +110,120 @@ export function matchesTerm(transcripts: readonly string[], term: string): boole
   return expected !== "" && transcripts.some((transcript) => spokenKey(transcript) === expected);
 }
 
+// ---- Microphone ----
+
+// Speech recognizers take 16 kHz, 16-bit, mono PCM.
+const PCM_RATE = 16_000;
+// A tap on the capture that hands its raw samples to the main thread. Loaded from a blob, so it needs no separate file.
+const PCM_TAP = `registerProcessor("wordinator-pcm-tap", class extends AudioWorkletProcessor {
+  process(inputs) { const channel = inputs[0] && inputs[0][0]; if (channel) this.port.postMessage(channel.slice(0)); return true; }
+});`;
+
+// One microphone capture per listen (docs/words.md#listening-feedback), with the browser's echo cancellation, noise suppression,
+// and automatic gain, so sound from the device's own speakers and steady background noise reach the recognizer as little as
+// possible. It reports the level (0–1) about sixty times a second, and, for a recognizer fed by the app (Microsoft), 16 kHz PCM.
+type Capture = { stream: MediaStream; onLevel: (listener: (level: number) => void) => void; onPcm: ((listener: (pcm: ArrayBuffer) => void) => void) | null; close: () => void };
+
+class MicrophoneBlocked extends Error {}
+
+async function openCapture(): Promise<Capture | null> {
+  if (!microsoftRecognitionSupported()) return null;
+  let stream: MediaStream;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } });
+  } catch { throw new MicrophoneBlocked(); }
+  const AudioContextClass = typeof window === "undefined" ? undefined : window.AudioContext;
+  let context: AudioContext | null = null; let frame = 0; let closed = false;
+  let levelListener: ((level: number) => void) | null = null; let pcmListener: ((pcm: ArrayBuffer) => void) | null = null;
+  let tap: AudioWorkletNode | null = null;
+  if (AudioContextClass) {
+    try {
+      context = new AudioContextClass();
+      const source = context.createMediaStreamSource(stream);
+      const analyser = context.createAnalyser();
+      analyser.fftSize = 512;
+      source.connect(analyser);
+      const samples = new Float32Array(analyser.fftSize);
+      const read = () => {
+        if (closed) return;
+        analyser.getFloatTimeDomainData(samples);
+        let sum = 0;
+        for (const sample of samples) sum += sample * sample;
+        // Speech sits around 0.02–0.2 RMS; this curve spreads it over the range.
+        levelListener?.(Math.min(1, Math.sqrt(Math.sqrt(sum / samples.length)) * 1.6));
+        frame = requestAnimationFrame(read);
+      };
+      read();
+      if (context.audioWorklet && typeof AudioWorkletNode !== "undefined") {
+        const url = URL.createObjectURL(new Blob([PCM_TAP], { type: "text/javascript" }));
+        try { await context.audioWorklet.addModule(url); } finally { URL.revokeObjectURL(url); }
+        tap = new AudioWorkletNode(context, "wordinator-pcm-tap");
+        const resample = pcmResampler(context.sampleRate);
+        tap.port.onmessage = (event: MessageEvent<Float32Array>) => { if (pcmListener) pcmListener(resample(event.data)); };
+        source.connect(tap);
+      }
+    } catch { tap = null; }
+  }
+  return {
+    stream,
+    onLevel: (listener) => { levelListener = listener; },
+    onPcm: tap ? (listener) => { pcmListener = listener; } : null,
+    close: () => {
+      closed = true; levelListener = null; pcmListener = null;
+      cancelAnimationFrame(frame);
+      tap?.port.close();
+      for (const track of stream.getTracks()) track.stop();
+      void context?.close().catch(() => undefined);
+    },
+  };
+}
+
+// Turns float samples at the capture's rate into 16 kHz, 16-bit PCM, averaging the samples each output sample covers and carrying
+// the fractional remainder between chunks.
+export function pcmResampler(inputRate: number) {
+  const step = inputRate / PCM_RATE;
+  let position = 0;
+  return (input: Float32Array): ArrayBuffer => {
+    const output = new Int16Array(Math.max(0, Math.floor((input.length - position) / step) + 1));
+    let count = 0;
+    for (; position < input.length && count < output.length; position += step, count++) {
+      const from = Math.floor(position); const to = Math.min(input.length, Math.max(from + 1, Math.floor(position + step)));
+      let sum = 0;
+      for (let index = from; index < to; index++) sum += input[index]!;
+      const sample = Math.max(-1, Math.min(1, sum / (to - from)));
+      output[count] = sample < 0 ? sample * 0x8000 : sample * 0x7fff;
+    }
+    position -= input.length;
+    return output.buffer.slice(0, count * 2);
+  };
+}
+
 // ---- Listening ----
 
-// One utterance: `onAlternatives` gets what was heard, best first; `onEnd` comes once, last. `stop` ends early.
-type Handlers = { onAlternatives: (alternatives: string[]) => void; onEnd: (outcome: ListenOutcome) => void };
-type Session = { stop: () => void };
+// One utterance: `onPhase` follows its progress and `onInterim` what has been heard so far; `onAlternatives` gets what was heard,
+// best first, with an assessment when the recognizer gives one; `onEnd` comes once, last. `finish` ends the audio and keeps what
+// was said so far; `cancel` drops it.
+type Handlers = {
+  onPhase: (phase: Exclude<ListenPhase, "preparing">) => void; onInterim: (text: string) => void;
+  onAlternatives: (alternatives: string[], assessment: PronunciationAssessment | null) => void; onEnd: (outcome: ListenOutcome) => void;
+};
+type Session = { finish: () => void; cancel: () => void };
 
+// The browser's recognizer captures the microphone itself; the app's capture only drives the meter and endpointing beside it.
 function listenWithBrowser(locale: string, handlers: Handlers): Session {
   const recognition = new (recognitionConstructor()!)();
-  recognition.lang = locale; recognition.interimResults = false; recognition.continuous = false; recognition.maxAlternatives = 5;
+  recognition.lang = locale; recognition.interimResults = true; recognition.continuous = false; recognition.maxAlternatives = 5;
   let outcome: ListenOutcome = "noSpeech";
+  recognition.onaudiostart = () => handlers.onPhase("listening");
+  recognition.onspeechstart = () => handlers.onPhase("hearing");
+  recognition.onspeechend = () => handlers.onPhase("checking");
   recognition.onresult = (event) => {
-    const alternatives = Array.from(event.results[0] ?? [], (alternative) => alternative.transcript.trim()).filter(Boolean);
+    const result = event.results[0];
+    const alternatives = Array.from(result ?? [], (alternative) => alternative.transcript.trim()).filter(Boolean);
     if (!alternatives.length) return;
+    if (result?.isFinal === false) { handlers.onPhase("hearing"); handlers.onInterim(alternatives[0]!); return; }
     outcome = "idle";
-    handlers.onAlternatives(alternatives);
+    handlers.onAlternatives(alternatives, null);
   };
   recognition.onerror = (event) => {
     if (event.error === "aborted") outcome = "idle";
@@ -122,7 +232,8 @@ function listenWithBrowser(locale: string, handlers: Handlers): Session {
   };
   recognition.onend = () => handlers.onEnd(outcome);
   try { recognition.start(); } catch { handlers.onEnd("failed"); }
-  return { stop: () => recognition.stop() };
+  // stop() asks for a final result from the audio so far; abort() drops it.
+  return { finish: () => recognition.stop(), cancel: () => recognition.abort() };
 }
 
 // Azure's detailed result lists alternatives (NBest), each with its display and lexical form.
@@ -136,74 +247,195 @@ function azureAlternatives(json: string | undefined, fallback: string): string[]
   return fallback.trim() ? [fallback.trim()] : [];
 }
 
-function listenWithMicrosoft(locale: string, token: TokenSource, handlers: Handlers): Session {
-  let stopped = false; let ended = false;
-  let close: (() => void) | null = null;
-  const end = (outcome: ListenOutcome) => { if (ended) return; ended = true; close?.(); handlers.onEnd(stopped ? "idle" : outcome); };
+const score = (value: unknown) => typeof value === "number" && Number.isFinite(value) ? Math.round(Math.min(100, Math.max(0, value))) : null;
+const ERRORS = { None: "none", Mispronunciation: "mispronunciation", Omission: "omission", Insertion: "insertion" } as const;
+
+// The assessment in Azure's detailed result: scores on the best alternative (inside `PronunciationAssessment`, or directly on it
+// in older responses) and on each of its words. Null when the result carries none.
+export function readAssessment(json: string | undefined): PronunciationAssessment | null {
+  type Scores = { AccuracyScore?: unknown; FluencyScore?: unknown; CompletenessScore?: unknown; PronScore?: unknown; ErrorType?: unknown };
+  type Best = Scores & { PronunciationAssessment?: Scores; Words?: Array<Scores & { Word?: unknown; PronunciationAssessment?: Scores }> };
+  let best: Best | undefined;
+  try { best = (JSON.parse(json ?? "") as { NBest?: Best[] }).NBest?.[0]; } catch { return null; }
+  if (!best) return null;
+  const totals = best.PronunciationAssessment ?? best;
+  const overall = score(totals.PronScore); const accuracy = score(totals.AccuracyScore);
+  const fluency = score(totals.FluencyScore); const completeness = score(totals.CompletenessScore);
+  if (overall === null || accuracy === null || fluency === null || completeness === null) return null;
+  const words = (best.Words ?? []).flatMap((entry): WordAssessment[] => {
+    const scores = entry.PronunciationAssessment ?? entry;
+    if (typeof entry.Word !== "string" || !entry.Word) return [];
+    const error = typeof scores.ErrorType === "string" && scores.ErrorType in ERRORS ? ERRORS[scores.ErrorType as keyof typeof ERRORS] : "none";
+    return [{ word: entry.Word, accuracy: error === "omission" ? null : score(scores.AccuracyScore), error }];
+  });
+  return { overall, accuracy, fluency, completeness, words };
+}
+
+// The term as Azure should expect it spoken: letters, digits, apostrophes, and hyphens, without the punctuation and ellipses that
+// a phrase such as "Zullen we …?" carries.
+const referenceText = (term: string) => term.replace(/[^\p{L}\p{N}'’-]+/gu, " ").trim();
+
+// Microsoft hears the app's own capture through a push stream, so the app decides when the audio ends: closing the stream makes
+// Azure recognize and assess what it has, which is how finishing early keeps the word.
+function listenWithMicrosoft(locale: string, token: TokenSource, term: string, capture: Capture, handlers: Handlers): Session {
+  let cancelled = false; let ended = false;
+  let close: (() => void) | null = null; let endAudio: (() => void) | null = null;
+  const end = (outcome: ListenOutcome) => { if (ended) return; ended = true; close?.(); handlers.onEnd(cancelled ? "idle" : outcome); };
   void (async () => {
-    // Asking for the microphone first tells a blocked microphone apart from a failing service.
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      for (const track of stream.getTracks()) track.stop();
-    } catch { end("blocked"); return; }
-    if (stopped) { end("idle"); return; }
     let sdk: typeof import("microsoft-cognitiveservices-speech-sdk");
     let access: SpeechRecognitionTokenResponse;
     try { [sdk, access] = await Promise.all([import("microsoft-cognitiveservices-speech-sdk"), token.get()]); } catch { end("failed"); return; }
-    if (stopped) { end("idle"); return; }
+    if (cancelled) { end("idle"); return; }
     const config = sdk.SpeechConfig.fromAuthorizationToken(access.token, access.region);
     config.speechRecognitionLanguage = locale;
     config.outputFormat = sdk.OutputFormat.Detailed;
-    const recognizer = new sdk.SpeechRecognizer(config, sdk.AudioConfig.fromDefaultMicrophoneInput());
-    close = () => { try { recognizer.close(); } catch { /* Already closed. */ } };
+    let audio: import("microsoft-cognitiveservices-speech-sdk").AudioConfig;
+    if (capture.onPcm) {
+      const push = sdk.AudioInputStream.createPushStream(sdk.AudioStreamFormat.getWaveFormatPCM(PCM_RATE, 16, 1));
+      let open = true;
+      capture.onPcm((pcm) => { if (open && pcm.byteLength) push.write(pcm); });
+      endAudio = () => { if (!open) return; open = false; push.close(); };
+      audio = sdk.AudioConfig.fromStreamInput(push);
+    } else {
+      // Without an audio worklet the SDK reads the processed stream itself; finishing early then stops the recognizer.
+      audio = sdk.AudioConfig.fromStreamInput(capture.stream);
+    }
+    const recognizer = new sdk.SpeechRecognizer(config, audio);
+    // Scripted assessment against the term: whole-answer and per-word scores, and missed or extra words (miscue).
+    const reference = referenceText(term);
+    if (reference) {
+      sdk.PronunciationAssessmentConfig.fromJSON(JSON.stringify({ referenceText: reference, gradingSystem: "HundredMark", granularity: "Word", enableMiscue: true }))
+        .applyTo(recognizer);
+    }
+    close = () => { endAudio?.(); try { recognizer.close(); } catch { /* Already closed. */ } };
+    recognizer.sessionStarted = () => handlers.onPhase("listening");
+    recognizer.speechStartDetected = () => handlers.onPhase("hearing");
+    recognizer.recognizing = (_sender, event) => { const text = event.result.text.trim(); if (text) { handlers.onPhase("hearing"); handlers.onInterim(text); } };
+    recognizer.speechEndDetected = () => handlers.onPhase("checking");
+    if (!endAudio) endAudio = () => { try { recognizer.close(); } catch { /* Already closed. */ } end("noSpeech"); };
     recognizer.recognizeOnceAsync((result) => {
       if (result.reason === sdk.ResultReason.RecognizedSpeech) {
-        const alternatives = azureAlternatives(result.properties.getProperty(sdk.PropertyId.SpeechServiceResponse_JsonResult), result.text);
-        if (alternatives.length && !stopped) { handlers.onAlternatives(alternatives); end("idle"); } else end("noSpeech");
+        const json = result.properties.getProperty(sdk.PropertyId.SpeechServiceResponse_JsonResult);
+        const alternatives = azureAlternatives(json, result.text);
+        if (alternatives.length && !cancelled) { handlers.onAlternatives(alternatives, reference ? readAssessment(json) : null); end("idle"); } else end("noSpeech");
       } else if (result.reason === sdk.ResultReason.NoMatch) end("noSpeech");
       else {
         const code = sdk.CancellationDetails.fromResult(result).ErrorCode;
         if (code === sdk.CancellationErrorCode.AuthenticationFailure || code === sdk.CancellationErrorCode.Forbidden) token.forget();
-        end("failed");
+        // Ending the audio early can surface as an end-of-stream cancellation; it still means nothing was recognized.
+        end(code === sdk.CancellationErrorCode.NoError ? "noSpeech" : "failed");
       }
     }, () => end("failed"));
   })();
-  return { stop: () => { stopped = true; end("idle"); } };
+  return {
+    finish: () => { if (endAudio) endAudio(); else { cancelled = true; end("idle"); } },
+    cancel: () => { cancelled = true; end("idle"); },
+  };
 }
 
+// ---- Ending an answer ----
+
+// How long the microphone can stay silent before the learner is nudged.
+export const QUIET_NUDGE_MS = 3000;
+const QUIET_LEVEL = 0.04;
+// The app ends an answer itself rather than waiting on the recognizer's own silence detection, which steady noise can hold open:
+// speech is sound above the measured background by SPEECH_MARGIN; the answer ends after END_SILENCE_MS back near the background,
+// and at the latest MAX_ANSWER_MS after speech began. Terms are a word or a short phrase.
+export const END_SILENCE_MS = 900;
+export const MAX_ANSWER_MS = 6000;
+const SPEECH_MARGIN = 0.12;
+const MIN_LEVEL = 0.01;
+
 // One recognition at a time for a card, in the surrounding scope's locale with the device's recognizer. `listen` starts it
-// (stopping any playing clip, so the speaker is not heard back) or, while listening, stops it; `onAnswer` gets the best
-// alternative and whether any alternative matched. Unmounting the card stops it. `available` is false outside a scope or where
-// no recognizer can run.
+// (stopping any playing clip, so the speaker is not heard back) or, while listening, finishes it with what was said so far;
+// `onAnswer` gets the best alternative and whether any alternative matched. While it listens, `status` is its phase, `interim`
+// what has been heard so far, and `quiet` whether the microphone has heard nothing for QUIET_NUDGE_MS; `meterRef` takes the
+// element whose `--level` (0–1) follows the microphone. Unmounting the card cancels it. `available` is false outside a scope or
+// where no recognizer can run.
 export function useSpokenAnswer(term: string, onAnswer: (answer: SpokenAnswer) => void) {
   const scope = useContext(RecognitionScopeContext);
   const recognizer = effectiveRecognizer(useRecognizerPreference());
   const [status, setStatus] = useState<ListenStatus>("idle");
-  const session = useRef<Session | null>(null);
+  const [interim, setInterim] = useState("");
+  const [quiet, setQuiet] = useState(false);
+  const run = useRef<{ finish: () => void; cancel: () => void } | null>(null);
+  const meterElement = useRef<HTMLElement | null>(null);
   const latest = useRef(onAnswer);
   latest.current = onAnswer;
-  useEffect(() => () => { const current = session.current; session.current = null; current?.stop(); }, []);
+  useEffect(() => () => { const current = run.current; run.current = null; current?.cancel(); }, []);
 
   const listen = () => {
     if (!scope || !recognizer) return;
-    if (session.current) { session.current.stop(); return; }
+    if (run.current) { run.current.finish(); return; }
     stopSpeech();
-    let current: Session | null = null;
-    const handlers: Handlers = {
-      onAlternatives: (alternatives) => { if (session.current === current) latest.current({ heard: alternatives[0]!, matches: matchesTerm(alternatives, term) }); },
-      onEnd: (outcome) => {
-        // A recognizer can end before it returns, so its session is recognized by the `ended` flag as well.
-        if (current === null) { ended = outcome; return; }
-        if (session.current !== current) return;
-        session.current = null;
-        setStatus(outcome);
+    const locale = scope.locale; const token = scope.token;
+    let session: Session | null = null; let capture: Capture | null = null;
+    let phase: ListenPhase = "preparing"; let done = false; let finishing = false; let pendingFinish = false;
+    let lastSound = Date.now(); let floor: number | null = null; let speechAt: number | null = null; let lastLoud = 0; let silent = false;
+    const self = {
+      finish: () => {
+        if (finishing || done) return;
+        if (!session) { pendingFinish = true; return; }
+        finishing = true;
+        if (phase === "hearing") handlers.onPhase("checking");
+        session.finish();
       },
+      cancel: () => { done = true; session?.cancel(); capture?.close(); },
     };
-    let ended: ListenOutcome | null = null;
-    setStatus("listening");
-    current = recognizer === "browser" ? listenWithBrowser(scope.locale, handlers) : listenWithMicrosoft(scope.locale, scope.token, handlers);
-    if (ended !== null) { setStatus(ended); return; }
-    session.current = current;
+    const live = () => run.current === self && !done;
+    const settle = (outcome: ListenOutcome) => {
+      if (done) return;
+      done = true; capture?.close(); meterElement.current?.style.removeProperty("--level");
+      if (run.current !== self) return;
+      run.current = null;
+      setInterim(""); setQuiet(false); setStatus(outcome);
+    };
+    const handlers: Handlers = {
+      onPhase: (next) => {
+        if (!live() || next === phase) return;
+        if (next === "listening" && phase !== "preparing") return;
+        if (next !== "checking" && finishing) return;
+        phase = next; lastSound = Date.now(); setStatus(next);
+      },
+      onInterim: (text) => { if (live()) setInterim(text); },
+      onAlternatives: (alternatives, assessment) => {
+        if (live()) latest.current({ heard: alternatives[0]!, matches: matchesTerm(alternatives, term), assessment });
+      },
+      onEnd: settle,
+    };
+    const onLevel = (level: number) => {
+      if (!live()) return;
+      meterElement.current?.style.setProperty("--level", level.toFixed(3));
+      const now = Date.now();
+      if (level >= QUIET_LEVEL) lastSound = now;
+      const nextSilent = phase === "listening" && now - lastSound >= QUIET_NUDGE_MS;
+      if (nextSilent !== silent) { silent = nextSilent; setQuiet(nextSilent); }
+      // The background level, ignoring the digital silence a capture can start with: it drops to quieter moments at once, rises
+      // toward steadier noise within a second or so, and barely moves while someone speaks.
+      if (level < MIN_LEVEL) return;
+      const loud = floor !== null && level > floor + SPEECH_MARGIN;
+      floor = floor === null || level < floor ? level : floor + (level - floor) * (loud ? 0.002 : 0.05);
+      if (loud) { lastLoud = now; speechAt ??= now; }
+      if (speechAt !== null && !finishing && (now - lastLoud >= END_SILENCE_MS || now - speechAt >= MAX_ANSWER_MS)) self.finish();
+    };
+    run.current = self;
+    setStatus("preparing"); setInterim(""); setQuiet(false);
+    // The browser's recognizer captures the microphone itself and starts at once; the app's capture only meters beside it.
+    // Microsoft hears the app's capture, so it starts once the capture is open, and a blocked microphone ends it.
+    if (recognizer === "browser") session = listenWithBrowser(locale, handlers);
+    void (async () => {
+      try { capture = await openCapture(); } catch (error) {
+        if (error instanceof MicrophoneBlocked && recognizer === "microsoft") { settle("blocked"); return; }
+        capture = null;
+      }
+      if (done || run.current !== self) { capture?.close(); return; }
+      capture?.onLevel(onLevel);
+      if (recognizer === "browser") return;
+      if (!capture) { settle("failed"); return; }
+      session = listenWithMicrosoft(locale, token, term, capture, handlers);
+      if (pendingFinish && !done) self.finish();
+    })();
   };
-  return { status, listen, available: scope !== null && recognizer !== null };
+  const meterRef = (element: HTMLElement | null) => { meterElement.current = element; };
+  return { status, interim, quiet, listen, meterRef, available: scope !== null && recognizer !== null };
 }

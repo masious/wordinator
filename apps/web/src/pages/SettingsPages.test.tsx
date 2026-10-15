@@ -66,7 +66,11 @@ describe("Account settings", () => {
     const sections = screen.getByRole("navigation", { name: "Settings sections" });
     expect(within(sections).getByRole("link", { name: "Account" })).toHaveAttribute("aria-current", "page");
     expect(within(sections).getByRole("link", { name: "Members" })).toHaveAttribute("href", `/groups/${groupId}/settings/members`);
-    expect(screen.getByDisplayValue("ada@example.test")).toBeDisabled();
+    // Identity sits in the card header: the email is read-only text, and the avatar is edited from its corner button.
+    expect(screen.getByText("ada@example.test")).toBeVisible();
+    expect(screen.queryByDisplayValue("ada@example.test")).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Choose a profile photo" })).toBeVisible();
+    expect(screen.queryByRole("button", { name: "Remove image" })).not.toBeInTheDocument();
     expect(screen.queryByLabelText("Group name")).not.toBeInTheDocument();
     fireEvent.change(screen.getByLabelText("Bio"), { target: { value: "A new bio" } });
     fireEvent.click(screen.getByRole("button", { name: "Save profile" }));

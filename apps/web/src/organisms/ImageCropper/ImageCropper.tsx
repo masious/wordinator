@@ -12,8 +12,8 @@ const CENTER: Point = { x: 0, y: 0 };
 
 // Lets a person choose which part of an image is kept. The parent receives the rendered output and decides what to do with it;
 // if that promise rejects, the dialog stays open with the selection intact so the person can retry.
-export function ImageCropper({ file, output, onCancel, onConfirm }: {
-  file: File | null; output: CropOutput; onCancel: () => void; onConfirm: (cropped: File) => Promise<unknown> | void;
+export function ImageCropper({ file, output, notice, onCancel, onConfirm }: {
+  file: File | null; output: CropOutput; notice?: string; onCancel: () => void; onConfirm: (cropped: File) => Promise<unknown> | void;
 }) {
   const { t } = useTranslation();
   const [source, setSource] = useState<string | null>(null);
@@ -43,7 +43,7 @@ export function ImageCropper({ file, output, onCancel, onConfirm }: {
   };
 
   return <AdaptiveDialog opened={file !== null} onClose={() => { if (!saving) onCancel(); }} title={t("media.cropTitle")}>
-    <p className={styles.help}>{t("media.cropHelp")}</p>
+    <p className={styles.help}>{t("media.cropHelp")}{notice && <> {notice}</>}</p>
     <div className={`${styles.stage} ${output.width === output.height ? styles.square : styles.wide}`} onKeyDown={onKeyDown}>
       {source && <Cropper
         image={source} crop={crop} zoom={zoom} aspect={output.width / output.height} minZoom={MIN_ZOOM} maxZoom={MAX_ZOOM}

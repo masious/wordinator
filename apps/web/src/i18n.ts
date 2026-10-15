@@ -71,7 +71,6 @@ export const resources = {
         intro: "Choose the name other learners will know you by. A profile photo is optional, but it makes your space feel like yours.",
         username: "Username",
         usernameHelp: "3–30 letters, numbers, or underscores.",
-        editAvatar: "Choose a profile photo",
         avatarHint: "Photo optional — tap the edit button to add one.",
         fallbackName: "New learner",
         continue: "Open the lesson library"
@@ -139,12 +138,36 @@ export const resources = {
         stop: "Stop listening",
         listening: "Listening…",
         stopHint: "Click to stop",
+        phase: {
+          preparing: "Getting ready…",
+          listening: "Listening…",
+          hearing: "Hearing you…",
+          checking: "Checking…",
+          preparingHint: "Starting the microphone…",
+          listeningHint: "Speak now · click to stop",
+          quiet: "Can't hear anything yet. Is the right microphone on?",
+          heardSoFar: "“{{interim}}…”",
+          checkingHint: "Working out what you said…"
+        },
         noSpeech: "Didn't catch that. Try again.",
         blocked: "The microphone is blocked. Allow it in the browser to answer aloud.",
         failed: "Speech recognition isn't available right now.",
         match: "Matches!",
         miss: "Not quite",
         heard: "You said “{{heard}}”",
+        assessment: {
+          title: "Pronunciation details",
+          overallScore: "Pronunciation score {{score}} of 100",
+          accuracy: "Accuracy",
+          fluency: "Fluency",
+          completeness: "Completeness",
+          words: "Words",
+          mispronounced: "{{score}} · unclear",
+          omission: "not heard",
+          insertion: "extra",
+          open: "Show pronunciation details",
+          close: "Close pronunciation details"
+        },
         recognizer: {
           title: "Speech recognition",
           description: "Who listens when you say a word aloud. Your browser's recognition may send audio to its maker (Google for Chrome); Microsoft sends it to Azure. Wordinator never keeps it.",
@@ -736,6 +759,12 @@ export const resources = {
           completed: "Finished"
         }
       },
+      avatar: {
+        choose: "Choose a profile photo",
+        change: "Change profile photo",
+        upload: "Upload new photo",
+        remove: "Remove photo"
+      },
       media: {
         publicNotice: "Images are public to anyone who has their URL.",
         chooseImage: "Choose a PNG, JPEG, or WebP image",
@@ -869,6 +898,7 @@ export const resources = {
           }
         },
         profileTitle: "Profile",
+        handle: "@{{username}}",
         bio: "Bio",
         bioHelp: "Up to 500 characters.",
         reactions: "Quick reactions",

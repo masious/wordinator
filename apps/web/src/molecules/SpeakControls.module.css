@@ -2,21 +2,34 @@
    hangs below without moving the row. */
 .speak{position:relative;display:inline-flex}
 .round,.round::before,.round::after{border-radius:50%}
-.speak[data-listening]::before,.speak[data-listening]::after{content:"";position:absolute;inset:0;border:var(--border-strong);border-color:var(--color-action);border-radius:inherit;pointer-events:none;animation:ripple calc(var(--motion-reveal) * 2) var(--ease-physical) infinite}
-.speak:not(.round)[data-listening]::before,.speak:not(.round)[data-listening]::after{border-radius:var(--radius-pill)}
-.speak[data-listening]::after{animation-delay:var(--motion-reveal)}
-.round[data-listening]::before,.round[data-listening]::after{animation-name:rippleRound}
-.speak[data-listening] .speakButton{--button-surface:color-mix(in srgb,var(--color-action) 24%,var(--color-control-surface))}
+/* Phases (docs/words.md#listening-feedback). Getting ready and checking: a spinner in place of the microphone and a gently
+   pulsing tint. Listening: two slow ripples. Hearing: one ring that swells with the microphone's `--level` (0–1), set by the
+   meter, over a faster ripple. */
+.speak[data-phase="listening"]::before,.speak[data-phase="listening"]::after,.speak[data-phase="hearing"]::before,.speak[data-phase="hearing"]::after{content:"";position:absolute;inset:0;border:var(--border-strong);border-color:var(--color-action);border-radius:inherit;pointer-events:none;animation:ripple calc(var(--motion-reveal) * 2) var(--ease-physical) infinite}
+.speak:not(.round)[data-phase]::before,.speak:not(.round)[data-phase]::after{border-radius:var(--radius-pill)}
+.speak[data-phase="listening"]::after{animation-delay:var(--motion-reveal)}
+.round[data-phase]::before,.round[data-phase]::after{animation-name:rippleRound}
+.speak[data-phase="hearing"]::after{animation-duration:var(--motion-reveal)}
+.speak[data-phase="hearing"]::before{animation:none;opacity:calc(.35 + var(--level,0) * .65);transform:scale(calc(1 + var(--level,0) * .18),calc(1 + var(--level,0) * .6));transition:transform 80ms linear,opacity 80ms linear}
+.round[data-phase="hearing"]::before{transform:scale(calc(1 + var(--level,0) * .7))}
+.speak[data-phase] .speakButton{--button-surface:color-mix(in srgb,var(--color-action) 24%,var(--color-control-surface))}
+.speak:is([data-phase="preparing"],[data-phase="checking"]) .speakButton,.speak:is([data-phase="preparing"],[data-phase="checking"]) .roundButton{animation:busy var(--motion-reveal) var(--ease-physical) infinite alternate}
+.spinner{animation:spin var(--motion-overlay) linear infinite}
 .mic{flex:none}
 .speakButton .mic{margin-inline-end:var(--space-2)}
-.speak[data-listening] .mic{color:var(--color-action);animation:breathe var(--motion-reveal) var(--ease-physical) infinite alternate}
+.speak[data-phase] .mic{color:var(--color-action)}
+.speak[data-phase="listening"] .mic{animation:breathe var(--motion-reveal) var(--ease-physical) infinite alternate}
+.speak[data-phase="hearing"] .mic{transform:scale(calc(1 + var(--level,0) * .35));transition:transform 80ms linear}
 .key{margin-inline-start:var(--space-2);padding:0 var(--space-1);font:var(--type-metadata)/1.4 var(--font-mono);color:inherit;opacity:.7;border:var(--ring-hairline);border-radius:var(--radius-sm)}
-.stopHint{position:absolute;top:calc(100% + var(--space-2));left:50%;transform:translateX(-50%);white-space:nowrap;font:var(--text-xs)/1.3 var(--font-mono);color:var(--color-foreground-muted)}
+.stopHint{position:absolute;top:calc(100% + var(--space-2));left:50%;transform:translateX(-50%);max-width:min(28rem,80vw);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:var(--text-xs)/1.3 var(--font-mono);color:var(--color-foreground-muted)}
+/* Nothing heard for a while: the hint takes the danger ink so the nudge is noticed. */
+.stopHint[data-quiet],.livePill[data-quiet]{color:var(--color-danger-text)}
+.livePill{max-width:100%;margin:0;padding:var(--space-1) var(--space-3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font:var(--type-metadata)/1.3 var(--font-mono);color:var(--color-foreground-muted);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-pill);box-shadow:var(--shadow-card);animation:verdictIn var(--motion-overlay) var(--ease-physical) both}
 .roundButton{display:inline-grid;place-items:center;width:var(--touch-target);height:var(--touch-target);padding:0;color:var(--color-foreground-muted);background:var(--color-control-surface);border:var(--ring-hairline);border-radius:50%;box-shadow:var(--shadow-card),var(--shadow-inset-highlight);cursor:pointer;transition:color var(--motion-press) var(--ease-physical),transform var(--motion-press) var(--ease-physical),background var(--motion-press) var(--ease-physical)}
 .roundButton:hover{color:var(--color-foreground);transform:translateY(-2px)}
 .roundButton:active{transform:scale(.94)}
 .roundButton:focus-visible{outline:var(--border-strong);outline-offset:2px}
-.round[data-listening] .roundButton{background:color-mix(in srgb,var(--color-action) 24%,var(--color-control-surface))}
+.round[data-phase] .roundButton{background:color-mix(in srgb,var(--color-action) 24%,var(--color-control-surface))}
 
 /* A spoken answer's verdict: a badge that pops in. A match glows in the success tone; a miss takes the ochre highlight (a nudge,
    not an error) and gives a small shake. */
@@ -34,6 +47,46 @@
 .passing{position:absolute;inset-inline:var(--space-3);bottom:calc(var(--control-height) + var(--space-6));z-index:var(--z-transient);display:flex;justify-content:center;cursor:pointer}
 .passing[data-leaving]{animation:fadeAway var(--motion-overlay) var(--ease-physical) forwards}
 .passingStatus{margin:0;padding:var(--space-1) var(--space-3);font-size:var(--type-metadata);color:var(--color-foreground-muted);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-pill);box-shadow:var(--shadow-card);animation:verdictIn var(--motion-overlay) var(--ease-physical) both}
+/* Microsoft's assessment (docs/words.md#pronunciation-assessment). Bands: good (success), fair (ochre highlight), weak (danger). */
+:is(.ring,.meter,.word)[data-band="good"]{--band:var(--color-success)}
+:is(.ring,.meter,.word)[data-band="fair"]{--band:var(--color-highlight)}
+:is(.ring,.meter,.word)[data-band="weak"]{--band:var(--color-danger)}
+/* The overall score: a ring that sweeps to the score as the verdict lands, with the number inside. */
+.ring{position:relative;display:inline-grid;place-items:center;flex:none;width:34px;height:34px;margin-inline-start:var(--space-1)}
+.ringCompact{width:26px;height:26px;margin-inline-start:0}
+.ring svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.ringTrack,.ringFill{fill:none;stroke-width:3.5}
+.ringTrack{stroke:var(--color-hairline)}
+.ringFill{stroke:var(--band);stroke-linecap:round;stroke-dasharray:var(--score) 100;animation:sweep var(--motion-reveal) var(--ease-physical) calc(var(--motion-standard) / 2 + var(--motion-press)) both}
+.ringValue{font:var(--weight-semibold) var(--text-xs)/1 var(--font-mono);color:var(--color-foreground);font-variant-numeric:tabular-nums}
+.ringCompact .ringValue{font-size:.625rem}
+.breakdown{display:grid;gap:var(--space-3);justify-self:stretch;min-width:0}
+/* Three meters side by side: label, bar, and value. */
+.meters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-3);margin:0}
+.meter{display:grid;gap:var(--space-1);min-width:0;text-align:left}
+.meter dt{font:var(--text-xs)/1.2 var(--font-mono);color:var(--color-foreground-muted);text-transform:uppercase;letter-spacing:.04em}
+.meter dd{display:flex;align-items:center;gap:var(--space-2);margin:0}
+.bar{flex:1;height:6px;overflow:hidden;background:var(--color-wash-strong);border-radius:var(--radius-pill)}
+.bar>span{display:block;width:var(--score);height:100%;background:var(--band);border-radius:inherit;transform-origin:left;animation:fill var(--motion-reveal) var(--ease-physical) calc(var(--motion-standard) / 2 + var(--motion-press)) both}
+.meterValue{font:var(--weight-semibold) var(--type-metadata)/1 var(--font-mono);color:var(--color-foreground);font-variant-numeric:tabular-nums}
+/* Each word of the term, tinted by its band; a missed or extra word is struck or dashed and names its error. */
+.words{display:flex;flex-wrap:wrap;justify-content:center;gap:var(--space-2);margin:0;padding:0;list-style:none}
+.word{display:inline-flex;align-items:baseline;gap:var(--space-1);padding:var(--space-1) var(--space-2);background:color-mix(in srgb,var(--band) 14%,transparent);border:1px solid color-mix(in srgb,var(--band) 45%,transparent);border-radius:var(--radius-sm)}
+.word[data-error="omission"] .wordText{text-decoration:line-through}
+.word[data-error="insertion"]{border-style:dashed}
+.wordText{font-weight:var(--weight-semibold);color:var(--color-foreground)}
+.wordNote{font:var(--text-xs)/1 var(--font-mono);color:var(--color-foreground-muted)}
+.wordNote:empty{display:none}
+/* On a word card the verdict with a score is a button that opens the panel. */
+.verdictButton{padding:0;background:none;border:0;border-radius:var(--radius-pill);cursor:pointer}
+.verdictButton:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.panel{position:absolute;inset-inline:var(--space-3);bottom:calc(var(--control-height) + var(--space-4));z-index:var(--z-transient);display:grid;gap:var(--space-3);max-height:calc(100% - var(--control-height) - var(--space-6));overflow-y:auto;padding:var(--space-3);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-raised);animation:verdictIn var(--motion-overlay) var(--ease-physical) both}
+.panelHead{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2)}
+.panel .verdict{animation:none}
+.panel .meters{gap:var(--space-2)}
+.close{display:inline-grid;place-items:center;flex:none;width:var(--touch-target);height:var(--touch-target);margin:calc(var(--space-2) * -1);padding:0;color:var(--color-foreground-muted);background:none;border:0;border-radius:50%;cursor:pointer}
+.close:hover{color:var(--color-foreground)}
+.close:focus-visible{outline:var(--border-strong);outline-offset:-4px}
 .listenStatus{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 
 @keyframes ripple{from{opacity:.7;transform:scale(1)}to{opacity:0;transform:scale(1.12,1.45)}}
@@ -43,10 +96,14 @@
 @keyframes iconIn{from{transform:scale(0) rotate(-90deg)}to{transform:none}}
 @keyframes glow{from{box-shadow:var(--shadow-card),0 0 0 0 color-mix(in srgb,var(--color-success) 55%,transparent)}to{box-shadow:var(--shadow-card),0 0 0 14px transparent}}
 @keyframes shake{0%,100%{transform:none}20%{transform:translateX(-5px)}40%{transform:translateX(5px)}60%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+@keyframes sweep{from{stroke-dasharray:0 100}}
+@keyframes fill{from{transform:scaleX(0)}}
+@keyframes spin{to{transform:rotate(1turn)}}
+@keyframes busy{from{filter:none}to{filter:brightness(1.08) saturate(1.2)}}
 @keyframes fadeAway{to{opacity:0;transform:translateY(calc(var(--space-2) * -1))}}
 @media(prefers-reduced-motion:reduce){
-  .speak[data-listening]::after{animation:none;opacity:0}
-  .speak[data-listening]::before{animation:none;opacity:.7}
-  .speak[data-listening] .mic,.verdict,.verdict[data-match],.verdictIcon,.roundButton,.passingStatus{animation:none;transition:none}
+  .speak[data-phase]::after{animation:none;opacity:0}
+  .speak[data-phase]::before{animation:none;opacity:.7;transform:none;transition:none}
+  .speak[data-phase] .mic,.speak[data-phase] .speakButton,.speak[data-phase] .roundButton,.livePill,.verdict,.verdict[data-match],.verdictIcon,.roundButton,.passingStatus,.ringFill,.bar>span,.panel{animation:none;transition:none}
   .passing[data-leaving]{animation-duration:1ms}
 }

@@ -134,13 +134,19 @@ class FakeRecognition {
   onresult: ((event: { results: string[][] }) => void) | null = null;
   onerror: ((event: { error: string }) => void) | null = null;
   onend: (() => void) | null = null;
+  onaudiostart: (() => void) | null = null; onspeechstart: (() => void) | null = null; onspeechend: (() => void) | null = null;
   started = false;
   constructor() { FakeRecognition.last = this; }
   start() { this.started = true; }
-  stop() { this.onend?.(); }
+  // A real stop() asks for a final result from the audio so far; the test then says what was heard.
+  stopRequested = false;
+  stop() { this.stopRequested = true; }
   abort() { this.onerror?.({ error: "aborted" }); this.onend?.(); }
   hear(...alternatives: string[]) { act(() => { this.onresult?.({ results: [alternatives.map((transcript) => ({ transcript }))] as never }); this.onend?.(); }); }
   fail(error: string) { act(() => { this.onerror?.({ error }); this.onend?.(); }); }
+  ready() { act(() => this.onaudiostart?.()); }
+  partial(transcript: string) { act(() => { this.onspeechstart?.(); this.onresult?.({ results: [Object.assign([{ transcript }], { isFinal: false })] as never }); }); }
+  done() { act(() => this.onspeechend?.()); }
 }
 const produceCard = () => card(1, "produce", { term: "het kaartje", meaning: "the ticket" });
 const sayIt = () => fireEvent.click(within(current()).getByRole("button", { name: /Say it/ }));
@@ -156,14 +162,117 @@ describe("Spoken answers", () => {
     const recognition = FakeRecognition.last!;
     expect(recognition.started).toBe(true);
     expect(recognition.lang).toBe("nl-NL");
-    expect(within(current()).getByRole("button", { name: /Listening/ })).toHaveAttribute("aria-pressed", "true");
-    expect(within(current()).getByRole("button", { name: /Listening/ })).toHaveAccessibleDescription("Click to stop");
+    expect(recognition.interimResults).toBe(true);
+    // Each phase names itself on the button and explains itself below it.
+    const button = () => within(current()).getByRole("button", { pressed: true });
+    expect(button()).toHaveTextContent("Getting ready…");
+    expect(button()).toHaveAccessibleDescription("Starting the microphone…");
+    recognition.ready();
+    expect(button()).toHaveTextContent("Listening…");
+    expect(button()).toHaveAccessibleDescription("Speak now · click to stop");
+    recognition.partial("Kaar");
+    expect(button()).toHaveTextContent("Hearing you…");
+    expect(button()).toHaveAccessibleDescription("“Kaar…”");
+    recognition.done();
+    expect(button()).toHaveTextContent("Checking…");
+    expect(button()).toHaveAccessibleDescription("Working out what you said…");
     recognition.hear("Kaartje", "kaart je");
     expect(current()).toHaveTextContent("Matches!You said “Kaartje”");
     expect(current()).toHaveTextContent("the ticket");
     expect(grades()).toEqual([]);
     gradeAs("Got it");
     await waitFor(() => expect(grades()).toHaveLength(1));
+  });
+
+  it("follows the microphone's level and nudges when it hears nothing for a while", async () => {
+    let level = 0; let now = 1_000_000;
+    const frames: FrameRequestCallback[] = [];
+    vi.spyOn(Date, "now").mockImplementation(() => now);
+    vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => { frames.push(callback); return frames.length; });
+    vi.stubGlobal("cancelAnimationFrame", () => undefined);
+    vi.stubGlobal("navigator", { ...navigator, mediaDevices: { getUserMedia: vi.fn(async () => ({ getTracks: () => [] })) } });
+    vi.stubGlobal("AudioContext", class {
+      createAnalyser() { return { fftSize: 0, getFloatTimeDomainData: (samples: Float32Array) => samples.fill(level) }; }
+      createMediaStreamSource() { return { connect: () => undefined }; }
+      close() { return Promise.resolve(); }
+    });
+    const frame = () => act(() => { frames.shift()?.(0); });
+    decks = [[produceCard()]];
+    renderPage();
+    await screen.findByRole("article", { name: "Drill card" });
+    sayIt();
+    await act(async () => undefined);
+    const recognition = FakeRecognition.last!;
+    recognition.ready();
+    const button = () => within(current()).getByRole("button", { pressed: true });
+    frame();
+    expect(button()).toHaveAccessibleDescription("Speak now · click to stop");
+    now += 3100; frame();
+    expect(button()).toHaveAccessibleDescription("Can't hear anything yet. Is the right microphone on?");
+    level = 0.1; frame();
+    expect(button()).toHaveAccessibleDescription("Speak now · click to stop");
+    expect(Number(button().parentElement!.style.getPropertyValue("--level"))).toBeGreaterThan(0.4);
+    recognition.hear("kaartje");
+    expect(within(current()).getByRole("button", { name: "Again" })).toBeInTheDocument();
+    expect(within(current()).queryByRole("button", { name: /Say it|Listening|Hearing|Checking/ })).not.toBeInTheDocument();
+  });
+
+  it("finishes the answer when pressed again while hearing, keeping what was said", async () => {
+    decks = [[produceCard()]];
+    renderPage();
+    await screen.findByRole("article", { name: "Drill card" });
+    sayIt();
+    const recognition = FakeRecognition.last!;
+    recognition.ready(); recognition.partial("kaar");
+    fireEvent.click(within(current()).getByRole("button", { pressed: true }));
+    expect(recognition.stopRequested).toBe(true);
+    expect(within(current()).getByRole("button", { pressed: true })).toHaveTextContent("Checking…");
+    recognition.hear("kaartje");
+    expect(current()).toHaveTextContent("Matches!You said “kaartje”");
+  });
+
+  it("ends the answer itself after a short silence, or at the latest after the time limit, whatever the background noise", async () => {
+    let level = 0; let now = 1_000_000;
+    const frames: FrameRequestCallback[] = [];
+    vi.spyOn(Date, "now").mockImplementation(() => now);
+    vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => { frames.push(callback); return frames.length; });
+    vi.stubGlobal("cancelAnimationFrame", () => undefined);
+    vi.stubGlobal("navigator", { ...navigator, mediaDevices: { getUserMedia: vi.fn(async () => ({ getTracks: () => [] })) } });
+    vi.stubGlobal("AudioContext", class {
+      createAnalyser() { return { fftSize: 0, getFloatTimeDomainData: (samples: Float32Array) => samples.fill(level) }; }
+      createMediaStreamSource() { return { connect: () => undefined }; }
+      close() { return Promise.resolve(); }
+    });
+    const frame = () => act(() => { frames.shift()?.(0); });
+    decks = [[produceCard(), card(2, "produce", { term: "de trein", meaning: "the train" })]];
+    renderPage();
+    await screen.findByRole("article", { name: "Drill card" });
+    // A quiet room: speech, then silence for END_SILENCE_MS.
+    sayIt();
+    await act(async () => undefined);
+    let recognition = FakeRecognition.last!;
+    recognition.ready();
+    level = 0.001; frame();
+    level = 0.1; frame();
+    now += 500; frame();
+    level = 0.001; frame();
+    expect(recognition.stopRequested).toBe(false);
+    now += 950; frame();
+    expect(recognition.stopRequested).toBe(true);
+    recognition.hear("kaartje");
+    gradeAs("Got it");
+    // Steady noise from a speaker never falls silent, so the time limit ends it.
+    frames.splice(0);
+    sayIt();
+    await act(async () => undefined);
+    recognition = FakeRecognition.last!;
+    recognition.ready();
+    level = 0.002; frame();
+    level = 0.1; frame();
+    for (let step = 0; step < 11; step++) { now += 500; frame(); }
+    expect(recognition.stopRequested).toBe(false);
+    now += 600; frame();
+    expect(recognition.stopRequested).toBe(true);
   });
 
   it("reveals a miss as not matching and still lets the learner grade it", async () => {

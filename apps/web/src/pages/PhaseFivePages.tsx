@@ -27,11 +27,11 @@ export function ImageUpload({ currentUrl, name, uploadPath, removePath, onChange
   return <div className={styles.upload}>
     <div className={styles.preview}>{shape === "wide"
       ? <div className={styles.widePreview}>{currentUrl && <img alt="" src={currentUrl} />}</div>
-      : <Avatar name={name} src={currentUrl ?? undefined} />}<span>{t("media.publicNotice")}</span></div>
+      : <Avatar name={name} src={currentUrl ?? undefined} />}</div>
     <FileInput label={t("media.chooseImage")} accept="image/png,image/jpeg,image/webp" value={file} onChange={setFile} />
     {currentUrl && <div className={styles.actions}><Button variant="secondary" loading={remove.isPending} onClick={() => remove.mutate()}>{t("media.remove")}</Button></div>}
     {remove.error && <p role="alert">{t("errors.generic")}</p>}
-    <ImageCropper file={file} output={shape === "wide" ? WIDE_OUTPUT : SQUARE_OUTPUT} onCancel={() => setFile(null)} onConfirm={upload} />
+    <ImageCropper file={file} output={shape === "wide" ? WIDE_OUTPUT : SQUARE_OUTPUT} notice={t("media.publicNotice")} onCancel={() => setFile(null)} onConfirm={upload} />
   </div>;
 }
 

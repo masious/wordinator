@@ -65,11 +65,12 @@ Every section has an empty state. The page reads one unpaged response: membershi
 
 Today the browser center-crops every upload automatically, so people cannot choose what part of a photo is kept. Picking an image instead opens a cropper.
 
-- The cropper lives in the shared `ImageUpload` component, so the avatar, group icon, and course cover all get it. Avatar and icon use a fixed square frame, and the cover uses its fixed 2:1 frame. The frame mask matches how the image is displayed.
+- The account avatar opens the cropper from the shared `AvatarEditor` ([profiles and settings](profiles-and-settings.md#avatar-editor)); the group icon and course cover open it from the shared `ImageUpload` component. Avatar and icon use a fixed square frame, and the cover uses its fixed 2:1 frame. The frame mask matches how the image is displayed.
 - It opens in the shared adaptive dialog: centered on desktop, full screen on mobile.
 - Drag (mouse, touch, or pen) moves the image. A labeled zoom slider, the mouse wheel, and pinch zoom between 1× and 3×. The image always covers the frame, with no empty edges.
 - Keyboard: arrow keys move the image and `+`/`-` zoom, with every control reachable by Tab. Reset returns to the centered fit.
 - Save renders the chosen area from the original pixels to the current output (512×512 JPEG for square, 1200×600 for wide) and uploads it through the existing endpoint. Re-encoding still strips metadata, and photo orientation follows the file's EXIF orientation.
+- The dialog's help text carries the public-by-URL notice (`notice` prop); upload surfaces do not repeat it on the page.
 - Cancel discards the selection and leaves the current image unchanged. An upload error keeps the dialog open with the selection intact, so the person can retry.
 - No API, size-limit, type-check, or R2 cleanup change. The server checks stay as they are.
 
@@ -89,7 +90,7 @@ The cropper uses `react-easy-crop`, styled with its static stylesheet (automatic
 - React Testing Library: the creator sees the sub-navigation and all three pages; a member sees Account only and is redirected from Group and Members; each Members section renders rows and its empty state; the directory no longer shows creator actions.
 - Unit: the crop-area to output-pixel calculation for both frames, including zoom limits and the cover-the-frame clamp.
 - React Testing Library: choosing a file opens the cropper; Cancel uploads nothing; Save uploads one file of the expected size; keyboard moving and zooming work; an upload error keeps the dialog open.
-- Playwright (Chromium and WebKit): an avatar upload goes through the cropper on desktop and mobile widths. An invited user's request is accepted from Settings → Members; the creator renames the group from Settings → Group; a member edits their profile from Settings → Account; the `/settings` redirect works.
+- Playwright (Chromium and WebKit): an avatar upload goes through the cropper on desktop and mobile widths, and the avatar's edit menu removes it. An invited user's request is accepted from Settings → Members; the creator renames the group from Settings → Group; a member edits their profile from Settings → Account; the `/settings` redirect works.
 - Type-checking and web plus API production builds.
 
 ## Out of scope

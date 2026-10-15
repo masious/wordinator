@@ -5,6 +5,7 @@ import { type FormEvent, type PropsWithChildren, type ReactNode, useEffect, useS
 import { useTranslation } from "react-i18next";
 import { ApiError, apiRequest, groupQueryOptions, membershipsQueryOptions, sessionQueryOptions, settingsQueryOptions } from "../api";
 import { Avatar, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, PageHeader, PasswordField, SectionHeader, Surface, TextAreaField, TextField, ThemePreferenceControl } from "../ui";
+import { AvatarEditor } from "../molecules/AvatarEditor";
 import { RecognizerPreferenceControl } from "../molecules/RecognizerPreferenceControl";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import shellStyles from "./PhaseOnePages.module.css";
@@ -84,12 +85,18 @@ export function AccountSettingsPage({ groupId, global = false }: { groupId: stri
 
   return <SettingsFrame groupId={groupId} session={session.data} section="account" creator={!global && shell.data.group.role === "creator"} eyebrow={global ? t("settings.accountEyebrow") : t("settings.everyGroup")} intro={t("settings.accountIntro")}>
     <div className={styles.settingsGrid}>
-      <Surface className={styles.settingsPanel} tone="featured"><SectionHeader title={t("settings.profileTitle")} /><form className={styles.form} onSubmit={(event: FormEvent) => { event.preventDefault(); account.mutate(); }}>
-        <TextField label={t("auth.email")} value={settings.data.email} disabled />
+      <Surface className={styles.settingsPanel} tone="featured"><SectionHeader title={t("settings.profileTitle")} />
+        <div className={styles.profileIdentity}>
+          <AvatarEditor size="medium" name={settings.data.displayName} src={settings.data.avatarUrl} onChanged={() => Promise.all([queryClient.invalidateQueries({ queryKey: ["settings"] }), queryClient.invalidateQueries({ queryKey: ["session"] })])} />
+          <div className={styles.profileName}>
+            <strong>{settings.data.displayName}</strong>
+            <p>{session.data.user.username && <span>{t("settings.handle", { username: session.data.user.username })}</span>}<span>{settings.data.email}</span></p>
+          </div>
+        </div>
+        <form className={styles.form} onSubmit={(event: FormEvent) => { event.preventDefault(); account.mutate(); }}>
         <TextField label={t("auth.displayName")} value={displayName} maxLength={80} onChange={(event) => setDisplayName(event.currentTarget.value)} required />
         <TextAreaField label={t("settings.bio")} description={t("settings.bioHelp")} value={bio} maxLength={500} minRows={4} autosize onChange={(event) => setBio(event.currentTarget.value)} />
-        <ImageUpload currentUrl={settings.data.avatarUrl} name={settings.data.displayName} uploadPath="/api/settings/avatar" removePath="/api/settings/avatar" onChanged={() => queryClient.invalidateQueries({ queryKey: ["settings"] })} />
-        <fieldset><legend>{t("settings.reactions")}</legend><p className={styles.muted}>{t("settings.reactionsHelp")}</p><div className={styles.reactionGrid}>{reactions.map((reaction, index) => <TextField key={index} aria-label={t("settings.reactionLabel", { number: index + 1 })} value={reaction} onChange={(event) => {
+        <fieldset className={styles.reactions}><legend>{t("settings.reactions")}</legend><p className={styles.muted}>{t("settings.reactionsHelp")}</p><div className={styles.reactionGrid}>{reactions.map((reaction, index) => <TextField key={index} aria-label={t("settings.reactionLabel", { number: index + 1 })} value={reaction} onChange={(event) => {
           const nextReaction = event.currentTarget.value;
           setReactions((values) => values.map((value, current) => current === index ? nextReaction : value));
         }} required />)}</div></fieldset>

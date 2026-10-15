@@ -27,8 +27,8 @@ for (const viewport of [{ name: "desktop", width: 1440, height: 900 }, { name: "
     await dialog.getByRole("button", { name: "Save image" }).click();
     expect((await uploaded).status()).toBe(200);
     await expect(dialog).toBeHidden();
-    await expect(page.getByRole("button", { name: "Remove image" })).toBeVisible();
-    await page.getByRole("button", { name: "Remove image" }).click();
-    await expect(page.getByRole("button", { name: "Remove image" })).toBeHidden();
+    await page.getByRole("button", { name: "Change profile photo" }).click();
+    await page.getByRole("menuitem", { name: "Remove photo" }).click();
+    await expect(page.getByRole("button", { name: "Choose a profile photo" })).toBeVisible();
   });
 }

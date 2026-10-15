@@ -2,8 +2,8 @@ import type { CourseWord, LessonStep } from "@wordinator/contracts/lesson-docume
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
-import { PassingVerdict, SpeakButton } from "../../molecules/SpeakControls";
-import { useSpokenAnswer, type ListenStatus, type SpokenAnswer } from "../../molecules/speechRecognition";
+import { ListeningPill, PassingVerdict, SpeakButton } from "../../molecules/SpeakControls";
+import { isListening, useSpokenAnswer, type SpokenAnswer } from "../../molecules/speechRecognition";
 import { playRevealSpeech, RevealSoundToggle, SpeechButton, useSpeechResolver, useStopSpeechOnUnmount } from "../../molecules/Speech";
 import { Button } from "../../ui";
 import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
@@ -53,7 +53,7 @@ function useGridFit() {
 // A word's identity on a page: its lesson and ID where the lesson is known, since word IDs are unique only within a lesson.
 const wordKey = (word: RecapWord) => word.lessonId ? `${word.lessonId}:${word.id}` : word.id;
 
-type SpokenOutcome = SpokenAnswer | Exclude<ListenStatus, "idle" | "listening">;
+type SpokenOutcome = SpokenAnswer | "noSpeech" | "blocked" | "failed";
 
 // Saying the term aloud on a word card (docs/words.md#spoken-answers): a round microphone in the footer, and the outcome floating
 // over the card for a moment, after which the term is spoken under the reveal sound toggle, right or wrong. It neither flips the
@@ -62,11 +62,12 @@ function WordSpeak({ term, onAnswer }: { term: string; onAnswer: () => void }) {
   const [outcome, setOutcome] = useState<SpokenOutcome | null>(null);
   const spoken = useSpokenAnswer(term, (answer) => { setOutcome(answer); onAnswer(); });
   const { status } = spoken;
-  useEffect(() => { if (status !== "idle" && status !== "listening") setOutcome(status); }, [status]);
-  const listen = () => { if (status !== "listening") setOutcome(null); spoken.listen(); };
+  useEffect(() => { if (status === "noSpeech" || status === "blocked" || status === "failed") setOutcome(status); }, [status]);
+  const listen = () => { if (!isListening(status)) setOutcome(null); spoken.listen(); };
   if (!spoken.available) return null;
   return <>
-    <span className={styles.speak}><SpeakButton compact term={term} listening={status === "listening"} onListen={listen} /></span>
+    <span className={styles.speak}><SpeakButton compact term={term} state={spoken} onListen={listen} /></span>
+    {isListening(status) && <ListeningPill state={spoken} />}
     {outcome && <PassingVerdict outcome={outcome} onGone={() => setOutcome(null)} />}
   </>;
 }

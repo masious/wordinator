@@ -1,21 +1,19 @@
 import {
-  imageResponseSchema,
   okResponseSchema,
   type SessionResponse,
 } from "@wordinator/contracts";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { type ChangeEvent, type FormEvent, type ReactNode, useEffect, useRef, useState } from "react";
+import { type FormEvent, type ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiError, apiRequest, groupQueryOptions, invitationQueryOptions, sessionQueryOptions } from "../api";
-import { Avatar, Button, ErrorState, LabelChip, LoadingState, PageHeader, PasswordField, SplitLayout, StatusPanel, Surface, TextField } from "../ui";
+import { Button, ErrorState, LabelChip, LoadingState, PageHeader, PasswordField, SplitLayout, StatusPanel, Surface, TextField } from "../ui";
 import styles from "./PhaseOnePages.module.css";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { Feed } from "./PhaseThreePages";
 import { RestrictedNotices } from "./PhaseSixPages";
 import { CreateGroupForm } from "../organisms/CreateGroupForm/CreateGroupForm";
-import { ImageCropper } from "../organisms/ImageCropper/ImageCropper";
-import { SQUARE_OUTPUT } from "../organisms/ImageCropper/crop";
+import { AvatarEditor } from "../molecules/AvatarEditor";
 
 const json = (value: unknown) => JSON.stringify(value);
 
@@ -92,36 +90,19 @@ function SignupForm({ onSignIn }: { onSignIn: () => void }) {
 function OnboardingSetup({ session }: { session: Extract<SessionResponse, { status: "signedIn" }> }) {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
-  const inputRef = useRef<HTMLInputElement>(null);
   const [username, setUsername] = useState("");
-  const [file, setFile] = useState<File | null>(null);
   const complete = useMutation({
     mutationFn: () => apiRequest("/api/auth/complete-onboarding", okResponseSchema, { method: "POST", body: json({ username }) }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ["session"] }),
   });
-  const upload = async (cropped: File) => {
-    const form = new FormData();
-    form.set("image", cropped);
-    await apiRequest("/api/settings/avatar", imageResponseSchema, { method: "POST", body: form });
-    setFile(null);
-    await queryClient.invalidateQueries({ queryKey: ["session"] });
-  };
-  const chooseAvatar = (event: ChangeEvent<HTMLInputElement>) => setFile(event.currentTarget.files?.[0] ?? null);
   return <AuthCard eyebrow={t("onboarding.eyebrow")} title={t("onboarding.title")} intro={t("onboarding.intro")}>
     <form className={styles.setupForm} onSubmit={(event) => { event.preventDefault(); complete.mutate(); }}>
-      <div className={styles.avatarSetup}>
-        <Avatar size={112} name={username || t("onboarding.fallbackName")} src={session.user.avatarUrl} />
-        <button aria-label={t("onboarding.editAvatar")} className={styles.avatarEdit} type="button" onClick={() => inputRef.current?.click()}>
-          <svg aria-hidden="true" viewBox="0 0 20 20"><path d="m13.9 3.6 2.5 2.5M4 16l.8-3.4L13.7 3.7a1.4 1.4 0 0 1 2 0l.6.6a1.4 1.4 0 0 1 0 2l-8.9 8.9L4 16Z" /></svg>
-        </button>
-        <input ref={inputRef} aria-hidden="true" tabIndex={-1} className={styles.fileInput} type="file" accept="image/png,image/jpeg,image/webp" onChange={chooseAvatar} />
-      </div>
+      <AvatarEditor name={username || t("onboarding.fallbackName")} src={session.user.avatarUrl} onChanged={() => queryClient.invalidateQueries({ queryKey: ["session"] })} />
       <p className={styles.avatarHint}>{t("onboarding.avatarHint")}</p>
       <TextField label={t("onboarding.username")} description={t("onboarding.usernameHelp")} value={username} minLength={3} maxLength={30} pattern="[A-Za-z0-9_]+" autoComplete="username" onChange={(event) => setUsername(event.currentTarget.value)} required />
       <MutationError error={complete.error} />
       <Button loading={complete.isPending} type="submit">{t("onboarding.continue")}</Button>
     </form>
-    <ImageCropper file={file} output={SQUARE_OUTPUT} onCancel={() => setFile(null)} onConfirm={upload} />
   </AuthCard>;
 }
 

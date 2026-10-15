@@ -254,15 +254,22 @@
   --size-lesson-index-max: 40dvh;
   /* Word cards (C9a): every card has one height so a page of them can be fitted to the viewport. */
   --size-word-card: 15rem;
+  /* Words tab cards: room for the course · lesson line, a long term with forms, and the microphone without scrolling. */
+  --size-word-card-roomy: 18rem;
   --size-word-card-min: 15rem;
   /* The Words tab's lesson filter (C12a): wide enough for a lesson title and its count. */
   --size-words-filter: 18rem;
   /* A drill card (C12e): one card at a time, tall enough for a full word without scrolling in most cases. */
-  --size-drill-card: 32rem;
+  --size-drill-card: 36rem;
   --lesson-column-gap: var(--space-6);
   --lesson-callout-icon: 1.25rem;
   /* Icon-only controls (bookmark, speaker): the glyph; the hit area is --touch-target. */
   --size-icon-control: 1.25rem;
+  /* Account avatar editor: setup screen, profile header, and the round edit button on the avatar's corner. */
+  --size-avatar-setup: 112px;
+  --size-avatar-profile: 96px;
+  --size-avatar-edit: 40px;
+  --size-avatar-edit-compact: 32px;
   --page-gutter: clamp(var(--space-4), 4vw, var(--space-10));
   --section-rhythm: clamp(var(--space-20), 10vw, var(--space-40));
   --card-inset: clamp(var(--space-5), 3vw, var(--space-8));
@@ -444,6 +451,8 @@
     --shell-clearance: var(--space-4);
     --card-inset: var(--space-4);
     --size-word-card: 12rem;
+    --size-word-card-roomy: 15rem;
+    --size-avatar-profile: 64px;
     --size-lesson-image: 8rem;
     --mobile-dock-height: 64px;
     --type-page-title: 1.75rem;

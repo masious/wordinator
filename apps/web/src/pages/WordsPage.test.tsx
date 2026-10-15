@@ -10,16 +10,24 @@ import { validateWordDrillSearch } from "./WordDrillPage";
 import { validateWordsSearch, WordsPage } from "./WordsPage";
 
 // A stand-in for Microsoft's Speech SDK: the test decides what its next recognition returns.
-const azure = vi.hoisted(() => ({ configs: [] as Array<{ token: string; region: string; speechRecognitionLanguage?: string }>, next: null as unknown }));
+const azure = vi.hoisted(() => ({ configs: [] as Array<{ token: string; region: string; speechRecognitionLanguage?: string }>, assessments: [] as unknown[], next: null as unknown,
+  respond: null as ((result: unknown) => void) | null, written: 0, pushClosed: false }));
 vi.mock("microsoft-cognitiveservices-speech-sdk", () => ({
   SpeechConfig: { fromAuthorizationToken: (token: string, region: string) => { const config = { token, region }; azure.configs.push(config); return config; } },
-  AudioConfig: { fromDefaultMicrophoneInput: () => ({}) },
+  AudioConfig: { fromDefaultMicrophoneInput: () => ({}), fromStreamInput: (input: unknown) => ({ input }) },
+  AudioInputStream: { createPushStream: () => ({ write: (pcm: ArrayBuffer) => { azure.written += pcm.byteLength; }, close: () => { azure.pushClosed = true; } }) },
+  AudioStreamFormat: { getWaveFormatPCM: () => ({}) },
   OutputFormat: { Detailed: 1 },
   ResultReason: { NoMatch: 0, Canceled: 1, RecognizedSpeech: 3 },
-  CancellationErrorCode: { AuthenticationFailure: 1, Forbidden: 8 },
+  CancellationErrorCode: { NoError: 0, AuthenticationFailure: 1, Forbidden: 8 },
   CancellationDetails: { fromResult: () => ({ ErrorCode: 4 }) },
   PropertyId: { SpeechServiceResponse_JsonResult: "json" },
-  SpeechRecognizer: class { recognizeOnceAsync(done: (result: unknown) => void) { done(azure.next); } close() {} },
+  PronunciationAssessmentConfig: { fromJSON: (json: string) => ({ applyTo: () => { azure.assessments.push(JSON.parse(json)); } }) },
+  // With `azure.next` set to "wait", recognition waits until the test calls `azure.respond`.
+  SpeechRecognizer: class {
+    recognizeOnceAsync(done: (result: unknown) => void) { if (azure.next === "wait") azure.respond = done; else done(azure.next); }
+    close() {}
+  },
 }));
 
 // jsdom has no layout, so the cards' page size is set here.
@@ -216,6 +224,9 @@ class FakeRecognition {
   abort() { this.onerror?.({ error: "aborted" }); this.onend?.(); }
   hear(...alternatives: string[]) { act(() => { this.onresult?.({ results: [alternatives.map((transcript) => ({ transcript }))] }); this.onend?.(); }); }
   fail(error: string) { act(() => { this.onerror?.({ error }); this.onend?.(); }); }
+  onaudiostart: (() => void) | null = null; onspeechstart: (() => void) | null = null;
+  ready() { act(() => this.onaudiostart?.()); }
+  partial(transcript: string) { act(() => { this.onspeechstart?.(); this.onresult?.({ results: [Object.assign([{ transcript }], { isFinal: false })] }); }); }
 }
 
 describe("Saying a word", () => {
@@ -234,10 +245,23 @@ describe("Saying a word", () => {
     expect(within(first).getByRole("button", { name: "Show meaning" })).toBeInTheDocument();
     expect(vi.mocked(fetch).mock.calls.length).toBe(calls);
     // Clicking dismisses it once its fade ends.
-    const passing = verdict.parentElement!;
-    fireEvent.click(passing);
-    fireEvent.animationEnd(passing);
+    fireEvent.click(verdict);
+    fireEvent.animationEnd(verdict);
     expect(within(first).queryByRole("status")).not.toBeInTheDocument();
+  });
+
+  it("shows what the microphone is doing over the card while it listens", async () => {
+    renderPage();
+    const first = await screen.findByRole("article", { name: "woord 1" });
+    fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
+    expect(first).toHaveTextContent("Starting the microphone…");
+    FakeRecognition.last!.ready();
+    expect(first).toHaveTextContent("Speak now · click to stop");
+    FakeRecognition.last!.partial("woo");
+    expect(first).toHaveTextContent("“woo…”");
+    FakeRecognition.last!.hear("woord 1");
+    expect(first).not.toHaveTextContent("“woo…”");
+    expect(within(first).getByRole("status")).toHaveTextContent("Matches!");
   });
 
   it("shows a miss and a missed listen the same passing way", async () => {
@@ -286,10 +310,67 @@ describe("Saying a word", () => {
     fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
     expect(await within(first).findByRole("status")).toHaveTextContent("Matches!You said “Woord 1.”");
     expect(FakeRecognition.last).toBeNull();
-    expect(getUserMedia).toHaveBeenCalledWith({ audio: true });
+    expect(getUserMedia).toHaveBeenCalledWith({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } });
     expect(azure.configs).toEqual([{ token: "azure-token", region: "germanywestcentral", speechRecognitionLanguage: "nl-NL", outputFormat: 1 }]);
     expect(fetcher.mock.calls.filter(([path]) => String(path).endsWith("/speech-recognition/token"))).toHaveLength(1);
     expect(fetcher.mock.calls.find(([path]) => String(path).endsWith("/speech-recognition/token"))![1]?.method).toBe("POST");
+  });
+
+  it("scores pronunciation with Microsoft and opens the details from the passing verdict", async () => {
+    vi.stubGlobal("navigator", { ...navigator, mediaDevices: { getUserMedia: vi.fn(async () => ({ getTracks: () => [] })) } });
+    setRecognizer("microsoft");
+    const fetcher = vi.mocked(fetch);
+    const original = fetcher.getMockImplementation()!;
+    fetcher.mockImplementation(async (input, init) => String(input).endsWith("/speech-recognition/token")
+      ? response({ token: "azure-token", region: "germanywestcentral", expiresAt: Date.now() + 60_000 }) : original(input, init));
+    azure.assessments = [];
+    azure.next = { reason: 3, text: "Woord 1.", properties: { getProperty: () => JSON.stringify({ NBest: [{
+      Display: "Woord 1.", PronunciationAssessment: { AccuracyScore: 72, FluencyScore: 90, CompletenessScore: 100, PronScore: 78 },
+      Words: [{ Word: "woord", PronunciationAssessment: { AccuracyScore: 58, ErrorType: "Mispronunciation" } }, { Word: "1", PronunciationAssessment: { AccuracyScore: 95, ErrorType: "None" } }],
+    }] }) } };
+    renderPage();
+    const first = await screen.findByRole("article", { name: "woord 1" });
+    fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
+    const verdict = await within(first).findByRole("status");
+    expect(azure.assessments).toEqual([{ referenceText: "woord 1", gradingSystem: "HundredMark", granularity: "Word", enableMiscue: true }]);
+    expect(within(verdict).getByRole("img", { name: "Pronunciation score 78 of 100" })).toBeInTheDocument();
+    fireEvent.click(within(verdict).getByRole("button", { name: /Show pronunciation details/ }));
+    const details = within(first).getByRole("dialog", { name: "Pronunciation details" });
+    expect(details).toHaveTextContent("Accuracy72");
+    expect(details).toHaveTextContent("woord58 · unclear");
+    fireEvent.click(within(details).getByRole("button", { name: "Close pronunciation details" }));
+    expect(within(first).queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("feeds Microsoft the app's own capture and keeps the word when finished early", async () => {
+    vi.stubGlobal("navigator", { ...navigator, mediaDevices: { getUserMedia: vi.fn(async () => ({ getTracks: () => [] })) } });
+    const ports: Array<{ onmessage: ((event: { data: Float32Array }) => void) | null; close: () => void }> = [];
+    vi.stubGlobal("AudioWorkletNode", class { port = { onmessage: null, close: () => undefined }; constructor() { ports.push(this.port); } });
+    vi.stubGlobal("AudioContext", class {
+      sampleRate = 48_000;
+      audioWorklet = { addModule: async () => undefined };
+      createAnalyser() { return { fftSize: 0, getFloatTimeDomainData: () => undefined }; }
+      createMediaStreamSource() { return { connect: () => undefined }; }
+      close() { return Promise.resolve(); }
+    });
+    vi.stubGlobal("requestAnimationFrame", () => 0);
+    vi.stubGlobal("URL", Object.assign(URL, { createObjectURL: () => "blob:tap", revokeObjectURL: () => undefined }));
+    setRecognizer("microsoft");
+    const fetcher = vi.mocked(fetch);
+    const original = fetcher.getMockImplementation()!;
+    fetcher.mockImplementation(async (input, init) => String(input).endsWith("/speech-recognition/token")
+      ? response({ token: "azure-token", region: "germanywestcentral", expiresAt: Date.now() + 60_000 }) : original(input, init));
+    azure.next = "wait"; azure.respond = null; azure.written = 0; azure.pushClosed = false;
+    renderPage();
+    const first = await screen.findByRole("article", { name: "woord 1" });
+    fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
+    await waitFor(() => expect(azure.respond).not.toBeNull());
+    act(() => ports[0]!.onmessage?.({ data: new Float32Array(480).fill(0.2) }));
+    expect(azure.written).toBe(320);
+    fireEvent.click(within(first).getByRole("button", { name: "Stop listening" }));
+    expect(azure.pushClosed).toBe(true);
+    act(() => azure.respond!({ reason: 3, text: "woord 1", properties: { getProperty: () => JSON.stringify({ NBest: [{ Display: "woord 1" }] }) } }));
+    expect(within(first).getByRole("status")).toHaveTextContent("Matches!You said “woord 1”");
   });
 
   it("says when Microsoft hears nothing or the microphone is blocked", async () => {

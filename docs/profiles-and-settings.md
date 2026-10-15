@@ -4,7 +4,13 @@
 
 Open registration is followed by a required first-use setup screen. A unique username is required; an avatar is optional. The avatar preview carries an overlaid circular edit button so upload is inviting without being presented as mandatory. Until setup completes, the router returns the account to `/` and protected course access is refused.
 
-The current settings destination is `/settings`. It is account-wide and contains profile, avatar, password, theme, and appearance controls. Group-private profile routes described below are retired: `/groups/:groupId/members/...` now redirects to `/courses`, and `/groups/:groupId/settings/...` redirects to `/settings`.
+The current settings destination is `/settings`. It is account-wide and contains profile, avatar, password, theme, and appearance controls.
+
+### Avatar editor
+
+Setup and Settings share one `AvatarEditor`: the avatar with a round edit button on its corner. With no photo, the button ("Choose a profile photo") opens the file picker directly. With a photo, the button ("Change profile photo") opens a menu with Upload new photo and Remove photo. Choosing a file opens the [cropper](settings-and-administration.md#image-cropper), and the save happens right away, separate from any form's submit button. The note that images are public by URL appears in the cropper dialog, where the person commits to the upload, not on the page.
+
+In Settings the profile card starts with an identity header: the avatar editor, the display name, and a muted `@username · email` line, above a separator. Email is shown as text here, not as a disabled field. The form below holds display name, bio, and quick reactions; quick reactions are a plain fieldset (legend and help) without a nested panel. Group-private profile routes described below are retired: `/groups/:groupId/members/...` now redirects to `/courses`, and `/groups/:groupId/settings/...` redirects to `/settings`.
 
 ## Group-private profile
 
