@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { check, index, integer, primaryKey, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
+import { check, index, integer, primaryKey, real, sqliteTable, text, uniqueIndex } from "drizzle-orm/sqlite-core";
 
 export const platformMetadata = sqliteTable("platform_metadata", {
   key: text("key").primaryKey(),
@@ -448,26 +448,144 @@ export const courseWordBookmarks = sqliteTable(
   ],
 );
 
-// Drill states (C12): an account's latest Leitner box per word and direction; keys into `course_lesson_words` without a
-// foreign key to it, like bookmarks. No `group_id` (storage compatibility rule); see docs/data-model.md#course_word_drill_states.
-export const courseWordDrillStates = sqliteTable(
-  "course_word_drill_states",
+// Learning data (C14a, migration 0026): every row belongs to one user and none has `group_id` (storage compatibility rule).
+// Lesson and word IDs are keys into `course_lesson_words` without a foreign key to it, like bookmarks; conversation IDs have
+// no foreign key either. See docs/data-model.md#learning-data. Migration 0026 seeded the first two from C12's dropped
+// `course_word_drill_states`.
+export const wordReviews = sqliteTable(
+  "word_reviews",
   {
-    userId: text("user_id").notNull().references(() => users.id),
+    id: text("id").primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    termKey: text("term_key").notNull(),
     courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
     lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
     wordId: text("word_id").notNull(),
     direction: text("direction", { enum: ["understand", "produce"] }).notNull(),
-    box: integer("box").notNull(),
-    lastResult: text("last_result", { enum: ["got", "again"] }).notNull(),
-    lastDrilledAt: integer("last_drilled_at").notNull(),
+    result: text("result", { enum: ["got", "again"] }).notNull(),
+    source: text("source", { enum: ["drill", "ai_chat", "ai_practice", "seed"] }).notNull(),
+    // The C12 Leitner box of a `seed` review, so a rebuild reproduces its seeded stability; null for every other source.
+    seedBox: integer("seed_box"),
+    conversationId: text("conversation_id"),
+    createdAt: integer("created_at").notNull(),
   },
   (table) => [
-    primaryKey({ columns: [table.userId, table.lessonId, table.wordId, table.direction] }),
-    index("course_word_drill_states_user_idx").on(table.userId, table.direction, table.box, table.lastDrilledAt),
-    check("course_word_drill_states_direction_check", sql`${table.direction} in ('understand', 'produce')`),
-    check("course_word_drill_states_result_check", sql`${table.lastResult} in ('got', 'again')`),
-    check("course_word_drill_states_box_check", sql`${table.box} BETWEEN 1 AND 5`),
+    index("word_reviews_term_idx").on(table.userId, table.termKey, table.direction, table.createdAt),
+    index("word_reviews_user_lesson_idx").on(table.userId, table.lessonId),
+    index("word_reviews_lesson_idx").on(table.lessonId),
+    check("word_reviews_direction_check", sql`${table.direction} in ('understand', 'produce')`),
+    check("word_reviews_result_check", sql`${table.result} in ('got', 'again')`),
+    check("word_reviews_source_check", sql`${table.source} in ('drill', 'ai_chat', 'ai_practice', 'seed')`),
+    check("word_reviews_seed_box_check", sql`(${table.source} = 'seed') = (${table.seedBox} IS NOT NULL) AND (${table.seedBox} IS NULL OR ${table.seedBox} BETWEEN 1 AND 5)`),
+  ],
+);
+
+export const wordMemory = sqliteTable(
+  "word_memory",
+  {
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    termKey: text("term_key").notNull(),
+    direction: text("direction", { enum: ["understand", "produce"] }).notNull(),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    wordId: text("word_id").notNull(),
+    recent: text("recent").notNull(),
+    reps: integer("reps").notNull(),
+    lapses: integer("lapses").notNull(),
+    lastLapseAt: integer("last_lapse_at"),
+    stability: real("stability").notNull(),
+    difficulty: real("difficulty").notNull(),
+    lastReviewedAt: integer("last_reviewed_at").notNull(),
+    knownOverride: integer("known_override", { mode: "boolean" }).notNull().default(false),
+  },
+  (table) => [
+    primaryKey({ columns: [table.userId, table.termKey, table.direction] }),
+    index("word_memory_user_reviewed_idx").on(table.userId, table.lastReviewedAt),
+    check("word_memory_direction_check", sql`${table.direction} in ('understand', 'produce')`),
+    check("word_memory_recent_check", sql`length(${table.recent}) <= 10 AND ${table.recent} NOT GLOB '*[^ga]*'`),
+    check("word_memory_difficulty_check", sql`${table.difficulty} BETWEEN 1 AND 10`),
+    check("word_memory_known_check", sql`${table.knownOverride} in (0, 1)`),
+  ],
+);
+
+export const practiceAttempts = sqliteTable(
+  "practice_attempts",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").references(() => courseLessons.id, { onDelete: "cascade" }),
+    practiceKind: text("practice_kind", { enum: ["lesson", "ai"] }).notNull(),
+    practiceId: text("practice_id").notNull(),
+    itemIndex: integer("item_index").notNull(),
+    prompt: text("prompt").notNull(),
+    answer: text("answer").notNull(),
+    reference: text("reference"),
+    matched: integer("matched", { mode: "boolean" }),
+    aiVerdict: text("ai_verdict", { enum: ["acceptable", "error"] }),
+    aiNote: text("ai_note"),
+    source: text("source", { enum: ["lesson", "ai_chat", "ai_practice"] }).notNull(),
+    conversationId: text("conversation_id"),
+    createdAt: integer("created_at").notNull(),
+  },
+  (table) => [
+    index("practice_attempts_user_created_idx").on(table.userId, table.createdAt),
+    index("practice_attempts_user_lesson_idx").on(table.userId, table.lessonId),
+    check("practice_attempts_kind_check", sql`${table.practiceKind} in ('lesson', 'ai')`),
+    check("practice_attempts_source_check", sql`${table.source} in ('lesson', 'ai_chat', 'ai_practice')`),
+    check("practice_attempts_verdict_check", sql`${table.aiVerdict} IS NULL OR ${table.aiVerdict} in ('acceptable', 'error')`),
+    check("practice_attempts_matched_check", sql`${table.matched} IS NULL OR ${table.matched} in (0, 1)`),
+    check("practice_attempts_item_check", sql`${table.itemIndex} >= 0`),
+    check("practice_attempts_length_check", sql`length(${table.prompt}) <= 2000 AND length(${table.answer}) <= 2000 AND (${table.reference} IS NULL OR length(${table.reference}) <= 2000)`),
+  ],
+);
+
+// Pronunciation attempts outlive their lesson: lesson deletion sets the lesson and word IDs to null.
+export const pronunciationAttempts = sqliteTable(
+  "pronunciation_attempts",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    surface: text("surface", { enum: ["drill", "word_card", "ai_chat"] }).notNull(),
+    referenceText: text("reference_text").notNull(),
+    termKey: text("term_key"),
+    lessonId: text("lesson_id").references(() => courseLessons.id, { onDelete: "set null" }),
+    wordId: text("word_id"),
+    overall: real("overall").notNull(),
+    accuracy: real("accuracy").notNull(),
+    fluency: real("fluency").notNull(),
+    completeness: real("completeness").notNull(),
+    wordScores: text("word_scores").notNull(),
+    createdAt: integer("created_at").notNull(),
+  },
+  (table) => [
+    index("pronunciation_attempts_user_created_idx").on(table.userId, table.createdAt),
+    index("pronunciation_attempts_user_term_idx").on(table.userId, table.termKey),
+    check("pronunciation_attempts_surface_check", sql`${table.surface} in ('drill', 'word_card', 'ai_chat')`),
+    check(
+      "pronunciation_attempts_score_check",
+      sql`${table.overall} BETWEEN 0 AND 100 AND ${table.accuracy} BETWEEN 0 AND 100 AND ${table.fluency} BETWEEN 0 AND 100 AND ${table.completeness} BETWEEN 0 AND 100`,
+    ),
+  ],
+);
+
+// Audit only, never read to undo. Course and lesson IDs carry no foreign key, so the audit outlives a deleted lesson.
+export const progressEvents = sqliteTable(
+  "progress_events",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    actor: text("actor", { enum: ["user", "agent"] }).notNull(),
+    kind: text("kind", { enum: ["lesson_completed", "lesson_reset"] }).notNull(),
+    courseId: text("course_id").notNull(),
+    lessonId: text("lesson_id").notNull(),
+    conversationId: text("conversation_id"),
+    createdAt: integer("created_at").notNull(),
+  },
+  (table) => [
+    index("progress_events_user_created_idx").on(table.userId, table.createdAt),
+    check("progress_events_actor_check", sql`${table.actor} in ('user', 'agent')`),
+    check("progress_events_kind_check", sql`${table.kind} in ('lesson_completed', 'lesson_reset')`),
   ],
 );
 

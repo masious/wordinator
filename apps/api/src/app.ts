@@ -71,7 +71,7 @@ import {
   speechRecognitionTokenResponseSchema, SPEECH_RECOGNITION_TOKEN_TTL_MS,
 } from "@wordinator/contracts";
 import {
-  LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, WORD_DRILL_BOX_MAX, nextWordDrillBox, wordDrillDeckSchema, wordDrillDirectionSchema, wordDrillGradeRequestSchema, wordDrillGradeResponseSchema, wordDrillQuerySchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
+  LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, wordDrillDeckSchema, wordDrillDirectionSchema, wordDrillGradeRequestSchema, wordDrillGradeResponseSchema, wordDrillQuerySchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
   lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
   toLearnerDocument, walkLessonBlocks, type CourseLesson, type CourseWord, type LessonBlockOf, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
@@ -90,7 +90,9 @@ import {
   SPEECH_DRAFT_DELAY_MS, speechJobStatement, storedSpeechCast,
 } from "./speech";
 import { azureRecognitionToken } from "./speechRecognition";
-import { buildWordDrillDeck, type WordDrillState } from "./wordDrill";
+import { buildWordDrillDeck, type WordDrillMemory } from "./wordDrill";
+import { lessonMemoryKeys, memoryRebuildStatements, recordWordReviews } from "./learningData";
+import { recentResults } from "./wordMemory";
 
 export type Bindings = Env & { MEDIA: R2Bucket; PUBLIC_MEDIA_BASE_URL: string };
 type Language = "nl" | "de";
@@ -2349,14 +2351,16 @@ async function drillLesson(context: Context<AppEnvironment>, lessonId: string) {
   return { course };
 }
 
-// The deck: eligible indexed words (Weak words: the viewer's visible bookmarks, like the bookmark list; Lesson: the lesson's
-// published words) with the viewer's states in both directions, ordered and capped by the pure deck builder. Rows of words
-// no longer in the index are skipped, never deleted. Speech is attached to the chosen cards only.
+// The deck: eligible indexed words (Weak words: the viewer's visible bookmarks, like the bookmark list, and every visible
+// occurrence of a term they have memory for; Lesson: the lesson's published words) with the viewer's word memory of the term
+// in both directions, ordered and capped by the pure deck builder. Speech is attached to the chosen cards only.
 type DrillRow = IndexedWord & {
-  termKey: string | null; courseId: string; courseSlug: string; courseTitle: string; lessonSlug: string; lessonTitle: string;
-  understandBox: number | null; understandAt: number | null; produceBox: number | null; produceAt: number | null;
+  termKey: string | null; courseId: string; courseSlug: string; courseTitle: string; lessonSlug: string; lessonTitle: string; bookmarked: number;
+  understandStability: number | null; understandAt: number | null; understandKnown: number | null;
+  produceStability: number | null; produceAt: number | null; produceKnown: number | null;
 };
-const drillState = (box: number | null, at: number | null): WordDrillState | undefined => box === null || at === null ? undefined : { box, lastDrilledAt: at };
+const drillMemory = (stability: number | null, at: number | null, known: number | null): WordDrillMemory | undefined =>
+  stability === null || at === null ? undefined : { stability, lastReviewedAt: at, knownOverride: known === 1 };
 
 // A short-lived Azure token for the Microsoft recognizer of spoken answers (docs/words.md#recognizers). Members only; the key
 // stays a Worker secret and neither the key nor the token is logged.
@@ -2383,40 +2387,50 @@ app.get("/api/groups/:groupId/word-drill", requireGroupAccess, async (context) =
   } else {
     const visible = courseVisibleClause(user.id, group.creatorUserId);
     source = {
-      sql: `w.group_id = ? AND ${visible.sql} AND EXISTS (SELECT 1 FROM course_word_bookmarks b
-        WHERE b.group_id = w.group_id AND b.course_id = w.course_id AND b.lesson_id = w.lesson_id AND b.word_id = w.word_id AND b.user_id = ?)`,
-      values: [group.id, ...visible.values, user.id],
+      sql: `w.group_id = ? AND ${visible.sql} AND (EXISTS (SELECT 1 FROM course_word_bookmarks b
+        WHERE b.group_id = w.group_id AND b.course_id = w.course_id AND b.lesson_id = w.lesson_id AND b.word_id = w.word_id AND b.user_id = ?)
+        OR EXISTS (SELECT 1 FROM word_memory m WHERE m.user_id = ? AND m.term_key = w.term_key))`,
+      values: [group.id, ...visible.values, user.id, user.id],
     };
   }
-  const state = (alias: string, direction: string) =>
-    `LEFT JOIN course_word_drill_states ${alias} ON ${alias}.user_id = ? AND ${alias}.course_id = w.course_id AND ${alias}.lesson_id = w.lesson_id
-       AND ${alias}.word_id = w.word_id AND ${alias}.direction = '${direction}'`;
+  // Memory is keyed by term key, so index rows still without one get it first.
+  await fillWordSearchKeys(db);
+  const memory = (alias: string, direction: string) =>
+    `LEFT JOIN word_memory ${alias} ON ${alias}.user_id = ? AND ${alias}.term_key = w.term_key AND ${alias}.direction = '${direction}'`;
   const rows = await db.prepare(
     `SELECT w.word_id AS id, w.lesson_id AS lessonId, w.term, w.meaning, w.forms, w.example, w.note, w.ipa, w.term_key AS termKey,
        c.id AS courseId, c.slug AS courseSlug, c.title AS courseTitle, l.slug AS lessonSlug, l.title AS lessonTitle,
-       u.box AS understandBox, u.last_drilled_at AS understandAt, p.box AS produceBox, p.last_drilled_at AS produceAt
+       EXISTS (SELECT 1 FROM course_word_bookmarks bm WHERE bm.user_id = ? AND bm.lesson_id = w.lesson_id AND bm.word_id = w.word_id) AS bookmarked,
+       u.stability AS understandStability, u.last_reviewed_at AS understandAt, u.known_override AS understandKnown,
+       p.stability AS produceStability, p.last_reviewed_at AS produceAt, p.known_override AS produceKnown
      FROM course_lesson_words w
      JOIN course_lessons l ON l.id = w.lesson_id AND l.group_id = w.group_id AND l.course_id = w.course_id AND l.published_doc IS NOT NULL
      JOIN courses c ON c.id = w.course_id AND c.group_id = w.group_id
-     ${state("u", "understand")}
-     ${state("p", "produce")}
+     ${memory("u", "understand")}
+     ${memory("p", "produce")}
      WHERE ${source.sql}`,
-  ).bind(user.id, user.id, ...source.values).all<DrillRow>();
+  ).bind(user.id, user.id, user.id, ...source.values).all<DrillRow>();
   const deck = buildWordDrillDeck(rows.results.map((row) => ({
-    row, termKey: row.termKey ?? wordSearchKey(row.term),
-    states: { understand: drillState(row.understandBox, row.understandAt), produce: drillState(row.produceBox, row.produceAt) },
-  })), parsed.data.direction, Math.random);
+    row, termKey: row.termKey ?? wordSearchKey(row.term), bookmarked: row.bookmarked === 1,
+    memory: {
+      understand: drillMemory(row.understandStability, row.understandAt, row.understandKnown),
+      produce: drillMemory(row.produceStability, row.produceAt, row.produceKnown),
+    },
+  })), parsed.data.direction, Math.random, Date.now());
   const spoken = await withWordSpeech(db, deck.map((entry) => entry.candidate.row), group.language, context.env.PUBLIC_MEDIA_BASE_URL);
   return context.json(wordDrillDeckSchema.parse({
-    cards: spoken.map(({ termKey: _termKey, courseId, courseSlug, courseTitle, lessonSlug, lessonTitle, understandBox: _ub, understandAt: _ua, produceBox: _pb, produceAt: _pa, ...word }, index) => ({
+    cards: spoken.map(({
+      termKey: _termKey, courseId, courseSlug, courseTitle, lessonSlug, lessonTitle, bookmarked: _bookmarked,
+      understandStability: _us, understandAt: _ua, understandKnown: _uk, produceStability: _ps, produceAt: _pa, produceKnown: _pk, ...word
+    }, index) => ({
       word, direction: deck[index]!.direction,
       course: { id: courseId, slug: courseSlug, title: courseTitle }, lesson: { id: word.lessonId, slug: lessonSlug, title: lessonTitle },
     })),
   }));
 });
 
-// A card's first grade in a session. One statement checks that the word is in the lesson's published index for this course
-// and moves the box by `nextWordDrillBox` (insert: a new word; update: an existing state); no row back means no such word.
+// A card's first grade in a session: the word must be in the lesson's published index for this course; the grade is appended
+// as a review and folded into the term's memory in one batch (docs/words.md#word-memory).
 app.put(`${lessonPath}/words/:wordId/drill/:direction`, requireGroupAccess, async (context) => {
   const direction = wordDrillDirectionSchema.safeParse(context.req.param("direction"));
   let body: unknown;
@@ -2424,23 +2438,19 @@ app.put(`${lessonPath}/words/:wordId/drill/:direction`, requireGroupAccess, asyn
   const grade = wordDrillGradeRequestSchema.safeParse(body);
   if (!direction.success || !grade.success) return apiError(context, 400, "INVALID_DRILL", "This grade is invalid.");
   const found = await visibleCourse(context); if ("error" in found) return found.error;
-  const result = grade.data.result;
-  const saved = await context.env.DB.prepare(
-    `INSERT INTO course_word_drill_states (user_id, course_id, lesson_id, word_id, direction, box, last_result, last_drilled_at)
-     SELECT ?, w.course_id, w.lesson_id, w.word_id, ?, ?, ?, ?
-     FROM course_lesson_words w
+  const db = context.env.DB;
+  const indexed = await db.prepare(
+    `SELECT w.lesson_id AS lessonId, w.word_id AS wordId, w.term, w.term_key AS termKey FROM course_lesson_words w
      JOIN course_lessons l ON l.id = w.lesson_id AND l.group_id = w.group_id AND l.course_id = w.course_id AND l.published_doc IS NOT NULL
-     WHERE w.group_id = ? AND w.course_id = ? AND w.lesson_id = ? AND w.word_id = ?
-     ON CONFLICT (user_id, lesson_id, word_id, direction) DO UPDATE SET
-       box = CASE WHEN excluded.last_result = 'again' THEN 1 ELSE MIN(course_word_drill_states.box + 1, ?) END,
-       last_result = excluded.last_result, last_drilled_at = excluded.last_drilled_at
-     RETURNING box`,
-  ).bind(
-    context.get("user")!.id, direction.data, nextWordDrillBox(null, result), result, Date.now(),
-    found.row.groupId, found.row.id, context.req.param("lessonId"), context.req.param("wordId"), WORD_DRILL_BOX_MAX,
-  ).first<{ box: number }>();
-  if (!saved) return apiError(context, 404, "WORD_NOT_FOUND", "This word is not available.");
-  return context.json(wordDrillGradeResponseSchema.parse({ box: saved.box }));
+     WHERE w.group_id = ? AND w.course_id = ? AND w.lesson_id = ? AND w.word_id = ?`,
+  ).bind(found.row.groupId, found.row.id, context.req.param("lessonId"), context.req.param("wordId"))
+    .first<{ lessonId: string; wordId: string; term: string; termKey: string | null }>();
+  if (!indexed) return apiError(context, 404, "WORD_NOT_FOUND", "This word is not available.");
+  const termKey = indexed.termKey ?? wordSearchKey(indexed.term);
+  const memory = await recordWordReviews(db, context.get("user")!.id, [{
+    termKey, direction: direction.data, result: grade.data.result, source: "drill", courseId: found.row.id, lessonId: indexed.lessonId, wordId: indexed.wordId,
+  }]);
+  return context.json(wordDrillGradeResponseSchema.parse({ recent: recentResults(memory.get(`${termKey}\n${direction.data}`)?.recent ?? "") }));
 });
 
 // Finishing a published lesson in the lesson player records it once; repeating the lesson keeps the first completion time.
@@ -2498,8 +2508,10 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
   const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id; const db = context.env.DB;
   const media = await db.prepare("SELECT key FROM course_media WHERE group_id = ? AND lesson_id = ?").bind(groupId, lessonId).all<{ key: string }>();
-  // Lessons are hard-deleted with their practice progress, completions, positions, word index rows, word bookmarks, drill
-  // states, speech job, and images.
+  // Lessons are hard-deleted with their practice progress, completions, positions, word index rows, word bookmarks, speech
+  // job, and images, and every account's practice attempts and word reviews of the lesson; memory of the terms those reviews
+  // touched is rebuilt from the remaining reviews after the lesson row is gone. Pronunciation attempts stay, unlinked.
+  const memoryRebuild = await memoryRebuildStatements(db, await lessonMemoryKeys(db, lessonId), { withoutLessonId: lessonId });
   await db.batch([
     db.prepare("DELETE FROM course_practice_progress WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_practices WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
@@ -2508,9 +2520,12 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
     db.prepare("DELETE FROM course_lesson_positions WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lesson_words WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_word_bookmarks WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
-    db.prepare("DELETE FROM course_word_drill_states WHERE course_id = ? AND lesson_id = ?").bind(courseId, lessonId),
+    db.prepare("DELETE FROM word_reviews WHERE course_id = ? AND lesson_id = ?").bind(courseId, lessonId),
+    db.prepare("DELETE FROM practice_attempts WHERE course_id = ? AND lesson_id = ?").bind(courseId, lessonId),
+    db.prepare("UPDATE pronunciation_attempts SET lesson_id = NULL, word_id = NULL WHERE lesson_id = ?").bind(lessonId),
     db.prepare("DELETE FROM speech_jobs WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM course_lessons WHERE group_id = ? AND course_id = ? AND id = ?").bind(groupId, courseId, lessonId),
+    ...memoryRebuild,
   ]);
   if (media.results.length) await context.env.MEDIA.delete(media.results.map((row) => row.key));
   return context.json({ ok: true } as const);

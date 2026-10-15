@@ -104,7 +104,7 @@ Added in C9b; see [bookmarks](words.md#bookmarks). Group ID, course ID, lesson I
 
 ### `course_word_drill_states`
 
-Added in C12 by migration `0025_course_word_drill_states.sql` and dropped by C14 before C12's release. It held the Leitner box per user, lesson word, and direction (`understand` or `produce`): box (1–5), last result, and last drilled timestamp, with primary key `(user_id, lesson_id, word_id, direction)`. The C14 migration turns each row into one `seed` row in [`word_reviews`](#word_reviews) and a [`word_memory`](#word_memory) row whose stability follows the box (see [word memory](words.md#word-memory)), then drops the table.
+Added in C12 by migration `0025_course_word_drill_states.sql` and dropped by `0026_learning_data.sql` (C14a) before C12's release. It held the Leitner box per user, lesson word, and direction (`understand` or `produce`): box (1–5), last result, and last drilled timestamp, with primary key `(user_id, lesson_id, word_id, direction)`. The C14 migration turns each row into one `seed` row in [`word_reviews`](#word_reviews) and a [`word_memory`](#word_memory) row whose stability follows the box (see [word memory](words.md#word-memory)), then drops the table. The term key comes from the word index; a word indexed before search keys and never keyed since uses its lower-cased term when that term is plain single-spaced ASCII, and is otherwise skipped, as are states of words no longer in the index.
 
 ### `course_contributors`
 
@@ -120,15 +120,15 @@ Added in C6b. Group ID, course ID, lesson ID, user ID, step key, step index, pas
 
 ## Learning data
 
-Added in C14 ([word memory](words.md#word-memory), [practice attempts](courses.md#practice-attempts), [reset](courses.md#reset)). None of these tables has `group_id`: they are new work under the [storage compatibility](groups-and-membership.md#storage-compatibility) rule and reach the backing library record through the course. Every row belongs to one user; reads always filter by the signed-in user's ID. Lesson and word IDs are keys into the published index with deliberately no foreign key to [`course_lesson_words`](#course_lesson_words), like bookmarks. Rows cascade from their user, course, and lesson where they carry them, and lesson deletion also deletes them explicitly in its batch, then rebuilds the affected memory rows.
+Added in C14 ([word memory](words.md#word-memory), [practice attempts](courses.md#practice-attempts), [reset](courses.md#reset)) by migration `0026_learning_data.sql` (C14a). None of these tables has `group_id`: they are new work under the [storage compatibility](groups-and-membership.md#storage-compatibility) rule and reach the backing library record through the course. Every row belongs to one user; reads always filter by the signed-in user's ID. Lesson and word IDs are keys into the published index with deliberately no foreign key to [`course_lesson_words`](#course_lesson_words), like bookmarks. Rows cascade from their user, course, and lesson where they carry them (except `progress_events`, below), and lesson deletion also deletes them explicitly in its batch, then rebuilds the affected memory rows. Conversation IDs have no foreign key, since the tutor's tables come later.
 
 ### `word_reviews`
 
-Append-only log of graded word answers. ID, user ID, term key (`wordSearchKey` of the term), course ID, lesson ID, word ID, direction (`understand` or `produce`), result (`got` or `again`), source (`drill`, `ai_chat`, `ai_practice`, or `seed`), nullable conversation ID, and created timestamp. Checks limit direction, result, and source. Indexed by `(user_id, term_key, direction, created_at)` for rebuilding and by `(user_id, lesson_id)` for reset. Rows are deleted only by a lesson reset or lesson deletion.
+Append-only log of graded word answers. ID, user ID, term key (`wordSearchKey` of the term), course ID, lesson ID, word ID, direction (`understand` or `produce`), result (`got` or `again`), source (`drill`, `ai_chat`, `ai_practice`, or `seed`), nullable seed box (the C12 Leitner box, 1–5, set only on `seed` rows so a rebuild reproduces the seeded stability), nullable conversation ID, and created timestamp. Checks limit direction, result, source, and the seed box. Indexed by `(user_id, term_key, direction, created_at)` for rebuilding, by `(user_id, lesson_id)` for reset, and by `lesson_id` for lesson deletion across accounts. Rows are deleted only by a lesson reset or lesson deletion.
 
 ### `word_memory`
 
-One row per `(user_id, term_key, direction)`, the primary key, folded from that key's reviews: representative course, lesson, and word ID (the most recently reviewed occurrence), `recent` (the last ten results as a string of `g` and `a`, newest last), reps, lapses, nullable last lapse timestamp, stability (days, real), difficulty (real, 1–10), last reviewed timestamp, and `known_override` (boolean, default false). Recall probability is computed at read time and never stored. A row is always reproducible from [`word_reviews`](#word_reviews); a key with no reviews left has no row. Indexed by `(user_id, last_reviewed_at)`.
+One row per `(user_id, term_key, direction)`, the primary key, folded from that key's reviews: representative course, lesson, and word ID (the most recently reviewed occurrence), `recent` (the last ten results as a string of `g` and `a`, newest last), reps, lapses, nullable last lapse timestamp, stability (days, real), difficulty (real, 1–10), last reviewed timestamp, and `known_override` (boolean, default false). Recall probability is computed at read time and never stored. A row is always reproducible from [`word_reviews`](#word_reviews) (replayed in `(created_at, id)` order), except `known_override`, which a rebuild carries over; a key with no reviews left has no row. Indexed by `(user_id, last_reviewed_at)`.
 
 ### `practice_attempts`
 
@@ -136,11 +136,11 @@ ID, user ID, course ID, nullable lesson ID, practice kind (`lesson` or `ai`), pr
 
 ### `pronunciation_attempts`
 
-ID, user ID, surface (`drill`, `word_card`, or `ai_chat`), reference text, nullable term key, lesson ID, and word ID, overall, accuracy, fluency, and completeness scores (0–100), word scores (JSON text: word, accuracy, and error type per word), and created timestamp. Indexed by `(user_id, created_at)` and `(user_id, term_key)`. A lesson reset keeps these rows; lesson deletion sets their lesson and word IDs to null.
+ID, user ID, surface (`drill`, `word_card`, or `ai_chat`), reference text, nullable term key, lesson ID (its foreign key sets null), and word ID, overall, accuracy, fluency, and completeness scores (0–100), word scores (JSON text: word, accuracy, and error type per word), and created timestamp. Indexed by `(user_id, created_at)` and `(user_id, term_key)`. A lesson reset keeps these rows; lesson deletion sets their lesson and word IDs to null.
 
 ### `progress_events`
 
-Audit only, never read to undo. ID, user ID, actor (`user` or `agent`), kind (`lesson_completed` or `lesson_reset`), course ID, lesson ID, nullable conversation ID, and created timestamp. Indexed by `(user_id, created_at)`.
+Audit only, never read to undo. ID, user ID, actor (`user` or `agent`), kind (`lesson_completed` or `lesson_reset`), course ID, lesson ID, nullable conversation ID, and created timestamp. Course and lesson IDs have no foreign key, so the audit outlives a deleted lesson. Indexed by `(user_id, created_at)`.
 
 ## AI tutor
 

@@ -24,10 +24,13 @@ describe("word drill contracts", () => {
     expect(wordDrillDeckSchema.safeParse({ cards: [{ ...card, direction: "mixed" }] }).success).toBe(false);
   });
 
-  it("accepts only a result and returns a box from 1 to 5", () => {
+  it("accepts only a result and returns at most the last five results", () => {
     expect(wordDrillGradeRequestSchema.parse({ result: "again" })).toEqual({ result: "again" });
     expect(wordDrillGradeRequestSchema.safeParse({ result: "maybe" }).success).toBe(false);
-    expect(wordDrillGradeResponseSchema.parse({ box: 5 })).toEqual({ box: 5 });
-    for (const box of [0, 6, 2.5]) expect(wordDrillGradeResponseSchema.safeParse({ box }).success).toBe(false);
+    const recent = ["got", "again", "got", "got", "again"];
+    expect(wordDrillGradeResponseSchema.parse({ recent })).toEqual({ recent });
+    expect(wordDrillGradeResponseSchema.parse({ recent: ["got"] })).toEqual({ recent: ["got"] });
+    for (const bad of [[...recent, "got"], ["maybe"], undefined]) expect(wordDrillGradeResponseSchema.safeParse({ recent: bad }).success).toBe(false);
+    expect(wordDrillGradeResponseSchema.safeParse({ box: 2 }).success).toBe(false);
   });
 });

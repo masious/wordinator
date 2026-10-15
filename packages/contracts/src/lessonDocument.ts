@@ -578,7 +578,6 @@ export type WordSearchPage = z.infer<typeof wordSearchPageSchema>;
 // Drill (C12): self-graded flashcards of words; see docs/words.md#drill. A session holds at most this many cards, each word
 // in one direction. `lessonId` names the lesson of `source=lesson` and is refused for `source=weak`.
 export const WORD_DRILL_SESSION_SIZE = 20;
-export const WORD_DRILL_BOX_MAX = 5;
 export const wordDrillSourceSchema = z.enum(["weak", "lesson"]);
 export type WordDrillSource = z.infer<typeof wordDrillSourceSchema>;
 export const wordDrillDirectionSchema = z.enum(["understand", "produce"]);
@@ -599,12 +598,11 @@ export const wordDrillCardSchema = z.object({
 export type WordDrillCard = z.infer<typeof wordDrillCardSchema>;
 export const wordDrillDeckSchema = z.object({ cards: z.array(wordDrillCardSchema).max(WORD_DRILL_SESSION_SIZE) });
 export type WordDrillDeck = z.infer<typeof wordDrillDeckSchema>;
-// A card's first grade in a session; each call moves the box, so the web sends one per card per session.
+// A card's first grade in a session; each call appends a review to word memory (C14), so the web sends one per card per session.
 export const wordDrillGradeRequestSchema = z.object({ result: wordDrillResultSchema });
 export type WordDrillGradeRequest = z.infer<typeof wordDrillGradeRequestSchema>;
-export const wordDrillBoxSchema = z.number().int().min(1).max(WORD_DRILL_BOX_MAX);
-export const wordDrillGradeResponseSchema = z.object({ box: wordDrillBoxSchema });
+// A word's latest results in one direction, oldest first (docs/words.md#word-memory); the grade returns the last five.
+export const WORD_RECENT_RESULTS_SHOWN = 5;
+export const wordRecentResultsSchema = z.array(wordDrillResultSchema).max(WORD_RECENT_RESULTS_SHOWN);
+export const wordDrillGradeResponseSchema = z.object({ recent: wordRecentResultsSchema });
 export type WordDrillGradeResponse = z.infer<typeof wordDrillGradeResponseSchema>;
-// Leitner boxes: Again sends a word to box 1; Got it moves it up one, and a word never drilled in that direction lands in box 2.
-export const nextWordDrillBox = (box: number | null, result: WordDrillResult): number =>
-  result === "again" ? 1 : Math.min((box ?? 1) + 1, WORD_DRILL_BOX_MAX);

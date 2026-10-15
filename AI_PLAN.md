@@ -42,20 +42,28 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 - [x] [docs/architecture.md](docs/architecture.md), [docs/operations.md](docs/operations.md) (secrets, the Workers AI binding, the superuser command), [docs/design-system.md](docs/design-system.md) (CTA, chat surfaces, tool steps, answer components, dots), [docs/testing.md](docs/testing.md), [docs/user-flows.md](docs/user-flows.md), [docs/what_is_it.md](docs/what_is_it.md) (the no-scores non-goal narrows), and [docs/roadmap.md](docs/roadmap.md) (C14).
 - [x] Mark `CLAUDE.md` product invariants that change: rich text stays limited to lessons, plus the assistant's markdown subset.
 
-## C14a — Learning data foundation
+## C14a — Learning data foundation (completed 2026-10-16)
 
-- [ ] Migration and schema:
+- [x] Migration and schema:
   - `word_reviews`: id, user_id, term_key, course_id, lesson_id, word_id, direction, result (`got` | `again`), source (`drill` | `ai_chat` | `ai_practice` | `seed`), conversation_id, created_at. Indexed by `(user_id, term_key, direction, created_at)` and `(user_id, lesson_id)`.
   - `word_memory`: primary key `(user_id, term_key, direction)`; the representative lesson and word ID, `recent` (last 10 results as a bit string), reps, lapses, last_lapse_at, stability, difficulty, last_reviewed_at, known_override.
   - `practice_attempts`: id, user_id, course_id, lesson_id (nullable), practice_kind (`lesson` | `ai`), practice_id, item_index, prompt, answer, reference, matched (nullable), ai_verdict (`acceptable` | `error`, nullable), ai_note, source (`lesson` | `ai_chat` | `ai_practice`), conversation_id, created_at.
   - `pronunciation_attempts`: id, user_id, surface (`drill` | `word_card` | `ai_chat`), reference_text, term_key, lesson_id, word_id, overall, accuracy, fluency, completeness, word_scores JSON, created_at.
   - `progress_events` (audit only, no undo): id, user_id, actor (`user` | `agent`), kind, course_id, lesson_id, conversation_id, created_at.
   - None of the new tables has `group_id`, per [storage compatibility](docs/groups-and-membership.md#storage-compatibility).
-- [ ] Pure memory engine (in the API, beside `wordDrill.ts`): fold one review into a memory row, rebuild a row from its reviews, recall probability at a time. Evaluate `ts-fsrs` against a small in-house version; the decision goes in the notes.
-- [ ] Seed migration: one `seed` review per existing drill state, memory rows from the boxes, then drop `course_word_drill_states`.
-- [ ] Drill: grading writes a review and updates memory in one batch; the deck builder ranks by recall probability instead of box tiers.
-- [ ] Lesson deletion removes the new rows explicitly in its batch.
-- [ ] Tests: engine unit tests (fold, rebuild equals incremental, recall decay); Workers tests for grade → review + memory, seeding, another account's rows never read, deck order from memory.
+- [x] Pure memory engine (in the API, beside `wordDrill.ts`): fold one review into a memory row, rebuild a row from its reviews, recall probability at a time. Evaluate `ts-fsrs` against a small in-house version; the decision goes in the notes.
+- [x] Seed migration: one `seed` review per existing drill state, memory rows from the boxes, then drop `course_word_drill_states`.
+- [x] Drill: grading writes a review and updates memory in one batch; the deck builder ranks by recall probability instead of box tiers.
+- [x] Lesson deletion removes the new rows explicitly in its batch.
+- [x] Tests: engine unit tests (fold, rebuild equals incremental, recall decay); Workers tests for grade → review + memory, seeding, another account's rows never read, deck order from memory.
+
+### Notes
+
+- **Memory engine: in-house, not `ts-fsrs`.** `apps/api/src/wordMemory.ts` is about a hundred lines of FSRS-4.5 (its published default weights, the power forgetting curve `R = (1 + 19/81 · t/S)^-0.5`, recall and forget stability, and mean-reverting difficulty) with two grades, Again = 1 and Got it = Good = 3. `ts-fsrs` (5.4, about 700 KB unpacked; checked against its current docs) is built around scheduling cards: due dates, learning steps, card states, fuzz, and four ratings, none of which Wordinator shows or needs, while the parts we need are a few formulas. Writing them in-house keeps the Worker bundle small, keeps every result deterministic so a rebuild equals incremental folding and migration `0026` can mirror the seed fold in SQL, and avoids tracking a scheduler library's version changes. Times are fractional days, so same-day reviews fold without `ts-fsrs`'s short-term terms.
+- **Seed box column.** `word_reviews.seed_box` (only on `seed` rows) keeps each seeded drill state's box, so rebuilding a seeded term after a reset or lesson deletion reproduces its box stability instead of guessing. A seed sets stability from its box and the default difficulty (Good's initial difficulty, 5.1618) and is never counted as a lapse.
+- **Unkeyed words when seeding.** SQLite cannot fold diacritics, so the migration takes the term key from `course_lesson_words.term_key`; a word indexed before `0023` and never keyed since falls back to its lower-cased trimmed term only when that term is plain single-spaced ASCII (exactly what `wordSearchKey` gives), and other unkeyed words, and states of words no longer in the index, are skipped. The drill deck now runs the word search's lazy key fill before reading, and the grade route keys a missing index key with `wordSearchKey` in the Worker.
+- **Helpers for later phases** (`apps/api/src/learningData.ts`): `recordWordReviews(db, userId, reviews)` appends reviews (sources `drill`, `ai_chat`, `ai_practice`) and upserts their memory in one batch, returning the new rows by `` `${termKey}\n${direction}` ``; `memoryRebuildStatements(db, keys, { withoutLessonId })` returns statements to put after the deletes in a reset or deletion batch; `lessonMemoryKeys(db, lessonId, userId?)` lists the keys a lesson's reviews touch; `rebuildMemory(db, userId, termKeys)` rebuilds both directions directly. `recentResults(recent, 5)` in `wordMemory.ts` turns a row's `recent` into the contracts' `wordRecentResultsSchema` shape. `known_override` survives a rebuild; a later Again clears it.
+- **Not done here:** the drill setup still disables Weak words without bookmarks (memory alone does not enable it yet); C14d's weak words read can expose whether the learner has memory.
 
 ## C14b — Capturing attempts and pronunciation
 

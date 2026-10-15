@@ -55,7 +55,7 @@ beforeEach(() => {
     if (path === "/api/session") return response(session);
     if (path.includes("/word-drill?")) return response({ cards: decks.length > 1 ? decks.shift()! : decks[0]! });
     if (init?.method === "PUT" && path.includes("/drill/")) {
-      if (gradeStatus === 200) return response({ box: 2 });
+      if (gradeStatus === 200) return response({ recent: ["got"] });
       return response({ error: { code: gradeStatus === 404 ? "WORD_NOT_FOUND" : "INTERNAL", message: "No." } }, gradeStatus);
     }
     return response({ ok: true });
