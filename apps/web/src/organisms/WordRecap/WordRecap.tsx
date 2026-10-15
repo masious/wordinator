@@ -2,6 +2,8 @@ import type { CourseWord, LessonStep } from "@wordinator/contracts/lesson-docume
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
+import { PassingVerdict, SpeakButton } from "../../molecules/SpeakControls";
+import { speechRecognitionSupported, useSpokenAnswer, type ListenStatus, type SpokenAnswer } from "../../molecules/speechRecognition";
 import { playRevealSpeech, RevealSoundToggle, SpeechButton, useSpeechResolver, useStopSpeechOnUnmount } from "../../molecules/Speech";
 import { Button } from "../../ui";
 import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
@@ -51,7 +53,25 @@ function useGridFit() {
 // A word's identity on a page: its lesson and ID where the lesson is known, since word IDs are unique only within a lesson.
 const wordKey = (word: RecapWord) => word.lessonId ? `${word.lessonId}:${word.id}` : word.id;
 
-function WordCard({ word, source, shown, opened, onToggle }: { word: RecapWord; source: string | null; shown: boolean; opened: boolean; onToggle: () => void }) {
+type SpokenOutcome = SpokenAnswer | Exclude<ListenStatus, "idle" | "listening">;
+
+// Saying the term aloud on a word card (docs/words.md#spoken-answers): a round microphone in the footer, and the outcome floating
+// over the card for a moment. It neither flips the card nor records anything.
+function WordSpeak({ term, locale }: { term: string; locale: string }) {
+  const [outcome, setOutcome] = useState<SpokenOutcome | null>(null);
+  const spoken = useSpokenAnswer(locale, term, setOutcome);
+  const { status } = spoken;
+  useEffect(() => { if (status !== "idle" && status !== "listening") setOutcome(status); }, [status]);
+  const listen = () => { if (status !== "listening") setOutcome(null); spoken.listen(); };
+  return <>
+    <span className={styles.speak}><SpeakButton compact term={term} listening={status === "listening"} onListen={listen} /></span>
+    {outcome && <PassingVerdict outcome={outcome} onGone={() => setOutcome(null)} />}
+  </>;
+}
+
+function WordCard({ word, source, shown, opened, speechLocale, onToggle }: {
+  word: RecapWord; source: string | null; shown: boolean; opened: boolean; speechLocale: string | null; onToggle: () => void;
+}) {
   const { t } = useTranslation();
   // Indexed words (course recap, Words tab) carry their clips; a lesson run's words take them from the lesson's speech scope.
   const resolve = useSpeechResolver();
@@ -85,6 +105,7 @@ function WordCard({ word, source, shown, opened, onToggle }: { word: RecapWord; 
     <div className={styles.footer}>
       <Button variant="secondary" onClick={toggle}>{shown ? t("courses.words.hideMeaning") : t("courses.words.showMeaning")}</Button>
       <span className={styles.bookmark}><WordBookmarkToggle wordId={word.id} lessonId={word.lessonId} term={word.term} /></span>
+      {speechLocale && speechRecognitionSupported() && <WordSpeak term={word.term} locale={speechLocale} />}
     </div>
   </article>;
 }
@@ -96,9 +117,11 @@ export type MoreWords = { hasMore: boolean; loading: boolean; onLoad: () => void
 // all reveals the page. Revealing one card speaks its term while the reveal sound is on; Show all and Hide meaning stay silent.
 // Back and Next move by a page; the last page offers the done action when there is one. With `more`, the next words load while
 // the reader is a page away from the end, and the total is not shown until every word has loaded. Nothing is graded, recorded,
-// or counted. Callers render it only when there is at least one word.
-export function WordRecap({ words, doneLabel, onDone, source, more }: {
+// or counted. Callers render it only when there is at least one word. With `speechLocale` (the Words tab only), each card also
+// offers saying its term aloud.
+export function WordRecap({ words, doneLabel, onDone, source, more, speechLocale = null }: {
   words: readonly RecapWord[]; doneLabel?: string; onDone?: () => void; source?: (word: RecapWord) => string | null; more?: MoreWords;
+  speechLocale?: string | null;
 }) {
   const { t } = useTranslation();
   const { recapRef, gridRef, size } = useGridFit();
@@ -137,7 +160,7 @@ export function WordRecap({ words, doneLabel, onDone, source, more }: {
       {page.map((word, index) => {
         const key = wordKey(word);
         return <WordCard key={`${start + index}:${key}`} word={word} source={source?.(word) ?? null} shown={shown.has(key)} opened={opened.has(key)}
-          onToggle={() => reveal([key], !shown.has(key))} />;
+          speechLocale={speechLocale} onToggle={() => reveal([key], !shown.has(key))} />;
       })}
     </div>
     <div className={styles.nav}>

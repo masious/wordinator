@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, ApiError, sessionQueryOptions, wordDrillQueryOptions, type WordDrillSettings } from "../api";
 import { RevealSoundToggle } from "../molecules/Speech";
-import { RECOGNITION_LOCALES } from "../organisms/WordDrill/spokenAnswer";
+import { RECOGNITION_LOCALES } from "../molecules/speechRecognition";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { gradeDrill, startDrill } from "../organisms/WordDrill/drillSession";
 import { WordDrillCard } from "../organisms/WordDrill/WordDrillCard";

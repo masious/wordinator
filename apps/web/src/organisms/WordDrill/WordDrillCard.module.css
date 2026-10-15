@@ -23,22 +23,7 @@
 /* The blank keeps the example's rhythm: an underline about one short word wide. */
 .blank{display:inline-block;width:4em;height:1em;vertical-align:baseline;border-bottom:var(--border-strong)}
 .speech{margin-inline-start:var(--space-2)}
-/* A spoken answer: what was heard sits above the term; a match takes the success tone, a miss stays muted. */
-.face .heard{font:var(--type-metadata)/1.3 var(--font-mono);color:var(--color-foreground-muted)}
-.face .heardMatch{color:var(--color-success)}
-.face .listenStatus{font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 .actions{display:flex;justify-content:center;gap:var(--space-3)}
-.mic{flex:none;margin-inline-end:var(--space-2)}
-/* Say it. While it listens the button takes an action tint, its icon breathes, and two rings ripple out from it; the stop hint
-   hangs below without moving the row. */
-.speak{position:relative;display:inline-flex}
-.speak[data-listening]::before,.speak[data-listening]::after{content:"";position:absolute;inset:0;border:var(--border-strong);border-color:var(--color-action);border-radius:var(--radius-pill);pointer-events:none;animation:ripple calc(var(--motion-reveal) * 2) var(--ease-physical) infinite}
-.speak[data-listening]::after{animation-delay:var(--motion-reveal)}
-.speak[data-listening] .speakButton{--button-surface:color-mix(in srgb,var(--color-action) 24%,var(--color-control-surface))}
-.speak[data-listening] .mic{color:var(--color-action);animation:breathe var(--motion-reveal) var(--ease-physical) infinite alternate}
-.stopHint{position:absolute;top:calc(100% + var(--space-2));left:50%;transform:translateX(-50%);white-space:nowrap;font:var(--text-xs)/1.3 var(--font-mono);color:var(--color-foreground-muted)}
-@keyframes ripple{from{opacity:.7;transform:scale(1)}to{opacity:0;transform:scale(1.12,1.45)}}
-@keyframes breathe{from{transform:scale(1)}to{transform:scale(1.2)}}
 .key{margin-inline-start:var(--space-2);padding:0 var(--space-1);font:var(--type-metadata)/1.4 var(--font-mono);color:inherit;opacity:.7;border:var(--ring-hairline);border-radius:var(--radius-sm)}
 @keyframes cardIn{from{opacity:0;transform:translateY(var(--space-2))}to{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){.card{animation:none}.faces,.front,.back{transition:none}.speak[data-listening]::after{animation:none;opacity:0}.speak[data-listening]::before{animation:none;opacity:.7}.speak[data-listening] .mic{animation:none}}
+@media(prefers-reduced-motion:reduce){.card{animation:none}.faces,.front,.back{transition:none}}

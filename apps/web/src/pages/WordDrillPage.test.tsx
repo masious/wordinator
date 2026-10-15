@@ -159,7 +159,7 @@ describe("Spoken answers", () => {
     expect(within(current()).getByRole("button", { name: /Listening/ })).toHaveAttribute("aria-pressed", "true");
     expect(within(current()).getByRole("button", { name: /Listening/ })).toHaveAccessibleDescription("Click to stop");
     recognition.hear("Kaartje", "kaart je");
-    expect(current()).toHaveTextContent("Heard “Kaartje” · matches");
+    expect(current()).toHaveTextContent("Matches!You said “Kaartje”");
     expect(current()).toHaveTextContent("the ticket");
     expect(grades()).toEqual([]);
     gradeAs("Got it");
@@ -172,7 +172,7 @@ describe("Spoken answers", () => {
     await screen.findByRole("article", { name: "Drill card" });
     press("m");
     FakeRecognition.last!.hear("kaart");
-    expect(current()).toHaveTextContent("Heard “kaart” · doesn't match");
+    expect(current()).toHaveTextContent("Not quiteYou said “kaart”");
     expect(within(current()).getByRole("button", { name: "Again" })).toBeInTheDocument();
   });
 

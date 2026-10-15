@@ -188,6 +188,63 @@ describe("Words tab", () => {
   });
 });
 
+// A stand-in for the browser's SpeechRecognition: the test says what it heard, or which error it raised.
+class FakeRecognition {
+  static last: FakeRecognition | null = null;
+  lang = ""; interimResults = true; continuous = true; maxAlternatives = 1;
+  onresult: ((event: { results: unknown }) => void) | null = null;
+  onerror: ((event: { error: string }) => void) | null = null;
+  onend: (() => void) | null = null;
+  constructor() { FakeRecognition.last = this; }
+  start() {}
+  stop() { this.onend?.(); }
+  abort() { this.onerror?.({ error: "aborted" }); this.onend?.(); }
+  hear(...alternatives: string[]) { act(() => { this.onresult?.({ results: [alternatives.map((transcript) => ({ transcript }))] }); this.onend?.(); }); }
+  fail(error: string) { act(() => { this.onerror?.({ error }); this.onend?.(); }); }
+}
+
+describe("Saying a word", () => {
+  beforeEach(() => { FakeRecognition.last = null; vi.stubGlobal("webkitSpeechRecognition", FakeRecognition); });
+
+  it("listens for the card's term and shows a passing verdict without flipping the card or saving anything", async () => {
+    renderPage();
+    const first = await screen.findByRole("article", { name: "woord 1" });
+    fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
+    expect(FakeRecognition.last!.lang).toBe("nl-NL");
+    expect(within(first).getByRole("button", { name: "Stop listening" })).toHaveAttribute("aria-pressed", "true");
+    const calls = vi.mocked(fetch).mock.calls.length;
+    FakeRecognition.last!.hear("Woord 1");
+    const verdict = within(first).getByRole("status");
+    expect(verdict).toHaveTextContent("Matches!You said “Woord 1”");
+    expect(within(first).getByRole("button", { name: "Show meaning" })).toBeInTheDocument();
+    expect(vi.mocked(fetch).mock.calls.length).toBe(calls);
+    // Clicking dismisses it once its fade ends.
+    const passing = verdict.parentElement!;
+    fireEvent.click(passing);
+    fireEvent.animationEnd(passing);
+    expect(within(first).queryByRole("status")).not.toBeInTheDocument();
+  });
+
+  it("shows a miss and a missed listen the same passing way", async () => {
+    renderPage();
+    const first = await screen.findByRole("article", { name: "woord 1" });
+    fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
+    FakeRecognition.last!.hear("woord 2");
+    expect(within(first).getByRole("status")).toHaveTextContent("Not quiteYou said “woord 2”");
+    fireEvent.click(within(first).getByRole("button", { name: "Say woord 1" }));
+    expect(within(first).queryByRole("status")).not.toBeInTheDocument();
+    FakeRecognition.last!.fail("no-speech");
+    expect(within(first).getByRole("status")).toHaveTextContent("Didn't catch that. Try again.");
+  });
+
+  it("offers no microphone where the browser cannot recognize speech", async () => {
+    vi.stubGlobal("webkitSpeechRecognition", undefined);
+    renderPage();
+    const first = await screen.findByRole("article", { name: "woord 1" });
+    expect(within(first).queryByRole("button", { name: /Say/ })).not.toBeInTheDocument();
+  });
+});
+
 describe("Drill setup", () => {
   it("starts a mixed Weak words drill by default, with directions named after the library language", async () => {
     const router = renderPage();

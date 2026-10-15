@@ -7,6 +7,7 @@ import { sessionQueryOptions, wordBookmarkLessonsQueryOptions, wordBookmarksQuer
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { WordBookmarkScope } from "../organisms/WordBookmark/WordBookmark";
 import { WordDrillSetup } from "../organisms/WordDrill/WordDrillSetup";
+import { RECOGNITION_LOCALES } from "../molecules/speechRecognition";
 import { WordRecap, type RecapWord } from "../organisms/WordRecap/WordRecap";
 import { Button, EmptyState, ErrorState, LabelChip, LoadingState, PageHeader, SelectField, Surface } from "../ui";
 import styles from "./WordsPage.module.css";
@@ -66,7 +67,7 @@ function LessonFilter({ lessons, lessonId, onLesson }: {
 }
 
 // One filter's cards; the page remounts it when the filter changes, which starts its stable list afresh.
-function BookmarkedWords({ groupId, lessonId }: { groupId: string; lessonId: string | null }) {
+function BookmarkedWords({ groupId, lessonId, speechLocale }: { groupId: string; lessonId: string | null; speechLocale: string | null }) {
   const { t } = useTranslation();
   const list = useInfiniteQuery(wordBookmarksQueryOptions(groupId, lessonId ?? undefined));
   const bookmarks = useStableBookmarks(list.data?.pages);
@@ -86,7 +87,7 @@ function BookmarkedWords({ groupId, lessonId }: { groupId: string; lessonId: str
   if (list.isError) return <ErrorState title={t("words.unavailable")}><Button onClick={() => list.refetch()}>{t("common.retry")}</Button></ErrorState>;
   if (!words.length) return <Surface tone="quiet"><EmptyState title={t("words.emptyTitle")}>{t("words.emptyBody")}</EmptyState></Surface>;
   return <WordBookmarkScope resolve={resolve}>
-    <WordRecap words={words} source={source} more={{ hasMore: Boolean(hasNextPage), loading: isFetchingNextPage, onLoad }} />
+    <WordRecap words={words} source={source} speechLocale={speechLocale} more={{ hasMore: Boolean(hasNextPage), loading: isFetchingNextPage, onLoad }} />
   </WordBookmarkScope>;
 }
 
@@ -109,7 +110,7 @@ export function WordsPage({ groupId, lessonId, onLesson, onDrill }: {
           {lessons.length > 0 && <LessonFilter lessons={lessons} lessonId={lessonId} onLesson={onLesson} />}
           <Button variant="secondary" onClick={() => setDrillOpen(true)}>{t("words.drill")}</Button>
         </div>} />
-      <BookmarkedWords key={lessonId ?? ALL_LESSONS} groupId={groupId} lessonId={lessonId} />
+      <BookmarkedWords key={lessonId ?? ALL_LESSONS} groupId={groupId} lessonId={lessonId} speechLocale={libraryLanguage ? RECOGNITION_LOCALES[libraryLanguage] : null} />
     </div>
     <WordDrillSetup opened={drillOpen} onClose={() => setDrillOpen(false)} lessons={lessons} lessonId={lessonId}
       language={libraryLanguage ? t(`languages.${libraryLanguage}`) : ""} onStart={(settings) => { setDrillOpen(false); onDrill(settings); }} />

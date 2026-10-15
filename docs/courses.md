@@ -370,7 +370,7 @@ Courses are archived, not hard-deleted. The owner or group creator may archive a
 
 ## Deferred
 
-- Speaking practice, speak-and-repeat, and spoken answers in lessons. These need an explicit product exception for audio and pronunciation, and a privacy review because browser speech recognition may send audio to the browser vendor. The one exception so far is [spoken answers on Produce drill cards](words.md#spoken-answers) (approved 2026-10-15), which does not extend to lessons.
+- Speaking practice, speak-and-repeat, and spoken answers in lessons. These need an explicit product exception for audio and pronunciation, and a privacy review because browser speech recognition may send audio to the browser vendor. The one exception so far is [spoken answers](words.md#spoken-answers) on Produce drill cards and Words tab word cards (approved 2026-10-15), which does not extend to lessons or their word recaps.
 - Interactive role-play dialogues. Text-to-speech playback is [lesson speech](speech.md) (C10).
 - Feed posts for course updates
 - Course-specific notifications beyond contributor requests

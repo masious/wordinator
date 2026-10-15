@@ -1,8 +1,8 @@
 import { wordSearchKey } from "@wordinator/contracts/lesson-document";
 import { useEffect, useRef, useState } from "react";
-import { stopSpeech } from "../../molecules/Speech";
+import { stopSpeech } from "./Speech";
 
-// Spoken answers on Produce drill cards (docs/words.md#spoken-answers). Recognition is the browser's Web Speech API, so it
+// Spoken answers on drill and word cards (docs/words.md#spoken-answers). Recognition is the browser's Web Speech API, so it
 // exists only where the browser provides it (Chrome, Edge, Safari) and the browser decides where the audio is processed.
 
 // The recognition locale of each library language, matching the accents of its speech voices (docs/speech.md#voices).

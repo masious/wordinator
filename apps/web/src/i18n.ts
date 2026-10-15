@@ -133,6 +133,19 @@ export const resources = {
         lessonOption: "{{lesson}} ({{count}})",
         drill: "Drill"
       },
+      speak: {
+        start: "Say it",
+        sayTerm: "Say {{term}}",
+        stop: "Stop listening",
+        listening: "Listening…",
+        stopHint: "Click to stop",
+        noSpeech: "Didn't catch that. Try again.",
+        blocked: "The microphone is blocked. Allow it in the browser to answer aloud.",
+        failed: "Speech recognition isn't available right now.",
+        match: "Matches!",
+        miss: "Not quite",
+        heard: "You said “{{heard}}”"
+      },
       drill: {
         eyebrow: "Words",
         title: "Drill",
@@ -154,16 +167,6 @@ export const resources = {
         unsaved_other: "{{count}} answers could not be saved.",
         backToWords: "Back to words",
         drillAgain: "Drill again",
-        speak: {
-          start: "Say it",
-          listening: "Listening…",
-          stopHint: "Click to stop",
-          noSpeech: "Didn't catch that. Try again, or show the answer.",
-          blocked: "The microphone is blocked. Allow it in the browser to answer aloud.",
-          failed: "Speech recognition isn't available right now.",
-          heardMatch: "Heard “{{heard}}” · matches",
-          heardMiss: "Heard “{{heard}}” · doesn't match"
-        },
         summary: {
           title: "Session done",
           got: "Got it on the first try",

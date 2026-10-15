@@ -124,3 +124,16 @@ describe("Word recap", () => {
     ]);
   });
 });
+
+describe("Saying words", () => {
+  it("is offered only where the caller passes a recognition locale", () => {
+    vi.stubGlobal("webkitSpeechRecognition", class {});
+    try {
+      renderRecap(words);
+      expect(screen.queryByRole("button", { name: /^Say / })).not.toBeInTheDocument();
+      cleanup();
+      render(<MantineProvider><WordRecap words={words} speechLocale="de-DE" /></MantineProvider>);
+      expect(within(card(words[0]!.term)).getByRole("button", { name: `Say ${words[0]!.term}` })).toBeInTheDocument();
+    } finally { vi.unstubAllGlobals(); }
+  });
+});

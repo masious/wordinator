@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { matchesTerm } from "./spokenAnswer";
+import { matchesTerm } from "./speechRecognition";
 
 describe("matchesTerm", () => {
   it("compares by search key, ignoring case, diacritics, and punctuation", () => {

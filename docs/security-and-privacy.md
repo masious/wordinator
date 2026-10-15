@@ -43,7 +43,7 @@ Lesson shares (C11, in progress; the API is in place; see [lesson shares](lesson
 
 ### Spoken drill answers
 
-[Spoken answers](words.md#spoken-answers) on drill cards (C13) use the browser's own Web Speech API. The browser decides where audio is recognized: Chrome and Edge send it to their vendor's speech service (Google, Microsoft), and Safari may use Apple's servers or the device. Accepted as a product decision on 2026-10-15: the learner chooses to speak by pressing the microphone button, the browser's microphone permission prompt is the consent, and what is spoken is a single drill answer. Wordinator never receives, sends, stores, or logs audio or transcripts; the match runs in the browser and only the learner's own grade is saved, as for any drill card. Listening stops after one answer and when the card leaves the screen.
+[Spoken answers](words.md#spoken-answers) on drill cards and Words tab word cards (C13) use the browser's own Web Speech API. The browser decides where audio is recognized: Chrome and Edge send it to their vendor's speech service (Google, Microsoft), and Safari may use Apple's servers or the device. Accepted as a product decision on 2026-10-15: the learner chooses to speak by pressing the microphone button, the browser's microphone permission prompt is the consent, and what is spoken is a single word or drill answer. Wordinator never receives, sends, stores, or logs audio or transcripts; the match runs in the browser and only the learner's own grade is saved, as for any drill card. Listening stops after one utterance and when the card leaves the screen.
 
 ## Known accepted limitations
 

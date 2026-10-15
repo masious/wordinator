@@ -1,12 +1,12 @@
 import type { WordDrillCard as DrillCard, WordDrillResult } from "@wordinator/contracts/lesson-document";
-import { Mic } from "lucide-react";
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
 import { playRevealSpeech, SpeechButton, useStopSpeechOnUnmount } from "../../molecules/Speech";
 import { Button } from "../../ui";
 import { blankExample } from "./drillSession";
-import { speechRecognitionSupported, useSpokenAnswer, type SpokenAnswer } from "./spokenAnswer";
+import { ListenStatusLine, SpeakButton, SpokenVerdict } from "../../molecules/SpeakControls";
+import { speechRecognitionSupported, useSpokenAnswer, type SpokenAnswer } from "../../molecules/speechRecognition";
 import styles from "./WordDrillCard.module.css";
 
 // Keys typed into a field, or pressed on a control that handles them itself, are not drill shortcuts.
@@ -45,7 +45,6 @@ export function WordDrillCard({ card, language, recognitionLocale, revealed, aut
   const spoken = useSpokenAnswer(recognitionLocale ?? "", word.term, (heard) => { if (revealed) return; setAnswer(heard); reveal(); });
   const listen = () => { if (canSpeak && !revealed) spoken.listen(); };
   const listening = spoken.status === "listening";
-  const stopHint = useId();
 
   // A card after the first takes focus, so the keyboard and screen readers follow the session; the answer takes it once shown.
   useLayoutEffect(() => { if (autoFocus) cardRef.current?.focus({ preventScroll: true }); }, [autoFocus]);
@@ -78,14 +77,13 @@ export function WordDrillCard({ card, language, recognitionLocale, revealed, aut
           <p className={styles.meaningPrompt}><PlainText>{word.meaning}</PlainText></p>
           {word.example && <ProduceExample example={word.example} term={word.term} />}
         </>}
-        {canSpeak && spoken.status !== "idle" && spoken.status !== "listening" && <p className={styles.listenStatus} role="status">{t(`drill.speak.${spoken.status}`)}</p>}
+        {canSpeak && <ListenStatusLine status={spoken.status} />}
       </div>
       {/* The back stays empty until revealed, so nothing is spoiled. */}
       <div ref={backRef} className={`${styles.face} ${styles.back}`} aria-hidden={!revealed || undefined} inert={!revealed} tabIndex={revealed ? -1 : undefined}>
         {revealed && <>
+          {answer && <SpokenVerdict answer={answer} />}
           <p className={styles.source}>{source}</p>
-          {answer && <p className={`${styles.heard} ${answer.matches ? styles.heardMatch : ""}`}>
-            {t(answer.matches ? "drill.speak.heardMatch" : "drill.speak.heardMiss", { heard: answer.heard })}</p>}
           <p className={styles.backTerm}>{word.term}<SpeechButton url={word.speech.term} label={termLabel} owner={termOwner} className={styles.speech} /></p>
           {word.forms && <p className={styles.forms}>{word.forms}</p>}
           <p className={styles.meaning}><PlainText>{word.meaning}</PlainText></p>
@@ -100,13 +98,7 @@ export function WordDrillCard({ card, language, recognitionLocale, revealed, aut
         <Button variant="secondary" aria-keyshortcuts="1" onClick={() => onGrade("again")}>{t("drill.again")}<kbd className={styles.key} aria-hidden="true">1</kbd></Button>
         <Button aria-keyshortcuts="2" onClick={() => onGrade("got")}>{t("drill.got")}<kbd className={styles.key} aria-hidden="true">2</kbd></Button>
       </> : <>
-        {canSpeak && <span className={styles.speak} data-listening={listening || undefined}>
-          <Button variant="secondary" className={styles.speakButton} aria-keyshortcuts="M" aria-pressed={listening}
-            aria-describedby={listening ? stopHint : undefined} onClick={listen}>
-            <Mic className={styles.mic} size={16} aria-hidden="true" />{listening ? t("drill.speak.listening") : t("drill.speak.start")}<kbd className={styles.key} aria-hidden="true">M</kbd>
-          </Button>
-          {listening && <span id={stopHint} className={styles.stopHint}>{t("drill.speak.stopHint")}</span>}
-        </span>}
+        {canSpeak && <SpeakButton listening={listening} onListen={listen} />}
         <Button aria-keyshortcuts="Space" onClick={reveal}>{t("drill.showAnswer")}</Button>
       </>}
     </div>
