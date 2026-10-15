@@ -103,6 +103,8 @@ export function AccountSettingsPage({ groupId, global = false }: { groupId: stri
         <div className={styles.actions}><Button loading={account.isPending} type="submit">{t("settings.saveProfile")}</Button><Message error={account.error} success={account.isSuccess} /></div>
       </form></Surface>
       <div className={styles.settingsRail}>
+        {session.data.user.isSuperuser === true && <Surface className={styles.settingsPanel} tone="inset"><SectionHeader title={t("analytics.settingsLinkTitle")} description={t("analytics.settingsLinkBody")} />
+          <Link className={styles.adminLink} to="/admin/analytics">{t("analytics.settingsLink")}</Link></Surface>}
         <Surface className={styles.settingsPanel} tone="inset"><ThemePreferenceControl /></Surface>
         <Surface className={styles.settingsPanel} tone="inset"><RecognizerPreferenceControl /></Surface>
         <Surface className={styles.settingsPanel}><SectionHeader title={t("settings.passwordTitle")} /><form className={styles.form} onSubmit={(event) => { event.preventDefault(); password.mutate(); }}>

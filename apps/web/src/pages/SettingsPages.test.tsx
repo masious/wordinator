@@ -16,9 +16,10 @@ const ids = {
 };
 
 let role: "creator" | "member" = "creator";
+let superuser = false;
 const session = () => ({
   status: "signedIn",
-  user: { id: creatorId, displayName: "Ada", avatarUrl: null, mustChangePassword: false },
+  user: { id: creatorId, displayName: "Ada", avatarUrl: null, mustChangePassword: false, isSuperuser: superuser },
   groups: [{ id: groupId, name: "Study room", language: "nl", role, icon: "🇳🇱", iconUrl: null }],
   deletedGroups: [], requests: [],
 });
@@ -44,6 +45,7 @@ function renderPage(component: () => React.ReactNode) {
 
 beforeEach(() => {
   role = "creator";
+  superuser = false;
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
     if (path === "/api/session") return json(session());
@@ -76,6 +78,16 @@ describe("Account settings", () => {
     fireEvent.click(screen.getByRole("button", { name: "Save profile" }));
     expect(await screen.findByText("Saved.")).toBeVisible();
     await waitFor(() => expect(fetch).toHaveBeenCalledWith("/api/settings", expect.objectContaining({ method: "PATCH", body: expect.stringContaining("A new bio") })));
+  });
+
+  it("links to analytics only for the superuser", async () => {
+    renderPage(() => <AccountSettingsPage groupId={groupId} global />);
+    await screen.findByRole("heading", { name: "Settings" });
+    expect(screen.queryByRole("link", { name: "Open analytics" })).not.toBeInTheDocument();
+    cleanup();
+    superuser = true;
+    renderPage(() => <AccountSettingsPage groupId={groupId} global />);
+    expect(await screen.findByRole("link", { name: "Open analytics" })).toHaveAttribute("href", "/admin/analytics");
   });
 
   it("shows ordinary members no section navigation", async () => {

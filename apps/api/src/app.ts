@@ -91,6 +91,7 @@ import {
   SPEECH_DRAFT_DELAY_MS, speechJobStatement, storedSpeechCast,
 } from "./speech";
 import { azureRecognitionToken } from "./speechRecognition";
+import { adminRoutes } from "./admin";
 import { buildWordDrillDeck, type WordDrillMemory } from "./wordDrill";
 import { lessonMemoryKeys, memoryRebuildStatements, recordWordReviews } from "./learningData";
 import { completeLesson, readLessonProgress, resetLesson } from "./learning/progress";
@@ -962,6 +963,9 @@ app.use("/api/*", async (context, next) => {
   context.set("user", await readSession(context, createDatabase(context.env.DB), context.env.COOKIE_SIGNING_SECRET));
   await next();
 });
+
+// Superuser analytics and AI settings (C14e).
+app.route("/api/admin", adminRoutes);
 
 app.get("/api/health", (context) => context.json(healthResponseSchema.parse({ status: "ok", service: "wordinator-api" })));
 

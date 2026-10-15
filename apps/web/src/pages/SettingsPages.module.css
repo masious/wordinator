@@ -38,3 +38,6 @@
 @media(max-width:48em){.settingsPage{gap:var(--space-10)}.settingsGrid,.adminGrid{grid-template-columns:1fr;gap:var(--space-6)}}
 @media(max-width:36em){.reactionGrid{grid-template-columns:1fr}.deletedRow,.row{align-items:flex-start;flex-direction:column}.rowActions{justify-content:flex-start;width:100%}.rowActions>*{flex:1}.sectionNav{width:100%}.sectionNav a{flex:1;justify-content:center;padding:0 var(--space-3)}}
 @media(prefers-reduced-motion:reduce){.settingsPage{animation:none}.sectionNav a{transition:none}}
+/* C14e: the superuser's link to analytics, a plain link with the focus ring. */
+.adminLink{width:fit-content;color:var(--color-foreground);font-weight:var(--weight-semibold);text-underline-offset:.2em}
+.adminLink:focus-visible{outline:3px solid var(--color-focus);outline-offset:2px;border-radius:var(--radius-sm)}

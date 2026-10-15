@@ -26,7 +26,9 @@ The [library creator's](groups-and-membership.md#library-creator) leftover moder
 - **AI:** tutor turns, model requests, tokens in and out, and cost, per account and per provider and model, with failed requests counted separately.
 - **Speech:** on-demand speech requests and characters per account, split into cache hits and Azure calls.
 
-Accounts are listed by username. The page shows counts and costs only, never message text, answers, words, or scores. It is a desktop page with tables, and its reads are `GET /api/admin/analytics/{learning|ai|speech}?days=`.
+Accounts are listed by username. The page shows counts and costs only, never message text, answers, words, or scores. It is a desktop page with tables, and its reads are `GET /api/admin/analytics/{learning|ai|speech}?days=7|30|90` (7 when missing; any other value is `400 VALIDATION_ERROR`), validated and shaped by `@wordinator/contracts/admin`.
+
+As built (C14e): each section has a table by day (newest first, every day of the range shown, with a totals row) and a table of per-account totals over the range; AI adds a table per provider and model. Activity counts come from `word_reviews` (drill reviews are `source = drill`; seed reviews are not activity), `practice_attempts` by source, `pronunciation_attempts`, `course_lesson_completions`, saved `course_lesson_positions`, and `ai_usage` turn starts. AI requests include fallback attempts, and tokens and cost cover every request, failed or not. Speech splits requests and characters into cache hits and Azure calls (with the characters sent to Azure). The range picker keeps its choice in the URL (`?days=30`). Other accounts opening `/admin/analytics` see a not-available state and no analytics request is made.
 
 ### AI settings
 
@@ -36,7 +38,7 @@ The analytics page also holds the AI settings form, stored in [`platform_metadat
 - **Model per provider:** a model ID per target. Only tool-calling models may be used; the form says so and the API checks the ID's format, not the model's abilities.
 - **Daily turn cap** per account (default 40, 0–500) and **daily speech character cap** per account (default 5,000, 0–100,000).
 
-`GET` and `PUT /api/admin/ai-settings` read and replace the whole value, validated by the contracts' `aiSettingsSchema` (`400 AI_SETTINGS_INVALID`). Changes apply to the next turn.
+`GET` and `PUT /api/admin/ai-settings` read and replace the whole value, validated by the contracts' `aiSettingsSchema` (`400 AI_SETTINGS_INVALID` with the issues; a body that is not JSON is `400 INVALID_JSON`). `PUT` answers with the saved value. Changes apply to the next turn. The form checks the same rules before saving (at least one provider on, a valid model ID per provider, whole-number caps in range) and moves providers with up and down buttons.
 
 ## Image cropper
 

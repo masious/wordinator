@@ -111,12 +111,21 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 - **`hasMemory`** on every weak words page enables Weak words in the drill setup without bookmarks (the C14a open item). Contracts live in `packages/contracts/src/weakWords.ts` (`@wordinator/contracts/weak-words`).
 - **Drill these words** starts a mixed Weak words drill (there is no stored direction setting to reuse).
 
-## C14e — Superuser and analytics
+## C14e — Superuser and analytics (completed 2026-10-16)
 
-- [ ] Migration: `users.is_superuser` (default false). A `pnpm` script grants and revokes by email and requires `--local` or `--remote`.
-- [ ] API: superuser-only analytics reads (active users, lessons completed, drill reviews, practice attempts, AI usage per user and provider by day, and speech requests and characters per user by day). AI settings are stored in `platform_metadata` under `ai_settings` (provider order, model per provider, daily cap) with a contracts schema.
-- [ ] Web: an `/admin/analytics` route linked from Settings for superusers only, with an AI settings form.
-- [ ] Tests: `403` for non-superusers on every route; settings validation; RTL for the page and the hidden link.
+- [x] Migration: `users.is_superuser` (default false). A `pnpm` script grants and revokes by email and requires `--local` or `--remote`.
+- [x] API: superuser-only analytics reads (active users, lessons completed, drill reviews, practice attempts, AI usage per user and provider by day, and speech requests and characters per user by day). AI settings are stored in `platform_metadata` under `ai_settings` (provider order, model per provider, daily cap) with a contracts schema.
+- [x] Web: an `/admin/analytics` route linked from Settings for superusers only, with an AI settings form.
+- [x] Tests: `403` for non-superusers on every route; settings validation; RTL for the page and the hidden link.
+
+### Notes (C14e)
+
+Delivered as migration `0028_superuser.sql`, `scripts/superuser.mjs` (`pnpm superuser`), `apps/api/src/admin/` (routes mounted at `/api/admin` after the session middleware; queries in `analytics.ts`), the `@wordinator/contracts/admin` subpath, `AuthUser.isSuperuser` on the session read, and `apps/web/src/pages/AdminAnalyticsPage.tsx` with the `/admin/analytics` route. Behavior is in [settings and administration](docs/settings-and-administration.md#analytics).
+
+- **Shape.** Each read returns `daily` (one zero-filled row per UTC day of the range) and `accounts` (totals over the range, by username); AI adds `models` (totals per provider and model). Per-account-per-day rows were left out: at a few friends' scale the daily totals plus range totals answer the questions without 90 × accounts rows. Response objects are strict in the contracts, so a text field added by mistake fails the contract.
+- **Active accounts** count any non-seed review, practice or pronunciation attempt, saved position, lesson completion, or tutor turn start that day. Lessons completed come from `course_lesson_completions.completed_at` (the current completion, not the audit log), since `progress_events` is not yet written by every completion path.
+- **The CLI's argument parsing** is a pure exported function tested with Node's built-in runner (`node --test scripts/`); no root test script runs it yet.
+- The Workers fixture reset (`apps/api/test/courseApi.ts`) now also clears `ai_usage` and `speech_usage`, whose user foreign keys do not cascade.
 
 ## C14f — Provider layer and metering
 

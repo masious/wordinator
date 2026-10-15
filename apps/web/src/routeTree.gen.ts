@@ -17,6 +17,7 @@ import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as UiRouteImport } from './routes/ui'
 import { Route as WordsRouteImport } from './routes/words'
 import { Route as R2overviewLessonSlugRouteImport } from './routes/2overview.$lessonSlug'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
 import { Route as CoursesCourseSlugRouteImport } from './routes/courses_.$courseSlug'
 import { Route as GroupsGroupIdRouteImport } from './routes/groups.$groupId'
 import { Route as InviteTokenRouteImport } from './routes/invite.$token'
@@ -76,6 +77,11 @@ const WordsRoute = WordsRouteImport.update({
 const R2overviewLessonSlugRoute = R2overviewLessonSlugRouteImport.update({
   id: '/2overview/$lessonSlug',
   path: '/2overview/$lessonSlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/admin/analytics',
+  path: '/admin/analytics',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CoursesCourseSlugRoute = CoursesCourseSlugRouteImport.update({
@@ -198,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
   '/courses/$courseSlug': typeof CoursesCourseSlugRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
@@ -228,6 +235,7 @@ export interface FileRoutesByTo {
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
   '/courses/$courseSlug': typeof CoursesCourseSlugRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
@@ -259,6 +267,7 @@ export interface FileRoutesById {
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
   '/courses_/$courseSlug': typeof CoursesCourseSlugRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
   '/invite/$token': typeof InviteTokenRoute
@@ -291,6 +300,7 @@ export interface FileRouteTypes {
     | '/ui'
     | '/words'
     | '/2overview/$lessonSlug'
+    | '/admin/analytics'
     | '/courses/$courseSlug'
     | '/groups/$groupId'
     | '/invite/$token'
@@ -321,6 +331,7 @@ export interface FileRouteTypes {
     | '/ui'
     | '/words'
     | '/2overview/$lessonSlug'
+    | '/admin/analytics'
     | '/courses/$courseSlug'
     | '/groups/$groupId'
     | '/invite/$token'
@@ -351,6 +362,7 @@ export interface FileRouteTypes {
     | '/ui'
     | '/words'
     | '/2overview/$lessonSlug'
+    | '/admin/analytics'
     | '/courses_/$courseSlug'
     | '/groups/$groupId'
     | '/invite/$token'
@@ -382,6 +394,7 @@ export interface RootRouteChildren {
   UiRoute: typeof UiRoute
   WordsRoute: typeof WordsRoute
   R2overviewLessonSlugRoute: typeof R2overviewLessonSlugRoute
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
   CoursesCourseSlugRoute: typeof CoursesCourseSlugRoute
   GroupsGroupIdRoute: typeof GroupsGroupIdRoute
   InviteTokenRoute: typeof InviteTokenRoute
@@ -460,6 +473,13 @@ declare module '@tanstack/react-router' {
       path: '/2overview/$lessonSlug'
       fullPath: '/2overview/$lessonSlug'
       preLoaderRoute: typeof R2overviewLessonSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/admin/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/courses_/$courseSlug': {
@@ -614,6 +634,7 @@ const rootRouteChildren: RootRouteChildren = {
   UiRoute: UiRoute,
   WordsRoute: WordsRoute,
   R2overviewLessonSlugRoute: R2overviewLessonSlugRoute,
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
   CoursesCourseSlugRoute: CoursesCourseSlugRoute,
   GroupsGroupIdRoute: GroupsGroupIdRoute,
   InviteTokenRoute: InviteTokenRoute,

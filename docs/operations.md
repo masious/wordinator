@@ -111,7 +111,7 @@ Run it from the workspace root as `pnpm bootstrap --local` or `pnpm bootstrap --
 
 ## Superuser command
 
-Run `pnpm superuser --local --grant <email>` or `pnpm superuser --remote --grant <email>` (or `--revoke`) from the workspace root. Exactly one target and exactly one of `--grant` or `--revoke` are required, and any other argument fails before database access. The tool looks up the normalized email, rejects unknown accounts, sets or clears `users.is_superuser`, and prints the account's username and new state. The flag takes effect on the account's next request. C14's migration adds the column with every account false, so grant the operator account after applying it.
+Run `pnpm superuser --local --grant <email>` or `pnpm superuser --remote --grant <email>` (or `--revoke`) from the workspace root. Exactly one target and exactly one of `--grant` or `--revoke` are required, and any other argument fails before database access. The tool looks up the normalized email, rejects unknown accounts, sets or clears `users.is_superuser`, and prints the account's username and new state. The flag takes effect on the account's next request. C14's migration (`0028_superuser.sql`) adds the column with every account false, so grant the operator account after applying it. The email is not secret, so the tool runs its lookup, update, and confirming read as single Wrangler `--command` statements without a temporary SQL file. Its argument parsing is tested with `node --test scripts/`.
 
 ## Operator password setting
 

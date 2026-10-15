@@ -163,7 +163,9 @@ export const sessionResponseSchema = z.discriminatedUnion("status", [
       username: usernameSchema.nullable().optional(),
       avatarUrl: z.string().nullable(), 
       mustChangePassword: z.boolean(),
-      onboardingComplete: z.boolean().optional() }),
+      onboardingComplete: z.boolean().optional(),
+      // C14e: opens the analytics link; every superuser route still checks the flag in the API.
+      isSuperuser: z.boolean().optional() }),
     groups: z.array(groupSummarySchema),
     requests: z.array(membershipRequestSummarySchema),
     deletedGroups: z.array(deletedGroupSummarySchema),

@@ -23,6 +23,8 @@ export const users = sqliteTable(
     quickReactionTwo: text("quick_reaction_two").notNull().default("❤️"),
     quickReactionThree: text("quick_reaction_three").notNull().default("😂"),
     mustChangePassword: integer("must_change_password", { mode: "boolean" }).notNull().default(false),
+    // C14e: set only by the operator command (docs/operations.md#superuser-command).
+    isSuperuser: integer("is_superuser", { mode: "boolean" }).notNull().default(false),
     createdAt: integer("created_at").notNull(),
     updatedAt: integer("updated_at").notNull(),
   },

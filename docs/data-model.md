@@ -16,7 +16,7 @@ Key, JSON text value, and updated timestamp. Since C14 the key `ai_settings` hol
 
 ### `users`
 
-Opaque ID, normalized unique email, password hash and parameters, case-insensitively unique nullable username, onboarding-completed timestamp, display name, optional bio/avatar key, three quick-reaction emoji, `must_change_password`, `is_superuser` (C14, default false; set only by the operator command in [operations](operations.md#superuser-command)), and timestamps. New registrations keep username and onboarding completion null until required setup; existing accounts are backfilled by migration `0020_global_accounts.sql`. There is no account-deletion state initially.
+Opaque ID, normalized unique email, password hash and parameters, case-insensitively unique nullable username, onboarding-completed timestamp, display name, optional bio/avatar key, three quick-reaction emoji, `must_change_password`, `is_superuser` (C14e migration `0028_superuser.sql`, default false; set only by the operator command in [operations](operations.md#superuser-command)), and timestamps. New registrations keep username and onboarding completion null until required setup; existing accounts are backfilled by migration `0020_global_accounts.sql`. There is no account-deletion state initially.
 
 ### Legacy `groups`
 

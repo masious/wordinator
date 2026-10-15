@@ -16,6 +16,8 @@ export type AuthUser = {
   username: string | null;
   onboardingComplete: boolean;
   mustChangePassword: boolean;
+  // C14e: read fresh on every request, so a grant or revoke takes effect on the account's next request.
+  isSuperuser: boolean;
 };
 
 type SessionPayload = { userId: string; expiresAt: number };
@@ -108,6 +110,7 @@ export async function readSession(context: Context, database: Database, secret: 
       avatarKey: users.avatarKey,
       onboardingCompletedAt: users.onboardingCompletedAt,
       mustChangePassword: users.mustChangePassword,
+      isSuperuser: users.isSuperuser,
     })
     .from(users)
     .where(eq(users.id, payload.userId))
