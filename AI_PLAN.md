@@ -129,8 +129,55 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 - [ ] All copy goes behind i18next keys; tokens only, no raw values.
 - [ ] Tests: RTL for streaming render, sections, on-demand speech (loading, cached, limit), chips, confirmation, each component, archive, limit state.
 
+## C14k — Profile activity
+
+Requested 2026-10-16. Delivered before C14j, so the release covers it. It needs C14c (`progress_events`, lesson states) and C14g (tutor completions).
+
+**Conflicts to reconcile in the first step.** Each one reverses a recorded decision:
+- [profile pages are retired](docs/profiles-and-settings.md#profile-pages-retired);
+- "public profiles" is a [non-goal](docs/what_is_it.md#explicit-non-goals);
+- C14.0 made progress [private to the learner](docs/security-and-privacy.md#account-and-profile-privacy).
+
+**Assumptions so far** (confirm in step one):
+- "Public" means visible to every signed-in account that has completed setup, never to signed-out visitors.
+- Only achievements are shown: lessons completed, how far into a course, courses completed, and tutor study volume. Never answers, mistakes, weak words, scores, or conversations.
+- A Settings switch "Show my progress on my profile" defaults to on.
+- A lesson reset removes that lesson's completion from the activity.
+- Lessons finished through the tutor are marked "with the tutor".
+
+- [ ] Docs and decisions:
+  - A new owner `docs/profiles-and-activity.md` (or reinstate the profile section in [profiles-and-settings.md](docs/profiles-and-settings.md)) covering the profile route, what an activity is, grouping, visibility, the opt-out, and reset.
+  - Reverse the three conflicting rules above in [what_is_it.md](docs/what_is_it.md), [security-and-privacy.md](docs/security-and-privacy.md), [courses.md](docs/courses.md#progress), and [words.md](docs/words.md#word-memory).
+  - Update [data-model.md](docs/data-model.md), [design-system.md](docs/design-system.md), [user-flows.md](docs/user-flows.md), [testing.md](docs/testing.md), and [roadmap.md](docs/roadmap.md).
+- [ ] Profile page:
+  - The route is `/people/:username`. Bylines (posts, comments, contributors, editor attribution) link to it.
+  - The header shows the avatar, display name, `@username`, and bio. Email and quick reactions stay hidden.
+  - The page lists the person's activity, newest first, in cursor pages.
+- [ ] Activities are derived at read time from `progress_events`, lesson completions, positions, and tutor usage:
+  - lesson completed (actor `user` or `agent`, the latter marked "with the tutor");
+  - course completed (a new `progress_events` kind `course_completed`, written when the last lesson completes);
+  - studied with the tutor (component answers per day);
+  - drill sessions.
+- [ ] Grouping:
+  - Consecutive activities of the same kind in the same course, with no other activity between them and within a UTC day, combine into one item, e.g. "Masoud completed 3 lessons and is on lesson 8/12 of Dutch Foundations".
+  - The "is on lesson N/M" part is the person's current lesson in that course (most recently moved unfinished lesson, or the next one not started) over its published lessons.
+  - Grouping rules are a pure, unit-tested function.
+- [ ] Visibility and privacy:
+  - Only signed-in, set-up accounts can read profiles.
+  - The opt-out hides all activity, though the profile header stays.
+  - A reset or a deleted lesson removes its completion from the activity.
+  - Archived or draft courses the viewer cannot see are named as "a course".
+- [ ] API:
+  - `GET /api/people/:username` returns the profile header.
+  - `GET /api/people/:username/activity?cursor=` returns grouped activity pages.
+  - The profile settings read and update add `showActivity`.
+- [ ] Tests:
+  - unit tests for grouping (repeats combined, other activity splits a group, day boundary, the lesson N/M line);
+  - Workers tests for the opt-out, signed-out refusal, reset removing the item, hidden courses anonymized, and no private learning data in responses;
+  - RTL tests for the profile page, grouped items, byline links, and the Settings switch.
+
 ## C14j — Critical paths and release
 
-- [ ] Playwright with a stubbed provider: ask for the next lesson → steps visible → a fill-in answered → confirm complete → the Progress tab shows it; reset from the lesson page; the Weak words dots; superuser analytics hidden from others.
+- [ ] Playwright with a stubbed provider: ask for the next lesson → steps visible → a fill-in answered → confirm complete → the Progress tab shows it; reset from the lesson page; the Weak words dots; superuser analytics hidden from others; a completed lesson appearing grouped on the learner's profile for another account.
 - [ ] Type-check, Vitest, Workers, RTL, Playwright, and production builds for web and API. Apply migrations to local, then production with the explicit target.
 - [ ] Release notes and roadmap status.
