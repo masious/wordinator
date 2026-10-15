@@ -19,7 +19,7 @@ import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/Word
 import { runWords, WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import styles from "./LessonPlayer.module.css";
-import { AnswerField, type AnswerSubmit, PracticePosition, practiceDraftKey, practiceFromBlock, questionPiece, readAnswers, storeAnswers, usePracticeProgress, type Practice } from "./PracticeBlock";
+import { AnswerField, type AnswerSubmit, PracticePosition, practiceDraftKey, practiceFromBlock, questionPiece, readAnswers, storeAnswers, usePracticeAttempt, usePracticeProgress, type Practice } from "./PracticeBlock";
 
 // Readers play the published document. Editors preview the draft of a lesson that is not published yet; previews never count.
 export const playableDocument = (lesson: CourseLesson) => lesson.document ?? lesson.draft?.document ?? null;
@@ -58,16 +58,16 @@ export function QuestionPrompt({ block, item }: { block: Practice; item: number 
 }
 
 // Answers share the practice block's local draft, so a set started here can be finished in the lesson view and the reverse.
-function QuestionStep({ block, item, answers, onAnswer, onNext, submitRef }: {
+function QuestionStep({ block, item, answers, onAnswer, onNext, onCheck, submitRef }: {
   block: Practice; item: number; answers: string[]; onAnswer: (value: string) => void;
-  onNext: () => void; submitRef: AnswerSubmit;
+  onNext: () => void; onCheck: (answer: string) => void; submitRef: AnswerSubmit;
 }) {
   const { t } = useTranslation();
   const { payload } = block;
   return <div className={styles.question}>
     <QuestionPrompt block={block} item={item} />
     <AnswerField key={item} question={payload.items[item]!} label={t("courses.player.yourAnswer")} description={t("courses.practice.enterHelp")}
-      value={answers[item] ?? ""} minRows={2} onChange={onAnswer} onAdvance={onNext} submitRef={submitRef} />
+      value={answers[item] ?? ""} minRows={2} onChange={onAnswer} onAdvance={onNext} onCheck={onCheck} submitRef={submitRef} />
   </div>;
 }
 
@@ -152,8 +152,9 @@ const stepSharePiece = (step: LessonStep, lesson: CourseLesson): SharePiece | nu
   }
 };
 
-function Player({ scope, lesson, position, next, onNext, onClose }: {
-  scope: PlayerScope; lesson: CourseLesson; position: LessonPosition | undefined; next: CourseLessonSummary | undefined; onNext: (lessonId: string) => void; onClose: () => void;
+function Player({ scope, lesson, position, next, archived, onNext, onClose }: {
+  scope: PlayerScope; lesson: CourseLesson; position: LessonPosition | undefined; next: CourseLessonSummary | undefined; archived: boolean;
+  onNext: (lessonId: string) => void; onClose: () => void;
 }) {
   const { t } = useTranslation();
   // Steps are fixed when the run starts, so a refetch (for example after saving practice progress) never moves the reader.
@@ -183,6 +184,8 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
   const finished = index >= steps.length; const step = steps[index];
   // Leaving a question, by moving or by closing the player, saves how many questions of its practice are answered.
   const saveProgress = usePracticeProgress({ ...scope, lessonId: lesson.id }, lesson.document !== null);
+  // Each answer check of a published lesson is recorded as a practice attempt; previews and archived courses record nothing.
+  const recordAttempt = usePracticeAttempt({ ...scope, lessonId: lesson.id }, lesson.document !== null && !archived);
   const practiceAt = (at: number) => { const current = steps[at]; return current?.kind === "practiceItem" ? practiceFromBlock(current.block, lesson.practiceProgress) : null; };
   const practiceAtRef = useRef(practiceAt); practiceAtRef.current = practiceAt;
   const left = useRef(index);
@@ -251,7 +254,8 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
       : <div ref={stage} className={styles.stageSlot}><StepStage key={stageKey(step, index)} step={step} opensSection={opensSection(steps, index)} renderQuestion={(question) => {
         const practice = practiceFromBlock(question.block, lesson.practiceProgress);
         return <QuestionStep block={practice} item={question.itemIndex} answers={answersFor(practice)}
-          onAnswer={(value) => answer(practice, question.itemIndex, value)} onNext={advanceFromAnswer} submitRef={answerSubmit} />;
+          onAnswer={(value) => answer(practice, question.itemIndex, value)} onNext={advanceFromAnswer}
+          onCheck={(value) => recordAttempt(practice.id, question.itemIndex, value)} submitRef={answerSubmit} />;
       }} />{sharePiece && <div className={styles.share}><ShareButton piece={sharePiece} label={t(`lessonShares.shareNamed.${sharePiece.kind}`, { number: step.kind === "practiceItem" ? step.itemIndex + 1 : undefined })} /></div>}</div>}
     {!finished && <div ref={nav} className={styles.nav}>
       <Button variant="quiet" disabled={index === 0} onClick={() => setIndex((value) => value - 1)}>{t("common.back")}</Button>
@@ -271,8 +275,8 @@ export function refreshAfterPlaying(queryClient: QueryClient, groupId: string, c
 // records the lesson toward the viewer's course progress.
 // Retired from the course page, which now continues lessons on their own pages (docs/courses.md). Nothing renders it, so the bundle
 // leaves it out; it stays for a possible return. Close it with `refreshAfterPlaying`.
-export function LessonPlayer({ scope, lessonId, outline, positions, onChangeLesson, onClose }: {
-  scope: PlayerScope; lessonId: string | null; outline: CourseLessonSummary[]; positions: readonly LessonPosition[];
+export function LessonPlayer({ scope, lessonId, outline, positions, archived = false, onChangeLesson, onClose }: {
+  scope: PlayerScope; lessonId: string | null; outline: CourseLessonSummary[]; positions: readonly LessonPosition[]; archived?: boolean;
   onChangeLesson: (lessonId: string) => void; onClose: () => void;
 }) {
   const { t } = useTranslation();
@@ -283,6 +287,6 @@ export function LessonPlayer({ scope, lessonId, outline, positions, onChangeLess
   return <AdaptiveDialog opened={lessonId !== null} onClose={onClose} title={title}>
     {lessonId !== null && (lesson.isPending ? <LoadingState label={t("courses.lessons.loading")} />
       : lesson.isError ? <ErrorState title={t("courses.lessons.unavailable")} />
-      : <Player key={lessonId} scope={scope} lesson={lesson.data.lesson} position={positions.find((entry) => entry.lessonId === lessonId)} next={next} onNext={onChangeLesson} onClose={onClose} />)}
+      : <Player key={lessonId} scope={scope} lesson={lesson.data.lesson} position={positions.find((entry) => entry.lessonId === lessonId)} next={next} archived={archived} onNext={onChangeLesson} onClose={onClose} />)}
   </AdaptiveDialog>;
 }

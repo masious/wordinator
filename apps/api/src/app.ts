@@ -94,6 +94,7 @@ import { azureRecognitionToken } from "./speechRecognition";
 import { buildWordDrillDeck, type WordDrillMemory } from "./wordDrill";
 import { lessonMemoryKeys, memoryRebuildStatements, recordWordReviews } from "./learningData";
 import { completeLesson, readLessonProgress, resetLesson } from "./learning/progress";
+import { registerAttemptRoutes } from "./learning/attempts";
 import { recentResults } from "./wordMemory";
 import { decodeWeakCursor, readWeakWords, setWordKnown } from "./weakWords";
 import { weakWordsPageSchema, weakWordsQuerySchema, wordTermKeySchema } from "@wordinator/contracts/weak-words";
@@ -101,7 +102,7 @@ import { weakWordsPageSchema, weakWordsQuerySchema, wordTermKeySchema } from "@w
 export type Bindings = Env & { MEDIA: R2Bucket; PUBLIC_MEDIA_BASE_URL: string };
 type Language = "nl" | "de";
 type GroupAccess = { id: string; name: string; language: Language; creatorUserId: string; invitationToken: string; iconKey: string | null };
-type AppEnvironment = { Bindings: Bindings; Variables: { user: AuthUser | null; groupAccess: GroupAccess } };
+export type AppEnvironment = { Bindings: Bindings; Variables: { user: AuthUser | null; groupAccess: GroupAccess } };
 
 const LOGIN_WINDOW_MS = 15 * 60 * 1000;
 const LOGIN_LIMIT = 5;
@@ -2721,6 +2722,9 @@ app.put(`${practicePath}/progress`, requireGroupAccess, async (context) => {
   const progress = await practiceProgress(context.env.DB, groupId, user.id, new Map([[found.block.id, questions]]));
   return context.json(practiceProgressResponseSchema.parse({ progress: progress[found.block.id] }));
 });
+
+// Practice and pronunciation attempts (C14b) live in their own module.
+registerAttemptRoutes(app, { requireGroupAccess, practiceBlock, readableLesson: drillLesson });
 
 app.notFound((context) => apiError(context, 404, "NOT_FOUND", "The requested resource was not found."));
 app.onError((error, context) => {

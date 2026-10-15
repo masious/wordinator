@@ -51,6 +51,7 @@ beforeEach(() => {
   localStorage.clear();
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
+    if (path === `${blockPath}/attempts`) return new Response(null, { status: 204 });
     if (path === `${blockPath}/progress`) return response({ progress: { done: 3, started: 4, answered: (JSON.parse(String(init?.body)) as { answered: number }).answered } });
     if (path.endsWith(`/lessons/${lessonId}`)) return response({ lesson: detail().lessons[0] });
     return response({ status: "signedOut" });
@@ -200,6 +201,75 @@ describe("Practice blocks", () => {
     fireEvent.change(within(dialog).getByLabelText(/^1\. … een kleine keuken\./), { target: { value: "Er is" } });
     fireEvent.keyDown(dialog, { key: "Escape" });
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${blockPath}/progress`, expect.objectContaining({ method: "PUT", body: JSON.stringify({ answered: 1 }) })));
+  });
+
+  it("records each answer check once as a practice attempt, and nothing for an unchanged re-check or an empty answer", async () => {
+    await openPractice(detail());
+    const attempts = () => vi.mocked(fetch).mock.calls.filter(([path]) => String(path) === `${blockPath}/attempts`)
+      .map(([, init]) => { expect(init?.method).toBe("POST"); return JSON.parse(String(init?.body)) as unknown; });
+    const field = screen.getByLabelText(/^1\. … een kleine keuken\./);
+    await waitFor(() => expect(field).toHaveFocus());
+    fireEvent.keyDown(field, { key: "Enter" });
+    expect(attempts()).toEqual([]);
+    // A miss is recorded once; Enter again on the unchanged answer only moves on.
+    fireEvent.change(field, { target: { value: "Daar is" } });
+    fireEvent.keyDown(field, { key: "Enter" });
+    expect(attempts()).toEqual([{ item: 0, answer: "Daar is" }]);
+    fireEvent.keyDown(field, { key: "Enter" });
+    expect(attempts()).toHaveLength(1);
+    // A changed answer is checked and recorded again; the client never sends its own match result.
+    fireEvent.change(field, { target: { value: "Er is" } });
+    fireEvent.keyDown(field, { key: "Enter" });
+    expect(attempts()).toEqual([{ item: 0, answer: "Daar is" }, { item: 0, answer: "Er is" }]);
+    // Closing the dialog sends progress only.
+    fireEvent.click(screen.getByRole("button", { name: "Finish later" }));
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${blockPath}/progress`, expect.anything()));
+    expect(attempts()).toHaveLength(2);
+  });
+
+  it("records a fill-in item with several blanks once, at its last blank", async () => {
+    const items = [{ prompt: "… een keuken, … twee kamers.", authorsVersion: ["Er is", "er zijn"] }];
+    const blanks: LessonTopBlock = { ...practiceBlock, props: { data: JSON.stringify({ instruction: "Vul in.", passage: null, items }) } };
+    const value = detail(); value.lessons = [{ ...value.lessons[0]!, document: { ...document, blocks: [blanks] } }];
+    await openPractice(value);
+    const first = screen.getByLabelText("Blank 1"); const second = screen.getByLabelText("Blank 2");
+    fireEvent.change(first, { target: { value: "Er is" } });
+    fireEvent.keyDown(first, { key: "Enter" });
+    fireEvent.change(second, { target: { value: "er zijn" } });
+    expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith("/attempts"))).toHaveLength(0);
+    fireEvent.keyDown(second, { key: "Enter" });
+    const sent = vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith("/attempts"));
+    expect(sent.map(([, init]) => JSON.parse(String(init?.body)) as unknown)).toEqual([{ item: 0, answer: "Er is · er zijn" }]);
+  });
+
+  it("keeps going when an attempt cannot be saved", async () => {
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/attempts") ? Promise.reject(new TypeError("offline")) : original(input, init));
+    await openPractice(detail());
+    const field = screen.getByLabelText(/^1\. … een kleine keuken\./);
+    fireEvent.change(field, { target: { value: "Er is" } });
+    fireEvent.keyDown(field, { key: "Enter" });
+    expect(screen.getByText("Matches the author’s version")).toBeInTheDocument();
+    expect(screen.getByLabelText(/^2\. There are two bedrooms\./)).toHaveFocus();
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${blockPath}/attempts`, expect.anything()));
+    expect(screen.queryByRole("alert")).not.toBeInTheDocument();
+    expect(screen.getByRole("dialog", { name: "Answer the practice" })).toBeInTheDocument();
+  });
+
+  it("records nothing in a draft preview or an archived course", async () => {
+    const preview = detail(); const lesson = preview.lessons[0]!;
+    preview.lessons = [{ ...lesson, published: false, document: null, draft: { document, version: 1 } }];
+    preview.outline = [{ ...summary, published: false }];
+    const archived = detail(); archived.course = { ...archived.course, status: "archived" };
+    for (const value of [preview, archived]) {
+      await openPractice(value);
+      const field = screen.getByLabelText(/^1\. … een kleine keuken\./);
+      fireEvent.change(field, { target: { value: "Daar is" } });
+      fireEvent.keyDown(field, { key: "Enter" });
+      expect(screen.getByText(/can still be right/)).toBeInTheDocument();
+      cleanup();
+    }
+    expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith("/attempts"))).toHaveLength(0);
   });
 
   it("shows the viewer as done once their count reaches the number of questions", async () => {

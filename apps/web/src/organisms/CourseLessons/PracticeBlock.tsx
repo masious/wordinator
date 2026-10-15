@@ -6,6 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { type FocusEvent, type FormEvent, type KeyboardEvent, type ReactNode, type RefObject, useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, lessonQueryOptions } from "../../api";
+import { sendPracticeAttempt } from "../../molecules/learningAttempts";
 import { PlainText } from "../../molecules/PlainText";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { AdaptiveDialog, Button, TextAreaField, TextField } from "../../ui";
@@ -83,29 +84,45 @@ export function PracticePosition({ current, total, className }: { current: numbe
   </div>;
 }
 
+// Records each answer check of a published practice as a practice attempt (docs/courses.md#practice-attempts), after the check has
+// shown its result. Previews and archived courses record nothing (`enabled` false); a failed save is ignored.
+export function usePracticeAttempt(scope: PracticeScope, enabled: boolean) {
+  const { groupId, courseId, lessonId } = scope;
+  return useCallback((practiceId: string, item: number, answer: string) => {
+    if (enabled) sendPracticeAttempt({ groupId, courseId, lessonId }, practiceId, item, answer);
+  }, [courseId, enabled, groupId, lessonId]);
+}
+
 // Enter checks the answer on this device against the author's version, with the same matching the contracts define for every
 // surface; Shift+Enter keeps a new line. A match is celebrated and calls `onAdvance`, which moves to the next question. A miss
 // keeps focus and shows the author's version as a reference, never as a verdict, because a sentence can be translated in several
 // ways; it stays while the learner edits, until the next check. Enter on an empty answer, an unchanged checked answer, or an item
 // without a complete author's version (nothing to check against) also calls `onAdvance`.
-// `submitRef` lets a caller's own Next action check a filled answer before it moves on, exactly as Enter does.
+// `submitRef` lets a caller's own Next action check a filled answer before it moves on, exactly as Enter does. `onCheck` gets each
+// whole-item check of a non-empty answer (an item with nothing to check counts, with its answer only) once per changed answer;
+// blank-by-blank checks of a fill-in item are not reported, only the check of its last blank.
 export type AnswerSubmit = RefObject<(() => void) | null>;
 type PracticeQuestion = LearnerPracticePayload["items"][number];
 // `blank` names the blank a check covered, or null for the whole item.
 type Check = { answer: string; match: boolean; blank: number | null };
 // `initialFocus` marks the field a dialog's focus trap focuses when it opens.
-export function AnswerField({ question, label, description, value, onChange, minRows, onAdvance, submitRef, initialFocus = false }: {
+export function AnswerField({ question, label, description, value, onChange, minRows, onAdvance, submitRef, onCheck, initialFocus = false }: {
   question: PracticeQuestion; label: string; description?: ReactNode; value: string; onChange: (value: string) => void; minRows: number;
-  onAdvance?: () => void; submitRef?: AnswerSubmit; initialFocus?: boolean;
+  onAdvance?: () => void; submitRef?: AnswerSubmit; onCheck?: (answer: string) => void; initialFocus?: boolean;
 }) {
   const { t } = useTranslation();
   const [checked, setChecked] = useState<Check | null>(null);
   const current = checked?.answer === value; const matched = current && checked.match && checked.blank === null;
   const reference = checked && !checked.match && question.authorsVersion.length ? question.authorsVersion : null;
+  // The last answer reported to `onCheck`, so pressing Enter again on an unchanged answer reports nothing.
+  const reported = useRef<string | null>(null);
+  const report = (answer: string) => { if (reported.current === answer) return; reported.current = answer; onCheck?.(answer); };
   const submit = () => {
-    if (!value.trim() || (current && checked.blank === null) || !hasAuthorsVersion(question)) { onAdvance?.(); return; }
+    if (!value.trim() || (current && checked.blank === null)) { onAdvance?.(); return; }
+    if (!hasAuthorsVersion(question)) { report(value); onAdvance?.(); return; }
     const match = answerMatches(question, value);
     setChecked({ answer: value, match, blank: null });
+    report(value);
     if (match) onAdvance?.();
   };
   useEffect(() => {
@@ -178,7 +195,9 @@ function ownStatus(practice: Practice) {
 // A practice on the lesson page: its instruction and first prompts, how many people are done and how many questions the viewer has
 // left, and an Answer action that opens the answer set and any reading passage in a dialog. `dock` keeps the dialog over the
 // reading column so the lesson's New words panel stays usable beside it.
-export function PracticeSummary({ scope, block, published, dock }: { scope: PracticeScope; block: Practice; published: boolean; dock?: RefObject<HTMLElement | null> }) {
+export function PracticeSummary({ scope, block, published, archived = false, dock }: {
+  scope: PracticeScope; block: Practice; published: boolean; archived?: boolean; dock?: RefObject<HTMLElement | null>;
+}) {
   const { t } = useTranslation(); const [answering, setAnswering] = useState(false);
   const saveProgress = usePracticeProgress(scope, published);
   const { payload } = block; const more = payload.items.length - SUMMARY_PROMPTS; const own = ownStatus(block);
@@ -204,7 +223,7 @@ export function PracticeSummary({ scope, block, published, dock }: { scope: Prac
     <AdaptiveDialog opened={answering} onClose={close} title={t("courses.practice.dialogTitle")} dock={dock}>
       {answering && <div className={styles.dialogBody}>
         <PracticeContent block={block} prompts={false} />
-        <AnswerSetComposer scope={scope} block={block} onDone={close} />
+        <AnswerSetComposer scope={scope} block={block} recordAttempts={published && !archived} onDone={close} />
       </div>}
     </AdaptiveDialog>
   </div>;
@@ -213,9 +232,11 @@ export function PracticeSummary({ scope, block, published, dock }: { scope: Prac
 // The answers stay in the local draft so the learner can come back and change them. Done (or Finish later, while some questions are
 // blank) closes the dialog, which saves the answered count. The dialog opens on the first unanswered question; a matching answer
 // (or Enter where there is nothing to check) moves focus to the next question's field, and from the last question to Done.
-// The position bar follows the focused question and stays below the dialog's header while the answer set scrolls.
-export function AnswerSetComposer({ scope, block, onDone }: { scope: PracticeScope; block: Practice; onDone: () => void }) {
+// The position bar follows the focused question and stays below the dialog's header while the answer set scrolls. With
+// `recordAttempts` (a published practice outside an archived course) each answer check is recorded as a practice attempt.
+export function AnswerSetComposer({ scope, block, recordAttempts = false, onDone }: { scope: PracticeScope; block: Practice; recordAttempts?: boolean; onDone: () => void }) {
   const { t } = useTranslation();
+  const recordAttempt = usePracticeAttempt(scope, recordAttempts);
   const key = practiceDraftKey(scope.accountId, scope.groupId, "practice-answer", block.id);
   const questions = block.payload.items;
   const [answers, setAnswers] = useState(() => readAnswers(key, questions.length));
@@ -253,7 +274,8 @@ export function AnswerSetComposer({ scope, block, onDone }: { scope: PracticeSco
     {block.payload.passage && <PassageShareNote id={passageNote} />}
     {questions.map((question, index) => <div key={index} className={styles.question}>
       <AnswerField question={question} label={t("courses.practice.answerLabel", { number: index + 1, prompt: question.prompt })} value={answers[index] ?? ""} minRows={1} initialFocus={index === initial}
-        onChange={(text) => setAnswers((value) => value.map((entry, current) => current === index ? text : entry))} onAdvance={() => focusQuestion(index + 1)} />
+        onChange={(text) => setAnswers((value) => value.map((entry, current) => current === index ? text : entry))} onAdvance={() => focusQuestion(index + 1)}
+        onCheck={(answer) => recordAttempt(block.id, index, answer)} />
       <div className={styles.questionShare}><ShareButton piece={questionPiece(block, index)} label={t("lessonShares.shareNamed.question", { number: index + 1 })} describedBy={passageNote} /></div>
     </div>)}
     <p className={styles.help}>{t("courses.practice.blankHelp")} {t("courses.practice.enterHelp")}</p>

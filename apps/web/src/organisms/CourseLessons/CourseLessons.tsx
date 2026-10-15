@@ -55,7 +55,7 @@ function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" 
 // a collapsible panel of the lesson's words, where the words of the blocks on screen are highlighted. Narrow screens move the
 // panel to a bar at the bottom of the window that starts collapsed on every lesson; it renders into the body so the shell's entry
 // transform cannot pin it to the page.
-function LessonBody({ scope, lesson, tracking, resume }: { scope: Scope; lesson: CourseLesson; tracking: ReadingTracking; resume: LessonPosition | undefined }) {
+function LessonBody({ scope, lesson, tracking, resume, archived }: { scope: Scope; lesson: CourseLesson; tracking: ReadingTracking; resume: LessonPosition | undefined; archived: boolean }) {
   const { t } = useTranslation();
   const document = playableDocument(lesson);
   const steps = useMemo(() => lessonSteps(lesson), [lesson]);
@@ -88,7 +88,7 @@ function LessonBody({ scope, lesson, tracking, resume }: { scope: Scope; lesson:
           label={t(`lessonShares.shareNamed.${block.type}`)} /> : undefined}
         renderPractice={(block) =>
         <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.practiceProgress)}
-          published={lesson.document !== null} dock={hasSide ? reading : undefined} />} />
+          published={lesson.document !== null} archived={archived} dock={hasSide ? reading : undefined} />} />
     </div>
     {(hasIndex || (words && !bar)) && <div ref={side} className={styles.side}>
       {hasIndex && <LessonIndex entries={entries} reading={reading} side={side} fill={!hasWords || bar || wordsCollapsed} />}
@@ -339,7 +339,7 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
       : editing ? <Suspense fallback={<LoadingState label={t("courses.editor.loading")} />}>
         <LessonEditor groupId={groupId} courseId={courseId} accountId={accountId} owner={scope.owner} lesson={data} onClose={() => setEditing(false)} />
       </Suspense>
-      : <LessonBody scope={scope} lesson={data} resume={resume ? saved : undefined} tracking={{
+      : <LessonBody scope={scope} lesson={data} resume={resume ? saved : undefined} archived={detail.course.status === "archived"} tracking={{
         // Scrolling saves the furthest step of a published lesson the viewer has not finished; previews and archived courses never save.
         save: data.published && data.document !== null && !completed && detail.course.status !== "archived" && progress.isSuccess,
         completed, position, path: `${lessonsPath(scope)}/${encodeURIComponent(lessonId)}`, groupId, courseId, lessonId,

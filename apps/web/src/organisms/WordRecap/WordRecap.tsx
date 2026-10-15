@@ -3,7 +3,7 @@ import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
 import { ListeningPill, PassingVerdict, SpeakButton } from "../../molecules/SpeakControls";
-import { isListening, useSpokenAnswer, type SpokenAnswer } from "../../molecules/speechRecognition";
+import { isListening, useSpokenAnswer, type AssessedWord, type SpokenAnswer } from "../../molecules/speechRecognition";
 import { playRevealSpeech, RevealSoundToggle, SpeechButton, useSpeechResolver, useStopSpeechOnUnmount } from "../../molecules/Speech";
 import { Button } from "../../ui";
 import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
@@ -57,10 +57,10 @@ type SpokenOutcome = SpokenAnswer | "noSpeech" | "blocked" | "failed";
 
 // Saying the term aloud on a word card (docs/words.md#spoken-answers): a round microphone in the footer, and the outcome floating
 // over the card for a moment, after which the term is spoken under the reveal sound toggle, right or wrong. It neither flips the
-// card nor records anything. Only a surface inside a recognition scope (the Words tab) listens.
-function WordSpeak({ term, onAnswer }: { term: string; onAnswer: () => void }) {
+// card nor grades it; only a Microsoft assessment is stored, through the scope. Only a surface inside a recognition scope (the Words tab) listens.
+function WordSpeak({ term, word, onAnswer }: { term: string; word: AssessedWord | undefined; onAnswer: () => void }) {
   const [outcome, setOutcome] = useState<SpokenOutcome | null>(null);
-  const spoken = useSpokenAnswer(term, (answer) => { setOutcome(answer); onAnswer(); });
+  const spoken = useSpokenAnswer(term, (answer) => { setOutcome(answer); onAnswer(); }, word);
   const { status } = spoken;
   useEffect(() => { if (status === "noSpeech" || status === "blocked" || status === "failed") setOutcome(status); }, [status]);
   const listen = () => { if (!isListening(status)) setOutcome(null); spoken.listen(); };
@@ -106,7 +106,7 @@ function WordCard({ word, source, shown, opened, onToggle }: { word: RecapWord; 
     <div className={styles.footer}>
       <Button variant="secondary" onClick={toggle}>{shown ? t("courses.words.hideMeaning") : t("courses.words.showMeaning")}</Button>
       <span className={styles.bookmark}><WordBookmarkToggle wordId={word.id} lessonId={word.lessonId} term={word.term} /></span>
-      <WordSpeak term={word.term} onAnswer={() => playRevealSpeech(termOwner, termSpeech)} />
+      <WordSpeak term={word.term} word={word.lessonId ? { lessonId: word.lessonId, wordId: word.id } : undefined} onAnswer={() => playRevealSpeech(termOwner, termSpeech)} />
     </div>
   </article>;
 }

@@ -112,7 +112,7 @@ type Outcome = SpokenAnswer | "noSpeech" | "blocked" | "failed";
 
 // A word card's verdict, or why nothing was heard, floating over the card and fading away after PASSING_VERDICT_MS. Each new
 // outcome is a new object and restarts it. Clicking dismisses it early, except that a verdict with an assessment opens instead
-// into a panel with the breakdown, which stays until closed. Nothing is kept.
+// into a panel with the breakdown, which stays until closed. The verdict is not kept (the recognition scope stores the assessment).
 export function PassingVerdict({ outcome, onGone }: { outcome: Outcome; onGone: () => void }) {
   const { t } = useTranslation();
   const [leaving, setLeaving] = useState(false);

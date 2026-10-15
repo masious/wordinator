@@ -331,12 +331,16 @@ describe("Course lessons", () => {
     expect(within(dialog).getByRole("progressbar", { name: "Practice progress" })).toHaveAttribute("aria-valuenow", "100");
     await waitFor(() => expect(within(dialog).getByLabelText("Your answer")).toHaveFocus());
     expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path).includes("/check"))).toHaveLength(0);
+    // Each check was recorded once as a practice attempt (docs/courses.md#practice-attempts); the server decides the match.
+    const attempts = () => vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith(`/blocks/${practice.id}/attempts`)).map(([, init]) => JSON.parse(String(init?.body)) as unknown);
+    expect(attempts()).toEqual([{ item: 0, answer: "Er is een boom." }, { item: 0, answer: "er is een TUIN" }]);
     // Leaving a question saves only how many of the practice's questions are answered, never the answers.
     await waitFor(() => expect(progress()).toEqual([["PUT", { answered: 1 }]]));
     expect(within(dialog).queryByRole("button", { name: /share/i })).not.toBeInTheDocument();
 
     // An empty answer is never checked: Next moves straight on.
     fireEvent.click(within(dialog).getByRole("button", { name: "Finish lesson" }));
+    expect(attempts()).toHaveLength(2);
     expect(await within(dialog).findByText("You have finished 1 of 4 lessons (25%).")).toBeInTheDocument();
     expect(meter()).toHaveAttribute("aria-valuenow", "100");
     await waitFor(() => expect(progress().length).toBe(2));
@@ -590,6 +594,10 @@ describe("Lesson actions", () => {
     fireEvent.click(other);
     const field = await within(dialog).findByLabelText(/Hoe gaat het\?/);
     fireEvent.change(field, { target: { value: "Goed." } });
+    // Checking the answer records it as a practice attempt of the published lesson.
+    fireEvent.keyDown(field, { key: "Enter" });
+    expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith(`/blocks/${second.id}/attempts`)).map(([, init]) => JSON.parse(String(init?.body)) as unknown))
+      .toEqual([{ item: 0, answer: "Goed." }]);
     fireEvent.click(within(dialog).getByRole("button", { name: "Done" }));
     // Finishing the set saves only the answered count and returns to the list.
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/blocks/${second.id}/progress`,

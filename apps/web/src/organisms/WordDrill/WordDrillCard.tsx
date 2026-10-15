@@ -41,7 +41,7 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
   const source = t("words.source", { course: card.course.title, lesson: card.lesson.title });
   const reveal = () => { if (revealed) return; playRevealSpeech(termOwner, word.speech.term); onReveal(); };
   const [answer, setAnswer] = useState<SpokenAnswer | null>(null);
-  const spoken = useSpokenAnswer(word.term, (heard) => { if (revealed) return; setAnswer(heard); reveal(); });
+  const spoken = useSpokenAnswer(word.term, (heard) => { if (revealed) return; setAnswer(heard); reveal(); }, { lessonId: card.lesson.id, wordId: word.id });
   const canSpeak = direction === "produce" && spoken.available;
   const listen = () => { if (canSpeak && !revealed) spoken.listen(); };
 

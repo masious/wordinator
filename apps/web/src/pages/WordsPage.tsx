@@ -9,7 +9,8 @@ import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { WeakWords } from "../organisms/WeakWords/WeakWords";
 import { WordBookmarkScope } from "../organisms/WordBookmark/WordBookmark";
 import { WordDrillSetup } from "../organisms/WordDrill/WordDrillSetup";
-import { RECOGNITION_LOCALES, SpeechRecognitionScope } from "../molecules/speechRecognition";
+import { RECOGNITION_LOCALES, SpeechRecognitionScope, type AssessmentHandler } from "../molecules/speechRecognition";
+import { sendPronunciationAttempt } from "../molecules/learningAttempts";
 import { WordRecap, type RecapWord } from "../organisms/WordRecap/WordRecap";
 import { Button, EmptyState, ErrorState, LabelChip, LoadingState, PageHeader, SelectField, Surface } from "../ui";
 import styles from "./WordsPage.module.css";
@@ -112,6 +113,8 @@ export function WordsPage({ groupId, view = "bookmarks", lessonId, onView, onLes
   const hasWeakRows = Boolean(weak.data?.pages.some((page) => page.items.length));
   const [drillOpen, setDrillOpen] = useState(false);
   const token = useMemo(() => speechRecognitionTokenSource(groupId), [groupId]);
+  // Microsoft assessments of word cards are stored as pronunciation attempts (docs/words.md#pronunciation-assessment).
+  const onAssessment = useCallback<AssessmentHandler>((reference, assessment, word) => sendPronunciationAttempt(groupId, "word_card", reference, assessment, word), [groupId]);
   if (session.isPending) return <main className={styles.center}><LoadingState label={t("words.loading")} /></main>;
   if (session.data?.status !== "signedIn") return null;
   const libraryLanguage = session.data.groups[0]?.language;
@@ -131,7 +134,7 @@ export function WordsPage({ groupId, view = "bookmarks", lessonId, onView, onLes
         </div>} />
       {view === "weak"
         ? <WeakWords groupId={groupId} />
-        : <SpeechRecognitionScope locale={libraryLanguage ? RECOGNITION_LOCALES[libraryLanguage] : null} token={token}>
+        : <SpeechRecognitionScope locale={libraryLanguage ? RECOGNITION_LOCALES[libraryLanguage] : null} token={token} onAssessment={onAssessment}>
             <BookmarkedWords key={lessonId ?? ALL_LESSONS} groupId={groupId} lessonId={lessonId} />
           </SpeechRecognitionScope>}
     </div>

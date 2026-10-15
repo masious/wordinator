@@ -349,6 +349,14 @@ describe("Saying a word", () => {
     const verdict = await within(first).findByRole("status");
     expect(azure.assessments).toEqual([{ referenceText: "woord 1", gradingSystem: "HundredMark", granularity: "Word", enableMiscue: true }]);
     expect(within(verdict).getByRole("img", { name: "Pronunciation score 78 of 100" })).toBeInTheDocument();
+    // The assessment is stored once as a pronunciation attempt of the word card (docs/words.md#pronunciation-assessment).
+    const stored = fetcher.mock.calls.filter(([path]) => String(path) === `/api/groups/${groupId}/pronunciation-attempts`);
+    expect(stored).toHaveLength(1);
+    expect(stored[0]![1]?.method).toBe("POST");
+    expect(JSON.parse(String(stored[0]![1]?.body))).toEqual({
+      surface: "word_card", referenceText: "woord 1", overall: 78, accuracy: 72, fluency: 90, completeness: 100, lessonId: id(40), wordId: id(101),
+      words: [{ word: "woord", accuracy: 58, error: "mispronunciation" }, { word: "1", accuracy: 95, error: "none" }],
+    });
     fireEvent.click(within(verdict).getByRole("button", { name: /Show pronunciation details/ }));
     const details = within(first).getByRole("dialog", { name: "Pronunciation details" });
     expect(details).toHaveTextContent("Accuracy72");

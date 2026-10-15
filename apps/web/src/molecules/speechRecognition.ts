@@ -90,11 +90,16 @@ export function effectiveRecognizer(preference: Recognizer): Recognizer | null {
 // A surface that listens says in which locale, and how to get a Microsoft token (docs/words.md#recognizers). Outside a scope,
 // nothing listens.
 export type TokenSource = { get: () => Promise<SpeechRecognitionTokenResponse>; forget: () => void };
-type RecognitionScopeValue = { locale: string; token: TokenSource };
+// The lesson word a spoken term belongs to, when the surface knows it.
+export type AssessedWord = { lessonId: string; wordId: string };
+// `onAssessment` gets each pronunciation assessment with the reference text it was scored against, so the surface can store it
+// (docs/words.md#pronunciation-assessment). Only a recognizer that assesses (Microsoft) calls it.
+export type AssessmentHandler = (referenceText: string, assessment: PronunciationAssessment, word: AssessedWord | undefined) => void;
+type RecognitionScopeValue = { locale: string; token: TokenSource; onAssessment?: AssessmentHandler };
 const RecognitionScopeContext = createContext<RecognitionScopeValue | null>(null);
 
-export function SpeechRecognitionScope({ locale, token, children }: { locale: string | null; token: TokenSource; children: ReactNode }) {
-  return createElement(RecognitionScopeContext.Provider, { value: locale ? { locale, token } : null }, children);
+export function SpeechRecognitionScope({ locale, token, onAssessment, children }: { locale: string | null; token: TokenSource; onAssessment?: AssessmentHandler; children: ReactNode }) {
+  return createElement(RecognitionScopeContext.Provider, { value: locale ? { locale, token, onAssessment } : null }, children);
 }
 
 // ---- Matching ----
@@ -352,7 +357,7 @@ const MIN_LEVEL = 0.01;
 // what has been heard so far, and `quiet` whether the microphone has heard nothing for QUIET_NUDGE_MS; `meterRef` takes the
 // element whose `--level` (0–1) follows the microphone. Unmounting the card cancels it. `available` is false outside a scope or
 // where no recognizer can run.
-export function useSpokenAnswer(term: string, onAnswer: (answer: SpokenAnswer) => void) {
+export function useSpokenAnswer(term: string, onAnswer: (answer: SpokenAnswer) => void, word?: AssessedWord) {
   const scope = useContext(RecognitionScopeContext);
   const recognizer = effectiveRecognizer(useRecognizerPreference());
   const [status, setStatus] = useState<ListenStatus>("idle");
@@ -368,7 +373,7 @@ export function useSpokenAnswer(term: string, onAnswer: (answer: SpokenAnswer) =
     if (!scope || !recognizer) return;
     if (run.current) { run.current.finish(); return; }
     stopSpeech();
-    const locale = scope.locale; const token = scope.token;
+    const locale = scope.locale; const token = scope.token; const onAssessment = scope.onAssessment;
     let session: Session | null = null; let capture: Capture | null = null;
     let phase: ListenPhase = "preparing"; let done = false; let finishing = false; let pendingFinish = false;
     let lastSound = Date.now(); let floor: number | null = null; let speechAt: number | null = null; let lastLoud = 0; let silent = false;
@@ -399,7 +404,10 @@ export function useSpokenAnswer(term: string, onAnswer: (answer: SpokenAnswer) =
       },
       onInterim: (text) => { if (live()) setInterim(text); },
       onAlternatives: (alternatives, assessment) => {
-        if (live()) latest.current({ heard: alternatives[0]!, matches: matchesTerm(alternatives, term), assessment });
+        if (!live()) return;
+        latest.current({ heard: alternatives[0]!, matches: matchesTerm(alternatives, term), assessment });
+        // Stored after the card has shown it; a failed save is the handler's to ignore.
+        if (assessment) onAssessment?.(referenceText(term), assessment, word);
       },
       onEnd: settle,
     };

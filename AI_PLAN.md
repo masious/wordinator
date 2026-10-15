@@ -65,11 +65,20 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 - **Helpers for later phases** (`apps/api/src/learningData.ts`): `recordWordReviews(db, userId, reviews)` appends reviews (sources `drill`, `ai_chat`, `ai_practice`) and upserts their memory in one batch, returning the new rows by `` `${termKey}\n${direction}` ``; `memoryRebuildStatements(db, keys, { withoutLessonId })` returns statements to put after the deletes in a reset or deletion batch; `lessonMemoryKeys(db, lessonId, userId?)` lists the keys a lesson's reviews touch; `rebuildMemory(db, userId, termKeys)` rebuilds both directions directly. `recentResults(recent, 5)` in `wordMemory.ts` turns a row's `recent` into the contracts' `wordRecentResultsSchema` shape. `known_override` survives a rebuild; a later Again clears it.
 - **Not done here:** the drill setup still disables Weak words without bookmarks (memory alone does not enable it yet); C14d's weak words read can expose whether the learner has memory.
 
-## C14b — Capturing attempts and pronunciation
+## C14b — Capturing attempts and pronunciation (completed 2026-10-16)
 
-- [ ] Contracts and API: `POST .../practice-attempts` (one checked item; the server re-derives `matched` from the published author's version and never trusts the client's), and `POST .../pronunciation-attempts`.
-- [ ] Web: the lesson Answer dialog, Practice again, and the player record an attempt on each answer check; drill cards and Words tab word cards record Microsoft assessments. Local drafts stay as they are.
-- [ ] Tests: validation, ownership, visibility, matched re-derived; RTL that a check posts once and a failed post does not block the learner.
+- [x] Contracts and API: `POST .../practice-attempts` (one checked item; the server re-derives `matched` from the published author's version and never trusts the client's), and `POST .../pronunciation-attempts`.
+- [x] Web: the lesson Answer dialog, Practice again, and the player record an attempt on each answer check; drill cards and Words tab word cards record Microsoft assessments. Local drafts stay as they are.
+- [x] Tests: validation, ownership, visibility, matched re-derived; RTL that a check posts once and a failed post does not block the learner.
+
+### Notes
+
+- **Route and shapes.** The practice route is `POST .../lessons/:lessonId/blocks/:blockId/attempts`, as [docs/courses.md](docs/courses.md#practice-attempts) names it. Bodies live in `packages/contracts/src/learning.ts` (subpath `@wordinator/contracts/learning`): `practiceAttemptRequestSchema` (non-strict, so a client's `matched` is dropped, not refused), `pronunciationScoresSchema` (reusable by the tutor's Say it), `pronunciationAttemptRequestSchema`, and the source, kind, verdict, and surface enums.
+- **Draft-only practices** answer `409 PRACTICE_NOT_PUBLISHED` for editors and `404` for readers, exactly like progress (the practice resolver is shared). An empty answer is a `400`, since the web never sends one.
+- **Pronunciation term key.** With a lesson and word (required together), the API takes the term key from the published index (falling back to `wordSearchKey` of the term) and ignores the body's; without them it stores the body's `termKey` as is, for the tutor.
+- **Helpers for later phases** (`apps/api/src/learning/attempts.ts`): `insertPracticeAttempt(db, row)` and `practiceAttemptStatement(db, row)` (for a batch) take `NewPracticeAttempt` with `practiceKind`, `source`, `aiVerdict`, `aiNote`, and `conversationId`; `lessonPracticeCheck(item, answer)` gives the prompt, reference (blanks joined by ` · `), and server match; `insertPronunciationAttempt(db, row)`. `app.ts` only calls `registerAttemptRoutes(app, { requireGroupAccess, practiceBlock, readableLesson: drillLesson })` and exports its `AppEnvironment` type.
+- **Web.** `AnswerField` takes `onCheck`, called once per changed, non-empty whole-item check (an item with nothing to check counts when it moves on; blank-by-blank checks do not). `AnswerSetComposer` records only with `recordAttempts`; the lesson page passes `published && !archived`, Practice again (absent in archived courses) passes the published document, and `LessonPlayer` takes an optional `archived` prop. Journal share checks pass no `onCheck`. Sending (`molecules/learningAttempts.ts`) is a bare `fetch` that ignores the result, since the routes answer `204` without a body. `SpeechRecognitionScope` takes `onAssessment`; `useSpokenAnswer(term, onAnswer, word?)` calls it with the reference text after the card shows the verdict. The Words page posts `word_card`, the drill page `drill`.
+- **Not covered by RTL:** the drill page's Microsoft path (its tests have no Azure SDK mock); it shares the scope code covered by the Words tab test.
 
 ## C14c — Lesson progress tab and reset (completed 2026-10-16)
 

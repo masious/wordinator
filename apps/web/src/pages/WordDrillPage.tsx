@@ -1,11 +1,12 @@
 import { opaqueIdSchema } from "@wordinator/contracts";
 import { wordDrillGradeResponseSchema, wordDrillModeSchema, wordDrillSourceSchema, type WordDrillCard as DrillCard, type WordDrillGradeRequest, type WordDrillResult } from "@wordinator/contracts/lesson-document";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, ApiError, sessionQueryOptions, speechRecognitionTokenSource, wordDrillQueryOptions, type WordDrillSettings } from "../api";
 import { RevealSoundToggle } from "../molecules/Speech";
-import { RECOGNITION_LOCALES, SpeechRecognitionScope } from "../molecules/speechRecognition";
+import { RECOGNITION_LOCALES, SpeechRecognitionScope, type AssessmentHandler } from "../molecules/speechRecognition";
+import { sendPronunciationAttempt } from "../molecules/learningAttempts";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { gradeDrill, startDrill } from "../organisms/WordDrill/drillSession";
 import { WordDrillCard } from "../organisms/WordDrill/WordDrillCard";
@@ -114,6 +115,8 @@ export function WordDrillPage({ groupId, settings, onBack }: { groupId: string; 
   const session = useQuery(sessionQueryOptions());
   const [run, setRun] = useState(0);
   const token = useMemo(() => speechRecognitionTokenSource(groupId), [groupId]);
+  // Microsoft assessments of drill cards are stored as pronunciation attempts (docs/words.md#pronunciation-assessment).
+  const onAssessment = useCallback<AssessmentHandler>((reference, assessment, word) => sendPronunciationAttempt(groupId, "drill", reference, assessment, word), [groupId]);
   if (session.isPending) return <main className={styles.center}><LoadingState label={t("drill.loading")} /></main>;
   if (session.data?.status !== "signedIn") return null;
   const libraryLanguage = session.data.groups[0]?.language;
@@ -128,7 +131,7 @@ export function WordDrillPage({ groupId, settings, onBack }: { groupId: string; 
         <h1 className={styles.title}>{t("drill.title")}</h1>
         <p className={styles.settings}>{t("drill.settings", { source: subtitle, direction })}</p>
       </header>
-      <SpeechRecognitionScope locale={recognitionLocale} token={token}><DrillSession key={`${run}:${settings.source}:${settings.lesson ?? ""}:${settings.direction}`} groupId={groupId} settings={settings} run={run}
+      <SpeechRecognitionScope locale={recognitionLocale} token={token} onAssessment={onAssessment}><DrillSession key={`${run}:${settings.source}:${settings.lesson ?? ""}:${settings.direction}`} groupId={groupId} settings={settings} run={run}
         language={language} onAgain={() => setRun((value) => value + 1)} onBack={onBack} /></SpeechRecognitionScope>
     </div>
   </GroupFrame>;
