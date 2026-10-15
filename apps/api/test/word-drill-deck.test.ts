@@ -1,7 +1,7 @@
 import { WORD_DRILL_SESSION_SIZE } from "@wordinator/contracts/lesson-document";
 import { describe, expect, it } from "vitest";
 import { buildWordDrillDeck, type WordDrillCandidate, type WordDrillMemory } from "../src/wordDrill";
-import { recallProbability, WORD_NEW_RECALL } from "../src/wordMemory";
+import { WORD_NEW_RECALL, wordWeakness } from "../src/wordMemory";
 
 type Candidate = WordDrillCandidate & { id: string };
 const DAY = 86_400_000;
@@ -15,7 +15,7 @@ const ids = (deck: { candidate: Candidate }[]) => deck.map((entry) => entry.cand
 const noShuffle = (deck: Candidate[], size: number) => buildWordDrillDeck(deck, "understand", () => 0.999_999, NOW, size);
 
 describe("word drill deck", () => {
-  it("ranks by recall probability now, with never-reviewed words at WORD_NEW_RECALL", () => {
+  it("ranks by recall projected a week ahead, with never-reviewed words at WORD_NEW_RECALL", () => {
     const words = [
       candidate("solid", { understand: mem(30, 1) }),
       candidate("fading", { understand: mem(1, 20) }),
@@ -23,8 +23,8 @@ describe("word drill deck", () => {
       candidate("forgotten", { understand: mem(0.5, 30) }),
       candidate("fresh", { understand: mem(3, 2) }),
     ];
-    expect(recallProbability(words[1]!.memory.understand, NOW)).toBeLessThan(WORD_NEW_RECALL);
-    expect(recallProbability(words[4]!.memory.understand, NOW)).toBeGreaterThan(WORD_NEW_RECALL);
+    expect(wordWeakness(words[1]!.memory.understand, NOW).recall).toBeLessThan(WORD_NEW_RECALL);
+    expect(wordWeakness(words[4]!.memory.understand, NOW).recall).toBeGreaterThan(WORD_NEW_RECALL);
     // Taking fewer cards than words shows the priority, since the shuffle cannot add words back.
     for (const [size, expected] of [[1, ["forgotten"]], [2, ["forgotten", "fading"]], [3, ["forgotten", "fading", "new"]], [4, ["forgotten", "fading", "new", "fresh"]]] as const) {
       expect(new Set(ids(noShuffle(words, size)))).toEqual(new Set(expected));
@@ -35,14 +35,22 @@ describe("word drill deck", () => {
     const words = [
       candidate("new-plain"), candidate("new-bookmarked", {}, "new-bookmarked", true),
       candidate("known", { understand: mem(0.5, 300, true) }),
-      // Elapsed time over stability is 20 for both (recall under 0.5), so their recall is equal; the earlier review wins.
-      candidate("weak-later", { understand: mem(1, 20) }), candidate("weak-earlier", { understand: mem(2, 40) }),
+      // Elapsed time a week from now over stability is 27 for both (recall under 0.5), so their recall is equal; the earlier
+      // review wins.
+      candidate("weak-later", { understand: mem(1, 20) }), candidate("weak-earlier", { understand: mem(2, 47) }),
     ];
     // Then the bookmarked new word before the plain one; the known word last even though its recall is the lowest.
     expect(ids(noShuffle(words, 1))).toEqual(["weak-earlier"]);
     expect(new Set(ids(noShuffle(words, 3)))).toEqual(new Set(["weak-earlier", "weak-later", "new-bookmarked"]));
     expect(new Set(ids(noShuffle(words, 4)))).toEqual(new Set(["weak-earlier", "weak-later", "new-bookmarked", "new-plain"]));
     expect(ids(noShuffle(words, 5))).toContain("known");
+  });
+
+  it("puts a word failed moments ago before a never-reviewed one, though its recall now is near 1", () => {
+    // A first Again gives about half a day of stability: recall now is 1, but a week ahead it is under WORD_NEW_RECALL.
+    const words = [candidate("new"), candidate("failed", { understand: mem(0.4872, 0) }), candidate("stable", { understand: mem(60, 1) })];
+    expect(ids(noShuffle(words, 1))).toEqual(["failed"]);
+    expect(new Set(ids(noShuffle(words, 2)))).toEqual(new Set(["failed", "new"]));
   });
 
   it("caps the session and returns fewer cards when fewer words are eligible", () => {

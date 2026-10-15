@@ -83,11 +83,11 @@ C14 (the Progress tab and reset since C14c). [Courses](courses.md#lesson-progres
 
 ## Find weak words
 
-Planned (C14). [Words](words.md#weak-words-view) owns the rules.
+C14d. [Words](words.md#weak-words-view) owns the rules.
 
 1. On the Words tab the learner switches to Weak words. Words they have drilled or practised with the tutor are listed weakest first, each with five dots for its last five results (green for Got it, red for Again, hollow when there are fewer). There are no percentages.
 2. I know this word removes a word from the list until they next get it wrong.
-3. Drill these words starts a Weak words drill.
+3. Drill these words starts a mixed Weak words drill. The drill setup also offers Weak words once they have memory, even without bookmarks.
 
 ## Study with the AI tutor
 

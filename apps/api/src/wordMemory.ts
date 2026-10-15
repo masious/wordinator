@@ -94,3 +94,18 @@ export const recentResults = (recent: string, count = 5): WordDrillResult[] =>
   [...recent.slice(-count)].map((mark) => (mark === "g" ? "got" : "again"));
 
 export type WordMemoryKey = { userId: string; termKey: string; direction: WordDrillDirection };
+
+// Weakness ranking (docs/words.md#word-memory), shared by the Weak words view and the drill deck so both order words alike.
+// Recall is projected this many days ahead, not taken now: a word failed moments ago has recall near 1 *now*, yet it is the
+// one most likely to slip, and projecting a week ahead puts its short stability first while long-stable words stay last.
+export const WORD_WEAK_HORIZON_DAYS = 7;
+export type WordWeakness = { recall: number; lastReviewedAt: number };
+
+/** A row's weakness at `now`: recall `WORD_WEAK_HORIZON_DAYS` ahead (`WORD_NEW_RECALL` without a row), and its last review. */
+export function wordWeakness(state: Pick<WordMemoryState, "stability" | "lastReviewedAt"> | null | undefined, now: number): WordWeakness {
+  return { recall: recallProbability(state, now + WORD_WEAK_HORIZON_DAYS * DAY_MS), lastReviewedAt: state?.lastReviewedAt ?? Number.NEGATIVE_INFINITY };
+}
+
+/** Weakest first: the lower projected recall, then the longer since last reviewed (never reviewed first). */
+export const compareWordWeakness = (left: WordWeakness, right: WordWeakness): number =>
+  left.recall - right.recall || (left.lastReviewedAt === right.lastReviewedAt ? 0 : left.lastReviewedAt < right.lastReviewedAt ? -1 : 1);

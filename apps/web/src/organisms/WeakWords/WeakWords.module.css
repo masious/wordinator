@@ -1,0 +1,18 @@
+.view{display:grid;gap:var(--space-4)}
+.list{display:grid;gap:var(--space-2);margin:0;padding:0;list-style:none}
+/* A row: the word on the left, its five dots, then the bookmark toggle and I know this word. */
+.row{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:var(--space-5);padding:var(--space-3) var(--space-5);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-md);box-shadow:var(--shadow-card)}
+.word{display:grid;gap:var(--space-1);min-width:0}
+.word p{margin:0}
+.term{display:flex;align-items:center;gap:var(--space-2);font-family:var(--font-display);font-size:var(--text-xl);overflow-wrap:anywhere}
+.speech{flex:none}
+.meaning{color:var(--color-foreground);overflow-wrap:anywhere}
+.source{font-family:var(--font-mono);font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+/* Weak words dots (docs/design-system.md): five 8px circles a space-1 apart, filled by result, ringed when empty. */
+.dots{display:inline-flex;gap:var(--space-1)}
+.dot{width:8px;height:8px;border-radius:var(--radius-pill);box-shadow:inset 0 0 0 1.5px var(--color-hairline)}
+.dot[data-result="got"]{background:var(--color-success);box-shadow:none}
+.dot[data-result="again"]{background:var(--color-danger);box-shadow:none}
+.actions{display:flex;align-items:center;gap:var(--space-2)}
+.more{display:flex;justify-content:center}
+.error{margin:0;font-size:var(--type-metadata);color:var(--color-danger-text)}

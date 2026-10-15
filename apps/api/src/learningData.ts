@@ -62,6 +62,7 @@ export async function recordWordReviews(db: D1Database, userId: string, reviews:
     updated.set(keyId(key), { ...key, ...foldWordReview(previous, { ...review, seedBox: null }) });
   }
   if (!stored.length) return new Map();
+  const cleared = [...new Set(stored.filter((review) => review.result === "again").map((review) => review.termKey))];
   await db.batch([
     ...chunked(stored).map((part) => db.prepare(
       `INSERT INTO word_reviews (id, user_id, term_key, course_id, lesson_id, word_id, direction, result, source, seed_box, conversation_id, created_at)
@@ -71,6 +72,9 @@ export async function recordWordReviews(db: D1Database, userId: string, reviews:
        FROM json_each(?)`,
     ).bind(userId, JSON.stringify(part.map((review) => ({ ...review, conversationId: review.conversationId ?? null }))))),
     ...upsertMemoryStatements(db, [...updated.values()]),
+    // "I know this word" belongs to the term: an Again in one direction clears it in the other too (C14d).
+    ...cleared.length ? [db.prepare("UPDATE word_memory SET known_override = 0 WHERE user_id = ? AND term_key IN (SELECT value FROM json_each(?))")
+      .bind(userId, JSON.stringify(cleared))] : [],
   ]);
   return new Map([...updated.values()].map(({ userId: _userId, termKey, direction, ...state }) => [`${termKey}\n${direction}`, state]));
 }

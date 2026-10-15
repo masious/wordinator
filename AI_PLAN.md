@@ -86,11 +86,21 @@ Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 - **Words reviewed** counts index rows whose `term_key` has a memory row for the viewer; a row still without a term key (indexed before `0023` and not yet lazily keyed) counts as not reviewed.
 - The lesson page shows Reset lesson for any published lesson in a course that is not archived, even before the learner started it, since reviews and attempts can exist without a position.
 
-## C14d — Weak words view
+## C14d — Weak words view (completed 2026-10-16)
 
-- [ ] API: a cursor-paginated weak words read from `word_memory`, ordered by recall probability now, each with its last 5 results and lesson context.
-- [ ] Web: a Weak words view on the Words tab with 5 dots per word (got, again, empty), and Drill from this list.
-- [ ] Tests: ordering with time decay, known_override excluded; RTL for the dots and empty state.
+- [x] API: a cursor-paginated weak words read from `word_memory`, ordered by the shared weakness ranking (see notes), each with its last 5 results and lesson context; `PUT`/`DELETE .../word-memory/:termKey/known`.
+- [x] Web: a Weak words view on the Words tab with 5 dots per word (got, again, empty), and Drill from this list.
+- [x] Tests: ordering with time decay, known_override excluded; RTL for the dots and empty state.
+
+### Notes
+
+- **Weakness ranking projects a week ahead.** With the FSRS curve a word graded Again moments ago has recall about 1 *now*, so ranking by recall now put it after never-reviewed words for days. `wordWeakness(state, now)` and `compareWordWeakness` in `apps/api/src/wordMemory.ts` rank by recall `WORD_WEAK_HORIZON_DAYS` (7) days ahead, then the longest since last reviewed; the deck builder (`wordDrill.ts`) and the Weak words read (`apps/api/src/weakWords.ts`) both use them. Owners: [docs/words.md](docs/words.md#word-memory).
+- **Known limitation.** A word answered Got it and then Again keeps about a day of stability, so a week ahead its recall (about 0.65) still ranks it after never-reviewed words (0.5) in the deck. Only a first-time failure outranks new words. A longer horizon or a lapse boost would change this; left as is pending a product call.
+- **The view ranks reviewed directions only.** A term's row ranks by its weaker *reviewed* direction; an unreviewed direction does not count as 0.5 there (it still does in a mixed deck), so a well-known word drilled one way is not pinned at 0.5.
+- **Order and cursor.** The read loads the viewer's memory rows and the visible occurrences of their term keys and orders them in the Worker; the cursor is `[at, recall, lastReviewedAt, termKey]` (base64 JSON), so later pages are computed at the first page's time. `recent` comes from `word_reviews` (last five per term across both directions, a window query), since each row's `recent` string has no times to merge by.
+- **"I know this word" is per term.** `recordWordReviews` now also clears `known_override` on both directions of any term it records an Again for, in the same batch; the fold already cleared the graded direction.
+- **`hasMemory`** on every weak words page enables Weak words in the drill setup without bookmarks (the C14a open item). Contracts live in `packages/contracts/src/weakWords.ts` (`@wordinator/contracts/weak-words`).
+- **Drill these words** starts a mixed Weak words drill (there is no stored direction setting to reuse).
 
 ## C14e — Superuser and analytics
 

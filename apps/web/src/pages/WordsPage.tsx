@@ -1,10 +1,12 @@
 import { opaqueIdSchema } from "@wordinator/contracts";
 import type { WordBookmark, WordBookmarkLesson } from "@wordinator/contracts/lesson-document";
+import { SegmentedControl } from "@mantine/core";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { sessionQueryOptions, speechRecognitionTokenSource, wordBookmarkLessonsQueryOptions, wordBookmarksQueryOptions, type WordDrillSettings } from "../api";
+import { sessionQueryOptions, speechRecognitionTokenSource, weakWordsQueryOptions, wordBookmarkLessonsQueryOptions, wordBookmarksQueryOptions, type WordDrillSettings } from "../api";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
+import { WeakWords } from "../organisms/WeakWords/WeakWords";
 import { WordBookmarkScope } from "../organisms/WordBookmark/WordBookmark";
 import { WordDrillSetup } from "../organisms/WordDrill/WordDrillSetup";
 import { RECOGNITION_LOCALES, SpeechRecognitionScope } from "../molecules/speechRecognition";
@@ -12,8 +14,11 @@ import { WordRecap, type RecapWord } from "../organisms/WordRecap/WordRecap";
 import { Button, EmptyState, ErrorState, LabelChip, LoadingState, PageHeader, SelectField, Surface } from "../ui";
 import styles from "./WordsPage.module.css";
 
-// The route's search: `lesson` narrows the tab to one lesson's bookmarks (C12a); anything that is not a lesson ID is dropped.
-export function validateWordsSearch(search: Record<string, unknown>): { lesson?: string } {
+// The route's search: `view=weak` shows the Weak words view (C14d), and otherwise `lesson` narrows the tab to one lesson's
+// bookmarks (C12a); the lesson filter belongs to Bookmarks only. Anything else is dropped.
+export type WordsView = "bookmarks" | "weak";
+export function validateWordsSearch(search: Record<string, unknown>): { view?: "weak"; lesson?: string } {
+  if (search.view === "weak") return { view: "weak" };
   const lesson = opaqueIdSchema.safeParse(search.lesson);
   return lesson.success ? { lesson: lesson.data } : {};
 }
@@ -91,14 +96,20 @@ function BookmarkedWords({ groupId, lessonId }: { groupId: string; lessonId: str
   </WordBookmarkScope>;
 }
 
-// The Words tab: the viewer's bookmarked words, newest bookmark first, as word cards, optionally of one lesson. Nothing here is
-// scheduled, scored, or counted; removing a bookmark is the only change it makes. Drill opens the drill setup (C12e).
-export function WordsPage({ groupId, lessonId, onLesson, onDrill }: {
-  groupId: string; lessonId: string | null; onLesson: (next: string | null, replace?: boolean) => void; onDrill: (settings: WordDrillSettings) => void;
+// The Words tab: the viewer's bookmarked words, newest bookmark first, as word cards, optionally of one lesson; or the Weak
+// words view (C14d). Nothing here is scheduled or scored; the Weak words dots are the only sign of how well a word is known.
+// Drill opens the drill setup (C12e); Drill these words starts a Weak words drill.
+export function WordsPage({ groupId, view = "bookmarks", lessonId, onView, onLesson, onDrill }: {
+  groupId: string; view?: WordsView; lessonId: string | null; onView?: (next: WordsView) => void;
+  onLesson: (next: string | null, replace?: boolean) => void; onDrill: (settings: WordDrillSettings) => void;
 }) {
   const { t } = useTranslation();
   const session = useQuery(sessionQueryOptions());
   const lessons = useFilterLessons(groupId, lessonId, onLesson);
+  // The Weak words read also says whether there is memory to drill without bookmarks.
+  const weak = useInfiniteQuery(weakWordsQueryOptions(groupId));
+  const hasMemory = weak.data?.pages[0]?.hasMemory ?? false;
+  const hasWeakRows = Boolean(weak.data?.pages.some((page) => page.items.length));
   const [drillOpen, setDrillOpen] = useState(false);
   const token = useMemo(() => speechRecognitionTokenSource(groupId), [groupId]);
   if (session.isPending) return <main className={styles.center}><LoadingState label={t("words.loading")} /></main>;
@@ -106,16 +117,25 @@ export function WordsPage({ groupId, lessonId, onLesson, onDrill }: {
   const libraryLanguage = session.data.groups[0]?.language;
   return <GroupFrame groupId={groupId} session={session.data}>
     <div className={styles.page}>
-      <PageHeader className={styles.header} eyebrow={<LabelChip>{t("words.eyebrow")}</LabelChip>} title={t("words.title")} intro={t("words.intro")}
+      <PageHeader className={styles.header} eyebrow={<LabelChip>{t("words.eyebrow")}</LabelChip>} title={t("words.title")}
+        intro={view === "weak" ? t("words.weakIntro") : t("words.intro")}
         actions={<div className={styles.actions}>
-          {lessons.length > 0 && <LessonFilter lessons={lessons} lessonId={lessonId} onLesson={onLesson} />}
-          <Button variant="secondary" onClick={() => setDrillOpen(true)}>{t("words.drill")}</Button>
+          {onView && <div role="group" aria-label={t("words.view.label")} className={styles.views}>
+            <SegmentedControl value={view} onChange={(value) => onView(value === "weak" ? "weak" : "bookmarks")}
+              data={[{ value: "bookmarks", label: t("words.view.bookmarks") }, { value: "weak", label: t("words.view.weak") }]} />
+          </div>}
+          {view === "bookmarks" && lessons.length > 0 && <LessonFilter lessons={lessons} lessonId={lessonId} onLesson={onLesson} />}
+          {view === "weak"
+            ? <Button variant="secondary" disabled={!hasWeakRows} onClick={() => onDrill({ source: "weak", direction: "mixed" })}>{t("words.drillWeak")}</Button>
+            : <Button variant="secondary" onClick={() => setDrillOpen(true)}>{t("words.drill")}</Button>}
         </div>} />
-      <SpeechRecognitionScope locale={libraryLanguage ? RECOGNITION_LOCALES[libraryLanguage] : null} token={token}>
-        <BookmarkedWords key={lessonId ?? ALL_LESSONS} groupId={groupId} lessonId={lessonId} />
-      </SpeechRecognitionScope>
+      {view === "weak"
+        ? <WeakWords groupId={groupId} />
+        : <SpeechRecognitionScope locale={libraryLanguage ? RECOGNITION_LOCALES[libraryLanguage] : null} token={token}>
+            <BookmarkedWords key={lessonId ?? ALL_LESSONS} groupId={groupId} lessonId={lessonId} />
+          </SpeechRecognitionScope>}
     </div>
-    <WordDrillSetup opened={drillOpen} onClose={() => setDrillOpen(false)} lessons={lessons} lessonId={lessonId}
+    <WordDrillSetup opened={drillOpen} onClose={() => setDrillOpen(false)} lessons={lessons} lessonId={lessonId} hasMemory={hasMemory}
       language={libraryLanguage ? t(`languages.${libraryLanguage}`) : ""} onStart={(settings) => { setDrillOpen(false); onDrill(settings); }} />
   </GroupFrame>;
 }

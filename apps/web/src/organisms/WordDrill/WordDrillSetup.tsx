@@ -6,14 +6,15 @@ import type { WordDrillSettings } from "../../api";
 import { AdaptiveDialog, Button, RadioField, SelectField } from "../../ui";
 import styles from "./WordDrillSetup.module.css";
 
-// The drill setup (docs/words.md#setup): Weak words or one lesson, and a direction. Weak words needs a visible bookmark; the
+// The drill setup (docs/words.md#setup): Weak words or one lesson, and a direction. Weak words needs a visible bookmark or
+// word memory (`hasMemory`, from the Weak words read); the
 // lessons come from the Words tab's lesson filter, and the lesson select starts on the filter's lesson.
-function SetupForm({ lessons, lessonId, language, onClose, onStart }: {
-  lessons: readonly WordBookmarkLesson[]; lessonId: string | null; language: string; onClose: () => void; onStart: (settings: WordDrillSettings) => void;
+function SetupForm({ lessons, lessonId, hasMemory, language, onClose, onStart }: {
+  lessons: readonly WordBookmarkLesson[]; lessonId: string | null; hasMemory: boolean; language: string; onClose: () => void; onStart: (settings: WordDrillSettings) => void;
 }) {
   const { t } = useTranslation();
-  const hasBookmarks = lessons.some((entry) => entry.count > 0);
-  const [source, setSource] = useState<WordDrillSource>(hasBookmarks || !lessons.length ? "weak" : "lesson");
+  const hasWeak = hasMemory || lessons.some((entry) => entry.count > 0);
+  const [source, setSource] = useState<WordDrillSource>(hasWeak || !lessons.length ? "weak" : "lesson");
   const [lesson, setLesson] = useState<string | null>(() => lessons.find((entry) => entry.lesson.id === lessonId)?.lesson.id ?? lessons[0]?.lesson.id ?? null);
   const [direction, setDirection] = useState<WordDrillMode>("mixed");
   const data = useMemo(() => {
@@ -25,7 +26,7 @@ function SetupForm({ lessons, lessonId, language, onClose, onStart }: {
     }
     return [...groups.values()];
   }, [lessons]);
-  const ready = source === "weak" ? hasBookmarks : Boolean(lesson);
+  const ready = source === "weak" ? hasWeak : Boolean(lesson);
   return <form className={styles.form} onSubmit={(event) => {
     event.preventDefault();
     if (!ready) return;
@@ -33,8 +34,8 @@ function SetupForm({ lessons, lessonId, language, onClose, onStart }: {
   }}>
     <Radio.Group label={t("drill.setup.words")} value={source} onChange={(value) => { const next = wordDrillSourceSchema.safeParse(value); if (next.success) setSource(next.data); }}>
       <div className={styles.choices}>
-        <RadioField value="weak" label={t("drill.setup.weak")} disabled={!hasBookmarks}
-          description={hasBookmarks ? t("drill.setup.weakHelp") : t("drill.setup.weakEmpty")} />
+        <RadioField value="weak" label={t("drill.setup.weak")} disabled={!hasWeak}
+          description={hasWeak ? t("drill.setup.weakHelp") : t("drill.setup.weakEmpty")} />
         <RadioField value="lesson" label={t("drill.setup.lesson")} disabled={!lessons.length} description={t("drill.setup.lessonHelp")} />
       </div>
     </Radio.Group>
@@ -54,7 +55,7 @@ function SetupForm({ lessons, lessonId, language, onClose, onStart }: {
 }
 
 export function WordDrillSetup({ opened, ...props }: {
-  opened: boolean; lessons: readonly WordBookmarkLesson[]; lessonId: string | null; language: string; onClose: () => void; onStart: (settings: WordDrillSettings) => void;
+  opened: boolean; lessons: readonly WordBookmarkLesson[]; lessonId: string | null; hasMemory: boolean; language: string; onClose: () => void; onStart: (settings: WordDrillSettings) => void;
 }) {
   const { t } = useTranslation();
   // The form mounts with the dialog, so each opening starts from the defaults and the current filter.

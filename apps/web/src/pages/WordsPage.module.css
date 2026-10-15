@@ -12,3 +12,5 @@
 .filter{flex:0 1 var(--size-words-filter);min-width:0}
 /* On phones the intro gives way to the cards; the empty state still explains how to bookmark. */
 @media(max-width:48em){.page{gap:var(--space-4)}.header h1{font-size:var(--text-3xl)}.header p{display:none}}
+/* The Bookmarks | Weak words switch leads the action slot, lined up with the select's control like the Drill button. */
+.views{flex:none;margin-bottom:var(--space-1)}

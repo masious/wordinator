@@ -7,7 +7,8 @@
     ".": "./src/index.ts",
     "./lesson-document": "./src/lessonDocument.ts",
     "./speech": "./src/speech.ts",
-    "./ai": "./src/ai.ts"
+    "./ai": "./src/ai.ts",
+    "./weak-words": "./src/weakWords.ts"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

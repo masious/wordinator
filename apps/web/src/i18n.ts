@@ -130,7 +130,25 @@ export const resources = {
         filterLabel: "Lesson",
         allLessons: "All lessons",
         lessonOption: "{{lesson}} ({{count}})",
-        drill: "Drill"
+        drill: "Drill",
+        view: { label: "Show", bookmarks: "Bookmarks", weak: "Weak words" },
+        weakIntro: "The words you remember least, weakest first, with your last five answers.",
+        drillWeak: "Drill these words",
+        weak: {
+          loading: "Finding your weak words",
+          unavailable: "Your weak words could not be loaded.",
+          listLabel: "Weak words",
+          emptyTitle: "No weak words yet",
+          emptyBody: "Words appear here after you drill them or practise them with the tutor.",
+          dots_one: "Last result: {{results}}",
+          dots_other: "Last {{count}} results, oldest first: {{results}}",
+          noResults: "No results yet",
+          result: { got: "Got it", again: "Again" },
+          known: "I know this word",
+          knownFor: "I know {{term}}",
+          knownFailed: "That word could not be marked as known. Try again.",
+          more: "Show more words"
+        }
       },
       speak: {
         start: "Say it",
@@ -210,8 +228,8 @@ export const resources = {
           title: "Drill words",
           words: "Words",
           weak: "Weak words",
-          weakHelp: "Your bookmarked words, weakest first.",
-          weakEmpty: "Bookmark words in a lesson first; your weak words come from your bookmarks.",
+          weakHelp: "Your bookmarked and drilled words, weakest first.",
+          weakEmpty: "Bookmark words in a lesson or drill a lesson first; your weak words come from your bookmarks and drills.",
           lesson: "Lesson",
           lessonHelp: "Every word of one lesson.",
           lessonSelect: "Lesson to drill",

@@ -50,6 +50,13 @@ const lessonEntry = (lesson: string, count: number) => ({
 let lessons: ReturnType<typeof lessonEntry>[];
 let pages: Record<string, { items: unknown[]; nextCursor: string | null }>;
 let keys: Array<{ lessonId: string; wordId: string }>;
+const weakPath = `/api/groups/${groupId}/weak-words`;
+const weakItem = (n: number, recent: string[] = ["got", "again"]) => ({
+  word: { id: id(200 + n), lessonId: id(40), term: `zwak ${n}`, meaning: `weak meaning ${n}`, forms: null, example: null, note: null, speech: { term: null, example: null } },
+  termKey: `zwak ${n}`, recent, course: { id: courseId, slug: "dutch-foundations", title: "Dutch foundations" }, lesson: { id: id(40), slug: "lesson-40", title: "Lesson 40" },
+});
+let weakPages: Record<string, { items: unknown[]; nextCursor: string | null; hasMemory: boolean }>;
+let knownStatus: number;
 
 function response(body: unknown) { return new Response(JSON.stringify(body), { headers: { "content-type": "application/json" } }); }
 // The page under a route that keeps the lesson filter in the URL, like the app's own `/words` route.
@@ -58,8 +65,9 @@ function renderPage(initial = "/words") {
   const route = createRoute({
     getParentRoute: () => root, path: "words", validateSearch: validateWordsSearch,
     component: function Words() {
-      const { lesson } = route.useSearch(); const navigate = route.useNavigate();
-      return <WordsPage groupId={groupId} lessonId={lesson ?? null} onLesson={(next, replace = false) => { void navigate({ search: next ? { lesson: next } : {}, replace }); }}
+      const { lesson, view } = route.useSearch(); const navigate = route.useNavigate();
+      return <WordsPage groupId={groupId} view={view ?? "bookmarks"} lessonId={lesson ?? null} onView={(next) => { void navigate({ search: next === "weak" ? { view: "weak" } : {} }); }}
+        onLesson={(next, replace = false) => { void navigate({ search: next ? { lesson: next } : {}, replace }); }}
         onDrill={(settings) => { void navigate({ to: "/words/drill", search: settings }); }} />;
     },
   });
@@ -72,6 +80,9 @@ function renderPage(initial = "/words") {
 }
 
 beforeEach(() => {
+  weakPages = { [weakPath]: { items: [weakItem(1, ["again", "again", "got"]), weakItem(2, ["got", "got", "got", "got", "again"])], nextCursor: "next", hasMemory: true } };
+  weakPages[`${weakPath}?cursor=next`] = { items: [weakItem(3, [])], nextCursor: null, hasMemory: true };
+  knownStatus = 200;
   pages = { [listPath]: { items: [item(1), item(2), item(3, id(41))], nextCursor: null } };
   pages[`${listPath}&lessonId=${id(41)}`] = { items: [item(3, id(41))], nextCursor: null };
   lessons = [lessonEntry(id(40), 2), lessonEntry(id(41), 1)];
@@ -82,6 +93,10 @@ beforeEach(() => {
     if (path === keysPath) return response({ keys });
     if (path === lessonsPath) return response({ lessons });
     if (path in pages) return response(pages[path]);
+    if (path in weakPages) return response(weakPages[path]);
+    if (path.endsWith("/known") && init?.method === "PUT") {
+      return knownStatus === 200 ? response({ ok: true }) : new Response(JSON.stringify({ error: { code: "WORD_NOT_FOUND", message: "Gone." } }), { status: knownStatus, headers: { "content-type": "application/json" } });
+    }
     if (path.endsWith("/bookmark") && init?.method === "DELETE") {
       // The server forgets the bookmark, so a refetched list leaves it out.
       const wordId = path.split("/words/")[1]!.split("/")[0];
@@ -434,13 +449,86 @@ describe("Drill setup", () => {
 
   it("disables Weak words with an explanation while there are no visible bookmarks", async () => {
     pages = { [listPath]: { items: [], nextCursor: null } }; lessons = [];
+    weakPages = { [weakPath]: { items: [], nextCursor: null, hasMemory: false } };
     renderPage();
     await screen.findByText("No bookmarked words yet");
     fireEvent.click(screen.getByRole("button", { name: "Drill" }));
     const dialog = await screen.findByRole("dialog", { name: "Drill words" });
     expect(within(dialog).getByRole("radio", { name: "Weak words" })).toBeDisabled();
     expect(within(dialog).getByRole("radio", { name: "Lesson" })).toBeDisabled();
-    expect(dialog).toHaveTextContent("Bookmark words in a lesson first; your weak words come from your bookmarks.");
+    expect(dialog).toHaveTextContent("Bookmark words in a lesson or drill a lesson first; your weak words come from your bookmarks and drills.");
     expect(within(dialog).getByRole("button", { name: "Start" })).toBeDisabled();
+  });
+});
+
+describe("Weak words view", () => {
+  it("switches views in the URL, dropping the lesson filter", async () => {
+    const router = renderPage(`/words?lesson=${id(41)}`);
+    await screen.findByRole("article", { name: "woord 3" });
+    fireEvent.click(within(screen.getByRole("group", { name: "Show" })).getByText("Weak words"));
+    await waitFor(() => expect(router.state.location.search).toEqual({ view: "weak" }));
+    expect(await screen.findByRole("listitem", { name: "zwak 1" })).toBeInTheDocument();
+    expect(screen.queryByRole("combobox", { name: "Lesson" })).not.toBeInTheDocument();
+    fireEvent.click(within(screen.getByRole("group", { name: "Show" })).getByText("Bookmarks"));
+    await waitFor(() => expect(router.state.location.search).toEqual({}));
+    expect(await screen.findByRole("article", { name: "woord 1" })).toBeInTheDocument();
+    // Unknown views fall back to Bookmarks, and a weak view keeps no lesson.
+    expect(validateWordsSearch({ view: "other", lesson: id(41) })).toEqual({ lesson: id(41) });
+    expect(validateWordsSearch({ view: "weak", lesson: id(41) })).toEqual({ view: "weak" });
+  });
+
+  it("shows each word with its place and five dots labelled in words, loading more pages", async () => {
+    renderPage("/words?view=weak");
+    const row = await screen.findByRole("listitem", { name: "zwak 1" });
+    expect(row).toHaveTextContent("weak meaning 1");
+    expect(row).toHaveTextContent("Dutch foundations · Lesson 40");
+    const dots = within(row).getByRole("img", { name: "Last 3 results, oldest first: Again, Again, Got it" });
+    expect([...dots.children].map((dot) => dot.getAttribute("data-result"))).toEqual(["again", "again", "got", "empty", "empty"]);
+    expect(within(row).getByRole("button", { name: "Bookmark zwak 1" })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Show more words" }));
+    const third = await screen.findByRole("listitem", { name: "zwak 3" });
+    expect(within(third).getByRole("img", { name: "No results yet" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Show more words" })).not.toBeInTheDocument();
+  });
+
+  it("removes a word marked known at once, and puts it back when that fails", async () => {
+    renderPage("/words?view=weak");
+    fireEvent.click(within(await screen.findByRole("listitem", { name: "zwak 1" })).getByRole("button", { name: "I know zwak 1" }));
+    await waitFor(() => expect(screen.queryByRole("listitem", { name: "zwak 1" })).not.toBeInTheDocument());
+    const calls = vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith("/known"));
+    expect(calls.map(([path, init]) => [String(path), init?.method])).toEqual([[`/api/groups/${groupId}/word-memory/zwak%201/known`, "PUT"]]);
+    knownStatus = 404;
+    fireEvent.click(within(screen.getByRole("listitem", { name: "zwak 2" })).getByRole("button", { name: "I know zwak 2" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent("That word could not be marked as known. Try again.");
+    expect(screen.getByRole("listitem", { name: "zwak 2" })).toBeInTheDocument();
+  });
+
+  it("explains where weak words come from while there are none", async () => {
+    weakPages = { [weakPath]: { items: [], nextCursor: null, hasMemory: false } };
+    renderPage("/words?view=weak");
+    expect(await screen.findByText("No weak words yet")).toBeInTheDocument();
+    expect(screen.getByText("Words appear here after you drill them or practise them with the tutor.")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Drill these words" })).toBeDisabled();
+  });
+
+  it("starts a Weak words drill from the list", async () => {
+    const router = renderPage("/words?view=weak");
+    await screen.findByRole("listitem", { name: "zwak 1" });
+    fireEvent.click(screen.getByRole("button", { name: "Drill these words" }));
+    await waitFor(() => expect(router.state.location.pathname).toBe("/words/drill"));
+    expect(router.state.location.search).toEqual({ source: "weak", direction: "mixed" });
+  });
+
+  it("enables a Weak words drill from memory alone, without bookmarks", async () => {
+    pages = { [listPath]: { items: [], nextCursor: null } }; lessons = [];
+    weakPages = { [weakPath]: { items: [], nextCursor: null, hasMemory: true } };
+    const router = renderPage();
+    await screen.findByText("No bookmarked words yet");
+    fireEvent.click(screen.getByRole("button", { name: "Drill" }));
+    const dialog = await screen.findByRole("dialog", { name: "Drill words" });
+    expect(within(dialog).getByRole("radio", { name: "Weak words" })).toBeEnabled();
+    expect(within(dialog).getByRole("radio", { name: "Weak words" })).toBeChecked();
+    fireEvent.click(within(dialog).getByRole("button", { name: "Start" }));
+    await waitFor(() => expect(router.state.location.search).toEqual({ source: "weak", direction: "mixed" }));
   });
 });

@@ -1,5 +1,6 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, lessonProgressResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema, speechRecognitionTokenResponseSchema, type SpeechRecognitionTokenResponse } from "@wordinator/contracts";
 import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
+import { weakWordsPageSchema } from "@wordinator/contracts/weak-words";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
 export class ApiError extends Error {
@@ -187,6 +188,19 @@ export const wordDrillQueryOptions = (groupId: string, settings: WordDrillSettin
   ),
   staleTime: Infinity, gcTime: 0, retry: false,
   refetchOnMount: false, refetchOnWindowFocus: false, refetchOnReconnect: false,
+});
+
+// The Weak words view (C14d): the viewer's remembered terms, weakest first, twenty a page. The first page also says whether
+// the viewer has any memory, which enables a Weak words drill without bookmarks.
+export const weakWordsKey = (groupId: string) => ["weak-words", groupId] as const;
+export const weakWordsQueryOptions = (groupId: string) => infiniteQueryOptions({
+  queryKey: weakWordsKey(groupId),
+  initialPageParam: undefined as string | undefined,
+  queryFn: ({ pageParam }) => apiRequest(
+    `/api/groups/${encodeURIComponent(groupId)}/weak-words${pageParam ? `?cursor=${encodeURIComponent(pageParam)}` : ""}`, weakWordsPageSchema,
+  ),
+  getNextPageParam: (page) => page.nextCursor ?? undefined,
+  retry: false,
 });
 
 // Library word search (New words panel): published words of visible courses matching the query, twenty at a time.

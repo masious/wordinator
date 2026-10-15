@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
-  foldWordReview, rebuildWordMemory, recallProbability, recentResults, SEED_STABILITY_DAYS, WORD_DEFAULT_DIFFICULTY, WORD_NEW_RECALL,
+  compareWordWeakness, foldWordReview, rebuildWordMemory, recallProbability, recentResults, SEED_STABILITY_DAYS, WORD_DEFAULT_DIFFICULTY, WORD_NEW_RECALL,
+  WORD_WEAK_HORIZON_DAYS, wordWeakness,
   type FoldableWordReview, type WordMemoryState,
 } from "../src/wordMemory";
 
@@ -86,5 +87,32 @@ describe("word memory engine", () => {
     const two = foldAll([review("got", 1, { source: "seed", seedBox: 5 }), review("again", 2, { source: "seed", seedBox: 1, lessonId: "two" })])!;
     expect(two).toMatchObject({ stability: 0.5, reps: 2, lapses: 0, recent: "ga", lessonId: "two", lastReviewedAt: 2 * DAY });
     expect(foldWordReview(two, review("again", 3)).lapses).toBe(1);
+  });
+});
+
+describe("weakness ranking", () => {
+  const rank = (state: WordMemoryState | null, day: number) => wordWeakness(state, day * DAY);
+  it("projects recall WORD_WEAK_HORIZON_DAYS ahead and decays with time", () => {
+    const state = foldWordReview(null, review("got", 0));
+    expect(rank(state, 0).recall).toBe(recallProbability(state, WORD_WEAK_HORIZON_DAYS * DAY));
+    expect(rank(state, 10).recall).toBeLessThan(rank(state, 0).recall);
+    expect(rank(null, 0)).toEqual({ recall: WORD_NEW_RECALL, lastReviewedAt: Number.NEGATIVE_INFINITY });
+  });
+
+  it("ranks a word failed moments ago before a never-reviewed one and a long-stable word last", () => {
+    const failed = foldWordReview(null, review("again", 100));
+    // Recall now is 1, which alone would rank the failure after every never-reviewed word.
+    expect(recallProbability(failed, 100 * DAY)).toBe(1);
+    const stable = foldAll([review("got", 0), review("got", 10), review("got", 60), review("got", 99)])!;
+    const order = [{ id: "stable", ...rank(stable, 100) }, { id: "new", ...rank(null, 100) }, { id: "failed", ...rank(failed, 100) }]
+      .sort(compareWordWeakness).map((entry) => entry.id);
+    expect(order).toEqual(["failed", "new", "stable"]);
+  });
+
+  it("breaks ties of recall by the longest since last reviewed", () => {
+    const earlier = { recall: 0.4, lastReviewedAt: 1 }; const later = { recall: 0.4, lastReviewedAt: 2 };
+    expect(compareWordWeakness(earlier, later)).toBeLessThan(0);
+    expect(compareWordWeakness(later, earlier)).toBeGreaterThan(0);
+    expect(compareWordWeakness(earlier, { ...earlier })).toBe(0);
   });
 });

@@ -95,6 +95,8 @@ import { buildWordDrillDeck, type WordDrillMemory } from "./wordDrill";
 import { lessonMemoryKeys, memoryRebuildStatements, recordWordReviews } from "./learningData";
 import { completeLesson, readLessonProgress, resetLesson } from "./learning/progress";
 import { recentResults } from "./wordMemory";
+import { decodeWeakCursor, readWeakWords, setWordKnown } from "./weakWords";
+import { weakWordsPageSchema, weakWordsQuerySchema, wordTermKeySchema } from "@wordinator/contracts/weak-words";
 
 export type Bindings = Env & { MEDIA: R2Bucket; PUBLIC_MEDIA_BASE_URL: string };
 type Language = "nl" | "de";
@@ -2460,6 +2462,36 @@ app.put(`${lessonPath}/words/:wordId/drill/:direction`, requireGroupAccess, asyn
     termKey, direction: direction.data, result: grade.data.result, source: "drill", courseId: found.row.id, lessonId: indexed.lessonId, wordId: indexed.wordId,
   }]);
   return context.json(wordDrillGradeResponseSchema.parse({ recent: recentResults(memory.get(`${termKey}\n${direction.data}`)?.recent ?? "") }));
+});
+
+// The Weak words view (C14d, docs/words.md#weak-words-view): the viewer's remembered terms, weakest first, twenty a page.
+app.get("/api/groups/:groupId/weak-words", requireGroupAccess, async (context) => {
+  const parsed = weakWordsQuerySchema.safeParse(context.req.query());
+  const cursor = parsed.success && parsed.data.cursor ? decodeWeakCursor(parsed.data.cursor) : null;
+  if (!parsed.success || (parsed.data.cursor && !cursor)) return apiError(context, 400, "INVALID_CURSOR", "The weak words cursor is invalid.");
+  const group = context.get("groupAccess"); const user = context.get("user")!; const db = context.env.DB;
+  // Memory is keyed by term key, so index rows still without one get it first.
+  await fillWordSearchKeys(db);
+  const page = await readWeakWords(db, { userId: user.id, groupId: group.id, visible: courseVisibleClause(user.id, group.creatorUserId), cursor, now: Date.now() });
+  const spoken = await withWordSpeech(db, page.rows.map((row) => row.occurrence), group.language, context.env.PUBLIC_MEDIA_BASE_URL);
+  return context.json(weakWordsPageSchema.parse({
+    items: spoken.map(({ termKey: _termKey, courseId, courseSlug, courseTitle, lessonSlug, lessonTitle, ...word }, index) => ({
+      word, termKey: page.rows[index]!.termKey, recent: page.rows[index]!.recent,
+      course: { id: courseId, slug: courseSlug, title: courseTitle }, lesson: { id: word.lessonId, slug: lessonSlug, title: lessonTitle },
+    })),
+    nextCursor: page.nextCursor, hasMemory: page.hasMemory,
+  }));
+});
+
+// "I know this word": sets or clears `known_override` on both directions of the viewer's memory of a term; idempotent. A
+// later Again clears the mark through the memory fold. Marking a term the viewer has no memory of is 404.
+app.on(["PUT", "DELETE"], "/api/groups/:groupId/word-memory/:termKey/known", requireGroupAccess, async (context) => {
+  const termKey = wordTermKeySchema.safeParse(context.req.param("termKey"));
+  if (!termKey.success) return apiError(context, 400, "INVALID_WORD", "This word is invalid.");
+  const known = context.req.method === "PUT";
+  const rows = await setWordKnown(context.env.DB, context.get("user")!.id, termKey.data, known);
+  if (known && !rows) return apiError(context, 404, "WORD_NOT_FOUND", "This word is not available.");
+  return context.json({ ok: true } as const);
 });
 
 // Finishing a published lesson in the lesson player records it once; repeating the lesson keeps the first completion time.
