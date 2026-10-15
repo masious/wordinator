@@ -3,7 +3,11 @@ import { courseQueryOptions, courseRefQueryOptions, lessonQueryOptions } from ".
 import { requireLibrary } from "../libraryRoute";
 import { LessonPage } from "../pages/CoursePages";
 
+// `resume` opens the lesson at the viewer's saved step; the course page's Continue actions link with it.
+export type LessonSearch = { resume?: true };
+
 export const Route = createFileRoute("/courses_/$courseSlug_/lessons/$lessonSlug")({
+  validateSearch: (search: Record<string, unknown>): LessonSearch => search.resume === true || search.resume === "true" || search.resume === 1 ? { resume: true } : {},
   beforeLoad: ({ context }) => requireLibrary(context.queryClient),
   loader: async ({ context, params }) => {
     const { groupId } = context;
@@ -28,5 +32,6 @@ export const Route = createFileRoute("/courses_/$courseSlug_/lessons/$lessonSlug
 function LessonRoute() {
   const { courseId, lessonId } = Route.useLoaderData();
   const { groupId } = Route.useRouteContext();
-  return <LessonPage groupId={groupId} courseId={courseId} lessonId={lessonId} />;
+  const { resume } = Route.useSearch();
+  return <LessonPage groupId={groupId} courseId={courseId} lessonId={lessonId} resume={resume === true} />;
 }

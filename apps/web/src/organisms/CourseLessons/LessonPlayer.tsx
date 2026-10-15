@@ -4,10 +4,10 @@ import {
 import {
   flattenToSteps, lessonStepKey, resolveStepIndex, type CourseLesson, type LessonBlockOf, type LessonStep,
 } from "@wordinator/contracts/lesson-document";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { type QueryClient, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import { apiRequest, courseProgressQueryOptions, lessonQueryOptions } from "../../api";
+import { apiRequest, courseProgressQueryOptions, courseWordsQueryOptions, lessonQueryOptions } from "../../api";
 import { Callout } from "../../molecules/Callout";
 import { PlainText } from "../../molecules/PlainText";
 import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
@@ -260,8 +260,17 @@ function Player({ scope, lesson, position, next, onNext, onClose }: {
   </div></SpeechScope></WordBookmarkScope></LessonShareScope>;
 }
 
+// The player saved the reader's steps while it was open; refresh the positions and percentages it changed, and the course recap,
+// which a finished lesson may extend.
+export function refreshAfterPlaying(queryClient: QueryClient, groupId: string, courseId: string) {
+  void queryClient.invalidateQueries({ queryKey: courseProgressQueryOptions(groupId, courseId).queryKey });
+  void queryClient.invalidateQueries({ queryKey: courseWordsQueryOptions(groupId, courseId).queryKey });
+}
+
 // A focused, step-by-step run through one lesson. Each step of a published lesson is saved as the viewer's position, and finishing
 // records the lesson toward the viewer's course progress.
+// Retired from the course page, which now continues lessons on their own pages (docs/courses.md). Nothing renders it, so the bundle
+// leaves it out; it stays for a possible return. Close it with `refreshAfterPlaying`.
 export function LessonPlayer({ scope, lessonId, outline, positions, onChangeLesson, onClose }: {
   scope: PlayerScope; lessonId: string | null; outline: CourseLessonSummary[]; positions: readonly LessonPosition[];
   onChangeLesson: (lessonId: string) => void; onClose: () => void;

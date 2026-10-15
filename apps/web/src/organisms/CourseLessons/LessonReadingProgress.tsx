@@ -19,12 +19,10 @@ const stepAnchor = (step: LessonStep) => {
   }
 };
 
-// The furthest step whose place on the page has crossed the reading line. A dialogue's lines and a practice's items share one
-// block, so they are spread evenly over its height. Steps with nothing on the page (New words, shown in the side panel) take the
-// place of the next step that has one. At the bottom of the page every step is reached.
-export function reachedStep(steps: readonly LessonStep[], root: HTMLElement, viewportHeight: number, atBottom: boolean): number {
-  if (!steps.length) return -1;
-  if (atBottom) return steps.length - 1;
+// Each step's place on the page, as a viewport top. A dialogue's lines and a practice's items share one block, so they are spread
+// evenly over its height. Steps with nothing on the page (New words, shown in the side panel) take the place of the next step that
+// has one.
+export function stepTops(steps: readonly LessonStep[], root: HTMLElement): Array<number | null> {
   const elements = new Map<string, HTMLElement>();
   root.querySelectorAll<HTMLElement>("[data-block-id]").forEach((element) => { elements.set(element.dataset.blockId!, element); });
   const tops: Array<number | null> = steps.map((step) => {
@@ -39,10 +37,39 @@ export function reachedStep(steps: readonly LessonStep[], root: HTMLElement, vie
     return box.top;
   });
   for (let index = tops.length - 2; index >= 0; index -= 1) if (tops[index] === null) tops[index] = tops[index + 1] ?? null;
+  return tops;
+}
+
+// The furthest step whose place on the page has crossed the reading line. At the bottom of the page every step is reached.
+export function reachedStep(steps: readonly LessonStep[], root: HTMLElement, viewportHeight: number, atBottom: boolean): number {
+  if (!steps.length) return -1;
+  if (atBottom) return steps.length - 1;
+  const tops = stepTops(steps, root);
   const line = viewportHeight * READING_LINE;
   let reached = -1;
   tops.forEach((top, index) => { if (top !== null && top <= line) reached = index; });
   return reached;
+}
+
+// Opening the lesson to continue it (the course page's Continue actions) brings the saved step to the top of the reading area, where
+// the sticky side column starts, once. The router resets the scroll as the page renders, so the jump waits a frame. Arriving any
+// other way leaves the page at its top.
+export function useResumeScroll({ steps, reading, position, inset }: {
+  steps: readonly LessonStep[]; reading: RefObject<HTMLElement | null>; position: LessonPosition | undefined; inset: () => number;
+}) {
+  const done = useRef(false);
+  const insetRef = useRef(inset); insetRef.current = inset;
+  useEffect(() => {
+    if (done.current || !position || !steps.length) return;
+    const index = resolveStepIndex(steps, position.stepKey, position.stepIndex);
+    const frame = requestAnimationFrame(() => {
+      const root = reading.current; const top = root ? stepTops(steps, root)[index] : null;
+      if (top === null || top === undefined) return;
+      done.current = true;
+      window.scrollTo({ top: Math.max(0, top + window.scrollY - insetRef.current()), behavior: "auto" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [position, reading, steps]);
 }
 
 const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "]);

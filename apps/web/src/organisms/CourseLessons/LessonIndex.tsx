@@ -61,7 +61,7 @@ export function currentEntry(tops: ReadonlyArray<number | null>, line: number, a
 }
 
 // The sticky side column's top, which is where the reading line sits; 0 when the column does not stick (narrow screens).
-const stickyInset = (side: HTMLElement | null) => {
+export const stickyInset = (side: HTMLElement | null) => {
   const style = side ? getComputedStyle(side) : null;
   return style?.position === "sticky" ? parseFloat(style.top) || 0 : 0;
 };

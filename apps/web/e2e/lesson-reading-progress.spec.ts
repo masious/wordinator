@@ -2,7 +2,7 @@ import { expect, test } from "@playwright/test";
 import { signIn, uniqueTag } from "./auth";
 import { courseApi, example, openLesson, seedLesson } from "./lessonSeed";
 
-test("scrolling a lesson page fills its bar, saves the furthest step, and the player resumes there", async ({ page }, testInfo) => {
+test("scrolling a lesson page fills its bar, saves the furthest step, and Continue reopens the page there", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
   const suffix = `reading-${uniqueTag(testInfo)}`;
   await signIn(page);
@@ -46,7 +46,36 @@ test("scrolling a lesson page fills its bar, saves the furthest step, and the pl
   await expect(page.getByRole("heading", { name: "Pick up where you left off" })).toBeVisible();
   await expect(page.getByRole("progressbar", { name: "Your course progress" })).toHaveAttribute("aria-valuenow", "91");
   await page.getByRole("button", { name: "Continue lesson 1", exact: true }).click();
-  const player = page.getByRole("dialog");
-  await expect(player.getByText("Step 12 of 12")).toBeVisible();
-  await expect(player.getByText("Picked up where you left off.")).toBeVisible();
+  await expect(page).toHaveURL(/\/lessons\/[^?]+\?resume=true$/);
+  await expect(page.getByText("Zin nummer 12 staat hier.")).toBeInViewport();
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+});
+
+test("Continue opens the lesson page scrolled to a saved step in the middle", async ({ page }, testInfo) => {
+  test.setTimeout(60_000);
+  const suffix = `resume-${uniqueTag(testInfo)}`;
+  await signIn(page);
+  const api = courseApi(page);
+  const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Lezen" });
+  await api(`/courses/${course.id}/visibility`, { status: "published" });
+  const sentences = Array.from({ length: 12 }, (_, index) => `Zin nummer ${index + 1} staat hier.`);
+  await seedLesson(page, course.id, `${suffix} lesson`, sentences.map((sentence) => example(sentence, `Sentence ${sentence.length}.`, "Een notitie om de pagina langer te maken.")));
+
+  await page.goto(`/courses/${course.id}`);
+  await openLesson(page);
+  await expect(page.getByRole("progressbar", { name: "Lesson progress" })).toHaveAttribute("aria-valuenow", "0");
+  const saved = page.waitForResponse((response) => response.url().endsWith("/position") && response.request().method() === "PUT");
+  await page.mouse.wheel(0, 900);
+  const { position } = await (await saved).json() as { position: { stepIndex: number } };
+  expect(position.stepIndex).toBeGreaterThan(1);
+  expect(position.stepIndex).toBeLessThan(10);
+  await page.getByRole("link", { name: /^Back to / }).click();
+  await page.getByRole("button", { name: "Continue lesson 1", exact: true }).click();
+  await expect(page).toHaveURL(/\?resume=true$/);
+  // The saved step sits near the top of the window; the lesson's start is scrolled past.
+  const step = page.getByText(sentences[position.stepIndex]!, { exact: true });
+  await expect(step).toBeInViewport();
+  await expect(page.getByText(sentences[0]!, { exact: true })).not.toBeInViewport();
+  const top = await step.evaluate((element) => element.getBoundingClientRect().top);
+  expect(top).toBeLessThan(250);
 });

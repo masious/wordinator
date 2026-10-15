@@ -11,6 +11,13 @@
 .lessonImage{position:absolute;inset-block:0;left:0;z-index:-1;width:var(--size-lesson-image);
   mask-image:linear-gradient(to right,#000 35%,transparent);-webkit-mask-image:linear-gradient(to right,#000 35%,transparent)}
 .lessonImage img{display:block;width:100%;height:100%;object-fit:cover;object-position:left center}
+/* Narrow cards have no width to spare, so the image becomes a banner across the top that fades down into the card. */
+@media(max-width:48em){
+  .withImage{padding-inline-start:var(--card-inset);padding-block-start:calc(var(--size-lesson-image) - var(--space-6))}
+  .lessonImage{inset-block:0 auto;inset-inline:0;width:auto;height:var(--size-lesson-image);
+    mask-image:linear-gradient(to bottom,#000 35%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 35%,transparent)}
+  .lessonImage img{object-position:center}
+}
 .lessonCopy{display:grid;gap:var(--space-1);min-width:0}
 .lessonTitle{font-family:var(--font-display);font-size:var(--type-card-title);font-weight:var(--weight-medium);line-height:var(--line-title);overflow-wrap:anywhere}
 .page{display:grid;gap:var(--space-6);min-width:0}

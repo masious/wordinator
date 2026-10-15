@@ -13,7 +13,7 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [discussions-and-reactions.md](discussions-and-reactions.md) | Answers, spoiler concealment, comments, replies, pins, and emoji reactions |
 | [courses.md](courses.md) | Course structure, blocks, contributors, publishing, practice progress, and loading |
 | [lesson-shares.md](lesson-shares.md) | Sharing examples, dialogues, and practice questions to the journal: snapshots and references, entry points, duplicates, availability, and the shared answer check |
-| [words.md](words.md) | Word cards, word bookmarks, the Words tab, and Drill |
+| [words.md](words.md) | Word cards, word bookmarks, the Words tab, and Drill (including spoken answers) |
 | [speech.md](speech.md) | Lesson speech: spoken items, voices, dialogue cast, pronunciation overrides, background generation, and playback |
 | [content/index.md](content/index.md) | Course curriculum, storyline, and taught-topic coverage for member-authored Dutch Foundations content |
 | [settings-and-administration.md](settings-and-administration.md) | Settings page structure, creator membership administration, and the interactive image cropper |

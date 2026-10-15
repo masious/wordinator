@@ -1,6 +1,6 @@
 # Words
 
-Status: C9 (word cards, bookmarks, and the Words tab) delivered; its release is tracked in [WORDS_PLAN.md](../WORDS_PLAN.md). C12 (lesson filter, spoken reveal, and Drill) is an approved product change (2026-10-12) in progress: C12a (lesson filter), C12b (spoken reveal), C12c (drill contracts and data), C12d (drill API), and C12e (drill web) are complete; the release is pending. Delivery is tracked in [DRILL_PLAN.md](../DRILL_PLAN.md). Phases are tracked in the [roadmap](roadmap.md#course-phases).
+Status: C9 (word cards, bookmarks, and the Words tab) delivered; its release is tracked in [WORDS_PLAN.md](../WORDS_PLAN.md). C12 (lesson filter, spoken reveal, and Drill) is an approved product change (2026-10-12) in progress: C12a (lesson filter), C12b (spoken reveal), C12c (drill contracts and data), C12d (drill API), and C12e (drill web) are complete; the release is pending. C13 (spoken answers on Produce drill cards, approved 2026-10-15) is complete in the web; its release goes with C12. Delivery is tracked in [DRILL_PLAN.md](../DRILL_PLAN.md). Phases are tracked in the [roadmap](roadmap.md#course-phases).
 
 Words builds on [new words and recap](courses.md#new-words-and-recap). Lessons define words; this document owns how learners review them several at a time, bookmark them, come back to them in a Words tab, and drill them.
 
@@ -75,6 +75,17 @@ A session holds at most `WORD_DRILL_SESSION_SIZE` (20) cards, or fewer when fewe
 - A mono counter shows cards retired of the session total. There is no timer.
 - A grade that cannot be saved does not stop the session: a quiet line says how many answers were not saved, with Try again, and stays on the summary until they are.
 - A card whose word disappears mid-session (edited out or unpublished) still finishes from the session's copy; its grade is refused and ignored.
+
+### Spoken answers
+
+C13 (approved product change, 2026-10-15) lets a learner answer a **Produce** card aloud instead of only in their head. Understand cards do not listen: their answer is a meaning in English, which is long and has synonyms.
+
+- **Where.** A Say it button (with a microphone icon, keyboard `M`) sits beside Show answer on a Produce card's front. It shows only where the browser provides speech recognition (the Web Speech API: Chrome, Edge, and Safari; not Firefox), and nowhere else in the product. Lessons, practice blocks, and word cards do not listen; see [Deferred](courses.md#deferred).
+- **Listening.** Pressing it stops any playing clip and listens for one answer in the library's language (`nl-NL` or `de-DE`, the accents of the [speech voices](speech.md#voices)); pressing it again while it listens stops early. The browser's microphone permission prompt is the only consent.
+- **Matching** is lenient and runs in the browser: the recognizer's alternatives (up to five) are compared with the term by search key (`wordSearchKey`) after dropping punctuation and `…`, and a leading article is optional on either side, so *kaartje* answers *het kaartje*. The article is therefore not checked. Inflected forms and the word's forms are not accepted.
+- **Result.** Any recognized answer reveals the card exactly like Show answer (including the term's sound), with a mono line above the term: Heard “…” · matches (in the success tone) or Heard “…” · doesn't match. It never grades: the learner still chooses Again or Got it, so a misheard word cannot move a Leitner box.
+- **Nothing heard.** When nothing is recognized the front stays, with a quiet status line: try again or show the answer; a blocked microphone and an unavailable recognizer say so instead.
+- **Privacy.** Recognition is the browser's, and some browsers send the audio to their vendor; Wordinator never receives or stores audio or transcripts. See [security and privacy](security-and-privacy.md#spoken-drill-answers).
 
 ### End of session
 

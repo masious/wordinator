@@ -77,9 +77,9 @@ function PracticeList({ scope, lesson, selected, onSelect }: { scope: PlayerScop
   </li>)}</ol>;
 }
 
-// Per-lesson actions on the course page: play (Start, Continue, Start again, or Preview), Review words, and Practice again. Review
-// words and Practice again show only when the published lesson has words or practices; Practice again is left out of archived
-// courses, which refuse practice progress.
+// Per-lesson actions on the course page: play (Start, Continue, Start again, or Preview), which opens the lesson page (Continue at
+// the saved step), Review words, and Practice again. Review words and Practice again show only when the published lesson has words
+// or practices; Practice again is left out of archived courses, which refuse practice progress.
 export function LessonActions({ scope, summary, number, completed, position, archived, onPlay }: {
   scope: PlayerScope; summary: CourseLessonSummary; number: number; completed: boolean; position: LessonPosition | undefined; archived: boolean;
   onPlay: (lessonId: string) => void;

@@ -3,11 +3,12 @@ import { LESSON_DOCUMENT_SCHEMA_VERSION, type CourseDetailResponse, type CourseL
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryHistory, createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
-import type { ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
 import { CourseLessons, CourseLessonTools, LessonView } from "./CourseLessons";
 import { CourseResume } from "./CourseResume";
+import { LessonPlayer } from "./LessonPlayer";
 
 const groupId = "20000000-0000-4000-8000-000000000001";
 const accountId = "10000000-0000-4000-8000-000000000001";
@@ -51,18 +52,29 @@ function renderWithRouter(page: ReactNode) {
   const root = createRootRoute();
   const route = createRoute({ getParentRoute: () => root, path: "$", component: () => page });
   const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: [`/groups/${groupId}/courses/${courseId}`] }) });
-  return render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
+  return { router, ...render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>) };
 }
 // The course page renders the resume action above the lesson list; both read the same progress query.
 let served: CourseLesson[] = [];
 // Lessons the default server has recorded as finished, so a later progress read still reports them.
 let finished: string[] = [];
 const renderLessons = (detail: CourseDetailResponse) => { served = detail.lessons; return renderWithRouter(<>
-  <CourseResume groupId={groupId} courseId={courseId} accountId={accountId} outline={detail.outline} />
+  <CourseResume groupId={groupId} courseId={courseId} accountId={accountId} courseSlug={detail.course.slug} outline={detail.outline} />
   <CourseLessons groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} />
 </>); };
-const renderLesson = (detail: CourseDetailResponse, id = lessonId(1)) =>
-  renderWithRouter(<LessonView groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} lessonId={id} dataUpdatedAt={Date.now()} />);
+// The course page no longer opens the lesson player; it stays in its own component and is tested on its own, opened on one lesson.
+function PlayerHarness({ detail, initial, positions }: { detail: CourseDetailResponse; initial: string; positions: unknown[] }) {
+  const [playing, setPlaying] = useState<string | null>(initial);
+  return <LessonPlayer scope={{ groupId, courseId, accountId }} lessonId={playing} outline={detail.outline} positions={positions as never[]}
+    onChangeLesson={setPlaying} onClose={() => setPlaying(null)} />;
+}
+const renderPlayer = (detail: CourseDetailResponse, id = lessonId(1), positions: unknown[] = []) => { served = detail.lessons; return renderWithRouter(<PlayerHarness detail={detail} initial={id} positions={positions} />); };
+// The player loads its lesson once open; it is ready when it shows a step.
+const playerOpen = async () => { const dialog = await screen.findByRole("dialog"); await within(dialog).findByText(/^Step \d+ of \d+$/); return dialog; };
+// Where a play action took the viewer: the lesson's page, with `resume` when it continues at the saved step.
+const landed = (router: ReturnType<typeof renderWithRouter>["router"]) => ({ path: router.state.location.pathname, search: router.state.location.search });
+const renderLesson = (detail: CourseDetailResponse, id = lessonId(1), resume = false) =>
+  renderWithRouter(<LessonView groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} lessonId={id} dataUpdatedAt={Date.now()} resume={resume} />);
 
 const lessonFour = lesson(4, [example("50000000-0000-4000-8000-000000000004", "Ik stap over.")]);
 
@@ -109,6 +121,26 @@ describe("Course lessons", () => {
     expect(image).toHaveAttribute("src", imageUrl);
     expect(image).toHaveAttribute("alt", "");
     expect(screen.getByRole("link", { name: "Open lesson 2: Lesson title 2" }).querySelector("img")).toBeNull();
+  });
+
+  it("scrolls a lesson opened to continue it to the saved step, and leaves other visits at the top", async () => {
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    const saved = { lessonId: lessonId(1), stepKey: `${dialogue.id}:1`, stepIndex: 2, passedSteps: 2, totalSteps: 3, updatedAt: 1 };
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") ? response(progress([], [saved])) : original(input, init));
+    // The dialogue starts 1000px down and is 200px tall, so its second line sits half way through it.
+    vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(function (this: HTMLElement) {
+      return new DOMRect(0, this.dataset.blockId === dialogue.id ? 1000 : 0, 100, this.dataset.blockId === dialogue.id ? 200 : 20);
+    });
+    const scrollTo = vi.fn(); vi.stubGlobal("scrollTo", scrollTo);
+    const detail = { course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon."), dialogue])] };
+    renderLesson(detail);
+    expect(await screen.findByText("Step 3 of 3")).toBeInTheDocument();
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    expect(scrollTo).not.toHaveBeenCalledWith(expect.objectContaining({ top: 1100 }));
+    cleanup();
+    renderLesson(detail, lessonId(1), true);
+    await waitFor(() => expect(scrollTo).toHaveBeenCalledWith({ top: 1100, behavior: "auto" }));
+    vi.restoreAllMocks();
   });
 
   it("renders one lesson's published document on its page with links to its neighbours", async () => {
@@ -256,9 +288,8 @@ describe("Course lessons", () => {
     const first = lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.", "There is a balcony."), dialogue, practice]);
     const withAnswers = vi.mocked(fetch).getMockImplementation()!;
     vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith(`/lessons/${lessonId(1)}`) ? response({ lesson: first }) : withAnswers(input, init));
-    renderLessons({ course: course(false), outline: [1, 2, 3, 4].map((n) => summary(n)), lessons: [first, lesson(2), lesson(3)] });
-    fireEvent.click(await screen.findByRole("button", { name: "Start lesson 1" }));
-    const dialog = await screen.findByRole("dialog");
+    renderPlayer({ course: course(false), outline: [1, 2, 3, 4].map((n) => summary(n)), lessons: [first, lesson(2), lesson(3)] });
+    const dialog = await playerOpen();
     const meter = () => within(dialog).getByRole("progressbar", { name: "Lesson progress" });
     expect(within(dialog).getByText("Step 1 of 5")).toBeInTheDocument();
     expect(meter()).toHaveAttribute("aria-valuenow", "0");
@@ -314,7 +345,6 @@ describe("Course lessons", () => {
     expect(within(dialog).getByRole("button", { name: "Next: Lesson title 2" })).toBeInTheDocument();
     // A run without words offers no recap.
     expect(within(dialog).queryByRole("button", { name: "Review words" })).not.toBeInTheDocument();
-    await waitFor(() => expect(screen.getAllByRole("img", { name: "Finished" }).length).toBeGreaterThan(0));
   });
 
   it("shows each step's new words in a panel and reviews the run's words after finishing", async () => {
@@ -330,9 +360,8 @@ describe("Course lessons", () => {
       vocabulary(5, word(5, "het huis")),
     ];
     const first = lesson(1, blocks);
-    renderLessons({ course: course(false), outline: [summary(1)], lessons: [first] });
-    fireEvent.click(await screen.findByRole("button", { name: "Start lesson 1" }));
-    const dialog = await screen.findByRole("dialog");
+    renderPlayer({ course: course(false), outline: [summary(1)], lessons: [first] });
+    const dialog = await playerOpen();
     const panel = () => within(dialog).getByRole("region", { name: "New words" });
     const next = () => fireEvent.click(within(dialog).getByRole("button", { name: /^(Next|Finish lesson)$/ }));
     // Prose, example, both dialogue lines (only the line that uses a word shows it), both practice items, and a words-only section.
@@ -389,9 +418,8 @@ describe("Course lessons", () => {
       { id: "50000000-0000-4000-8000-000000000007", type: "paragraph", props: { textColor: "default", backgroundColor: "default" }, content: text("Tweede alinea."), children: [] },
       { id: "50000000-0000-4000-8000-000000000008", type: "callout", props: { variant: "grammar", icon: "auto" }, content: text("Let op de volgorde."), children: [] },
     ];
-    renderLessons({ course: course(false), outline: [summary(1)], lessons: [lesson(1, blocks)] });
-    fireEvent.click(await screen.findByRole("button", { name: "Start lesson 1" }));
-    const dialog = await screen.findByRole("dialog");
+    renderPlayer({ course: course(false), outline: [summary(1)], lessons: [lesson(1, blocks)] });
+    const dialog = await playerOpen();
     expect(within(dialog).getByText("Step 1 of 2")).toBeInTheDocument();
     expect(within(dialog).getByText("Eerste alinea.")).toBeInTheDocument();
     expect(within(dialog).getByText("Tweede alinea.")).toBeInTheDocument();
@@ -402,10 +430,8 @@ describe("Course lessons", () => {
   });
 
   it("does not record progress for an unpublished lesson preview", async () => {
-    renderLessons({ course: course(true), outline: [summary(1, false)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")], { published: false, editing: true })] });
-    expect(await screen.findByText(/is a preview: it starts from the beginning/)).toBeInTheDocument();
-    fireEvent.click(await screen.findByRole("button", { name: "Start lesson 1" }));
-    const dialog = await screen.findByRole("dialog");
+    renderPlayer({ course: course(true), outline: [summary(1, false)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")], { published: false, editing: true })] });
+    const dialog = await playerOpen();
     fireEvent.click(within(dialog).getByRole("button", { name: "Finish lesson" }));
     expect(await within(dialog).findByText("This lesson is unpublished, so finishing it does not count toward progress.")).toBeInTheDocument();
     expect(vi.mocked(fetch).mock.calls.some(([path]) => String(path).endsWith("/completion") || String(path).endsWith("/position"))).toBe(false);
@@ -431,18 +457,33 @@ describe("Course lessons", () => {
     expect(screen.getByText("You have finished every lesson. Run through them again whenever you like.")).toBeInTheDocument();
   });
 
-  it("resumes an unfinished lesson at the saved step and can start over", async () => {
+  it("continues an unfinished lesson on its own page at the saved step", async () => {
     const original = vi.mocked(fetch).getMockImplementation()!;
     const saved = { lessonId: lessonId(1), stepKey: `${practice.id}:0`, stepIndex: 3, passedSteps: 3, totalSteps: 5, updatedAt: 1 };
     vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") ? response(progress([], [saved])) : original(input, init));
-    // The example moved one step later since the position was saved; the key still finds the same question.
-    const first = lesson(1, [example("50000000-0000-4000-8000-000000000009", "Nieuw."), example("50000000-0000-4000-8000-000000000001", "Er is een balkon."), dialogue, practice]);
-    renderLessons({ course: course(false), outline: [1, 2].map((n) => summary(n)), lessons: [first, lesson(2)] });
+    const { router } = renderLessons({ course: course(false), outline: [1, 2].map((n) => summary(n)), lessons: [lesson(1), lesson(2)] });
     expect(await screen.findByRole("heading", { name: "Pick up where you left off" })).toBeInTheDocument();
     expect(screen.getByText("Lesson 1, Lesson title 1, step 4 of 5.")).toBeInTheDocument();
     expect(screen.getByText("Step 4 of 5")).toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Continue lesson 1" }));
-    const dialog = await screen.findByRole("dialog");
+    await waitFor(() => expect(landed(router)).toEqual({ path: "/courses/dutch-foundations/lessons/lesson-title-1", search: { resume: true } }));
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("starts the next lesson on its own page from the top", async () => {
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") ? response(progress([lessonId(1)])) : original(input, init));
+    const { router } = renderLessons({ course: course(false), outline: [1, 2].map((n) => summary(n)), lessons: [lesson(1), lesson(2)] });
+    fireEvent.click(await screen.findByRole("button", { name: "Start lesson 2" }));
+    await waitFor(() => expect(landed(router)).toEqual({ path: "/courses/dutch-foundations/lessons/lesson-title-2", search: {} }));
+  });
+
+  it("resumes the player at the saved step and can start over", async () => {
+    const saved = { lessonId: lessonId(1), stepKey: `${practice.id}:0`, stepIndex: 3, passedSteps: 3, totalSteps: 5, updatedAt: 1 };
+    // The example moved one step later since the position was saved; the key still finds the same question.
+    const first = lesson(1, [example("50000000-0000-4000-8000-000000000009", "Nieuw."), example("50000000-0000-4000-8000-000000000001", "Er is een balkon."), dialogue, practice]);
+    renderPlayer({ course: course(false), outline: [1, 2].map((n) => summary(n)), lessons: [first, lesson(2)] }, lessonId(1), [saved]);
+    const dialog = await playerOpen();
     expect(within(dialog).getByText("Step 5 of 6")).toBeInTheDocument();
     expect(within(dialog).getByText("There is a garden.")).toBeInTheDocument();
     expect(within(dialog).getByText("Picked up where you left off.")).toBeInTheDocument();
@@ -469,24 +510,23 @@ describe("Lesson actions", () => {
   };
   const lessonReads = () => vi.mocked(fetch).mock.calls.filter(([path]) => /\/lessons\/[^/]+$/.test(String(path)));
 
-  it("plays each lesson by the viewer's state: start, continue at the saved step, or start a finished one again", async () => {
+  it("opens each lesson's page by the viewer's state: start, continue at the saved step, or start a finished one again", async () => {
     const saved = { lessonId: lessonId(2), stepKey: "50000000-0000-4000-8000-000000000002", stepIndex: 1, passedSteps: 1, totalSteps: 2, updatedAt: 1 };
     withProgress(progress([lessonId(1)], [saved]));
     const blocks = [example("50000000-0000-4000-8000-000000000001", "Er is een balkon."), example("50000000-0000-4000-8000-000000000002", "Er is een tuin.")];
-    renderLessons({ course: course(false), outline: [1, 2, 3].map((n) => summary(n)), lessons: [lesson(1, blocks), lesson(2, blocks), lesson(3, blocks)] });
+    const { router } = renderLessons({ course: course(false), outline: [1, 2, 3].map((n) => summary(n)), lessons: [lesson(1, blocks), lesson(2, blocks), lesson(3, blocks)] });
     expect(await screen.findByRole("button", { name: "Start lesson 1 again: Lesson title 1" })).toHaveTextContent("Start again");
     expect(screen.getByRole("button", { name: "Start lesson 3: Lesson title 3" })).toHaveTextContent("Start");
     // Lessons without words or practices offer nothing to review or practice.
     expect(screen.queryByRole("button", { name: /^Review the words of lesson/ })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: /^Practice lesson \d+ again:/ })).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Continue lesson 2: Lesson title 2" }));
-    const dialog = await screen.findByRole("dialog", { name: "Lesson 2 · Lesson title 2" });
-    expect(within(dialog).getByText("Step 2 of 2")).toBeInTheDocument();
-    expect(within(dialog).getByText("Picked up where you left off.")).toBeInTheDocument();
-    fireEvent.keyDown(within(dialog).getByRole("button", { name: "Finish lesson" }), { key: "Escape" });
-    await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
+    await waitFor(() => expect(landed(router)).toEqual({ path: "/courses/dutch-foundations/lessons/lesson-title-2", search: { resume: true } }));
     fireEvent.click(screen.getByRole("button", { name: "Start lesson 1 again: Lesson title 1" }));
-    expect(await within(await screen.findByRole("dialog")).findByText("Step 1 of 2")).toBeInTheDocument();
+    await waitFor(() => expect(landed(router)).toEqual({ path: "/courses/dutch-foundations/lessons/lesson-title-1", search: {} }));
+    fireEvent.click(screen.getByRole("button", { name: "Start lesson 3: Lesson title 3" }));
+    await waitFor(() => expect(landed(router)).toEqual({ path: "/courses/dutch-foundations/lessons/lesson-title-3", search: {} }));
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
   it("reviews one lesson's words, loading the lesson only when asked", async () => {

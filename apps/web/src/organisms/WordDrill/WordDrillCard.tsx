@@ -1,10 +1,12 @@
 import type { WordDrillCard as DrillCard, WordDrillResult } from "@wordinator/contracts/lesson-document";
-import { useEffect, useId, useLayoutEffect, useRef } from "react";
+import { Mic } from "lucide-react";
+import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
 import { playRevealSpeech, SpeechButton, useStopSpeechOnUnmount } from "../../molecules/Speech";
 import { Button } from "../../ui";
 import { blankExample } from "./drillSession";
+import { speechRecognitionSupported, useSpokenAnswer, type SpokenAnswer } from "./spokenAnswer";
 import styles from "./WordDrillCard.module.css";
 
 // Keys typed into a field, or pressed on a control that handles them itself, are not drill shortcuts.
@@ -24,8 +26,11 @@ function ProduceExample({ example, term }: { example: string; term: string }) {
 // One drill card (docs/words.md#a-card). Understand asks for the meaning of the term; Produce asks for the term from its meaning,
 // the lesson, and the example with the term blanked. Show answer flips the card in place to the full word and speaks the term
 // under the shared reveal sound toggle; Again and Got it then grade it. Space reveals, 1 is Again, and 2 is Got it.
-export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, onGrade }: {
-  card: DrillCard; language: string; revealed: boolean; autoFocus: boolean; onReveal: () => void; onGrade: (result: WordDrillResult) => void;
+// Where the browser recognizes speech, a Produce card can also be answered aloud (M): the answer reveals the card with what was
+// heard and whether it matched, and the learner still grades it (docs/words.md#spoken-answers).
+export function WordDrillCard({ card, language, recognitionLocale, revealed, autoFocus, onReveal, onGrade }: {
+  card: DrillCard; language: string; recognitionLocale: string | null; revealed: boolean; autoFocus: boolean;
+  onReveal: () => void; onGrade: (result: WordDrillResult) => void;
 }) {
   const { t } = useTranslation();
   const { word, direction } = card;
@@ -35,18 +40,23 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
   const termLabel = t("courses.speech.term", { term: word.term });
   const source = t("words.source", { course: card.course.title, lesson: card.lesson.title });
   const reveal = () => { if (revealed) return; playRevealSpeech(termOwner, word.speech.term); onReveal(); };
+  const [answer, setAnswer] = useState<SpokenAnswer | null>(null);
+  const canSpeak = direction === "produce" && recognitionLocale !== null && speechRecognitionSupported();
+  const spoken = useSpokenAnswer(recognitionLocale ?? "", word.term, (heard) => { if (revealed) return; setAnswer(heard); reveal(); });
+  const listen = () => { if (canSpeak && !revealed) spoken.listen(); };
 
   // A card after the first takes focus, so the keyboard and screen readers follow the session; the answer takes it once shown.
   useLayoutEffect(() => { if (autoFocus) cardRef.current?.focus({ preventScroll: true }); }, [autoFocus]);
   useLayoutEffect(() => { if (revealed) backRef.current?.focus({ preventScroll: true }); }, [revealed]);
 
-  const latest = useRef({ revealed, reveal, onGrade });
-  latest.current = { revealed, reveal, onGrade };
+  const latest = useRef({ revealed, reveal, listen, onGrade });
+  latest.current = { revealed, reveal, listen, onGrade };
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.defaultPrevented || event.repeat || event.altKey || event.ctrlKey || event.metaKey || typing(event.target)) return;
       const current = latest.current;
       if (!current.revealed && event.key === " " && !control(event.target)) { event.preventDefault(); current.reveal(); }
+      else if (!current.revealed && (event.key === "m" || event.key === "M")) { event.preventDefault(); current.listen(); }
       else if (current.revealed && (event.key === "1" || event.key === "2")) { event.preventDefault(); current.onGrade(event.key === "1" ? "again" : "got"); }
     };
     window.addEventListener("keydown", onKey);
@@ -66,11 +76,14 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
           <p className={styles.meaningPrompt}><PlainText>{word.meaning}</PlainText></p>
           {word.example && <ProduceExample example={word.example} term={word.term} />}
         </>}
+        {canSpeak && spoken.status !== "idle" && spoken.status !== "listening" && <p className={styles.listenStatus} role="status">{t(`drill.speak.${spoken.status}`)}</p>}
       </div>
       {/* The back stays empty until revealed, so nothing is spoiled. */}
       <div ref={backRef} className={`${styles.face} ${styles.back}`} aria-hidden={!revealed || undefined} inert={!revealed} tabIndex={revealed ? -1 : undefined}>
         {revealed && <>
           <p className={styles.source}>{source}</p>
+          {answer && <p className={`${styles.heard} ${answer.matches ? styles.heardMatch : ""}`}>
+            {t(answer.matches ? "drill.speak.heardMatch" : "drill.speak.heardMiss", { heard: answer.heard })}</p>}
           <p className={styles.backTerm}>{word.term}<SpeechButton url={word.speech.term} label={termLabel} owner={termOwner} className={styles.speech} /></p>
           {word.forms && <p className={styles.forms}>{word.forms}</p>}
           <p className={styles.meaning}><PlainText>{word.meaning}</PlainText></p>
@@ -84,7 +97,13 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
       {revealed ? <>
         <Button variant="secondary" aria-keyshortcuts="1" onClick={() => onGrade("again")}>{t("drill.again")}<kbd className={styles.key} aria-hidden="true">1</kbd></Button>
         <Button aria-keyshortcuts="2" onClick={() => onGrade("got")}>{t("drill.got")}<kbd className={styles.key} aria-hidden="true">2</kbd></Button>
-      </> : <Button aria-keyshortcuts="Space" onClick={reveal}>{t("drill.showAnswer")}</Button>}
+      </> : <>
+        {canSpeak && <Button variant="secondary" aria-keyshortcuts="M" aria-pressed={spoken.status === "listening"} onClick={listen}
+          trailingIcon={<Mic size={16} />}>
+          {spoken.status === "listening" ? t("drill.speak.listening") : t("drill.speak.start")}<kbd className={styles.key} aria-hidden="true">M</kbd>
+        </Button>}
+        <Button aria-keyshortcuts="Space" onClick={reveal}>{t("drill.showAnswer")}</Button>
+      </>}
     </div>
   </article>;
 }

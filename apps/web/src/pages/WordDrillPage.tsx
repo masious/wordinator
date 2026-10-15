@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, ApiError, sessionQueryOptions, wordDrillQueryOptions, type WordDrillSettings } from "../api";
 import { RevealSoundToggle } from "../molecules/Speech";
+import { RECOGNITION_LOCALES } from "../organisms/WordDrill/spokenAnswer";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { gradeDrill, startDrill } from "../organisms/WordDrill/drillSession";
 import { WordDrillCard } from "../organisms/WordDrill/WordDrillCard";
@@ -23,8 +24,8 @@ export function validateWordDrillSearch(search: Record<string, unknown>): WordDr
 
 // One session's cards, shown one at a time. The first grade of each card is sent once, as soon as it is given; a failed save is
 // kept to retry, and a word that is gone (404) finishes from the session's copy with its grade ignored.
-function DrillRun({ groupId, cards, language, onAgain, onBack }: {
-  groupId: string; cards: readonly DrillCard[]; language: string; onAgain: () => void; onBack: () => void;
+function DrillRun({ groupId, cards, language, recognitionLocale, onAgain, onBack }: {
+  groupId: string; cards: readonly DrillCard[]; language: string; recognitionLocale: string | null; onAgain: () => void; onBack: () => void;
 }) {
   const { t } = useTranslation();
   const [state, setState] = useState(() => startDrill(cards.length));
@@ -80,15 +81,15 @@ function DrillRun({ groupId, cards, language, onAgain, onBack }: {
       </span>
       <Button variant="quiet" onClick={onBack}>{t("drill.backToWords")}</Button>
     </div>
-    <WordDrillCard key={state.shown} card={cards[current]!} language={language} revealed={revealed} autoFocus={state.shown > 0}
+    <WordDrillCard key={state.shown} card={cards[current]!} language={language} recognitionLocale={recognitionLocale} revealed={revealed} autoFocus={state.shown > 0}
       onReveal={() => setRevealed(true)} onGrade={grade} />
     {failure}
   </div>;
 }
 
 // A session: its deck, fetched once, then the cards; Drill again starts the next session with a fresh deck.
-function DrillSession({ groupId, settings, run, language, onAgain, onBack }: {
-  groupId: string; settings: WordDrillSettings; run: number; language: string; onAgain: () => void; onBack: () => void;
+function DrillSession({ groupId, settings, run, language, recognitionLocale, onAgain, onBack }: {
+  groupId: string; settings: WordDrillSettings; run: number; language: string; recognitionLocale: string | null; onAgain: () => void; onBack: () => void;
 }) {
   const { t } = useTranslation();
   const deck = useQuery(wordDrillQueryOptions(groupId, settings, run));
@@ -104,7 +105,7 @@ function DrillSession({ groupId, settings, run, language, onAgain, onBack }: {
       {settings.source === "weak" ? t("drill.emptyWeak") : t("drill.emptyLesson")}
     </EmptyState></Surface>;
   }
-  return <DrillRun groupId={groupId} cards={deck.data.cards} language={language} onAgain={onAgain} onBack={onBack} />;
+  return <DrillRun groupId={groupId} cards={deck.data.cards} language={language} recognitionLocale={recognitionLocale} onAgain={onAgain} onBack={onBack} />;
 }
 
 // The drill page (C12e): self-graded cards one at a time, then a short summary. Desktop only, like other new work.
@@ -116,6 +117,7 @@ export function WordDrillPage({ groupId, settings, onBack }: { groupId: string; 
   if (session.data?.status !== "signedIn") return null;
   const libraryLanguage = session.data.groups[0]?.language;
   const language = libraryLanguage ? t(`languages.${libraryLanguage}`) : "";
+  const recognitionLocale = libraryLanguage ? RECOGNITION_LOCALES[libraryLanguage] : null;
   const subtitle = settings.source === "weak" ? t("drill.setup.weak") : t("drill.setup.lesson");
   const direction = settings.direction === "mixed" ? t("drill.setup.mixed") : t(`drill.setup.${settings.direction}`, { language });
   return <GroupFrame groupId={groupId} session={session.data}>
@@ -126,7 +128,7 @@ export function WordDrillPage({ groupId, settings, onBack }: { groupId: string; 
         <p className={styles.settings}>{t("drill.settings", { source: subtitle, direction })}</p>
       </header>
       <DrillSession key={`${run}:${settings.source}:${settings.lesson ?? ""}:${settings.direction}`} groupId={groupId} settings={settings} run={run}
-        language={language} onAgain={() => setRun((value) => value + 1)} onBack={onBack} />
+        language={language} recognitionLocale={recognitionLocale} onAgain={() => setRun((value) => value + 1)} onBack={onBack} />
     </div>
   </GroupFrame>;
 }

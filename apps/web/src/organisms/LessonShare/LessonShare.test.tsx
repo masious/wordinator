@@ -6,7 +6,8 @@ import { createMemoryHistory, createRootRoute, createRoute, createRouter, Router
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
-import { CourseLessons, LessonView } from "../CourseLessons/CourseLessons";
+import { LessonView } from "../CourseLessons/CourseLessons";
+import { LessonPlayer } from "../CourseLessons/LessonPlayer";
 
 const groupId = "20000000-0000-4000-8000-000000000001";
 const accountId = "10000000-0000-4000-8000-000000000001";
@@ -66,15 +67,16 @@ let shareResponse: () => Response;
 const shareRequests = () => vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith("/lesson-shares"));
 const shareBody = (index = 0) => JSON.parse(String(shareRequests()[index]![1]!.body)) as Record<string, unknown>;
 
-// Renders the lesson page the way the route does: the course read is in the cache before the lesson renders.
-function renderPage(value: CourseDetailResponse, page: "lesson" | "course" = "lesson") {
+// Renders the lesson page the way the route does: the course read is in the cache before the lesson renders. `player` opens the
+// lesson player on the lesson instead; the app no longer renders it, but the component stays.
+function renderPage(value: CourseDetailResponse, page: "lesson" | "player" = "lesson") {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false, staleTime: 20_000 }, mutations: { retry: false } } });
   queryClient.setQueryData(["course", groupId, courseId], value);
   queryClient.setQueryData(["course-lesson", groupId, courseId, lessonId], { lesson: value.lessons[0] });
   const root = createRootRoute();
   const route = createRoute({ getParentRoute: () => root, path: "$", component: () => page === "lesson"
     ? <LessonView groupId={groupId} courseId={courseId} accountId={accountId} detail={value} lessonId={lessonId} dataUpdatedAt={Date.now()} />
-    : <CourseLessons groupId={groupId} courseId={courseId} accountId={accountId} detail={value} /> });
+    : <LessonPlayer scope={{ groupId, courseId, accountId }} lessonId={lessonId} outline={value.outline} positions={[]} onChangeLesson={() => undefined} onClose={() => undefined} /> });
   const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: ["/courses/dutch/lessons/mijn-huis"] }) });
   render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
 }
@@ -227,8 +229,7 @@ describe("Lesson shares", () => {
   });
 
   it("offers Share on the player's example, dialogue, and question steps", async () => {
-    renderPage(detail(lesson()), "course");
-    fireEvent.click(await screen.findByRole("button", { name: "Start lesson 1: Mijn huis" }));
+    renderPage(detail(lesson()), "player");
     const player = await screen.findByRole("dialog", { name: "Lesson 1 · Mijn huis" });
     expect(await within(player).findByRole("button", { name: "Share this example" })).toBeInTheDocument();
     fireEvent.click(within(player).getByRole("button", { name: "Next" }));

@@ -127,6 +127,83 @@ describe("Drill card", () => {
   });
 });
 
+// A stand-in for the browser's SpeechRecognition: the test says what it heard, or which error it raised.
+class FakeRecognition {
+  static last: FakeRecognition | null = null;
+  lang = ""; interimResults = true; continuous = true; maxAlternatives = 1;
+  onresult: ((event: { results: string[][] }) => void) | null = null;
+  onerror: ((event: { error: string }) => void) | null = null;
+  onend: (() => void) | null = null;
+  started = false;
+  constructor() { FakeRecognition.last = this; }
+  start() { this.started = true; }
+  stop() { this.onend?.(); }
+  abort() { this.onerror?.({ error: "aborted" }); this.onend?.(); }
+  hear(...alternatives: string[]) { act(() => { this.onresult?.({ results: [alternatives.map((transcript) => ({ transcript }))] as never }); this.onend?.(); }); }
+  fail(error: string) { act(() => { this.onerror?.({ error }); this.onend?.(); }); }
+}
+const produceCard = () => card(1, "produce", { term: "het kaartje", meaning: "the ticket" });
+const sayIt = () => fireEvent.click(within(current()).getByRole("button", { name: /Say it/ }));
+
+describe("Spoken answers", () => {
+  beforeEach(() => { FakeRecognition.last = null; vi.stubGlobal("webkitSpeechRecognition", FakeRecognition); });
+
+  it("listens in the library's locale and reveals a matching answer with what was heard", async () => {
+    decks = [[produceCard()]];
+    renderPage();
+    await screen.findByRole("article", { name: "Drill card" });
+    sayIt();
+    const recognition = FakeRecognition.last!;
+    expect(recognition.started).toBe(true);
+    expect(recognition.lang).toBe("nl-NL");
+    expect(within(current()).getByRole("button", { name: /Listening/ })).toHaveAttribute("aria-pressed", "true");
+    recognition.hear("Kaartje", "kaart je");
+    expect(current()).toHaveTextContent("Heard “Kaartje” · matches");
+    expect(current()).toHaveTextContent("the ticket");
+    expect(grades()).toEqual([]);
+    gradeAs("Got it");
+    await waitFor(() => expect(grades()).toHaveLength(1));
+  });
+
+  it("reveals a miss as not matching and still lets the learner grade it", async () => {
+    decks = [[produceCard()]];
+    renderPage();
+    await screen.findByRole("article", { name: "Drill card" });
+    press("m");
+    FakeRecognition.last!.hear("kaart");
+    expect(current()).toHaveTextContent("Heard “kaart” · doesn't match");
+    expect(within(current()).getByRole("button", { name: "Again" })).toBeInTheDocument();
+  });
+
+  it("keeps the front when nothing was heard or the microphone is blocked", async () => {
+    decks = [[produceCard()]];
+    renderPage();
+    await screen.findByRole("article", { name: "Drill card" });
+    sayIt();
+    FakeRecognition.last!.fail("no-speech");
+    expect(screen.getByRole("status")).toHaveTextContent("Didn't catch that");
+    expect(within(current()).getByRole("button", { name: "Show answer" })).toBeInTheDocument();
+    sayIt();
+    FakeRecognition.last!.fail("not-allowed");
+    expect(screen.getByRole("status")).toHaveTextContent("The microphone is blocked");
+  });
+
+  it("offers no microphone on Understand cards or without browser support", async () => {
+    decks = [[card(1, "understand")]];
+    renderPage();
+    await screen.findByRole("article", { name: "Drill card" });
+    expect(within(current()).queryByRole("button", { name: /Say it/ })).not.toBeInTheDocument();
+    cleanup();
+    vi.stubGlobal("webkitSpeechRecognition", undefined);
+    decks = [[produceCard()]];
+    renderPage();
+    await screen.findByRole("article", { name: "Drill card" });
+    expect(within(current()).queryByRole("button", { name: /Say it/ })).not.toBeInTheDocument();
+    press("m");
+    expect(FakeRecognition.last).toBeNull();
+  });
+});
+
 describe("Drill session", () => {
   it("requeues a card three to five cards later after Again and sends only its first grade", async () => {
     vi.spyOn(Math, "random").mockReturnValue(0);

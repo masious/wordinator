@@ -23,6 +23,10 @@
 /* The blank keeps the example's rhythm: an underline about one short word wide. */
 .blank{display:inline-block;width:4em;height:1em;vertical-align:baseline;border-bottom:var(--border-strong)}
 .speech{margin-inline-start:var(--space-2)}
+/* A spoken answer: what was heard sits above the term; a match takes the success tone, a miss stays muted. */
+.face .heard{font:var(--type-metadata)/1.3 var(--font-mono);color:var(--color-foreground-muted)}
+.face .heardMatch{color:var(--color-success)}
+.face .listenStatus{font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 .actions{display:flex;justify-content:center;gap:var(--space-3)}
 .key{margin-inline-start:var(--space-2);padding:0 var(--space-1);font:var(--type-metadata)/1.4 var(--font-mono);color:inherit;opacity:.7;border:var(--ring-hairline);border-radius:var(--radius-sm)}
 @keyframes cardIn{from{opacity:0;transform:translateY(var(--space-2))}to{opacity:1;transform:none}}

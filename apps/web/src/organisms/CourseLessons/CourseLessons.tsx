@@ -18,12 +18,11 @@ import { LessonShareScope, ShareButton, useLessonShareScope } from "../LessonSha
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import { WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
-import { refreshAfterPlaying } from "./CourseResume";
 import { LessonActions } from "./LessonActions";
-import { LessonPlayer, lessonSteps, playableDocument } from "./LessonPlayer";
+import { lessonSteps, playableDocument } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
-import { LessonReadingProgress, type ReadingTracking } from "./LessonReadingProgress";
-import { LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN } from "./LessonIndex";
+import { LessonReadingProgress, type ReadingTracking, useResumeScroll } from "./LessonReadingProgress";
+import { LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN, stickyInset } from "./LessonIndex";
 import { LessonWords, useVisibleWords, useWordsCollapsed } from "./LessonWords";
 import { practiceFromBlock, PracticeSummary } from "./PracticeBlock";
 
@@ -55,13 +54,14 @@ function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" 
 // a collapsible panel of the lesson's words, where the words of the blocks on screen are highlighted. Narrow screens move the
 // panel to a bar at the bottom of the window that starts collapsed on every lesson; it renders into the body so the shell's entry
 // transform cannot pin it to the page.
-function LessonBody({ scope, lesson, tracking }: { scope: Scope; lesson: CourseLesson; tracking: ReadingTracking }) {
+function LessonBody({ scope, lesson, tracking, resume }: { scope: Scope; lesson: CourseLesson; tracking: ReadingTracking; resume: LessonPosition | undefined }) {
   const { t } = useTranslation();
   const document = playableDocument(lesson);
   const steps = useMemo(() => lessonSteps(lesson), [lesson]);
   const entries = useMemo(() => document ? lessonIndexEntries(document) : [], [document]);
   const reading = useRef<HTMLDivElement>(null); const side = useRef<HTMLDivElement>(null);
   const active = useVisibleWords(reading, side, steps);
+  useResumeScroll({ steps, reading, position: resume, inset: () => stickyInset(side.current) });
   const [wordsCollapsed, toggleWords] = useWordsCollapsed();
   const bar = useMediaQuery("(max-width: 64em)", undefined, { getInitialValueInEffect: false });
   const [barOpen, setBarOpen] = useState(false);
@@ -225,14 +225,16 @@ const lessonScope = (groupId: string, courseId: string, accountId: string, detai
 
 // The course page's lesson list. Each lesson's content lives on its own page.
 export function CourseLessons({ groupId, courseId, accountId, detail }: { groupId: string; courseId: string; accountId: string; detail: CourseDetailResponse }) {
-  const { t } = useTranslation(); const queryClient = useQueryClient();
+  const { t } = useTranslation(); const navigate = useNavigate();
   const scope = lessonScope(groupId, courseId, accountId, detail);
   const { outline } = detail;
   const progress = useQuery(courseProgressQueryOptions(groupId, courseId));
   const completed = new Set(progress.data?.completedLessonIds ?? []);
   // Saved steps, shown on each started lesson and resumed by its Continue action.
   const positions = progress.data?.positions ?? [];
-  const [playing, setPlaying] = useState<string | null>(null);
+  // Playing a lesson opens its page; a saved step, also in a finished lesson, opens it scrolled there.
+  const play = (lesson: CourseLessonSummary) => void navigate({ to: "/courses/$courseSlug/lessons/$lessonSlug", params: { courseSlug: scope.courseSlug, lessonSlug: lesson.slug },
+    search: positions.some((entry) => entry.lessonId === lesson.id) ? { resume: true } : {} });
   // The course recap covers the published lessons the viewer has finished; it is offered only when they carried words.
   const wordsQuery = useQuery(courseWordsQueryOptions(groupId, courseId));
   const words = useMemo(() => wordsQuery.data?.words ?? [], [wordsQuery.data]);
@@ -248,15 +250,13 @@ export function CourseLessons({ groupId, courseId, accountId, detail }: { groupI
     </Surface>}
     {outline.length
       ? <ol className={styles.lessonList}>{outline.map((lesson, index) => <LessonRow key={lesson.id} scope={scope} summary={lesson} number={index + 1}
-        completed={completed.has(lesson.id)} saved={positions.find((entry) => entry.lessonId === lesson.id)} practices={progress.data?.practices[lesson.id]} archived={detail.course.status === "archived"} onPlay={setPlaying} />)}</ol>
+        completed={completed.has(lesson.id)} saved={positions.find((entry) => entry.lessonId === lesson.id)} practices={progress.data?.practices[lesson.id]} archived={detail.course.status === "archived"} onPlay={() => play(lesson)} />)}</ol>
       : <Surface tone="quiet"><EmptyState title={t("courses.noLessonsTitle")}>{t("courses.noLessonsBody")}</EmptyState></Surface>}
     <AdaptiveDialog opened={reviewing && words.length > 0} onClose={() => setReviewing(false)} title={t("courses.words.recapTitle")}>
       {reviewing && <WordBookmarkScope resolve={recapTarget}>
         <WordRecap words={words} doneLabel={t("courses.words.backToCourse")} onDone={() => setReviewing(false)} />
       </WordBookmarkScope>}
     </AdaptiveDialog>
-    <LessonPlayer scope={scope} lessonId={playing} outline={outline} positions={positions} onChangeLesson={setPlaying}
-      onClose={() => { setPlaying(null); refreshAfterPlaying(queryClient, groupId, courseId); }} />
   </section>;
 }
 
@@ -289,8 +289,9 @@ export function CourseLessonTools({ groupId, courseId, accountId, detail }: { gr
   </section>;
 }
 
-export function LessonView({ groupId, courseId, accountId, detail, lessonId, dataUpdatedAt }: {
-  groupId: string; courseId: string; accountId: string; detail: CourseDetailResponse; lessonId: string; dataUpdatedAt: number;
+// `resume` opens the lesson at the viewer's saved step, also in a finished lesson they are going through again.
+export function LessonView({ groupId, courseId, accountId, detail, lessonId, dataUpdatedAt, resume = false }: {
+  groupId: string; courseId: string; accountId: string; detail: CourseDetailResponse; lessonId: string; dataUpdatedAt: number; resume?: boolean;
 }) {
   const { t } = useTranslation();
   const scope = lessonScope(groupId, courseId, accountId, detail);
@@ -305,7 +306,8 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
   // The outline summary is fresher after a publish elsewhere; the loaded lesson is fresher after this viewer's own edits.
   const current = data ?? summary;
   const completed = progress.data?.completedLessonIds.includes(lessonId) ?? false;
-  const position = completed ? undefined : progress.data?.positions.find((entry) => entry.lessonId === lessonId);
+  const saved = progress.data?.positions.find((entry) => entry.lessonId === lessonId);
+  const position = completed ? undefined : saved;
   const playable = data ? lessonSteps(data).length > 0 : false;
   const previous = outline[index - 1]; const next = outline[index + 1];
   const pagerLink = (target: CourseLessonSummary, label: string, className: string) =>
@@ -332,7 +334,7 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
       : editing ? <Suspense fallback={<LoadingState label={t("courses.editor.loading")} />}>
         <LessonEditor groupId={groupId} courseId={courseId} accountId={accountId} owner={scope.owner} lesson={data} onClose={() => setEditing(false)} />
       </Suspense>
-      : <LessonBody scope={scope} lesson={data} tracking={{
+      : <LessonBody scope={scope} lesson={data} resume={resume ? saved : undefined} tracking={{
         // Scrolling saves the furthest step of a published lesson the viewer has not finished; previews and archived courses never save.
         save: data.published && data.document !== null && !completed && detail.course.status !== "archived" && progress.isSuccess,
         completed, position, path: `${lessonsPath(scope)}/${encodeURIComponent(lessonId)}`, groupId, courseId, lessonId,

@@ -127,7 +127,7 @@ export function CoursePage({ groupId, courseId }: { groupId: string; courseId: s
       </div>
     </article>
     {archived && <Surface tone="quiet"><EmptyState title={t("courses.archivedTitle")}>{t("courses.archivedBody")}</EmptyState></Surface>}
-    <CourseResume groupId={groupId} courseId={courseId} accountId={session.data.user.id} outline={course.data.outline} />
+    <CourseResume groupId={groupId} courseId={courseId} accountId={session.data.user.id} courseSlug={course.data.course.slug} outline={course.data.outline} />
     {/* The owner manages contributors on the manage page; everyone else asks, withdraws, or leaves here. */}
     {!archived && !data.permissions.manageContributors && <CourseContributors groupId={groupId} course={data} />}
     <CourseLessons groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} />
@@ -188,7 +188,7 @@ export function ManageCoursePage({ groupId, courseId }: { groupId: string; cours
   </div></GroupFrame>;
 }
 
-export function LessonPage({ groupId, courseId, lessonId }: { groupId: string; courseId: string; lessonId: string }) {
+export function LessonPage({ groupId, courseId, lessonId, resume = false }: { groupId: string; courseId: string; lessonId: string; resume?: boolean }) {
   const { t } = useTranslation();
   const session = useQuery(sessionQueryOptions());
   const course = useQuery(courseQueryOptions(groupId, courseId));
@@ -200,6 +200,6 @@ export function LessonPage({ groupId, courseId, lessonId }: { groupId: string; c
   }
   return <GroupFrame groupId={groupId} session={session.data}><div className={styles.stack}>
     <Link className={styles.back} to="/courses/$courseSlug" params={{ courseSlug: course.data.course.slug }}>{t("courses.lessons.backToCourse", { title: course.data.course.title })}</Link>
-    <LessonView key={lessonId} groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} lessonId={lessonId} dataUpdatedAt={course.dataUpdatedAt} />
+    <LessonView key={lessonId} groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} lessonId={lessonId} dataUpdatedAt={course.dataUpdatedAt} resume={resume} />
   </div></GroupFrame>;
 }

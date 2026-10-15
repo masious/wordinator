@@ -1,28 +1,19 @@
 import type { CourseLessonSummary } from "@wordinator/contracts";
-import { type QueryClient, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { courseProgressQueryOptions, courseWordsQueryOptions } from "../../api";
+import { courseProgressQueryOptions } from "../../api";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { Button, Surface } from "../../ui";
-import { LessonPlayer } from "./LessonPlayer";
 import styles from "./CourseResume.module.css";
 
-// The player saved the reader's steps while it was open; refresh the positions and percentages it changed, and the course recap,
-// which a finished lesson may extend.
-export function refreshAfterPlaying(queryClient: QueryClient, groupId: string, courseId: string) {
-  void queryClient.invalidateQueries({ queryKey: courseProgressQueryOptions(groupId, courseId).queryKey });
-  void queryClient.invalidateQueries({ queryKey: courseWordsQueryOptions(groupId, courseId).queryKey });
-}
-
-// The course-wide way into the lesson player. It resumes the most recently moved unfinished lesson at its saved step, otherwise
-// starts the first lesson they have not finished, otherwise offers the first lesson again. Lessons that count come first: an
-// unpublished lesson is chosen only when nothing in the course is published, and then it plays as a preview.
-export function CourseResume({ groupId, courseId, accountId, outline }: {
-  groupId: string; courseId: string; accountId: string; outline: CourseLessonSummary[];
+// The course-wide way back into studying, on the lesson's own page. It resumes the most recently moved unfinished lesson, scrolled
+// to its saved step, otherwise starts the first lesson they have not finished, otherwise offers the first lesson again. Lessons that
+// count come first: an unpublished lesson is chosen only when nothing in the course is published, and then it opens as a preview.
+export function CourseResume({ groupId, courseId, accountId, courseSlug, outline }: {
+  groupId: string; courseId: string; accountId: string; courseSlug: string; outline: CourseLessonSummary[];
 }) {
-  const { t } = useTranslation(); const queryClient = useQueryClient();
-  const [playing, setPlaying] = useState<string | null>(null);
+  const { t } = useTranslation(); const navigate = useNavigate();
   const progress = useQuery(courseProgressQueryOptions(groupId, courseId));
   if (!outline.length) return null;
   const completed = new Set(progress.data?.completedLessonIds ?? []);
@@ -37,6 +28,7 @@ export function CourseResume({ groupId, courseId, accountId, outline }: {
     ? ["courses.player.continue", "courses.player.continueNamed", t("courses.resume.continueHelp", { number, title: target.title, current: resume.entry.stepIndex + 1, total: resume.entry.totalSteps })] as const
     : unfinished ? ["courses.player.start", "courses.player.startNamed", t("courses.resume.startHelp", { number, title: target.title })] as const
     : ["courses.player.again", "courses.player.againNamed", t("courses.resume.doneHelp")] as const;
+  const open = () => void navigate({ to: "/courses/$courseSlug/lessons/$lessonSlug", params: { courseSlug, lessonSlug: target.slug }, search: resume ? { resume: true } : {} });
   return <Surface className={styles.card}>
     <div className={styles.copy}>
       <div className={styles.heading}>
@@ -47,9 +39,6 @@ export function CourseResume({ groupId, courseId, accountId, outline }: {
       <p className={styles.help}>{help}</p>
       {!target.published && <p className={styles.help}>{t("courses.resume.previewHelp")}</p>}
     </div>
-    <Button className={styles.action} variant={resume || unfinished ? "primary" : "secondary"} onClick={() => setPlaying(target.id)} aria-label={t(namedLabel, { number })}>{t(label)}</Button>
-    <LessonPlayer scope={{ groupId, courseId, accountId }} lessonId={playing} outline={outline} positions={progress.data?.positions ?? []}
-      onChangeLesson={setPlaying}
-      onClose={() => { setPlaying(null); refreshAfterPlaying(queryClient, groupId, courseId); }} />
+    <Button className={styles.action} variant={resume || unfinished ? "primary" : "secondary"} onClick={open} aria-label={t(namedLabel, { number })}>{t(label)}</Button>
   </Surface>;
 }

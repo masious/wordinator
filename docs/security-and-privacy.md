@@ -41,6 +41,10 @@ Lesson shares (C11, in progress; the API is in place; see [lesson shares](lesson
 
 [Lesson speech](speech.md) (C10; generation, playback, and authoring are implemented) sends the spoken text of lessons (word terms and their IPA, word examples, example sentences, and dialogue turns, from published documents and from drafts) to Microsoft Azure AI Speech in the `germanywestcentral` region. Accepted as a product decision on 2026-10-09: lesson text is member-authored course material, not personal conversation. The fixed voice sample sentences of the cast editor are sent too. Post, comment, practice answer, and profile text is never sent. Clips are stored in R2 under hashed keys and are public-by-URL like images. Because identical text shares one clip across groups, an author can infer from instant audio that some group already used the same sentence with the same voice; this reveals no group, lesson, or person. No route accepts arbitrary text, so members cannot spend the Azure quota on text outside lessons. The Azure key is a Worker secret and is never logged.
 
+### Spoken drill answers
+
+[Spoken answers](words.md#spoken-answers) on drill cards (C13) use the browser's own Web Speech API. The browser decides where audio is recognized: Chrome and Edge send it to their vendor's speech service (Google, Microsoft), and Safari may use Apple's servers or the device. Accepted as a product decision on 2026-10-15: the learner chooses to speak by pressing the microphone button, the browser's microphone permission prompt is the consent, and what is spoken is a single drill answer. Wordinator never receives, sends, stores, or logs audio or transcripts; the match runs in the browser and only the learner's own grade is saved, as for any drill card. Listening stops after one answer and when the card leaves the screen.
+
 ## Known accepted limitations
 
 - Six-character minimum passwords are weak by modern public-service standards.
