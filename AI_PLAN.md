@@ -2,57 +2,45 @@
 
 Working plan for the AI tutor and the learning data it reads: word memory with full review history, stored practice attempts and pronunciation scores, the lesson progress tab with reset, the Weak words view, AI-generated practices, and the superuser analytics page. C14.0 moves every rule below into its owning document; after that this file holds delivery steps only and links to the owners. Phase status is mirrored in [docs/roadmap.md](docs/roadmap.md#course-phases).
 
-Decisions agreed (2026-10-15):
+Decisions agreed on 2026-10-15 now live in their owning documents (C14.0, completed 2026-10-16). Change the owner, not this file:
 
-- **Storage rule reversed.** Lesson practice answers and their check results, drill history, and pronunciation scores are now stored server-side for the tutor and the learner's own views. This reverses [courses.md](docs/courses.md#practice-answers), [words.md](docs/words.md#memory-leitner-boxes) ("only the latest state … never a history"), [words.md](docs/words.md#pronunciation-assessment) ("scores are never stored"), and [security and privacy](docs/security-and-privacy.md). Journal posts and comments are **not** sent to the AI for now (possible future addition).
-- **Word memory replaces Leitner boxes.** C12 is unreleased, so Drill moves to the new model before release: an append-only review log plus a per-word memory row keyed by term key (not lesson word ID), using an FSRS-style model (stability, difficulty, recall probability now). Existing boxes seed it, then `course_word_drill_states` is dropped.
-- **Weakness is visible.** A Weak words view on the Words tab lists words weakest first, each with 5 dots for its last 5 results. No percentages.
-- **Lesson states per course:** not started, in progress (furthest share passed), completed, and **missed**. Missed is derived: an earlier lesson in a course with no completion or position while a later lesson has been started or completed. A course is complete when every published lesson is completed or missed. The tutor now and then mixes words from missed lessons into practice to gauge fluency.
-- **Reset is permanent.** Resetting a lesson deletes its storyline position, completion, practice progress, practice attempts, and word reviews recorded from that lesson. Memory for the affected terms is then rebuilt from the reviews that remain, so a word learnt in another lesson stays known. Reset is available from the lesson progress tab, the lesson page (returns to the course's lesson list), and the tutor (with confirmation).
-- **Lesson progress tab** on the single course page: each lesson's state, storyline progress, practices done, words reviewed, AI practices, and Reset.
-- **Tutor entry point:** a `/ai` route, reached from a colourful CTA on `/courses`. No new navigation tab. Same features on mobile and desktop.
-- **Conversations** are stored server-side, permanent, and archivable (never deleted).
-- **Formatting:** user messages are plain text. Assistant messages may be split into several small sections (short headings) and support a small markdown subset (bold, italic, lists, inline code, safe `http`/`https` links), rendered without HTML.
-- **Visible tool use:** every tool call shows in the chat as a step ("Looked up lesson 6", "Updated progress").
-- **Confirmation:** tools that change progress or create content pause for an in-chat Confirm / Cancel card: finishing a lesson, resetting a lesson, and saving an AI practice. Reviews and attempts produced by the learner's own answers to interactive components are recorded without a prompt.
-- **Interactive tools** render answer components in the chat. Chat answers count as practice attempts and word reviews. First set (C14i):
-  - **Fill in the blank.**
-  - **Translate into Dutch**, with a microphone that uses the existing recognizers and Azure pronunciation assessment.
-  - **Word order**: shuffled chunks the learner clicks or drags into place.
-  - **De or het**: a quick article picker for one or more nouns. Very common Dutch mistakes, graded instantly.
-  - **Multiple choice**: one prompt and 3–4 options, for meaning, grammar, or the right form.
-  - **Quick review**: drill-style cards (Show answer, Again / Got it) for a handful of words, writing word reviews like Drill.
-  - **Say it**: the tutor's sentence is played (on-demand audio), and the learner repeats it for a pronunciation assessment (shadowing).
-  - **Dictation**: audio only; the learner types what they heard, compared word by word.
-  - **Fix the mistake**: a sentence with one error; the learner rewrites it and the tutor judges the fix.
+- [docs/ai-tutor.md](docs/ai-tutor.md): entry point (`/ai`, the `/courses` CTA, the mobile exception), conversations and archiving, formatting, tools and visible steps, confirmation, answer components (first and later sets), next lesson, tutor profile, providers and fallback, limits, prompt injection, API.
+- [docs/words.md](docs/words.md#word-memory): word memory and the review log (replacing Leitner boxes), the [Weak words view](docs/words.md#weak-words-view), deck ranking by recall, [stored pronunciation scores](docs/words.md#pronunciation-assessment).
+- [docs/courses.md](docs/courses.md): [block ID stability](docs/courses.md#editor-and-format), [practice attempts](docs/courses.md#practice-attempts), [lesson states](docs/courses.md#lesson-states), the [Progress tab](docs/courses.md#lesson-progress-tab), [reset](docs/courses.md#reset), [AI practices](docs/courses.md#ai-practices).
+- [docs/speech.md](docs/speech.md#on-demand-audio): on-demand audio, its caching and character cap.
+- [docs/data-model.md](docs/data-model.md#learning-data): every new table, `users.is_superuser`, `platform_metadata.ai_settings`, and the dropped `course_word_drill_states`.
+- [docs/security-and-privacy.md](docs/security-and-privacy.md#ai-tutor): what is stored, what each provider receives, OpenRouter logging, and the accepted trade-offs.
+- [docs/settings-and-administration.md](docs/settings-and-administration.md#current-settings-page): Tutor settings, the superuser, analytics, AI settings.
+- [docs/architecture.md](docs/architecture.md#ai-tutor-and-learning-data), [docs/operations.md](docs/operations.md#superuser-command), [docs/design-system.md](docs/design-system.md), [docs/testing.md](docs/testing.md#ai-tutor-and-learning-data-c14), [docs/user-flows.md](docs/user-flows.md#study-with-the-ai-tutor), [docs/what_is_it.md](docs/what_is_it.md), [docs/product-requirements.md](docs/product-requirements.md), and [docs/roadmap.md](docs/roadmap.md#course-phases).
 
-  Later set (after C14j, if useful): verb conjugation grid (present, perfectum with *hebben*/*zijn*, imperfectum), matching pairs (term ↔ meaning), and role-play turns (the tutor plays a character from the course's dialogues; the learner answers by text or voice with optional hint chips).
-- **Next lesson:** the tutor resolves the next lesson in the most recently active course, reads its content, can teach it in chat, and with confirmation marks lessons complete and advances progress.
-- **AI-generated practices** are saved as reusable content tagged to one or more related lessons. Each tag stores an `afterId` (the block ID it follows). The lesson page has a button that expands the lesson's AI practices in place. Block IDs must stay stable across draft and publish (they already are UUIDs; C14.0 states this as a contract).
-- **Providers:** Cloudflare Workers AI, OpenRouter, and Microsoft Azure (Foundry), switchable. Default order is OpenRouter free models → Workers AI → Azure, with automatic fallback on rate limit or error. No Anthropic/Claude agents.
-- **On-demand audio:** Dutch text in assistant messages (marked by the model as target-language spans) gets a speaker button that generates speech on demand through the existing Azure voices and `speech_clips` cache. This reverses the [security and privacy](docs/security-and-privacy.md) rule that no route accepts arbitrary text. Only text from the user's own assistant messages can be spoken, never text the user typed.
-- **Usage:** a per-user daily cap of 40 tutor turns (UTC day), adjustable by the superuser. Token usage is recorded per request.
-- **Superuser:** a new `users.is_superuser` flag, set by an explicit-target command. The analytics page (superuser only) shows active users, lessons completed, drill and practice volume, and AI messages, tokens, and cost per user and provider, and speech generation requests and characters per user. It also holds the AI settings (provider order, models, cap). Group removal stays separate tech debt.
+The three open assumptions were adopted as decisions in C14.0: AI practices are visible to everyone who can read the lesson and removable by the owner and contributors; Drill's Weak words draws from word memory plus bookmarks (lowest recall first, never-reviewed words at 0.5, bookmarks as a tiebreak); native language, reply language, and goals live in a Tutor section in Settings, and the tutor may rewrite its own notes (the learner can clear them).
 
-To confirm during C14.0 (assumptions taken so far):
+Details C14.0 settled that were not in the agreed list (review before C14a):
 
-- AI practices are visible to everyone who can read the lesson, and the course owner and contributors can remove them.
-- The Drill's Weak words source switches from bookmarks to `word_memory` (weakest recall first, bookmarks as a tiebreak).
-- Native language and reply language are set in Settings (a new Tutor section), and the tutor may rewrite its own `tutor_notes`.
+- The tutor is the one exception to desktop-first: same features and tests on phones.
+- Say it needs the Microsoft recognizer (assessment is Azure-only); with the browser recognizer it says so.
+- Leitner seed mapping: box 1–5 → stability 0.5, 1, 3, 7, 21 days.
+- Weak words rows get an I know this word action (sets `known_override`; a later Again clears it).
+- A web reset also clears the lesson's local practice drafts on that device; archived courses refuse reset.
+- Pronunciation attempts survive reset; journal share answer checks are not recorded.
+- AI practices are unattributed (labelled AI practice) and count toward no progress.
+- New account-level routes live under `/api/ai/...` and `/api/admin/...`; lesson-bound routes stay under the group compatibility prefix.
+- Default speech cap 5,000 characters per UTC day; turn cap 0–500, speech cap 0–100,000.
+- The tutor never receives the learner's username.
 
 Status legend: `[ ]` todo · `[~]` in progress · `[x]` done
 
-## C14.0 — Docs and decisions
+## C14.0 — Docs and decisions (completed 2026-10-16)
 
-- [ ] New owner [docs/ai-tutor.md](docs/ai-tutor.md): entry point, conversations and archiving, formatting, tools and their visibility, confirmation, interactive components, next lesson, providers and fallback, the daily cap, and prompt-injection rules. Add it to [docs/index.md](docs/index.md).
-- [ ] [docs/speech.md](docs/speech.md): on-demand clips for assistant messages, their voice, caching, and metering.
-- [ ] [docs/words.md](docs/words.md): word memory (replacing Leitner boxes), the review log, the Weak words view, Drill ordering from memory, stored pronunciation scores.
-- [ ] [docs/courses.md](docs/courses.md): stored practice attempts, lesson states including missed, course completion, the lesson progress tab, reset, AI practices on the lesson page, and block ID stability.
-- [ ] [docs/data-model.md](docs/data-model.md): every table under C14a, C14e, C14f, and C14h; drop `course_word_drill_states`.
-- [ ] [docs/security-and-privacy.md](docs/security-and-privacy.md): on-demand speech of assistant text (and its quota guard), what is stored, what is sent to each provider (lesson content, the learner's words, attempts, memory, profile; never posts, comments, credentials, or other users' data), OpenRouter free models possibly logging prompts, and the accepted trade-off.
-- [ ] [docs/settings-and-administration.md](docs/settings-and-administration.md): the superuser flag, analytics, AI settings, and the Tutor settings section.
-- [ ] [docs/architecture.md](docs/architecture.md), [docs/operations.md](docs/operations.md) (secrets, the Workers AI binding, the superuser command), [docs/design-system.md](docs/design-system.md) (CTA, chat surfaces, tool steps, answer components, dots), [docs/testing.md](docs/testing.md), [docs/user-flows.md](docs/user-flows.md), [docs/what_is_it.md](docs/what_is_it.md) (the no-scores non-goal narrows), and [docs/roadmap.md](docs/roadmap.md) (C14).
-- [ ] Mark `CLAUDE.md` product invariants that change: rich text stays limited to lessons, plus the assistant's markdown subset.
+- [x] New owner [docs/ai-tutor.md](docs/ai-tutor.md): entry point, conversations and archiving, formatting, tools and their visibility, confirmation, interactive components, next lesson, providers and fallback, the daily cap, and prompt-injection rules. Add it to [docs/index.md](docs/index.md).
+- [x] [docs/speech.md](docs/speech.md): on-demand clips for assistant messages, their voice, caching, and metering.
+- [x] [docs/words.md](docs/words.md): word memory (replacing Leitner boxes), the review log, the Weak words view, Drill ordering from memory, stored pronunciation scores.
+- [x] [docs/courses.md](docs/courses.md): stored practice attempts, lesson states including missed, course completion, the lesson progress tab, reset, AI practices on the lesson page, and block ID stability.
+- [x] [docs/data-model.md](docs/data-model.md): every table under C14a, C14e, C14f, and C14h; drop `course_word_drill_states`.
+- [x] [docs/security-and-privacy.md](docs/security-and-privacy.md): on-demand speech of assistant text (and its quota guard), what is stored, what is sent to each provider (lesson content, the learner's words, attempts, memory, profile; never posts, comments, credentials, or other users' data), OpenRouter free models possibly logging prompts, and the accepted trade-off.
+- [x] [docs/settings-and-administration.md](docs/settings-and-administration.md): the superuser flag, analytics, AI settings, and the Tutor settings section.
+- [x] [docs/architecture.md](docs/architecture.md), [docs/operations.md](docs/operations.md) (secrets, the Workers AI binding, the superuser command), [docs/design-system.md](docs/design-system.md) (CTA, chat surfaces, tool steps, answer components, dots), [docs/testing.md](docs/testing.md), [docs/user-flows.md](docs/user-flows.md), [docs/what_is_it.md](docs/what_is_it.md) (the no-scores non-goal narrows), and [docs/roadmap.md](docs/roadmap.md) (C14).
+- [x] Mark `CLAUDE.md` product invariants that change: rich text stays limited to lessons, plus the assistant's markdown subset.
 
 ## C14a — Learning data foundation
 

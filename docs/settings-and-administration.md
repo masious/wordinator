@@ -1,71 +1,48 @@
 # Settings and administration
 
-> Current scope: only the account settings surface at `/settings` remains in the product shell. Group and member administration below is retired behavior retained as migration history while its compatibility endpoints still exist; every `/groups/$groupId/settings/...` route now redirects to `/settings`.
+This document owns the Settings page, the Tutor settings section, the superuser role with its analytics page and AI settings, and the interactive image cropper. Field rules stay with their owners: account fields in [profiles-and-settings.md](profiles-and-settings.md), credentials in [authentication.md](authentication.md), and tutor behavior in [ai-tutor.md](ai-tutor.md).
 
-Status: shipped on 2026-10-06. See the [roadmap](roadmap.md#settings-split).
+Settings is one account-wide page at `/settings` for every signed-in account that has completed setup. It has no sub-navigation. The Tutor section and the superuser pages are planned (C14); everything else has shipped.
 
-This document owns how Settings is divided into pages, who sees each page, the creator's membership administration page, and the interactive image cropper. Field rules stay with their current owners: account fields in [profiles-and-settings.md](profiles-and-settings.md), membership states and creator powers in [groups-and-membership.md](groups-and-membership.md), credentials in [authentication.md](authentication.md).
+## Current Settings page
 
-## Why split
+`/settings` holds the account controls owned by [profiles and settings](profiles-and-settings.md) (an identity header with the avatar editor, then the profile form with display name, bio, and quick reactions, and a side rail with Appearance, the per-device [speech recognizer](words.md#recognizers), and the password change) and, since C14, a [Tutor](#tutor-settings) section. For a superuser it also links to [Analytics](#analytics).
 
-Today one page mixes three scopes: account-wide fields that apply in every group, group facts that only the creator may change, and (soon) group membership administration. The split follows scope and audience, not page length.
+### Tutor settings
 
-## Pages
+C14 (approved product change, 2026-10-15). A Tutor section on `/settings` edits the [tutor profile](ai-tutor.md#tutor-profile): native language (a select, English by default), reply language (my language, the library language, or mixed), and goals (optional plain text, at most 500 characters). Below them it shows the tutor's own notes about the learner, read-only, with Clear notes (confirmed). The section says plainly that tutor conversations are processed by external AI providers that may keep them (see [security and privacy](security-and-privacy.md#ai-tutor)). It saves with its own button through `PUT /api/ai/profile`.
 
-| Page | Route | Scope | Visible to |
-| --- | --- | --- | --- |
-| Account | `/groups/$groupId/settings/account` | Whole account | Every active member |
-| Group | `/groups/$groupId/settings/group` | Addressed group | Creator only |
-| Members | `/groups/$groupId/settings/members` | Addressed group | Creator only |
+## Superuser
 
-`/groups/$groupId/settings` redirects to the Account page, so existing links and the account utility keep working. All three routes stay inside the group shell, because the app has no group-less authenticated shell.
+C14 (approved product change, 2026-10-15). A superuser is an account with `users.is_superuser` set. It is granted and revoked only by the operator command `pnpm superuser --local|--remote --grant|--revoke <email>` ([operations](operations.md#superuser-command)); no route changes it. A superuser has no power over other accounts or content; the flag opens only the analytics page and the AI settings. The session read carries `isSuperuser` so the web can show the link; every superuser route checks the flag in the API and answers `403 SUPERUSER_REQUIRED` otherwise.
 
-A settings sub-navigation (Account, Group, Members) appears only for the creator. Ordinary members see the Account page with no sub-navigation. A non-creator who opens a creator-only route directly is redirected to Account. That redirect is a convenience; the API still rejects every creator-only read and mutation.
+The [library creator's](groups-and-membership.md#library-creator) leftover moderation powers stay separate technical debt; the superuser does not replace them.
 
-### Account
+### Analytics
 
-- Profile form: email (read-only), display name, bio, avatar, three quick reactions
-- Password change
-- Theme preference (browser-local)
-- Deleted groups, with Restore for creator-owned ones. This stays here because a deleted group's own routes are unreachable, and the list spans groups.
+`/admin/analytics`, linked from Settings for superusers only, shows the installation's activity for a chosen range (last 7 days by default, or 30 or 90 days), by UTC day:
 
-The Account page states plainly that these settings apply in every group.
+- **Learning:** active accounts (any review, attempt, position, completion, or tutor turn that day), lessons completed, drill reviews, practice attempts (lesson, tutor, and AI practice), and pronunciation attempts.
+- **AI:** tutor turns, model requests, tokens in and out, and cost, per account and per provider and model, with failed requests counted separately.
+- **Speech:** on-demand speech requests and characters per account, split into cache hits and Azure calls.
 
-### Group
+Accounts are listed by username. The page shows counts and costs only, never message text, answers, words, or scores. It is a desktop page with tables, and its reads are `GET /api/admin/analytics/{learning|ai|speech}?days=`.
 
-- Rename
-- Replace or remove the group icon
-- Delete the group, inside the existing confirmation-guarded danger zone
+### AI settings
 
-The language and creator stay immutable and are shown read-only.
+The analytics page also holds the AI settings form, stored in [`platform_metadata`](data-model.md#platform_metadata) under `ai_settings`:
 
-### Members
+- **Provider order:** OpenRouter, Workers AI, and Azure, reorderable, each with an on/off switch; at least one must be on.
+- **Model per provider:** a model ID per target. Only tool-calling models may be used; the form says so and the API checks the ID's format, not the model's abilities.
+- **Daily turn cap** per account (default 40, 0–500) and **daily speech character cap** per account (default 5,000, 0–100,000).
 
-The creator's single place for membership decisions. It shows four sections in this order:
-
-1. **Pending requests**, oldest request first, each with Accept and Reject.
-2. **Active**, alphabetical. Every non-creator row has Remove (with confirmation) and Generate temporary password (shown once). The creator's own row has no actions.
-3. **Rejected**, most recent decision first. Read-only. The person may request again through the invitation, which moves the row back to Pending.
-4. **Former** (left or removed), most recent decision first, labeled with which of the two happened. Read-only.
-
-Rows show the avatar or initials, display name, and the relevant date: requested for Pending, accepted for Active, decided for Rejected and Former. Never show email or other group memberships.
-
-Names follow the existing snapshot rule. Active rows use current account fields. Left and removed rows use the frozen membership snapshot. Pending and rejected people have no snapshot, so they show their current display name and avatar, as the pending-request panel does today.
-
-Every section has an empty state. The page reads one unpaged response: membership rows are bounded by the people who ever followed one group's invitation, the same assumption the member directory already makes.
-
-## Changes to existing surfaces
-
-- **Member directory** (`/groups/$groupId/members`) becomes a social view only: active and former members with profile links, plus Leave for ordinary members. Remove and Generate temporary password move to the Members settings page.
-- **Group home** loses the inline pending-request panel. For the creator, when requests are waiting, it shows one quiet line ("2 join requests waiting") linking to the Members settings page. Members never see it.
-- **Join-request notifications** link to the Members settings page instead of the group home.
-- **Account utility** still says "Settings" and opens Account.
+`GET` and `PUT /api/admin/ai-settings` read and replace the whole value, validated by the contracts' `aiSettingsSchema` (`400 AI_SETTINGS_INVALID`). Changes apply to the next turn.
 
 ## Image cropper
 
-Today the browser center-crops every upload automatically, so people cannot choose what part of a photo is kept. Picking an image instead opens a cropper.
+Picking an avatar or course cover opens a cropper, so people choose what part of a photo is kept (before 2026-10-06 the browser centre-cropped every upload).
 
-- The account avatar opens the cropper from the shared `AvatarEditor` ([profiles and settings](profiles-and-settings.md#avatar-editor)); the group icon and course cover open it from the shared `ImageUpload` component. Avatar and icon use a fixed square frame, and the cover uses its fixed 2:1 frame. The frame mask matches how the image is displayed.
+- The account avatar opens the cropper from the shared `AvatarEditor` ([profiles and settings](profiles-and-settings.md#avatar-editor)), and the course cover from the shared `ImageUpload` component. The avatar uses a fixed square frame and the cover its fixed 2:1 frame. (The retired group icon also used the square frame.) The frame mask matches how the image is displayed.
 - It opens in the shared adaptive dialog: centered on desktop, full screen on mobile.
 - Drag (mouse, touch, or pen) moves the image. A labeled zoom slider, the mouse wheel, and pinch zoom between 1× and 3×. The image always covers the frame, with no empty edges.
 - Keyboard: arrow keys move the image and `+`/`-` zoom, with every control reachable by Tab. Reset returns to the centered fit.
@@ -74,25 +51,24 @@ Today the browser center-crops every upload automatically, so people cannot choo
 - Cancel discards the selection and leaves the current image unchanged. An upload error keeps the dialog open with the selection intact, so the person can retry.
 - No API, size-limit, type-check, or R2 cleanup change. The server checks stay as they are.
 
-The cropper uses `react-easy-crop`, styled with its static stylesheet (automatic style injection is disabled) followed by CSS Modules and design tokens. The group-creation form uses the same cropper for its optional icon and uploads the cropped output after the group exists.
+The cropper uses `react-easy-crop`, styled with its static stylesheet (automatic style injection is disabled) followed by CSS Modules and design tokens.
 
-## API
+## Retired group administration
 
-- New `GET /api/groups/:groupId/memberships`: active-membership middleware, then creator-only (`403 CREATOR_REQUIRED`). It returns `pending`, `active`, `rejected`, and `former` arrays, validated by a shared contract.
-- `GET /api/groups/:groupId` replaces `pendingMembers` with `pendingRequestCount`, which is `0` for non-creators.
-- Existing mutations keep their paths and rules: `PATCH /memberships/:userId` (accept/reject pending only), `DELETE /memberships/:userId`, `POST /memberships/:userId/regenerate-password`, group rename, icon, delete, and restore.
-- No schema change. `memberships.state`, `requested_at`, `decided_at`, and the profile snapshot already carry everything above.
+The settings split (shipped 2026-10-06, see the [roadmap](roadmap.md#settings-split)) divided Settings into Account, Group, and Members pages, with group rename, icon, deletion, and a creator-only membership administration page (pending requests, active members with remove and temporary passwords, rejected and former members). Groups were retired with the [global library](groups-and-membership.md) on 2026-10-10:
+
+- Every `/groups/$groupId/settings/...` route redirects to `/settings`, and `/settings` shows only the account page. The deleted-groups list and its Restore action are no longer shown.
+- The API still answers the compatibility endpoints `GET /api/groups/:groupId/memberships`, `PATCH`, `DELETE`, and `POST .../regenerate-password` on `/memberships/:userId`, `POST /memberships/leave`, and the group rename, icon, delete, and restore routes. No screen calls them, and they are removed with the rest of the compatibility layer. The [library creator](groups-and-membership.md#library-creator) is the only account that passes their creator checks.
+- The earlier rules for these pages are in git history before the global-library change.
 
 ## Verification
 
-- Workers integration: a member gets `403` from the memberships read; a creator of group A gets the tenant-access rejection for group B; a creator's response contains only the addressed group's rows; each state lands in the correct array with snapshot-versus-current names; email never appears; `pendingRequestCount` is `0` for members.
-- Negative authorization stays covered for accept, reject, remove, and regenerate, including a target user ID that belongs to another group.
-- React Testing Library: the creator sees the sub-navigation and all three pages; a member sees Account only and is redirected from Group and Members; each Members section renders rows and its empty state; the directory no longer shows creator actions.
+- Workers integration: the profile and password routes as owned by [profiles and settings](profiles-and-settings.md); and for C14, `403 SUPERUSER_REQUIRED` on every `/api/admin/...` route for ordinary accounts, `aiSettingsSchema` validation, analytics returning counts only, and the tutor profile read and update scoped to the signed-in account.
+- React Testing Library: `/settings` renders the profile, appearance, recognizer, and password controls with no sub-navigation; the Tutor section saves and clears notes; the Analytics link shows only for a superuser.
 - Unit: the crop-area to output-pixel calculation for both frames, including zoom limits and the cover-the-frame clamp.
 - React Testing Library: choosing a file opens the cropper; Cancel uploads nothing; Save uploads one file of the expected size; keyboard moving and zooming work; an upload error keeps the dialog open.
-- Playwright (Chromium and WebKit): an avatar upload goes through the cropper on desktop and mobile widths, and the avatar's edit menu removes it. An invited user's request is accepted from Settings → Members; the creator renames the group from Settings → Group; a member edits their profile from Settings → Account; the `/settings` redirect works.
-- Type-checking and web plus API production builds.
+- Playwright: Settings at `/settings` saves the profile and uploads an avatar through the cropper (`settings-split.spec.ts`), and a legacy `/groups/.../settings` link redirects to `/settings`.
 
 ## Out of scope
 
-Ownership transfer, invitation-link rotation, bans, filtering or searching the member lists, bulk decisions, and any new account setting. The cropper adds no rotation, filters, free aspect ratio, or image editing beyond move and zoom.
+Ownership transfer, bans, account administration by the superuser, bulk actions, and any account setting not listed above. The cropper adds no rotation, filters, free aspect ratio, or image editing beyond move and zoom.

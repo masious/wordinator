@@ -22,8 +22,11 @@ Documentation is part of the definition of done:
 - The journal (posts, answers, comments, reactions, pins, and notices) is one global feed beside the library, shown as the third navigation tab. The feed is strict reverse chronology. Do not add ranking, filtering, search, or feed pinning without an explicit product change.
 - Uploaded R2 images are intentionally public-by-URL.
 - Answer concealment prevents accidental spoilers; it is not authorization.
-- User content is plain text, except course lessons. Preserve line breaks, escape output, and link only safe `http`/`https` URLs.
-- Course lessons are the one rich-content surface: BlockNote documents restricted by the shared contracts to bold, italic, a token-mapped text palette, and safe links, as defined in `docs/courses.md`. Do not extend rich text or the BlockNote editor to posts, comments, or other surfaces. The one exception is a shared example sentence in a lesson share post (`docs/lesson-shares.md`), which keeps its lesson formatting through the read-only lesson renderer; the share's note stays plain text.
+- User content is plain text, except course lessons. Preserve line breaks, escape output, and link only safe `http`/`https` URLs. AI tutor messages typed by the user are plain text too.
+- Course lessons are the one rich-content surface: BlockNote documents restricted by the shared contracts to bold, italic, a token-mapped text palette, and safe links, as defined in `docs/courses.md`. Do not extend rich text or the BlockNote editor to posts, comments, or other surfaces. The AI tutor's assistant messages (C14, `docs/ai-tutor.md`) are a second, separate exception: a small Markdown subset (bold, italic, lists, inline code, short headings, safe links) rendered by Wordinator's own renderer without HTML, never with BlockNote. The one exception is a shared example sentence in a lesson share post (`docs/lesson-shares.md`), which keeps its lesson formatting through the read-only lesson renderer; the share's note stays plain text.
+- Learning data (word reviews and memory, practice attempts, pronunciation attempts) is stored per account and private to it; only the learner, their AI tutor, and the superuser's counts-only analytics read it. See `docs/security-and-privacy.md`.
+- The AI tutor never receives journal posts, comments, other users' data, or credentials, and every tutor change to progress or shared content needs the user's in-chat confirmation.
+- Lesson block IDs are stable across draft, merge, and publish; progress, positions, shares, speech, and AI practice anchors depend on them.
 - No Tailwind.
 
 ## Planned repository shape

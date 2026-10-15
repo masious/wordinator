@@ -6,8 +6,8 @@ Wordinator serves a known, small circle, but invitation links and the public int
 
 ## Required baseline
 
-- Enforce membership and group scope on every tenant-owned read/write.
-- Test cross-tenant access attempts for IDs, nested resources, media metadata, and notification targets.
+- Enforce authentication, completed setup, and per-account ownership on every read and write; legacy routes also keep their group scope until the compatibility layer is removed.
+- Test access with another account's IDs for nested resources, media metadata, notification targets, and every per-account record (bookmarks, progress, learning data, tutor conversations).
 - Hash passwords using a reviewed Workers-compatible password hashing implementation with per-password salts.
 - Store the cookie-signing secret and other credentials as Wrangler secrets, never source or client configuration.
 - Use Secure, HTTP-only, SameSite cookies and same-origin `/api` access.
@@ -21,17 +21,15 @@ Wordinator serves a known, small circle, but invitation links and the public int
 - Re-encode every image in the browser before upload so original metadata, such as location, never reaches R2. Lesson images follow [lesson images](courses.md#images).
 - Avoid secrets and authored bodies in logs.
 
-## Tenant and profile privacy
+## Account and profile privacy
 
-Only active group members can read a group, its directory, profiles, posts, discussions, reactions, and normal notifications. Profile routes reveal no email or other memberships. Former-member profiles are visible only inside the group whose history they explain.
+Every signed-in account that has completed setup reads the one global library and journal. There are no profile pages (they were [retired](profiles-and-settings.md#profile-pages-retired) with groups); others see only a person's display name, username, and avatar in bylines. No route reveals another account's email, quick reactions, bookmarks, progress, or learning data. The legacy group membership checks still run inside the compatibility layer (see [storage compatibility](groups-and-membership.md#storage-compatibility)) but are not a product privacy boundary.
 
-Former-member profile fields come from the membership’s last group-visible snapshot rather than the account’s current fields. Active profile changes refresh snapshots only for active memberships, preventing former groups from learning later display-name, bio, or avatar changes.
-
-Course progress is visible to every member who can see the course: each active member's finished-lesson count and percentage are shown by name. The percentage includes the share of started lessons a member has passed, so it reveals roughly how far they are, but never which step they are on, their answers, or timing; saved lesson positions are returned only to their own member. Former members are not listed.
+Course progress is private to its learner: since 2026-10-13 the course page shows only the viewer's own percentage, and no route lists other members' progress (see [progress](courses.md#progress)). Saved lesson positions, [lesson states](courses.md#lesson-states), and the [Progress tab](courses.md#lesson-progress-tab) are returned only to their own learner.
 
 Word bookmarks are private to their member: no route returns another member's bookmarks or counts them. A bookmark is readable only while its member is active in the group and can still see the course.
 
-Answer concealment for posts is spoiler protection, not authorization. Since 2026-10-10 the [answer check](courses.md#practice-answers) runs in the browser, so learner reads of a published practice include each item's author's version; any member can read them in the response. Accepted tradeoff: authors' versions are reference answers for self-study among friends, not secrets, and immediate feedback matters more than hiding them. The web never renders a version before a check misses, which prevents accidental spoilers and is not authorization. Item notes stay editor-only, and a version that exists only in a draft (a draft-only practice, an edited version not yet published, or an unpublished lesson) is sent only to the owner and active contributors. Course practice answers are never sent to the server: it stores only how many questions each learner answered, and the answers stay in the learner's local draft.
+Answer concealment for posts is spoiler protection, not authorization. Since 2026-10-10 the [answer check](courses.md#practice-answers) runs in the browser, so learner reads of a published practice include each item's author's version; any member can read them in the response. Accepted tradeoff: authors' versions are reference answers for self-study among friends, not secrets, and immediate feedback matters more than hiding them. The web never renders a version before a check misses, which prevents accidental spoilers and is not authorization. Item notes stay editor-only, and a version that exists only in a draft (a draft-only practice, an edited version not yet published, or an unpublished lesson) is sent only to the owner and active contributors. Since C14 (approved product change, 2026-10-15) course practice answers are sent to the server after the on-device check and stored as private [practice attempts](courses.md#practice-attempts) with their match result; this reverses the earlier rule that answers never left the device. Attempts are returned only to their learner and read by that learner's [AI tutor](#ai-tutor); no route returns another learner's attempts, and the server computes the match itself.
 
 R2 objects are an explicit exception: images are public-by-URL. Unguessable keys reduce discovery but are not access control. Document this to users/operators and do not claim image confidentiality.
 
@@ -39,7 +37,7 @@ Lesson shares (C11, in progress; the API is in place; see [lesson shares](lesson
 
 ### Lesson speech
 
-[Lesson speech](speech.md) (C10; generation, playback, and authoring are implemented) sends the spoken text of lessons (word terms and their IPA, word examples, example sentences, and dialogue turns, from published documents and from drafts) to Microsoft Azure AI Speech in the `germanywestcentral` region. Accepted as a product decision on 2026-10-09: lesson text is member-authored course material, not personal conversation. The fixed voice sample sentences of the cast editor are sent too. Post, comment, practice answer, and profile text is never sent. Clips are stored in R2 under hashed keys and are public-by-URL like images. Because identical text shares one clip across groups, an author can infer from instant audio that some group already used the same sentence with the same voice; this reveals no group, lesson, or person. No route accepts arbitrary text, so members cannot spend the Azure quota on text outside lessons. The Azure key is a Worker secret and is never logged.
+[Lesson speech](speech.md) (C10; generation, playback, and authoring are implemented) sends the spoken text of lessons (word terms and their IPA, word examples, example sentences, and dialogue turns, from published documents and from drafts) to Microsoft Azure AI Speech in the `germanywestcentral` region. Accepted as a product decision on 2026-10-09: lesson text is member-authored course material, not personal conversation. The fixed voice sample sentences of the cast editor are sent too. Post, comment, practice answer, and profile text is never sent. Clips are stored in R2 under hashed keys and are public-by-URL like images. Because identical text shares one clip across groups, an author can infer from instant audio that some group already used the same sentence with the same voice; this reveals no group, lesson, or person. No route accepts text to synthesize. Since C14 the tutor's [on-demand audio](speech.md#on-demand-audio) synthesizes text outside lessons, which reverses the earlier rule that only lesson text is ever synthesized; it speaks only target-language text stored in the learner's own assistant messages, tutor components, and AI practices, read by the server by ID, never text a learner types. Its quota guard is a per-account daily character cap (`429 SPEECH_DAILY_LIMIT`), counted in `speech_usage` for cache hits too. Accepted limitation: a learner can still steer the tutor into writing arbitrary Dutch and then play it, within the cap. The Azure key is a Worker secret and is never logged.
 
 ### Spoken drill answers
 
@@ -48,16 +46,34 @@ Lesson shares (C11, in progress; the API is in place; see [lesson shares](lesson
 - **Browser** (default): the browser's own Web Speech API decides where audio is recognized. Chrome and Edge send it to their vendor's speech service (Google, Microsoft), and Safari may use Apple's servers or the device.
 - **Microsoft**: the browser streams the audio (the app's own echo-cancelled, noise-suppressed capture, processed only in the page) straight to Microsoft Azure AI Speech in `germanywestcentral`, the same resource as [lesson speech](#lesson-speech). The Azure key stays a Worker secret; signed-in, onboarded members of the library get a ten-minute authorization token from `POST /api/groups/:groupId/speech-recognition/token`, sent with `Cache-Control: no-store` and never logged. Accepted limitation: the route is not rate limited, so a member could request tokens repeatedly and spend the Azure recognition quota; this is acceptable for a small trusted group and is the first thing to revisit if the group grows.
 
-With Microsoft, the term is sent to Azure as the reference text of a pronunciation assessment, and the scores come back to the browser only. Either way Wordinator never receives, sends, stores, or logs audio, transcripts, or scores; the match runs in the browser and only the learner's own drill grade is saved, as for any drill card. Listening stops after one utterance and when the card leaves the screen.
+With Microsoft, the term is sent to Azure as the reference text of a pronunciation assessment, and the scores come back to the browser. Since C14 the browser then sends the scores to Wordinator, which stores them as private [pronunciation attempts](words.md#pronunciation-assessment) (this reverses the earlier rule that scores were never stored). Either way Wordinator never receives, sends, stores, or logs audio or transcripts; the match runs in the browser, and besides the scores only the learner's own drill grade is saved. Listening stops after one utterance and when the card leaves the screen.
+
+### Learning data
+
+C14 stores a history of each learner's learning: [word reviews and memory](words.md#word-memory), [practice attempts](courses.md#practice-attempts) with answer text, [pronunciation attempts](words.md#pronunciation-assessment), and progress audit events. All of it is private to the learner: every read filters by the signed-in account, and tutor tools cannot take another user's ID. [Reset](courses.md#reset) and lesson deletion delete the matching rows for real. The superuser's [analytics](settings-and-administration.md#analytics) shows per-account activity counts (reviews, attempts, lessons completed, AI and speech usage), never answers, words, or messages; this is a deliberate exception to "nothing counts them" for the operator of a small installation.
+
+### AI tutor
+
+The [AI tutor](ai-tutor.md) (C14, approved product change 2026-10-15) sends data to third-party model providers. Accepted as a product decision on 2026-10-15 for a small trusted group studying member-authored material.
+
+- **Stored.** Conversations (every message, tool call, tool result, component answer, and confirmation), the learner's tutor profile and tutor notes, and `ai_usage` rows. Conversations are permanent (archive, never delete) and visible only to their account; the superuser sees usage counts and cost, never content.
+- **Sent to the provider that serves a turn:** the system prompt with the learner's snapshot (tutor profile and notes, recent and in-progress lessons, weakest words, recent misses), the conversation so far, and the results of tools the model called: published lesson content the learner can read, the learner's own words, memory, reviews, attempts, pronunciation scores, and course progress, and AI practices. The learner's username is not sent; the tutor addresses them without it.
+- **Never sent:** journal posts, comments, reactions, notifications, other learners' data of any kind, email, passwords, cookies, tokens, unpublished drafts, item notes, or audio.
+- **Providers.** OpenRouter (which routes to the model's host), Cloudflare Workers AI (inside the Cloudflare account that already hosts Wordinator), and Microsoft Azure AI Foundry. Fallback can move one turn across providers, so any of them may receive a conversation. **OpenRouter's free models may log and train on prompts at the model host.** Accepted trade-off: lesson material is member-authored, and a learner's answers and mistakes are low-sensitivity study data; the Tutor settings section and the `/ai` page say plainly that conversations are processed by external AI providers that may keep them. A learner who does not accept that does not use the tutor; nothing is sent until they write a first message.
+- **Prompt injection.** Lesson text, AI practices, and the learner's own answers can contain instructions. They reach the model only as quoted tool data; tools are scoped to the signed-in account and readable lessons whatever the model asks; and every progress or shared-content change waits for the learner's in-chat confirmation. The model therefore cannot read another account, touch content the learner cannot see, or change progress on its own. It can be talked into saying wrong or odd things; AI practices it saves are visible to other learners of the lesson, so owners and contributors can remove them.
+- **Model output** is rendered with the [assistant Markdown subset](ai-tutor.md#messages-and-formatting) by Wordinator's own renderer: no HTML, and links only for `http` and `https`.
+- **Secrets.** `OPENROUTER_API_KEY`, `AZURE_AI_ENDPOINT`, and `AZURE_AI_KEY` are Worker secrets; Workers AI uses the `AI` binding. Prompts, answers, tool payloads, and keys are never logged; logs record provider, model, status, token counts, and timing only.
+- **Cost guard.** The per-account daily turn cap (40 by default, `429 AI_DAILY_LIMIT`) is checked before any model call.
 
 ## Known accepted limitations
 
 - Six-character minimum passwords are weak by modern public-service standards.
 - Email is unverified and has no self-service recovery.
-- Any group creator can regenerate a member password and thereby access the entire account.
+- The [library creator](groups-and-membership.md#library-creator) can still regenerate any account's password through a compatibility endpoint and thereby access that account.
 - Stateless sessions cannot be individually revoked and survive password changes.
-- There is no sign-out-all, account deletion, global admin, ban, report, block, mute, or invite rotation.
-- Public R2 URLs bypass group membership.
+- There is no sign-out-all, account deletion, ban, report, block, mute, or invite rotation. The C14 superuser flag grants only the read-only analytics page and the AI settings, not account or content administration.
+- Tutor conversations may be logged by OpenRouter free-model hosts (see [AI tutor](#ai-tutor)).
+- Public R2 URLs bypass sign-in.
 
 Phase 5 surfaces the public-image warning beside uploads. Media keys use random UUID paths, validation reads signatures rather than extensions, animated PNG/WebP payloads are rejected, and replacement cleanup happens only after D1 points at the new object. These controls do not turn the public URL into authorization.
 - Formal accessibility and broader browser assurance are deferred.

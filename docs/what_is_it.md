@@ -17,7 +17,7 @@ Wordinator is not a public network, professional course provider, tutoring marke
 
 ### Desktop first
 
-New work is designed and verified for desktop viewports only. Mobile phones are not a target: phone support will be discontinued in the future. Existing phone layouts keep working and their tests keep passing until that change is made explicitly, but new features do not add phone-specific layouts, behaviors, or tests. See [product requirements](product-requirements.md#release-definition).
+New work is designed and verified for desktop viewports only. Mobile phones are not a target: phone support will be discontinued in the future. The one exception is the [AI tutor](ai-tutor.md) (C14, approved 2026-10-15), which works the same on phones and desktops. Existing phone layouts keep working and their tests keep passing until that change is made explicitly, but new features do not add phone-specific layouts, behaviors, or tests. See [product requirements](product-requirements.md#release-definition).
 
 ## What learners do
 
@@ -26,6 +26,7 @@ New work is designed and verified for desktop viewports only. Mobile phones are 
 3. Collect and review words in the Words tab (see [words](words.md)).
 4. Track progress: lesson and practice progress show what is finished and what comes next.
 5. Optionally share sentences, questions, and exercises with other learners in the [journal](posts-and-feed.md).
+6. Study with an [AI tutor](ai-tutor.md) (planned, C14) that knows their lessons, weak words, and mistakes, teaches the next lesson, and asks practice questions in the chat.
 
 Content comes from members; the platform does not ship a fixed curriculum. The member-authored Dutch Foundations content is described in [content](content/index.md).
 
@@ -47,8 +48,9 @@ The expected load is small, so clarity and maintainability matter more than dist
 
 - Mobile phone layouts or phone-specific features for new work
 - Public discovery, public profiles, followers, or direct messages
-- Platform-provided lessons or a fixed curriculum, translation, dictionaries, automated grammar correction, or pronunciation assessment
+- Platform-provided lessons or a fixed curriculum, translation, or dictionaries. Two former non-goals have narrowed: pronunciation assessment exists on [spoken answers](words.md#pronunciation-assessment) (C13), and since C14 its scores are stored privately; the [AI tutor](ai-tutor.md) judges open answers and points out mistakes in its own chat. Neither grades or corrects journal posts or comments.
+- Scores shown as numbers or percentages of a learner's knowledge. Learning data is stored (C14) to guide the learner and the tutor; the only visible signs of weakness are the Weak words view's dots and lesson states.
 - Gamification: points, streaks, rankings, or leaderboards
 - Automated language detection or enforcement
-- Rich text, media posts, audio, or file attachments outside course lessons. Course lessons are a deliberate exception for restricted rich text and images, owned by [courses](courses.md#lesson-documents), and for synthesized [lesson speech](speech.md)
+- Rich text, media posts, audio, or file attachments outside course lessons. Course lessons are a deliberate exception for restricted rich text and images, owned by [courses](courses.md#lesson-documents), and for synthesized [lesson speech](speech.md). The [AI tutor's](ai-tutor.md#messages-and-formatting) assistant messages (C14) are a second exception, with a small Markdown subset and on-demand audio.
 - Monetization or advertising

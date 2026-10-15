@@ -4,7 +4,7 @@
 
 The current release is an installable, connectivity-required web application for current Chrome and Safari. It serves committed Dutch and German learners who choose the skill they practice (see [what it is](what_is_it.md#who-it-is-for)). It exposes one global course library; courses remain the organizational layer above lessons.
 
-**Desktop is the only target for new work.** New features are designed, laid out, and tested for desktop viewports only. Existing phone layouts (the slim header, dock, and full-screen surfaces) keep working and their `mobile-*` tests keep passing until phone support is discontinued by an explicit product change; new features do not add phone-specific layouts, behaviors, or tests, and must not be blocked on phone behavior.
+**Desktop is the only target for new work.** New features are designed, laid out, and tested for desktop viewports only. Existing phone layouts (the slim header, dock, and full-screen surfaces) keep working and their `mobile-*` tests keep passing until phone support is discontinued by an explicit product change; new features do not add phone-specific layouts, behaviors, or tests, and must not be blocked on phone behavior. The [AI tutor](ai-tutor.md) (C14) is the one exception and is built and tested for phones and desktops alike.
 
 ## Required capabilities
 
@@ -20,16 +20,17 @@ The current release is an installable, connectivity-required web application for
 - Desktop-first warm editorial design and an English localization catalog
 - A signed-out home page that addresses the target learner and names the skills they can practice
 - Progress measurement and interface guidance toward the next useful practice, without competitive mechanics
+- Planned (C14): an [AI tutor](ai-tutor.md) at `/ai`, private learning data (word memory, practice and pronunciation attempts), a lesson Progress tab with reset, a Weak words view, AI practices on lesson pages, and a superuser analytics page
 - Installable PWA metadata with an internet-required offline fallback
 - Manual local/production setup, migration, deployment, backup, and restore procedures
 
 ## Global content rules
 
 - A course defines the context for its lessons. The application does not create separate workspaces per language.
-- User-generated content is plain text. Preserve line breaks and auto-link only `http`/`https` URLs. The one exception is course lessons, which use a restricted rich-text document owned by [courses](courses.md#lesson-documents): bold, italic, a fixed text palette, and `http`/`https` links only. An example sentence shared to the journal as a [lesson share](lesson-shares.md) keeps that formatting, rendered read-only by the lesson renderer; posts, notes, and comments themselves stay plain text.
+- User-generated content is plain text. Preserve line breaks and auto-link only `http`/`https` URLs. The one exception is course lessons, which use a restricted rich-text document owned by [courses](courses.md#lesson-documents): bold, italic, a fixed text palette, and `http`/`https` links only. An example sentence shared to the journal as a [lesson share](lesson-shares.md) keeps that formatting, rendered read-only by the lesson renderer; posts, notes, and comments themselves stay plain text. The second exception is the [AI tutor's](ai-tutor.md#messages-and-formatting) assistant messages (C14), which use a small Markdown subset (bold, italic, lists, inline code, short headings, and `http`/`https` links) rendered without HTML; user messages stay plain text.
 - Optional notes exist on every post type, are hidden by default, and return to hidden on each visit.
 - Content limits are generous safeguards rather than learning constraints.
-- Authored and progress activity is attributed; there is no anonymous mode.
+- Authored and progress activity is attributed; there is no anonymous mode. [AI practices](courses.md#ai-practices) (C14) are attributed to the AI tutor rather than to the learner who saved them.
 
 ## Global interaction rules
 
@@ -42,7 +43,7 @@ The current release is an installable, connectivity-required web application for
 
 ## Initial exclusions
 
-The release excludes new mobile phone layouts or phone-specific features, gamification (points, streaks, rankings, leaderboards), email verification, self-service password recovery, account deletion, a global admin UI, session management, reports, blocking, muting, search, formal accessibility conformance, offline application behavior, push/email notifications, notification badges, CI/CD, and automated backups.
+The release excludes new mobile phone layouts or phone-specific features, gamification (points, streaks, rankings, leaderboards), email verification, self-service password recovery, account deletion, a global admin UI (the C14 superuser analytics page is read-only apart from the AI settings), session management, reports, blocking, muting, search, formal accessibility conformance, offline application behavior, push/email notifications, notification badges, CI/CD, and automated backups.
 
 ## Acceptance summary
 

@@ -68,9 +68,38 @@
 9. Each lesson in the course's lesson list also has its own actions (see [lesson actions](courses.md#lesson-actions)): Start, Continue at the saved step, or Start again for a finished lesson; Review words for that lesson's words when it has any; and Practice again when it has practices, which lists them with the member's own state and opens the chosen one's answer set.
 10. A member can bookmark any word of a published lesson, finished or not, with the bookmark icon beside it in a New words list, the lesson page's New words panel, or on a recap card; pressing it again removes the bookmark. A draft preview offers no bookmarks.
 11. On the Words tab they see their bookmarked words newest first and can narrow them to one lesson with the lesson filter; the choice stays in the address, so a reload or a shared link keeps it.
-12. Drill on the Words tab opens a small setup: Weak words (their bookmarks, weakest first) or one lesson's words, and Mixed, Understand Dutch, or Produce Dutch (German in a German library). Start opens the drill page with one card at a time. Show answer (or Space) flips the card to the whole word and speaks it when the reveal sound is on; Again (`1`) brings the card back a few cards later and Got it (`2`) retires it. A mono counter shows how many cards are done. At the end a summary says how many were Got it on the first try and how many needed Again, with Drill again for a fresh deck and Back to words. See [Drill](words.md#drill).
+12. Drill on the Words tab opens a small setup: Weak words (their weakest words from memory and their bookmarks, weakest first) or one lesson's words, and Mixed, Understand Dutch, or Produce Dutch (German in a German library). Start opens the drill page with one card at a time. Show answer (or Space) flips the card to the whole word and speaks it when the reveal sound is on; Again (`1`) brings the card back a few cards later and Got it (`2`) retires it. A mono counter shows how many cards are done. At the end a summary says how many were Got it on the first try and how many needed Again, with Drill again for a fresh deck and Back to words. See [Drill](words.md#drill).
 13. Where a word, example, or dialogue line has audio ready, a speaker icon beside it plays it once; pressing it again stops it, and starting another clip stops the one playing. A dialogue's Play dialogue reads its lines in order in the speakers' voices, highlighting each line as it is spoken, with a progress bar of the conversation. The learner can pause and resume, stop, skip to the previous or next line, or press a line's segment of the bar to continue listening from there; in the player it reads only the lines shown so far. Items whose audio is not generated yet have no icon. Owners and contributors also hear a draft preview once its audio is ready.
 14. Owners and contributors can run an unpublished lesson as a preview; it does not count toward progress.
+
+## Check progress and reset a lesson
+
+Planned (C14). [Courses](courses.md#lesson-progress-tab) owns the rules.
+
+1. On a course page the learner opens the Progress tab. It says whether the course is complete and lists each published lesson with its state (Not started, In progress, Completed, or Missed when they skipped it and went on), how far through its storyline they are, practices done, words reviewed, and AI practices.
+2. Reset on a lesson opens a confirmation listing what will be deleted: their place in the lesson, its completion, practice progress and answers, and the word reviews from that lesson. Confirming deletes them for good and refreshes the tab; words also learnt in another lesson stay known.
+3. On a lesson page, Reset lesson does the same and returns to the course's lesson list.
+4. Every answer they check in a practice is kept privately for them and their tutor; the check itself still happens instantly on their device.
+
+## Find weak words
+
+Planned (C14). [Words](words.md#weak-words-view) owns the rules.
+
+1. On the Words tab the learner switches to Weak words. Words they have drilled or practised with the tutor are listed weakest first, each with five dots for its last five results (green for Got it, red for Again, hollow when there are fewer). There are no percentages.
+2. I know this word removes a word from the list until they next get it wrong.
+3. Drill these words starts a Weak words drill.
+
+## Study with the AI tutor
+
+Planned (C14). The [AI tutor](ai-tutor.md) owns the rules. It works the same on a phone and a desktop.
+
+1. On `/courses` a colourful Ask your tutor card opens `/ai` with a new conversation; earlier conversations are listed beside it (or behind a list button on a phone), with archived ones in their own view.
+2. The learner asks what to study next. The tutor shows its steps as small chips (Checked your progress, Looked up lesson 6) and explains the lesson's grammar and words in short sections; Dutch phrases have speaker buttons that play them on request.
+3. The tutor asks questions with answer components in the chat: a fill-in, a translation (typed or spoken), word order, de or het, multiple choice, quick review cards, Say it, dictation, or fix the mistake. Each is graded at once, and the result is kept for their memory and progress.
+4. When they are done, the tutor offers to mark the lesson complete. A card with Confirm and Cancel appears; nothing changes until they confirm. Resetting a lesson or saving a practice for other learners asks the same way.
+5. After 40 turns in a UTC day the composer says the daily limit is reached and when it resets.
+6. The learner can archive a conversation and later unarchive it; conversations are never deleted.
+7. A practice the tutor saved shows up on its lesson page behind Show AI practices (*n*), placed after the block it belongs to, for everyone who reads the lesson.
 ## Share a piece of a lesson
 
 In progress (C11): sharing works from the lesson page, the dialogs, and the player; share posts get their own journal cards in C11d. [Lesson shares](lesson-shares.md) owns the rules.
@@ -115,7 +144,7 @@ In progress (C11): sharing works from the lesson page, the dialogs, and the play
 
 ## Manage the account
 
-1. `/settings` shows account profile, avatar, password, theme, and appearance controls.
+1. `/settings` shows account profile, avatar, password, theme, and appearance controls, and (C14) a Tutor section for native language, reply language, goals, and the tutor's notes. A superuser also sees a link to Analytics, which shows activity counts, AI and speech usage, and the AI settings.
 2. Username is established during required setup. Later profile edits remain account-wide.
 3. Avatar upload is optional and uses the existing square crop, public-by-URL storage, replacement cleanup, and remove flow.
 

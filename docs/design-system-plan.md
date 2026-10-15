@@ -6,7 +6,7 @@ The plan deliberately establishes reusable foundations before feature-heavy page
 
 ## Relationship to the premium visual refresh
 
-This plan remains the historical owner for the original Phase 0 design-system foundation. The cross-phase [visual redesign plan](../VISUAL-REDESIGN-PLAN.md) is the successor for the approved Editorial Luxury and Editorial Split refresh. It does not reopen completed DS-01 through DS-06 work; it evolves those foundations through explicit token, primitive, shell, feature-page, and verification batches.
+This plan remains the historical owner for the original Phase 0 design-system foundation. The cross-phase visual redesign plan (`VISUAL-REDESIGN-PLAN.md`, removed in `938d46c`; see git history) is the successor for the approved Editorial Luxury and Editorial Split refresh. It does not reopen completed DS-01 through DS-06 work; it evolves those foundations through explicit token, primitive, shell, feature-page, and verification batches.
 
 Outstanding DS-07 through DS-10 work is coordinated through the successor plan rather than duplicated here:
 

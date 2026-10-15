@@ -6,11 +6,17 @@ This is a conceptual relational model, not final migration syntax. The Drizzle s
 
 The product model is now accounts → courses → lessons, with one course library for the installation. `groups`, `memberships`, and `group_id` columns are legacy storage compatibility, not product tenancy. They remain temporarily so existing lesson documents, R2 media ownership, course progress, word bookmarks, and speech jobs are preserved during rollout. New features must not create or switch libraries, use invitation state, or grant behavior from membership lifecycle state.
 
+## Platform metadata
+
+### `platform_metadata`
+
+Key, JSON text value, and updated timestamp. Since C14 the key `ai_settings` holds the [AI settings](settings-and-administration.md#ai-settings) (provider order, model per provider, daily turn cap, daily speech character cap), validated by the contracts' `aiSettingsSchema` on read and write; a missing or invalid row reads as the defaults.
+
 ## Identity and groups
 
 ### `users`
 
-Opaque ID, normalized unique email, password hash and parameters, case-insensitively unique nullable username, onboarding-completed timestamp, display name, optional bio/avatar key, three quick-reaction emoji, `must_change_password`, and timestamps. New registrations keep username and onboarding completion null until required setup; existing accounts are backfilled by migration `0020_global_accounts.sql`. There is no account-deletion state initially.
+Opaque ID, normalized unique email, password hash and parameters, case-insensitively unique nullable username, onboarding-completed timestamp, display name, optional bio/avatar key, three quick-reaction emoji, `must_change_password`, `is_superuser` (C14, default false; set only by the operator command in [operations](operations.md#superuser-command)), and timestamps. New registrations keep username and onboarding completion null until required setup; existing accounts are backfilled by migration `0020_global_accounts.sql`. There is no account-deletion state initially.
 
 ### Legacy `groups`
 
@@ -98,7 +104,7 @@ Added in C9b; see [bookmarks](words.md#bookmarks). Group ID, course ID, lesson I
 
 ### `course_word_drill_states`
 
-Added in C12; see [Drill](words.md#memory-leitner-boxes). User ID, course ID, lesson ID, word ID, direction (`understand` or `produce`), box (1–5), last result (`got` or `again`), and last drilled timestamp. The primary key is `(user_id, lesson_id, word_id, direction)`; checks limit the direction, result, and box. Like a bookmark, the row is a key into [`course_lesson_words`](#course_lesson_words) with deliberately no foreign key to it, so a word missing from the index is skipped, not deleted, and the row survives removing the bookmark. Rows cascade from their course and lesson, and lesson deletion also removes them explicitly in its batch. Only the latest state is kept; there is no answer history. The table has no `group_id`: it is new work under the [storage compatibility](groups-and-membership.md#storage-compatibility) rule, and reads reach the backing library record through the course. Indexed by `(user_id, direction, box, last_drilled_at)`. Migration `0025_course_word_drill_states.sql` adds the table.
+Added in C12 by migration `0025_course_word_drill_states.sql` and dropped by C14 before C12's release. It held the Leitner box per user, lesson word, and direction (`understand` or `produce`): box (1–5), last result, and last drilled timestamp, with primary key `(user_id, lesson_id, word_id, direction)`. The C14 migration turns each row into one `seed` row in [`word_reviews`](#word_reviews) and a [`word_memory`](#word_memory) row whose stability follows the box (see [word memory](words.md#word-memory)), then drops the table.
 
 ### `course_contributors`
 
@@ -112,6 +118,58 @@ Group ID, course ID, lesson ID, user ID, and completed timestamp. The primary ke
 
 Added in C6b. Group ID, course ID, lesson ID, user ID, step key, step index, passed steps, total steps, and updated timestamp; the primary key is `(lesson_id, user_id)`. The step key and index are the last [player step](courses.md#lesson-positions) shown, for resuming. Passed steps of total steps is the furthest share of the lesson passed, which counts toward course progress while the lesson is unfinished; a check keeps `total_steps > 0` and both the index and passed steps below it. Finishing the lesson deletes the row. Rows cascade from their course and lesson, lesson deletion also removes them explicitly in its batch, and they stay when a member leaves the group. Indexed by `(group_id, course_id, user_id)`. Migration `0016_course_lesson_positions.sql` adds the table.
 
+## Learning data
+
+Added in C14 ([word memory](words.md#word-memory), [practice attempts](courses.md#practice-attempts), [reset](courses.md#reset)). None of these tables has `group_id`: they are new work under the [storage compatibility](groups-and-membership.md#storage-compatibility) rule and reach the backing library record through the course. Every row belongs to one user; reads always filter by the signed-in user's ID. Lesson and word IDs are keys into the published index with deliberately no foreign key to [`course_lesson_words`](#course_lesson_words), like bookmarks. Rows cascade from their user, course, and lesson where they carry them, and lesson deletion also deletes them explicitly in its batch, then rebuilds the affected memory rows.
+
+### `word_reviews`
+
+Append-only log of graded word answers. ID, user ID, term key (`wordSearchKey` of the term), course ID, lesson ID, word ID, direction (`understand` or `produce`), result (`got` or `again`), source (`drill`, `ai_chat`, `ai_practice`, or `seed`), nullable conversation ID, and created timestamp. Checks limit direction, result, and source. Indexed by `(user_id, term_key, direction, created_at)` for rebuilding and by `(user_id, lesson_id)` for reset. Rows are deleted only by a lesson reset or lesson deletion.
+
+### `word_memory`
+
+One row per `(user_id, term_key, direction)`, the primary key, folded from that key's reviews: representative course, lesson, and word ID (the most recently reviewed occurrence), `recent` (the last ten results as a string of `g` and `a`, newest last), reps, lapses, nullable last lapse timestamp, stability (days, real), difficulty (real, 1–10), last reviewed timestamp, and `known_override` (boolean, default false). Recall probability is computed at read time and never stored. A row is always reproducible from [`word_reviews`](#word_reviews); a key with no reviews left has no row. Indexed by `(user_id, last_reviewed_at)`.
+
+### `practice_attempts`
+
+ID, user ID, course ID, nullable lesson ID, practice kind (`lesson` or `ai`), practice ID (the practice block ID or the `ai_practices` ID), item index, prompt, answer, reference (the author's version or the AI practice's reference, nullable), nullable `matched`, nullable `ai_verdict` (`acceptable` or `error`), nullable `ai_note`, source (`lesson`, `ai_chat`, or `ai_practice`), nullable conversation ID, and created timestamp. Checks limit the enums. Prompt, answer, and reference are capped at 2,000 characters. Indexed by `(user_id, created_at)` and `(user_id, lesson_id)`. Unlike [`course_practice_progress`](#course_practice_progress), rows keep the answer text.
+
+### `pronunciation_attempts`
+
+ID, user ID, surface (`drill`, `word_card`, or `ai_chat`), reference text, nullable term key, lesson ID, and word ID, overall, accuracy, fluency, and completeness scores (0–100), word scores (JSON text: word, accuracy, and error type per word), and created timestamp. Indexed by `(user_id, created_at)` and `(user_id, term_key)`. A lesson reset keeps these rows; lesson deletion sets their lesson and word IDs to null.
+
+### `progress_events`
+
+Audit only, never read to undo. ID, user ID, actor (`user` or `agent`), kind (`lesson_completed` or `lesson_reset`), course ID, lesson ID, nullable conversation ID, and created timestamp. Indexed by `(user_id, created_at)`.
+
+## AI tutor
+
+Added in C14; the [AI tutor](ai-tutor.md) owns behavior. No table has `group_id`.
+
+### `ai_conversations`
+
+ID, user ID, title, nullable archived timestamp, and created/updated timestamps. Conversations are never deleted. Indexed by `(user_id, archived_at, updated_at)`.
+
+### `ai_messages`
+
+ID, conversation ID (cascading), user ID, role (`user` or `assistant`), parts (JSON text: `text`, `tool_call`, `tool_result`, `component`, and `confirmation` parts, validated by the contracts), status (`complete`, `awaiting_user`, or `error`), nullable provider and model, and created timestamp. Cursor-paginated by `(conversation_id, created_at, id)`. A component or confirmation part holds its tool call ID, payload, and once answered the answer and grade; it is answered at most once.
+
+### `learner_profiles`
+
+User ID (primary key), native language, reply language, nullable goals (plain text, at most 500 characters), nullable tutor notes (plain text, at most 2,000 characters), and updated timestamp. A missing row reads as the defaults.
+
+### `ai_usage`
+
+One row per model request, successful or not. ID, user ID, nullable conversation ID, provider, model, tokens in, tokens out, cost in micro-dollars, ok, and created timestamp. Indexed by `(user_id, created_at)` for the daily cap and `(created_at)` for analytics. Rows hold no prompt or answer text.
+
+### `ai_practices`
+
+ID, kind (`fill_in`, `translate`, `word_order`, `article`, `choice`, `dictation`, or `fix_mistake`), payload (JSON text per the contracts' schema for the kind, including its reference answer), created-by user ID, nullable conversation ID, and created timestamp. See [AI practices](courses.md#ai-practices).
+
+### `ai_practice_lessons`
+
+Practice ID (cascading), lesson ID, course ID, after-block ID, and position, with primary key `(practice_id, lesson_id)`. Rows cascade from their course and lesson, and lesson deletion removes them in its batch; a practice left without rows is deleted in the same batch. Indexed by `(lesson_id, after_block_id, position)`.
+
 ## Speech
 
 Added in C10a; migration `0019_speech.sql`. The [speech rules](speech.md) own behavior.
@@ -119,6 +177,10 @@ Added in C10a; migration `0019_speech.sql`. The [speech rules](speech.md) own be
 ### `speech_clips`
 
 One row per synthesized clip, shared across groups because a clip is content-addressed. Hash (primary key, the [clip identity](speech.md#generation)), voice, character count, status (`pending`, `ready`, or `failed`), attempt count, nullable next-attempt and claimed timestamps, and created/updated timestamps. The R2 key is `speech/{hash}.mp3`. Inserting the row is the claim that keeps Azure from being called twice for one clip. The row holds no lesson, course, or group ID and no text; the worker rebuilds the markup from the lesson it is processing. Rows and their R2 objects are kept when lessons change. A check constraint limits the statuses.
+
+### `speech_usage`
+
+Added in C14 for [on-demand audio](speech.md#on-demand-audio). ID, user ID, surface (`ai_message` for now), clip hash, characters, cached (whether the clip was already ready), and created timestamp. Indexed by `(user_id, created_at)` for the daily character cap and `(created_at)` for analytics. Holds no text.
 
 ### `speech_jobs`
 
@@ -166,7 +228,9 @@ Opaque ID, group ID, recipient ID, actor ID, event type, optional post ID, optio
 - Comments are hard-deleted with replies, response items, and reactions.
 - Notifications survive target deletion.
 - Courses are never hard-deleted. Archiving sets status `archived`; restoring returns the course to `draft` so the owner chooses again when to publish. Archived courses keep their cover image. A course post stays when its course is archived and is deleted like any other post.
-- Lessons are hard-deleted with their documents, practice anchors, practice progress, and their lesson images (rows and R2 objects). The API deletes the R2 objects after the batch.
+- Lessons are hard-deleted with their documents, practice anchors, practice progress, practice attempts, word reviews recorded from them (memory rows of the affected terms are rebuilt in the same request), AI practice tags, and their lesson images (rows and R2 objects). The API deletes the R2 objects after the batch.
+- A lesson [reset](courses.md#reset) deletes one learner's position, completion, practice progress, practice attempts, and word reviews for the lesson, rebuilds the affected memory rows, and writes a `progress_events` row.
+- Tutor conversations are archived, never deleted. Usage rows, progress events, and pronunciation attempts are kept indefinitely.
 - Removing a block from a lesson is an ordinary draft edit. A practice removed from both documents loses its anchor and progress at the next publish or discard, after the editor warns the owner when anyone has started it; images referenced by neither document are cleaned up as described under `course_media`.
 - Member departure never deletes authored content or reactions. Contributor departure or removal keeps their lessons and updated-by attribution. Lesson completions and positions also stay and are hidden while the member is not active.
 - Deleting a lesson deletes its completions and positions.
@@ -177,4 +241,4 @@ Opaque ID, group ID, recipient ID, actor ID, event type, optional post ID, optio
 
 Index the feed by `(group_id, created_at, id)`, memberships by user and state, pending membership requests by group/state, profile posts by `(group_id, author_id, created_at, id)`, comments by post/parent/order and by block/parent/order, reactions by target, the course library by `(group_id, created_at, id)`, lessons by `(group_id, course_id, position)`, practice anchors and practice progress by `(group_id, lesson_id)`, lesson media by `(group_id, lesson_id, created_at)`, course contributors by `(group_id, course_id, state)`, lesson completions by `(group_id, course_id, user_id)`, and notifications by `(recipient_id, group_id, created_at)` plus `(recipient_id, created_at)` for restricted status lookup.
 
-Every tenant-owned table includes or can unambiguously derive `group_id`. Favor explicit `group_id` when it makes authorization and indexes safer, even if technically redundant.
+Every legacy tenant-owned table includes or can unambiguously derive `group_id`. Tables added since C12 (the [learning data](#learning-data) and [AI tutor](#ai-tutor) tables, `speech_usage`) carry no `group_id` under the [storage compatibility](groups-and-membership.md#storage-compatibility) rule; they are scoped by user ID and reach courses through their course and lesson IDs. Favor explicit `group_id` when it makes authorization and indexes safer, even if technically redundant.

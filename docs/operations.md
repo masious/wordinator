@@ -26,6 +26,7 @@ Run these commands from the repository root:
 - `pnpm db:migrate:remote` — apply committed migrations to production D1 explicitly
 - `pnpm bootstrap --local` or `pnpm bootstrap --remote` — create the first account and the single course-library record against one explicit target
 - `pnpm set-password --local <email>` or `pnpm set-password --remote <email>` — replace an existing account password against one explicit target
+- `pnpm superuser --local|--remote --grant|--revoke <email>` — grant or revoke the [superuser](settings-and-administration.md#superuser) flag against one explicit target (C14)
 
 Do not implement an ambiguous `deploy` or `migrate` command that silently chooses production.
 
@@ -45,7 +46,7 @@ It needs no API or database: every story uses contract-parsed fixtures.
 ## Local setup
 
 1. Run `pnpm install`.
-2. Copy `apps/api/.dev.vars.example` to the ignored `apps/api/.dev.vars` and replace the placeholder with a strong local cookie-signing secret. For [lesson speech](speech.md), also set `AZURE_SPEECH_KEY` there; without it the speech worker does nothing. `AZURE_SPEECH_REGION` is a plain variable in `wrangler.jsonc`. `wrangler dev` does not fire cron triggers on its own: start it with `--test-scheduled` and request `/__scheduled?cron=*+*+*+*+*` to run the speech worker once.
+2. Copy `apps/api/.dev.vars.example` to the ignored `apps/api/.dev.vars` and replace the placeholder with a strong local cookie-signing secret. For the [AI tutor](ai-tutor.md), also set `OPENROUTER_API_KEY`, and optionally `AZURE_AI_ENDPOINT` and `AZURE_AI_KEY`; `wrangler dev` reaches Workers AI through the remote `AI` binding, which needs `wrangler login`. For [lesson speech](speech.md), also set `AZURE_SPEECH_KEY` there; without it the speech worker does nothing. `AZURE_SPEECH_REGION` is a plain variable in `wrangler.jsonc`. `wrangler dev` does not fire cron triggers on its own: start it with `--test-scheduled` and request `/__scheduled?cron=*+*+*+*+*` to run the speech worker once.
 3. Run `pnpm db:migrate:local` to create and migrate a fresh local D1 database.
 4. Run `pnpm bootstrap --local` and enter the first account and library language.
 5. Run `pnpm dev`.
@@ -61,8 +62,9 @@ Production needs:
 2. An R2 bucket configured for public object reads and bound to the API Worker.
 3. A strong cookie-signing secret stored with Wrangler secret management.
 4. An Azure AI Speech resource (currently in `germanywestcentral`), whose key is the `AZURE_SPEECH_KEY` Worker secret (`pnpm --filter @wordinator/api exec wrangler secret put AZURE_SPEECH_KEY`) and whose region is the `AZURE_SPEECH_REGION` variable in `apps/api/wrangler.jsonc`. The same key also issues the short-lived tokens of the Microsoft [speech recognizer](words.md#recognizers), so recognition usage counts against the same resource. Rotate the key in the Azure portal and put the new one; never commit it.
-5. An API Worker route for `/api/*` on the application hostname.
-6. A web Worker using Workers Static Assets with SPA fallback for all other routes.
+5. For the [AI tutor](ai-tutor.md) (C14): the `AI` Workers AI binding in `apps/api/wrangler.jsonc` (no secret; usage is billed to the Cloudflare account), an OpenRouter API key as the `OPENROUTER_API_KEY` secret, and an Azure AI Foundry deployment whose endpoint and key are the `AZURE_AI_ENDPOINT` and `AZURE_AI_KEY` secrets. Put each with `pnpm --filter @wordinator/api exec wrangler secret put <NAME>`. A missing key or binding takes that provider out of the fallback order; with none configured the tutor answers `503 AI_UNAVAILABLE`. The Azure AI Foundry resource is separate from the Azure AI Speech resource. Rotate keys at the provider and put the new value; never commit them.
+6. An API Worker route for `/api/*` on the application hostname.
+7. A web Worker using Workers Static Assets with SPA fallback for all other routes.
 
 Keep IDs and non-secret binding names in Wrangler configuration. Keep secrets out of committed files.
 
@@ -106,6 +108,10 @@ The interactive bootstrap tool requires exactly one of `--local` or `--remote`. 
 It validates that bootstrap has not already created equivalent records, hashes the password, creates the already-onboarded user plus the single library record and its legacy membership row atomically where possible, and never echoes the password after input.
 
 Run it from the workspace root as `pnpm bootstrap --local` or `pnpm bootstrap --remote`. Supplying both targets, neither target, or any extra argument fails before database access. The tool checks that the target has no user records, writes the three records in one Wrangler invocation, removes its mode-`0600` temporary SQL file, and confirms that open registration is available. Open registration (`POST /api/auth/register`) fails with `LIBRARY_NOT_READY` until bootstrap has created the library record. Wrangler's local D1 executor does not accept explicit transaction statements; if any bootstrap statement fails, the tool makes a scoped cleanup pass using the newly generated user and group IDs.
+
+## Superuser command
+
+Run `pnpm superuser --local --grant <email>` or `pnpm superuser --remote --grant <email>` (or `--revoke`) from the workspace root. Exactly one target and exactly one of `--grant` or `--revoke` are required, and any other argument fails before database access. The tool looks up the normalized email, rejects unknown accounts, sets or clears `users.is_superuser`, and prints the account's username and new state. The flag takes effect on the account's next request. C14's migration adds the column with every account false, so grant the operator account after applying it.
 
 ## Operator password setting
 
@@ -180,4 +186,4 @@ Automated backup and CI/CD are future work.
 
 ## Logging and incidents
 
-Use structured Worker logs for request ID, route, status, timing, safe error code, and opaque actor/group IDs when useful. Exclude credentials, cookies, invitation tokens, temporary passwords, and authored bodies. For this initial project, operational recovery may use direct Cloudflare/D1 access because there is no global admin UI.
+Use structured Worker logs for request ID, route, status, timing, safe error code, and opaque actor/group IDs when useful. Exclude credentials, cookies, invitation tokens, temporary passwords, and authored bodies. For this initial project, operational recovery may use direct Cloudflare/D1 access because there is no global admin UI; the C14 analytics page is read-only. The tutor logs `ai.request` lines (provider, model, status, tokens, duration) and `ai.fallback` when it moves to the next provider, and never prompts, answers, or tool payloads; repeated `ai.fallback` or `AI_UNAVAILABLE` lines mean a provider key or model needs attention.
