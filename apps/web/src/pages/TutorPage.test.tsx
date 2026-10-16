@@ -1,7 +1,7 @@
 import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryHistory, createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
-import type { TutorConversation, TutorMessage, TutorPart, TutorStreamEvent } from "@wordinator/contracts/tutor";
+import type { TutorConversation, TutorMessage, TutorModelOption, TutorPart, TutorStreamEvent } from "@wordinator/contracts/tutor";
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../i18n";

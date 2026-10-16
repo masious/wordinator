@@ -246,9 +246,9 @@ Delivered as `apps/web/src/routes/ai.tsx`, `pages/TutorPage.tsx`, `organisms/Tut
 
 ### Notes (C14j, 2026-10-16)
 
-- **Browser tests delivered:** `tutor.spec.ts`, `mobile-tutor.spec.ts`, and `learning-data.spec.ts` with the stub provider `e2e/aiStub.ts` (see [docs/testing.md](docs/testing.md#ai-tutor-and-learning-data-c14)); 9 passed on Chromium, WebKit, and the three phone projects. The Playwright reset now clears `ai_usage` and `speech_usage` (the C14g gap) and stores AI settings with only the stub on.
-- **Production migrations:** `0026`–`0030` were applied to production with `--remote` (03:17 UTC) and the API deployed (03:32 UTC), outside this checklist; `0031_conversation_provider.sql` (per-conversation provider, in progress) is not yet committed or applied.
-- **Still open here:** the full suites and builds; the Workers AI native chunk shape and real-provider tool calling against a real binding (the stub speaks OpenAI chunks only); a Playwright case for the AI practices expander.
+- **Browser tests delivered:** `tutor.spec.ts`, `mobile-tutor.spec.ts`, `ai-practices.spec.ts`, and `learning-data.spec.ts` with the stub provider `e2e/aiStub.ts` (see [docs/testing.md](docs/testing.md#ai-tutor-and-learning-data-c14)). The Playwright reset clears `ai_usage` and `speech_usage` (the C14g gap) and stores AI settings with only the stub on. The e2e worker runs without the Workers AI binding (`apps/api/wrangler.e2e.json`), so browser tests need no wrangler login.
+- **Production migrations:** `0026`–`0030` were applied to production with `--remote` (03:17 UTC) and the API deployed (03:32 UTC). `0031_conversation_provider.sql` (per-conversation model choice, committed in `9639961`) is applied locally, not yet in production.
+- **Not covered by tests:** the Workers AI native chunk shape and real-provider tool calling (the stub speaks OpenAI chunks only); check them by hand against the real providers after the release.
 
 ## C14l — Tutor sessions and memory
 
