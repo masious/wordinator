@@ -145,6 +145,9 @@
   --color-vivid-slate: var(--palette-vivid-slate);
   --color-vivid-text: var(--palette-vivid-on);
   --color-vivid-text-on-yellow: var(--palette-vivid-on-yellow);
+  /* The tutor call to action (C14): the one large surface filled with vivid accents. Dark mode deepens it, so white text keeps
+     its contrast and the card does not glare on the dark page. */
+  --gradient-tutor: linear-gradient(135deg, var(--color-vivid-violet) 0%, var(--color-vivid-blue) 55%, var(--color-vivid-teal) 100%);
   /* Callout tones: one lesson surface per callout variant. */
   --color-callout-hint: var(--color-lesson-yellow-surface);
   --color-callout-important: var(--color-lesson-blue-surface);
@@ -311,6 +314,7 @@
 
 [data-mantine-color-scheme="dark"],
 [data-theme-preview="dark"] {
+  --gradient-tutor: linear-gradient(135deg, color-mix(in srgb, var(--color-vivid-violet) 78%, black) 0%, color-mix(in srgb, var(--color-vivid-blue) 74%, black) 55%, color-mix(in srgb, var(--color-vivid-teal) 72%, black) 100%);
   --palette-paper: #1c1715;
   --palette-paper-deep: #120f0e;
   --palette-surface: #251f1c;
@@ -378,6 +382,7 @@
 }
 
 [data-theme-preview="light"] {
+  --gradient-tutor: linear-gradient(135deg, var(--color-vivid-violet) 0%, var(--color-vivid-blue) 55%, var(--color-vivid-teal) 100%);
   --palette-paper: #f5ede2;
   --palette-paper-deep: #eadfce;
   --palette-surface: #fffaf2;

@@ -13,6 +13,7 @@ import { coursePanelId, CourseProgressTab, CourseTabs, courseTabId, type CourseT
 import { CourseResume } from "../organisms/CourseLessons/CourseResume";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { SpeechCastFields } from "../organisms/SpeechCast/SpeechCastFields";
+import { TutorCta } from "../organisms/Tutor/TutorCta";
 import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, MetadataRow, PageHeader, SectionHeader, Surface, TextAreaField, TextField } from "../ui";
 import { ImageUpload } from "./PhaseFivePages";
 import shellStyles from "./PhaseOnePages.module.css";
@@ -89,6 +90,7 @@ export function CourseLibraryPage({ groupId }: { groupId: string }) {
   const items = courses.data?.pages.flatMap((page) => page.items) ?? [];
   return <GroupFrame groupId={groupId} session={session.data}><div className={styles.stack}>
     <PageHeader eyebrow={<LabelChip>{t("courses.eyebrow")}</LabelChip>} title={t("courses.title")} intro={t("courses.intro")} actions={<Button onClick={() => setCreateOpen(true)}>{t("courses.create")}</Button>} />
+    <TutorCta />
     {courses.isError ? <ErrorState title={t("courses.unavailable")} /> : items.length
       ? <div className={styles.library}>{items.map((course) => <CourseCard key={course.id} course={course} />)}</div>
       : <Surface><EmptyState title={t("courses.emptyTitle")} action={<Button onClick={() => setCreateOpen(true)}>{t("courses.create")}</Button>}>{t("courses.emptyBody")}</EmptyState></Surface>}

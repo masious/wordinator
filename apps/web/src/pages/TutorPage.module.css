@@ -1,0 +1,16 @@
+/* `/ai` (docs/design-system.md, C14): a 20rem conversation list on the wash beside the chat, capped at the reading width.
+   The tutor is the one phone exception: below 48em one pane shows at a time. */
+.page{display:grid;grid-template-columns:20rem minmax(0,var(--width-reading));gap:var(--space-6);align-items:start;justify-content:center;min-width:0}
+.listPane{position:sticky;top:var(--navigation-offset,var(--space-6));max-height:calc(100dvh - var(--space-12));overflow-y:auto;padding:var(--space-3);background:var(--color-wash);border-radius:var(--radius-lg)}
+.chatPane{display:grid;gap:var(--space-4);min-width:0}
+.chatHead{display:flex;align-items:center;gap:var(--space-3);min-width:0}
+.chatTitle{flex:1;min-width:0;margin:0;overflow:hidden;font:var(--type-card-title)/var(--line-title) var(--font-display);text-overflow:ellipsis;white-space:nowrap}
+.listToggle{display:none}
+.visuallyHidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@media(max-width:48em){
+  .page{grid-template-columns:minmax(0,1fr)}
+  .listPane{position:static;max-height:none}
+  .listToggle{display:inline-flex}
+  .page[data-pane="chat"] .listPane{display:none}
+  .page[data-pane="list"] .chatPane{display:none}
+}

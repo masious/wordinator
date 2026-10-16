@@ -1,0 +1,9 @@
+/* The tutor call to action (docs/design-system.md, C14): the one large surface filled with the vivid accents. */
+.cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--card-inset);color:var(--color-vivid-text);text-decoration:none;background:var(--gradient-tutor);border-radius:var(--radius-xl);box-shadow:var(--shadow-card);transition:transform var(--motion-standard) var(--ease-physical),box-shadow var(--motion-standard) var(--ease-physical)}
+.cta:hover{transform:translateY(-2px);box-shadow:var(--shadow-raised)}
+.cta:focus-visible{outline:var(--border-strong);outline-color:var(--color-focus);outline-offset:4px}
+.copy{display:grid;gap:var(--space-1);min-width:0}
+.title{font:var(--type-card-title)/var(--line-title) var(--font-display)}
+.pitch{font-size:var(--type-body)}
+.button{display:inline-flex;align-items:center;gap:var(--space-2);min-height:var(--control-height);padding:0 var(--space-5);font:var(--weight-semibold) var(--type-control-label)/1 var(--font-sans);color:var(--color-vivid-violet);background:var(--color-vivid-text);border-radius:var(--radius-pill)}
+@media(prefers-reduced-motion:reduce){.cta{transition:none}.cta:hover{transform:none}}

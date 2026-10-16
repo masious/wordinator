@@ -38,7 +38,8 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
   const termOwner = useId();
   useStopSpeechOnUnmount(termOwner);
   const termLabel = t("courses.speech.term", { term: word.term });
-  const source = t("words.source", { course: card.course.title, lesson: card.lesson.title });
+  // A card without its course (the tutor's Quick review, docs/ai-tutor.md#answer-components) has no context line.
+  const source = card.course.title ? t("words.source", { course: card.course.title, lesson: card.lesson.title }) : null;
   const reveal = () => { if (revealed) return; playRevealSpeech(termOwner, word.speech.term); onReveal(); };
   const [answer, setAnswer] = useState<SpokenAnswer | null>(null);
   const spoken = useSpokenAnswer(word.term, (heard) => { if (revealed) return; setAnswer(heard); reveal(); }, { lessonId: card.lesson.id, wordId: word.id });
@@ -72,7 +73,7 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
           <SpeechButton url={word.speech.term} label={termLabel} owner={termOwner} />
           {word.forms && <p className={styles.forms}>{word.forms}</p>}
         </> : <>
-          <p className={styles.source}>{source}</p>
+          {source && <p className={styles.source}>{source}</p>}
           <p className={styles.meaningPrompt}><PlainText>{word.meaning}</PlainText></p>
           {word.example && <ProduceExample example={word.example} term={word.term} />}
         </>}
@@ -83,7 +84,7 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
         {revealed && <>
           {answer && <SpokenVerdict answer={answer} />}
           {answer?.assessment && <AssessmentBreakdown assessment={answer.assessment} />}
-          <p className={styles.source}>{source}</p>
+          {source && <p className={styles.source}>{source}</p>}
           <p className={styles.backTerm}>{word.term}<SpeechButton url={word.speech.term} label={termLabel} owner={termOwner} className={styles.speech} /></p>
           {word.forms && <p className={styles.forms}>{word.forms}</p>}
           <p className={styles.meaning}><PlainText>{word.meaning}</PlainText></p>

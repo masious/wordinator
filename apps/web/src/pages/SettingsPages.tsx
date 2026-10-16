@@ -8,6 +8,7 @@ import { Avatar, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, Loadi
 import { AvatarEditor } from "../molecules/AvatarEditor";
 import { RecognizerPreferenceControl } from "../molecules/RecognizerPreferenceControl";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
+import { TutorSettings } from "../organisms/Tutor/TutorSettings";
 import shellStyles from "./PhaseOnePages.module.css";
 import { ImageUpload } from "./PhaseFivePages";
 import styles from "./SettingsPages.module.css";
@@ -107,6 +108,7 @@ export function AccountSettingsPage({ groupId, global = false }: { groupId: stri
           <Link className={styles.adminLink} to="/admin/analytics">{t("analytics.settingsLink")}</Link></Surface>}
         <Surface className={styles.settingsPanel} tone="inset"><ThemePreferenceControl /></Surface>
         <Surface className={styles.settingsPanel} tone="inset"><RecognizerPreferenceControl /></Surface>
+        {global && <Surface className={styles.settingsPanel}><TutorSettings /></Surface>}
         <Surface className={styles.settingsPanel}><SectionHeader title={t("settings.passwordTitle")} /><form className={styles.form} onSubmit={(event) => { event.preventDefault(); password.mutate(); }}>
           <PasswordField label={t("settings.currentPassword")} value={currentPassword} minLength={6} onChange={(event) => setCurrentPassword(event.currentTarget.value)} required />
           <PasswordField label={t("auth.newPassword")} value={newPassword} minLength={6} onChange={(event) => setNewPassword(event.currentTarget.value)} required />

@@ -1,0 +1,77 @@
+/* Answer components (docs/design-system.md, C14): inset panels in the assistant's column, shared with the lesson page's AI practices. */
+.frame{display:grid;gap:var(--space-3);min-width:0;padding:var(--space-4);background:var(--color-surface-muted);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-inset-highlight)}
+.frame:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.eyebrow,.noteLabel{margin:0;font:var(--weight-medium) var(--type-eyebrow)/var(--line-compact) var(--font-mono);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
+.prompt{margin:0;font-family:var(--font-display);font-size:var(--text-xl);line-height:var(--line-title);color:var(--color-foreground);overflow-wrap:anywhere;white-space:pre-wrap}
+.promptRow{display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap}
+.blank{display:inline-block;min-width:3em;border-bottom:var(--border-strong);color:var(--color-foreground-muted);font-family:var(--font-mono);font-size:var(--type-metadata);text-align:center}
+.muted{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted);white-space:pre-wrap}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:var(--space-3)}
+.matched textarea,.matched input{border-color:var(--color-success)}
+.answerRow{display:flex;align-items:flex-end;gap:var(--space-2)}
+.answerRow>:first-child{flex:1;min-width:0}
+.submitRow{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:var(--space-3)}
+.sendError{margin:0;font-size:var(--type-metadata);color:var(--color-danger-text)}
+.waiting{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+
+/* Word order: hairline pill chips that move between the pool and the answer row. */
+.chipRow{display:flex;flex-wrap:wrap;gap:var(--space-2);min-height:calc(var(--control-height) + var(--space-2) * 2);padding:var(--space-2);margin:0;list-style:none;border:var(--ring-hairline);border-radius:var(--radius-md)}
+.answerChips{background:var(--color-core)}
+.poolChips{border-style:dashed;background:var(--color-wash-subtle)}
+.chipRow li{display:contents}
+.chipButton{min-height:var(--control-height-sm);padding:var(--space-1) var(--space-3);font:var(--weight-medium) var(--type-body)/var(--line-compact) var(--font-sans);color:var(--color-foreground);background:var(--color-control-surface);border:var(--ring-hairline);border-radius:var(--radius-pill);box-shadow:var(--shadow-card);cursor:grab;transition:transform var(--motion-standard) var(--ease-physical),background var(--motion-standard) var(--ease-physical)}
+.chipButton:hover:not(:disabled){transform:translateY(-2px)}
+.chipButton:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.chipButton:disabled{cursor:default;box-shadow:none}
+.rowLabel{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+
+/* De or het: two (or three) large toggle pills per noun. */
+.nouns{display:grid;gap:var(--space-3);margin:0;padding:0;list-style:none}
+.noun{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3)}
+.nounText{display:grid;gap:var(--space-1);min-width:0}
+.nounTerm{font-family:var(--font-display);font-size:var(--text-xl);color:var(--color-foreground)}
+.toggles{display:flex;gap:var(--space-2)}
+.toggle{min-width:5rem;min-height:var(--control-height-lg);padding:0 var(--space-5);font:var(--weight-semibold) var(--text-lg)/1 var(--font-sans);color:var(--color-foreground);background:var(--color-control-surface);border:var(--ring-hairline);border-radius:var(--radius-pill);cursor:pointer;transition:background var(--motion-press) var(--ease-physical),transform var(--motion-press) var(--ease-physical)}
+.toggle:active:not(:disabled){transform:scale(.96)}
+.toggle:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.toggle[aria-pressed="true"]{background:var(--color-selected);border-color:var(--color-highlight)}
+.toggle:disabled{cursor:default}
+.toggle[data-ok="false"]{border-color:var(--color-danger)}
+.toggle[data-ok="true"]{border-color:var(--color-success)}
+
+/* Multiple choice: full-width choice tiles with a mono key number. */
+.options{display:grid;gap:var(--space-2);margin:0;padding:0;list-style:none}
+.option{display:flex;align-items:center;gap:var(--space-3);width:100%;min-height:var(--touch-target);padding:var(--space-2) var(--space-4);font:var(--type-body)/var(--line-body) var(--font-sans);color:var(--color-foreground);text-align:left;background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-md);cursor:pointer;transition:background var(--motion-press) var(--ease-physical)}
+.option:hover:not(:disabled){background:var(--color-hover)}
+.option:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.option:disabled{cursor:default}
+.option[aria-pressed="true"]{background:var(--color-selected);border-color:var(--color-highlight)}
+.option[data-correct]{border-color:var(--color-success);background:var(--color-success-surface)}
+.key{flex:none;padding:0 var(--space-1);font:var(--type-metadata)/1.4 var(--font-mono);color:var(--color-foreground-muted);border:var(--ring-hairline);border-radius:var(--radius-sm)}
+
+/* Quick review: the drill card at word card size. */
+.review{--size-drill-card:var(--size-word-card-roomy);display:grid;gap:var(--space-3)}
+.reviewList{display:grid;gap:var(--space-1);margin:0;padding:0;list-style:none}
+.reviewList li{display:flex;justify-content:space-between;gap:var(--space-3);font-size:var(--type-metadata)}
+.reviewList [data-result="got"]{color:var(--color-success)}
+.reviewList [data-result="again"]{color:var(--color-danger-text)}
+
+.notice{margin:0;padding:var(--space-3) var(--space-4);font-size:var(--type-metadata);color:var(--color-foreground);background:var(--color-highlight-soft);border-radius:var(--radius-md)}
+.noticeRow{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3)}
+
+/* The verdict badge, as on drill cards. */
+.grade{display:grid;gap:var(--space-2);justify-items:start}
+.verdict{display:inline-flex;align-items:center;gap:var(--space-2);margin:0;padding:var(--space-1) var(--space-4) var(--space-1) var(--space-1);background:var(--color-highlight-soft);border:var(--ring-hairline);border-color:var(--color-highlight);border-radius:var(--radius-pill);box-shadow:var(--shadow-card);animation:verdictIn var(--motion-overlay) var(--ease-physical) both}
+.verdict[data-match]{background:var(--color-success-surface);border-color:var(--color-success)}
+.verdictIcon{display:inline-grid;place-items:center;flex:none;width:24px;height:24px;color:var(--color-page);background:var(--color-highlight);border-radius:50%}
+.verdict[data-match] .verdictIcon{background:var(--color-success)}
+.verdictLabel{font-weight:var(--weight-semibold);color:var(--color-foreground)}
+.items{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0;padding:0;list-style:none}
+.items li{display:inline-flex;gap:var(--space-1);padding:var(--space-1) var(--space-2);font-size:var(--type-metadata);border:1px solid var(--color-danger);border-radius:var(--radius-sm)}
+.items li[data-ok]{border-color:var(--color-success)}
+.note,.reference{display:grid;gap:var(--space-1);justify-self:stretch;padding:var(--space-3) var(--space-4);border-radius:var(--radius-md)}
+.note{background:var(--color-wash)}
+.reference{background:var(--color-support-soft)}
+.noteText,.referenceText{margin:0;font-size:var(--type-authored);line-height:var(--line-body);white-space:pre-wrap;overflow-wrap:anywhere}
+@keyframes verdictIn{0%{opacity:0;transform:translateY(var(--space-2)) scale(.6)}60%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.verdict,.chipButton,.toggle,.option{animation:none;transition:none}}

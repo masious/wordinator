@@ -1,5 +1,6 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, lessonProgressResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema, speechRecognitionTokenResponseSchema, type SpeechRecognitionTokenResponse } from "@wordinator/contracts";
 import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
+import { tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorProfileResponseSchema } from "@wordinator/contracts/tutor";
 import { weakWordsPageSchema } from "@wordinator/contracts/weak-words";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
@@ -240,3 +241,32 @@ export function speechRecognitionTokenSource(groupId: string) {
     forget: () => { recognitionTokens.delete(groupId); },
   };
 }
+
+// The AI tutor (C14i, docs/ai-tutor.md#api). Everything lives under one `tutor` prefix; a conversation's messages are nested
+// under its key, newest page first, as the API returns them.
+export const tutorKey = ["tutor"] as const;
+export const tutorConversationsKey = [...tutorKey, "conversations"] as const;
+export const tutorConversationsQueryOptions = (archived: boolean) => infiniteQueryOptions({
+  queryKey: [...tutorConversationsKey, archived ? "archived" : "active"] as const,
+  initialPageParam: undefined as string | undefined,
+  queryFn: ({ pageParam }) => apiRequest(`/api/ai/conversations?archived=${archived}${pageParam ? `&cursor=${encodeURIComponent(pageParam)}` : ""}`, tutorConversationPageSchema),
+  getNextPageParam: (page) => page.nextCursor ?? undefined,
+});
+export const tutorConversationQueryOptions = (conversationId: string) => queryOptions({
+  queryKey: [...tutorKey, "conversation", conversationId] as const,
+  queryFn: () => apiRequest(`/api/ai/conversations/${encodeURIComponent(conversationId)}`, tutorConversationResponseSchema),
+  retry: false,
+});
+export const tutorMessagesKey = (conversationId: string) => [...tutorKey, "conversation", conversationId, "messages"] as const;
+export const tutorMessagesQueryOptions = (conversationId: string) => infiniteQueryOptions({
+  queryKey: tutorMessagesKey(conversationId),
+  initialPageParam: undefined as string | undefined,
+  queryFn: ({ pageParam }) => apiRequest(`/api/ai/conversations/${encodeURIComponent(conversationId)}/messages${pageParam ? `?cursor=${encodeURIComponent(pageParam)}` : ""}`, tutorMessagePageSchema),
+  getNextPageParam: (page) => page.nextCursor ?? undefined,
+  retry: false,
+});
+export const tutorProfileQueryOptions = () => queryOptions({
+  queryKey: [...tutorKey, "profile"] as const,
+  queryFn: () => apiRequest("/api/ai/profile", tutorProfileResponseSchema),
+  retry: false,
+});

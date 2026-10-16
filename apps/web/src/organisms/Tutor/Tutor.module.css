@@ -1,0 +1,76 @@
+/* The tutor's chat surfaces (docs/design-system.md, C14). */
+.chat{display:grid;gap:var(--space-4);min-width:0}
+.messages{display:grid;gap:var(--space-5);min-width:0}
+.earlier{justify-self:center}
+.privacy,.emptyChat,.thinking,.composerNote,.listEmpty{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.privacy{padding:var(--space-3) var(--space-4);background:var(--color-wash-subtle);border:var(--ring-hairline);border-radius:var(--radius-md)}
+.thinking{animation:pulse var(--motion-reveal) var(--ease-physical) infinite alternate}
+
+/* Learner messages: right-aligned highlight bubbles in authored text. */
+.userRow{display:flex;justify-content:flex-end}
+.userBubble{max-width:min(36rem,85%);margin:0;padding:var(--space-3) var(--space-4);font-size:var(--type-authored);line-height:var(--line-body);color:var(--color-foreground);white-space:pre-wrap;overflow-wrap:anywhere;background:var(--color-highlight-soft);border-radius:var(--radius-lg)}
+
+/* Assistant messages: unframed, left-aligned, sections under mono eyebrows. */
+.assistant{display:grid;gap:var(--space-3);min-width:0}
+.assistantText{display:grid;gap:var(--space-4);min-width:0;font-size:var(--type-body);line-height:var(--line-body);color:var(--color-foreground)}
+.section{display:grid;gap:var(--space-2);min-width:0}
+.sectionLabel{margin:0;font:var(--weight-medium) var(--type-eyebrow)/var(--line-compact) var(--font-mono);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
+.paragraph{margin:0;overflow-wrap:anywhere}
+.list{display:grid;gap:var(--space-1);margin:0;padding-inline-start:var(--space-6)}
+.code{padding:0 var(--space-1);font:.92em/1.4 var(--font-mono);background:var(--color-wash-strong);border-radius:var(--radius-sm)}
+.target{font-weight:var(--weight-medium)}
+.spanSpeech{margin-inline-start:var(--space-1)}
+
+/* Tool steps: post-type label chips with a status icon; an opened chip shows its detail below. */
+.step{display:grid;gap:var(--space-1);justify-items:start}
+.chip{display:inline-flex;align-items:center;gap:var(--space-2);min-height:28px;padding:var(--space-1) var(--space-3);font:var(--type-metadata)/var(--line-compact) var(--font-mono);color:var(--color-foreground);background:var(--color-wash);border:var(--ring-hairline);border-radius:var(--radius-pill);cursor:pointer}
+.chip:disabled{cursor:default;color:var(--color-foreground)}
+.chip:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.chipIcon{display:inline-grid;place-items:center}
+.step[data-status="done"] .chipIcon{color:var(--color-success)}
+.step[data-status="failed"] .chipIcon{color:var(--color-danger-text)}
+.chip[aria-expanded="true"] .chipChevron{transform:rotate(180deg)}
+.chipChevron{transition:transform var(--motion-standard) var(--ease-physical)}
+.spinner{animation:spin var(--motion-overlay) linear infinite}
+.stepDetail{padding:var(--space-2) var(--space-3);font-size:var(--type-metadata);background:var(--color-wash-subtle);border:var(--ring-hairline);border-radius:var(--radius-md)}
+.stepDetail p{margin:0}
+.stepDetail dl{display:grid;gap:var(--space-1);margin:0}
+.stepDetail dl div{display:flex;gap:var(--space-2)}
+.stepDetail dt{font-family:var(--font-mono);color:var(--color-foreground-muted)}
+.stepDetail dd{margin:0;overflow-wrap:anywhere}
+
+/* Confirmation cards: inset surfaces; answered ones collapse to a muted line. */
+.card{display:grid;gap:var(--space-3);padding:var(--space-4);background:var(--color-surface-muted);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-inset-highlight)}
+.cardSummary{margin:0;font-weight:var(--weight-semibold)}
+.cardDetails{display:grid;gap:var(--space-1);margin:0;padding-inline-start:var(--space-5);font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.cardActions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:var(--space-2)}
+.answeredCard{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.errorPart{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3);padding:var(--space-3) var(--space-4);background:var(--color-danger-surface);border-radius:var(--radius-md)}
+.errorPart p{margin:0;color:var(--color-danger-text)}
+.errorLine{margin:0;font-size:var(--type-metadata);color:var(--color-danger-text)}
+
+/* The composer: a sticky bottom bar with the shared textarea and a primary icon send button. */
+.composer{position:sticky;bottom:var(--space-3);z-index:var(--z-content);display:flex;align-items:flex-end;gap:var(--space-2);padding:var(--space-3);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-floating)}
+.composerField{flex:1;min-width:0}
+.send{flex:none;width:var(--touch-target);height:var(--touch-target);color:var(--color-action-text);background:var(--color-action);border-radius:var(--radius-pill)}
+
+/* The conversation list. */
+.conversationList{display:grid;gap:var(--space-3)}
+.listHead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-2)}
+.views{display:inline-flex;padding:2px;background:var(--color-wash-strong);border-radius:var(--radius-pill)}
+.views button{min-height:var(--control-height-sm);padding:0 var(--space-3);font:var(--weight-medium) var(--type-metadata)/1 var(--font-sans);color:var(--color-foreground-muted);background:none;border:0;border-radius:var(--radius-pill);cursor:pointer}
+.views button[aria-pressed="true"]{color:var(--color-foreground);background:var(--color-core);box-shadow:var(--shadow-card)}
+.views button:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.listItems{display:grid;gap:var(--space-1);margin:0;padding:0;list-style:none}
+.listItem{display:flex;align-items:center;gap:var(--space-1);border-radius:var(--radius-md)}
+.listItem[data-active]{background:var(--color-core)}
+.listItem a{display:grid;flex:1;min-width:0;min-height:var(--touch-target);align-content:center;padding:var(--space-2) var(--space-3);color:var(--color-foreground);text-decoration:none;border-radius:var(--radius-md)}
+.listItem a:hover{background:var(--color-hover)}
+.listItem a:focus-visible{outline:var(--border-strong);outline-offset:-2px}
+.listTitle{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:var(--weight-medium)}
+.listDate{font:var(--text-xs)/1.3 var(--font-mono);color:var(--color-foreground-muted)}
+
+.visuallyHidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+@keyframes spin{to{transform:rotate(1turn)}}
+@keyframes pulse{from{opacity:1}to{opacity:.5}}
+@media(prefers-reduced-motion:reduce){.spinner,.thinking{animation:none}.chipChevron{transition:none}}

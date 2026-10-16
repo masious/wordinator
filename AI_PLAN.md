@@ -202,19 +202,31 @@ Delivered as migration `0030_ai_practices.sql` (+ Drizzle `aiPractices`, `aiPrac
 - **Decisions.** An answer is recorded under the lesson it was answered on (the stored payload's `lessonId` is overridden), so attempts and resets follow that lesson. Answers can be repeated. Archived courses grade but record nothing (`recorded: false`). The open-kind judge is metered with `turn_start` false and no conversation; it is skipped (comparison only, no verdict, not accepted) when no provider answers or the account has reached its daily turn cap, so the lesson page cannot run unbounded model calls. Word order views are shuffled with a generator seeded by the practice ID, so every read offers the same chunks; grading checks the chunks against the payload. An unpublished lesson shows no AI practices and counts 0, but its tags are kept and removable by editors. `ai_practices.created_by_user_id` cascades from the user; `conversation_id` has no foreign key.
 - **Not covered here:** saving trusts the tutor to have validated the payload with the contracts (a stored payload the contracts later refuse is skipped on read).
 
-## C14i — Tutor web
+## C14i — Tutor web (completed 2026-10-16)
 
-- [ ] A colourful CTA on `/courses`, and a `/ai` route with a conversation list (active and archived) and the chat. Responsive, so mobile has every feature.
-- [ ] Message rendering: plain text for the user; a safe markdown-subset renderer for the assistant with small sections (no raw HTML, only `http`/`https` links). Target-language spans get a speaker button that requests on-demand speech and plays through the shared `Speech` element.
-- [ ] Tool steps as compact chips with an expandable detail; Confirm / Cancel cards.
-- [ ] Answer components:
+- [x] A colourful CTA on `/courses`, and a `/ai` route with a conversation list (active and archived) and the chat. Responsive, so mobile has every feature.
+- [x] Message rendering: plain text for the user; a safe markdown-subset renderer for the assistant with small sections (no raw HTML, only `http`/`https` links). Target-language spans get a speaker button that requests on-demand speech and plays through the shared `Speech` element.
+- [x] Tool steps as compact chips with an expandable detail; Confirm / Cancel cards.
+- [x] Answer components:
   - Fill in the blank.
   - Translate into Dutch with a microphone through `useSpokenAnswer`, with the answer window extended for sentences (the current `MAX_ANSWER_MS` targets single terms).
   - Word order with click-to-place and drag, keyboard accessible.
   - De or het (two large toggle buttons per noun), Multiple choice (keyboard 1–4), Quick review (reusing the drill card), Say it and Dictation (on-demand audio plus the recognizer or a text field), Fix the mistake (a pre-filled editable sentence).
-- [ ] Settings: a Tutor section (native language, reply language, goals). The daily-limit state is shown in the composer.
-- [ ] All copy goes behind i18next keys; tokens only, no raw values.
-- [ ] Tests: RTL for streaming render, sections, on-demand speech (loading, cached, limit), chips, confirmation, each component, archive, limit state.
+- [x] Settings: a Tutor section (native language, reply language, goals). The daily-limit state is shown in the composer.
+- [x] All copy goes behind i18next keys; tokens only, no raw values.
+- [x] Tests: RTL for streaming render, sections, on-demand speech (loading, cached, limit), chips, confirmation, each component, archive, limit state.
+
+### Notes (C14i)
+
+Delivered as `apps/web/src/routes/ai.tsx`, `pages/TutorPage.tsx`, `organisms/Tutor/` (`Chat`, `Messages`, `Markdown`, `ConversationList`, `TutorSettings`, `TutorCta`, `tutorApi`), `organisms/TutorComponents/`, the tutor query options in `api.ts`, the `tutor`, `tutorComponents`, and `tutorSettings` i18n blocks, and `--gradient-tutor` in `tokens.css`. Behavior is in [docs/ai-tutor.md](docs/ai-tutor.md); tests are listed in [docs/testing.md](docs/testing.md#ai-tutor-and-learning-data-c14).
+
+- **Route.** The open conversation is a search parameter, `/ai?conversation=<id>`, not a path segment: a new conversation is created by the first message (`POST /api/ai/conversations` then the message), and keeping one route means the page and its streaming turn stay mounted while the URL gains the ID. The loader warms `GET /api/ai/conversations/:id` and swallows a `404`, which the page shows as unavailable.
+- **For C14h: the TutorComponents API** (`apps/web/src/organisms/TutorComponents/index.tsx`). `AnswerComponent({ view, answer, grade, onAnswer, disabled?, clip?, language?, autoFocus? })` renders any view; each kind is also exported (`FillInComponent`, `TranslateComponent`, `WordOrderComponent`, `ArticleComponent`, `ChoiceComponent`, `QuickReviewComponent`, `SayItComponent`, `DictationComponent`, `FixMistakeComponent`) with `AnswerComponentProps<K>`. `view` is the contracts' `TutorComponentView`; `answer` and `grade` are the stored ones (with an answer the component is read-only, and the grade shows in place once present); `onAnswer(answer)` sends the contracts' `TutorComponentAnswer` once (a rejected promise re-opens the component with an error line, a resolved one keeps it locked until `grade` arrives). For a lesson page grading on the client, call `gradeTutorAnswer` in `onAnswer` and pass the result back as `grade`. Audio is a `ClipSource` (`{ key, load: () => Promise<ClipResult> }`, results `ready`/`pending`/`limit`/`unavailable`/`failed`); `ClipButton` does the `202` retries, caching, and hiding, so an AI practice dictation only needs its own `load` for its speech route. Answer components need a `SpeechRecognitionScope` around them for the microphone (the tutor page passes the library locale and `speechRecognitionTokenSource`).
+- **`useSpokenAnswer`** takes an optional fourth argument, the answer window: `WORD_ANSWER_WINDOW` (unchanged, the default) or `SENTENCE_ANSWER_WINDOW` (1.8 s of quiet, at most 20 s). `MAX_ANSWER_MS` is unchanged.
+- **Drill card.** `WordDrillCard` hides its course · lesson line when the card has no course title (Quick review cards carry none); Quick review sets `--size-drill-card` to `--size-word-card-roomy` in its own scope.
+- **Say it with the browser recognizer** shows the needs-Microsoft message and a Use Microsoft on this device button (the recognizer preference) instead of offering Translate: the component waits for its answer, so a new message is refused with `TURN_IN_PROGRESS` and there is no route to decline a component.
+- **Older messages** load with a Show earlier messages button rather than on scroll.
+- **Not covered here:** a decline or skip for a waiting component (an API change); Azure's own segmentation silence for long Translate answers through Microsoft (`recognizeOnceAsync` may end a paused sentence early; only the app-side window was extended); phone-width checks are left to C14j's Playwright run (RTL cannot lay out CSS).
 
 ## C14j — Critical paths and release
 

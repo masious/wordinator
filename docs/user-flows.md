@@ -91,7 +91,7 @@ C14d. [Words](words.md#weak-words-view) owns the rules.
 
 ## Study with the AI tutor
 
-Planned (C14). The [AI tutor](ai-tutor.md) owns the rules. It works the same on a phone and a desktop.
+In progress (C14): the tutor and its web (C14i) are in place; AI practices on lesson pages come with C14h. The [AI tutor](ai-tutor.md) owns the rules. It works the same on a phone and a desktop.
 
 1. On `/courses` a colourful Ask your tutor card opens `/ai` with a new conversation; earlier conversations are listed beside it (or behind a list button on a phone), with archived ones in their own view.
 2. The learner asks what to study next. The tutor shows its steps as small chips (Checked your progress, Looked up lesson 6) and explains the lesson's grammar and words in short sections; Dutch phrases have speaker buttons that play them on request.

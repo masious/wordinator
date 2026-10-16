@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AiRouteImport } from './routes/ai'
 import { Route as CoursesRouteImport } from './routes/courses'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as NotificationsRouteImport } from './routes/notifications'
@@ -42,6 +43,11 @@ import { Route as GroupsGroupIdCoursesCourseIdLessonsLessonIdRouteImport } from 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiRoute = AiRouteImport.update({
+  id: '/ai',
+  path: '/ai',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CoursesRoute = CoursesRouteImport.update({
@@ -197,6 +203,7 @@ const GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai': typeof AiRoute
   '/courses': typeof CoursesRoute
   '/journal': typeof JournalRoute
   '/notifications': typeof NotificationsRoute
@@ -228,6 +235,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai': typeof AiRoute
   '/courses': typeof CoursesRoute
   '/journal': typeof JournalRoute
   '/notifications': typeof NotificationsRoute
@@ -260,6 +268,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai': typeof AiRoute
   '/courses': typeof CoursesRoute
   '/journal': typeof JournalRoute
   '/notifications': typeof NotificationsRoute
@@ -293,6 +302,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai'
     | '/courses'
     | '/journal'
     | '/notifications'
@@ -324,6 +334,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai'
     | '/courses'
     | '/journal'
     | '/notifications'
@@ -355,6 +366,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/ai'
     | '/courses'
     | '/journal'
     | '/notifications'
@@ -387,6 +399,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiRoute: typeof AiRoute
   CoursesRoute: typeof CoursesRoute
   JournalRoute: typeof JournalRoute
   NotificationsRoute: typeof NotificationsRoute
@@ -424,6 +437,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai': {
+      id: '/ai'
+      path: '/ai'
+      fullPath: '/ai'
+      preLoaderRoute: typeof AiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/courses': {
@@ -627,6 +647,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiRoute: AiRoute,
   CoursesRoute: CoursesRoute,
   JournalRoute: JournalRoute,
   NotificationsRoute: NotificationsRoute,

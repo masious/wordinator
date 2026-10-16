@@ -348,6 +348,11 @@ const QUIET_LEVEL = 0.04;
 // and at the latest MAX_ANSWER_MS after speech began. Terms are a word or a short phrase.
 export const END_SILENCE_MS = 900;
 export const MAX_ANSWER_MS = 6000;
+// A whole sentence (the tutor's Translate into Dutch, docs/ai-tutor.md#answer-components) gets a longer window and a longer pause
+// before the answer ends, since people pause between words while building one.
+export type AnswerWindow = { maxAnswerMs: number; endSilenceMs: number };
+export const WORD_ANSWER_WINDOW: AnswerWindow = { maxAnswerMs: MAX_ANSWER_MS, endSilenceMs: END_SILENCE_MS };
+export const SENTENCE_ANSWER_WINDOW: AnswerWindow = { maxAnswerMs: 20_000, endSilenceMs: 1_800 };
 const SPEECH_MARGIN = 0.12;
 const MIN_LEVEL = 0.01;
 
@@ -356,8 +361,8 @@ const MIN_LEVEL = 0.01;
 // `onAnswer` gets the best alternative and whether any alternative matched. While it listens, `status` is its phase, `interim`
 // what has been heard so far, and `quiet` whether the microphone has heard nothing for QUIET_NUDGE_MS; `meterRef` takes the
 // element whose `--level` (0–1) follows the microphone. Unmounting the card cancels it. `available` is false outside a scope or
-// where no recognizer can run.
-export function useSpokenAnswer(term: string, onAnswer: (answer: SpokenAnswer) => void, word?: AssessedWord) {
+// where no recognizer can run. `answerWindow` sets how long an answer may last (a word's by default; SENTENCE_ANSWER_WINDOW for sentences).
+export function useSpokenAnswer(term: string, onAnswer: (answer: SpokenAnswer) => void, word?: AssessedWord, answerWindow: AnswerWindow = WORD_ANSWER_WINDOW) {
   const scope = useContext(RecognitionScopeContext);
   const recognizer = effectiveRecognizer(useRecognizerPreference());
   const [status, setStatus] = useState<ListenStatus>("idle");
@@ -424,7 +429,7 @@ export function useSpokenAnswer(term: string, onAnswer: (answer: SpokenAnswer) =
       const loud = floor !== null && level > floor + SPEECH_MARGIN;
       floor = floor === null || level < floor ? level : floor + (level - floor) * (loud ? 0.002 : 0.05);
       if (loud) { lastLoud = now; speechAt ??= now; }
-      if (speechAt !== null && !finishing && (now - lastLoud >= END_SILENCE_MS || now - speechAt >= MAX_ANSWER_MS)) self.finish();
+      if (speechAt !== null && !finishing && (now - lastLoud >= answerWindow.endSilenceMs || now - speechAt >= answerWindow.maxAnswerMs)) self.finish();
     };
     run.current = self;
     setStatus("preparing"); setInterim(""); setQuiet(false);
