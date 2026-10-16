@@ -168,6 +168,21 @@ describe("stream formats", () => {
     expect(result).toMatchObject({ text: "Hoi", finishReason: "tool_calls", usage: { tokensIn: 7, tokensOut: 2 } });
     expect(result.toolCalls).toEqual([{ id: "chatcmpl-tool-1", name: "get_lesson", arguments: "{\"lessonId\": \"l4\"}" }]);
   });
+
+  it("reads a Workers AI chunk that carries both formats once", async () => {
+    const both = (response: string, choiceDelta: Record<string, unknown>, extra: Record<string, unknown> = {}) =>
+      event({ response, ...extra, choices: [{ index: 0, delta: choiceDelta }] });
+    const { binding } = stubBinding(async () => sseStream([
+      both("You", { content: "You" }), both(" **did**", { content: " **did**" }),
+      both("", { tool_calls: [{ index: 0, id: "chatcmpl-tool-2", type: "function", function: { name: "get_lesson", arguments: "{\"lessonId\":\"l5\"}" } }] },
+        { tool_calls: [{ name: "get_lesson", arguments: { lessonId: "l5" } }] }),
+      "data: [DONE]\n\n",
+    ]));
+    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [DEFAULT_AI_SETTINGS.providers[1]!, { ...DEFAULT_AI_SETTINGS.providers[0]!, enabled: false }, { ...DEFAULT_AI_SETTINGS.providers[2]!, enabled: false }] };
+    const result = await completeChat(request, options({ AI: binding }, fetch, { settings }));
+    expect(result.text).toBe("You **did**");
+    expect(result.toolCalls).toEqual([{ id: "chatcmpl-tool-2", name: "get_lesson", arguments: "{\"lessonId\":\"l5\"}" }]);
+  });
 });
 
 describe("fallback", () => {

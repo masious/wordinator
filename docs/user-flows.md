@@ -99,7 +99,18 @@ In progress (C14): the tutor and its web (C14i) and AI practices on lesson pages
 4. When they are done, the tutor offers to mark the lesson complete. A card with Confirm and Cancel appears; nothing changes until they confirm. Resetting a lesson or saving a practice for other learners asks the same way.
 5. After 40 turns in a UTC day the composer says the daily limit is reached and when it resets.
 6. The learner can archive a conversation and later unarchive it; conversations are never deleted.
-7. A practice the tutor saved shows up on its lesson page behind Show AI practices (*n*), placed after the block it belongs to, for everyone who reads the lesson. Readers answer it there and see the result at once; the course owner and contributors can remove it from the lesson after confirming.
+7. A practice the tutor saved shows up on its lesson page behind Show AI practices (*n*), placed after the block it belongs to, for everyone who reads the lesson.
+
+### Plan a study session (C14l, planned)
+
+Owned by [tutor sessions and memory](tutor-sessions-and-memory.md).
+
+1. Before the first message the learner opens Context and, for example, focuses on one course and turns on more weak words; the defaults come from Settings.
+2. They press Plan a session in the Session panel, or write "15 minutes, I feel rusty on last week's words". The tutor checks their weak words, recent topics, and due notes, and posts a dated plan: weak words from lesson 2.8, a few Say it sentences from recent lessons, modal verbs again (practised three days ago with two misses), a reading passage, and a summary.
+3. It works through the steps with answer components; the Session panel ticks steps off and counts questions answered and words reviewed. It may swap a later step when something goes badly.
+4. Along the way it teaches five extra time-of-day words. They appear in Words → From your tutor and in the Weak words view, and it adds a note to check them in three days.
+5. It ends with a summary of what was covered and the mistakes to watch, read back from the session's own results. The panel keeps the plan under Earlier sessions.
+6. Three days later, in a new conversation, the due note brings the tutor back to those words, mixed with the lesson's words. It may also leave a reading practice on lesson 2.8 marked Just for you. Readers answer it there and see the result at once; the course owner and contributors can remove it from the lesson after confirming.
 ## Share a piece of a lesson
 
 In progress (C11): sharing works from the lesson page, the dialogs, and the player; share posts get their own journal cards in C11d. [Lesson shares](lesson-shares.md) owns the rules.

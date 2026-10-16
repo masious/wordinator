@@ -10,7 +10,7 @@ Settings is one account-wide page at `/settings` for every signed-in account tha
 
 ### Tutor settings
 
-C14 (approved product change, 2026-10-15). A Tutor section on `/settings` edits the [tutor profile](ai-tutor.md#tutor-profile): native language (a select, English by default), reply language (my language, the library language, or mixed), and goals (optional plain text, at most 500 characters). Below them it shows the tutor's own notes about the learner, read-only, with Clear notes (confirmed). The section says plainly that tutor conversations are processed by external AI providers that may keep them (see [security and privacy](security-and-privacy.md#ai-tutor)). It saves with its own button through `PUT /api/ai/profile`.
+C14 (approved product change, 2026-10-15). A Tutor section on `/settings` edits the [tutor profile](ai-tutor.md#tutor-profile): native language (a select, English by default), reply language (my language, the library language, or mixed), and goals (optional plain text, at most 500 characters). Below them it shows the tutor's own notes about the learner, read-only, with Clear notes (confirmed). C14l turns the notes into a list of dated entries, each with Delete and an optional follow-up date, beside Clear all ([tutor notes](tutor-sessions-and-memory.md#tutor-notes)), and adds **Default context**: the sections and sizes of the tutor's starting context and an optional focus course, used by new conversations ([context scope](tutor-sessions-and-memory.md#context-scope)). The section says plainly that tutor conversations are processed by external AI providers that may keep them (see [security and privacy](security-and-privacy.md#ai-tutor)). It saves with its own button through `PUT /api/ai/profile`.
 
 ## Superuser
 

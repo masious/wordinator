@@ -16,13 +16,14 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [words.md](words.md) | Word cards, word bookmarks, the Words tab, the Weak words view, Drill (including spoken answers), word memory and its review log, and stored pronunciation scores |
 | [speech.md](speech.md) | Lesson speech: spoken items, voices, dialogue cast, pronunciation overrides, background generation, and playback; on-demand audio for tutor messages |
 | [ai-tutor.md](ai-tutor.md) | The AI tutor: entry point, conversations, formatting, tools and their visibility, confirmation, answer components, next lesson, providers and fallback, the daily cap, and prompt-injection rules |
+| [tutor-sessions-and-memory.md](tutor-sessions-and-memory.md) | Tutor study plans and the session panel, per-conversation context scope, dated tutor notes, practice topics, tutor words, word observations, personal practices, the reading component, and short prompt references (C14l) |
 | [content/index.md](content/index.md) | Course curriculum, storyline, and taught-topic coverage for member-authored Dutch Foundations content |
 | [settings-and-administration.md](settings-and-administration.md) | Settings page structure, the Tutor settings section, the superuser flag, analytics and AI settings, retired creator membership administration, and the interactive image cropper |
 | [notifications.md](notifications.md) | Notification triggers, read state, retention, and links |
 | [profiles-and-settings.md](profiles-and-settings.md) | Required account setup, public identity fields, and account preferences |
 | [design-system.md](design-system.md) | Visual language and canonical UI tokens |
 | [design-system-plan.md](design-system-plan.md) | Phase 0 design-system implementation tasks, sequencing, and completion criteria |
-| [AI_PLAN.md](../AI_PLAN.md) | AI tutor and learning data (C14) delivery steps, status, and release procedure |
+| [AI_PLAN.md](../AI_PLAN.md) | AI tutor and learning data (C14, including C14l tutor sessions and memory) delivery steps, status, and release procedure |
 | [SPEECH_PLAN.md](../SPEECH_PLAN.md) | Lesson speech (C10) delivery steps, status, and release procedure |
 | [architecture.md](architecture.md) | Runtime topology, monorepo boundaries, client/server responsibilities, and API conventions |
 | [data-model.md](data-model.md) | Conceptual entities, relationships, constraints, retention, and deletion semantics |

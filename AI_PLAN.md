@@ -244,6 +244,27 @@ Delivered as `apps/web/src/routes/ai.tsx`, `pages/TutorPage.tsx`, `organisms/Tut
 - [ ] Type-check, Vitest, Workers, RTL, Playwright, and production builds for web and API. Apply migrations to local, then production with the explicit target.
 - [ ] Release notes and roadmap status.
 
+## C14l — Tutor sessions and memory
+
+Requested and decided 2026-10-16. Runs after C14j and before C14k. Behavior is owned by [docs/tutor-sessions-and-memory.md](docs/tutor-sessions-and-memory.md); change the owner, not this list.
+
+Decided 2026-10-16:
+- Practice history comes from data: `ask_*` calls carry a `topic`, stored on attempts and reviews; notes become dated entries (with follow-up dates) for what data cannot say.
+- Words taught outside lessons are private **tutor words** that share word memory by term key; reviews and memory rows reference a lesson word or a tutor word. The tutor's free-chat impressions are separate **observations** that never change memory.
+- Practices built around tutor words are **personal**: shown on the lesson page to that learner only.
+- A session is a **dated plan inside the chat**, several per conversation; the session panel shows the active plan and earlier ones with counts, never right-and-wrong numbers.
+- The context scope is chosen **per conversation**, with defaults in Settings.
+- The prompt names IDs with short references (`L3`, `W12`) to cut snapshot tokens (UUIDs cost ~22–25 tokens each).
+
+- [x] Docs and decisions: new owner [docs/tutor-sessions-and-memory.md](docs/tutor-sessions-and-memory.md) in [docs/index.md](docs/index.md); [ai-tutor.md](docs/ai-tutor.md), [words.md](docs/words.md), [courses.md](docs/courses.md), [data-model.md](docs/data-model.md), [settings-and-administration.md](docs/settings-and-administration.md), [security-and-privacy.md](docs/security-and-privacy.md), [design-system.md](docs/design-system.md), [architecture.md](docs/architecture.md), [user-flows.md](docs/user-flows.md), [testing.md](docs/testing.md), and [roadmap.md](docs/roadmap.md).
+- [ ] Migration and contracts: the new tables and columns in [data-model.md](docs/data-model.md#tutor-sessions-and-memory) (moving `tutor_notes` into `learner_notes`); `tutorContextScopeSchema`, `tutorPlanStepsSchema`, the reading payload, view, and answer, `topic` on every payload, tutor word references in `words`.
+- [ ] Memory engine: reviews of tutor words; rebuild on tutor word removal; Weak words, Drill's Weak words, and the From your tutor view.
+- [ ] Tutor API: short references; the scoped snapshot (time, turns left, active plan, due follow-ups, topics, tutor words, earlier plans); the new tools; lesson-less attempts; the plan, context, notes, and tutor word routes; personal practices on the AI practice routes; the prompt's guidance on plans, pacing by turns left, notes and follow-ups, topic reuse, tutor words, and observations.
+- [ ] Web: the Session panel and plan part, Plan a session, the Context control and dialog, dated notes and Default context in Settings, Words → From your tutor, the reading component, Just for you practices.
+- [ ] Tests as listed in [docs/testing.md](docs/testing.md#ai-tutor-and-learning-data-c14); type-check, all suites, production builds, local migration; roadmap status.
+
+**Interaction with C14k:** profiles never show plans, notes, topics, tutor words, observations, or personal practices; lesson-less tutor answers count as answered AI questions without a course.
+
 ## C14k — Profile activity
 
 Requested 2026-10-16. **Secondary priority:** it runs last, after C14j, and has its own tests and release step. It needs C14c (`progress_events`, lesson states), C14g (tutor completions), and C14h (AI practices).
@@ -260,6 +281,7 @@ Decided 2026-10-16:
   - answering AI-generated questions, both tutor components and AI practices on lesson pages (counts only);
   - drill sessions.
 - A lesson reset removes that lesson's completion from the activity.
+- C14l's plans, notes, topics, tutor words, observations, and personal practices are never shown; lesson-less tutor answers count as answered AI questions without a course.
 
 **Conflicts to reconcile in the first step.** Each one reverses a recorded decision:
 - [profile pages are retired](docs/profiles-and-settings.md#profile-pages-retired);

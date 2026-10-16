@@ -170,6 +170,43 @@ ID, kind (`fill_in`, `translate`, `word_order`, `article`, `choice`, `dictation`
 
 Practice ID (cascading), lesson ID, course ID, after-block ID (a block of the lesson's published document when the tag was written), and position (0-based among the lesson's tags sharing that anchor, checked non-negative), with primary key `(practice_id, lesson_id)`. Rows cascade from their course and lesson, and lesson deletion removes them in its batch; a practice left without rows is deleted in the same batch, as is a practice whose last tag is removed. Indexed by `(lesson_id, after_block_id, position)` and `(course_id)`. Added in migration `0030_ai_practices.sql`.
 
+## Tutor sessions and memory
+
+Added in C14l (planned); [tutor sessions and memory](tutor-sessions-and-memory.md) owns behavior. One new migration adds these tables and columns; like the other learning tables none has `group_id`, every row belongs to one user and cascades from it, and reads always filter by the signed-in user.
+
+Changes to existing tables:
+
+- [`word_reviews`](#word_reviews): course, lesson, and word ID become nullable and a nullable `tutor_word_id` (cascading) is added; a check requires either the lesson word (course, lesson, and word ID) or the tutor word, never both, except on `seed` rows, which keep the lesson word. A nullable `topic_key` is added. Indexed by `(user_id, tutor_word_id)`.
+- [`word_memory`](#word_memory): the representative course, lesson, and word ID become nullable and a nullable representative `tutor_word_id` is added, with the same either-or check. A term reviewed as both a lesson word and a tutor word has one row, represented by its most recently reviewed occurrence.
+- [`practice_attempts`](#practice_attempts): course ID becomes nullable, allowed only for source `ai_chat` (a check), and a nullable `topic_key` and `topic_label` are added. Indexed by `(user_id, topic_key, created_at)`. Rows without a course are deleted only with their user.
+- [`ai_practices`](#ai_practices): a nullable `personal_user_id` (cascading); when set, the practice is a personal practice visible only to that user. The kind check adds `reading`. A nullable `topic_key`.
+- [`learner_profiles`](#learner_profiles): nullable `context_defaults` (JSON text per the contracts' `tutorContextScopeSchema`). `tutor_notes` is copied into one [`learner_notes`](#learner_notes) row and dropped.
+- [`ai_conversations`](#ai_conversations): nullable `context_scope` (JSON text, the same schema); null reads as the learner's defaults.
+
+### `ai_plans`
+
+ID, user ID, conversation ID (cascading), title, nullable target minutes, steps (JSON text per the contracts' `tutorPlanStepsSchema`: kind, label, nullable topic, lesson IDs, estimated minutes, and status `pending`, `active`, `done`, or `skipped`), status (`active`, `completed`, or `ended`, check-constrained), nullable summary, started timestamp, nullable ended timestamp, and updated timestamp. A partial unique index allows one `active` plan per conversation. Indexed by `(user_id, started_at)`. A plan whose status is `active` and whose `updated_at` is more than 24 hours old reads as `ended`.
+
+### `learner_notes`
+
+ID, user ID, text (plain text, at most 300 characters), nullable topic key and label, nullable follow-up date (a UTC day, `YYYY-MM-DD`), nullable conversation ID (no foreign key), and created/updated timestamps. At most 50 rows per user, enforced in the API. Indexed by `(user_id, updated_at)` and `(user_id, follow_up_on)`.
+
+### `tutor_words`
+
+ID, user ID, term, term key (`wordSearchKey` of the term), meaning, nullable forms, nullable example, nullable topic key and label, nullable conversation ID (no foreign key), and created/updated timestamps. Unique on `(user_id, term_key)`. At most 500 rows per user, enforced in the API. Deleting a row deletes its reviews and observations and rebuilds the memory rows of its term key in the same batch.
+
+### `tutor_word_lessons`
+
+Tutor word ID (cascading), lesson ID, and course ID, with primary key `(tutor_word_id, lesson_id)`; at most five per word. Rows cascade from their course and lesson. Indexed by `(lesson_id)`.
+
+### `word_observations`
+
+ID, user ID, term key, either a lesson word (course, lesson, and word ID, no foreign keys, like bookmarks) or a tutor word ID (cascading), kind (`used_correctly` or `struggled`, check-constrained), nullable note (at most 200 characters), nullable conversation ID, and created timestamp. Indexed by `(user_id, term_key, created_at)`. Never read by the memory engine. Lesson deletion and a lesson reset delete the lesson's rows for the affected learners, like reviews.
+
+### `ai_conversation_refs`
+
+Conversation ID (cascading), short reference (`L3`, `W12`, `T4`, `N2`, `P1`), kind, and the full ID, with primary key `(conversation_id, ref)` and a unique `(conversation_id, kind, target_id)`. Written the first time an ID is shown to the model in a conversation; see [short references](tutor-sessions-and-memory.md#short-references).
+
 ## Speech
 
 Added in C10a; migration `0019_speech.sql`. The [speech rules](speech.md) own behavior.
@@ -231,6 +268,7 @@ Opaque ID, group ID, recipient ID, actor ID, event type, optional post ID, optio
 - Lessons are hard-deleted with their documents, practice anchors, practice progress, practice attempts, word reviews recorded from them (memory rows of the affected terms are rebuilt in the same request), AI practice tags, and their lesson images (rows and R2 objects). The API deletes the R2 objects after the batch.
 - A lesson [reset](courses.md#reset) deletes one learner's position, completion, practice progress, practice attempts, and word reviews for the lesson, rebuilds the affected memory rows, and writes a `progress_events` row.
 - Tutor conversations are archived, never deleted. Usage rows, progress events, and pronunciation attempts are kept indefinitely.
+- Since C14l: plans, notes, tutor words, observations, and lesson-less attempts are kept until the learner removes them (notes and tutor words) or the account is deleted. A lesson reset keeps tutor words, personal practices, and lesson-less attempts; lesson deletion removes the lesson's tutor word tags, observations, and personal practice tags.
 - Removing a block from a lesson is an ordinary draft edit. A practice removed from both documents loses its anchor and progress at the next publish or discard, after the editor warns the owner when anyone has started it; images referenced by neither document are cleaned up as described under `course_media`.
 - Member departure never deletes authored content or reactions. Contributor departure or removal keeps their lessons and updated-by attribution. Lesson completions and positions also stay and are hidden while the member is not active.
 - Deleting a lesson deletes its completions and positions.

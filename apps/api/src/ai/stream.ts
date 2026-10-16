@@ -117,9 +117,11 @@ export class ChatStreamAccumulator {
           this.finishReason = choice.finish_reason;
         }
       }
+    } else {
+      // Workers AI native format. Some models send both formats in one chunk; reading both would double every token.
+      if (typeof chunk.response === "string") text += chunk.response;
+      if (Array.isArray(chunk.tool_calls)) this.pushToolCalls(chunk.tool_calls);
     }
-    if (typeof chunk.response === "string") text += chunk.response;
-    if (Array.isArray(chunk.tool_calls)) this.pushToolCalls(chunk.tool_calls);
     return { text, error: null };
   }
 
