@@ -44,7 +44,7 @@
 .ringFill{stroke:var(--color-action);stroke-linecap:round;transition:stroke-dasharray var(--motion-standard) var(--ease-physical)}
 .stop[data-status="current"] .lane::before{content:"";position:absolute;top:-10px;left:calc(var(--x) * 1% - var(--node) / 2 - 10px);width:calc(var(--node) + 20px);height:calc(var(--node) + 20px);background:var(--color-action);border-radius:var(--radius-pill);opacity:0;animation:halo 2.4s var(--ease-physical) infinite}
 
-.bubble{position:absolute;bottom:calc(100% + var(--space-4));left:0;z-index:1;padding:var(--space-1) var(--space-3);font-family:var(--font-mono);font-size:var(--type-eyebrow);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;white-space:nowrap;color:var(--color-surface-raised);background:var(--color-foreground);border-radius:var(--radius-pill);animation:bob 2.4s ease-in-out infinite}
+.bubble{position:absolute;bottom:calc(100% + var(--space-4));left:0;z-index:1;padding:var(--space-1) var(--space-3);font-family:var(--font-mono);font-size:var(--type-eyebrow);font-weight:var(--weight-semibold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;white-space:nowrap;color:var(--color-surface-raised);background:var(--color-foreground);border-radius:var(--radius-pill);animation:bob 2.4s var(--ease-physical) infinite}
 /* Narrow lanes are too thin to centre the bubble, so it starts at the lane edge and its arrow points at the node. */
 .bubble::after{content:"";position:absolute;top:100%;left:calc(var(--x) * var(--lane) / 100 - 6px);border:6px solid transparent;border-top-color:var(--color-foreground)}
 

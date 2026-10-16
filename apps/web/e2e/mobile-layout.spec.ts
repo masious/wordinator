@@ -199,43 +199,7 @@ test("mobile course page lists lessons that open their own page", async ({ page 
   await expectNoHorizontalOverflow(page, "practice answer dialog");
 });
 
-test("mobile lesson player stays within the viewport at every step", async ({ page }) => {
-  const api = courseApi(page);
-  const { course } = await api<{ course: { id: string } }>("/courses", { title: "Player course", summary: "Op reis" });
-  await api(`/courses/${course.id}/visibility`, { status: "published" });
-  await seedLesson(page, course.id, "Onderweg naar het station", [
-    example("Waar is het dichtstbijzijnde treinstation in deze buurt?", "Where is the nearest train station in this neighbourhood?", "Dichtstbijzijnde is een lange overtreffende trap."),
-    dialogue([{ speaker: "Reiziger", text: "Moet ik hier rechtdoor of linksaf?" }, { speaker: "Buurvrouw", text: "Rechtdoor, en dan de tweede straat rechts." }]),
-    practice("Vertaal.", [{ prompt: "Turn left at the traffic lights.", authorsVersion: ["Sla linksaf bij het verkeerslicht."] }]),
-  ]);
-
-  await page.goto(`/courses/${course.id}`, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Start lesson 1", exact: true }).click();
-  const player = page.getByRole("dialog");
-  const steps: Array<[string, () => Promise<void>]> = [
-    ["example", () => expect(player.getByText("Step 1 of 4")).toBeVisible()],
-    ["dialogue", () => expect(player.getByText("Moet ik hier rechtdoor of linksaf?")).toBeVisible()],
-    ["dialogue turn", () => expect(player.getByText("Rechtdoor, en dan de tweede straat rechts.")).toBeVisible()],
-    ["practice", () => expect(player.getByText("Question 1 of 1")).toBeVisible()],
-  ];
-  for (const [index, [label, ready]] of steps.entries()) {
-    if (index > 0) await player.getByRole("button", { name: "Next" }).click();
-    await ready();
-    await expectNoHorizontalOverflow(page, `lesson player ${label}`);
-    if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-player-${label.replace(/ /g, "-")}.png` });
-  }
-  await player.getByLabel("Your answer").fill("Ga linksaf bij het stoplicht.");
-  // The first press checks the filled answer against the author's version; the next one finishes.
-  await player.getByRole("button", { name: "Finish lesson" }).click();
-  await expect(player.getByText("Author’s version")).toBeVisible();
-  await expectNoHorizontalOverflow(page, "lesson player answer check");
-  await player.getByRole("button", { name: "Finish lesson" }).click();
-  await expect(player.getByRole("heading", { name: "Lesson complete" })).toBeVisible();
-  await expectNoHorizontalOverflow(page, "lesson player finish");
-  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-player-finish.png` });
-});
-
-test("mobile new words panel and word recap stay within the viewport", async ({ page }) => {
+test("mobile word recap stays within the viewport", async ({ page }) => {
   const api = courseApi(page);
   const { course } = await api<{ course: { id: string } }>("/courses", { title: "Words course", summary: "Nieuwe woorden" });
   await api(`/courses/${course.id}/visibility`, { status: "published" });
@@ -247,20 +211,16 @@ test("mobile new words panel and word recap stay within the viewport", async ({ 
     ),
   ]);
 
+  // The lesson's own recap opens from its actions on the course page (the player that also offered it is retired).
   await page.goto(`/courses/${course.id}`, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Start lesson 1", exact: true }).click();
-  const player = page.getByRole("dialog");
-  await expect(player.getByRole("region", { name: "New words" })).toContainText("de overstapmogelijkheid");
-  await expectNoHorizontalOverflow(page, "lesson player new words panel");
-  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-player-words.png` });
-  await player.getByRole("button", { name: "Finish lesson" }).click();
-  await player.getByRole("button", { name: "Review words" }).click();
-  const platform = player.getByRole("article", { name: "het perron" });
+  await page.getByRole("button", { name: "Review the words of lesson 1: Op het station" }).click();
+  const recap = page.getByRole("dialog", { name: "Words of lesson 1" });
+  const platform = recap.getByRole("article", { name: "het perron" });
   await platform.getByRole("button", { name: "Show meaning" }).click();
   await expect(platform.getByText("the platform", { exact: true })).toBeVisible();
   await expectNoHorizontalOverflow(page, "lesson word recap");
   await expectRecapFits(page, "lesson word recap");
-  await pageToWord(player, "de overstapmogelijkheid");
+  await pageToWord(recap, "de overstapmogelijkheid");
   await expectNoHorizontalOverflow(page, "lesson word recap long term");
   await expectRecapFits(page, "lesson word recap long term");
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-word-recap.png` });

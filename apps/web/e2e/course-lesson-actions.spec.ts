@@ -10,9 +10,10 @@ test("each lesson on the course page starts or continues, reviews its words, and
   const api = courseApi(page);
   const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Op de markt" });
   await api(`/courses/${course.id}/visibility`, { status: "published" });
-  await seedLesson(page, course.id, `${suffix} first`, [
+  const opening = example("Twee euro.");
+  const firstId = await seedLesson(page, course.id, `${suffix} first`, [
     example("Wat kost dat?", "What does that cost?"), vocabulary({ term: "de appel", meaning: "the apple" }, { term: "duur", meaning: "expensive" }),
-    example("Twee euro."),
+    opening,
     practice("Vertaal.", [{ prompt: "The apple is expensive.", authorsVersion: ["De appel is duur."] }]),
     practice("Maak een vraag.", [{ prompt: "duur / de appel", authorsVersion: ["Is de appel duur?"] }]),
   ]);
@@ -43,14 +44,13 @@ test("each lesson on the course page starts or continues, reviews its words, and
   await expect(practices.getByRole("button", { name: /Maak een vraag\./ })).toContainText("Done");
   await page.keyboard.press("Escape");
 
-  // Start plays the lesson; leaving it mid-way turns the lesson's action into Continue at the saved step.
+  // Start opens the lesson's own page (the player is retired from the course page); once a place is saved in the lesson, its
+  // action turns into Continue, which opens the page at that place.
   await page.getByRole("button", { name: `Start lesson 1: ${first}` }).click();
-  const player = page.getByRole("dialog", { name: `Lesson 1 · ${first}` });
-  await expect(player.getByText("Step 1 of 4")).toBeVisible();
-  await player.getByRole("button", { name: "Next" }).click();
-  await expect(player.getByText("Step 2 of 4")).toBeVisible();
-  await page.keyboard.press("Escape");
+  await expect(page).toHaveURL(/\/lessons\/[^/?]+$/);
+  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await api(`/courses/${course.id}/lessons/${firstId}/position`, { stepKey: opening.id }, "PUT");
+  await page.goto(`/courses/${course.id}`);
   await page.getByRole("button", { name: `Continue lesson 1: ${first}` }).click();
-  await expect(player.getByText("Step 2 of 4")).toBeVisible();
-  await expect(player.getByText("Picked up where you left off.")).toBeVisible();
+  await expect(page).toHaveURL(/\/lessons\/[^?]+\?resume=true$/);
 });

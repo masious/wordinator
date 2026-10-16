@@ -6,11 +6,16 @@
 .header.header{padding-block:0}
 .header h1{max-width:none;font-size:var(--text-4xl)}
 /* The lesson filter and the Drill button sit in the header's action slot, aligned with the intro's last line. */
-.actions{display:flex;align-items:flex-end;gap:var(--space-3);min-width:0}
+.actions{display:flex;flex-wrap:wrap;justify-content:flex-end;align-items:flex-end;gap:var(--space-3);min-width:0}
 /* The button keeps its width and lines up with the select's control inside its bezel. */
 .actions>button{flex:none;margin-bottom:var(--space-1)}
 .filter{flex:0 1 var(--size-words-filter);min-width:0}
 /* On phones the intro gives way to the cards; the empty state still explains how to bookmark. */
 @media(max-width:48em){.page{gap:var(--space-4)}.header h1{font-size:var(--text-3xl)}.header p{display:none}}
-/* The Bookmarks | Weak words switch leads the action slot, lined up with the select's control like the Drill button. */
-.views{flex:none;margin-bottom:var(--space-1)}
+/* The Bookmarks | Weak words switch takes its own row above the filter and Drill, so the filter keeps its width beside the
+   intro. */
+.views{display:flex;flex-basis:100%;justify-content:flex-end}
+/* On phones the rows start at the left like the header, and the filter takes the room beside Drill. Its Lesson label is only
+   read out there (the field already shows All lessons or the lesson), so the switch's row costs the cards no height. */
+@media(max-width:48em){.actions,.views{justify-content:flex-start}.filter{flex:1 1 0}
+  .filter label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}}

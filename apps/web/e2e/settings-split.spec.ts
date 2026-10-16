@@ -1,13 +1,14 @@
 import { expect, test } from "@playwright/test";
-import { signIn } from "./auth";
+import { registerAccount } from "./auth";
 
 // A real, decodable 1×1 PNG so the browser's bitmap and canvas pipeline runs end to end.
 const PNG = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==", "base64");
 
 for (const viewport of [{ name: "desktop", width: 1440, height: 900 }, { name: "mobile", width: 390, height: 844 }]) {
-  test(`settings opens globally and uploads an avatar through the cropper (${viewport.name})`, async ({ page }) => {
+  test(`settings opens globally and uploads an avatar through the cropper (${viewport.name})`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width: viewport.width, height: viewport.height });
-    await signIn(page);
+    // Each variant (in each browser) has its own account; on the shared one, parallel runs change the same photo.
+    await registerAccount(page, testInfo, `settings${viewport.name}`);
 
     // Legacy group settings links land on the single global settings page.
     await page.goto("/groups/legacy-library/settings/members");
@@ -28,7 +29,8 @@ for (const viewport of [{ name: "desktop", width: 1440, height: 900 }, { name: "
     expect((await uploaded).status()).toBe(200);
     await expect(dialog).toBeHidden();
     await page.getByRole("button", { name: "Change profile photo" }).click();
-    await page.getByRole("menuitem", { name: "Remove photo" }).click();
+    // Chosen from the keyboard: under load WebKit can keep the opening menu moving long enough to fail a click's stability wait.
+    await page.getByRole("menuitem", { name: "Remove photo" }).press("Enter");
     await expect(page.getByRole("button", { name: "Choose a profile photo" })).toBeVisible();
   });
 }

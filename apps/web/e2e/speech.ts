@@ -51,7 +51,7 @@ export async function serveSpeech(page: Page) {
   return played;
 }
 
-// A learner plays a word, an example, and a dialogue on the lesson page, and a word and a dialogue line in the player.
+// A learner plays a word, an example, and a dialogue on the lesson page.
 export async function playLessonSpeech(page: Page, testInfo: TestInfo) {
   testInfo.setTimeout(60_000);
   const suffix = `speech-${uniqueTag(testInfo)}`;
@@ -71,10 +71,17 @@ export async function playLessonSpeech(page: Page, testInfo: TestInfo) {
 
   await page.goto(`/courses/${course.id}`);
   await openLesson(page);
-  const word = page.getByRole("complementary", { name: "New words" }).getByRole("button", { name: "Play pronunciation of het water" });
+  const panel = page.getByRole("complementary", { name: "New words" });
+  // On phones the panel is a collapsed bar above the dock; open it first.
+  await expect(panel).toBeVisible();
+  const toggle = panel.getByRole("button", { name: /^New words/ });
+  if (await toggle.count() && await toggle.getAttribute("aria-expanded") === "false") await toggle.click();
+  const word = panel.getByRole("button", { name: "Play pronunciation of het water" });
   await word.click();
   await expect(word).toHaveAttribute("aria-pressed", "true");
   await expect(word).toHaveAttribute("aria-pressed", "false");
+  // The opened bar covers the page on phones; close it again.
+  if (await toggle.count() && await toggle.getAttribute("aria-expanded") === "true") await toggle.click();
   const sentence = page.getByRole("button", { name: "Play the example sentence" });
   await sentence.click();
   await expect(sentence).toHaveAttribute("aria-pressed", "true");
@@ -97,19 +104,4 @@ export async function playLessonSpeech(page: Page, testInfo: TestInfo) {
   await page.getByRole("button", { name: "Resume dialogue" }).click();
   await expect(page.getByRole("button", { name: "Play dialogue" })).toBeVisible();
   await expect(second).not.toHaveAttribute("aria-current");
-
-  // In the player, a word plays from the step's New words panel and a line from the dialogue stage.
-  await page.getByRole("link", { name: /^Back to / }).click();
-  await page.getByRole("button", { name: "Start lesson 1", exact: true }).click();
-  const player = page.getByRole("dialog");
-  const panelWord = player.getByRole("region", { name: "New words" }).getByRole("button", { name: "Play pronunciation of het water" });
-  await panelWord.click();
-  await expect(panelWord).toHaveAttribute("aria-pressed", "true");
-  // Moving on stops the clip.
-  await player.getByRole("button", { name: "Next" }).click();
-  await expect(player.getByText("Hallo!")).toBeVisible();
-  const line = player.getByRole("button", { name: "Play line 1, Anna" });
-  await line.click();
-  await expect(line).toHaveAttribute("aria-pressed", "true");
-  await expect(line).toHaveAttribute("aria-pressed", "false");
 }

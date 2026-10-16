@@ -6,7 +6,7 @@ import { caretToEnd } from "./editor";
 import { expectRecapFits, finishRecap, pageToWord } from "./wordRecap";
 
 // The learner journey seeds its lessons through the API like the other course specs; authoring words is covered below.
-test("a learner sees new words on the steps that introduce them and reviews them after finishing", async ({ page }, testInfo) => {
+test("a learner reads new words beside the lesson, bookmarks them, and reviews them once the lesson is finished", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
   const suffix = `words-${uniqueTag(testInfo)}`;
   await signIn(page);
@@ -14,7 +14,7 @@ test("a learner sees new words on the steps that introduce them and reviews them
   const api = courseApi(page);
   const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Woorden" });
   await api(`/courses/${course.id}/visibility`, { status: "published" });
-  await seedLesson(page, course.id, `${suffix} lesson`, [
+  const lessonId = await seedLesson(page, course.id, `${suffix} lesson`, [
     example("Ik koop een kaartje.", "I buy a ticket."),
     vocabulary({ term: "het kaartje", meaning: "the ticket", forms: "de kaartjes", note: "Diminutive of de kaart." }),
     dialogue([{ speaker: "A", text: "Waar is de trein?" }, { speaker: "B", text: "Op spoor twee." }]),
@@ -25,56 +25,36 @@ test("a learner sees new words on the steps that introduce them and reviews them
 
   await page.goto(`/courses/${course.id}`);
   await expect(page.getByRole("button", { name: "Review words" })).toHaveCount(0);
-  // The lesson page lists the lesson's words beside the text instead of showing vocabulary blocks in place.
+  // The lesson page lists the lesson's words beside the text instead of showing vocabulary blocks in place; a word's forms and
+  // note open behind its chevron.
   await openLesson(page);
-  await expect(page.getByRole("complementary", { name: "New words" })).toContainText("het kaartje");
-  await expect(page.getByRole("region", { name: "New words" })).toHaveCount(0);
-  await page.getByRole("link", { name: /^Back to / }).click();
-
-  await page.getByRole("button", { name: "Start lesson 1", exact: true }).click();
-  const player = page.getByRole("dialog");
-  const panel = player.getByRole("region", { name: "New words" });
-  await expect(player.getByText("Step 1 of 4")).toBeVisible();
+  const panel = page.getByRole("complementary", { name: "New words" });
   await expect(panel).toContainText("het kaartje");
+  await expect(panel).toContainText("het spoor");
+  await expect(page.getByRole("region", { name: "New words" })).toHaveCount(0);
   await expect(panel.getByText("Diminutive of de kaart.")).toHaveCount(0);
   await panel.getByRole("button", { name: "Show more about het kaartje" }).click();
+  await expect(panel).toContainText("de kaartjes");
   await expect(panel).toContainText("Diminutive of de kaart.");
-  // Words can be bookmarked from the panel before the lesson is finished.
+  // Words can be bookmarked before the lesson is finished.
   const ticketBookmark = panel.getByRole("button", { name: "Bookmark het kaartje" });
   await expect(ticketBookmark).toHaveAttribute("aria-pressed", "false");
   await ticketBookmark.click();
   await expect(ticketBookmark).toHaveAttribute("aria-pressed", "true");
-  // A dialogue's word shows on the first line that uses it, not before.
-  await player.getByRole("button", { name: "Next" }).click();
-  await expect(player.getByText("Waar is de trein?", { exact: true })).toBeVisible();
-  await expect(panel).toHaveCount(0);
-  await player.getByRole("button", { name: "Next" }).click();
-  await expect(player.getByText("Op spoor twee.", { exact: true })).toBeVisible();
-  await expect(panel).toContainText("het spoor");
-  await player.getByRole("button", { name: "Next" }).click();
-  await expect(player.getByText("Tot ziens!")).toBeVisible();
-  await expect(panel).toHaveCount(0);
-  await player.getByRole("button", { name: "Finish lesson" }).click();
 
-  await expect(player.getByRole("heading", { name: "Lesson complete" })).toBeVisible();
-  await player.getByRole("button", { name: "Review words" }).click();
-  await expect(player.getByText(/^Words? 1\b.* of 2$/)).toBeVisible();
-  const ticket = player.getByRole("article", { name: "het kaartje" });
+  // A finished lesson (recorded through the API, as the tutor's confirmation does) adds its words to the course recap.
+  await api(`/courses/${course.id}/lessons/${lessonId}/completion`, {}, "PUT");
+  await page.goto(`/courses/${course.id}`);
+  await expect(page.getByText("2 words from the lessons you have finished.")).toBeVisible();
+  await page.getByRole("button", { name: "Review words" }).click();
+  const recap = page.getByRole("dialog", { name: "Review words" });
+  const ticket = recap.getByRole("article", { name: "het kaartje" });
   await expect(ticket).toContainText("de kaartjes");
-  await expect(player.getByText("the ticket")).toHaveCount(0);
   await ticket.getByRole("button", { name: "Show meaning" }).click();
   await expect(ticket.getByText("the ticket")).toBeVisible();
   // The recap card shows the bookmark made in the panel.
   await expect(ticket.getByRole("button", { name: "Bookmark het kaartje" })).toHaveAttribute("aria-pressed", "true");
-  await expectRecapFits(page, "lesson word recap");
-  await finishRecap(player, "Back to the summary");
-  await player.getByRole("button", { name: "Back to the course" }).click();
-
-  // The course recap covers the finished lesson only.
-  await expect(page.getByText("2 words from the lessons you have finished.")).toBeVisible();
-  await page.getByRole("button", { name: "Review words" }).click();
-  const recap = page.getByRole("dialog", { name: "Review words" });
-  await expect(recap.getByRole("article", { name: "het kaartje" })).toBeVisible();
+  await expectRecapFits(page, "course word recap");
   const track = await pageToWord(recap, "het spoor");
   await track.getByRole("button", { name: "Bookmark het spoor" }).click();
   await expect(track.getByRole("button", { name: "Bookmark het spoor" })).toHaveAttribute("aria-pressed", "true");
@@ -123,6 +103,7 @@ test("an author adds new words in the editor, fixes an empty meaning, and publis
 
   const words = page.getByRole("complementary", { name: "New words" });
   await expect(words).toContainText("het kaartje");
+  await words.getByRole("button", { name: "Show more about het kaartje" }).click();
   await expect(words).toContainText("de kaartjes");
   await expect(words).toContainText("to buy");
 });

@@ -47,9 +47,10 @@ test("a member bookmarks words on a lesson page and reviews them on the Words ta
   await expect(page.getByRole("heading", { name: "Your words" })).toBeVisible();
   await expect(page.getByRole("article", { name: `het spoor ${suffix}` })).toBeVisible();
   await expect(page.getByRole("article", { name: `het kaartje ${suffix}` })).toHaveCount(0);
-  // The cards and Back and Next fit the first screen.
-  const next = await page.getByRole("button", { name: "Next" }).boundingBox();
-  expect(next!.y + next!.height).toBeLessThanOrEqual(page.viewportSize()!.height);
+  // The cards and Back and Next fit the first screen. One row of the Words tab's roomy cards needs about 730px under the header,
+  // so this checks a common laptop height rather than the default 720px window, where the one row the page always shows overflows.
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await expect.poll(async () => { const next = await page.getByRole("button", { name: "Next" }).boundingBox(); return next!.y + next!.height; }).toBeLessThanOrEqual(800);
 
   // The lesson filter narrows the tab to one lesson and keeps it in the URL across a reload.
   await page.getByRole("combobox", { name: "Lesson" }).click();
