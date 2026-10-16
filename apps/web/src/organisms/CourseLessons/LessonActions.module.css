@@ -1,11 +1,11 @@
 .actions{flex:none}
-/* Phones: the group takes its own full-width row under the lesson link; the shared group shares it between the actions. */
-@media(max-width:40em){.actions{flex:1 1 100%;width:100%}}
+/* Phones (below 48em): the group takes its own full-width row under the lesson link; the shared group shares it between the actions. */
+@media(max-width:48em){.actions{flex:1 1 100%;width:100%}}
 .empty{margin:0;color:var(--color-foreground-muted)}
 .practices{display:grid;gap:var(--space-2);margin:0;padding:0;list-style:none}
-.practice{display:flex;align-items:baseline;gap:var(--space-3);width:100%;min-height:var(--touch-target);padding:var(--space-3) var(--space-4);font:inherit;color:var(--color-foreground);text-align:start;cursor:pointer;background:var(--color-bezel);border:var(--ring-hairline);border-radius:var(--radius-md);transition:background-color var(--motion-standard) var(--ease-physical)}
-.practice:hover{background:var(--color-wash)}
-.practice:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.practice{display:flex;align-items:baseline;gap:var(--space-3);width:100%;min-height:var(--touch-target);padding:var(--space-3) var(--space-4);font:inherit;color:var(--color-foreground);text-align:start;cursor:pointer;background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-md);transition:background-color var(--motion-standard) var(--ease-physical),border-color var(--motion-standard) var(--ease-physical)}
+.practice:hover{background:var(--color-wash-subtle);border-color:var(--color-action)}
+.practice:focus-visible{outline:var(--focus-ring-width) solid var(--color-action);outline-offset:var(--focus-ring-offset)}
 .practiceNumber{min-width:2ch;font-family:var(--font-mono);font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 .practiceCopy{display:grid;gap:var(--space-1);min-width:0}
 .instruction{display:-webkit-box;overflow:hidden;font-weight:var(--weight-semibold);overflow-wrap:anywhere;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2}

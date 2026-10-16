@@ -5,19 +5,41 @@
 .lessonLink:hover .lessonTitle{text-decoration:underline}
 .lessonLink:focus-visible{outline:var(--border-strong);outline-offset:2px;border-radius:var(--radius-sm)}
 .lessonNumber{min-width:2ch;font-family:var(--font-mono);font-size:var(--type-metadata);color:var(--color-foreground-muted)}
-/* A lesson's first image covers the card's full height along its left edge and fades into the card, so the text beside it stays
-   on the card's own colour; it sits under the card's content. The card clips it to its rounded corners; the image may be cropped. */
-.withImage{position:relative;isolation:isolate;overflow:hidden;padding-inline-start:calc(var(--size-lesson-image) - var(--space-6))}
-.lessonImage{position:absolute;inset-block:0;left:0;z-index:-1;width:var(--size-lesson-image);
+/* The course page's lesson list (Lumen lesson items): one bordered card on --color-core, rows split by hairlines. */
+.items{margin:0;padding:0;list-style:none;overflow:hidden;background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+.item{position:relative;isolation:isolate;display:grid;gap:var(--space-2);padding:var(--space-3) var(--card-inset);background:var(--color-core);transition:background-color var(--motion-standard) ease}
+.item+.item{border-top:var(--ring-hairline)}
+.item:hover{background:var(--color-wash-subtle)}
+.itemMain{display:flex;align-items:center;gap:var(--space-4)}
+.itemLink{display:flex;flex:1;align-items:flex-start;gap:var(--space-4);min-width:0;min-height:var(--touch-target);padding:var(--space-1) 0;color:var(--color-foreground);text-decoration:none}
+.itemLink:hover .itemTitle{color:var(--color-action-soft-text)}
+.itemLink:focus-visible{outline:var(--focus-ring-width) solid var(--color-action);outline-offset:var(--focus-ring-offset);border-radius:var(--radius-sm)}
+/* The number circle: a mono counter on the muted surface, accent while a saved step waits, a success check once finished. */
+.itemNumber{display:inline-grid;flex:none;place-items:center;width:var(--control-height-sm);height:var(--control-height-sm);color:var(--color-foreground-muted);background:var(--color-surface-muted);border:var(--ring-hairline);border-radius:50%;font:var(--weight-medium) var(--type-metadata)/1 var(--font-mono);font-variant-numeric:tabular-nums}
+.itemNumber[data-state="current"]{color:var(--color-action-soft-text);background:var(--color-action-soft);border-color:var(--color-action)}
+.itemNumber[data-state="done"]{color:var(--color-success);background:var(--color-success-surface);border-color:transparent}
+.itemNumber svg{width:1rem;height:1rem;stroke-width:2}
+.itemCopy{display:grid;gap:var(--space-1);min-width:0;padding-top:var(--space-1)}
+.itemTitle{font-size:var(--type-card-title);font-weight:var(--weight-semibold);line-height:var(--line-title);overflow-wrap:anywhere;transition:color var(--motion-standard) ease}
+.itemGoal{font-size:var(--text-sm);line-height:var(--line-body);color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}
+.itemStatus{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-1) var(--space-3);margin-top:var(--space-1)}
+.itemChips{display:flex;flex-wrap:wrap;gap:var(--space-2);padding-inline-start:calc(var(--control-height-sm) + var(--space-4))}
+/* A lesson's first image covers the row's full height along its left edge and fades into the card surface, so the text beside it
+   stays on --color-core; it sits under the row's content and may be cropped. The list clips it at its rounded corners. */
+.itemWithImage{padding-inline-start:calc(var(--size-lesson-image) - var(--space-6))}
+.itemImage{position:absolute;inset-block:0;left:0;z-index:-1;width:var(--size-lesson-image);
   mask-image:linear-gradient(to right,#000 35%,transparent);-webkit-mask-image:linear-gradient(to right,#000 35%,transparent)}
-.lessonImage img{display:block;width:100%;height:100%;object-fit:cover;object-position:left center}
-/* Narrow cards have no width to spare, so the image becomes a banner across the top that fades down into the card. */
+.itemImage img{display:block;width:100%;height:100%;object-fit:cover;object-position:left center}
+/* Phones: the image becomes a banner across the row's top that fades down into the card, and the actions stack under the link. */
 @media(max-width:48em){
-  .withImage{padding-inline-start:var(--card-inset);padding-block-start:calc(var(--size-lesson-image) - var(--space-6))}
-  .lessonImage{inset-block:0 auto;inset-inline:0;width:auto;height:var(--size-lesson-image);
+  .itemWithImage{padding-inline-start:var(--card-inset);padding-block-start:calc(var(--size-lesson-image) - var(--space-6))}
+  .itemImage{inset-block:0 auto;inset-inline:0;width:auto;height:var(--size-lesson-image);
     mask-image:linear-gradient(to bottom,#000 35%,transparent);-webkit-mask-image:linear-gradient(to bottom,#000 35%,transparent)}
-  .lessonImage img{object-position:center}
+  .itemImage img{object-position:center}
+  .itemMain{flex-wrap:wrap;gap:var(--space-2)}
+  .itemChips{padding-inline-start:0}
 }
+@media(prefers-reduced-motion:reduce){.item,.itemTitle{transition:none}}
 .lessonCopy{display:grid;gap:var(--space-1);min-width:0}
 .lessonTitle{font-family:var(--font-display);font-size:var(--type-card-title);font-weight:var(--weight-medium);line-height:var(--line-title);overflow-wrap:anywhere}
 /* The lesson page's reading column; the index and lesson box live in the app rail, the vocabulary panel in the right rail. */
@@ -67,8 +89,6 @@
 .recap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3)}
 .recap p{margin:0}
 .completed{font-size:var(--type-metadata);font-weight:var(--weight-semibold);color:var(--color-success)}
-.check{color:var(--color-success);font-weight:var(--weight-semibold)}
-.goal{margin:0;color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}
 .blocks{display:grid;gap:var(--space-5);margin:0;padding:0;list-style:none}
 .block{display:grid;gap:var(--space-2);min-width:0}
 .heading{margin:var(--space-4) 0 0;font-family:var(--font-display);font-size:var(--text-2xl);font-weight:var(--weight-medium);letter-spacing:var(--tracking-title);line-height:var(--line-title);overflow-wrap:anywhere}

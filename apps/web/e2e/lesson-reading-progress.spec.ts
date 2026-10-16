@@ -44,7 +44,7 @@ test("scrolling a lesson page fills its bar, saves the furthest step, and Contin
   // Eleven of twelve steps passed in the only lesson.
   await page.getByRole("link", { name: /^Back to / }).click();
   await expect(page.getByRole("heading", { name: "Pick up where you left off" })).toBeVisible();
-  await expect(page.getByRole("progressbar", { name: "Your course progress" })).toHaveAttribute("aria-valuenow", "91");
+  await expect(page.getByRole("progressbar", { name: "Your course progress" }).first()).toHaveAttribute("aria-valuenow", "91");
   await page.getByRole("button", { name: "Continue lesson 1", exact: true }).click();
   await expect(page).toHaveURL(/\/lessons\/[^?]+\?resume=true$/);
   await expect(page.getByText("Zin nummer 12 staat hier.")).toBeInViewport();

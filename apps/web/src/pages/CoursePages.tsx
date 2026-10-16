@@ -4,8 +4,10 @@ import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tansta
 import { Link, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { apiRequest, courseQueryOptions, coursesQueryOptions, courseSpeechCastQueryOptions, sessionQueryOptions } from "../api";
+import { ArrowLeft, BookOpen, UserRound } from "lucide-react";
+import { apiRequest, courseProgressQueryOptions, courseQueryOptions, coursesQueryOptions, courseSpeechCastQueryOptions, sessionQueryOptions } from "../api";
 import { PlainText } from "../molecules/PlainText";
+import { ProgressMeter } from "../molecules/ProgressMeter";
 import { CourseContributors } from "../organisms/CourseContributors/CourseContributors";
 import { CourseErrorMessage as ErrorMessage } from "../organisms/CourseLessons/CourseErrorMessage";
 import { CourseLessons, CourseLessonTools, LessonView } from "../organisms/CourseLessons/CourseLessons";
@@ -14,7 +16,7 @@ import { CourseResume } from "../organisms/CourseLessons/CourseResume";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { SpeechCastFields } from "../organisms/SpeechCast/SpeechCastFields";
 import { TutorCta } from "../organisms/Tutor/TutorCta";
-import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, MetadataRow, PageHeader, SectionHeader, Surface, TextAreaField, TextField } from "../ui";
+import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, MetadataItem, MetadataRow, PageHeader, SectionHeader, Surface, TextAreaField, TextField } from "../ui";
 import { ImageUpload } from "./PhaseFivePages";
 import shellStyles from "./PhaseOnePages.module.css";
 import styles from "./CoursePages.module.css";
@@ -104,31 +106,49 @@ export function CourseLibraryPage({ groupId }: { groupId: string }) {
 // Owners, contributors, and the site creator (who may archive or remove content) each have something to manage.
 const canManage = ({ permissions }: Course) => permissions.edit || permissions.archive || permissions.manageContributors || permissions.contribute || permissions.removeContent;
 
+// The viewer's own course percentage in the course header, once the course has published lessons.
+function CourseHeaderProgress({ groupId, courseId, accountId }: { groupId: string; courseId: string; accountId: string }) {
+  const { t } = useTranslation();
+  const progress = useQuery(courseProgressQueryOptions(groupId, courseId));
+  const mine = progress.data?.publishedLessons ? progress.data.participants.find((entry) => entry.user.id === accountId) : undefined;
+  if (!mine) return null;
+  return <ProgressMeter className={styles.headerMeter} value={mine.percent} label={t("courses.progress.yourLabel")} showLabel />;
+}
+
 export function CoursePage({ groupId, courseId, tab = "lessons" }: { groupId: string; courseId: string; tab?: CourseTab }) {
   const { t } = useTranslation(); const navigate = useNavigate();
   const session = useQuery(sessionQueryOptions());
   const course = useQuery(courseQueryOptions(groupId, courseId));
   if (session.isPending || course.isPending) return <main className={shellStyles.center}><LoadingState label={t("courses.loadingCourse")} /></main>;
   if (session.data?.status !== "signedIn") return null;
-  const back = <Link className={styles.back} to="/courses">{t("courses.backToLibrary")}</Link>;
+  const back = <Link className={styles.back} to="/courses"><ArrowLeft aria-hidden="true" />{t("courses.backToLibrary")}</Link>;
   if (course.isError) return <GroupFrame groupId={groupId} session={session.data}><ErrorState title={t("courses.courseUnavailable")} action={back} /></GroupFrame>;
   const data = course.data.course; const archived = data.status === "archived";
+  const lessonCount = course.data.outline.length;
   return <GroupFrame groupId={groupId} session={session.data}><div className={styles.stack}>
     {back}
-    <article className={styles.hero}>
-      <CourseCover course={data} className={styles.heroCover} />
-      <div className={styles.heroCopy}>
-        <StatusChip status={data.status} />
+    {/* The Lumen page header: badges, title, summary, metadata, and the viewer's course progress, with the cover beside it and
+        Manage course in the tools slot. */}
+    <header className={data.coverUrl ? `${styles.courseHeader} ${styles.withCover}` : styles.courseHeader}>
+      <div className={styles.headerCopy}>
+        {(data.level || data.status !== "published") && <div className={styles.badges}>
+          {data.level && <LabelChip tone="accent">{t("courses.levelLabel", { level: data.level })}</LabelChip>}
+          <StatusChip status={data.status} />
+        </div>}
         <h1>{data.title}</h1>
         <p className={styles.summary}><PlainText>{data.summary}</PlainText></p>
-        <MetadataRow className={styles.meta}>
-          {data.level && <span>{t("courses.levelLabel", { level: data.level })}</span>}
-          <span>{t("courses.ownerLabel", { name: data.owner.displayName })}</span>
+        <MetadataRow>
+          <MetadataItem icon={<UserRound />}>{t("courses.ownerLabel", { name: data.owner.displayName })}</MetadataItem>
+          {lessonCount > 0 && <MetadataItem icon={<BookOpen />}>{t("courses.lessons.outlineCount", { count: lessonCount })}</MetadataItem>}
         </MetadataRow>
         {data.intendedLearner && <div className={styles.learner}><h2>{t("courses.fields.intendedLearner")}</h2><p><PlainText>{data.intendedLearner}</PlainText></p></div>}
-        {canManage(data) && <Button variant="secondary" onClick={() => void navigate({ to: "/courses/$courseSlug/manage", params: { courseSlug: data.slug } })}>{t("courses.manageTitle")}</Button>}
+        <CourseHeaderProgress groupId={groupId} courseId={courseId} accountId={session.data.user.id} />
       </div>
-    </article>
+      {data.coverUrl && <div aria-hidden="true" className={styles.headerCover}><img alt="" src={data.coverUrl} /></div>}
+      {canManage(data) && <div className={styles.headerTools}>
+        <Button variant="secondary" onClick={() => void navigate({ to: "/courses/$courseSlug/manage", params: { courseSlug: data.slug } })}>{t("courses.manageTitle")}</Button>
+      </div>}
+    </header>
     {archived && <Surface tone="quiet"><EmptyState title={t("courses.archivedTitle")}>{t("courses.archivedBody")}</EmptyState></Surface>}
     <CourseResume groupId={groupId} courseId={courseId} accountId={session.data.user.id} courseSlug={course.data.course.slug} outline={course.data.outline} />
     {/* The owner manages contributors on the manage page; everyone else asks, withdraws, or leaves here. */}

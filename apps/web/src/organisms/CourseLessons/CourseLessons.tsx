@@ -9,7 +9,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, lazy, Suspense, useCallback, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { ArrowLeft, ArrowRight, BookA, ChevronRight, ListTree, PencilLine } from "lucide-react";
+import { ArrowLeft, ArrowRight, BookA, Check, ChevronRight, ListTree, PencilLine } from "lucide-react";
 import { Trans, useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, courseQueryOptions, courseWordsQueryOptions, lessonAiPracticesQueryOptions, lessonQueryOptions, wordBookmarksKey } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
@@ -165,17 +165,21 @@ function LessonRow({ scope, summary, number, completed, saved, practices, archiv
   const { t } = useTranslation();
   const position = completed ? undefined : saved;
   const activity = summary.published && (summary.practiceCount > 0 || practices);
-  return <li className={summary.imageUrl ? `${styles.lesson} ${styles.withImage}` : styles.lesson}>
-    <div className={styles.lessonMain}>
-      <Link className={styles.lessonLink} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug: scope.courseSlug, lessonSlug: summary.slug }}
+  // The number circle: a success check once finished, the accent while a saved step is waiting, otherwise the plain number.
+  const marker = completed ? "done" : position ? "current" : "upcoming";
+  return <li className={summary.imageUrl ? `${styles.item} ${styles.itemWithImage}` : styles.item}>
+    <div className={styles.itemMain}>
+      <Link className={styles.itemLink} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug: scope.courseSlug, lessonSlug: summary.slug }}
         aria-label={t("courses.lessons.open", { number, title: summary.title })}>
-        <span className={styles.lessonNumber}>{completed ? <span className={styles.check} role="img" aria-label={t("courses.progress.completed")}>✓</span> : number}</span>
-        {/* The link's label names the lesson, so its first image is decorative here. */}
-        {summary.imageUrl && <span className={styles.lessonImage}><img src={summary.imageUrl} alt="" loading="lazy" decoding="async" /></span>}
-        <span className={styles.lessonCopy}>
-          <span className={styles.lessonTitle}>{summary.title}</span>
-          {summary.goal && <span className={styles.goal}>{summary.goal}</span>}
-          {(completed || position || activity) && <span className={styles.start}>
+        {/* The link's label names the lesson, so its first image is decorative here; it is positioned against the whole row. */}
+        {summary.imageUrl && <span className={styles.itemImage}><img src={summary.imageUrl} alt="" loading="lazy" decoding="async" /></span>}
+        <span className={styles.itemNumber} data-state={marker}>
+          {completed ? <Check role="img" aria-label={t("courses.progress.completed")} /> : number}
+        </span>
+        <span className={styles.itemCopy}>
+          <span className={styles.itemTitle}>{summary.title}</span>
+          {summary.goal && <span className={styles.itemGoal}>{summary.goal}</span>}
+          {(completed || position || activity) && <span className={styles.itemStatus}>
             {completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
             {!completed && position && <span className={styles.position}>{t("courses.player.step", { current: position.stepIndex + 1, total: position.totalSteps })}</span>}
             {activity && <PracticeActivity summary={summary} practices={practices} archived={archived} />}
@@ -185,7 +189,7 @@ function LessonRow({ scope, summary, number, completed, saved, practices, archiv
       <LessonActions scope={scope} summary={summary} number={number} completed={completed} position={saved} archived={archived} onPlay={onPlay} />
     </div>
     {/* Editors still see which lessons readers cannot see yet; changing lessons happens on the manage page. */}
-    {scope.contribute && (!summary.published || summary.changed) && <div className={styles.blockTools}><StateChips lesson={summary} /></div>}
+    {scope.contribute && (!summary.published || summary.changed) && <div className={styles.itemChips}><StateChips lesson={summary} /></div>}
   </li>;
 }
 
@@ -275,7 +279,7 @@ export function CourseLessons({ groupId, courseId, accountId, detail }: { groupI
       <Button variant="secondary" onClick={() => setReviewing(true)}>{t("courses.words.review")}</Button>
     </Surface>}
     {outline.length
-      ? <ol className={styles.lessonList}>{outline.map((lesson, index) => <LessonRow key={lesson.id} scope={scope} summary={lesson} number={index + 1}
+      ? <ol className={styles.items}>{outline.map((lesson, index) => <LessonRow key={lesson.id} scope={scope} summary={lesson} number={index + 1}
         completed={completed.has(lesson.id)} saved={positions.find((entry) => entry.lessonId === lesson.id)} practices={progress.data?.practices[lesson.id]} archived={detail.course.status === "archived"} onPlay={() => play(lesson)} />)}</ol>
       : <Surface tone="quiet"><EmptyState title={t("courses.noLessonsTitle")}>{t("courses.noLessonsBody")}</EmptyState></Surface>}
     <AdaptiveDialog opened={reviewing && words.length > 0} onClose={() => setReviewing(false)} title={t("courses.words.recapTitle")}>
