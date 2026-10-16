@@ -3,5 +3,8 @@
 export { tutorRoutes } from "./routes";
 export { gradeComponentAnswer, modelJudge, parseVerdict, type Verdict, type VerdictInput, type VerdictJudge } from "./grading";
 export { recordComponentAnswer, type RecordAnswerInput, type RecordedAnswer } from "./recording";
-export { listAiPractices, saveAiPractice, type AiPracticeLessonTag, type SaveAiPracticeInput, type SaveAiPracticeResult } from "./aiPractices";
+export {
+  aiPracticeCounts, findLessonAiPractice, lessonAiPracticeDeletion, listAiPractices, readLessonAiPractices, removeAiPracticeTag, saveAiPractice,
+  type AiPracticeLessonTag, type SaveAiPracticeInput, type SaveAiPracticeResult,
+} from "./aiPractices";
 export { readableLesson, readableWords, type ReadableLesson } from "./library";

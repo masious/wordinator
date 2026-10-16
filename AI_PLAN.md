@@ -188,11 +188,19 @@ Delivered as migration `0029_ai_tutor.sql` (+ Drizzle `aiConversations`, `aiMess
 
 ## C14h — AI-generated practices
 
-- [ ] Tables: `ai_practices` (id, kind `fill_in` | `translate` | `word_order` | `article` | `choice` | `dictation` | `fix_mistake`, payload JSON per contracts, created_by_user_id, conversation_id, created_at) and `ai_practice_lessons` (practice_id, lesson_id, course_id, after_block_id, position; primary key `(practice_id, lesson_id)`).
-- [ ] `save_ai_practice` validates that every `after_block_id` exists in the lesson's published document. A missing anchor at read time places the practice at the end of the lesson.
-- [ ] Lesson read includes the AI practice count. A separate read returns the practices with their anchors. Owners and contributors can remove a tag.
+- [x] Tables: `ai_practices` (id, kind `fill_in` | `translate` | `word_order` | `article` | `choice` | `dictation` | `fix_mistake`, payload JSON per contracts, created_by_user_id, conversation_id, created_at) and `ai_practice_lessons` (practice_id, lesson_id, course_id, after_block_id, position; primary key `(practice_id, lesson_id)`).
+- [x] `save_ai_practice` validates that every `after_block_id` exists in the lesson's published document. A missing anchor at read time places the practice at the end of the lesson.
+- [x] Lesson read includes the AI practice count. A separate read returns the practices with their anchors. Owners and contributors can remove a tag.
 - [ ] Web: a Show AI practices (n) button on the lesson page that expands each practice after its anchor block, answered with the same components and recorded as `ai_practice` attempts.
-- [ ] Tests: anchor validation, multi-lesson tags, removal permissions, visibility; RTL for the expander and placement.
+- [~] Tests: anchor validation, multi-lesson tags, removal permissions, visibility (API done); RTL for the expander and placement (with the web part).
+
+### Notes (C14h API, 2026-10-16)
+
+Delivered as migration `0030_ai_practices.sql` (+ Drizzle `aiPractices`, `aiPracticeLessons`; the migration also rebuilds `speech_usage` so its surface check accepts `ai_practice`), `apps/api/src/tutor/aiPractices.ts` (seam filled), `apps/api/src/learning/aiPracticeRoutes.ts`, `apps/api/src/tutor/onDemandSpeech.ts` (shared by both speech routes), and contracts in the `tutor` subpath. Behavior is in [docs/courses.md](docs/courses.md#ai-practices); tests in `apps/api/test/ai-practices.test.ts`. The web expander is still to do.
+
+- **For the web expander: routes** (under `/api/groups/:groupId/courses/:courseId/lessons/:lessonId`). `GET .../ai-practices` → `lessonAiPracticesResponseSchema` `{ practices: [{ id, kind, afterBlockId | null, view, createdAt }], canRemove }`, already in reading order (null anchor = end of the lesson; render each after its `afterBlockId` block). `POST .../ai-practices/:practiceId/answer` with `aiPracticeAnswerRequestSchema` `{ answer }` → `aiPracticeAnswerResponseSchema` `{ grade, recorded }` (`400 ANSWER_INVALID`, `404 AI_PRACTICE_NOT_FOUND`). `POST .../ai-practices/:practiceId/speech` (no body, dictation only) → `{ url }`, `202 { status: "pending" }`, `429 SPEECH_DAILY_LIMIT`, `503 SPEECH_UNAVAILABLE` / `SPEECH_FAILED`, as the tutor's speech route. `DELETE .../ai-practices/:practiceId` → `{ ok: true }` (`403 COURSE_EDIT_FORBIDDEN`, `409 COURSE_ARCHIVED`). The lesson read's `aiPracticeCount` (optional in `courseLessonSchema`, treat missing as 0) drives the Show AI practices (n) button. Views are the tutor component views, so the C14i components render them directly.
+- **Decisions.** An answer is recorded under the lesson it was answered on (the stored payload's `lessonId` is overridden), so attempts and resets follow that lesson. Answers can be repeated. Archived courses grade but record nothing (`recorded: false`). The open-kind judge is metered with `turn_start` false and no conversation; it is skipped (comparison only, no verdict, not accepted) when no provider answers or the account has reached its daily turn cap, so the lesson page cannot run unbounded model calls. Word order views are shuffled with a generator seeded by the practice ID, so every read offers the same chunks; grading checks the chunks against the payload. An unpublished lesson shows no AI practices and counts 0, but its tags are kept and removable by editors. `ai_practices.created_by_user_id` cascades from the user; `conversation_id` has no foreign key.
+- **Not covered here:** saving trusts the tutor to have validated the payload with the contracts (a stored payload the contracts later refuse is skipped on read).
 
 ## C14i — Tutor web
 

@@ -368,6 +368,23 @@ export const saveAiPracticeArgsSchema = z.object({
 });
 export type SaveAiPracticeArgs = z.infer<typeof saveAiPracticeArgsSchema>;
 
+// The lesson page's read of a lesson's AI practices (`GET .../lessons/:lessonId/ai-practices`), in reading order: each practice's
+// view, never its reference answer. `afterBlockId` is the block of the published document the practice follows, or null when its
+// anchor is no longer in the document and it is shown at the end of the lesson. `canRemove` is true for the course owner and
+// active contributors while the course is not archived.
+export const lessonAiPracticeSchema = z.strictObject({
+  id: opaqueIdSchema, kind: aiPracticeKindSchema, afterBlockId: opaqueIdSchema.nullable(), view: tutorComponentViewSchema, createdAt: z.number().int(),
+});
+export type LessonAiPractice = z.infer<typeof lessonAiPracticeSchema>;
+export const lessonAiPracticesResponseSchema = z.strictObject({ practices: z.array(lessonAiPracticeSchema), canRemove: z.boolean() });
+export type LessonAiPracticesResponse = z.infer<typeof lessonAiPracticesResponseSchema>;
+// `POST .../ai-practices/:practiceId/answer`: the answer schema of the practice's kind. The response's grade reveals the reference;
+// `recorded` is false when nothing was stored (an archived course).
+export const aiPracticeAnswerRequestSchema = z.strictObject({ answer: tutorComponentAnswerSchema });
+export type AiPracticeAnswerRequest = z.input<typeof aiPracticeAnswerRequestSchema>;
+export const aiPracticeAnswerResponseSchema = z.strictObject({ grade: tutorGradeSchema, recorded: z.boolean() });
+export type AiPracticeAnswerResponse = z.infer<typeof aiPracticeAnswerResponseSchema>;
+
 // ---- Message parts ----
 
 export const tutorConfirmationActionSchema = z.enum(["complete_lesson", "reset_lesson", "save_ai_practice"]);

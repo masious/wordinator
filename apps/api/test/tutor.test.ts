@@ -327,16 +327,17 @@ describe("turns", () => {
     expect(await count("SELECT COUNT(*) AS n FROM progress_events")).toBe(1);
   });
 
-  it("confirms save_ai_practice through the C14h seam, which refuses for now", async () => {
+  it("saves an AI practice only after confirmation", async () => {
     const { learner, lessons, example } = await seedLibrary();
     const practice = { kind: "choice", payload: { question: "Wat is een huis?", options: ["house", "mouse", "horse"], correct: 0 } };
-    const ai = scriptedAi([callTool("save_ai_practice", { practice, lessons: [{ lessonId: lessons.first.id, afterBlockId: example.id }] }), say("Not yet.")]);
+    const ai = scriptedAi([callTool("save_ai_practice", { practice, lessons: [{ lessonId: lessons.first.id, afterBlockId: example.id }] }), say("Saved.")]);
     const conversationId = await newConversation(learner);
     const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Save it" }, { AI: ai.binding }));
     const card = ofType(events, "confirmation")[0]!.part;
     expect(card.summary).toMatchObject({ action: "save_ai_practice", view: { kind: "choice", options: ["house", "mouse", "horse"] }, lessons: [{ lesson: { id: lessons.first.id }, afterBlockId: example.id }] });
     const confirmed = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${card.toolCallId}/respond`, learner, { type: "confirmation", confirmed: true }, { AI: ai.binding }));
-    expect(ofType(confirmed, "answered")[0]!.part).toMatchObject({ answer: "confirmed", outcome: { ok: false, error: "AI_PRACTICES_UNAVAILABLE" } });
+    expect(ofType(confirmed, "answered")[0]!.part).toMatchObject({ answer: "confirmed", outcome: { ok: true, error: null } });
+    expect(await count("SELECT COUNT(*) AS n FROM ai_practice_lessons WHERE lesson_id = ? AND after_block_id = ?", lessons.first.id, example.id)).toBe(1);
   });
 
   it("ends a failed turn with an error part and keeps what was written", async () => {

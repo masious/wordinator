@@ -1,5 +1,6 @@
 import type { LessonProgressResponse } from "@wordinator/contracts";
 import { lessonMemoryKeys, memoryRebuildStatements } from "../learningData";
+import { aiPracticeCounts } from "../tutor/aiPractices";
 import { courseComplete, deriveLessonStates } from "./lessonStates";
 
 // The viewer's lesson progress, lesson completion, and lesson reset (docs/courses.md#lesson-states, #lesson-progress-tab,
@@ -14,12 +15,6 @@ type LessonProgressRow = {
   lessonId: string; slug: string; title: string; completed: number; passedSteps: number | null; totalSteps: number | null;
   practicesTotal: number; practicesDone: number; wordsTotal: number; wordsReviewed: number; practiceIds: string;
 };
-
-// Seam for AI practices (C14h): count each lesson's rows in `ai_practice_lessons` here once that table exists. Until then
-// every lesson has none.
-async function aiPracticeCounts(_db: D1Database, _lessonIds: readonly string[]): Promise<Map<string, number>> {
-  return new Map();
-}
 
 /**
  * Every currently published lesson of the course in outline order with the viewer's derived state, storyline share, practices

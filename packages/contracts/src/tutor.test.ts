@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  aiPracticeContentSchema, applyVerdict, componentAttemptText, gradeTutorAnswer, messageSpanTexts, parseTargetSpans, saveAiPracticeArgsSchema,
+  aiPracticeAnswerRequestSchema, aiPracticeAnswerResponseSchema, aiPracticeContentSchema, applyVerdict, lessonAiPracticesResponseSchema, componentAttemptText, gradeTutorAnswer, messageSpanTexts, parseTargetSpans, saveAiPracticeArgsSchema,
   toPublicPart, tutorComponentAnswerSchema, tutorComponentPayloadSchemas, tutorComponentView, tutorMessageRequestSchema, tutorProfileSchema,
   tutorRespondRequestSchema, tutorSpeechRequestSchema, tutorStoredPartSchema, tutorStreamEventSchema, updateTutorProfileRequestSchema,
   type TutorComponent, type TutorComponentAnswer, type TutorStoredPart,
@@ -148,6 +148,17 @@ describe("payloads and views", () => {
     expect(aiPracticeContentSchema.safeParse({ kind: "choice", payload: { question: "Q", options: ["a", "b", "c"], correct: 0 } }).success).toBe(true);
     expect(aiPracticeContentSchema.safeParse({ kind: "say_it", payload: { sentence: "Hoi" } }).success).toBe(false);
     expect(saveAiPracticeArgsSchema.safeParse({ practice: { kind: "translate", payload: { source: "a", reference: "b" } }, lessons: [] }).success).toBe(false);
+  });
+
+  it("shape the lesson page's AI practice read and answer", () => {
+    const practice = { id: id(1), kind: "dictation", afterBlockId: null, view: { kind: "dictation", translation: null }, createdAt: 1 };
+    expect(lessonAiPracticesResponseSchema.safeParse({ practices: [practice], canRemove: false }).success).toBe(true);
+    expect(lessonAiPracticesResponseSchema.safeParse({ practices: [{ ...practice, view: { kind: "dictation", translation: null, sentence: "Hoi" } }], canRemove: false }).success).toBe(false);
+    expect(lessonAiPracticesResponseSchema.safeParse({ practices: [{ ...practice, kind: "say_it" }], canRemove: false }).success).toBe(false);
+    expect(aiPracticeAnswerRequestSchema.safeParse({ answer: { kind: "choice", choice: 1 } }).success).toBe(true);
+    expect(aiPracticeAnswerRequestSchema.safeParse({ answer: { kind: "choice", choice: 1 }, matched: true }).success).toBe(false);
+    const graded = { correct: true, matched: true, verdict: null, note: null, reference: "a", items: [], score: null };
+    expect(aiPracticeAnswerResponseSchema.parse({ grade: graded, recorded: false })).toEqual({ grade: graded, recorded: false });
   });
 });
 

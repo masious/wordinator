@@ -98,6 +98,8 @@ import { buildWordDrillDeck, type WordDrillMemory } from "./wordDrill";
 import { lessonMemoryKeys, memoryRebuildStatements, recordWordReviews } from "./learningData";
 import { completeLesson, readLessonProgress, resetLesson } from "./learning/progress";
 import { registerAttemptRoutes } from "./learning/attempts";
+import { registerAiPracticeRoutes } from "./learning/aiPracticeRoutes";
+import { aiPracticeCounts, lessonAiPracticeDeletion } from "./tutor/aiPractices";
 import { recentResults } from "./wordMemory";
 import { decodeWeakCursor, readWeakWords, setWordKnown } from "./weakWords";
 import { weakWordsPageSchema, weakWordsQuerySchema, wordTermKeySchema } from "@wordinator/contracts/weak-words";
@@ -738,10 +740,11 @@ async function presentLessons(binding: D1Database, course: CourseRow, viewerId: 
   }));
   // The published practice sets the number of questions; a practice only in an editor's draft uses the draft's.
   const questions = new Map(documents.flatMap(({ draft, published }) => [...(editor ? practiceQuestions(draft) : []), ...(published ? practiceQuestions(published) : [])]));
-  const [progress, clips, shares] = await Promise.all([
+  const [progress, clips, shares, aiPractices] = await Promise.all([
     practiceProgress(binding, course.groupId, viewerId, questions),
     readClips(binding, documents.flatMap(({ publishedSpeech, draftSpeech }) => [...publishedSpeech, ...draftSpeech].map((item) => item.hash))),
     myLessonShares(binding, viewerId, rows.map((row) => row.id)),
+    aiPracticeCounts(binding, rows.filter((row) => row.publishedDoc !== null).map((row) => row.id)),
   ]);
   const media = (key: string) => mediaUrlFromBase(mediaBase, key)!;
   return documents.map(({ row, draft, published, publishedSpeech, draftSpeech }) => {
@@ -754,6 +757,7 @@ async function presentLessons(binding: D1Database, course: CourseRow, viewerId: 
       speech: presentSpeech(publishedSpeech, clips, media),
       draftSpeech: editor ? presentDraftSpeech(draftSpeech, clips, media) : null,
       myShares: shares.get(row.id) ?? {},
+      aiPracticeCount: aiPractices.get(row.id) ?? 0,
     };
   });
 }
@@ -2551,7 +2555,8 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
   const { groupId, id: courseId } = found.row; const lessonId = lesson.lesson.id; const db = context.env.DB;
   const media = await db.prepare("SELECT key FROM course_media WHERE group_id = ? AND lesson_id = ?").bind(groupId, lessonId).all<{ key: string }>();
   // Lessons are hard-deleted with their practice progress, completions, positions, word index rows, word bookmarks, speech
-  // job, and images, and every account's practice attempts and word reviews of the lesson; memory of the terms those reviews
+  // job, images, and AI practice tags (a practice left without tags is deleted), and every account's practice attempts and word
+  // reviews of the lesson; memory of the terms those reviews
   // touched is rebuilt from the remaining reviews after the lesson row is gone. Pronunciation attempts stay, unlinked.
   const memoryRebuild = await memoryRebuildStatements(db, await lessonMemoryKeys(db, lessonId), { withoutLessonId: lessonId });
   await db.batch([
@@ -2566,6 +2571,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
     db.prepare("DELETE FROM practice_attempts WHERE course_id = ? AND lesson_id = ?").bind(courseId, lessonId),
     db.prepare("UPDATE pronunciation_attempts SET lesson_id = NULL, word_id = NULL WHERE lesson_id = ?").bind(lessonId),
     db.prepare("DELETE FROM speech_jobs WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
+    ...lessonAiPracticeDeletion(db, lessonId),
     db.prepare("DELETE FROM course_lessons WHERE group_id = ? AND course_id = ? AND id = ?").bind(groupId, courseId, lessonId),
     ...memoryRebuild,
   ]);
@@ -2723,6 +2729,25 @@ app.put(`${practicePath}/progress`, requireGroupAccess, async (context) => {
 
 // Practice and pronunciation attempts (C14b) live in their own module.
 registerAttemptRoutes(app, { requireGroupAccess, practiceBlock, readableLesson: drillLesson });
+
+// AI practices on the lesson page (C14h): the lesson read's rules for reading and answering, the owner and active contributors
+// of a course that is not archived for removing a tag.
+registerAiPracticeRoutes(app, {
+  requireGroupAccess,
+  lessonFor: async (context, mode) => {
+    const found = mode === "edit" ? await contributableCourse(context) : await visibleCourse(context);
+    if (!found.row) return { error: found.error! };
+    const course = found.row;
+    const visible = await visibleLesson(context, course);
+    if (!visible.lesson) return { error: visible.error! };
+    const userId = context.get("user")!.id; const archived = course.status === "archived";
+    return {
+      course: { id: course.id, archived, canEdit: seesCourseDrafts(course, userId) && !archived },
+      lesson: { id: visible.lesson.id, publishedDoc: visible.lesson.publishedDoc },
+      language: context.get("groupAccess").language,
+    };
+  },
+});
 
 app.notFound((context) => apiError(context, 404, "NOT_FOUND", "The requested resource was not found."));
 app.onError((error, context) => {

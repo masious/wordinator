@@ -1,21 +1,19 @@
-import { speechNarrator } from "@wordinator/contracts";
-import { spokenText } from "@wordinator/contracts/speech";
 import {
-  conversationTitle, messageSpanTexts, toPublicPart, TUTOR_SPAN_MAX, tutorConversationPageSchema, tutorConversationResponseSchema,
+  conversationTitle, messageSpanTexts, toPublicPart, tutorConversationPageSchema, tutorConversationResponseSchema,
   tutorConversationsQuerySchema, tutorMessagePageSchema, tutorMessageRequestSchema, tutorMessagesQuerySchema, tutorProfileResponseSchema,
   tutorRespondRequestSchema, tutorSpeechRequestSchema, updateTutorProfileRequestSchema, type TutorStoredPart, type TutorStreamEvent,
 } from "@wordinator/contracts/tutor";
 import { Hono, type Context } from "hono";
 import { createMiddleware } from "hono/factory";
 import { streamSSE } from "hono/streaming";
-import { aiErrorResponse, assertDailySpeechCap, assertDailyTurnCap, readAiSettings, recordSpeechUsage } from "../ai";
+import { aiErrorResponse, assertDailyTurnCap, readAiSettings } from "../ai";
 import type { AuthUser } from "../auth";
 import { apiError, parseJson } from "../http";
 import { logInfo } from "../logger";
-import { azureSynthesizer, clipUrl, hashSpeechItems, onDemandClip } from "../speech";
 import { gradeComponentAnswer, modelJudge } from "./grading";
 import { accountLibrary } from "./library";
 import { runAgentTurn, type TurnEmit } from "./loop";
+import { speakStoredText } from "./onDemandSpeech";
 import { LANGUAGE_NAMES } from "./prompt";
 import { readTutorProfile, updateTutorProfile, writeTutorNotes } from "./profile";
 import { recordComponentAnswer } from "./recording";
@@ -208,26 +206,8 @@ tutorRoutes.post("/conversations/:conversationId/messages/:messageId/speech", as
     if (component?.type === "component" && (component.component.kind === "say_it" || component.component.kind === "dictation")) text = component.component.payload.sentence;
   }
   if (text === undefined) return apiError(context, 404, "SPAN_NOT_FOUND", "There is nothing to play here.");
-  if (text.length > TUTOR_SPAN_MAX) return apiError(context, 400, "SPAN_TOO_LONG", "This text is too long to play.");
-  const { AZURE_SPEECH_KEY: key, AZURE_SPEECH_REGION: region } = context.env;
   const library = await accountLibrary(db, userId);
-  if (!key || !region || !library) return apiError(context, 503, "SPEECH_UNAVAILABLE", "Audio is not available.");
-  const spoken = spokenText(text);
-  if (!spoken) return apiError(context, 404, "SPAN_NOT_FOUND", "There is nothing to play here.");
-  const [item] = await hashSpeechItems([{ key: "tutor", voice: speechNarrator(library.language), text: spoken, ipa: null }]);
-  const settings = await readAiSettings(db);
-  try {
-    await assertDailySpeechCap(db, userId, settings, spoken.length);
-  } catch (error) {
-    const response = aiErrorResponse(context, error); if (response) return response;
-    throw error;
-  }
-  const clip = await onDemandClip(context.env, item!, azureSynthesizer(key, region));
-  if (clip === "pending") return context.json({ status: "pending" as const }, 202);
-  if (clip === "failed") return apiError(context, 503, "SPEECH_FAILED", "The audio could not be made. Try again later.");
-  await recordSpeechUsage(db, { userId, surface: "ai_message", clipHash: item!.hash, characters: spoken.length, cached: clip === "cached" });
-  const base = context.env.PUBLIC_MEDIA_BASE_URL.replace(/\/$/, "");
-  return context.json({ url: clipUrl((key) => `${base}/${key.split("/").map(encodeURIComponent).join("/")}`, item!.hash) });
+  return speakStoredText(context, context.env, { userId, text, language: library?.language ?? null, surface: "ai_message" });
 });
 
 // ---- Tutor profile ----

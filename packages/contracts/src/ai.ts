@@ -45,7 +45,7 @@ export const DEFAULT_AI_SETTINGS: AiSettings = {
 };
 
 // Surfaces that request on-demand speech; `speech_usage.surface` holds one of them.
-export const SPEECH_USAGE_SURFACES = ["ai_message"] as const;
+export const SPEECH_USAGE_SURFACES = ["ai_message", "ai_practice"] as const;
 export const speechUsageSurfaceSchema = z.enum(SPEECH_USAGE_SURFACES);
 export type SpeechUsageSurface = z.infer<typeof speechUsageSurfaceSchema>;
 

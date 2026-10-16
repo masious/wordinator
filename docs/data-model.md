@@ -164,11 +164,11 @@ One row per model request, successful or not (a fallback writes one row per prov
 
 ### `ai_practices`
 
-ID, kind (`fill_in`, `translate`, `word_order`, `article`, `choice`, `dictation`, or `fix_mistake`), payload (JSON text per the contracts' schema for the kind, including its reference answer), created-by user ID, nullable conversation ID, and created timestamp. See [AI practices](courses.md#ai-practices).
+ID, kind (`fill_in`, `translate`, `word_order`, `article`, `choice`, `dictation`, or `fix_mistake`), payload (JSON text per the contracts' schema for the kind, including its reference answer), created-by user ID (cascading from the user; never shown, since AI practices are unattributed), nullable conversation ID (no foreign key, like `ai_usage`), and created timestamp. The kind is check-constrained. Added in migration `0030_ai_practices.sql` (C14h). See [AI practices](courses.md#ai-practices).
 
 ### `ai_practice_lessons`
 
-Practice ID (cascading), lesson ID, course ID, after-block ID, and position, with primary key `(practice_id, lesson_id)`. Rows cascade from their course and lesson, and lesson deletion removes them in its batch; a practice left without rows is deleted in the same batch. Indexed by `(lesson_id, after_block_id, position)`.
+Practice ID (cascading), lesson ID, course ID, after-block ID (a block of the lesson's published document when the tag was written), and position (0-based among the lesson's tags sharing that anchor, checked non-negative), with primary key `(practice_id, lesson_id)`. Rows cascade from their course and lesson, and lesson deletion removes them in its batch; a practice left without rows is deleted in the same batch, as is a practice whose last tag is removed. Indexed by `(lesson_id, after_block_id, position)` and `(course_id)`. Added in migration `0030_ai_practices.sql`.
 
 ## Speech
 
@@ -180,7 +180,7 @@ One row per synthesized clip, shared across groups because a clip is content-add
 
 ### `speech_usage`
 
-Added in C14 for [on-demand audio](speech.md#on-demand-audio), migration `0027_ai_usage.sql`. ID, user ID, surface (`ai_message` for now, check-constrained), clip hash, characters, cached (whether the clip was already ready), and created timestamp. Indexed by `(user_id, created_at)` for the daily character cap and `(created_at)` for analytics. Holds no text.
+Added in C14 for [on-demand audio](speech.md#on-demand-audio), migration `0027_ai_usage.sql`. ID, user ID, surface (`ai_message` or, since migration `0030_ai_practices.sql` rebuilt the table with the wider check, `ai_practice`; check-constrained), clip hash, characters, cached (whether the clip was already ready), and created timestamp. Indexed by `(user_id, created_at)` for the daily character cap and `(created_at)` for analytics. Holds no text.
 
 ### `speech_jobs`
 

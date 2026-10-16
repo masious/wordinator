@@ -35,6 +35,8 @@ DELETE FROM course_word_bookmarks;
 DELETE FROM word_reviews;
 DELETE FROM word_memory;
 DELETE FROM practice_attempts;
+DELETE FROM ai_practice_lessons;
+DELETE FROM ai_practices;
 DELETE FROM pronunciation_attempts;
 DELETE FROM progress_events;
 DELETE FROM speech_jobs;

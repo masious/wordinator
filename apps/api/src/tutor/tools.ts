@@ -239,7 +239,8 @@ export async function applyConfirmation(context: ToolContext, action: TutorConfi
     const saved = await saveAiPractice(db, { userId, conversationId, practice: parsed.data.practice, lessons: tags, now: context.now() });
     return saved.ok
       ? { ok: true, error: null, data: { saved: true, practiceId: saved.practiceId } }
-      : { ok: false, error: saved.error, data: { saved: false, error: saved.error, message: "Saving AI practices is not available yet." } };
+      : { ok: false, error: saved.error, data: { saved: false, error: saved.error, message: saved.error === "ANCHOR_NOT_FOUND"
+        ? "An anchor block is not in the lesson's published document. Use block IDs from get_lesson." : "Saving AI practices is not available." } };
   }
   const lesson = typeof args.lessonId === "string" ? await readableLesson(db, userId, args.lessonId) : null;
   if (!lesson) return { ok: false, error: "LESSON_NOT_FOUND", data: { error: "LESSON_NOT_FOUND" } };

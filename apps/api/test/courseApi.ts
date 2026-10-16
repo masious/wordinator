@@ -53,6 +53,7 @@ export async function resetDatabase() {
     env.DB.prepare("DELETE FROM reactions"), env.DB.prepare("DELETE FROM comment_response_items"), env.DB.prepare("DELETE FROM comments"),
     env.DB.prepare("DELETE FROM word_reviews"), env.DB.prepare("DELETE FROM word_memory"), env.DB.prepare("DELETE FROM practice_attempts"), env.DB.prepare("DELETE FROM pronunciation_attempts"), env.DB.prepare("DELETE FROM progress_events"),
     env.DB.prepare("DELETE FROM ai_usage"), env.DB.prepare("DELETE FROM speech_usage"),
+    env.DB.prepare("DELETE FROM ai_practice_lessons"), env.DB.prepare("DELETE FROM ai_practices"),
     env.DB.prepare("DELETE FROM ai_messages"), env.DB.prepare("DELETE FROM ai_conversations"), env.DB.prepare("DELETE FROM learner_profiles"),
     env.DB.prepare("DELETE FROM speech_jobs"), env.DB.prepare("DELETE FROM speech_clips"), env.DB.prepare("DELETE FROM course_lesson_completions"), env.DB.prepare("DELETE FROM course_lesson_positions"), env.DB.prepare("DELETE FROM course_lesson_words"), env.DB.prepare("DELETE FROM course_word_bookmarks"), env.DB.prepare("DELETE FROM course_practices"), env.DB.prepare("DELETE FROM course_media"),
     env.DB.prepare("DELETE FROM post_lesson_shares"), env.DB.prepare("DELETE FROM posts"), env.DB.prepare("DELETE FROM course_contributors"), env.DB.prepare("DELETE FROM course_lessons"),

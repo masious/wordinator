@@ -653,7 +653,7 @@ export const speechUsage = sqliteTable(
   {
     id: text("id").primaryKey(),
     userId: text("user_id").notNull().references(() => users.id),
-    surface: text("surface", { enum: ["ai_message"] }).notNull(),
+    surface: text("surface", { enum: ["ai_message", "ai_practice"] }).notNull(),
     clipHash: text("clip_hash").notNull(),
     characters: integer("characters").notNull(),
     cached: integer("cached", { mode: "boolean" }).notNull(),
@@ -662,7 +662,7 @@ export const speechUsage = sqliteTable(
   (table) => [
     index("speech_usage_user_created_idx").on(table.userId, table.createdAt),
     index("speech_usage_created_idx").on(table.createdAt),
-    check("speech_usage_surface_check", sql`${table.surface} in ('ai_message')`),
+    check("speech_usage_surface_check", sql`${table.surface} in ('ai_message', 'ai_practice')`),
   ],
 );
 
@@ -712,4 +712,40 @@ export const learnerProfiles = sqliteTable(
     updatedAt: integer("updated_at").notNull(),
   },
   (table) => [check("learner_profiles_reply_language_check", sql`${table.replyLanguage} in ('native', 'target', 'mixed')`)],
+);
+
+// AI practices (C14h): practices the tutor saved with the learner's confirmation and the lessons they are tagged to; see
+// docs/data-model.md#ai_practices. The payload is JSON text validated by the contracts' `tutor` subpath, reference included.
+export const aiPractices = sqliteTable(
+  "ai_practices",
+  {
+    id: text("id").primaryKey(),
+    kind: text("kind", { enum: ["fill_in", "translate", "word_order", "article", "choice", "dictation", "fix_mistake"] }).notNull(),
+    payload: text("payload").notNull(),
+    createdByUserId: text("created_by_user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    conversationId: text("conversation_id"),
+    createdAt: integer("created_at").notNull(),
+  },
+  (table) => [
+    check("ai_practices_kind_check", sql`${table.kind} in ('fill_in', 'translate', 'word_order', 'article', 'choice', 'dictation', 'fix_mistake')`),
+  ],
+);
+
+// One tag per lesson: the block of the lesson's published document the practice follows and its position among practices
+// sharing that anchor. Lesson deletion removes the lesson's tags and deletes practices left without tags in its batch.
+export const aiPracticeLessons = sqliteTable(
+  "ai_practice_lessons",
+  {
+    practiceId: text("practice_id").notNull().references(() => aiPractices.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+    courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }),
+    afterBlockId: text("after_block_id").notNull(),
+    position: integer("position").notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.practiceId, table.lessonId] }),
+    index("ai_practice_lessons_lesson_anchor_idx").on(table.lessonId, table.afterBlockId, table.position),
+    index("ai_practice_lessons_course_idx").on(table.courseId),
+    check("ai_practice_lessons_position_check", sql`${table.position} >= 0`),
+  ],
 );

@@ -493,6 +493,9 @@ export const courseLessonSchema = courseLessonSummarySchema.extend({
   draftSpeech: draftSpeechSchema.nullable(),
   // The viewer's own shares of this lesson (docs/lesson-shares.md): share key to post ID, so the share action can say Already shared.
   myShares: lessonMySharesSchema,
+  // AI practices tagged to the published lesson (docs/courses.md#ai-practices); 0 for an unpublished lesson. Optional so lessons
+  // built before C14h still parse; a missing count reads as 0.
+  aiPracticeCount: z.number().int().nonnegative().optional(),
 });
 export type CourseLesson = z.infer<typeof courseLessonSchema>;
 export const lessonResponseSchema = z.object({ lesson: courseLessonSchema });
