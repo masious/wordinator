@@ -30,7 +30,7 @@ test("answers a practice set in the question dock and checks it at once", async 
   for (const chunk of ["Ik", "drink", "water"]) await dock.getByRole("button", { name: `Add “${chunk}”` }).click();
   await dock.getByRole("button", { name: "Check answers" }).click();
 
-  await expect(page.getByText("You answered 3 of 3.")).toBeVisible();
+  await expect(page.getByRole("region", { name: "Chat with your tutor" }).getByText("You answered 3 of 3.")).toBeVisible();
   await expect(dock).toBeHidden();
   await expect(page.getByRole("textbox", { name: "Message your tutor" })).toBeEnabled();
   await expect(page.getByText("Matches!")).toHaveCount(3);

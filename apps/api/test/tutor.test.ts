@@ -297,7 +297,7 @@ describe("turns", () => {
     const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "What next?" }, { AI: ai.binding }));
     expect(types(events)).toEqual(["user_message", "start", "tool_call", "tool_result", "text", "done"]);
     const result = ofType(events, "tool_result")[0]!.part;
-    expect(result).toMatchObject({ name: "get_lesson", ok: true, detail: { lessonId: lessons.first.id, lessonTitle: "Greetings", next: true } });
+    expect(result).toMatchObject({ name: "get_lesson", ok: true, detail: { lessonId: lessons.first.id, lessonTitle: "Greetings", next: true, summary: "Running get_lesson" } });
     expect(result).not.toHaveProperty("content");
     const [tool] = toolMessages(ai.calls[1]);
     const data = JSON.parse(tool!.content!) as { lesson: { lessonId: string; blocks: Array<{ type: string; words?: Array<{ wordId: string }> }> } };
@@ -309,8 +309,26 @@ describe("turns", () => {
     const tools = ai.calls[0]!.tools as Array<{ type: string; function: { name: string; parameters: { properties?: Record<string, unknown> } } }>;
     expect(tools.map((entry) => entry.function.name)).toEqual(expect.arrayContaining(["search_words", "get_lesson", "ask_fill_in", "complete_lesson", "record_word_review"]));
     for (const entry of tools) expect(Object.keys(entry.function.parameters.properties ?? {})).not.toContain("userId");
+    // Read and write tools require the learner-facing summary; questions and confirmation cards describe themselves.
+    const required = (name: string) => (tools.find((entry) => entry.function.name === name)!.function.parameters as { required?: string[] }).required ?? [];
+    for (const name of ["get_lesson", "search_words", "record_word_review", "set_conversation_title"]) expect(required(name)).toContain("summary");
+    for (const name of ["ask_fill_in", "complete_lesson", "save_ai_practice"]) expect(required(name)).not.toContain("summary");
     expect(await count("SELECT COUNT(*) AS n FROM ai_usage")).toBe(2);
     expect(await count("SELECT COUNT(*) AS n FROM ai_usage WHERE turn_start = 1")).toBe(1);
+  });
+
+  it("refuses a read or write tool call without a summary and keeps the summary on the result", async () => {
+    const { learner } = await seedLibrary();
+    const conversationId = await newConversation(learner);
+    const ai = scriptedAi([
+      callTool("get_weak_words", { summary: undefined }, [{ name: "search_words", args: { summary: "  Looking up   huis ", query: "huis" } }]),
+      say("Done."),
+    ]);
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Words?" }, { AI: ai.binding }));
+    const [missing, found] = ofType(events, "tool_result").map((event) => event.part);
+    expect(missing).toMatchObject({ name: "get_weak_words", ok: false, error: "INVALID_ARGUMENTS", detail: {} });
+    expect(toolMessages(ai.calls[1])[0]!.content).toContain("summary");
+    expect(found).toMatchObject({ name: "search_words", ok: true, detail: { summary: "Looking up huis" } });
   });
 
   it("never reaches an unpublished lesson, an invisible course, or another library", async () => {
@@ -541,7 +559,7 @@ describe("turns", () => {
       expect(logged.map((entry) => [entry.tool, entry.errorCode, entry.category])).toEqual([
         ["get_lesson", "INVALID_ARGUMENTS", "model"], ["get_lesson", "LESSON_NOT_FOUND", "model"], ["no_such_tool", "UNKNOWN_TOOL", "model"],
       ]);
-      expect(logged[0]).toMatchObject({ level: "warn", area: "ai_tutor", toolKind: "other", conversationId, provider: "workers_ai", argumentKeys: "lessonId", request: 0 });
+      expect(logged[0]).toMatchObject({ level: "warn", area: "ai_tutor", toolKind: "other", conversationId, provider: "workers_ai", argumentKeys: "summary,lessonId", request: 0 });
       expect(String(logged[0]!.issues)).toContain("lessonId");
       expect(JSON.stringify(logged)).not.toContain("secret title");
     });

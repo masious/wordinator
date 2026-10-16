@@ -17,7 +17,7 @@
 
 ## Browse courses and lessons
 
-1. `/courses` lists the courses in the one global library. There is no workspace, language namespace, or group switcher. The main navigation is the left rail: Courses (with every visible course listed beneath it), Words, Journal, Tutor, and Notices; Settings and Sign out live in the account menu at the rail's foot.
+1. `/courses` lists the courses in the one global library. There is no workspace, language namespace, or group switcher. The main navigation is the left rail: Courses (with every visible course listed beneath it), Words, Journal, and Tutor; Settings and Sign out live in the account menu at the rail's foot, and Settings links to Notices.
 2. A course page presents its ordered lesson outline, the viewer's own progress, and the next lesson action.
 3. Each course and lesson has a readable, stable route built from its title, such as `/courses/dutch-foundations/lessons/er-is-een-huis`. Older ID links redirect to it.
 4. The lesson player, word recap, bookmarks, speech playback, and authoring behavior follow [courses.md](courses.md), [words.md](words.md), and [speech.md](speech.md).
@@ -148,7 +148,7 @@ In progress (C11): sharing works from the lesson page, the dialogs, and the play
 
 ## Review notifications
 
-1. A member opens Notices (`/notifications`) from the main navigation; no notification request runs in the background.
+1. A member opens Notices (`/notifications`) from Settings; no notification request runs in the background.
 2. Unread and read events are visually distinct. The member may mark one event or every unread event read.
 3. Post, answer, reply, pin, and reaction events link to the most specific surviving destination. A direct answer/reply link reveals the concealed discussion and scrolls to that item.
 4. A deleted post/comment leaves the event in place with “Content no longer available.”

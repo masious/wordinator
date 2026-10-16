@@ -63,3 +63,16 @@ export const pronunciationAttemptRequestSchema = pronunciationScoresSchema.exten
   wordId: opaqueIdSchema.optional(),
 }).refine((value) => (value.lessonId === undefined) === (value.wordId === undefined), { message: "Give a lesson and a word together.", path: ["wordId"] });
 export type PronunciationAttemptRequest = z.input<typeof pronunciationAttemptRequestSchema>;
+
+// The lesson metrics read (docs/courses.md#lesson-box): the viewer's own figures for one lesson, computed at read time.
+// `pronunciation` averages the Azure fluency score (0–100, rounded) of the viewer's pronunciation attempts on the lesson's words;
+// `fluency` is null when there are none. `words` counts the lesson's distinct terms (`total`), those with word memory
+// (`practised`), and those remembered well now (`strong`); recall itself is never returned. `lastStudiedAt` is the viewer's latest
+// activity on the lesson (reading position, practice attempt, word review, or spoken attempt), in epoch milliseconds, or null.
+export const lessonMetricsResponseSchema = z.strictObject({
+  pronunciation: z.strictObject({ attempts: z.number().int().nonnegative(), fluency: z.number().int().min(0).max(100).nullable() }),
+  words: z.strictObject({ total: z.number().int().nonnegative(), practised: z.number().int().nonnegative(), strong: z.number().int().nonnegative() })
+    .refine((words) => words.strong <= words.practised && words.practised <= words.total, { message: "Counts must nest." }),
+  lastStudiedAt: z.number().int().nonnegative().nullable(),
+});
+export type LessonMetricsResponse = z.infer<typeof lessonMetricsResponseSchema>;

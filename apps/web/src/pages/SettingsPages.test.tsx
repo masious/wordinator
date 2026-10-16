@@ -90,6 +90,11 @@ describe("Account settings", () => {
     expect(await screen.findByRole("link", { name: "Open analytics" })).toHaveAttribute("href", "/admin/analytics");
   });
 
+  it("links to notices from global settings", async () => {
+    renderPage(() => <AccountSettingsPage groupId={groupId} global />);
+    expect(await screen.findByRole("link", { name: "Open notices" })).toHaveAttribute("href", "/notifications");
+  });
+
   it("shows ordinary members no section navigation", async () => {
     role = "member";
     renderPage(() => <AccountSettingsPage groupId={groupId} />);

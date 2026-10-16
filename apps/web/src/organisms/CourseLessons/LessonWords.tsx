@@ -86,12 +86,13 @@ export function useWordsCollapsed() {
   return [collapsed, toggle] as const;
 }
 
-// Every new word of a lesson, in the order the player introduces them, beside the reading column. Words whose blocks are on
-// screen are highlighted and brought into view. A search box filters the lesson's words by term, forms, or meaning; with a
-// library, the search can instead run across the whole library (see LessonWordSearch). The panel collapses to its title, which
-// then counts the highlighted words. As a `bar` (narrow screens) it is fixed at the bottom of the window and opens upward.
-export function LessonWords({ steps, active, groupId, collapsed, onToggle, bar = false }: {
-  steps: readonly LessonStep[]; active: ReadonlySet<string>; groupId?: string; collapsed: boolean; onToggle: () => void; bar?: boolean;
+// Every new word of a lesson, in the order the player introduces them: the lesson page's vocabulary panel. Words whose blocks are on
+// screen are highlighted and brought into view. A search box at the top filters the lesson's words by term, forms, or meaning;
+// with a library, the search can instead run across the whole library (see LessonWordSearch). A `collapsible` panel (beside or
+// under the text) collapses to its title, which then counts the highlighted words; the phone's bottom sheet is not collapsible.
+// A `docked` panel fills the frame's right rail instead of being a card.
+export function LessonWords({ steps, active, groupId, collapsed = false, onToggle, collapsible = true, docked = false }: {
+  steps: readonly LessonStep[]; active: ReadonlySet<string>; groupId?: string; collapsed?: boolean; onToggle?: () => void; collapsible?: boolean; docked?: boolean;
 }) {
   const { t } = useTranslation();
   const speech = useSpeechResolver();
@@ -102,16 +103,20 @@ export function LessonWords({ steps, active, groupId, collapsed, onToggle, bar =
   const key = wordSearchKey(query);
   const shown = useMemo(() => key ? words.filter((word) => [word.term, word.meaning, word.forms ?? ""].some((value) => wordSearchKey(value).includes(key))) : words, [words, key]);
   const library = mode === "library" && Boolean(groupId);
+  const closed = collapsible && collapsed;
   const highlighted = words.filter((word) => active.has(word.id)).length;
-  useRevealCurrent(panelRef, library || collapsed ? "" : shown.filter((word) => active.has(word.id)).map((word) => word.id).join(" "));
+  useRevealCurrent(panelRef, library || closed ? "" : shown.filter((word) => active.has(word.id)).map((word) => word.id).join(" "));
   if (!words.length) return null;
-  return <aside ref={panelRef} className={bar ? `${styles.panel} ${styles.bar}` : styles.panel} data-collapsed={collapsed || undefined} aria-label={t("courses.words.title")}>
-    <button type="button" className={styles.toggle} aria-expanded={!collapsed} aria-controls={collapsed ? undefined : bodyId} onClick={onToggle}>
-      <span className={styles.title}>{t("courses.words.title")}</span>
-      {collapsed && highlighted > 0 && <span className={styles.count}>{t("courses.words.highlighted", { count: highlighted })}</span>}
-      <ChevronDown aria-hidden="true" size={16} className={styles.chevron} />
-    </button>
-    {!collapsed && <div id={bodyId} className={styles.body}>
+  const title = <><span className={styles.title}>{t("courses.words.title")}</span>
+    <span className={styles.total} aria-hidden="true">{words.length}</span>
+    {closed && highlighted > 0 && <span className={styles.count}>{t("courses.words.highlighted", { count: highlighted })}</span>}</>;
+  return <aside ref={panelRef} className={docked ? `${styles.panel} ${styles.docked}` : styles.panel} data-collapsed={closed || undefined} aria-label={t("courses.words.title")}>
+    {collapsible
+      ? <button type="button" className={styles.toggle} aria-expanded={!closed} aria-controls={closed ? undefined : bodyId} onClick={onToggle}>
+        {title}<ChevronDown aria-hidden="true" size={16} className={styles.chevron} />
+      </button>
+      : <div className={styles.toggle}>{title}</div>}
+    {!closed && <div id={bodyId} className={styles.body}>
       <WordSearchControls query={query} onQuery={setQuery} mode={groupId ? mode : null} onMode={setMode} />
       {library && groupId ? <LibraryWordResults groupId={groupId} query={query} /> : <>
         {key && !shown.length && <p className={styles.status} role="status">{t("courses.words.search.noLessonMatches")}</p>}

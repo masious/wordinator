@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { practiceAttemptRequestSchema, pronunciationAttemptRequestSchema, PRONUNCIATION_WORDS_MAX } from "./learning";
+import { lessonMetricsResponseSchema, practiceAttemptRequestSchema, pronunciationAttemptRequestSchema, PRONUNCIATION_WORDS_MAX } from "./learning";
 
 describe("practiceAttemptRequestSchema", () => {
   it("accepts an item and a non-empty answer up to 2,000 characters", () => {
@@ -46,5 +46,29 @@ describe("pronunciationAttemptRequestSchema", () => {
     expect(pronunciationAttemptRequestSchema.safeParse({ ...valid, lessonId }).success).toBe(false);
     expect(pronunciationAttemptRequestSchema.safeParse({ ...valid, wordId }).success).toBe(false);
     expect(pronunciationAttemptRequestSchema.safeParse({ ...valid, lessonId: "lesson", wordId }).success).toBe(false);
+  });
+});
+
+describe("lessonMetricsResponseSchema", () => {
+  const words = { total: 4, practised: 2, strong: 1 };
+  it("carries an attempt count and a whole fluency score, or none, with word counts and the last study time", () => {
+    for (const pronunciation of [{ attempts: 0, fluency: null }, { attempts: 3, fluency: 74 }, { attempts: 1, fluency: 100 }]) {
+      for (const lastStudiedAt of [null, 1_700_000_000_000]) {
+        const body = { pronunciation, words, lastStudiedAt };
+        expect(lessonMetricsResponseSchema.parse(body)).toEqual(body);
+      }
+    }
+  });
+
+  it("refuses scores outside 0–100, fractions, negative counts, counts that do not nest, and extra fields", () => {
+    const base = { words, lastStudiedAt: null };
+    for (const body of [
+      { ...base, pronunciation: { attempts: 1, fluency: 101 } }, { ...base, pronunciation: { attempts: 1, fluency: 70.5 } }, { ...base, pronunciation: { attempts: -1, fluency: null } },
+      { ...base, pronunciation: { attempts: 1, fluency: 70, recall: 0.9 } }, { ...base, pronunciation: { attempts: 1, fluency: 70 }, userId: "x" },
+      { pronunciation: { attempts: 0, fluency: null }, words: { total: 1, practised: 2, strong: 0 }, lastStudiedAt: null },
+      { pronunciation: { attempts: 0, fluency: null }, words: { total: 2, practised: 1, strong: 2 }, lastStudiedAt: null },
+      { pronunciation: { attempts: 0, fluency: null }, words: { ...words, recall: 0.5 }, lastStudiedAt: null },
+      { pronunciation: { attempts: 0, fluency: null }, words, lastStudiedAt: -1 },
+    ]) expect(lessonMetricsResponseSchema.safeParse(body).success).toBe(false);
   });
 });

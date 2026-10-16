@@ -51,7 +51,7 @@ function nextLessonScript(messages: Message[]): Reply {
   const results = toolResults(messages);
   const lesson = results.find((result) => result.name === "get_lesson")?.content.lesson as StubLesson | null | undefined;
   const last = results.at(-1);
-  if (!last) return { call: { name: "get_lesson", arguments: { lessonId: "next" } } };
+  if (!last) return { call: { name: "get_lesson", arguments: { summary: "Reading your next lesson", lessonId: "next" } } };
   if (!lesson) return { text: "There is no lesson to study next." };
   if (last.name === "get_lesson") {
     return { text: `Let's practise **${lesson.title}**.`, call: { name: "ask_fill_in", arguments: { lessonId: lesson.lessonId, ...exampleFillIn(lesson) } } };
@@ -67,7 +67,7 @@ function savePracticeScript(messages: Message[]): Reply {
   const results = toolResults(messages);
   const lesson = results.find((result) => result.name === "get_lesson")?.content.lesson as StubLesson | null | undefined;
   const last = results.at(-1);
-  if (!last) return { call: { name: "get_lesson", arguments: { lessonId: "next" } } };
+  if (!last) return { call: { name: "get_lesson", arguments: { summary: "Reading your next lesson", lessonId: "next" } } };
   if (!lesson) return { text: "There is no lesson to add a practice to." };
   if (last.name === "get_lesson") {
     const anchor = lesson.blocks.find((block) => block.type === "example") ?? lesson.blocks[0];

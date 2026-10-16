@@ -277,6 +277,8 @@
   --size-lesson-rail: 17rem;
   --size-context-panel: 18rem;
   --size-reference-panel: 19.5rem;
+  /* The right rail's width between 62em and 75em, where the reading column needs the room. */
+  --size-reference-panel-min: 16rem;
   --width-conversation: 48rem;
   --width-modal: 640px;
   --width-modal-reading: 760px;

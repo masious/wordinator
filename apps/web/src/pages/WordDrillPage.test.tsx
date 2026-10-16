@@ -441,4 +441,12 @@ describe("Drill route search", () => {
     expect(validateWordDrillSearch({ source: "weak", lesson: lessonId, direction: "understand" })).toEqual({ source: "weak", direction: "understand" });
     expect(validateWordDrillSearch({ source: "lesson", lesson: lessonId, direction: "produce" })).toEqual({ source: "lesson", lesson: lessonId, direction: "produce" });
   });
+
+  it("keeps a course drill only with a valid course", () => {
+    const courseId = crypto.randomUUID();
+    expect(validateWordDrillSearch({ source: "course", course: courseId })).toEqual({ source: "course", course: courseId, direction: "mixed" });
+    expect(validateWordDrillSearch({ source: "course" })).toEqual({ source: "weak", direction: "mixed" });
+    expect(validateWordDrillSearch({ source: "course", lesson: lessonId })).toEqual({ source: "weak", direction: "mixed" });
+    expect(validateWordDrillSearch({ source: "lesson", lesson: lessonId, course: courseId })).toEqual({ source: "lesson", lesson: lessonId, direction: "mixed" });
+  });
 });

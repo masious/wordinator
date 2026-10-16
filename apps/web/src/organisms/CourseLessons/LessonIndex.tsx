@@ -87,30 +87,33 @@ function useCurrentEntry(entries: readonly LessonIndexEntry[], reading: RefObjec
   return current;
 }
 
-// The lesson's index beside the text: every heading and practice, with the one the reader is in marked as current and the ones
-// already passed dimmed. Choosing an entry scrolls the page to it.
-// `fill` lets it take the whole column when no open New words panel sits below it.
-export function LessonIndex({ entries, reading, side, fill }: {
-  entries: readonly LessonIndexEntry[]; reading: RefObject<HTMLElement | null>; side: RefObject<HTMLElement | null>; fill: boolean;
+// The lesson's index in the app rail, under the current course: every heading and practice, one line each, with the one the reader is in marked
+// as current on the rule and the ones already passed muted. Choosing an entry scrolls the page to it, then calls `onJump` (the
+// phone's drawer closes). A long index scrolls on its own and keeps the current entry in view.
+export function LessonIndex({ entries, reading, side, onJump }: {
+  entries: readonly LessonIndexEntry[]; reading: RefObject<HTMLElement | null>; side: RefObject<HTMLElement | null>; onJump?: () => void;
 }) {
   const { t } = useTranslation();
   const list = useRef<HTMLElement>(null);
   const current = useCurrentEntry(entries, reading, side);
+  // Entries keep to one line in the rail, so each also carries its full label as a tooltip.
+  const labels = entries.map((entry) => entry.kind === "practice" && !entry.titled
+    ? entry.text ? t("courses.lessons.index.practice", { instruction: entry.text }) : t("courses.lessons.index.practiceUntitled")
+    : entry.text);
   useRevealCurrent(list, current >= 0 ? entries[current]!.id : "");
   const jump = (id: string) => {
     const element = reading.current?.querySelector<HTMLElement>(`[data-block-id="${id}"]`); if (!element) return;
     const top = element.getBoundingClientRect().top + window.scrollY - stickyInset(side.current);
-    const still = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const still = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
     window.scrollTo({ top: Math.max(0, top), behavior: still ? "auto" : "smooth" });
+    onJump?.();
   };
-  return <nav ref={list} className={styles.index} data-fill={fill || undefined} aria-label={t("courses.lessons.index.title")}>
+  return <nav ref={list} className={styles.index} aria-label={t("courses.lessons.index.title")}>
     <p className={styles.title} aria-hidden="true">{t("courses.lessons.index.title")}</p>
     <ol className={styles.list}>{entries.map((entry, index) => <li key={entry.id}>
       <button type="button" className={styles.entry} data-kind={entry.kind} data-passed={index < current || undefined}
-        style={{ "--index-depth": entry.depth } as CSSProperties} aria-current={index === current ? "location" : undefined} onClick={() => jump(entry.id)}>
-        {entry.kind === "practice" && !entry.titled
-          ? entry.text ? t("courses.lessons.index.practice", { instruction: entry.text }) : t("courses.lessons.index.practiceUntitled")
-          : entry.text}
+        style={{ "--index-depth": entry.depth } as CSSProperties} aria-current={index === current ? "location" : undefined} title={labels[index]} onClick={() => jump(entry.id)}>
+        {labels[index]}
       </button>
     </li>)}</ol>
   </nav>;

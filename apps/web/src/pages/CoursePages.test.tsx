@@ -71,7 +71,8 @@ describe("Course shell pages", () => {
   it("lists every course under Courses in the rail, collapsible and remembered per account", async () => {
     renderPage("library");
     const rail = await screen.findByRole("navigation", { name: "Main navigation" });
-    expect(within(rail).getAllByRole("link").map((link) => link.textContent)).toEqual(expect.arrayContaining(["Words", "Journal", "Tutor", "Notices"]));
+    expect(within(rail).getAllByRole("link").map((link) => link.textContent)).toEqual(expect.arrayContaining(["Words", "Journal", "Tutor"]));
+    expect(within(rail).queryByRole("link", { name: "Notices" })).not.toBeInTheDocument();
     const courses = await within(rail).findByRole("list", { name: "Your courses" });
     expect(within(courses).getByRole("link", { name: "Deutsch für Anfänger" })).toHaveAttribute("href", "/courses/deutsch-fur-anfanger");
     fireEvent.click(within(rail).getByRole("button", { name: "Hide courses" }));

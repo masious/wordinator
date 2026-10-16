@@ -197,7 +197,8 @@ export async function runAgentTurn(options: TurnOptions): Promise<StoredMessage>
         if (!asks) toolCalls += 1;
         let thrown: string | null = null;
         const confirms = call.name === "complete_lesson" || call.name === "reset_lesson" || call.name === "save_ai_practice";
-        const readKey = REPEATABLE_READS.has(call.name) && parsed.ok ? `${call.name}:${JSON.stringify(parsed.value)}` : null;
+        // The learner-facing summary is worded freely, so a repeated read is matched on its other arguments.
+        const readKey = REPEATABLE_READS.has(call.name) && parsed.ok ? `${call.name}:${JSON.stringify({ ...parsed.value, summary: undefined })}` : null;
         const outcome = confirmation
           ? skippedResult("A confirmation card is waiting; ask this again after the learner answers it.")
           : confirms && components > 0

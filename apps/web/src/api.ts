@@ -1,6 +1,7 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, lessonProgressResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema, speechRecognitionTokenResponseSchema, type SpeechRecognitionTokenResponse } from "@wordinator/contracts";
 import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
 import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorModelsResponseSchema, tutorProfileResponseSchema, tutorUsageResponseSchema } from "@wordinator/contracts/tutor";
+import { lessonMetricsResponseSchema } from "@wordinator/contracts/learning";
 import { weakWordsPageSchema } from "@wordinator/contracts/weak-words";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
@@ -180,11 +181,13 @@ export const wordBookmarkLessonsQueryOptions = (groupId: string) => queryOptions
 
 // A drill session's deck (C12e). Each session fetches its deck once: `run` tells sessions with the same settings apart, so Drill
 // again draws a fresh deck, and the deck is never refetched in the background or kept once the session's page is left.
-export type WordDrillSettings = { source: WordDrillSource; lesson?: string; direction: WordDrillMode };
+export type WordDrillSettings = { source: WordDrillSource; lesson?: string; course?: string; direction: WordDrillMode };
+const drillTarget = (settings: WordDrillSettings) => settings.source === "lesson" && settings.lesson ? `&lessonId=${encodeURIComponent(settings.lesson)}`
+  : settings.source === "course" && settings.course ? `&courseId=${encodeURIComponent(settings.course)}` : "";
 export const wordDrillQueryOptions = (groupId: string, settings: WordDrillSettings, run: number) => queryOptions({
-  queryKey: ["word-drill", groupId, settings.source, settings.lesson ?? null, settings.direction, run] as const,
+  queryKey: ["word-drill", groupId, settings.source, settings.lesson ?? settings.course ?? null, settings.direction, run] as const,
   queryFn: () => apiRequest(
-    `/api/groups/${encodeURIComponent(groupId)}/word-drill?source=${settings.source}${settings.source === "lesson" && settings.lesson ? `&lessonId=${encodeURIComponent(settings.lesson)}` : ""}&direction=${settings.direction}`,
+    `/api/groups/${encodeURIComponent(groupId)}/word-drill?source=${settings.source}${drillTarget(settings)}&direction=${settings.direction}`,
     wordDrillDeckSchema,
   ),
   staleTime: Infinity, gcTime: 0, retry: false,
@@ -224,6 +227,13 @@ export const lessonQueryOptions = (groupId: string, courseId: string, lessonId: 
 // The AI practices of a published lesson (C14h, docs/courses.md#ai-practices), read when the lesson page expands them.
 export const lessonAiPracticesPath = (groupId: string, courseId: string, lessonId: string) =>
   `/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}/ai-practices`;
+// The viewer's own metrics for one lesson (pronunciation fluency), for the lesson page's lesson box.
+export const lessonMetricsQueryOptions = (groupId: string, courseId: string, lessonId: string) => queryOptions({
+  queryKey: ["course-lesson", groupId, courseId, lessonId, "metrics"] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}/metrics`, lessonMetricsResponseSchema),
+  retry: false,
+});
+
 export const lessonAiPracticesQueryOptions = (groupId: string, courseId: string, lessonId: string) => queryOptions({
   queryKey: ["course-lesson", groupId, courseId, lessonId, "ai-practices"] as const,
   queryFn: () => apiRequest(lessonAiPracticesPath(groupId, courseId, lessonId), lessonAiPracticesResponseSchema),

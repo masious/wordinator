@@ -17,11 +17,17 @@ export const say = (text: string): Chunk[] => [
   { choices: [{ index: 0, delta: {}, finish_reason: "stop" }] },
   { choices: [], usage: { prompt_tokens: 20, completion_tokens: 5 } },
 ];
+// Read and write tools take a learner-facing `summary`; scripted calls get one unless they set their own (or `summary: undefined`
+// to leave it out).
+const UNSUMMARIZED = new Set(["complete_lesson", "reset_lesson", "save_ai_practice"]);
+const withSummary = (name: string, args: unknown) => !name.startsWith("ask_") && !UNSUMMARIZED.has(name) && args && typeof args === "object" && !Array.isArray(args) && !("summary" in args)
+  ? { summary: `Running ${name}`, ...args } : args;
+
 export const callTool = (name: string, args: unknown, extra: Array<{ name: string; args: unknown }> = []): Chunk[] => [
   {
     choices: [{
       index: 0, finish_reason: null,
-      delta: { tool_calls: [{ name, args }, ...extra].map((call, index) => ({ index, id: `call_${index}`, type: "function", function: { name: call.name, arguments: JSON.stringify(call.args) } })) },
+      delta: { tool_calls: [{ name, args }, ...extra].map((call, index) => ({ index, id: `call_${index}`, type: "function", function: { name: call.name, arguments: JSON.stringify(withSummary(call.name, call.args)) } })) },
     }],
   },
   { choices: [{ index: 0, delta: {}, finish_reason: "tool_calls" }] },

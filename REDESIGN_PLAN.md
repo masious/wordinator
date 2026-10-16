@@ -1,6 +1,6 @@
 # Lumen redesign plan
 
-**Status: approved (2026-10-16).** Batches 0–3 are done; Batch 6 (lesson page) is next, then Batch 4. The owner settled D1–D9 and D11 on 2026-10-16 and added the Batch 4 product changes; D2's phone action bar awaits confirmation, and D10 is deferred to a separate discussion. Management pages are last (Batch M).
+**Status: approved (2026-10-16).** Batches 0–3 and 6 are done; the first Batch 7 Tutor slice is done; Batch A (WCAG checks) is next, then Batch 4. The owner settled D1–D11 on 2026-10-16 and added the Batch 4 product changes; D2's phone action bar awaits confirmation. Management pages are last (Batch M).
 
 This plan moves Wordinator from the Editorial Luxury look (warm paper, coral, Newsreader, bezels, pills, a top navigation island) to the **Lumen** direction: a cool canvas, white cards with line borders, one violet accent, Inter, small radii, a left navigation rail, and the three reference compositions (course library, lesson reader, tutor). [docs/design-system.md](docs/design-system.md) owns every value; this file owns order, scope, and completion. Each batch rewrites the design-system rules it replaces, so the doc never describes two systems for the same component.
 
@@ -148,14 +148,20 @@ Owner design (2026-10-16). Three columns: the app rail (extended for the lesson)
 
 **Tests** (API work is not covered by the manual-testing rule): contract tests; authorization and privacy tests for the lesson-metrics read and the course drill source (another account's data never appears, invisible courses refused); RTL for the rail index, lesson box (with and without fluency data), vocabulary button stack (Speak hidden without audio).
 
+**Outcome (done 2026-10-16):** shipped as listed, with these changes. The vocabulary panel is a **right rail** docked to the window's right edge, sticky and full height like the app rail (owner, 2026-10-16), rather than a sticky card in the content column; the frame gains a third column only while the lesson page fills it, and window-fixed bars stop at it (`--shell-inline-end`); new token `--size-reference-panel-min` for `62em`–`75em`. The rail slots (index, lesson box, right rail) are portals from the lesson page into `GroupFrame` (`useRailSlots`); a collapsed course list still shows the current course with its index. **Fluency** shows only the pronunciation average: practice topics are C14l and not built yet, so per-topic figures wait for it. **Ask for more practices like this** prefills a new conversation through `/ai?prompt=` (the lesson is named in the request; C14l's context scope does not exist yet). The phone action bar has Contents (opens the rail drawer with the index and lesson box) and Words (bottom sheet); D2's reading is still to confirm. API: `GET .../lessons/:lessonId/metrics` and `word-drill?source=course&courseId=`. Docs: courses.md (lesson pages, new Lesson box section), words.md (course source), security-and-privacy.md, ai-tutor.md (`prompt`), design-system.md. The pre-existing AI settings form test failure is unrelated. Visual check is the owner's.
+
+**Follow-up (owner, 2026-10-16):** lesson index entries keep to one line with an ellipsis; on a lesson page with the course list expanded, Courses is promoted to the rail's heading and Words, Journal, and Tutor become an icon row with tooltips above the lesson box; the lesson box adds Ask AI beside Practise words (a new tutor conversation prefilled to talk the lesson's grammar and topics through), and its Fluency block adds Words remembered well and Last studied from the extended lesson-metrics read ([courses](docs/courses.md#lesson-box)).
+
 ## Batch 7 — Tutor (`/ai`)
 
-- **Header**: tutor mark (accent tile with sparkle and `--shadow-accent`), conversation title with the rename pencil, model picker, Archive, and a settings icon button. No online badge; the status line is the active plan or context summary.
+- **Header**: tutor mark (accent tile with sparkle and `--shadow-accent`), conversation title and short tutor description, model picker, a three-dots Conversation details action, and Archive. Conversation details owns renaming, the session summary, token usage, progress counts, and recent tool calls.
 - **Turns**: avatars on both sides; assistant turns in a bordered `--color-surface` card with a "Tutor · AI" meta row, then the Markdown body (headings at card-title size, numbered lists as the step list with round accent-soft numbers); user turns as accent bubbles with white text and the ink avatar on the right. Tool steps, confirmation cards, plan parts, and answer components sit inside the assistant card. Lesson links render as source chips.
 - **Composer**: floating card (`--shadow-floating`, `--radius-lg`) over the column bottom with the textarea, "Enter to send" hint, and primary Send with icon; the question dock takes the same frame.
-- **Context panel** (`--size-context-panel`): current lesson card on `--color-action-soft` (eyebrow, title, Lesson n of m, Open lesson) when the conversation has a lesson context; Session panel (plan steps and counts) as a context card with a count badge; usage box; the accuracy note at the bottom. No Try asking card (D9: a future feature in the roadmap backlog).
-- **Conversation list**: keeps its current placement until D10 is decided in a separate discussion.
-- Phone layout keeps one pane at a time (tutor is the documented phone exception).
+- **Context panel**: the shell's right reference rail, present above `75em`, starts with the current conversation, then a Session context card with learner-turn and completed-activity counts plus up to four recent visible tool results. The prototype's Try asking position temporarily shows a deterministic excerpt of the session rather than prompt suggestions (D9).
+- **Conversation list**: continues the app rail directly under Tutor (D10), with single-line titles fading at the end like course titles. It remains reachable through the navigation drawer below the rail breakpoint.
+- Phone layout is one chat column; Conversations opens the navigation drawer and the context rail is omitted.
+
+**Outcome (done 2026-10-16, first slice):** the page shell, header, conversation placement, context rail, session excerpt, and conversation-details dialog shipped. The richer assistant/user turn-card treatment, source chips, and composer hint remain later Batch 7 work.
 
 ## Batch 8 — Words and Drill
 
@@ -212,6 +218,6 @@ Owner direction (D8, 2026-10-16): pixel baselines are gone; add basic automated 
 | D6 | Tutor call to action on `/courses`. | **Decided:** the feature panel's visual half becomes the AI tutor entry; the gradient card and `--gradient-tutor` are retired. |
 | D7 | Lesson page composition and the reference "principle grid". | **Decided:** the grid is dropped; the lesson page is the owner's three-column design in Batch 6. |
 | D8 | Playwright screenshot baselines. | **Done:** deleted in Batch 2. **Decided:** add basic WCAG checks through Storybook (Batch A). |
-| D9 | Tutor "Try asking" suggestions. | **Decided:** a future feature (roadmap backlog); Batch 7 leaves it out. |
-| D10 | Tutor conversation list: the reference has no list. | **Deferred** to a separate discussion. |
+| D9 | Tutor "Try asking" suggestions. | **Decided (2026-10-16):** use the position for a deterministic summary excerpt of the current session for now; real suggestions remain a possible later change. |
+| D10 | Tutor conversation list: the reference has no list. | **Decided (2026-10-16):** recent conversations continue the app rail directly under Tutor, using the course-title fade treatment. |
 | D11 | Batch order. | **Decided:** the left rail first (Batch 3, done), the lesson page next (Batch 6), then A, 4, 7, 5, 8, 9, 10; management pages last (Batch M), then cleanup (11). |

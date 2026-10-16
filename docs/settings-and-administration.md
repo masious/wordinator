@@ -6,7 +6,7 @@ Settings is one account-wide page at `/settings` for every signed-in account tha
 
 ## Current Settings page
 
-`/settings` holds the account controls owned by [profiles and settings](profiles-and-settings.md) (an identity header with the avatar editor, then the profile form with display name, bio, and quick reactions, and a side rail with Appearance, the per-device [speech recognizer](words.md#recognizers), and the password change) and, since C14, a [Tutor](#tutor-settings) section. For a superuser it also links to [Analytics](#analytics).
+`/settings` holds the account controls owned by [profiles and settings](profiles-and-settings.md) (an identity header with the avatar editor, then the profile form with display name, bio, and quick reactions, and a side rail with [Notices](notifications.md), Appearance, the per-device [speech recognizer](words.md#recognizers), and the password change) and, since C14, a [Tutor](#tutor-settings) section. Notices is kept here instead of in the primary navigation because it is an on-demand supporting view. For a superuser Settings also links to [Analytics](#analytics).
 
 ### Tutor settings
 
@@ -66,7 +66,7 @@ The settings split (shipped 2026-10-06, see the [roadmap](roadmap.md#settings-sp
 ## Verification
 
 - Workers integration: the profile and password routes as owned by [profiles and settings](profiles-and-settings.md); and for C14, `403 SUPERUSER_REQUIRED` on every `/api/admin/...` route for ordinary accounts, `aiSettingsSchema` validation, analytics returning counts only, and the tutor profile read and update scoped to the signed-in account.
-- React Testing Library: `/settings` renders the profile, appearance, recognizer, and password controls with no sub-navigation; the Tutor section saves and clears notes; the Analytics link shows only for a superuser.
+- React Testing Library: `/settings` renders the profile, Notices link, appearance, recognizer, and password controls with no sub-navigation; the Tutor section saves and clears notes; the Analytics link shows only for a superuser.
 - Unit: the crop-area to output-pixel calculation for both frames, including zoom limits and the cover-the-frame clamp.
 - React Testing Library: choosing a file opens the cropper; Cancel uploads nothing; Save uploads one file of the expected size; keyboard moving and zooming work; an upload error keeps the dialog open.
 - Playwright: Settings at `/settings` saves the profile and uploads an avatar through the cropper (`settings-split.spec.ts`), and a legacy `/groups/.../settings` link redirects to `/settings`.

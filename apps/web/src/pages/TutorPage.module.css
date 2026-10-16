@@ -1,15 +1,92 @@
-/* `/ai` (docs/design-system.md, C14): a 20rem conversation list on the wash beside the chat, capped at the reading width.
-   The tutor is the one phone exception: below 48em one pane shows at a time. */
-.page{display:grid;grid-template-columns:20rem minmax(0,var(--width-reading));gap:var(--space-6);align-items:start;justify-content:center;min-width:0}
-.listPane{position:sticky;top:var(--navigation-offset,var(--space-6));max-height:calc(100dvh - var(--space-12));overflow-y:auto;padding:var(--space-3);background:var(--color-wash);border-radius:var(--radius-lg)}
-.chatPane{display:grid;gap:var(--space-4);min-width:0}
-.chatHead{display:flex;align-items:center;gap:var(--space-3);min-width:0}
-.listToggle{display:none}
-.visuallyHidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-@media(max-width:48em){
-  .page{grid-template-columns:minmax(0,1fr)}
-  .listPane{position:static;max-height:none}
-  .listToggle{display:inline-flex}
-  .page[data-pane="chat"] .listPane{display:none}
-  .page[data-pane="list"] .chatPane{display:none}
+/* `/ai`: conversation history continues the app rail, the conversation occupies the calm centre, and session evidence uses the
+   shell's right reference rail on roomy desktops. The frame is filled (GroupFrame `fill`): the page is exactly the content column's height, the header and composer stay put, and
+   only the messages scroll. Each region centres itself in the conversation width, so the messages' scrollbar sits at the column's
+   edge rather than beside the text. */
+.page {
+  --chat-inset: max(var(--page-gutter), (100% - var(--width-conversation)) / 2);
+  display: flex;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+}
+.chatPane {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+  min-height: 0;
+  padding-top: var(--shell-clearance);
+}
+.chatHead {
+  flex: none;
+  display: flex;
+  margin-inline: var(--chat-inset);
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  padding-bottom: var(--space-4);
+  border-bottom: var(--ring-hairline);
+}
+.tutorMark {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: var(--control-height);
+  height: var(--control-height);
+  color: var(--color-inverse-text);
+  background: var(--gradient-tutor);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-accent);
+}
+.tutorMark svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  stroke-width: 1.5;
+}
+.heading {
+  display: grid;
+  flex: 1;
+  gap: 2px;
+  min-width: 0;
+}
+.heading p {
+  margin: 0;
+  font-size: var(--type-metadata);
+  color: var(--color-foreground-muted);
+}
+.railConversations {
+  min-width: 0;
+  padding-inline-end: var(--space-4);
+}
+.listToggle {
+  display: none;
+}
+.visuallyHidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+@media (max-width: 68rem) {
+  .listToggle {
+    display: inline-flex;
+  }
+}
+@media (max-width: 48em) {
+  .chatHead {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .listToggle {
+    order: -2;
+  }
+  .tutorMark {
+    order: -1;
+  }
+  .heading {
+    min-width: calc(100% - 8rem);
+  }
 }

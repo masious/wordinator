@@ -89,7 +89,7 @@ function Harness() {
   const reading = useRef<HTMLDivElement>(null); const side = useRef<HTMLDivElement>(null);
   return <>
     <div ref={reading}>{entries.map((entry) => <div key={entry.id} data-block-id={entry.id}>{entry.text}</div>)}</div>
-    <div ref={side}><LessonIndex entries={entries} reading={reading} side={side} fill={false} /></div>
+    <div ref={side}><LessonIndex entries={entries} reading={reading} side={side} /></div>
   </>;
 }
 const scroll = async (y: number) => {
@@ -141,7 +141,7 @@ describe("LessonIndex", () => {
     ];
     function Titled() {
       const reading = useRef<HTMLDivElement>(null); const side = useRef<HTMLDivElement>(null);
-      return <><div ref={reading} /><div ref={side}><LessonIndex entries={titled} reading={reading} side={side} fill={false} /></div></>;
+      return <><div ref={reading} /><div ref={side}><LessonIndex entries={titled} reading={reading} side={side} /></div></>;
     }
     render(<Titled />);
     const buttons = within(screen.getByRole("navigation", { name: "In this lesson" })).getAllByRole("button");

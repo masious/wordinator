@@ -6,6 +6,7 @@ import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-li
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
 import { useState } from "react";
+import { SpeechScope } from "../../molecules/Speech";
 import { LessonWords, useWordsCollapsed } from "./LessonWords";
 
 const groupId = "20000000-0000-4000-8000-000000000001";
@@ -42,7 +43,7 @@ function CollapsiblePanel() {
   const [active] = useState(() => new Set([id(2), id(3)]));
   return <LessonWords steps={steps} active={active} collapsed={collapsed} onToggle={toggle} />;
 }
-const shownTerms = (panel: HTMLElement) => within(panel).queryAllByRole("listitem").map((item) => item.querySelector("span")?.textContent);
+const shownTerms = (panel: HTMLElement) => within(panel).queryAllByRole("listitem").map((item) => item.querySelector("p")?.textContent);
 
 describe("New words search", () => {
   it("filters the lesson's words by term, forms, or meaning, ignoring case and diacritics", async () => {
@@ -85,15 +86,15 @@ describe("New words search", () => {
     fireEvent.change(box, { target: { value: "hu" } });
     fireEvent.change(box, { target: { value: "hund" } });
     const results = await within(panel).findByRole("list", { name: "Library matches" });
-    // Typing quickly sends one request, for the last query.
-    expect(fetchMock).toHaveBeenCalledTimes(1);
-    expect(fetchMock.mock.calls[0]![0]).toBe(`/api/groups/${groupId}/word-search?q=hund`);
-    expect(within(results).getAllByRole("listitem").map((item) => item.querySelector("span")?.textContent)).toEqual(["der Hund", "hundert"]);
-    // The lesson that introduced a match shows only once the match is opened.
+    // Typing quickly sends one search request, for the last query (the bookmark toggles read the bookmark keys beside it).
+    const searches = () => fetchMock.mock.calls.map(([path]) => String(path)).filter((path) => path.includes("/word-search"));
+    expect(searches()).toEqual([`/api/groups/${groupId}/word-search?q=hund`]);
+    expect(within(results).getAllByRole("listitem").map((item) => item.querySelector("p")?.textContent)).toEqual(["der Hund", "hundert"]);
+    // The lesson that introduced a match shows only once the match is opened; the bookmark sits in the row's button stack.
     expect(within(results).queryByRole("link")).not.toBeInTheDocument();
     fireEvent.click(within(results).getByRole("button", { name: "Show more about der Hund" }));
     expect(within(results).getByRole("link", { name: "Learnt in Animals (German basics)" })).toHaveAttribute("href", "/courses/german-basics/lessons/animals");
-    // An opened match can be bookmarked in the lesson that introduced it.
+    // A match can be bookmarked in the lesson that introduced it.
     expect(await within(results).findByRole("button", { name: "Bookmark der Hund" })).toHaveAttribute("aria-pressed", "false");
     // The lesson's own words are not shown while searching the library.
     expect(within(panel).queryByText("de kat")).not.toBeInTheDocument();
@@ -144,6 +145,17 @@ describe("New words panel rows", () => {
     expect(within(row).queryByRole("link")).not.toBeInTheDocument();
     fireEvent.click(chevron);
     expect(row).not.toHaveTextContent("honden");
+  });
+
+  it("stacks Speak only for words with a clip, then Expand, at the row's end", () => {
+    const steps = flattenToSteps({ schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks: [{ ...vocabulary, props: { data: JSON.stringify({ words: [
+      { id: id(1), term: "de hond", meaning: "the dog" }, { id: id(2), term: "de kat", meaning: "the cat" },
+    ] }) } }] });
+    const resolve = (key: string) => key === `word:${id(1)}` ? "https://media.test/hond.mp3" : null;
+    render(<MantineProvider><SpeechScope resolve={resolve}><LessonWords steps={steps} active={new Set()} collapsed={false} onToggle={() => undefined} /></SpeechScope></MantineProvider>);
+    const [hond, kat] = screen.getAllByRole("listitem");
+    expect(within(hond!).getAllByRole("button").map((button) => button.getAttribute("aria-label"))).toEqual(["Play pronunciation of de hond", "Show more about de hond"]);
+    expect(within(kat!).getAllByRole("button").map((button) => button.getAttribute("aria-label"))).toEqual(["Show more about de kat"]);
   });
 });
 

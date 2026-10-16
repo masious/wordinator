@@ -3,21 +3,24 @@ import {
 } from "@wordinator/contracts";
 import { lessonResponseSchema, type CourseDetailResponse, type CourseLesson } from "@wordinator/contracts/lesson-document";
 import type { LessonAiPracticesResponse } from "@wordinator/contracts/tutor";
+import { Drawer } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, lazy, Suspense, useCallback, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { ArrowLeft, ArrowRight, BookA, ChevronRight, ListTree, PencilLine } from "lucide-react";
 import { Trans, useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, courseQueryOptions, courseWordsQueryOptions, lessonAiPracticesQueryOptions, lessonQueryOptions, wordBookmarksKey } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
 import { relativeTime } from "../../relativeTime";
 import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
-import { AdaptiveDialog, Button, ButtonGroup, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, SectionHeader, Surface, TextAreaField, TextField } from "../../ui";
+import { AdaptiveDialog, Button, ButtonGroup, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, MetadataItem, MetadataRow, SectionHeader, Surface, TextAreaField, TextField } from "../../ui";
 import { LessonDocument } from "../LessonDocument/LessonDocument";
 import { LessonShareScope, ShareButton, useLessonShareScope } from "../LessonShare/LessonShare";
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import { WordRecap } from "../WordRecap/WordRecap";
+import { useRailSlots } from "../GroupFrame/GroupFrame";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import { LessonResetAction } from "./CourseProgress";
 import { LessonActions } from "./LessonActions";
@@ -25,6 +28,7 @@ import { lessonSteps, playableDocument } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
 import { LessonReadingProgress, type ReadingTracking, useResumeScroll } from "./LessonReadingProgress";
 import { LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN, stickyInset } from "./LessonIndex";
+import { LessonBox, type LessonBoxLesson } from "./LessonBox";
 import { LessonWords, useVisibleWords, useWordsCollapsed } from "./LessonWords";
 import { practiceFromBlock, PracticeSummary } from "./PracticeBlock";
 import { AiPracticeToggle, useAiPracticeSlots, type AiPracticeScope } from "./AiPractices";
@@ -52,15 +56,15 @@ function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" 
 }
 
 // Readers see the published document. Editors of a lesson that is not published yet see its draft, marked as a preview. A practice
-// shows only its first prompts; its answer set opens in a dialog that, beside the side column, sits over the text. New words are
-// not shown in the text: the side column holds the lesson's index (headings and practices, following the reader) and, below it,
-// a collapsible panel of the lesson's words, where the words of the blocks on screen are highlighted. Narrow screens move the
-// panel to a bar at the bottom of the window that starts collapsed on every lesson; it renders into the body so the shell's entry
-// transform cannot pin it to the page.
+// shows only its first prompts; its answer set opens in a dialog that, beside the vocabulary panel, sits over the text. New words
+// are not shown in the text. The page extends the frame (docs/courses.md#lesson-pages): the lesson's index (headings and practices,
+// following the reader) renders in the app rail under the current course, the lesson box under the rail's navigation, and the
+// vocabulary panel, where the words of the blocks on screen are highlighted, in the right rail. Below 62em the panel sits under the
+// text; phones get a lesson action bar whose Contents opens the rail drawer and whose Words opens the panel as a bottom sheet.
 // `aiPractices`, once expanded and read, places the lesson's AI practices after their anchor blocks and at the end.
-function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices }: {
+function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, box }: {
   scope: Scope; lesson: CourseLesson; tracking: ReadingTracking; resume: LessonPosition | undefined; archived: boolean;
-  aiPractices?: { scope: AiPracticeScope; data: LessonAiPracticesResponse | undefined };
+  aiPractices?: { scope: AiPracticeScope; data: LessonAiPracticesResponse | undefined }; box: LessonBoxLesson;
 }) {
   const { t } = useTranslation();
   const document = playableDocument(lesson);
@@ -72,23 +76,28 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices }: 
   const active = useVisibleWords(reading, side, steps);
   useResumeScroll({ steps, reading, position: resume, inset: () => stickyInset(side.current) });
   const [wordsCollapsed, toggleWords] = useWordsCollapsed();
-  const bar = useMediaQuery("(max-width: 64em)", undefined, { getInitialValueInEffect: false });
-  const [barOpen, setBarOpen] = useState(false);
-  const toggleBar = useCallback(() => setBarOpen((open) => !open), []);
+  const rail = useRailSlots();
+  const phone = useMediaQuery("(max-width: 48em)", undefined, { getInitialValueInEffect: false });
+  const inline = useMediaQuery("(max-width: 62em)", undefined, { getInitialValueInEffect: false });
+  const [sheetOpen, setSheetOpen] = useState(false);
+  const [percent, setPercent] = useState(0);
   // Only words of the published document can be bookmarked, so a draft preview shows no toggles.
   const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
   const speech = useMemo(() => lessonSpeech(lesson), [lesson]);
   const resolveSpeech = useCallback((key: string) => speech[key] ?? null, [speech]);
   // Examples and dialogues of a shareable lesson are selectable and reveal their Share action (docs/lesson-shares.md).
   const share = useLessonShareScope(scope.groupId, scope.courseId, lesson);
-  if (!document || !steps.length) return <div className={styles.body}><p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p></div>;
+  const lessonBox = rail.box && createPortal(<LessonBox lesson={box} percent={percent} />, rail.box);
+  if (!document || !steps.length) return <div className={styles.body}><p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p>{lessonBox}</div>;
   const hasWords = steps.some((step) => step.words.length > 0);
   const hasIndex = entries.length >= LESSON_INDEX_MIN;
-  const hasSide = hasWords || hasIndex;
-  const words = hasWords && <LessonWords steps={steps} active={active} groupId={scope.groupId} bar={bar}
-    collapsed={bar ? !barOpen : wordsCollapsed} onToggle={bar ? toggleBar : toggleWords} />;
-  return <LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={hasSide ? styles.withSide : undefined} data-words-bar={(bar && hasWords) || undefined}>
-    <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} />
+  // Where the vocabulary panel goes: the right rail on wide screens, under the text below 62em (or outside the frame), a sheet on phones.
+  const placement = !hasWords ? null : phone ? "sheet" : !inline && rail.reference ? "rail" : "under";
+  const docked = placement === "rail";
+  const words = (props: { docked?: boolean; collapsible?: boolean }) =>
+    <LessonWords steps={steps} active={active} groupId={scope.groupId} collapsed={wordsCollapsed} onToggle={toggleWords} {...props} />;
+  return <LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={styles.reader} data-action-bar={phone || undefined}>
+    <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} onPercent={setPercent} />
     <div ref={reading} className={styles.body}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
       <LessonDocument document={document} anchored vocabulary={false} renderAfterBlock={slots?.afterBlock}
@@ -96,14 +105,21 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices }: 
           label={t(`lessonShares.shareNamed.${block.type}`)} /> : undefined}
         renderPractice={(block) =>
         <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.practiceProgress)}
-          published={lesson.document !== null} archived={archived} dock={hasSide ? reading : undefined} />} />
+          published={lesson.document !== null} archived={archived} dock={docked ? reading : undefined} />} />
       {slots?.end}
     </div>
-    {(hasIndex || (words && !bar)) && <div ref={side} className={styles.side}>
-      {hasIndex && <LessonIndex entries={entries} reading={reading} side={side} fill={!hasWords || bar || wordsCollapsed} />}
-      {!bar && words}
-    </div>}
-    {bar && words && createPortal(words, window.document.body)}
+    {docked && rail.reference && createPortal(<div ref={side} className={styles.side}>{words({ docked: true })}</div>, rail.reference)}
+    {placement === "under" && <div ref={side} className={styles.under}>{words({})}</div>}
+    {hasIndex && rail.index && createPortal(<LessonIndex entries={entries} reading={reading} side={side} onJump={rail.closeRail} />, rail.index)}
+    {lessonBox}
+    {phone && createPortal(<nav className={styles.actionBar} aria-label={t("courses.lessons.actionBar")}>
+      <button type="button" className={styles.barButton} onClick={rail.openRail}><ListTree aria-hidden="true" />{t("courses.lessons.contents")}</button>
+      {hasWords && <button type="button" className={styles.barButton} aria-expanded={sheetOpen} onClick={() => setSheetOpen(true)}><BookA aria-hidden="true" />{t("courses.lessons.words")}</button>}
+    </nav>, window.document.body)}
+    {placement === "sheet" && <Drawer opened={sheetOpen} onClose={() => setSheetOpen(false)} position="bottom" size="75%" title={t("courses.words.title")}
+      classNames={{ content: styles.sheet, header: styles.sheetHeader }}>
+      {words({ collapsible: false })}
+    </Drawer>}
   </div></SpeechScope></WordBookmarkScope></LessonShareScope>;
 }
 
@@ -328,13 +344,25 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
   const playable = data ? lessonSteps(data).length > 0 : false;
   const resettable = Boolean(data?.published && data.document) && detail.course.status !== "archived";
   const previous = outline[index - 1]; const next = outline[index + 1];
-  const pagerLink = (target: CourseLessonSummary, label: string, className: string) =>
-    <Link className={className} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug: detail.course.slug, lessonSlug: target.slug }}>{t(label, { title: target.title })}</Link>;
+  const steps = data ? lessonSteps(data) : [];
+  const wordCount = new Set(steps.flatMap((step) => step.words.map((word) => word.id))).size;
+  const lessonLink = (target: CourseLessonSummary) => ({ to: "/courses/$courseSlug/lessons/$lessonSlug" as const, params: { courseSlug: detail.course.slug, lessonSlug: target.slug } });
   return <article className={styles.page} aria-labelledby="lesson-title">
+    {/* The lesson's cover: its first image, as on the course page's lesson list; decorative beside the title. */}
+    {summary.imageUrl && <div className={styles.cover}><img src={summary.imageUrl} alt="" decoding="async" /></div>}
     <header className={styles.lessonHeader}>
-      <p className={styles.eyebrow}>{t("courses.lessons.number", { number })}</p>
+      <nav className={styles.breadcrumb} aria-label={t("courses.lessons.breadcrumb")}>
+        <Link to="/courses/$courseSlug" params={{ courseSlug: detail.course.slug }}>{detail.course.title}</Link>
+        <ChevronRight aria-hidden="true" />
+        <span aria-current="page">{t("courses.lessons.number", { number })}</span>
+      </nav>
+      <LabelChip tone="accent">{t("courses.lessons.badge", { number: String(number).padStart(2, "0") })}</LabelChip>
       <h1 id="lesson-title">{current.title}</h1>
-      {current.goal && <p className={styles.goal}><PlainText>{current.goal}</PlainText></p>}
+      {current.goal && <p className={styles.dek}><PlainText>{current.goal}</PlainText></p>}
+      {(wordCount > 0 || current.practiceCount > 0) && <MetadataRow>
+        {wordCount > 0 && <MetadataItem icon={<BookA />}>{t("courses.lessons.wordCount", { count: wordCount })}</MetadataItem>}
+        {current.practiceCount > 0 && <MetadataItem icon={<PencilLine />}>{t("courses.lessons.practiceCount", { count: current.practiceCount })}</MetadataItem>}
+      </MetadataRow>}
       {/* Reset (C14) sits beside the saved step or Finished label, for published lessons in courses that are not archived. */}
       {!editing && ((playable && (completed || position)) || resettable) && <div className={styles.start}>
         {playable && completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
@@ -358,14 +386,21 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
         <LessonEditor groupId={groupId} courseId={courseId} accountId={accountId} owner={scope.owner} lesson={data} onClose={() => setEditing(false)} />
       </Suspense>
       : <LessonBody scope={scope} lesson={data} resume={resume ? saved : undefined} archived={detail.course.status === "archived"}
+        box={{ groupId, courseId, courseTitle: detail.course.title, lessonId, title: current.title, number }}
         aiPractices={aiOpen ? { scope: aiScope, data: aiPractices.data } : undefined} tracking={{
         // Scrolling saves the furthest step of a published lesson the viewer has not finished; previews and archived courses never save.
         save: data.published && data.document !== null && !completed && detail.course.status !== "archived" && progress.isSuccess,
         completed, position, path: `${lessonsPath(scope)}/${encodeURIComponent(lessonId)}`, groupId, courseId, lessonId,
       }} />}
+    {/* The pager: Previous, the next lesson's title under Up next, and Next lesson. The links' names carry the titles. */}
     {(previous || next) && <nav className={styles.pager} aria-label={t("courses.lessons.pager")}>
-      {previous && pagerLink(previous, "courses.lessons.previous", styles.previous!)}
-      {next && pagerLink(next, "courses.lessons.next", styles.next!)}
+      {previous ? <Link className={styles.previous} {...lessonLink(previous)} aria-label={t("courses.lessons.previous", { title: previous.title })}>
+        <ArrowLeft aria-hidden="true" />{t("courses.lessons.previousShort")}
+      </Link> : <span />}
+      {next && <p className={styles.upNext}><span>{t("courses.lessons.upNext")}</span><strong>{next.title}</strong></p>}
+      {next && <Link className={styles.next} {...lessonLink(next)} aria-label={t("courses.lessons.next", { title: next.title })}>
+        {t("courses.lessons.nextShort")}<ArrowRight aria-hidden="true" />
+      </Link>}
     </nav>}
   </article>;
 }

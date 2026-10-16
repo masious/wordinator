@@ -8,7 +8,7 @@
 .surfaceInset .surfaceCore { background: var(--color-surface); box-shadow: none; }
 .surfaceDanger .surfaceCore { background: var(--color-danger-surface); box-shadow: none; }
 .surfaceReading { padding: clamp(var(--space-6), 5vw, var(--space-12)); }
-.chip { display: inline-flex; align-items: center; width: fit-content; max-width: 100%; padding: 0.3rem 0.55rem; color: var(--color-foreground-muted); background: var(--color-surface-muted); border-radius: var(--radius-pill); font: var(--weight-bold) var(--type-badge)/1 var(--font-sans); letter-spacing: 0.03em; overflow-wrap: anywhere; }
+.chip { display: inline-flex; align-items: center; width: fit-content; max-width: 100%; padding: 0.3rem 0.55rem; color: var(--color-foreground-muted); background: var(--color-surface-muted); border-radius: var(--radius-pill); font: var(--weight-medium) var(--type-badge)/1 var(--font-mono); letter-spacing: 0.02em; overflow-wrap: anywhere; }
 .chip[data-tone="accent"] { color: var(--color-action-soft-text); background: var(--color-action-soft); }
 .chip[data-tone="success"] { color: var(--color-success); background: var(--color-success-surface); }
 .chip[data-tone="warm"] { color: var(--color-highlight); background: var(--color-highlight-soft); }
@@ -92,7 +92,7 @@
 .split { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(17rem, .7fr); align-items: start; gap: clamp(var(--space-8), 7vw, var(--space-20)); }
 .splitReverse { grid-template-columns: minmax(17rem, .7fr) minmax(0, 1.3fr); }
 .splitReverse > :first-child { order: 2; }
-.metadata { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-5); color: var(--color-foreground-faint); font: var(--weight-medium) var(--type-metadata)/var(--line-compact) var(--font-sans); font-variant-numeric: tabular-nums; }
+.metadata { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-5); color: var(--color-foreground-faint); font: var(--weight-regular) var(--type-metadata)/var(--line-compact) var(--font-mono); font-variant-numeric: tabular-nums; }
 .metadataItem { display: inline-flex; align-items: center; gap: 0.4rem; }
 .metadataItem svg { flex: none; width: 1rem; height: 1rem; }
 .navigationItem { display: flex; align-items: center; gap: var(--space-2); min-height: var(--control-height); padding: 0.6rem 0.85rem; color: var(--color-foreground-muted); border-radius: var(--radius-sm); font-size: var(--type-control-label); font-weight: var(--weight-semibold); text-decoration: none; transition: background-color var(--motion-standard) ease, color var(--motion-standard) ease; }

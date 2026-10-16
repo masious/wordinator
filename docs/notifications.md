@@ -1,6 +1,6 @@
 # Notifications
 
-> Current scope: notifications open at `/notifications` (Notices in the main navigation) and cover the single library. Membership triggers (join requests and decisions) no longer fire because registration is open; post, answer, reply, pin, reaction, and course triggers remain. Old `/groups/:groupId/notifications` links redirect there.
+> Current scope: notifications open at `/notifications` from the Notices link on Settings and cover the single library. Membership triggers (join requests and decisions) no longer fire because registration is open; post, answer, reply, pin, reaction, and course triggers remain. Old `/groups/:groupId/notifications` links redirect there.
 
 Notifications are in-app, group-scoped records loaded only when the active group’s Notifications page opens.
 

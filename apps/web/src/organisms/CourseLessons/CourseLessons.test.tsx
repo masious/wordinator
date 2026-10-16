@@ -6,6 +6,7 @@ import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-li
 import { type ReactNode, useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
+import { RailSlotsContext } from "../GroupFrame/GroupFrame";
 import { CourseLessons, CourseLessonTools, LessonView } from "./CourseLessons";
 import { CourseResume } from "./CourseResume";
 import { LessonPlayer } from "./LessonPlayer";
@@ -75,6 +76,20 @@ const playerOpen = async () => { const dialog = await screen.findByRole("dialog"
 const landed = (router: ReturnType<typeof renderWithRouter>["router"]) => ({ path: router.state.location.pathname, search: router.state.location.search });
 const renderLesson = (detail: CourseDetailResponse, id = lessonId(1), resume = false) =>
   renderWithRouter(<LessonView groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} lessonId={id} dataUpdatedAt={Date.now()} resume={resume} />);
+
+// The lesson page inside the frame's rails: the index, lesson box, and right-rail slots are plain elements here.
+function renderInRails(detail: CourseDetailResponse, id = lessonId(1), openRail = vi.fn(), closeRail = vi.fn()) {
+  const slot = (name: string) => { const element = document.createElement("div"); element.dataset.slot = name; document.body.append(element); return element; };
+  const slots = { index: slot("index"), box: slot("box"), reference: slot("reference"), openRail, closeRail };
+  const rendered = renderWithRouter(<RailSlotsContext.Provider value={slots}>
+    <LessonView groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} lessonId={id} dataUpdatedAt={Date.now()} />
+  </RailSlotsContext.Provider>);
+  return { ...rendered, slots };
+}
+const mediaMatching = (...queries: string[]) => vi.spyOn(window, "matchMedia").mockImplementation((query: string) => ({
+  matches: queries.includes(query), media: query, onchange: null, addEventListener: vi.fn(), removeEventListener: vi.fn(),
+  addListener: vi.fn(), removeListener: vi.fn(), dispatchEvent: vi.fn(),
+}));
 
 const lessonFour = lesson(4, [example("50000000-0000-4000-8000-000000000004", "Ik stap over.")]);
 
@@ -164,7 +179,7 @@ describe("Course lessons", () => {
     expect(screen.queryByRole("link", { name: /^Next:/ })).not.toBeInTheDocument();
   });
 
-  it("lists the lesson's new words beside the text and highlights the words of blocks on screen", async () => {
+  it("lists the lesson's new words in the vocabulary panel and highlights the words of blocks on screen", async () => {
     const word = (n: number, term: string) => ({ id: `70000000-0000-4000-8000-00000000000${n}`, term, meaning: `meaning of ${term}` });
     const vocabulary = (n: number, ...words: unknown[]): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000002${n}`, type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [] });
     const first = example("50000000-0000-4000-8000-000000000011", "De hond blaft.");
@@ -187,7 +202,16 @@ describe("Course lessons", () => {
     expect(observed.map((element) => element.getAttribute("data-block-id"))).toEqual([first.id, second.id]);
   });
 
-  it("moves the new words to a bar at the bottom of narrow screens that starts collapsed and opens on the highlighted words", async () => {
+  it("docks the new words in the right rail on wide screens", async () => {
+    const word = { id: "70000000-0000-4000-8000-000000000001", term: "de hond", meaning: "the dog" };
+    const vocabulary: LessonTopBlock = { id: "50000000-0000-4000-8000-000000000021", type: "vocabulary", props: { data: JSON.stringify({ words: [word] }) }, children: [] };
+    const { slots } = renderInRails({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000011", "De hond blaft."), vocabulary])] });
+    const panel = await screen.findByRole("complementary", { name: "New words" });
+    expect(slots.reference.contains(panel)).toBe(true);
+    expect(within(panel).getByText("de hond")).toBeInTheDocument();
+  });
+
+  it("gives phones a lesson action bar: Contents opens the rail, Words opens the panel as a sheet", async () => {
     const word = (n: number, term: string) => ({ id: `70000000-0000-4000-8000-00000000000${n}`, term, meaning: `meaning of ${term}` });
     const vocabulary = (n: number, ...words: unknown[]): LessonTopBlock => ({ id: `50000000-0000-4000-8000-00000000002${n}`, type: "vocabulary", props: { data: JSON.stringify({ words }) }, children: [] });
     const first = example("50000000-0000-4000-8000-000000000011", "De hond blaft.");
@@ -197,43 +221,70 @@ describe("Course lessons", () => {
       observe(target: Element) { this.callback([{ target, isIntersecting: target.getAttribute("data-block-id") === first.id } as IntersectionObserverEntry], this as unknown as IntersectionObserver); }
       disconnect() { /* nothing to release */ }
     });
-    // A desktop choice to keep the panel open does not open the bar.
-    localStorage.removeItem("wordinator:ui:v1:lesson-words-collapsed");
-    const matchMedia = vi.spyOn(window, "matchMedia").mockImplementation((query: string) => ({
-      matches: query === "(max-width: 64em)", media: query, onchange: null, addEventListener: vi.fn(), removeEventListener: vi.fn(),
-      addListener: vi.fn(), removeListener: vi.fn(), dispatchEvent: vi.fn(),
-    }));
+    const matchMedia = mediaMatching("(max-width: 48em)", "(max-width: 62em)");
     try {
-      renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [first, vocabulary(1, word(1, "de hond")), second, vocabulary(2, word(2, "de kat"))])] });
+      const openRail = vi.fn();
+      const { slots } = renderInRails({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [first, vocabulary(1, word(1, "de hond")), second, vocabulary(2, word(2, "de kat"))])] }, lessonId(1), openRail);
+      const bar = await screen.findByRole("navigation", { name: "Lesson tools" });
+      // The bar renders straight into the body, outside the page; the right rail stays empty.
+      expect(bar.parentElement).toBe(document.body);
+      expect(slots.reference).toBeEmptyDOMElement();
+      expect(screen.queryByRole("complementary", { name: "New words" })).not.toBeInTheDocument();
+      fireEvent.click(within(bar).getByRole("button", { name: "Contents" }));
+      expect(openRail).toHaveBeenCalledTimes(1);
+      fireEvent.click(within(bar).getByRole("button", { name: "Words" }));
       const panel = await screen.findByRole("complementary", { name: "New words" });
-      // The bar renders straight into the body, outside the page.
-      expect(panel.parentElement).toBe(document.body);
-      const toggle = within(panel).getByRole("button", { name: /^New words/ });
-      expect(toggle).toHaveAttribute("aria-expanded", "false");
-      await waitFor(() => expect(toggle).toHaveTextContent("1 highlighted"));
-      expect(within(panel).queryByText("de hond")).not.toBeInTheDocument();
-      fireEvent.click(toggle);
-      expect(toggle).toHaveAttribute("aria-expanded", "true");
-      expect(within(panel).getByText("de hond").closest("li")).toHaveAttribute("aria-current", "true");
+      // The sheet is not collapsible and opens on the highlighted words.
+      expect(within(panel).queryByRole("button", { name: /^New words/ })).not.toBeInTheDocument();
+      await waitFor(() => expect(within(panel).getByText("de hond").closest("li")).toHaveAttribute("aria-current", "true"));
       expect(within(panel).getByText("de kat").closest("li")).not.toHaveAttribute("aria-current");
-      expect(localStorage.getItem("wordinator:ui:v1:lesson-words-collapsed")).toBeNull();
     } finally { matchMedia.mockRestore(); }
   });
 
-  it("lists the lesson's headings and practices in an index beside the text, and leaves it out with fewer than two", async () => {
+  it("puts the lesson's headings and practices in the rail's index, and leaves it out with fewer than two", async () => {
     const heading = (id: string, title: string): LessonTopBlock => ({ id, type: "heading", props: { textColor: "default", backgroundColor: "default", level: 2 }, content: text(title), children: [] });
-    renderLesson({ course: course(false), outline: [summary(1), summary(2)], lessons: [
+    const { slots } = renderInRails({ course: course(false), outline: [summary(1), summary(2)], lessons: [
       lesson(1, [heading("50000000-0000-4000-8000-000000000031", "Wonen"), example("50000000-0000-4000-8000-000000000032", "Er is een balkon."), practice]),
       lesson(2, [heading("50000000-0000-4000-8000-000000000033", "Alleen"), example("50000000-0000-4000-8000-000000000034", "Ik woon hier.")]),
     ] });
     const index = await screen.findByRole("navigation", { name: "In this lesson" });
+    expect(slots.index.contains(index)).toBe(true);
     expect(within(index).getAllByRole("button").map((entry) => entry.textContent)).toEqual(["Wonen", "Practice: Translate"]);
-    // The index needs no New words panel beside it.
+    // Choosing an entry closes the phone's drawer (a no-op on wide screens).
+    vi.stubGlobal("scrollTo", vi.fn());
+    fireEvent.click(within(index).getByRole("button", { name: "Wonen" }));
     expect(screen.queryByRole("complementary", { name: "New words" })).not.toBeInTheDocument();
-    cleanup();
-    renderLesson({ course: course(false), outline: [summary(1), summary(2)], lessons: [lesson(1), lesson(2, [heading("50000000-0000-4000-8000-000000000033", "Alleen"), example("50000000-0000-4000-8000-000000000034", "Ik woon hier.")])] }, lessonId(2));
+    cleanup(); document.body.replaceChildren();
+    renderInRails({ course: course(false), outline: [summary(1), summary(2)], lessons: [lesson(1), lesson(2, [heading("50000000-0000-4000-8000-000000000033", "Alleen"), example("50000000-0000-4000-8000-000000000034", "Ik woon hier.")])] }, lessonId(2));
     expect(await screen.findByText("Ik woon hier.")).toBeInTheDocument();
     expect(screen.queryByRole("navigation", { name: "In this lesson" })).not.toBeInTheDocument();
+  });
+
+  it("pins the lesson box in the rail with progress, the course drill, the tutor requests, and figures only with data", async () => {
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    let metrics = { pronunciation: { attempts: 0, fluency: null as number | null }, words: { total: 2, practised: 0, strong: 0 }, lastStudiedAt: null as number | null };
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/metrics") ? response(metrics) : original(input, init));
+    const detail = { course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000011", "De hond blaft.")])] };
+    const { slots } = renderInRails(detail);
+    const box = await screen.findByRole("region", { name: "This lesson" });
+    expect(slots.box.contains(box)).toBe(true);
+    expect(within(box).getByRole("progressbar", { name: "Lesson progress" })).toBeInTheDocument();
+    expect(within(box).getByRole("link", { name: "Practise words" })).toHaveAttribute("href", `/words/drill?source=course&course=${courseId}&direction=mixed`);
+    const prompt = (name: string) => new URL(within(box).getByRole("link", { name }).getAttribute("href")!, "https://wordinator.test").searchParams.get("prompt");
+    expect(prompt("Ask for more practices like this")).toContain("lesson 1, “Lesson title 1”");
+    // Ask AI opens a new tutor conversation prefilled to talk the lesson's grammar and topics through.
+    expect(prompt("Ask AI")).toMatch(/^Let’s talk about lesson 1, “Lesson title 1”.*grammar and its topics/);
+    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/metrics`, expect.anything()));
+    expect(within(box).queryByText("Fluency")).not.toBeInTheDocument();
+    cleanup(); document.body.replaceChildren();
+    metrics = { pronunciation: { attempts: 3, fluency: 74 }, words: { total: 2, practised: 2, strong: 1 }, lastStudiedAt: Date.now() - 2 * 86_400_000 };
+    renderInRails(detail);
+    const filled = await screen.findByRole("region", { name: "This lesson" });
+    expect(await within(filled).findByText("Fluency")).toBeInTheDocument();
+    expect(within(filled).getByText("74 / 100")).toBeInTheDocument();
+    expect(within(filled).getByText("3 spoken attempts")).toBeInTheDocument();
+    expect(within(filled).getByText("Words remembered well").nextElementSibling).toHaveTextContent("1 of 2");
+    expect(within(filled).getByText("Last studied").nextElementSibling).toHaveTextContent("2 days ago");
   });
 
   it("shows a lesson outside the course outline as unavailable", async () => {

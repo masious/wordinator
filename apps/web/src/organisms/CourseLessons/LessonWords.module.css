@@ -1,46 +1,47 @@
-/* The panel sits in the lesson page's sticky side column and scrolls on its own in the space the index leaves. */
-.panel{display:grid;align-content:start;gap:var(--space-3);flex:1 1 auto;min-height:0;overflow-y:auto;padding:var(--space-2) var(--space-5) var(--space-4);background:var(--color-words-surface);border-radius:var(--radius-md);min-width:0;overscroll-behavior:contain}
-.panel[data-collapsed]{flex:none;padding-bottom:var(--space-2)}
-.toggle{display:flex;align-items:center;gap:var(--space-2);width:100%;min-height:var(--touch-target);padding:0;font:inherit;color:var(--color-foreground-muted);text-align:start;background:none;border:0;cursor:pointer}
-.toggle:hover .title{color:var(--color-foreground)}
-.toggle:focus-visible{outline:var(--border-strong);outline-offset:2px;border-radius:var(--radius-sm)}
-.count{padding:0 var(--space-2);font-size:var(--type-metadata);color:var(--color-foreground);background:var(--color-highlight-soft);border-radius:var(--radius-pill)}
-.chevron{flex:none;margin-left:auto;transition:transform var(--motion-standard) var(--ease-physical)}
+/* The vocabulary panel: a sticky column beside the text that scrolls on its own, under the text on narrower screens, and the body
+   of the phone's bottom sheet. */
+.panel{display:grid;align-content:start;gap:var(--space-3);min-width:0;max-height:100%;overflow-y:auto;padding:var(--space-4);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);overscroll-behavior:contain}
+.panel[data-collapsed]{padding-block:var(--space-2)}
+/* Docked in the right rail: the rail is the surface, so the panel fills its height and scrolls on its own. */
+.docked{height:100%;max-height:none;padding:var(--space-6) var(--space-4);background:none;border:0;border-radius:0;box-shadow:none}
+.docked[data-collapsed]{padding-block:var(--space-6)}
+.toggle{display:flex;align-items:center;gap:var(--space-2);width:100%;min-height:var(--control-height-sm);padding:0;font:inherit;color:var(--color-foreground);text-align:start;background:none;border:0}
+button.toggle{cursor:pointer}
+button.toggle:focus-visible{outline-offset:2px;border-radius:var(--radius-sm)}
+.title{font-size:var(--type-eyebrow);font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-action)}
+.total{font:var(--weight-medium) var(--type-badge)/1 var(--font-mono);color:var(--color-foreground-faint)}
+.count{padding:0.2rem var(--space-2);font:var(--weight-medium) var(--type-badge)/1 var(--font-mono);color:var(--color-action-soft-text);background:var(--color-action-soft);border-radius:var(--radius-pill)}
+.chevron{flex:none;margin-left:auto;color:var(--color-foreground-faint);transition:transform var(--motion-standard) var(--ease-physical)}
 .panel[data-collapsed] .chevron{transform:rotate(-90deg)}
 .body{display:grid;align-content:start;gap:var(--space-3);min-width:0}
-.title{font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
-.list{display:grid;gap:var(--space-1);margin:0;padding:0;list-style:none}
-.word{display:grid;gap:var(--space-1);min-width:0;padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm);opacity:0.6;transition:background-color var(--motion-standard) var(--ease-physical),opacity var(--motion-standard) var(--ease-physical)}
-.active{opacity:1;background:var(--color-highlight-soft)}
-.head{display:flex;align-items:center;gap:var(--space-1) var(--space-3);margin:0}
-.term{min-width:0;font-weight:var(--weight-semibold);overflow-wrap:anywhere}
-.forms{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted);overflow-wrap:anywhere}
-.meaning{margin:0;font-size:var(--type-metadata);white-space:pre-wrap;overflow-wrap:anywhere}
-/* Narrow screens fix the panel at the bottom of the window as a one-row bar; opened, it grows upward into
-   a sheet that scrolls on its own under its title. */
-.bar{--bar-bottom:calc(var(--navigation-offset) + env(safe-area-inset-bottom, 0px));position:fixed;right:var(--page-gutter);bottom:var(--bar-bottom);left:var(--page-gutter);z-index:var(--z-floating-action);width:min(calc(100% - (var(--page-gutter) * 2)),34rem);max-height:min(60dvh,32rem);margin-inline:auto;padding-top:0;border:var(--ring-hairline);box-shadow:var(--shadow-floating)}
-.bar .toggle{position:sticky;top:0;z-index:1;padding-top:var(--space-2);background:var(--color-words-surface)}
-.bar[data-collapsed]{padding-bottom:0}
-.bar[data-collapsed] .toggle{padding-top:0}
-.bar[data-collapsed] .chevron{transform:rotate(180deg)}
-@media(max-width:48em){.bar{--bar-bottom:calc(var(--mobile-dock-clearance) + var(--space-2))}}
-@media(prefers-reduced-motion:reduce){.word,.chevron,.expand svg{transition:none}}
-/* The chevron that opens a word's details: a compact icon with a full touch target kept out of the row height. */
-.expand{display:inline-grid;place-items:center;flex:none;min-width:var(--touch-target);min-height:var(--touch-target);margin:calc((var(--touch-target) - 1.5rem) / -2);margin-left:auto;padding:0;color:var(--color-foreground-muted);background:none;border:0;border-radius:var(--radius-pill);cursor:pointer;transition:color var(--motion-press) var(--ease-physical)}
-.expand:hover{color:var(--color-foreground)}
-.expand:focus-visible{outline:var(--border-strong);outline-offset:-4px}
+.list{display:grid;gap:var(--space-2);margin:0;padding:0;list-style:none}
+/* A Lumen reference item: the word on the card surface with a line border, its button stack at the row's end. Words of blocks off
+   screen are dimmed; the ones on screen are on the soft accent. */
+.word{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:var(--space-3);min-width:0;padding:var(--space-3);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-md);opacity:0.6;transition:background-color var(--motion-standard) var(--ease-physical),border-color var(--motion-standard) var(--ease-physical),opacity var(--motion-standard) var(--ease-physical)}
+.active{opacity:1;background:var(--color-action-soft);border-color:color-mix(in srgb,var(--color-action) 35%,transparent)}
+.copy{display:grid;gap:var(--space-1);min-width:0}
+.term{margin:0;font-weight:var(--weight-semibold);overflow-wrap:anywhere}
+.forms{margin:0;font:var(--type-metadata)/var(--line-compact) var(--font-mono);color:var(--color-foreground-muted);overflow-wrap:anywhere}
+.meaning{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}
+/* The attached vertical stack: Speak, Bookmark, Expand, each a square cell, joined by hairlines. */
+.stack{display:grid;overflow:hidden;background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-sm)}
+.stackCell{display:grid}
+.stackCell:empty{display:none}
+.stackCell+.stackCell{border-top:var(--ring-hairline)}
+.stackCell :is(button){display:grid;place-items:center;width:var(--control-height-sm);min-width:0;height:var(--control-height-sm);min-height:0;margin:0;padding:0;color:var(--color-foreground-muted);background:none;border:0;border-radius:0;cursor:pointer;transition:color var(--motion-press) var(--ease-physical),background-color var(--motion-press) var(--ease-physical)}
+.stackCell :is(button):hover{color:var(--color-action-soft-text);background:var(--color-action-soft)}
+.stackCell :is(button):focus-visible{outline-offset:-3px}
+.stackCell :is(button) svg{width:1rem;height:1rem}
+.stackCell :is(button)[aria-pressed="true"]{color:var(--color-action)}
 .expand svg{transition:transform var(--motion-standard) var(--ease-physical)}
 .word[data-open] .expand svg{transform:rotate(180deg)}
-.details{display:grid;gap:var(--space-1);min-width:0;padding-top:var(--space-1)}
+.details{display:grid;gap:var(--space-2);min-width:0;padding-top:var(--space-2);margin-top:var(--space-1);border-top:var(--ring-hairline)}
 .example{display:flex;align-items:center;gap:var(--space-2);margin:0;font-size:var(--type-metadata);font-style:italic;overflow-wrap:anywhere}
 .note{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}
-.footer{display:flex;align-items:center;gap:var(--space-2);min-height:var(--touch-target)}
-.bookmark{display:inline-flex;margin-left:auto}
-.bookmark:empty{display:none}
 .search{display:grid;gap:var(--space-2)}
 .status{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 .result{opacity:1}
 .source{display:inline-flex;align-items:center;gap:var(--space-1);min-width:0;font-size:var(--type-metadata);color:var(--color-foreground-muted);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:0.18em;overflow-wrap:anywhere;border-radius:var(--radius-sm);transition:color var(--motion-press) var(--ease-physical)}
 .source svg{flex:none}
-.source:hover{color:var(--color-foreground)}
-.source:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.source:hover{color:var(--color-action-soft-text)}
+@media(prefers-reduced-motion:reduce){.word,.chevron,.expand svg,.stackCell :is(button){transition:none}}

@@ -1,0 +1,22 @@
+.rail{display:grid;align-content:start;gap:var(--space-4);height:100%;overflow-y:auto;padding:var(--space-5);background:var(--color-surface-raised)}
+.hero,.card{display:grid;gap:var(--space-3);padding:var(--space-5);border:var(--ring-hairline);border-radius:var(--radius-lg)}
+.hero{background:var(--color-action-soft)}
+.hero h2,.card h2{margin:0;font-family:var(--font-display);font-size:var(--type-card-title);font-weight:var(--weight-medium);line-height:var(--line-title)}
+.hero p,.summary{margin:0;color:var(--color-foreground-muted);font-size:var(--type-metadata);line-height:var(--line-body)}
+.eyebrow{font:var(--weight-bold) var(--type-eyebrow)/var(--line-compact) var(--font-mono);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-action-soft-text)}
+.card{background:var(--color-core)}
+.card header{display:flex;align-items:center;justify-content:space-between;gap:var(--space-2)}
+.card header>span{padding:var(--space-1) var(--space-2);font:var(--type-badge)/1 var(--font-mono);color:var(--color-foreground-muted);background:var(--color-wash);border-radius:var(--radius-pill)}
+.contextList,.toolList{display:grid;gap:var(--space-3);margin:0;padding:0;list-style:none}
+.contextList li,.toolList li{display:flex;align-items:flex-start;gap:var(--space-2);font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.contextList svg,.toolList svg{flex:none;width:1rem;height:1rem;margin-top:2px;stroke-width:1.5}
+.contextIcon{display:inline-grid;place-items:center}.contextIcon[data-ok]{color:var(--color-success)}
+.dialog{display:grid;gap:var(--space-5)}
+.dialogSection{display:grid;gap:var(--space-2)}
+.dialogSection p{margin:0;color:var(--color-foreground);line-height:var(--line-body)}
+.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2);margin:0}
+.metrics div{display:grid;gap:var(--space-1);padding:var(--space-3);background:var(--color-wash-subtle);border-radius:var(--radius-md)}
+.metrics dt{font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.metrics dd{margin:0;font:var(--weight-medium) var(--type-card-title)/1 var(--font-mono);font-variant-numeric:tabular-nums}
+.dialogActions{display:flex;justify-content:flex-end;gap:var(--space-2)}
+@media(max-width:48em){.metrics{grid-template-columns:1fr 1fr}}

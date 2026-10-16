@@ -98,6 +98,16 @@ const WRITE_TOOLS = {
   },
 } as const;
 
+// Every read and write tool (the ones the learner sees as steps) also takes `summary`: one line, written for the learner, saying
+// what this call does. It is validated before the tool's own arguments and stored in the result's detail, so the session rail and
+// step details describe the call instead of naming only the tool. Questions and confirmation cards describe themselves.
+export const TOOL_SUMMARY_MAX = 120;
+const summaryArgs = z.object({
+  summary: z.string().transform((value) => value.replace(/\s+/g, " ").trim()).pipe(z.string().min(1).max(TOOL_SUMMARY_MAX))
+    .describe("One short line for the learner, in English, saying what this call does and for what, such as \"Reading lesson 3: Boodschappen\" or \"Checking your weakest words for a review\". Never include answers."),
+});
+const summarized = (name: string) => name in READ_TOOLS || name in WRITE_TOOLS;
+
 export const TOOL_NAMES = [
   ...Object.keys(READ_TOOLS), ...TUTOR_COMPONENT_KINDS.map((kind) => `ask_${kind}`), ...Object.keys(CONFIRMED_TOOLS), ...Object.keys(WRITE_TOOLS),
 ] as const;
@@ -110,10 +120,10 @@ function parameters(schema: z.ZodType): Record<string, unknown> {
 let definitions: AiToolDefinition[] | null = null;
 export function toolDefinitions(): AiToolDefinition[] {
   definitions ??= [
-    ...Object.entries(READ_TOOLS).map(([name, tool]) => ({ name, description: tool.description, parameters: parameters(tool.schema) })),
+    ...Object.entries(READ_TOOLS).map(([name, tool]) => ({ name, description: tool.description, parameters: parameters(summaryArgs.extend(tool.schema.shape)) })),
     ...TUTOR_COMPONENT_KINDS.map((kind) => ({ name: `ask_${kind}`, description: COMPONENT_DESCRIPTIONS[kind] + COMPONENT_NOTE + ((TUTOR_HINT_KINDS as readonly string[]).includes(kind) ? HINT_NOTE : ""), parameters: parameters(tutorComponentPayloadSchemas[kind]) })),
     ...Object.entries(CONFIRMED_TOOLS).map(([name, tool]) => ({ name, description: tool.description, parameters: parameters(tool.schema) })),
-    ...Object.entries(WRITE_TOOLS).map(([name, tool]) => ({ name, description: tool.description, parameters: parameters(tool.schema) })),
+    ...Object.entries(WRITE_TOOLS).map(([name, tool]) => ({ name, description: tool.description, parameters: parameters(summaryArgs.extend(tool.schema.shape)) })),
   ];
   return definitions;
 }
@@ -127,6 +137,15 @@ const lessonDetail = (lesson: ReadableLesson): TutorToolDetail => ({ lessonId: l
 
 /** Runs one tool call. Unknown tools and invalid arguments come back as failed results the model can correct. */
 export async function runTool(context: ToolContext, name: string, args: unknown): Promise<ToolOutcome> {
+  if (!summarized(name)) return dispatchTool(context, name, args);
+  const parsed = summaryArgs.safeParse(args);
+  if (!parsed.success) return invalidArguments(parsed.error);
+  // The tools' own schemas strip the unknown `summary` key.
+  const outcome = await dispatchTool(context, name, args);
+  return outcome.kind === "result" ? { ...outcome, detail: { ...outcome.detail, summary: parsed.data.summary } } : outcome;
+}
+
+async function dispatchTool(context: ToolContext, name: string, args: unknown): Promise<ToolOutcome> {
   const { db, userId } = context;
   if (name in READ_TOOLS) {
     const parsed = READ_TOOLS[name as keyof typeof READ_TOOLS].schema.safeParse(args);

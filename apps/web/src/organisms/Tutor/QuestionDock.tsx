@@ -1,8 +1,8 @@
 import type { TutorComponentAnswer, TutorPart, TutorSetAnswer } from "@wordinator/contracts/tutor";
-import { ArrowLeft, ArrowRight, Check } from "lucide-react";
-import { useCallback, useMemo, useRef, useState } from "react";
+import { ArrowLeft, ArrowRight, Check, ChevronDown, ChevronUp } from "lucide-react";
+import { useCallback, useId, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button } from "../../ui";
+import { Button, IconButton } from "../../ui";
 import { AnswerComponent, DraftContext, type ClipSource, type DraftMode } from "../TutorComponents";
 import styles from "./Tutor.module.css";
 
@@ -18,6 +18,8 @@ const ADVANCES = new Set(["choice", "fill_in", "translate", "dictation", "fix_mi
 // One question shows at a time under its position and step pips; answers are drafts the learner can revisit with Previous or a
 // pip, Skip marks one skipped, and Next becomes Check answers on the last question, which sends the whole set at once (questions
 // left unanswered go as skips). The questions stay mounted while hidden, so what was typed survives moving between them.
+// Minimized, the dock keeps only its head (position, pips, and the toggle), leaving the chat's height to earlier messages; the
+// questions stay mounted then too, and a pip or the toggle brings them back where the learner left off.
 export function QuestionDock({ components, onSubmit, clip, language, disabled }: {
   components: readonly OpenComponent[]; onSubmit: (answers: TutorSetAnswer[]) => Promise<unknown>;
   clip?: (toolCallId: string) => ClipSource | undefined; language: string; disabled: boolean;
@@ -28,6 +30,8 @@ export function QuestionDock({ components, onSubmit, clip, language, disabled }:
   const [ready, setReady] = useState<Record<string, boolean>>({});
   const [sending, setSending] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [minimized, setMinimized] = useState(false);
+  const bodyId = useId();
   const draftsRef = useRef(drafts);
   const submitters = useRef(new Map<string, Submitter>());
   const stepping = useRef(false);
@@ -56,7 +60,7 @@ export function QuestionDock({ components, onSubmit, clip, language, disabled }:
     stepping.current = true;
     try { submitter.submit(); } finally { stepping.current = false; }
   };
-  const go = (position: number) => { saveCurrent(); setIndex(Math.max(0, Math.min(position, count - 1))); };
+  const go = (position: number) => { saveCurrent(); setIndex(Math.max(0, Math.min(position, count - 1))); setMinimized(false); };
   // A lone question's Skip sends it at once; in a set it marks the question and moves on.
   const skip = () => {
     write({ ...draftsRef.current, [current.toolCallId]: { skip: true } });
@@ -80,17 +84,23 @@ export function QuestionDock({ components, onSubmit, clip, language, disabled }:
   const unanswered = components.filter((part) => part !== current && state(part) !== "answered").length + (currentReady ? 0 : 1);
   const locked = disabled || sending;
 
-  return <section className={styles.dock} aria-label={t("tutor.dock.label")}>
-    {count > 1 && <div className={styles.dockHead}>
-      <p className={styles.dockPosition} role="status">{t("tutor.dock.position", { current: index + 1, count })}</p>
-      <ol className={styles.dockPips}>
-        {components.map((part, position) => <li key={part.toolCallId}>
-          <button type="button" className={styles.dockPip} data-state={state(part)} aria-current={position === index ? "step" : undefined} disabled={locked}
-            aria-label={t("tutor.dock.goTo", { number: position + 1, state: t(`tutor.dock.states.${state(part)}`) })} onClick={() => go(position)} />
-        </li>)}
-      </ol>
-    </div>}
-    <div className={styles.dockBody}>
+  return <section className={styles.dock} aria-label={t("tutor.dock.label")} data-minimized={minimized || undefined}>
+    <div className={styles.dockHead}>
+      <p className={styles.dockPosition} role="status">{count > 1 ? t("tutor.dock.position", { current: index + 1, count }) : t("tutor.dock.single")}</p>
+      <div className={styles.dockTools}>
+        {count > 1 && <ol className={styles.dockPips}>
+          {components.map((part, position) => <li key={part.toolCallId}>
+            <button type="button" className={styles.dockPip} data-state={state(part)} aria-current={position === index ? "step" : undefined} disabled={locked}
+              aria-label={t("tutor.dock.goTo", { number: position + 1, state: t(`tutor.dock.states.${state(part)}`) })} onClick={() => go(position)} />
+          </li>)}
+        </ol>}
+        <IconButton tone="quiet" label={minimized ? t("tutor.dock.expand") : t("tutor.dock.minimize")} aria-expanded={!minimized} aria-controls={bodyId}
+          onClick={() => setMinimized((value) => !value)}>
+          {minimized ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}
+        </IconButton>
+      </div>
+    </div>
+    <div className={styles.dockBody} id={bodyId}>
       {components.map((part, position) => <div key={part.toolCallId} hidden={position !== index}>
         <DraftContext.Provider value={modes.get(part.toolCallId)!}>
           <AnswerComponent view={part.view} answer={null} grade={null} gradeHeld disabled={locked} clip={clip?.(part.toolCallId)} language={language}

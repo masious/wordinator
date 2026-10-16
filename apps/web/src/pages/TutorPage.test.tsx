@@ -134,21 +134,16 @@ async function choose(combobox: HTMLElement, option: string | RegExp) {
 const sendText = (value: string) => { fireEvent.change(composer(), { target: { value } }); fireEvent.click(screen.getByRole("button", { name: "Send" })); };
 
 describe("Tutor page", () => {
-  it("renames the open conversation in place and keeps the learner's title", async () => {
+  it("renames the open conversation from its details dialog and keeps the learner's title", async () => {
     renderPage(c1);
-    fireEvent.click(await screen.findByRole("button", { name: "Rename conversation" }));
-    const field = screen.getByRole("textbox", { name: "Conversation title" });
+    fireEvent.click(await screen.findByRole("button", { name: "Conversation details" }));
+    const dialog = await screen.findByRole("dialog", { name: "Conversation details" });
+    const field = within(dialog).getByRole("textbox", { name: "Conversation title" });
     expect(field).toHaveValue("What next?");
     fireEvent.change(field, { target: { value: "  Separable   verbs " } });
-    fireEvent.click(screen.getByRole("button", { name: "Save title" }));
+    fireEvent.click(within(dialog).getByRole("button", { name: "Save changes" }));
     expect(await screen.findByRole("heading", { name: "Separable verbs", level: 2 })).toBeInTheDocument();
     expect(patches()).toEqual([{ path: `/api/ai/conversations/${c1}`, body: { title: "Separable verbs" } }]);
-
-    // Escape cancels without a request.
-    fireEvent.click(screen.getByRole("button", { name: "Rename conversation" }));
-    fireEvent.keyDown(screen.getByRole("textbox", { name: "Conversation title" }), { key: "Escape" });
-    expect(screen.queryByRole("textbox", { name: "Conversation title" })).not.toBeInTheDocument();
-    expect(patches()).toHaveLength(1);
   });
 
   it("shows each row's tokens and marks a title the tutor chose", async () => {
@@ -173,12 +168,13 @@ describe("Tutor page", () => {
     expect(summary.closest("details")).toHaveAttribute("open");
   });
 
-  it("shows today's usage and the open conversation's tokens", async () => {
+  it("shows today's usage and the open conversation's tokens in conversation details", async () => {
     renderPage(c1);
-    const usage = await screen.findByRole("region", { name: "Usage" });
-    expect(await within(usage).findByText("15.4K tokens")).toBeInTheDocument();
-    expect(within(usage).getByText("2.5K tokens")).toBeInTheDocument();
-    expect(within(usage).getByRole("progressbar", { name: "7 of 40 turns" })).toBeInTheDocument();
+    fireEvent.click(await screen.findByRole("button", { name: "Conversation details" }));
+    const dialog = await screen.findByRole("dialog", { name: "Conversation details" });
+    expect(await within(dialog).findByText("15.4K tokens")).toBeInTheDocument();
+    expect(within(dialog).getByText("2.5K tokens")).toBeInTheDocument();
+    expect(within(dialog).getByText("7 of 40 turns")).toBeInTheDocument();
     expect(vi.mocked(fetch).mock.calls.some(([input]) => String(input) === `/api/ai/usage?conversationId=${c1}`)).toBe(true);
   });
 
@@ -233,6 +229,21 @@ describe("Tutor page", () => {
     fireEvent.click(await screen.findByRole("button", { name: "Play “hallo”" }));
     await waitFor(() => expect(HTMLMediaElement.prototype.play).toHaveBeenCalled());
     expect(posts().find((entry) => entry.path.endsWith("/speech"))).toEqual({ path: `/api/ai/conversations/${c1}/messages/${id(2)}/speech`, body: { spanIndex: 1 } });
+  });
+
+  it("describes recent tool calls by the tutor's summary, and older ones without a summary by the tool's label", async () => {
+    messages[c1]!.push(message(id(2), "assistant", [
+      { type: "tool_call", toolCallId: id(21), name: "get_weak_words", arguments: {} },
+      { type: "tool_result", toolCallId: id(21), name: "get_weak_words", ok: true, error: null, detail: { count: 3 } },
+      { type: "tool_call", toolCallId: id(22), name: "get_lesson", arguments: {} },
+      { type: "tool_result", toolCallId: id(22), name: "get_lesson", ok: true, error: null, detail: { lessonTitle: "Boodschappen", summary: "Reading lesson 3: Boodschappen" } },
+      text("Here we go."),
+    ]));
+    renderPage(c1);
+    fireEvent.click(await screen.findByRole("button", { name: "Conversation details" }));
+    const dialog = await screen.findByRole("dialog", { name: "Conversation details" });
+    expect(await within(dialog).findByText("Reading lesson 3: Boodschappen")).toBeInTheDocument();
+    expect(within(dialog).getByText("Checked your weak words")).toBeInTheDocument();
   });
 
   it("folds consecutive tool chips into one closed group that opens to done and failed steps", async () => {
@@ -343,6 +354,14 @@ describe("Tutor page", () => {
     expect(within(dock).getByRole("button", { name: /house/ })).toHaveAttribute("aria-pressed", "true");
     fireEvent.click(within(dock).getByRole("button", { name: /tree/ }));
     expect(within(dock).getByRole("button", { name: "Question 2, answered" })).toBeInTheDocument();
+
+    // Minimizing keeps only the head, and the questions stay mounted; a pip brings them back where they were.
+    fireEvent.click(within(dock).getByRole("button", { name: "Minimize questions" }));
+    expect(dock).toHaveAttribute("data-minimized");
+    expect(within(dock).getByRole("button", { name: "Show questions" })).toHaveAttribute("aria-expanded", "false");
+    fireEvent.click(within(dock).getByRole("button", { name: "Question 2, answered" }));
+    expect(dock).not.toHaveAttribute("data-minimized");
+    expect(within(dock).getByRole("button", { name: "Minimize questions" })).toHaveAttribute("aria-expanded", "true");
 
     // The typed translation survived; Next on the last question becomes Check answers, and the unanswered one goes as a skip.
     expect(within(dock).getByRole("textbox", { name: "Your translation" })).toHaveValue("Ik woon in een huis.");

@@ -141,6 +141,42 @@ describe("Word drill access", () => {
   });
 });
 
+describe("Course word drill", () => {
+  it("drills the published words of every lesson in one course", async () => {
+    const { groupId, owner, reader, course, hond, kat } = await setup();
+    const vis = word("de vis");
+    await addLesson(groupId, course.id, owner, "Fish", { document: documentOf(blocks.vocabulary(vis)) });
+    await addLesson(groupId, course.id, owner, "Draft", { published: false, document: documentOf(blocks.vocabulary(word("het concept"))) });
+    const travel = await createCourse(groupId, owner, true, { title: "Travel", summary: "On the road." });
+    await addLesson(groupId, travel.id, owner, "Stations", { document: documentOf(blocks.vocabulary(word("de trein"))) });
+    const { cards } = await deck(groupId, reader, `source=course&courseId=${course.id}`);
+    expect(cards.map((card) => card.word.id).sort()).toEqual([hond.id, kat.id, vis.id].sort());
+    expect(cards.every((card) => card.course.id === course.id)).toBe(true);
+  });
+
+  it("refuses invalid settings, invisible courses, and other libraries' courses", async () => {
+    const { groupId, owner, reader, course, lesson } = await setup();
+    for (const query of ["source=course", "source=course&courseId=nope", `source=course&courseId=${course.id}&lessonId=${lesson.lesson.id}`, `source=weak&courseId=${course.id}`]) {
+      const response = await request(`/api/groups/${groupId}/word-drill?${query}`, reader);
+      expect(response.status, query).toBe(400);
+      expect(await errorCode(response)).toBe("INVALID_DRILL");
+    }
+    const hidden = await createCourse(groupId, owner, false, { title: "Hidden", summary: "Not yet." });
+    await addLesson(groupId, hidden.id, owner, "Secret", { document: documentOf(blocks.vocabulary(word("het geheim"))) });
+    for (const courseId of [hidden.id, crypto.randomUUID()]) {
+      const response = await request(`/api/groups/${groupId}/word-drill?source=course&courseId=${courseId}`, reader);
+      expect(response.status).toBe(404);
+      expect(await errorCode(response)).toBe("COURSE_NOT_FOUND");
+    }
+    expect((await deck(groupId, owner, `source=course&courseId=${hidden.id}`)).cards.map((card) => card.word.term)).toEqual(["het geheim"]);
+    const outsiderId = await seedUser("outsider"); const otherGroup = await seedGroup("beta", outsiderId);
+    const outsider = await signIn("outsider");
+    const betaCourse = await createCourse(otherGroup, outsider);
+    await addLesson(otherGroup, betaCourse.id, outsider, "Beta", { document: documentOf(blocks.vocabulary(word("de fiets"))) });
+    expect((await request(`/api/groups/${groupId}/word-drill?source=course&courseId=${betaCourse.id}`, reader)).status).toBe(404);
+  });
+});
+
 describe("Word drill deck", () => {
   it("drills every published word of a lesson with its course, lesson, and speech", async () => {
     const { groupId, reader, course, lesson, hond, kat } = await setup();

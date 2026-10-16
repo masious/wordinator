@@ -13,14 +13,18 @@ import { WordDrillCard } from "../organisms/WordDrill/WordDrillCard";
 import { Button, EmptyState, ErrorState, LabelChip, LoadingState, Surface } from "../ui";
 import styles from "./WordDrillPage.module.css";
 
-// The drill route's search (docs/words.md#setup). Unknown settings fall back to the defaults, and a lesson drill without a valid
-// lesson becomes a Weak words drill, so the page never asks the API for a deck it would refuse.
+// The drill route's search (docs/words.md#setup). Unknown settings fall back to the defaults, and a lesson or course drill without
+// a valid lesson or course becomes a Weak words drill, so the page never asks the API for a deck it would refuse. The lesson page's
+// Practise words opens a course drill (`source=course&course=<id>`).
 export function validateWordDrillSearch(search: Record<string, unknown>): WordDrillSettings {
   const source = wordDrillSourceSchema.safeParse(search.source);
   const direction = wordDrillModeSchema.safeParse(search.direction);
   const lesson = opaqueIdSchema.safeParse(search.lesson);
+  const course = opaqueIdSchema.safeParse(search.course);
   const mode = direction.success ? direction.data : "mixed";
-  return source.success && source.data === "lesson" && lesson.success ? { source: "lesson", lesson: lesson.data, direction: mode } : { source: "weak", direction: mode };
+  if (source.success && source.data === "lesson" && lesson.success) return { source: "lesson", lesson: lesson.data, direction: mode };
+  if (source.success && source.data === "course" && course.success) return { source: "course", course: course.data, direction: mode };
+  return { source: "weak", direction: mode };
 }
 
 // One session's cards, shown one at a time. The first grade of each card is sent once, as soon as it is given; a failed save is
@@ -97,13 +101,13 @@ function DrillSession({ groupId, settings, run, language, onAgain, onBack }: {
   if (deck.isPending) return <LoadingState label={t("drill.loading")} />;
   if (deck.isError) {
     if (deck.error instanceof ApiError && deck.error.status === 404) {
-      return <Surface tone="quiet"><EmptyState title={t("drill.lessonUnavailable")} action={<Button onClick={onBack}>{t("drill.backToWords")}</Button>} /></Surface>;
+      return <Surface tone="quiet"><EmptyState title={t(settings.source === "course" ? "drill.courseUnavailable" : "drill.lessonUnavailable")} action={<Button onClick={onBack}>{t("drill.backToWords")}</Button>} /></Surface>;
     }
     return <ErrorState title={t("drill.unavailable")}><Button onClick={() => deck.refetch()}>{t("common.retry")}</Button></ErrorState>;
   }
   if (!deck.data.cards.length) {
     return <Surface tone="quiet"><EmptyState title={t("drill.emptyTitle")} action={<Button onClick={onBack}>{t("drill.backToWords")}</Button>}>
-      {settings.source === "weak" ? t("drill.emptyWeak") : t("drill.emptyLesson")}
+      {t({ weak: "drill.emptyWeak", lesson: "drill.emptyLesson", course: "drill.emptyCourse" }[settings.source])}
     </EmptyState></Surface>;
   }
   return <DrillRun groupId={groupId} cards={deck.data.cards} language={language} onAgain={onAgain} onBack={onBack} />;
@@ -122,7 +126,7 @@ export function WordDrillPage({ groupId, settings, onBack }: { groupId: string; 
   const libraryLanguage = session.data.groups[0]?.language;
   const language = libraryLanguage ? t(`languages.${libraryLanguage}`) : "";
   const recognitionLocale = libraryLanguage ? RECOGNITION_LOCALES[libraryLanguage] : null;
-  const subtitle = settings.source === "weak" ? t("drill.setup.weak") : t("drill.setup.lesson");
+  const subtitle = t(`drill.setup.${settings.source}`);
   const direction = settings.direction === "mixed" ? t("drill.setup.mixed") : t(`drill.setup.${settings.direction}`, { language });
   return <GroupFrame groupId={groupId} session={session.data}>
     <div className={styles.page}>
@@ -131,7 +135,7 @@ export function WordDrillPage({ groupId, settings, onBack }: { groupId: string; 
         <h1 className={styles.title}>{t("drill.title")}</h1>
         <p className={styles.settings}>{t("drill.settings", { source: subtitle, direction })}</p>
       </header>
-      <SpeechRecognitionScope locale={recognitionLocale} token={token} onAssessment={onAssessment}><DrillSession key={`${run}:${settings.source}:${settings.lesson ?? ""}:${settings.direction}`} groupId={groupId} settings={settings} run={run}
+      <SpeechRecognitionScope locale={recognitionLocale} token={token} onAssessment={onAssessment}><DrillSession key={`${run}:${settings.source}:${settings.lesson ?? settings.course ?? ""}:${settings.direction}`} groupId={groupId} settings={settings} run={run}
         language={language} onAgain={() => setRun((value) => value + 1)} onBack={onBack} /></SpeechRecognitionScope>
     </div>
   </GroupFrame>;

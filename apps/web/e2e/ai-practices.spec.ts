@@ -9,7 +9,7 @@ test("a practice the tutor saves shows on the lesson page, is answered there, an
   await askTutor(page, SAVE_PRACTICE_REQUEST);
   await expect(page.getByText(/^Save this .+ practice for everyone who reads this lesson\?$/)).toBeVisible();
   await page.getByRole("button", { name: "Confirm" }).click();
-  await expect(page.getByText("The practice is saved.")).toBeVisible();
+  await expect(page.getByRole("region", { name: "Chat with your tutor" }).getByText("The practice is saved.")).toBeVisible();
 
   await page.goto(`/courses/${courseId}`);
   await page.getByRole("link", { name: /^Open lesson 1:/ }).click();

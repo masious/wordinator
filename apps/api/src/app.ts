@@ -96,6 +96,7 @@ import { courseVisibleClause } from "./courseVisibility";
 import { tutorRoutes } from "./tutor";
 import { buildWordDrillDeck, type WordDrillMemory } from "./wordDrill";
 import { lessonMemoryKeys, memoryRebuildStatements, recordWordReviews } from "./learningData";
+import { readLessonMetrics } from "./learning/metrics";
 import { completeLesson, readLessonProgress, resetLesson } from "./learning/progress";
 import { registerAttemptRoutes } from "./learning/attempts";
 import { registerAiPracticeRoutes } from "./learning/aiPracticeRoutes";
@@ -103,6 +104,7 @@ import { aiPracticeCounts, lessonAiPracticeDeletion } from "./tutor/aiPractices"
 import { recentResults } from "./wordMemory";
 import { decodeWeakCursor, readWeakWords, setWordKnown } from "./weakWords";
 import { weakWordsPageSchema, weakWordsQuerySchema, wordTermKeySchema } from "@wordinator/contracts/weak-words";
+import { lessonMetricsResponseSchema } from "@wordinator/contracts/learning";
 
 export type Bindings = Env & { MEDIA: R2Bucket; PUBLIC_MEDIA_BASE_URL: string };
 type Language = "nl" | "de";
@@ -2157,6 +2159,14 @@ app.get("/api/groups/:groupId/courses/:courseId/progress/lessons", requireGroupA
   return context.json(lessonProgressResponseSchema.parse(await readLessonProgress(context.env.DB, found.row, context.get("user")!.id)));
 });
 
+// The viewer's own metrics for one lesson, for the lesson page's lesson box (docs/courses.md#lesson-box). Private learning data:
+// it reads only the signed-in viewer's rows, under the lesson read's visibility rules.
+app.get(`${lessonPath}/metrics`, requireGroupAccess, async (context) => {
+  const found = await visibleCourse(context); if ("error" in found) return found.error;
+  const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
+  return context.json(lessonMetricsResponseSchema.parse(await readLessonMetrics(context.env.DB, lesson.lesson.id, context.get("user")!.id)));
+});
+
 // The course word recap: words of the currently published lessons the viewer has finished, in lesson order and then document
 // order. A term repeated across lessons (trimmed, case-insensitive) is kept at its first occurrence. Course visibility applies.
 app.get("/api/groups/:groupId/courses/:courseId/words", requireGroupAccess, async (context) => {
@@ -2398,6 +2408,11 @@ app.get("/api/groups/:groupId/word-drill", requireGroupAccess, async (context) =
   if (parsed.data.source === "lesson") {
     const lesson = await drillLesson(context, parsed.data.lessonId!); if ("error" in lesson) return lesson.error;
     source = { sql: "w.group_id = ? AND w.course_id = ? AND w.lesson_id = ?", values: [group.id, lesson.course.id, parsed.data.lessonId!] };
+  } else if (parsed.data.source === "course") {
+    // A course drill takes the published words of every lesson of one visible course; any miss is the course read's 404.
+    const course = await readCourseRow(db, user.id, group.id, parsed.data.courseId!);
+    if (!course || !courseVisible(course, user.id, group.creatorUserId)) return apiError(context, 404, "COURSE_NOT_FOUND", "This course is not available.");
+    source = { sql: "w.group_id = ? AND w.course_id = ?", values: [group.id, course.id] };
   } else {
     const visible = courseVisibleClause(user.id, group.creatorUserId);
     source = {

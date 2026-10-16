@@ -1,6 +1,7 @@
 import { type MembershipAdminItem, okResponseSchema, type SessionResponse, temporaryPasswordResponseSchema } from "@wordinator/contracts";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, Navigate, useNavigate } from "@tanstack/react-router";
+import { Bell } from "lucide-react";
 import { type FormEvent, type PropsWithChildren, type ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiError, apiRequest, groupQueryOptions, membershipsQueryOptions, sessionQueryOptions, settingsQueryOptions } from "../api";
@@ -104,8 +105,10 @@ export function AccountSettingsPage({ groupId, global = false }: { groupId: stri
         <div className={styles.actions}><Button loading={account.isPending} type="submit">{t("settings.saveProfile")}</Button><Message error={account.error} success={account.isSuccess} /></div>
       </form></Surface>
       <div className={styles.settingsRail}>
+        {global && <Surface className={styles.settingsPanel} tone="inset"><SectionHeader title={t("settings.noticesTitle")} description={t("settings.noticesIntro")} />
+          <Link className={styles.settingsLink} to="/notifications"><Bell size={16} aria-hidden="true" />{t("settings.openNotices")}</Link></Surface>}
         {session.data.user.isSuperuser === true && <Surface className={styles.settingsPanel} tone="inset"><SectionHeader title={t("analytics.settingsLinkTitle")} description={t("analytics.settingsLinkBody")} />
-          <Link className={styles.adminLink} to="/admin/analytics">{t("analytics.settingsLink")}</Link></Surface>}
+          <Link className={styles.settingsLink} to="/admin/analytics">{t("analytics.settingsLink")}</Link></Surface>}
         <Surface className={styles.settingsPanel} tone="inset"><ThemePreferenceControl /></Surface>
         <Surface className={styles.settingsPanel} tone="inset"><RecognizerPreferenceControl /></Surface>
         {global && <Surface className={styles.settingsPanel}><TutorSettings /></Surface>}

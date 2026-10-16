@@ -41,10 +41,15 @@ test("a new person signs up, sets up a username, and lands in the one global lib
   await expect(navigation).toBeVisible();
   await expect(page.getByRole("banner")).toBeHidden();
   await expect(navigation.getByRole("link", { name: "Courses", exact: true })).toHaveAttribute("aria-current", "page");
-  for (const name of ["Words", "Journal", "Tutor", "Notices"]) await expect(navigation.getByRole("link", { name, exact: true })).toBeVisible();
+  for (const name of ["Words", "Journal", "Tutor"]) await expect(navigation.getByRole("link", { name, exact: true })).toBeVisible();
+  await expect(navigation.getByRole("link", { name: "Notices", exact: true })).toHaveCount(0);
   const railBox = await navigation.boundingBox();
   expect(railBox).not.toBeNull();
   expect(railBox!.x).toBeLessThan(40);
+
+  await page.goto("/settings");
+  await expect(page.getByRole("link", { name: "Open notices" })).toHaveAttribute("href", "/notifications");
+  await page.goto("/courses");
 
   // Narrow windows hide the rail behind the header's menu button.
   await page.setViewportSize({ width: 390, height: 844 });

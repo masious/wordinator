@@ -13,6 +13,14 @@ describe("word drill contracts", () => {
     }
   });
 
+  it("names a course only for a course drill", () => {
+    const courseId = id(); const lessonId = id();
+    expect(wordDrillQuerySchema.parse({ source: "course", courseId })).toEqual({ source: "course", courseId, direction: "mixed" });
+    for (const query of [{ source: "course" }, { source: "course", courseId: "nope" }, { source: "course", courseId, lessonId }, { source: "weak", courseId }, { source: "lesson", lessonId, courseId }]) {
+      expect(wordDrillQuerySchema.safeParse(query).success).toBe(false);
+    }
+  });
+
   it("caps a deck at the session size", () => {
     const lessonId = id();
     const card = {

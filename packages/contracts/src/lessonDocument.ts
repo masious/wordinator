@@ -579,9 +579,10 @@ export const wordSearchPageSchema = z.object({ items: z.array(wordSearchResultSc
 export type WordSearchPage = z.infer<typeof wordSearchPageSchema>;
 
 // Drill (C12): self-graded flashcards of words; see docs/words.md#drill. A session holds at most this many cards, each word
-// in one direction. `lessonId` names the lesson of `source=lesson` and is refused for `source=weak`.
+// in one direction. `lessonId` names the lesson of `source=lesson` and `courseId` the course of `source=course`; each is refused
+// for every other source.
 export const WORD_DRILL_SESSION_SIZE = 20;
-export const wordDrillSourceSchema = z.enum(["weak", "lesson"]);
+export const wordDrillSourceSchema = z.enum(["weak", "lesson", "course"]);
 export type WordDrillSource = z.infer<typeof wordDrillSourceSchema>;
 export const wordDrillDirectionSchema = z.enum(["understand", "produce"]);
 export type WordDrillDirection = z.infer<typeof wordDrillDirectionSchema>;
@@ -590,8 +591,9 @@ export type WordDrillMode = z.infer<typeof wordDrillModeSchema>;
 export const wordDrillResultSchema = z.enum(["got", "again"]);
 export type WordDrillResult = z.infer<typeof wordDrillResultSchema>;
 export const wordDrillQuerySchema = z.object({
-  source: wordDrillSourceSchema, lessonId: opaqueIdSchema.optional(), direction: wordDrillModeSchema.default("mixed"),
-}).refine((query) => (query.source === "lesson") === (query.lessonId !== undefined), { message: "A lesson drill names one lesson; a weak words drill names none.", path: ["lessonId"] });
+  source: wordDrillSourceSchema, lessonId: opaqueIdSchema.optional(), courseId: opaqueIdSchema.optional(), direction: wordDrillModeSchema.default("mixed"),
+}).refine((query) => (query.source === "lesson") === (query.lessonId !== undefined), { message: "A lesson drill names one lesson; other drills name none.", path: ["lessonId"] })
+  .refine((query) => (query.source === "course") === (query.courseId !== undefined), { message: "A course drill names one course; other drills name none.", path: ["courseId"] });
 export type WordDrillQuery = z.infer<typeof wordDrillQuerySchema>;
 export const wordDrillCardSchema = z.object({
   word: courseWordSchema, direction: wordDrillDirectionSchema,

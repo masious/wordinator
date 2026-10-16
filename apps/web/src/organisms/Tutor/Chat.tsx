@@ -57,9 +57,10 @@ function applyEvent(current: Streaming, event: TutorStreamEvent): Streaming {
 
 const textOf = (message: TutorMessage) => message.parts.map((part) => part.type === "text" ? part.text : "").join("");
 
-export function TutorChat({ accountId, conversationId, conversation, newProvider = null, onCreated, language, languageName, recognitionLocale, token }: {
-  // Null for a new conversation, which is created when the learner first sends, with `newProvider` as its model.
-  accountId: string; conversationId: string | null; conversation: TutorConversation | null; newProvider?: AiProvider | null; onCreated: (conversation: TutorConversation) => void;
+export function TutorChat({ accountId, conversationId, conversation, newProvider = null, initialText, onCreated, language, languageName, recognitionLocale, token }: {
+  // Null for a new conversation, which is created when the learner first sends, with `newProvider` as its model. `initialText`
+  // prefills the composer of a new conversation.
+  accountId: string; conversationId: string | null; conversation: TutorConversation | null; newProvider?: AiProvider | null; initialText?: string; onCreated: (conversation: TutorConversation) => void;
   language: string; languageName: string; recognitionLocale: string | null; token: TokenSource;
 }) {
   const { t } = useTranslation();
@@ -71,7 +72,7 @@ export function TutorChat({ accountId, conversationId, conversation, newProvider
   const [busy, setBusy] = useState(false);
   const [refusal, setRefusal] = useState<Refusal>(null);
   const [limitUntil, setLimitUntil] = useState<number | null>(null);
-  const [text, setText] = useState("");
+  const [text, setText] = useState(initialText ?? "");
   const abort = useRef<AbortController | null>(null);
   const bottom = useRef<HTMLDivElement>(null);
 

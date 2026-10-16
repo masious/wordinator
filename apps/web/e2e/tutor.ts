@@ -46,9 +46,11 @@ export async function studyNextLessonWithTutor(page: Page, testInfo: TestInfo) {
 
   await expect(page.getByText(`Mark ${lessonTitle} in ${courseTitle} as complete?`)).toBeVisible();
   await page.getByRole("button", { name: "Confirm" }).click();
-  await expect(page.getByText(`${lessonTitle} is complete.`)).toBeVisible();
-  // The chat fits the viewport, which matters at phone width.
+  // The session rail's summary repeats the tutor's latest line on wide screens, so this looks in the chat.
+  await expect(page.getByRole("region", { name: "Chat with your tutor" }).getByText(`${lessonTitle} is complete.`)).toBeVisible();
+  // The chat fits the viewport, which matters at phone width, and the page never scrolls: only the messages do.
   expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBeLessThanOrEqual(0);
+  expect(await page.evaluate(() => document.documentElement.scrollHeight - document.documentElement.clientHeight)).toBeLessThanOrEqual(0);
 
   await page.goto(`/courses/${courseId}`);
   await page.getByRole("tab", { name: "Progress" }).click();
