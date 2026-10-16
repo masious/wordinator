@@ -22,8 +22,8 @@ test("the course card opens lessons on their page and follows the learner's prog
   await seedLesson(page, course.id, `${suffix} second`, [example("Tot ziens.")]);
 
   await page.goto(`/courses/${course.id}`);
-  // Progress is private, so the course page shows only the viewer's own bar.
-  const progress = page.getByRole("progressbar", { name: "Your course progress" });
+  // Progress is private, so the course page shows only the viewer's own bar; the course header carries it first (Lumen Batch 5).
+  const progress = page.getByRole("progressbar", { name: "Your course progress" }).first();
   await expect(progress).toHaveAttribute("aria-valuenow", "0");
   await page.getByRole("button", { name: "Start lesson 1", exact: true }).click();
   await expect(page).toHaveURL(/\/lessons\/[^/?]+$/);

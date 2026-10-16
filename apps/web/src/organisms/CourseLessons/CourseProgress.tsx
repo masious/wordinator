@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, lessonProgressQueryOptions, lessonQueryOptions } from "../../api";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
-import { Button, ConfirmDialog, EmptyState, ErrorState, LoadingState, Surface } from "../../ui";
+import { Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, type LabelChipTone, LoadingState, Surface } from "../../ui";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import { practiceDraftKey } from "./PracticeBlock";
 import styles from "./CourseProgress.module.css";
@@ -77,14 +77,17 @@ export function ResetLessonDialog({ title, opened, pending, error, onConfirm, on
   </ConfirmDialog>;
 }
 
+// Lesson states as badge tones: done in success, under way in the accent, missed in the warm attention tone.
+const stateTone: Record<LessonProgress["state"], LabelChipTone> = { completed: "success", in_progress: "accent", missed: "warm", not_started: "default" };
+
 function ProgressRow({ courseSlug, row, number, archived, onReset }: { courseSlug: string; row: LessonProgress; number: number; archived: boolean; onReset: () => void }) {
   const { t } = useTranslation();
   return <li className={styles.row}>
     <Link className={styles.lessonLink} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug, lessonSlug: row.slug }}>
-      <span className={styles.number}>{number}</span>
+      <span className={styles.number} data-state={row.state}>{number}</span>
       <span className={styles.title}>{row.title}</span>
     </Link>
-    <span className={styles.state} data-state={row.state}>{t(`courses.lessonProgress.states.${row.state}`)}</span>
+    <LabelChip className={styles.state} tone={stateTone[row.state]}>{t(`courses.lessonProgress.states.${row.state}`)}</LabelChip>
     <ProgressMeter className={styles.meter} size="compact" value={row.storylinePercent} label={t("courses.lessonProgress.storylineLabel", { number })} />
     <span className={styles.counts}>
       <span aria-label={t("courses.lessonProgress.practicesLabel", { done: row.practicesDone, total: row.practicesTotal })}>

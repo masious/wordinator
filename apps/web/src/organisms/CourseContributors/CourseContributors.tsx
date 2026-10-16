@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type ReactNode, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, courseContributorsQueryOptions } from "../../api";
-import { Avatar, Button, ConfirmDialog, SectionHeader, Surface } from "../../ui";
+import { Avatar, Button, ConfirmDialog, Surface } from "../../ui";
 import { CourseErrorMessage } from "../CourseLessons/CourseErrorMessage";
 import styles from "./CourseContributors.module.css";
 
@@ -41,13 +41,19 @@ export function CourseContributors({ groupId, course }: { groupId: string; cours
     {actions && <div className={styles.rowActions}>{actions}</div>}
   </li>;
   const data = contributors.data;
-  return <Surface className={styles.panel} tone="quiet">
-    <SectionHeader title={t("courses.contributors.title")} description={description} />
-    {(permissions.requestContribution || permissions.leaveContribution) && <div className={styles.actions}>
-      {permissions.requestContribution && <Button variant="secondary" loading={ask.isPending} onClick={() => ask.mutate()}>{t("courses.contributors.request")}</Button>}
-      {contribution === "pending" && <Button variant="quiet" loading={leave.isPending} onClick={() => leave.mutate()}>{t("courses.contributors.withdraw")}</Button>}
-      {contribution === "active" && <Button variant="quiet" onClick={() => setLeaving(true)}>{t("courses.contributors.leave")}</Button>}
-    </div>}
+  // A Lumen context card: a small heading and note with the viewer's own action beside them, then the lists.
+  return <Surface className={styles.panel}>
+    <div className={styles.top}>
+      <header className={styles.header}>
+        <h2>{t("courses.contributors.title")}</h2>
+        <p>{description}</p>
+      </header>
+      {(permissions.requestContribution || permissions.leaveContribution) && <div className={styles.actions}>
+        {permissions.requestContribution && <Button variant="secondary" loading={ask.isPending} onClick={() => ask.mutate()}>{t("courses.contributors.request")}</Button>}
+        {contribution === "pending" && <Button variant="quiet" loading={leave.isPending} onClick={() => leave.mutate()}>{t("courses.contributors.withdraw")}</Button>}
+        {contribution === "active" && <Button variant="quiet" onClick={() => setLeaving(true)}>{t("courses.contributors.leave")}</Button>}
+      </div>}
+    </div>
     <CourseErrorMessage error={ask.error ?? decide.error ?? (leaving ? null : leave.error) ?? contributors.error} />
     {manage && data && <section className={styles.group} aria-labelledby="course-contributor-requests">
       <h3 id="course-contributor-requests">{t("courses.contributors.requests")}</h3>
