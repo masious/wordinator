@@ -19,6 +19,7 @@
   flex-wrap: nowrap;
 }
 
+/* Lumen reaction chips: paper pills with a line border; hover and the viewer's own reactions on the soft accent. */
 .chip {
   display: inline-flex;
   align-items: center;
@@ -36,13 +37,12 @@
     transform var(--motion-press) var(--ease-physical),
     background-color var(--motion-standard) var(--ease-physical);
 }
-.chip:hover { background: var(--color-wash); }
+.chip:hover { color: var(--color-action-soft-text); background: var(--color-action-soft); }
 .chip:active { transform: scale(0.96); }
-.chip:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
 .chip[data-active="true"] {
-  color: var(--color-foreground);
+  color: var(--color-action-soft-text);
   background: var(--color-selected);
-  border-color: var(--color-highlight);
+  border-color: var(--color-action);
 }
 
 .vertical .chip {
@@ -85,7 +85,7 @@
   transition: border-color var(--motion-standard) var(--ease-physical);
 }
 .customInput:hover { border-color: var(--color-foreground-muted); }
-.customInput:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; border-style: solid; }
+.customInput:focus-visible { border-style: solid; border-color: var(--color-action); }
 .customInput[aria-invalid="true"] { border-color: var(--color-danger-text); }
 
 .vertical .customInput {

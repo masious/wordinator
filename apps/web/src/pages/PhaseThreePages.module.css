@@ -1,88 +1,53 @@
+/* The journal column and post detail (docs/design-system.md#journal): one reverse-chronological column at the reading width. */
 .feed,
 .detail {
   width: min(100%, var(--width-reading));
   margin-inline: auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-8);
+  gap: var(--space-5);
   animation: wordinator-enter var(--motion-reveal) var(--ease-physical) both;
 }
 
-.detail { padding-top: var(--space-4); }
+.detail { gap: var(--space-4); padding-top: var(--space-4); }
 .promptAnchor { scroll-margin-top: var(--space-8); }
+
+/* The create prompt row: a search-field-like paper row with the member's avatar, the placeholder, and a soft pen tile. */
 .composerPrompt {
   display: flex;
   align-items: center;
   gap: var(--space-3);
   width: 100%;
   min-height: var(--touch-target);
-  padding: var(--space-2) var(--space-4) var(--space-2) var(--space-2);
-  color: var(--color-foreground-muted);
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-3);
+  color: var(--color-foreground-faint);
   background: var(--color-core);
   border: var(--ring-hairline);
-  border-radius: var(--radius-pill);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-card);
   font: inherit;
   text-align: start;
   cursor: pointer;
-  transition: transform var(--motion-press) var(--ease-physical), background-color var(--motion-standard) var(--ease-physical);
+  transition: border-color var(--motion-standard) var(--ease-physical), box-shadow var(--motion-standard) var(--ease-physical);
 }
-.composerPrompt:hover { background: var(--color-highlight-soft); }
-.composerPrompt:active { transform: scale(0.99); }
+.composerPrompt:hover { border-color: var(--color-action); }
 .composerPromptText { flex: 1; min-width: 0; overflow: hidden; font-size: var(--type-post-body); text-overflow: ellipsis; white-space: nowrap; }
+.composerPromptIcon { display: inline-grid; flex: none; place-items: center; width: var(--control-height-sm); height: var(--control-height-sm); color: var(--color-action-soft-text); background: var(--color-action-soft); border-radius: var(--radius-sm); }
 
-.fieldRow { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-3); align-items: end; }
-.actions { display: flex; justify-content: flex-end; gap: var(--space-3); flex-wrap: wrap; padding-top: var(--space-2); }
-.error { margin: 0; color: var(--color-danger-text); font-weight: var(--weight-semibold); }
-.muted { margin: 0; color: var(--color-foreground-muted); line-height: var(--line-body); }
-
-.postShell {
-  min-width: 0;
-  padding: var(--space-2);
-  background: var(--color-bezel);
-  border: var(--ring-hairline);
-  border-radius: var(--radius-shell);
-  box-shadow: var(--shadow-card);
-}
-.postCard {
-  display: grid;
-  gap: var(--space-5);
-  min-width: 0;
-  padding: clamp(var(--space-5), 4vw, var(--space-8));
-  background: var(--color-core);
-  border: var(--ring-hairline);
-  border-radius: var(--radius-core);
-  box-shadow: var(--shadow-inset-highlight);
-}
-.postHeader { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); }
-.postBody,
-.notes { white-space: pre-wrap; overflow-wrap: anywhere; line-height: var(--line-body); }
-.postBody { max-width: 64ch; font-size: var(--type-authored); }
-.postBody a { color: var(--color-foreground); text-decoration-color: var(--color-action); text-underline-offset: 3px; }
-.postFooter { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; padding-top: var(--space-4); color: var(--color-foreground-muted); border-top: 1px solid var(--color-separator); font: var(--type-metadata)/var(--line-compact) var(--font-mono); }
-.grow { flex: 1; }
-.openPost { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--touch-target); padding-inline: var(--space-3); color: var(--color-foreground); border-radius: var(--radius-pill); font-family: var(--font-sans); font-weight: var(--weight-semibold); text-decoration: none; transition: transform var(--motion-press) var(--ease-physical); }
-.openPost svg { transition: transform var(--motion-standard) var(--ease-physical); }
-.openPost:hover { background: var(--color-highlight-soft); transform: translateY(-1px); }
-.openPost:hover svg { transform: translate(3px, -1px); }
 .newPosts { position: sticky; top: var(--navigation-offset); z-index: var(--z-content); justify-self: center; box-shadow: var(--shadow-floating); }
-.pagination { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); padding: var(--space-5) 0; color: var(--color-foreground-muted); border-top: 1px solid var(--color-separator); font-family: var(--font-display); font-size: var(--text-lg); font-style: italic; }
+.pagination { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); padding: var(--space-5) 0; color: var(--color-foreground-muted); border-top: 1px solid var(--color-hairline); font-size: var(--text-sm); }
 .floating { position: fixed; right: max(var(--page-gutter), calc((100vw - var(--width-shell)) / 2)); bottom: calc(var(--mobile-dock-clearance) + var(--space-3)); z-index: var(--z-floating-action); box-shadow: var(--shadow-floating); }
-.backLink { width: fit-content; color: var(--color-foreground-muted); font: var(--type-metadata)/1 var(--font-mono); text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.backLink { display: inline-flex; align-items: center; gap: var(--space-2); width: fit-content; color: var(--color-foreground-muted); font-size: var(--type-control-label); font-weight: var(--weight-semibold); text-decoration: none; border-radius: var(--radius-sm); }
+.backLink:hover { color: var(--color-action-soft-text); }
 
+/* Phones: cards drop their outer margin to the page gutter; the column only tightens its rhythm. */
 @media (max-width: 48em) {
-  .feed, .detail { gap: var(--space-6); }
-  .postHeader { align-items: stretch; flex-direction: column; }
-  .meta { justify-content: flex-start; }
-  .postShell { border-radius: var(--radius-xl); }
-  .fieldRow { grid-template-columns: 1fr; }
+  .feed, .detail { gap: var(--space-4); }
   .pagination { align-items: flex-start; flex-direction: column; }
   .floating { right: var(--space-3); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .feed, .detail { animation: none; }
-  .openPost, .openPost svg, .composerPrompt { transition-duration: 1ms; }
-  .composerPrompt:active { transform: none; }
-  .openPost:hover, .openPost:hover svg { transform: none; }
+  .composerPrompt { transition-duration: 1ms; }
 }

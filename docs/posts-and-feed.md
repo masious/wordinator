@@ -71,7 +71,7 @@ In the feed only the byline is the link to the post: the shared piece follows it
 
 ## Composer and drafts
 
-The feed begins with a one-line create prompt row (the member's avatar and "Write something…"). When it leaves the viewport, show a floating create action that opens the same flow. Use a centered modal on larger screens and a full-screen mobile composition surface with a sticky title bar and a sticky Discard/Publish bar that stays above the on-screen keyboard. Below `48em` the journal hero is dropped: the group name moves to the header and Create a group moves to the account menu and the More sheet. The [design system](design-system.md#responsive-behavior) owns the visual details.
+The feed begins with a one-line create prompt row (the member's avatar and "Write something…"). When it leaves the viewport, show a floating create action that opens the same flow. Use a centered modal on larger screens and a full-screen mobile composition surface with a sticky title bar and a sticky Discard/Publish bar that stays above the on-screen keyboard. Below `48em` the journal header is dropped and its title stays as a visually hidden heading. The [design system](design-system.md#journal) owns the visual details.
 
 The post-type chooser is at the top; it offers neither system-created type (course and lesson share). Maintain independent field state for each type during the session and map compatible values, such as notes and primary text, without erasing prior type state. Clear composer state only after successful publication or explicit discard.
 
@@ -89,9 +89,9 @@ Phase 4 implements the remaining writing drafts with `wordinator:draft:v1:<accou
 - Stable cursor pagination; do not use offset pagination for the growing feed
 - Infinite loading for older pages
 - No ranking, search, filtering, or feed pinning
-- Cards show a byline sentence naming author, type, and relative time (for example “Ada asked a question 20 minutes ago.”), a suitable content preview, and reactions: a vertical rail beside the card at `48em` and wider, a footer row below it on narrower screens
-- The byline and preview form one link to the post's detail page (a [lesson share](#lesson-share) links its byline only); the actions menu and reaction rail sit beside that link, never inside it. Authored URLs are not linked inside feed cards, and notes are revealed on the detail page
-- Comment/answer and reaction counts live in the card's actions menu. At `48em` and wider cards have no footer; below `48em` a footer shows the comment/answer count beside the reaction row. The menu shows no view count
+- Cards show a byline sentence naming author, type, and relative time (for example “Ada asked a question 20 minutes ago.”), a post-type badge, a suitable content preview, and a reactions row closing the card at every width
+- The byline and preview form one link to the post's detail page (a [lesson share](#lesson-share) links its byline only); the type badge, actions menu, and reactions row sit outside that link, never inside it. Authored URLs are not linked inside feed cards, and notes are revealed on the detail page
+- Comment/answer and reaction counts live in the card's actions menu; the reactions row also shows the comment/answer count at its end. The menu shows no view count
 - Long content uses “Read more” to navigate to the canonical detail page; it does not expand inline
 - Comments and answers never expand inside the feed
 
