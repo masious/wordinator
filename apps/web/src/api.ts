@@ -1,6 +1,6 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, lessonProgressResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema, speechRecognitionTokenResponseSchema, type SpeechRecognitionTokenResponse } from "@wordinator/contracts";
 import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
-import { tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorProfileResponseSchema } from "@wordinator/contracts/tutor";
+import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorProfileResponseSchema } from "@wordinator/contracts/tutor";
 import { weakWordsPageSchema } from "@wordinator/contracts/weak-words";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
@@ -218,6 +218,15 @@ export const wordSearchQueryOptions = (groupId: string, query: string) => infini
 export const lessonQueryOptions = (groupId: string, courseId: string, lessonId: string) => queryOptions({
   queryKey: ["course-lesson", groupId, courseId, lessonId] as const,
   queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}`, lessonResponseSchema),
+  retry: false,
+});
+
+// The AI practices of a published lesson (C14h, docs/courses.md#ai-practices), read when the lesson page expands them.
+export const lessonAiPracticesPath = (groupId: string, courseId: string, lessonId: string) =>
+  `/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}/ai-practices`;
+export const lessonAiPracticesQueryOptions = (groupId: string, courseId: string, lessonId: string) => queryOptions({
+  queryKey: ["course-lesson", groupId, courseId, lessonId, "ai-practices"] as const,
+  queryFn: () => apiRequest(lessonAiPracticesPath(groupId, courseId, lessonId), lessonAiPracticesResponseSchema),
   retry: false,
 });
 

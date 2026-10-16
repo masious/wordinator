@@ -169,6 +169,10 @@ describe("requests and events", () => {
     expect(tutorMessageRequestSchema.parse({ text: " Hoi\nwereld " }).text).toBe("Hoi\nwereld");
     expect(tutorRespondRequestSchema.safeParse({ type: "confirmation", confirmed: true }).success).toBe(true);
     expect(tutorRespondRequestSchema.safeParse({ type: "component", answer: { kind: "choice", choice: 1, extra: true } }).success).toBe(false);
+    expect(tutorRespondRequestSchema.parse({ type: "component", skip: true })).toEqual({ type: "component", skip: true });
+    expect(tutorRespondRequestSchema.safeParse({ type: "component", skip: false }).success).toBe(false);
+    expect(tutorRespondRequestSchema.safeParse({ type: "confirmation", skip: true }).success).toBe(false);
+    expect(tutorRespondRequestSchema.safeParse({ type: "component", skip: true, answer: { kind: "choice", choice: 1 } }).success).toBe(false);
     expect(tutorComponentAnswerSchema.safeParse({ kind: "translate", text: " " }).success).toBe(false);
     expect(tutorSpeechRequestSchema.safeParse({ spanIndex: 0 }).success).toBe(true);
     expect(tutorSpeechRequestSchema.safeParse({ text: "Hallo" }).success).toBe(false);

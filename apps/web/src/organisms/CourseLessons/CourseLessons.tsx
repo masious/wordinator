@@ -2,13 +2,14 @@ import {
   COURSE_TEXT_MAX, COURSE_TITLE_MAX, okResponseSchema, outlineResponseSchema, type CourseLessonSummary, type CourseProgressResponse, type LessonInput, type LessonPosition,
 } from "@wordinator/contracts";
 import { lessonResponseSchema, type CourseDetailResponse, type CourseLesson } from "@wordinator/contracts/lesson-document";
+import type { LessonAiPracticesResponse } from "@wordinator/contracts/tutor";
 import { useMediaQuery } from "@mantine/hooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, lazy, Suspense, useCallback, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { Trans, useTranslation } from "react-i18next";
-import { apiRequest, courseProgressQueryOptions, courseQueryOptions, courseWordsQueryOptions, lessonQueryOptions, wordBookmarksKey } from "../../api";
+import { apiRequest, courseProgressQueryOptions, courseQueryOptions, courseWordsQueryOptions, lessonAiPracticesQueryOptions, lessonQueryOptions, wordBookmarksKey } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
 import { relativeTime } from "../../relativeTime";
 import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
@@ -26,6 +27,7 @@ import { LessonReadingProgress, type ReadingTracking, useResumeScroll } from "./
 import { LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN, stickyInset } from "./LessonIndex";
 import { LessonWords, useVisibleWords, useWordsCollapsed } from "./LessonWords";
 import { practiceFromBlock, PracticeSummary } from "./PracticeBlock";
+import { AiPracticeToggle, useAiPracticeSlots, type AiPracticeScope } from "./AiPractices";
 
 // The editor and BlockNote load only when someone opens a lesson for editing.
 const LessonEditor = lazy(() => import("../LessonEditor/LessonEditor"));
@@ -55,9 +57,15 @@ function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" 
 // a collapsible panel of the lesson's words, where the words of the blocks on screen are highlighted. Narrow screens move the
 // panel to a bar at the bottom of the window that starts collapsed on every lesson; it renders into the body so the shell's entry
 // transform cannot pin it to the page.
-function LessonBody({ scope, lesson, tracking, resume, archived }: { scope: Scope; lesson: CourseLesson; tracking: ReadingTracking; resume: LessonPosition | undefined; archived: boolean }) {
+// `aiPractices`, once expanded and read, places the lesson's AI practices after their anchor blocks and at the end.
+function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices }: {
+  scope: Scope; lesson: CourseLesson; tracking: ReadingTracking; resume: LessonPosition | undefined; archived: boolean;
+  aiPractices?: { scope: AiPracticeScope; data: LessonAiPracticesResponse | undefined };
+}) {
   const { t } = useTranslation();
   const document = playableDocument(lesson);
+  // Draft previews show no AI practices; they are tagged to the published document only.
+  const slots = useAiPracticeSlots(aiPractices?.scope ?? null, lesson.document, aiPractices?.data);
   const steps = useMemo(() => lessonSteps(lesson), [lesson]);
   const entries = useMemo(() => document ? lessonIndexEntries(document) : [], [document]);
   const reading = useRef<HTMLDivElement>(null); const side = useRef<HTMLDivElement>(null);
@@ -83,12 +91,13 @@ function LessonBody({ scope, lesson, tracking, resume, archived }: { scope: Scop
     <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} />
     <div ref={reading} className={styles.body}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
-      <LessonDocument document={document} anchored vocabulary={false}
+      <LessonDocument document={document} anchored vocabulary={false} renderAfterBlock={slots?.afterBlock}
         renderShare={share ? (block) => <ShareButton piece={block.type === "example" ? { kind: "example", block } : { kind: "dialogue", block }}
           label={t(`lessonShares.shareNamed.${block.type}`)} /> : undefined}
         renderPractice={(block) =>
         <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.practiceProgress)}
           published={lesson.document !== null} archived={archived} dock={hasSide ? reading : undefined} />} />
+      {slots?.end}
     </div>
     {(hasIndex || (words && !bar)) && <div ref={side} className={styles.side}>
       {hasIndex && <LessonIndex entries={entries} reading={reading} side={side} fill={!hasWords || bar || wordsCollapsed} />}
@@ -291,8 +300,9 @@ export function CourseLessonTools({ groupId, courseId, accountId, detail }: { gr
 }
 
 // `resume` opens the lesson at the viewer's saved step, also in a finished lesson they are going through again.
-export function LessonView({ groupId, courseId, accountId, detail, lessonId, dataUpdatedAt, resume = false }: {
-  groupId: string; courseId: string; accountId: string; detail: CourseDetailResponse; lessonId: string; dataUpdatedAt: number; resume?: boolean;
+// `language` is the library language, for the microphone of AI practices.
+export function LessonView({ groupId, courseId, accountId, detail, lessonId, dataUpdatedAt, resume = false, language }: {
+  groupId: string; courseId: string; accountId: string; detail: CourseDetailResponse; lessonId: string; dataUpdatedAt: number; resume?: boolean; language?: string;
 }) {
   const { t } = useTranslation(); const navigate = useNavigate();
   const scope = lessonScope(groupId, courseId, accountId, detail);
@@ -302,6 +312,12 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
   const lesson = useQuery({ ...lessonQueryOptions(groupId, courseId, lessonId), initialData: preloaded && { lesson: preloaded }, initialDataUpdatedAt: dataUpdatedAt, enabled: index >= 0 });
   const progress = useQuery(courseProgressQueryOptions(groupId, courseId));
   const [editing, setEditing] = useState(false);
+  // AI practices (C14h) expand on request and are read only then; the choice is not remembered.
+  const [aiShown, setAiShown] = useState(false);
+  const aiPracticeCount = lesson.data?.lesson.document ? lesson.data.lesson.aiPracticeCount ?? 0 : 0;
+  const aiOpen = aiShown && aiPracticeCount > 0 && !editing;
+  const aiPractices = useQuery({ ...lessonAiPracticesQueryOptions(groupId, courseId, lessonId), enabled: aiOpen });
+  const aiScope = useMemo<AiPracticeScope>(() => ({ groupId, courseId, lessonId, language }), [groupId, courseId, lessonId, language]);
   if (!summary) return <ErrorState title={t("courses.lessons.unavailable")} />;
   const number = index + 1; const data = lesson.data?.lesson;
   // The outline summary is fresher after a publish elsewhere; the loaded lesson is fresher after this viewer's own edits.
@@ -334,12 +350,15 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
         </div>}
       </div>}
     </header>
+    {aiPracticeCount > 0 && !editing && <AiPracticeToggle count={aiPracticeCount} shown={aiOpen} onToggle={() => setAiShown((shown) => !shown)}
+      state={aiPractices.isError ? "error" : aiPractices.isSuccess ? "success" : "pending"} onRetry={() => void aiPractices.refetch()} />}
     {lesson.isPending ? <LoadingState label={t("courses.lessons.loading")} />
       : lesson.isError || !data ? <ErrorState title={t("courses.lessons.unavailable")} />
       : editing ? <Suspense fallback={<LoadingState label={t("courses.editor.loading")} />}>
         <LessonEditor groupId={groupId} courseId={courseId} accountId={accountId} owner={scope.owner} lesson={data} onClose={() => setEditing(false)} />
       </Suspense>
-      : <LessonBody scope={scope} lesson={data} resume={resume ? saved : undefined} archived={detail.course.status === "archived"} tracking={{
+      : <LessonBody scope={scope} lesson={data} resume={resume ? saved : undefined} archived={detail.course.status === "archived"}
+        aiPractices={aiOpen ? { scope: aiScope, data: aiPractices.data } : undefined} tracking={{
         // Scrolling saves the furthest step of a published lesson the viewer has not finished; previews and archived courses never save.
         save: data.published && data.document !== null && !completed && detail.course.status !== "archived" && progress.isSuccess,
         completed, position, path: `${lessonsPath(scope)}/${encodeURIComponent(lessonId)}`, groupId, courseId, lessonId,

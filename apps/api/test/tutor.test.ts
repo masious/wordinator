@@ -245,6 +245,43 @@ describe("turns", () => {
     expect(stored.status).toBe("complete");
   });
 
+  it("skips a waiting component once: nothing is recorded, the model is told, and the turn resumes", async () => {
+    const { learner, lessons, words } = await seedLibrary();
+    const ai = scriptedAi([
+      callTool("ask_say_it", { sentence: "Ik woon in een huis.", lessonId: lessons.first.id, words: [{ lessonId: lessons.first.id, wordId: words.huis.id }] }),
+      say("No problem, let's move on."),
+    ]);
+    const conversationId = await newConversation(learner);
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Let me speak" }, { AI: ai.binding }));
+    const component = ofType(events, "component")[0]!.part;
+    const path = `/api/ai/conversations/${conversationId}/tool-calls/${component.toolCallId}/respond`;
+    const skipped = await readEvents(await call("POST", path, learner, { type: "component", skip: true }, { AI: ai.binding }));
+    expect(types(skipped)).toEqual(["answered", "start", "text", "done"]);
+    expect(ofType(skipped, "answered")[0]!.part).toMatchObject({ skipped: true, answer: null, grade: null });
+    expect(ofType(skipped, "answered")[0]!.part.answeredAt).not.toBeNull();
+    expect(JSON.parse(toolMessages(ai.calls[1]).at(-1)!.content!)).toMatchObject({ status: "skipped" });
+    expect(await count("SELECT COUNT(*) AS n FROM practice_attempts")).toBe(0);
+    expect(await count("SELECT COUNT(*) AS n FROM word_reviews")).toBe(0);
+    expect(await count("SELECT COUNT(*) AS n FROM pronunciation_attempts")).toBe(0);
+
+    const again = await call("POST", path, learner, { type: "component", skip: true }, { AI: ai.binding });
+    expect(await errorCode(again)).toBe("TOOL_CALL_ANSWERED");
+    const answerAfter = await call("POST", path, learner, { type: "component", answer: { kind: "say_it", scores: { overall: 90, accuracy: 90, fluency: 90, completeness: 100, words: [{ word: "huis", accuracy: 90, error: "none" }] } } }, { AI: ai.binding });
+    expect(await errorCode(answerAfter)).toBe("TOOL_CALL_ANSWERED");
+    const free = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Next" }, { AI: scriptedAi([say("Sure.")]).binding }));
+    expect(types(free)[0]).toBe("user_message");
+  });
+
+  it("refuses a skip for a confirmation card", async () => {
+    const { learner, lessons } = await seedLibrary();
+    const ai = scriptedAi([callTool("complete_lesson", { lessonId: lessons.first.id })]);
+    const conversationId = await newConversation(learner);
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Done" }, { AI: ai.binding }));
+    const card = ofType(events, "confirmation")[0]!.part;
+    const skipped = await call("POST", `/api/ai/conversations/${conversationId}/tool-calls/${card.toolCallId}/respond`, learner, { type: "component", skip: true }, { AI: ai.binding });
+    expect(await errorCode(skipped)).toBe("ANSWER_INVALID");
+  });
+
   it("takes the model's verdict for an open answer that does not match", async () => {
     const { learner, lessons } = await seedLibrary();
     const ai = scriptedAi([

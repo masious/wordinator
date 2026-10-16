@@ -262,7 +262,7 @@ async function recordReview(context: ToolContext, args: unknown): Promise<ToolOu
        AND EXISTS (SELECT 1 FROM json_each(m.parts) p WHERE json_extract(p.value, '$.type') = 'component' AND json_extract(p.value, '$.answeredAt') IS NOT NULL)`,
   ).bind(conversationId, userId).all<{ parts: string }>();
   const tested = new Set(rows.results.flatMap((row) => parseParts(row.parts))
-    .flatMap((part: TutorStoredPart) => part.type === "component" && part.answeredAt !== null ? componentWords(part.component).map(wordKey) : []));
+    .flatMap((part: TutorStoredPart) => part.type === "component" && part.answeredAt !== null && !part.skipped ? componentWords(part.component).map(wordKey) : []));
   if (!tested.has(wordKey(input))) return failed("WORD_NOT_TESTED", "Reviews can be recorded only for words a question in this conversation tested.");
   const word = (await readableWords(db, userId, [input])).get(wordKey(input));
   if (!word) return notFound("word");

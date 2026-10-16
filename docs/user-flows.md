@@ -91,15 +91,15 @@ C14d. [Words](words.md#weak-words-view) owns the rules.
 
 ## Study with the AI tutor
 
-In progress (C14): the tutor and its web (C14i) are in place; AI practices on lesson pages come with C14h. The [AI tutor](ai-tutor.md) owns the rules. It works the same on a phone and a desktop.
+In progress (C14): the tutor and its web (C14i) and AI practices on lesson pages (C14h) are in place. The [AI tutor](ai-tutor.md) owns the rules. It works the same on a phone and a desktop.
 
 1. On `/courses` a colourful Ask your tutor card opens `/ai` with a new conversation; earlier conversations are listed beside it (or behind a list button on a phone), with archived ones in their own view.
 2. The learner asks what to study next. The tutor shows its steps as small chips (Checked your progress, Looked up lesson 6) and explains the lesson's grammar and words in short sections; Dutch phrases have speaker buttons that play them on request.
-3. The tutor asks questions with answer components in the chat: a fill-in, a translation (typed or spoken), word order, de or het, multiple choice, quick review cards, Say it, dictation, or fix the mistake. Each is graded at once, and the result is kept for their memory and progress.
+3. The tutor asks questions with answer components in the chat: a fill-in, a translation (typed or spoken), word order, de or het, multiple choice, quick review cards, Say it, dictation, or fix the mistake. Each is graded at once, and the result is kept for their memory and progress. A question they do not want to answer (for example Say it without the Microsoft recognizer) can be skipped; nothing is recorded and the tutor carries on.
 4. When they are done, the tutor offers to mark the lesson complete. A card with Confirm and Cancel appears; nothing changes until they confirm. Resetting a lesson or saving a practice for other learners asks the same way.
 5. After 40 turns in a UTC day the composer says the daily limit is reached and when it resets.
 6. The learner can archive a conversation and later unarchive it; conversations are never deleted.
-7. A practice the tutor saved shows up on its lesson page behind Show AI practices (*n*), placed after the block it belongs to, for everyone who reads the lesson.
+7. A practice the tutor saved shows up on its lesson page behind Show AI practices (*n*), placed after the block it belongs to, for everyone who reads the lesson. Readers answer it there and see the result at once; the course owner and contributors can remove it from the lesson after confirming.
 ## Share a piece of a lesson
 
 In progress (C11): sharing works from the lesson page, the dialogs, and the player; share posts get their own journal cards in C11d. [Lesson shares](lesson-shares.md) owns the rules.

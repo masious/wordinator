@@ -422,6 +422,8 @@ const publicToolResultPart = z.strictObject({
 const publicComponentPart = z.strictObject({
   type: z.literal("component"), toolCallId: opaqueIdSchema, kind: tutorComponentKindSchema, view: tutorComponentViewSchema,
   answer: tutorComponentAnswerSchema.nullable(), grade: tutorGradeSchema.nullable(), ...answeredFields,
+  // A skipped component is answered without an answer or grade: nothing was recorded, and the model was told.
+  skipped: z.boolean().optional(),
 });
 const publicConfirmationPart = z.strictObject({
   type: z.literal("confirmation"), toolCallId: opaqueIdSchema, summary: tutorConfirmationSummarySchema,
@@ -493,10 +495,14 @@ export const conversationTitle = (text: string) => text.replace(/\s+/g, " ").tri
 // A user message is plain text; line breaks are kept and the ends are trimmed.
 export const tutorMessageRequestSchema = z.strictObject({ text: z.string().trim().min(1).max(TUTOR_MESSAGE_TEXT_MAX) });
 export type TutorMessageRequest = z.input<typeof tutorMessageRequestSchema>;
-// Answers a component or a confirmation card, once.
-export const tutorRespondRequestSchema = z.discriminatedUnion("type", [
-  z.strictObject({ type: z.literal("component"), answer: tutorComponentAnswerSchema }),
-  z.strictObject({ type: z.literal("confirmation"), confirmed: z.boolean() }),
+// Answers a component or a confirmation card, once. `{ type: "component", skip: true }` declines a waiting component: it counts
+// as its one answer, records nothing, and the turn resumes with the model told the learner skipped it.
+export const tutorRespondRequestSchema = z.union([
+  z.discriminatedUnion("type", [
+    z.strictObject({ type: z.literal("component"), answer: tutorComponentAnswerSchema }),
+    z.strictObject({ type: z.literal("confirmation"), confirmed: z.boolean() }),
+  ]),
+  z.strictObject({ type: z.literal("component"), skip: z.literal(true) }),
 ]);
 export type TutorRespondRequest = z.input<typeof tutorRespondRequestSchema>;
 // On-demand audio of a stored assistant message: a target-language span by index, or the sentence of a Say it or Dictation component.

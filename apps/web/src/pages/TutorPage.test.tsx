@@ -231,6 +231,23 @@ describe("Tutor page", () => {
     expect(posts().find((entry) => entry.path.endsWith("/respond"))?.body).toEqual({ type: "component", answer: { kind: "choice", choice: 0 } });
   });
 
+  it("skips a waiting component, which collapses to a muted line and frees the composer", async () => {
+    const component: Extract<TutorPart, { type: "component" }> = { type: "component", toolCallId: id(43), kind: "choice", answer: null, grade: null, answeredAt: null,
+      view: { kind: "choice", question: "Huis means?", options: ["house", "tree"] } };
+    messages[c1]!.push(message(id(2), "assistant", [component], "awaiting_user"));
+    turn = () => sse([{ type: "answered", messageId: id(2), part: { ...component, answeredAt: 9, skipped: true } }, { type: "start", messageId: id(3) },
+      { type: "done", message: message(id(3), "assistant", [text("Let's move on.")]) }]).response;
+    renderPage();
+    expect(await screen.findByText("Huis means?")).toBeInTheDocument();
+    expect(composer()).toBeDisabled();
+    fireEvent.click(screen.getByRole("button", { name: "Skip this question" }));
+    expect(await screen.findByText("Let's move on.")).toBeInTheDocument();
+    expect(screen.getByText("Skipped · Multiple choice")).toBeInTheDocument();
+    expect(screen.queryByText("Huis means?")).toBeNull();
+    expect(posts().find((entry) => entry.path.endsWith("/respond"))?.body).toEqual({ type: "component", skip: true });
+    expect(composer()).toBeEnabled();
+  });
+
   it("disables the composer at the daily limit and says when it resets", async () => {
     turn = () => json({ error: { code: "AI_DAILY_LIMIT", message: "Limit.", resetsAt: Date.UTC(2026, 9, 17) } }, 429);
     renderPage();

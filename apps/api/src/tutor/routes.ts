@@ -130,7 +130,7 @@ tutorRoutes.post("/conversations/:conversationId/messages", async (context) => {
   });
 });
 
-// Answers a component or a confirmation card once, then resumes the turn. Grading, the open-kind verdict, and confirmed writes
+// Answers a component (or skips it) or a confirmation card once, then resumes the turn. Grading, the open-kind verdict, and confirmed writes
 // happen here; the stored answer is claimed with a conditional update, so a second answer is `409 TOOL_CALL_ANSWERED`.
 tutorRoutes.post("/conversations/:conversationId/tool-calls/:toolCallId/respond", async (context) => {
   const found = await ownConversation(context); if ("error" in found) return found.error;
@@ -156,7 +156,11 @@ tutorRoutes.post("/conversations/:conversationId/tool-calls/:toolCallId/respond"
   const now = Date.now();
   const toolContext = { db, userId, conversationId, now: Date.now, random: Math.random };
   let answeredPart: TutorStoredPart;
-  if (part.type === "component" && parsed.data.type === "component") {
+  if (part.type === "component" && "skip" in parsed.data) {
+    // A skip is the component's one answer: nothing is graded or recorded, and the model reads that the learner skipped it.
+    answeredPart = { ...part, answer: null, grade: null, answeredAt: now, skipped: true };
+    if (!(await storeAnswer(db, userId, message, message.parts.map((item, position) => position === index ? answeredPart : item), toolCallId))) return answered();
+  } else if (part.type === "component" && "answer" in parsed.data) {
     const [profile, library] = await Promise.all([readTutorProfile(db, userId), accountLibrary(db, userId)]);
     const judge = modelJudge({
       env: context.env, db, settings, userId, conversationId, language: library?.language ?? "nl",

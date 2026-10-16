@@ -108,6 +108,27 @@ describe("Lesson document renderer", () => {
     expect(container.innerHTML).not.toMatch(/style="[^"]*color/);
   });
 
+  it("gives every block an after-block slot, at any depth, also for blocks the reader leaves out", () => {
+    const para = (n: number, words: string) => ({ id: id(n), type: "paragraph", props: plain, content: words ? [text(words)] : [], children: [] });
+    const blocks = [
+      para(1, "Begin."),
+      { id: id(2), type: "bulletListItem", props: plain, content: [text("punt")], children: [{ id: id(3), type: "bulletListItem", props: plain, content: [text("genest")], children: [] }] },
+      { id: id(4), type: "columnList", props: {}, children: [{ id: id(5), type: "column", props: { width: 1 }, children: [para(6, "kolom")] }] },
+      { id: id(7), type: "vocabulary", props: { data: JSON.stringify({ words: [] }) }, children: [] },
+      para(8, "Einde."),
+      para(9, ""),
+    ];
+    const seen: string[] = [];
+    const { container } = render(<MantineProvider><LessonDocument document={doc(blocks)} anchored vocabulary={false}
+      renderAfterBlock={(blockId) => { seen.push(blockId); return <aside data-after={blockId} />; }} /></MantineProvider>);
+    expect(new Set(seen)).toEqual(new Set([1, 2, 3, 4, 5, 6, 7, 8, 9].map(id)));
+    const order = [...container.querySelectorAll("[data-after]")].map((element) => element.getAttribute("data-after"));
+    expect(order).toEqual([1, 3, 2, 6, 5, 4, 7, 8, 9].map(id));
+    // A nested list item's slot sits in its own item; slots never sit inside the block's anchor element.
+    expect(container.querySelector(`[data-after="${id(3)}"]`)!.closest("li")).toHaveTextContent("genest");
+    expect(container.querySelector(`[data-after="${id(1)}"]`)!.closest("[data-block-id]")).toBeNull();
+  });
+
   it("lays out columns by their widths", () => {
     const column = (n: number, width: number, words: string) => ({ id: id(n), type: "column", props: { width }, children: [
       { id: id(n + 10), type: "paragraph", props: plain, content: [text(words)], children: [] },

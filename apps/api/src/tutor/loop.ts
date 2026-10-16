@@ -46,6 +46,7 @@ const toolMessageContent = (part: TutorStoredPart): string | null => {
     case "tool_result": return part.content;
     case "component": return JSON.stringify(part.answeredAt === null
       ? { status: "waiting", message: "The learner has not answered yet." }
+      : part.skipped ? { status: "skipped", message: "The learner skipped this question without answering; nothing was recorded." }
       : { status: "answered", kind: part.kind, answer: part.answer, grade: part.grade });
     case "confirmation": return JSON.stringify(part.answeredAt === null
       ? { status: "waiting", message: "The learner has not confirmed or cancelled yet." }

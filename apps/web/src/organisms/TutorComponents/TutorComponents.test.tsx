@@ -143,6 +143,34 @@ describe("Answer components", () => {
     await waitFor(() => expect(onAnswer).toHaveBeenCalledWith({ kind: "dictation", text: "ik ben moe" }));
   });
 
+  it("offers a quiet Skip on a waiting component, also in Say it's needs-Microsoft state, and none once answered", async () => {
+    vi.stubGlobal("webkitSpeechRecognition", class {});
+    setRecognizer("browser");
+    const onSkip = vi.fn(async () => undefined);
+    const view: TutorComponentView = { kind: "say_it", sentence: "Goedemorgen", translation: null };
+    const { rerender } = render(<MantineProvider><AnswerComponent view={view} answer={null} grade={null} onAnswer={vi.fn()} onSkip={onSkip} /></MantineProvider>);
+    expect(screen.getByText(/Say it needs the Microsoft recognizer/)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Skip this question" }));
+    await waitFor(() => expect(onSkip).toHaveBeenCalledTimes(1));
+    // A busy chat disables it; a stored answer removes it.
+    rerender(<MantineProvider><AnswerComponent view={view} answer={null} grade={null} onAnswer={vi.fn()} onSkip={onSkip} disabled /></MantineProvider>);
+    expect(screen.getByRole("button", { name: "Skip this question" })).toBeDisabled();
+    const choice: TutorComponentView = { kind: "choice", question: "What does huis mean?", options: ["house", "mouse"] };
+    rerender(<MantineProvider><AnswerComponent view={choice} answer={{ kind: "choice", choice: 0 }} grade={null} onAnswer={vi.fn()} onSkip={onSkip} /></MantineProvider>);
+    expect(screen.queryByRole("button", { name: "Skip this question" })).toBeNull();
+    // Without `onSkip` (the lesson page) there is no Skip at all.
+    rerender(<MantineProvider><AnswerComponent view={choice} answer={null} grade={null} onAnswer={vi.fn()} /></MantineProvider>);
+    expect(screen.queryByRole("button", { name: "Skip this question" })).toBeNull();
+  });
+
+  it("shows a failed skip and keeps the component open", async () => {
+    render(<MantineProvider><AnswerComponent view={{ kind: "choice", question: "Q", options: ["a", "b"] }} answer={null} grade={null} onAnswer={vi.fn()}
+      onSkip={async () => { throw new Error("offline"); }} /></MantineProvider>);
+    fireEvent.click(screen.getByRole("button", { name: "Skip this question" }));
+    expect(await screen.findByRole("alert")).toHaveTextContent("Your answer was not sent");
+    expect(screen.getByRole("button", { name: "Skip this question" })).toBeEnabled();
+  });
+
   it("Fix the mistake starts from the sentence", async () => {
     const { onAnswer } = renderComponent({ kind: "fix_mistake", sentence: "Ik heb naar huis gegaan.", hint: "The auxiliary" });
     const field = screen.getByRole("textbox", { name: "The corrected sentence" });

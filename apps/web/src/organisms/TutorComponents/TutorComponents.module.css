@@ -12,6 +12,7 @@
 .answerRow>:first-child{flex:1;min-width:0}
 .submitRow{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:var(--space-3)}
 .sendError{margin:0;font-size:var(--type-metadata);color:var(--color-danger-text)}
+.skipRow{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:var(--space-3)}
 .waiting{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 
 /* Word order: hairline pill chips that move between the pool and the answer row. */

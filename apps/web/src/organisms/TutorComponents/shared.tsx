@@ -1,6 +1,6 @@
 import type { TutorComponentKind, TutorGrade } from "@wordinator/contracts/tutor";
 import { Check, X } from "lucide-react";
-import { useState, type KeyboardEvent, type ReactNode } from "react";
+import { createContext, useContext, useState, type KeyboardEvent, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
 import { Button } from "../../ui";
@@ -23,12 +23,34 @@ export function useAnswerFlow<A>(stored: A | null, onAnswer: (answer: A) => Prom
 // Enter without modifiers, outside an IME composition.
 export const plainEnter = (event: KeyboardEvent) => event.key === "Enter" && !event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey && !event.nativeEvent.isComposing;
 
-// The component's inset panel: a mono eyebrow naming the kind, the body, and the answer's footer.
+// A waiting component the learner may decline (the tutor's chat, docs/ai-tutor.md#answer-components). `AnswerComponent` provides it
+// while the component has no stored answer; the frame then ends with a quiet Skip.
+export type SkipAction = { onSkip: () => Promise<unknown> | void; disabled: boolean };
+export const SkipContext = createContext<SkipAction | null>(null);
+
+function SkipRow({ action }: { action: SkipAction }) {
+  const { t } = useTranslation();
+  const [pending, setPending] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const skip = async () => {
+    if (pending) return;
+    setPending(true); setFailed(false);
+    try { await action.onSkip(); } catch { setFailed(true); } finally { setPending(false); }
+  };
+  return <div className={styles.skipRow}>
+    {failed && <p className={styles.sendError} role="alert">{t("tutorComponents.sendFailed")}</p>}
+    <Button variant="quiet" aria-label={t("tutorComponents.skipNamed")} loading={pending} disabled={action.disabled} onClick={() => void skip()}>{t("tutorComponents.skip")}</Button>
+  </div>;
+}
+
+// The component's inset panel: a mono eyebrow naming the kind, the body, the answer's footer, and Skip where offered.
 export function ComponentFrame({ kind, children, labelledBy }: { kind: TutorComponentKind; children: ReactNode; labelledBy?: string }) {
   const { t } = useTranslation();
+  const skip = useContext(SkipContext);
   return <section className={styles.frame} aria-label={labelledBy ? undefined : t(`tutorComponents.kinds.${kind}`)} aria-labelledby={labelledBy} data-kind={kind}>
     <p className={styles.eyebrow}>{t(`tutorComponents.kinds.${kind}`)}</p>
     {children}
+    {skip && <SkipRow action={skip} />}
   </section>;
 }
 

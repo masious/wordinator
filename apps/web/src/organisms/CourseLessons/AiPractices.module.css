@@ -1,0 +1,6 @@
+/* AI practices on the lesson page (docs/design-system.md, C14): the tutor's answer component under a label chip, in the reading column. */
+.toggle{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3);max-width:var(--width-reading)}
+.practice{display:grid;gap:var(--space-2);min-width:0}
+.head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3)}
+.status{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.error{margin:0;font-size:var(--type-metadata);color:var(--color-danger-text)}

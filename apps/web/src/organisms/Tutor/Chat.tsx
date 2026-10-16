@@ -163,6 +163,7 @@ export function TutorChat({ conversationId, conversation, onCreated, language, l
       componentClip: id && messageId ? (toolCallId) => tutorClip(id, messageId, { toolCallId }) : undefined,
       onAnswer: (toolCallId, answer: TutorComponentAnswer) => respond(toolCallId, { type: "component", answer }),
       onConfirm: (toolCallId, confirmed) => respond(toolCallId, { type: "confirmation", confirmed }),
+      onSkip: (toolCallId) => respond(toolCallId, { type: "component", skip: true }),
       onRetry: isLast && message?.status === "error" && !busy ? retry : undefined,
       focusOpen: isLast,
     };

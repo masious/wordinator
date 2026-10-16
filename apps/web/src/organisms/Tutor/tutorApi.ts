@@ -57,18 +57,19 @@ export function limitResetsAt(body: unknown): number {
 export function tutorClip(conversationId: string, messageId: string, request: TutorSpeechRequest): ClipSource {
   return {
     key: `tutor:${messageId}:${"spanIndex" in request ? `span:${request.spanIndex}` : `tool:${request.toolCallId}`}`,
-    load: async (): Promise<ClipResult> => {
-      const response = await fetch(`${conversationPath(conversationId)}/messages/${encodeURIComponent(messageId)}/speech`, {
-        method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(request),
-      });
-      let body: unknown = null;
-      try { body = await response.json(); } catch { /* No JSON body. */ }
-      if (response.status === 200) { const parsed = tutorSpeechResponseSchema.safeParse(body); return parsed.success ? { status: "ready", url: parsed.data.url } : { status: "failed" }; }
-      if (response.status === 202) return { status: "pending" };
-      if (response.status === 429) return { status: "limit", resetsAt: limitResetsAt(body) };
-      const code = apiErrorSchema.safeParse(body);
-      if (response.status === 503 && code.success && code.data.error.code === "SPEECH_UNAVAILABLE") return { status: "unavailable" };
-      return { status: "failed" };
-    },
+    load: () => loadClip(`${conversationPath(conversationId)}/messages/${encodeURIComponent(messageId)}/speech`, JSON.stringify(request)),
   };
+}
+
+// One request to an on-demand speech route (the tutor's, or an AI practice's on the lesson page), read as a clip result.
+export async function loadClip(path: string, body?: string): Promise<ClipResult> {
+  const response = await fetch(path, { method: "POST", ...(body === undefined ? {} : { headers: { "content-type": "application/json" }, body }) });
+  let json: unknown = null;
+  try { json = await response.json(); } catch { /* No JSON body. */ }
+  if (response.status === 200) { const parsed = tutorSpeechResponseSchema.safeParse(json); return parsed.success ? { status: "ready", url: parsed.data.url } : { status: "failed" }; }
+  if (response.status === 202) return { status: "pending" };
+  if (response.status === 429) return { status: "limit", resetsAt: limitResetsAt(json) };
+  const code = apiErrorSchema.safeParse(json);
+  if (response.status === 503 && code.success && code.data.error.code === "SPEECH_UNAVAILABLE") return { status: "unavailable" };
+  return { status: "failed" };
 }

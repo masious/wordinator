@@ -100,6 +100,8 @@ export type PartHandlers = {
   componentClip?: (toolCallId: string) => ClipSource | undefined;
   onAnswer?: (toolCallId: string, answer: TutorComponentAnswer) => Promise<unknown>;
   onConfirm?: (toolCallId: string, confirmed: boolean) => Promise<unknown>;
+  // Declines a waiting component: it is answered as skipped and the turn resumes (docs/ai-tutor.md#answer-components).
+  onSkip?: (toolCallId: string) => Promise<unknown>;
   onRetry?: () => void;
   focusOpen?: boolean;
 };
@@ -128,10 +130,15 @@ export function AssistantParts({ parts, streaming, handlers }: { parts: readonly
           return <ToolStep key={index} call={part} result={results.get(part.toolCallId) ?? null} running={streaming} />;
         case "tool_result":
           return calls.has(part.toolCallId) || shownBy.has(part.toolCallId) ? null : <ToolStep key={index} call={part} result={part} running={false} />;
-        case "component":
+        case "component": {
+          // A skipped component collapses to one muted line, like an answered card.
+          if (part.skipped) return <p key={part.toolCallId} className={styles.answeredCard} role="status">{t("tutorComponents.skipped")} · {t(`tutorComponents.kinds.${part.kind}`)}</p>;
+          const { onSkip } = handlers;
           return <AnswerComponent key={part.toolCallId} view={part.view} answer={part.answer} grade={part.grade} disabled={handlers.disabled || !handlers.onAnswer}
             clip={handlers.componentClip?.(part.toolCallId)} language={handlers.language} autoFocus={handlers.focusOpen && part.answeredAt === null}
+            onSkip={onSkip && part.answeredAt === null ? () => onSkip(part.toolCallId) : undefined}
             onAnswer={(answer) => handlers.onAnswer ? handlers.onAnswer(part.toolCallId, answer) : undefined} />;
+        };
         case "confirmation":
           return <ConfirmationCard key={part.toolCallId} part={part} disabled={handlers.disabled || !handlers.onConfirm}
             onRespond={(confirmed) => handlers.onConfirm ? handlers.onConfirm(part.toolCallId, confirmed) : Promise.resolve()} />;

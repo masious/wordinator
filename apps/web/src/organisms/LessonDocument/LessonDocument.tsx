@@ -11,6 +11,7 @@ import {
   type ListItemBlock,
   type StyledText,
   type VocabularyWord,
+  walkLessonBlocks,
 } from "@wordinator/contracts/lesson-document";
 import { createContext, Fragment, useContext, useEffect, useId, useRef, useState, type CSSProperties, type KeyboardEvent, type MouseEvent, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
@@ -27,6 +28,21 @@ export type PracticeRenderer = (block: LessonBlockOf<"practice">) => ReactNode;
 // The lesson page passes `renderShare` to make examples and dialogues selectable; it renders the selected block's share action.
 export type ShareableBlock = LessonBlockOf<"example"> | LessonBlockOf<"dialogue">;
 export type ShareRenderer = (block: ShareableBlock) => ReactNode;
+// The lesson page passes `renderAfterBlock` to place content after a block of any depth (AI practices, docs/courses.md#lesson-pages).
+// It is called once for every block ID of the document, in reading order; a block the reader leaves out (a New words block, a
+// trailing blank paragraph, a child of a block that shows no children) still gets its slot where it would have been.
+export type AfterBlockRenderer = (blockId: string) => ReactNode;
+const AfterBlockContext = createContext<AfterBlockRenderer | null>(null);
+
+function AfterBlocks({ blocks }: { blocks: readonly LessonBlock[] }) {
+  const render = useContext(AfterBlockContext);
+  if (!render) return null;
+  return <>{[...walkLessonBlocks(blocks)].map(({ block }) => <Fragment key={block.id}>{render(block.id)}</Fragment>)}</>;
+}
+function AfterBlock({ id }: { id: string }) {
+  const render = useContext(AfterBlockContext);
+  return render ? <>{render(id)}</> : null;
+}
 
 const join = (...names: Array<string | false | undefined>) =>
   names.filter(Boolean).join(" ") || undefined;
@@ -409,6 +425,7 @@ function ListItems({
                 renderPractice={renderPractice}
               />
             )}
+            <AfterBlock id={item.id} />
           </li>
         ));
         return first.type === "numberedListItem" ? (
@@ -494,6 +511,7 @@ function Block({
             blocks={block.children}
             renderPractice={renderPractice}
           />
+          <AfterBlock id={block.id} />
         </div>
       );
     case "columnList": {
@@ -542,9 +560,10 @@ export function LessonBlocks({
     !inlineText((blocks[end - 1] as LessonBlockOf<"paragraph">).content).trim()
   )
     end -= 1;
-  const runs: Array<LessonBlock | ListItemBlock[]> = [];
+  // A block left out of the reading keeps only its after-block slot.
+  const runs: Array<LessonBlock | ListItemBlock[] | { hidden: LessonBlock }> = [];
   for (const block of blocks.slice(0, end)) {
-    if (!vocabulary && block.type === "vocabulary") continue;
+    if (!vocabulary && block.type === "vocabulary") { runs.push({ hidden: block }); continue; }
     const last = runs.at(-1);
     if (isListItem(block) && Array.isArray(last)) last.push(block);
     else runs.push(isListItem(block) ? [block] : block);
@@ -552,7 +571,10 @@ export function LessonBlocks({
   return (
     <>
       {runs.map((run) => {
+        if ("hidden" in run) return <AfterBlocks key={run.hidden.id} blocks={[run.hidden]} />;
         const id = Array.isArray(run) ? run[0]!.id : run.id;
+        // List items and columns place their own slots; any other block shows no children, so its slot covers them too.
+        const after = Array.isArray(run) ? null : run.type === "columnList" ? <AfterBlock id={run.id} /> : <AfterBlocks blocks={[run]} />;
         const content = Array.isArray(run) ? (
           <ListItems
             key={run[0]!.id}
@@ -566,14 +588,19 @@ export function LessonBlocks({
             renderPractice={renderPractice}
           />
         );
+        // The slot sits outside the anchor element, so what it shows never counts as the block's own height.
         return anchored ? (
-          <div key={id} className={styles.anchor} data-block-id={id}>
-            {content}
-          </div>
+          <Fragment key={id}>
+            <div className={styles.anchor} data-block-id={id}>
+              {content}
+            </div>
+            {after}
+          </Fragment>
         ) : (
-          <Fragment key={id}>{content}</Fragment>
+          <Fragment key={id}>{content}{after}</Fragment>
         );
       })}
+      {end < blocks.length && <AfterBlocks blocks={blocks.slice(end)} />}
     </>
   );
 }
@@ -582,12 +609,14 @@ export function LessonDocument({
   document,
   renderPractice,
   renderShare,
+  renderAfterBlock,
   anchored = false,
   vocabulary = true,
 }: {
   document: LessonDocumentData;
   renderPractice?: PracticeRenderer;
   renderShare?: ShareRenderer;
+  renderAfterBlock?: AfterBlockRenderer;
   anchored?: boolean;
   vocabulary?: boolean;
 }) {
@@ -599,11 +628,13 @@ export function LessonDocument({
   );
   return (
     <ReaderOptionsContext.Provider value={{ anchored, vocabulary }}>
-      {renderShare ? (
-        <SelectionContext.Provider value={{ selected, select: setSelected, renderShare }}>{blocks}</SelectionContext.Provider>
-      ) : (
-        blocks
-      )}
+      <AfterBlockContext.Provider value={renderAfterBlock ?? null}>
+        {renderShare ? (
+          <SelectionContext.Provider value={{ selected, select: setSelected, renderShare }}>{blocks}</SelectionContext.Provider>
+        ) : (
+          blocks
+        )}
+      </AfterBlockContext.Provider>
     </ReaderOptionsContext.Provider>
   );
 }
