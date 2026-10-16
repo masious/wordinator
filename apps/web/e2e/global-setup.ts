@@ -3,6 +3,7 @@ import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import { execFileSync } from "node:child_process";
+import { AI_STUB_MODEL } from "./aiStub";
 
 export const E2E_INVITATION_TOKEN = "e2e-invitation-token-xxxxxxxxxxxxxxxxxxxxxxxx";
 export const E2E_CREATOR_EMAIL = "creator@e2e.test";
@@ -21,6 +22,16 @@ export default function globalSetup() {
   const userId = "10000000-0000-4000-8000-000000000001";
   const groupId = E2E_GROUP_ID;
   const now = Date.now();
+  // The tutor reaches only the stub provider (aiStub.ts), so the other providers are off.
+  const aiSettings = JSON.stringify({
+    providers: [
+      { provider: "azure", enabled: true, model: AI_STUB_MODEL },
+      { provider: "openrouter", enabled: false, model: "openai/gpt-oss-120b:free" },
+      { provider: "workers_ai", enabled: false, model: "@cf/meta/llama-4-scout-17b-16e-instruct" },
+    ],
+    dailyTurnCap: 500,
+    dailySpeechCharCap: 5000,
+  });
   const sql = `DELETE FROM reactions;
 DELETE FROM post_pins;
 DELETE FROM comment_response_items;
@@ -47,11 +58,14 @@ DELETE FROM course_practices;
 DELETE FROM course_lessons;
 DELETE FROM courses;
 DELETE FROM login_attempts;
+DELETE FROM ai_usage;
+DELETE FROM speech_usage;
 DELETE FROM notifications;
 DELETE FROM memberships;
 DELETE FROM groups;
 DELETE FROM users;
 INSERT INTO users (id,email,normalized_email,password_hash,display_name,quick_reaction_one,quick_reaction_two,quick_reaction_three,must_change_password,created_at,updated_at) VALUES ('${userId}','${E2E_CREATOR_EMAIL}','${E2E_CREATOR_EMAIL}','${passwordHash}','Creator',char(128077),char(10084,65039),char(128514),0,${now},${now});
+INSERT OR REPLACE INTO platform_metadata (key,value,updated_at) VALUES ('ai_settings','${aiSettings}',${now});
 INSERT INTO groups (id,creator_user_id,name,language,invitation_token,created_at,updated_at) VALUES ('${groupId}','${userId}','Alpha Journal','nl','${E2E_INVITATION_TOKEN}',${now},${now});
 INSERT INTO memberships (group_id,user_id,state,requested_at,decided_at,profile_display_name,updated_at) VALUES ('${groupId}','${userId}','active',${now},${now},'Creator',${now});`;
   const directory = mkdtempSync(join(tmpdir(), "wordinator-e2e-"));

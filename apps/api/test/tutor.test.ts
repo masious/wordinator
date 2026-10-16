@@ -26,6 +26,7 @@ describe("access", () => {
     const routes: Array<[string, string, unknown?]> = [
       ["GET", "/api/ai/conversations"], ["POST", "/api/ai/conversations"], ["GET", `/api/ai/conversations/${id}`],
       ["POST", `/api/ai/conversations/${id}/archive`], ["POST", `/api/ai/conversations/${id}/unarchive`],
+      ["PATCH", `/api/ai/conversations/${id}`, { provider: null }], ["GET", "/api/ai/models"],
       ["GET", `/api/ai/conversations/${id}/messages`], ["POST", `/api/ai/conversations/${id}/messages`, { text: "Hoi" }],
       ["POST", `/api/ai/conversations/${id}/tool-calls/${id}/respond`, { type: "confirmation", confirmed: true }],
       ["POST", `/api/ai/conversations/${id}/messages/${id}/speech`, { spanIndex: 0 }],
@@ -52,7 +53,7 @@ describe("access", () => {
     const messageId = ofType(events, "done")[0]!.message.id;
     const base = `/api/ai/conversations/${conversationId}`;
     for (const [method, path, body] of [
-      ["GET", base], ["GET", `${base}/messages`], ["POST", `${base}/archive`], ["POST", `${base}/unarchive`],
+      ["GET", base], ["GET", `${base}/messages`], ["POST", `${base}/archive`], ["POST", `${base}/unarchive`], ["PATCH", base, { provider: null }],
       ["POST", `${base}/messages`, { text: "Hi" }], ["POST", `${base}/tool-calls/${toolCallId}/respond`, { type: "component", answer: { kind: "choice", choice: 0 } }],
       ["POST", `${base}/messages/${messageId}/speech`, { spanIndex: 0 }],
     ] as Array<[string, string, unknown?]>) {
@@ -117,6 +118,57 @@ describe("conversations", () => {
     ].reverse());
     expect(older.nextCursor).toBeNull();
     expect((await call("GET", `/api/ai/conversations/${conversationId}/messages?cursor=nope`, learner)).status).toBe(400);
+  });
+});
+
+describe("model choice", () => {
+  const settings = {
+    ...DEFAULT_AI_SETTINGS,
+    providers: [DEFAULT_AI_SETTINGS.providers[0]!, DEFAULT_AI_SETTINGS.providers[1]!, { ...DEFAULT_AI_SETTINGS.providers[2]!, enabled: false }],
+  };
+  const reachable = { OPENROUTER_API_KEY: "or-test-key", AZURE_AI_ENDPOINT: "https://azure.test", AZURE_AI_KEY: "az-test-key" };
+
+  it("lists only enabled providers the API can reach, in the configured order", async () => {
+    const { learner } = await seedLibrary();
+    await writeAiSettings(env.DB, settings);
+    const models = async (extra: Partial<Env>) => (await (await call("GET", "/api/ai/models", learner, undefined, extra)).json()) as { items: Array<{ provider: string; model: string }> };
+    expect((await models({ ...reachable, AI: scriptedAi([]).binding })).items).toEqual([
+      { provider: "openrouter", model: DEFAULT_AI_SETTINGS.providers[0]!.model },
+      { provider: "workers_ai", model: DEFAULT_AI_SETTINGS.providers[1]!.model },
+    ]);
+    expect((await models({ AI: scriptedAi([]).binding })).items.map((item) => item.provider)).toEqual(["workers_ai"]);
+  });
+
+  it("sets and clears a conversation's model, refusing an unavailable or unknown provider", async () => {
+    const { learner } = await seedLibrary();
+    await writeAiSettings(env.DB, settings);
+    const conversationId = await newConversation(learner);
+    const patch = (body: unknown) => call("PATCH", `/api/ai/conversations/${conversationId}`, learner, body, { ...reachable, AI: scriptedAi([]).binding });
+    const provider = async (response: Response) => ((await response.json()) as { conversation: { provider: string | null } }).conversation.provider;
+
+    expect(await provider(await patch({ provider: "workers_ai" }))).toBe("workers_ai");
+    expect(await provider(await call("GET", `/api/ai/conversations/${conversationId}`, learner))).toBe("workers_ai");
+    const disabled = await patch({ provider: "azure" });
+    expect(disabled.status).toBe(409);
+    expect(await errorCode(disabled)).toBe("AI_PROVIDER_UNAVAILABLE");
+    for (const body of [{ provider: "anthropic" }, {}, { provider: "workers_ai", extra: true }]) {
+      const invalid = await patch(body);
+      expect(invalid.status, JSON.stringify(body)).toBe(400);
+      expect(await errorCode(invalid)).toBe("VALIDATION_ERROR");
+    }
+    expect(await provider(await patch({ provider: null }))).toBeNull();
+  });
+
+  it("runs the conversation's turns on the chosen model first", async () => {
+    const { learner } = await seedLibrary();
+    await writeAiSettings(env.DB, settings);
+    const conversationId = await newConversation(learner);
+    const ai = scriptedAi([say("Hallo!")]);
+    await call("PATCH", `/api/ai/conversations/${conversationId}`, learner, { provider: "workers_ai" }, { ...reachable, AI: ai.binding });
+    // OpenRouter leads the configured order and has a key, but the conversation's choice goes first.
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hoi" }, { ...reachable, AI: ai.binding }));
+    expect(ofType(events, "done")[0]!.message).toMatchObject({ provider: "workers_ai", model: DEFAULT_AI_SETTINGS.providers[1]!.model });
+    expect(await count("SELECT COUNT(*) AS n FROM ai_usage WHERE provider <> 'workers_ai'")).toBe(0);
   });
 });
 

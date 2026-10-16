@@ -1,12 +1,12 @@
 import {
   conversationTitle, messageSpanTexts, toPublicPart, tutorConversationPageSchema, tutorConversationResponseSchema,
   tutorConversationsQuerySchema, tutorMessagePageSchema, tutorMessageRequestSchema, tutorMessagesQuerySchema, tutorProfileResponseSchema,
-  tutorRespondRequestSchema, tutorSpeechRequestSchema, updateTutorProfileRequestSchema, type TutorStoredPart, type TutorStreamEvent,
+  tutorModelsResponseSchema, tutorRespondRequestSchema, tutorSpeechRequestSchema, updateTutorConversationRequestSchema, updateTutorProfileRequestSchema, type TutorStoredPart, type TutorStreamEvent,
 } from "@wordinator/contracts/tutor";
 import { Hono, type Context } from "hono";
 import { createMiddleware } from "hono/factory";
 import { streamSSE } from "hono/streaming";
-import { aiErrorResponse, assertDailyTurnCap, readAiSettings } from "../ai";
+import { aiErrorResponse, assertDailyTurnCap, availableProviders, preferProvider, readAiSettings } from "../ai";
 import type { AuthUser } from "../auth";
 import { apiError, parseJson } from "../http";
 import { logInfo } from "../logger";
@@ -19,7 +19,8 @@ import { readTutorProfile, updateTutorProfile, writeTutorNotes } from "./profile
 import { recordComponentAnswer } from "./recording";
 import {
   createConversation, decodeCursor, findToolCallMessage, hasAwaitingMessage, insertMessageStatement, lastMessageAt, listConversations,
-  presentConversation, presentMessage, readConversation, readMessage, readMessagePage, setArchived, storeAnswer, touchConversationStatement,
+  presentConversation, presentMessage, readConversation, readMessage, readMessagePage, setArchived, setConversationProvider, storeAnswer,
+  touchConversationStatement,
 } from "./store";
 import { applyConfirmation } from "./tools";
 
@@ -68,6 +69,22 @@ tutorRoutes.get("/conversations/:conversationId", async (context) => {
   return context.json(tutorConversationResponseSchema.parse({ conversation: presentConversation(found.row) }));
 });
 
+// Chooses the conversation's model for its next turns; `null` goes back to the default order. Only a provider the learner
+// could pick from `GET /models` is accepted.
+tutorRoutes.patch("/conversations/:conversationId", async (context) => {
+  const found = await ownConversation(context); if ("error" in found) return found.error;
+  const parsed = await parseJson(context, updateTutorConversationRequestSchema, 1_024); if ("response" in parsed) return parsed.response;
+  const { provider } = parsed.data;
+  if (provider && !availableProviders(context.env, await readAiSettings(context.env.DB)).some((item) => item.provider === provider)) {
+    return apiError(context, 409, "AI_PROVIDER_UNAVAILABLE", "This model is not available right now.");
+  }
+  const row = await setConversationProvider(context.env.DB, userIdOf(context), found.row.id, provider);
+  return context.json(tutorConversationResponseSchema.parse({ conversation: presentConversation(row!) }));
+});
+
+tutorRoutes.get("/models", async (context) =>
+  context.json(tutorModelsResponseSchema.parse({ items: availableProviders(context.env, await readAiSettings(context.env.DB)) })));
+
 for (const [path, archived] of [["archive", true], ["unarchive", false]] as const) {
   tutorRoutes.post(`/conversations/:conversationId/${path}`, async (context) => {
     const found = await ownConversation(context); if ("error" in found) return found.error;
@@ -111,7 +128,7 @@ tutorRoutes.post("/conversations/:conversationId/messages", async (context) => {
   if (found.row.archivedAt !== null) return apiError(context, 409, "CONVERSATION_ARCHIVED", "Unarchive this conversation to continue it.");
   const parsed = await parseJson(context, tutorMessageRequestSchema, 32_768); if ("response" in parsed) return parsed.response;
   if (await hasAwaitingMessage(db, userId, found.row.id)) return apiError(context, 409, "TURN_IN_PROGRESS", "Answer the open question or card first.");
-  const settings = await readAiSettings(db);
+  const settings = preferProvider(await readAiSettings(db), found.row.provider);
   try {
     await assertDailyTurnCap(db, userId, settings);
   } catch (error) {
@@ -146,7 +163,7 @@ tutorRoutes.post("/conversations/:conversationId/tool-calls/:toolCallId/respond"
   const parsed = await parseJson(context, tutorRespondRequestSchema, 32_768); if ("response" in parsed) return parsed.response;
   const invalid = () => apiError(context, 400, "ANSWER_INVALID", "This answer does not fit the question.");
   if (parsed.data.type !== part.type) return invalid();
-  const settings = await readAiSettings(db);
+  const settings = preferProvider(await readAiSettings(db), found.row.provider);
   try {
     await assertDailyTurnCap(db, userId, settings);
   } catch (error) {

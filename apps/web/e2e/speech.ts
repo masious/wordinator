@@ -10,7 +10,7 @@ import { courseApi, dialogue, example, openLesson, seedLesson, vocabulary } from
 // Parallel test workers writing the local database at once deadlock, so direct writes take this lock (a directory, created
 // atomically) one at a time. Global setup removes a lock left by an interrupted run.
 const SEED_LOCK = resolve(import.meta.dirname, "../../../.wrangler/e2e/seed.lock");
-async function withSeedLock(run: () => void) {
+export async function withSeedLock(run: () => void) {
   for (const started = Date.now(); ; await new Promise((done) => setTimeout(done, 100))) {
     try { mkdirSync(SEED_LOCK); break; } catch (error) {
       if ((error as NodeJS.ErrnoException).code !== "EEXIST") throw error;

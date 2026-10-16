@@ -1,6 +1,6 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, lessonProgressResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema, speechRecognitionTokenResponseSchema, type SpeechRecognitionTokenResponse } from "@wordinator/contracts";
 import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
-import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorProfileResponseSchema } from "@wordinator/contracts/tutor";
+import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorModelsResponseSchema, tutorProfileResponseSchema } from "@wordinator/contracts/tutor";
 import { weakWordsPageSchema } from "@wordinator/contracts/weak-words";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
@@ -273,6 +273,12 @@ export const tutorMessagesQueryOptions = (conversationId: string) => infiniteQue
   queryFn: ({ pageParam }) => apiRequest(`/api/ai/conversations/${encodeURIComponent(conversationId)}/messages${pageParam ? `?cursor=${encodeURIComponent(pageParam)}` : ""}`, tutorMessagePageSchema),
   getNextPageParam: (page) => page.nextCursor ?? undefined,
   retry: false,
+});
+// The models a conversation can use; rarely changes, so it is kept for the session.
+export const tutorModelsQueryOptions = () => queryOptions({
+  queryKey: [...tutorKey, "models"] as const,
+  queryFn: () => apiRequest("/api/ai/models", tutorModelsResponseSchema),
+  staleTime: Infinity,
 });
 export const tutorProfileQueryOptions = () => queryOptions({
   queryKey: [...tutorKey, "profile"] as const,

@@ -23,13 +23,14 @@ const session = () => ({
   groups: [{ id: groupId, name: "Library", language: "nl", role: "member", icon: "🇳🇱", iconUrl: null }],
   deletedGroups: [], requests: [],
 });
-const conversation = (conversationId: string, title: string, archivedAt: number | null = null): TutorConversation => ({ id: conversationId, title, archivedAt, createdAt: 1, updatedAt: 2 });
+const conversation = (conversationId: string, title: string, archivedAt: number | null = null): TutorConversation => ({ id: conversationId, title, archivedAt, provider: null, createdAt: 1, updatedAt: 2 });
 const message = (messageId: string, role: "user" | "assistant", parts: TutorPart[], status: TutorMessage["status"] = "complete"): TutorMessage =>
   ({ id: messageId, conversationId: c1, role, status, parts, provider: role === "assistant" ? "workers_ai" : null, model: null, createdAt: Number(messageId.slice(-4)) });
 const text = (value: string, spans: { start: number; end: number }[] = []): TutorPart => ({ type: "text", text: value, spans });
 
 let conversations: TutorConversation[];
 let archivedConversations: TutorConversation[];
+let models: TutorModelOption[];
 let messages: Record<string, TutorMessage[]>;
 let turn: (path: string, body: unknown) => Response;
 let speech: () => Response;
@@ -68,12 +69,14 @@ function renderPage(initial: string | null = c1) {
   return router;
 }
 
+const patches = () => vi.mocked(fetch).mock.calls.filter(([, init]) => init?.method === "PATCH").map(([input, init]) => ({ path: String(input), body: JSON.parse(String(init!.body)) as unknown }));
 const posts = () => vi.mocked(fetch).mock.calls.filter(([, init]) => init?.method === "POST").map(([input, init]) => ({ path: String(input), body: init?.body ? JSON.parse(String(init.body)) as unknown : null }));
 
 beforeEach(() => {
   resetOnDemandSpeech();
   conversations = [conversation(c1, "What next?")];
   archivedConversations = [];
+  models = [{ provider: "openrouter", model: "openai/gpt-oss-120b:free" }, { provider: "workers_ai", model: "@cf/meta/llama-4-scout-17b-16e-instruct" }];
   messages = { [c1]: [message(id(1), "user", [text("What next?")])] };
   turn = () => json({ error: { code: "UNEXPECTED", message: "No turn scripted." } }, 500);
   speech = () => json({ url: "https://media.test/clip.mp3" });
@@ -84,6 +87,7 @@ beforeEach(() => {
     const path = String(input); const method = init?.method ?? "GET";
     const body = init?.body ? JSON.parse(String(init.body)) as unknown : null;
     if (path === "/api/session") return json(session());
+    if (path === "/api/ai/models") return json({ items: models });
     if (path.startsWith("/api/ai/conversations?archived=")) return json({ items: path.includes("archived=true") ? archivedConversations : conversations, nextCursor: null });
     if (path === "/api/ai/conversations" && method === "POST") { const created = conversation(c2, ""); conversations = [created, ...conversations]; messages[c2] = []; return json({ conversation: created }, 201); }
     const match = /^\/api\/ai\/conversations\/([^/]+)(\/.*)?$/.exec(path);
@@ -92,6 +96,11 @@ beforeEach(() => {
       const all = [...conversations, ...archivedConversations];
       const found = all.find((entry) => entry.id === conversationId);
       if (!found) return json({ error: { code: "CONVERSATION_NOT_FOUND", message: "Missing." } }, 404);
+      if (rest === "" && method === "PATCH") {
+        const changed = { ...found, provider: (body as { provider: TutorConversation["provider"] }).provider };
+        conversations = conversations.map((entry) => entry.id === found.id ? changed : entry);
+        return json({ conversation: changed });
+      }
       if (rest === "") return json({ conversation: found });
       if (rest === "/messages" && method === "GET") return json({ items: [...(messages[conversationId!] ?? [])].reverse(), nextCursor: null });
       if (rest === "/archive" || rest === "/unarchive") {
@@ -110,6 +119,12 @@ beforeEach(() => {
 afterEach(() => { act(() => stopSpeech()); cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); vi.useRealTimers(); });
 
 const composer = () => screen.getByRole("textbox", { name: "Message your tutor" });
+// Every Select keeps its options mounted; the open one is found through the listbox its combobox controls.
+async function choose(combobox: HTMLElement, option: string) {
+  fireEvent.click(combobox);
+  await waitFor(() => expect(combobox).toHaveAttribute("aria-expanded", "true"));
+  fireEvent.click(within(document.getElementById(combobox.getAttribute("aria-controls")!)!).getByRole("option", { name: option, hidden: true }));
+}
 const sendText = (value: string) => { fireEvent.change(composer(), { target: { value } }); fireEvent.click(screen.getByRole("button", { name: "Send" })); };
 
 describe("Tutor page", () => {
@@ -288,6 +303,37 @@ describe("Tutor page", () => {
     expect(await screen.findByText("Welcome.")).toBeInTheDocument();
     expect(router.state.location.search).toEqual({ conversation: c2 });
     expect(posts().map((entry) => entry.path)).toEqual(["/api/ai/conversations", `/api/ai/conversations/${c2}/messages`]);
+  });
+
+  it("changes an open conversation's model, and back to the default", async () => {
+    renderPage();
+    const picker = await screen.findByRole("combobox", { name: "Model for this conversation" });
+    expect(picker).toHaveValue("Default (openai/gpt-oss-120b:free)");
+    await choose(picker, "Workers AI · @cf/meta/llama-4-scout-17b-16e-instruct");
+    await waitFor(() => expect(picker).toHaveValue("Workers AI · @cf/meta/llama-4-scout-17b-16e-instruct"));
+    await choose(picker, "Default (openai/gpt-oss-120b:free)");
+    await waitFor(() => expect(patches()).toHaveLength(2));
+    expect(patches()).toEqual([
+      { path: `/api/ai/conversations/${c1}`, body: { provider: "workers_ai" } },
+      { path: `/api/ai/conversations/${c1}`, body: { provider: null } },
+    ]);
+  });
+
+  it("keeps a new conversation's model until its first message creates it, and hides the picker with one model", async () => {
+    turn = () => sse([{ type: "start", messageId: id(11) }, { type: "done", message: { ...message(id(11), "assistant", [text("Hoi.")]), conversationId: c2 } }]).response;
+    renderPage(null);
+    const picker = await screen.findByRole("combobox", { name: "Model for this conversation" });
+    await choose(picker, "Workers AI · @cf/meta/llama-4-scout-17b-16e-instruct");
+    expect(patches()).toEqual([]);
+    sendText("Start");
+    expect(await screen.findByText("Hoi.")).toBeInTheDocument();
+    expect(patches()).toEqual([{ path: `/api/ai/conversations/${c2}`, body: { provider: "workers_ai" } }]);
+    expect(posts().map((entry) => entry.path)).toEqual(["/api/ai/conversations", `/api/ai/conversations/${c2}/messages`]);
+    cleanup();
+    models = models.slice(0, 1);
+    renderPage();
+    expect(await screen.findByText("What next?", { selector: "p" })).toBeInTheDocument();
+    expect(screen.queryByRole("combobox", { name: "Model for this conversation" })).toBeNull();
   });
 
   it("archives and unarchives a conversation; an archived one cannot be continued", async () => {

@@ -1,3 +1,4 @@
+import type { AiProvider } from "@wordinator/contracts/ai";
 import { TUTOR_MESSAGE_TEXT_MAX, tutorConversationResponseSchema, type TutorComponentAnswer, type TutorConversation, type TutorMessage, type TutorMessagePage, type TutorPart, type TutorRespondRequest, type TutorStreamEvent } from "@wordinator/contracts/tutor";
 import { useInfiniteQuery, useQueryClient, type InfiniteData } from "@tanstack/react-query";
 import { ArrowUp } from "lucide-react";
@@ -52,9 +53,9 @@ function applyEvent(current: Streaming, event: TutorStreamEvent): Streaming {
 
 const textOf = (message: TutorMessage) => message.parts.map((part) => part.type === "text" ? part.text : "").join("");
 
-export function TutorChat({ conversationId, conversation, onCreated, language, languageName, recognitionLocale, token }: {
-  // Null for a new conversation, which is created when the learner first sends.
-  conversationId: string | null; conversation: TutorConversation | null; onCreated: (conversation: TutorConversation) => void;
+export function TutorChat({ conversationId, conversation, newProvider = null, onCreated, language, languageName, recognitionLocale, token }: {
+  // Null for a new conversation, which is created when the learner first sends, with `newProvider` as its model.
+  conversationId: string | null; conversation: TutorConversation | null; newProvider?: AiProvider | null; onCreated: (conversation: TutorConversation) => void;
   language: string; languageName: string; recognitionLocale: string | null; token: TokenSource;
 }) {
   const { t } = useTranslation();
@@ -130,7 +131,9 @@ export function TutorChat({ conversationId, conversation, onCreated, language, l
     if (!target) {
       setBusy(true);
       try {
-        const created = await apiRequest("/api/ai/conversations", tutorConversationResponseSchema, { method: "POST" });
+        let created = await apiRequest("/api/ai/conversations", tutorConversationResponseSchema, { method: "POST" });
+        // A model that can no longer be chosen leaves the conversation on the default order.
+        if (newProvider) created = await apiRequest(conversationPath(created.conversation.id), tutorConversationResponseSchema, { method: "PATCH", body: JSON.stringify({ provider: newProvider }) }).catch(() => created);
         target = created.conversation.id;
         queryClient.setQueryData(tutorConversationQueryOptions(target).queryKey, created);
         queryClient.setQueryData<Messages>(tutorMessagesKey(target), emptyPages());

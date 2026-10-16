@@ -106,6 +106,23 @@ function workersAiTarget(model: string, binding: WorkersAiBinding): ProviderTarg
   };
 }
 
+// The enabled providers that have credentials, in the configured order: what a learner may choose for a conversation.
+export function availableProviders(env: AiEnv, settings: AiSettings): Array<{ provider: AiProvider; model: string }> {
+  return settings.providers.filter(({ provider, enabled }) => enabled && (
+    provider === "openrouter" ? Boolean(env.OPENROUTER_API_KEY)
+      : provider === "workers_ai" ? Boolean(env.AI)
+      : Boolean(env.AZURE_AI_ENDPOINT && env.AZURE_AI_KEY)
+  )).map(({ provider, model }) => ({ provider, model }));
+}
+
+// The settings with a conversation's chosen provider moved to the front; the rest keep their order as the fallback. A choice
+// that is no longer enabled changes nothing.
+export function preferProvider(settings: AiSettings, provider: AiProvider | null): AiSettings {
+  const index = provider ? settings.providers.findIndex((item) => item.provider === provider && item.enabled) : -1;
+  if (index <= 0) return settings;
+  return { ...settings, providers: [settings.providers[index]!, ...settings.providers.filter((_, position) => position !== index)] };
+}
+
 // The enabled targets that have credentials, in the configured order.
 export function configuredTargets(env: AiEnv, settings: AiSettings, fetcher: typeof fetch = fetch): ProviderTarget[] {
   const targets: ProviderTarget[] = [];

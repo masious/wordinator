@@ -675,10 +675,14 @@ export const aiConversations = sqliteTable(
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     title: text("title").notNull().default(""),
     archivedAt: integer("archived_at"),
+    provider: text("provider", { enum: ["openrouter", "workers_ai", "azure"] }),
     createdAt: integer("created_at").notNull(),
     updatedAt: integer("updated_at").notNull(),
   },
-  (table) => [index("ai_conversations_user_archived_updated_idx").on(table.userId, table.archivedAt, table.updatedAt)],
+  (table) => [
+    index("ai_conversations_user_archived_updated_idx").on(table.userId, table.archivedAt, table.updatedAt),
+    check("ai_conversations_provider_check", sql`${table.provider} is null or ${table.provider} in ('openrouter', 'workers_ai', 'azure')`),
+  ],
 );
 
 export const aiMessages = sqliteTable(

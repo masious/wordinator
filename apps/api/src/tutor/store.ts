@@ -7,8 +7,8 @@ import {
 // Conversations and messages in D1 (docs/data-model.md#ai-tutor). Every read and write is scoped by the signed-in account's ID,
 // so another account's conversation, message, or tool call is never found.
 
-type ConversationRow = { id: string; title: string; archivedAt: number | null; createdAt: number; updatedAt: number };
-const CONVERSATION_COLUMNS = "id, title, archived_at AS archivedAt, created_at AS createdAt, updated_at AS updatedAt";
+type ConversationRow = { id: string; title: string; archivedAt: number | null; provider: AiProvider | null; createdAt: number; updatedAt: number };
+const CONVERSATION_COLUMNS = "id, title, archived_at AS archivedAt, provider, created_at AS createdAt, updated_at AS updatedAt";
 
 type Cursor = [number, string];
 export const encodeCursor = (createdAt: number, id: string) => btoa(JSON.stringify([createdAt, id]));
@@ -21,7 +21,7 @@ export function decodeCursor(value: string): Cursor | null {
 }
 
 export const presentConversation = (row: ConversationRow): TutorConversation =>
-  ({ id: row.id, title: row.title, archivedAt: row.archivedAt, createdAt: row.createdAt, updatedAt: row.updatedAt });
+  ({ id: row.id, title: row.title, archivedAt: row.archivedAt, provider: row.provider, createdAt: row.createdAt, updatedAt: row.updatedAt });
 
 export async function readConversation(db: D1Database, userId: string, id: string): Promise<ConversationRow | null> {
   return db.prepare(`SELECT ${CONVERSATION_COLUMNS} FROM ai_conversations WHERE id = ? AND user_id = ?`).bind(id, userId).first<ConversationRow>();
@@ -38,7 +38,7 @@ export async function listConversations(db: D1Database, userId: string, archived
 }
 
 export async function createConversation(db: D1Database, userId: string, now = Date.now()): Promise<ConversationRow> {
-  const row: ConversationRow = { id: crypto.randomUUID(), title: "", archivedAt: null, createdAt: now, updatedAt: now };
+  const row: ConversationRow = { id: crypto.randomUUID(), title: "", archivedAt: null, provider: null, createdAt: now, updatedAt: now };
   await db.prepare("INSERT INTO ai_conversations (id, user_id, title, archived_at, created_at, updated_at) VALUES (?, ?, ?, NULL, ?, ?)")
     .bind(row.id, userId, row.title, now, now).run();
   return row;
@@ -48,6 +48,12 @@ export async function createConversation(db: D1Database, userId: string, now = D
 export async function setArchived(db: D1Database, userId: string, id: string, archived: boolean, now = Date.now()) {
   await db.prepare(`UPDATE ai_conversations SET archived_at = ${archived ? "COALESCE(archived_at, ?)" : "NULL"} WHERE id = ? AND user_id = ?`)
     .bind(...(archived ? [now] : []), id, userId).run();
+  return readConversation(db, userId, id);
+}
+
+// Changing the model keeps `updated_at`, like archiving; it applies from the next turn.
+export async function setConversationProvider(db: D1Database, userId: string, id: string, provider: AiProvider | null) {
+  await db.prepare("UPDATE ai_conversations SET provider = ? WHERE id = ? AND user_id = ?").bind(provider, id, userId).run();
   return readConversation(db, userId, id);
 }
 

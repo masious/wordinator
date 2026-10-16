@@ -1280,6 +1280,13 @@ export const resources = {
         send: "Send",
         limit: "You have reached today’s tutor limit. It resets at {{time}}.",
         archivedNote: "This conversation is archived. Unarchive it to continue.",
+        model: {
+          label: "Model for this conversation",
+          default: "Default ({{model}})",
+          option: "{{provider}} · {{model}}",
+          failed: "The model could not be changed.",
+          providers: { openrouter: "OpenRouter", workers_ai: "Workers AI", azure: "Azure" },
+        },
         tryAgain: "Try again",
         cta: {
           title: "Ask your tutor",

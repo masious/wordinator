@@ -472,10 +472,11 @@ export type TutorMessage = z.infer<typeof tutorMessageSchema>;
 export const tutorMessagePageSchema = z.strictObject({ items: z.array(tutorMessageSchema), nextCursor: z.string().nullable() });
 export type TutorMessagePage = z.infer<typeof tutorMessagePageSchema>;
 
-// An empty title is a conversation without a user message yet.
+// An empty title is a conversation without a user message yet. `provider` is the learner's choice of model for the
+// conversation's turns (one of the enabled providers); `null` follows the superuser's order.
 export const tutorConversationSchema = z.strictObject({
   id: opaqueIdSchema, title: z.string().max(TUTOR_TITLE_MAX), archivedAt: z.number().int().nullable(),
-  createdAt: z.number().int(), updatedAt: z.number().int(),
+  provider: aiProviderSchema.nullable(), createdAt: z.number().int(), updatedAt: z.number().int(),
 });
 export type TutorConversation = z.infer<typeof tutorConversationSchema>;
 export const tutorConversationResponseSchema = z.strictObject({ conversation: tutorConversationSchema });
@@ -486,6 +487,13 @@ export const tutorConversationsQuerySchema = z.object({
   cursor: z.string().min(1).max(500).optional(),
 });
 export const tutorMessagesQuerySchema = z.object({ cursor: z.string().min(1).max(500).optional() });
+export const updateTutorConversationRequestSchema = z.strictObject({ provider: aiProviderSchema.nullable() });
+
+// The models a learner can choose for a conversation: the enabled providers that the API can reach, in the superuser's order
+// (the first one is the default).
+export const tutorModelOptionSchema = z.strictObject({ provider: aiProviderSchema, model: z.string() });
+export type TutorModelOption = z.infer<typeof tutorModelOptionSchema>;
+export const tutorModelsResponseSchema = z.strictObject({ items: z.array(tutorModelOptionSchema) });
 
 // The title of a conversation: its first user message on one line, cut to 80 characters.
 export const conversationTitle = (text: string) => text.replace(/\s+/g, " ").trim().slice(0, TUTOR_TITLE_MAX).trim();

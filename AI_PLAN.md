@@ -240,9 +240,15 @@ Delivered as `apps/web/src/routes/ai.tsx`, `pages/TutorPage.tsx`, `organisms/Tut
 
 ## C14j — Critical paths and release
 
-- [ ] Playwright with a stubbed provider: ask for the next lesson → steps visible → a fill-in answered → confirm complete → the Progress tab shows it; reset from the lesson page; the Weak words dots; superuser analytics hidden from others.
+- [x] Playwright with a stubbed provider: ask for the next lesson → steps visible → a fill-in answered → confirm complete → the Progress tab shows it; reset from the lesson page; the Weak words dots; superuser analytics hidden from others.
 - [ ] Type-check, Vitest, Workers, RTL, Playwright, and production builds for web and API. Apply migrations to local, then production with the explicit target.
 - [ ] Release notes and roadmap status.
+
+### Notes (C14j, 2026-10-16)
+
+- **Browser tests delivered:** `tutor.spec.ts`, `mobile-tutor.spec.ts`, and `learning-data.spec.ts` with the stub provider `e2e/aiStub.ts` (see [docs/testing.md](docs/testing.md#ai-tutor-and-learning-data-c14)); 9 passed on Chromium, WebKit, and the three phone projects. The Playwright reset now clears `ai_usage` and `speech_usage` (the C14g gap) and stores AI settings with only the stub on.
+- **Production migrations:** `0026`–`0030` were applied to production with `--remote` (03:17 UTC) and the API deployed (03:32 UTC), outside this checklist; `0031_conversation_provider.sql` (per-conversation provider, in progress) is not yet committed or applied.
+- **Still open here:** the full suites and builds; the Workers AI native chunk shape and real-provider tool calling against a real binding (the stub speaks OpenAI chunks only); a Playwright case for the AI practices expander.
 
 ## C14l — Tutor sessions and memory
 
