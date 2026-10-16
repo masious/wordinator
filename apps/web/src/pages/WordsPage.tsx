@@ -12,7 +12,7 @@ import { WordDrillSetup } from "../organisms/WordDrill/WordDrillSetup";
 import { RECOGNITION_LOCALES, SpeechRecognitionScope, type AssessmentHandler } from "../molecules/speechRecognition";
 import { sendPronunciationAttempt } from "../molecules/learningAttempts";
 import { WordRecap, type RecapWord } from "../organisms/WordRecap/WordRecap";
-import { Button, EmptyState, ErrorState, LabelChip, LoadingState, PageHeader, SelectField, Surface } from "../ui";
+import { Button, EmptyState, ErrorState, Eyebrow, LoadingState, PageHeader, SelectField, Surface } from "../ui";
 import styles from "./WordsPage.module.css";
 
 // The route's search: `view=weak` shows the Weak words view (C14d), and otherwise `lesson` narrows the tab to one lesson's
@@ -120,7 +120,7 @@ export function WordsPage({ groupId, view = "bookmarks", lessonId, onView, onLes
   const libraryLanguage = session.data.groups[0]?.language;
   return <GroupFrame groupId={groupId} session={session.data}>
     <div className={styles.page}>
-      <PageHeader className={styles.header} eyebrow={<LabelChip>{t("words.eyebrow")}</LabelChip>} title={t("words.title")}
+      <PageHeader className={styles.header} eyebrow={<Eyebrow>{t("words.eyebrow")}</Eyebrow>} title={t("words.title")}
         intro={view === "weak" ? t("words.weakIntro") : t("words.intro")}
         actions={<div className={styles.actions}>
           {onView && <div role="group" aria-label={t("words.view.label")} className={styles.views}>

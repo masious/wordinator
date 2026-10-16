@@ -3,7 +3,7 @@ import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
 import { playRevealSpeech, SpeechButton, useStopSpeechOnUnmount } from "../../molecules/Speech";
-import { Button } from "../../ui";
+import { Button, Eyebrow } from "../../ui";
 import { blankExample } from "./drillSession";
 import { AssessmentBreakdown, ListenStatusLine, SpeakButton, SpokenVerdict } from "../../molecules/SpeakControls";
 import { useSpokenAnswer, type SpokenAnswer } from "../../molecules/speechRecognition";
@@ -67,7 +67,7 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
   return <article ref={cardRef} tabIndex={-1} className={`${styles.card} ${revealed ? styles.flipped : ""}`} aria-label={t("drill.card")}>
     <div className={styles.faces}>
       <div className={`${styles.face} ${styles.front}`} aria-hidden={revealed || undefined} inert={revealed}>
-        <p className={styles.prompt}>{direction === "understand" ? t("drill.prompt.understand") : t("drill.prompt.produce", { language })}</p>
+        <Eyebrow className={styles.prompt}>{direction === "understand" ? t("drill.prompt.understand") : t("drill.prompt.produce", { language })}</Eyebrow>
         {direction === "understand" ? <>
           <p className={styles.term}>{word.term}</p>
           <SpeechButton url={word.speech.term} label={termLabel} owner={termOwner} />

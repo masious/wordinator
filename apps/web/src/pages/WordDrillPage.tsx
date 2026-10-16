@@ -10,7 +10,7 @@ import { sendPronunciationAttempt } from "../molecules/learningAttempts";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { gradeDrill, startDrill } from "../organisms/WordDrill/drillSession";
 import { WordDrillCard } from "../organisms/WordDrill/WordDrillCard";
-import { Button, EmptyState, ErrorState, LabelChip, LoadingState, Surface } from "../ui";
+import { Button, EmptyState, ErrorState, Eyebrow, LoadingState, Surface } from "../ui";
 import styles from "./WordDrillPage.module.css";
 
 // The drill route's search (docs/words.md#setup). Unknown settings fall back to the defaults, and a lesson or course drill without
@@ -68,8 +68,8 @@ function DrillRun({ groupId, cards, language, onAgain, onBack }: {
     return <Surface className={styles.summary}>
       <h2 className={styles.summaryTitle}>{t("drill.summary.title")}</h2>
       <dl className={styles.counts}>
-        <div><dt>{t("drill.summary.got")}</dt><dd>{firstResults.filter((result) => result === "got").length}</dd></div>
-        <div><dt>{t("drill.summary.again")}</dt><dd>{firstResults.filter((result) => result === "again").length}</dd></div>
+        <div data-result="got"><dt>{t("drill.summary.got")}</dt><dd>{firstResults.filter((result) => result === "got").length}</dd></div>
+        <div data-result="again"><dt>{t("drill.summary.again")}</dt><dd>{firstResults.filter((result) => result === "again").length}</dd></div>
       </dl>
       {failure}
       <div className={styles.summaryActions}>
@@ -131,7 +131,7 @@ export function WordDrillPage({ groupId, settings, onBack }: { groupId: string; 
   return <GroupFrame groupId={groupId} session={session.data}>
     <div className={styles.page}>
       <header className={styles.header}>
-        <LabelChip>{t("drill.eyebrow")}</LabelChip>
+        <Eyebrow>{t("drill.eyebrow")}</Eyebrow>
         <h1 className={styles.title}>{t("drill.title")}</h1>
         <p className={styles.settings}>{t("drill.settings", { source: subtitle, direction })}</p>
       </header>

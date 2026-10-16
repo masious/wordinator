@@ -1,5 +1,11 @@
 .form{display:grid;gap:var(--space-6)}
 .choices{display:grid;gap:var(--space-2);margin-top:var(--space-2)}
-/* Each choice fills the dialog's width, so the descriptions line up. */
-.choices.choices>*{width:100%}
+/* Each choice is a Lumen tile that fills the dialog's width, so the descriptions line up: paper on a line border, the chosen
+   one on the soft accent with an accent line. A disabled choice keeps its tile on the muted surface. */
+.choices.choices>*{width:100%;padding:var(--space-3);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-md);transition:background-color var(--motion-press) var(--ease-physical),border-color var(--motion-press) var(--ease-physical)}
+.choices.choices>:has(input:checked){background:var(--color-action-soft);border-color:color-mix(in srgb,var(--color-action) 35%,transparent)}
+.choices.choices>:has(input:disabled){background:var(--color-surface)}
 .actions{display:flex;justify-content:flex-end;gap:var(--space-3);padding-top:var(--space-2)}
+/* Phones: Cancel and Start share the width. */
+@media(max-width:48em){.actions>*{flex:1 1 0;min-width:0}}
+@media(prefers-reduced-motion:reduce){.choices.choices>*{transition:none}}

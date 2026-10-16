@@ -1,18 +1,24 @@
 .center{min-height:100dvh;display:grid;place-items:center;padding:var(--space-6)}
 /* One card at a time, centred in a column as wide as a dialog. */
 .page{display:grid;gap:var(--space-6);width:min(100%,var(--width-modal));margin-inline:auto;animation:wordinator-enter var(--motion-reveal) var(--ease-physical) both}
-.header{display:grid;justify-items:start;gap:var(--space-2)}
-.title{margin:0;font-family:var(--font-display);font-size:var(--text-4xl);line-height:var(--line-title)}
-.settings{margin:0;color:var(--color-foreground-muted)}
+/* The Lumen page header, centred over the card: eyebrow, title, and the settings line as the intro. */
+.header{display:grid;justify-items:center;gap:var(--space-2);text-align:center}
+.title{margin:0;font-family:var(--font-display);font-size:var(--type-page-title);font-weight:var(--weight-semibold);line-height:var(--line-heading);letter-spacing:var(--tracking-display)}
+.settings{margin:0;color:var(--color-foreground-muted);font-size:var(--type-page-intro)}
 .session{display:grid;gap:var(--space-4)}
 .toolbar{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);min-height:var(--control-height)}
 .status{display:inline-flex;align-items:center;gap:var(--space-4)}
 .counter{margin:0;color:var(--color-foreground-muted);font:var(--type-metadata)/1 var(--font-mono);font-variant-numeric:tabular-nums}
 .failure{display:flex;align-items:center;justify-content:center;gap:var(--space-2);margin:0;color:var(--color-foreground-muted);font-size:var(--type-metadata)}
 .summary{display:grid;gap:var(--space-5)}
-.summaryTitle{margin:0;font-family:var(--font-display);font-size:var(--text-2xl);line-height:var(--line-title)}
+.summaryTitle{margin:0;font-family:var(--font-display);font-size:var(--type-section-title);font-weight:var(--weight-semibold);line-height:var(--line-title);letter-spacing:var(--tracking-title)}
+/* Two tiles in the results' Lumen tints: Got it on the success tint, Again on the warm one. */
 .counts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4);margin:0}
-.counts>div{display:grid;gap:var(--space-1);padding:var(--space-4);background:var(--color-wash-subtle);border:var(--ring-hairline);border-radius:var(--radius-md)}
-.counts dt{color:var(--color-foreground-muted);font-size:var(--type-metadata)}
-.counts dd{margin:0;font:var(--text-3xl)/1 var(--font-mono);font-variant-numeric:tabular-nums}
+.counts>div{display:grid;gap:var(--space-1);padding:var(--space-4);background:var(--color-surface);border:var(--ring-hairline);border-radius:var(--radius-md)}
+.counts>[data-result="got"]{background:var(--color-success-surface);border-color:color-mix(in srgb,var(--color-success) 35%,transparent)}
+.counts>[data-result="again"]{background:var(--color-highlight-soft);border-color:color-mix(in srgb,var(--color-highlight) 35%,transparent)}
+.counts dt{color:var(--color-foreground-muted);font-size:var(--type-metadata);font-weight:var(--weight-semibold)}
+.counts dd{margin:0;font:var(--weight-medium) var(--text-3xl)/1 var(--font-mono);color:var(--color-foreground);font-variant-numeric:tabular-nums}
 .summaryActions{display:flex;justify-content:flex-end;gap:var(--space-3)}
+/* Phones: the summary's buttons share the width. */
+@media(max-width:48em){.summaryActions>*{flex:1 1 0;min-width:0}}

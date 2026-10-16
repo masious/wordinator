@@ -132,9 +132,8 @@
   --color-selected: var(--palette-accent-soft);
   --color-concealed: var(--palette-blue-soft);
   --color-pinned: var(--palette-lime-soft);
-  /* New words (C8): the word list and panel surface, and the recap card face. */
+  /* New words (C8): the word list and panel surface. Word and drill cards are Lumen cards on --color-core. */
   --color-words-surface: var(--palette-warm-soft);
-  --color-words-card: var(--palette-surface-raised);
   /* Lesson shares (C11): the outline of the block selected for sharing on the lesson page, and the share preview card. */
   --share-select-outline: var(--color-action);
   --share-select-outline-width: 2px;
