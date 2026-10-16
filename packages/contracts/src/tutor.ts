@@ -25,6 +25,9 @@ export const TUTOR_COMPONENT_WORDS_MAX = 8;
 // Say it counts as passed from this overall pronunciation score.
 export const TUTOR_SAY_IT_PASS_SCORE = 60;
 export const TUTOR_NOTE_MAX = 500;
+// Word hints per component, and the length of a hint's cue (the native-language words of the question it explains).
+export const TUTOR_HINTS_MAX = 4;
+export const TUTOR_HINT_CUE_MAX = 80;
 
 // ---- Target-language spans ----
 
@@ -58,6 +61,10 @@ export function parseTargetSpans(raw: string): { text: string; spans: TutorSpan[
   return { text, spans };
 }
 
+// The text without its `[[...]]` marks. Answer and reference fields of a component are stored without marks, so grading compares
+// plain text; display fields (a question, options, a source sentence, a translation, a hint) keep them for the web to emphasise.
+export const stripTargetMarks = (raw: string): string => parseTargetSpans(raw).text;
+
 // ---- Answer components ----
 
 export const TUTOR_COMPONENT_KINDS = ["fill_in", "translate", "word_order", "article", "choice", "quick_review", "say_it", "dictation", "fix_mistake"] as const;
@@ -76,6 +83,22 @@ const optionalSentence = z.string().trim().max(TUTOR_SENTENCE_MAX).nullable().op
 // answer writes a word review for it, and `record_word_review` accepts only words a component of the conversation tested.
 export const tutorWordRefSchema = z.object({ lessonId: opaqueIdSchema, wordId: opaqueIdSchema });
 export type TutorWordRef = z.infer<typeof tutorWordRefSchema>;
+// A word hint (docs/ai-tutor.md#word-hints): a lesson word from the published index and the cue in the question it helps with,
+// such as "tidy up". The server resolves the word's term, meaning, and forms when the component is created; the model never
+// writes the hint's target-language text.
+export const tutorHintRefSchema = z.object({ lessonId: opaqueIdSchema, wordId: opaqueIdSchema, cue: z.string().trim().min(1).max(TUTOR_HINT_CUE_MAX) });
+export type TutorHintRef = z.infer<typeof tutorHintRefSchema>;
+const hintsField = { hints: z.array(tutorHintRefSchema).max(TUTOR_HINTS_MAX).optional() };
+// The kinds whose questions can carry hints; for the others a hint would give the answer away.
+export const TUTOR_HINT_KINDS = ["fill_in", "translate", "word_order", "fix_mistake", "dictation"] as const;
+export const tutorHintViewSchema = z.strictObject({
+  lessonId: opaqueIdSchema, wordId: opaqueIdSchema, cue: z.string(), term: z.string(), meaning: z.string(), forms: z.string().nullable(),
+});
+export type TutorHintView = z.infer<typeof tutorHintViewSchema>;
+const hintViews = { hints: z.array(tutorHintViewSchema).max(TUTOR_HINTS_MAX).optional() };
+// The hint words the learner opened before answering, as word references; each must be one of the component's hints.
+const hintsUsed = { hintsUsed: z.array(tutorWordRefSchema).max(TUTOR_HINTS_MAX).optional() };
+
 // Every payload may name the lesson it practises (its attempts are stored under it; without one, a word's lesson is used, and
 // a component with neither stores its answer only in the conversation) and the lesson words it tests.
 const componentBase = {
@@ -86,14 +109,14 @@ const componentBase = {
 // Full payloads, as the model sends them to an `ask_*` tool and as they are stored. They include the reference answer, so the web
 // receives only the component's view (see `tutorComponentView`) until it is answered.
 export const fillInPayloadSchema = z.object({
-  ...componentBase,
+  ...componentBase, ...hintsField,
   // The sentence with one `…` per blank, as in lesson practices.
   prompt: sentence.refine((value) => countBlanks(value) >= 1 && countBlanks(value) <= 5, "Use one to five … blanks."),
   answers: z.array(shortText).min(1).max(5),
   translation: optionalSentence,
 }).refine((value) => countBlanks(value.prompt) === value.answers.length, { message: "Give one answer per blank.", path: ["answers"] });
-export const translatePayloadSchema = z.object({ ...componentBase, source: sentence, reference: sentence });
-export const wordOrderPayloadSchema = z.object({ ...componentBase, chunks: z.array(z.string().trim().min(1).max(60)).min(2).max(12), translation: optionalSentence });
+export const translatePayloadSchema = z.object({ ...componentBase, ...hintsField, source: sentence, reference: sentence });
+export const wordOrderPayloadSchema = z.object({ ...componentBase, ...hintsField, chunks: z.array(z.string().trim().min(1).max(60)).min(2).max(12), translation: optionalSentence });
 const DUTCH_ARTICLES: readonly TutorArticle[] = ["de", "het"];
 export const articlePayloadSchema = z.object({
   ...componentBase,
@@ -113,8 +136,8 @@ export const quickReviewPayloadSchema = z.object({
   cards: z.array(z.object({ lessonId: opaqueIdSchema, wordId: opaqueIdSchema, direction: wordDrillDirectionSchema })).min(1).max(TUTOR_COMPONENT_WORDS_MAX),
 });
 export const sayItPayloadSchema = z.object({ ...componentBase, sentence: z.string().trim().min(1).max(TUTOR_SPAN_MAX), translation: optionalSentence });
-export const dictationPayloadSchema = z.object({ ...componentBase, sentence: z.string().trim().min(1).max(TUTOR_SPAN_MAX), translation: optionalSentence });
-export const fixMistakePayloadSchema = z.object({ ...componentBase, sentence, reference: sentence, hint: optionalSentence });
+export const dictationPayloadSchema = z.object({ ...componentBase, ...hintsField, sentence: z.string().trim().min(1).max(TUTOR_SPAN_MAX), translation: optionalSentence });
+export const fixMistakePayloadSchema = z.object({ ...componentBase, ...hintsField, sentence, reference: sentence, hint: optionalSentence });
 
 export const tutorComponentPayloadSchemas = {
   fill_in: fillInPayloadSchema, translate: translatePayloadSchema, word_order: wordOrderPayloadSchema, article: articlePayloadSchema,
@@ -150,17 +173,17 @@ export const quickReviewCardViewSchema = z.strictObject({
 });
 export type QuickReviewCardView = z.infer<typeof quickReviewCardViewSchema>;
 export const tutorComponentViewSchema = z.discriminatedUnion("kind", [
-  z.strictObject({ kind: z.literal("fill_in"), prompt: z.string(), blanks: z.number().int().positive(), translation: z.string().nullable() }),
-  z.strictObject({ kind: z.literal("translate"), source: z.string() }),
+  z.strictObject({ kind: z.literal("fill_in"), prompt: z.string(), blanks: z.number().int().positive(), translation: z.string().nullable(), ...hintViews }),
+  z.strictObject({ kind: z.literal("translate"), source: z.string(), ...hintViews }),
   // Chunks in the shuffled order the learner starts from.
-  z.strictObject({ kind: z.literal("word_order"), chunks: z.array(z.string()), translation: z.string().nullable() }),
+  z.strictObject({ kind: z.literal("word_order"), chunks: z.array(z.string()), translation: z.string().nullable(), ...hintViews }),
   z.strictObject({ kind: z.literal("article"), options: z.array(tutorArticleSchema), nouns: z.array(z.strictObject({ noun: z.string(), meaning: z.string().nullable() })) }),
   z.strictObject({ kind: z.literal("choice"), question: z.string(), options: z.array(z.string()) }),
   z.strictObject({ kind: z.literal("quick_review"), cards: z.array(quickReviewCardViewSchema) }),
   z.strictObject({ kind: z.literal("say_it"), sentence: z.string(), translation: z.string().nullable() }),
   // Audio only: the sentence is never part of the view.
-  z.strictObject({ kind: z.literal("dictation"), translation: z.string().nullable() }),
-  z.strictObject({ kind: z.literal("fix_mistake"), sentence: z.string(), hint: z.string().nullable() }),
+  z.strictObject({ kind: z.literal("dictation"), translation: z.string().nullable(), ...hintViews }),
+  z.strictObject({ kind: z.literal("fix_mistake"), sentence: z.string(), hint: z.string().nullable(), ...hintViews }),
 ]);
 export type TutorComponentView = z.infer<typeof tutorComponentViewSchema>;
 
@@ -181,12 +204,14 @@ function shuffled<T>(items: readonly T[], random: () => number): T[] {
  * The view of a component: the payload without its reference answer. A quick review needs its cards' words, which the server
  * resolves; `random` shuffles word order chunks once, when the component is created, and the view is stored with it.
  */
-export function tutorComponentView(component: TutorComponent, options: { cards?: QuickReviewCardView[]; random?: () => number } = {}): TutorComponentView {
+export function tutorComponentView(component: TutorComponent, options: { cards?: QuickReviewCardView[]; hints?: TutorHintView[]; random?: () => number } = {}): TutorComponentView {
   const random = options.random ?? Math.random;
+  // Resolved hints, only for kinds that take them; none leaves the field out, so older views stay as they were.
+  const hints = options.hints?.length && (TUTOR_HINT_KINDS as readonly string[]).includes(component.kind) ? { hints: options.hints } : {};
   switch (component.kind) {
-    case "fill_in": return { kind: "fill_in", prompt: component.payload.prompt, blanks: component.payload.answers.length, translation: component.payload.translation ?? null };
-    case "translate": return { kind: "translate", source: component.payload.source };
-    case "word_order": return { kind: "word_order", chunks: shuffled(component.payload.chunks, random), translation: component.payload.translation ?? null };
+    case "fill_in": return { kind: "fill_in", prompt: component.payload.prompt, blanks: component.payload.answers.length, translation: component.payload.translation ?? null, ...hints };
+    case "translate": return { kind: "translate", source: component.payload.source, ...hints };
+    case "word_order": return { kind: "word_order", chunks: shuffled(component.payload.chunks, random), translation: component.payload.translation ?? null, ...hints };
     case "article": {
       const dutch = component.payload.nouns.every((noun) => DUTCH_ARTICLES.includes(noun.article));
       return { kind: "article", options: dutch ? ["de", "het"] : ["der", "die", "das"], nouns: component.payload.nouns.map((noun) => ({ noun: noun.noun, meaning: noun.meaning ?? null })) };
@@ -194,24 +219,34 @@ export function tutorComponentView(component: TutorComponent, options: { cards?:
     case "choice": return { kind: "choice", question: component.payload.question, options: component.payload.options };
     case "quick_review": return { kind: "quick_review", cards: options.cards ?? [] };
     case "say_it": return { kind: "say_it", sentence: component.payload.sentence, translation: component.payload.translation ?? null };
-    case "dictation": return { kind: "dictation", translation: component.payload.translation ?? null };
-    case "fix_mistake": return { kind: "fix_mistake", sentence: component.payload.sentence, hint: component.payload.hint ?? null };
+    case "dictation": return { kind: "dictation", translation: component.payload.translation ?? null, ...hints };
+    case "fix_mistake": return { kind: "fix_mistake", sentence: component.payload.sentence, hint: component.payload.hint ?? null, ...hints };
   }
+}
+
+// A component's hint references (empty for kinds without hints).
+export function componentHints(component: TutorComponent): TutorHintRef[] {
+  return "hints" in component.payload ? component.payload.hints ?? [] : [];
+}
+
+// The hint words an answer says the learner opened (empty for kinds without hints).
+export function answerHintsUsed(answer: TutorComponentAnswer): TutorWordRef[] {
+  return "hintsUsed" in answer ? answer.hintsUsed ?? [] : [];
 }
 
 // ---- Answers ----
 
 const typedAnswer = z.string().max(1_000).refine((value) => value.trim().length > 0, { message: "Type an answer." });
 export const tutorComponentAnswerSchema = z.discriminatedUnion("kind", [
-  z.strictObject({ kind: z.literal("fill_in"), blanks: z.array(z.string().max(TUTOR_SHORT_TEXT_MAX)).min(1).max(5) }),
-  z.strictObject({ kind: z.literal("translate"), text: typedAnswer }),
-  z.strictObject({ kind: z.literal("word_order"), chunks: z.array(z.string().max(60)).min(2).max(12) }),
+  z.strictObject({ kind: z.literal("fill_in"), blanks: z.array(z.string().max(TUTOR_SHORT_TEXT_MAX)).min(1).max(5), ...hintsUsed }),
+  z.strictObject({ kind: z.literal("translate"), text: typedAnswer, ...hintsUsed }),
+  z.strictObject({ kind: z.literal("word_order"), chunks: z.array(z.string().max(60)).min(2).max(12), ...hintsUsed }),
   z.strictObject({ kind: z.literal("article"), articles: z.array(tutorArticleSchema).min(1).max(8) }),
   z.strictObject({ kind: z.literal("choice"), choice: z.number().int().min(0).max(3) }),
   z.strictObject({ kind: z.literal("quick_review"), results: z.array(wordDrillResultSchema).min(1).max(TUTOR_COMPONENT_WORDS_MAX) }),
   z.strictObject({ kind: z.literal("say_it"), scores: pronunciationScoresSchema }),
-  z.strictObject({ kind: z.literal("dictation"), text: typedAnswer }),
-  z.strictObject({ kind: z.literal("fix_mistake"), text: typedAnswer }),
+  z.strictObject({ kind: z.literal("dictation"), text: typedAnswer, ...hintsUsed }),
+  z.strictObject({ kind: z.literal("fix_mistake"), text: typedAnswer, ...hintsUsed }),
 ]);
 export type TutorComponentAnswer = z.infer<typeof tutorComponentAnswerSchema>;
 
@@ -252,6 +287,9 @@ const sameMultiset = (left: readonly string[], right: readonly string[]) => {
  */
 export function gradeTutorAnswer(component: TutorComponent, answer: TutorComponentAnswer, view?: TutorComponentView): TutorGradeOutcome {
   if (component.kind !== answer.kind) return invalid;
+  // Opened hints must be the component's own; they never change the grade.
+  const offered = new Set(componentHints(component).map((hint) => `${hint.lessonId}:${hint.wordId}`));
+  if (answerHintsUsed(answer).some((ref) => !offered.has(`${ref.lessonId}:${ref.wordId}`))) return invalid;
   switch (component.kind) {
     case "fill_in": {
       const { blanks } = answer as Extract<TutorComponentAnswer, { kind: "fill_in" }>;
@@ -474,9 +512,16 @@ export type TutorMessagePage = z.infer<typeof tutorMessagePageSchema>;
 
 // An empty title is a conversation without a user message yet. `provider` is the learner's choice of model for the
 // conversation's turns (one of the enabled providers); `null` follows the superuser's order.
+// Who set a conversation's title (docs/ai-tutor.md#conversation-titles): `auto` is the first user message, `tutor` a title the
+// tutor chose, and `user` one the learner typed, which the tutor never replaces.
+export const TUTOR_TITLE_SOURCES = ["auto", "tutor", "user"] as const;
+export const tutorTitleSourceSchema = z.enum(TUTOR_TITLE_SOURCES);
+export type TutorTitleSource = z.infer<typeof tutorTitleSourceSchema>;
 export const tutorConversationSchema = z.strictObject({
-  id: opaqueIdSchema, title: z.string().max(TUTOR_TITLE_MAX), archivedAt: z.number().int().nullable(),
+  id: opaqueIdSchema, title: z.string().max(TUTOR_TITLE_MAX), titleSource: tutorTitleSourceSchema, archivedAt: z.number().int().nullable(),
   provider: aiProviderSchema.nullable(), createdAt: z.number().int(), updatedAt: z.number().int(),
+  // Tokens in and out of every model request made for the conversation (docs/ai-tutor.md#usage-box).
+  tokens: z.number().int().nonnegative(),
 });
 export type TutorConversation = z.infer<typeof tutorConversationSchema>;
 export const tutorConversationResponseSchema = z.strictObject({ conversation: tutorConversationSchema });
@@ -487,7 +532,23 @@ export const tutorConversationsQuerySchema = z.object({
   cursor: z.string().min(1).max(500).optional(),
 });
 export const tutorMessagesQuerySchema = z.object({ cursor: z.string().min(1).max(500).optional() });
-export const updateTutorConversationRequestSchema = z.strictObject({ provider: aiProviderSchema.nullable() });
+// A title the learner types: one line, trimmed, 1–80 characters.
+export const tutorTitleInputSchema = z.string().transform((value) => value.replace(/\s+/g, " ").trim()).pipe(z.string().min(1).max(TUTOR_TITLE_MAX));
+// Changes the conversation's model, its title, or both; at least one is required.
+export const updateTutorConversationRequestSchema = z.strictObject({ provider: aiProviderSchema.nullable().optional(), title: tutorTitleInputSchema.optional() })
+  .refine((value) => value.provider !== undefined || value.title !== undefined, { message: "Change the model or the title." });
+export type UpdateTutorConversationRequest = z.input<typeof updateTutorConversationRequestSchema>;
+
+// The learner's own tutor usage (docs/ai-tutor.md#usage-box): today's (UTC) tokens and turns across every conversation, and,
+// with `conversationId`, that conversation's tokens over its whole life. Counts only; never another account's.
+export const tutorUsageQuerySchema = z.object({ conversationId: opaqueIdSchema.optional() });
+export const tutorTokenCountSchema = z.strictObject({ tokensIn: z.number().int().nonnegative(), tokensOut: z.number().int().nonnegative() });
+export type TutorTokenCount = z.infer<typeof tutorTokenCountSchema>;
+export const tutorUsageResponseSchema = z.strictObject({
+  today: tutorTokenCountSchema.extend({ turns: z.number().int().nonnegative(), turnCap: z.number().int().nonnegative(), resetsAt: z.number().int() }),
+  conversation: tutorTokenCountSchema.nullable(),
+});
+export type TutorUsage = z.infer<typeof tutorUsageResponseSchema>;
 
 // The models a learner can choose for a conversation: the enabled providers that the API can reach, in the superuser's order
 // (the first one is the default).
@@ -513,6 +574,17 @@ export const tutorRespondRequestSchema = z.union([
   z.strictObject({ type: z.literal("component"), skip: z.literal(true) }),
 ]);
 export type TutorRespondRequest = z.input<typeof tutorRespondRequestSchema>;
+// Answers every open question of one message's practice set together (docs/ai-tutor.md#practice-sets): each one's answer or a
+// skip, once per tool call ID. They are graded and stored together and the turn resumes once, with every grade.
+export const TUTOR_SET_ANSWERS_MAX = 10;
+export const tutorSetAnswerSchema = z.union([
+  z.strictObject({ toolCallId: opaqueIdSchema, answer: tutorComponentAnswerSchema }),
+  z.strictObject({ toolCallId: opaqueIdSchema, skip: z.literal(true) }),
+]);
+export type TutorSetAnswer = z.input<typeof tutorSetAnswerSchema>;
+export const tutorSetAnswersRequestSchema = z.strictObject({ answers: z.array(tutorSetAnswerSchema).min(1).max(TUTOR_SET_ANSWERS_MAX) })
+  .refine((value) => new Set(value.answers.map((entry) => entry.toolCallId)).size === value.answers.length, { message: "Answer each question once." });
+export type TutorSetAnswersRequest = z.input<typeof tutorSetAnswersRequestSchema>;
 // On-demand audio of a stored assistant message: a target-language span by index, or the sentence of a Say it or Dictation component.
 export const tutorSpeechRequestSchema = z.union([
   z.strictObject({ spanIndex: z.number().int().nonnegative().max(1_000) }),

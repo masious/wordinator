@@ -132,7 +132,7 @@ One row per `(user_id, term_key, direction)`, the primary key, folded from that 
 
 ### `practice_attempts`
 
-ID, user ID, course ID, nullable lesson ID, practice kind (`lesson` or `ai`), practice ID (the practice block ID or the `ai_practices` ID), item index, prompt, answer, reference (the author's version or the AI practice's reference, nullable), nullable `matched`, nullable `ai_verdict` (`acceptable` or `error`), nullable `ai_note`, source (`lesson`, `ai_chat`, or `ai_practice`), nullable conversation ID, and created timestamp. Checks limit the enums. Prompt, answer, and reference are capped at 2,000 characters. Indexed by `(user_id, created_at)` and `(user_id, lesson_id)`. Unlike [`course_practice_progress`](#course_practice_progress), rows keep the answer text.
+ID, user ID, course ID, nullable lesson ID, practice kind (`lesson` or `ai`), practice ID (the practice block ID or the `ai_practices` ID), item index, prompt, answer, reference (the author's version or the AI practice's reference, nullable), nullable `matched`, nullable `ai_verdict` (`acceptable` or `error`), nullable `ai_note`, source (`lesson`, `ai_chat`, or `ai_practice`), nullable conversation ID, `hints_used` (the number of [word hints](ai-tutor.md#word-hints) opened before answering, 0–4, default 0; migration `0032_attempt_hints.sql`), and created timestamp. Checks limit the enums and the hint count. Prompt, answer, and reference are capped at 2,000 characters. Indexed by `(user_id, created_at)` and `(user_id, lesson_id)`. Unlike [`course_practice_progress`](#course_practice_progress), rows keep the answer text.
 
 ### `pronunciation_attempts`
 
@@ -148,7 +148,7 @@ Added in C14; the [AI tutor](ai-tutor.md) owns behavior. No table has `group_id`
 
 ### `ai_conversations`
 
-ID, user ID, title (empty until the first user message, then that message on one line cut to 80 characters), nullable archived timestamp, nullable `provider` (the learner's [model choice](ai-tutor.md#providers-and-fallback): `openrouter`, `workers_ai`, or `azure`, check-constrained; null follows the configured order; added by migration `0031_conversation_provider.sql`), and created/updated timestamps. Conversations are never deleted. Each stored message moves `updated_at`; archiving does not. Indexed by `(user_id, archived_at, updated_at)`.
+ID, user ID, title (empty until the first user message, then that message on one line cut to 80 characters), nullable archived timestamp, `title_source` (`auto`, `tutor`, or `user`, check-constrained, default `auto`: who set the title, see [conversation titles](ai-tutor.md#conversation-titles); added by migration `0033_conversation_title_source.sql`), nullable `provider` (the learner's [model choice](ai-tutor.md#providers-and-fallback): `openrouter`, `workers_ai`, or `azure`, check-constrained; null follows the configured order; added by migration `0031_conversation_provider.sql`), and created/updated timestamps. Conversations are never deleted. Each stored message moves `updated_at`; archiving, renaming, and changing the model do not. Indexed by `(user_id, archived_at, updated_at)`.
 
 ### `ai_messages`
 
@@ -160,7 +160,7 @@ User ID (primary key), native language (default `en`), reply language (`native`,
 
 ### `ai_usage`
 
-One row per model request, successful or not (a fallback writes one row per provider tried). ID, user ID, nullable conversation ID (no foreign key; conversations are never deleted), provider (`openrouter`, `workers_ai`, or `azure`, check-constrained), model, turn start (whether the request is the first of a tutor turn; the [daily turn cap](ai-tutor.md#usage-and-limits) counts these rows), tokens in, tokens out, cost in micro-dollars, ok, and created timestamp. Indexed by `(user_id, created_at)` for the daily cap and `(created_at)` for analytics. Rows hold no prompt or answer text. Added in migration `0027_ai_usage.sql`.
+One row per model request, successful or not (a fallback writes one row per provider tried). ID, user ID, nullable conversation ID (no foreign key; conversations are never deleted), provider (`openrouter`, `workers_ai`, or `azure`, check-constrained), model, turn start (whether the request is the first of a tutor turn; the [daily turn cap](ai-tutor.md#usage-and-limits) counts these rows), tokens in, tokens out, cost in micro-dollars, ok, and created timestamp. Indexed by `(user_id, created_at)` for the daily cap, `(created_at)` for analytics, and `(conversation_id)` for each conversation's token total in the tutor's list (migration `0033_conversation_title_source.sql`). Rows hold no prompt or answer text. Added in migration `0027_ai_usage.sql`.
 
 ### `ai_practices`
 

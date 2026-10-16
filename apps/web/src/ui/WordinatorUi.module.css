@@ -1,38 +1,45 @@
 .container { width: min(100%, var(--width-shell)); margin-inline: auto; }
 .reading { width: min(100%, var(--width-reading)); margin-inline: auto; }
-.surfaceShell { width: 100%; padding: var(--space-2); background: var(--color-bezel); border: var(--ring-hairline); border-radius: var(--radius-shell); box-shadow: var(--shadow-card); animation: wordinator-enter-soft var(--motion-reveal) var(--ease-physical) both; }
-.surfaceCore { min-width: 0; padding: var(--card-inset); background: var(--color-core); border: var(--ring-hairline); border-radius: var(--radius-core); box-shadow: var(--shadow-inset-highlight); }
-.surfaceQuiet { box-shadow: none; }
-.surfaceQuiet .surfaceCore { background: var(--color-surface); }
-.surfaceFeatured { background: color-mix(in srgb, var(--color-action) 16%, transparent); box-shadow: var(--shadow-raised); }
-.surfaceInset { background: color-mix(in srgb, var(--color-foreground) 7%, transparent); box-shadow: var(--shadow-pressed); }
-.surfaceInset .surfaceCore { background: var(--color-surface-muted); }
-.surfaceDanger { background: color-mix(in srgb, var(--color-danger) 12%, transparent); }
-.surfaceDanger .surfaceCore { background: var(--color-danger-surface); }
+.surfaceShell { width: 100%; animation: wordinator-enter-soft var(--motion-reveal) var(--ease-physical) both; }
+/* One card per surface: paper, a line border, and a soft shadow. Tones swap the card's surface. */
+.surfaceCore { min-width: 0; height: 100%; padding: var(--card-inset); color: var(--color-foreground); background: var(--color-core); border: var(--ring-hairline); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+.surfaceQuiet .surfaceCore { background: var(--color-surface); box-shadow: none; }
+.surfaceFeatured .surfaceCore { color: var(--color-feature-text); background: var(--color-feature-surface); border-color: var(--color-feature-line); }
+.surfaceInset .surfaceCore { background: var(--color-surface); box-shadow: none; }
+.surfaceDanger .surfaceCore { background: var(--color-danger-surface); box-shadow: none; }
 .surfaceReading { padding: clamp(var(--space-6), 5vw, var(--space-12)); }
-.chip { display: inline-flex; align-items: center; min-height: 28px; max-width: 100%; padding: var(--space-1) var(--space-3); color: var(--color-foreground); background: var(--color-info-soft); border: var(--ring-hairline); border-radius: var(--radius-pill); box-shadow: var(--shadow-inset-highlight); font: var(--weight-medium) var(--type-eyebrow)/var(--line-compact) var(--font-mono); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; overflow-wrap: anywhere; }
-/* Each variant names its surface and a token-based ink; where `contrast-color()` is supported the ink is derived from the surface instead, so a button stays legible whatever the scheme does to its background. */
-.button { --button-surface: var(--color-action); --button-ink: var(--color-action-text); min-height: var(--control-height); padding-inline: var(--space-5); color: var(--button-ink); background: var(--button-surface); border: var(--ring-hairline); border-radius: var(--radius-pill); box-shadow: var(--shadow-card), var(--shadow-inset-highlight); transition: transform var(--motion-press) var(--ease-physical); }
+.chip { display: inline-flex; align-items: center; width: fit-content; max-width: 100%; padding: 0.3rem 0.55rem; color: var(--color-foreground-muted); background: var(--color-surface-muted); border-radius: var(--radius-pill); font: var(--weight-bold) var(--type-badge)/1 var(--font-sans); letter-spacing: 0.03em; overflow-wrap: anywhere; }
+.chip[data-tone="accent"] { color: var(--color-action-soft-text); background: var(--color-action-soft); }
+.chip[data-tone="success"] { color: var(--color-success); background: var(--color-success-surface); }
+.chip[data-tone="warm"] { color: var(--color-highlight); background: var(--color-highlight-soft); }
+.chip[data-tone="info"] { color: var(--color-info); background: var(--color-info-soft); }
+.eyebrow { margin: 0; color: var(--color-action); font: var(--weight-bold) var(--type-eyebrow)/var(--line-compact) var(--font-sans); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; }
+.avatar :global(.mantine-Avatar-placeholder) { color: var(--color-inverse-text); background: var(--color-inverse-surface); font-size: 0.66rem; font-weight: var(--weight-bold); }
+.avatar[data-tone="accent"] :global(.mantine-Avatar-placeholder) { color: var(--color-action-text); background: var(--color-action); }
+.avatar[data-tone="soft"] :global(.mantine-Avatar-placeholder) { color: var(--color-action-soft-text); background: var(--color-action-soft); }
+/* Each variant names its surface, ink, and edge. Hover lifts by one pixel; there is no press shadow. */
+.button { --button-surface: var(--color-action); --button-ink: var(--color-action-text); --button-edge: transparent; min-height: var(--control-height); padding-inline: 0.85rem; color: var(--button-ink); background: var(--button-surface); border: 1px solid var(--button-edge); border-radius: var(--radius-sm); font-size: var(--type-control-label); font-weight: var(--weight-semibold); transition: background-color var(--motion-standard) ease, border-color var(--motion-standard) ease, color var(--motion-standard) ease, transform var(--motion-standard) ease; }
 .button :global(.mantine-Button-inner) { gap: var(--space-2); }
 .buttonLabel { overflow: visible; display: inline-flex; align-items: center; }
-/* Mantine's own :hover (and touch :active) rule paints its filled-coral hover colors; these outrank it so every state keeps the variant's pair. */
-.button:hover:not(:disabled, [data-disabled]) { color: var(--button-ink); background: var(--button-surface); transform: translateY(-2px); box-shadow: var(--shadow-raised), var(--shadow-inset-highlight); }
-.button:active:not(:disabled, [data-disabled]) { color: var(--button-ink); background: var(--button-surface); transform: scale(.98); box-shadow: var(--shadow-pressed); }
-.button:disabled, .button[data-disabled] { color: var(--color-disabled-text); background: var(--color-disabled); box-shadow: none; transform: none; }
-.primary { --button-surface: var(--color-action); }
-.primary:hover:not(:disabled, [data-disabled]) { --button-surface: var(--color-hover); }
-.secondary { --button-surface: var(--color-control-surface); --button-ink: var(--color-foreground); }
-.quiet { --button-surface: transparent; --button-ink: var(--color-foreground); box-shadow: none; }
-.quiet:hover:not(:disabled, [data-disabled]), .quiet:active:not(:disabled, [data-disabled]) { background: var(--color-wash-strong); box-shadow: none; }
+/* Mantine's own :hover (and touch :active) rule paints its filled-accent hover colors; these outrank it so every state keeps the variant's pair. */
+.button:hover:not(:disabled, [data-disabled]) { color: var(--button-ink); background: var(--button-surface); border-color: var(--button-edge); transform: translateY(-1px); }
+.button:active:not(:disabled, [data-disabled]) { color: var(--button-ink); background: var(--button-surface); transform: none; }
+.button:disabled, .button[data-disabled] { color: var(--color-disabled-text); background: var(--color-disabled); border-color: transparent; opacity: 1; transform: none; }
+.primary { --button-surface: var(--color-action); --button-edge: var(--color-action); }
+.primary:hover:not(:disabled, [data-disabled]) { --button-surface: var(--color-hover); --button-edge: var(--color-hover); }
+.secondary { --button-surface: var(--color-control-surface); --button-ink: var(--color-foreground); --button-edge: var(--color-separator); }
+.secondary:hover:not(:disabled, [data-disabled]) { --button-edge: var(--color-foreground-faint); }
+.quiet { --button-surface: transparent; --button-ink: var(--color-foreground); }
+.quiet:hover:not(:disabled, [data-disabled]), .quiet:active:not(:disabled, [data-disabled]) { --button-surface: var(--color-action-soft); --button-ink: var(--color-action-soft-text); }
 .danger { --button-surface: var(--color-danger-surface); --button-ink: var(--color-danger-text); }
-.iconIsland { display: inline-grid; place-items: center; width: 30px; height: 30px; margin-block: -5px; margin-right: -12px; background: var(--color-wash-strong); border: var(--ring-hairline); border-radius: 50%; transition: transform var(--motion-standard) var(--ease-physical); }
-.button:hover .iconIsland { transform: translate(3px, -1px) scale(1.05); }
-/* Attached buttons: the group owns the pill shadow and lift, so members drop their own elevation and never move apart; hover adds a wash over each variant's surface instead. */
-.buttonGroup { width: fit-content; max-width: 100%; border-radius: var(--radius-pill); box-shadow: var(--shadow-card); transition: transform var(--motion-press) var(--ease-physical), box-shadow var(--motion-press) var(--ease-physical); }
-.buttonGroup:has(.button:hover:not(:disabled, [data-disabled])) { transform: translateY(-2px); box-shadow: var(--shadow-raised); }
-.buttonGroup .button { position: relative; box-shadow: var(--shadow-inset-highlight); }
-.buttonGroup .button:hover:not(:disabled, [data-disabled]) { transform: none; box-shadow: var(--shadow-inset-highlight); background-image: linear-gradient(var(--color-wash-strong), var(--color-wash-strong)); }
-.buttonGroup .button:active:not(:disabled, [data-disabled]) { transform: none; box-shadow: var(--shadow-pressed); }
+/* The trailing glyph sits in Mantine's right section, outside the label that clips its overflow. */
+.button :global(.mantine-Button-section[data-position="right"]) { margin-inline-start: var(--space-2); }
+.trailingGlyph { display: inline-grid; place-items: center; flex: none; transition: transform var(--motion-standard) var(--ease-physical); }
+.button:hover .trailingGlyph { transform: translateX(2px); }
+/* Attached buttons: members share one rounded frame and their seams are lines; the group does not lift. */
+.buttonGroup { width: fit-content; max-width: 100%; border-radius: var(--radius-sm); }
+.buttonGroup .button { position: relative; }
+.buttonGroup .button:hover:not(:disabled, [data-disabled]) { transform: none; background-image: linear-gradient(var(--color-wash), var(--color-wash)); }
 .buttonGroup .button:focus-visible { z-index: 1; }
 /* Phones: members share the group's width by label length and wrap a label that does not fit onto two lines rather than cutting it
    or pushing the page sideways; a word never breaks. */
@@ -40,22 +47,22 @@
   .buttonGroup .button { flex: 1 1 auto; min-width: min-content; height: auto; padding-inline: var(--space-3); }
   .buttonGroup .button :global(.mantine-Button-label) { white-space: normal; overflow-wrap: normal; text-align: center; line-height: var(--line-compact); }
 }
-.lineIcon { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.25; }
-.iconButton { --button-surface: var(--color-highlight-soft); --button-ink: var(--color-foreground); min-width: var(--touch-target); min-height: var(--touch-target); color: var(--button-ink); background: var(--button-surface); border: var(--ring-hairline); box-shadow: var(--shadow-card), var(--shadow-inset-highlight); transition: transform var(--motion-press) var(--ease-physical); }
-.iconButton:hover:not(:disabled, [data-disabled]) { color: var(--button-ink); background: var(--button-surface); transform: translateY(-2px) rotate(3deg); box-shadow: var(--shadow-raised); }
-.iconButton:active:not(:disabled, [data-disabled]) { color: var(--button-ink); background: var(--button-surface); transform: scale(.96); }
-.iconButton:disabled, .iconButton[data-disabled] { color: var(--color-disabled-text); background: var(--color-disabled); box-shadow: none; }
-/* Opaque surfaces only: a quiet button has no surface of its own, and danger keeps its semantic ink. The pure black or white
-   is tinted toward the surface so it stays in the warm palette while keeping well above 4.5:1. */
-@supports (color: contrast-color(red)) {
-  .primary, .secondary, .iconButton { --button-ink: color-mix(in oklab, contrast-color(var(--button-surface)) 88%, var(--button-surface)); }
-}
+.lineIcon { width: 1.25rem; height: 1.25rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.5; }
+/* A square icon-only button on paper with a line border; hover turns the edge and glyph to the accent. */
+.iconButton { --button-surface: var(--color-control-surface); --button-ink: var(--color-foreground); min-width: var(--control-height); min-height: var(--control-height); color: var(--button-ink); background: var(--button-surface); border: var(--ring-hairline); border-radius: var(--radius-sm); transition: border-color var(--motion-standard) ease, color var(--motion-standard) ease, background-color var(--motion-standard) ease; }
+.iconButton:hover:not(:disabled, [data-disabled]) { color: var(--color-action); background: var(--button-surface); border-color: var(--color-action); }
+.iconButton:active:not(:disabled, [data-disabled]) { background: var(--button-surface); }
+.iconButton:disabled, .iconButton[data-disabled] { color: var(--color-disabled-text); background: var(--color-disabled); }
+.iconButton svg { flex: none; }
+/* Quiet: no surface of its own, for actions inside rows and cards; hover adds the soft accent. Primary: the action colour. */
+.iconButton[data-tone="quiet"] { --button-surface: transparent; border-color: transparent; }
+.iconButton[data-tone="quiet"]:hover:not(:disabled, [data-disabled]) { color: var(--color-action-soft-text); background: var(--color-action-soft); border-color: transparent; }
+.iconButton[data-tone="quiet"]:disabled, .iconButton[data-tone="quiet"][data-disabled] { background: transparent; }
+.iconButton[data-tone="primary"] { --button-surface: var(--color-action); --button-ink: var(--color-action-text); border-color: var(--color-action); }
+.iconButton[data-tone="primary"]:hover:not(:disabled, [data-disabled]) { color: var(--button-ink); background: var(--color-hover); border-color: var(--color-hover); }
 .control { width: 100%; }
-.control :global(.mantine-Input-wrapper) { padding: 5px; background: var(--color-bezel); border: var(--ring-hairline); border-radius: calc(var(--radius-md) + 5px); box-shadow: var(--shadow-inset-highlight); }
-.control :global(.mantine-Input-input) { border-radius: var(--radius-md); }
-.control :global(.mantine-Input-description), .control :global(.mantine-Input-error) { padding-inline: var(--space-1); }
-.choice { width: fit-content; max-width: 100%; padding: var(--space-2) var(--space-3); background: var(--color-wash-subtle); border: var(--ring-hairline); border-radius: var(--radius-md); box-shadow: var(--shadow-inset-highlight); }
-.status { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-4); background: var(--color-muted); border: var(--ring-hairline); border-radius: var(--radius-md); box-shadow: var(--shadow-inset-highlight); }
+.choice { width: fit-content; max-width: 100%; }
+.status { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-4); background: var(--color-muted); border-radius: var(--radius-md); }
 .statusSuccess { background: var(--color-success-surface); }
 .statusError { color: var(--color-danger-text); background: var(--color-danger-surface); }
 .statusInfo { background: var(--color-info-soft); }
@@ -67,26 +74,30 @@
 .state h3, .state p { margin: 0; }
 .help { display: block; margin-top: var(--space-1); color: var(--color-foreground-muted); font-size: var(--text-sm); line-height: var(--line-body); }
 .errorText { color: var(--color-danger-text); font-weight: var(--weight-semibold); }
-.skeletonWide, .skeletonShort { height: 14px; overflow: hidden; background: var(--color-muted); border-radius: var(--radius-pill); }
+.skeletonWide, .skeletonShort { height: 14px; overflow: hidden; background: var(--color-muted); border-radius: var(--radius-sm); }
 .skeletonWide { width: 70%; }
 .skeletonShort { width: 45%; }
-.skeletonWide::after, .skeletonShort::after { display: block; width: 42%; height: 100%; content: ""; background: linear-gradient(90deg, transparent, var(--color-support), transparent); animation: loading 1.4s var(--ease-physical) infinite; }
+.skeletonWide::after, .skeletonShort::after { display: block; width: 42%; height: 100%; content: ""; background: linear-gradient(90deg, transparent, var(--color-surface-raised), transparent); animation: loading 1.4s var(--ease-physical) infinite; }
 @keyframes loading { from { transform: translateX(-110%); } to { transform: translateX(280%); } }
-.pageHeader { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(16rem, .55fr); align-items: end; gap: var(--space-12); padding-block: var(--page-header-block-start) var(--page-header-block-end); }
-.pageHeaderCopy { display: grid; justify-items: start; gap: var(--page-header-gap); }
-.pageHeader h1 { max-width: 13ch; margin: 0; font-size: var(--type-page-title); line-height: var(--line-heading); }
-.pageHeader p { max-width: 60ch; margin: 0; color: var(--color-foreground-muted); font-size: var(--type-page-intro); }
-.pageHeaderActions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-3); }
-.sectionHeader { display: flex; align-items: end; justify-content: space-between; gap: var(--space-8); }
-.sectionHeader h2 { margin: var(--space-2) 0 0; font-size: var(--type-section-title); }
-.sectionHeader p { max-width: 60ch; margin: var(--space-3) 0 0; color: var(--color-foreground-muted); }
+.pageHeader { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--space-8); padding-block: var(--page-header-block-start) var(--page-header-block-end); }
+.pageHeaderCopy { display: grid; justify-items: start; min-width: 0; }
+.pageHeader h1 { margin: var(--space-2) 0 var(--space-3); font-size: var(--type-page-title); line-height: var(--line-heading); letter-spacing: var(--tracking-display); }
+.pageHeader h1:first-child { margin-top: 0; }
+.pageHeader p { max-width: 60ch; margin: 0; color: var(--color-foreground-muted); font-size: var(--type-page-intro); line-height: var(--line-body); }
+.pageHeaderActions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--space-3); }
+.sectionHeader { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-4); }
+.sectionHeader h2 { margin: 0; font-size: var(--type-section-title); letter-spacing: -0.025em; }
+.sectionHeader > div > div + h2 { margin-top: var(--space-2); }
+.sectionHeader p { max-width: 60ch; margin: var(--space-1) 0 0; color: var(--color-foreground-muted); font-size: var(--text-xs); }
 .split { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(17rem, .7fr); align-items: start; gap: clamp(var(--space-8), 7vw, var(--space-20)); }
 .splitReverse { grid-template-columns: minmax(17rem, .7fr) minmax(0, 1.3fr); }
 .splitReverse > :first-child { order: 2; }
-.metadata { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); color: var(--color-foreground-muted); font: var(--type-metadata)/var(--line-compact) var(--font-mono); }
-.navigationItem { display: inline-flex; align-items: center; gap: var(--space-2); min-height: var(--touch-target); padding: var(--space-2) var(--space-4); color: var(--color-foreground-muted); border-radius: var(--radius-pill); text-decoration: none; transition: transform var(--motion-press) var(--ease-physical); }
-.navigationItem:hover { color: var(--color-foreground); background: var(--color-wash); transform: translateY(-1px); }
-.navigationItem[aria-current="page"] { color: var(--color-foreground); background: var(--color-selected); box-shadow: var(--shadow-inset-highlight); }
+.metadata { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-5); color: var(--color-foreground-faint); font: var(--weight-medium) var(--type-metadata)/var(--line-compact) var(--font-sans); font-variant-numeric: tabular-nums; }
+.metadataItem { display: inline-flex; align-items: center; gap: 0.4rem; }
+.metadataItem svg { flex: none; width: 1rem; height: 1rem; }
+.navigationItem { display: flex; align-items: center; gap: var(--space-2); min-height: var(--control-height); padding: 0.6rem 0.85rem; color: var(--color-foreground-muted); border-radius: var(--radius-sm); font-size: var(--type-control-label); font-weight: var(--weight-semibold); text-decoration: none; transition: background-color var(--motion-standard) ease, color var(--motion-standard) ease; }
+.navigationItem:hover { color: var(--color-action-soft-text); background: var(--color-action-soft); }
+.navigationItem[aria-current="page"] { color: var(--color-action-soft-text); background: var(--color-action-soft); }
 .navigationIcon { display: inline-grid; place-items: center; }
 .reveal { opacity: 0; transform: translateY(var(--space-8)); transition: opacity var(--motion-reveal) var(--ease-physical) var(--reveal-delay, 0ms), transform var(--motion-reveal) var(--ease-physical) var(--reveal-delay, 0ms); }
 .revealed { opacity: 1; transform: translateY(0); }
@@ -96,9 +107,9 @@
 .stagger > :nth-child(4) { --stagger-index: 3; }
 .stagger > :nth-child(5) { --stagger-index: 4; }
 @keyframes staggerIn { from { opacity: 0; transform: translateY(var(--space-4)); } to { opacity: 1; transform: translateY(0); } }
-.dialogShell { padding: var(--space-2); background: var(--color-bezel); border: var(--ring-hairline); box-shadow: var(--shadow-overlay); }
-.dialogHeader { margin: 0; padding: var(--space-6) var(--space-6) var(--space-3); background: var(--color-overlay-glass); border: var(--ring-hairline); border-bottom: 0; border-radius: var(--radius-core) var(--radius-core) 0 0; box-shadow: var(--shadow-inset-highlight); }
-.dialogContent { padding: 0 var(--space-6) var(--space-6); background: var(--color-overlay-glass); border: var(--ring-hairline); border-top: 0; border-radius: 0 0 var(--radius-core) var(--radius-core); }
+.dialogShell { background: var(--color-surface-raised); border: var(--ring-hairline); box-shadow: var(--shadow-overlay); }
+.dialogHeader { margin: 0; padding: var(--space-6) var(--space-6) var(--space-3); background: var(--color-surface-raised); }
+.dialogContent { padding: 0 var(--space-6) var(--space-6); }
 /* A docked dialog sits over its reading column below the navigation bar; only the dialog itself takes pointer input. */
 .dialogDocked { justify-content: flex-start; padding-inline-end: 0; pointer-events: none; }
 .dialogDocked > * { pointer-events: auto; }
@@ -106,19 +117,15 @@
 .dialogBody :where(p) { margin: 0; color: var(--color-foreground-muted); }
 .dialogActions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-3); padding-top: var(--space-2); }
 @media (max-width: 48em) {
-  /* One frame per surface on phones: the bezel shell dissolves and the core carries the card. */
-  .surfaceShell.surfaceShell { padding: 0; background: none; border: 0; border-radius: 0; box-shadow: none; }
-  .surfaceCore { border-radius: var(--radius-lg); box-shadow: var(--shadow-card), var(--shadow-inset-highlight); }
-  .pageHeader { grid-template-columns: 1fr; gap: var(--page-header-gap); }
+  .pageHeader { display: grid; gap: var(--page-header-gap); }
   .pageHeaderActions { justify-content: flex-start; }
-  .sectionHeader { align-items: start; flex-direction: column; gap: var(--space-4); }
   .split, .splitReverse { grid-template-columns: 1fr; gap: var(--space-6); }
   .splitReverse > :first-child { order: initial; }
   .dialogInner.dialogInner { padding: 0; }
   /* Full-screen sheet: sticky title bar, body grows so a form's action bar can pin to the bottom edge. */
   .dialogShell.dialogShell { display: flex; flex-direction: column; width: 100vw; max-width: none; min-height: 100dvh; margin: 0; padding: 0; border: 0; border-radius: 0; }
-  .dialogHeader { min-height: var(--navigation-height); padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); border: 0; border-bottom: var(--ring-hairline); border-radius: 0; backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); }
-  .dialogContent { display: flex; flex: 1 0 auto; flex-direction: column; padding: var(--space-5) var(--space-4) var(--space-8); border: 0; border-radius: 0; }
+  .dialogHeader { min-height: var(--navigation-height); padding: var(--space-2) var(--space-2) var(--space-2) var(--space-4); border: 0; border-bottom: var(--ring-hairline); border-radius: 0; }
+  .dialogContent { display: flex; flex: 1 0 auto; flex-direction: column; padding: var(--space-5) var(--space-4) var(--space-8); }
   .dialogBody { display: flex; flex: 1 0 auto; flex-direction: column; }
 }
 @media (prefers-reduced-motion: reduce) {

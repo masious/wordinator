@@ -11,6 +11,7 @@ import {
   PasswordInput,
   Popover,
   Radio,
+  SegmentedControl,
   Select,
   Textarea,
   TextInput,
@@ -22,8 +23,8 @@ const semanticScale = (value: string) => Array(10).fill(value) as unknown as rea
 ];
 
 const motion = {
-  standard: 360,
-  overlay: 520,
+  standard: 180,
+  overlay: 320,
 } as const;
 
 const inputDefaults = {
@@ -35,7 +36,6 @@ const inputDefaults = {
       color: "var(--color-foreground)",
       background: "var(--color-core)",
       border: "var(--ring-hairline)",
-      boxShadow: "var(--shadow-inset-highlight)",
     },
     label: {
       color: "var(--color-foreground)",
@@ -48,7 +48,7 @@ const inputDefaults = {
 } as const;
 
 export const theme = createTheme({
-  primaryColor: "coral",
+  primaryColor: "accent",
   primaryShade: 5,
   autoContrast: false,
   black: "var(--color-foreground)",
@@ -80,10 +80,10 @@ export const theme = createTheme({
     },
   },
   colors: {
-    coral: semanticScale("var(--color-action)"),
-    sage: semanticScale("var(--color-support)"),
-    ochre: semanticScale("var(--color-highlight)"),
-    paper: semanticScale("var(--color-surface)"),
+    accent: semanticScale("var(--color-action)"),
+    support: semanticScale("var(--color-support)"),
+    highlight: semanticScale("var(--color-highlight)"),
+    surface: semanticScale("var(--color-surface)"),
   },
   spacing: {
     xs: "var(--space-1)", sm: "var(--space-2)", md: "var(--space-4)",
@@ -93,7 +93,7 @@ export const theme = createTheme({
     xs: "var(--radius-sm)", sm: "var(--radius-sm)", md: "var(--radius-md)",
     lg: "var(--radius-lg)", xl: "var(--radius-xl)",
   },
-  defaultRadius: "lg",
+  defaultRadius: "md",
   shadows: {
     xs: "var(--shadow-pressed)", sm: "var(--shadow-card)", md: "var(--shadow-card)",
     lg: "var(--shadow-raised)", xl: "var(--shadow-raised)",
@@ -107,7 +107,7 @@ export const theme = createTheme({
   cursorType: "pointer",
   components: {
     Button: Button.extend({
-      defaultProps: { autoContrast: false, color: "coral", radius: "xl", size: "md" },
+      defaultProps: { autoContrast: false, color: "accent", radius: "sm", size: "md" },
       styles: {
         root: {
           minHeight: "var(--control-height)",
@@ -116,38 +116,38 @@ export const theme = createTheme({
       },
     }),
     ActionIcon: ActionIcon.extend({
-      defaultProps: { autoContrast: false, color: "coral", radius: "xl", size: "var(--touch-target)" },
+      defaultProps: { autoContrast: false, color: "accent", radius: "sm", size: "var(--control-height)" },
     }),
     TextInput: TextInput.extend({ defaultProps: inputDefaults }),
     PasswordInput: PasswordInput.extend({ defaultProps: inputDefaults }),
     Textarea: Textarea.extend({ defaultProps: inputDefaults }),
     Select: Select.extend({ defaultProps: inputDefaults }),
-    Checkbox: Checkbox.extend({ defaultProps: { color: "coral", radius: "sm", size: "md" } }),
-    Radio: Radio.extend({ defaultProps: { color: "coral", size: "md" } }),
+    Checkbox: Checkbox.extend({ defaultProps: { color: "accent", radius: "sm", size: "md" } }),
+    Radio: Radio.extend({ defaultProps: { color: "accent", size: "md" } }),
     Modal: Modal.extend({
       defaultProps: {
         centered: true,
-        radius: "xl",
+        radius: "lg",
         size: "var(--width-modal)",
         transitionProps: { duration: motion.overlay, timingFunction: "var(--ease-physical)" },
       },
       styles: {
-        overlay: { background: "var(--color-overlay)", backdropFilter: "blur(12px)" },
+        overlay: { background: "var(--color-overlay)" },
         content: {
-          background: "var(--color-overlay-glass)",
+          background: "var(--color-surface-raised)",
           border: "var(--ring-hairline)",
-          boxShadow: "var(--shadow-overlay), var(--shadow-inset-highlight)",
+          boxShadow: "var(--shadow-overlay)",
         },
         title: {
-          fontFamily: "var(--font-display)",
           fontSize: "var(--type-dialog-title)",
-          fontWeight: "var(--weight-medium)",
+          fontWeight: "var(--weight-semibold)",
+          letterSpacing: "var(--tracking-title)",
         },
       },
     }),
     Menu: Menu.extend({
       defaultProps: {
-        radius: "lg",
+        radius: "md",
         shadow: "md",
         transitionProps: { duration: motion.standard, timingFunction: "var(--ease-physical)" },
       },
@@ -155,7 +155,7 @@ export const theme = createTheme({
     }),
     Popover: Popover.extend({
       defaultProps: {
-        radius: "lg",
+        radius: "md",
         shadow: "md",
         transitionProps: { duration: motion.standard, timingFunction: "var(--ease-physical)" },
       },
@@ -163,26 +163,27 @@ export const theme = createTheme({
     }),
     Tooltip: Tooltip.extend({
       defaultProps: {
-        color: "var(--color-foreground)",
+        color: "var(--color-inverse-surface)",
         openDelay: 300,
         transitionProps: { duration: motion.standard, timingFunction: "var(--ease-physical)" },
       },
-      styles: { tooltip: { fontSize: "var(--text-sm)" } },
+      styles: { tooltip: { color: "var(--color-inverse-text)", fontSize: "var(--text-xs)", fontWeight: "var(--weight-semibold)" } },
     }),
+    // The switcher look (a paper track, the active option on ink) lives in index.css so modules can still adjust it.
+    SegmentedControl: SegmentedControl.extend({ defaultProps: { radius: "sm", size: "sm" } }),
     Badge: Badge.extend({
-      defaultProps: { color: "coral", radius: "xl", variant: "filled" },
-      styles: { root: { color: "var(--color-action-text)", fontFamily: "var(--font-mono)" } },
+      defaultProps: { color: "accent", radius: "xl", variant: "filled" },
+      styles: { root: { color: "var(--color-action-text)", fontFamily: "var(--font-sans)", fontSize: "var(--type-badge)" } },
     }),
     Alert: Alert.extend({
-      defaultProps: { color: "coral", radius: "lg", variant: "light" },
+      defaultProps: { color: "accent", radius: "lg", variant: "light" },
       styles: {
-        root: { border: "var(--ring-hairline)", boxShadow: "var(--shadow-inset-highlight)" },
+        root: { border: "var(--ring-hairline)" },
         title: { color: "var(--color-foreground)" },
       },
     }),
     Avatar: Avatar.extend({
-      defaultProps: { color: "coral", radius: "xl", size: "var(--touch-target)" },
-      styles: { root: { color: "var(--color-action-text)", border: "var(--ring-hairline)" } },
+      defaultProps: { color: "accent", radius: "100%", size: "var(--size-avatar)" },
     }),
   },
 });

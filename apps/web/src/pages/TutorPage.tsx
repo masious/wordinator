@@ -1,5 +1,6 @@
 import type { AiProvider } from "@wordinator/contracts/ai";
 import { tutorConversationResponseSchema } from "@wordinator/contracts/tutor";
+import { Tooltip } from "@mantine/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Archive, ArchiveRestore, List } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -9,9 +10,11 @@ import { RECOGNITION_LOCALES } from "../molecules/speechRecognition";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { TutorChat } from "../organisms/Tutor/Chat";
 import { ConversationList } from "../organisms/Tutor/ConversationList";
+import { ConversationTitle } from "../organisms/Tutor/ConversationTitle";
 import { ModelPicker } from "../organisms/Tutor/ModelPicker";
+import { UsageBox } from "../organisms/Tutor/UsageBox";
 import { conversationPath } from "../organisms/Tutor/tutorApi";
-import { Button, ErrorState, LoadingState } from "../ui";
+import { Button, ErrorState, IconButton, LoadingState } from "../ui";
 import shellStyles from "./PhaseOnePages.module.css";
 import styles from "./TutorPage.module.css";
 
@@ -51,20 +54,24 @@ export function TutorPage({ groupId, conversationId, onOpen }: { groupId: string
     <div className={styles.listPane}>
       <ConversationList activeId={conversationId} archived={archivedView} onArchivedView={setArchivedView}
         onNew={() => { onOpen(null); setDraftProvider(null); setPane("chat"); }} onOpen={() => setPane("chat")} />
+      <UsageBox conversationId={conversationId} />
     </div>
     <section className={styles.chatPane} aria-label={t("tutor.chat")}>
       <header className={styles.chatHead}>
         <Button variant="quiet" className={styles.listToggle} onClick={() => setPane("list")} trailingIcon={<List size={16} />}>{t("tutor.conversations")}</Button>
-        <h2 className={styles.chatTitle}>{current?.title || t("tutor.newTitle")}</h2>
+        <ConversationTitle key={current?.id ?? "new"} conversation={current} fallback={t("tutor.newTitle")} />
         {!(conversationId && !current) && <ModelPicker value={current ? current.provider : draftProvider} disabled={archived || choose.isPending}
           error={choose.isError ? t("tutor.model.failed") : null}
           onChange={(provider) => { if (current) choose.mutate(provider); else setDraftProvider(provider); }} />}
-        {current && <Button variant="quiet" loading={move.isPending} onClick={() => move.mutate(!archived)}
-          trailingIcon={archived ? <ArchiveRestore size={16} /> : <Archive size={16} />}>{archived ? t("tutor.unarchive") : t("tutor.archive")}</Button>}
+        {current && <Tooltip label={archived ? t("tutor.unarchive") : t("tutor.archive")}>
+          <IconButton tone="quiet" label={archived ? t("tutor.unarchive") : t("tutor.archive")} loading={move.isPending} onClick={() => move.mutate(!archived)}>
+            {archived ? <ArchiveRestore size={18} aria-hidden="true" /> : <Archive size={18} aria-hidden="true" />}
+          </IconButton>
+        </Tooltip>}
       </header>
       {conversationId && conversation.isPending ? <LoadingState label={t("tutor.loading")} />
         : conversationId && conversation.isError ? <ErrorState title={t("tutor.unavailable")} action={<Button variant="secondary" onClick={() => onOpen(null)}>{t("tutor.new")}</Button>} />
-        : <TutorChat conversationId={conversationId} conversation={current} language={language} languageName={languageName} recognitionLocale={locale} token={token}
+        : <TutorChat accountId={session.data.user.id} conversationId={conversationId} conversation={current} language={language} languageName={languageName} recognitionLocale={locale} token={token}
           newProvider={draftProvider} onCreated={(created) => onOpen(created.id)} />}
     </section>
   </div></GroupFrame>;

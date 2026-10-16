@@ -4,8 +4,8 @@ import { useTranslation } from "react-i18next";
 import styles from "./colorScheme.module.css";
 
 export const COLOR_SCHEME_STORAGE_KEY = "wordinator:color-scheme";
-export const LIGHT_THEME_COLOR = "#f5ede2";
-export const DARK_THEME_COLOR = "#1c1715";
+export const LIGHT_THEME_COLOR = "#f4f3ef";
+export const DARK_THEME_COLOR = "#121316";
 
 export function ThemeRuntimeSync() {
   const resolved = useComputedColorScheme("light", { getInitialValueInEffect: false });

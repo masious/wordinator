@@ -1,14 +1,18 @@
 import type { AiProvider } from "@wordinator/contracts/ai";
 import {
   TUTOR_CONVERSATIONS_PAGE_SIZE, TUTOR_MESSAGES_PAGE_SIZE, toPublicPart, tutorStoredPartSchema,
-  type TutorConversation, type TutorMessage, type TutorMessageStatus, type TutorStoredPart,
+  type TutorConversation, type TutorMessage, type TutorMessageStatus, type TutorStoredPart, type TutorTitleSource,
 } from "@wordinator/contracts/tutor";
 
 // Conversations and messages in D1 (docs/data-model.md#ai-tutor). Every read and write is scoped by the signed-in account's ID,
 // so another account's conversation, message, or tool call is never found.
 
-type ConversationRow = { id: string; title: string; archivedAt: number | null; provider: AiProvider | null; createdAt: number; updatedAt: number };
-const CONVERSATION_COLUMNS = "id, title, archived_at AS archivedAt, provider, created_at AS createdAt, updated_at AS updatedAt";
+export type ConversationRow = {
+  id: string; title: string; titleSource: TutorTitleSource; archivedAt: number | null; provider: AiProvider | null; createdAt: number; updatedAt: number; tokens: number;
+};
+// `tokens` sums the conversation's metered model requests (indexed by `ai_usage.conversation_id`).
+const CONVERSATION_COLUMNS = `id, title, title_source AS titleSource, archived_at AS archivedAt, provider, created_at AS createdAt, updated_at AS updatedAt,
+  (SELECT COALESCE(SUM(u.tokens_in + u.tokens_out), 0) FROM ai_usage u WHERE u.conversation_id = ai_conversations.id AND u.user_id = ai_conversations.user_id) AS tokens`;
 
 type Cursor = [number, string];
 export const encodeCursor = (createdAt: number, id: string) => btoa(JSON.stringify([createdAt, id]));
@@ -21,7 +25,7 @@ export function decodeCursor(value: string): Cursor | null {
 }
 
 export const presentConversation = (row: ConversationRow): TutorConversation =>
-  ({ id: row.id, title: row.title, archivedAt: row.archivedAt, provider: row.provider, createdAt: row.createdAt, updatedAt: row.updatedAt });
+  ({ id: row.id, title: row.title, titleSource: row.titleSource, archivedAt: row.archivedAt, provider: row.provider, createdAt: row.createdAt, updatedAt: row.updatedAt, tokens: row.tokens });
 
 export async function readConversation(db: D1Database, userId: string, id: string): Promise<ConversationRow | null> {
   return db.prepare(`SELECT ${CONVERSATION_COLUMNS} FROM ai_conversations WHERE id = ? AND user_id = ?`).bind(id, userId).first<ConversationRow>();
@@ -38,7 +42,7 @@ export async function listConversations(db: D1Database, userId: string, archived
 }
 
 export async function createConversation(db: D1Database, userId: string, now = Date.now()): Promise<ConversationRow> {
-  const row: ConversationRow = { id: crypto.randomUUID(), title: "", archivedAt: null, provider: null, createdAt: now, updatedAt: now };
+  const row: ConversationRow = { id: crypto.randomUUID(), title: "", titleSource: "auto", archivedAt: null, provider: null, createdAt: now, updatedAt: now, tokens: 0 };
   await db.prepare("INSERT INTO ai_conversations (id, user_id, title, archived_at, created_at, updated_at) VALUES (?, ?, ?, NULL, ?, ?)")
     .bind(row.id, userId, row.title, now, now).run();
   return row;
@@ -55,6 +59,14 @@ export async function setArchived(db: D1Database, userId: string, id: string, ar
 export async function setConversationProvider(db: D1Database, userId: string, id: string, provider: AiProvider | null) {
   await db.prepare("UPDATE ai_conversations SET provider = ? WHERE id = ? AND user_id = ?").bind(provider, id, userId).run();
   return readConversation(db, userId, id);
+}
+
+// Renaming keeps `updated_at`, like archiving. The learner's title always applies; the tutor's applies unless the learner chose
+// one (`user`), and reports whether it did.
+export async function setConversationTitle(db: D1Database, userId: string, id: string, title: string, source: Exclude<TutorTitleSource, "auto">) {
+  const result = await db.prepare(`UPDATE ai_conversations SET title = ?, title_source = ? WHERE id = ? AND user_id = ?${source === "tutor" ? " AND title_source <> 'user'" : ""}`)
+    .bind(title, source, id, userId).run();
+  return (result.meta.changes ?? 0) > 0;
 }
 
 export const touchConversationStatement = (db: D1Database, userId: string, id: string, now: number, title?: string) => db.prepare(
@@ -135,15 +147,31 @@ export const insertMessageStatement = (db: D1Database, userId: string, message: 
   "INSERT INTO ai_messages (id, conversation_id, user_id, role, parts, status, provider, model, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
 ).bind(message.id, message.conversationId, userId, message.role, JSON.stringify(message.parts), message.status, message.provider, message.model, message.createdAt);
 
+// The JSON path of the component or confirmation part with the bound tool call ID in a message's `parts`.
+const PART_PATH = `'$[' || (SELECT p.key FROM json_each(ai_messages.parts) p WHERE json_extract(p.value, '$.toolCallId') = ?
+  AND json_extract(p.value, '$.type') IN ('component', 'confirmation') LIMIT 1) || ']'`;
+
 /**
  * Stores an answered part in place, once: the update applies only while the message still waits for the learner and the part
- * is still unanswered, so a second answer, or two at once, changes nothing. Returns whether this call stored the answer.
+ * is still unanswered, so a second answer, or two at once, changes nothing. Only that part is written, so the answers to the
+ * components of one practice set never overwrite each other. The message stops waiting with the set's last open part.
+ * Returns whether this call stored the answer and whether other parts of the message still wait.
  */
-export async function storeAnswer(db: D1Database, userId: string, message: StoredMessage, parts: TutorStoredPart[], toolCallId: string): Promise<boolean> {
-  const result = await db.prepare(
-    `UPDATE ai_messages SET parts = ?, status = 'complete' WHERE id = ? AND user_id = ? AND status = 'awaiting_user'
+export async function storeAnswer(db: D1Database, userId: string, message: StoredMessage, part: TutorStoredPart & { toolCallId: string }): Promise<{ stored: boolean; waiting: boolean }> {
+  const row = await db.prepare(
+    `UPDATE ai_messages SET parts = json_set(parts, ${PART_PATH}, json(?)),
+       status = CASE WHEN EXISTS (SELECT 1 FROM json_each(ai_messages.parts) p WHERE json_extract(p.value, '$.toolCallId') <> ?
+         AND json_extract(p.value, '$.type') IN ('component', 'confirmation') AND json_extract(p.value, '$.answeredAt') IS NULL) THEN 'awaiting_user' ELSE 'complete' END
+     WHERE id = ? AND user_id = ? AND status = 'awaiting_user'
        AND EXISTS (SELECT 1 FROM json_each(ai_messages.parts) p WHERE json_extract(p.value, '$.toolCallId') = ?
-         AND json_extract(p.value, '$.type') IN ('component', 'confirmation') AND json_extract(p.value, '$.answeredAt') IS NULL)`,
-  ).bind(JSON.stringify(parts), message.id, userId, toolCallId).run();
-  return (result.meta.changes ?? 0) > 0;
+         AND json_extract(p.value, '$.type') IN ('component', 'confirmation') AND json_extract(p.value, '$.answeredAt') IS NULL)
+     RETURNING status`,
+  ).bind(part.toolCallId, JSON.stringify(part), part.toolCallId, message.id, userId, part.toolCallId).first<{ status: TutorMessageStatus }>();
+  return { stored: Boolean(row), waiting: row?.status === "awaiting_user" };
+}
+
+/** Replaces an already answered part, such as a confirmation card with its outcome. */
+export async function replacePart(db: D1Database, userId: string, messageId: string, part: TutorStoredPart & { toolCallId: string }): Promise<void> {
+  await db.prepare(`UPDATE ai_messages SET parts = json_set(parts, ${PART_PATH}, json(?)) WHERE id = ? AND user_id = ?`)
+    .bind(part.toolCallId, JSON.stringify(part), messageId, userId).run();
 }

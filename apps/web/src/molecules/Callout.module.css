@@ -1,9 +1,12 @@
-.callout{display:flex;gap:var(--space-3);align-items:flex-start;width:100%;margin:0;padding:var(--space-3) var(--space-4);color:var(--color-foreground);background:var(--color-callout-hint);border-radius:var(--radius-md)}
-.callout[data-variant="important"]{background:var(--color-callout-important)}
-.callout[data-variant="warning"]{background:var(--color-callout-warning)}
-.callout[data-variant="grammar"]{background:var(--color-callout-grammar)}
-.callout[data-variant="culture"]{background:var(--color-callout-culture)}
-.callout[data-variant="false-friend"]{background:var(--color-callout-false-friend)}
-.callout[data-variant="pronunciation"]{background:var(--color-callout-pronunciation)}
-.icon{flex:none;width:var(--lesson-callout-icon);height:var(--lesson-callout-icon);margin-top:0.2em}
+.callout{--callout-ink:var(--color-lesson-yellow-text);display:flex;gap:var(--space-4);align-items:flex-start;width:100%;margin:0;padding:var(--space-5);color:var(--color-foreground);background:var(--color-callout-hint);border:1px solid color-mix(in srgb,var(--callout-ink) 22%,transparent);border-radius:var(--radius-lg)}
+.callout[data-variant="important"]{--callout-ink:var(--color-lesson-blue-text);background:var(--color-callout-important)}
+.callout[data-variant="warning"]{--callout-ink:var(--color-lesson-red-text);background:var(--color-callout-warning)}
+.callout[data-variant="grammar"]{--callout-ink:var(--color-lesson-green-text);background:var(--color-callout-grammar)}
+.callout[data-variant="culture"]{--callout-ink:var(--color-lesson-purple-text);background:var(--color-callout-culture)}
+.callout[data-variant="false-friend"]{--callout-ink:var(--color-lesson-orange-text);background:var(--color-callout-false-friend)}
+.callout[data-variant="pronunciation"]{--callout-ink:var(--color-lesson-pink-text);background:var(--color-callout-pronunciation)}
+/* The round icon tile: the glyph itself carries the fill and padding, so the editor's icon button gets the same tile. */
+.icon{box-sizing:content-box;flex:none;width:var(--lesson-callout-icon);height:var(--lesson-callout-icon);padding:0.6rem;color:var(--color-surface-raised);background:var(--callout-ink);border-radius:50%}
+.content{display:grid;flex:1;gap:var(--space-1);min-width:0}
+.eyebrow{margin:0;color:var(--callout-ink);font-size:var(--type-eyebrow);font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);line-height:var(--line-compact);text-transform:uppercase}
 .body{flex:1;min-width:0;font-size:var(--type-authored);line-height:var(--line-body);white-space:pre-wrap;overflow-wrap:anywhere}

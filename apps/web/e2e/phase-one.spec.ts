@@ -91,8 +91,8 @@ test("the UI workbench remains directly addressable", async ({ page }) => {
   const heading = page.getByRole("heading", { name: "Wordinator UI workbench" });
   await expect(heading).toBeVisible();
   await page.evaluate(() => document.fonts.ready);
-  expect(await page.evaluate(() => document.fonts.check('16px "Newsreader Variable"'))).toBe(true);
-  expect(await heading.evaluate((element) => getComputedStyle(element).fontFamily)).toContain("Newsreader Variable");
+  expect(await page.evaluate(() => document.fonts.check('16px "Inter Variable"'))).toBe(true);
+  expect(await heading.evaluate((element) => getComputedStyle(element).fontFamily)).toContain("Inter Variable");
   expect(await page.evaluate(() => {
     const grain = getComputedStyle(document.body, "::before");
     return { pointerEvents: grain.pointerEvents, position: grain.position };

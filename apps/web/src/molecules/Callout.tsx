@@ -21,12 +21,16 @@ export const calloutDefaults = {
 
 export const calloutIcon = (variant: CalloutVariant, icon: CalloutIcon) => calloutIcons[icon === "auto" ? calloutDefaults[variant] : icon];
 
-// A tinted note inside a lesson. The variant sets the tone and default icon and is announced to screen readers.
+// A tinted note inside a lesson. The variant sets the tone and default icon, shows as the eyebrow, and is announced to screen readers
+// through the label (so the eyebrow is hidden from them).
 export function Callout({ variant, icon, iconSlot, children }: { variant: CalloutVariant; icon: CalloutIcon; iconSlot?: ReactNode; children: ReactNode }) {
   const { t } = useTranslation();
   const Icon = calloutIcon(variant, icon);
   return <aside className={styles.callout} data-variant={variant} aria-label={t(`courses.callout.variants.${variant}`)}>
     {iconSlot ?? <Icon className={styles.icon} aria-hidden="true" />}
-    <div className={styles.body}>{children}</div>
+    <div className={styles.content}>
+      <span aria-hidden="true" className={styles.eyebrow}>{t(`courses.callout.variants.${variant}`)}</span>
+      <div className={styles.body}>{children}</div>
+    </div>
   </aside>;
 }

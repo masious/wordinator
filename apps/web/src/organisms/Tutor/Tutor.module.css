@@ -4,6 +4,10 @@
 .earlier{justify-self:center}
 .privacy,.emptyChat,.thinking,.composerNote,.listEmpty{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 .privacy{padding:var(--space-3) var(--space-4);background:var(--color-wash-subtle);border:var(--ring-hairline);border-radius:var(--radius-md)}
+.privacyCompact{padding-block:var(--space-2)}
+.privacyCompact summary{cursor:pointer}
+.privacyCompact summary:focus-visible{outline:var(--border-strong);outline-offset:2px;border-radius:var(--radius-sm)}
+.privacyCompact p{margin:var(--space-2) 0 0}
 .thinking{animation:pulse var(--motion-reveal) var(--ease-physical) infinite alternate}
 
 /* Learner messages: right-aligned highlight bubbles in authored text. */
@@ -32,6 +36,12 @@
 .chip[aria-expanded="true"] .chipChevron{transform:rotate(180deg)}
 .chipChevron{transition:transform var(--motion-standard) var(--ease-physical)}
 .spinner{animation:spin var(--motion-overlay) linear infinite}
+.chipFailed{color:var(--color-danger-text)}
+.stepList{display:grid;gap:var(--space-1);justify-items:start;padding-left:var(--space-3);border-left:var(--ring-hairline)}
+.setStatus{display:grid;gap:var(--space-2)}
+.setProgress{font:var(--type-metadata)/1 var(--font-mono);color:var(--color-foreground-muted)}
+.setTrack{height:5px;overflow:hidden;background:var(--color-wash-strong);border-radius:var(--radius-pill)}
+.setTrack span{display:block;width:100%;height:100%;background:var(--color-action);border-radius:inherit;transform-origin:left;transition:transform var(--motion-standard) var(--ease-physical)}
 .stepDetail{padding:var(--space-2) var(--space-3);font-size:var(--type-metadata);background:var(--color-wash-subtle);border:var(--ring-hairline);border-radius:var(--radius-md)}
 .stepDetail p{margin:0}
 .stepDetail dl{display:grid;gap:var(--space-1);margin:0}
@@ -52,7 +62,30 @@
 /* The composer: a sticky bottom bar with the shared textarea and a primary icon send button. */
 .composer{position:sticky;bottom:var(--space-3);z-index:var(--z-content);display:flex;align-items:flex-end;gap:var(--space-2);padding:var(--space-3);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-floating)}
 .composerField{flex:1;min-width:0}
-.send{flex:none;width:var(--touch-target);height:var(--touch-target);color:var(--color-action-text);background:var(--color-action);border-radius:var(--radius-pill)}
+.send{flex:none}
+
+/* The question dock (docs/ai-tutor.md#practice-sets): takes the composer's sticky place while questions wait. The current question
+   scrolls inside it; step pips above, and a footer with Previous at the start and Skip and Next (or Check answers) at the end. */
+.dockSlot{position:sticky;bottom:var(--space-3);z-index:var(--z-content);display:grid;gap:var(--space-2)}
+.dock{display:grid;grid-template-rows:auto minmax(0,1fr) auto;max-height:min(72dvh,44rem);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-floating);overflow:hidden}
+.dockHead{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-2) var(--space-4);padding:var(--space-3) var(--space-4) 0}
+.dockPosition{margin:0;font:var(--type-metadata)/var(--line-compact) var(--font-mono);color:var(--color-foreground-muted)}
+.dockPips{display:flex;gap:var(--space-1);margin:0;padding:0;list-style:none}
+.dockPip{display:grid;place-items:center;width:28px;height:28px;padding:0;background:none;border:0;border-radius:var(--radius-pill);cursor:pointer}
+.dockPip::before{content:"";width:10px;height:10px;background:var(--color-wash-strong);border:var(--ring-hairline);border-radius:50%;transition:transform var(--motion-standard) var(--ease-physical)}
+.dockPip[data-state="answered"]::before{background:var(--color-action);border-color:var(--color-action)}
+.dockPip[data-state="skipped"]::before{background:transparent;border:1px dashed var(--color-foreground-muted)}
+.dockPip[aria-current="step"]::before{transform:scale(1.35);box-shadow:0 0 0 2px var(--color-core),0 0 0 3px var(--color-foreground)}
+.dockPip:focus-visible{outline:var(--border-strong);outline-offset:0}
+.dockPip:disabled{cursor:default}
+.dockBody{min-height:0;overflow-y:auto;padding:var(--space-3) var(--space-3) var(--space-2)}
+.dockBody section{box-shadow:none}
+.dockFoot{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2);padding:var(--space-2) var(--space-3) var(--space-3);border-top:var(--ring-hairline)}
+.dockSpacer{flex:1}
+.dockNote{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.dockBody .dockNote{padding:var(--space-2) var(--space-1) 0}
+.dockedLine{margin:0;padding:var(--space-2) var(--space-3);font-size:var(--type-metadata);color:var(--color-foreground-muted);background:var(--color-wash-subtle);border:1px dashed var(--color-hairline);border-radius:var(--radius-md);justify-self:start}
+@media(prefers-reduced-motion:reduce){.dockPip::before{transition:none}}
 
 /* The conversation list. */
 .conversationList{display:grid;gap:var(--space-3)}
@@ -62,19 +95,46 @@
 .views button[aria-pressed="true"]{color:var(--color-foreground);background:var(--color-core);box-shadow:var(--shadow-card)}
 .views button:focus-visible{outline:var(--border-strong);outline-offset:2px}
 .listItems{display:grid;gap:var(--space-1);margin:0;padding:0;list-style:none}
-.listItem{display:flex;align-items:center;gap:var(--space-1);border-radius:var(--radius-md)}
+.listItem{display:flex;align-items:center;gap:var(--space-1);padding-inline-end:var(--space-1);border-radius:var(--radius-md)}
 .listItem[data-active]{background:var(--color-core)}
 .listItem a{display:grid;flex:1;min-width:0;min-height:var(--touch-target);align-content:center;padding:var(--space-2) var(--space-3);color:var(--color-foreground);text-decoration:none;border-radius:var(--radius-md)}
 .listItem a:hover{background:var(--color-hover)}
 .listItem a:focus-visible{outline:var(--border-strong);outline-offset:-2px}
-.listTitle{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:var(--weight-medium)}
-.listDate{font:var(--text-xs)/1.3 var(--font-mono);color:var(--color-foreground-muted)}
+/* Titles wrap to two lines, then end in an ellipsis. */
+.listTitle{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;font-weight:var(--weight-medium);line-height:var(--line-compact);overflow-wrap:anywhere}
+/* The row's archive button stays quiet until the row is hovered, focused, or open; touch screens always show it. */
+.listAction{flex:none;color:var(--color-foreground-muted)}
+@media(hover:hover){.listItem:not([data-active]):not(:hover):not(:focus-within) .listAction{opacity:0}}
+/* The date and the conversation's token total, mono and muted; a tutor-chosen title starts with a small sparkle. */
+.listMeta{display:flex;flex-wrap:wrap;gap:0 var(--space-2);margin-top:var(--space-1);font:var(--text-xs)/1.3 var(--font-mono);font-variant-numeric:tabular-nums;color:var(--color-foreground-muted)}
+.listMeta>span+span::before{content:"·";margin-inline-end:var(--space-2)}
+.listMark{margin-inline-end:var(--space-1);vertical-align:-1px;color:var(--color-foreground-muted)}
 
 .visuallyHidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 @keyframes spin{to{transform:rotate(1turn)}}
 @keyframes pulse{from{opacity:1}to{opacity:.5}}
-@media(prefers-reduced-motion:reduce){.spinner,.thinking{animation:none}.chipChevron{transition:none}}
+@media(prefers-reduced-motion:reduce){.spinner,.thinking{animation:none}.chipChevron,.setTrack span{transition:none}}
+
+/* The chat header's title: renamed in place through a quiet pencil; a tutor-chosen title carries a small sparkle. */
+.titleRow{display:flex;flex:1;align-items:center;gap:var(--space-1);min-width:0;margin:0}
+.chatTitle{min-width:0;margin:0;overflow:hidden;font:var(--type-card-title)/var(--line-title) var(--font-display);text-overflow:ellipsis;white-space:nowrap}
+.titleMark{display:inline-grid;flex:none;place-items:center;color:var(--color-foreground-muted)}
+.titleField{flex:1;min-width:0}
+
+/* The usage box under the conversation list: muted metadata, token totals in mono with tabular figures. */
+.usage{display:grid;gap:var(--space-2);margin-top:var(--space-2);padding:var(--space-3);background:var(--color-wash-subtle);border:var(--ring-hairline);border-radius:var(--radius-md)}
+.usageTitle{margin:0;font:var(--weight-medium) var(--type-eyebrow)/var(--line-compact) var(--font-mono);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
+.usageList{display:grid;gap:var(--space-2);margin:0}
+.usageList div{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:0 var(--space-2)}
+.usageList dt{font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.usageList dd{display:grid;justify-items:end;margin:0}
+.usageValue{font:var(--weight-medium) var(--type-metadata)/var(--line-compact) var(--font-mono);font-variant-numeric:tabular-nums;color:var(--color-foreground)}
+.usageSplit{margin:0;font:var(--text-xs)/1.3 var(--font-mono);font-variant-numeric:tabular-nums;color:var(--color-foreground-muted)}
+.usageTurns{display:grid;gap:var(--space-1)}
+.usageMeta{display:flex;flex-wrap:wrap;justify-content:space-between;gap:0 var(--space-2);margin:0;font:var(--text-xs)/1.3 var(--font-mono);font-variant-numeric:tabular-nums;color:var(--color-foreground-muted)}
 
 /* The conversation's model in the chat header; narrow, and its menu grows to fit the model IDs. */
 .modelPicker{width:12rem;flex:none}
+.modelOption{display:grid;gap:2px}
+.modelId{font:var(--text-xs)/1.3 var(--font-mono);color:var(--color-foreground-muted)}
 @media(max-width:48em){.modelPicker{width:9rem}}

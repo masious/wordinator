@@ -1,6 +1,6 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, lessonProgressResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema, speechRecognitionTokenResponseSchema, type SpeechRecognitionTokenResponse } from "@wordinator/contracts";
 import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
-import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorModelsResponseSchema, tutorProfileResponseSchema } from "@wordinator/contracts/tutor";
+import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorModelsResponseSchema, tutorProfileResponseSchema, tutorUsageResponseSchema } from "@wordinator/contracts/tutor";
 import { weakWordsPageSchema } from "@wordinator/contracts/weak-words";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
@@ -275,6 +275,13 @@ export const tutorMessagesQueryOptions = (conversationId: string) => infiniteQue
   retry: false,
 });
 // The models a conversation can use; rarely changes, so it is kept for the session.
+// The learner's own token counts (docs/ai-tutor.md#usage-box): today across every conversation, and the open one's.
+export const tutorUsageKey = [...tutorKey, "usage"] as const;
+export const tutorUsageQueryOptions = (conversationId: string | null) => queryOptions({
+  queryKey: [...tutorUsageKey, conversationId ?? "none"] as const,
+  queryFn: () => apiRequest(`/api/ai/usage${conversationId ? `?conversationId=${encodeURIComponent(conversationId)}` : ""}`, tutorUsageResponseSchema),
+});
+
 export const tutorModelsQueryOptions = () => queryOptions({
   queryKey: [...tutorKey, "models"] as const,
   queryFn: () => apiRequest("/api/ai/models", tutorModelsResponseSchema),

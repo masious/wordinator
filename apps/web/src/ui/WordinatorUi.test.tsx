@@ -37,6 +37,14 @@ describe("reusable UI contracts", () => {
     expect(container.querySelector("svg")).toHaveAttribute("aria-hidden", "true");
   });
 
+  it("keeps a trailing icon island outside the label that clips overflow", () => {
+    const { container } = renderWithTheme(<Button trailingIcon={<ArrowIcon />}>A long label that may be cut</Button>);
+    const island = container.querySelector("svg")!.parentElement!;
+    // Mantine's label has `overflow: hidden`; an island inside it lost its right half.
+    expect(island.closest(".mantine-Button-label")).toBeNull();
+    expect(island.closest(".mantine-Button-section")).toHaveAttribute("data-position", "right");
+  });
+
   it("associates shared validation help with its field", () => {
     renderWithTheme(<TextInput error={<FieldHelp error id="code-error">Enter a valid invitation code.</FieldHelp>} label="Invitation code" />);
 

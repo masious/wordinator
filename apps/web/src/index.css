@@ -66,9 +66,21 @@ a { color: currentColor; }
 }
 
 :where(button, a, input, textarea, select, summary, [tabindex]):focus-visible {
-  outline: 3px solid var(--color-focus);
-  outline-offset: 3px;
+  outline: var(--focus-ring-width) solid var(--color-focus);
+  outline-offset: var(--focus-ring-offset);
 }
+
+/* Line icons share one weight. */
+:where(svg.lucide) { stroke-width: 1.5; }
+
+/* Inputs: a line border that turns accent with a soft ring on focus. */
+:where(.mantine-Input-input):focus { border-color: var(--color-action); box-shadow: 0 0 0 var(--focus-ring-width) var(--color-action-soft); outline: 0; }
+
+/* Switchers (segmented controls): a paper track with a line border; the active option sits on ink. */
+:where(.mantine-SegmentedControl-root) { padding: var(--space-1); background: var(--color-surface-raised); border: var(--ring-hairline); }
+:where(.mantine-SegmentedControl-indicator) { background: var(--color-inverse-surface); box-shadow: none; }
+:where(.mantine-SegmentedControl-label) { color: var(--color-foreground-muted); font-size: var(--type-control-label); font-weight: var(--weight-semibold); }
+:where(.mantine-SegmentedControl-label)[data-active] { color: var(--color-inverse-text); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

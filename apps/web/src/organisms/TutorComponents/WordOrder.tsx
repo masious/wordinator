@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type DragEvent, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { ComponentFrame, GradePending, GradeResult, SubmitRow, useAnswerFlow } from "./shared";
+import { ComponentFrame, GradePending, GradeResult, HintRow, MarkedText, SubmitRow, useAnswerFlow } from "./shared";
 import type { AnswerComponentProps } from "./types";
 import styles from "./TutorComponents.module.css";
 
@@ -59,7 +59,8 @@ export function WordOrderComponent({ view, answer, grade, onAnswer, disabled, au
   const shownAnswer = flow.answered ? flow.answered.chunks : null;
   return <ComponentFrame kind="word_order">
     <div ref={frame} className={styles.grade}>
-      {view.translation && <p className={styles.prompt}>{view.translation}</p>}
+      {view.translation && <p className={styles.prompt}><MarkedText text={view.translation} /></p>}
+      <HintRow />
       <p className={styles.rowLabel} aria-hidden="true">{t("tutorComponents.wordOrder.answer")}</p>
       <ul className={`${styles.chipRow} ${styles.answerChips}`} aria-label={t("tutorComponents.wordOrder.answer")}
         onDragOver={(event) => event.preventDefault()} onDrop={(event) => dropOnAnswer(event)}>

@@ -1,21 +1,25 @@
 import type { AiProvider, AiSettings } from "@wordinator/contracts/ai";
-import { parseTargetSpans, toPublicPart, type TutorSpan, type TutorStoredPart, type TutorStreamEvent } from "@wordinator/contracts/tutor";
+import { answerHintsUsed, componentHints, parseTargetSpans, toPublicPart, type TutorSpan, type TutorStoredPart, type TutorStreamEvent } from "@wordinator/contracts/tutor";
 import { AiLimitError, AiRequestError, AiUnavailableError, streamChat, type AiChatMessage, type AiEnv } from "../ai";
-import { logInfo } from "../logger";
+import { logError, logInfo, logWarn } from "../logger";
 import { learnerSnapshot, systemPrompt } from "./prompt";
 import { readTutorProfile } from "./profile";
 import { accountLibrary } from "./library";
-import { insertMessageStatement, lastMessageAt, presentMessage, readHistory, touchConversationStatement, type StoredMessage } from "./store";
+import { insertMessageStatement, lastMessageAt, presentMessage, readConversation, readHistory, touchConversationStatement, type StoredMessage } from "./store";
 import { runTool, toolDefinitions, type ToolContext } from "./tools";
 
 // The agent loop (docs/ai-tutor.md, docs/architecture.md#ai-tutor-and-learning-data). One turn: call the model with the system
 // prompt (with the learner snapshot), the conversation so far, and the tools; stream its text; run read tools and unconfirmed
-// writes in the Worker and call the model again with their results; stop when the model answers without tools, or at the first
-// component or confirmation card, which leaves the message waiting for the learner. The turn's parts are stored as one
-// assistant message when it ends, also when it fails. Prompts and answers are never logged.
+// writes in the Worker and call the model again with their results; stop when the model answers without tools, or after a
+// response that showed components (a practice set of up to `TUTOR_COMPONENTS_MAX`) or one confirmation card, which leaves the
+// message waiting for the learner. The model resumes once every component of the set is answered or skipped, so it gets all the
+// grades together. The turn's parts are stored as one assistant message when it ends, also when it fails. Prompts and answers are
+// never logged.
 
 // At most this many tool calls run per turn; after that the model is called once more without tools so it answers in text.
 export const TUTOR_TOOL_CALLS_MAX = 8;
+// At most this many components make one practice set; further `ask_*` calls in the same response are skipped.
+export const TUTOR_COMPONENTS_MAX = 6;
 // No further model request starts after this long; the turn then ends with a `TURN_LIMIT` error part.
 export const TUTOR_TURN_DEADLINE_MS = 100_000;
 const MAX_MODEL_REQUESTS = TUTOR_TOOL_CALLS_MAX + 2;
@@ -44,13 +48,20 @@ export function withSpanMarks(text: string, spans: readonly TutorSpan[]): string
   return result + text.slice(index);
 }
 
+// The cues of the hints the learner opened, so the model can say which words they still needed.
+function hintsOpened(part: Extract<TutorStoredPart, { type: "component" }>): { hintsOpened?: string[] } {
+  const opened = new Set(part.answer ? answerHintsUsed(part.answer).map((ref) => `${ref.lessonId}:${ref.wordId}`) : []);
+  if (!opened.size) return {};
+  return { hintsOpened: componentHints(part.component).filter((hint) => opened.has(`${hint.lessonId}:${hint.wordId}`)).map((hint) => hint.cue) };
+}
+
 const toolMessageContent = (part: TutorStoredPart): string | null => {
   switch (part.type) {
     case "tool_result": return part.content;
     case "component": return JSON.stringify(part.answeredAt === null
       ? { status: "waiting", message: "The learner has not answered yet." }
       : part.skipped ? { status: "skipped", message: "The learner skipped this question without answering; nothing was recorded." }
-      : { status: "answered", kind: part.kind, answer: part.answer, grade: part.grade });
+      : { status: "answered", kind: part.kind, answer: part.answer, grade: part.grade, ...hintsOpened(part) });
     case "confirmation": return JSON.stringify(part.answeredAt === null
       ? { status: "waiting", message: "The learner has not confirmed or cancelled yet." }
       : part.answer === "cancelled" ? { status: "cancelled", message: "The learner cancelled; nothing changed." }
@@ -103,6 +114,21 @@ function parseArguments(raw: string): { ok: true; value: Record<string, unknown>
   }
 }
 
+const skippedResult = (message: string) => ({ kind: "result" as const, ok: false, error: "SKIPPED", detail: {}, data: { error: "SKIPPED", message } });
+
+// Read tools whose identical repeat in one turn is answered from the first call instead of being run again.
+const REPEATABLE_READS = new Set(["search_words", "get_weak_words", "get_recent_words", "get_course_progress", "get_lesson", "list_lessons", "get_recent_mistakes", "list_ai_practices"]);
+
+// Why a tool call failed, as a filterable tag: the model's mistake (bad arguments, unknown tool, an ID it cannot read), a
+// limit or ordering rule of the loop, a refusal of the learner's data (archived course, untested word), or a server failure.
+const LOOP_ERRORS = new Set(["SKIPPED", "TOOL_LIMIT", "REPEATED_CALL"]);
+const MODEL_ERRORS = new Set(["INVALID_ARGUMENTS", "UNKNOWN_TOOL", "LESSON_NOT_FOUND", "COURSE_NOT_FOUND", "WORD_NOT_FOUND", "ANCHOR_NOT_FOUND"]);
+export function toolFailureCategory(error: string): "model" | "loop" | "refused" | "server" {
+  if (error === "TOOL_FAILED") return "server";
+  if (LOOP_ERRORS.has(error)) return "loop";
+  return MODEL_ERRORS.has(error) ? "model" : "refused";
+}
+
 const ERROR_MESSAGES: Record<string, string> = {
   AI_UNAVAILABLE: "The tutor is unavailable right now. Try again later.",
   AI_REQUEST_FAILED: "The tutor could not answer. Try again.",
@@ -115,10 +141,10 @@ export async function runAgentTurn(options: TurnOptions): Promise<StoredMessage>
   const now = options.now ?? Date.now;
   const started = now();
   const deadline = started + (options.deadlineMs ?? TUTOR_TURN_DEADLINE_MS);
-  const [profile, library, history] = await Promise.all([
-    readTutorProfile(db, userId), accountLibrary(db, userId), readHistory(db, userId, conversationId, HISTORY_MESSAGES),
+  const [profile, library, history, conversation] = await Promise.all([
+    readTutorProfile(db, userId), accountLibrary(db, userId), readHistory(db, userId, conversationId, HISTORY_MESSAGES), readConversation(db, userId, conversationId),
   ]);
-  const system = systemPrompt(library?.language ?? "nl", profile, await learnerSnapshot(db, userId, profile, started));
+  const system = systemPrompt(library?.language ?? "nl", profile, await learnerSnapshot(db, userId, profile, started), conversation ?? undefined);
   const messageId = crypto.randomUUID();
   await emit({ type: "start", messageId });
 
@@ -133,6 +159,7 @@ export async function runAgentTurn(options: TurnOptions): Promise<StoredMessage>
   let provider: AiProvider | null = null; let model: string | null = null;
   let turnStart = options.turnStart;
   let toolCalls = 0;
+  const readsThisTurn = new Set<string>();
   try {
     for (let request = 0; ; request += 1) {
       if (now() > deadline || request >= MAX_MODEL_REQUESTS) {
@@ -156,7 +183,8 @@ export async function runAgentTurn(options: TurnOptions): Promise<StoredMessage>
       flushText();
       if (!calls.length) break;
 
-      let waiting = false;
+      // A response either asks a practice set (components only wait together) or shows one confirmation card.
+      let components = 0; let confirmation = false;
       for (const call of calls) {
         const toolCallId = crypto.randomUUID();
         const parsed = parseArguments(call.arguments);
@@ -164,15 +192,43 @@ export async function runAgentTurn(options: TurnOptions): Promise<StoredMessage>
         parts.push(callPart);
         const publicCall = toPublicPart(callPart);
         if (publicCall.type === "tool_call") await emit({ type: "tool_call", part: publicCall });
-        toolCalls += 1;
-        const outcome = waiting
-          ? { kind: "result" as const, ok: false, error: "SKIPPED", detail: {}, data: { error: "SKIPPED", message: "Only one question or confirmation at a time; ask this again after the learner answers." } }
-          : toolCalls > TUTOR_TOOL_CALLS_MAX
+        // Questions do not count toward the tool limit, so a set can follow the reads that prepared it.
+        const asks = call.name.startsWith("ask_");
+        if (!asks) toolCalls += 1;
+        let thrown: string | null = null;
+        const confirms = call.name === "complete_lesson" || call.name === "reset_lesson" || call.name === "save_ai_practice";
+        const readKey = REPEATABLE_READS.has(call.name) && parsed.ok ? `${call.name}:${JSON.stringify(parsed.value)}` : null;
+        const outcome = confirmation
+          ? skippedResult("A confirmation card is waiting; ask this again after the learner answers it.")
+          : confirms && components > 0
+            ? skippedResult("Confirmation cards are not shown with questions; ask for it after the learner answers the questions.")
+          : asks && components >= TUTOR_COMPONENTS_MAX
+            ? skippedResult(`At most ${TUTOR_COMPONENTS_MAX} questions at a time; ask the rest after the learner answers these.`)
+          : !asks && toolCalls > TUTOR_TOOL_CALLS_MAX
             ? { kind: "result" as const, ok: false, error: "TOOL_LIMIT", detail: {}, data: { error: "TOOL_LIMIT", message: "No more tools in this turn. Answer the learner now." } }
             : !parsed.ok
               ? { kind: "result" as const, ok: false, error: "INVALID_ARGUMENTS", detail: {}, data: { error: "INVALID_ARGUMENTS", message: "The arguments must be a JSON object." } }
-              : await runTool(context, call.name, parsed.value);
+              : readKey !== null && readsThisTurn.has(readKey)
+                ? { kind: "result" as const, ok: false, error: "REPEATED_CALL", detail: {}, data: { error: "REPEATED_CALL", message: "You already called this tool with the same arguments in this turn; use that result instead of calling it again." } }
+                : await runTool(context, call.name, parsed.value).catch((error: unknown) => {
+                  // A tool that throws fails as a result the model can read, so the turn carries on; the failure is logged below.
+                  thrown = error instanceof Error ? error.name : "unknown";
+                  return { kind: "result" as const, ok: false, error: "TOOL_FAILED", detail: {}, data: { error: "TOOL_FAILED", message: "This tool failed. Try another way or answer without it." } };
+                });
+        if (readKey !== null && outcome.kind === "result" && outcome.error !== "REPEATED_CALL") readsThisTurn.add(readKey);
         logInfo("ai.tool", { tool: callPart.name, outcome: outcome.kind === "result" ? (outcome.ok ? "ok" : outcome.error) : outcome.kind });
+        if (outcome.kind === "result" && !outcome.ok) {
+          // One event per failed tool call, with every tag a top-level field so Workers Logs can filter on it. Arguments, lesson
+          // text, and answers are never logged; only the argument names and the validation issue paths are.
+          const error = outcome.error ?? "UNKNOWN";
+          const category = toolFailureCategory(error);
+          (category === "server" ? logError : logWarn)("ai.tool_failed", {
+            area: "ai_tutor", tool: callPart.name, toolKind: asks ? "ask" : "other", errorCode: error, category,
+            provider: provider ?? undefined, model: model ?? undefined, conversationId, toolCallId, request,
+            argumentKeys: parsed.ok ? Object.keys(parsed.value).slice(0, 12).join(",") : undefined,
+            issues: "issues" in outcome ? outcome.issues?.slice(0, 300) : undefined, exception: thrown ?? undefined,
+          });
+        }
         if (outcome.kind === "result") {
           const part: TutorStoredPart = { type: "tool_result", toolCallId, name: callPart.name, ok: outcome.ok, error: outcome.error, detail: outcome.detail, content: JSON.stringify(outcome.data) };
           parts.push(part);
@@ -183,16 +239,16 @@ export async function runAgentTurn(options: TurnOptions): Promise<StoredMessage>
           parts.push(part);
           const { component: _component, ...publicPart } = part;
           await emit({ type: "component", part: publicPart });
-          waiting = true;
+          components += 1;
         } else {
           const part: TutorStoredPart = { type: "confirmation", toolCallId, summary: outcome.summary, arguments: outcome.arguments, answer: null, outcome: null, answeredAt: null };
           parts.push(part);
           const { arguments: _arguments, ...publicPart } = part;
           await emit({ type: "confirmation", part: publicPart });
-          waiting = true;
+          confirmation = true;
         }
       }
-      if (waiting) { status = "awaiting_user"; break; }
+      if (components > 0 || confirmation) { status = "awaiting_user"; break; }
     }
   } catch (error) {
     flushText();

@@ -38,7 +38,10 @@ export async function studyNextLessonWithTutor(page: Page, testInfo: TestInfo) {
 
   const fillIn = page.getByRole("region", { name: "Fill in the blank" });
   await fillIn.getByRole("textbox", { name: "Your answer" }).fill("water");
-  await fillIn.getByRole("button", { name: "Check" }).click();
+  // Open questions wait in the question dock, which replaces the composer; its footer sends them.
+  const dock = page.getByRole("region", { name: "Your tutor’s questions" });
+  await expect(page.getByRole("textbox", { name: "Message your tutor" })).toBeHidden();
+  await dock.getByRole("button", { name: "Check" }).click();
   await expect(fillIn.getByText("Matches!")).toBeVisible();
 
   await expect(page.getByText(`Mark ${lessonTitle} in ${courseTitle} as complete?`)).toBeVisible();

@@ -1,5 +1,6 @@
 import { parseStoredLessonDocument, walkLessonBlocks } from "@wordinator/contracts/lesson-document";
-import { aiPracticeContentSchema, tutorComponentView, type AiPracticeContent, type LessonAiPractice } from "@wordinator/contracts/tutor";
+import { aiPracticeContentSchema, componentHints, tutorComponentView, type AiPracticeContent, type LessonAiPractice } from "@wordinator/contracts/tutor";
+import { hintViews, readableWords } from "./library";
 
 // AI practices (C14h, docs/courses.md#ai-practices): practices the tutor saved with the learner's confirmation, tagged to one or
 // more lessons after a block of each lesson's published document. The tutor's `save_ai_practice` tool validates its arguments
@@ -93,16 +94,18 @@ function seededRandom(seed: string): () => number {
  * practices sharing it; a practice whose anchor is no longer in the document comes last, with `afterBlockId: null`. Only views
  * are returned, never references. An unpublished lesson shows none.
  */
-export async function readLessonAiPractices(db: D1Database, lesson: { id: string; publishedDoc: string | null }): Promise<LessonAiPractice[]> {
+export async function readLessonAiPractices(db: D1Database, lesson: { id: string; publishedDoc: string | null }, userId: string): Promise<LessonAiPractice[]> {
   if (!lesson.publishedDoc) return [];
   const order = new Map(publishedBlockIds(lesson.publishedDoc).map((id, index) => [id, index]));
   const listed = await listAiPractices(db, lesson.id);
+  // Hints show the words' current index entries, as far as the reader can read them.
+  const words = await readableWords(db, userId, listed.flatMap((practice) => componentHints(practice.practice)));
   const rank = (practice: ListedAiPractice) => order.get(practice.afterBlockId) ?? Number.MAX_SAFE_INTEGER;
   return listed
     .sort((a, b) => rank(a) - rank(b) || a.position - b.position || a.createdAt - b.createdAt || a.practiceId.localeCompare(b.practiceId))
     .map((practice) => ({
       id: practice.practiceId, kind: practice.practice.kind, afterBlockId: order.has(practice.afterBlockId) ? practice.afterBlockId : null,
-      view: tutorComponentView(practice.practice, { random: seededRandom(practice.practiceId) }), createdAt: practice.createdAt,
+      view: tutorComponentView(practice.practice, { hints: hintViews(componentHints(practice.practice), words), random: seededRandom(practice.practiceId) }), createdAt: practice.createdAt,
     }));
 }
 

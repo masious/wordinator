@@ -56,6 +56,25 @@ export async function countDailyTurns(db: D1Database, userId: string, now = Date
   return row?.used ?? 0;
 }
 
+// The learner's own token counts for the tutor's usage box (docs/ai-tutor.md#usage-box): today's (UTC) model requests made for
+// any of their conversations, and, given one, that conversation's requests over its life. Failed requests count with the
+// tokens they reported. Turns are counted as the daily cap counts them.
+export async function readTutorUsage(db: D1Database, userId: string, conversationId: string | null, now = Date.now()) {
+  const start = utcDayStart(now);
+  const today = db.prepare(
+    `SELECT COALESCE(SUM(tokens_in), 0) AS tokensIn, COALESCE(SUM(tokens_out), 0) AS tokensOut
+     FROM ai_usage WHERE user_id = ? AND created_at >= ? AND created_at < ? AND conversation_id IS NOT NULL`,
+  ).bind(userId, start, start + DAY_MS).first<{ tokensIn: number; tokensOut: number }>();
+  const conversation = conversationId === null ? Promise.resolve(null) : db.prepare(
+    "SELECT COALESCE(SUM(tokens_in), 0) AS tokensIn, COALESCE(SUM(tokens_out), 0) AS tokensOut FROM ai_usage WHERE user_id = ? AND conversation_id = ?",
+  ).bind(userId, conversationId).first<{ tokensIn: number; tokensOut: number }>();
+  const [day, own, turns] = await Promise.all([today, conversation, countDailyTurns(db, userId, now)]);
+  return {
+    today: { tokensIn: day?.tokensIn ?? 0, tokensOut: day?.tokensOut ?? 0, turns, resetsAt: nextUtcMidnight(now) },
+    conversation: own ? { tokensIn: own.tokensIn, tokensOut: own.tokensOut } : null,
+  };
+}
+
 export type DailyAllowance = { used: number; cap: number; resetsAt: number };
 
 // Call once per turn, before the first model call. Throws `AiLimitError("AI_DAILY_LIMIT")` once the account has started

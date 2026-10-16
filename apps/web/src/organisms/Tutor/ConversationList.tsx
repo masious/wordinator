@@ -1,7 +1,7 @@
 import { tutorConversationResponseSchema, type TutorConversation } from "@wordinator/contracts/tutor";
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { Archive, ArchiveRestore, Plus } from "lucide-react";
+import { Archive, ArchiveRestore, Plus, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, tutorConversationQueryOptions, tutorConversationsKey, tutorConversationsQueryOptions } from "../../api";
 import { Button, IconButton } from "../../ui";
@@ -13,8 +13,9 @@ import styles from "./Tutor.module.css";
 export function ConversationList({ activeId, archived, onArchivedView, onNew, onOpen }: {
   activeId: string | null; archived: boolean; onArchivedView: (archived: boolean) => void; onNew: () => void; onOpen?: () => void;
 }) {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const queryClient = useQueryClient();
+  const compact = new Intl.NumberFormat(i18n.language, { notation: "compact", maximumFractionDigits: 1 });
   const conversations = useInfiniteQuery(tutorConversationsQueryOptions(archived));
   const move = useMutation({
     mutationFn: ({ id, archive }: { id: string; archive: boolean }) => apiRequest(`${conversationPath(id)}/${archive ? "archive" : "unarchive"}`, tutorConversationResponseSchema, { method: "POST" }),
@@ -39,10 +40,16 @@ export function ConversationList({ activeId, archived, onArchivedView, onNew, on
       : <ul className={styles.listItems}>
         {items.map((conversation) => <li key={conversation.id} className={styles.listItem} data-active={conversation.id === activeId || undefined}>
           <Link to="/ai" search={{ conversation: conversation.id }} aria-current={conversation.id === activeId ? "page" : undefined} onClick={onOpen}>
-            <span className={styles.listTitle}>{title(conversation)}</span>
-            <span className={styles.listDate}>{new Date(conversation.updatedAt).toLocaleDateString()}</span>
+            <span className={styles.listTitle}>
+              {conversation.titleSource === "tutor" && <Sparkles className={styles.listMark} size={12} aria-label={t("tutor.rename.byTutor")} />}
+              {title(conversation)}
+            </span>
+            <span className={styles.listMeta}>
+              <span>{new Date(conversation.updatedAt).toLocaleDateString()}</span>
+              {conversation.tokens > 0 && <span>{t("tutor.usage.tokens", { total: compact.format(conversation.tokens) })}</span>}
+            </span>
           </Link>
-          <IconButton variant="subtle" label={archived ? t("tutor.unarchiveNamed", { title: title(conversation) }) : t("tutor.archiveNamed", { title: title(conversation) })}
+          <IconButton tone="quiet" className={styles.listAction} label={archived ? t("tutor.unarchiveNamed", { title: title(conversation) }) : t("tutor.archiveNamed", { title: title(conversation) })}
             loading={move.isPending && move.variables?.id === conversation.id} onClick={() => move.mutate({ id: conversation.id, archive: !archived })}>
             {archived ? <ArchiveRestore size={16} aria-hidden="true" /> : <Archive size={16} aria-hidden="true" />}
           </IconButton>

@@ -1,6 +1,6 @@
 import { wordDrillDirectionSchema, wordDrillResultSchema } from "@wordinator/contracts/lesson-document";
 import {
-  componentWords, saveAiPracticeArgsSchema, TUTOR_COMPONENT_KINDS, TUTOR_NOTES_MAX, tutorComponentPayloadSchemas, tutorComponentView,
+  TUTOR_TITLE_MAX, componentHints, componentWords, saveAiPracticeArgsSchema, stripTargetMarks, TUTOR_COMPONENT_KINDS, TUTOR_HINT_KINDS, TUTOR_NOTES_MAX, tutorComponentPayloadSchemas, tutorComponentView,
   type QuickReviewCardView, type TutorComponent, type TutorComponentKind, type TutorComponentView, type TutorConfirmationAction,
   type TutorConfirmationSummary, type TutorStoredPart, type TutorToolDetail,
 } from "@wordinator/contracts/tutor";
@@ -10,9 +10,9 @@ import { recordWordReviews } from "../learningData";
 import { completeLesson, readLessonProgress, resetLesson } from "../learning/progress";
 import { listAiPractices, saveAiPractice } from "./aiPractices";
 import { recentLessons, recentMistakes, recentWords, searchWords, weakestWords } from "./learner";
-import { lessonForModel, nextLesson, readableCourse, readableCourses, readableLesson, readableWords, wordKey, type ReadableLesson } from "./library";
+import { lessonForModel, nextLesson, readableCourse, readableCourses, readableLesson, hintViews, readableLessonList, readableWords, wordKey, type ReadableLesson } from "./library";
 import { writeTutorNotes } from "./profile";
-import { parseParts } from "./store";
+import { parseParts, setConversationTitle } from "./store";
 
 // The tutor's tools (docs/ai-tutor.md#tools). Every tool runs as the signed-in account: the context carries its user ID and no
 // tool accepts one. Lessons, courses, and words are resolved under the account's read rules (published lessons of visible
@@ -22,14 +22,20 @@ import { parseParts } from "./store";
 export type ToolContext = { db: D1Database; userId: string; conversationId: string; now: () => number; random: () => number };
 
 export type ToolOutcome =
-  | { kind: "result"; ok: boolean; error: string | null; detail: TutorToolDetail; data: unknown }
+  // `issues` names what did not validate (paths and messages, never values), for the failure log only.
+  | { kind: "result"; ok: boolean; error: string | null; detail: TutorToolDetail; data: unknown; issues?: string }
   | { kind: "component"; component: TutorComponent; view: TutorComponentView }
   | { kind: "confirmation"; summary: TutorConfirmationSummary; arguments: Record<string, unknown> };
 
 const ok = (detail: TutorToolDetail, data: unknown): ToolOutcome => ({ kind: "result", ok: true, error: null, detail, data });
 const failed = (error: string, message: string, detail: TutorToolDetail = {}): ToolOutcome => ({ kind: "result", ok: false, error, detail, data: { error, message } });
+const NOT_FOUND_HELP = {
+  lesson: "Never build or guess a lessonId: find it with list_lessons (by course or title) and use its lessonId exactly.",
+  course: "Use a courseId from list_lessons or get_course_progress exactly.",
+  word: "Use word IDs from get_lesson or the word tools exactly.",
+} as const;
 const notFound = (what: "lesson" | "course" | "word") =>
-  failed(`${what.toUpperCase()}_NOT_FOUND`, `This ${what} is not available. Use IDs from earlier tool results.`);
+  failed(`${what.toUpperCase()}_NOT_FOUND`, `This ${what} is not available. ${NOT_FOUND_HELP[what]}`);
 
 const limitArg = z.number().int().min(1).max(20).optional();
 const lessonIdArg = z.object({ lessonId: z.uuid() });
@@ -41,8 +47,12 @@ const READ_TOOLS = {
     description: "Without courseId: the courses the learner can read with lessons completed. With courseId: each published lesson's state (not started, in progress, missed, completed), storyline share, practices done, and words reviewed.",
     schema: z.object({ courseId: z.uuid().optional() }),
   },
+  list_lessons: {
+    description: "Lists the published lessons the learner can read, in course order: each lesson's lessonId, number in its course, title, state, and course. Filter by courseId, or by a query matched against lesson and course titles. Use it to find a lesson the learner names by title, number, or course.",
+    schema: z.object({ courseId: z.uuid().optional(), query: z.string().trim().min(1).max(100).optional() }),
+  },
   get_lesson: {
-    description: "Reads a published lesson: blocks with IDs, new words with IDs, examples, dialogues, and practices. lessonId \"next\" reads the lesson the learner should study next.",
+    description: "Reads one published lesson by its lessonId (from list_lessons, get_course_progress, or the snapshot): blocks with IDs, new words with IDs, examples, dialogues, and practices. lessonId \"next\" reads the lesson the learner should study next; call it once per turn.",
     schema: z.object({ lessonId: z.union([z.uuid(), z.literal("next")]) }),
   },
   get_recent_mistakes: { description: "The learner's most recent practice answers that did not match.", schema: z.object({ limit: limitArg }) },
@@ -60,7 +70,8 @@ const COMPONENT_DESCRIPTIONS: Record<TutorComponentKind, string> = {
   dictation: "Plays a target-language sentence as audio only; the learner types what they heard.",
   fix_mistake: "Shows a target-language sentence with exactly one error; give the corrected reference.",
 };
-const COMPONENT_NOTE = " Name the lesson (lessonId) and the lesson words it tests (words) when it practises a lesson. Ask one question per turn, then wait.";
+const COMPONENT_NOTE = " Name the lesson (lessonId) and the lesson words it tests (words) when it practises a lesson. Ask a practice set: call several ask_* tools of different kinds in one response, then wait for all the answers.";
+const HINT_NOTE = " Add hints for the key words the learner must produce: each a lesson word ID (from get_lesson or the word tools) with the cue, the exact words of the question it helps with (such as \"tidy up\"). The learner sees only the cue until they open a hint; the word comes from the lesson.";
 
 const CONFIRMED_TOOLS = {
   complete_lesson: { description: "Marks a published lesson completed for the learner. The learner must confirm a card first.", schema: lessonIdArg },
@@ -81,6 +92,10 @@ const WRITE_TOOLS = {
     description: "Replaces your private notes about the learner (recurring mistakes, preferences), at most 2000 characters. Empty notes clear them.",
     schema: z.object({ notes: z.string().max(TUTOR_NOTES_MAX) }),
   },
+  set_conversation_title: {
+    description: "Renames this conversation in the learner's list: a short title (at most 60 characters, no quotes) naming its topic, such as \"Separable verbs: opruimen, afwassen\". Refused when the learner named the conversation.",
+    schema: z.object({ title: z.string().transform((value) => value.replace(/\s+/g, " ").replace(/^["'“”]+|["'“”]+$/g, "").trim()).pipe(z.string().min(1).max(TUTOR_TITLE_MAX)) }),
+  },
 } as const;
 
 export const TOOL_NAMES = [
@@ -96,15 +111,17 @@ let definitions: AiToolDefinition[] | null = null;
 export function toolDefinitions(): AiToolDefinition[] {
   definitions ??= [
     ...Object.entries(READ_TOOLS).map(([name, tool]) => ({ name, description: tool.description, parameters: parameters(tool.schema) })),
-    ...TUTOR_COMPONENT_KINDS.map((kind) => ({ name: `ask_${kind}`, description: COMPONENT_DESCRIPTIONS[kind] + COMPONENT_NOTE, parameters: parameters(tutorComponentPayloadSchemas[kind]) })),
+    ...TUTOR_COMPONENT_KINDS.map((kind) => ({ name: `ask_${kind}`, description: COMPONENT_DESCRIPTIONS[kind] + COMPONENT_NOTE + ((TUTOR_HINT_KINDS as readonly string[]).includes(kind) ? HINT_NOTE : ""), parameters: parameters(tutorComponentPayloadSchemas[kind]) })),
     ...Object.entries(CONFIRMED_TOOLS).map(([name, tool]) => ({ name, description: tool.description, parameters: parameters(tool.schema) })),
     ...Object.entries(WRITE_TOOLS).map(([name, tool]) => ({ name, description: tool.description, parameters: parameters(tool.schema) })),
   ];
   return definitions;
 }
 
-const invalidArguments = (error: z.ZodError) =>
-  failed("INVALID_ARGUMENTS", `The arguments do not fit the tool: ${error.issues.slice(0, 5).map((issue) => `${issue.path.join(".") || "(root)"}: ${issue.message}`).join("; ")}`);
+const invalidArguments = (error: z.ZodError): ToolOutcome => {
+  const issues = error.issues.slice(0, 5).map((issue) => `${issue.path.join(".") || "(root)"}: ${issue.message}`).join("; ");
+  return { ...failed("INVALID_ARGUMENTS", `The arguments do not fit the tool: ${issues}`), issues } as ToolOutcome;
+};
 
 const lessonDetail = (lesson: ReadableLesson): TutorToolDetail => ({ lessonId: lesson.id, lessonTitle: lesson.title.slice(0, 200), courseTitle: lesson.course.title.slice(0, 200) });
 
@@ -143,6 +160,10 @@ export async function runTool(context: ToolContext, name: string, args: unknown)
         if (!lesson) return input.lessonId === "next" ? ok({ next: false }, { lesson: null, message: "There is no next lesson: everything readable is completed, or no course is readable." }) : notFound("lesson");
         return ok({ ...lessonDetail(lesson), next: input.lessonId === "next" }, { lesson: lessonForModel(lesson) });
       }
+      case "list_lessons": {
+        const lessons = await readableLessonList(db, userId, { courseId: typeof input.courseId === "string" ? input.courseId : null, query: typeof input.query === "string" ? input.query : null });
+        return ok({ ...(typeof input.query === "string" ? { query: input.query.slice(0, 100) } : {}), count: lessons.length }, { lessons });
+      }
       case "list_ai_practices": {
         const lesson = await readableLesson(db, userId, String(input.lessonId));
         if (!lesson) return notFound("lesson");
@@ -160,24 +181,43 @@ export async function runTool(context: ToolContext, name: string, args: unknown)
     const profile = await writeTutorNotes(db, userId, parsed.data.notes, context.now());
     return ok({ characters: profile.notes?.length ?? 0 }, { saved: true });
   }
+  if (name === "set_conversation_title") {
+    const parsed = WRITE_TOOLS.set_conversation_title.schema.safeParse(args);
+    if (!parsed.success) return invalidArguments(parsed.error);
+    const applied = await setConversationTitle(db, userId, context.conversationId, parsed.data.title, "tutor");
+    if (!applied) return failed("TITLE_SET_BY_LEARNER", "The learner named this conversation; keep their title.");
+    return ok({ title: parsed.data.title }, { saved: true });
+  }
   return failed("UNKNOWN_TOOL", `There is no tool named ${name.slice(0, 60)}.`);
 }
 
+// Display fields keep the model's `[[...]]` marks, which the web shows as emphasised target-language text; every other text
+// field (answers, references, chunks, nouns, spoken sentences) is stored without them, so grading and audio see plain text.
+const MARKED_FIELDS = new Set(["question", "options", "source", "translation", "hint"]);
+function withoutAnswerMarks(value: unknown, key: string | null = null): unknown {
+  if (typeof value === "string") return key !== null && MARKED_FIELDS.has(key) ? value : stripTargetMarks(value);
+  if (Array.isArray(value)) return value.map((item) => withoutAnswerMarks(item, key));
+  if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([field, item]) => [field, withoutAnswerMarks(item, field)]));
+  return value;
+}
+
 async function askComponent(context: ToolContext, kind: TutorComponentKind, args: unknown): Promise<ToolOutcome> {
-  const parsed = tutorComponentPayloadSchemas[kind].safeParse(args);
+  const parsed = tutorComponentPayloadSchemas[kind].safeParse(withoutAnswerMarks(args));
   if (!parsed.success) return invalidArguments(parsed.error);
   const component = { kind, payload: parsed.data } as TutorComponent;
   if (component.payload.lessonId && !(await readableLesson(context.db, context.userId, component.payload.lessonId))) return notFound("lesson");
-  const refs = componentWords(component);
+  const hintRefs = componentHints(component);
+  const refs = [...componentWords(component), ...hintRefs];
   const words = await readableWords(context.db, context.userId, refs);
   const missing = refs.filter((ref) => !words.has(wordKey(ref)));
-  if (missing.length) return failed("WORD_NOT_FOUND", `These words are not in a lesson the learner can read: ${missing.map((ref) => ref.wordId).join(", ")}. Use word IDs from get_lesson or the word tools.`);
+  if (missing.length) return failed("WORD_NOT_FOUND", `These words are not in a lesson the learner can read: ${[...new Set(missing.map((ref) => ref.wordId))].join(", ")}. Use word IDs from get_lesson or the word tools.`);
+  const hints = hintViews(hintRefs, words);
   let cards: QuickReviewCardView[] | undefined;
   if (component.kind === "quick_review") cards = component.payload.cards.map((card) => {
     const word = words.get(wordKey(card))!;
     return { lessonId: card.lessonId, wordId: card.wordId, direction: card.direction, term: word.term, meaning: word.meaning, forms: word.forms, example: word.example };
   });
-  return { kind: "component", component, view: tutorComponentView(component, { cards, random: context.random }) };
+  return { kind: "component", component, view: tutorComponentView(component, { cards, hints, random: context.random }) };
 }
 
 const titled = (lesson: ReadableLesson) => ({ course: { id: lesson.course.id, title: lesson.course.title }, lesson: { id: lesson.id, title: lesson.title } });
@@ -195,10 +235,11 @@ async function askConfirmation(context: ToolContext, action: TutorConfirmationAc
       if (lesson.course.status === "archived") return failed("COURSE_ARCHIVED", "This lesson's course is archived.");
       lessons.push({ ...titled(lesson), afterBlockId: tag.afterBlockId });
     }
-    const words = componentWords(input.practice);
+    const words = [...componentWords(input.practice), ...componentHints(input.practice)];
     const found = await readableWords(db, userId, words);
     if (words.some((ref) => !found.has(wordKey(ref)))) return notFound("word");
-    return { kind: "confirmation", arguments: input as unknown as Record<string, unknown>, summary: { action, view: tutorComponentView(input.practice, { random: context.random }), lessons } };
+    const hints = hintViews(componentHints(input.practice), found);
+    return { kind: "confirmation", arguments: input as unknown as Record<string, unknown>, summary: { action, view: tutorComponentView(input.practice, { hints, random: context.random }), lessons } };
   }
   const { lessonId } = parsed.data as { lessonId: string };
   const lesson = await readableLesson(db, userId, lessonId);

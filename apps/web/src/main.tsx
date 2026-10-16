@@ -1,7 +1,6 @@
 import "@mantine/core/styles.css";
-import "@fontsource-variable/manrope/wght.css";
-import "@fontsource-variable/newsreader/wght.css";
-import "@fontsource-variable/newsreader/wght-italic.css";
+import "@fontsource-variable/inter/wght.css";
+import "@fontsource-variable/inter/wght-italic.css";
 import "@fontsource/dm-mono/latin-400.css";
 import "@fontsource/dm-mono/latin-500.css";
 import { localStorageColorSchemeManager, MantineProvider } from "@mantine/core";

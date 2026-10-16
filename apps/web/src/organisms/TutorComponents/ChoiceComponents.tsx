@@ -1,7 +1,7 @@
 import type { TutorArticle } from "@wordinator/contracts/tutor";
 import { useEffect, useRef, useState, type KeyboardEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { ComponentFrame, GradePending, GradeResult, SubmitRow, useAnswerFlow } from "./shared";
+import { ComponentFrame, GradePending, GradeResult, MarkedText, SubmitRow, useAnswerFlow } from "./shared";
 import type { AnswerComponentProps } from "./types";
 import styles from "./TutorComponents.module.css";
 
@@ -50,7 +50,7 @@ export function ChoiceComponent({ view, answer, grade, onAnswer, disabled, autoF
   const frame = useRef<HTMLDivElement>(null);
   useEffect(() => { if (autoFocus) frame.current?.focus({ preventScroll: true }); }, [autoFocus]);
   const locked = Boolean(flow.answered) || flow.pending || Boolean(disabled);
-  const chosen = flow.answered?.choice ?? null;
+  const chosen = flow.answered?.choice ?? flow.draft?.choice ?? null;
   const choose = (index: number) => { if (!locked && index < view.options.length) void flow.submit({ kind: "choice", choice: index }); };
   return <ComponentFrame kind="choice">
     <div ref={frame} tabIndex={-1} className={styles.grade} onKeyDown={(event) => {
@@ -58,12 +58,12 @@ export function ChoiceComponent({ view, answer, grade, onAnswer, disabled, autoF
       const key = numberKey(event); if (key === null || key >= view.options.length || locked) return;
       event.preventDefault(); choose(key);
     }}>
-      <p className={styles.prompt}>{view.question}</p>
+      <p className={styles.prompt}><MarkedText text={view.question} /></p>
       <ul className={styles.options} aria-label={t("tutorComponents.choice.options")}>
         {view.options.map((option, index) => <li key={index}>
           <button type="button" className={styles.option} disabled={locked} aria-pressed={chosen === index} aria-keyshortcuts={String(index + 1)}
             data-correct={grade && grade.reference === option ? "" : undefined} onClick={() => choose(index)}>
-            <kbd className={styles.key} aria-hidden="true">{index + 1}</kbd><span>{option}</span>
+            <kbd className={styles.key} aria-hidden="true">{index + 1}</kbd><span><MarkedText text={option} /></span>
           </button>
         </li>)}
       </ul>

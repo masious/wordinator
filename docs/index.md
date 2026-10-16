@@ -25,6 +25,7 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [design-system-plan.md](design-system-plan.md) | Phase 0 design-system implementation tasks, sequencing, and completion criteria |
 | [AI_PLAN.md](../AI_PLAN.md) | AI tutor and learning data (C14, including C14l tutor sessions and memory) delivery steps, status, and release procedure |
 | [SPEECH_PLAN.md](../SPEECH_PLAN.md) | Lesson speech (C10) delivery steps, status, and release procedure |
+| [REDESIGN_PLAN.md](../REDESIGN_PLAN.md) | Lumen visual redesign: batch order, component mapping, open decisions, and status |
 | [architecture.md](architecture.md) | Runtime topology, monorepo boundaries, client/server responsibilities, and API conventions |
 | [data-model.md](data-model.md) | Conceptual entities, relationships, constraints, retention, and deletion semantics |
 | [security-and-privacy.md](security-and-privacy.md) | Security baseline, privacy boundaries, tradeoffs, and deferred work |

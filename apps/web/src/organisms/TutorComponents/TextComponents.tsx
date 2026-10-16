@@ -1,10 +1,11 @@
+import { stripTargetMarks } from "@wordinator/contracts/tutor";
 import { useEffect, useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ListenStatusLine, SpeakButton } from "../../molecules/SpeakControls";
 import { SENTENCE_ANSWER_WINDOW, useSpokenAnswer } from "../../molecules/speechRecognition";
 import { TextAreaField, TextField } from "../../ui";
 import { ClipButton } from "./ClipButton";
-import { ComponentFrame, GradePending, GradeResult, plainEnter, SubmitRow, useAnswerFlow } from "./shared";
+import { ComponentFrame, GradePending, GradeResult, HintRow, MarkedText, plainEnter, SubmitRow, useAnswerFlow } from "./shared";
 import type { AnswerComponentProps } from "./types";
 import styles from "./TutorComponents.module.css";
 
@@ -37,7 +38,8 @@ export function FillInComponent({ view, answer, grade, onAnswer, disabled, autoF
   const submit = () => { if (!locked && ready) void flow.submit({ kind: "fill_in", blanks: values.map((value) => value.trim()) }); };
   return <ComponentFrame kind="fill_in">
     <BlankPrompt prompt={view.prompt} blanks={view.blanks} />
-    {view.translation && <p className={styles.muted}>{view.translation}</p>}
+    {view.translation && <p className={styles.muted}><MarkedText text={view.translation} /></p>}
+    <HintRow />
     <div className={`${styles.fields} ${grade?.correct ? styles.matched : ""}`}>
       {shown.map((value, index) => <TextField key={index} ref={(input) => { inputs.current[index] = input; }} value={value} disabled={locked} maxLength={200}
         label={view.blanks > 1 ? t("tutorComponents.blankLabel", { number: index + 1 }) : t("tutorComponents.yourAnswer")}
@@ -78,7 +80,8 @@ export function TranslateComponent({ view, answer, grade, onAnswer, disabled, au
   const flow = useAnswerFlow(answer, onAnswer);
   const locked = Boolean(flow.answered) || flow.pending || Boolean(disabled);
   return <ComponentFrame kind="translate">
-    <p className={styles.prompt}>{view.source}</p>
+    <p className={styles.prompt}><MarkedText text={view.source} /></p>
+    <HintRow />
     <SentenceAnswer kind="translate" initial="" label={t("tutorComponents.translation")} answerText={flow.answered?.text ?? null} grade={grade} locked={locked}
       pending={flow.pending} failed={flow.failed} spoken autoFocus={autoFocus} onSubmit={(text) => void flow.submit({ kind: "translate", text })} />
   </ComponentFrame>;
@@ -93,7 +96,8 @@ export function DictationComponent({ view, answer, grade, onAnswer, disabled, cl
       <p className={styles.muted}>{t("tutorComponents.dictationPrompt")}</p>
       {clip && <ClipButton clip={clip} label={t("tutorComponents.audio.play")} />}
     </div>
-    {view.translation && <p className={styles.muted}>{t("tutorComponents.meaning", { meaning: view.translation })}</p>}
+    {view.translation && <p className={styles.muted}>{t("tutorComponents.meaning", { meaning: stripTargetMarks(view.translation) })}</p>}
+    <HintRow />
     <SentenceAnswer kind="dictation" initial="" label={t("tutorComponents.whatYouHeard")} answerText={flow.answered?.text ?? null} grade={grade} locked={locked}
       pending={flow.pending} failed={flow.failed} spoken={false} autoFocus={autoFocus} onSubmit={(text) => void flow.submit({ kind: "dictation", text })} />
   </ComponentFrame>;
@@ -106,7 +110,8 @@ export function FixMistakeComponent({ view, answer, grade, onAnswer, disabled, a
   const hintId = useId();
   return <ComponentFrame kind="fix_mistake">
     <p className={styles.prompt}>{view.sentence}</p>
-    {view.hint && <p className={styles.muted} id={hintId}>{t("tutorComponents.hint", { hint: view.hint })}</p>}
+    {view.hint && <p className={styles.muted} id={hintId}>{t("tutorComponents.hint", { hint: stripTargetMarks(view.hint) })}</p>}
+    <HintRow />
     <SentenceAnswer kind="fix_mistake" initial={view.sentence} label={t("tutorComponents.corrected")} answerText={flow.answered?.text ?? null} grade={grade} locked={locked}
       pending={flow.pending} failed={flow.failed} spoken={false} autoFocus={autoFocus} onSubmit={(text) => void flow.submit({ kind: "fix_mistake", text })} />
   </ComponentFrame>;

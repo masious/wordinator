@@ -3,7 +3,7 @@ import { speechNarrator } from "@wordinator/contracts";
 import { DEFAULT_AI_SETTINGS } from "@wordinator/contracts/ai";
 import { spokenText } from "@wordinator/contracts/speech";
 import { tutorMessagePageSchema, type TutorStreamEvent } from "@wordinator/contracts/tutor";
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { writeAiSettings } from "../src/ai";
 import { TUTOR_MAX_OUTPUT_TOKENS } from "../src/tutor/loop";
 import { hashSpeechItems } from "../src/speech";
@@ -30,9 +30,11 @@ describe("access", () => {
     const routes: Array<[string, string, unknown?]> = [
       ["GET", "/api/ai/conversations"], ["POST", "/api/ai/conversations"], ["GET", `/api/ai/conversations/${id}`],
       ["POST", `/api/ai/conversations/${id}/archive`], ["POST", `/api/ai/conversations/${id}/unarchive`],
-      ["PATCH", `/api/ai/conversations/${id}`, { provider: null }], ["GET", "/api/ai/models"],
+      ["PATCH", `/api/ai/conversations/${id}`, { provider: null }], ["PATCH", `/api/ai/conversations/${id}`, { title: "Mine" }], ["GET", "/api/ai/models"],
+      ["GET", "/api/ai/usage"], ["GET", `/api/ai/usage?conversationId=${id}`],
       ["GET", `/api/ai/conversations/${id}/messages`], ["POST", `/api/ai/conversations/${id}/messages`, { text: "Hoi" }],
       ["POST", `/api/ai/conversations/${id}/tool-calls/${id}/respond`, { type: "confirmation", confirmed: true }],
+      ["POST", `/api/ai/conversations/${id}/messages/${id}/answers`, { answers: [{ toolCallId: id, skip: true }] }],
       ["POST", `/api/ai/conversations/${id}/messages/${id}/speech`, { spanIndex: 0 }],
       ["GET", "/api/ai/profile"], ["PUT", "/api/ai/profile", { nativeLanguage: "en", replyLanguage: "native", goals: null }], ["DELETE", "/api/ai/profile/notes"],
     ];
@@ -58,6 +60,7 @@ describe("access", () => {
     const base = `/api/ai/conversations/${conversationId}`;
     for (const [method, path, body] of [
       ["GET", base], ["GET", `${base}/messages`], ["POST", `${base}/archive`], ["POST", `${base}/unarchive`], ["PATCH", base, { provider: null }],
+      ["PATCH", base, { title: "Taken" }], ["GET", `/api/ai/usage?conversationId=${conversationId}`],
       ["POST", `${base}/messages`, { text: "Hi" }], ["POST", `${base}/tool-calls/${toolCallId}/respond`, { type: "component", answer: { kind: "choice", choice: 0 } }],
       ["POST", `${base}/messages/${messageId}/speech`, { spanIndex: 0 }],
     ] as Array<[string, string, unknown?]>) {
@@ -122,6 +125,78 @@ describe("conversations", () => {
     ].reverse());
     expect(older.nextCursor).toBeNull();
     expect((await call("GET", `/api/ai/conversations/${conversationId}/messages?cursor=nope`, learner)).status).toBe(400);
+  });
+});
+
+describe("titles and usage", () => {
+  const title = async (cookie: string, conversationId: string) =>
+    ((await (await call("GET", `/api/ai/conversations/${conversationId}`, cookie)).json()) as { conversation: { title: string; titleSource: string } }).conversation;
+
+  it("lets the learner rename a conversation and validates the title", async () => {
+    const { learner } = await seedLibrary();
+    const conversationId = await newConversation(learner);
+    expect(await title(learner, conversationId)).toEqual(expect.objectContaining({ title: "", titleSource: "auto" }));
+    const renamed = await call("PATCH", `/api/ai/conversations/${conversationId}`, learner, { title: "  Separable \n verbs  " });
+    expect(renamed.status).toBe(200);
+    expect(((await renamed.json()) as { conversation: { title: string; titleSource: string } }).conversation).toMatchObject({ title: "Separable verbs", titleSource: "user" });
+    for (const body of [{ title: "   " }, { title: "x".repeat(81) }, { title: 5 }, { title: "Ok", extra: true }]) {
+      const invalid = await call("PATCH", `/api/ai/conversations/${conversationId}`, learner, body);
+      expect(invalid.status, JSON.stringify(body)).toBe(400);
+      expect(await errorCode(invalid)).toBe("VALIDATION_ERROR");
+    }
+    // The first message no longer replaces a title the learner chose.
+    await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hoi" }, { AI: scriptedAi([say("Hallo!")]).binding }));
+    expect(await title(learner, conversationId)).toMatchObject({ title: "Separable verbs", titleSource: "user" });
+  });
+
+  it("lets the tutor name a conversation until the learner renames it", async () => {
+    const { learner } = await seedLibrary();
+    const conversationId = await newConversation(learner);
+    const first = scriptedAi([callTool("set_conversation_title", { title: "\"Greetings practice\"" }), say("Let's go.")]);
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Teach me greetings" }, { AI: first.binding }));
+    expect(ofType(events, "tool_result")[0]!.part).toMatchObject({ ok: true, detail: { title: "Greetings practice" } });
+    expect(await title(learner, conversationId)).toMatchObject({ title: "Greetings practice", titleSource: "tutor" });
+    expect(String(modelMessages(first.calls[0]).find((message) => message.role === "system")?.content)).toContain("still the learner's first message");
+
+    await call("PATCH", `/api/ai/conversations/${conversationId}`, learner, { title: "My greetings" });
+    const second = scriptedAi([callTool("set_conversation_title", { title: "Other" }), say("Ok.")]);
+    const refused = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "More" }, { AI: second.binding }));
+    expect(ofType(refused, "tool_result")[0]!.part).toMatchObject({ ok: false, error: "TITLE_SET_BY_LEARNER" });
+    expect(await title(learner, conversationId)).toMatchObject({ title: "My greetings", titleSource: "user" });
+    expect(String(modelMessages(second.calls[0]).find((message) => message.role === "system")?.content)).toContain("Never call set_conversation_title");
+  });
+
+  it("reports the learner's own tokens today and for one conversation, never another account's", async () => {
+    const { learner, rival } = await seedLibrary();
+    const conversationId = await newConversation(learner);
+    const other = await newConversation(learner);
+    const rivalConversation = await newConversation(rival);
+    const learnerId = (await env.DB.prepare("SELECT user_id AS id FROM ai_conversations WHERE id = ?").bind(conversationId).first<{ id: string }>())!.id;
+    const rivalId = (await env.DB.prepare("SELECT user_id AS id FROM ai_conversations WHERE id = ?").bind(rivalConversation).first<{ id: string }>())!.id;
+    const now = Date.now(); const yesterday = now - 26 * 60 * 60 * 1000;
+    const usage = (userId: string, conversation: string | null, tokensIn: number, tokensOut: number, turnStart: boolean, createdAt: number) =>
+      env.DB.prepare("INSERT INTO ai_usage (id, user_id, conversation_id, provider, model, turn_start, tokens_in, tokens_out, cost_microusd, ok, created_at) VALUES (?, ?, ?, 'workers_ai', 'm', ?, ?, ?, 0, 1, ?)")
+        .bind(crypto.randomUUID(), userId, conversation, turnStart ? 1 : 0, tokensIn, tokensOut, createdAt);
+    await env.DB.batch([
+      usage(learnerId, conversationId, 1000, 200, true, now), usage(learnerId, conversationId, 500, 50, false, now),
+      usage(learnerId, conversationId, 4000, 400, true, yesterday), usage(learnerId, other, 300, 30, true, now),
+      // An AI practice request outside any conversation, and the rival's usage, are left out.
+      usage(learnerId, null, 9000, 900, false, now), usage(rivalId, rivalConversation, 7000, 700, true, now),
+    ]);
+    const read = async (query = "") => (await (await call("GET", `/api/ai/usage${query}`, learner)).json()) as { today: Record<string, number>; conversation: Record<string, number> | null };
+    expect(await read(`?conversationId=${conversationId}`)).toMatchObject({
+      today: { tokensIn: 1800, tokensOut: 280, turns: 2, turnCap: DEFAULT_AI_SETTINGS.dailyTurnCap },
+      conversation: { tokensIn: 5500, tokensOut: 650 },
+    });
+    expect((await read()).conversation).toBeNull();
+    // The conversation list carries each conversation's token total, from the learner's own rows only.
+    const listed = ((await (await call("GET", "/api/ai/conversations", learner)).json()) as { items: Array<{ id: string; tokens: number }> }).items;
+    expect(Object.fromEntries(listed.map((item) => [item.id, item.tokens]))).toEqual({ [conversationId]: 6150, [other]: 330 });
+    const foreign = await call("GET", `/api/ai/usage?conversationId=${rivalConversation}`, learner);
+    expect(foreign.status).toBe(404);
+    expect(await errorCode(foreign)).toBe("CONVERSATION_NOT_FOUND");
+    const invalid = await call("GET", "/api/ai/usage?conversationId=nope", learner);
+    expect(invalid.status).toBe(400);
   });
 });
 
@@ -303,6 +378,173 @@ describe("turns", () => {
     expect(await count("SELECT COUNT(*) AS n FROM ai_usage WHERE turn_start = 1")).toBe(2);
     const stored = (await messagesOf(learner, conversationId)).items.find((message) => message.parts.some((part) => part.type === "component"))!;
     expect(stored.status).toBe("complete");
+  });
+
+  it("answers a whole practice set at once: validates every answer first, stores them together, and resumes the model once", async () => {
+    const { learner, rival, lessons, words } = await seedLibrary();
+    const ai = scriptedAi([
+      callTool("ask_choice", { question: "What does [[het huis]] mean?", options: ["the house", "the table", "the chair"], correct: 0, lessonId: lessons.first.id }, [
+        { name: "ask_fill_in", args: { prompt: "Ik woon in … .", answers: ["het huis"], lessonId: lessons.first.id, words: [{ lessonId: lessons.first.id, wordId: words.huis.id }] } },
+        { name: "ask_article", args: { nouns: [{ noun: "tafel", article: "de" }] } },
+      ]),
+      say("Two of three, well done."),
+    ]);
+    const conversationId = await newConversation(learner);
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz me" }, { AI: ai.binding }));
+    const [choice, fillIn, article] = ofType(events, "component").map((event) => event.part.toolCallId);
+    const messageId = ofType(events, "done")[0]!.message.id;
+    const path = `/api/ai/conversations/${conversationId}/messages/${messageId}/answers`;
+    const full = [
+      { toolCallId: choice, answer: { kind: "choice", choice: 0 } },
+      { toolCallId: fillIn, answer: { kind: "fill_in", blanks: ["het huis"] } },
+      { toolCallId: article, skip: true },
+    ];
+    const refused = async (body: unknown, status: number, code: string, cookie = learner) => {
+      const response = await call("POST", path, cookie, body, { AI: ai.binding });
+      expect(response.status, JSON.stringify(body)).toBe(status);
+      expect(await errorCode(response)).toBe(code);
+    };
+    await refused({ answers: full }, 404, "CONVERSATION_NOT_FOUND", rival);
+    await refused({ answers: full.slice(0, 2) }, 400, "ANSWERS_INCOMPLETE");
+    await refused({ answers: [...full, full[0]] }, 400, "VALIDATION_ERROR");
+    await refused({ answers: [...full.slice(0, 2), { toolCallId: crypto.randomUUID(), skip: true }] }, 404, "TOOL_CALL_NOT_FOUND");
+    // An answer of the wrong kind refuses the set before anything is stored.
+    await refused({ answers: [{ toolCallId: choice, answer: { kind: "fill_in", blanks: ["x"] } }, ...full.slice(1)] }, 400, "ANSWER_INVALID");
+    expect(await count("SELECT COUNT(*) AS n FROM practice_attempts")).toBe(0);
+    expect(ai.calls).toHaveLength(1);
+
+    const answered = await readEvents(await call("POST", path, learner, { answers: full }, { AI: ai.binding }));
+    expect(types(answered)).toEqual(["answered", "answered", "answered", "start", "text", "done"]);
+    expect(ofType(answered, "answered").map((event) => event.part.type === "component" ? event.part.grade?.correct ?? "skipped" : event.part.type)).toEqual([true, true, "skipped"]);
+    const results = toolMessages(ai.calls[1]).map((message) => JSON.parse(message.content!) as { status?: string });
+    expect(results.map((result) => result.status)).toEqual(["answered", "answered", "skipped"]);
+    expect(await count("SELECT COUNT(*) AS n FROM practice_attempts")).toBe(2);
+    expect(await count("SELECT COUNT(*) AS n FROM ai_usage WHERE turn_start = 1")).toBe(2);
+    await refused({ answers: full }, 409, "TOOL_CALL_ANSWERED");
+  });
+
+  it("asks a practice set in one response and resumes the model once, with every grade, after the last answer", async () => {
+    const { learner, lessons, words } = await seedLibrary();
+    const ai = scriptedAi([
+      callTool("ask_choice", { question: "What does [[het huis]] mean?", options: ["the house", "the table", "the chair"], correct: 0, lessonId: lessons.first.id }, [
+        { name: "ask_fill_in", args: { prompt: "Ik woon in … .", answers: ["[[het huis]]"], lessonId: lessons.first.id, words: [{ lessonId: lessons.first.id, wordId: words.huis.id }] } },
+        { name: "ask_article", args: { nouns: [{ noun: "[[tafel]]", article: "de" }] } },
+        { name: "complete_lesson", args: { lessonId: lessons.first.id } },
+      ]),
+      say("Two of three, well done."),
+    ]);
+    const conversationId = await newConversation(learner);
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz me" }, { AI: ai.binding }));
+    const components = ofType(events, "component").map((event) => event.part);
+    expect(components.map((part) => part.kind)).toEqual(["choice", "fill_in", "article"]);
+    // Display fields keep the marks; answer fields and nouns are stored without them.
+    expect(components[0]!.view).toMatchObject({ question: "What does [[het huis]] mean?" });
+    expect(components[2]!.view).toMatchObject({ nouns: [{ noun: "tafel", meaning: null }] });
+    expect(ofType(events, "tool_result")).toEqual([expect.objectContaining({ part: expect.objectContaining({ name: "complete_lesson", error: "SKIPPED" }) })]);
+    expect(ofType(events, "confirmation")).toEqual([]);
+    expect(ofType(events, "done")[0]!.message.status).toBe("awaiting_user");
+    const path = (index: number) => `/api/ai/conversations/${conversationId}/tool-calls/${components[index]!.toolCallId}/respond`;
+
+    const [first, second] = await Promise.all([
+      readEvents(await call("POST", path(0), learner, { type: "component", answer: { kind: "choice", choice: 0 } }, { AI: ai.binding })),
+      readEvents(await call("POST", path(2), learner, { type: "component", skip: true }, { AI: ai.binding })),
+    ]);
+    for (const partial of [first, second]) {
+      expect(types(partial)).toEqual(["answered", "done"]);
+      expect(ofType(partial, "done")[0]!.message.status).toBe("awaiting_user");
+    }
+    expect(ai.calls).toHaveLength(1);
+    const blocked = await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Next" }, { AI: ai.binding });
+    expect(await errorCode(blocked)).toBe("TURN_IN_PROGRESS");
+
+    const last = await readEvents(await call("POST", path(1), learner, { type: "component", answer: { kind: "fill_in", blanks: ["het huis"] } }, { AI: ai.binding }));
+    expect(types(last)).toEqual(["answered", "start", "text", "done"]);
+    expect(ofType(last, "answered")[0]!.part).toMatchObject({ grade: { correct: true, reference: "het huis" } });
+    const results = toolMessages(ai.calls[1]).map((message) => JSON.parse(message.content!) as { status?: string; error?: string });
+    expect(results.map((result) => result.status ?? result.error)).toEqual(["answered", "answered", "skipped", "SKIPPED"]);
+    const stored = (await messagesOf(learner, conversationId)).items.find((message) => message.parts.some((part) => part.type === "component"))!;
+    expect(stored.status).toBe("complete");
+    expect(stored.parts.filter((part) => part.type === "component").every((part) => part.type === "component" && part.answeredAt !== null)).toBe(true);
+    expect(await count("SELECT COUNT(*) AS n FROM practice_attempts")).toBe(2);
+    expect(await count("SELECT COUNT(*) AS n FROM ai_usage WHERE turn_start = 1")).toBe(2);
+  });
+
+  it("lists lessons by course and title, and answers a repeated read from the first call", async () => {
+    const { learner, course, lessons } = await seedLibrary();
+    const ai = scriptedAi([
+      callTool("list_lessons", { courseId: course.id }, [
+        { name: "list_lessons", args: { query: "furn" } },
+        { name: "get_lesson", args: { lessonId: "next" } },
+        { name: "get_lesson", args: { lessonId: "next" } },
+      ]),
+      say("Found them."),
+    ]);
+    const conversationId = await newConversation(learner);
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Lessons of the first course" }, { AI: ai.binding }));
+    expect(ofType(events, "tool_result").map((event) => event.part.error)).toEqual([null, null, null, "REPEATED_CALL"]);
+    const [byCourse, byTitle] = toolMessages(ai.calls[1]).map((message) => JSON.parse(message.content!) as { lessons: Array<Record<string, unknown>> });
+    expect(byCourse!.lessons).toEqual([
+      expect.objectContaining({ lessonId: lessons.first.id, number: 1, title: "Greetings", courseNumber: 1, state: "not_started" }),
+      expect.objectContaining({ lessonId: lessons.second.id, number: 2, title: "Furniture" }),
+    ]);
+    expect(byTitle!.lessons.map((lesson) => lesson.lessonId)).toEqual([lessons.second.id]);
+    expect(JSON.stringify(toolMessages(ai.calls[1]))).not.toContain("Secret draft lesson");
+    const system = modelMessages(ai.calls[0])[0]!.content!;
+    expect(system).toContain(`"courseId":"${course.id}"`);
+    expect(system).not.toContain("Hidden course");
+  });
+
+  it("resolves word hints from the lesson index and reviews an opened hint's tested word as Again", async () => {
+    const { learner, learnerId, lessons, words } = await seedLibrary();
+    const huis = { lessonId: lessons.first.id, wordId: words.huis.id };
+    const tafel = { lessonId: lessons.first.id, wordId: words.tafel.id };
+    const ai = scriptedAi([
+      callTool("ask_translate", { source: "the house", reference: "het huis", hints: [{ ...huis, cue: "a stranger's word" }, { lessonId: lessons.first.id, wordId: crypto.randomUUID(), cue: "x" }] }, [
+        { name: "ask_fill_in", args: { prompt: "Ik woon in … bij … .", answers: ["het huis", "de tafel"], lessonId: lessons.first.id, words: [huis, tafel], hints: [{ ...huis, cue: "the house" }, { ...tafel, cue: "the table" }] } },
+      ]),
+      say("You needed one hint."),
+    ]);
+    const conversationId = await newConversation(learner);
+    const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Quiz me" }, { AI: ai.binding }));
+    // A hint word outside the readable index is refused like any word; the model never supplies the hint's Dutch.
+    expect(ofType(events, "tool_result")[0]!.part).toMatchObject({ name: "ask_translate", error: "WORD_NOT_FOUND" });
+    const component = ofType(events, "component")[0]!.part;
+    expect(component.view).toMatchObject({ hints: [
+      { ...huis, cue: "the house", term: "het huis", meaning: "meaning of het huis", forms: null },
+      { ...tafel, cue: "the table", term: "de tafel" },
+    ] });
+    const path = `/api/ai/conversations/${conversationId}/tool-calls/${component.toolCallId}/respond`;
+    const foreign = await call("POST", path, learner, { type: "component", answer: { kind: "fill_in", blanks: ["het huis", "de tafel"], hintsUsed: [{ lessonId: lessons.first.id, wordId: words.stoel.id }] } }, { AI: ai.binding });
+    expect(await errorCode(foreign)).toBe("ANSWER_INVALID");
+
+    const answered = await readEvents(await call("POST", path, learner, { type: "component", answer: { kind: "fill_in", blanks: ["het huis", "de tafel"], hintsUsed: [tafel] } }, { AI: ai.binding }));
+    expect(ofType(answered, "answered")[0]!.part).toMatchObject({ grade: { correct: true }, answer: { hintsUsed: [tafel] } });
+    expect(JSON.parse(toolMessages(ai.calls[1]).at(-1)!.content!)).toMatchObject({ status: "answered", hintsOpened: ["the table"] });
+    expect(await env.DB.prepare("SELECT hints_used AS n FROM practice_attempts WHERE user_id = ?").bind(learnerId).first<{ n: number }>()).toEqual({ n: 1 });
+    const reviews = await env.DB.prepare("SELECT word_id AS wordId, result FROM word_reviews WHERE user_id = ? ORDER BY result").bind(learnerId).all<{ wordId: string; result: string }>();
+    expect(reviews.results).toEqual([{ wordId: words.tafel.id, result: "again" }, { wordId: words.huis.id, result: "got" }]);
+  });
+
+  describe("tool failure logs", () => {
+    afterEach(() => { vi.restoreAllMocks(); });
+
+    it("logs each failed tool call as a tagged warning without its arguments' values", async () => {
+      const { learner } = await seedLibrary();
+      const warn = vi.spyOn(console, "warn").mockImplementation(() => undefined);
+      const ai = scriptedAi([
+        callTool("get_lesson", { lessonId: "Lesson 3 secret title" }, [{ name: "get_lesson", args: { lessonId: crypto.randomUUID() } }, { name: "no_such_tool", args: {} }]),
+        say("Sorry."),
+      ]);
+      const conversationId = await newConversation(learner);
+      await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Lesson 3" }, { AI: ai.binding }));
+      const logged = warn.mock.calls.map(([line]) => JSON.parse(String(line)) as Record<string, unknown>).filter((entry) => entry.event === "ai.tool_failed");
+      expect(logged.map((entry) => [entry.tool, entry.errorCode, entry.category])).toEqual([
+        ["get_lesson", "INVALID_ARGUMENTS", "model"], ["get_lesson", "LESSON_NOT_FOUND", "model"], ["no_such_tool", "UNKNOWN_TOOL", "model"],
+      ]);
+      expect(logged[0]).toMatchObject({ level: "warn", area: "ai_tutor", toolKind: "other", conversationId, provider: "workers_ai", argumentKeys: "lessonId", request: 0 });
+      expect(String(logged[0]!.issues)).toContain("lessonId");
+      expect(JSON.stringify(logged)).not.toContain("secret title");
+    });
   });
 
   it("skips a waiting component once: nothing is recorded, the model is told, and the turn resumes", async () => {

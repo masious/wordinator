@@ -70,9 +70,28 @@
 .items{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0;padding:0;list-style:none}
 .items li{display:inline-flex;gap:var(--space-1);padding:var(--space-1) var(--space-2);font-size:var(--type-metadata);border:1px solid var(--color-danger);border-radius:var(--radius-sm)}
 .items li[data-ok]{border-color:var(--color-success)}
-.note,.reference{display:grid;gap:var(--space-1);justify-self:stretch;padding:var(--space-3) var(--space-4);border-radius:var(--radius-md)}
-.note{background:var(--color-wash)}
-.reference{background:var(--color-support-soft)}
-.noteText,.referenceText{margin:0;font-size:var(--type-authored);line-height:var(--line-body);white-space:pre-wrap;overflow-wrap:anywhere}
+/* One feedback box: the expected answer in authored text, the tutor's note smaller and muted, labels in a narrow column (stacked on phones). */
+.feedback{display:grid;gap:var(--space-2);justify-self:stretch;margin:0;padding:var(--space-2) var(--space-3);background:var(--color-support-soft);border-radius:var(--radius-md);box-shadow:inset 3px 0 0 var(--color-highlight)}
+.feedback[data-match]{box-shadow:inset 3px 0 0 var(--color-success)}
+.feedbackRow{display:grid;grid-template-columns:7rem minmax(0,1fr);align-items:baseline;gap:var(--space-3)}
+.feedbackRow dd{margin:0}
+.referenceText{font-size:var(--type-authored);line-height:var(--line-body);white-space:pre-wrap;overflow-wrap:anywhere}
+.noteText{font-size:var(--type-metadata);line-height:var(--line-body);color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}
+@media(max-width:30em){.feedbackRow{grid-template-columns:minmax(0,1fr);gap:0}}
 @keyframes verdictIn{0%{opacity:0;transform:translateY(var(--space-2)) scale(.6)}60%{opacity:1;transform:scale(1.08)}100%{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.verdict,.chipButton,.toggle,.option{animation:none;transition:none}}
+
+/* Target-language text the tutor marked with [[...]] in a question, option, or translation. */
+.target{font-style:italic;font-weight:var(--weight-semibold);color:var(--color-foreground);background:var(--color-highlight-soft);border-radius:var(--radius-sm);padding:0 var(--space-1);box-decoration-break:clone;-webkit-box-decoration-break:clone}
+
+/* Word hints: cue chips that open, in place, to the lesson word (docs/ai-tutor.md#word-hints). */
+.hints{display:grid;gap:var(--space-2)}
+.hintsLabel{display:inline-flex;align-items:center;gap:var(--space-1);margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
+.hintList{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0;padding:0;list-style:none}
+.hintButton{min-height:var(--control-height-sm);padding:var(--space-1) var(--space-3);font:var(--type-metadata)/var(--line-compact) var(--font-sans);color:var(--color-foreground);background:var(--color-wash-subtle);border:var(--ring-hairline);border-style:dashed;border-radius:var(--radius-pill);cursor:pointer}
+.hintButton:hover{background:var(--color-hover)}
+.hintButton:focus-visible{outline:var(--border-strong);outline-offset:2px}
+.hintOpen{display:inline-flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-2);min-height:var(--control-height-sm);padding:var(--space-1) var(--space-3);font-size:var(--type-metadata);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-pill)}
+.hintOpen[data-used]{background:var(--color-highlight-soft);border-color:var(--color-highlight)}
+.hintCue{color:var(--color-foreground-muted)}
+.hintTerm{font-weight:var(--weight-semibold);color:var(--color-foreground)}

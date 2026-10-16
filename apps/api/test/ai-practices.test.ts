@@ -211,6 +211,19 @@ describe("answering", () => {
     expect(await count("SELECT COUNT(*) AS n FROM course_practice_progress")).toBe(0);
   });
 
+  it("shows a saved practice's word hints from the lesson index and records the hints the learner opened", async () => {
+    const s = await setup();
+    const huis = { lessonId: s.lessons.first.id, wordId: s.words.huis.id };
+    const practice: AiPracticeContent = { kind: "translate", payload: { source: "the house", reference: "het huis", words: [huis], hints: [{ ...huis, cue: "the house" }] } };
+    const id = await s.save(practice, [{ lessonId: s.lessons.first.id, afterBlockId: s.anchors.example }]);
+    const listed = await practicesOf(s.firstPath, s.learner);
+    expect(listed.practices[0]!.view).toEqual({ kind: "translate", source: "the house", hints: [{ ...huis, cue: "the house", term: "het huis", meaning: "meaning of het huis", forms: null }] });
+    const answered = await request(`${s.firstPath}/ai-practices/${id}/answer`, s.learner, { answer: { kind: "translate", text: "het huis", hintsUsed: [huis] } });
+    expect(aiPracticeAnswerResponseSchema.parse(await answered.json())).toMatchObject({ grade: { correct: true } });
+    expect(await count("SELECT hints_used AS n FROM practice_attempts WHERE user_id = ?", s.learnerId)).toBe(1);
+    expect(await count("SELECT COUNT(*) AS n FROM word_reviews WHERE user_id = ? AND result = 'again'", s.learnerId)).toBe(1);
+  });
+
   it("refuses answers that do not fit the practice", async () => {
     const s = await setup();
     const id = await s.save(choice(), [{ lessonId: s.lessons.first.id, afterBlockId: s.anchors.example }]);

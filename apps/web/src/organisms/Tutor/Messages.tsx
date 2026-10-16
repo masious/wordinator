@@ -1,6 +1,6 @@
 import { parseTargetSpans, type TutorComponentAnswer, type TutorConfirmationSummary, type TutorPart } from "@wordinator/contracts/tutor";
 import { Check, ChevronDown, LoaderCircle, X } from "lucide-react";
-import { useId, useState } from "react";
+import { useId, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
 import { Button } from "../../ui";
@@ -27,12 +27,10 @@ export function ToolStep({ call, result, running }: { call: Pick<ToolCallPart, "
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const detailId = useId();
-  const status = result ? (result.ok ? "done" : "failed") : running ? "running" : "done";
+  const status: StepStatus = result ? (result.ok ? "done" : "failed") : running ? "running" : "done";
   const detail = result?.detail ?? {};
   const values = { ...Object.fromEntries(Object.entries(detail).map(([key, value]) => [key, value === null ? "" : String(value)])) };
-  const label = status === "running" ? t(`tutor.steps.running.${call.name}`, { defaultValue: t("tutor.steps.running.default") })
-    : detail.next === false && call.name === "get_lesson" ? t("tutor.steps.done.noNextLesson")
-    : t(`tutor.steps.done.${call.name}`, { ...values, defaultValue: t("tutor.steps.done.default") });
+  const label = stepLabel(call.name, status, detail, values, t, result?.error ?? null);
   const rows = Object.entries(detail).filter(([key]) => !key.endsWith("Id"));
   const expandable = status !== "running" && (rows.length > 0 || Boolean(result?.error));
   return <div className={styles.step} data-status={status}>
@@ -46,6 +44,44 @@ export function ToolStep({ call, result, running }: { call: Pick<ToolCallPart, "
     {expandable && open && <div className={styles.stepDetail} id={detailId}>
       {result?.error && <p>{t("tutor.steps.error", { code: result.error })}</p>}
       {rows.length > 0 && <dl>{rows.map(([key, value]) => <div key={key}><dt>{t(`tutor.steps.detail.${key}`, { defaultValue: key })}</dt><dd>{value === null ? "—" : String(value)}</dd></div>)}</dl>}
+    </div>}
+  </div>;
+}
+
+type StepStatus = "running" | "done" | "failed";
+type Translate = (key: string, options?: Record<string, unknown>) => string;
+
+// A step's plain-words label. A failed step has no titles in its detail, so it gets its own label instead of a done label with
+// empty placeholders.
+function stepLabel(name: string, status: StepStatus, detail: ToolResultPart["detail"], values: Record<string, string>, t: Translate, error: string | null = null) {
+  if (status === "running") return t(`tutor.steps.running.${name}`, { defaultValue: t("tutor.steps.running.default") });
+  if (status === "failed" && (error === "REPEATED_CALL" || error === "SKIPPED")) return t(`tutor.steps.failedLabel.${error}`);
+  if (status === "failed") return t(`tutor.steps.failedLabel.${name}`, { defaultValue: t("tutor.steps.failedLabel.default") });
+  if (detail.next === false && name === "get_lesson") return t("tutor.steps.done.noNextLesson");
+  return t(`tutor.steps.done.${name}`, { ...values, defaultValue: t("tutor.steps.done.default") });
+}
+
+type StepEntry = { key: number; call: Pick<ToolCallPart, "name" | "toolCallId">; result: ToolResultPart | null; running: boolean };
+
+// Consecutive tool steps fold into one chip (Used 4 tools), closed by default, that opens to the single steps.
+export function ToolSteps({ steps }: { steps: StepEntry[] }) {
+  const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
+  const listId = useId();
+  if (steps.length === 1) { const [step] = steps; return <ToolStep call={step!.call} result={step!.result} running={step!.running} />; }
+  const running = steps.some((step) => !step.result && step.running);
+  const failedCount = steps.filter((step) => step.result && !step.result.ok).length;
+  const status: StepStatus = running ? "running" : "done";
+  const label = running ? stepLabel(steps[steps.length - 1]!.call.name, "running", {}, {}, t) : t("tutor.steps.group", { count: steps.length });
+  return <div className={styles.step} data-status={status}>
+    <button type="button" className={styles.chip} aria-expanded={open} aria-controls={listId} onClick={() => setOpen((value) => !value)}>
+      <span className={styles.chipIcon} aria-hidden="true">{running ? <LoaderCircle size={14} className={styles.spinner} /> : <Check size={14} />}</span>
+      <span>{label}</span>
+      {failedCount > 0 && !running && <span className={styles.chipFailed}>{t("tutor.steps.groupFailed", { count: failedCount })}</span>}
+      <ChevronDown size={14} aria-hidden="true" className={styles.chipChevron} />
+    </button>
+    {open && <div className={styles.stepList} id={listId}>
+      {steps.map((step) => <ToolStep key={step.key} call={step.call} result={step.result} running={step.running} />)}
     </div>}
   </div>;
 }
@@ -104,50 +140,90 @@ export type PartHandlers = {
   onSkip?: (toolCallId: string) => Promise<unknown>;
   onRetry?: () => void;
   focusOpen?: boolean;
+  // The message's open questions are answered in the question dock under the chat; here they show as one line.
+  docked?: boolean;
 };
 
 // The assistant's parts, stored or streaming. Tool calls pair with their results by ID; an `ask_*` call or a confirmation's
-// call is shown by its component or card instead of a chip.
+// call is shown by its component or card instead of a chip, and consecutive chips fold into one group. The components of one
+// message form a practice set: their grades stay hidden until every one is answered or skipped, then show together.
 export function AssistantParts({ parts, streaming, handlers }: { parts: readonly (TutorPart | StreamPart)[]; streaming: boolean; handlers: PartHandlers }) {
   const { t } = useTranslation();
   const shownBy = new Set(parts.flatMap((part) => part.type === "component" || part.type === "confirmation" ? [part.toolCallId] : []));
   const results = new Map(parts.flatMap((part) => part.type === "tool_result" ? [[part.toolCallId, part] as const] : []));
   const calls = new Set(parts.flatMap((part) => part.type === "tool_call" ? [part.toolCallId] : []));
+  const components = parts.flatMap((part) => part.type === "component" ? [part] : []);
+  const open = components.filter((part) => part.answeredAt === null);
+  const docked = Boolean(handlers.docked) && !streaming && open.length > 0;
+  const setOpen = !streaming && components.length > 1 && open.length > 0;
+  const firstOpen = open[0]?.toolCallId;
   let spanBase = 0;
-  return <div className={styles.assistant}>
-    {parts.map((part, index) => {
-      switch (part.type) {
-        case "text": {
-          const base = spanBase; spanBase += part.spans.length;
-          return <AssistantText key={index} text={part.text} spans={part.spans} spanBase={base} speech={handlers.speech} lang={handlers.lang} />;
-        }
-        case "raw_text": {
-          const parsed = parseTargetSpans(part.raw);
-          return <AssistantText key={index} text={parsed.text} spans={parsed.spans} lang={handlers.lang} />;
-        }
-        case "tool_call":
-          if (shownBy.has(part.toolCallId) || part.name.startsWith("ask_")) return null;
-          return <ToolStep key={index} call={part} result={results.get(part.toolCallId) ?? null} running={streaming} />;
-        case "tool_result":
-          return calls.has(part.toolCallId) || shownBy.has(part.toolCallId) ? null : <ToolStep key={index} call={part} result={part} running={false} />;
-        case "component": {
-          // A skipped component collapses to one muted line, like an answered card.
-          if (part.skipped) return <p key={part.toolCallId} className={styles.answeredCard} role="status">{t("tutorComponents.skipped")} · {t(`tutorComponents.kinds.${part.kind}`)}</p>;
-          const { onSkip } = handlers;
-          return <AnswerComponent key={part.toolCallId} view={part.view} answer={part.answer} grade={part.grade} disabled={handlers.disabled || !handlers.onAnswer}
-            clip={handlers.componentClip?.(part.toolCallId)} language={handlers.language} autoFocus={handlers.focusOpen && part.answeredAt === null}
-            onSkip={onSkip && part.answeredAt === null ? () => onSkip(part.toolCallId) : undefined}
-            onAnswer={(answer) => handlers.onAnswer ? handlers.onAnswer(part.toolCallId, answer) : undefined} />;
-        };
-        case "confirmation":
-          return <ConfirmationCard key={part.toolCallId} part={part} disabled={handlers.disabled || !handlers.onConfirm}
-            onRespond={(confirmed) => handlers.onConfirm ? handlers.onConfirm(part.toolCallId, confirmed) : Promise.resolve()} />;
-        case "error":
-          return <div key={index} className={styles.errorPart} role="alert">
-            <p>{t(`tutor.errors.${part.code}`, { defaultValue: t("tutor.errors.generic") })}</p>
-            {handlers.onRetry && <Button variant="secondary" onClick={handlers.onRetry}>{t("tutor.tryAgain")}</Button>}
-          </div>;
+  const nodes: ReactNode[] = [];
+  let steps: StepEntry[] = [];
+  const flushSteps = () => {
+    if (steps.length) nodes.push(<ToolSteps key={`steps-${steps[0]!.key}`} steps={steps} />);
+    steps = [];
+  };
+  parts.forEach((part, index) => {
+    switch (part.type) {
+      case "tool_call":
+        if (shownBy.has(part.toolCallId) || part.name.startsWith("ask_")) return;
+        steps.push({ key: index, call: part, result: results.get(part.toolCallId) ?? null, running: streaming });
+        return;
+      case "tool_result":
+        if (!calls.has(part.toolCallId) && !shownBy.has(part.toolCallId)) steps.push({ key: index, call: part, result: part, running: false });
+        return;
+    }
+    flushSteps();
+    switch (part.type) {
+      case "text": {
+        const base = spanBase; spanBase += part.spans.length;
+        nodes.push(<AssistantText key={index} text={part.text} spans={part.spans} spanBase={base} speech={handlers.speech} lang={handlers.lang} />);
+        return;
       }
-    })}
-  </div>;
+      case "raw_text": {
+        const parsed = parseTargetSpans(part.raw);
+        nodes.push(<AssistantText key={index} text={parsed.text} spans={parsed.spans} lang={handlers.lang} />);
+        return;
+      }
+      case "component": {
+        if (docked && part.answeredAt === null) {
+          if (part.toolCallId === firstOpen) nodes.push(<p key="docked" className={styles.dockedLine} role="status">{t("tutor.dock.inline", { count: open.length })}</p>);
+          return;
+        }
+        // An open set shows one question at a time: the first open one, under a progress bar. The others show once it is done.
+        if (setOpen) {
+          if (part.toolCallId !== firstOpen) return;
+          const position = components.length - open.length + 1;
+          nodes.push(<div key="set-progress" className={styles.setStatus} role="status">
+            <span className={styles.setProgress}>{t("tutor.set.progress", { current: position, count: components.length })}</span>
+            <span aria-hidden="true" className={styles.setTrack}><span style={{ transform: `scaleX(${(position - 1) / components.length})` }} /></span>
+          </div>);
+        }
+        // A skipped component collapses to one muted line, like an answered card.
+        if (part.skipped) nodes.push(<p key={part.toolCallId} className={styles.answeredCard} role="status">{t("tutorComponents.skipped")} · {t(`tutorComponents.kinds.${part.kind}`)}</p>);
+        else {
+          const { onSkip } = handlers;
+          nodes.push(<AnswerComponent key={part.toolCallId} view={part.view} answer={part.answer} grade={setOpen ? null : part.grade} gradeHeld={setOpen}
+            disabled={handlers.disabled || !handlers.onAnswer}
+            clip={handlers.componentClip?.(part.toolCallId)} language={handlers.language} autoFocus={handlers.focusOpen && part.toolCallId === firstOpen}
+            onSkip={onSkip && part.answeredAt === null ? () => onSkip(part.toolCallId) : undefined}
+            onAnswer={(answer) => handlers.onAnswer ? handlers.onAnswer(part.toolCallId, answer) : undefined} />);
+        }
+        return;
+      }
+      case "confirmation":
+        nodes.push(<ConfirmationCard key={part.toolCallId} part={part} disabled={handlers.disabled || !handlers.onConfirm}
+          onRespond={(confirmed) => handlers.onConfirm ? handlers.onConfirm(part.toolCallId, confirmed) : Promise.resolve()} />);
+        return;
+      case "error":
+        nodes.push(<div key={index} className={styles.errorPart} role="alert">
+          <p>{t(`tutor.errors.${part.code}`, { defaultValue: t("tutor.errors.generic") })}</p>
+          {handlers.onRetry && <Button variant="secondary" onClick={handlers.onRetry}>{t("tutor.tryAgain")}</Button>}
+        </div>);
+        return;
+    }
+  });
+  flushSteps();
+  return <div className={styles.assistant}>{nodes}</div>;
 }

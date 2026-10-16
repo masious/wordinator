@@ -1,7 +1,7 @@
 import {
   inlineText, parseStoredLessonDocument, readDialogueTurns, readPracticeBlock, readVocabularyBlock, walkLessonBlocks, wordSearchKey, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
-import type { TutorWordRef } from "@wordinator/contracts/tutor";
+import type { TutorHintRef, TutorHintView, TutorWordRef } from "@wordinator/contracts/tutor";
 import { courseVisibleInLibraryClause, READABLE_LIBRARY_JOIN } from "../courseVisibility";
 
 // What the tutor can read (docs/ai-tutor.md#tools): published lessons of courses the account can see in a library it is an
@@ -63,6 +63,37 @@ export async function readableCourse(db: D1Database, userId: string, courseId: s
   return row ? toCourse(row) : null;
 }
 
+export type ListedLesson = {
+  lessonId: string; number: number; title: string; state: "completed" | "in_progress" | "not_started";
+  courseId: string; courseNumber: number; courseTitle: string; archived: boolean;
+};
+const LESSON_LIST_MAX = 100;
+
+/**
+ * The readable published lessons in library order (courses oldest first, lessons by position), numbered within their course and
+ * courses numbered in the library, so the tutor can resolve "lesson 3 of the second course" or a title to a lesson ID. A query
+ * keeps the lessons whose title or course title contains it, ignoring case.
+ */
+export async function readableLessonList(db: D1Database, userId: string, filter: { courseId: string | null; query: string | null }): Promise<ListedLesson[]> {
+  const from = readableLessonsFrom(userId);
+  const like = filter.query === null ? null : `%${filter.query.toLowerCase().replace(/[\\%_]/g, (character) => `\\${character}`)}%`;
+  const rows = await db.prepare(
+    `SELECT * FROM (
+       SELECT l.id AS lessonId, l.title, c.id AS courseId, c.title AS courseTitle, c.status = 'archived' AS archived,
+         ROW_NUMBER() OVER (PARTITION BY c.id ORDER BY l.position, l.created_at, l.id) AS number,
+         DENSE_RANK() OVER (ORDER BY c.created_at, c.id) AS courseNumber,
+         EXISTS (SELECT 1 FROM course_lesson_completions clc WHERE clc.lesson_id = l.id AND clc.user_id = ?) AS completed,
+         EXISTS (SELECT 1 FROM course_lesson_positions p WHERE p.lesson_id = l.id AND p.user_id = ?) AS started
+       ${from.sql}) listed
+     WHERE (? IS NULL OR listed.courseId = ?) AND (? IS NULL OR lower(listed.title) LIKE ? ESCAPE '\\' OR lower(listed.courseTitle) LIKE ? ESCAPE '\\')
+     ORDER BY listed.courseNumber, listed.number LIMIT ${LESSON_LIST_MAX}`,
+  ).bind(userId, userId, ...from.values, filter.courseId, filter.courseId, like, like, like)
+    .all<Omit<ListedLesson, "state" | "archived"> & { archived: number; completed: number; started: number }>();
+  return rows.results.map(({ completed, started, archived, ...row }) => ({
+    ...row, archived: archived === 1, state: completed === 1 ? "completed" : started === 1 ? "in_progress" : "not_started",
+  }));
+}
+
 /**
  * The lesson to study next: in the readable course the account was most recently active in (a saved position, a completion, or
  * a practice attempt), the most recently moved unfinished lesson, otherwise the first published lesson not completed. Without
@@ -115,6 +146,14 @@ export async function readableWords(db: D1Database, userId: string, refs: readon
     .all<Omit<IndexedTutorWord, "termKey" | "archived"> & { termKey: string | null; archived: number }>();
   for (const row of rows.results) found.set(wordKey(row), { ...row, termKey: row.termKey ?? wordSearchKey(row.term), archived: row.archived === 1 });
   return found;
+}
+
+// A component's hints with their words from the published index, in the model's order; an unreadable word is left out.
+export function hintViews(refs: readonly TutorHintRef[], words: ReadonlyMap<string, IndexedTutorWord>): TutorHintView[] {
+  return refs.flatMap((ref) => {
+    const word = words.get(wordKey(ref));
+    return word ? [{ lessonId: ref.lessonId, wordId: ref.wordId, cue: ref.cue, term: word.term, meaning: word.meaning, forms: word.forms }] : [];
+  });
 }
 
 // ---- Lesson content for the model ----

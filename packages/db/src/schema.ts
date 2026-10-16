@@ -528,6 +528,8 @@ export const practiceAttempts = sqliteTable(
     aiNote: text("ai_note"),
     source: text("source", { enum: ["lesson", "ai_chat", "ai_practice"] }).notNull(),
     conversationId: text("conversation_id"),
+    // Word hints the learner opened before answering a tutor component or AI practice (0 for lesson practices).
+    hintsUsed: integer("hints_used").notNull().default(0),
     createdAt: integer("created_at").notNull(),
   },
   (table) => [
@@ -538,6 +540,7 @@ export const practiceAttempts = sqliteTable(
     check("practice_attempts_verdict_check", sql`${table.aiVerdict} IS NULL OR ${table.aiVerdict} in ('acceptable', 'error')`),
     check("practice_attempts_matched_check", sql`${table.matched} IS NULL OR ${table.matched} in (0, 1)`),
     check("practice_attempts_item_check", sql`${table.itemIndex} >= 0`),
+    check("practice_attempts_hints_check", sql`${table.hintsUsed} >= 0 AND ${table.hintsUsed} <= 4`),
     check("practice_attempts_length_check", sql`length(${table.prompt}) <= 2000 AND length(${table.answer}) <= 2000 AND (${table.reference} IS NULL OR length(${table.reference}) <= 2000)`),
   ],
 );
@@ -643,6 +646,7 @@ export const aiUsage = sqliteTable(
   (table) => [
     index("ai_usage_user_created_idx").on(table.userId, table.createdAt),
     index("ai_usage_created_idx").on(table.createdAt),
+    index("ai_usage_conversation_idx").on(table.conversationId),
     check("ai_usage_provider_check", sql`${table.provider} in ('openrouter', 'workers_ai', 'azure')`),
   ],
 );
@@ -674,6 +678,7 @@ export const aiConversations = sqliteTable(
     id: text("id").primaryKey(),
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     title: text("title").notNull().default(""),
+    titleSource: text("title_source", { enum: ["auto", "tutor", "user"] }).notNull().default("auto"),
     archivedAt: integer("archived_at"),
     provider: text("provider", { enum: ["openrouter", "workers_ai", "azure"] }),
     createdAt: integer("created_at").notNull(),
@@ -682,6 +687,7 @@ export const aiConversations = sqliteTable(
   (table) => [
     index("ai_conversations_user_archived_updated_idx").on(table.userId, table.archivedAt, table.updatedAt),
     check("ai_conversations_provider_check", sql`${table.provider} is null or ${table.provider} in ('openrouter', 'workers_ai', 'azure')`),
+    check("ai_conversations_title_source_check", sql`${table.titleSource} in ('auto', 'tutor', 'user')`),
   ],
 );
 

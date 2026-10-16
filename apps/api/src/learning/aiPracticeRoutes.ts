@@ -62,7 +62,7 @@ export function registerAiPracticeRoutes(app: Hono<AppEnvironment>, deps: AiPrac
 
   app.get(PRACTICES_PATH, deps.requireGroupAccess, async (context) => {
     const found = await deps.lessonFor(context, "read"); if ("error" in found) return found.error;
-    const practices = await readLessonAiPractices(context.env.DB, found.lesson);
+    const practices = await readLessonAiPractices(context.env.DB, found.lesson, context.get("user")!.id);
     return context.json(lessonAiPracticesResponseSchema.parse({ practices, canRemove: found.course.canEdit }));
   });
 

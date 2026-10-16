@@ -1,13 +1,15 @@
 import type { AiProvider } from "@wordinator/contracts/ai";
-import { TUTOR_MESSAGE_TEXT_MAX, tutorConversationResponseSchema, type TutorComponentAnswer, type TutorConversation, type TutorMessage, type TutorMessagePage, type TutorPart, type TutorRespondRequest, type TutorStreamEvent } from "@wordinator/contracts/tutor";
+import { TUTOR_MESSAGE_TEXT_MAX, tutorConversationResponseSchema, type TutorComponentAnswer, type TutorConversation, type TutorMessage, type TutorMessagePage, type TutorPart, type TutorRespondRequest, type TutorSetAnswer, type TutorStreamEvent } from "@wordinator/contracts/tutor";
 import { useInfiniteQuery, useQueryClient, type InfiniteData } from "@tanstack/react-query";
 import { ArrowUp } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
-import { ApiError, apiRequest, tutorConversationQueryOptions, tutorConversationsKey, tutorMessagesKey, tutorMessagesQueryOptions } from "../../api";
+import { ApiError, apiRequest, tutorConversationQueryOptions, tutorConversationsKey, tutorMessagesKey, tutorMessagesQueryOptions, tutorUsageKey } from "../../api";
 import { SpeechRecognitionScope, type TokenSource } from "../../molecules/speechRecognition";
 import { Button, IconButton, TextAreaField } from "../../ui";
 import { AssistantParts, UserMessage, type PartHandlers, type StreamPart } from "./Messages";
+import { PrivacyNotice } from "./PrivacyNotice";
+import { QuestionDock } from "./QuestionDock";
 import { conversationPath, limitResetsAt, streamTurn, tutorClip } from "./tutorApi";
 import styles from "./Tutor.module.css";
 
@@ -28,12 +30,14 @@ function withMessage(data: Messages | undefined, message: TutorMessage): Message
   return { ...base, pages };
 }
 
-// Replaces an answered component or card in its message, which no longer waits.
+// Replaces an answered component or card in its message, which keeps waiting while other questions of its practice set are open.
 function withAnsweredPart(data: Messages | undefined, messageId: string, part: Extract<TutorPart, { type: "component" | "confirmation" }>): Messages | undefined {
   if (!data) return data;
-  return { ...data, pages: data.pages.map((page) => ({ ...page, items: page.items.map((message) => message.id !== messageId ? message : {
-    ...message, status: "complete" as const,
-    parts: message.parts.map((entry) => (entry.type === part.type && "toolCallId" in entry && entry.toolCallId === part.toolCallId) ? part : entry),
+  return { ...data, pages: data.pages.map((page) => ({ ...page, items: page.items.map((message) => {
+    if (message.id !== messageId) return message;
+    const parts = message.parts.map((entry) => (entry.type === part.type && "toolCallId" in entry && entry.toolCallId === part.toolCallId) ? part : entry);
+    const waiting = parts.some((entry) => (entry.type === "component" || entry.type === "confirmation") && entry.answeredAt === null);
+    return { ...message, status: waiting ? "awaiting_user" as const : "complete" as const, parts };
   }) })) };
 }
 
@@ -53,9 +57,9 @@ function applyEvent(current: Streaming, event: TutorStreamEvent): Streaming {
 
 const textOf = (message: TutorMessage) => message.parts.map((part) => part.type === "text" ? part.text : "").join("");
 
-export function TutorChat({ conversationId, conversation, newProvider = null, onCreated, language, languageName, recognitionLocale, token }: {
+export function TutorChat({ accountId, conversationId, conversation, newProvider = null, onCreated, language, languageName, recognitionLocale, token }: {
   // Null for a new conversation, which is created when the learner first sends, with `newProvider` as its model.
-  conversationId: string | null; conversation: TutorConversation | null; newProvider?: AiProvider | null; onCreated: (conversation: TutorConversation) => void;
+  accountId: string; conversationId: string | null; conversation: TutorConversation | null; newProvider?: AiProvider | null; onCreated: (conversation: TutorConversation) => void;
   language: string; languageName: string; recognitionLocale: string | null; token: TokenSource;
 }) {
   const { t } = useTranslation();
@@ -93,6 +97,9 @@ export function TutorChat({ conversationId, conversation, newProvider = null, on
   const last = list[list.length - 1];
   const archived = conversation?.archivedAt != null;
   const awaiting = last?.role === "assistant" && last.status === "awaiting_user";
+  // The last message's open questions go to the question dock, which takes the composer's place until they are sent.
+  const dockParts = awaiting && !archived && last ? last.parts.flatMap((part) => part.type === "component" && part.answeredAt === null ? [part] : []) : [];
+  const docked = dockParts.length > 0 && !streaming;
   const lastUser = [...list].reverse().find((message) => message.role === "user");
 
   const run = async (target: string, path: string, body: unknown) => {
@@ -122,7 +129,10 @@ export function TutorChat({ conversationId, conversation, newProvider = null, on
       throw error;
     } finally {
       if (abort.current === controller) { abort.current = null; setBusy(false); }
+      // The tutor may have renamed the conversation, and the turn used tokens: refresh the header, the list, and the usage box.
       void queryClient.invalidateQueries({ queryKey: tutorConversationsKey });
+      void queryClient.invalidateQueries({ queryKey: tutorConversationQueryOptions(target).queryKey, exact: true });
+      void queryClient.invalidateQueries({ queryKey: tutorUsageKey });
     }
   };
 
@@ -153,6 +163,10 @@ export function TutorChat({ conversationId, conversation, newProvider = null, on
     if (!id) return Promise.reject(new Error("No conversation"));
     return run(id, `${conversationPath(id)}/tool-calls/${encodeURIComponent(toolCallId)}/respond`, request);
   };
+  const answerSet = (answers: TutorSetAnswer[]) => {
+    if (!id || !last) return Promise.reject(new Error("No conversation"));
+    return run(id, `${conversationPath(id)}/messages/${encodeURIComponent(last.id)}/answers`, { answers });
+  };
   const retry = lastUser && !archived ? () => { void send(textOf(lastUser)).catch(() => undefined); } : undefined;
 
   const composerLocked = busy || archived || awaiting || limitUntil !== null;
@@ -169,6 +183,7 @@ export function TutorChat({ conversationId, conversation, newProvider = null, on
       onSkip: (toolCallId) => respond(toolCallId, { type: "component", skip: true }),
       onRetry: isLast && message?.status === "error" && !busy ? retry : undefined,
       focusOpen: isLast,
+      docked: isLast && docked,
     };
   };
 
@@ -178,7 +193,7 @@ export function TutorChat({ conversationId, conversation, newProvider = null, on
       <div className={styles.messages} aria-live="polite" aria-busy={busy || undefined}>
         {messages.hasNextPage && <Button variant="quiet" className={styles.earlier} loading={messages.isFetchingNextPage} onClick={() => void messages.fetchNextPage()}>{t("tutor.earlier")}</Button>}
         {messages.isError && <p className={styles.errorLine} role="alert">{t("tutor.messagesUnavailable")}</p>}
-        {!messages.hasNextPage && <p className={styles.privacy}>{t("tutor.privacy")}</p>}
+        {!messages.hasNextPage && <PrivacyNotice accountId={accountId} />}
         {list.length === 0 && !streaming && !messages.isPending && <p className={styles.emptyChat}>{t("tutor.emptyChat")}</p>}
         {list.map((message) => message.role === "user"
           ? <UserMessage key={message.id} text={textOf(message)} />
@@ -191,7 +206,11 @@ export function TutorChat({ conversationId, conversation, newProvider = null, on
         </div>}
         <div ref={bottom} />
       </div>
-      <form className={styles.composer} onSubmit={submit}>
+      {docked && last ? <div className={styles.dockSlot}>
+        {limitUntil !== null && <p className={styles.composerNote} role="status">{t("tutor.limit", { time: resets })}</p>}
+        <QuestionDock key={last.id} components={dockParts} onSubmit={answerSet} language={languageName} disabled={busy || limitUntil !== null}
+          clip={id ? (toolCallId) => tutorClip(id, last.id, { toolCallId }) : undefined} />
+      </div> : <form className={styles.composer} onSubmit={submit}>
         {limitUntil !== null ? <p className={styles.composerNote} role="status">{t("tutor.limit", { time: resets })}</p>
           : archived ? <p className={styles.composerNote}>{t("tutor.archivedNote")}</p>
           : <>
@@ -199,9 +218,9 @@ export function TutorChat({ conversationId, conversation, newProvider = null, on
               value={text} maxLength={TUTOR_MESSAGE_TEXT_MAX} autosize minRows={1} maxRows={6} disabled={awaiting}
               onChange={(event) => setText(event.currentTarget.value)}
               onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); submit(); } }} />
-            <IconButton label={t("tutor.send")} type="submit" className={styles.send} disabled={composerLocked || !text.trim()} loading={busy}><ArrowUp size={18} aria-hidden="true" /></IconButton>
+            <IconButton label={t("tutor.send")} type="submit" tone="primary" className={styles.send} disabled={composerLocked || !text.trim()} loading={busy}><ArrowUp size={18} aria-hidden="true" /></IconButton>
           </>}
-      </form>
+      </form>}
     </div>
   </SpeechRecognitionScope>;
 }

@@ -15,12 +15,21 @@ export function ModelPicker({ value, onChange, disabled, error }: {
   const items = models.data?.items ?? [];
   if (items.length < 2) return null;
   const provider = (name: AiProvider) => t(`tutor.model.providers.${name}`);
-  const data = [
-    { value: "", label: t("tutor.model.default", { model: items[0]!.model }) },
-    ...items.map((item) => ({ value: item.provider, label: t("tutor.model.option", { provider: provider(item.provider), model: item.model }) })),
-  ];
+  // The closed picker shows the short model name; the open list adds Default or the provider, and the full ID as a tooltip.
+  const details = new Map<string, { title: string; model: string }>([
+    ["", { title: t("tutor.model.defaultTitle"), model: items[0]!.model }],
+    ...items.map((item): [string, { title: string; model: string }] => [item.provider, { title: provider(item.provider), model: item.model }]),
+  ]);
+  const data = [...details].map(([key, detail]) => ({ value: key, label: key === "" ? t("tutor.model.default", { model: shortModel(detail.model) }) : shortModel(detail.model) }));
   const selected = value && items.some((item) => item.provider === value) ? value : "";
   return <SelectField className={styles.modelPicker} aria-label={t("tutor.model.label")} allowDeselect={false} disabled={disabled}
     data={data} value={selected} error={error ?? undefined} comboboxProps={{ width: "max-content", position: "bottom-end" }}
+    renderOption={({ option }) => {
+      const detail = details.get(option.value)!;
+      return <span className={styles.modelOption} title={detail.model}><span>{detail.title}</span><span className={styles.modelId}>{shortModel(detail.model)}</span></span>;
+    }}
     onChange={(next) => onChange(next ? items.find((item) => item.provider === next)?.provider ?? null : null)} />;
 }
+
+// A model ID without its vendor path and tag: `openai/gpt-oss-120b:free` and `@cf/openai/gpt-oss-120b` read `gpt-oss-120b`.
+export const shortModel = (model: string) => (model.split("/").pop() ?? model).replace(/:[^:]*$/, "") || model;

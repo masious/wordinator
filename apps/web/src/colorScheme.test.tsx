@@ -26,7 +26,7 @@ describe("theme preference", () => {
     localStorage.clear();
     document.documentElement.removeAttribute("data-mantine-color-scheme");
     document.documentElement.style.colorScheme = "";
-    document.head.innerHTML = '<meta name="theme-color" content="#f5ede2">';
+    document.head.innerHTML = '<meta name="theme-color" content="#f4f3ef">';
   });
 
   it("selects and persists an explicit accessible preference", async () => {

@@ -23,7 +23,7 @@ const session = () => ({
   groups: [{ id: groupId, name: "Library", language: "nl", role: "member", icon: "🇳🇱", iconUrl: null }],
   deletedGroups: [], requests: [],
 });
-const conversation = (conversationId: string, title: string, archivedAt: number | null = null): TutorConversation => ({ id: conversationId, title, archivedAt, provider: null, createdAt: 1, updatedAt: 2 });
+const conversation = (conversationId: string, title: string, archivedAt: number | null = null): TutorConversation => ({ id: conversationId, title, titleSource: "auto", archivedAt, provider: null, createdAt: 1, updatedAt: 2, tokens: 2_500 });
 const message = (messageId: string, role: "user" | "assistant", parts: TutorPart[], status: TutorMessage["status"] = "complete"): TutorMessage =>
   ({ id: messageId, conversationId: c1, role, status, parts, provider: role === "assistant" ? "workers_ai" : null, model: null, createdAt: Number(messageId.slice(-4)) });
 const text = (value: string, spans: { start: number; end: number }[] = []): TutorPart => ({ type: "text", text: value, spans });
@@ -73,6 +73,7 @@ const patches = () => vi.mocked(fetch).mock.calls.filter(([, init]) => init?.met
 const posts = () => vi.mocked(fetch).mock.calls.filter(([, init]) => init?.method === "POST").map(([input, init]) => ({ path: String(input), body: init?.body ? JSON.parse(String(init.body)) as unknown : null }));
 
 beforeEach(() => {
+  localStorage.clear();
   resetOnDemandSpeech();
   conversations = [conversation(c1, "What next?")];
   archivedConversations = [];
@@ -88,6 +89,10 @@ beforeEach(() => {
     const body = init?.body ? JSON.parse(String(init.body)) as unknown : null;
     if (path === "/api/session") return json(session());
     if (path === "/api/ai/models") return json({ items: models });
+    if (path.startsWith("/api/ai/usage")) return json({
+      today: { tokensIn: 12_000, tokensOut: 3_400, turns: 7, turnCap: 40, resetsAt: Date.UTC(2026, 9, 17) },
+      conversation: path.includes("conversationId=") ? { tokensIn: 2_000, tokensOut: 500 } : null,
+    });
     if (path.startsWith("/api/ai/conversations?archived=")) return json({ items: path.includes("archived=true") ? archivedConversations : conversations, nextCursor: null });
     if (path === "/api/ai/conversations" && method === "POST") { const created = conversation(c2, ""); conversations = [created, ...conversations]; messages[c2] = []; return json({ conversation: created }, 201); }
     const match = /^\/api\/ai\/conversations\/([^/]+)(\/.*)?$/.exec(path);
@@ -97,7 +102,8 @@ beforeEach(() => {
       const found = all.find((entry) => entry.id === conversationId);
       if (!found) return json({ error: { code: "CONVERSATION_NOT_FOUND", message: "Missing." } }, 404);
       if (rest === "" && method === "PATCH") {
-        const changed = { ...found, provider: (body as { provider: TutorConversation["provider"] }).provider };
+        const change = body as { provider?: TutorConversation["provider"]; title?: string };
+        const changed = { ...found, ...(change.provider !== undefined ? { provider: change.provider } : {}), ...(change.title !== undefined ? { title: change.title, titleSource: "user" as const } : {}) };
         conversations = conversations.map((entry) => entry.id === found.id ? changed : entry);
         return json({ conversation: changed });
       }
@@ -120,7 +126,7 @@ afterEach(() => { act(() => stopSpeech()); cleanup(); vi.restoreAllMocks(); vi.u
 
 const composer = () => screen.getByRole("textbox", { name: "Message your tutor" });
 // Every Select keeps its options mounted; the open one is found through the listbox its combobox controls.
-async function choose(combobox: HTMLElement, option: string) {
+async function choose(combobox: HTMLElement, option: string | RegExp) {
   fireEvent.click(combobox);
   await waitFor(() => expect(combobox).toHaveAttribute("aria-expanded", "true"));
   fireEvent.click(within(document.getElementById(combobox.getAttribute("aria-controls")!)!).getByRole("option", { name: option, hidden: true }));
@@ -128,6 +134,54 @@ async function choose(combobox: HTMLElement, option: string) {
 const sendText = (value: string) => { fireEvent.change(composer(), { target: { value } }); fireEvent.click(screen.getByRole("button", { name: "Send" })); };
 
 describe("Tutor page", () => {
+  it("renames the open conversation in place and keeps the learner's title", async () => {
+    renderPage(c1);
+    fireEvent.click(await screen.findByRole("button", { name: "Rename conversation" }));
+    const field = screen.getByRole("textbox", { name: "Conversation title" });
+    expect(field).toHaveValue("What next?");
+    fireEvent.change(field, { target: { value: "  Separable   verbs " } });
+    fireEvent.click(screen.getByRole("button", { name: "Save title" }));
+    expect(await screen.findByRole("heading", { name: "Separable verbs", level: 2 })).toBeInTheDocument();
+    expect(patches()).toEqual([{ path: `/api/ai/conversations/${c1}`, body: { title: "Separable verbs" } }]);
+
+    // Escape cancels without a request.
+    fireEvent.click(screen.getByRole("button", { name: "Rename conversation" }));
+    fireEvent.keyDown(screen.getByRole("textbox", { name: "Conversation title" }), { key: "Escape" });
+    expect(screen.queryByRole("textbox", { name: "Conversation title" })).not.toBeInTheDocument();
+    expect(patches()).toHaveLength(1);
+  });
+
+  it("shows each row's tokens and marks a title the tutor chose", async () => {
+    conversations = [{ ...conversation(c1, "Greetings practice"), titleSource: "tutor" }, { ...conversation(c2, "Untouched"), tokens: 0 }];
+    renderPage(c1);
+    const row = await screen.findByRole("link", { name: /Greetings practice/ });
+    expect(row).toHaveTextContent("2.5K tokens");
+    expect(within(row).getByLabelText("Named by your tutor")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Untouched/ })).not.toHaveTextContent("tokens");
+    expect(screen.getAllByLabelText("Named by your tutor")).toHaveLength(2);
+  });
+
+  it("shows the privacy notice in full once per account and browser, then as one line that opens", async () => {
+    renderPage(c1);
+    expect(await screen.findByText(/which may keep them/)).toBeVisible();
+    expect(screen.queryByText("Processed by external AI providers")).toBeNull();
+    cleanup();
+    renderPage(c1);
+    const summary = await screen.findByText("Processed by external AI providers");
+    expect(summary.closest("details")).not.toHaveAttribute("open");
+    fireEvent.click(summary);
+    expect(summary.closest("details")).toHaveAttribute("open");
+  });
+
+  it("shows today's usage and the open conversation's tokens", async () => {
+    renderPage(c1);
+    const usage = await screen.findByRole("region", { name: "Usage" });
+    expect(await within(usage).findByText("15.4K tokens")).toBeInTheDocument();
+    expect(within(usage).getByText("2.5K tokens")).toBeInTheDocument();
+    expect(within(usage).getByRole("progressbar", { name: "7 of 40 turns" })).toBeInTheDocument();
+    expect(vi.mocked(fetch).mock.calls.some(([input]) => String(input) === `/api/ai/usage?conversationId=${c1}`)).toBe(true);
+  });
+
   it("lists conversations, shows the privacy notice, and renders a stored conversation", async () => {
     messages[c1]!.push(message(id(2), "assistant", [text("## Grammar\nUse **de** here.")]));
     renderPage();
@@ -181,20 +235,30 @@ describe("Tutor page", () => {
     expect(posts().find((entry) => entry.path.endsWith("/speech"))).toEqual({ path: `/api/ai/conversations/${c1}/messages/${id(2)}/speech`, body: { spanIndex: 1 } });
   });
 
-  it("shows tool chips as running, done, and failed", async () => {
+  it("folds consecutive tool chips into one closed group that opens to done and failed steps", async () => {
     messages[c1]!.push(message(id(2), "assistant", [
       { type: "tool_call", toolCallId: id(21), name: "get_weak_words", arguments: {} },
       { type: "tool_result", toolCallId: id(21), name: "get_weak_words", ok: true, error: null, detail: { count: 3 } },
-      { type: "tool_call", toolCallId: id(22), name: "search_words", arguments: {} },
-      { type: "tool_result", toolCallId: id(22), name: "search_words", ok: false, error: "INVALID_ARGUMENTS", detail: {} },
+      { type: "tool_call", toolCallId: id(22), name: "get_lesson", arguments: {} },
+      { type: "tool_result", toolCallId: id(22), name: "get_lesson", ok: false, error: "LESSON_NOT_FOUND", detail: {} },
+      text("Here we go."),
+      { type: "tool_call", toolCallId: id(23), name: "get_recent_words", arguments: {} },
+      { type: "tool_result", toolCallId: id(23), name: "get_recent_words", ok: true, error: null, detail: { count: 1 } },
     ]));
     renderPage();
-    const done = (await screen.findByText("Checked your weak words")).closest("[data-status]");
-    expect(done).toHaveAttribute("data-status", "done");
-    const failed = screen.getByText(/Searched words for/).closest("[data-status]");
+    const group = await screen.findByRole("button", { name: /Used 2 tools/ });
+    expect(group).toHaveAttribute("aria-expanded", "false");
+    expect(group).toHaveTextContent("· 1 failed");
+    expect(screen.queryByText("Checked your weak words")).toBeNull();
+    // A single step outside the group stays a plain chip.
+    expect(screen.getByText("Checked your recent words")).toBeInTheDocument();
+    fireEvent.click(group);
+    expect(screen.getByText("Checked your weak words").closest("[data-status]")).toHaveAttribute("data-status", "done");
+    const failed = screen.getByText("Couldn’t open that lesson").closest("[data-status]");
     expect(failed).toHaveAttribute("data-status", "failed");
+    expect(screen.queryByText(/\{\{lessonTitle\}\}/)).toBeNull();
     fireEvent.click(within(failed as HTMLElement).getByRole("button"));
-    expect(screen.getByText("Error: INVALID_ARGUMENTS")).toBeInTheDocument();
+    expect(screen.getByText("Error: LESSON_NOT_FOUND")).toBeInTheDocument();
   });
 
   it("answers a confirmation card, streams the resumed turn, and collapses the card", async () => {
@@ -233,7 +297,7 @@ describe("Tutor page", () => {
     expect(posts().find((entry) => entry.path.endsWith("/respond"))?.body).toEqual({ type: "confirmation", confirmed: false });
   });
 
-  it("answers a component through the respond route", async () => {
+  it("answers a lone question in the dock, which replaces the composer, and sends it with the set route", async () => {
     const component: Extract<TutorPart, { type: "component" }> = { type: "component", toolCallId: id(42), kind: "choice", answer: null, grade: null, answeredAt: null,
       view: { kind: "choice", question: "Huis means?", options: ["house", "tree", "car"] } };
     messages[c1]!.push(message(id(2), "assistant", [component], "awaiting_user"));
@@ -241,25 +305,75 @@ describe("Tutor page", () => {
       grade: { correct: true, matched: true, verdict: null, note: null, reference: "house", items: [], score: null } };
     turn = () => sse([{ type: "answered", messageId: id(2), part: graded }, { type: "start", messageId: id(3) }, { type: "done", message: message(id(3), "assistant", [text("Right!")]) }]).response;
     renderPage();
-    fireEvent.click(await screen.findByRole("button", { name: /house/ }));
+    const dock = await screen.findByRole("region", { name: "Your tutor’s questions" });
+    expect(screen.queryByRole("textbox", { name: "Message your tutor" })).toBeNull();
+    expect(screen.getByText("Answer the question below.")).toBeInTheDocument();
+    fireEvent.click(within(dock).getByRole("button", { name: /house/ }));
+    expect(within(dock).getByRole("button", { name: /house/ })).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(within(dock).getByRole("button", { name: "Check" }));
     expect(await screen.findByText("Matches!")).toBeInTheDocument();
-    expect(posts().find((entry) => entry.path.endsWith("/respond"))?.body).toEqual({ type: "component", answer: { kind: "choice", choice: 0 } });
+    expect(posts().find((entry) => entry.path.endsWith("/answers"))).toEqual({
+      path: `/api/ai/conversations/${c1}/messages/${id(2)}/answers`, body: { answers: [{ toolCallId: id(42), answer: { kind: "choice", choice: 0 } }] },
+    });
+    expect(await screen.findByRole("textbox", { name: "Message your tutor" })).toBeEnabled();
   });
 
-  it("skips a waiting component, which collapses to a muted line and frees the composer", async () => {
+  it("moves through a practice set with Next and Previous, keeps drafts editable, and checks the whole set at once", async () => {
+    const choice: Extract<TutorPart, { type: "component" }> = { type: "component", toolCallId: id(44), kind: "choice", answer: null, grade: null, answeredAt: null,
+      view: { kind: "choice", question: "What does [[het huis]] mean?", options: ["house", "tree", "car"] } };
+    const translate: Extract<TutorPart, { type: "component" }> = { type: "component", toolCallId: id(45), kind: "translate", answer: null, grade: null, answeredAt: null,
+      view: { kind: "translate", source: "I live in a house." } };
+    const order: Extract<TutorPart, { type: "component" }> = { type: "component", toolCallId: id(46), kind: "word_order", answer: null, grade: null, answeredAt: null,
+      view: { kind: "word_order", chunks: ["groot", "Het huis", "is"], translation: "The house is big." } };
+    messages[c1]!.push(message(id(2), "assistant", [choice, translate, order], "awaiting_user"));
+    turn = () => sse([{ type: "start", messageId: id(3) }, { type: "done", message: message(id(3), "assistant", [text("Checked.")]) }]).response;
+    renderPage();
+    const dock = await screen.findByRole("region", { name: "Your tutor’s questions" });
+    // The marks become an emphasised span, not literal brackets.
+    expect(within(dock).getByText("het huis")).toBeInTheDocument();
+    expect(screen.queryByText(/\[\[/)).toBeNull();
+    expect(within(dock).getByText(/Question 1 of 3/)).toBeInTheDocument();
+    expect(within(dock).queryByRole("textbox", { name: "Your translation" })).toBeNull();
+
+    // Picking an option saves it and moves on; Previous goes back with the pick kept, and it can change.
+    fireEvent.click(within(dock).getByRole("button", { name: /house/ }));
+    expect(await within(dock).findByText(/Question 2 of 3/)).toBeInTheDocument();
+    fireEvent.change(within(dock).getByRole("textbox", { name: "Your translation" }), { target: { value: "Ik woon in een huis." } });
+    fireEvent.click(within(dock).getByRole("button", { name: "Previous" }));
+    expect(within(dock).getByRole("button", { name: /house/ })).toHaveAttribute("aria-pressed", "true");
+    fireEvent.click(within(dock).getByRole("button", { name: /tree/ }));
+    expect(within(dock).getByRole("button", { name: "Question 2, answered" })).toBeInTheDocument();
+
+    // The typed translation survived; Next on the last question becomes Check answers, and the unanswered one goes as a skip.
+    expect(within(dock).getByRole("textbox", { name: "Your translation" })).toHaveValue("Ik woon in een huis.");
+    fireEvent.click(within(dock).getByRole("button", { name: "Next" }));
+    expect(within(dock).getByText(/Question 3 of 3/)).toBeInTheDocument();
+    expect(within(dock).queryByRole("button", { name: "Next" })).toBeNull();
+    expect(within(dock).getByText("1 question without an answer will be skipped.")).toBeInTheDocument();
+    expect(posts().some((entry) => entry.path.endsWith("/answers"))).toBe(false);
+    fireEvent.click(within(dock).getByRole("button", { name: "Check answers" }));
+    expect(await screen.findByText("Checked.")).toBeInTheDocument();
+    expect(posts().find((entry) => entry.path.endsWith("/answers"))?.body).toEqual({ answers: [
+      { toolCallId: id(44), answer: { kind: "choice", choice: 1 } },
+      { toolCallId: id(45), answer: { kind: "translate", text: "Ik woon in een huis." } },
+      { toolCallId: id(46), skip: true },
+    ] });
+  });
+
+  it("skips a lone question from the dock, which collapses to a muted line and frees the composer", async () => {
     const component: Extract<TutorPart, { type: "component" }> = { type: "component", toolCallId: id(43), kind: "choice", answer: null, grade: null, answeredAt: null,
       view: { kind: "choice", question: "Huis means?", options: ["house", "tree"] } };
     messages[c1]!.push(message(id(2), "assistant", [component], "awaiting_user"));
     turn = () => sse([{ type: "answered", messageId: id(2), part: { ...component, answeredAt: 9, skipped: true } }, { type: "start", messageId: id(3) },
       { type: "done", message: message(id(3), "assistant", [text("Let's move on.")]) }]).response;
     renderPage();
-    expect(await screen.findByText("Huis means?")).toBeInTheDocument();
-    expect(composer()).toBeDisabled();
-    fireEvent.click(screen.getByRole("button", { name: "Skip this question" }));
+    const dock = await screen.findByRole("region", { name: "Your tutor’s questions" });
+    expect(within(dock).getByText("Huis means?")).toBeInTheDocument();
+    fireEvent.click(within(dock).getByRole("button", { name: "Skip" }));
     expect(await screen.findByText("Let's move on.")).toBeInTheDocument();
     expect(screen.getByText("Skipped · Multiple choice")).toBeInTheDocument();
     expect(screen.queryByText("Huis means?")).toBeNull();
-    expect(posts().find((entry) => entry.path.endsWith("/respond"))?.body).toEqual({ type: "component", skip: true });
+    expect(posts().find((entry) => entry.path.endsWith("/answers"))?.body).toEqual({ answers: [{ toolCallId: id(43), skip: true }] });
     expect(composer()).toBeEnabled();
   });
 
@@ -308,10 +422,11 @@ describe("Tutor page", () => {
   it("changes an open conversation's model, and back to the default", async () => {
     renderPage();
     const picker = await screen.findByRole("combobox", { name: "Model for this conversation" });
-    expect(picker).toHaveValue("Default (openai/gpt-oss-120b:free)");
-    await choose(picker, "Workers AI · @cf/meta/llama-4-scout-17b-16e-instruct");
-    await waitFor(() => expect(picker).toHaveValue("Workers AI · @cf/meta/llama-4-scout-17b-16e-instruct"));
-    await choose(picker, "Default (openai/gpt-oss-120b:free)");
+    // Closed, the picker shows short model names; the open list names Default or the provider above each.
+    expect(picker).toHaveValue("gpt-oss-120b · Default");
+    await choose(picker, /^Workers AI/);
+    await waitFor(() => expect(picker).toHaveValue("llama-4-scout-17b-16e-instruct"));
+    await choose(picker, /^Default/);
     await waitFor(() => expect(patches()).toHaveLength(2));
     expect(patches()).toEqual([
       { path: `/api/ai/conversations/${c1}`, body: { provider: "workers_ai" } },
@@ -323,7 +438,7 @@ describe("Tutor page", () => {
     turn = () => sse([{ type: "start", messageId: id(11) }, { type: "done", message: { ...message(id(11), "assistant", [text("Hoi.")]), conversationId: c2 } }]).response;
     renderPage(null);
     const picker = await screen.findByRole("combobox", { name: "Model for this conversation" });
-    await choose(picker, "Workers AI · @cf/meta/llama-4-scout-17b-16e-instruct");
+    await choose(picker, /^Workers AI/);
     expect(patches()).toEqual([]);
     sendText("Start");
     expect(await screen.findByText("Hoi.")).toBeInTheDocument();

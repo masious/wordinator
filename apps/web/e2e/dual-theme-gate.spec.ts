@@ -13,7 +13,7 @@ async function setPreference(page: import("@playwright/test").Page, scheme: "lig
 
 async function expectScheme(page: import("@playwright/test").Page, scheme: "light" | "dark") {
   await expect(page.locator("html")).toHaveAttribute("data-mantine-color-scheme", scheme);
-  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute("content", scheme === "dark" ? "#1c1715" : "#f5ede2");
+  await expect(page.locator('meta[name="theme-color"]')).toHaveAttribute("content", scheme === "dark" ? "#121316" : "#f4f3ef");
   await expect.poll(() => page.evaluate(() => document.documentElement.style.colorScheme)).toBe(scheme);
 }
 

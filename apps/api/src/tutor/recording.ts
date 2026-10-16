@@ -1,13 +1,14 @@
 import { PRONUNCIATION_REFERENCE_MAX, type PracticeAttemptSource } from "@wordinator/contracts/learning";
 import {
-  componentAttemptText, componentReviewDirection, componentWords, type TutorComponent, type TutorComponentAnswer, type TutorGrade,
+  answerHintsUsed, componentAttemptText, componentReviewDirection, componentWords, type TutorComponent, type TutorComponentAnswer, type TutorGrade,
 } from "@wordinator/contracts/tutor";
 import { recordWordReviews, type NewWordReview } from "../learningData";
 import { insertPronunciationAttempt, insertPracticeAttempt } from "../learning/attempts";
 import { readableLesson, readableWords, wordKey } from "./library";
 
 // What answering a component writes (docs/ai-tutor.md#answer-components): a practice attempt (practice kind `ai`), a word review
-// for every lesson word the component tests, and for Say it a pronunciation attempt. Words and lessons are re-resolved under the
+// for every lesson word the component tests, and for Say it a pronunciation attempt. A tested word whose hint the learner opened
+// is reviewed as Again even when the answer is right, since the learner did not produce it unaided. Words and lessons are re-resolved under the
 // account's read rules; nothing is written for a word or lesson it cannot read or for an archived course. Shared with AI
 // practices (C14h), which pass source `ai_practice` and their practice ID.
 
@@ -26,13 +27,14 @@ export async function recordComponentAnswer(db: D1Database, input: RecordAnswerI
   const lessonId = component.payload.lessonId ?? usable[0]?.lessonId ?? null;
   const lesson = lessonId ? await readableLesson(db, userId, lessonId) : null;
   const recorded: RecordedAnswer = { attempt: false, reviews: 0, pronunciation: false };
+  const hinted = new Set(answerHintsUsed(answer).map(wordKey));
 
   const text = componentAttemptText(component, answer);
   if (text && lesson && lesson.course.status !== "archived") {
     await insertPracticeAttempt(db, {
       userId, courseId: lesson.course.id, lessonId: lesson.id, practiceKind: "ai", practiceId: input.practiceId, itemIndex: 0,
       prompt: text.prompt, answer: text.answer, reference: text.reference, matched: grade.matched,
-      aiVerdict: grade.verdict, aiNote: grade.note, source: input.source, conversationId: input.conversationId, createdAt: now,
+      aiVerdict: grade.verdict, aiNote: grade.note, source: input.source, conversationId: input.conversationId, hintsUsed: hinted.size, createdAt: now,
     });
     recorded.attempt = true;
   }
@@ -52,7 +54,7 @@ export async function recordComponentAnswer(db: D1Database, input: RecordAnswerI
       if (!word || seen.has(word.termKey)) continue;
       seen.add(word.termKey);
       reviews.push({
-        termKey: word.termKey, direction: componentReviewDirection(component.kind), result: grade.correct ? "got" : "again", source: input.source,
+        termKey: word.termKey, direction: componentReviewDirection(component.kind), result: grade.correct && !hinted.has(wordKey(word)) ? "got" : "again", source: input.source,
         courseId: word.courseId, lessonId: word.lessonId, wordId: word.wordId, conversationId: input.conversationId, createdAt: now,
       });
     }

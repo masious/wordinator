@@ -7,7 +7,7 @@ import { effectiveRecognizer, microsoftRecognitionSupported, SENTENCE_ANSWER_WIN
 import { Button } from "../../ui";
 import { WordDrillCard } from "../WordDrill/WordDrillCard";
 import { ClipButton } from "./ClipButton";
-import { ComponentFrame, GradePending, VerdictBadge, useAnswerFlow } from "./shared";
+import { ComponentFrame, GradePending, MarkedText, VerdictBadge, useAnswerFlow } from "./shared";
 import type { AnswerComponentProps } from "./types";
 import styles from "./TutorComponents.module.css";
 
@@ -23,7 +23,7 @@ export function QuickReviewComponent({ view, answer, grade, onAnswer, disabled, 
   const flow = useAnswerFlow(answer, onAnswer);
   const [results, setResults] = useState<WordDrillResult[]>([]);
   const [revealed, setRevealed] = useState(false);
-  const done = flow.answered?.results ?? null;
+  const done = flow.answered?.results ?? flow.draft?.results ?? null;
   const card = view.cards[results.length];
   const locked = flow.pending || Boolean(disabled);
   const gradeCard = (result: WordDrillResult) => {
@@ -65,13 +65,13 @@ export function SayItComponent({ view, answer, grade, onAnswer, disabled, clip }
     void flow.submit({ kind: "say_it", scores: { ...heard.assessment, words: heard.assessment.words.slice(0, 100) } });
   }, undefined, SENTENCE_ANSWER_WINDOW);
   const locked = Boolean(flow.answered) || flow.pending || Boolean(disabled);
-  const scores = flow.answered?.scores ?? null;
+  const scores = flow.answered?.scores ?? flow.draft?.scores ?? null;
   return <ComponentFrame kind="say_it">
     <div className={styles.promptRow}>
       <p className={styles.prompt}>{view.sentence}</p>
       {clip && <ClipButton clip={clip} label={t("tutorComponents.audio.playSentence")} />}
     </div>
-    {view.translation && <p className={styles.muted}>{view.translation}</p>}
+    {view.translation && <p className={styles.muted}><MarkedText text={view.translation} /></p>}
     {scores ? <div className={styles.grade}>
       {grade ? <VerdictBadge ok={grade.correct} label={grade.correct ? t("tutorComponents.verdict.passed") : t("tutorComponents.verdict.miss")}>
         <ScoreRing score={scores.overall} compact />

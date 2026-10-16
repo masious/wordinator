@@ -9,12 +9,15 @@ export const AI_STUB_MODEL = "gpt-4.1-mini";
 // The tutor tests ask with these phrases; any other conversation gets a plain greeting.
 export const NEXT_LESSON_REQUEST = "Teach me my next lesson";
 export const SAVE_PRACTICE_REQUEST = "Save a practice for my lesson";
+export const PRACTICE_SET_REQUEST = "Quiz me with a set";
 
 type Message =
   | { role: "system" | "user"; content: string }
   | { role: "assistant"; content: string | null; tool_calls?: Array<{ id: string; function: { name: string; arguments: string } }> }
   | { role: "tool"; tool_call_id: string; content: string };
-type Reply = { text?: string; call?: { name: string; arguments: Record<string, unknown> } };
+type Call = { name: string; arguments: Record<string, unknown> };
+// `calls` asks several tools in one response, as a practice set does.
+type Reply = { text?: string; call?: Call; calls?: Call[] };
 
 const parse = (value: string): Record<string, unknown> => {
   try { return JSON.parse(value) as Record<string, unknown>; } catch { return {}; }
@@ -76,10 +79,24 @@ function savePracticeScript(messages: Message[]): Reply {
   return { text: last.content.status === "confirmed" && last.content.ok ? "The practice is saved." : "Nothing was saved." };
 }
 
+// Ask for a set → three questions in one response (a choice, a translation, a word order) → once all are answered together, a
+// line naming how many came back answered.
+function practiceSetScript(messages: Message[]): Reply {
+  const results = toolResults(messages);
+  if (!results.length) return { text: "Three questions.", calls: [
+    { name: "ask_choice", arguments: { question: "What does [[het huis]] mean?", options: ["the house", "the tree", "the car"], correct: 0 } },
+    { name: "ask_translate", arguments: { source: "I drink water.", reference: "Ik drink water." } },
+    { name: "ask_word_order", arguments: { chunks: ["Ik", "drink", "water"], translation: "I drink water." } },
+  ] };
+  const answered = results.filter((result) => result.content.status === "answered").length;
+  return { text: `You answered ${answered} of ${results.length}.` };
+}
+
 export function stubReply(messages: Message[]): Reply {
   const first = messages.find((message) => message.role === "user")?.content ?? "";
   if (first.includes(NEXT_LESSON_REQUEST)) return nextLessonScript(messages);
   if (first.includes(SAVE_PRACTICE_REQUEST)) return savePracticeScript(messages);
+  if (first.includes(PRACTICE_SET_REQUEST)) return practiceSetScript(messages);
   return { text: "Hallo! Zeg [[Goedemorgen]]." };
 }
 
@@ -88,14 +105,15 @@ function chunks(reply: Reply) {
   const events: unknown[] = [];
   const text = reply.text ?? "";
   for (let start = 0; start < text.length; start += 12) events.push(choice({ content: text.slice(start, start + 12) }));
-  if (reply.call) {
-    const args = JSON.stringify(reply.call.arguments);
+  const calls = reply.calls ?? (reply.call ? [reply.call] : []);
+  calls.forEach((call, index) => {
+    const args = JSON.stringify(call.arguments);
     const half = Math.ceil(args.length / 2);
     const id = `call_${Math.random().toString(36).slice(2, 10)}`;
-    events.push(choice({ tool_calls: [{ index: 0, id, type: "function", function: { name: reply.call.name, arguments: args.slice(0, half) } }] }));
-    events.push(choice({ tool_calls: [{ index: 0, function: { arguments: args.slice(half) } }] }));
-  }
-  events.push(choice({}, reply.call ? "tool_calls" : "stop"));
+    events.push(choice({ tool_calls: [{ index, id, type: "function", function: { name: call.name, arguments: args.slice(0, half) } }] }));
+    events.push(choice({ tool_calls: [{ index, function: { arguments: args.slice(half) } }] }));
+  });
+  events.push(choice({}, calls.length ? "tool_calls" : "stop"));
   events.push({ choices: [], usage: { prompt_tokens: 120, completion_tokens: 30 } });
   return events;
 }

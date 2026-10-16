@@ -43,22 +43,27 @@ type WordinatorButtonProps = Omit<MantineButtonProps, "variant"> &
     trailingIcon?: ReactNode;
   };
 
+// The trailing glyph goes in Mantine's right section, outside the label: the label clips its overflow (so long labels end in an
+// ellipsis), and a glyph inside it could be cut. Pass icons here, never as children or `rightSection`.
 export function Button({ variant = "primary", className, children, trailingIcon, ...props }: WordinatorButtonProps) {
   return (
-    <MantineButton className={`${styles.button} ${styles[variant]} ${className ?? ""}`} {...props}>
+    <MantineButton className={`${styles.button} ${styles[variant]} ${className ?? ""}`}
+      rightSection={trailingIcon ? <span aria-hidden="true" className={styles.trailingGlyph}>{trailingIcon}</span> : undefined} {...props}>
       <span className={styles.buttonLabel}>{children}</span>
-      {trailingIcon && <span aria-hidden="true" className={styles.iconIsland}>{trailingIcon}</span>}
     </MantineButton>
   );
 }
 
-/** Attached buttons that act as one control: the pill clips the outer ends, inner seams are hairlines, and the group lifts as a whole. */
+/** Attached buttons that act as one control: the group rounds the outer ends and inner seams are lines. */
 export function ButtonGroup({ label, className, children, ...props }: Omit<MantineButtonGroupProps, "orientation"> & { label: string }) {
   return <MantineButton.Group aria-label={label} className={`${styles.buttonGroup} ${className ?? ""}`} {...props}>{children}</MantineButton.Group>;
 }
 
-export function IconButton({ label, className, children, ...props }: ActionIconProps & Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof ActionIconProps | "aria-label"> & { label: string }) {
-  return <ActionIcon aria-label={label} className={`${styles.iconButton} ${className ?? ""}`} {...props}>{children}</ActionIcon>;
+// A square icon-only button. `tone="quiet"` drops the surface and edge for actions inside rows and cards (such as a list item's
+// archive button), and `primary` sits on the action colour (such as a composer's send).
+export type IconButtonTone = "default" | "quiet" | "primary";
+export function IconButton({ label, className, children, tone = "default", ...props }: Omit<ActionIconProps, "variant"> & Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof ActionIconProps | "aria-label"> & { label: string; tone?: IconButtonTone }) {
+  return <ActionIcon aria-label={label} data-tone={tone} className={`${styles.iconButton} ${className ?? ""}`} {...props}>{children}</ActionIcon>;
 }
 
 export function ArrowIcon() {
@@ -86,13 +91,23 @@ function capitalize(value: string) {
   return `${value[0]?.toUpperCase() ?? ""}${value.slice(1)}`;
 }
 
-export function LabelChip({ children }: PropsWithChildren) {
-  return <span className={styles.chip}>{children}</span>;
+// A small pill label (a badge). Tones tint it: accent for the current or featured thing, success for done, warm for attention,
+// info for categories.
+export type LabelChipTone = "default" | "accent" | "success" | "warm" | "info";
+export function LabelChip({ children, tone = "default", className }: PropsWithChildren<{ tone?: LabelChipTone; className?: string }>) {
+  return <span className={`${styles.chip} ${className ?? ""}`} data-tone={tone}>{children}</span>;
 }
 
-export function Avatar({ name, className, src, size, radius }: { name: string; className?: string, src?: string | null, size?: number | string, radius?: number | string }) {
+// The uppercase accent line above a page or card title.
+export function Eyebrow({ children, className }: PropsWithChildren<{ className?: string }>) {
+  return <p className={`${styles.eyebrow} ${className ?? ""}`}>{children}</p>;
+}
+
+// Initials on ink by default; `accent` marks the tutor and `soft` a quiet identity. A picture replaces the initials.
+export type AvatarTone = "ink" | "accent" | "soft";
+export function Avatar({ name, className, src, size, radius, tone = "ink" }: { name: string; className?: string, src?: string | null, size?: number | string, radius?: number | string, tone?: AvatarTone }) {
   const initials = name.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase();
-  return <MantineAvatar className={className} size={size} radius={radius} alt={name} name={name} src={src}>{initials}</MantineAvatar>;
+  return <MantineAvatar className={`${styles.avatar} ${className ?? ""}`} data-tone={tone} size={size} radius={radius} alt={name} name={name} src={src}>{initials}</MantineAvatar>;
 }
 
 export function StatusPanel({ title, children, tone = "info" }: PropsWithChildren<{ title: string; tone?: "info" | "success" | "error" }>) {
@@ -145,6 +160,11 @@ export function SplitLayout({ primary, secondary, reverse = false, className }: 
 
 export function MetadataRow({ children, className }: PropsWithChildren<{ className?: string }>) {
   return <div className={`${styles.metadata} ${className ?? ""}`}>{children}</div>;
+}
+
+// One entry of a metadata row with its leading line icon (decorative).
+export function MetadataItem({ icon, children }: PropsWithChildren<{ icon?: ReactNode }>) {
+  return <span className={styles.metadataItem}>{icon && <span aria-hidden="true" className={styles.navigationIcon}>{icon}</span>}{children}</span>;
 }
 
 export function NavigationItem({ href, icon, active = false, children }: PropsWithChildren<{ href: string; icon?: ReactNode; active?: boolean }>) {
@@ -202,10 +222,10 @@ export function AdaptiveDialog({ dock, ...props }: ModalProps & { dock?: RefObje
   const narrow = useMediaQuery("(max-width: 48em)");
   const wide = useMediaQuery("(min-width: 64em)");
   const docked = useDockFrame(dock && wide ? dock : null, props.opened);
-  if (docked) return <Dialog centered={false} radius="xl" size={docked.width} yOffset="var(--navigation-offset)" withOverlay={false} trapFocus={false} lockScroll={false} closeOnClickOutside={false}
+  if (docked) return <Dialog centered={false} radius="lg" size={docked.width} yOffset="var(--navigation-offset)" withOverlay={false} trapFocus={false} lockScroll={false} closeOnClickOutside={false}
     classNames={{ inner: styles.dialogDocked }} styles={{ inner: { paddingInlineStart: docked.left } }} {...props} />;
   // The theme's content border and shadow are inline styles, so only a styles prop can drop them from the full-screen sheet.
-  return <Dialog centered={!narrow} fullScreen={narrow} radius={narrow ? 0 : "xl"} size="var(--width-modal)" styles={narrow ? { content: { border: 0, boxShadow: "none" } } : undefined} {...props} />;
+  return <Dialog centered={!narrow} fullScreen={narrow} radius={narrow ? 0 : "lg"} size="var(--width-modal)" styles={narrow ? { content: { border: 0, boxShadow: "none" } } : undefined} {...props} />;
 }
 
 export function ConfirmDialog({ confirmLabel, cancelLabel, onConfirm, onClose, children, confirmLoading = false, ...props }: ModalProps & { confirmLabel: string; cancelLabel?: string; onConfirm: () => void; confirmLoading?: boolean }) {

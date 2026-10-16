@@ -6,5 +6,5 @@ export { AI_SETTINGS_KEY, readAiSettings, writeAiSettings } from "./settings";
 export type { AiTokenUsage, AiToolCall } from "./stream";
 export {
   AI_MODEL_PRICES, assertDailySpeechCap, assertDailyTurnCap, countDailySpeechCharacters, countDailyTurns, estimateCostMicroUsd,
-  nextUtcMidnight, recordAiUsage, recordSpeechUsage, utcDayStart, type DailyAllowance, type SpeechUsageInput,
+  nextUtcMidnight, readTutorUsage, recordAiUsage, recordSpeechUsage, utcDayStart, type DailyAllowance, type SpeechUsageInput,
 } from "./usage";

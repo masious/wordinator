@@ -187,3 +187,20 @@ Automated backup and CI/CD are future work.
 ## Logging and incidents
 
 Use structured Worker logs for request ID, route, status, timing, safe error code, and opaque actor/group IDs when useful. Exclude credentials, cookies, invitation tokens, temporary passwords, and authored bodies. For this initial project, operational recovery may use direct Cloudflare/D1 access because there is no global admin UI; the C14 analytics page is read-only. The tutor logs `ai.request` lines (provider, model, status, tokens, duration) and `ai.fallback` when it moves to the next provider, and never prompts, answers, or tool payloads; repeated `ai.fallback` or `AI_UNAVAILABLE` lines mean a provider key or model needs attention.
+
+**Failed tutor tool calls.** Every failed tool call writes one `ai.tool_failed` event, at warning level (error level when the tool itself threw). Workers Logs indexes every top-level JSON field, so each field is a tag to filter on in the dashboard's Observability query builder (for example `event = ai.tool_failed AND category = model`, grouped by `tool` or `errorCode`):
+
+| Field | Value |
+| --- | --- |
+| `area` | always `ai_tutor` |
+| `tool` | the tool name the model called, such as `get_lesson` |
+| `toolKind` | `ask` for a question component, `other` for the rest |
+| `errorCode` | the result's code, such as `LESSON_NOT_FOUND`, `INVALID_ARGUMENTS`, `REPEATED_CALL`, `TOOL_FAILED` |
+| `category` | `model` (bad arguments, unknown tool, an ID it cannot read), `loop` (`SKIPPED`, `TOOL_LIMIT`, `REPEATED_CALL`), `refused` (the learner's data refuses it, such as an archived course or an untested word), or `server` (the tool threw) |
+| `provider`, `model` | the model target that made the call |
+| `conversationId`, `toolCallId`, `request` | opaque IDs and the model request's number within the turn |
+| `argumentKeys` | the argument names, comma-separated, never their values |
+| `issues` | for `INVALID_ARGUMENTS`, the validation issue paths and messages, never the values |
+| `exception` | for `server`, the thrown error's name |
+
+A tool that throws no longer ends the turn: the model receives `TOOL_FAILED` and carries on. Every call, failed or not, still writes the info-level `ai.tool` line (tool and outcome). Arguments, lesson text, answers, and prompts are never logged.

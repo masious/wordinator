@@ -18,7 +18,7 @@ const BLANK_SEPARATOR = " · ";
 export type NewPracticeAttempt = {
   userId: string; courseId: string; lessonId: string | null; practiceKind: PracticeAttemptKind; practiceId: string; itemIndex: number;
   prompt: string; answer: string; reference: string | null; matched: boolean | null;
-  aiVerdict?: PracticeAttemptVerdict | null; aiNote?: string | null; source: PracticeAttemptSource; conversationId?: string | null; createdAt?: number;
+  aiVerdict?: PracticeAttemptVerdict | null; aiNote?: string | null; source: PracticeAttemptSource; conversationId?: string | null; hintsUsed?: number; createdAt?: number;
 };
 
 const capped = (value: string) => value.slice(0, PRACTICE_ATTEMPT_TEXT_MAX);
@@ -27,12 +27,12 @@ const capped = (value: string) => value.slice(0, PRACTICE_ATTEMPT_TEXT_MAX);
 export function practiceAttemptStatement(db: D1Database, row: NewPracticeAttempt): D1PreparedStatement {
   return db.prepare(
     `INSERT INTO practice_attempts (id, user_id, course_id, lesson_id, practice_kind, practice_id, item_index, prompt, answer, reference, matched,
-       ai_verdict, ai_note, source, conversation_id, created_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+       ai_verdict, ai_note, source, conversation_id, hints_used, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
   ).bind(
     crypto.randomUUID(), row.userId, row.courseId, row.lessonId, row.practiceKind, row.practiceId, row.itemIndex,
     capped(row.prompt), capped(row.answer), row.reference === null ? null : capped(row.reference), row.matched === null ? null : row.matched ? 1 : 0,
-    row.aiVerdict ?? null, row.aiNote ?? null, row.source, row.conversationId ?? null, row.createdAt ?? Date.now(),
+    row.aiVerdict ?? null, row.aiNote ?? null, row.source, row.conversationId ?? null, row.hintsUsed ?? 0, row.createdAt ?? Date.now(),
   );
 }
 

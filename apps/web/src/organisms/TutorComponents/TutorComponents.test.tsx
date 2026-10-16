@@ -55,9 +55,30 @@ describe("Answer components", () => {
       grade: grade({ correct: true, matched: false, verdict: "acceptable", note: "Fine, erg adds emphasis.", reference: "Het huis is groot." }),
     });
     expect(screen.getByText("Good answer")).toBeInTheDocument();
-    expect(screen.getByText("Fine, erg adds emphasis.")).toBeInTheDocument();
-    expect(screen.getByText("Another way to say it")).toBeInTheDocument();
+    // The other phrasing and the note share one feedback box, each under its term.
+    const box = screen.getByText("Fine, erg adds emphasis.").closest("dl")!;
+    expect(within(box).getAllByRole("term").map((term) => term.textContent)).toEqual(["Also right", "Tutor’s note"]);
+    expect(within(box).getByText("Het huis is groot.")).toBeInTheDocument();
     expect(screen.getByRole("textbox", { name: "Your translation" })).toHaveValue("Het huis is erg groot.");
+  });
+
+  it("keeps word hints closed until opened, sends the opened ones with the answer, and shows them all after", async () => {
+    const hints = [
+      { lessonId: "11111111-1111-4111-8111-111111111111", wordId: "22222222-2222-4222-8222-222222222222", cue: "tidy up", term: "opruimen", meaning: "to tidy up", forms: "ruimde op, opgeruimd" },
+      { lessonId: "11111111-1111-4111-8111-111111111111", wordId: "33333333-3333-4333-8333-333333333333", cue: "the kitchen", term: "de keuken", meaning: "the kitchen", forms: null },
+    ];
+    const { onAnswer } = renderComponent({ kind: "translate", source: "I tidy up the kitchen.", hints });
+    expect(screen.queryByText("opruimen")).toBeNull();
+    expect(screen.queryByText("de keuken")).toBeNull();
+    fireEvent.click(screen.getByRole("button", { name: "Show the word for “tidy up”" }));
+    expect(screen.getByText("opruimen")).toBeInTheDocument();
+    expect(screen.queryByText("de keuken")).toBeNull();
+    fireEvent.change(screen.getByRole("textbox", { name: "Your translation" }), { target: { value: "Ik ruim de keuken op." } });
+    fireEvent.click(screen.getByRole("button", { name: "Check" }));
+    await waitFor(() => expect(onAnswer).toHaveBeenCalledWith({ kind: "translate", text: "Ik ruim de keuken op.", hintsUsed: [{ lessonId: "11111111-1111-4111-8111-111111111111", wordId: "22222222-2222-4222-8222-222222222222" }] }));
+    expect(await screen.findByText("de keuken")).toBeInTheDocument();
+    expect(screen.getByText("opruimen").closest("[data-used]")).not.toBeNull();
+    expect(screen.getByText("de keuken").closest("[data-used]")).toBeNull();
   });
 
   it("Word order places chunks by click and moves them with the arrow keys", async () => {
