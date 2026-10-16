@@ -24,11 +24,11 @@ const sample = (voice: string) => `https://media.test/speech/${voice}.mp3`;
 let speechCast: () => Response;
 
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
-function renderPage(page: "library" | "course" | "manage") {
+function renderPage(page: "library" | "course" | "manage", at = "/courses") {
   const root = createRootRoute();
   const route = createRoute({ getParentRoute: () => root, path: "$", component: () => page === "library" ? <CourseLibraryPage groupId={groupId} />
     : page === "course" ? <CoursePage groupId={groupId} courseId={courseId} /> : <ManageCoursePage groupId={groupId} courseId={courseId} /> });
-  const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: [`/groups/${groupId}/courses`] }) });
+  const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: [at] }) });
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false }, mutations: { retry: false } } });
   return render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
 }
@@ -81,6 +81,22 @@ describe("Course shell pages", () => {
     cleanup();
     renderPage("library");
     expect(await within(await screen.findByRole("navigation", { name: "Main navigation" })).findByRole("button", { name: "Show courses" })).toBeInTheDocument();
+  });
+
+  it("starts the course list collapsed outside course pages, without remembering an expansion there", async () => {
+    renderPage("library", "/journal");
+    const rail = await screen.findByRole("navigation", { name: "Main navigation" });
+    const show = await within(rail).findByRole("button", { name: "Show courses" });
+    expect(within(rail).queryByRole("list", { name: "Your courses" })).toBeNull();
+    fireEvent.click(show);
+    expect(await within(rail).findByRole("list", { name: "Your courses" })).toBeInTheDocument();
+    cleanup();
+    renderPage("library", "/journal");
+    expect(await within(await screen.findByRole("navigation", { name: "Main navigation" })).findByRole("button", { name: "Show courses" })).toBeInTheDocument();
+    // Course pages keep the remembered choice, expanded by default.
+    cleanup();
+    renderPage("library");
+    expect(await within(await screen.findByRole("navigation", { name: "Main navigation" })).findByRole("button", { name: "Hide courses" })).toBeInTheDocument();
   });
 
   it("resizes the rail from its edge by keyboard, remembers the width per account, and restores the default", async () => {

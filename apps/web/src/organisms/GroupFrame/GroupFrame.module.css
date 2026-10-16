@@ -271,12 +271,13 @@
 }
 
 .shellMain {
-  display: block;
+  display: grid;
   /* An implicit auto column grows to its widest child's min-content and widens the page on phones. */
   grid-template-columns: minmax(0, 1fr);
   align-content: start;
   gap: var(--space-6);
-  width: 100%;
+  /* Pages sit in a centred column with the page gutter on both sides, capped at the shell width. */
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--width-shell));
   min-width: 0;
   margin: 0 auto;
   padding: var(--shell-clearance) 0 var(--space-20);
@@ -285,7 +286,7 @@
 .shellMain h2 { margin-top: 0; }
 /* A filled frame is exactly the window's height; its page scrolls its own regions, so the main column is unpadded and clips. */
 .shell[data-fill] { height: 100dvh; min-height: 0; }
-.shell[data-fill] > .shellMain { min-height: 0; padding: 0; overflow: hidden; }
+.shell[data-fill] > .shellMain { display: block; width: 100%; min-height: 0; padding: 0; overflow: hidden; }
 
 @media (max-width: 75em) {
   .shell { --size-reference-panel: var(--size-reference-panel-min); }
