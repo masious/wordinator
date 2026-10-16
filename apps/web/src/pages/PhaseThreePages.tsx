@@ -10,6 +10,7 @@ import {
   type InfiniteData,
 } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
+import { ArrowLeft, PenLine } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import {
@@ -127,6 +128,7 @@ export function Feed({
         <button className={styles.composerPrompt} type="button" onClick={openComposer}>
           <Avatar name={session.user.displayName} src={session.user.avatarUrl} size={36} />
           <span className={styles.composerPromptText}>{t("posts.writePrompt")}</span>
+          <span aria-hidden="true" className={styles.composerPromptIcon}><PenLine size={16} /></span>
         </button>
       </div>
       {!!newer.data?.items.length && (
@@ -237,6 +239,7 @@ export function PostDetailPage({
           className={styles.backLink}
           to="/journal"
         >
+          <ArrowLeft size={16} aria-hidden="true" />
           {t("common.backToFeed")}
         </Link>
         <PostCard post={post.data.post} groupId={groupId} compact={false} />

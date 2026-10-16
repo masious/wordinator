@@ -7,7 +7,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, type ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiError, apiRequest, groupQueryOptions, invitationQueryOptions, sessionQueryOptions } from "../api";
-import { Button, ErrorState, LabelChip, LoadingState, PageHeader, PasswordField, SplitLayout, StatusPanel, Surface, TextField } from "../ui";
+import { Button, ErrorState, Eyebrow, LabelChip, LoadingState, PageHeader, PasswordField, SplitLayout, StatusPanel, Surface, TextField } from "../ui";
 import styles from "./PhaseOnePages.module.css";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { Feed } from "./PhaseThreePages";
@@ -210,7 +210,7 @@ export function JournalPage({ groupId }: { groupId: string }) {
   return <GroupFrame groupId={groupId} session={session.data}>
     <div className={styles.journal} id="journal">
       <h1 className={styles.mobileTitle}>{t("journal.title")}</h1>
-      <PageHeader className={styles.journalHero} eyebrow={<LabelChip>{t("journal.eyebrow")}</LabelChip>} title={t("journal.title")} intro={t("journal.intro")} />
+      <PageHeader className={styles.journalHero} eyebrow={<Eyebrow>{t("journal.eyebrow")}</Eyebrow>} title={t("journal.title")} intro={t("journal.intro")} />
       <Feed groupId={groupId} session={session.data} />
     </div>
   </GroupFrame>;

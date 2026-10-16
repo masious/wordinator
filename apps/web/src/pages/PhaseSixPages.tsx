@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
 import { apiRequest, notificationsQueryOptions, restrictedNotificationsQueryOptions, sessionQueryOptions } from "../api";
-import { Button, EmptyState, ErrorState, LabelChip, LoadingState, MetadataRow, PageHeader, Surface } from "../ui";
+import { Button, EmptyState, ErrorState, Eyebrow, LabelChip, LoadingState, MetadataRow, PageHeader, Surface } from "../ui";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import styles from "./PhaseSixPages.module.css";
 
@@ -39,8 +39,8 @@ export function NotificationsPage({ groupId }: { groupId: string }) {
   if (session.data?.status !== "signedIn") return null;
   if (notices.isError) return <main className={styles.center}><ErrorState title={t("notifications.unavailable")}><Button onClick={() => notices.refetch()}>{t("common.retry")}</Button></ErrorState></main>;
   return <GroupFrame groupId={groupId} session={session.data}>
-    <div className={styles.page}><PageHeader eyebrow={<LabelChip>{t("notifications.eyebrow")}</LabelChip>} title={t("notifications.title")} intro={t("notifications.intro")} actions={!!notices.data.items.some((item) => !item.readAt) && <Button variant="secondary" loading={readAll.isPending} onClick={() => readAll.mutate()}>{t("notifications.markAllRead")}</Button>} />
-      {!notices.data.items.length ? <Surface tone="quiet"><EmptyState title={t("notifications.emptyTitle")}>{t("notifications.emptyBody")}</EmptyState></Surface> : <Surface className={styles.list} tone="quiet">{notices.data.items.map((item) => <Notice key={item.id} item={item} />)}</Surface>}
+    <div className={styles.page}><PageHeader eyebrow={<Eyebrow>{t("notifications.eyebrow")}</Eyebrow>} title={t("notifications.title")} intro={t("notifications.intro")} actions={!!notices.data.items.some((item) => !item.readAt) && <Button variant="secondary" loading={readAll.isPending} onClick={() => readAll.mutate()}>{t("notifications.markAllRead")}</Button>} />
+      {!notices.data.items.length ? <Surface tone="quiet"><EmptyState title={t("notifications.emptyTitle")}>{t("notifications.emptyBody")}</EmptyState></Surface> : <div className={styles.list}>{notices.data.items.map((item) => <Notice key={item.id} item={item} />)}</div>}
     </div>
   </GroupFrame>;
 }
@@ -50,5 +50,5 @@ export function RestrictedNotices({ session }: { session: Extract<SessionRespons
   if (notices.isPending) return <LoadingState label={t("notifications.loadingStatus")} />;
   if (notices.isError) return <ErrorState title={t("notifications.statusUnavailable")}><Button onClick={() => notices.refetch()}>{t("common.retry")}</Button></ErrorState>;
   const relevant = notices.data.items.filter((item) => session.requests.some((request) => request.groupId === item.groupId));
-  return relevant.length ? <Surface className={styles.list} tone="quiet">{relevant.map((item) => <Notice key={item.id} item={item} restricted />)}</Surface> : null;
+  return relevant.length ? <div className={styles.list}>{relevant.map((item) => <Notice key={item.id} item={item} restricted />)}</div> : null;
 }

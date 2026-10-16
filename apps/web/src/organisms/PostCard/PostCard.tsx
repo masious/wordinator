@@ -11,9 +11,10 @@ import {
   Avatar,
   Button,
   ConfirmDialog,
+  LabelChip,
+  type LabelChipTone,
 } from "../../ui";
 import { Menu } from "@mantine/core";
-import { useMediaQuery } from "@mantine/hooks";
 import { Trans, useTranslation } from "react-i18next";
 import ErrorMessage from "../../molecules/ErrorMessage";
 import {
@@ -29,6 +30,16 @@ import { LessonShareByline, LessonSharePreview } from "../LessonShare/LessonShar
 import { ShareAnswerCheck, ShareNoteForm } from "../LessonShare/LessonSharePost";
 import { relativeTime } from "../../relativeTime";
 import styles from "./PostCard.module.css";
+
+// Post-type badges (docs/design-system.md#journal): one tint per type, so the feed reads by type at a glance.
+const typeTone: Record<Post["type"], LabelChipTone> = {
+  shared_sentence: "default",
+  question: "info",
+  reading: "success",
+  fill_in: "warm",
+  course: "accent",
+  lesson_share: "accent",
+};
 
 export default function PostCard({
   post,
@@ -47,8 +58,6 @@ export default function PostCard({
   const [deleting, setDeleting] = useState(false);
   const session = useQuery(sessionQueryOptions());
   const settings = useQuery(settingsQueryOptions());
-  // Phones trade the vertical rail for a footer row so the body can use the card's full width.
-  const narrow = useMediaQuery("(max-width: 48em)");
   const deletion = useMutation({
     mutationFn: () =>
       apiRequest(
@@ -115,10 +124,10 @@ export default function PostCard({
       )}
     </>
   );
-  const reactionBar = (orientation: "horizontal" | "vertical") =>
+  const reactionBar =
     settings.data && (
       <ReactionBar
-        orientation={orientation}
+        orientation="horizontal"
         compact
         reactions={post.reactions}
         quickReactions={settings.data.quickReactions}
@@ -134,8 +143,7 @@ export default function PostCard({
       />
     );
   return (
-    <article className={styles.postShell}>
-      <div className={styles.postCard}>
+    <article className={styles.postCard}>
         <div className={styles.main}>
           {/* In the feed the whole card body is one link; the actions menu sits beside it so controls never nest inside it.
               A lesson share's piece has its own speech controls and links, so only its byline is the link and the piece follows it. */}
@@ -183,6 +191,8 @@ export default function PostCard({
               )}
             </div>
           )}
+          <div className={styles.tools}>
+          <LabelChip tone={typeTone[post.type]}>{t(`posts.types.${post.type}`)}</LabelChip>
           <Menu
             position="bottom-end"
             width={220}
@@ -235,19 +245,16 @@ export default function PostCard({
               </Menu.Item>
             </Menu.Dropdown>
           </Menu>
+          </div>
         </div>
-        {settings.data && !narrow && (
-          <aside className={styles.reactionRail}>{reactionBar("vertical")}</aside>
-        )}
-        {narrow && (
-          <footer className={styles.footer}>
-            <span className={styles.responses}>
-              <MessagesSquare size={16} aria-hidden="true" />
-              {t("posts.responseCount", { count: post.commentCount })}
-            </span>
-            {settings.data && reactionBar("horizontal")}
-          </footer>
-        )}
+        {/* The reactions row: reactions first, the mono response count at the row's end. */}
+        <footer className={styles.footer}>
+          {reactionBar}
+          <span className={styles.responses}>
+            <MessagesSquare size={16} aria-hidden="true" />
+            {t("posts.responseCount", { count: post.commentCount })}
+          </span>
+        </footer>
         <AdaptiveDialog
           opened={editing}
           onClose={() => setEditing(false)}
@@ -292,7 +299,6 @@ export default function PostCard({
           <p>{t("posts.deleteBody")}</p>
           <ErrorMessage error={deletion.error} />
         </ConfirmDialog>
-      </div>
     </article>
   );
 }

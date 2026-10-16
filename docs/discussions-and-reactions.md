@@ -9,7 +9,7 @@ A discussion belongs to exactly one post. Every discussion is two levels deep:
 - Top-level comments or answers
 - Direct replies to a top-level item
 
-Below `48em` each top-level item is one frame and replies are unframed rows behind a narrow indent; the [design system](design-system.md#spacing-and-sizing) owns the details.
+Items are unframed, chat-like rows (avatar beside the content) separated by rules, and replies nest behind an indent; the [design system](design-system.md#journal) owns the details.
 
 Replies cannot themselves receive replies. Multiple top-level submissions by the same person are allowed. Order top-level items oldest-first and replies oldest-first, except for the pinned item rule below.
 
@@ -47,7 +47,7 @@ Reactions are available on posts, top-level items, and replies.
 - Every rendered emoji chip shows its count; activating it exposes the members who used it.
 - Any valid emoji used through the custom control appears alongside quick reactions.
 
-Each account has exactly three unique quick-reaction preferences. Their defaults are owned by [profiles and settings](profiles-and-settings.md) and are currently 👍, ❤️, and 😂. A fourth control is a compact text input; it will later open the shared `EmojiPicker` molecule (introduced by [course lessons](courses.md#emoji-picker)), which is not yet wired to reactions. Feed post cards show the controls as a vertical rail (a compact horizontal footer row below `48em`) that names a chip's members in a tooltip and submits the custom input with Enter; discussions keep a horizontal row with an Add button and an identity line. Validate exactly one displayed emoji grapheme, including composed sequences such as flags, skin-tone variants, and families; reject text, punctuation, and multiple emoji.
+Each account has exactly three unique quick-reaction preferences. Their defaults are owned by [profiles and settings](profiles-and-settings.md) and are currently 👍, ❤️, and 😂. A fourth control is a compact text input; it will later open the shared `EmojiPicker` molecule (introduced by [course lessons](courses.md#emoji-picker)), which is not yet wired to reactions. Feed post cards show the controls as a compact row closing the card that names a chip's members in a tooltip and submits the custom input with Enter; discussions keep a horizontal row with an Add button and an identity line. Validate exactly one displayed emoji grapheme, including composed sequences such as flags, skin-tone variants, and families; reject text, punctuation, and multiple emoji.
 
 ## Implemented Phase 4 behavior
 

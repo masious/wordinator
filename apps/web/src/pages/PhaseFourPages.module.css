@@ -1,100 +1,78 @@
-.discussion { display: grid; gap: var(--space-8); padding-block: var(--space-8) var(--space-16); animation: wordinator-enter-soft var(--motion-reveal) var(--ease-physical) both; }
+/* Lumen discussion (docs/design-system.md#journal): a section header, the response composer as one paper card,
+   chat-like rows without bezels separated by hairlines, pins and the concealed state on their soft tints. */
+.discussion { display: grid; gap: var(--space-6); padding-block: var(--space-6) var(--space-16); animation: wordinator-enter-soft var(--motion-reveal) var(--ease-physical) both; }
 .discussionHeader,
-.itemHeader,
 .itemActions,
-.reactionBar,
 .composerActions,
 .wizardNav { display: flex; align-items: center; gap: var(--space-3); flex-wrap: wrap; }
-.discussionHeader { justify-content: space-between; padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-separator); }
-.discussionHeader h2 { margin: var(--space-2) 0 0; font-size: var(--type-section-title); letter-spacing: var(--tracking-title); }
-.sectionEyebrow { color: var(--color-foreground-muted); font: var(--weight-medium) var(--type-eyebrow)/1 var(--font-mono); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; }
+.discussionHeader { justify-content: space-between; padding-bottom: var(--space-4); border-bottom: 1px solid var(--color-hairline); }
+.discussionHeader h2 { margin: var(--space-2) 0 0; font-size: var(--type-section-title); line-height: var(--line-heading); letter-spacing: var(--tracking-title); }
 
-.composerShell,
-.itemShell,
-.concealedShell {
-  min-width: 0;
-  padding: 6px;
-  background: var(--color-bezel);
-  border: var(--ring-hairline);
-  border-radius: var(--radius-xl);
-  box-shadow: var(--shadow-card);
-}
 .composer,
-.item,
 .concealed {
   display: grid;
-  gap: var(--space-5);
+  gap: var(--space-4);
   min-width: 0;
-  padding: var(--space-6);
-  background: var(--color-core);
+  padding: var(--card-inset);
   border: var(--ring-hairline);
-  border-radius: calc(var(--radius-xl) - 6px);
-  box-shadow: var(--shadow-inset-highlight);
+  border-radius: var(--radius-lg);
 }
-.composerShell { background: color-mix(in srgb, var(--color-info) 15%, transparent); }
-.composer { background: color-mix(in srgb, var(--color-surface-raised) 92%, var(--color-info-soft)); }
-.composer h3 { margin: 0; font-family: var(--font-display); font-size: var(--type-card-title); line-height: var(--line-title); }
-.concealedShell { background: color-mix(in srgb, var(--color-info) 30%, transparent); box-shadow: var(--shadow-raised); }
-.concealed { justify-items: start; background: var(--color-concealed); }
-.concealed h2 { margin: 0; font-size: var(--type-section-title); letter-spacing: var(--tracking-title); }
+.composer { background: var(--color-core); box-shadow: var(--shadow-card); }
+.composer h3 { margin: 0; font-size: var(--type-card-title); line-height: var(--line-title); letter-spacing: var(--tracking-title); }
+.concealed { justify-items: start; background: var(--color-concealed); border-color: transparent; }
+.concealed h2 { margin: 0; font-size: var(--type-section-title); line-height: var(--line-heading); letter-spacing: var(--tracking-title); }
 .concealed p,
 .item p { margin: 0; }
 .concealed > p { max-width: 52ch; color: var(--color-foreground-muted); line-height: var(--line-body); }
-.concealed > .composerShell { width: 100%; }
+/* A composer inside the concealed state or a row goes flat on its parent's surface. */
+.concealed > .composer { width: 100%; background: var(--color-core); box-shadow: none; }
+.itemMain .composer { padding: var(--space-3); box-shadow: none; }
 
 .responseList,
-.thread,
-.replies { display: grid; gap: var(--space-5); }
-.thread { gap: var(--space-6); }
-.responseItem { display: grid; gap: var(--space-2); padding: var(--space-4); background: var(--color-surface-muted); border: var(--ring-hairline); border-radius: var(--radius-md); box-shadow: var(--shadow-inset-highlight); }
-.responseItem dt { font-family: var(--font-display); font-size: var(--text-lg); font-weight: var(--weight-semibold); }
+.replies { display: grid; gap: var(--space-4); }
+.thread { display: grid; }
+.thread > .item { padding-block: var(--space-5); border-top: 1px solid var(--color-hairline); }
+.thread > .item:first-child { border-top: 0; padding-top: 0; }
+.responseItem { display: grid; gap: var(--space-2); padding: var(--space-3) var(--space-4); background: var(--color-surface); border: var(--ring-hairline); border-radius: var(--radius-md); }
+.responseItem dt { font-size: var(--text-md); font-weight: var(--weight-semibold); }
 .responseItem dd { margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; }
 .match { color: var(--color-success); font-weight: var(--weight-semibold); }
-.itemHeader { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; justify-content: initial; }
-.byline { display: grid; gap: var(--space-1); min-width: 0; }
+
+/* One row: the avatar in its own column, everything else (and the replies) in the content column. */
+.item { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: start; gap: var(--space-3); min-width: 0; }
+.item[data-pinned] { padding: var(--space-4); background: var(--color-pinned); border-radius: var(--radius-lg); }
+.thread > .item[data-pinned] { padding-block: var(--space-4); border-top-color: transparent; }
+.thread > .item[data-pinned] + .item { border-top-color: transparent; }
+.itemAvatar { grid-column: 1; }
+.itemMain { display: grid; gap: var(--space-3); min-width: 0; }
+.itemHeader { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); min-height: var(--control-height-sm); }
+.byline { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-2); min-width: 0; margin: 0; }
 .author { min-width: 0; color: var(--color-foreground); font: var(--weight-semibold) var(--type-post-author)/var(--line-compact) var(--font-sans); overflow-wrap: anywhere; }
-.meta { color: var(--color-foreground-muted); font: var(--type-post-meta)/var(--line-compact) var(--font-mono); }
+.meta { color: var(--color-foreground-faint); font: var(--type-post-meta)/var(--line-compact) var(--font-mono); }
 .body { max-width: 64ch; white-space: pre-wrap; overflow-wrap: anywhere; font-size: var(--type-post-body); line-height: var(--line-post-body); }
 .body a { color: var(--color-foreground); text-decoration-color: var(--color-action); text-underline-offset: 3px; }
-.replies { margin-left: var(--space-8); padding-left: var(--space-5); border-left: 1px solid var(--color-separator); }
-.replyShell { box-shadow: none; }
-.reply { background: var(--color-surface); }
-.itemActions { padding-top: var(--space-3); border-top: 1px solid var(--color-hairline); }
-
-.reactionBar { position: relative; }
-.reactionChip { min-height: var(--touch-target); padding: 0 var(--space-3); color: var(--color-foreground); background: var(--color-surface); border: var(--ring-hairline); border-radius: var(--radius-pill); box-shadow: var(--shadow-inset-highlight); cursor: pointer; transition: transform var(--motion-press) var(--ease-physical); }
-.reactionChip:hover { transform: translateY(-1px); }
-.reactionChip:active { transform: scale(.96); }
-.reactionChip[data-active="true"] { background: var(--color-selected); box-shadow: var(--shadow-pressed); }
-.identities { width: 100%; color: var(--color-foreground-muted); font-size: var(--text-sm); }
-.custom { display: flex; gap: var(--space-2); align-items: flex-start; }
-.custom > :first-child { width: 5rem; }
+.replies { margin-top: var(--space-2); padding-left: var(--space-4); border-left: 1px solid var(--color-hairline); }
+.itemActions { gap: var(--space-1); margin-left: calc(-1 * var(--space-2)); }
+.reply { gap: var(--space-2); }
 .error { margin: 0; color: var(--color-danger-text); font-weight: var(--weight-semibold); }
 .wizardStatus { display: grid; gap: var(--space-3); }
 .wizardProgress { color: var(--color-foreground-muted); font: var(--type-metadata)/1 var(--font-mono); }
-.wizardTrack { height: 5px; overflow: hidden; background: var(--color-wash-strong); border-radius: var(--radius-pill); }
+.wizardTrack { height: var(--size-progress); overflow: hidden; background: var(--color-hairline); border-radius: var(--radius-pill); }
 .wizardTrack span { display: block; width: 100%; height: 100%; background: var(--color-action); border-radius: inherit; transform-origin: left; transition: transform var(--motion-standard) var(--ease-physical); }
 .wizardNav { justify-content: space-between; }
 
-/* Phones get one frame per top-level surface: bezel shells dissolve, composers nested in a framed
-   surface go flat, and replies become unframed rows behind an 8px hairline indent. */
+/* Phones: the composer and concealed state keep one frame at the page gutter; rows stay unframed and replies
+   sit behind an 8px hairline indent. */
 @media (max-width: 48em) {
-  .discussion { gap: var(--space-6); padding-block: var(--space-6) var(--space-10); }
-  .thread { gap: var(--space-4); }
-  .composerShell, .itemShell, .concealedShell { padding: 0; background: none; border: 0; box-shadow: none; }
-  .composer, .item, .concealed { gap: var(--space-4); padding: var(--card-inset); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+  .discussion { gap: var(--space-5); padding-block: var(--space-5) var(--space-10); }
   .composer { gap: var(--space-3); }
   .composerActions { justify-content: flex-end; }
-  .item .composer, .concealed .composer, .reply { padding: 0; background: none; border: 0; border-radius: 0; box-shadow: none; }
-  .reply { gap: var(--space-3); }
-  .replies { gap: var(--space-5); margin-left: 0; padding-left: var(--space-2); border-left: 1px solid var(--color-hairline); }
-  .itemActions { padding-top: var(--space-2); }
-  .custom { width: 100%; }
-  .custom > :first-child { flex: 1; width: auto; }
+  .thread > .item { padding-block: var(--space-4); }
+  .item[data-pinned] { padding: var(--space-3); }
+  .replies { gap: var(--space-4); padding-left: var(--space-2); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .discussion { animation: none; }
-  .reactionChip, .wizardTrack span { transition-duration: 1ms; }
-  .reactionChip:hover { transform: none; }
+  .wizardTrack span { transition-duration: 1ms; }
 }
