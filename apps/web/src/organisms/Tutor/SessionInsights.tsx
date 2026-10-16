@@ -88,8 +88,8 @@ export function TutorContextRail({ conversation, insights }: { conversation: Tut
   </aside>;
 }
 
-export function ConversationDetailsDialog({ conversation, insights, opened, onClose }: {
-  conversation: TutorConversation | null; insights: TutorSessionInsights; opened: boolean; onClose: () => void;
+export function ConversationDetailsDialog({ conversation, insights, opened, focusTitle = false, onClose }: {
+  conversation: TutorConversation | null; insights: TutorSessionInsights; opened: boolean; focusTitle?: boolean; onClose: () => void;
 }) {
   const { t, i18n } = useTranslation();
   const queryClient = useQueryClient();
@@ -112,7 +112,7 @@ export function ConversationDetailsDialog({ conversation, insights, opened, onCl
   const tokens = insights.usage ? insights.usage.tokensIn + insights.usage.tokensOut : conversation?.tokens ?? 0;
   return <AdaptiveDialog opened={opened} onClose={onClose} title={t("tutor.details.title")}>
     <form className={styles.dialog} onSubmit={save}>
-      <TextField label={t("tutor.rename.label")} value={draft} maxLength={TUTOR_TITLE_MAX} disabled={!conversation}
+      <TextField label={t("tutor.rename.label")} value={draft} maxLength={TUTOR_TITLE_MAX} disabled={!conversation} data-autofocus={focusTitle || undefined}
         error={rename.isError ? t("tutor.rename.failed") : undefined} onChange={(event) => setDraft(event.currentTarget.value)} />
       <section className={styles.dialogSection}>
         <span className={styles.eyebrow}>{t("tutor.details.summary")}</span>

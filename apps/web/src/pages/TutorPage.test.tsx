@@ -147,13 +147,30 @@ describe("Tutor page", () => {
   });
 
   it("shows each row's tokens and marks a title the tutor chose", async () => {
-    conversations = [{ ...conversation(c1, "Greetings practice"), titleSource: "tutor" }, { ...conversation(c2, "Untouched"), tokens: 0 }];
+    conversations = [{ ...conversation(c1, "Greetings practice"), titleSource: "tutor", updatedAt: Date.now() - 20 * 60 * 1_000 }, { ...conversation(c2, "Untouched"), tokens: 0 }];
     renderPage(c1);
     const row = await screen.findByRole("link", { name: /Greetings practice/ });
+    expect(row).toHaveTextContent("20 minutes ago");
     expect(row).toHaveTextContent("2.5K tokens");
     expect(within(row).getByLabelText("Named by your tutor")).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Untouched/ })).not.toHaveTextContent("tokens");
     expect(screen.getAllByLabelText("Named by your tutor")).toHaveLength(2);
+  });
+
+  it("opens the summary from a conversation row's actions", async () => {
+    renderPage(c1);
+    fireEvent.click(await screen.findByRole("button", { name: "Actions for What next?" }));
+    fireEvent.click(await screen.findByRole("menuitem", { name: "Show summary" }));
+    const dialog = await screen.findByRole("dialog", { name: "Conversation details" });
+    expect(within(dialog).getByText(/You started by asking: What next\?/)).toBeInTheDocument();
+  });
+
+  it("opens title editing from a conversation row's actions", async () => {
+    renderPage(c1);
+    fireEvent.click(await screen.findByRole("button", { name: "Actions for What next?" }));
+    fireEvent.click(await screen.findByRole("menuitem", { name: "Change title" }));
+    const dialog = await screen.findByRole("dialog", { name: "Conversation details" });
+    await waitFor(() => expect(within(dialog).getByRole("textbox", { name: "Conversation title" })).toHaveFocus());
   });
 
   it("shows the privacy notice in full once per account and browser, then as one line that opens", async () => {
@@ -472,14 +489,16 @@ describe("Tutor page", () => {
 
   it("archives and unarchives a conversation; an archived one cannot be continued", async () => {
     renderPage();
-    fireEvent.click(await screen.findByRole("button", { name: "Archive What next?" }));
+    fireEvent.click(await screen.findByRole("button", { name: "Actions for What next?" }));
+    fireEvent.click(await screen.findByRole("menuitem", { name: "Archive" }));
     await waitFor(() => expect(screen.queryByRole("link", { name: /What next\?/ })).toBeNull());
     expect(await screen.findByText("This conversation is archived. Unarchive it to continue.")).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Archived" }));
-    fireEvent.click(await screen.findByRole("button", { name: "Unarchive What next?" }));
-    await waitFor(() => expect(screen.queryByRole("button", { name: "Unarchive What next?" })).toBeNull());
-    fireEvent.click(screen.getByRole("button", { name: "Active" }));
-    expect(await screen.findByRole("link", { name: /What next\?/ })).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("switch", { name: "Include archived" }));
+    const archivedRow = await screen.findByRole("link", { name: /What next\?/ });
+    expect(archivedRow).toHaveTextContent("Archived");
+    fireEvent.click(screen.getByRole("button", { name: "Actions for What next?" }));
+    fireEvent.click(await screen.findByRole("menuitem", { name: "Unarchive" }));
+    await waitFor(() => expect(screen.getByRole("link", { name: /What next\?/ })).not.toHaveTextContent("Archived"));
     expect(await screen.findByRole("textbox", { name: "Message your tutor" })).toBeEnabled();
   });
 });

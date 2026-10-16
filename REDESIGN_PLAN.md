@@ -160,10 +160,12 @@ Owner design (2026-10-16). Three columns: the app rail (extended for the lesson)
 - **Turns**: avatars on both sides; assistant turns in a bordered `--color-surface` card with a "Tutor · AI" meta row, then the Markdown body (headings at card-title size, numbered lists as the step list with round accent-soft numbers); user turns as accent bubbles with white text and the ink avatar on the right. Tool steps, confirmation cards, plan parts, and answer components sit inside the assistant card. Lesson links render as source chips.
 - **Composer**: floating card (`--shadow-floating`, `--radius-lg`) over the column bottom with the textarea, "Enter to send" hint, and primary Send with icon; the question dock takes the same frame.
 - **Context panel**: the shell's right reference rail, present above `75em`, starts with the current conversation, then a Session context card with learner-turn and completed-activity counts plus up to four recent visible tool results. The prototype's Try asking position temporarily shows a deterministic excerpt of the session rather than prompt suggestions (D9).
-- **Conversation list**: continues the app rail directly under Tutor (D10), with single-line titles fading at the end like course titles. It remains reachable through the navigation drawer below the rail breakpoint.
+- **Conversation list**: continues the app rail directly under Tutor (D10), with course-sub-item typography and single-line titles fading at the end. Active conversations are always shown; a bottom Include archived switch adds archived conversations to the same recency-sorted list. Relative activity times have exact-time tooltips, and each row has a three-dots menu for summary, title, and archive actions. It remains reachable through the navigation drawer below the rail breakpoint.
 - Phone layout is one chat column; Conversations opens the navigation drawer and the context rail is omitted.
 
 **Outcome (done 2026-10-16, first slice):** the page shell, header, conversation placement, context rail, session excerpt, and conversation-details dialog shipped. The richer assistant/user turn-card treatment, source chips, and composer hint remain later Batch 7 work.
+
+**Conversation-list follow-up (done 2026-10-17):** course-sub-item typography, relative activity times, per-row action menus, and the bottom Include archived switch shipped; the shared details dialog serves summary and rename. Focused RTL covers relative time, both detail entry points, archive/unarchive, and the combined list.
 
 ## Batch 8 — Words and Drill
 

@@ -130,17 +130,30 @@ const PCM_TAP = `registerProcessor("wordinator-pcm-tap", class extends AudioWork
 type Capture = { stream: MediaStream; onLevel: (listener: (level: number) => void) => void; onPcm: ((listener: (pcm: ArrayBuffer) => void) => void) | null; close: () => void };
 
 class MicrophoneBlocked extends Error {}
+class CaptureCancelled extends Error {}
 
-async function openCapture(): Promise<Capture | null> {
+async function openCapture(signal: AbortSignal): Promise<Capture | null> {
   if (!microsoftRecognitionSupported()) return null;
-  let stream: MediaStream;
+  let stream: MediaStream | null = null; let context: AudioContext | null = null;
+  let frame = 0; let closed = false; let tap: AudioWorkletNode | null = null;
+  let levelListener: ((level: number) => void) | null = null; let pcmListener: ((pcm: ArrayBuffer) => void) | null = null;
+  const close = () => {
+    // Repeat track cleanup because getUserMedia can resolve after an earlier abort ran while `stream` was still null.
+    signal.removeEventListener("abort", close);
+    if (!closed) {
+      closed = true; levelListener = null; pcmListener = null;
+      cancelAnimationFrame(frame);
+      tap?.port.close();
+      void context?.close().catch(() => undefined);
+    }
+    for (const track of stream?.getTracks() ?? []) track.stop();
+  };
+  signal.addEventListener("abort", close, { once: true });
   try {
     stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 } });
   } catch { throw new MicrophoneBlocked(); }
+  if (signal.aborted) { close(); throw new CaptureCancelled(); }
   const AudioContextClass = typeof window === "undefined" ? undefined : window.AudioContext;
-  let context: AudioContext | null = null; let frame = 0; let closed = false;
-  let levelListener: ((level: number) => void) | null = null; let pcmListener: ((pcm: ArrayBuffer) => void) | null = null;
-  let tap: AudioWorkletNode | null = null;
   if (AudioContextClass) {
     try {
       context = new AudioContextClass();
@@ -162,24 +175,22 @@ async function openCapture(): Promise<Capture | null> {
       if (context.audioWorklet && typeof AudioWorkletNode !== "undefined") {
         const url = URL.createObjectURL(new Blob([PCM_TAP], { type: "text/javascript" }));
         try { await context.audioWorklet.addModule(url); } finally { URL.revokeObjectURL(url); }
+        if (closed) throw new CaptureCancelled();
         tap = new AudioWorkletNode(context, "wordinator-pcm-tap");
         const resample = pcmResampler(context.sampleRate);
         tap.port.onmessage = (event: MessageEvent<Float32Array>) => { if (pcmListener) pcmListener(resample(event.data)); };
         source.connect(tap);
       }
-    } catch { tap = null; }
+    } catch (error) {
+      tap = null;
+      if (error instanceof CaptureCancelled) throw error;
+    }
   }
   return {
     stream,
     onLevel: (listener) => { levelListener = listener; },
     onPcm: tap ? (listener) => { pcmListener = listener; } : null,
-    close: () => {
-      closed = true; levelListener = null; pcmListener = null;
-      cancelAnimationFrame(frame);
-      tap?.port.close();
-      for (const track of stream.getTracks()) track.stop();
-      void context?.close().catch(() => undefined);
-    },
+    close,
   };
 }
 
@@ -348,6 +359,9 @@ const QUIET_LEVEL = 0.04;
 // and at the latest MAX_ANSWER_MS after speech began. Terms are a word or a short phrase.
 export const END_SILENCE_MS = 900;
 export const MAX_ANSWER_MS = 6000;
+// Preparation and final recognition are external browser/service operations, so neither may occupy the control indefinitely.
+export const PREPARE_TIMEOUT_MS = 10_000;
+export const RESULT_TIMEOUT_MS = 10_000;
 // A whole sentence (the tutor's Translate into Dutch, docs/ai-tutor.md#answer-components) gets a longer window and a longer pause
 // before the answer ends, since people pause between words while building one.
 export type AnswerWindow = { maxAnswerMs: number; endSilenceMs: number };
@@ -380,32 +394,51 @@ export function useSpokenAnswer(term: string, onAnswer: (answer: SpokenAnswer) =
     stopSpeech();
     const locale = scope.locale; const token = scope.token; const onAssessment = scope.onAssessment;
     let session: Session | null = null; let capture: Capture | null = null;
-    let phase: ListenPhase = "preparing"; let done = false; let finishing = false; let pendingFinish = false;
+    let phase: ListenPhase = "preparing"; let done = false; let finishing = false;
+    let prepareTimer = 0; let resultTimer = 0;
+    const preparation = new AbortController();
     let lastSound = Date.now(); let floor: number | null = null; let speechAt: number | null = null; let lastLoud = 0; let silent = false;
-    const self = {
-      finish: () => {
-        if (finishing || done) return;
-        if (!session) { pendingFinish = true; return; }
-        finishing = true;
-        if (phase === "hearing") handlers.onPhase("checking");
-        session.finish();
-      },
-      cancel: () => { done = true; session?.cancel(); capture?.close(); },
-    };
+    const clearTimers = () => { window.clearTimeout(prepareTimer); window.clearTimeout(resultTimer); };
     const live = () => run.current === self && !done;
     const settle = (outcome: ListenOutcome) => {
       if (done) return;
-      done = true; capture?.close(); meterElement.current?.style.removeProperty("--level");
+      done = true; clearTimers(); preparation.abort(); capture?.close(); meterElement.current?.style.removeProperty("--level");
       if (run.current !== self) return;
       run.current = null;
       setInterim(""); setQuiet(false); setStatus(outcome);
+    };
+    const failAndClose = () => {
+      if (!live()) return;
+      const current = session;
+      settle("failed");
+      current?.cancel();
+    };
+    const self = {
+      finish: () => {
+        if (finishing || done) return;
+        // Nothing has been heard while preparing. Cancel immediately instead of waiting for an external promise that may never settle.
+        if (phase === "preparing") { self.cancel(); return; }
+        if (!session) { failAndClose(); return; }
+        finishing = true;
+        handlers.onPhase("checking");
+        session.finish();
+      },
+      cancel: () => {
+        if (done) return;
+        const current = session;
+        settle("idle");
+        current?.cancel();
+      },
     };
     const handlers: Handlers = {
       onPhase: (next) => {
         if (!live() || next === phase) return;
         if (next === "listening" && phase !== "preparing") return;
         if (next !== "checking" && finishing) return;
-        phase = next; lastSound = Date.now(); setStatus(next);
+        phase = next; lastSound = Date.now();
+        window.clearTimeout(prepareTimer);
+        if (next === "checking" && !resultTimer) resultTimer = window.setTimeout(failAndClose, RESULT_TIMEOUT_MS);
+        setStatus(next);
       },
       onInterim: (text) => { if (live()) setInterim(text); },
       onAlternatives: (alternatives, assessment) => {
@@ -433,11 +466,13 @@ export function useSpokenAnswer(term: string, onAnswer: (answer: SpokenAnswer) =
     };
     run.current = self;
     setStatus("preparing"); setInterim(""); setQuiet(false);
+    prepareTimer = window.setTimeout(failAndClose, PREPARE_TIMEOUT_MS);
     // The browser's recognizer captures the microphone itself and starts at once; the app's capture only meters beside it.
     // Microsoft hears the app's capture, so it starts once the capture is open, and a blocked microphone ends it.
     if (recognizer === "browser") session = listenWithBrowser(locale, handlers);
     void (async () => {
-      try { capture = await openCapture(); } catch (error) {
+      try { capture = await openCapture(preparation.signal); } catch (error) {
+        if (error instanceof CaptureCancelled) return;
         if (error instanceof MicrophoneBlocked && recognizer === "microsoft") { settle("blocked"); return; }
         capture = null;
       }
@@ -446,7 +481,6 @@ export function useSpokenAnswer(term: string, onAnswer: (answer: SpokenAnswer) =
       if (recognizer === "browser") return;
       if (!capture) { settle("failed"); return; }
       session = listenWithMicrosoft(locale, token, term, capture, handlers);
-      if (pendingFinish && !done) self.finish();
     })();
   };
   const meterRef = (element: HTMLElement | null) => { meterElement.current = element; };

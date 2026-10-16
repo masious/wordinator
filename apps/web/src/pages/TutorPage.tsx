@@ -27,7 +27,6 @@ export function TutorPage({ groupId, conversationId, prompt, onOpen }: { groupId
   const queryClient = useQueryClient();
   const session = useQuery(sessionQueryOptions());
   const conversation = useQuery({ ...tutorConversationQueryOptions(conversationId ?? ""), enabled: Boolean(conversationId) });
-  const [archivedView, setArchivedView] = useState(false);
   const [detailsOpen, setDetailsOpen] = useState(false);
   // A new conversation's model is held here until its first message creates it.
   const [draftProvider, setDraftProvider] = useState<AiProvider | null>(null);
@@ -52,8 +51,8 @@ export function TutorPage({ groupId, conversationId, prompt, onOpen }: { groupId
   const current = conversation.data?.conversation ?? null;
   const archived = current?.archivedAt != null;
 
-  return <GroupFrame groupId={groupId} session={session.data} fill><TutorWorkspace conversationList={<ConversationList activeId={conversationId} archived={archivedView} onArchivedView={setArchivedView}
-      onNew={() => { onOpen(null); setDraftProvider(null); }} />} context={<TutorContextRail conversation={current} insights={insights} />}>
+  return <GroupFrame groupId={groupId} session={session.data} fill><TutorWorkspace conversationList={(closeRail) => <ConversationList activeId={conversationId} onOpen={closeRail}
+      onNew={() => { closeRail(); onOpen(null); setDraftProvider(null); }} />} context={<TutorContextRail conversation={current} insights={insights} />}>
     <div className={styles.page}>
     <h1 className={styles.visuallyHidden}>{t("tutor.title")}</h1>
     <section className={styles.chatPane} aria-label={t("tutor.chat")}>
@@ -83,11 +82,11 @@ export function TutorPage({ groupId, conversationId, prompt, onOpen }: { groupId
   </div></TutorWorkspace></GroupFrame>;
 }
 
-function TutorWorkspace({ conversationList, context, children }: { conversationList: ReactNode; context: ReactNode; children: ReactNode }) {
+function TutorWorkspace({ conversationList, context, children }: { conversationList: (closeRail: () => void) => ReactNode; context: ReactNode; children: ReactNode }) {
   const slots = useRailSlots();
   const wideContext = useMediaQuery("(min-width: 75.01em)", false, { getInitialValueInEffect: false });
   return <>
-    {slots.tutor && createPortal(<div className={styles.railConversations} onClick={slots.closeRail}>{conversationList}</div>, slots.tutor)}
+    {slots.tutor && createPortal(<div className={styles.railConversations}>{conversationList(slots.closeRail)}</div>, slots.tutor)}
     {wideContext && slots.reference && createPortal(context, slots.reference)}
     {children}
   </>;
