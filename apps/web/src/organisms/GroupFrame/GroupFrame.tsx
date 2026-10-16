@@ -23,7 +23,8 @@ type SlotRefs = { index: (element: HTMLElement | null) => void; tutor: (element:
 // The rail's breakpoint, matching the `68rem` media query in GroupFrame.module.css.
 const RAIL_DRAWER_QUERY = "(max-width: 68rem)";
 
-// The collapsed course list is a per-device convenience, kept per account; storage may be unavailable, so it falls back to expanded.
+// The collapsed course list is a per-device convenience, kept per account, for course and lesson pages only (other pages start
+// collapsed); storage may be unavailable, so it falls back to expanded.
 const collapsedKey = (accountId: string) => `wordinator:rail-courses-collapsed:v1:${accountId}`;
 function readCollapsed(accountId: string) {
   try { return window.localStorage.getItem(collapsedKey(accountId)) === "1"; } catch { return false; }
@@ -204,8 +205,17 @@ function Rail({ groupId, session, pathname, slots }: { groupId: string; session:
   const { t } = useTranslation();
   const { user } = session;
   const starts = (path: string) => pathname === path || pathname.startsWith(`${path}/`);
-  const [collapsed, setCollapsed] = useState(() => readCollapsed(user.id));
-  const toggle = () => setCollapsed((current) => { writeCollapsed(user.id, !current); return !current; });
+  // On course and lesson pages the course list follows the remembered choice; elsewhere it starts collapsed, and opening it there
+  // lasts only until the viewer leaves for a course page or another page outside them.
+  const inCourses = starts("/courses");
+  const [stored, setStored] = useState(() => readCollapsed(user.id));
+  const [openedOutside, setOpenedOutside] = useState(false);
+  useEffect(() => setOpenedOutside(false), [inCourses]);
+  const collapsed = inCourses ? stored : !openedOutside;
+  const toggle = () => {
+    if (!inCourses) { setOpenedOutside((current) => !current); return; }
+    setStored((current) => { writeCollapsed(user.id, !current); return !current; });
+  };
   // On a lesson page with the course list expanded, Courses becomes the rail's heading and the other items shrink to one row of
   // icons above the lesson box, leaving the height to the course list and the lesson index.
   const compact = !collapsed && /^\/courses\/[^/]+\/lessons\//.test(pathname);
