@@ -1,6 +1,8 @@
-import { Menu, Popover, Tooltip } from "@mantine/core";
-import { useState } from "react";
+import { Menu, Popover, SegmentedControl, Tooltip } from "@mantine/core";
+import { BookOpen, ChevronRight, Clock, Search, Sparkles, Volume2 } from "lucide-react";
+import { useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { ProgressMeter } from "../molecules/ProgressMeter";
 import {
   AdaptiveDialog,
   ArrowIcon,
@@ -11,20 +13,18 @@ import {
   ConfirmDialog,
   EmptyState,
   ErrorState,
+  Eyebrow,
   FieldHelp,
   IconButton,
   LabelChip,
   LoadingState,
+  MetadataItem,
   MetadataRow,
   NavigationItem,
-  PageContainer,
-  PageHeader,
   PasswordField,
   RadioField,
-  Reveal,
   SectionHeader,
   SelectField,
-  SplitLayout,
   StarIcon,
   StatusPanel,
   Surface,
@@ -34,194 +34,232 @@ import {
 } from "../ui";
 import styles from "./UiWorkbench.module.css";
 
+// A numbered workbench section: the number, title, and intro beside each other, then the section's panels.
+function WorkbenchSection({ number, title, intro, children }: { number: string; title: string; intro: string; children: ReactNode }) {
+  return <section className={styles.section} aria-labelledby={`ui-section-${number}`}>
+    <header className={styles.sectionHeading}>
+      <span aria-hidden="true">{number}</span>
+      <div><h2 id={`ui-section-${number}`}>{title}</h2><p>{intro}</p></div>
+    </header>
+    {children}
+  </section>;
+}
+
 export function UiWorkbench() {
   const { t } = useTranslation();
   const [dialog, setDialog] = useState(false);
   const [confirm, setConfirm] = useState(false);
+  const [view, setView] = useState("week");
   const swatches = [
-    ["page", t("ui.swatchPage")], ["surface", t("ui.swatchSurface")],
-    ["action", t("ui.swatchAction")], ["support", t("ui.swatchSupport")],
-    ["highlight", t("ui.swatchHighlight")], ["info", t("ui.swatchInfo")],
+    ["foreground", t("ui.swatchInk")], ["page", t("ui.swatchCanvas")], ["surface-raised", t("ui.swatchPaper")],
+    ["action", t("ui.swatchAccent")], ["info-soft", t("ui.swatchBlue")], ["support-soft", t("ui.swatchLime")],
   ] as const;
 
   return (
     <main className={styles.page}>
-      <PageContainer>
-        <Reveal>
-          <PageHeader
-            eyebrow={<LabelChip>{t("ui.eyebrow")}</LabelChip>}
-            title={t("ui.title")}
-            intro={t("ui.intro")}
-            actions={<Button trailingIcon={<ArrowIcon />}>{t("ui.primary")}</Button>}
-          />
-        </Reveal>
+      <div className={styles.workbench}>
+        <header className={styles.hero}>
+          <div>
+            <Eyebrow>{t("ui.eyebrow")}</Eyebrow>
+            <h1>{t("ui.title")}</h1>
+            <p>{t("ui.intro")}</p>
+          </div>
+          <div aria-hidden="true" className={styles.heroMark}><Sparkles size={28} /><span>{t("ui.mark")}</span></div>
+        </header>
 
-        <div className={styles.inventory}>
-          <Reveal className={styles.foundations}>
-            <Surface density="reading">
-              <SectionHeader eyebrow={<LabelChip>{t("ui.systemLabel")}</LabelChip>} title={t("ui.foundations")} description={t("ui.foundationIntro")} />
-              <div className={styles.swatches}>{swatches.map(([token, label]) => (
-                <div className={styles.swatch} key={token}>
-                  <span aria-hidden="true" className={styles.swatchColor} style={{ background: `var(--color-${token})` }} />
-                  <span>{label}</span><code>--color-{token}</code>
-                </div>
-              ))}</div>
-              <div className={styles.typeSpecimen}>
-                <p className={styles.displayType}>{t("ui.typeSample")}</p>
-                <p>{t("ui.bodySample")}</p>
-                <MetadataRow><span>{t("ui.metadataSample")}</span><span>09:42</span></MetadataRow>
+        <WorkbenchSection number="01" title={t("ui.foundations")} intro={t("ui.foundationIntro")}>
+          <Surface>
+            <div className={styles.swatches}>{swatches.map(([token, label]) => (
+              <div className={styles.swatch} key={token}>
+                <span aria-hidden="true" style={{ background: `var(--color-${token})` }} />
+                <strong>{label}</strong><code>--color-{token}</code>
               </div>
-              <dl className={styles.foundationMetrics}>
-                <div><dt>{t("ui.rhythmLabel")}</dt><dd>{t("ui.rhythmValue")}</dd></div>
-                <div><dt>{t("ui.radiusLabel")}</dt><dd>{t("ui.radiusValue")}</dd></div>
-                <div><dt>{t("ui.motionLabel")}</dt><dd>{t("ui.motionValue")}</dd></div>
-                <div><dt>{t("ui.measureLabel")}</dt><dd>{t("ui.measureValue")}</dd></div>
-              </dl>
-            </Surface>
-          </Reveal>
-
-          <Reveal className={styles.themeFoundation} delay={40}>
-            <SectionHeader eyebrow={<LabelChip>{t("ui.themeEyebrow")}</LabelChip>} title={t("ui.themeTitle")} description={t("ui.themeIntro")} />
-            <div className={styles.themeGrid}>
-              <div className={styles.themePreference}><Surface tone="inset"><ThemePreferenceControl /></Surface></div>
-              {(["light", "dark"] as const).map((scheme) => (
-                <div className={styles.themePreview} data-theme-preview={scheme} key={scheme}>
-                  <span className={styles.previewLabel}>{t(`theme.${scheme}`)}</span>
-                  <Surface>
-                    <div className={styles.themePreviewBody}>
-                      <nav aria-label={t("ui.themeNavigationPreview")} className={styles.navigation}>
-                        <NavigationItem active href={`#${scheme}-journal`} icon={<StarIcon />}>{t("nav.journal")}</NavigationItem>
-                        <NavigationItem href={`#${scheme}-settings`}>{t("nav.settings")}</NavigationItem>
-                      </nav>
-                      <p className={styles.themeAuthored}>{t("ui.themeAuthored")}</p>
-                      <div className={styles.row}><Button>{t("ui.primary")}</Button><Button variant="secondary">{t("ui.secondary")}</Button><Button disabled>{t("ui.disabled")}</Button></div>
-                      <TextField error={t("ui.validation")} label={t("ui.invalidField")} value="INV-2026" readOnly />
-                      <StatusPanel title={t("ui.infoTitle")}>{t("ui.infoBody")}</StatusPanel>
-                      <LoadingState label={t("ui.loadingContent")} />
-                    </div>
-                  </Surface>
-                </div>
-              ))}
+            ))}</div>
+            <div className={styles.typeSpecimen}>
+              <div><span>{t("ui.typeDisplay")}</span><p className={styles.displaySample}>{t("ui.displaySample")}</p></div>
+              <div><span>{t("ui.typeHeading")}</span><p className={styles.headingSample}>{t("ui.headingSample")}</p></div>
+              <div><span>{t("ui.typeBody")}</span><p>{t("ui.bodySample")}</p></div>
+              <div><span>{t("ui.typeLabel")}</span><Eyebrow>{t("ui.labelSample")}</Eyebrow></div>
             </div>
-          </Reveal>
+          </Surface>
+        </WorkbenchSection>
 
-          <Reveal className={styles.actions} delay={70}>
-            <Surface tone="featured">
-              <SectionHeader title={t("ui.actions")} description={t("ui.actionsIntro")} />
-              <div className={styles.actionRows}>
-                <div className={styles.row}>
-                  <Button trailingIcon={<ArrowIcon />}>{t("ui.primary")}</Button>
-                  <Button variant="secondary">{t("ui.secondary")}</Button>
-                  <Button variant="quiet">{t("ui.quiet")}</Button>
-                  <Button variant="danger">{t("ui.danger")}</Button>
-                </div>
-                <div className={styles.row}>
-                  <Button loading>{t("ui.loading")}</Button>
-                  <Button disabled>{t("ui.disabled")}</Button>
-                  <Tooltip label={t("ui.favoriteTip")}><IconButton label={t("ui.favorite")}><StarIcon /></IconButton></Tooltip>
-                </div>
-                <div className={styles.row}>
-                  <Button size="sm">{t("ui.small")}</Button><Button size="md">{t("ui.medium")}</Button><Button size="lg">{t("ui.large")}</Button>
-                  <IconButton label={t("ui.smallIcon")} size="sm"><StarIcon /></IconButton><IconButton label={t("ui.largeIcon")} size="lg"><StarIcon /></IconButton>
-                </div>
-                <div className={styles.row}>
-                  <ButtonGroup label={t("ui.groupLesson")}>
-                    <Button>{t("ui.groupContinue")}</Button>
-                    <Button variant="secondary">{t("ui.groupReview")}</Button>
-                    <Button variant="secondary">{t("ui.groupPractice")}</Button>
-                  </ButtonGroup>
-                  <ButtonGroup label={t("ui.groupView")}>
-                    <Button size="sm" variant="secondary">{t("ui.groupDay")}</Button>
-                    <Button size="sm" variant="secondary">{t("ui.groupWeek")}</Button>
-                    <Button size="sm" disabled variant="secondary">{t("ui.groupMonth")}</Button>
-                  </ButtonGroup>
-                </div>
+        <WorkbenchSection number="02" title={t("ui.controls")} intro={t("ui.controlsIntro")}>
+          <div className={styles.controlGrid}>
+            <Surface className={styles.demo}>
+              <h3>{t("ui.buttonsTitle")}</h3>
+              <div className={styles.row}>
+                <Button trailingIcon={<ArrowIcon />}>{t("ui.primary")}</Button>
+                <Button variant="secondary">{t("ui.secondary")}</Button>
+                <Button variant="quiet">{t("ui.quiet")}</Button>
+                <Button variant="danger">{t("ui.danger")}</Button>
               </div>
+              <div className={styles.row}>
+                <Button loading>{t("ui.loading")}</Button>
+                <Button disabled>{t("ui.disabled")}</Button>
+                <Tooltip label={t("ui.favoriteTip")}><IconButton label={t("ui.favorite")}><StarIcon /></IconButton></Tooltip>
+                <IconButton label={t("ui.groupReview")} tone="quiet"><Volume2 size={18} /></IconButton>
+                <IconButton label={t("ui.groupContinue")} tone="primary"><ChevronRight size={18} /></IconButton>
+              </div>
+              <div className={styles.row}>
+                <Button size="sm">{t("ui.small")}</Button><Button size="md">{t("ui.medium")}</Button><Button size="lg">{t("ui.large")}</Button>
+              </div>
+              <ButtonGroup label={t("ui.groupLesson")}>
+                <Button>{t("ui.groupContinue")}</Button>
+                <Button variant="secondary">{t("ui.groupReview")}</Button>
+                <Button variant="secondary">{t("ui.groupPractice")}</Button>
+              </ButtonGroup>
             </Surface>
-          </Reveal>
+            <Surface className={styles.demo}>
+              <h3>{t("ui.fieldsTitle")}</h3>
+              <TextField aria-label={t("ui.searchLabel")} leftSection={<Search size={16} aria-hidden="true" />} placeholder={t("ui.searchPlaceholder")} />
+              <SegmentedControl aria-label={t("ui.groupView")} value={view} onChange={setView} fullWidth
+                data={[{ value: "day", label: t("ui.groupDay") }, { value: "week", label: t("ui.groupWeek") }, { value: "month", label: t("ui.groupMonth") }]} />
+              <ProgressMeter value={64} label={t("ui.progressSample")} showLabel />
+              <ProgressMeter value={100} label={t("ui.lessonSample")} showLabel />
+            </Surface>
+            <Surface className={styles.demo}>
+              <h3>{t("ui.identityTitle")}</h3>
+              <div className={styles.row}>
+                <LabelChip>{t("ui.badgeDefault")}</LabelChip>
+                <LabelChip tone="accent">{t("ui.badgeAccent")}</LabelChip>
+                <LabelChip tone="success">{t("ui.badgeSuccess")}</LabelChip>
+                <LabelChip tone="warm">{t("ui.badgeWarm")}</LabelChip>
+                <LabelChip tone="info">{t("ui.badgeInfo")}</LabelChip>
+              </div>
+              <div className={styles.row}>
+                <Avatar name={t("ui.userName")} />
+                <Avatar name={t("ui.tutorName")} tone="accent" />
+                <Avatar name={t("ui.userName")} tone="soft" />
+              </div>
+              <MetadataRow>
+                <MetadataItem icon={<BookOpen />}>{t("ui.metadataLessons")}</MetadataItem>
+                <MetadataItem icon={<Clock />}>{t("ui.metadataWords")}</MetadataItem>
+              </MetadataRow>
+              <LabelChip>{t("ui.longChip")}</LabelChip>
+            </Surface>
+          </div>
+        </WorkbenchSection>
 
-          <Reveal className={styles.forms} delay={110}>
-            <Surface>
+        <WorkbenchSection number="03" title={t("ui.patterns")} intro={t("ui.patternsIntro")}>
+          <div className={styles.patternGrid}>
+            <div className={styles.pattern}>
+              <span className={styles.patternLabel}>{t("ui.patternCourse")}</span>
+              <article className={styles.courseCard}>
+                <div aria-hidden="true" className={styles.courseArt}><span className={styles.courseShape} /><span className={styles.courseGlyph}><BookOpen size={28} /></span></div>
+                <div className={styles.courseBody}>
+                  <LabelChip tone="accent">{t("ui.courseLevel")}</LabelChip>
+                  <h3>{t("ui.courseTitle")}</h3>
+                  <MetadataRow><MetadataItem icon={<BookOpen />}>{t("ui.courseLessons")}</MetadataItem></MetadataRow>
+                  <ProgressMeter value={68} label={t("ui.progressSample")} showLabel />
+                </div>
+              </article>
+            </div>
+            <div className={styles.pattern}>
+              <span className={styles.patternLabel}>{t("ui.patternReference")}</span>
+              <article className={styles.referenceItem}>
+                <div className={styles.referenceTop}><LabelChip tone="accent">{t("ui.referenceNumber")}</LabelChip><IconButton label={t("ui.groupReview")}><Volume2 size={16} /></IconButton></div>
+                <h4>{t("ui.referenceTerm")}</h4>
+                <p>{t("ui.referenceMeaning")}</p>
+              </article>
+            </div>
+          </div>
+          <div className={styles.pattern}>
+            <span className={styles.patternLabel}>{t("ui.patternConversation")}</span>
+            <div className={styles.conversation}>
+              <div className={styles.turn}>
+                <Avatar name={t("ui.tutorName")} tone="accent" />
+                <div className={styles.turnContent}><p className={styles.turnMeta}>{t("ui.tutorName")}</p><p>{t("ui.tutorTurn")}</p></div>
+              </div>
+              <div className={`${styles.turn} ${styles.turnUser}`}>
+                <Avatar name={t("ui.userName")} />
+                <div className={styles.turnContent}><p>{t("ui.userTurn")}</p></div>
+              </div>
+            </div>
+          </div>
+        </WorkbenchSection>
+
+        <WorkbenchSection number="04" title={t("ui.themeTitle")} intro={t("ui.themeIntro")}>
+          <div className={styles.themeGrid}>
+            <Surface tone="inset"><ThemePreferenceControl /></Surface>
+            {(["light", "dark"] as const).map((scheme) => (
+              <div className={styles.themePreview} data-theme-preview={scheme} key={scheme}>
+                <span className={styles.patternLabel}>{t(`theme.${scheme}`)}</span>
+                <Surface>
+                  <div className={styles.stack}>
+                    <nav aria-label={t("ui.themeNavigationPreview")} className={styles.navigation}>
+                      <NavigationItem active href={`#${scheme}-journal`} icon={<StarIcon />}>{t("nav.journal")}</NavigationItem>
+                      <NavigationItem href={`#${scheme}-settings`}>{t("nav.settings")}</NavigationItem>
+                    </nav>
+                    <p className={styles.authored}>{t("ui.themeAuthored")}</p>
+                    <div className={styles.row}><Button>{t("ui.primary")}</Button><Button variant="secondary">{t("ui.secondary")}</Button><Button disabled>{t("ui.disabled")}</Button></div>
+                    <TextField error={t("ui.validation")} label={t("ui.invalidField")} value="INV-2026" readOnly />
+                    <ProgressMeter value={42} label={t("ui.progressSample")} showLabel />
+                    <StatusPanel title={t("ui.infoTitle")}>{t("ui.infoBody")}</StatusPanel>
+                    <LoadingState label={t("ui.loadingContent")} />
+                  </div>
+                </Surface>
+              </div>
+            ))}
+          </div>
+        </WorkbenchSection>
+
+        <WorkbenchSection number="05" title={t("ui.inventory")} intro={t("ui.inventoryIntro")}>
+          <div className={styles.inventory}>
+            <Surface className={styles.demo}>
               <SectionHeader title={t("ui.forms")} description={t("ui.formsIntro")} />
-              <div className={styles.form}>
-                <TextField label={t("ui.name")} required placeholder={t("ui.namePlaceholder")} />
-                <PasswordField label={t("ui.password")} />
-                <TextAreaField label={t("ui.notes")} description={t("ui.help")} minRows={3} />
-                <SelectField label={t("ui.language")} data={[t("ui.dutch"), t("ui.german")]} />
-                <div className={styles.choiceRow}><CheckboxField label={t("ui.checkbox")} /><RadioField label={t("ui.radio")} /></div>
-                <TextField error={<FieldHelp error id="field-error">{t("ui.validation")}</FieldHelp>} label={t("ui.invalidField")} />
-                <TextField disabled label={t("ui.disabledField")} value={t("ui.disabledValue")} />
-              </div>
+              <TextField label={t("ui.name")} required placeholder={t("ui.namePlaceholder")} />
+              <PasswordField label={t("ui.password")} />
+              <TextAreaField label={t("ui.notes")} description={t("ui.help")} minRows={3} />
+              <SelectField label={t("ui.language")} data={[t("ui.dutch"), t("ui.german")]} />
+              <div className={styles.row}><CheckboxField label={t("ui.checkbox")} /><RadioField label={t("ui.radio")} /></div>
+              <TextField error={<FieldHelp error id="field-error">{t("ui.validation")}</FieldHelp>} label={t("ui.invalidField")} />
+              <TextField disabled label={t("ui.disabledField")} value={t("ui.disabledValue")} />
             </Surface>
-          </Reveal>
-
-          <Reveal className={styles.surfaces} delay={140}>
-            <SectionHeader title={t("ui.surfaces")} description={t("ui.surfacesIntro")} />
-            <div className={styles.surfaceStack}>
-              <Surface><h3>{t("ui.surfaceDefault")}</h3><p>{t("ui.surfaceBody")}</p></Surface>
-              <Surface tone="quiet"><h3>{t("ui.surfaceQuiet")}</h3><p>{t("ui.surfaceBody")}</p></Surface>
-              <Surface tone="inset"><h3>{t("ui.surfaceInset")}</h3><p>{t("ui.surfaceBody")}</p></Surface>
-              <Surface tone="danger"><h3>{t("ui.surfaceDanger")}</h3><p>{t("ui.surfaceBody")}</p></Surface>
-            </div>
-          </Reveal>
-
-          <Reveal className={styles.feedback} delay={170}>
-            <Surface>
-              <SectionHeader title={t("ui.feedback")} />
-              <div className={styles.feedbackStack}>
+            <div className={styles.stack}>
+              <SectionHeader title={t("ui.surfaces")} description={t("ui.surfacesIntro")} />
+              <div className={styles.surfaceGrid}>
+                <Surface><h3>{t("ui.surfaceDefault")}</h3><p>{t("ui.surfaceBody")}</p></Surface>
+                <Surface tone="quiet"><h3>{t("ui.surfaceQuiet")}</h3><p>{t("ui.surfaceBody")}</p></Surface>
+                <Surface tone="inset"><h3>{t("ui.surfaceInset")}</h3><p>{t("ui.surfaceBody")}</p></Surface>
+                <Surface tone="featured"><h3>{t("ui.surfaceFeatured")}</h3><p>{t("ui.surfaceBody")}</p></Surface>
+                <Surface tone="danger"><h3>{t("ui.surfaceDanger")}</h3><p>{t("ui.surfaceBody")}</p></Surface>
+              </div>
+              <Surface className={styles.demo}>
+                <SectionHeader title={t("ui.overlays")} description={t("ui.overlaysIntro")} />
+                <div className={styles.row}>
+                  <Button onClick={() => setDialog(true)}>{t("ui.openDialog")}</Button>
+                  <Button variant="danger" onClick={() => setConfirm(true)}>{t("ui.openConfirm")}</Button>
+                  <Menu><Menu.Target><Button variant="secondary">{t("ui.openMenu")}</Button></Menu.Target><Menu.Dropdown><Menu.Item>{t("ui.menuEdit")}</Menu.Item><Menu.Item color="red">{t("ui.menuRemove")}</Menu.Item></Menu.Dropdown></Menu>
+                  <Popover width={260} position="bottom" withArrow><Popover.Target><Button variant="quiet">{t("ui.openPopover")}</Button></Popover.Target><Popover.Dropdown>{t("ui.popoverBody")}</Popover.Dropdown></Popover>
+                </div>
+              </Surface>
+              <Surface className={styles.demo}>
+                <SectionHeader title={t("ui.feedback")} />
                 <StatusPanel title={t("ui.infoTitle")}>{t("ui.infoBody")}</StatusPanel>
                 <StatusPanel tone="success" title={t("ui.successTitle")} />
                 <StatusPanel tone="error" title={t("ui.errorTitle")} />
                 <LoadingState label={t("ui.loadingContent")} />
                 <EmptyState title={t("ui.emptyTitle")} action={<Button variant="secondary">{t("ui.emptyAction")}</Button>}>{t("ui.emptyBody")}</EmptyState>
                 <ErrorState title={t("ui.errorStateTitle")} action={<Button>{t("common.retry")}</Button>}>{t("ui.errorStateBody")}</ErrorState>
-              </div>
-            </Surface>
-          </Reveal>
-
-          <Reveal className={styles.composition} delay={200}>
-            <Surface tone="quiet">
-              <SectionHeader title={t("ui.composition")} description={t("ui.compositionIntro")} />
-              <SplitLayout
-                primary={<div className={styles.identity}><Avatar name="Mina Vos" /><div><h3>Mina Vos</h3><p>{t("ui.identityBody")}</p></div></div>}
-                secondary={<div><LabelChip>{t("ui.longChip")}</LabelChip><p>{t("ui.longContent")}</p></div>}
-              />
-              <nav aria-label={t("ui.navigationPreview")} className={styles.navigation}>
-                <NavigationItem active href="#journal" icon={<StarIcon />}>{t("nav.journal")}</NavigationItem>
-                <NavigationItem href="#members">{t("nav.members")}</NavigationItem>
-                <NavigationItem href="#settings">{t("nav.settings")}</NavigationItem>
-              </nav>
-            </Surface>
-          </Reveal>
-
-          <Reveal className={styles.overlays} delay={230}>
-            <Surface tone="featured">
-              <SectionHeader title={t("ui.overlays")} description={t("ui.overlaysIntro")} />
-              <div className={styles.row}>
-                <Button onClick={() => setDialog(true)}>{t("ui.openDialog")}</Button>
-                <Button variant="danger" onClick={() => setConfirm(true)}>{t("ui.openConfirm")}</Button>
-                <Menu><Menu.Target><Button variant="secondary">{t("ui.openMenu")}</Button></Menu.Target><Menu.Dropdown><Menu.Item>{t("ui.menuEdit")}</Menu.Item><Menu.Item color="red">{t("ui.menuRemove")}</Menu.Item></Menu.Dropdown></Menu>
-                <Popover width={260} position="bottom" withArrow><Popover.Target><Button variant="quiet">{t("ui.openPopover")}</Button></Popover.Target><Popover.Dropdown>{t("ui.popoverBody")}</Popover.Dropdown></Popover>
-              </div>
-            </Surface>
-          </Reveal>
-
-          <Reveal className={styles.responsive} delay={260}>
-            <SectionHeader title={t("ui.responsive")} description={t("ui.responsiveIntro")} />
-            <div className={styles.previewGrid}>
-              <div className={styles.widePreview}><span>{t("ui.wide")}</span><div><strong>{t("ui.previewTitle")}</strong><Button variant="secondary">{t("ui.previewAction")}</Button></div></div>
-              <div className={styles.narrowPreview}><span>{t("ui.narrow")}</span><div><strong>{t("ui.previewTitle")}</strong><Button variant="secondary">{t("ui.previewAction")}</Button></div></div>
+                <p className={styles.authored}>{t("ui.longContent")}</p>
+              </Surface>
             </div>
-          </Reveal>
-        </div>
+          </div>
+        </WorkbenchSection>
+
+        <nav aria-label={t("ui.navigationPreview")} className={styles.navigation}>
+          <NavigationItem active href="#journal" icon={<StarIcon />}>{t("nav.journal")}</NavigationItem>
+          <NavigationItem href="#settings">{t("nav.settings")}</NavigationItem>
+        </nav>
 
         <AdaptiveDialog opened={dialog} onClose={() => setDialog(false)} title={t("ui.dialogTitle")}>
-          <p>{t("ui.dialogBody")}</p><div className={styles.dialogActions}><Button onClick={() => setDialog(false)}>{t("ui.close")}</Button></div>
+          <p>{t("ui.dialogBody")}</p><div className={styles.row}><Button onClick={() => setDialog(false)}>{t("ui.close")}</Button></div>
         </AdaptiveDialog>
         <ConfirmDialog cancelLabel={t("common.cancel")} confirmLabel={t("ui.confirm")} opened={confirm} onClose={() => setConfirm(false)} onConfirm={() => setConfirm(false)} title={t("ui.confirmTitle")}>
           <p>{t("ui.confirmBody")}</p>
         </ConfirmDialog>
-      </PageContainer>
+      </div>
     </main>
   );
 }

@@ -117,7 +117,7 @@ export const resources = {
         unavailable: "This group is not available.",
         iconOptional: "Group icon (optional)"
       },
-      nav: { primary: "Main navigation", mobile: "Mobile navigation", accountMenu: "Account menu", journal: "Journal", courses: "Courses", words: "Words", members: "Members", notifications: "Notices", profile: "My profile", settings: "Settings", more: "More" },
+      nav: { primary: "Main navigation", accountMenu: "Account menu", openMenu: "Open navigation", journal: "Journal", courses: "Courses", courseList: "Your courses", showCourses: "Show courses", hideCourses: "Hide courses", resizeRail: "Resize navigation", words: "Words", tutor: "Tutor", notifications: "Notices", settings: "Settings" },
       words: {
         eyebrow: "Words",
         title: "Your words",

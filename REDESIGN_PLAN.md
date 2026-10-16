@@ -1,6 +1,6 @@
 # Lumen redesign plan
 
-**Status: approved (2026-10-16).** Batch 0 is done; Batches 1–3 are next, then Batch 4. The owner settled D5, D6, and D11 and added the Batch 4 product changes on 2026-10-16; the remaining decisions take their recommendation unless the owner revises them.
+**Status: approved (2026-10-16).** Batches 0–3 are done; Batch 6 (lesson page) is next, then Batch 4. The owner settled D1–D9 and D11 on 2026-10-16 and added the Batch 4 product changes; D2's phone action bar awaits confirmation, and D10 is deferred to a separate discussion. Management pages are last (Batch M).
 
 This plan moves Wordinator from the Editorial Luxury look (warm paper, coral, Newsreader, bezels, pills, a top navigation island) to the **Lumen** direction: a cool canvas, white cards with line borders, one violet accent, Inter, small radii, a left navigation rail, and the three reference compositions (course library, lesson reader, tutor). [docs/design-system.md](docs/design-system.md) owns every value; this file owns order, scope, and completion. Each batch rewrites the design-system rules it replaces, so the doc never describes two systems for the same component.
 
@@ -9,8 +9,8 @@ This plan moves Wordinator from the Editorial Luxury look (warm paper, coral, Ne
 - **Look, not behaviour.** Routes, data, permissions, i18n keys, and product rules stay. Anything in the reference screens that Wordinator does not have (course search, a sort menu, Home, Help center, lesson bookmarks, references and sources, read time, online status, attachments) is **left out** unless an open decision below adds it as a product change.
 - **Tokens only.** Components use semantic roles from `tokens.css`. No raw colours, no Tailwind (the reference stylesheet's `@import "tailwindcss"` and Google Fonts import are not carried over; Inter is self-hosted).
 - **Both schemes.** Dark mode comes from the token mapping. A batch is not done until its screens are checked in light and dark.
-- **Desktop first.** Design target is `1280px` and wider, must not break at `62em`–`75em`. Phone layouts stay maintained-but-frozen; each batch only keeps them usable (see decision D2).
-- **Verification.** Visual matching and testing are manual (owner). Each batch still runs `pnpm --filter @wordinator/web typecheck`, the Vitest suites for touched components, and `vite build`, and fixes tests that assert removed structure or copy. Playwright screenshot baselines are handled per decision D8.
+- **Desktop and phone.** Desktop (`1280px` and wider, not breaking at `62em`–`75em`) is the primary composition, and every UI decision also has a specified phone equivalent (below `48em`) that ships in the same batch (D2, owner 2026-10-16). Phone support is not being retired. Each batch lists its phone behaviour.
+- **Verification.** Visual matching and testing are manual (owner). Each batch still runs `pnpm --filter @wordinator/web typecheck`, the Vitest suites for touched components, and `vite build`, and fixes tests that assert removed structure or copy. Pixel baselines are deleted (D8); automated accessibility coverage is the basic WCAG checks in Batch A.
 
 ## Reference component map
 
@@ -28,13 +28,12 @@ How each Lumen component lands in the existing code. "New" means a new shared ex
 | `.progress-wrap` | `ProgressMeter` | `0.28rem` track on `--color-hairline`, accent fill, label row above (label and percent) |
 | `.search-field` | Mantine input theme (search look reused by the lesson word search) | No new search feature (D5) |
 | `.brand` | Shell brand | 2×2 rotated mark on `--color-inverse-surface`, one tile in the accent; the name stays Wordinator |
-| `.course-card` | Course library cards | Art band on `--color-art-*`, category badge, title, meta, progress, footer note and chevron (D4 for covers) |
+| `.course-card` | Course library cards | Cover band (course cover, or the lesson cover on lesson cards; `--color-art-*` band only when there is none), badge, title, meta, progress, footer note and chevron (D4) |
 | `.featured-course` | `CourseResume` | Dark `--color-feature-*` panel with a decorative visual half |
-| `.lesson-item`, `.lesson-rail__course` | New lesson rail on the lesson page | Numbered circle, check for finished, accent fill for current |
+| `.lesson-item`, `.lesson-rail__course` | Course page lesson rows; the lesson box in the app rail | No separate lesson rail (Batch 6) |
 | `.concept-callout` | Lesson `Callout` | Tinted panel, round icon tile, eyebrow, title, body; tone per callout type |
-| `.principle` | Lesson column blocks where they fit (D7) | Ink top rule on paper-soft |
 | `.lesson-pagination` | Lesson pager | Secondary Previous, centred Up next, primary Next lesson |
-| `.reference-item`, `.reference-panel` | Lesson side panel (index and New words) | Tabbed panel; items are bordered cards with a number chip |
+| `.reference-item`, `.reference-panel` | Lesson vocabulary panel | Search on top; word rows with a Speak / Bookmark / Expand stack |
 | `.chat-turn`, `.composer`, `.tutor-header`, `.context-card`, `.source-chip` | Tutor chat, composer, header, side panel, lesson links | See Batch 7 |
 | `.workbench-*` | `/ui` | See Batch 2 |
 | `.section-heading`, `.page-header` | `SectionHeader`, `PageHeader` | Eyebrow, title, intro, tools on the right |
@@ -67,23 +66,27 @@ Done when: every export renders Lumen in both schemes; Vitest for `ui`, molecule
 
 Outcome: shipped as listed. New tokens `--type-badge`, `--size-progress`, `--size-avatar`, `--focus-ring-width`, `--focus-ring-offset`; new exports `Eyebrow`, `MetadataItem`, `LabelChip` and `Avatar` tones, `ProgressMeter` `showLabel`. Switchers and the input focus ring are styled globally in `index.css`; Lucide icons take a `1.5` stroke globally. D3 (DM Mono) is applied to shared components only; page modules drop the mono role in their own batches. Light/dark visual check is the owner's.
 
-## Batch 2 — `/ui` workbench
+## Batch 2 — `/ui` workbench (done 2026-10-16)
 
 Rebuild `pages/UiWorkbench.tsx` in the reference layout: hero (eyebrow with version, title, intro, the rotated ink mark), **01 Foundations** (six swatches: ink, canvas, paper, accent, soft blue, soft lime; then display, heading, body, and label specimens), **02 Controls** (buttons, fields and progress, status and identity), **03 Product patterns** (course card, reference item, conversation turns), then the existing light/dark preview scopes and the remaining inventory (forms, dialogs, states) under the same section style. Real exported components only, i18n copy.
 
 Done when: `/ui` matches the reference sheet in light and has a correct dark scope; `phase-one.spec.ts` workbench heading assertion updated.
 
-## Batch 3 — Application shell
+Outcome: rebuilt as listed, sections numbered 01–05 (the dual-theme previews are 04, the remaining inventory 05); the heading text is unchanged, so `phase-one.spec.ts` needed no edit. Per D8 the pixel-baseline tests (`stable light-theme visual baselines`, `stable dual-theme visual baselines`) and their snapshot folders were deleted; the structural, contrast, and overflow specs stay. Visual check is the owner's.
+
+## Batch 3 — Application shell (done 2026-10-16)
 
 Replace the detached top island in `organisms/GroupFrame` with the Lumen product frame: a sticky full-height left rail (`--size-app-rail`, `--color-surface-raised`, right line border) with the brand, primary navigation (`rail-item`, active on `--color-action-soft`), and a footer profile row (avatar, name, `@username`, menu button opening the existing account menu: Settings, Sign out). Content area on `--color-surface`. Remove the grain layer and page glows from `index.css`.
 
 - Navigation items, in order: Courses, Words, Journal, Tutor, Notifications (D1).
 - **Course sub-items** (approved 2026-10-16): under Courses, the rail lists every course the viewer can see, in library order, as indented sub-items linking to the course page; the current course is marked active. The group is collapsible with a disclosure button on the Courses item, expanded by default; the collapsed state is a per-device convenience in `localStorage` (keyed by account). This is how the full course list stays reachable now that `/courses` shows lessons.
-- Below the rail breakpoint (`68rem` in the reference) a slim header with the brand and a menu button (D2).
-- The lesson page and drill page swap the app rail for their own rail (Batch 6).
+- Below the rail breakpoint (`68rem` in the reference) a slim header with the brand and a menu button that opens the rail as a drawer (D2).
+- The lesson page keeps the app rail and extends it (Batch 6).
 - Retire `--navigation-height`, `--navigation-offset`, `--shell-clearance` uses tied to the island; the lesson reading progress bar moves to the top of the content column.
 
 Done when: every authenticated route renders inside the rail frame; skip link and `aria-current` preserved; shell sections of design-system.md rewritten.
+
+Outcome: `GroupFrame` is the rail frame (the lesson and drill pages keep it until Batch 6); below `68rem` a slim header opens the rail in a Mantine drawer, and the phone dock and More sheet are gone (D2). `ShellIcon` was replaced by Lucide icons. The grain layer, page glows, and grain tokens were removed; `--mobile-dock-clearance` now only covers the safe area. The lesson progress bar starts at `--shell-inline-start`. Specs updated: `phase-one`, `mobile-layout`, `dual-theme-gate`, `light-theme-gate` (stroke `1.5px`), `phase-three` and `words-tab` (exact link names). The shell had no skip link before this batch; none was added. **Open with the owner (D2):** the owner does not retire phone support; whether the drawer is the phone equivalent of the old dock or the bottom dock comes back is to be confirmed.
 
 ## Batch 4 — Course library (`/courses`)
 
@@ -95,71 +98,120 @@ Approved product change (2026-10-16): the library page becomes a learning dashbo
   - **Recent lessons** (default): one card per lesson the viewer touched most recently across courses (positions and completions, newest first; up to nine). Card: art band (course tone), course badge, lesson title, Lesson n of m, **two meters** (lesson storyline share, then course progress), and a footer row with a chevron button that **expands the card's metrics**:
     - **Word recency**: when the viewer last reviewed a word from the lesson ("3 days ago", or Not practised yet) and the share of the lesson's words reviewed in the last 7 days.
     - **Memory strength**: the lesson's words in three bands — Strong (recall now ≥ 0.9), Fading (reviewed, below 0.9), New (no memory) — as counts and a stacked bar. Bands only; the recall probability itself is still never shown (owner-approved change to [words.md](docs/words.md#word-memory)).
-    - **Pronunciation fluency**: the average Azure fluency score (0–100) of the viewer's pronunciation attempts on the lesson's words, with the attempt count; "No spoken attempts" otherwise.
+    - **Pronunciation fluency** (built in Batch 6's lesson-metrics read): the average Azure fluency score (0–100) of the viewer's pronunciation attempts on the lesson's words, with the attempt count; "No spoken attempts" otherwise.
   - **Not started**: course cards for published courses with no position, completion, or word review by the viewer (art band, level badge, title, lesson count, Start course).
   - The select is a per-device convenience (`localStorage`); there is no other filtering.
+- **Covers** (D4): Not started cards show the course cover and Recent lessons cards the lesson cover (the lesson's first image, as on the course page); the `--color-art-*` band appears only when there is no image.
+- **Phone**: the header tools wrap under the title; the feature panel stacks the tutor half under the content half; the grid is one column; the metrics expand in place.
 - **API**: one private read for the dashboard (contract in `packages/contracts`, course visibility applies, viewer-only like the Progress tab) returning the resume course, the recent lessons with both meters and metrics, and the not-started courses; metrics are computed at read time from `word_reviews`, `word_memory`, `course_lesson_words`, and `pronunciation_attempts`. Owner docs: [courses.md](docs/courses.md) (library page), [words.md](docs/words.md) (bands), [data-model.md](docs/data-model.md) if indexes are added, [security-and-privacy.md](docs/security-and-privacy.md) (still private learning data).
 - Tests: contract tests, API authorization and privacy tests (another account's data never appears), RTL for the panel, grid, view select, and the expanding metrics.
 
-## Batch 5 — Course page and manage page
+## Batch 5 — Course page
 
 - Course page: page header with course badge, title, summary, and the course progress meter; lessons as `lesson-item`-style rows in one bordered list (number circle or check, title, goal, practice status, lesson actions on the right); lesson cover images keep their left-edge fade, retuned to the card surface; Contributors as a context card.
-- Manage page and lesson editor chrome: Lumen fields, buttons, and cards; BlockNote content styles follow the lesson reader's prose roles. Editor behaviour untouched.
+- Phone: lesson rows keep today's cover banner across the top and stack their actions.
 
-## Batch 6 — Lesson reader
+## Batch 6 — Lesson page
 
-Three columns at `1280px+`: lesson rail, reading column, side panel.
+Owner design (2026-10-16). Three columns: the app rail (extended for the lesson), the reading column, and the vocabulary panel. Two product changes are marked **(product)**.
 
-- **Lesson rail** (`--size-lesson-rail`, sticky): Back to course, course card (Course badge, title, progress), the course's lesson list as `lesson-item`s (check for finished, number otherwise, accent for current). Replaces the app rail on this route.
-- **Reading column**: header bar with breadcrumb (course › Lesson n) and the existing actions; article intro with Lesson nn badge, the title at `--text-display`, the lesson goal as the dek, and metadata (new-word count, practice count); prose at `--type-authored` / `--line-reading`; callouts as concept callouts; examples, dialogues, and practices restyled as bordered paper-soft panels; pager with Up next.
-- **Side panel** (`--size-reference-panel`): eyebrow and title, a segmented control **Contents | Words** replacing the stacked index and New words panels; index entries and word rows become reference-item cards (number or term, meaning, speaker and bookmark actions as the item's icon buttons). Keeps the current-entry tracking, dimming, and highlight behaviour from `docs/courses.md`.
-- Below `75em` the lesson rail collapses behind a menu button; below `62em` the side panel drops under the text.
-- Player, answer dialog (docked), share selection, and AI practices restyled in place.
+**0. Mono restore (D3).** Before the lesson work, give `MetadataRow` and `LabelChip` back their DM Mono role (Batch 1 had switched them to Inter); page modules keep their mono uses.
+
+**1. Left: app rail with the lesson inside it.** No separate lesson rail; the app rail stays.
+
+- **In this lesson** moves from the side column into the rail: under the active course's sub-item, the current lesson expands into its index (headings and practices, indented by level, practices in italics). It keeps today's behaviour from [courses.md](docs/courses.md#lesson-pages): click to scroll, passed entries muted, the current entry marked on the rule and kept in view. The expanded block scrolls on its own if long. Other courses stay collapsed.
+- **Lesson box**: a card pinned under the rail's navigation items (above the profile row) for the current lesson only:
+  - lesson progress (the reading-progress share as a `ProgressMeter` with its percent);
+  - **Practise words**: opens a word drill of this course's words **(product: new drill source `course`, `/words/drill?source=course&course=<id>`; owner doc [words.md](docs/words.md#drill))**;
+  - **Ask for more practices like this**: opens `/ai` with a new conversation, the lesson as context, and a prefilled request for more practices on this lesson's topics; the tutor's existing personal-practice flow and confirmations apply **(product; owner doc [ai-tutor.md](docs/ai-tutor.md))**;
+  - **Fluency**, only when data exists: per [practice topic](docs/tutor-sessions-and-memory.md#practice-topics) practised under this lesson, the label, answered and missed counts, and last practised; plus the lesson's pronunciation fluency average (the Batch 4 metric). No data, no section.
+  - Data comes from one private lesson-metrics read (contract in `packages/contracts`, viewer-only, course visibility applies). Batch 4's dashboard reuses it.
+- The thin lesson progress bar at the top of the content stays; the box adds the actions and fluency.
+
+**2. Centre: reading column.**
+
+- **Lesson cover** (D4): the lesson's first image (the same one the course page's lesson list uses, by the same published/draft rules) as a full-width banner at the top, `--radius-lg`, cropped to fill; none without an image.
+- Header: breadcrumb (course › Lesson n) and the existing actions; Lesson nn badge, the title at `--text-display`, the goal as the dek, metadata (new-word count, practice count).
+- Prose at `--type-authored` / `--line-reading`; callouts as concept callouts; examples, dialogues, and practice panels restyled as bordered Lumen panels (practice eyebrow and status stay mono); pager with Up next. Player, docked answer dialog, share selection, and AI practices restyled in place.
+
+**3. Right: vocabulary panel** (`--size-reference-panel`, sticky). Same functions as today's New words panel, new look.
+
+- A search field at the top (today's lesson word search, with the This lesson | Library switch below it).
+- Word rows as Lumen reference items on `--color-core` with a line border (no ochre panel): term, meaning, and at the row end one attached vertical **button stack**: Speak, Bookmark, Expand. Speak appears only when the word has a generated audio clip; Bookmark and Expand always. Expanded rows show forms, example (its speaker only with audio), note, and the Learnt in link as today.
+- On-screen highlighting and dimming of words stay as today.
+
+**Wide-but-not-desktop** (`62em`–`75em`): the vocabulary panel narrows to its minimum; below `62em` it moves under the text.
+
+**Phone** (D2): the rail (with the lesson index and lesson box) is reached through the phone's dynamic action bar; the vocabulary panel opens as a bottom sheet from the same bar; the cover spans the screen width; the pager keeps Previous and Next.
+
+**Docs**: rewrite the lesson-page rules in [courses.md](docs/courses.md#lesson-pages) and [design-system.md](docs/design-system.md); add the course drill source to [words.md](docs/words.md#drill); add the lesson-metrics read to [security-and-privacy.md](docs/security-and-privacy.md) (private learning data).
+
+**Tests** (API work is not covered by the manual-testing rule): contract tests; authorization and privacy tests for the lesson-metrics read and the course drill source (another account's data never appears, invisible courses refused); RTL for the rail index, lesson box (with and without fluency data), vocabulary button stack (Speak hidden without audio).
 
 ## Batch 7 — Tutor (`/ai`)
 
-- **Header**: tutor mark (accent tile with sparkle and `--shadow-accent`), conversation title with the rename pencil, model picker, Archive, and a settings icon button. No online badge (D9 for the status line).
+- **Header**: tutor mark (accent tile with sparkle and `--shadow-accent`), conversation title with the rename pencil, model picker, Archive, and a settings icon button. No online badge; the status line is the active plan or context summary.
 - **Turns**: avatars on both sides; assistant turns in a bordered `--color-surface` card with a "Tutor · AI" meta row, then the Markdown body (headings at card-title size, numbered lists as the step list with round accent-soft numbers); user turns as accent bubbles with white text and the ink avatar on the right. Tool steps, confirmation cards, plan parts, and answer components sit inside the assistant card. Lesson links render as source chips.
 - **Composer**: floating card (`--shadow-floating`, `--radius-lg`) over the column bottom with the textarea, "Enter to send" hint, and primary Send with icon; the question dock takes the same frame.
-- **Context panel** (`--size-context-panel`): current lesson card on `--color-action-soft` (eyebrow, title, Lesson n of m, Open lesson) when the conversation has a lesson context; Session panel (plan steps and counts) as a context card with a count badge; suggested prompts as Try asking rows only if they already exist (D9); usage box; the accuracy note at the bottom.
-- **Conversation list**: placement per D10.
+- **Context panel** (`--size-context-panel`): current lesson card on `--color-action-soft` (eyebrow, title, Lesson n of m, Open lesson) when the conversation has a lesson context; Session panel (plan steps and counts) as a context card with a count badge; usage box; the accuracy note at the bottom. No Try asking card (D9: a future feature in the roadmap backlog).
+- **Conversation list**: keeps its current placement until D10 is decided in a separate discussion.
 - Phone layout keeps one pane at a time (tutor is the documented phone exception).
 
 ## Batch 8 — Words and Drill
 
 - Words: page header with the Bookmarks | Weak words segmented control, lesson filter, and Drill in the tools slot; word cards as Lumen cards (white, line border, `--radius-lg`); weak-word rows as reference items with the result dots.
 - Drill: centred card on `--color-core`, prompt as eyebrow, term in the display role, Again / Got it as secondary / primary with `<kbd>` hints; verdict badge and pronunciation breakdown in Lumen tints.
+- Phone: header tools wrap; cards one column; drill buttons fill the width.
 
 ## Batch 9 — Journal, post detail, notifications
 
 - Journal stays one reverse-chronological column. Create prompt row, post cards as Lumen cards (avatar, author, meta, body, reactions row), post-type labels as badges, discussions as chat-like nested rows without bezels, pins and concealed answers on their soft tints.
 - Post detail and composer dialog: Lumen dialog and fields.
 - Notifications: quiet rows separated by lines, unread on `--color-action-soft`.
+- Phone: cards drop their outer margin to the page gutter; the composer stays the full-screen sheet with the sticky action bar.
 
-## Batch 10 — Auth, setup, settings, admin, states
+## Batch 10 — Auth, setup, settings, states
 
 - Sign in, register, and setup: centred Lumen card on the canvas with the brand mark (no editorial split).
 - Settings: page header plus section cards (account, appearance, speech recognition, tutor).
-- Admin analytics: Lumen tables (line rows, faint headers, tabular figures).
 - Empty, error, loading, and restricted states, offline page, 404.
+- Phone: the auth card fills the width; settings sections stack.
+
+## Batch M — Management pages (last priority)
+
+Owner direction (2026-10-16): management surfaces come last, after every learner-facing batch.
+
+- Manage course page: course details, cover, publishing, Contributors, and the lesson tools as Lumen cards, fields, and button groups.
+- Lesson editor chrome (toolbar, publish bar, merge conflicts, image dialog, practice and vocabulary fields); BlockNote content styles follow the lesson reader's prose roles. Editor behaviour untouched.
+- Admin analytics and AI settings: Lumen tables (line rows, faint headers, tabular figures) and form cards.
+- Phone: the manage tools take a full-width row; tables scroll inside their card; the editor keeps today's phone behaviour.
+
+## Batch A — Basic WCAG checks (Storybook)
+
+Owner direction (D8, 2026-10-16): pixel baselines are gone; add basic automated WCAG checks through the existing Storybook.
+
+- Add `@storybook/addon-a11y` (axe) and run it as tests through Storybook's Vitest integration, failing on WCAG 2.x A/AA violations (`color-contrast`, names, roles, labels).
+- Stories, light and dark: the shared `ui` exports (Button variants and states, IconButton tones, LabelChip and Avatar tones, Eyebrow, Surface, fields, PageHeader, SectionHeader, dialogs), `ProgressMeter`, `Callout`, the shell rail and drawer, and the existing journal post stories. Later batches add stories for the pieces they build.
+- Wire a `test:a11y` script; update [testing.md](docs/testing.md#storybook), which today calls Storybook a local preview outside every gate, and the `.storybook/main.ts` comment.
+- Runs after Batch 6, before Batch 4.
 
 ## Batch 11 — Cleanup and documentation
 
-- Remove `--font-display` / `--font-serif` aliases, bezel and shell radius tokens, `--shadow-inset-highlight`, grain tokens, navigation-island tokens, `--color-page-glow` / `--color-page-accent`, and DM Mono if D3 retires it; rename `--palette-*` users if any remain.
+- Remove `--font-display` / `--font-serif` aliases, bezel and shell radius tokens, `--shadow-inset-highlight`, grain tokens, navigation-island tokens, `--color-page-glow` / `--color-page-accent`; rename `--palette-*` users if any remain.
 - Replace the Editorial rule list in design-system.md with Lumen rules; update `docs/what_is_it.md` if it describes the stationery look; record the outcome in `docs/roadmap.md`; delete this plan.
 
 ## Open decisions
 
 | # | Question | Recommendation |
 | --- | --- | --- |
-| D1 | Rail items and order. The reference has Home, Library, Tutor, Help center. | Courses, Words, Journal, Tutor, Notifications; Settings via the profile menu; no Home or Help center. |
-| D2 | Narrow widths: the reference hides the rail below `68rem`. The phone dock is frozen behaviour. | Slim header with a menu button that opens the rail as a drawer below `68rem`; retire the phone dock and More sheet (docs already freeze phone work). |
-| D3 | DM Mono: the reference has no mono. | Retire it; metadata in Inter with `font-variant-numeric: tabular-nums`; `<kbd>` and code keep `ui-monospace`. |
-| D4 | Course cards: real cover images or the generated art band? | Cover image when present, art band (tone cycled by course, glyph by level) otherwise. |
+| D1 | Rail items and order. The reference has Home, Library, Tutor, Help center. | **Done (Batch 3):** Courses (with course sub-items), Words, Journal, Tutor, Notifications; Settings and Sign out in the profile menu; no Home or Help center. |
+| D2 | Narrow widths and phone support. | **Decided:** phone support is not retired; every UI decision gets a phone equivalent. The phone gets a new **dynamic action bar** instead of the old fixed dock: its slots change with the page and carry that page's equivalents of the desktop actions (for example, on a lesson: Contents, Words, Lesson box, Menu). The slim header and drawer from Batch 3 stay for the full navigation. *Reading of the owner's "another dynamic equivalent for similar actions"; to confirm.* The bar is built with Batch 6 and each later batch defines its slots. |
+| D3 | DM Mono. | **Decided:** kept for metadata, counters, practice and post-type labels, and `<kbd>`. Batch 6 restores it in `MetadataRow` and `LabelChip`; Lumen page eyebrows stay Inter. |
+| D4 | Covers. | **Decided:** course and lesson covers are used wherever they exist (library cards, course page), and the lesson page opens with the lesson's cover (Batch 6). The art band is only the no-image fallback on cards. |
 | D5 | Course search in the library header? | **Decided:** left out. |
 | D6 | Tutor call to action on `/courses`. | **Decided:** the feature panel's visual half becomes the AI tutor entry; the gradient card and `--gradient-tutor` are retired. |
-| D7 | Lesson "principle grid": no matching block type exists. | Skip; restyle only existing block types. |
-| D8 | Playwright screenshot baselines (dual-theme gate, `/ui`, auth) will all fail. | Delete the screenshot assertions; keep structural, accessibility, and contrast specs and fix them per batch. |
-| D9 | Tutor header status line and "Try asking" suggestions. | Status line: the active plan or context summary; Try asking only from existing prompt references, otherwise omit. |
-| D10 | Tutor conversation list: the reference has no list. | Put it in the context panel's top card (collapsible, recent first) and keep the full list behind a Conversations button; or keep a left list column between the rail and the chat. |
-| D11 | Batch order. | **Decided:** 1 → 2 → 3 → 4, then 6, 7, 5, 8, 9, 10, 11. |
+| D7 | Lesson page composition and the reference "principle grid". | **Decided:** the grid is dropped; the lesson page is the owner's three-column design in Batch 6. |
+| D8 | Playwright screenshot baselines. | **Done:** deleted in Batch 2. **Decided:** add basic WCAG checks through Storybook (Batch A). |
+| D9 | Tutor "Try asking" suggestions. | **Decided:** a future feature (roadmap backlog); Batch 7 leaves it out. |
+| D10 | Tutor conversation list: the reference has no list. | **Deferred** to a separate discussion. |
+| D11 | Batch order. | **Decided:** the left rail first (Batch 3, done), the lesson page next (Batch 6), then A, 4, 7, 5, 8, 9, 10; management pages last (Batch M), then cleanup (11). |

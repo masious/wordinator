@@ -17,7 +17,7 @@ Wordinator is not a public network, professional course provider, tutoring marke
 
 ### Desktop first
 
-New work is designed and verified for desktop viewports only. Mobile phones are not a target: phone support will be discontinued in the future. The one exception is the [AI tutor](ai-tutor.md) (C14, approved 2026-10-15), which works the same on phones and desktops. Existing phone layouts keep working and their tests keep passing until that change is made explicitly, but new features do not add phone-specific layouts, behaviors, or tests. See [product requirements](product-requirements.md#release-definition).
+Committed learners study mainly on desktop, so desktop is the primary composition for new work. Phones remain supported: every UI decision specifies a phone equivalent that ships with it (owner decision, 2026-10-16, replacing the earlier plan to discontinue phone support). The [AI tutor](ai-tutor.md) (C14) works the same on phones and desktops. See [product requirements](product-requirements.md#release-definition).
 
 ## What learners do
 

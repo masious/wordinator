@@ -35,31 +35,21 @@ test("a new person signs up, sets up a username, and lands in the one global lib
   await expect(page).toHaveURL(/\/journal$/);
   await expect(page.getByRole("heading", { name: "Journal", level: 1 })).toBeAttached();
 
-  const desktopNavigation = page.getByRole("navigation", { name: "Main navigation" });
-  const mobileNavigation = page.getByRole("navigation", { name: "Mobile navigation" });
+  // The left rail: primary destinations in order, with the course list nested under Courses.
+  const navigation = page.getByRole("navigation", { name: "Main navigation" });
   await page.goto("/courses");
-  await expect(desktopNavigation).toBeVisible();
-  await expect(mobileNavigation).toBeHidden();
-  await expect(desktopNavigation.getByRole("link", { name: "Courses" })).toHaveAttribute("aria-current", "page");
-  await expect(desktopNavigation.getByRole("link")).toHaveText(["Courses", "Words", "Journal", "Notices"]);
-  const islandBox = await page.getByRole("banner").locator(":scope > div").boundingBox();
-  const desktopViewport = page.viewportSize();
-  expect(islandBox).not.toBeNull();
-  expect(desktopViewport).not.toBeNull();
-  expect(islandBox!.x).toBeGreaterThan(0);
-  expect(islandBox!.y).toBeGreaterThan(0);
-  expect(islandBox!.width).toBeLessThan(desktopViewport!.width);
+  await expect(navigation).toBeVisible();
+  await expect(page.getByRole("banner")).toBeHidden();
+  await expect(navigation.getByRole("link", { name: "Courses", exact: true })).toHaveAttribute("aria-current", "page");
+  for (const name of ["Words", "Journal", "Tutor", "Notices"]) await expect(navigation.getByRole("link", { name, exact: true })).toBeVisible();
+  const railBox = await navigation.boundingBox();
+  expect(railBox).not.toBeNull();
+  expect(railBox!.x).toBeLessThan(40);
 
+  // Narrow windows hide the rail behind the header's menu button.
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(desktopNavigation).toBeHidden();
-  await expect(mobileNavigation).toBeVisible();
-  await expect(mobileNavigation.getByRole("link", { name: "Courses" })).toHaveAttribute("aria-current", "page");
-  await expect(mobileNavigation.getByRole("link")).toHaveText(["Courses", "Words", "Journal", "Notices"]);
-  const dockBox = await mobileNavigation.boundingBox();
-  expect(dockBox).not.toBeNull();
-  expect(dockBox!.x).toBeGreaterThan(0);
-  expect(dockBox!.width).toBeLessThan(390);
-  expect(dockBox!.y + dockBox!.height).toBeLessThan(844);
+  await expect(navigation).toBeHidden();
+  await expect(page.getByRole("banner").getByRole("button", { name: "Open navigation" })).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth)).toBe(false);
   await page.setViewportSize({ width: 1280, height: 720 });
   await signOut(page);
@@ -93,8 +83,4 @@ test("the UI workbench remains directly addressable", async ({ page }) => {
   await page.evaluate(() => document.fonts.ready);
   expect(await page.evaluate(() => document.fonts.check('16px "Inter Variable"'))).toBe(true);
   expect(await heading.evaluate((element) => getComputedStyle(element).fontFamily)).toContain("Inter Variable");
-  expect(await page.evaluate(() => {
-    const grain = getComputedStyle(document.body, "::before");
-    return { pointerEvents: grain.pointerEvents, position: grain.position };
-  })).toEqual({ pointerEvents: "none", position: "fixed" });
 });

@@ -14,7 +14,7 @@
 
 ## Desktop practice focus — completed 2026-10-10
 
-- Mission: Wordinator now serves committed desktop learners of Dutch (and German) who already know which skill they want to practice. See [what it is](what_is_it.md) and [product requirements](product-requirements.md). New work targets desktop only; existing phone layouts and `mobile-*` specs are kept but frozen.
+- Mission: Wordinator now serves committed desktop learners of Dutch (and German) who already know which skill they want to practice. See [what it is](what_is_it.md) and [product requirements](product-requirements.md). New work is composed for desktop and ships a phone equivalent for every UI decision (2026-10-16); existing phone layouts and `mobile-*` specs are kept.
 - The signed-out home page speaks to that learner, and the desktop header is compact (`--navigation-height` 56px, `--navigation-offset` 12px) and no longer pinned: it scrolls away with the page, and the New words panel, the new-posts pill, and docked dialogs stick near the window top instead. See [design system](design-system.md).
 - Lesson page progress: scrolling saves the furthest step reached through the same position API the player uses, and a top-edge bar shows that [lesson position](courses.md#lesson-positions) in the player's step unit, starting from the saved position. No API change.
 - Course manage page (2026-10-13): course details, visibility, archiving, the cover, the owner's Contributors panel, and the lesson tools (Add lesson, Edit details, Move up and down, Delete) move from the course page to `/courses/$courseSlug/manage`, opened with Manage course. The course page's Progress panel is removed; the progress card remains. No API change. See [manage page](courses.md#manage-page).
@@ -47,7 +47,7 @@ The design-system foundation batch (DS-01 through DS-05) was completed on 2026-0
 
 ## Lumen visual redesign — in progress
 
-Started 2026-10-16 through [REDESIGN_PLAN.md](../REDESIGN_PLAN.md). Batch 0 shipped the Lumen token layer: cool canvas, violet accent, Inter in place of Manrope and Newsreader, compact type, small radii, single-layer shadows, and a neutral dark mapping. The plan was approved the same day: shared components, `/ui`, and the shell (left navigation rail with collapsible course sub-items) come first, then the course library becomes a learning dashboard (Continue learning with the AI tutor, Recent lessons with lesson and course meters and expandable word recency, memory strength, and pronunciation fluency metrics, and a Not started view), then the remaining page families. Visual matching is verified manually.
+Started 2026-10-16 through [REDESIGN_PLAN.md](../REDESIGN_PLAN.md). Batch 0 shipped the Lumen token layer: cool canvas, violet accent, Inter in place of Manrope and Newsreader, compact type, small radii, single-layer shadows, and a neutral dark mapping. Batches 1–3 also shipped on 2026-10-16: Lumen shared components (cards, buttons, badges, eyebrows, avatars, progress, callouts, dialogs, switchers), the rebuilt `/ui` reference sheet, and the left-rail shell with collapsible course sub-items and a drawer below `68rem` (phone dock retired, pixel baselines removed). The plan was approved the same day: shared components, `/ui`, and the shell (left navigation rail with collapsible course sub-items) come first, then the course library becomes a learning dashboard (Continue learning with the AI tutor, Recent lessons with lesson and course meters and expandable word recency, memory strength, and pronunciation fluency metrics, and a Not started view), then the remaining page families. Visual matching is verified manually.
 
 ## Cross-phase premium visual redesign — completed
 
@@ -201,7 +201,7 @@ Completed on 2026-10-07. The mobile plan (`MOBILE_PLAN.md`, removed in `1ab9f54`
 
 No ordering is implied.
 
-- Discontinue phone support: remove the dock, the More sheet, the `mobile-*` Playwright projects, and the phone design rules
+- Tutor "Try asking" suggestions: short prompt suggestions in the tutor's context panel (deferred from the Lumen redesign, 2026-10-16)
 - Replace the initial authentication/recovery model; add verified recovery and session revocation
 - Account deletion and a broader privacy/data lifecycle
 - Dutch and German UI catalogs with immediate active-group locale switching

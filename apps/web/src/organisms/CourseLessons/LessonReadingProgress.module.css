@@ -1,8 +1,7 @@
-/* Lesson progress along the top edge of the window, in the gap above the navigation island. It moves in whole steps, so the fill
-   eases between them. */
+/* Lesson progress along the top edge of the content column. It moves in whole steps, so the fill eases between them. */
 .bar {
   position: fixed;
-  inset: 0 0 auto;
+  inset: 0 0 auto var(--shell-inline-start, 0px);
   z-index: var(--z-navigation);
   height: 3px;
   background: var(--color-wash-strong);

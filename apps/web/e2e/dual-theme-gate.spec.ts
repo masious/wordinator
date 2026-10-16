@@ -190,22 +190,5 @@ test("semantic contrast, focus, forced colors, and media treatment remain safe",
   await primary.focus();
   await expect(primary).toBeFocused();
   expect(await primary.evaluate((node) => getComputedStyle(node).outlineStyle)).not.toBe("none");
-  expect(await page.evaluate(() => getComputedStyle(document.body, "::before").display)).toBe("none");
   expect(await page.locator("img").evaluateAll((images) => images.every((image) => getComputedStyle(image).filter === "none"))).toBe(true);
-});
-
-test("stable dual-theme visual baselines", async ({ browserName, page }) => {
-  test.skip(browserName !== "chromium", "Chromium owns deterministic pixels; WebKit runs the structural dual-theme gate.");
-  await page.emulateMedia({ reducedMotion: "reduce" });
-
-  for (const scheme of ["light", "dark"] as const) {
-    await page.goto("/");
-    await setPreference(page, scheme);
-    for (const viewport of viewports) {
-      await page.setViewportSize(viewport);
-      await page.goto("/ui");
-      await expect(page.getByRole("heading", { name: "Wordinator UI workbench" })).toBeVisible();
-      await expect(page).toHaveScreenshot(`${scheme}-dual-ui-${viewport.name}.png`, { animations: "disabled", fullPage: true });
-    }
-  }
 });

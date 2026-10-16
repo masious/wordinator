@@ -1,101 +1,223 @@
-import { Menu } from "@mantine/core";
+import { Drawer, Menu } from "@mantine/core";
 import { okResponseSchema } from "@wordinator/contracts";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { type PropsWithChildren, type ReactNode } from "react";
+import { Bell, BookOpen, Bookmark, ChevronDown, LogOut, Menu as MenuIcon, MessageCircle, MoreHorizontal, NotebookPen, Settings } from "lucide-react";
+import { useEffect, useId, useRef, useState, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, type PropsWithChildren, type ReactNode, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
-import { apiRequest } from "../../api";
+import { apiRequest, coursesQueryOptions } from "../../api";
 import { Avatar } from "../../ui";
 import type { SignedInSession } from "../types/auth";
 import styles from "./GroupFrame.module.css";
 
-type ShellIconName = "journal" | "courses" | "words" | "members" | "notifications" | "profile" | "settings" | "signOut" | "chevron" | "more" | "plus" | "check";
+// The collapsed course list is a per-device convenience, kept per account; storage may be unavailable, so it falls back to expanded.
+const collapsedKey = (accountId: string) => `wordinator:rail-courses-collapsed:v1:${accountId}`;
+function readCollapsed(accountId: string) {
+  try { return window.localStorage.getItem(collapsedKey(accountId)) === "1"; } catch { return false; }
+}
+function writeCollapsed(accountId: string, collapsed: boolean) {
+  try { window.localStorage.setItem(collapsedKey(accountId), collapsed ? "1" : "0"); } catch { /* storage unavailable */ }
+}
 
-function ShellIcon({ name }: { name: ShellIconName }) {
-  const paths: Record<ShellIconName, ReactNode> = {
-    journal: <><path d="M4.25 3.5h7.5A2.25 2.25 0 0 1 14 5.75v10.5H6.5A2.25 2.25 0 0 1 4.25 14V3.5Z" /><path d="M14 5.75a2.25 2.25 0 0 1 2.25-2.25h.5v10.75a2 2 0 0 1-2 2H14V5.75Z" /></>,
-    courses: <><path d="M3.25 4.75c2.35-.6 4.6-.35 6.75 1.25v10.25c-2.15-1.6-4.4-1.85-6.75-1.25V4.75Z" /><path d="M16.75 4.75c-2.35-.6-4.6-.35-6.75 1.25v10.25c2.15-1.6 4.4-1.85 6.75-1.25V4.75Z" /></>,
-    words: <path d="M5.5 3.5h9v13L10 13.25 5.5 16.5v-13Z" />,
-    members: <><circle cx="7.25" cy="7" r="2.75" /><path d="M2.75 16.25c.35-3 1.85-4.5 4.5-4.5s4.15 1.5 4.5 4.5M12.25 4.75a2.75 2.75 0 0 1 0 5.25M13.75 12c2.05.37 3.22 1.78 3.5 4.25" /></>,
-    notifications: <><path d="M4.25 14.25h11.5l-1.5-2V8a4.25 4.25 0 0 0-8.5 0v4.25l-1.5 2Z" /><path d="M8.25 16.5c.45.67 1.03 1 1.75 1s1.3-.33 1.75-1" /></>,
-    profile: <><circle cx="10" cy="6.75" r="3.25" /><path d="M3.75 17c.45-3.67 2.53-5.5 6.25-5.5s5.8 1.83 6.25 5.5" /></>,
-    settings: <><circle cx="10" cy="10" r="2.5" /><path d="M10 2.75v1.5m0 11.5v1.5M17.25 10h-1.5m-11.5 0h-1.5m12.38-5.13-1.06 1.06M5.93 14.07l-1.06 1.06m10.26 0-1.06-1.06M5.93 5.93 4.87 4.87" /></>,
-    signOut: <><path d="M8.25 3.25H5.5a2 2 0 0 0-2 2v9.5a2 2 0 0 0 2 2h2.75M12.5 6.25 16.25 10l-3.75 3.75M7.25 10h9" /></>,
-    chevron: <path d="m6.75 8.25 3.25 3.5 3.25-3.5" />,
-    more: <><circle cx="4.75" cy="10" r=".75" /><circle cx="10" cy="10" r=".75" /><circle cx="15.25" cy="10" r=".75" /></>,
-    plus: <path d="M10 4.25v11.5M4.25 10h11.5" />,
-    check: <path d="m4.75 10.25 3.5 3.5 7-7.5" />,
+// The rail width is also a per-device convenience, kept per account in pixels; no stored width means the token default.
+const RAIL_MIN = 200;
+const RAIL_MAX = 400;
+const RAIL_STEP = 16;
+const railWidthKey = (accountId: string) => `wordinator:rail-width:v1:${accountId}`;
+const clampRail = (width: number) => Math.round(Math.min(RAIL_MAX, Math.max(RAIL_MIN, width)));
+function readRailWidth(accountId: string) {
+  try {
+    const stored = Number(window.localStorage.getItem(railWidthKey(accountId)));
+    return Number.isFinite(stored) && stored > 0 ? clampRail(stored) : null;
+  } catch { return null; }
+}
+function writeRailWidth(accountId: string, width: number | null) {
+  try {
+    if (width === null) window.localStorage.removeItem(railWidthKey(accountId));
+    else window.localStorage.setItem(railWidthKey(accountId), String(width));
+  } catch { /* storage unavailable */ }
+}
+
+// The rail's right edge: drag it, or focus it and use the arrow keys, to resize; a double click or Escape restores the default.
+function RailResizer({ accountId, rail, width, onWidth }: { accountId: string; rail: RefObject<HTMLElement | null>; width: number | null; onWidth: (width: number | null) => void }) {
+  const { t } = useTranslation();
+  const [dragging, setDragging] = useState(false);
+  const current = () => width ?? rail.current?.getBoundingClientRect().width ?? RAIL_MIN;
+  const commit = (next: number | null) => { onWidth(next); writeRailWidth(accountId, next); };
+  const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.button !== 0) return;
+    event.preventDefault();
+    const start = event.clientX;
+    const startWidth = current();
+    const handle = event.currentTarget;
+    handle.setPointerCapture(event.pointerId);
+    setDragging(true);
+    let latest = startWidth;
+    const move = (moveEvent: PointerEvent) => { latest = clampRail(startWidth + moveEvent.clientX - start); onWidth(latest); };
+    const end = () => {
+      handle.removeEventListener("pointermove", move);
+      handle.removeEventListener("pointerup", end);
+      handle.removeEventListener("pointercancel", end);
+      setDragging(false);
+      writeRailWidth(accountId, latest);
+    };
+    handle.addEventListener("pointermove", move);
+    handle.addEventListener("pointerup", end);
+    handle.addEventListener("pointercancel", end);
   };
-  return <svg aria-hidden="true" className={styles.shellIcon} viewBox="0 0 20 20">{paths[name]}</svg>;
+  const onKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
+    const keys: Record<string, () => number | null> = {
+      ArrowLeft: () => clampRail(current() - RAIL_STEP),
+      ArrowRight: () => clampRail(current() + RAIL_STEP),
+      Home: () => RAIL_MIN,
+      End: () => RAIL_MAX,
+      Escape: () => null,
+    };
+    const next = keys[event.key];
+    if (!next) return;
+    event.preventDefault();
+    commit(next());
+  };
+  return <div role="separator" aria-orientation="vertical" aria-label={t("nav.resizeRail")} tabIndex={0}
+    aria-valuemin={RAIL_MIN} aria-valuemax={RAIL_MAX} aria-valuenow={Math.round(current())}
+    className={styles.railResizer} data-dragging={dragging || undefined}
+    onPointerDown={onPointerDown} onKeyDown={onKeyDown} onDoubleClick={() => commit(null)} />;
 }
 
-function NavLabel({ icon, children }: { icon: ShellIconName; children: ReactNode }) {
-  return <><span className={styles.navIcon}><ShellIcon name={icon} /></span><span className={styles.navLabel}>{children}</span></>;
+function Brand() {
+  const { t } = useTranslation();
+  return <Link aria-label={t("brand")} className={styles.brand} to="/courses">
+    <span aria-hidden="true" className={styles.brandMark}><span /><span /><span /></span>
+    <span className={styles.brandName}>{t("brand")}</span>
+  </Link>;
 }
 
-export function GroupFrame({ children, session }: PropsWithChildren<{ groupId: string; session: SignedInSession }>) {
+function NavItem({ to, active, icon, children }: { to: "/courses" | "/words" | "/journal" | "/ai" | "/notifications"; active: boolean; icon: ReactNode; children: ReactNode }) {
+  return <Link aria-current={active ? "page" : undefined} className={styles.navItem} to={to}>
+    <span aria-hidden="true" className={styles.navIcon}>{icon}</span><span className={styles.navLabel}>{children}</span>
+  </Link>;
+}
+
+// A label too long for the rail fades out at its end and slides to reveal the rest while its item is hovered or focused.
+function SlidingLabel({ children }: { children: string }) {
+  const viewport = useRef<HTMLSpanElement>(null);
+  const text = useRef<HTMLSpanElement>(null);
+  const [overflow, setOverflow] = useState(0);
+  useEffect(() => {
+    const box = viewport.current;
+    const inner = text.current;
+    if (!box || !inner || typeof ResizeObserver === "undefined") return;
+    const measure = () => setOverflow(Math.max(0, Math.ceil(inner.scrollWidth - box.clientWidth)));
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(box);
+    observer.observe(inner);
+    return () => observer.disconnect();
+  }, [children]);
+  const style = overflow > 0 ? { "--slide-distance": `-${overflow}px`, "--slide-duration": `${Math.min(4000, 600 + overflow * 25)}ms` } as CSSProperties : undefined;
+  return <span ref={viewport} className={styles.slideViewport} data-overflow={overflow > 0 || undefined} style={style} title={overflow > 0 ? children : undefined}>
+    <span ref={text} className={styles.slideText}>{children}</span>
+  </span>;
+}
+
+// Every course the viewer can see, in library order, under Courses. The list loads every page so no course is out of reach.
+function CourseSubItems({ groupId, accountId, pathname }: { groupId: string; accountId: string; pathname: string }) {
+  const { t } = useTranslation();
+  const listId = useId();
+  const [collapsed, setCollapsed] = useState(() => readCollapsed(accountId));
+  const courses = useInfiniteQuery(coursesQueryOptions(groupId));
+  const { hasNextPage, isFetchingNextPage, fetchNextPage } = courses;
+  useEffect(() => { if (hasNextPage && !isFetchingNextPage) void fetchNextPage(); }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+  const items = courses.data?.pages.flatMap((page) => page.items) ?? [];
+  const coursesActive = pathname === "/courses";
+  const toggle = () => setCollapsed((current) => { writeCollapsed(accountId, !current); return !current; });
+  return <>
+    <div className={styles.navGroup}>
+      <NavItem to="/courses" active={coursesActive} icon={<BookOpen />}>{t("nav.courses")}</NavItem>
+      {items.length > 0 && <button type="button" className={styles.disclosure} aria-expanded={!collapsed} aria-controls={listId}
+        aria-label={t(collapsed ? "nav.showCourses" : "nav.hideCourses")} onClick={toggle}>
+        <ChevronDown aria-hidden="true" data-collapsed={collapsed || undefined} />
+      </button>}
+    </div>
+    {items.length > 0 && <ul id={listId} className={styles.subItems} hidden={collapsed} aria-label={t("nav.courseList")}>
+      {items.map((course) => {
+        const active = pathname === `/courses/${course.slug}` || pathname.startsWith(`/courses/${course.slug}/`);
+        return <li key={course.id}>
+          <Link aria-current={active ? "page" : undefined} className={styles.subItem} to="/courses/$courseSlug" params={{ courseSlug: course.slug }}>
+            <SlidingLabel>{course.title}</SlidingLabel>
+          </Link>
+        </li>;
+      })}
+    </ul>}
+  </>;
+}
+
+function AccountMenu({ trigger }: { trigger: ReactNode }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const pathname = useRouterState({ select: (state) => state.location.pathname });
   const queryClient = useQueryClient();
   const signOut = useMutation({
     mutationFn: () => apiRequest("/api/auth/sign-out", okResponseSchema, { method: "POST" }),
     onSuccess: async () => { queryClient.clear(); await navigate({ to: "/" }); },
   });
-  const coursesActive = pathname === "/courses" || pathname.startsWith("/courses/");
-  const coursesLink = <Link aria-current={coursesActive ? "page" : undefined} className={styles.navItem} to="/courses"><NavLabel icon="courses">{t("nav.courses")}</NavLabel></Link>;
-  const wordsActive = pathname === "/words" || pathname.startsWith("/words/");
-  const wordsLink = <Link aria-current={wordsActive ? "page" : undefined} className={styles.navItem} to="/words"><NavLabel icon="words">{t("nav.words")}</NavLabel></Link>;
-  const journalActive = pathname === "/journal" || pathname.startsWith("/journal/");
-  const journalLink = <Link aria-current={journalActive ? "page" : undefined} className={styles.navItem} to="/journal"><NavLabel icon="journal">{t("nav.journal")}</NavLabel></Link>;
-  const notificationsLink = <Link aria-current={pathname === "/notifications" ? "page" : undefined} className={styles.navItem} to="/notifications"><NavLabel icon="notifications">{t("nav.notifications")}</NavLabel></Link>;
+  // The trigger is always on the page when the menu opens; WebKit can misjudge a sticky rail as clipped and hide it.
+  return <Menu position="top-end" width={240} withinPortal hideDetached={false}>
+    <Menu.Target>{trigger}</Menu.Target>
+    <Menu.Dropdown>
+      <Menu.Item leftSection={<Settings size={16} aria-hidden="true" />} onClick={() => void navigate({ to: "/settings" })}>{t("nav.settings")}</Menu.Item>
+      <Menu.Item color="var(--color-danger-text)" disabled={signOut.isPending} leftSection={<LogOut size={16} aria-hidden="true" />} onClick={() => signOut.mutate()}>{t("auth.signOut")}</Menu.Item>
+    </Menu.Dropdown>
+  </Menu>;
+}
 
-  return <div className={styles.shell}>
-    <header className={styles.topbar}>
-      <div className={styles.navIsland}>
-        <div className={styles.navCore}>
-          <Link aria-label={t("brand")} className={styles.brand} to="/courses"><span aria-hidden="true" className={styles.brandMark}>W</span><span className={styles.brandName}>{t("brand")}</span></Link>
-          <nav className={styles.desktopNav} aria-label={t("nav.primary")}>
-            {coursesLink}
-            {wordsLink}
-            {journalLink}
-            {notificationsLink}
-          </nav>
-          {/* The trigger is always on the page when the menu opens; WebKit can misjudge the scrolling header as clipped and hide it. */}
-          <Menu position="bottom-end" width={260} withinPortal hideDetached={false}>
-            <Menu.Target>
-              <button aria-label={t("nav.accountMenu")} className={styles.accountTrigger} type="button">
-                <Avatar name={session.user.displayName} src={session.user.avatarUrl} />
-                <span className={styles.accountName}>{session.user.displayName}</span>
-                <span className={styles.accountChevron}><ShellIcon name="chevron" /></span>
-              </button>
-            </Menu.Target>
-            <Menu.Dropdown>
-              <Menu.Item onClick={() => void navigate({ to: "/settings" })}>
-                <span className={styles.identity}>
-                  <Avatar size={40} name={session.user.displayName} src={session.user.avatarUrl} />
-                  <span className={styles.identityText}>
-                    <span className={styles.identityName}>{session.user.displayName}</span>
-                    <span className={styles.identityHint}>{t("nav.profile")}</span>
-                  </span>
-                </span>
-              </Menu.Item>
-              <Menu.Divider />
-              <Menu.Item leftSection={<ShellIcon name="settings" />} onClick={() => void navigate({ to: "/settings" })}>{t("nav.settings")}</Menu.Item>
-              <Menu.Item color="var(--color-danger-text)" disabled={signOut.isPending} leftSection={<ShellIcon name="signOut" />} onClick={() => signOut.mutate()}>{t("auth.signOut")}</Menu.Item>
-            </Menu.Dropdown>
-          </Menu>
-        </div>
-      </div>
-    </header>
-    <main className={styles.shellMain}>{children}</main>
-    <nav className={styles.mobileDock} aria-label={t("nav.mobile")} data-fit-bottom>
-      <div className={styles.mobileNav}>
-        {coursesLink}
-        {wordsLink}
-        {journalLink}
-        {notificationsLink}
-      </div>
+function Rail({ groupId, session, pathname }: { groupId: string; session: SignedInSession; pathname: string }) {
+  const { t } = useTranslation();
+  const { user } = session;
+  const starts = (path: string) => pathname === path || pathname.startsWith(`${path}/`);
+  return <div className={styles.railBody}>
+    <Brand />
+    <nav className={styles.nav} aria-label={t("nav.primary")}>
+      <CourseSubItems groupId={groupId} accountId={user.id} pathname={pathname} />
+      <NavItem to="/words" active={starts("/words")} icon={<Bookmark />}>{t("nav.words")}</NavItem>
+      <NavItem to="/journal" active={starts("/journal")} icon={<NotebookPen />}>{t("nav.journal")}</NavItem>
+      <NavItem to="/ai" active={starts("/ai")} icon={<MessageCircle />}>{t("nav.tutor")}</NavItem>
+      <NavItem to="/notifications" active={pathname === "/notifications"} icon={<Bell />}>{t("nav.notifications")}</NavItem>
     </nav>
+    <div className={styles.profile}>
+      <Avatar name={user.displayName} src={user.avatarUrl} tone="soft" />
+      <div className={styles.profileText}>
+        <strong>{user.displayName}</strong>
+        {user.username && <span>@{user.username}</span>}
+      </div>
+      <AccountMenu trigger={<button aria-label={t("nav.accountMenu")} className={styles.profileMenu} type="button"><MoreHorizontal aria-hidden="true" /></button>} />
+    </div>
+  </div>;
+}
+
+export function GroupFrame({ children, groupId, session }: PropsWithChildren<{ groupId: string; session: SignedInSession }>) {
+  const { t } = useTranslation();
+  const pathname = useRouterState({ select: (state) => state.location.pathname });
+  const [drawer, setDrawer] = useState(false);
+  useEffect(() => setDrawer(false), [pathname]);
+
+  const rail = useRef<HTMLElement>(null);
+  const [railWidth, setRailWidth] = useState(() => readRailWidth(session.user.id));
+  const shellStyle = railWidth === null ? undefined : { "--size-app-rail": `${railWidth}px` } as CSSProperties;
+
+  return <div className={styles.shell} style={shellStyle}>
+    <aside ref={rail} className={styles.rail}>
+      <Rail groupId={groupId} session={session} pathname={pathname} />
+      <RailResizer accountId={session.user.id} rail={rail} width={railWidth} onWidth={setRailWidth} />
+    </aside>
+    <header className={styles.mobileHeader}>
+      <button aria-label={t("nav.openMenu")} aria-expanded={drawer} className={styles.menuButton} type="button" onClick={() => setDrawer(true)}><MenuIcon aria-hidden="true" /></button>
+      <Brand />
+      <AccountMenu trigger={<button aria-label={t("nav.accountMenu")} className={styles.headerAvatar} type="button"><Avatar name={session.user.displayName} src={session.user.avatarUrl} tone="soft" /></button>} />
+    </header>
+    <Drawer opened={drawer} onClose={() => setDrawer(false)} size="var(--size-app-rail)" padding={0} withCloseButton={false} title={t("nav.primary")}
+      classNames={{ content: styles.drawer, header: styles.drawerHeader }}>
+      <Rail groupId={groupId} session={session} pathname={pathname} />
+    </Drawer>
+    <main className={styles.shellMain}>{children}</main>
   </div>;
 }

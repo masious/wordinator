@@ -6,7 +6,7 @@ The tutor is a chat assistant that teaches from the library's lessons and the le
 
 ## Entry point
 
-- The tutor lives at `/ai`. It has no navigation tab: a colourful call to action at the top of `/courses` (Ask your tutor) opens it with a new conversation, which is created when the learner sends the first message. An open conversation is `/ai?conversation=<id>`.
+- The tutor lives at `/ai`. It is the Tutor item in the navigation rail (since the Lumen shell, 2026-10-16), and a call to action on `/courses` (Ask your tutor) also opens it with a new conversation, which is created when the learner sends the first message. An open conversation is `/ai?conversation=<id>`.
 - The tutor is the one exception to [desktop first](what_is_it.md#desktop-first) (approved product change, 2026-10-15): `/ai` and every tutor component work the same on phones and desktops. The page shows the conversation list beside the chat on wide screens and as a separate view on narrow ones.
 - Every signed-in account that has completed setup can use it. There is no per-user opt-in; the page says plainly, above the first message of a new conversation, that conversations are processed by external AI providers that may keep them (see [security and privacy](security-and-privacy.md#ai-tutor)), and nothing is sent until the learner writes. The full notice shows on the account's first visit in a browser; after that it is one line ("Processed by external AI providers") that opens to the full notice, remembered in that browser only (changed 2026-10-16).
 

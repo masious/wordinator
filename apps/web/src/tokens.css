@@ -185,9 +185,6 @@
   --color-callout-culture: var(--color-lesson-purple-surface);
   --color-callout-false-friend: var(--color-lesson-orange-surface);
   --color-callout-pronunciation: var(--color-lesson-pink-surface);
-  /* The paper grain is retired with the Lumen palette; the layer stays, invisible, until the shell redesign removes it. */
-  --grain-opacity: 0;
-  --grain-blend-mode: normal;
 
   /* Typography families and semantic roles */
   --font-sans: "Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif;
@@ -316,8 +313,8 @@
   --shell-clearance: var(--space-6);
   --navigation-offset: var(--space-3);
   --navigation-height: 56px;
-  --mobile-dock-height: 72px;
-  --mobile-dock-clearance: calc(var(--mobile-dock-height) + var(--navigation-offset) + env(safe-area-inset-bottom, 0px));
+  /* Bottom clearance for fixed bars and floating actions (the phone dock was retired with the Lumen shell). */
+  --mobile-dock-clearance: calc(var(--navigation-offset) + env(safe-area-inset-bottom, 0px));
   /* Progress tracks and the default avatar. */
   --size-progress: 0.28rem;
   --size-avatar: 2.25rem;
@@ -335,7 +332,6 @@
 
   /* Layering */
   --z-content: 10;
-  --z-grain: 50;
   --z-navigation: 100;
   --z-floating-action: 200;
   --z-overlay: 300;
@@ -424,8 +420,6 @@
   --color-wash-subtle: rgb(236 236 239 / 3%);
   --color-wash: rgb(236 236 239 / 6%);
   --color-wash-strong: rgb(236 236 239 / 10%);
-  --grain-opacity: 0;
-  --grain-blend-mode: normal;
 
   --shadow-card: 0 0.4rem 1.5rem rgb(0 0 0 / 28%);
   --shadow-raised: 0 0.8rem 2.3rem rgb(0 0 0 / 36%);
@@ -506,8 +500,6 @@
   --color-wash-subtle: rgb(25 26 30 / 2.5%);
   --color-wash: rgb(25 26 30 / 4.5%);
   --color-wash-strong: rgb(25 26 30 / 8%);
-  --grain-opacity: 0;
-  --grain-blend-mode: normal;
 
   --shadow-card: 0 0.4rem 1.5rem rgb(32 31 42 / 6%);
   --shadow-raised: 0 0.8rem 2.3rem rgb(32 31 42 / 10%);
@@ -527,7 +519,6 @@
     --size-word-card-roomy: 15rem;
     --size-avatar-profile: 64px;
     --size-lesson-image: 8rem;
-    --mobile-dock-height: 64px;
     --type-page-title: 1.75rem;
     --type-section-title: 1.15rem;
     --type-page-intro: var(--text-sm);

@@ -4,7 +4,7 @@ import { signIn } from "./auth";
 test("a member publishes, browses, edits, and deletes every Phase 3 post shape", async ({ page }, testInfo) => {
   const prefix = testInfo.project.name;
   await signIn(page);
-  await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Journal" }).click();
+  await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Journal", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Journal", level: 1 })).toBeVisible();
 
   const openComposer = async () => {

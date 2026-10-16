@@ -67,7 +67,7 @@ test("authenticated routes stay within the mobile viewport", async ({ page }) =>
   await expectNoHorizontalOverflow(page, "composer");
 });
 
-test("mobile shell uses a slim header and a four-slot dock with the journal third, without a workspace switcher", async ({ page }) => {
+test("mobile shell uses a slim header whose menu opens the navigation rail as a drawer", async ({ page }) => {
   await page.goto("/courses", { waitUntil: "networkidle" });
   const header = page.getByRole("banner");
   const headerBox = await header.boundingBox();
@@ -75,13 +75,14 @@ test("mobile shell uses a slim header and a four-slot dock with the journal thir
   expect(headerBox!.y).toBe(0);
   expect(headerBox!.height).toBeLessThanOrEqual(57);
   await expect(header.getByRole("button", { name: "Account menu" })).toBeVisible();
+  await expect(page.getByRole("navigation", { name: "Main navigation" })).toBeHidden();
 
-  const dock = page.getByRole("navigation", { name: "Mobile navigation" });
-  await expect(dock.getByRole("link")).toHaveText(["Courses", "Words", "Journal", "Notices"]);
-  await expect(dock.getByRole("link", { name: "Courses" })).toHaveAttribute("aria-current", "page");
-  await dock.getByRole("link", { name: "Journal" }).click();
+  await header.getByRole("button", { name: "Open navigation" }).click();
+  const drawer = page.getByRole("dialog", { name: "Main navigation" });
+  await expect(drawer.getByRole("link", { name: "Courses", exact: true })).toHaveAttribute("aria-current", "page");
+  await drawer.getByRole("link", { name: "Journal", exact: true }).click();
   await expect(page).toHaveURL(/\/journal$/);
-  await expect(dock.getByRole("link", { name: "Journal" })).toHaveAttribute("aria-current", "page");
+  await expect(drawer).toBeHidden();
 
   await header.getByRole("button", { name: "Account menu" }).click();
   await expect(page.getByRole("group", { name: "Active group" })).toHaveCount(0);
@@ -226,7 +227,7 @@ test("mobile word recap stays within the viewport", async ({ page }) => {
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-word-recap.png` });
 });
 
-test("mobile lesson page keeps new words in a collapsed bar above the dock", async ({ page }) => {
+test("mobile lesson page keeps new words in a collapsed bar at the bottom", async ({ page }) => {
   const api = courseApi(page);
   const { course } = await api<{ course: { id: string } }>("/courses", { title: "Words bar course", summary: "Onderaan" });
   await api(`/courses/${course.id}/visibility`, { status: "published" });
@@ -277,7 +278,7 @@ test("mobile lesson reader stacks columns", async ({ page }) => {
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-lesson-columns.png` });
 });
 
-test("mobile Words tab opens from the dock and fits its cards without scrolling", async ({ page }, testInfo) => {
+test("mobile Words tab opens from the navigation drawer and fits its cards without scrolling", async ({ page }, testInfo) => {
   // A fresh account keeps other tests' bookmarks off this one's Words tab.
   await registerAccount(page, testInfo, "mwords");
   const api = courseApi(page);
@@ -292,11 +293,11 @@ test("mobile Words tab opens from the dock and fits its cards without scrolling"
   const words = JSON.parse(lesson.document.blocks.find((block) => block.type === "vocabulary")!.props.data!) as { words: Array<{ id: string }> };
   for (const word of words.words) await api(`/courses/${course.id}/lessons/${lessonId}/words/${word.id}/bookmark`, undefined, "PUT");
 
-  // WebKit can take long to settle the library's network, so wait for the dock instead of network idle.
+  // WebKit can take long to settle the library's network, so wait for the menu button instead of network idle.
   await page.goto("/courses");
-  await page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("link", { name: "Words" }).click();
+  await page.getByRole("button", { name: "Open navigation" }).click();
+  await page.getByRole("dialog", { name: "Main navigation" }).getByRole("link", { name: "Words", exact: true }).click();
   await expect(page).toHaveURL(/\/words$/);
-  await expect(page.getByRole("navigation", { name: "Mobile navigation" }).getByRole("link", { name: "Words" })).toHaveAttribute("aria-current", "page");
   // Newest first, and a narrow phone fits one card per page, so page to the first bookmarked word.
   const card = page.getByRole("article", { name: "het perron" }).filter({ hasText: courseTitle });
   await expect(page.getByRole("heading", { name: "Your words" })).toBeVisible();
@@ -306,11 +307,10 @@ test("mobile Words tab opens from the dock and fits its cards without scrolling"
   await card.getByRole("button", { name: "Show meaning" }).click();
   await expect(card.getByText("the platform", { exact: true })).toBeVisible();
   await expectNoHorizontalOverflow(page, "words tab");
-  // The cards, counter, and Back and Next sit above the dock without scrolling.
+  // The cards, counter, and Back and Next fit the first screen without scrolling.
   await page.waitForTimeout(600);
   const next = await page.getByRole("button", { name: /^(Next)$/ }).boundingBox();
-  const dock = await page.getByRole("navigation", { name: "Mobile navigation" }).boundingBox();
-  expect(next!.y + next!.height).toBeLessThanOrEqual(dock!.y);
+  expect(next!.y + next!.height).toBeLessThanOrEqual(page.viewportSize()!.height);
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-words-tab.png` });
 });
 

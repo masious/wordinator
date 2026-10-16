@@ -58,7 +58,7 @@ beforeEach(() => {
   }));
 });
 
-afterEach(cleanup);
+afterEach(() => { cleanup(); window.localStorage.clear(); });
 
 // Every Select keeps its options mounted; the open one is found through the listbox its combobox controls.
 async function choose(combobox: HTMLElement, option: string) {
@@ -68,10 +68,43 @@ async function choose(combobox: HTMLElement, option: string) {
 }
 
 describe("Course shell pages", () => {
+  it("lists every course under Courses in the rail, collapsible and remembered per account", async () => {
+    renderPage("library");
+    const rail = await screen.findByRole("navigation", { name: "Main navigation" });
+    expect(within(rail).getAllByRole("link").map((link) => link.textContent)).toEqual(expect.arrayContaining(["Words", "Journal", "Tutor", "Notices"]));
+    const courses = await within(rail).findByRole("list", { name: "Your courses" });
+    expect(within(courses).getByRole("link", { name: "Deutsch für Anfänger" })).toHaveAttribute("href", "/courses/deutsch-fur-anfanger");
+    fireEvent.click(within(rail).getByRole("button", { name: "Hide courses" }));
+    expect(within(rail).queryByRole("list", { name: "Your courses" })).toBeNull();
+    expect(within(rail).getByRole("button", { name: "Show courses" })).toHaveAttribute("aria-expanded", "false");
+    cleanup();
+    renderPage("library");
+    expect(await within(await screen.findByRole("navigation", { name: "Main navigation" })).findByRole("button", { name: "Show courses" })).toBeInTheDocument();
+  });
+
+  it("resizes the rail from its edge by keyboard, remembers the width per account, and restores the default", async () => {
+    renderPage("library");
+    const handle = await screen.findByRole("separator", { name: "Resize navigation" });
+    const shell = handle.closest("aside")!.parentElement!;
+    expect(shell.style.getPropertyValue("--size-app-rail")).toBe("");
+    fireEvent.keyDown(handle, { key: "End" });
+    expect(shell.style.getPropertyValue("--size-app-rail")).toBe("400px");
+    fireEvent.keyDown(handle, { key: "ArrowLeft" });
+    expect(shell.style.getPropertyValue("--size-app-rail")).toBe("384px");
+    expect(handle).toHaveAttribute("aria-valuenow", "384");
+    cleanup();
+    renderPage("library");
+    const restored = await screen.findByRole("separator", { name: "Resize navigation" });
+    expect(restored.closest("aside")!.parentElement!.style.getPropertyValue("--size-app-rail")).toBe("384px");
+    fireEvent.keyDown(restored, { key: "Escape" });
+    expect(restored.closest("aside")!.parentElement!.style.getPropertyValue("--size-app-rail")).toBe("");
+  });
+
+
   it("lists visible courses with draft labels and validates the create form", async () => {
     renderPage("library");
     expect(await screen.findByRole("heading", { name: "Courses", level: 1 })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: /Deutsch für Anfänger/ })).toHaveAttribute("href", "/courses/deutsch-fur-anfanger");
+    expect(within(screen.getByRole("main")).getByRole("link", { name: /Deutsch für Anfänger/ })).toHaveAttribute("href", "/courses/deutsch-fur-anfanger");
     expect(screen.getByText("Draft")).toBeInTheDocument();
     fireEvent.click(screen.getAllByRole("button", { name: "New course" })[0]!);
     const submit = await screen.findByRole("button", { name: "Create draft" });
