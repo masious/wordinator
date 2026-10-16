@@ -34,7 +34,7 @@ As built (C14e): each section has a table by day (newest first, every day of the
 
 The analytics page also holds the AI settings form, stored in [`platform_metadata`](data-model.md#platform_metadata) under `ai_settings`:
 
-- **Provider order:** OpenRouter, Workers AI, and Azure, reorderable, each with an on/off switch; at least one must be on.
+- **Provider order:** Azure, OpenRouter, and Workers AI by default ([default models](ai-tutor.md#providers-and-fallback)), reorderable, each with an on/off switch; at least one must be on. The order is the Default for conversations; a learner can put another enabled provider first for one conversation ([per-conversation model](ai-tutor.md#providers-and-fallback)).
 - **Model per provider:** a model ID per target. Only tool-calling models may be used; the form says so and the API checks the ID's format, not the model's abilities.
 - **Daily turn cap** per account (default 40, 0–500) and **daily speech character cap** per account (default 5,000, 0–100,000).
 

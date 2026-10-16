@@ -33,12 +33,13 @@ export const aiSettingsSchema = z.object({
 export type AiSettings = z.infer<typeof aiSettingsSchema>;
 
 // Defaults used when the row is missing or invalid. The models are starting points the superuser replaces; each one
-// supports tool calling at its provider.
+// supports tool calling at its provider. Azure leads because it calls tools most reliably; the free OpenRouter model is
+// rate-limited, and Workers AI is the last fallback. Small models such as Llama 4 Scout tend to write tool calls as text.
 export const DEFAULT_AI_SETTINGS: AiSettings = {
   providers: [
-    { provider: "openrouter", enabled: true, model: "openai/gpt-oss-120b:free" },
-    { provider: "workers_ai", enabled: true, model: "@cf/meta/llama-4-scout-17b-16e-instruct" },
     { provider: "azure", enabled: true, model: "gpt-4.1-mini" },
+    { provider: "openrouter", enabled: true, model: "openai/gpt-oss-120b:free" },
+    { provider: "workers_ai", enabled: true, model: "@cf/openai/gpt-oss-120b" },
   ],
   dailyTurnCap: 40,
   dailySpeechCharCap: 5_000,

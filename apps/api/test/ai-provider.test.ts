@@ -4,6 +4,11 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { AiRequestError, AiUnavailableError, azureChatUrl, completeChat, streamChat, type AiChatRequest, type AiEnv, type StreamChatOptions } from "../src/ai";
 import { resetDatabase, seedUser } from "./courseApi";
 
+// The default setting of one provider, by name: the default order may change.
+const preset = (provider: string) => DEFAULT_AI_SETTINGS.providers.find((item) => item.provider === provider)!;
+// The fallback tests walk OpenRouter, Workers AI, then Azure, whatever the default order is.
+const ordered: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [preset("openrouter"), preset("workers_ai"), preset("azure")] };
+
 // The provider layer (C14f, docs/ai-tutor.md#providers-and-fallback) against stubbed fetch and a stubbed AI binding; no
 // real provider is ever called.
 
@@ -58,7 +63,7 @@ const fullEnv = (binding: WorkersAiBinding): AiEnv => ({ OPENROUTER_API_KEY: "or
 
 let userId: string;
 const options = (aiEnv: AiEnv, fetcher: typeof fetch, extra: Partial<StreamChatOptions> = {}): StreamChatOptions => ({
-  env: aiEnv, db: env.DB, settings: DEFAULT_AI_SETTINGS, userId, conversationId: "conversation-1", turnStart: true, fetcher, ...extra,
+  env: aiEnv, db: env.DB, settings: ordered, userId, conversationId: "conversation-1", turnStart: true, fetcher, ...extra,
 });
 
 type UsageRow = { provider: string; model: string; turn_start: number; tokens_in: number; tokens_out: number; cost_microusd: number; ok: number; conversation_id: string | null };
@@ -93,21 +98,21 @@ describe("stream formats", () => {
     expect(events).toEqual([
       { type: "text", delta: "Hal" }, { type: "text", delta: "lo!" },
       { type: "tool_call", call: { id: "call_a", name: "get_lesson", arguments: "{\"lessonId\":\"l1\"}" } },
-      { type: "done", provider: "openrouter", model: DEFAULT_AI_SETTINGS.providers[0]!.model, finishReason: "tool_calls", usage: { tokensIn: 120, tokensOut: 20, costUsd: 0.000042 } },
+      { type: "done", provider: "openrouter", model: preset("openrouter").model, finishReason: "tool_calls", usage: { tokensIn: 120, tokensOut: 20, costUsd: 0.000042 } },
     ]);
     expect(calls).toHaveLength(1);
     expect(calls[0]!.url).toBe("https://openrouter.ai/api/v1/chat/completions");
     expect(new Headers(calls[0]!.init.headers).get("authorization")).toBe("Bearer or-test-key");
     const body = JSON.parse(String(calls[0]!.init.body)) as Record<string, unknown>;
-    expect(body).toMatchObject({ model: DEFAULT_AI_SETTINGS.providers[0]!.model, stream: true, stream_options: { include_usage: true }, tool_choice: "auto" });
+    expect(body).toMatchObject({ model: preset("openrouter").model, stream: true, stream_options: { include_usage: true }, tool_choice: "auto" });
     expect(body.tools).toEqual([{ type: "function", function: request.tools![0] }]);
     expect(await usageRows()).toEqual([
-      { provider: "openrouter", model: DEFAULT_AI_SETTINGS.providers[0]!.model, turn_start: 1, tokens_in: 120, tokens_out: 20, cost_microusd: 42, ok: 1, conversation_id: "conversation-1" },
+      { provider: "openrouter", model: preset("openrouter").model, turn_start: 1, tokens_in: 120, tokens_out: 20, cost_microusd: 42, ok: 1, conversation_id: "conversation-1" },
     ]);
   });
 
   it("parses Azure AI Foundry's stream, with an empty first chunk and usage on a choice-less chunk", async () => {
-    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [DEFAULT_AI_SETTINGS.providers[2]!, { ...DEFAULT_AI_SETTINGS.providers[0]!, enabled: false }, { ...DEFAULT_AI_SETTINGS.providers[1]!, enabled: false }] };
+    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [preset("azure"), { ...preset("openrouter"), enabled: false }, { ...preset("workers_ai"), enabled: false }] };
     const { calls, fetcher } = stubFetch(() => sseResponse([
       event({ choices: [], prompt_filter_results: [{ prompt_index: 0, content_filter_results: {} }] }),
       event(delta({ role: "assistant", content: null, tool_calls: [{ index: 0, id: "call_1", type: "function", function: { name: "get_lesson", arguments: "" } }] })),
@@ -144,7 +149,8 @@ describe("stream formats", () => {
       event({ response: "", usage: { prompt_tokens: 50, completion_tokens: 8, total_tokens: 58 } }),
       "data: [DONE]\n\n",
     ]));
-    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [DEFAULT_AI_SETTINGS.providers[1]!, DEFAULT_AI_SETTINGS.providers[0]!, DEFAULT_AI_SETTINGS.providers[2]!] };
+    const llama = { ...preset("workers_ai"), model: "@cf/meta/llama-4-scout-17b-16e-instruct" };
+    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [llama, preset("openrouter"), preset("azure")] };
     const result = await completeChat(request, options({ AI: binding }, stubFetch(() => { throw new Error("no fetch"); }).fetcher, { settings }));
     expect(result).toMatchObject({ text: "Goed zo.", provider: "workers_ai", model: "@cf/meta/llama-4-scout-17b-16e-instruct", usage: { tokensIn: 50, tokensOut: 8, costUsd: null } });
     expect(result.toolCalls).toHaveLength(1);
@@ -163,7 +169,7 @@ describe("stream formats", () => {
       event({ choices: [{ index: 0, delta: {}, finish_reason: "tool_calls" }], usage: { prompt_tokens: 7, completion_tokens: 2 } }),
       "data: [DONE]\n\n",
     ]));
-    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [DEFAULT_AI_SETTINGS.providers[1]!, { ...DEFAULT_AI_SETTINGS.providers[0]!, enabled: false }, { ...DEFAULT_AI_SETTINGS.providers[2]!, enabled: false }] };
+    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [preset("workers_ai"), { ...preset("openrouter"), enabled: false }, { ...preset("azure"), enabled: false }] };
     const result = await completeChat(request, options({ AI: binding }, fetch, { settings }));
     expect(result).toMatchObject({ text: "Hoi", finishReason: "tool_calls", usage: { tokensIn: 7, tokensOut: 2 } });
     expect(result.toolCalls).toEqual([{ id: "chatcmpl-tool-1", name: "get_lesson", arguments: "{\"lessonId\": \"l4\"}" }]);
@@ -178,7 +184,7 @@ describe("stream formats", () => {
         { tool_calls: [{ name: "get_lesson", arguments: { lessonId: "l5" } }] }),
       "data: [DONE]\n\n",
     ]));
-    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [DEFAULT_AI_SETTINGS.providers[1]!, { ...DEFAULT_AI_SETTINGS.providers[0]!, enabled: false }, { ...DEFAULT_AI_SETTINGS.providers[2]!, enabled: false }] };
+    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [preset("workers_ai"), { ...preset("openrouter"), enabled: false }, { ...preset("azure"), enabled: false }] };
     const result = await completeChat(request, options({ AI: binding }, fetch, { settings }));
     expect(result.text).toBe("You **did**");
     expect(result.toolCalls).toEqual([{ id: "chatcmpl-tool-2", name: "get_lesson", arguments: "{\"lessonId\":\"l5\"}" }]);
@@ -230,7 +236,7 @@ describe("fallback", () => {
     const { fetcher } = stubFetch((url) => url.startsWith("https://openrouter.ai")
       ? sseResponse([": OPENROUTER PROCESSING\n\n", event({ id: "x", object: "chat.completion.chunk", error: { code: 502, message: "Provider disconnected" }, choices: [{ index: 0, delta: { content: "" }, finish_reason: "error" }] })])
       : sseResponse(openAiTextStream("Azure")));
-    const result = await completeChat(request, options(fullEnv(unusedBinding().binding), fetcher, { settings: { ...DEFAULT_AI_SETTINGS, providers: [DEFAULT_AI_SETTINGS.providers[0]!, { ...DEFAULT_AI_SETTINGS.providers[1]!, enabled: false }, DEFAULT_AI_SETTINGS.providers[2]!] } }));
+    const result = await completeChat(request, options(fullEnv(unusedBinding().binding), fetcher, { settings: { ...DEFAULT_AI_SETTINGS, providers: [preset("openrouter"), { ...preset("workers_ai"), enabled: false }, preset("azure")] } }));
     expect(result.provider).toBe("azure");
   });
 
@@ -283,7 +289,7 @@ describe("fallback", () => {
   it("does not fall back when the binding refuses the input", async () => {
     const workers = stubBinding(async () => { throw new Error("5006: Error: oneOf at '/' not met, Invalid input"); });
     const { calls, fetcher } = stubFetch(() => sseResponse(openAiTextStream("never")));
-    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [DEFAULT_AI_SETTINGS.providers[1]!, DEFAULT_AI_SETTINGS.providers[0]!, DEFAULT_AI_SETTINGS.providers[2]!] };
+    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [preset("workers_ai"), preset("openrouter"), preset("azure")] };
     await expect(completeChat(request, options(fullEnv(workers.binding), fetcher, { settings }))).rejects.toMatchObject({ code: "AI_REQUEST_FAILED", status: 400 });
     expect(calls).toHaveLength(0);
   });

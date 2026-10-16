@@ -5,9 +5,13 @@ import { spokenText } from "@wordinator/contracts/speech";
 import { tutorMessagePageSchema, type TutorStreamEvent } from "@wordinator/contracts/tutor";
 import { beforeEach, describe, expect, it } from "vitest";
 import { writeAiSettings } from "../src/ai";
+import { TUTOR_MAX_OUTPUT_TOKENS } from "../src/tutor/loop";
 import { hashSpeechItems } from "../src/speech";
 import { errorCode, resetDatabase, seedUser, signIn } from "./courseApi";
 import { call, callTool, modelMessages, newConversation, readEvents, say, scriptedAi, seedLibrary, toolMessages } from "./tutorApi";
+
+// The default setting of one provider, by name: the default order may change.
+const preset = (provider: string) => DEFAULT_AI_SETTINGS.providers.find((item) => item.provider === provider)!;
 
 // The AI tutor API (C14g, docs/ai-tutor.md#api) against a stubbed Workers AI binding.
 
@@ -124,7 +128,7 @@ describe("conversations", () => {
 describe("model choice", () => {
   const settings = {
     ...DEFAULT_AI_SETTINGS,
-    providers: [DEFAULT_AI_SETTINGS.providers[0]!, DEFAULT_AI_SETTINGS.providers[1]!, { ...DEFAULT_AI_SETTINGS.providers[2]!, enabled: false }],
+    providers: [preset("openrouter"), preset("workers_ai"), { ...preset("azure"), enabled: false }],
   };
   const reachable = { OPENROUTER_API_KEY: "or-test-key", AZURE_AI_ENDPOINT: "https://azure.test", AZURE_AI_KEY: "az-test-key" };
 
@@ -133,8 +137,8 @@ describe("model choice", () => {
     await writeAiSettings(env.DB, settings);
     const models = async (extra: Partial<Env>) => (await (await call("GET", "/api/ai/models", learner, undefined, extra)).json()) as { items: Array<{ provider: string; model: string }> };
     expect((await models({ ...reachable, AI: scriptedAi([]).binding })).items).toEqual([
-      { provider: "openrouter", model: DEFAULT_AI_SETTINGS.providers[0]!.model },
-      { provider: "workers_ai", model: DEFAULT_AI_SETTINGS.providers[1]!.model },
+      { provider: "openrouter", model: preset("openrouter").model },
+      { provider: "workers_ai", model: preset("workers_ai").model },
     ]);
     expect((await models({ AI: scriptedAi([]).binding })).items.map((item) => item.provider)).toEqual(["workers_ai"]);
   });
@@ -167,7 +171,7 @@ describe("model choice", () => {
     await call("PATCH", `/api/ai/conversations/${conversationId}`, learner, { provider: "workers_ai" }, { ...reachable, AI: ai.binding });
     // OpenRouter leads the configured order and has a key, but the conversation's choice goes first.
     const events = await readEvents(await call("POST", `/api/ai/conversations/${conversationId}/messages`, learner, { text: "Hoi" }, { ...reachable, AI: ai.binding }));
-    expect(ofType(events, "done")[0]!.message).toMatchObject({ provider: "workers_ai", model: DEFAULT_AI_SETTINGS.providers[1]!.model });
+    expect(ofType(events, "done")[0]!.message).toMatchObject({ provider: "workers_ai", model: preset("workers_ai").model });
     expect(await count("SELECT COUNT(*) AS n FROM ai_usage WHERE provider <> 'workers_ai'")).toBe(0);
   });
 });
@@ -193,9 +197,11 @@ describe("turns", () => {
     expect(types(events)).toEqual(["user_message", "start", "text", "done"]);
     expect(ofType(events, "text")[0]!.delta).toContain("[[Goedemorgen]]");
     const done = ofType(events, "done")[0]!.message;
-    expect(done).toMatchObject({ role: "assistant", status: "complete", provider: "workers_ai", model: DEFAULT_AI_SETTINGS.providers[1]!.model });
+    expect(done).toMatchObject({ role: "assistant", status: "complete", provider: "workers_ai", model: preset("workers_ai").model });
     expect(done.parts).toEqual([{ type: "text", text: "Zeg Goedemorgen! Dat betekent good morning.", spans: [{ start: 4, end: 15 }] }]);
     expect(ofType(events, "start")[0]!.messageId).toBe(done.id);
+    // Workers AI stops at 256 tokens without a cap.
+    expect(ai.calls[0]).toMatchObject({ max_tokens: TUTOR_MAX_OUTPUT_TOKENS });
     const page = await messagesOf(learner, conversationId);
     expect(page.items.map((item) => item.role)).toEqual(["assistant", "user"]);
     expect(page.items[0]).toEqual(done);
@@ -204,6 +210,8 @@ describe("turns", () => {
     expect(system.role).toBe("system");
     expect(system.content).toContain("Learner snapshot");
     expect(system.content).not.toContain("@example.test");
+    expect(system.content).toContain("Call tools only through the function-calling interface");
+    expect(system.content).toContain("Talk to the learner directly");
     expect(await count("SELECT COUNT(*) AS n FROM ai_usage WHERE turn_start = 1")).toBe(1);
   });
 

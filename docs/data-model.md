@@ -148,7 +148,7 @@ Added in C14; the [AI tutor](ai-tutor.md) owns behavior. No table has `group_id`
 
 ### `ai_conversations`
 
-ID, user ID, title (empty until the first user message, then that message on one line cut to 80 characters), nullable archived timestamp, and created/updated timestamps. Conversations are never deleted. Each stored message moves `updated_at`; archiving does not. Indexed by `(user_id, archived_at, updated_at)`.
+ID, user ID, title (empty until the first user message, then that message on one line cut to 80 characters), nullable archived timestamp, nullable `provider` (the learner's [model choice](ai-tutor.md#providers-and-fallback): `openrouter`, `workers_ai`, or `azure`, check-constrained; null follows the configured order; added by migration `0031_conversation_provider.sql`), and created/updated timestamps. Conversations are never deleted. Each stored message moves `updated_at`; archiving does not. Indexed by `(user_id, archived_at, updated_at)`.
 
 ### `ai_messages`
 

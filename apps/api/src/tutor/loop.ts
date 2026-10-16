@@ -19,6 +19,9 @@ export const TUTOR_TOOL_CALLS_MAX = 8;
 // No further model request starts after this long; the turn then ends with a `TURN_LIMIT` error part.
 export const TUTOR_TURN_DEADLINE_MS = 100_000;
 const MAX_MODEL_REQUESTS = TUTOR_TOOL_CALLS_MAX + 2;
+// Each model request's output cap. Workers AI otherwise stops at 256 tokens, which cuts off answers and tool arguments, and
+// reasoning models spend part of the cap before they write.
+export const TUTOR_MAX_OUTPUT_TOKENS = 2_000;
 // The stored message history sent with each turn.
 const HISTORY_MESSAGES = 40;
 
@@ -141,7 +144,7 @@ export async function runAgentTurn(options: TurnOptions): Promise<StoredMessage>
       }
       const messages: AiChatMessage[] = [{ role: "system", content: system }, ...toModelMessages([...history, { role: "assistant", parts }])];
       const calls = [];
-      for await (const event of streamChat({ messages, tools: toolCalls < TUTOR_TOOL_CALLS_MAX ? toolDefinitions() : undefined }, {
+      for await (const event of streamChat({ messages, tools: toolCalls < TUTOR_TOOL_CALLS_MAX ? toolDefinitions() : undefined, maxTokens: TUTOR_MAX_OUTPUT_TOKENS }, {
         env: options.env, db, settings: options.settings, userId, conversationId, turnStart, fetcher: options.fetcher, now,
       })) {
         if (event.type === "text") { rawText += event.delta; await emit({ type: "text", delta: event.delta }); }

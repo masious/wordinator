@@ -1,16 +1,19 @@
 import { describe, expect, it } from "vitest";
 import { aiModelIdSchema, aiSettingsSchema, DEFAULT_AI_SETTINGS } from "./ai";
 
+// The default setting of one provider, by name: the default order may change.
+const preset = (provider: string) => DEFAULT_AI_SETTINGS.providers.find((item) => item.provider === provider)!;
+
 describe("aiSettingsSchema", () => {
   it("accepts the defaults", () => {
     expect(aiSettingsSchema.parse(DEFAULT_AI_SETTINGS)).toEqual(DEFAULT_AI_SETTINGS);
     expect(DEFAULT_AI_SETTINGS.dailyTurnCap).toBe(40);
     expect(DEFAULT_AI_SETTINGS.dailySpeechCharCap).toBe(5_000);
-    expect(DEFAULT_AI_SETTINGS.providers.map((item) => item.provider)).toEqual(["openrouter", "workers_ai", "azure"]);
+    expect(DEFAULT_AI_SETTINGS.providers.map((item) => item.provider)).toEqual(["azure", "openrouter", "workers_ai"]);
   });
 
   it("accepts a reordered list with providers turned off", () => {
-    const providers = [DEFAULT_AI_SETTINGS.providers[2]!, { ...DEFAULT_AI_SETTINGS.providers[0]!, enabled: false }, DEFAULT_AI_SETTINGS.providers[1]!];
+    const providers = [preset("azure"), { ...preset("openrouter"), enabled: false }, preset("workers_ai")];
     expect(aiSettingsSchema.safeParse({ ...DEFAULT_AI_SETTINGS, providers }).success).toBe(true);
   });
 
