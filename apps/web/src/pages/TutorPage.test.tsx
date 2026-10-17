@@ -6,7 +6,6 @@ import { act, cleanup, fireEvent, render, screen, waitFor, within } from "@testi
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../i18n";
 import { stopSpeech } from "../molecules/Speech";
-import { TutorCta } from "../organisms/Tutor/TutorCta";
 import { TutorSettings } from "../organisms/Tutor/TutorSettings";
 import { resetOnDemandSpeech } from "../organisms/TutorComponents";
 import { TutorPage } from "./TutorPage";
@@ -513,11 +512,6 @@ function renderWithRouter(element: () => React.ReactNode) {
 }
 
 describe("Tutor entry and settings", () => {
-  it("links the courses call to action to /ai", async () => {
-    renderWithRouter(() => <TutorCta />);
-    expect(await screen.findByRole("link", { name: /Ask your tutor/ })).toHaveAttribute("href", "/ai");
-  });
-
   it("edits the tutor profile, shows the notes, and clears them after confirming", async () => {
     let profile = { nativeLanguage: "en", replyLanguage: "native", goals: null as string | null, notes: "Mixes up de and het." as string | null, updatedAt: null as number | null };
     vi.mocked(fetch).mockImplementation(async (input, init) => {

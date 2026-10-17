@@ -9,6 +9,7 @@ import { CourseLibraryPage, CoursePage, ManageCoursePage } from "./CoursePages";
 const groupId = "20000000-0000-4000-8000-000000000001";
 const ownerId = "10000000-0000-4000-8000-000000000001";
 const courseId = "30000000-0000-4000-8000-000000000001";
+const lessonId = "40000000-0000-4000-8000-000000000001";
 const session = { status: "signedIn", user: { id: ownerId, displayName: "Ada", avatarUrl: null, mustChangePassword: false }, groups: [{ id: groupId, name: "Study", language: "de", role: "member", icon: "🇩🇪", iconUrl: null }], requests: [], deletedGroups: [] };
 const helper = { id: "10000000-0000-4000-8000-000000000002", displayName: "Bo", avatarUrl: null };
 const ownerPermissions = { edit: true, publish: true, archive: true, removeContent: true, contribute: true, requestContribution: false, leaveContribution: false, manageContributors: true };
@@ -22,6 +23,11 @@ let current = course();
 let contributors = { active: [] as unknown[], pending: [] as unknown[] };
 const sample = (voice: string) => `https://media.test/speech/${voice}.mp3`;
 let speechCast: () => Response;
+const dashboard = () => ({
+  resume: { course: { id: courseId, slug: "deutsch-fur-anfanger", title: "Deutsch für Anfänger", summary: "Erste Schritte", level: "A1", coverUrl: null, lessonCount: 4, coursePercent: 25 }, lesson: { id: lessonId, slug: "hallo", title: "Hallo", number: 1, total: 4, imageUrl: null, storylinePercent: 50 } },
+  recentLessons: [{ course: { id: courseId, slug: "deutsch-fur-anfanger", title: "Deutsch für Anfänger", coursePercent: 25 }, lesson: { id: lessonId, slug: "hallo", title: "Hallo", number: 1, total: 4, imageUrl: null, storylinePercent: 50 }, activityAt: Date.now() - 86_400_000, metrics: { wordRecency: { lastReviewedAt: null, recent: 0, total: 3 }, memory: { strong: 1, fading: 1, new: 1, total: 3 }, pronunciation: { attempts: 0, fluency: null } } }],
+  notStarted: [{ id: "30000000-0000-4000-8000-000000000002", slug: "next-course", title: "Next course", level: "A2", coverUrl: null, lessonCount: 3 }],
+});
 
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
 function renderPage(page: "library" | "course" | "manage", at = "/courses") {
@@ -42,6 +48,7 @@ beforeEach(() => {
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
     if (path === "/api/session") return response(session);
+    if (path === `/api/groups/${groupId}/course-dashboard`) return response(dashboard());
     if (path === `/api/groups/${groupId}/courses` && init?.method === "POST") return response({ course: { ...current, ...JSON.parse(String(init.body)) } }, 201);
     if (path.startsWith(`/api/groups/${groupId}/courses?`) || path === `/api/groups/${groupId}/courses`) return response({ items: [current], nextCursor: null });
     if (path.endsWith("/visibility")) { current = course({ status: JSON.parse(String(init?.body)).status }); return response({ course: current }); }
@@ -118,11 +125,16 @@ describe("Course shell pages", () => {
   });
 
 
-  it("lists visible courses with draft labels and validates the create form", async () => {
+  it("renders the learning dashboard, remembers its view, expands metrics, and validates the create form", async () => {
     renderPage("library");
-    expect(await screen.findByRole("heading", { name: "Courses", level: 1 })).toBeInTheDocument();
-    expect(within(screen.getByRole("main")).getByRole("link", { name: /Deutsch für Anfänger/ })).toHaveAttribute("href", "/courses/deutsch-fur-anfanger");
-    expect(screen.getByText("Draft")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Course library", level: 1 })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Deutsch für Anfänger", level: 2 })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Continue/ })).toHaveAttribute("href", "/courses/deutsch-fur-anfanger/lessons/hallo?resume=true");
+    fireEvent.click(screen.getByRole("button", { name: "Show learning metrics" }));
+    expect(screen.getByText("Strong 1 · Fading 1 · New 1")).toBeInTheDocument();
+    await choose(screen.getByRole("combobox", { name: "Dashboard view" }), "Not started");
+    expect(await screen.findByRole("heading", { name: "Next course" })).toBeInTheDocument();
+    expect(localStorage.getItem(`wordinator:course-dashboard-view:${ownerId}`)).toBe("not-started");
     fireEvent.click(screen.getAllByRole("button", { name: "New course" })[0]!);
     const submit = await screen.findByRole("button", { name: "Create draft" });
     expect(submit).toBeDisabled();

@@ -2,11 +2,20 @@ this file isn't meant for agents. don't read it if you're an agent.
 
 AI
 ===
-[ ] user can fix his mistakes after seeing author's version when hits enter on a question. are we storing those mistakes too?
-[ ] "Pick up where you left off" should have multiple progresses for each lesson. also, for a lesson, undone practices mean incomplete progress.
+[ ] tool calls, question answers with specific components fail to pass data from ui to the agent
+[ ] tool calls to update progress of a course
+[ ] pull up practice blocks from in-progress lessons
+[ ] attach and (later on) suggest ai-added practices
 [ ] ai can also help the user complete current practices interactively.
-[ ] ai should also see a fluency level on a topic so that it can decide on moving on to the next sections or continuing with the existing ones.
-[ ] if all existing practices of a topic/concept was done recently by the user, ai should gravitate toward generating new excersises.
+[ ] suggest speaking practices
+[ ] read paragraphs and answer multiple questions
+[ ] index grammar topics for look-up
+[ ] practice for twenty minutes with timer
+
+[x] user can fix his mistakes after seeing author's version when hits enter on a question. are we storing those mistakes too?
+[x] "Pick up where you left off" should have multiple progresses for each lesson. also, for a lesson, undone practices mean incomplete progress.
+[x] ai should also see a fluency level on a topic so that it can decide on moving on to the next sections or continuing with the existing ones.
+[x] if all existing practices of a topic/concept was done recently by the user, ai should gravitate toward generating new excersises.
 
 
 
@@ -34,3 +43,4 @@ AI
 [x] lesson page: no index and spyscrolls
 [x] bookmark slide/block, question of a practice, examples
 [x] progress tracking: show remaining practices from older lessons
+

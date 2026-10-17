@@ -8,7 +8,6 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
 import { RailSlotsContext } from "../GroupFrame/GroupFrame";
 import { CourseLessons, CourseLessonTools, LessonView } from "./CourseLessons";
-import { CourseResume } from "./CourseResume";
 import { LessonPlayer } from "./LessonPlayer";
 
 const groupId = "20000000-0000-4000-8000-000000000001";
@@ -55,12 +54,10 @@ function renderWithRouter(page: ReactNode) {
   const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: [`/groups/${groupId}/courses/${courseId}`] }) });
   return { router, ...render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>) };
 }
-// The course page renders the resume action above the lesson list; both read the same progress query.
 let served: CourseLesson[] = [];
 // Lessons the default server has recorded as finished, so a later progress read still reports them.
 let finished: string[] = [];
 const renderLessons = (detail: CourseDetailResponse) => { served = detail.lessons; return renderWithRouter(<>
-  <CourseResume groupId={groupId} courseId={courseId} accountId={accountId} courseSlug={detail.course.slug} outline={detail.outline} />
   <CourseLessons groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} />
 </>); };
 // The course page no longer opens the lesson player; it stays in its own component and is tested on its own, opened on one lesson.

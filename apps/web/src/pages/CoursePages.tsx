@@ -1,11 +1,12 @@
 import { COURSE_LEVEL_MAX, COURSE_TEXT_MAX, COURSE_TITLE_MAX, courseResponseSchema, type Course, type CourseInput, type SpeechCast, type UpdateCourseInput } from "@wordinator/contracts";
 import type { CourseDetailResponse } from "@wordinator/contracts/lesson-document";
-import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import type { CourseDashboardResponse } from "@wordinator/contracts/learning";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ArrowLeft, BookOpen, UserRound } from "lucide-react";
-import { apiRequest, courseProgressQueryOptions, courseQueryOptions, coursesQueryOptions, courseSpeechCastQueryOptions, sessionQueryOptions } from "../api";
+import { ArrowLeft, BookOpen, ChevronDown, UserRound } from "lucide-react";
+import { apiRequest, courseDashboardQueryOptions, courseProgressQueryOptions, courseQueryOptions, courseSpeechCastQueryOptions, sessionQueryOptions } from "../api";
 import { PlainText } from "../molecules/PlainText";
 import { ProgressMeter } from "../molecules/ProgressMeter";
 import { CourseContributors } from "../organisms/CourseContributors/CourseContributors";
@@ -15,8 +16,8 @@ import { coursePanelId, CourseProgressTab, CourseTabs, courseTabId, type CourseT
 import { CourseResume } from "../organisms/CourseLessons/CourseResume";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { SpeechCastFields } from "../organisms/SpeechCast/SpeechCastFields";
-import { TutorCta } from "../organisms/Tutor/TutorCta";
-import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, LabelChip, LoadingState, MetadataItem, MetadataRow, PageHeader, SectionHeader, Surface, TextAreaField, TextField } from "../ui";
+import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, Eyebrow, IconButton, LabelChip, LoadingState, MetadataItem, MetadataRow, PageHeader, SectionHeader, SelectField, Surface, TextAreaField, TextField } from "../ui";
+import { relativeTime } from "../relativeTime";
 import { ImageUpload } from "./PhaseFivePages";
 import shellStyles from "./PhaseOnePages.module.css";
 import styles from "./CoursePages.module.css";
@@ -58,45 +59,82 @@ function CourseForm({ initial, submitLabel, pending, error, onSubmit, onCancel }
   </form>;
 }
 
-function CourseCover({ course, className }: { course: Course; className?: string }) {
-  return <div aria-hidden="true" className={`${styles.cover} ${className ?? ""}`}>{course.coverUrl ? <img alt="" src={course.coverUrl} /> : <span>{course.title.slice(0, 1)}</span>}</div>;
+type DashboardView = "recent" | "not-started";
+
+function CourseArt({ src, tone }: { src: string | null; tone: number }) {
+  return <div aria-hidden="true" className={styles.dashboardArt} data-art={tone % 3}>{src && <img alt="" src={src} />}</div>;
 }
 
-function CourseCard({ course }: { course: Course }) {
-  return <Link className={styles.card} to="/courses/$courseSlug" params={{ courseSlug: course.slug }}>
-    <CourseCover course={course} />
-    <div className={styles.cardBody}>
-      <StatusChip status={course.status} />
-      <h2>{course.title}</h2>
-      {course.level && <p className={styles.level}>{course.level}</p>}
-      <p className={styles.cardSummary}>{course.summary}</p>
-      <p className={styles.owner}>{course.owner.displayName}</p>
+function RecentLessonCard({ item, tone }: { item: CourseDashboardResponse["recentLessons"][number]; tone: number }) {
+  const { t } = useTranslation(); const [expanded, setExpanded] = useState(false);
+  const { course, lesson, metrics } = item;
+  const reviewed = metrics.wordRecency.total ? Math.round(100 * metrics.wordRecency.recent / metrics.wordRecency.total) : 0;
+  return <article className={styles.dashboardCard}>
+    <Link className={styles.cardLink} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug: course.slug, lessonSlug: lesson.slug }}>
+      <CourseArt src={lesson.imageUrl} tone={tone} />
+      <div className={styles.dashboardCardBody}>
+        <LabelChip tone="info">{course.title}</LabelChip><h3>{lesson.title}</h3>
+        <p className={styles.cardMeta}>{t("courses.dashboard.lessonNumber", { number: lesson.number, total: lesson.total })}</p>
+        <ProgressMeter value={lesson.storylinePercent} label={t("courses.dashboard.lessonProgress")} showLabel />
+        <ProgressMeter value={course.coursePercent} label={t("courses.progress.yourLabel")} showLabel />
+      </div>
+    </Link>
+    <div className={styles.cardFooter}>
+      <span>{t("courses.dashboard.lastOpened", { time: relativeTime(item.activityAt) })}</span>
+      <IconButton label={expanded ? t("courses.dashboard.hideMetrics") : t("courses.dashboard.showMetrics")} tone="quiet" aria-expanded={expanded} onClick={() => setExpanded((value) => !value)}><ChevronDown className={expanded ? styles.chevronOpen : ""} /></IconButton>
     </div>
-  </Link>;
+    {expanded && <div className={styles.metrics}>
+      <div><strong>{t("courses.dashboard.wordRecency")}</strong><span>{metrics.wordRecency.lastReviewedAt ? relativeTime(metrics.wordRecency.lastReviewedAt) : t("courses.dashboard.notPractised")}</span><ProgressMeter value={reviewed} label={t("courses.dashboard.reviewedRecently", { count: metrics.wordRecency.recent, total: metrics.wordRecency.total })} showLabel /></div>
+      <div><strong>{t("courses.dashboard.memoryStrength")}</strong><div className={styles.memoryBar} aria-label={t("courses.dashboard.memorySummary", metrics.memory)}>{metrics.memory.total > 0 && <><span data-band="strong" style={{ flexGrow: metrics.memory.strong }} /><span data-band="fading" style={{ flexGrow: metrics.memory.fading }} /><span data-band="new" style={{ flexGrow: metrics.memory.new }} /></>}</div><span>{t("courses.dashboard.memorySummary", metrics.memory)}</span></div>
+      <div><strong>{t("courses.dashboard.pronunciation")}</strong><span>{metrics.pronunciation.fluency === null ? t("courses.dashboard.noSpokenAttempts") : t("courses.dashboard.fluencySummary", metrics.pronunciation)}</span></div>
+    </div>}
+  </article>;
+}
+
+function NotStartedCard({ course, tone }: { course: CourseDashboardResponse["notStarted"][number]; tone: number }) {
+  const { t } = useTranslation();
+  return <article className={styles.dashboardCard}><Link className={styles.cardLink} to="/courses/$courseSlug" params={{ courseSlug: course.slug }}>
+    <CourseArt src={course.coverUrl} tone={tone} /><div className={styles.dashboardCardBody}>{course.level && <LabelChip tone="accent">{course.level}</LabelChip>}<h3>{course.title}</h3><p className={styles.cardMeta}>{t("courses.dashboard.lessonCount", { count: course.lessonCount })}</p><span className={styles.startCourse}>{t("courses.dashboard.startCourse")}</span></div>
+  </Link></article>;
+}
+
+function LearningDashboard({ groupId, accountId, onCreate }: { groupId: string; accountId: string; onCreate: () => void }) {
+  const { t } = useTranslation(); const dashboard = useQuery(courseDashboardQueryOptions(groupId));
+  const storageKey = `wordinator:course-dashboard-view:${accountId}`;
+  const [view, setView] = useState<DashboardView>(() => window.localStorage.getItem(storageKey) === "not-started" ? "not-started" : "recent");
+  const chooseView = (next: string | null) => { const value: DashboardView = next === "not-started" ? "not-started" : "recent"; setView(value); window.localStorage.setItem(storageKey, value); };
+  if (dashboard.isPending) return <LoadingState label={t("courses.dashboard.loading")} />;
+  if (dashboard.isError) return <ErrorState title={t("courses.unavailable")} />;
+  const items = view === "recent" ? dashboard.data.recentLessons : dashboard.data.notStarted;
+  return <>
+    {dashboard.data.resume && <CourseResume resume={dashboard.data.resume} />}
+    <section className={styles.dashboardSection}>
+      <SectionHeader eyebrow={<Eyebrow>{t("courses.dashboard.eyebrow")}</Eyebrow>} title={t("courses.dashboard.lessonsTitle")} action={<SelectField aria-label={t("courses.dashboard.viewLabel")} value={view} onChange={chooseView} data={[{ value: "recent", label: t("courses.dashboard.recent") }, { value: "not-started", label: t("courses.dashboard.notStarted") }]} />} />
+      {items.length ? <div className={styles.library}>{view === "recent"
+        ? dashboard.data.recentLessons.map((item, index) => <RecentLessonCard key={item.lesson.id} item={item} tone={index} />)
+        : dashboard.data.notStarted.map((course, index) => <NotStartedCard key={course.id} course={course} tone={index} />)}</div>
+        : <Surface><EmptyState title={view === "recent" ? t("courses.dashboard.noRecentTitle") : t("courses.dashboard.noNotStartedTitle")} action={!dashboard.data.resume ? <Button onClick={onCreate}>{t("courses.create")}</Button> : undefined}>{view === "recent" ? t("courses.dashboard.noRecentBody") : t("courses.dashboard.noNotStartedBody")}</EmptyState></Surface>}
+    </section>
+  </>;
 }
 
 export function CourseLibraryPage({ groupId }: { groupId: string }) {
   const { t } = useTranslation(); const navigate = useNavigate(); const queryClient = useQueryClient();
   const [createOpen, setCreateOpen] = useState(false);
   const session = useQuery(sessionQueryOptions());
-  const courses = useInfiniteQuery(coursesQueryOptions(groupId));
   const create = useMutation({
     mutationFn: (input: CourseInput) => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses`, courseResponseSchema, { method: "POST", body: json(input) }),
     onSuccess: async ({ course }) => {
       await queryClient.invalidateQueries({ queryKey: ["courses", groupId] });
+      await queryClient.invalidateQueries({ queryKey: ["course-dashboard", groupId] });
       await navigate({ to: "/courses/$courseSlug", params: { courseSlug: course.slug } });
     },
   });
-  if (session.isPending || courses.isPending) return <main className={shellStyles.center}><LoadingState label={t("courses.loading")} /></main>;
+  if (session.isPending) return <main className={shellStyles.center}><LoadingState label={t("courses.loading")} /></main>;
   if (session.data?.status !== "signedIn") return null;
-  const items = courses.data?.pages.flatMap((page) => page.items) ?? [];
   return <GroupFrame groupId={groupId} session={session.data}><div className={styles.stack}>
-    <PageHeader eyebrow={<LabelChip>{t("courses.eyebrow")}</LabelChip>} title={t("courses.title")} intro={t("courses.intro")} actions={<Button onClick={() => setCreateOpen(true)}>{t("courses.create")}</Button>} />
-    <TutorCta />
-    {courses.isError ? <ErrorState title={t("courses.unavailable")} /> : items.length
-      ? <div className={styles.library}>{items.map((course) => <CourseCard key={course.id} course={course} />)}</div>
-      : <Surface><EmptyState title={t("courses.emptyTitle")} action={<Button onClick={() => setCreateOpen(true)}>{t("courses.create")}</Button>}>{t("courses.emptyBody")}</EmptyState></Surface>}
-    {courses.hasNextPage && <Button variant="secondary" loading={courses.isFetchingNextPage} onClick={() => void courses.fetchNextPage()}>{t("courses.loadMore")}</Button>}
+    <PageHeader eyebrow={<Eyebrow>{t("courses.eyebrow")}</Eyebrow>} title={t("courses.title")} intro={t("courses.intro")} actions={<Button onClick={() => setCreateOpen(true)}>{t("courses.create")}</Button>} />
+    <LearningDashboard groupId={groupId} accountId={session.data.user.id} onCreate={() => setCreateOpen(true)} />
     <AdaptiveDialog opened={createOpen} onClose={() => setCreateOpen(false)} title={t("courses.createTitle")}>
       {createOpen && <CourseForm submitLabel={t("courses.createSubmit")} pending={create.isPending} error={create.error} onSubmit={(input) => create.mutate(input)} onCancel={() => setCreateOpen(false)} />}
     </AdaptiveDialog>
@@ -150,7 +188,6 @@ export function CoursePage({ groupId, courseId, tab = "lessons" }: { groupId: st
       </div>}
     </header>
     {archived && <Surface tone="quiet"><EmptyState title={t("courses.archivedTitle")}>{t("courses.archivedBody")}</EmptyState></Surface>}
-    <CourseResume groupId={groupId} courseId={courseId} accountId={session.data.user.id} courseSlug={course.data.course.slug} outline={course.data.outline} />
     {/* The owner manages contributors on the manage page; everyone else asks, withdraws, or leaves here. */}
     {!archived && !data.permissions.manageContributors && <CourseContributors groupId={groupId} course={data} />}
     <CourseTabs courseSlug={data.slug} tab={tab} />

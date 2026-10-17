@@ -17,6 +17,16 @@ Courses and lessons are addressed by slugs, not IDs: `/courses/dutch-foundations
 
 Status: delivered. C1 (course shell), C2 (lessons and content blocks), C3 (practice blocks; answer threads retired by [practice progress](#practice-answers)), C4 (feed presence), C5 (contributors), C6 (lesson player and progress), C6b (lesson positions), C7 (lesson editor; see [lesson documents](#lesson-documents)), and C8 (new words and recap; see [new words](#new-words-and-recap)) are complete. C9 ([word bookmarks and the Words tab](words.md)) is delivered, and C12 ([Drill](words.md#drill)) is implemented (C12a–C12e) and awaiting release. Delivery phases live in the [roadmap](roadmap.md#course-phases).
 
+## Library page
+
+`/courses` is the viewer's private learning dashboard; the rail is the complete course list. Its header says Your learning space / Course library and keeps New course in the tools slot, with no search or filters.
+
+- **Continue learning** chooses the non-archived visible course with the viewer's newest saved lesson position or completion, falling back to the first visible course with a published lesson. Within it, the newest unfinished saved lesson wins, then the first unfinished published lesson, then the first published lesson. The dark feature panel shows that lesson's storyline share and the course percentage, links to the lesson (with `?resume=true` for a saved position), and includes the AI tutor entry.
+- **Recent lessons** is the default view: up to nine published lessons with a viewer position or completion, newest activity first. Each card shows the lesson cover when it has one (otherwise a soft art band), its course, lesson number, storyline and course meters, and expandable private metrics: last word review and the share of lesson terms reviewed in the last seven days; Strong, Fading, and New memory bands; and pronunciation fluency with attempt count.
+- **Not started** lists published courses with a published lesson and no position, completion, or word review by this viewer. Cards show the course cover when present, otherwise the art band, plus level, title, lesson count, and Start course.
+- The Recent lessons / Not started selection is a per-account, per-device convenience in `localStorage`; it changes no server data. Below `48em`, the header tools wrap, the feature panel puts the tutor half below the course half, and the card grid is one column with metrics expanding in place.
+- `GET /api/groups/:groupId/course-dashboard` is the single private read (`courseDashboardResponseSchema`). The request accepts no account ID; visibility is applied before learning activity is joined, every learning row is scoped to the signed-in viewer, and another account's data never affects selection or metrics.
+
 ## Purpose
 
 A course is a long-lived, member-authored learning journal that belongs to one group. Members build it gradually, lesson by lesson, and practice it together. Courses complement the feed; they do not replace it. Nothing in a course is generated, translated, or graded by the platform.
@@ -47,7 +57,7 @@ Approved product change (2026-10-13): the course page is for reading and practis
 
 - The course page's header shows a Manage course button to the owner, active contributors, and the site creator (who may archive and remove content); nobody else sees it. A viewer with none of those permissions who opens the URL sees Only the course owner and its contributors can manage this course. The API still enforces every action.
 - The manage page links back to the course and shows, under the usual [permissions](#contributors-and-publishing): Course details (Edit details, Publish course or Return to draft, Archive course or Restore as draft, and the cover image); the owner's Contributors panel with requests and current contributors; and the lesson list's tools (Add lesson, and per lesson Edit details, Move up and Move down, and Delete, attached as one labelled button group). Each lesson there links to its lesson page, where content is edited with Edit lesson.
-- The course page keeps the progress card and the lesson list with each lesson's [actions](#lesson-actions). It has no separate Progress panel. Members who do not own the course still ask to contribute, withdraw, or stop contributing in the Contributors panel on the course page.
+- The course page keeps its header progress meter and the lesson list with each lesson's [actions](#lesson-actions). Continue learning lives only on the [library page](#library-page), so the course page has no duplicate resume card. Members who do not own the course still ask to contribute, withdraw, or stop contributing in the Contributors panel on the course page.
 
 ### Lesson
 
@@ -423,7 +433,7 @@ Approved product change (2026-10-10). Desktop learners usually know which lesson
 
 ## Reading and loading
 
-- The course library lists the group's courses that the viewer may see, newest first. Library filtering by level is permitted because the library is not the feed.
+- The course library uses the [private learning dashboard](#library-page); the complete visible course list is in the rail.
 - A course read returns the full outline (lesson IDs, titles, goals, positions, published state, and the published document's word and practice counts for the [lesson actions](#lesson-actions), and the [first image](#images)'s URL as `imageUrl`) plus the documents of the first three visible lessons. Word counts come from the [`course_lesson_words`](data-model.md#course_lesson_words) index; practice counts and the first image key walk the document in SQL (`json_tree`). Lesson reads and reorder responses carry the same fields.
 - The lesson page and the player read further lessons by ID (`GET .../lessons/:lessonId`), reusing a lesson the course read already returned.
 - Learner payloads never include item notes; they carry authors' versions only for the on-device [answer check](#practice-answers). Editors receive both for editing.

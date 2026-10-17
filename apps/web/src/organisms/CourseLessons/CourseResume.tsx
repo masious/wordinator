@@ -1,44 +1,32 @@
-import type { CourseLessonSummary } from "@wordinator/contracts";
-import { useQuery } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
+import type { CourseDashboardResponse } from "@wordinator/contracts/learning";
+import { Link } from "@tanstack/react-router";
+import { ArrowRight, Sparkles } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { courseProgressQueryOptions } from "../../api";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
-import { Button, Surface } from "../../ui";
+import { LabelChip } from "../../ui";
 import styles from "./CourseResume.module.css";
 
-// The course-wide way back into studying, on the lesson's own page. It resumes the most recently moved unfinished lesson, scrolled
-// to its saved step, otherwise starts the first lesson they have not finished, otherwise offers the first lesson again. Lessons that
-// count come first: an unpublished lesson is chosen only when nothing in the course is published, and then it opens as a preview.
-export function CourseResume({ groupId, courseId, accountId, courseSlug, outline }: {
-  groupId: string; courseId: string; accountId: string; courseSlug: string; outline: CourseLessonSummary[];
-}) {
-  const { t } = useTranslation(); const navigate = useNavigate();
-  const progress = useQuery(courseProgressQueryOptions(groupId, courseId));
-  if (!outline.length) return null;
-  const completed = new Set(progress.data?.completedLessonIds ?? []);
-  const resume = (progress.data?.positions ?? []).filter((entry) => !completed.has(entry.lessonId))
-    .map((entry) => ({ entry, index: outline.findIndex((lesson) => lesson.id === entry.lessonId) })).find(({ index }) => index >= 0);
-  const candidates = outline.some((lesson) => lesson.published) ? outline.filter((lesson) => lesson.published) : outline;
-  const unfinished = candidates.find((lesson) => !completed.has(lesson.id));
-  const target = resume ? outline[resume.index]! : unfinished ?? candidates[0]!;
-  const number = outline.indexOf(target) + 1;
-  const mine = progress.data?.publishedLessons ? progress.data.participants.find((entry) => entry.user.id === accountId) : undefined;
-  const [label, namedLabel, help] = resume
-    ? ["courses.player.continue", "courses.player.continueNamed", t("courses.resume.continueHelp", { number, title: target.title, current: resume.entry.stepIndex + 1, total: resume.entry.totalSteps })] as const
-    : unfinished ? ["courses.player.start", "courses.player.startNamed", t("courses.resume.startHelp", { number, title: target.title })] as const
-    : ["courses.player.again", "courses.player.againNamed", t("courses.resume.doneHelp")] as const;
-  const open = () => void navigate({ to: "/courses/$courseSlug/lessons/$lessonSlug", params: { courseSlug, lessonSlug: target.slug }, search: resume ? { resume: true } : {} });
-  return <Surface className={styles.card}>
-    <div className={styles.copy}>
-      <div className={styles.heading}>
-        <h2>{resume ? t("courses.resume.continueTitle") : t("courses.resume.title")}</h2>
-        {mine && <span className={styles.percent}>{t("courses.progress.percent", { percent: mine.percent })}</span>}
+// The library's dark Continue learning feature: study context on the left and the AI tutor entry on the right.
+export function CourseResume({ resume }: { resume: NonNullable<CourseDashboardResponse["resume"]> }) {
+  const { t } = useTranslation(); const { course, lesson } = resume;
+  const continuing = lesson.storylinePercent > 0 && lesson.storylinePercent < 100;
+  return <section className={styles.panel} aria-labelledby="continue-learning-title">
+    <div className={styles.learning}>
+      <LabelChip tone="accent">{t("courses.dashboard.inProgress")}</LabelChip>
+      <div className={styles.copy}><h2 id="continue-learning-title">{course.title}</h2><p>{course.summary}</p></div>
+      <p className={styles.lesson}>{t("courses.dashboard.lessonOf", { number: lesson.number, total: lesson.total, title: lesson.title })}</p>
+      <div className={styles.meters}>
+        <ProgressMeter value={lesson.storylinePercent} label={t("courses.dashboard.lessonProgress")} showLabel />
+        <ProgressMeter value={course.coursePercent} label={t("courses.progress.yourLabel")} showLabel />
       </div>
-      {mine && <ProgressMeter value={mine.percent} label={t("courses.progress.yourLabel")} />}
-      <p className={styles.help}>{help}</p>
-      {!target.published && <p className={styles.help}>{t("courses.resume.previewHelp")}</p>}
+      <Link className={styles.primaryAction} to="/courses/$courseSlug/lessons/$lessonSlug" params={{ courseSlug: course.slug, lessonSlug: lesson.slug }} search={continuing ? { resume: true } : {}}>
+        {continuing ? t("courses.player.continue") : lesson.storylinePercent === 100 ? t("courses.player.again") : t("courses.player.start")}<ArrowRight aria-hidden="true" />
+      </Link>
     </div>
-    <Button className={styles.action} variant={resume || unfinished ? "primary" : "secondary"} onClick={open} aria-label={t(namedLabel, { number })}>{t(label)}</Button>
-  </Surface>;
+    <div className={styles.tutor}>
+      <span className={styles.tutorMark} aria-hidden="true"><Sparkles /></span>
+      <div><h3>{t("tutor.cta.title")}</h3><p>{t("tutor.cta.pitch")}</p></div>
+      <Link className={styles.tutorAction} to="/ai">{t("tutor.cta.action")}<ArrowRight aria-hidden="true" /></Link>
+    </div>
+  </section>;
 }

@@ -97,6 +97,7 @@ import { tutorRoutes } from "./tutor";
 import { buildWordDrillDeck, type WordDrillMemory } from "./wordDrill";
 import { lessonMemoryKeys, memoryRebuildStatements, recordWordReviews } from "./learningData";
 import { readLessonMetrics } from "./learning/metrics";
+import { readCourseDashboard } from "./learning/dashboard";
 import { completeLesson, readLessonProgress, resetLesson } from "./learning/progress";
 import { registerAttemptRoutes } from "./learning/attempts";
 import { registerAiPracticeRoutes } from "./learning/aiPracticeRoutes";
@@ -104,7 +105,7 @@ import { aiPracticeCounts, lessonAiPracticeDeletion } from "./tutor/aiPractices"
 import { recentResults } from "./wordMemory";
 import { decodeWeakCursor, readWeakWords, setWordKnown } from "./weakWords";
 import { weakWordsPageSchema, weakWordsQuerySchema, wordTermKeySchema } from "@wordinator/contracts/weak-words";
-import { lessonMetricsResponseSchema } from "@wordinator/contracts/learning";
+import { courseDashboardResponseSchema, lessonMetricsResponseSchema } from "@wordinator/contracts/learning";
 
 export type Bindings = Env & { MEDIA: R2Bucket; PUBLIC_MEDIA_BASE_URL: string };
 type Language = "nl" | "de";
@@ -1838,6 +1839,15 @@ app.get("/api/groups/:groupId/courses", requireGroupAccess, async (context) => {
     items: page.map((row) => presentCourse(row, user.id, group.creatorUserId, context.env.PUBLIC_MEDIA_BASE_URL)),
     nextCursor: rows.results.length > parsed.data.limit && tail ? encodeCursor({ createdAt: tail.createdAt, id: tail.id }) : null,
   }));
+});
+
+// The course library is a private learning dashboard. It accepts no account ID and derives every activity row for the signed-in
+// viewer after applying the same course visibility boundary as the rest of the library.
+app.get("/api/groups/:groupId/course-dashboard", requireGroupAccess, async (context) => {
+  const group = context.get("groupAccess"); const user = context.get("user")!;
+  return context.json(courseDashboardResponseSchema.parse(await readCourseDashboard(
+    context.env.DB, group.id, user.id, group.creatorUserId, context.env.PUBLIC_MEDIA_BASE_URL,
+  )));
 });
 
 app.post("/api/groups/:groupId/courses", requireGroupAccess, async (context) => {

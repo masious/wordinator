@@ -1,7 +1,7 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, lessonProgressResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema, speechRecognitionTokenResponseSchema, type SpeechRecognitionTokenResponse } from "@wordinator/contracts";
 import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
 import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorModelsResponseSchema, tutorProfileResponseSchema, tutorUsageResponseSchema } from "@wordinator/contracts/tutor";
-import { lessonMetricsResponseSchema } from "@wordinator/contracts/learning";
+import { courseDashboardResponseSchema, lessonMetricsResponseSchema } from "@wordinator/contracts/learning";
 import { weakWordsPageSchema } from "@wordinator/contracts/weak-words";
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 
@@ -103,6 +103,12 @@ export const coursesQueryOptions = (groupId: string) => infiniteQueryOptions({
   initialPageParam: undefined as string | undefined,
   queryFn: ({ pageParam }) => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses${pageParam ? `?cursor=${encodeURIComponent(pageParam)}` : ""}`, coursePageSchema),
   getNextPageParam: (page) => page.nextCursor ?? undefined,
+});
+
+export const courseDashboardQueryOptions = (groupId: string) => queryOptions({
+  queryKey: ["course-dashboard", groupId] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/course-dashboard`, courseDashboardResponseSchema),
+  retry: false,
 });
 
 // Course and lesson URL segments are slugs, or legacy IDs that redirect to them. Slugs never change, so the mapping caches for the session.

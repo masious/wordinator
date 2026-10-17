@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { lessonMetricsResponseSchema, practiceAttemptRequestSchema, pronunciationAttemptRequestSchema, PRONUNCIATION_WORDS_MAX } from "./learning";
+import { courseDashboardResponseSchema, lessonMetricsResponseSchema, practiceAttemptRequestSchema, pronunciationAttemptRequestSchema, PRONUNCIATION_WORDS_MAX } from "./learning";
 
 describe("practiceAttemptRequestSchema", () => {
   it("accepts an item and a non-empty answer up to 2,000 characters", () => {
@@ -70,5 +70,19 @@ describe("lessonMetricsResponseSchema", () => {
       { pronunciation: { attempts: 0, fluency: null }, words: { ...words, recall: 0.5 }, lastStudiedAt: null },
       { pronunciation: { attempts: 0, fluency: null }, words, lastStudiedAt: -1 },
     ]) expect(lessonMetricsResponseSchema.safeParse(body).success).toBe(false);
+  });
+});
+
+describe("courseDashboardResponseSchema", () => {
+  const id = "8f8a3c55-8b0f-4f43-a3c4-3c5a8f2a4c11";
+  const course = { id, slug: "dutch", title: "Dutch", summary: "Learn.", level: "A1", coverUrl: null, lessonCount: 2, coursePercent: 25 };
+  const lesson = { id, slug: "hello", title: "Hello", number: 1, total: 2, imageUrl: null, storylinePercent: 50 };
+  const body = { resume: { course, lesson }, recentLessons: [{ course: { id, slug: "dutch", title: "Dutch", coursePercent: 25 }, lesson, activityAt: 1,
+    metrics: { wordRecency: { lastReviewedAt: null, recent: 1, total: 2 }, memory: { strong: 1, fading: 0, new: 1, total: 2 }, pronunciation: { attempts: 0, fluency: null } } }], notStarted: [] };
+  it("accepts a private dashboard without recall probabilities", () => expect(courseDashboardResponseSchema.parse(body)).toEqual(body));
+  it("requires nested memory bands and bounds recent lessons", () => {
+    expect(courseDashboardResponseSchema.safeParse({ ...body, recentLessons: [{ ...body.recentLessons[0], metrics: { ...body.recentLessons[0]!.metrics, memory: { strong: 2, fading: 1, new: 1, total: 2 } } }] }).success).toBe(false);
+    expect(courseDashboardResponseSchema.safeParse({ ...body, userId: id }).success).toBe(false);
+    expect(courseDashboardResponseSchema.safeParse({ ...body, recentLessons: Array.from({ length: 10 }, () => body.recentLessons[0]) }).success).toBe(false);
   });
 });

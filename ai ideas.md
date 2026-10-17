@@ -5,6 +5,6 @@
         - review grammar and rules
         - do excercises around them.
         - summary, what we accomplished with review of possible mistakes from previous sections
+-> this plan is completely dynamic and the model can decide whici one(s) to put.
 
 
-this plan is completely dynamic and the model can decide whici one(s) to put.

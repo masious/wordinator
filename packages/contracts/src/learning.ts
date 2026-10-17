@@ -76,3 +76,33 @@ export const lessonMetricsResponseSchema = z.strictObject({
   lastStudiedAt: z.number().int().nonnegative().nullable(),
 });
 export type LessonMetricsResponse = z.infer<typeof lessonMetricsResponseSchema>;
+
+// The private course-library dashboard (docs/courses.md#library-page). It is derived for the signed-in viewer: no account ID is
+// accepted from the client, and recall probabilities stay server-side. The dashboard exposes only the three memory bands.
+const dashboardProgressSchema = z.number().int().min(0).max(100);
+const dashboardCourseRefSchema = z.strictObject({
+  id: opaqueIdSchema, slug: z.string(), title: z.string(), summary: z.string(), level: z.string().nullable(),
+  coverUrl: z.string().url().nullable(), lessonCount: z.number().int().nonnegative(), coursePercent: dashboardProgressSchema,
+});
+const dashboardLessonRefSchema = z.strictObject({
+  id: opaqueIdSchema, slug: z.string(), title: z.string(), number: z.number().int().positive(), total: z.number().int().positive(),
+  imageUrl: z.string().url().nullable(), storylinePercent: dashboardProgressSchema,
+});
+export const courseDashboardResponseSchema = z.strictObject({
+  resume: z.strictObject({ course: dashboardCourseRefSchema, lesson: dashboardLessonRefSchema }).nullable(),
+  recentLessons: z.array(z.strictObject({
+    course: dashboardCourseRefSchema.pick({ id: true, slug: true, title: true, coursePercent: true }),
+    lesson: dashboardLessonRefSchema, activityAt: z.number().int().nonnegative(),
+    metrics: z.strictObject({
+      wordRecency: z.strictObject({
+        lastReviewedAt: z.number().int().nonnegative().nullable(), recent: z.number().int().nonnegative(), total: z.number().int().nonnegative(),
+      }).refine((value) => value.recent <= value.total, { message: "Recent words cannot exceed total words." }),
+      memory: z.strictObject({
+        strong: z.number().int().nonnegative(), fading: z.number().int().nonnegative(), new: z.number().int().nonnegative(), total: z.number().int().nonnegative(),
+      }).refine((value) => value.strong + value.fading + value.new === value.total, { message: "Memory bands must equal total words." }),
+      pronunciation: z.strictObject({ attempts: z.number().int().nonnegative(), fluency: z.number().int().min(0).max(100).nullable() }),
+    }),
+  })).max(9),
+  notStarted: z.array(dashboardCourseRefSchema.omit({ summary: true, coursePercent: true })),
+});
+export type CourseDashboardResponse = z.infer<typeof courseDashboardResponseSchema>;
