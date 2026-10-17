@@ -119,7 +119,13 @@ Phase 0 establishes the runnable test layers used by later phases:
 
 ## Storybook
 
-Storybook (C11e) previews every journal post variant, the lesson share action, and the AI tutor's messages and answer components. It is a local development tool only: it is not a release gate, runs in no test command or CI, and is never built for or deployed to production. The production `/ui` route remains the canonical, release-gated visual inventory described in the [design system](design-system.md). Stories for other features are optional. [Operations](operations.md#storybook) has the commands.
+Storybook (C11e) previews every journal post variant, the lesson share action, and the AI tutor's messages and answer components. It is a local development tool and is not built for or deployed to production. The production `/ui` route remains the canonical, release-gated visual inventory described in the [design system](design-system.md). Stories for other features are optional. [Operations](operations.md#storybook) has the commands.
+
+Batch A is adding a basic automated WCAG gate run from stories using Storybook's Vitest integration and the a11y addon (axe). Its intended gate runs in light and dark and fails on WCAG 2.x A/AA violations (contrast, names, roles, labels). The implementation is paused as of 2026-10-17 and is not yet a release gate: the light run currently fails in the Storybook preview decorator before axe executes, and the dark run therefore does not start.
+
+- Install: `@storybook/addon-a11y` is configured in `apps/web/.storybook/main.ts`.
+- Run locally: `pnpm --filter @wordinator/web test:a11y` (or `pnpm test:a11y` at the repo root). The suite renders selected stories through `@storybook/test` and checks them with axe in jsdom.
+- Scope: shared UI exports and molecules as they gain stories; the existing journal post, lesson share, and tutor stories are included already. Later batches should add stories for their new pieces so they are covered automatically.
 
 - Layout: `apps/web/.storybook` (configuration and a fixture speech clip under `public/`) and `apps/web/stories`. Neither is in `tsconfig.app.json`, the Vitest include, or the Vite build; `tsconfig.storybook.json` is used only by `storybook:typecheck`, and `storybook-static/` is git-ignored.
 - Decorators: the app's Mantine theme, `index.css` with `tokens.css`, and i18next; a colour-scheme toolbar (light and dark); a fresh `QueryClient` per story, seeded with a signed-in fixture account and its settings (`parameters.queries` adds entries under the app's query keys); and a memory TanStack router, so links render without navigating away. Storybook reuses the app's Vite config without the PWA and route-generator plugins. Telemetry is off.

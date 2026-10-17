@@ -13,10 +13,13 @@
     "test:e2e": "playwright test",
     "storybook": "storybook dev --port 6006 --no-open",
     "storybook:build": "storybook build --output-dir storybook-static",
-    "storybook:typecheck": "tsc -p tsconfig.storybook.json"
+    "storybook:typecheck": "tsc -p tsconfig.storybook.json",
+    "test:a11y": "A11Y_SCHEME=light vitest run --config vitest.storybook.config.ts && A11Y_SCHEME=dark vitest run --config vitest.storybook.config.ts"
   },
   "devDependencies": {
     "@playwright/test": "latest",
+    "@storybook/addon-a11y": "10.6.1",
+    "@storybook/addon-vitest": "10.6.1",
     "@storybook/react-vite": "^10.6.1",
     "@tanstack/router-plugin": "^1.168.41",
     "@testing-library/jest-dom": "latest",
@@ -25,6 +28,7 @@
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "@vitejs/plugin-react": "~5.0.4",
+    "@vitest/browser": "~3.2.7",
     "jsdom": "~27.0.1",
     "storybook": "^10.6.1",
     "tsx": "^4.23.15",

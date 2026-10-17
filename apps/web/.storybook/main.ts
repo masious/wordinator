@@ -1,13 +1,13 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 import type { PluginOption } from "vite";
 
-// Storybook is a local preview of journal post variants (docs/testing.md#storybook). It is not a release gate: it is outside
-// `typecheck`, `test`, `build`, and deployment.
+// Storybook previews journal and UI stories locally; its Vitest addon runs the Batch A browser accessibility gate.
 const config: StorybookConfig = {
   framework: "@storybook/react-vite",
   stories: ["../stories/**/*.stories.tsx"],
   staticDirs: ["./public"],
   core: { disableTelemetry: true },
+  addons: ["@storybook/addon-a11y", "@storybook/addon-vitest"],
   // The app's Vite config is reused, without the service worker and the route generator, which only the app itself needs.
   viteFinal: (vite) => {
     const keep = (plugin: PluginOption): PluginOption => {

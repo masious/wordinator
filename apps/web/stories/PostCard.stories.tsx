@@ -8,6 +8,7 @@ type Args = { variant: PostVariant; compact: boolean; note: boolean };
 
 const meta = {
   title: "Journal/Posts",
+  tags: ["a11y"],
   args: { variant: "sharedSentence", compact: true, note: false },
   argTypes: {
     variant: { control: "select", options: Object.keys(postVariants) },

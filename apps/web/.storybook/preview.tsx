@@ -51,6 +51,12 @@ const preview: Preview = {
     },
   },
   initialGlobals: { colorScheme: "light" },
-  parameters: { layout: "padded", controls: { expanded: true } },
+  parameters: {
+    layout: "padded", controls: { expanded: true },
+    a11y: {
+      test: "error",
+      options: { runOnly: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa"] },
+    },
+  },
 };
 export default preview;

@@ -1,6 +1,6 @@
 # Lumen redesign plan
 
-**Status: approved (2026-10-16).** Batches 0–3 and 6 are done; the first Batch 7 Tutor slice is done; Batch A (WCAG checks) is next, then Batch 4. The owner settled D1–D11 on 2026-10-16 and added the Batch 4 product changes; D2's phone action bar awaits confirmation. Management pages are last (Batch M).
+**Status: in progress (2026-10-17).** Batches 0–3, 5, 6, 8, and 9 are done. Batch 7's page shell and conversation-list slices are done, with its turn and composer treatment still open. Batch A is scaffolded but deliberately paused and not passing; Batch 4 remains the next product batch. The owner settled D1–D11 on 2026-10-16 and added the Batch 4 product changes; D2's phone action bar awaits confirmation. Management pages are last (Batch M).
 
 This plan moves Wordinator from the Editorial Luxury look (warm paper, coral, Newsreader, bezels, pills, a top navigation island) to the **Lumen** direction: a cool canvas, white cards with line borders, one violet accent, Inter, small radii, a left navigation rail, and the three reference compositions (course library, lesson reader, tutor). [docs/design-system.md](docs/design-system.md) owns every value; this file owns order, scope, and completion. Each batch rewrites the design-system rules it replaces, so the doc never describes two systems for the same component.
 
@@ -208,6 +208,8 @@ Owner direction (D8, 2026-10-16): pixel baselines are gone; add basic automated 
 - Stories, light and dark: the shared `ui` exports (Button variants and states, IconButton tones, LabelChip and Avatar tones, Eyebrow, Surface, fields, PageHeader, SectionHeader, dialogs), `ProgressMeter`, `Callout`, the shell rail and drawer, and the existing journal post stories. Later batches add stories for the pieces they build.
 - Wire a `test:a11y` script; update [testing.md](docs/testing.md#storybook), which today calls Storybook a local preview outside every gate, and the `.storybook/main.ts` comment.
 - Runs after Batch 6, before Batch 4.
+
+**Status (paused 2026-10-17):** the Storybook a11y/Vitest dependencies, light-and-dark script, browser-test configuration, and initial shared-UI, shell, and journal story tags are present in the working implementation. The gate is not complete or release-ready: its light-scheme run currently stops with `React is not defined` in the Storybook preview decorator (38 failed stories), so the dark-scheme run does not start. Do not count Batch A as done until both schemes execute and pass. Per owner direction, leave this batch paused and proceed without finishing it.
 
 ## Batch 11 — Cleanup and documentation
 

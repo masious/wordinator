@@ -7,6 +7,7 @@
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm --filter @wordinator/contracts test && pnpm --filter @wordinator/db test && pnpm --filter @wordinator/api test && pnpm --filter @wordinator/web test",
     "test:e2e": "pnpm --filter @wordinator/web test:e2e",
+    "test:a11y": "pnpm --filter @wordinator/web test:a11y",
     "build": "pnpm -r build",
     "db:generate": "pnpm --filter @wordinator/db generate",
     "db:studio": "pnpm --filter @wordinator/db studio",
