@@ -1451,6 +1451,7 @@ export const resources = {
           previous: "Previous",
           next: "Next",
           skip: "Skip",
+          skipAll: "Skip all and continue",
           checkAll: "Check answers",
           skipped: "Skipped. Answer it to include it.",
           unanswered_one: "{{count}} question without an answer will be skipped.",

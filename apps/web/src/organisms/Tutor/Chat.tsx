@@ -168,6 +168,7 @@ export function TutorChat({ accountId, conversationId, conversation, newProvider
     if (!id || !last) return Promise.reject(new Error("No conversation"));
     return run(id, `${conversationPath(id)}/messages/${encodeURIComponent(last.id)}/answers`, { answers });
   };
+  const skipAll = () => answerSet(dockParts.map((part) => ({ toolCallId: part.toolCallId, skip: true })));
   const retry = lastUser && !archived ? () => { void send(textOf(lastUser)).catch(() => undefined); } : undefined;
 
   const composerLocked = busy || archived || awaiting || limitUntil !== null;
@@ -208,7 +209,7 @@ export function TutorChat({ accountId, conversationId, conversation, newProvider
       </div>
       {docked && last ? <div className={styles.dockSlot}>
         {limitUntil !== null && <p className={styles.composerNote} role="status">{t("tutor.limit", { time: resets })}</p>}
-        <QuestionDock key={last.id} components={dockParts} onSubmit={answerSet} language={languageName} disabled={busy || limitUntil !== null}
+        <QuestionDock key={last.id} components={dockParts} onSubmit={answerSet} onSkipAll={skipAll} language={languageName} disabled={busy || limitUntil !== null}
           clip={id ? (toolCallId) => tutorClip(id, last.id, { toolCallId }) : undefined} />
       </div> : <form className={styles.composer} onSubmit={submit}>
         {limitUntil !== null ? <p className={styles.composerNote} role="status">{t("tutor.limit", { time: resets })}</p>

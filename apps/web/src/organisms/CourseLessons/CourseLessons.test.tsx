@@ -489,47 +489,6 @@ describe("Course lessons", () => {
     expect(vi.mocked(fetch).mock.calls.some(([path]) => String(path).endsWith("/completion") || String(path).endsWith("/position"))).toBe(false);
   });
 
-  it("offers one course action: the first unfinished lesson", async () => {
-    const original = vi.mocked(fetch).getMockImplementation()!;
-    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") ? response(progress([lessonId(1)])) : original(input, init));
-    const blocks = [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")];
-    renderLessons({ course: course(false), outline: [1, 2, 3].map((n) => summary(n)), lessons: [lesson(1, blocks), lesson(2, blocks), lesson(3, blocks)] });
-    expect(await screen.findByText("Next up: lesson 2, Lesson title 2.")).toBeInTheDocument();
-    expect(screen.getByRole("progressbar", { name: "Your course progress" })).toHaveAttribute("aria-valuenow", "25");
-    expect(screen.getByText("25%")).toBeInTheDocument();
-    expect(screen.getAllByRole("button", { name: /^(Start|Continue|Practice) lesson \d+( again)?$/ })).toHaveLength(1);
-    expect(screen.getByRole("button", { name: "Start lesson 2" })).toBeInTheDocument();
-  });
-
-  it("offers the first lesson again once every lesson is finished", async () => {
-    const original = vi.mocked(fetch).getMockImplementation()!;
-    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") ? response(progress([lessonId(1), lessonId(2)])) : original(input, init));
-    renderLessons({ course: course(false), outline: [1, 2].map((n) => summary(n)), lessons: [lesson(1), lesson(2)] });
-    expect(await screen.findByRole("button", { name: "Practice lesson 1 again" })).toBeInTheDocument();
-    expect(screen.getByText("You have finished every lesson. Run through them again whenever you like.")).toBeInTheDocument();
-  });
-
-  it("continues an unfinished lesson on its own page at the saved step", async () => {
-    const original = vi.mocked(fetch).getMockImplementation()!;
-    const saved = { lessonId: lessonId(1), stepKey: `${practice.id}:0`, stepIndex: 3, passedSteps: 3, totalSteps: 5, updatedAt: 1 };
-    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") ? response(progress([], [saved])) : original(input, init));
-    const { router } = renderLessons({ course: course(false), outline: [1, 2].map((n) => summary(n)), lessons: [lesson(1), lesson(2)] });
-    expect(await screen.findByRole("heading", { name: "Pick up where you left off" })).toBeInTheDocument();
-    expect(screen.getByText("Lesson 1, Lesson title 1, step 4 of 5.")).toBeInTheDocument();
-    expect(screen.getByText("Step 4 of 5")).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Continue lesson 1" }));
-    await waitFor(() => expect(landed(router)).toEqual({ path: "/courses/dutch-foundations/lessons/lesson-title-1", search: { resume: true } }));
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
-  });
-
-  it("starts the next lesson on its own page from the top", async () => {
-    const original = vi.mocked(fetch).getMockImplementation()!;
-    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") ? response(progress([lessonId(1)])) : original(input, init));
-    const { router } = renderLessons({ course: course(false), outline: [1, 2].map((n) => summary(n)), lessons: [lesson(1), lesson(2)] });
-    fireEvent.click(await screen.findByRole("button", { name: "Start lesson 2" }));
-    await waitFor(() => expect(landed(router)).toEqual({ path: "/courses/dutch-foundations/lessons/lesson-title-2", search: {} }));
-  });
-
   it("resumes the player at the saved step and can start over", async () => {
     const saved = { lessonId: lessonId(1), stepKey: `${practice.id}:0`, stepIndex: 3, passedSteps: 3, totalSteps: 5, updatedAt: 1 };
     // The example moved one step later since the position was saved; the key still finds the same question.

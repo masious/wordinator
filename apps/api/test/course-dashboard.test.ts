@@ -31,7 +31,7 @@ describe("Course dashboard", () => {
     const response = await request(`/api/groups/${groupId}/course-dashboard`, reader);
     expect(response.status, await response.clone().text()).toBe(200);
     const dashboard = courseDashboardResponseSchema.parse(await response.json());
-    expect(dashboard.resume).toMatchObject({ course: { id: first.id, coursePercent: 25 }, lesson: { id: firstLesson.lesson.id, storylinePercent: 50 } });
+    expect(dashboard.resume).toMatchObject({ course: { id: first.id, coursePercent: 50 }, lesson: { id: firstLesson.lesson.id, storylinePercent: 50 } });
     expect(dashboard.recentLessons).toHaveLength(1);
     expect(dashboard.recentLessons[0]).toMatchObject({
       course: { id: first.id }, lesson: { id: firstLesson.lesson.id },

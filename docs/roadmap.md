@@ -10,6 +10,7 @@
 - Every legacy `/groups/...` web route redirects to its global equivalent (`/courses`, `/courses/:courseId`, lesson pages, `/words`, `/settings`), and `/invite/:token` redirects to `/`. `pnpm bootstrap` now asks for a username and library language and creates the single library record that open registration requires.
 - Playwright moved to shared `e2e/auth.ts` helpers. Journal, discussion, notices, and course-feed specs run against the global routes; member-administration specs and the empty-journal visual baselines were removed.
 - Readable course and lesson URLs (completed 2026-10-10): migration `0021_course_slugs.sql` adds stable title slugs, routes are `/courses/:courseSlug` and `/courses/:courseSlug/lessons/:lessonSlug`, and ID links redirect. See [readable URLs](courses.md#readable-urls).
+- Course learning dashboard (Lumen Batch 4, completed 2026-10-17): `/courses` now combines the latest resume target and tutor entry with Recent lessons / Not started cards. One viewer-only read derives storyline and course progress, seven-day word recency, Strong/Fading/New memory bands, and pronunciation fluency under course visibility; the rail remains the complete course list. The course detail's duplicate resume card and the old gradient tutor CTA were retired. See [library page](courses.md#library-page).
 - Remaining cleanup, tracked here: delete the now-unrouted member-directory, profile, and group-settings page modules and their API handlers once the storage bridge is retired.
 
 ## Desktop practice focus — completed 2026-10-10
