@@ -21,6 +21,10 @@ describe("Assistant Markdown subset", () => {
     expect(container.querySelector("em")).toHaveTextContent("most");
     expect(container.querySelector("code")).toHaveTextContent("de man");
     expect(container.querySelectorAll("ul li")).toHaveLength(2);
+    const ordered = container.querySelector("ol");
+    expect(ordered).toBeInTheDocument();
+    expect(ordered).toHaveAttribute("role", "list");
+    expect(ordered?.className).toContain("orderedList");
     expect(container.querySelectorAll("ol li")).toHaveLength(2);
     expect(screen.getByRole("link", { name: "https://example.com/page" })).toHaveAttribute("href", "https://example.com/page");
     expect(screen.getByRole("link", { name: "the docs" })).toHaveAttribute("href", "https://example.com/docs");
@@ -30,7 +34,9 @@ describe("Assistant Markdown subset", () => {
     const { container } = renderText("Intro line.\n\n## Grammar\nDe and het.\n\n## Words\n- huis");
     const sections = container.querySelectorAll("section");
     expect(sections).toHaveLength(3);
-    expect(screen.getByRole("heading", { name: "Grammar" })).toBeInTheDocument();
+    const grammar = screen.getByRole("heading", { name: "Grammar" });
+    expect(grammar).toBeInTheDocument();
+    expect(grammar.className).toContain("sectionLabel");
     expect(screen.getByRole("heading", { name: "Words" })).toBeInTheDocument();
     // A long heading is not a label: it stays literal text.
     const long = parseMarkdown(`# ${"x".repeat(90)}`);

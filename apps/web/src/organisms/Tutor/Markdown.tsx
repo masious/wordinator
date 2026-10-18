@@ -148,7 +148,7 @@ export function AssistantText({ text, spans, spanBase = 0, speech, lang }: {
   const renderBlock = (block: Block, key: number) => block.type === "paragraph"
     ? <p key={key} className={styles.paragraph}>{block.lines.map((line, index) => <Fragment key={index}>{index > 0 && <br />}{renderInline(line)}</Fragment>)}</p>
     : block.ordered
-      ? <ol key={key} className={styles.list}>{block.items.map((entry, index) => <li key={index}>{renderInline(entry)}</li>)}</ol>
+      ? <ol key={key} role="list" className={`${styles.list} ${styles.orderedList}`}>{block.items.map((entry, index) => <li key={index}>{renderInline(entry)}</li>)}</ol>
       : <ul key={key} className={styles.list}>{block.items.map((entry, index) => <li key={index}>{renderInline(entry)}</li>)}</ul>;
   return <div className={styles.assistantText}>
     {sections.map((section, index) => <section key={index} className={styles.section}>

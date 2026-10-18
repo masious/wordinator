@@ -195,12 +195,46 @@ describe("Tutor page", () => {
   });
 
   it("lists conversations, shows the privacy notice, and renders a stored conversation", async () => {
-    messages[c1]!.push(message(id(2), "assistant", [text("## Grammar\nUse **de** here.")]));
+    messages[c1]!.push(message(id(2), "assistant", [
+      { type: "tool_call", toolCallId: id(20), name: "get_lesson", arguments: { lessonId: id(30) } },
+      { type: "tool_result", toolCallId: id(20), name: "get_lesson", ok: true, error: null, detail: { lessonTitle: "Lesson 6", courseTitle: "Basics", lessonId: id(30) } },
+      text("## Grammar\nUse **de** here."),
+    ]));
     renderPage();
     expect(await screen.findByRole("link", { name: /What next\?/ })).toHaveAttribute("aria-current", "page");
     expect(await screen.findByText("What next?", { selector: "p" })).toBeInTheDocument();
     expect(screen.getByText(/processed by external AI providers/)).toBeInTheDocument();
     expect(screen.getByRole("heading", { name: "Grammar" })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "Your avatar" })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "Tutor avatar" })).toBeInTheDocument();
+    const response = screen.getByRole("article", { name: "Tutor response" });
+    expect(within(response).getByText("Tutor")).toBeInTheDocument();
+    expect(within(response).getByText("AI")).toBeInTheDocument();
+    expect(within(response).getByLabelText("Lesson source: Basics · Lesson 6")).toBeInTheDocument();
+  });
+
+  it("shows the send hint and preserves Enter, Shift+Enter, and IME keyboard behavior", async () => {
+    const user = message(id(10), "user", [text("Teach me")]);
+    const assistant = message(id(11), "assistant", [text("Let’s begin.")]);
+    turn = () => sse([
+      { type: "user_message", message: user },
+      { type: "start", messageId: assistant.id },
+      { type: "done", message: assistant },
+    ]).response;
+    renderPage();
+    const field = await screen.findByRole("textbox", { name: "Message your tutor" });
+    expect(screen.getByText("Enter to send")).toBeVisible();
+    fireEvent.change(field, { target: { value: "Teach me" } });
+    expect(fireEvent.keyDown(field, { key: "Enter", shiftKey: true })).toBe(true);
+    fireEvent.change(field, { target: { value: "Teach me\n" } });
+    expect(field).toHaveValue("Teach me\n");
+    expect(fireEvent.keyDown(field, { key: "Enter", isComposing: true })).toBe(true);
+    expect(posts().filter((entry) => entry.path.endsWith("/messages"))).toHaveLength(0);
+    expect(field).toHaveValue("Teach me\n");
+    expect(fireEvent.keyDown(field, { key: "Enter" })).toBe(false);
+    await waitFor(() => expect(posts().filter((entry) => entry.path.endsWith("/messages"))).toHaveLength(1));
+    expect(await screen.findByText("Let’s begin.")).toBeInTheDocument();
+    expect(posts().find((entry) => entry.path.endsWith("/messages"))?.body).toEqual({ text: "Teach me" });
   });
 
   it("streams a turn live into sections, then replaces it with the stored message", async () => {
@@ -413,7 +447,7 @@ describe("Tutor page", () => {
   });
 
   it("disables the composer at the daily limit and says when it resets", async () => {
-    turn = () => json({ error: { code: "AI_DAILY_LIMIT", message: "Limit.", resetsAt: Date.UTC(2026, 9, 17) } }, 429);
+    turn = () => json({ error: { code: "AI_DAILY_LIMIT", message: "Limit.", resetsAt: Date.now() + 60_000 } }, 429);
     renderPage();
     await screen.findByText("What next?", { selector: "p" });
     sendText("One more");

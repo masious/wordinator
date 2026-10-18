@@ -57,10 +57,14 @@
   animation: pulse var(--motion-reveal) var(--ease-physical) infinite alternate;
 }
 
-/* Learner messages: right-aligned highlight bubbles in authored text. */
+/* Lumen turns: the learner speaks in an accent bubble; the tutor uses one bordered card that keeps every interactive part in the
+   same message frame. */
 .userRow {
   display: flex;
+  align-items: flex-end;
   justify-content: flex-end;
+  gap: var(--space-2);
+  min-width: 0;
 }
 .userBubble {
   max-width: min(36rem, 85%);
@@ -68,14 +72,58 @@
   padding: var(--space-3) var(--space-4);
   font-size: var(--type-authored);
   line-height: var(--line-body);
-  color: var(--color-foreground);
+  color: var(--color-action-text);
   white-space: pre-wrap;
   overflow-wrap: anywhere;
-  background: var(--color-highlight-soft);
+  background: var(--color-action);
   border-radius: var(--radius-lg);
 }
+.userBubble a {
+  color: inherit;
+  text-decoration-color: currentColor;
+}
+.turnAvatar {
+  display: grid;
+  flex: 0 0 var(--size-avatar);
+  width: var(--size-avatar);
+  height: var(--size-avatar);
+  place-items: center;
+  border-radius: 50%;
+}
+.tutorAvatar {
+  color: var(--color-action-text);
+  background: var(--color-action);
+  box-shadow: var(--shadow-accent);
+}
 
-/* Assistant messages: unframed, left-aligned, sections under mono eyebrows. */
+/* Assistant messages: avatar, metadata, then the complete part stack in one paper card. */
+.assistantRow {
+  display: grid;
+  grid-template-columns: var(--size-avatar) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+.assistantCard {
+  display: grid;
+  gap: var(--space-3);
+  min-width: 0;
+  padding: var(--space-4);
+  background: var(--color-core);
+  border: var(--ring-hairline);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+.assistantMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin: 0;
+  font-size: var(--type-metadata);
+  font-weight: var(--weight-semibold);
+  line-height: var(--line-compact);
+  color: var(--color-foreground-muted);
+}
 .assistant {
   display: grid;
   gap: var(--space-3);
@@ -96,11 +144,10 @@
 }
 .sectionLabel {
   margin: 0;
-  font: var(--weight-medium) var(--type-eyebrow)/var(--line-compact)
-    var(--font-mono);
-  letter-spacing: var(--tracking-eyebrow);
-  text-transform: uppercase;
-  color: var(--color-foreground-muted);
+  font: var(--weight-semibold) var(--type-card-title)/var(--line-title)
+    var(--font-display);
+  letter-spacing: var(--tracking-title);
+  color: var(--color-foreground);
 }
 .paragraph {
   margin: 0;
@@ -108,9 +155,35 @@
 }
 .list {
   display: grid;
-  gap: var(--space-1);
+  gap: var(--space-2);
   margin: 0;
   padding-inline-start: var(--space-6);
+}
+.orderedList {
+  padding: 0;
+  list-style: none;
+  counter-reset: tutor-step;
+}
+.orderedList li {
+  display: grid;
+  grid-template-columns: var(--control-height-sm) minmax(0, 1fr);
+  align-items: start;
+  gap: var(--space-2);
+  min-width: 0;
+  counter-increment: tutor-step;
+}
+.orderedList li::before {
+  content: counter(tutor-step);
+  display: grid;
+  width: var(--control-height-sm);
+  height: var(--control-height-sm);
+  place-items: center;
+  font-size: var(--type-metadata);
+  font-weight: var(--weight-bold);
+  line-height: 1;
+  color: var(--color-action-soft-text);
+  background: var(--color-action-soft);
+  border-radius: 50%;
 }
 .code {
   padding: 0 var(--space-1);
@@ -130,6 +203,14 @@
   display: grid;
   gap: var(--space-1);
   justify-items: start;
+  min-width: 0;
+}
+.stepSummary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
 }
 .chip {
   display: inline-flex;
@@ -173,6 +254,31 @@
 }
 .chipFailed {
   color: var(--color-danger-text);
+}
+.sourceChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  max-width: 100%;
+  min-height: 28px;
+  padding: var(--space-1) var(--space-3);
+  overflow: hidden;
+  font-size: var(--type-metadata);
+  font-weight: var(--weight-semibold);
+  line-height: var(--line-compact);
+  color: var(--color-action-soft-text);
+  background: var(--color-action-soft);
+  border: 1px solid color-mix(in srgb, var(--color-action) 35%, var(--color-hairline));
+  border-radius: var(--radius-pill);
+}
+.sourceChip svg {
+  flex: none;
+}
+.sourceChip span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .stepList {
   display: grid;
@@ -284,7 +390,7 @@
   color: var(--color-danger-text);
 }
 
-/* The composer: a sticky bottom bar with the shared textarea and a primary icon send button. */
+/* Floating Lumen composer: the shared textarea and keyboard hint sit together, with an explicit primary send action. */
 .composer {
   flex: none;
   display: flex;
@@ -297,9 +403,20 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-floating);
 }
-.composerField {
+.composerInput {
+  display: grid;
   flex: 1;
+  gap: var(--space-1);
   min-width: 0;
+}
+.composerField {
+  min-width: 0;
+}
+.composerHint {
+  margin: 0 var(--space-1);
+  font-size: var(--type-badge);
+  line-height: var(--line-compact);
+  color: var(--color-foreground-faint);
 }
 .send {
   flex: none;
@@ -442,6 +559,45 @@
 @media (prefers-reduced-motion: reduce) {
   .dockPip::before {
     transition: none;
+  }
+}
+
+@media (max-width: 48em) {
+  .messages {
+    gap: var(--space-4);
+  }
+  .assistantCard {
+    padding: var(--space-3);
+  }
+  .userBubble {
+    max-width: calc(100% - var(--size-avatar) - var(--space-2));
+  }
+  .composer {
+    align-items: flex-end;
+  }
+  .send {
+    min-width: auto;
+  }
+}
+
+@media (forced-colors: active) {
+  .assistantCard,
+  .composer,
+  .dock,
+  .sourceChip,
+  .userBubble,
+  .tutorAvatar {
+    border: 1px solid CanvasText;
+  }
+  .userBubble,
+  .tutorAvatar {
+    color: HighlightText;
+    background: Highlight;
+  }
+  .sourceChip,
+  .orderedList li::before {
+    color: CanvasText;
+    background: Canvas;
   }
 }
 

@@ -6,7 +6,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiError, apiRequest, tutorConversationQueryOptions, tutorConversationsKey, tutorMessagesKey, tutorMessagesQueryOptions, tutorUsageKey } from "../../api";
 import { SpeechRecognitionScope, type TokenSource } from "../../molecules/speechRecognition";
-import { Button, IconButton, TextAreaField } from "../../ui";
+import { Button, TextAreaField } from "../../ui";
 import { AssistantParts, UserMessage, type PartHandlers, type StreamPart } from "./Messages";
 import { PrivacyNotice } from "./PrivacyNotice";
 import { QuestionDock } from "./QuestionDock";
@@ -199,8 +199,7 @@ export function TutorChat({ accountId, conversationId, conversation, newProvider
         {list.map((message) => message.role === "user"
           ? <UserMessage key={message.id} text={textOf(message)} />
           : <AssistantParts key={message.id} parts={message.parts} streaming={false} handlers={handlers(message, false)} />)}
-        {streaming && <AssistantParts parts={streaming.parts.length ? streaming.parts : []} streaming handlers={handlers(null, true)} />}
-        {streaming && streaming.parts.length === 0 && <p className={styles.thinking} role="status">{t("tutor.thinking")}</p>}
+        {streaming && <AssistantParts parts={streaming.parts} streaming handlers={handlers(null, true)} />}
         {refusal && <div className={styles.errorPart} role="alert">
           <p>{t(`tutor.errors.${refusal.code}`, { defaultValue: t("tutor.errors.generic") })}</p>
           {refusal.code === "STREAM_LOST" && retry && !busy && <Button variant="secondary" onClick={retry}>{t("tutor.tryAgain")}</Button>}
@@ -215,11 +214,14 @@ export function TutorChat({ accountId, conversationId, conversation, newProvider
         {limitUntil !== null ? <p className={styles.composerNote} role="status">{t("tutor.limit", { time: resets })}</p>
           : archived ? <p className={styles.composerNote}>{t("tutor.archivedNote")}</p>
           : <>
-            <TextAreaField className={styles.composerField} aria-label={t("tutor.composerLabel")} placeholder={awaiting ? t("tutor.answerFirst") : t("tutor.composerPlaceholder")}
-              value={text} maxLength={TUTOR_MESSAGE_TEXT_MAX} autosize minRows={1} maxRows={6} disabled={awaiting}
-              onChange={(event) => setText(event.currentTarget.value)}
-              onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); submit(); } }} />
-            <IconButton label={t("tutor.send")} type="submit" tone="primary" className={styles.send} disabled={composerLocked || !text.trim()} loading={busy}><ArrowUp size={18} aria-hidden="true" /></IconButton>
+            <div className={styles.composerInput}>
+              <TextAreaField className={styles.composerField} aria-label={t("tutor.composerLabel")} placeholder={awaiting ? t("tutor.answerFirst") : t("tutor.composerPlaceholder")}
+                value={text} maxLength={TUTOR_MESSAGE_TEXT_MAX} autosize minRows={1} maxRows={6} disabled={awaiting}
+                onChange={(event) => setText(event.currentTarget.value)}
+                onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); submit(); } }} />
+              <p className={styles.composerHint}>{t("tutor.enterToSend")}</p>
+            </div>
+            <Button type="submit" className={styles.send} disabled={composerLocked || !text.trim()} loading={busy} trailingIcon={<ArrowUp size={16} aria-hidden="true" />}>{t("tutor.send")}</Button>
           </>}
       </form>}
     </div>

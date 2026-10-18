@@ -1,9 +1,9 @@
 import { parseTargetSpans, type TutorComponentAnswer, type TutorConfirmationSummary, type TutorPart } from "@wordinator/contracts/tutor";
-import { Check, ChevronDown, LoaderCircle, X } from "lucide-react";
+import { BookOpen, Check, ChevronDown, LoaderCircle, Sparkles, X } from "lucide-react";
 import { useId, useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
-import { Button } from "../../ui";
+import { Avatar, Button } from "../../ui";
 import { AnswerComponent, type ClipSource } from "../TutorComponents";
 import { AssistantText } from "./Markdown";
 import styles from "./Tutor.module.css";
@@ -19,11 +19,25 @@ export type StreamPart = { type: "raw_text"; raw: string } | Exclude<TutorPart, 
 
 export function UserMessage({ text }: { text: string }) {
   const { t } = useTranslation();
-  return <div className={styles.userRow}><p className={styles.userBubble} aria-label={t("tutor.you")}><PlainText>{text}</PlainText></p></div>;
+  return <div className={styles.userRow}>
+    <p className={styles.userBubble} aria-label={t("tutor.you")}><PlainText>{text}</PlainText></p>
+    <span className={styles.turnAvatar} role="img" aria-label={t("tutor.userAvatar")}><Avatar name={t("tutor.you")} size="100%" tone="ink" /></span>
+  </div>;
+}
+
+function LessonSourceChip({ detail }: { detail: ToolResultPart["detail"] }) {
+  const { t } = useTranslation();
+  const lesson = typeof detail.lessonTitle === "string" ? detail.lessonTitle : null;
+  if (!lesson) return null;
+  const course = typeof detail.courseTitle === "string" ? detail.courseTitle : null;
+  const label = course ? t("tutor.source.lessonInCourse", { lesson, course }) : t("tutor.source.lesson", { lesson });
+  return <span className={styles.sourceChip} aria-label={t("tutor.source.label", { source: label })}>
+    <BookOpen size={14} aria-hidden="true" /><span>{label}</span>
+  </span>;
 }
 
 // A tool step: running (spinner), done (check), or failed (cross), opening to its detail.
-export function ToolStep({ call, result, running }: { call: Pick<ToolCallPart, "name" | "toolCallId">; result: ToolResultPart | null; running: boolean }) {
+export function ToolStep({ call, result, running, showSource = true }: { call: Pick<ToolCallPart, "name" | "toolCallId">; result: ToolResultPart | null; running: boolean; showSource?: boolean }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const detailId = useId();
@@ -34,13 +48,16 @@ export function ToolStep({ call, result, running }: { call: Pick<ToolCallPart, "
   const rows = Object.entries(detail).filter(([key]) => !key.endsWith("Id"));
   const expandable = status !== "running" && (rows.length > 0 || Boolean(result?.error));
   return <div className={styles.step} data-status={status}>
-    <button type="button" className={styles.chip} aria-expanded={expandable ? open : undefined} aria-controls={expandable ? detailId : undefined}
-      disabled={!expandable} onClick={() => setOpen((value) => !value)}>
-      <span className={styles.chipIcon} aria-hidden="true">{status === "running" ? <LoaderCircle size={14} className={styles.spinner} /> : status === "done" ? <Check size={14} /> : <X size={14} />}</span>
-      <span>{label}</span>
-      {status === "failed" && <span className={styles.visuallyHidden}>{t("tutor.steps.failed")}</span>}
-      {expandable && <ChevronDown size={14} aria-hidden="true" className={styles.chipChevron} />}
-    </button>
+    <div className={styles.stepSummary}>
+      <button type="button" className={styles.chip} aria-expanded={expandable ? open : undefined} aria-controls={expandable ? detailId : undefined}
+        disabled={!expandable} onClick={() => setOpen((value) => !value)}>
+        <span className={styles.chipIcon} aria-hidden="true">{status === "running" ? <LoaderCircle size={14} className={styles.spinner} /> : status === "done" ? <Check size={14} /> : <X size={14} />}</span>
+        <span>{label}</span>
+        {status === "failed" && <span className={styles.visuallyHidden}>{t("tutor.steps.failed")}</span>}
+        {expandable && <ChevronDown size={14} aria-hidden="true" className={styles.chipChevron} />}
+      </button>
+      {showSource && result?.ok && <LessonSourceChip detail={detail} />}
+    </div>
     {expandable && open && <div className={styles.stepDetail} id={detailId}>
       {result?.error && <p>{t("tutor.steps.error", { code: result.error })}</p>}
       {rows.length > 0 && <dl>{rows.map(([key, value]) => <div key={key}><dt>{t(`tutor.steps.detail.${key}`, { defaultValue: key })}</dt><dd>{value === null ? "—" : String(value)}</dd></div>)}</dl>}
@@ -73,15 +90,27 @@ export function ToolSteps({ steps }: { steps: StepEntry[] }) {
   const failedCount = steps.filter((step) => step.result && !step.result.ok).length;
   const status: StepStatus = running ? "running" : "done";
   const label = running ? stepLabel(steps[steps.length - 1]!.call.name, "running", {}, {}, t) : t("tutor.steps.group", { count: steps.length });
+  const sources = new Map<string, ToolResultPart["detail"]>();
+  for (const step of steps) {
+    if (!step.result?.ok) continue;
+    const detail = step.result.detail;
+    const lesson = typeof detail.lessonTitle === "string" ? detail.lessonTitle : null;
+    if (!lesson) continue;
+    const course = typeof detail.courseTitle === "string" ? detail.courseTitle : "";
+    sources.set(`${course}\u0000${lesson}`, detail);
+  }
   return <div className={styles.step} data-status={status}>
-    <button type="button" className={styles.chip} aria-expanded={open} aria-controls={listId} onClick={() => setOpen((value) => !value)}>
-      <span className={styles.chipIcon} aria-hidden="true">{running ? <LoaderCircle size={14} className={styles.spinner} /> : <Check size={14} />}</span>
-      <span>{label}</span>
-      {failedCount > 0 && !running && <span className={styles.chipFailed}>{t("tutor.steps.groupFailed", { count: failedCount })}</span>}
-      <ChevronDown size={14} aria-hidden="true" className={styles.chipChevron} />
-    </button>
+    <div className={styles.stepSummary}>
+      <button type="button" className={styles.chip} aria-expanded={open} aria-controls={listId} onClick={() => setOpen((value) => !value)}>
+        <span className={styles.chipIcon} aria-hidden="true">{running ? <LoaderCircle size={14} className={styles.spinner} /> : <Check size={14} />}</span>
+        <span>{label}</span>
+        {failedCount > 0 && !running && <span className={styles.chipFailed}>{t("tutor.steps.groupFailed", { count: failedCount })}</span>}
+        <ChevronDown size={14} aria-hidden="true" className={styles.chipChevron} />
+      </button>
+      {[...sources.values()].map((detail) => <LessonSourceChip key={`${String(detail.courseTitle)}:${String(detail.lessonTitle)}`} detail={detail} />)}
+    </div>
     {open && <div className={styles.stepList} id={listId}>
-      {steps.map((step) => <ToolStep key={step.key} call={step.call} result={step.result} running={step.running} />)}
+      {steps.map((step) => <ToolStep key={step.key} call={step.call} result={step.result} running={step.running} showSource={false} />)}
     </div>}
   </div>;
 }
@@ -225,5 +254,12 @@ export function AssistantParts({ parts, streaming, handlers }: { parts: readonly
     }
   });
   flushSteps();
-  return <div className={styles.assistant}>{nodes}</div>;
+  if (streaming && nodes.length === 0) nodes.push(<p key="thinking" className={styles.thinking} role="status">{t("tutor.thinking")}</p>);
+  return <div className={styles.assistantRow}>
+    <span className={`${styles.turnAvatar} ${styles.tutorAvatar}`} role="img" aria-label={t("tutor.tutorAvatar")}><Sparkles size={16} aria-hidden="true" /></span>
+    <article className={styles.assistantCard} aria-label={t("tutor.assistantTurn")}>
+      <p className={styles.assistantMeta}><span>{t("tutor.tutorName")}</span><span aria-hidden="true">·</span><span>{t("tutor.aiLabel")}</span></p>
+      <div className={styles.assistant}>{nodes}</div>
+    </article>
+  </div>;
 }
