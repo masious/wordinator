@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { aiProviderSchema } from "./ai";
+import { timeCategoriesSchema } from "./learning";
 
 // Superuser analytics (C14e). docs/settings-and-administration.md#analytics owns what is counted. Every response holds
 // counts, token totals, and costs only, never message text, answers, words, or scores, so the objects are strict: a
@@ -76,6 +77,15 @@ export const speechAnalyticsResponseSchema = z.strictObject({
   accounts: z.array(z.strictObject({ ...accountFields, ...speechCounts })),
 });
 export type SpeechAnalyticsResponse = z.infer<typeof speechAnalyticsResponseSchema>;
+
+// Learning time by category (C15d, docs/learning-time.md#analytics): seconds per UTC day label and account, from the learners'
+// local days in that range. Only durations, never the activity's targets.
+export const timeAnalyticsResponseSchema = z.strictObject({
+  ...rangeFields,
+  daily: z.array(z.strictObject({ day: utcDaySchema, ...timeCategoriesSchema.shape })),
+  accounts: z.array(z.strictObject({ ...accountFields, ...timeCategoriesSchema.shape })),
+});
+export type TimeAnalyticsResponse = z.infer<typeof timeAnalyticsResponseSchema>;
 
 // `GET` and `PUT /api/admin/ai-settings` read and replace the whole value with the contracts' `aiSettingsSchema`
 // (`@wordinator/contracts/ai`); an invalid body is `400 AI_SETTINGS_INVALID`.

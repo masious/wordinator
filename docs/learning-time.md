@@ -46,7 +46,7 @@ The [lesson box](courses.md#lesson-box) shows the viewer's own **Reading** time 
 
 ## Activity
 
-`GET /api/groups/:groupId/learning-activity?range=week|month&end=YYYY-MM-DD` returns the viewer's time per local day for the seven or thirty days ending on `end`, by category, with the previous period's total for comparison, the daily goal, and the streak. **Categories**:
+`GET /api/groups/:groupId/learning-activity?range=week|month&end=YYYY-MM-DD` returns the viewer's time per local day for the seven or thirty days ending on `end` (required; the client sends its own local today). Every day is listed, zero-filled, from `from` to `to`. The response carries the period's `totals`, the `previousTotal` of the same number of days just before `from`, the `dailyGoalMinutes`, and the `streak`. Each day and the totals split time by category, and `aiPracticeFocus` splits the AI practice part by focus. **Categories**:
 
 | Category | Activities |
 | --- | --- |
@@ -58,9 +58,9 @@ The [lesson box](courses.md#lesson-box) shows the viewer's own **Reading** time 
 
 ## Daily goal and streak
 
-- Settings has a **Study goal**: minutes per day, from 5 to 240, or none (the default). It is stored on the [tutor profile](ai-tutor.md#tutor-profile) row (`daily_goal_minutes`) and saved with `PUT /api/learning/goal`.
+- Settings has a **Study goal**: minutes per day, from 5 to 240, or none (the default). It is stored on the [tutor profile](ai-tutor.md#tutor-profile) row (`daily_goal_minutes`), read with `GET /api/learning/goal`, and saved with `PUT /api/learning/goal` (`{ dailyGoalMinutes }`, `null` for no goal). Values outside 5–240 or not whole are `400 VALIDATION_ERROR`. Saving the tutor's fields keeps the goal.
 - A day meets the goal when the learner's time that local day reaches it. Without a goal, any minute of study meets the day.
-- The **streak** is the number of consecutive days that met it, ending today, or ending yesterday while today has not met it yet.
+- The **streak** is the number of consecutive days that met it, ending today, or ending yesterday while today has not met it yet. It counts back at most 366 days from `end`, so a longer streak reads as 366.
 - The goal and streak are personal. They are never shown to anyone else, compared, ranked, or rewarded, and nothing nags a learner who misses a day.
 
 ## Home dashboard
@@ -74,7 +74,7 @@ Planned (C15e). The signed-in home page becomes a study summary above the course
 
 ## Analytics
 
-The superuser's [analytics](settings-and-administration.md#analytics) adds a Time section: minutes per day and per account, by category. It shows counts only, like the other sections.
+The superuser's [analytics](settings-and-administration.md#analytics) adds a Time section: minutes per day and per account, by category. `GET /api/admin/analytics/time?days=7|30|90` answers seconds, and the page shows whole minutes. Days are each learner's local days, under the same range as the other sections, so a learner's day near midnight may fall on a neighbouring UTC label. It shows durations only, like the other sections.
 
 ## Reset and deletion
 

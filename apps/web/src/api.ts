@@ -1,7 +1,7 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, lessonProgressResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema, speechRecognitionTokenResponseSchema, type SpeechRecognitionTokenResponse } from "@wordinator/contracts";
 import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
 import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorModelsResponseSchema, tutorProfileResponseSchema, tutorUsageResponseSchema } from "@wordinator/contracts/tutor";
-import { courseDashboardResponseSchema, lessonMetricsResponseSchema, type LearningTimeEntry } from "@wordinator/contracts/learning";
+import { courseDashboardResponseSchema, learningGoalSchema, lessonMetricsResponseSchema, type LearningTimeEntry } from "@wordinator/contracts/learning";
 import { weakWordsPageSchema } from "@wordinator/contracts/weak-words";
 import { infiniteQueryOptions, queryOptions, type QueryClient } from "@tanstack/react-query";
 
@@ -321,5 +321,12 @@ export const tutorModelsQueryOptions = () => queryOptions({
 export const tutorProfileQueryOptions = () => queryOptions({
   queryKey: [...tutorKey, "profile"] as const,
   queryFn: () => apiRequest("/api/ai/profile", tutorProfileResponseSchema),
+  retry: false,
+});
+
+// The daily goal (C15d, docs/learning-time.md#daily-goal-and-streak): the account's, read in Settings.
+export const learningGoalQueryOptions = () => queryOptions({
+  queryKey: ["learning", "goal"] as const,
+  queryFn: () => apiRequest("/api/learning/goal", learningGoalSchema),
   retry: false,
 });

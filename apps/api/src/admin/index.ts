@@ -5,7 +5,7 @@ import { createMiddleware } from "hono/factory";
 import { readAiSettings, writeAiSettings } from "../ai";
 import type { AuthUser } from "../auth";
 import { apiError } from "../http";
-import { aiAnalytics, learningAnalytics, speechAnalytics } from "./analytics";
+import { aiAnalytics, learningAnalytics, speechAnalytics, timeAnalytics } from "./analytics";
 
 // Superuser routes (C14e, docs/settings-and-administration.md#superuser), mounted at `/api/admin` after the session
 // middleware. Every route needs a signed-in, set-up account whose `users.is_superuser` is set; the flag is read with the
@@ -45,6 +45,11 @@ adminRoutes.get("/analytics/ai", async (context) => {
 adminRoutes.get("/analytics/speech", async (context) => {
   const days = rangeOf(context); if (!days) return invalidRange(context);
   return context.json(await speechAnalytics(context.env.DB, days));
+});
+
+adminRoutes.get("/analytics/time", async (context) => {
+  const days = rangeOf(context); if (!days) return invalidRange(context);
+  return context.json(await timeAnalytics(context.env.DB, days));
 });
 
 adminRoutes.get("/ai-settings", async (context) => context.json(await readAiSettings(context.env.DB)));

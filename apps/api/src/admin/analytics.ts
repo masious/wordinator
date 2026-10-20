@@ -1,7 +1,9 @@
 import type {
-  AdminAnalyticsRange, AiAnalyticsResponse, LearningAnalyticsResponse, PracticeAttemptCounts, SpeechAnalyticsResponse,
+  AdminAnalyticsRange, AiAnalyticsResponse, LearningAnalyticsResponse, PracticeAttemptCounts, SpeechAnalyticsResponse, TimeAnalyticsResponse,
 } from "@wordinator/contracts/admin";
 import { AI_PROVIDERS, type AiProvider } from "@wordinator/contracts/ai";
+import type { LearningActivity, TimeCategories } from "@wordinator/contracts/learning";
+import { addTimeSeconds, emptyTimeCategories } from "../learning/activity";
 
 // Superuser analytics reads (docs/settings-and-administration.md#analytics). Each query groups by UTC day number
 // (`created_at / 86400000`, integer division) and account, selects counts and sums only, and never reads a text column
@@ -178,6 +180,30 @@ export async function speechAnalytics(db: D1Database, days: AdminAnalyticsRange,
   return {
     ...rangeFields(range),
     daily: dayNumbers(range).map((day) => ({ day: dayLabel(day), ...(byDay.get(day) ?? emptySpeech()) })),
+    accounts: [...byAccount].map(([userId, counts]) => ({ userId, username: names.get(userId) ?? null, ...counts })).sort(byUsername),
+  };
+}
+
+export async function timeAnalytics(db: D1Database, days: AdminAnalyticsRange, now = Date.now()): Promise<TimeAnalyticsResponse> {
+  const range = analyticsRange(days, now);
+  // Learning time rows carry the learner's local day, so the range is matched by its labels.
+  const rows = await db.prepare(
+    `SELECT day, user_id AS userId, activity, focus, SUM(seconds) AS seconds FROM learning_time WHERE day >= ? AND day <= ?
+     GROUP BY day, user_id, activity, focus`,
+  ).bind(dayLabel(range.firstDay), dayLabel(range.lastDay)).all<{ day: string; userId: string; activity: LearningActivity; focus: string | null; seconds: number }>();
+
+  const byDay = new Map<string, TimeCategories>();
+  const byAccount = new Map<string, TimeCategories>();
+  for (const row of rows.results) {
+    if (!byDay.has(row.day)) byDay.set(row.day, emptyTimeCategories());
+    addTimeSeconds(byDay.get(row.day)!, row.activity, row.focus, num(row.seconds));
+    if (!byAccount.has(row.userId)) byAccount.set(row.userId, emptyTimeCategories());
+    addTimeSeconds(byAccount.get(row.userId)!, row.activity, row.focus, num(row.seconds));
+  }
+  const names = await usernames(db, byAccount.keys());
+  return {
+    ...rangeFields(range),
+    daily: dayNumbers(range).map((day) => ({ day: dayLabel(day), ...(byDay.get(dayLabel(day)) ?? emptyTimeCategories()) })),
     accounts: [...byAccount].map(([userId, counts]) => ({ userId, username: names.get(userId) ?? null, ...counts })).sort(byUsername),
   };
 }

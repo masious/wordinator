@@ -4,13 +4,14 @@ import { useEffect, useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, tutorProfileQueryOptions } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
+import { StudyGoal } from "./StudyGoal";
 import { Button, ConfirmDialog, LoadingState, SectionHeader, SelectField, TextAreaField } from "../../ui";
 import styles from "./TutorSettings.module.css";
 
 type ReplyLanguage = UpdateTutorProfileRequest["replyLanguage"];
 
-// The Tutor section of Settings (docs/settings-and-administration.md#tutor-settings): native language, reply language, and goals,
-// saved with their own button; the tutor's notes, read-only with a confirmed Clear notes; and the provider privacy notice.
+// The Tutor section of Settings (docs/settings-and-administration.md#tutor-settings): the Study goal block, then native language, reply
+// language, and goals, saved with their own button; the tutor's notes, read-only with a confirmed Clear notes; and the provider privacy notice.
 export function TutorSettings() {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
@@ -32,10 +33,11 @@ export function TutorSettings() {
     onSuccess: (response) => { queryClient.setQueryData(tutorProfileQueryOptions().queryKey, response); setClearOpen(false); },
   });
   if (profile.isPending) return <LoadingState label={t("tutorSettings.loading")} />;
-  if (profile.isError) return <><SectionHeader title={t("tutorSettings.title")} /><p className={styles.error} role="alert">{t("tutorSettings.unavailable")}</p></>;
+  if (profile.isError) return <><SectionHeader title={t("tutorSettings.title")} /><StudyGoal /><p className={styles.error} role="alert">{t("tutorSettings.unavailable")}</p></>;
   const notes = profile.data.profile.notes;
   return <div className={styles.section}>
     <SectionHeader title={t("tutorSettings.title")} description={t("tutorSettings.intro")} />
+    <StudyGoal />
     <form className={styles.form} onSubmit={(event: FormEvent) => { event.preventDefault(); save.mutate(); }}>
       <SelectField label={t("tutorSettings.nativeLanguage")} value={nativeLanguage} allowDeselect={false}
         data={TUTOR_NATIVE_LANGUAGES.map((code) => ({ value: code, label: t(`tutorSettings.languages.${code}`) }))}

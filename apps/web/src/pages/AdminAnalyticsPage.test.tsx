@@ -33,6 +33,10 @@ const ai = (count: number) => {
   const used = { turns: 3, requests: 4, failures: 1, tokensIn: 1500, tokensOut: 300, costMicroUsd: 1_250_000 };
   return { ...range(count), daily: days(count).map((day, index) => ({ day, ...(index === count - 1 ? used : zero) })), accounts: [{ userId, username: "ada", ...used }], models: [{ provider: "azure", model: "gpt-4.1-mini", ...used }] };
 };
+const time = (count: number) => {
+  const used = { lesson: 600, grammar: 300, practice: 1_200, vocabulary: 120, aiPractice: 180, total: 2_400 };
+  return { ...range(count), daily: days(count).map((day, index) => ({ day, ...(index === count - 1 ? used : { lesson: 0, grammar: 0, practice: 0, vocabulary: 0, aiPractice: 0, total: 0 }) })), accounts: [{ userId, username: "ada", ...used }] };
+};
 const speech = (count: number) => {
   const used = { requests: 2, characters: 240, cacheHits: 1, azureCalls: 1, azureCharacters: 120 };
   return { ...range(count), daily: days(count).map((day) => ({ day, ...used })), accounts: [{ userId, username: null, ...used }] };
@@ -67,6 +71,8 @@ beforeEach(() => {
     if (path === "/api/admin/ai-settings" && init?.method === "PUT") {
       return saveStatus === 200 ? json(JSON.parse(String(init.body))) : json({ error: { code: "AI_SETTINGS_INVALID", message: "Invalid." } }, saveStatus);
     }
+    const timed = /^\/api\/admin\/analytics\/time\?days=(\d+)$/.exec(path);
+    if (timed) return json(time(Number(timed[1])));
     if (path === "/api/admin/ai-settings") return json(DEFAULT_AI_SETTINGS);
     return json({ ok: true });
   }));
@@ -89,6 +95,20 @@ describe("Analytics page", () => {
     expect(screen.getByText("gpt-4.1-mini")).toBeVisible();
     expect(screen.getByText("(no username)")).toBeVisible();
     expect(fetched()).toEqual(expect.arrayContaining(["/api/admin/analytics/learning?days=7", "/api/admin/analytics/ai?days=7", "/api/admin/analytics/speech?days=7"]));
+  });
+
+  it("shows learning time in minutes by category, by day and account", async () => {
+    renderPage();
+    await screen.findByRole("heading", { name: "Analytics" });
+    expect(screen.getByRole("heading", { name: "Time" })).toBeVisible();
+    // The by-day table comes first; the by-account table repeats the columns.
+    const timeTable = (await screen.findAllByRole("columnheader", { name: "Lesson reading (min)" }))[0]!.closest("table")!;
+    // Seconds are shown as whole minutes: 600 seconds of lesson reading is 10 minutes, and the day and account rows repeat them.
+    expect(within(timeTable).getAllByRole("row")[1]).toHaveTextContent("2026-10-16");
+    expect(within(timeTable).getAllByText("10")).not.toHaveLength(0);
+    expect(within(timeTable).getAllByText("20")).not.toHaveLength(0);
+    expect(within(timeTable).getAllByText("40")).not.toHaveLength(0);
+    expect(fetched()).toContain("/api/admin/analytics/time?days=7");
   });
 
   it("switches the range and reloads every section", async () => {

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { courseDashboardResponseSchema, learningTimeRequestSchema, lessonMetricsResponseSchema, localDayOf, practiceAttemptRequestSchema, pronunciationAttemptRequestSchema, PRONUNCIATION_WORDS_MAX } from "./learning";
+import { courseDashboardResponseSchema, learningActivityQuerySchema, learningGoalSchema, learningTimeRequestSchema, lessonMetricsResponseSchema, localDayOf, practiceAttemptRequestSchema, pronunciationAttemptRequestSchema, PRONUNCIATION_WORDS_MAX } from "./learning";
 
 describe("practiceAttemptRequestSchema", () => {
   it("accepts an item and a non-empty answer up to 2,000 characters", () => {
@@ -113,5 +113,22 @@ describe("learningTimeRequestSchema", () => {
   });
   it("names a date's local day", () => {
     expect(localDayOf(new Date(2026, 0, 5, 23, 59))).toBe("2026-01-05");
+  });
+});
+
+describe("learningGoalSchema", () => {
+  it("accepts 5–240 whole minutes or no goal", () => {
+    for (const dailyGoalMinutes of [5, 240, null]) expect(learningGoalSchema.safeParse({ dailyGoalMinutes }).success).toBe(true);
+    for (const dailyGoalMinutes of [4, 241, 7.5, "15", undefined]) expect(learningGoalSchema.safeParse({ dailyGoalMinutes }).success).toBe(false);
+    expect(learningGoalSchema.safeParse({ dailyGoalMinutes: 15, extra: true }).success).toBe(false);
+  });
+});
+
+describe("learningActivityQuerySchema", () => {
+  it("takes a week or a month ending on a day", () => {
+    expect(learningActivityQuerySchema.safeParse({ range: "week", end: "2026-10-20" }).success).toBe(true);
+    expect(learningActivityQuerySchema.safeParse({ range: "month", end: "2026-10-20" }).success).toBe(true);
+    expect(learningActivityQuerySchema.safeParse({ range: "year", end: "2026-10-20" }).success).toBe(false);
+    expect(learningActivityQuerySchema.safeParse({ range: "week", end: "2026-13-01" }).success).toBe(false);
   });
 });

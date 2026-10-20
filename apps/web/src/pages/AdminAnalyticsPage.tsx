@@ -1,5 +1,5 @@
 import {
-  ADMIN_ANALYTICS_RANGES, aiAnalyticsResponseSchema, learningAnalyticsResponseSchema, speechAnalyticsResponseSchema, type AdminAnalyticsRange,
+  ADMIN_ANALYTICS_RANGES, aiAnalyticsResponseSchema, learningAnalyticsResponseSchema, speechAnalyticsResponseSchema, timeAnalyticsResponseSchema, type AdminAnalyticsRange,
 } from "@wordinator/contracts/admin";
 import { AI_SPEECH_CHAR_CAP_MAX, AI_TURN_CAP_MAX, aiModelIdSchema, aiSettingsSchema, type AiProviderSetting, type AiSettings } from "@wordinator/contracts/ai";
 import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -11,8 +11,8 @@ import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { Button, CheckboxField, ErrorState, IconButton, LabelChip, LoadingState, PageHeader, SectionHeader, SelectField, Surface, TextField } from "../ui";
 import styles from "./AdminAnalyticsPage.module.css";
 
-// The superuser analytics page (C14e, docs/settings-and-administration.md#analytics): plain tables of counts and costs by
-// UTC day and account for the chosen range, and the AI settings form. Other accounts get a not-available state; the API
+// The superuser analytics page (C14e, docs/settings-and-administration.md#analytics): plain tables of counts, costs, and learning
+// minutes by day and account for the chosen range, and the AI settings form. Other accounts get a not-available state; the API
 // refuses them anyway.
 
 export function validateAnalyticsSearch(search: Record<string, unknown>): { days?: AdminAnalyticsRange } {
@@ -31,6 +31,10 @@ const aiQuery = (days: AdminAnalyticsRange) => queryOptions({
 const speechQuery = (days: AdminAnalyticsRange) => queryOptions({
   queryKey: ["admin-analytics", "speech", days] as const,
   queryFn: () => apiRequest(`/api/admin/analytics/speech?days=${days}`, speechAnalyticsResponseSchema),
+});
+const timeQuery = (days: AdminAnalyticsRange) => queryOptions({
+  queryKey: ["admin-analytics", "time", days] as const,
+  queryFn: () => apiRequest(`/api/admin/analytics/time?days=${days}`, timeAnalyticsResponseSchema),
 });
 const aiSettingsQuery = () => queryOptions({
   queryKey: ["admin-ai-settings"] as const,
@@ -153,6 +157,30 @@ function SpeechSection({ days }: { days: AdminAnalyticsRange }) {
   </Section>;
 }
 
+function TimeSection({ days }: { days: AdminAnalyticsRange }) {
+  const { t } = useTranslation();
+  const formats = useFormats();
+  const query = useQuery(timeQuery(days));
+  type Counts = NonNullable<typeof query.data>["daily"][number] | NonNullable<typeof query.data>["accounts"][number];
+  // The API counts seconds; the table shows whole minutes.
+  const minutes = (seconds: number) => formats.number(Math.round(seconds / 60));
+  const columns: Column<Counts>[] = [
+    { key: "lesson", label: t("analytics.columns.timeLesson"), value: (row) => row.lesson, format: minutes },
+    { key: "grammar", label: t("analytics.columns.timeGrammar"), value: (row) => row.grammar, format: minutes },
+    { key: "practice", label: t("analytics.columns.timePractice"), value: (row) => row.practice, format: minutes },
+    { key: "vocabulary", label: t("analytics.columns.timeVocabulary"), value: (row) => row.vocabulary, format: minutes },
+    { key: "aiPractice", label: t("analytics.columns.timeAiPractice"), value: (row) => row.aiPractice, format: minutes },
+    { key: "total", label: t("analytics.columns.timeTotal"), value: (row) => row.total, format: minutes },
+  ];
+  return <Section title={t("analytics.time.title")} description={t("analytics.time.description")}>
+    {query.data ? <>
+      <CountTable caption={t("analytics.byDay")} head={[t("analytics.columns.day")]} rows={newestFirst(query.data.daily)} rowKey={(row) => row.day} label={(row) => [row.day]} columns={columns} totals />
+      <CountTable caption={t("analytics.byAccount")} head={[t("analytics.columns.account")]} rows={query.data.accounts} rowKey={(row) => row.userId}
+        label={(row) => [accountName(row.username, t("analytics.noUsername"))]} columns={columns} empty={t("analytics.noAccounts")} />
+    </> : <SectionState query={query} />}
+  </Section>;
+}
+
 type SettingsDraft = { providers: AiProviderSetting[]; dailyTurnCap: string; dailySpeechCharCap: string };
 const draftOf = (settings: AiSettings): SettingsDraft => ({
   providers: settings.providers.map((item) => ({ ...item })), dailyTurnCap: String(settings.dailyTurnCap), dailySpeechCharCap: String(settings.dailySpeechCharCap),
@@ -253,6 +281,7 @@ export function AdminAnalyticsPage({ groupId, days, onDays }: { groupId: string;
         <LearningSection days={days} />
         <AiSection days={days} />
         <SpeechSection days={days} />
+        <TimeSection days={days} />
         <AiSettingsForm />
       </> : <ErrorState title={t("analytics.unavailableTitle")}>{t("analytics.unavailableBody")}</ErrorState>}
     </div>

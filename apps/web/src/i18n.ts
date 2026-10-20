@@ -1174,11 +1174,14 @@ export const resources = {
           lessonsCompleted: "Lessons completed", drillReviews: "Drill reviews", practiceLesson: "Lesson practice", practiceAiChat: "Tutor practice",
           practiceAiPractice: "AI practice", pronunciation: "Pronunciation", turns: "Tutor turns", requests: "Requests", failures: "Failed",
           tokensIn: "Tokens in", tokensOut: "Tokens out", cost: "Cost", speechRequests: "Requests", characters: "Characters",
-          cacheHits: "Cache hits", azureCalls: "Azure calls", azureCharacters: "Azure characters"
+          cacheHits: "Cache hits", azureCalls: "Azure calls", azureCharacters: "Azure characters",
+          timeLesson: "Lesson reading (min)", timeGrammar: "Grammar (min)", timePractice: "Practice (min)", timeVocabulary: "Vocabulary (min)",
+          timeAiPractice: "AI practice and tutor (min)", timeTotal: "Total (min)"
         },
         learning: { title: "Learning", description: "Active accounts, completed lessons, drill reviews, practice attempts, and pronunciation attempts." },
         ai: { title: "AI", description: "Tutor turns, model requests including fallbacks, tokens, and cost. Failed requests are counted separately." },
         speech: { title: "Speech", description: "On-demand speech requests and characters, split into cache hits and Azure calls." },
+        time: { title: "Time", description: "Minutes of learning time by category. Each learner's days are their own local days, under the chosen range." },
         providers: { openrouter: "OpenRouter", workers_ai: "Workers AI", azure: "Azure" },
         settings: {
           title: "AI settings",
@@ -1636,6 +1639,17 @@ export const resources = {
           useMicrosoft: "Use Microsoft on this device",
           unscored: "That could not be scored. Try again.",
         },
+      },
+      studyGoal: {
+        title: "Study goal",
+        help: "The minutes of learning time you aim for each day. Only you see it, and a missed day is never held against you.",
+        enable: "Set a daily goal",
+        minutes: "Minutes a day",
+        minutesHelp: "A whole number from 5 to 240.",
+        invalid: "Enter a whole number of minutes from 5 to 240.",
+        save: "Save study goal",
+        loading: "Loading your study goal",
+        unavailable: "Your study goal could not be loaded.",
       },
       tutorSettings: {
         title: "Tutor",

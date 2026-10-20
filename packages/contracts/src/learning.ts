@@ -156,3 +156,43 @@ export const lessonTimeSchema = z.strictObject({
   typical: z.strictObject({ reading: typicalTimeSchema.nullable(), practice: typicalTimeSchema.nullable() }),
 });
 export type LessonTime = z.infer<typeof lessonTimeSchema>;
+
+// ---- Activity and goal (C15d) ----
+
+// docs/learning-time.md#daily-goal-and-streak owns the goal; `null` is no goal.
+export const DAILY_GOAL_MINUTES_MIN = 5;
+export const DAILY_GOAL_MINUTES_MAX = 240;
+export const learningGoalSchema = z.strictObject({
+  dailyGoalMinutes: z.number().int().min(DAILY_GOAL_MINUTES_MIN).max(DAILY_GOAL_MINUTES_MAX).nullable(),
+});
+export type LearningGoal = z.infer<typeof learningGoalSchema>;
+
+const seconds = z.number().int().nonnegative();
+// Seconds per category (docs/learning-time.md#activity). `aiPractice` is AI practice and tutor time together.
+export const timeCategoriesSchema = z.strictObject({ lesson: seconds, grammar: seconds, practice: seconds, vocabulary: seconds, aiPractice: seconds, total: seconds });
+export type TimeCategories = z.infer<typeof timeCategoriesSchema>;
+// The AI practice part of a period, split by each practice's focus (tutor time has none).
+export const aiPracticeFocusSecondsSchema = z.strictObject({ grammar: seconds, vocabulary: seconds, reading: seconds, listening: seconds, writing: seconds });
+export const activityTotalsSchema = timeCategoriesSchema.extend({ aiPracticeFocus: aiPracticeFocusSecondsSchema });
+export type ActivityTotals = z.infer<typeof activityTotalsSchema>;
+export const learningActivityDaySchema = activityTotalsSchema.extend({ day: localDaySchema });
+export type LearningActivityDay = z.infer<typeof learningActivityDaySchema>;
+
+// `GET /api/groups/:groupId/learning-activity?range=week|month&end=YYYY-MM-DD`: the days are the learner's local days ending on `end`.
+export const LEARNING_ACTIVITY_DAYS = { week: 7, month: 30 } as const;
+export const learningActivityRangeSchema = z.enum(["week", "month"]);
+export type LearningActivityRange = z.infer<typeof learningActivityRangeSchema>;
+export const learningActivityQuerySchema = z.object({ range: learningActivityRangeSchema, end: localDaySchema });
+export const learningActivityResponseSchema = z.strictObject({
+  range: learningActivityRangeSchema,
+  from: localDaySchema,
+  to: localDaySchema,
+  // One row per day from `from` to `to`, zero-filled.
+  days: z.array(learningActivityDaySchema),
+  totals: activityTotalsSchema,
+  // The seconds of the same number of days just before `from`, for the change against the previous period.
+  previousTotal: seconds,
+  dailyGoalMinutes: learningGoalSchema.shape.dailyGoalMinutes,
+  streak: z.number().int().nonnegative(),
+});
+export type LearningActivityResponse = z.infer<typeof learningActivityResponseSchema>;

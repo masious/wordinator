@@ -102,6 +102,7 @@ import { completeLesson, readLessonProgress, resetLesson } from "./learning/prog
 import { registerAttemptRoutes } from "./learning/attempts";
 import { practiceSecondsSql, readCourseTypicalTimes, readLessonTime, registerLearningTimeRoutes, typicalFields } from "./learning/time";
 import { registerAiPracticeRoutes } from "./learning/aiPracticeRoutes";
+import { registerLearningActivityRoutes } from "./learning/activity";
 import { aiPracticeCounts, lessonAiPracticeDeletion } from "./tutor/aiPractices";
 import { recentResults } from "./wordMemory";
 import { decodeWeakCursor, readWeakWords, setWordKnown } from "./weakWords";
@@ -2783,6 +2784,9 @@ registerLearningTimeRoutes(app, {
     },
   },
 });
+
+// Learning activity and the daily goal (C15d): the activity read is per library; the goal is the account's.
+registerLearningActivityRoutes(app, { requireGroupAccess });
 
 // AI practices on the lesson page (C14h): the lesson read's rules for reading and answering, the owner and active contributors
 // of a course that is not archived for removing a tag.
