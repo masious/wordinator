@@ -62,10 +62,14 @@ export const SCORE_GOOD = 80;
 export const SCORE_FAIR = 60;
 const band = (score: number) => score >= SCORE_GOOD ? "good" : score >= SCORE_FAIR ? "fair" : "weak";
 
+// An assessment where Azure scored nothing (silence, or only noise): its zeros say less than the "not heard" chips do.
+export const unscored = (assessment: PronunciationAssessment) =>
+  assessment.overall === 0 && assessment.accuracy === 0 && assessment.fluency === 0 && assessment.completeness === 0;
+
 // The overall pronunciation score as a ring that fills to it, coloured by band.
-export function ScoreRing({ score, compact = false }: { score: number; compact?: boolean }) {
+export function ScoreRing({ score, compact = false, large = false }: { score: number; compact?: boolean; large?: boolean }) {
   const { t } = useTranslation();
-  return <span className={`${styles.ring} ${compact ? styles.ringCompact : ""}`} data-band={band(score)} role="img"
+  return <span className={`${styles.ring} ${compact ? styles.ringCompact : ""} ${large ? styles.ringLarge : ""}`} data-band={band(score)} role="img"
     aria-label={t("speak.assessment.overallScore", { score })} style={{ "--score": score } as CSSProperties}>
     <svg viewBox="0 0 36 36" aria-hidden="true"><circle className={styles.ringTrack} cx="18" cy="18" r="15.9155" /><circle className={styles.ringFill} cx="18" cy="18" r="15.9155" pathLength="100" /></svg>
     <span className={styles.ringValue} aria-hidden="true">{score}</span>
@@ -74,28 +78,35 @@ export function ScoreRing({ score, compact = false }: { score: number; compact?:
 
 // What was heard and whether it matched: a badge that pops in, then glows on a match or shakes on a miss. With an assessment it
 // ends in the overall score ring. `as="span"` lets it sit inside a button.
-export function SpokenVerdict({ answer, compact = false, as: Root = "p" }: { answer: SpokenAnswer; compact?: boolean; as?: "p" | "span" }) {
+const plain = (text: string) => text.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim();
+
+// With `term` given, a match that is the term itself (ignoring case and punctuation) leaves out "You said", which would only repeat
+// the word. `large` gives the score ring more room.
+export function SpokenVerdict({ answer, compact = false, large = false, term, as: Root = "p" }: { answer: SpokenAnswer; compact?: boolean; large?: boolean; term?: string; as?: "p" | "span" }) {
   const { t } = useTranslation();
+  const exact = answer.matches && term !== undefined && plain(answer.heard) === plain(term);
   return <Root className={`${styles.verdict} ${compact ? styles.compact : ""}`} data-match={answer.matches || undefined} {...(Root === "p" ? { role: "status" } : {})}>
     <span className={styles.verdictIcon} aria-hidden="true">{answer.matches ? <Check size={compact ? 14 : 18} strokeWidth={3} /> : <X size={compact ? 14 : 18} strokeWidth={3} />}</span>
-    <span className={styles.verdictLabel}>{answer.matches ? t("speak.match") : t("speak.miss")}</span>
-    <span className={styles.verdictHeard}>{t("speak.heard", { heard: answer.heard })}</span>
-    {answer.assessment && <ScoreRing score={answer.assessment.overall} compact={compact} />}
+    <span className={styles.verdictText}>
+      <span className={styles.verdictLabel}>{answer.matches ? t("speak.match") : t("speak.miss")}</span>
+      {!exact && <span className={styles.verdictHeard}>{t("speak.heard", { heard: answer.heard })}</span>}
+    </span>
+    {answer.assessment && !unscored(answer.assessment) && <ScoreRing score={answer.assessment.overall} compact={compact} large={large} />}
   </Root>;
 }
 
-// Microsoft's breakdown: accuracy, fluency, and completeness as bars, then each word of the term coloured by its accuracy, with
+// Microsoft's breakdown: accuracy, fluency, and completeness as bars (left out when nothing was scored), then each word of the term coloured by its accuracy, with
 // missed and extra words named.
 export function AssessmentBreakdown({ assessment }: { assessment: PronunciationAssessment }) {
   const { t } = useTranslation();
   const meters = [["accuracy", assessment.accuracy], ["fluency", assessment.fluency], ["completeness", assessment.completeness]] as const;
   return <div className={styles.breakdown}>
-    <dl className={styles.meters}>
+    {!unscored(assessment) && <dl className={styles.meters}>
       {meters.map(([name, value]) => <div key={name} className={styles.meter} data-band={band(value)}>
         <dt>{t(`speak.assessment.${name}`)}</dt>
         <dd><span className={styles.bar} aria-hidden="true"><span style={{ "--score": `${value}%` } as CSSProperties} /></span><span className={styles.meterValue}>{value}</span></dd>
       </div>)}
-    </dl>
+    </dl>}
     {assessment.words.length > 0 && <ul className={styles.words} aria-label={t("speak.assessment.words")}>
       {assessment.words.map((word, index) => <li key={index} className={styles.word} data-error={word.error}
         data-band={word.error === "none" && word.accuracy !== null ? band(word.accuracy) : "weak"}>

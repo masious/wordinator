@@ -1,6 +1,7 @@
 .center{min-height:100dvh;display:grid;place-items:center;padding:var(--space-6)}
-/* One card at a time, centred in a column as wide as a dialog. */
-.page{display:grid;gap:var(--space-6);width:min(100%,var(--width-modal));margin-inline:auto;animation:wordinator-enter var(--motion-reveal) var(--ease-physical) both}
+/* The page column is a size container, so the card can grow when the column is narrow (see WordDrillCard.module.css). */
+/* One card at a time, centred in a conversation-width column, wide enough for the back to split. */
+.page{container-type:inline-size;display:grid;gap:var(--space-6);width:min(100%,var(--width-conversation));margin-inline:auto;animation:wordinator-enter var(--motion-reveal) var(--ease-physical) both}
 /* The Lumen page header, centred over the card: eyebrow, title, and the settings line as the intro. */
 .header{display:grid;justify-items:center;gap:var(--space-2);text-align:center}
 .title{margin:0;font-family:var(--font-display);font-size:var(--type-page-title);font-weight:var(--weight-semibold);line-height:var(--line-heading);letter-spacing:var(--tracking-display)}

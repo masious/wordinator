@@ -6,7 +6,7 @@
    pulsing tint. Listening: two slow ripples. Hearing: one ring that swells with the microphone's `--level` (0–1), set by the
    meter, over a faster ripple. */
 .speak[data-phase="listening"]::before,.speak[data-phase="listening"]::after,.speak[data-phase="hearing"]::before,.speak[data-phase="hearing"]::after{content:"";position:absolute;inset:0;border:var(--border-strong);border-color:var(--color-action);border-radius:inherit;pointer-events:none;animation:ripple calc(var(--motion-reveal) * 2) var(--ease-physical) infinite}
-.speak:not(.round)[data-phase]::before,.speak:not(.round)[data-phase]::after{border-radius:var(--radius-pill)}
+.speak:not(.round)[data-phase]::before,.speak:not(.round)[data-phase]::after{border-radius:var(--radius-sm)}
 .speak[data-phase="listening"]::after{animation-delay:var(--motion-reveal)}
 .round[data-phase]::before,.round[data-phase]::after{animation-name:rippleRound}
 .speak[data-phase="hearing"]::after{animation-duration:var(--motion-reveal)}
@@ -37,6 +37,8 @@
 .verdict[data-match]{background:var(--color-success-surface);border-color:color-mix(in srgb,var(--color-success) 35%,transparent);animation:verdictIn var(--motion-overlay) var(--ease-physical) calc(var(--motion-standard) / 2) both,glow var(--motion-reveal) ease-out calc(var(--motion-standard) / 2 + var(--motion-press)) both}
 .verdictIcon{display:inline-grid;place-items:center;flex:none;width:28px;height:28px;color:var(--color-core);background:var(--color-highlight);border-radius:50%;animation:iconIn var(--motion-overlay) var(--ease-physical) calc(var(--motion-standard) / 2 + var(--motion-press)) both}
 .verdict[data-match] .verdictIcon{background:var(--color-success)}
+.verdict .ring{margin-inline-start:auto}
+.verdictText{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:var(--space-2);min-width:0}
 .verdictLabel{font-weight:var(--weight-semibold);color:var(--color-foreground);white-space:nowrap}
 .verdictHeard{font:var(--type-metadata)/1.3 var(--font-mono);color:var(--color-foreground-muted);overflow-wrap:anywhere}
 .compact{gap:var(--space-1);padding-inline-end:var(--space-3);font-size:var(--type-metadata);animation-delay:0s,var(--motion-overlay)}
@@ -59,8 +61,10 @@
 .ringTrack,.ringFill{fill:none;stroke-width:3.5}
 .ringTrack{stroke:var(--color-hairline)}
 .ringFill{stroke:var(--band);stroke-linecap:round;stroke-dasharray:var(--score) 100;animation:sweep var(--motion-reveal) var(--ease-physical) calc(var(--motion-standard) / 2 + var(--motion-press)) both}
+.ringLarge{width:56px;height:56px}
 .ringValue{font:var(--weight-semibold) var(--text-xs)/1 var(--font-mono);color:var(--color-foreground);font-variant-numeric:tabular-nums}
 .ringCompact .ringValue{font-size:.625rem}
+.ringLarge .ringValue{font-size:var(--text-lg)}
 .breakdown{display:grid;gap:var(--space-3);justify-self:stretch;min-width:0}
 /* Three meters side by side: label, bar, and value. */
 .meters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-3);margin:0}
@@ -76,7 +80,7 @@
 .word[data-error="omission"] .wordText{text-decoration:line-through}
 .word[data-error="insertion"]{border-style:dashed}
 .wordText{font-weight:var(--weight-semibold);color:var(--color-foreground)}
-.wordNote{font:var(--text-xs)/1 var(--font-mono);color:var(--color-foreground-muted)}
+.wordNote{white-space:nowrap;font:var(--text-xs)/1 var(--font-mono);color:var(--color-foreground-muted)}
 .wordNote:empty{display:none}
 /* On a word card the verdict with a score is a button that opens the panel. */
 .verdictButton{padding:0;background:none;border:0;border-radius:var(--radius-pill);cursor:pointer}

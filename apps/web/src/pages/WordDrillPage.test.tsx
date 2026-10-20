@@ -214,7 +214,29 @@ describe("Spoken answers", () => {
     expect(Number(button().parentElement!.style.getPropertyValue("--level"))).toBeGreaterThan(0.4);
     recognition.hear("kaartje");
     expect(within(current()).getByRole("button", { name: "Again" })).toBeInTheDocument();
-    expect(within(current()).queryByRole("button", { name: /Say it|Listening|Hearing|Checking/ })).not.toBeInTheDocument();
+    // The back keeps a Say it button for practice.
+    expect(within(current()).getByRole("button", { name: /Say it/ })).toBeInTheDocument();
+  });
+
+  it("offers practice on an Understand back and replaces the result with each new attempt", async () => {
+    decks = [[card(1, "understand", { term: "het kaartje", meaning: "the ticket" })]];
+    renderPage();
+    await screen.findByRole("article", { name: "Drill card" });
+    expect(within(current()).queryByRole("button", { name: /Say it/ })).not.toBeInTheDocument();
+    reveal();
+    expect(within(current()).getByText("Now say it aloud.")).toBeInTheDocument();
+    sayIt();
+    FakeRecognition.last!.hear("kaart");
+    expect(within(current()).getByText("Not quite")).toBeInTheDocument();
+    sayIt();
+    FakeRecognition.last!.hear("kaartje");
+    expect(within(current()).getByText("Matches!")).toBeInTheDocument();
+    expect(within(current()).getByText("You said “kaartje”")).toBeInTheDocument();
+    // Saying exactly the term needs no "You said" line.
+    sayIt();
+    FakeRecognition.last!.hear("Het kaartje");
+    expect(within(current()).getByText("Matches!")).toBeInTheDocument();
+    expect(within(current()).queryByText(/You said/)).not.toBeInTheDocument();
   });
 
   it("finishes the answer when pressed again while hearing, keeping what was said", async () => {

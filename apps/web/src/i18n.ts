@@ -216,6 +216,7 @@ export const resources = {
         blank: "blank",
         showAnswer: "Show answer",
         again: "Again",
+        practice: { label: "Pronunciation practice", prompt: "Now say it aloud.", listen: "Listen" },
         got: "Got it",
         unsaved_one: "{{count}} answer could not be saved.",
         unsaved_other: "{{count}} answers could not be saved.",

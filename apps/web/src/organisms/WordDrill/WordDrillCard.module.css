@@ -1,16 +1,45 @@
 /* One drill card at a time: a Lumen card at drill size, centred in the page column. Its height stays fixed; long text scrolls
    inside the face. */
-.card{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:var(--space-5);width:100%;height:var(--size-drill-card);padding:var(--card-inset);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);perspective:1600px;animation:cardIn var(--motion-standard) var(--ease-physical)}
+.card{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:var(--space-5);width:100%;height:var(--size-drill-card);padding:var(--card-inset);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);perspective:1600px;container-type:inline-size;animation:cardIn var(--motion-standard) var(--ease-physical)}
 .card:focus-visible{outline-offset:var(--focus-ring-offset)}
+/* On a narrow drill page the back is one column and can outgrow the fixed height, which would hide the practice buttons below a scroll:
+   there the card keeps its height as a minimum and grows to fit. A card outside the drill page (the tutor's) keeps its fixed height. */
+@container (max-width:43rem){.card{height:auto;min-height:var(--size-drill-card)}}
 .faces{display:grid;min-height:0;min-width:0;transform-style:preserve-3d;transition:transform var(--motion-standard) var(--ease-physical)}
 .flipped .faces{transform:rotateY(180deg)}
-.face{grid-area:1/1;display:grid;align-content:start;align-content:safe center;justify-items:center;gap:var(--space-3);min-height:0;min-width:0;overflow-y:auto;text-align:center;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.face{grid-area:1/1;display:grid;align-content:start;align-content:safe center;justify-items:center;gap:var(--space-3);min-height:0;min-width:0;overflow-y:auto;overflow-x:clip;text-align:center;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+/* overflow-x is clipped, not scrolled: the verdict's pop-in scale and shake briefly reach past the face's edge. */
 /* WebKit ignores backface-visibility on scrolling faces, so each face also switches visibility halfway through the flip. */
 .front,.back{transition:visibility 0s linear calc(var(--motion-standard) / 2)}
 .back{transform:rotateY(180deg);visibility:hidden}
+/* The answer reads as a left-aligned sheet from the context line down; the pronunciation result closes it under a hairline. */
+.face.back{align-content:start;justify-items:stretch;gap:var(--space-2);text-align:left}
+.pronunciation{display:grid;align-content:start;gap:var(--space-3);justify-items:stretch;margin-top:var(--space-3);padding-top:var(--space-3);border-top:var(--ring-hairline)}
+.pronunciation ul{justify-content:flex-start}
+.practicePrompt{color:var(--color-foreground-muted)!important}
+/* Listen and Say it are one attached pair sharing the column's width: the outer ends are rounded and the seam is a line. */
+div.practiceActions{display:flex;width:100%;gap:0}
+.practiceActions>*{flex:1 1 0;min-width:0}
+.practiceActions button{border-radius:0}
+.practiceActions>:first-child:is(button,span>button),.practiceActions>:first-child>button{border-start-start-radius:var(--radius-sm);border-end-start-radius:var(--radius-sm)}
+.practiceActions>:last-child:is(button),.practiceActions>:last-child>button{border-start-end-radius:var(--radius-sm);border-end-end-radius:var(--radius-sm)}
+.listenIcon{margin-inline-end:var(--space-2)}
+.practiceActions>:last-child:not(:first-child){margin-inline-start:-1px}
+.practiceActions>span>button{width:100%}
+/* The verdict badge insets its icon and its ring by the same amount. */
+.pronunciation>[role="status"]:first-child{padding:var(--space-2);font-size:var(--text-md)}
+.answer{display:grid;gap:var(--space-2);align-content:start;min-width:0}
+/* A wide card with a spoken answer splits the back: the word on the start side, the pronunciation result beside it. */
+@container (min-width:40rem){
+  .back[data-split]{grid-template-columns:minmax(0,1fr) minmax(0,19rem);align-content:center;align-items:stretch;column-gap:var(--space-5)}
+  .back[data-split] .pronunciation{margin-top:0;padding-top:0;padding-inline-start:var(--space-6);border-top:0;border-inline-start:var(--ring-hairline)}
+  .back[data-split] .pronunciation dl{grid-template-columns:minmax(0,1fr)}
+}
 .flipped .front{visibility:hidden}
 .flipped .back{visibility:visible}
-.back:focus-visible{outline-offset:2px;border-radius:var(--radius-sm)}
+/* The revealed answer takes focus, but its ring goes around the whole card: on the face it would be clipped by the scroll area. */
+.back:focus-visible{outline:none}
+.card:has(.back:focus-visible){outline:var(--focus-ring-width) solid var(--color-focus);outline-offset:var(--focus-ring-offset)}
 .face p{margin:0;color:var(--color-foreground);overflow-wrap:anywhere}
 /* The prompt is the Lumen eyebrow (accent, bold, uppercase); the course · lesson line stays mono metadata. */
 .face .prompt{color:var(--color-action)}
@@ -26,10 +55,16 @@
 /* The blank keeps the example's rhythm: an underline about one short word wide. */
 .blank{display:inline-block;width:4em;height:1em;vertical-align:baseline;border-bottom:var(--border-strong)}
 .speech{margin-inline-start:var(--space-2)}
-.actions{display:flex;justify-content:center;gap:var(--space-3)}
+.back .meaning{margin-top:var(--space-2)}
+/* The listening hint hangs below the Say it button, so the row keeps room for it above the card's edge. */
+.actions{display:flex;justify-content:center;gap:var(--space-3);padding-bottom:var(--space-5)}
+/* The card's buttons (its footer and the practice pair) are the main controls here, so they take the large control height. */
+.actions button,.practiceActions.practiceActions button{height:var(--control-height-lg);min-height:var(--control-height-lg);padding-inline:var(--space-6);font-size:var(--text-lg)}
 /* A key hint inside a button: mono, on a faint wash of the button's ink, so it reads on secondary and primary alike. */
 .key{margin-inline-start:var(--space-2);padding:0 var(--space-1);font:var(--weight-medium) var(--type-badge)/1.6 var(--font-mono);color:inherit;background:color-mix(in srgb,currentColor 10%,transparent);border:1px solid color-mix(in srgb,currentColor 25%,transparent);border-radius:var(--radius-sm)}
 /* Phones: the buttons share the card's width. */
 @media(max-width:48em){.actions>*{flex:1 1 0;min-width:0}}
 @keyframes cardIn{from{opacity:0;transform:translateY(var(--space-2))}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.card{animation:none}.faces,.front,.back{transition:none}}
+
+.practiceActions.practiceActions button{padding-inline:var(--space-3)}

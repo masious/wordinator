@@ -2,10 +2,11 @@ import type { WordDrillCard as DrillCard, WordDrillResult } from "@wordinator/co
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
-import { playRevealSpeech, SpeechButton, useStopSpeechOnUnmount } from "../../molecules/Speech";
-import { Button, Eyebrow } from "../../ui";
+import { Volume2 } from "lucide-react";
+import { playRevealSpeech, playSpeech, SpeechButton, useStopSpeechOnUnmount } from "../../molecules/Speech";
+import { Button, ButtonGroup, Eyebrow } from "../../ui";
 import { blankExample } from "./drillSession";
-import { AssessmentBreakdown, ListenStatusLine, SpeakButton, SpokenVerdict } from "../../molecules/SpeakControls";
+import { AssessmentBreakdown, ListenStatusLine, SCORE_FAIR, SpeakButton, SpokenVerdict } from "../../molecules/SpeakControls";
 import { useSpokenAnswer, type SpokenAnswer } from "../../molecules/speechRecognition";
 import styles from "./WordDrillCard.module.css";
 
@@ -27,9 +28,9 @@ function ProduceExample({ example, term }: { example: string; term: string }) {
 // the lesson, and the example with the term blanked. Show answer flips the card in place to the full word and speaks the term
 // under the shared reveal sound toggle; Again and Got it then grade it. Space reveals, 1 is Again, and 2 is Got it.
 // Where the browser recognizes speech, a Produce card can also be answered aloud (M): the answer reveals the card with what was
-// heard and whether it matched, and the learner still grades it (docs/words.md#spoken-answers).
-export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, onGrade }: {
-  card: DrillCard; language: string; revealed: boolean; autoFocus: boolean;
+// heard and whether it matched, and the learner still grades it (docs/words.md#spoken-answers). `heard` seeds that answer for previews.
+export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, onGrade, heard = null }: {
+  card: DrillCard; language: string; revealed: boolean; autoFocus: boolean; heard?: SpokenAnswer | null;
   onReveal: () => void; onGrade: (result: WordDrillResult) => void;
 }) {
   const { t } = useTranslation();
@@ -41,10 +42,17 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
   // A card without its course (the tutor's Quick review, docs/ai-tutor.md#answer-components) has no context line.
   const source = card.course.title ? t("words.source", { course: card.course.title, lesson: card.lesson.title }) : null;
   const reveal = () => { if (revealed) return; playRevealSpeech(termOwner, word.speech.term); onReveal(); };
-  const [answer, setAnswer] = useState<SpokenAnswer | null>(null);
-  const spoken = useSpokenAnswer(word.term, (heard) => { if (revealed) return; setAnswer(heard); reveal(); }, { lessonId: card.lesson.id, wordId: word.id });
+  const [answer, setAnswer] = useState<SpokenAnswer | null>(heard);
+  // Once revealed, saying the word is practice in either direction: each attempt replaces the result, is stored like the first, and
+  // a miss plays the term again (under the reveal sound) so it can be repeated as often as wanted.
+  const spoken = useSpokenAnswer(word.term, (said) => {
+    setAnswer(said);
+    if (!revealed) reveal();
+    else if (!said.matches || (said.assessment && said.assessment.overall < SCORE_FAIR)) playRevealSpeech(termOwner, word.speech.term);
+  }, { lessonId: card.lesson.id, wordId: word.id });
   const canSpeak = direction === "produce" && spoken.available;
-  const listen = () => { if (canSpeak && !revealed) spoken.listen(); };
+  const listen = () => { if (spoken.available && (revealed || canSpeak)) spoken.listen(); };
+  const hearAgain = () => playSpeech(termOwner, [word.speech.term!]);
 
   // A card after the first takes focus, so the keyboard and screen readers follow the session; the answer takes it once shown.
   useLayoutEffect(() => { if (autoFocus) cardRef.current?.focus({ preventScroll: true }); }, [autoFocus]);
@@ -57,7 +65,7 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
       if (event.defaultPrevented || event.repeat || event.altKey || event.ctrlKey || event.metaKey || typing(event.target)) return;
       const current = latest.current;
       if (!current.revealed && event.key === " " && !control(event.target)) { event.preventDefault(); current.reveal(); }
-      else if (!current.revealed && (event.key === "m" || event.key === "M")) { event.preventDefault(); current.listen(); }
+      else if (event.key === "m" || event.key === "M") { event.preventDefault(); current.listen(); }
       else if (current.revealed && (event.key === "1" || event.key === "2")) { event.preventDefault(); current.onGrade(event.key === "1" ? "again" : "got"); }
     };
     window.addEventListener("keydown", onKey);
@@ -80,17 +88,28 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
         {canSpeak && <ListenStatusLine status={spoken.status} />}
       </div>
       {/* The back stays empty until revealed, so nothing is spoiled. */}
-      <div ref={backRef} className={`${styles.face} ${styles.back}`} aria-hidden={!revealed || undefined} inert={!revealed} tabIndex={revealed ? -1 : undefined}>
+      <div ref={backRef} className={`${styles.face} ${styles.back}`} data-split={answer || spoken.available ? "" : undefined} aria-hidden={!revealed || undefined} inert={!revealed} tabIndex={revealed ? -1 : undefined}>
         {revealed && <>
-          {source && <p className={styles.source}>{source}</p>}
-          <p className={styles.backTerm}>{word.term}<SpeechButton url={word.speech.term} label={termLabel} owner={termOwner} className={styles.speech} /></p>
-          {word.forms && <p className={styles.forms}>{word.forms}</p>}
-          <p className={styles.meaning}><PlainText>{word.meaning}</PlainText></p>
-          {word.example && <p className={styles.example}><PlainText>{word.example}</PlainText>
-            <SpeechButton url={word.speech.example} label={t("courses.speech.wordExample", { term: word.term })} className={styles.speech} /></p>}
-          {word.note && <p className={styles.note}><PlainText>{word.note}</PlainText></p>}
-          {answer && <SpokenVerdict answer={answer} />}
-          {answer?.assessment && <AssessmentBreakdown assessment={answer.assessment} />}
+          <div className={styles.answer}>
+            {source && <p className={styles.source}>{source}</p>}
+            <p className={styles.backTerm}>{word.term}<SpeechButton url={word.speech.term} label={termLabel} owner={termOwner} className={styles.speech} /></p>
+            {word.forms && <p className={styles.forms}>{word.forms}</p>}
+            <p className={styles.meaning}><PlainText>{word.meaning}</PlainText></p>
+            {word.example && <p className={styles.example}><PlainText>{word.example}</PlainText>
+              <SpeechButton url={word.speech.example} label={t("courses.speech.wordExample", { term: word.term })} className={styles.speech} /></p>}
+            {word.note && <p className={styles.note}><PlainText>{word.note}</PlainText></p>}
+          </div>
+          {(answer || spoken.available) && <div className={styles.pronunciation}>
+            {answer ? <>
+              <SpokenVerdict answer={answer} compact large term={word.term} />
+              {answer.assessment && <AssessmentBreakdown assessment={answer.assessment} />}
+            </> : <p className={styles.practicePrompt}>{t("drill.practice.prompt")}</p>}
+            <ButtonGroup label={t("drill.practice.label")} className={styles.practiceActions}>
+              {word.speech.term && <Button variant="secondary" onClick={hearAgain}><Volume2 size={16} className={styles.listenIcon} aria-hidden="true" />{t("drill.practice.listen")}</Button>}
+              {spoken.available && <SpeakButton state={spoken} onListen={listen} />}
+            </ButtonGroup>
+            <ListenStatusLine status={spoken.status} />
+          </div>}
         </>}
       </div>
     </div>
