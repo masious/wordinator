@@ -136,6 +136,17 @@ describe("Lesson page reading progress", { timeout: 15_000 }, () => {
     await waitFor(() => expect(saved()).toEqual([blockId(1), blockId(3), blockId(4)]), { timeout: 3000 });
   });
 
+  it("fills the bar half from the reading steps reached and half from the practices done", async () => {
+    const practice: LessonTopBlock = { id: blockId(9), type: "practice", children: [],
+      props: { data: JSON.stringify({ instruction: "Vertaal.", passage: null, items: [{ prompt: "Een", authorsVersion: ["One"], note: null }, { prompt: "Twee", authorsVersion: ["Two"], note: null }] }) } };
+    const withPractice: CourseLesson = { ...lesson(), document: { schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks: [...blocks, practice] }, practiceProgress: { [blockId(9)]: { done: 1, started: 1, answered: 2 } } };
+    // Two of four reading steps reached is a quarter of the lesson; its only practice, done, is the other half.
+    served = { ...progress([], [position(2)]), practices: { [lessonId]: { done: 1, practicedAt: 1 } } };
+    renderLesson(detail(withPractice));
+    expect(await screen.findByText("Zin 1.")).toBeInTheDocument();
+    await waitFor(() => expect(bar()).toHaveAttribute("aria-valuenow", "75"));
+  });
+
   it("saves nothing when the page is only opened, or before the saved position", async () => {
     served = progress([], [position(3)]);
     renderLesson(detail(lesson()));

@@ -34,7 +34,7 @@ test("scrolling a lesson page fills its bar, saves the furthest step, and Contin
   await expect(bar).toHaveAttribute("aria-valuenow", "8");
 
   // Part of the way down, the furthest step reached is saved through the position API, and after a reload the bar starts from
-  // that saved position at the top of the page, in the player's step unit.
+  // that saved position at the top of the page. Without practices the bar is the share of reading steps reached, rounded down.
   const partway = page.waitForResponse((response) => response.url().endsWith("/position") && response.request().method() === "PUT");
   // Starting saved step 1, so the wheel has to pass at least the second step.
   await page.mouse.move(640, 400);
@@ -42,28 +42,25 @@ test("scrolling a lesson page fills its bar, saves the furthest step, and Contin
   const { position: middle } = await (await partway).json() as { position: { stepIndex: number; totalSteps: number } };
   expect(middle.stepIndex).toBeGreaterThan(0);
   expect(middle.stepIndex).toBeLessThan(11);
-  const middlePercent = String(Math.round(((middle.stepIndex + 1) / middle.totalSteps) * 100));
+  const middlePercent = String(Math.floor(((middle.stepIndex + 1) / middle.totalSteps) * 100 + 1e-9));
   await expect(bar).toHaveAttribute("aria-valuenow", middlePercent);
   await page.reload();
   await expect(page.getByText(`Step ${middle.stepIndex + 1} of 12`)).toBeVisible();
   await expect(bar).toHaveAttribute("aria-valuenow", middlePercent);
 
-  // Reaching the bottom fills the bar and, once the reader pauses, saves the last step.
+  // Reaching the bottom fills the bar and, once the reader pauses, saves the last step, which completes a lesson without practices.
   const saved = page.waitForResponse((response) => response.url().endsWith("/position") && response.request().method() === "PUT");
   await page.mouse.wheel(0, 20_000);
   await expect(bar).toHaveAttribute("aria-valuenow", "100");
   const response = await saved;
   expect(response.ok()).toBe(true);
-  expect((await response.json()).position).toMatchObject({ stepIndex: 11, passedSteps: 11, totalSteps: 12 });
-  await expect(page.getByText("Step 12 of 12")).toBeVisible();
+  expect(await response.json()).toMatchObject({ position: { stepIndex: 11, passedSteps: 11, totalSteps: 12 }, completed: true });
+  await expect(page.getByRole("main").getByText("Finished", { exact: true })).toBeVisible();
 
-  // Eleven of twelve steps passed in the only lesson.
+  // The finished lesson counts whole, and the course page offers it again from the top.
   await page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("link", { name: `${suffix} course` }).click();
-  await expect(page.getByRole("progressbar", { name: "Your course progress" }).first()).toHaveAttribute("aria-valuenow", "91");
-  await page.getByRole("button", { name: `Continue lesson 1: ${suffix} lesson` }).click();
-  await expect(page).toHaveURL(/\/lessons\/[^?]+\?resume=true$/);
-  await expect(page.getByText("Zin nummer 12 staat hier.")).toBeInViewport();
-  await expect(page.getByRole("dialog")).toHaveCount(0);
+  await expect(page.getByRole("progressbar", { name: "Your course progress" }).first()).toHaveAttribute("aria-valuenow", "100");
+  await expect(page.getByRole("button", { name: `Start lesson 1 again: ${suffix} lesson` })).toBeVisible();
 });
 
 test("Continue opens the lesson page scrolled to a saved step in the middle", async ({ page }, testInfo) => {

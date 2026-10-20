@@ -196,3 +196,23 @@ export const learningActivityResponseSchema = z.strictObject({
   streak: z.number().int().nonnegative(),
 });
 export type LearningActivityResponse = z.infer<typeof learningActivityResponseSchema>;
+
+// ---- Lesson share (docs/courses.md#progress) ----
+
+/**
+ * How much of a lesson a learner has done, from 0 to 1. Reading and practices weigh half each: reading is the share of the
+ * lesson's reading steps (every step but practice questions) reached, and each practice counts once every one of its questions
+ * has an answer. A lesson without practices is all reading; one without reading steps is all practices. A completion counts whole.
+ */
+export type LessonShareInput = {
+  completed: boolean; readingShare: number; hasReading: boolean; practicesDone: number; practicesTotal: number;
+};
+export function lessonShare({ completed, readingShare, hasReading, practicesDone, practicesTotal }: LessonShareInput): number {
+  if (completed) return 1;
+  const reading = Math.min(1, Math.max(0, readingShare));
+  const practice = practicesTotal > 0 ? Math.min(practicesDone, practicesTotal) / practicesTotal : 0;
+  if (practicesTotal === 0) return hasReading ? reading : 0;
+  return hasReading ? (reading + practice) / 2 : practice;
+}
+/** A share as a whole percentage, rounded down; the epsilon keeps sums such as 1/3 + 2/3 from losing a point. */
+export const sharePercent = (share: number) => Math.max(0, Math.min(100, Math.floor(share * 100 + 1e-9)));

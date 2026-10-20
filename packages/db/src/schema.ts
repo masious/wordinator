@@ -427,6 +427,10 @@ export const courseLessonPositions = sqliteTable(
     stepIndex: integer("step_index").notNull(),
     passedSteps: integer("passed_steps").notNull(),
     totalSteps: integer("total_steps").notNull(),
+    // Reading steps reached and the lesson's reading steps (every step but practice questions), for the lesson share's reading
+    // half; NULL on rows saved before migration 0035.
+    readingReached: integer("reading_reached"),
+    readingTotal: integer("reading_total"),
     updatedAt: integer("updated_at").notNull(),
   },
   (table) => [

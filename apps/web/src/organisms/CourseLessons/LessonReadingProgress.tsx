@@ -1,5 +1,6 @@
 import { lessonPositionResponseSchema, type CourseProgressResponse, type LessonPosition } from "@wordinator/contracts";
-import { lessonStepKey, resolveStepIndex, type LessonStep } from "@wordinator/contracts/lesson-document";
+import { lessonStepKey, readingReached, resolveStepIndex, type LessonStep } from "@wordinator/contracts/lesson-document";
+import { lessonShare, sharePercent } from "@wordinator/contracts/learning";
 import { type QueryClient, useQueryClient } from "@tanstack/react-query";
 import { type RefObject, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -81,20 +82,23 @@ const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home
 export function saveLessonPosition(queryClient: QueryClient, target: { path: string; groupId: string; courseId: string }, step: LessonStep) {
   const progressKey = courseProgressQueryOptions(target.groupId, target.courseId).queryKey;
   return apiRequest(`${target.path}/position`, lessonPositionResponseSchema, { method: "PUT", body: JSON.stringify({ stepKey: lessonStepKey(step) }), keepalive: true })
-    .then(({ position }) => {
+    .then(({ position, completed }) => {
       queryClient.setQueryData(progressKey, (data: CourseProgressResponse | undefined) => data && {
         ...data, positions: [position, ...data.positions.filter((entry) => entry.lessonId !== position.lessonId)],
       });
-      // Percentages depend on the new position, so the course page refetches them when it next shows them.
-      void queryClient.invalidateQueries({ queryKey: progressKey, refetchType: "none" });
+      // Percentages depend on the new position, so the course page refetches them when it next shows them. A save that completed
+      // the lesson (its end reached with every practice done) refetches them at once, so the page shows it finished.
+      void queryClient.invalidateQueries({ queryKey: progressKey, refetchType: completed ? "active" : "none" });
     }, () => undefined);
 }
 
-export type ReadingTracking = { save: boolean; completed: boolean; position: LessonPosition | undefined; path: string; groupId: string; courseId: string; lessonId: string };
+export type ReadingTracking = {
+  save: boolean; completed: boolean; position: LessonPosition | undefined; practicesDone: number; path: string; groupId: string; courseId: string; lessonId: string;
+};
 
-// A thin bar along the top of the window showing the viewer's lesson position, in the player's unit: step N of M fills N/M. It
-// starts from the saved position, so it matches the player, and moves on as the reader scrolls further; the bottom of the page
-// reaches the last step, and a finished lesson shows full. While the reader scrolls a published lesson they have not finished,
+// A thin bar along the top of the window showing the viewer's lesson share (docs/courses.md#progress): half the reading steps
+// reached, half the practices done, as the course page counts it. It starts from the saved position and moves on as the reader
+// scrolls further; the bottom of the page reaches the last step, and a finished lesson shows full. While the reader scrolls a published lesson they have not finished,
 // the furthest step they reach is saved as their lesson position, the same one the player resumes from. Nothing is saved until
 // the reader scrolls, and never for a step at or before their saved one.
 // `onPercent` hears the bar's percentage, for the rail's lesson box.
@@ -151,9 +155,12 @@ export function LessonReadingProgress({ steps, reading, tracking, onPercent }: {
       flush();
     };
   }, [queryClient, reading, steps]);
-  const current = tracking.completed ? steps.length - 1 : Math.max(saved, reached);
-  const share = steps.length ? (current + 1) / steps.length : 0;
-  const percent = Math.round(share * 100);
+  const current = Math.max(saved, reached);
+  const read = readingReached(steps, current);
+  const practicesTotal = new Set(steps.flatMap((step) => step.kind === "practiceItem" ? [step.block.id] : [])).size;
+  const share = lessonShare({ completed: tracking.completed, readingShare: read.total ? read.reached / read.total : 0, hasReading: read.total > 0,
+    practicesDone: tracking.practicesDone, practicesTotal });
+  const percent = sharePercent(share);
   useEffect(() => { onPercent?.(percent); }, [onPercent, percent]);
   return <div className={styles.bar} role="progressbar" aria-label={t("courses.lessons.readingProgress")} aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent}
     data-complete={percent >= 100 || undefined}>

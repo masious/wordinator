@@ -548,7 +548,8 @@ export const practiceProgressSchema = z.object({
   done: z.number().int().nonnegative(), started: z.number().int().nonnegative(), answered: z.number().int().nonnegative().nullable(),
 });
 export type PracticeProgress = z.infer<typeof practiceProgressSchema>;
-export const practiceProgressResponseSchema = z.object({ progress: practiceProgressSchema });
+// `lessonCompleted`: this save completed the lesson, or it already was (docs/courses.md#progress).
+export const practiceProgressResponseSchema = z.object({ progress: practiceProgressSchema, lessonCompleted: z.boolean().default(false) });
 
 // A sentence has many valid translations, so a check never says an answer is wrong: a match is confirmed and a miss shows the
 // item's author's version as a reference. The client and any server code share these functions, so matching cannot diverge.
@@ -654,7 +655,8 @@ export const lessonPositionSchema = z.object({
   passedSteps: z.number().int().nonnegative(), totalSteps: z.number().int().positive(), updatedAt: z.number().int(),
 });
 export type LessonPosition = z.infer<typeof lessonPositionSchema>;
-export const lessonPositionResponseSchema = z.object({ position: lessonPositionSchema });
+// `completed`: the lesson is complete after this save, reached at its end with every practice done (docs/courses.md#progress).
+export const lessonPositionResponseSchema = z.object({ position: lessonPositionSchema, completed: z.boolean().default(false) });
 export const courseProgressResponseSchema = z.object({
   publishedLessons: z.number().int().nonnegative(),
   // The viewer's own finished lessons, including ones currently unpublished, so the outline can mark them.

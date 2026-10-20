@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import fixture from "../../../test/fixtures/courses/dutch-foundations-part-iii.json";
 import { COURSE_BLOCKS_MAX, COURSE_WORDS_PER_BLOCK_MAX, practicePayloadSchema } from ".";
 import {
-  collectImageUrls, collectLessonWords, collectPracticeIds, courseWordsResponseSchema, findPublishProblems, flattenToSteps, inlineText,
+  collectImageUrls, collectLessonWords, collectPracticeIds, courseWordsResponseSchema, findPublishProblems, flattenToSteps, inlineText, isReadingStep, readingReached,
   LESSON_DOCUMENT_SCHEMA_VERSION, lessonDocumentSchema, lessonNotReadySchema, lessonPositionRequestSchema, lessonStepKey, mapImageUrls,
   parseStoredLessonDocument, readPracticeBlock, readVocabularyBlock, resolveStepIndex, saveLessonDraftRequestSchema, toLearnerDocument,
   upgradeLegacyBlocks, vocabularyPayloadSchema,
@@ -225,6 +225,16 @@ describe("lesson document helpers", () => {
     ]);
     const prose = steps[1]!;
     expect(prose.kind === "content" && prose.blocks.map((block) => block.type)).toEqual(["paragraph", "bulletListItem", "image"]);
+  });
+
+  it("counts reading steps reached, leaving practice questions out", () => {
+    const steps = flattenToSteps(parse(paragraph("Intro"), example("Een."), practice(), example("Twee.")));
+    expect(steps.map((step) => isReadingStep(step))).toEqual([true, true, false, false, true]);
+    expect(readingReached(steps, -1)).toEqual({ reached: 0, total: 3 });
+    expect(readingReached(steps, 1)).toEqual({ reached: 2, total: 3 });
+    // A practice question reaches the reading steps before it.
+    expect(readingReached(steps, 3)).toEqual({ reached: 2, total: 3 });
+    expect(readingReached(steps, 4)).toEqual({ reached: 3, total: 3 });
   });
 
   it("never makes a step of dividers and blank paragraphs, and trims them from prose", () => {

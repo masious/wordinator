@@ -18,8 +18,9 @@ import { AnswerSetComposer, practiceFromBlock, PracticeContent, usePracticeProgr
 // What the lesson's play action does for this viewer. An unpublished lesson (only editors see one) plays as a preview from the
 // start; a saved position resumes, also in a finished lesson practiced again; a finished lesson otherwise starts again.
 export type PlayAction = "preview" | "continue" | "again" | "start";
-export const playAction = (lesson: Pick<CourseLessonSummary, "published">, completed: boolean, position: LessonPosition | undefined): PlayAction =>
-  !lesson.published ? "preview" : position ? "continue" : completed ? "again" : "start";
+// A lesson is under way with a saved position or, since practices count toward it, any practice progress (docs/courses.md#progress).
+export const playAction = (lesson: Pick<CourseLessonSummary, "published">, completed: boolean, position: LessonPosition | undefined, practised = false): PlayAction =>
+  !lesson.published ? "preview" : position || (practised && !completed) ? "continue" : completed ? "again" : "start";
 
 // Loads the lesson only once one of its dialogs opens; the course read carries just the counts that decide which actions show.
 function LoadedLesson({ scope, lessonId, children }: { scope: PlayerScope; lessonId: string; children: (lesson: CourseLesson) => ReactNode }) {
@@ -83,17 +84,19 @@ function PracticeList({ scope, lesson, selected, typicalPractices, onSelect }: {
 }
 
 // Per-lesson actions on the course page: play (Start, Continue, Start again, or Preview), which opens the lesson page (Continue at
-// the saved step), Review words, and Practice again. Review words and Practice again show only when the published lesson has words
-// or practices; Practice again is left out of archived courses, which refuse practice progress.
-export function LessonActions({ scope, summary, number, completed, position, archived, onPlay }: {
-  scope: PlayerScope; summary: CourseLessonSummary; number: number; completed: boolean; position: LessonPosition | undefined; archived: boolean;
-  onPlay: (lessonId: string) => void;
+// the saved step), Review words, and Practice (Practice again once every practice is done). Review words and Practice show only
+// when the published lesson has words or practices; Practice is left out of archived courses, which refuse practice progress.
+// `practices` is the viewer's practice progress in the lesson, from the course progress read.
+export function LessonActions({ scope, summary, number, completed, position, practices: progress, archived, onPlay }: {
+  scope: PlayerScope; summary: CourseLessonSummary; number: number; completed: boolean; position: LessonPosition | undefined;
+  practices?: { done: number } | undefined; archived: boolean; onPlay: (lessonId: string) => void;
 }) {
   const { t } = useTranslation();
   const [reviewing, setReviewing] = useState(false);
   const [practising, setPractising] = useState(false); const [selected, setSelected] = useState<Practice | null>(null);
   const saveProgress = usePracticeProgress({ ...scope, lessonId: summary.id }, summary.published);
-  const action = playAction(summary, completed, position);
+  const action = playAction(summary, completed, position, Boolean(progress));
+  const practiceAction = (progress?.done ?? 0) >= summary.practiceCount ? "practice" : "practiceFirst";
   const named = { number, title: summary.title };
   const words = summary.wordCount > 0; const practices = summary.practiceCount > 0 && !archived;
   // Closing the practice dialog in any way saves the open answer set's progress, as on the lesson page.
@@ -103,7 +106,7 @@ export function LessonActions({ scope, summary, number, completed, position, arc
       <Button variant={action === "continue" || action === "start" ? "secondary" : "quiet"} onClick={() => onPlay(summary.id)}
         aria-label={t(`courses.lessonActions.${action}Named`, named)}>{t(`courses.lessonActions.${action}`)}</Button>
       {words && <Button variant="quiet" onClick={() => setReviewing(true)} aria-label={t("courses.lessonActions.reviewWordsNamed", named)}>{t("courses.lessonActions.reviewWords")}</Button>}
-      {practices && <Button variant="quiet" onClick={() => setPractising(true)} aria-label={t("courses.lessonActions.practiceNamed", named)}>{t("courses.lessonActions.practice")}</Button>}
+      {practices && <Button variant="quiet" onClick={() => setPractising(true)} aria-label={t(`courses.lessonActions.${practiceAction}Named`, named)}>{t(`courses.lessonActions.${practiceAction}`)}</Button>}
     </ButtonGroup>
     <AdaptiveDialog opened={reviewing} onClose={() => setReviewing(false)} title={t("courses.lessonActions.wordsTitle", named)}>
       {reviewing && <LoadedLesson scope={scope} lessonId={summary.id}>{(lesson) => <LessonRecap scope={scope} lesson={lesson} onDone={() => setReviewing(false)} />}</LoadedLesson>}

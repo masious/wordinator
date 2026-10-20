@@ -1,7 +1,7 @@
 import { env } from "cloudflare:test";
 import { courseProgressResponseSchema } from "@wordinator/contracts";
 import { beforeEach, describe, expect, it } from "vitest";
-import { lessonPositionResponseSchema } from "@wordinator/contracts";
+import { lessonPositionResponseSchema, practiceProgressResponseSchema } from "@wordinator/contracts";
 import {
   addLesson as createLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, publishLesson, readLesson, request, resetDatabase, saveDraft, seedGroup,
   seedUser, signIn,
@@ -114,17 +114,17 @@ describe("Lesson positions", () => {
     const saved = await place(path, stepped.id, reader, examples[2]!.id);
     expect(saved.status).toBe(200);
     expect(lessonPositionResponseSchema.parse(await saved.json()).position).toMatchObject({ lessonId: stepped.id, stepIndex: 2, passedSteps: 2, totalSteps: 4 });
-    // Two of four steps passed in one of two lessons is a quarter of the course.
-    expect(await percentOf(path, reader, readerId)).toBe(25);
+    // Three of four reading steps reached in a lesson without practices, in one of two lessons, is 37% of the course.
+    expect(await percentOf(path, reader, readerId)).toBe(37);
     // Stepping back moves the resume point but never shrinks the passed share.
     await place(path, stepped.id, reader, examples[1]!.id);
     const mine = await progress(path, reader);
     expect(mine.positions).toEqual([expect.objectContaining({ lessonId: stepped.id, stepKey: examples[1]!.id, stepIndex: 1, passedSteps: 2 })]);
-    expect(mine.participants.find((entry) => entry.user.id === readerId)).toMatchObject({ completedLessons: 0, percent: 25 });
+    expect(mine.participants.find((entry) => entry.user.id === readerId)).toMatchObject({ completedLessons: 0, percent: 37 });
     // Other members see the percentage but never the reader's position.
     const theirs = await progress(path, owner);
     expect(theirs.positions).toEqual([]);
-    expect(theirs.participants.find((entry) => entry.user.id === readerId)?.percent).toBe(25);
+    expect(theirs.participants.find((entry) => entry.user.id === readerId)?.percent).toBe(37);
     // Finishing counts the whole lesson and clears its position; replaying it saves a position that no longer adds progress.
     await complete(path, stepped.id, reader);
     expect((await progress(path, reader)).positions).toEqual([]);
@@ -137,8 +137,11 @@ describe("Lesson positions", () => {
 
   it("resolves steps against the published document and survives edits", async () => {
     const { readerId, owner, reader, path, examples, stepped, steppedPath } = await stepSetup();
-    await place(path, stepped.id, reader, examples[3]!.id);
-    expect(await percentOf(path, reader, readerId)).toBe(37);
+    // Reaching the last step of a lesson without practices completes it.
+    const last = lessonPositionResponseSchema.parse(await (await place(path, stepped.id, reader, examples[3]!.id)).json());
+    expect(last.completed).toBe(true);
+    expect((await progress(path, reader)).completedLessonIds).toEqual([stepped.id]);
+    expect(await percentOf(path, reader, readerId)).toBe(50);
     // An inserted step moves the index while the key still finds the same example.
     const edited = documentOf(blocks.example("Nul"), ...examples);
     await saveDraft(steppedPath, owner, edited, (await readLesson(steppedPath, owner)).draft!.version);
@@ -151,6 +154,42 @@ describe("Lesson positions", () => {
     expect(await errorCode(unknown)).toBe("LESSON_STEP_NOT_FOUND");
     expect((await place(path, stepped.id, reader, "step-1")).status).toBe(400);
     expect((await progress(path, reader)).positions[0]).toMatchObject({ stepIndex: 4 });
+  });
+
+  it("weighs reading and practices half each, and completes the lesson once both are whole", async () => {
+    const { readerId, groupId, course, owner, reader, path, second } = await setup();
+    await request(`${path}/lessons/${second.id}`, owner, undefined, "DELETE");
+    const examples = ["Een", "Twee"].map((sentence) => blocks.example(sentence));
+    const item = (prompt: string) => ({ prompt, authorsVersion: ["x"], note: null });
+    const [both, one] = [blocks.practice({ instruction: "Vertaal.", passage: null, items: [item("Een"), item("Twee")] }), blocks.practice({ instruction: "Schrijf.", passage: null, items: [item("Drie")] })];
+    const mixed = await createLesson(groupId, course.id, owner, "Mixed", { document: documentOf(examples[0]!, examples[1]!, both, one) });
+    const answer = async (practiceId: string, answered: number) =>
+      practiceProgressResponseSchema.parse(await (await request(`${mixed.path}/blocks/${practiceId}/progress`, reader, { answered }, "PUT")).json());
+    // One of two reading steps is a quarter of the lesson, an eighth of the course's two lessons.
+    await place(path, mixed.lesson.id, reader, examples[0]!.id);
+    expect(await percentOf(path, reader, readerId)).toBe(12);
+    // A practice counts only once every question has an answer; each of the two weighs a quarter of the lesson.
+    await answer(both.id, 1);
+    expect(await percentOf(path, reader, readerId)).toBe(12);
+    expect((await answer(both.id, 2)).lessonCompleted).toBe(false);
+    expect(await percentOf(path, reader, readerId)).toBe(25);
+    // Reading to the end is not enough while a practice remains.
+    expect(lessonPositionResponseSchema.parse(await (await place(path, mixed.lesson.id, reader, examples[1]!.id)).json()).completed).toBe(false);
+    expect(await percentOf(path, reader, readerId)).toBe(37);
+    // The last practice completes the lesson, which then counts whole and drops its position.
+    expect((await answer(one.id, 1)).lessonCompleted).toBe(true);
+    const after = await progress(path, reader);
+    expect(after.completedLessonIds).toEqual([mixed.lesson.id]);
+    expect(after.positions).toEqual([]);
+    expect(await percentOf(path, reader, readerId)).toBe(50);
+  });
+
+  it("falls back to the passed share of all steps for a position saved before reading steps were counted", async () => {
+    const { readerId, reader, path, examples, stepped } = await stepSetup();
+    await place(path, stepped.id, reader, examples[1]!.id);
+    await env.DB.prepare("UPDATE course_lesson_positions SET reading_reached = NULL, reading_total = NULL WHERE lesson_id = ?").bind(stepped.id).run();
+    // One of four steps passed in one of two lessons.
+    expect(await percentOf(path, reader, readerId)).toBe(12);
   });
 
   it("ignores unpublished lessons and forgets deleted ones", async () => {

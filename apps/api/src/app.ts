@@ -72,7 +72,7 @@ import {
   speechRecognitionTokenResponseSchema, SPEECH_RECOGNITION_TOKEN_TTL_MS,
 } from "@wordinator/contracts";
 import {
-  LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, wordDrillDeckSchema, wordDrillDirectionSchema, wordDrillGradeRequestSchema, wordDrillGradeResponseSchema, wordDrillQuerySchema, findPublishProblems, flattenToSteps, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
+  LESSON_DOCUMENT_SCHEMA_VERSION, collectImageUrls, collectLessonWords, collectPracticeIds, courseDetailResponseSchema, courseWordsResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordBookmarksQuerySchema, wordSearchKey, wordSearchPageSchema, wordSearchQuerySchema, wordDrillDeckSchema, wordDrillDirectionSchema, wordDrillGradeRequestSchema, wordDrillGradeResponseSchema, wordDrillQuerySchema, findPublishProblems, flattenToSteps, readingReached, lessonDraftSavedResponseSchema, lessonImageUploadResponseSchema,
   lessonPositionRequestSchema, lessonResponseSchema, lessonStepKey, mapImageUrls, parseStoredLessonDocument, publishLessonRequestSchema, readPracticeBlock, saveLessonDraftRequestSchema,
   toLearnerDocument, walkLessonBlocks, type CourseLesson, type CourseWord, type LessonBlockOf, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
@@ -98,7 +98,8 @@ import { buildWordDrillDeck, type WordDrillMemory } from "./wordDrill";
 import { lessonMemoryKeys, memoryRebuildStatements, recordWordReviews } from "./learningData";
 import { readLessonMetrics } from "./learning/metrics";
 import { readCourseDashboard } from "./learning/dashboard";
-import { completeLesson, readLessonProgress, resetLesson } from "./learning/progress";
+import { completeIfWhole, completeLesson, readLessonProgress, resetLesson } from "./learning/progress";
+import { lessonShareColumns, shareOfRow, type LessonShareInputs } from "./learning/lessonShare";
 import { registerAttemptRoutes } from "./learning/attempts";
 import { practiceSecondsSql, readCourseTypicalTimes, readLessonTime, registerLearningTimeRoutes, typicalFields } from "./learning/time";
 import { registerAiPracticeRoutes } from "./learning/aiPracticeRoutes";
@@ -107,7 +108,7 @@ import { aiPracticeCounts, lessonAiPracticeDeletion } from "./tutor/aiPractices"
 import { recentResults } from "./wordMemory";
 import { decodeWeakCursor, readWeakWords, setWordKnown } from "./weakWords";
 import { weakWordsPageSchema, weakWordsQuerySchema, wordTermKeySchema } from "@wordinator/contracts/weak-words";
-import { courseDashboardResponseSchema, lessonMetricsResponseSchema } from "@wordinator/contracts/learning";
+import { courseDashboardResponseSchema, lessonMetricsResponseSchema, sharePercent } from "@wordinator/contracts/learning";
 
 export type Bindings = Env & { MEDIA: R2Bucket; PUBLIC_MEDIA_BASE_URL: string };
 type Language = "nl" | "de";
@@ -2110,12 +2111,12 @@ app.get(lessonPath, requireGroupAccess, async (context) => {
   return lessonResponse(context, found.row, lesson.lesson.id);
 });
 
-// Progress counts finished lessons among the currently published ones, plus the passed share of each published lesson a member
-// has started but not finished, for every active member of the course's group. Members are listed by name, never ranked by progress.
+// Progress is the average lesson share over the currently published lessons (a finished lesson counts whole; see
+// learning/lessonShare.ts), for every active member of the course's group. Members are listed by name, never ranked by progress.
 const PUBLISHED_POSITION_JOIN = "JOIN course_lessons l ON l.id = p.lesson_id AND l.group_id = p.group_id AND l.published_doc IS NOT NULL";
 async function progressResponse(context: Context<AppEnvironment>, course: CourseRow) {
   const db = context.env.DB; const viewerId = context.get("user")!.id;
-  const [published, mine, positions, practices, members] = await Promise.all([
+  const [published, mine, positions, practices, members, lessonShares] = await Promise.all([
     db.prepare("SELECT COUNT(*) AS total FROM course_lessons WHERE group_id = ? AND course_id = ? AND published_doc IS NOT NULL").bind(course.groupId, course.id).first<{ total: number }>(),
     db.prepare("SELECT lesson_id AS lessonId FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND user_id = ? ORDER BY completed_at")
       .bind(course.groupId, course.id, viewerId).all<{ lessonId: string }>(),
@@ -2137,18 +2138,22 @@ async function progressResponse(context: Context<AppEnvironment>, course: Course
     db.prepare(
       `SELECT u.id, u.display_name AS displayName, u.avatar_key AS avatarKey,
         (SELECT COUNT(*) FROM course_lesson_completions clc JOIN course_lessons l ON l.id = clc.lesson_id AND l.group_id = clc.group_id AND l.published_doc IS NOT NULL
-          WHERE clc.group_id = m.group_id AND clc.course_id = ? AND clc.user_id = m.user_id) AS completed,
-        (SELECT COALESCE(SUM(CAST(p.passed_steps AS REAL) / p.total_steps), 0) FROM course_lesson_positions p ${PUBLISHED_POSITION_JOIN}
-          WHERE p.group_id = m.group_id AND p.course_id = ? AND p.user_id = m.user_id
-            AND NOT EXISTS (SELECT 1 FROM course_lesson_completions clc WHERE clc.lesson_id = p.lesson_id AND clc.user_id = p.user_id)) AS started
+          WHERE clc.group_id = m.group_id AND clc.course_id = ? AND clc.user_id = m.user_id) AS completed
        FROM memberships m JOIN users u ON u.id = m.user_id
        WHERE m.group_id = ? AND m.state = 'active'
        ORDER BY u.display_name COLLATE NOCASE ASC, u.id ASC`,
-    ).bind(course.id, course.id, course.groupId).all<{ id: string; displayName: string; avatarKey: string | null; completed: number; started: number }>(),
+    ).bind(course.id, course.groupId).all<{ id: string; displayName: string; avatarKey: string | null; completed: number }>(),
+    // Each active member's share of each published lesson (half reading, half practices; see learning/lessonShare.ts).
+    db.prepare(
+      `SELECT m.user_id AS userId, ${lessonShareColumns("m.user_id")}
+       FROM memberships m JOIN course_lessons l ON l.group_id = m.group_id AND l.course_id = ? AND l.published_doc IS NOT NULL
+       WHERE m.group_id = ? AND m.state = 'active'`,
+    ).bind(course.id, course.groupId).all<LessonShareInputs & { userId: string }>(),
   ]);
   const total = published?.total ?? 0;
-  // The small epsilon keeps sums such as 1/3 + 2/3 from rounding down a whole lesson.
-  const percent = (lessons: number) => total ? Math.min(100, Math.floor((lessons / total) * 100 + 1e-9)) : 0;
+  const shares = new Map<string, number>();
+  for (const row of lessonShares.results) shares.set(row.userId, (shares.get(row.userId) ?? 0) + shareOfRow(row));
+  const percent = (userId: string) => total ? sharePercent((shares.get(userId) ?? 0) / total) : 0;
   return context.json(courseProgressResponseSchema.parse({
     publishedLessons: total,
     completedLessonIds: mine.results.map((row) => row.lessonId),
@@ -2156,7 +2161,7 @@ async function progressResponse(context: Context<AppEnvironment>, course: Course
     practices: Object.fromEntries(practices.results.map(({ lessonId, done, practicedAt }) => [lessonId, { done, practicedAt }])),
     participants: members.results.map((row) => ({
       user: { id: row.id, displayName: row.displayName, avatarUrl: mediaUrl(context.env, row.avatarKey) },
-      completedLessons: row.completed, percent: percent(row.completed + row.started),
+      completedLessons: row.completed, percent: percent(row.id),
     })),
   }));
 }
@@ -2548,8 +2553,9 @@ app.post(`${lessonPath}/reset`, requireGroupAccess, async (context) => {
   return progressResponse(context, found.row);
 });
 
-// The lesson player saves the step a member is on, so they can resume and so a started lesson counts in part toward progress.
-// The key is resolved against the published document; the furthest share passed never shrinks, even when the reader steps back.
+// The lesson player and the lesson page save the step a member is on, so they can resume and so a started lesson counts in part
+// toward progress. The key is resolved against the published document; the furthest share passed never shrinks, even when the
+// reader steps back.
 app.put(`${lessonPath}/position`, requireGroupAccess, async (context) => {
   const found = await visibleCourse(context); if ("error" in found) return found.error;
   if (found.row.status === "archived") return apiError(context, 409, "COURSE_ARCHIVED", "Restore this course before changing it.");
@@ -2559,15 +2565,22 @@ app.put(`${lessonPath}/position`, requireGroupAccess, async (context) => {
   const steps = flattenToSteps(storedDocument(lesson.lesson.publishedDoc, lesson.lesson.id));
   const stepIndex = steps.findIndex((step) => lessonStepKey(step) === parsed.data.stepKey);
   if (stepIndex < 0) return apiError(context, 409, "LESSON_STEP_NOT_FOUND", "This lesson has changed. Reopen it to continue.");
+  // Reading steps reached (every step but practice questions) feed the reading half of the lesson share, and never shrink either.
+  const reading = readingReached(steps, stepIndex);
+  const target = { groupId: found.row.groupId, courseId: found.row.id, lessonId: lesson.lesson.id, userId: context.get("user")!.id };
   const position = await context.env.DB.prepare(
-    `INSERT INTO course_lesson_positions (group_id, course_id, lesson_id, user_id, step_key, step_index, passed_steps, total_steps, updated_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `INSERT INTO course_lesson_positions (group_id, course_id, lesson_id, user_id, step_key, step_index, passed_steps, total_steps, reading_reached, reading_total, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
      ON CONFLICT (lesson_id, user_id) DO UPDATE SET step_key = excluded.step_key, step_index = excluded.step_index,
        passed_steps = MAX(excluded.passed_steps, MIN(course_lesson_positions.passed_steps, excluded.total_steps - 1)),
-       total_steps = excluded.total_steps, updated_at = excluded.updated_at
+       total_steps = excluded.total_steps,
+       reading_reached = MIN(MAX(excluded.reading_reached, COALESCE(course_lesson_positions.reading_reached, 0)), excluded.reading_total),
+       reading_total = excluded.reading_total, updated_at = excluded.updated_at
      RETURNING lesson_id AS lessonId, step_key AS stepKey, step_index AS stepIndex, passed_steps AS passedSteps, total_steps AS totalSteps, updated_at AS updatedAt`,
-  ).bind(found.row.groupId, found.row.id, lesson.lesson.id, context.get("user")!.id, parsed.data.stepKey, stepIndex, stepIndex, steps.length, Date.now()).first();
-  return context.json(lessonPositionResponseSchema.parse({ position }));
+  ).bind(target.groupId, target.courseId, target.lessonId, target.userId, parsed.data.stepKey, stepIndex, stepIndex, steps.length, reading.reached, reading.total, Date.now()).first();
+  // Reaching the end with every practice done completes the lesson (docs/courses.md#progress).
+  const completed = await completeIfWhole(context.env.DB, target, storedDocument(lesson.lesson.publishedDoc, lesson.lesson.id));
+  return context.json(lessonPositionResponseSchema.parse({ position, completed }));
 });
 
 app.patch(lessonPath, requireGroupAccess, async (context) => {
@@ -2738,7 +2751,7 @@ async function practiceBlock(context: Context<AppEnvironment>, write: boolean) {
   const publishedBlock = find(published);
   const block = publishedBlock ?? (seesCourseDrafts(found.row, context.get("user")!.id) ? find(draft) : undefined);
   if (!block) return { error: apiError(context, 404, "PRACTICE_NOT_FOUND", "This practice is not available.") };
-  return { course: found.row, lessonId: lesson.lesson.id, block, published: Boolean(publishedBlock), practice: readPracticeBlock(block) };
+  return { course: found.row, lessonId: lesson.lesson.id, block, published: Boolean(publishedBlock), publishedDocument: published, practice: readPracticeBlock(block) };
 }
 
 const practicePath = `${lessonPath}/blocks/:blockId`;
@@ -2760,7 +2773,9 @@ app.put(`${practicePath}/progress`, requireGroupAccess, async (context) => {
       updated_at = excluded.updated_at`)
     .bind(found.block.id, groupId, courseId, found.lessonId, user.id, parsed.data.answered, Date.now(), questions).run();
   const progress = await practiceProgress(context.env.DB, groupId, user.id, new Map([[found.block.id, questions]]));
-  return context.json(practiceProgressResponseSchema.parse({ progress: progress[found.block.id] }));
+  // The last practice done after the reading is done completes the lesson (docs/courses.md#progress).
+  const lessonCompleted = await completeIfWhole(context.env.DB, { groupId, courseId, lessonId: found.lessonId, userId: user.id }, found.publishedDocument!);
+  return context.json(practiceProgressResponseSchema.parse({ progress: progress[found.block.id], lessonCompleted }));
 });
 
 // Practice and pronunciation attempts (C14b) live in their own module.

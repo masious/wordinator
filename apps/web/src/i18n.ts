@@ -523,6 +523,8 @@ export const resources = {
           noWords: "This lesson has no new words.",
           practice: "Practice again",
           practiceNamed: "Practice lesson {{number}} again: {{title}}",
+          practiceFirst: "Practice",
+          practiceFirstNamed: "Practice lesson {{number}}: {{title}}",
           practicesTitle: "Practices in lesson {{number}}",
           noPractices: "This lesson has no practices.",
           typical: "Typically about {{minutes}} min",

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { courseDashboardResponseSchema, learningActivityQuerySchema, learningGoalSchema, learningTimeRequestSchema, lessonMetricsResponseSchema, localDayOf, practiceAttemptRequestSchema, pronunciationAttemptRequestSchema, PRONUNCIATION_WORDS_MAX } from "./learning";
+import { lessonShare, sharePercent, courseDashboardResponseSchema, learningActivityQuerySchema, learningGoalSchema, learningTimeRequestSchema, lessonMetricsResponseSchema, localDayOf, practiceAttemptRequestSchema, pronunciationAttemptRequestSchema, PRONUNCIATION_WORDS_MAX } from "./learning";
 
 describe("practiceAttemptRequestSchema", () => {
   it("accepts an item and a non-empty answer up to 2,000 characters", () => {
@@ -130,5 +130,28 @@ describe("learningActivityQuerySchema", () => {
     expect(learningActivityQuerySchema.safeParse({ range: "month", end: "2026-10-20" }).success).toBe(true);
     expect(learningActivityQuerySchema.safeParse({ range: "year", end: "2026-10-20" }).success).toBe(false);
     expect(learningActivityQuerySchema.safeParse({ range: "week", end: "2026-13-01" }).success).toBe(false);
+  });
+});
+
+describe("lessonShare", () => {
+  const base = { completed: false, readingShare: 0, hasReading: true, practicesDone: 0, practicesTotal: 0 };
+  it("weighs reading and practices half each, and counts a completion whole", () => {
+    expect(lessonShare({ ...base, readingShare: 0.5, practicesDone: 1, practicesTotal: 4 })).toBe(0.375);
+    expect(lessonShare({ ...base, readingShare: 1, practicesDone: 4, practicesTotal: 4 })).toBe(1);
+    expect(lessonShare({ ...base, completed: true })).toBe(1);
+  });
+  it("is all reading without practices and all practices without reading steps", () => {
+    expect(lessonShare({ ...base, readingShare: 0.75 })).toBe(0.75);
+    expect(lessonShare({ ...base, hasReading: false, practicesDone: 1, practicesTotal: 2 })).toBe(0.5);
+    expect(lessonShare({ ...base, hasReading: false })).toBe(0);
+  });
+  it("keeps its inputs in bounds", () => {
+    expect(lessonShare({ ...base, readingShare: 1.4, practicesDone: 5, practicesTotal: 2 })).toBe(1);
+    expect(lessonShare({ ...base, readingShare: -1 })).toBe(0);
+  });
+  it("turns a share into a whole percentage, rounded down", () => {
+    expect(sharePercent(0.375)).toBe(37);
+    expect(sharePercent(1 / 3 + 2 / 3)).toBe(100);
+    expect(sharePercent(0.999)).toBe(99);
   });
 });

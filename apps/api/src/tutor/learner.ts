@@ -1,4 +1,6 @@
+import { sharePercent } from "@wordinator/contracts/learning";
 import { wordSearchKey } from "@wordinator/contracts/lesson-document";
+import { lessonShareColumns, shareOfRow, type LessonShareInputs } from "../learning/lessonShare";
 import { courseVisibleClause } from "../courseVisibility";
 import { readWeakWords } from "../weakWords";
 import { accountLibrary, readableLessonsFrom } from "./library";
@@ -15,7 +17,7 @@ export async function recentLessons(db: D1Database, userId: string, limit: numbe
   const from = readableLessonsFrom(userId);
   const rows = await db.prepare(
     `SELECT rl.lessonId, rl.title, rl.courseId, rl.courseTitle,
-       clc.completed_at IS NOT NULL AS completed, p.passed_steps AS passedSteps, p.total_steps AS totalSteps,
+       clc.completed_at IS NOT NULL AS completed,
        MAX(COALESCE(p.updated_at, 0), COALESCE(clc.completed_at, 0)) AS at
      FROM (SELECT l.id AS lessonId, l.title, c.id AS courseId, c.title AS courseTitle ${from.sql}) rl
      LEFT JOIN course_lesson_positions p ON p.lesson_id = rl.lessonId AND p.user_id = ?
@@ -23,10 +25,14 @@ export async function recentLessons(db: D1Database, userId: string, limit: numbe
      WHERE p.lesson_id IS NOT NULL OR clc.lesson_id IS NOT NULL
      ORDER BY at DESC, rl.lessonId LIMIT ?`,
   ).bind(...from.values, userId, userId, limit)
-    .all<Omit<RecentLesson, "completed" | "storylinePercent"> & { completed: number; passedSteps: number | null; totalSteps: number | null }>();
-  return rows.results.map(({ passedSteps, totalSteps, completed, ...row }) => ({
-    ...row, completed: completed === 1,
-    storylinePercent: completed === 1 ? 100 : totalSteps ? Math.min(100, Math.floor(((passedSteps ?? 0) / totalSteps) * 100)) : null,
+    .all<Omit<RecentLesson, "completed" | "storylinePercent"> & { completed: number }>();
+  // The lesson share (half reading, half practices; see learning/lessonShare.ts) of each of those lessons.
+  const shares = await db.prepare(`SELECT l.id AS lessonId, ${lessonShareColumns("?1")} FROM course_lessons l
+    WHERE l.id IN (SELECT value FROM json_each(?2)) AND l.published_doc IS NOT NULL`)
+    .bind(userId, JSON.stringify(rows.results.map((row) => row.lessonId))).all<LessonShareInputs & { lessonId: string }>();
+  const share = new Map(shares.results.map((row) => [row.lessonId, sharePercent(shareOfRow(row))]));
+  return rows.results.map(({ completed, ...row }) => ({
+    ...row, completed: completed === 1, storylinePercent: completed === 1 ? 100 : share.get(row.lessonId) ?? null,
   }));
 }
 

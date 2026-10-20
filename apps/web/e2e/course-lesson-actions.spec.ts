@@ -24,7 +24,7 @@ test("each lesson on the course page starts or continues, reviews its words, and
   // A lesson without words or practices offers only its start.
   await expect(page.getByRole("button", { name: `Start lesson 2: ${suffix} second` })).toBeVisible();
   await expect(page.getByRole("button", { name: `Review the words of lesson 2: ${suffix} second` })).toHaveCount(0);
-  await expect(page.getByRole("button", { name: `Practice lesson 2 again: ${suffix} second` })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: `Practice lesson 2: ${suffix} second` })).toHaveCount(0);
 
   // Review words shows the lesson's own words as cards.
   await page.getByRole("button", { name: `Review the words of lesson 1: ${first}` }).click();
@@ -34,8 +34,8 @@ test("each lesson on the course page starts or continues, reviews its words, and
   await page.keyboard.press("Escape");
   await expect(recap).toHaveCount(0);
 
-  // Practice again lists the lesson's practices and opens the chosen one's answer set.
-  await page.getByRole("button", { name: `Practice lesson 1 again: ${first}` }).click();
+  // Practice lists the lesson's practices and opens the chosen one's answer set.
+  await page.getByRole("button", { name: `Practice lesson 1: ${first}` }).click();
   const practices = page.getByRole("dialog", { name: "Practices in lesson 1" });
   await expect(practices.getByRole("button", { name: /Vertaal\./ })).toContainText("1 question");
   await practices.getByRole("button", { name: /Maak een vraag\./ }).click();
@@ -44,9 +44,9 @@ test("each lesson on the course page starts or continues, reviews its words, and
   await expect(practices.getByRole("button", { name: /Maak een vraag\./ })).toContainText("Done");
   await page.keyboard.press("Escape");
 
-  // Start opens the lesson's own page (the player is retired from the course page); once a place is saved in the lesson, its
-  // action turns into Continue, which opens the page at that place.
-  await page.getByRole("button", { name: `Start lesson 1: ${first}` }).click();
+  // An answered practice puts the lesson under way, so its play action reads Continue and opens the lesson's own page at its top
+  // (the player is retired from the course page); once a place is saved in the lesson, Continue opens the page at that place.
+  await page.getByRole("button", { name: `Continue lesson 1: ${first}` }).click();
   await expect(page).toHaveURL(/\/lessons\/[^/?]+$/);
   await expect(page.getByRole("dialog")).toHaveCount(0);
   await api(`/courses/${course.id}/lessons/${firstId}/position`, { stepKey: opening.id }, "PUT");

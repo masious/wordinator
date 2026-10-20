@@ -588,6 +588,16 @@ describe("Lesson actions", () => {
   };
   const lessonReads = () => vi.mocked(fetch).mock.calls.filter(([path]) => /\/lessons\/[^/]+$/.test(String(path)));
 
+  it("continues a lesson started only by its practices, and offers Practice until every practice is done", async () => {
+    withProgress(progress([], [], { [lessonId(1)]: { done: 1, practicedAt: 1 }, [lessonId(2)]: { done: 1, practicedAt: 1 } }));
+    const blocks = [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")];
+    renderLessons({ course: course(false), outline: [summary(1, true, { practiceCount: 2 }), summary(2, true, { practiceCount: 1 })], lessons: [lesson(1, blocks), lesson(2, blocks)] });
+    // Answered practices count toward the lesson, so it is under way without a saved step.
+    expect(await screen.findByRole("button", { name: "Continue lesson 1: Lesson title 1" })).toHaveTextContent("Continue");
+    expect(screen.getByRole("button", { name: "Practice lesson 1: Lesson title 1" })).toHaveTextContent("Practice");
+    expect(screen.getByRole("button", { name: "Practice lesson 2 again: Lesson title 2" })).toHaveTextContent("Practice again");
+  });
+
   it("opens each lesson's page by the viewer's state: start, continue at the saved step, or start a finished one again", async () => {
     const saved = { lessonId: lessonId(2), stepKey: "50000000-0000-4000-8000-000000000002", stepIndex: 1, passedSteps: 1, totalSteps: 2, updatedAt: 1 };
     withProgress(progress([lessonId(1)], [saved]));
@@ -597,7 +607,7 @@ describe("Lesson actions", () => {
     expect(screen.getByRole("button", { name: "Start lesson 3: Lesson title 3" })).toHaveTextContent("Start");
     // Lessons without words or practices offer nothing to review or practice.
     expect(screen.queryByRole("button", { name: /^Review the words of lesson/ })).not.toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: /^Practice lesson \d+ again:/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /^Practice lesson \d+/ })).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Continue lesson 2: Lesson title 2" }));
     await waitFor(() => expect(landed(router)).toEqual({ path: "/courses/dutch-foundations/lessons/lesson-title-2", search: { resume: true } }));
     fireEvent.click(screen.getByRole("button", { name: "Start lesson 1 again: Lesson title 1" }));
@@ -657,7 +667,7 @@ describe("Lesson actions", () => {
       return original(input, init);
     });
     renderLessons({ course: course(false), outline: [summary(1, true, { practiceCount: 2 })], lessons: [lesson(1)] });
-    fireEvent.click(await screen.findByRole("button", { name: "Practice lesson 1 again: Lesson title 1" }));
+    fireEvent.click(await screen.findByRole("button", { name: "Practice lesson 1: Lesson title 1" }));
     const dialog = await screen.findByRole("dialog", { name: "Practices in lesson 1" });
     const first = await within(dialog).findByRole("button", { name: /Translate\./ });
     expect(first).toHaveTextContent("Done");
@@ -683,7 +693,7 @@ describe("Lesson actions", () => {
 
   it("gives each practice its typical time from the course read", async () => {
     renderLessons({ course: course(false), outline: [{ ...summary(1, true, { practiceCount: 1 }), typicalSeconds: 600, typicalPractices: { [practice.id]: 300 } }], lessons: [lesson(1, [practice])] });
-    fireEvent.click(await screen.findByRole("button", { name: "Practice lesson 1 again: Lesson title 1" }));
+    fireEvent.click(await screen.findByRole("button", { name: "Practice lesson 1: Lesson title 1" }));
     const dialog = await screen.findByRole("dialog", { name: "Practices in lesson 1" });
     expect(await within(dialog).findByRole("button", { name: /Translate\./ })).toHaveTextContent("Typically about 5 min");
   });
@@ -695,6 +705,6 @@ describe("Lesson actions", () => {
     const archived = { ...course(true), status: "archived" as const };
     renderLessons({ course: archived, outline: [summary(1, true, { wordCount: 1, practiceCount: 1 })], lessons: [lesson(1, [practice])] });
     expect(await screen.findByRole("button", { name: "Review the words of lesson 1: Lesson title 1" })).toBeInTheDocument();
-    expect(screen.queryByRole("button", { name: "Practice lesson 1 again: Lesson title 1" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Practice lesson 1: Lesson title 1" })).not.toBeInTheDocument();
   });
 });

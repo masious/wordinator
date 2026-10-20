@@ -82,12 +82,12 @@ describe("Lesson progress read", () => {
     // Finishing the second lesson leaves the first missed; a review of "de hond" in the first lesson counts in the second too.
     expect((await complete(s.path, s.second.id, s.reader)).status).toBe(200);
     await grade(s.path, s.first.id, s.hond.id, s.reader);
-    await saveProgress(s.path, s.first.id, s.practice.id, 2, s.reader);
+    // Three of four reading steps in a lesson without practices is 75% of it.
     expect((await place(s.path, s.third.id, s.thirdSteps[2]!.id, s.reader)).status).toBe(200);
     const progressed = await lessonProgress(s.path, s.reader);
     expect(progressed).toMatchObject({ complete: false, completedLessons: 1, missedLessons: 1 });
-    expect(progressed.lessons.map(({ state, storylinePercent }) => [state, storylinePercent])).toEqual([["missed", 0], ["completed", 100], ["in_progress", 50]]);
-    expect(progressed.lessons[0]).toMatchObject({ practicesDone: 1, practicesTotal: 1, wordsReviewed: 1, wordsTotal: 2 });
+    expect(progressed.lessons.map(({ state, storylinePercent }) => [state, storylinePercent])).toEqual([["missed", 0], ["completed", 100], ["in_progress", 75]]);
+    expect(progressed.lessons[0]).toMatchObject({ practicesDone: 0, practicesTotal: 1, wordsReviewed: 1, wordsTotal: 2 });
     expect(progressed.lessons[1]).toMatchObject({ wordsReviewed: 1, wordsTotal: 1 });
     // Another account sees none of it.
     const others = await lessonProgress(s.path, s.other);
@@ -97,6 +97,11 @@ describe("Lesson progress read", () => {
     // Completing the last lesson completes the course with the missed lesson counted separately.
     expect((await complete(s.path, s.third.id, s.reader)).status).toBe(200);
     expect(await lessonProgress(s.path, s.reader)).toMatchObject({ complete: true, completedLessons: 2, missedLessons: 1 });
+    // A practice done in the missed lesson starts it: half of it is its one practice, and the course is no longer complete.
+    await saveProgress(s.path, s.first.id, s.practice.id, 2, s.reader);
+    const practised = await lessonProgress(s.path, s.reader);
+    expect(practised).toMatchObject({ complete: false, missedLessons: 0 });
+    expect(practised.lessons[0]).toMatchObject({ state: "in_progress", storylinePercent: 50, practicesDone: 1, practicesTotal: 1 });
   });
 
   it("refuses anonymous requests, outsiders, and hidden courses", async () => {

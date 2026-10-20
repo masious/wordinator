@@ -275,6 +275,13 @@ export type LessonStep = StepBase & (
   | { kind: "practiceItem"; block: LessonBlockOf<"practice">; itemIndex: number }
   | { kind: "words"; blocks: LessonBlockOf<"vocabulary">[] }
 );
+/** Reading steps are every step but practice questions; practices count toward a lesson by their answers instead. */
+export const isReadingStep = (step: LessonStep) => step.kind !== "practiceItem";
+/** How many reading steps are reached once the step at `index` is: those at or before it. */
+export function readingReached(steps: readonly LessonStep[], index: number) {
+  return { reached: steps.slice(0, index + 1).filter(isReadingStep).length, total: steps.filter(isReadingStep).length };
+}
+
 type StepShape = LessonStep extends infer S ? S extends LessonStep ? Omit<S, keyof StepBase> : never : never;
 
 const isInteractive = (block: LessonLeafBlock) => block.type === "dialogue" || block.type === "practice";

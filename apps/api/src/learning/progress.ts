@@ -1,7 +1,10 @@
 import type { LessonProgressResponse } from "@wordinator/contracts";
+import { sharePercent } from "@wordinator/contracts/learning";
+import { flattenToSteps, readingReached, readPracticeBlock, walkLessonBlocks, type LessonBlockOf, type LessonDocument } from "@wordinator/contracts/lesson-document";
 import { lessonMemoryKeys, memoryRebuildStatements } from "../learningData";
 import { aiPracticeCounts } from "../tutor/aiPractices";
 import { courseComplete, deriveLessonStates } from "./lessonStates";
+import { lessonShareColumns, shareOfRow, startedRow, type LessonShareInputs } from "./lessonShare";
 import { readingSecondsSql } from "./time";
 
 // The viewer's lesson progress, lesson completion, and lesson reset (docs/courses.md#lesson-states, #lesson-progress-tab,
@@ -12,44 +15,33 @@ export type CourseRef = { groupId: string; id: string };
 export type LessonTarget = { groupId: string; courseId: string; lessonId: string; userId: string };
 export type ProgressActor = { actor: "user" | "agent"; conversationId?: string | null };
 
-type LessonProgressRow = {
-  lessonId: string; slug: string; title: string; completed: number; passedSteps: number | null; totalSteps: number | null;
-  practicesTotal: number; practicesDone: number; wordsTotal: number; wordsReviewed: number; practiceIds: string;
+type LessonProgressRow = LessonShareInputs & {
+  lessonId: string; slug: string; title: string; wordsTotal: number; wordsReviewed: number; practiceIds: string;
 };
 
 /**
- * Every currently published lesson of the course in outline order with the viewer's derived state, storyline share, practices
- * done of total, words reviewed of total, and AI practice count, plus course completion. Practice done counts follow the
- * course progress read: a saved count is done once it reaches its practice's current number of questions.
+ * Every currently published lesson of the course in outline order with the viewer's derived state, lesson share (half reading,
+ * half practices; see lessonShare.ts), practices done of total, words reviewed of total, and AI practice count, plus course
+ * completion. A saved practice count is done once it reaches its practice's current number of questions.
  */
 export async function readLessonProgress(db: D1Database, course: CourseRef, userId: string): Promise<LessonProgressResponse> {
   const rows = await db.prepare(
-    `SELECT l.id AS lessonId, l.slug, l.title,
-       EXISTS (SELECT 1 FROM course_lesson_completions c WHERE c.lesson_id = l.id AND c.user_id = ?1) AS completed,
-       p.passed_steps AS passedSteps, p.total_steps AS totalSteps,
-       (SELECT COUNT(*) FROM json_tree(l.published_doc) WHERE json_tree.key = 'type' AND json_tree.atom = 'practice') AS practicesTotal,
-       (SELECT COALESCE(SUM(EXISTS (SELECT 1 FROM json_tree(l.published_doc) t WHERE t.key = 'id' AND t.atom = pp.practice_id
-           AND json_extract(l.published_doc, t.path || '.type') = 'practice'
-           AND pp.answered >= json_array_length(json_extract(l.published_doc, t.path || '.props.data'), '$.items'))), 0)
-         FROM course_practice_progress pp WHERE pp.lesson_id = l.id AND pp.user_id = ?1) AS practicesDone,
+    `SELECT l.id AS lessonId, l.slug, l.title, ${lessonShareColumns("?1")},
        (SELECT COUNT(*) FROM course_lesson_words w WHERE w.lesson_id = l.id) AS wordsTotal,
        (SELECT COUNT(*) FROM course_lesson_words w WHERE w.lesson_id = l.id
          AND EXISTS (SELECT 1 FROM word_memory m WHERE m.user_id = ?1 AND m.term_key = w.term_key)) AS wordsReviewed,
        (SELECT json_group_array(cp.id) FROM course_practices cp WHERE cp.lesson_id = l.id) AS practiceIds
      FROM course_lessons l
-     LEFT JOIN course_lesson_positions p ON p.lesson_id = l.id AND p.user_id = ?1
      WHERE l.group_id = ?2 AND l.course_id = ?3 AND l.published_doc IS NOT NULL
      ORDER BY l.position, l.created_at, l.id`,
   ).bind(userId, course.groupId, course.id).all<LessonProgressRow>();
   const aiPractices = await aiPracticeCounts(db, rows.results.map((row) => row.lessonId));
-  const states = deriveLessonStates(rows.results.map((row) => ({ completed: row.completed === 1, started: row.totalSteps !== null })));
+  const states = deriveLessonStates(rows.results.map((row) => ({ completed: row.shareCompleted === 1, started: startedRow(row) })));
   const lessons = rows.results.map((row, index) => {
     const state = states[index]!;
-    const storylinePercent = state === "completed" ? 100
-      : row.totalSteps ? Math.min(100, Math.floor(((row.passedSteps ?? 0) / row.totalSteps) * 100 + 1e-9)) : 0;
     return {
-      lessonId: row.lessonId, slug: row.slug, title: row.title, state, storylinePercent,
-      practicesDone: Math.min(row.practicesDone, row.practicesTotal), practicesTotal: row.practicesTotal,
+      lessonId: row.lessonId, slug: row.slug, title: row.title, state, storylinePercent: sharePercent(shareOfRow(row)),
+      practicesDone: Math.min(row.sharePracticesDone, row.sharePracticesTotal), practicesTotal: row.sharePracticesTotal,
       wordsReviewed: row.wordsReviewed, wordsTotal: row.wordsTotal, aiPracticeCount: aiPractices.get(row.lessonId) ?? 0,
       practiceIds: JSON.parse(row.practiceIds) as string[],
     };
@@ -111,4 +103,28 @@ export async function resetLesson(db: D1Database, target: LessonTarget, by: Prog
     db.prepare("DELETE FROM learning_time WHERE user_id = ? AND lesson_id = ?").bind(userId, lessonId),
     eventStatement(db, target, "lesson_reset", by, now),
   ]);
+}
+
+/**
+ * Records the lesson's completion once the viewer has reached its last reading step and answered every question of every
+ * practice, so the lesson page completes a lesson at 100%. Returns whether the lesson is complete after this call. The caller
+ * checks that the course is not archived and passes the published document.
+ */
+export async function completeIfWhole(db: D1Database, target: LessonTarget, document: LessonDocument): Promise<boolean> {
+  const steps = flattenToSteps(document);
+  const readingTotal = readingReached(steps, -1).total;
+  const practices = [...walkLessonBlocks(document.blocks)].flatMap(({ block }) => block.type === "practice"
+    ? [{ id: block.id, questions: readPracticeBlock(block as LessonBlockOf<"practice">).items.length }] : []);
+  if (!readingTotal && !practices.length) return false;
+  const [completed, position, progress] = await db.batch([
+    db.prepare("SELECT 1 AS found FROM course_lesson_completions WHERE lesson_id = ? AND user_id = ?").bind(target.lessonId, target.userId),
+    db.prepare("SELECT reading_reached AS reached FROM course_lesson_positions WHERE lesson_id = ? AND user_id = ?").bind(target.lessonId, target.userId),
+    db.prepare("SELECT practice_id AS practiceId, answered FROM course_practice_progress WHERE lesson_id = ? AND user_id = ?").bind(target.lessonId, target.userId),
+  ]);
+  if (completed?.results.length) return true;
+  const reached = (position?.results[0] as { reached: number | null } | undefined)?.reached ?? 0;
+  const answered = new Map((progress?.results as Array<{ practiceId: string; answered: number }> | undefined ?? []).map((row) => [row.practiceId, row.answered]));
+  const whole = reached >= readingTotal && practices.every((practice) => (answered.get(practice.id) ?? 0) >= practice.questions);
+  if (whole) await completeLesson(db, target, { actor: "user" });
+  return whole;
 }

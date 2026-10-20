@@ -228,7 +228,7 @@ function LessonRow({ scope, summary, number, completed, saved, practices, archiv
           </span>}
         </span>
       </Link>
-      <LessonActions scope={scope} summary={summary} number={number} completed={completed} position={saved} archived={archived} onPlay={onPlay} />
+      <LessonActions scope={scope} summary={summary} number={number} completed={completed} position={saved} practices={practices} archived={archived} onPlay={onPlay} />
     </div>
     {/* Editors still see which lessons readers cannot see yet; changing lessons happens on the manage page. */}
     {scope.contribute && (!summary.published || summary.changed) && <div className={styles.itemChips}><StateChips lesson={summary} /></div>}
@@ -447,7 +447,7 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
         aiPractices={aiOpen ? { scope: aiScope, data: aiPractices.data } : undefined} tracking={{
         // Scrolling saves the furthest step of a published lesson the viewer has not finished; previews and archived courses never save.
         save: data.published && data.document !== null && !completed && !archived && progress.isSuccess,
-        completed, position, path: lessonPath, groupId, courseId, lessonId,
+        completed, position, practicesDone: progress.data?.practices[lessonId]?.done ?? 0, path: lessonPath, groupId, courseId, lessonId,
       }} />}
     {/* The pager: Previous, the next lesson's title under Up next, and Next lesson. The links' names carry the titles. */}
     {(previous || next) && !gated && <nav className={styles.pager} aria-label={t("courses.lessons.pager")}>
