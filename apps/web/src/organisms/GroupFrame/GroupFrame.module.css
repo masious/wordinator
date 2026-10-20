@@ -128,12 +128,28 @@
 .navIcon svg { width: 1.1rem; height: 1.1rem; }
 .navLabel { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-/* Promoted (a lesson page with the course list expanded), Courses reads as the rail's heading, a level above its course list. */
-.navGroup[data-promoted] .navItem { color: var(--color-foreground); font-size: var(--text-md); font-weight: var(--weight-bold); }
-.navGroup[data-promoted] .navItem:not(:hover) { background: transparent; }
-.navGroup[data-promoted] .navIcon svg { width: 1.25rem; height: 1.25rem; }
+/* A lesson page's rail: Back to course, the lesson box, then the index, which alone scrolls. */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: fit-content;
+  margin-top: var(--space-8);
+  padding: var(--space-1) var(--space-2) var(--space-1) 0;
+  color: var(--color-foreground);
+  border-radius: var(--radius-sm);
+  font-size: var(--type-control-label);
+  font-weight: var(--weight-semibold);
+  text-decoration: none;
+}
+.back svg { width: 1.1rem; height: 1.1rem; transition: transform var(--motion-standard) var(--ease-physical); }
+.back:hover { color: var(--color-action-soft-text); }
+.back:hover svg { transform: translateX(-2px); }
+.lessonBoxSlot { flex: none; margin: var(--space-5) var(--space-5) 0 0; }
+.lessonBoxSlot:empty { display: none; }
+.railScroll.lessonScroll { margin-top: var(--space-4); }
 
-/* The compact navigation: the other items as one row of icon buttons above the lesson box. */
+/* The compact navigation: the other items as one row of icon buttons above the lesson's actions. */
 .iconRow {
   display: grid;
   grid-auto-columns: minmax(0, 1fr);
@@ -225,13 +241,23 @@
 .subItem:hover { color: var(--color-foreground); background: var(--color-wash); }
 .subItems li[hidden] { display: none; }
 
-/* The lesson page's slots: its index under the current course, its lesson box under the navigation. Empty, they take no room. */
+/* The rail's slots: the lesson's index and actions, the tutor's conversations, and a card above the profile. Empty, they take no
+   room. */
 .lessonSlot:empty, .tutorSlot:empty, .boxSlot:empty { display: none; }
-.lessonSlot { margin: var(--space-1) 0 var(--space-2); }
 .tutorSlot { min-width: 0; margin: 0 0 var(--space-3) 1.45rem; }
 /* The box keeps the profile row's end inset, so its border never meets the rail's. */
 .boxSlot { margin: var(--space-6) var(--space-5) 0 0; }
 .subItem[aria-current="page"] { color: var(--color-action-soft-text); background: var(--color-action-soft); font-weight: var(--weight-semibold); }
+/* A lesson page's Study time card, shown and hidden by the profile row's toggle: it grows in from zero height and fades in. */
+.studyReveal {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows var(--motion-standard) var(--ease-physical), opacity var(--motion-standard) ease;
+}
+.studyReveal[data-open] { grid-template-rows: 1fr; opacity: 1; }
+.studyInner { min-height: 0; overflow: hidden; }
+.studyInner > * { margin: var(--space-3) var(--space-5) 0 0; }
 
 .profile {
   display: grid;
@@ -257,7 +283,10 @@
   cursor: pointer;
 }
 .profileMenu { width: var(--control-height-sm); height: var(--control-height-sm); }
-.profileMenu:hover, .menuButton:hover { color: var(--color-action-soft-text); background: var(--color-action-soft); }
+.profileMenu:hover, .menuButton:hover, .profileMenu[aria-expanded="true"] { color: var(--color-action-soft-text); background: var(--color-action-soft); }
+/* On a lesson page the Study time toggle sits just before the account menu. */
+.profile[data-study] { grid-template-columns: auto minmax(0, 1fr) auto auto; }
+.profile[data-study] > .profileMenu:last-child { margin-left: calc(var(--space-2) - 0.7rem); }
 .profileMenu svg, .menuButton svg { width: 1.1rem; height: 1.1rem; }
 
 /* The right rail: docked to the window's right edge, sticky and full height like the app rail. Empty, it takes no column. */
@@ -333,5 +362,5 @@
 
 @media (prefers-reduced-motion: reduce) {
   .shellMain { animation: none; }
-  .navItem, .navIconItem, .disclosure svg, .railResizer::after { transition-duration: 1ms; }
+  .navItem, .navIconItem, .disclosure svg, .railResizer::after, .back svg, .studyReveal { transition-duration: 1ms; }
 }

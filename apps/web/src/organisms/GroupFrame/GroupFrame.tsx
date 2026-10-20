@@ -3,24 +3,25 @@ import { useMediaQuery } from "@mantine/hooks";
 import { okResponseSchema } from "@wordinator/contracts";
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import { BookOpen, Bookmark, ChevronDown, LogOut, Menu as MenuIcon, MessageCircle, MoreHorizontal, NotebookPen, Settings } from "lucide-react";
+import { BookOpen, Bookmark, ChartNoAxesColumnIncreasing, ChevronDown, ChevronLeft, LogOut, Menu as MenuIcon, MessageCircle, MoreHorizontal, NotebookPen, Settings } from "lucide-react";
 import { createContext, useCallback, useContext, useEffect, useId, useMemo, useRef, useState, type CSSProperties, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent, type PropsWithChildren, type ReactNode, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, coursesQueryOptions } from "../../api";
 import { Avatar } from "../../ui";
-import { StudyTimeBox } from "../StudyTime/StudyTime";
+import { StudyTimeBox, useFiguresOpen } from "../StudyTime/StudyTime";
 import type { SignedInSession } from "../types/auth";
 import styles from "./GroupFrame.module.css";
 
-// The lesson page extends the rail (docs/courses.md#lesson-pages): its index renders under the current course's sub-item and its
-// lesson box under the navigation, both through portals into the slots below. Only the rail on screen offers slots: the sticky
+// The lesson page has its own rail (docs/courses.md#lesson-pages): Back to course, then its lesson box, its index, and, above the
+// profile row, its actions, all through portals into the slots below. Only the rail on screen offers slots: the sticky
 // rail on wide screens, the drawer's copy (while open) below the rail breakpoint. `openRail` and `closeRail` open and close that
 // drawer; closing does nothing on wide screens. `reference` is the right rail, a full-height column docked to the window's right
 // edge like the app rail, where the lesson page puts its vocabulary panel; it takes room only while filled.
-export type RailSlots = { index: HTMLElement | null; tutor?: HTMLElement | null; box: HTMLElement | null; reference: HTMLElement | null; openRail: () => void; closeRail: () => void };
-export const RailSlotsContext = createContext<RailSlots>({ index: null, tutor: null, box: null, reference: null, openRail: () => undefined, closeRail: () => undefined });
+export type RailSlots = { index: HTMLElement | null; tutor?: HTMLElement | null; box: HTMLElement | null; actions?: HTMLElement | null; reference: HTMLElement | null; openRail: () => void; closeRail: () => void };
+export const RailSlotsContext = createContext<RailSlots>({ index: null, tutor: null, box: null, actions: null, reference: null, openRail: () => undefined, closeRail: () => undefined });
 export const useRailSlots = () => useContext(RailSlotsContext);
-type SlotRefs = { index: (element: HTMLElement | null) => void; tutor: (element: HTMLElement | null) => void; box: (element: HTMLElement | null) => void };
+type SlotRef = (element: HTMLElement | null) => void;
+type SlotRefs = { index: SlotRef; tutor: SlotRef; box: SlotRef; actions: SlotRef };
 // The rail's breakpoint, matching the `68rem` media query in GroupFrame.module.css.
 const RAIL_DRAWER_QUERY = "(max-width: 68rem)";
 
@@ -147,11 +148,8 @@ function SlidingLabel({ children }: { children: string }) {
 }
 
 // Every course the viewer can see, in library order, under Courses. The list loads every page so no course is out of reach.
-// Collapsed, the list still shows the current course, so a lesson's index stays in reach. `promoted` raises Courses to the rail's
-// heading while the other items are compact.
-function CourseSubItems({ groupId, pathname, slots, collapsed, onToggle, promoted }: {
-  groupId: string; pathname: string; slots: SlotRefs | null; collapsed: boolean; onToggle: () => void; promoted: boolean;
-}) {
+// Collapsed, the list still shows the current course.
+function CourseSubItems({ groupId, pathname, collapsed, onToggle }: { groupId: string; pathname: string; collapsed: boolean; onToggle: () => void }) {
   const { t } = useTranslation();
   const listId = useId();
   const courses = useInfiniteQuery(coursesQueryOptions(groupId));
@@ -162,7 +160,7 @@ function CourseSubItems({ groupId, pathname, slots, collapsed, onToggle, promote
   const isActive = (slug: string) => pathname === `/courses/${slug}` || pathname.startsWith(`/courses/${slug}/`);
   const hasActive = items.some((course) => isActive(course.slug));
   return <>
-    <div className={styles.navGroup} data-promoted={promoted || undefined}>
+    <div className={styles.navGroup}>
       <NavItem to="/courses" active={coursesActive} icon={<BookOpen />}>{t("nav.courses")}</NavItem>
       {items.length > 0 && <button type="button" className={styles.disclosure} aria-expanded={!collapsed} aria-controls={listId}
         aria-label={t(collapsed ? "nav.showCourses" : "nav.hideCourses")} onClick={onToggle}>
@@ -172,12 +170,10 @@ function CourseSubItems({ groupId, pathname, slots, collapsed, onToggle, promote
     {items.length > 0 && <ul id={listId} className={styles.subItems} hidden={collapsed && !hasActive} aria-label={t("nav.courseList")}>
       {items.map((course) => {
         const active = isActive(course.slug);
-        const reading = active && pathname.startsWith(`/courses/${course.slug}/lessons/`);
         return <li key={course.id} hidden={collapsed && !active}>
           <Link aria-current={active ? "page" : undefined} className={styles.subItem} to="/courses/$courseSlug" params={{ courseSlug: course.slug }}>
             <SlidingLabel>{course.title}</SlidingLabel>
           </Link>
-          {reading && slots && <div ref={slots.index} className={styles.lessonSlot} />}
         </li>;
       })}
     </ul>}
@@ -219,12 +215,65 @@ function useMoreBelow(scroller: RefObject<HTMLElement | null>) {
   return more;
 }
 
+// The rail's scrolling part; its bottom edge fades while there is more below.
+function RailScroll({ className, children }: { className?: string; children: ReactNode }) {
+  const scroll = useRef<HTMLDivElement>(null);
+  const moreBelow = useMoreBelow(scroll);
+  return <div ref={scroll} className={`${styles.railScroll} ${className ?? ""}`} data-rail-scroll data-more-below={moreBelow || undefined}>{children}</div>;
+}
+
+const LESSON_STUDY_OPEN_KEY = "wordinator:ui:v1:lesson-rail-study-open";
+
+// The profile row: the avatar, display name and handle, the account menu, and, on a lesson page, the Study time toggle before it.
+function Profile({ user, study }: { user: SignedInSession["user"]; study?: { open: boolean; controls: string; onToggle: () => void } }) {
+  const { t } = useTranslation();
+  return <div className={styles.profile} data-study={study ? true : undefined}>
+    <Avatar name={user.displayName} src={user.avatarUrl} tone="soft" />
+    <div className={styles.profileText}>
+      <strong>{user.displayName}</strong>
+      {user.username && <span>@{user.username}</span>}
+    </div>
+    {study && <Tooltip label={t(study.open ? "nav.hideStudyTime" : "nav.showStudyTime")} withArrow events={{ hover: true, focus: true, touch: false }}>
+      <button type="button" className={styles.profileMenu} aria-label={t("studyTime.title")} aria-expanded={study.open} aria-controls={study.controls} onClick={study.onToggle}>
+        <ChartNoAxesColumnIncreasing aria-hidden="true" />
+      </button>
+    </Tooltip>}
+    <AccountMenu trigger={<button aria-label={t("nav.accountMenu")} className={styles.profileMenu} type="button"><MoreHorizontal aria-hidden="true" /></button>} />
+  </div>;
+}
+
+// A lesson page's rail (docs/courses.md#lesson-pages): Back to course, the lesson box, and the lesson's index, which alone scrolls;
+// then the other navigation items as a row of icons, the lesson's actions, the Study time card when the profile row's toggle shows
+// it, and the profile row.
+function LessonRail({ groupId, user, courseSlug, pathname, slots, others }: {
+  groupId: string; user: SignedInSession["user"]; courseSlug: string; pathname: string; slots: SlotRefs | null;
+  others: Array<{ to: NavTarget; active: boolean; icon: ReactNode; label: string }>;
+}) {
+  const { t } = useTranslation();
+  const [studyOpen, toggleStudy] = useFiguresOpen(LESSON_STUDY_OPEN_KEY);
+  const studyId = useId();
+  return <>
+    <Link className={styles.back} to="/courses/$courseSlug" params={{ courseSlug }}><ChevronLeft aria-hidden="true" />{t("nav.backToCourse")}</Link>
+    {slots && <div ref={slots.box} className={styles.lessonBoxSlot} />}
+    <RailScroll className={styles.lessonScroll}>{slots && <div ref={slots.index} className={styles.lessonSlot} />}</RailScroll>
+    <nav className={styles.iconRow} aria-label={t("nav.primary")}>
+      <NavIcon to="/courses" active={pathname === "/courses"} icon={<BookOpen />} label={t("nav.courses")} />
+      {others.map((item) => <NavIcon key={item.to} {...item} />)}
+    </nav>
+    {slots && <div ref={slots.actions} className={styles.boxSlot} />}
+    <div id={studyId} className={styles.studyReveal} data-open={studyOpen || undefined} inert={!studyOpen}>
+      <div className={styles.studyInner}>{studyOpen && <StudyTimeBox groupId={groupId} expanded />}</div>
+    </div>
+    <Profile user={user} study={{ open: studyOpen, controls: studyId, onToggle: toggleStudy }} />
+  </>;
+}
+
 function Rail({ groupId, session, pathname, slots }: { groupId: string; session: SignedInSession; pathname: string; slots: SlotRefs | null }) {
   const { t } = useTranslation();
   const { user } = session;
   const starts = (path: string) => pathname === path || pathname.startsWith(`${path}/`);
-  // On course and lesson pages the course list follows the remembered choice; elsewhere it starts collapsed, and opening it there
-  // lasts only until the viewer leaves for a course page or another page outside them.
+  // On course pages the course list follows the remembered choice; elsewhere it starts collapsed, and opening it there lasts only
+  // until the viewer leaves for a course page or another page outside them.
   const inCourses = starts("/courses");
   const [stored, setStored] = useState(() => readCollapsed(user.id));
   const [openedOutside, setOpenedOutside] = useState(false);
@@ -234,40 +283,28 @@ function Rail({ groupId, session, pathname, slots }: { groupId: string; session:
     if (!inCourses) { setOpenedOutside((current) => !current); return; }
     setStored((current) => { writeCollapsed(user.id, !current); return !current; });
   };
-  // On a lesson page with the course list expanded, Courses becomes the rail's heading and the other items shrink to one row of
-  // icons above the lesson box, leaving the height to the course list and the lesson index.
-  const lessonPage = /^\/courses\/[^/]+\/lessons\//.test(pathname);
-  const compact = !collapsed && lessonPage;
+  const lessonCourse = /^\/courses\/([^/]+)\/lessons\//.exec(pathname)?.[1];
   const others: Array<{ to: NavTarget; active: boolean; icon: ReactNode; label: string }> = [
     { to: "/words", active: starts("/words"), icon: <Bookmark />, label: t("nav.words") },
     { to: "/journal", active: starts("/journal"), icon: <NotebookPen />, label: t("nav.journal") },
     { to: "/ai", active: starts("/ai"), icon: <MessageCircle />, label: t("nav.tutor") },
   ];
-  const scroll = useRef<HTMLDivElement>(null);
-  const moreBelow = useMoreBelow(scroll);
+  if (lessonCourse) return <div className={styles.railBody}>
+    <Brand />
+    <LessonRail groupId={groupId} user={user} courseSlug={decodeURIComponent(lessonCourse)} pathname={pathname} slots={slots} others={others} />
+  </div>;
   return <div className={styles.railBody}>
     <Brand />
-    <div ref={scroll} className={styles.railScroll} data-rail-scroll data-more-below={moreBelow || undefined}>
+    <RailScroll>
       <nav className={styles.nav} aria-label={t("nav.primary")}>
-        <CourseSubItems groupId={groupId} pathname={pathname} slots={slots} collapsed={collapsed} onToggle={toggle} promoted={compact} />
-        {!compact && others.map((item) => <NavItem key={item.to} to={item.to} active={item.active} icon={item.icon}>{item.label}</NavItem>)}
-        {!compact && starts("/ai") && slots && <div ref={slots.tutor} className={styles.tutorSlot} />}
+        <CourseSubItems groupId={groupId} pathname={pathname} collapsed={collapsed} onToggle={toggle} />
+        {others.map((item) => <NavItem key={item.to} to={item.to} active={item.active} icon={item.icon}>{item.label}</NavItem>)}
+        {starts("/ai") && slots && <div ref={slots.tutor} className={styles.tutorSlot} />}
       </nav>
-    </div>
-    {compact && <nav className={styles.iconRow} aria-label={t("nav.more")}>
-      {others.map((item) => <NavIcon key={item.to} {...item} />)}
-    </nav>}
-    {slots && <div ref={slots.box} className={styles.boxSlot} />}
-    {/* Elsewhere the rail's study time takes the lesson box's place; the course library's home dashboard already shows it. */}
-    {slots && !lessonPage && pathname !== "/courses" && <div className={styles.boxSlot}><StudyTimeBox groupId={groupId} /></div>}
-    <div className={styles.profile}>
-      <Avatar name={user.displayName} src={user.avatarUrl} tone="soft" />
-      <div className={styles.profileText}>
-        <strong>{user.displayName}</strong>
-        {user.username && <span>@{user.username}</span>}
-      </div>
-      <AccountMenu trigger={<button aria-label={t("nav.accountMenu")} className={styles.profileMenu} type="button"><MoreHorizontal aria-hidden="true" /></button>} />
-    </div>
+    </RailScroll>
+    {/* The course library's home dashboard already shows study time. */}
+    {slots && pathname !== "/courses" && <div className={styles.boxSlot}><StudyTimeBox groupId={groupId} /></div>}
+    <Profile user={user} />
   </div>;
 }
 
@@ -287,11 +324,12 @@ export function GroupFrame({ children, groupId, session, fill = false }: PropsWi
   const [indexSlot, setIndexSlot] = useState<HTMLElement | null>(null);
   const [tutorSlot, setTutorSlot] = useState<HTMLElement | null>(null);
   const [boxSlot, setBoxSlot] = useState<HTMLElement | null>(null);
-  const slotRefs = useMemo<SlotRefs>(() => ({ index: setIndexSlot, tutor: setTutorSlot, box: setBoxSlot }), []);
+  const [actionsSlot, setActionsSlot] = useState<HTMLElement | null>(null);
+  const slotRefs = useMemo<SlotRefs>(() => ({ index: setIndexSlot, tutor: setTutorSlot, box: setBoxSlot, actions: setActionsSlot }), []);
   const openRail = useCallback(() => setDrawer(true), []);
   const closeRail = useCallback(() => setDrawer(false), []);
   const [referenceSlot, setReferenceSlot] = useState<HTMLElement | null>(null);
-  const slots = useMemo<RailSlots>(() => ({ index: indexSlot, tutor: tutorSlot, box: boxSlot, reference: referenceSlot, openRail, closeRail }), [indexSlot, tutorSlot, boxSlot, referenceSlot, openRail, closeRail]);
+  const slots = useMemo<RailSlots>(() => ({ index: indexSlot, tutor: tutorSlot, box: boxSlot, actions: actionsSlot, reference: referenceSlot, openRail, closeRail }), [indexSlot, tutorSlot, boxSlot, actionsSlot, referenceSlot, openRail, closeRail]);
 
   return <RailSlotsContext.Provider value={slots}><div className={styles.shell} style={shellStyle} data-fill={fill || undefined}>
     <aside ref={rail} className={styles.rail}>

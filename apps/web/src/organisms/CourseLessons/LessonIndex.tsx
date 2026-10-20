@@ -1,11 +1,16 @@
 import { inlineText, walkLessonBlocks, type LessonDocument } from "@wordinator/contracts/lesson-document";
 import { type CSSProperties, type RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { AnimatedEmoji } from "../../molecules/AnimatedEmoji";
+import { headingCategories, type OverviewCategory } from "../LessonOverview/overviewModel";
+import { notoEmoji } from "../LessonOverview/notoEmoji";
+import { stopCategories } from "../LessonOverview/stopCategories";
 import { useRevealCurrent } from "./LessonWords";
 import styles from "./LessonIndex.module.css";
 
-// One line of a lesson's index: a heading. `depth` indents it: the document's highest heading level is depth 0.
-export type LessonIndexEntry = { id: string; text: string; depth: number };
+// One line of a lesson's index: a heading. `depth` indents it: the document's highest heading level is depth 0. `category` is
+// what its section holds, read as the overview reads its stops (Story, Grammar, a practice type, Summary, and so on).
+export type LessonIndexEntry = { id: string; text: string; depth: number; category: OverviewCategory };
 
 // The index shows only when it has at least this many entries; one entry tells the reader nothing.
 export const LESSON_INDEX_MIN = 2;
@@ -23,7 +28,8 @@ export function lessonIndexEntries(document: LessonDocument): LessonIndexEntry[]
     if (text) found.push({ id: block.id, text, level: block.props.level });
   }
   const top = Math.min(...found.map((entry) => entry.level));
-  return found.map(({ level, ...entry }) => ({ ...entry, depth: level - top }));
+  const categories = headingCategories(document, found);
+  return found.map(({ level, ...entry }) => ({ ...entry, depth: level - top, category: categories.get(entry.id) ?? "topic" }));
 }
 
 // The last entry whose top has reached `line` (window coordinates), or -1 before the first. At the bottom of the page the last
@@ -62,17 +68,34 @@ function useCurrentEntry(entries: readonly LessonIndexEntry[], reading: RefObjec
   return current;
 }
 
-// The lesson's index in the app rail, under the current course: its headings, one line each, with the one the reader is in marked
-// as current on the rule and the ones already passed muted. Choosing an entry scrolls the page to it, then calls `onJump` (the
-// phone's drawer closes). A long index scrolls with the rail's navigation, which keeps the current entry in view.
+// An entry's category as one of Noto's animated emoji on a round badge washed in the category's tone. It plays only while the
+// badge is inside the rail's scrolling part (or the window, outside it); scrolled out of view it rests on its still.
+function CategoryBadge({ category }: { category: OverviewCategory }) {
+  const badge = useRef<HTMLSpanElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const element = badge.current;
+    if (!element || typeof IntersectionObserver === "undefined") return;
+    const observer = new IntersectionObserver(([entry]) => setVisible(entry?.isIntersecting ?? false), { root: element.closest<HTMLElement>("[data-rail-scroll]") });
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, []);
+  const { emoji, codepoint, tone } = stopCategories[category];
+  return <span ref={badge} className={styles.badge} data-tone={tone}><AnimatedEmoji emoji={emoji} {...notoEmoji(codepoint)} playing={visible} /></span>;
+}
+
+// The lesson's index in the app rail, under the lesson box: its headings, one row each after their category's badge. Entries
+// the reader has not reached are grey; the one they are in and those already passed are in colour, the current one on the soft
+// accent. Choosing an entry scrolls the page to it, then calls `onJump` (the phone's drawer closes). A long index scrolls with the
+// rail's scrolling part, which keeps the current entry in view.
 export function LessonIndex({ entries, reading, side, onJump }: {
   entries: readonly LessonIndexEntry[]; reading: RefObject<HTMLElement | null>; side: RefObject<HTMLElement | null>; onJump?: () => void;
 }) {
   const { t } = useTranslation();
   const list = useRef<HTMLElement>(null);
   const current = useCurrentEntry(entries, reading, side);
-  // Entries keep to one line in the rail, so each also carries its full label as a tooltip.
-  // The index scrolls with the rail's navigation, so that is where the current entry is kept in view.
+  // Entries keep to two lines in the rail, so each also carries its full label as a tooltip.
+  // The index scrolls with the rail's scrolling part, so that is where the current entry is kept in view.
   const scroller = useRef<HTMLElement | null>(null);
   useLayoutEffect(() => { scroller.current = list.current?.closest<HTMLElement>("[data-rail-scroll]") ?? list.current; });
   useRevealCurrent(scroller, current >= 0 ? entries[current]!.id : "", '[aria-current="location"]');
@@ -84,11 +107,11 @@ export function LessonIndex({ entries, reading, side, onJump }: {
     onJump?.();
   };
   return <nav ref={list} className={styles.index} aria-label={t("courses.lessons.index.title")}>
-    <p className={styles.title} aria-hidden="true">{t("courses.lessons.index.title")}</p>
     <ol className={styles.list}>{entries.map((entry, index) => <li key={entry.id}>
-      <button type="button" className={styles.entry} data-passed={index < current || undefined}
+      <button type="button" className={styles.entry} data-state={index < current ? "passed" : index === current ? "current" : "upcoming"}
         style={{ "--index-depth": entry.depth } as CSSProperties} aria-current={index === current ? "location" : undefined} title={entry.text} onClick={() => jump(entry.id)}>
-        {entry.text}
+        <CategoryBadge category={entry.category} />
+        <span className={styles.label}>{entry.text}</span>
       </button>
     </li>)}</ol>
   </nav>;

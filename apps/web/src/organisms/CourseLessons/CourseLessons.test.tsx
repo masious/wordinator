@@ -78,7 +78,7 @@ const renderLesson = (detail: CourseDetailResponse, id = lessonId(1), resume = f
 // The lesson page inside the frame's rails: the index, lesson box, and right-rail slots are plain elements here.
 function renderInRails(detail: CourseDetailResponse, id = lessonId(1), openRail = vi.fn(), closeRail = vi.fn()) {
   const slot = (name: string) => { const element = document.createElement("div"); element.dataset.slot = name; document.body.append(element); return element; };
-  const slots = { index: slot("index"), box: slot("box"), reference: slot("reference"), openRail, closeRail };
+  const slots = { index: slot("index"), box: slot("box"), actions: slot("actions"), reference: slot("reference"), openRail, closeRail };
   const rendered = renderWithRouter(<RailSlotsContext.Provider value={slots}>
     <LessonView groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} lessonId={id} dataUpdatedAt={Date.now()} />
   </RailSlotsContext.Provider>);
@@ -259,7 +259,7 @@ describe("Course lessons", () => {
   });
 
   const noTime = { readingSeconds: 0, practiceSeconds: 0, typical: { reading: null, practice: null } };
-  it("pins the lesson box in the rail with progress, the course drill, the tutor requests, and figures only with data", async () => {
+  it("pins the lesson box in the rail with the lesson, its progress, and figures only with data, and its actions apart", async () => {
     const original = vi.mocked(fetch).getMockImplementation()!;
     let metrics = { pronunciation: { attempts: 0, fluency: null as number | null }, words: { total: 2, practised: 0, strong: 0 }, lastStudiedAt: null as number | null, time: noTime };
     vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/metrics") ? response(metrics) : original(input, init));
@@ -267,9 +267,16 @@ describe("Course lessons", () => {
     const { slots } = renderInRails(detail);
     const box = await screen.findByRole("region", { name: "This lesson" });
     expect(slots.box.contains(box)).toBe(true);
-    expect(within(box).getByRole("progressbar", { name: "Lesson progress" })).toBeInTheDocument();
-    expect(within(box).getByRole("link", { name: "Practise words" })).toHaveAttribute("href", `/words/drill?source=course&course=${courseId}&direction=mixed`);
-    const prompt = (name: string) => new URL(within(box).getByRole("link", { name }).getAttribute("href")!, "https://wordinator.test").searchParams.get("prompt");
+    expect(within(box).getByText("Lesson 1")).toBeInTheDocument();
+    expect(within(box).getByText("Lesson title 1")).toBeInTheDocument();
+    expect(within(box).getByRole("progressbar", { name: "Progress" })).toBeInTheDocument();
+    // The lesson box has no study period switch; the lesson rail's Study time card holds today and this week.
+    expect(within(box).queryByRole("group", { name: "Study time period" })).not.toBeInTheDocument();
+    // The actions sit apart, above the profile row.
+    const actions = screen.getByRole("group", { name: "Lesson actions" });
+    expect(slots.actions.contains(actions)).toBe(true);
+    expect(within(actions).getByRole("link", { name: "Practise words" })).toHaveAttribute("href", `/words/drill?source=course&course=${courseId}&direction=mixed`);
+    const prompt = (name: string) => new URL(within(actions).getByRole("link", { name }).getAttribute("href")!, "https://wordinator.test").searchParams.get("prompt");
     expect(prompt("Ask for more practices like this")).toContain("lesson 1, “Lesson title 1”");
     // Ask AI opens a new tutor conversation prefilled to talk the lesson's grammar and topics through.
     expect(prompt("Ask AI")).toMatch(/^Let’s talk about lesson 1, “Lesson title 1”.*grammar and its topics/);
@@ -281,7 +288,7 @@ describe("Course lessons", () => {
     fireEvent.click(reveal);
     expect(within(box).getByRole("button", { name: "Hide study figures" })).toHaveAttribute("aria-expanded", "true");
     expect(document.getElementById(reveal.getAttribute("aria-controls")!)).not.toHaveAttribute("inert");
-    // Before the viewer studies the lesson, the Lesson tab says its figures are still to come.
+    // Before the viewer studies the lesson, the box says its figures are still to come.
     expect(await within(box).findByText("Your figures for this lesson show up once you study it.")).toBeInTheDocument();
     expect(within(box).queryByText("Words remembered well")).not.toBeInTheDocument();
     cleanup(); document.body.replaceChildren();
@@ -294,40 +301,6 @@ describe("Course lessons", () => {
     expect(within(filled).getByText("3 spoken attempts")).toBeInTheDocument();
     expect(within(filled).getByText("Words remembered well").nextElementSibling).toHaveTextContent("1 of 2");
     expect(within(filled).getByText("Last studied").nextElementSibling).toHaveTextContent("2 days ago");
-  });
-
-  it("switches the lesson box between the lesson's figures and today's and this week's study time, and remembers the choice", async () => {
-    const original = vi.mocked(fetch).getMockImplementation()!;
-    const metrics = { pronunciation: { attempts: 0, fluency: null }, words: { total: 2, practised: 2, strong: 1 }, lastStudiedAt: null, time: noTime };
-    const zero = { lesson: 0, grammar: 0, practice: 0, vocabulary: 0, aiPractice: 0, total: 0, aiPracticeFocus: { grammar: 0, vocabulary: 0, reading: 0, listening: 0, writing: 0 } };
-    const today = localDayOf(new Date());
-    const activity = { range: "week", from: "2026-01-01", to: today, previousTotal: 0, dailyGoalMinutes: 30, streak: 2,
-      days: [{ ...zero, day: "2026-01-01", lesson: 600, total: 600 }, { ...zero, day: today, lesson: 300, vocabulary: 240, total: 540 }],
-      totals: { ...zero, lesson: 900, vocabulary: 240, total: 1140 } };
-    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/metrics") ? response(metrics)
-      : String(input).includes("/learning-activity?range=week") ? response(activity) : original(input, init));
-    const detail = { course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000011", "De hond blaft.")])] };
-    renderInRails(detail);
-    const box = await screen.findByRole("region", { name: "This lesson" });
-    fireEvent.click(within(box).getByRole("button", { name: "Show study figures" }));
-    expect(await within(box).findByText("Words remembered well")).toBeInTheDocument();
-    fireEvent.click(within(box).getByText("Today"));
-    expect(await within(box).findByText("Lesson reading")).toBeInTheDocument();
-    expect(within(box).getByText("Lesson reading").nextElementSibling).toHaveTextContent("5 min");
-    expect(within(box).getByText("Vocabulary").nextElementSibling).toHaveTextContent("4 min");
-    expect(within(box).getByText("Total").nextElementSibling).toHaveTextContent("9 min");
-    expect(within(box).queryByText("Grammar")).not.toBeInTheDocument();
-    expect(within(box).getByRole("progressbar", { name: "Today's goal: 9 min of 30 min" })).toBeInTheDocument();
-    fireEvent.click(within(box).getByText("Week"));
-    expect(within(box).getByText("Lesson reading").nextElementSibling).toHaveTextContent("15 min");
-    expect(within(box).getByText("Total").nextElementSibling).toHaveTextContent("19 min");
-    expect(within(box).queryByRole("progressbar", { name: /Today's goal/ })).not.toBeInTheDocument();
-    // The choice is kept on the device for the next lesson page.
-    cleanup(); document.body.replaceChildren();
-    renderInRails(detail);
-    const again = await screen.findByRole("region", { name: "This lesson" });
-    expect(await within(again).findByText("Total")).toBeInTheDocument();
-    expect(within(again).getByText("Total").nextElementSibling).toHaveTextContent("19 min");
   });
 
   it("shows the viewer's reading and practice time with the lesson's typical times", async () => {

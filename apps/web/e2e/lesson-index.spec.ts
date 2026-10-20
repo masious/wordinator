@@ -32,12 +32,12 @@ test("the lesson index follows the reader, jumps to an entry, and sits above a c
   // Choosing an entry scrolls to it; it becomes current and the entries before it are dimmed. The column stays in view.
   await index.getByRole("button", { name: "Goodbyes" }).click();
   await expect(index.getByRole("button", { name: "Goodbyes" })).toHaveAttribute("aria-current", "location");
-  await expect(index.getByRole("button", { name: "Greetings" })).toHaveAttribute("data-passed", "true");
+  await expect(index.getByRole("button", { name: "Greetings" })).toHaveAttribute("data-state", "passed");
   await expect(page.getByText("Dag zin 1.")).toBeInViewport();
   await expect(index).toBeInViewport();
   await index.getByRole("button", { name: "Small talk" }).click();
   await expect(index.getByRole("button", { name: "Small talk" })).toHaveAttribute("aria-current", "location");
-  await expect(index.getByRole("button", { name: "Goodbyes" })).not.toHaveAttribute("data-passed");
+  await expect(index.getByRole("button", { name: "Goodbyes" })).toHaveAttribute("data-state", "upcoming");
 
   // Collapsed, the panel keeps only its title with the number of highlighted words, and stays collapsed after a reload.
   const toggle = words.getByRole("button", { name: /^New words/ });

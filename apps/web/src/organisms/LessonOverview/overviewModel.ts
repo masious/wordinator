@@ -52,7 +52,7 @@ function sectionsByBlock(document: LessonDocument, lessonTitle: string) {
   return sections;
 }
 
-const kindOf = (steps: readonly LessonStep[]): OverviewKind => {
+export const kindOf = (steps: readonly LessonStep[]): OverviewKind => {
   const practice = steps.find((step) => step.kind === "practiceItem");
   if (practice) return readPracticeBlock(practice.block).passage ? "reading" : "practice";
   return steps.some((step) => step.kind === "dialogueTurn") ? "story" : "topic";
@@ -100,6 +100,28 @@ export function categoryOf(kind: OverviewKind, title: string, steps: readonly Le
   if (callouts.has("pronunciation")) return "pronunciation";
   if (callouts.has("culture")) return "culture";
   return steps.some((step) => step.words.length > 0) ? "vocabulary" : "topic";
+}
+
+// The category of each listed heading (the lesson index's level-1 and level-2 headings, all top-level blocks), read from every step
+// up to the next listed heading, level-3 sections included. The first listed heading may be an Introduction; one with no steps of
+// its own (a level-1 heading straight above a level-2 one) reads from its title alone.
+export function headingCategories(document: LessonDocument, headings: ReadonlyArray<{ id: string; text: string }>): Map<string, OverviewCategory> {
+  const listed = new Set(headings.map((heading) => heading.id));
+  const owners = new Map<string, string>();
+  let owner: string | null = null;
+  for (const top of document.blocks) {
+    if (listed.has(top.id)) owner = top.id;
+    if (owner) for (const { block } of walkLessonBlocks([top])) owners.set(block.id, owner);
+  }
+  const grouped = new Map<string, LessonStep[]>();
+  for (const step of flattenToSteps(document)) {
+    const id = owners.get(lessonStepKey(step).split(":")[0]!);
+    if (id) grouped.set(id, [...grouped.get(id) ?? [], step]);
+  }
+  return new Map(headings.map((heading, index) => {
+    const steps = grouped.get(heading.id) ?? [];
+    return [heading.id, categoryOf(kindOf(steps), heading.text, steps, index === 0)];
+  }));
 }
 
 function toStop(section: Section, steps: LessonStep[], start: number): OverviewStop {

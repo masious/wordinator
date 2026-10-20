@@ -68,7 +68,7 @@ The Drill button opens a small dialog with two choices and Start:
 
 Start opens `/words/drill?source=weak|lesson&lesson=<lessonId>&direction=mixed|understand|produce`. Unknown settings fall back to Weak words and Mixed, and `lesson` is kept only for a lesson drill.
 
-**Course source** (approved product change, Lumen Batch 6, 2026-10-16). The lesson page's [lesson box](courses.md#lesson-box) has Practise words, which opens `/words/drill?source=course&course=<courseId>&direction=mixed`: every published word of one course. The setup dialog does not offer it. `course` is kept only for a course drill; without a valid one the page falls back to Weak words. A course the viewer cannot see shows that the course is not available, with Back to words; a course without published words says so. The Lesson choice is disabled while the filter lists no lesson. The drill page is desktop-only, like other new work. A lesson the viewer cannot read shows that the lesson is not available, with Back to words.
+**Course source** (approved product change, Lumen Batch 6, 2026-10-16). The lesson page's [lesson actions](courses.md#lesson-box) include Practise words, which opens `/words/drill?source=course&course=<courseId>&direction=mixed`: every published word of one course. The setup dialog does not offer it. `course` is kept only for a course drill; without a valid one the page falls back to Weak words. A course the viewer cannot see shows that the course is not available, with Back to words; a course without published words says so. The Lesson choice is disabled while the filter lists no lesson. The drill page is desktop-only, like other new work. A lesson the viewer cannot read shows that the lesson is not available, with Back to words.
 
 ### The deck
 

@@ -120,7 +120,7 @@ export const resources = {
         unavailable: "This group is not available.",
         iconOptional: "Group icon (optional)"
       },
-      nav: { primary: "Main navigation", accountMenu: "Account menu", openMenu: "Open navigation", journal: "Journal", courses: "Courses", courseList: "Your courses", showCourses: "Show courses", hideCourses: "Hide courses", resizeRail: "Resize navigation", more: "More navigation", words: "Words", tutor: "Tutor", notifications: "Notices", settings: "Settings" },
+      nav: { primary: "Main navigation", accountMenu: "Account menu", openMenu: "Open navigation", journal: "Journal", courses: "Courses", courseList: "Your courses", showCourses: "Show courses", hideCourses: "Hide courses", resizeRail: "Resize navigation", backToCourse: "Back to course", showStudyTime: "Show study time", hideStudyTime: "Hide study time", more: "More navigation", words: "Words", tutor: "Tutor", notifications: "Notices", settings: "Settings" },
       words: {
         eyebrow: "Words",
         title: "Your words",
@@ -420,7 +420,9 @@ export const resources = {
         delete: "Delete",
         lessonBox: {
           title: "This lesson",
-          progress: "Lesson progress",
+          number: "Lesson {{number}}",
+          progress: "Progress",
+          actions: "Lesson actions",
           practiseWords: "Practise words",
           askAi: "Ask AI",
           askAiPrompt: "Let’s talk about lesson {{number}}, “{{lesson}}”, of the course “{{course}}”. Walk me through its grammar and its topics, then check that I understood them.",
@@ -1022,6 +1024,8 @@ export const resources = {
         noticesTitle: "Notices",
         noticesIntro: "Review updates from the journal and your courses when you need them.",
         openNotices: "Open notices",
+        creditsTitle: "Credits",
+        creditsNoto: "Lesson category emoji: <noto>Noto Animated Emoji</noto> by Google, licensed under <licence>CC BY 4.0</licence>.",
         groupIntro: "Change how this group appears to its members, or delete it.",
         membersIntro: "Review join requests and manage who belongs to this group.",
         sectionsLabel: "Settings sections",
@@ -1687,7 +1691,7 @@ export const resources = {
       studyTime: {
         title: "Study time",
         period: "Study time period",
-        periods: { lesson: "Lesson", today: "Today", week: "This week", weekShort: "Week" },
+        periods: { today: "Today", week: "This week" },
         total: "Total",
         underMinute: "< 1 min",
         summary: "Today · {{time}}",

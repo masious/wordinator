@@ -29,7 +29,7 @@ import styles from "./CourseLessons.module.css";
 import { LessonReadingProgress, type ReadingTracking, saveLessonPosition, useResumeScroll } from "./LessonReadingProgress";
 import { typicalMinutes, useReadingTime } from "./LessonTime";
 import { LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN, stickyInset } from "./LessonIndex";
-import { LessonBox, type LessonBoxLesson } from "./LessonBox";
+import { LessonBox, LessonBoxActions, type LessonBoxLesson } from "./LessonBox";
 import { LessonWords, useVisibleWords, useWordsCollapsed } from "./LessonWords";
 import { practiceFromBlock, PracticeSummary } from "./PracticeBlock";
 import { PracticeStepper } from "./PracticeStepper";
@@ -86,8 +86,8 @@ function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" 
 
 // Readers see the published document. Editors of a lesson that is not published yet see its draft, marked as a preview. A practice
 // shows only its first prompts; its answer set opens in a dialog that, beside the vocabulary panel, sits over the text. New words
-// are not shown in the text. The page extends the frame (docs/courses.md#lesson-pages): the lesson's index (headings and practices,
-// following the reader) renders in the app rail under the current course, the lesson box under the rail's navigation, and the
+// are not shown in the text. The page fills the frame's lesson rail (docs/courses.md#lesson-pages): the lesson box at its top, the
+// lesson's index (its headings, following the reader) under it, the lesson's actions above the profile row, and the
 // vocabulary panel, where the words of the blocks on screen are highlighted, in the right rail. Below 62em the panel sits under the
 // text; phones get a lesson action bar whose Contents opens the rail drawer and whose Words opens the panel as a bottom sheet.
 // `aiPractices`, once expanded and read, places the lesson's AI practices after their anchor blocks and at the end.
@@ -123,7 +123,10 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   // Examples and dialogues of a shareable lesson are selectable and reveal their Share action (docs/lesson-shares.md).
   const share = useLessonShareScope(scope.groupId, scope.courseId, lesson);
   const practiceScope = { groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId };
-  const lessonBox = rail.box && createPortal(<LessonBox lesson={box} percent={percent} />, rail.box);
+  const lessonBox = <>
+    {rail.box && createPortal(<LessonBox lesson={box} percent={percent} />, rail.box)}
+    {rail.actions && createPortal(<LessonBoxActions lesson={box} />, rail.actions)}
+  </>;
   if (!document || !steps.length) return <div className={styles.body}><p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p>{lessonBox}</div>;
   const hasWords = steps.some((step) => step.words.length > 0);
   const hasIndex = entries.length >= LESSON_INDEX_MIN;

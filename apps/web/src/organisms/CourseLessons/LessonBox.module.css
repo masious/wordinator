@@ -1,6 +1,9 @@
-/* The lesson box: a card in the rail, under the navigation, for the open lesson only. */
+/* The lesson box: a card at the top of the rail, for the open lesson only. */
 .box{--reveal-gap:var(--space-4);container-type:inline-size;display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-4);padding:var(--space-4);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
-.actions{display:grid;gap:var(--space-2)}
+.heading{display:grid;justify-items:start;gap:var(--space-2)}
+.title{display:-webkit-box;margin:0;overflow:hidden;color:var(--color-foreground);font-size:var(--text-md);font-weight:var(--weight-semibold);line-height:var(--line-compact);-webkit-box-orient:vertical;-webkit-line-clamp:3}
+/* The lesson's actions, above the profile row, outside the card. */
+.actions{container-type:inline-size;display:grid;gap:var(--space-2)}
 /* Practise words and Ask AI share one row; each label stays on one line. */
 .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2)}
 .pair .label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

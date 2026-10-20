@@ -14,43 +14,40 @@ import { ACTIVITY_CATEGORIES, dayOf, goalShare, studyTime } from "../LearningHom
 import styles from "./StudyTime.module.css";
 
 // The rail's study time (docs/learning-time.md#study-time): the viewer's own time today or in the past seven days, per activity
-// category, with today's share of the daily goal. On a lesson page the lesson box adds a Lesson tab with the lesson's figures.
+// category, with today's share of the daily goal.
 
-export type StudyPeriod = "lesson" | "today" | "week";
+export type StudyPeriod = "today" | "week";
 
 // The chosen tab is a per-device convenience, like the New words panel's collapse; storage may be unavailable, so it falls back
-// to the page's default.
+// to Today. A Lesson tab remembered before the lesson box dropped it reads as Today too.
 const PERIOD_KEY = "wordinator:ui:v1:rail-study-period";
-const isPeriod = (value: unknown): value is StudyPeriod => value === "lesson" || value === "today" || value === "week";
-function readPeriod() {
-  try { const stored = window.localStorage.getItem(PERIOD_KEY); return isPeriod(stored) ? stored : null; } catch { return null; }
+const isPeriod = (value: unknown): value is StudyPeriod => value === "today" || value === "week";
+function readPeriod(): StudyPeriod {
+  try { const stored = window.localStorage.getItem(PERIOD_KEY); return isPeriod(stored) ? stored : "today"; } catch { return "today"; }
 }
 function writePeriod(period: StudyPeriod) {
   try { window.localStorage.setItem(PERIOD_KEY, period); } catch { /* storage unavailable */ }
 }
 
-/** The remembered tab. Without a lesson, a remembered Lesson tab reads as Today; with one, nothing remembered opens Lesson. */
-export function useStudyPeriod(withLesson: boolean) {
-  const [stored, setStored] = useState(readPeriod);
-  const period: StudyPeriod = stored === null ? (withLesson ? "lesson" : "today") : stored === "lesson" && !withLesson ? "today" : stored;
-  const choose = (next: StudyPeriod) => { setStored(next); writePeriod(next); };
+/** The remembered tab. */
+export function useStudyPeriod() {
+  const [period, setPeriod] = useState(readPeriod);
+  const choose = (next: StudyPeriod) => { setPeriod(next); writePeriod(next); };
   return [period, choose] as const;
 }
 
-// Beside Lesson, in the lesson box, This week is shortened to Week so three tabs fit a narrow rail.
-export function StudyPeriodSwitch({ value, onChange, withLesson }: { value: StudyPeriod; onChange: (period: StudyPeriod) => void; withLesson: boolean }) {
+const PERIODS: StudyPeriod[] = ["today", "week"];
+export function StudyPeriodSwitch({ value, onChange }: { value: StudyPeriod; onChange: (period: StudyPeriod) => void }) {
   const { t } = useTranslation();
-  const periods: StudyPeriod[] = withLesson ? ["lesson", "today", "week"] : ["today", "week"];
   return <div role="group" aria-label={t("studyTime.period")}>
     <SegmentedControl size="xs" fullWidth classNames={{ root: styles.switch, label: styles.switchLabel }} value={value} onChange={(next) => { if (isPeriod(next)) onChange(next); }}
-      data={periods.map((period) => ({ value: period, label: t(withLesson && period === "week" ? "studyTime.periods.weekShort" : `studyTime.periods.${period}`) }))} />
+      data={PERIODS.map((period) => ({ value: period, label: t(`studyTime.periods.${period}`) }))} />
   </div>;
 }
 
 /** The content of the chosen tab, sliding in from the side of the tab moved to (see SlidePanel). */
-export function StudyPeriodPanel({ period, withLesson, children }: { period: StudyPeriod; withLesson: boolean; children: ReactNode }) {
-  const order: StudyPeriod[] = withLesson ? ["lesson", "today", "week"] : ["today", "week"];
-  return <SlidePanel index={order.indexOf(period)}>{children}</SlidePanel>;
+export function StudyPeriodPanel({ period, children }: { period: StudyPeriod; children: ReactNode }) {
+  return <SlidePanel index={PERIODS.indexOf(period)}>{children}</SlidePanel>;
 }
 
 /** A list of label and figure rows; a `quiet` row is a mono note under the row above it. */
@@ -102,13 +99,14 @@ export function StudyTimeFigures({ groupId, period, withGoal = true }: { groupId
   </div>;
 }
 
-// Whether the study figures are open, one choice for the lesson box and the Study time card. They start closed, since the rail
-// is short; the choice is a per-device convenience, so storage that cannot be read or written leaves them closed.
+// Whether a rail card's figures are open: the Study time card's (the default key) or, under its own key, the lesson box's lesson
+// figures or the lesson page's study time. They start closed, since the rail is short; the choice is a per-device convenience,
+// so storage that cannot be read or written leaves them closed.
 const FIGURES_OPEN_KEY = "wordinator:ui:v1:study-figures-open";
-export function useFiguresOpen() {
-  const [open, setOpen] = useState(() => { try { return localStorage.getItem(FIGURES_OPEN_KEY) === "1"; } catch { return false; } });
+export function useFiguresOpen(key = FIGURES_OPEN_KEY) {
+  const [open, setOpen] = useState(() => { try { return localStorage.getItem(key) === "1"; } catch { return false; } });
   const toggle = () => setOpen((current) => {
-    try { localStorage.setItem(FIGURES_OPEN_KEY, current ? "0" : "1"); } catch { /* storage unavailable */ }
+    try { localStorage.setItem(key, current ? "0" : "1"); } catch { /* storage unavailable */ }
     return !current;
   });
   return [open, toggle] as const;
@@ -142,19 +140,20 @@ function TodaySummary({ groupId, end }: { groupId: string; end: ReactNode }) {
 }
 
 /**
- * The rail's study time card on pages without a lesson box. Its summary row is always today; the chevron opens the Today |
- * This week switch and its figures.
+ * The rail's study time card. Its summary row is always today; the chevron opens the Today | This week switch and its figures.
+ * `expanded` (the lesson page, whose profile row shows and hides the whole card) keeps the figures open without the chevron.
  */
-export function StudyTimeBox({ groupId }: { groupId: string }) {
+export function StudyTimeBox({ groupId, expanded = false }: { groupId: string; expanded?: boolean }) {
   const { t } = useTranslation();
-  const [period, choose] = useStudyPeriod(false);
-  const [open, toggle] = useFiguresOpen();
+  const [period, choose] = useStudyPeriod();
+  const [stored, toggle] = useFiguresOpen();
+  const open = expanded || stored;
   const figuresId = useId();
   return <section className={styles.box} aria-label={t("studyTime.title")}>
-    <TodaySummary groupId={groupId} end={<FiguresDisclosure open={open} controls={figuresId} onToggle={toggle} />} />
+    <TodaySummary groupId={groupId} end={expanded ? null : <FiguresDisclosure open={open} controls={figuresId} onToggle={toggle} />} />
     <FiguresReveal id={figuresId} open={open}>
-      <StudyPeriodSwitch value={period} onChange={choose} withLesson={false} />
-      <StudyPeriodPanel period={period} withLesson={false}><StudyTimeFigures groupId={groupId} period={period === "week" ? "week" : "today"} withGoal={false} /></StudyPeriodPanel>
+      <StudyPeriodSwitch value={period} onChange={choose} />
+      <StudyPeriodPanel period={period}><StudyTimeFigures groupId={groupId} period={period} withGoal={false} /></StudyPeriodPanel>
     </FiguresReveal>
   </section>;
 }

@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { Bell } from "lucide-react";
 import { type FormEvent, useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { ApiError, apiRequest, sessionQueryOptions, settingsQueryOptions } from "../api";
 import { Button, ErrorState, Eyebrow, LoadingState, PageHeader, PasswordField, SectionHeader, Surface, TextAreaField, TextField, ThemePreferenceControl } from "../ui";
 import { AvatarEditor } from "../molecules/AvatarEditor";
@@ -86,6 +86,12 @@ export function AccountSettingsPage({ groupId }: { groupId: string }) {
           <PasswordField label={t("auth.newPassword")} value={newPassword} minLength={6} onChange={(event) => setNewPassword(event.currentTarget.value)} required />
           <div className={styles.actions}><Button loading={password.isPending} type="submit">{t("settings.savePassword")}</Button><Message error={password.error} success={password.isSuccess} /></div>
         </form></Surface>
+        {/* Noto's animated emoji (the lesson index's category badges) are CC BY 4.0, which asks for this credit. */}
+        <Surface className={styles.settingsPanel} tone="inset"><SectionHeader title={t("settings.creditsTitle")} />
+          <p className={styles.muted}><Trans i18nKey="settings.creditsNoto" components={{
+            noto: <a href="https://googlefonts.github.io/noto-emoji-animation/" target="_blank" rel="noreferrer" />,
+            licence: <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noreferrer" />,
+          }} /></p></Surface>
       </div>
     </div>
   </div></GroupFrame>;
