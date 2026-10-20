@@ -12,6 +12,8 @@ Settings is one account-wide page at `/settings` for every signed-in account tha
 
 C14 (approved product change, 2026-10-15). A Tutor section on `/settings` edits the [tutor profile](ai-tutor.md#tutor-profile): native language (a select, English by default), reply language (my language, the library language, or mixed), and goals (optional plain text, at most 500 characters). Below them it shows the tutor's own notes about the learner, read-only, with Clear notes (confirmed). C14l turns the notes into a list of dated entries, each with Delete and an optional follow-up date, beside Clear all ([tutor notes](tutor-sessions-and-memory.md#tutor-notes)), and adds **Default context**: the sections and sizes of the tutor's starting context and an optional focus course, used by new conversations ([context scope](tutor-sessions-and-memory.md#context-scope)). The section says plainly that tutor conversations are processed by external AI providers that may keep them (see [security and privacy](security-and-privacy.md#ai-tutor)). It saves with its own button through `PUT /api/ai/profile`.
 
+**Study goal** (C15, approved product change 2026-10-20) sits above the tutor fields in its own block: a number input for the [daily goal](learning-time.md#daily-goal-and-streak) in minutes (5–240) with a clear option for no goal, saved with its own button through `PUT /api/learning/goal`.
+
 ## Superuser
 
 C14 (approved product change, 2026-10-15). A superuser is an account with `users.is_superuser` set. It is granted and revoked only by the operator command `pnpm superuser --local|--remote --grant|--revoke <email>` ([operations](operations.md#superuser-command)); no route changes it. A superuser has no power over other accounts or content; the flag opens only the analytics page and the AI settings. The session read carries `isSuperuser` so the web can show the link; every superuser route checks the flag in the API and answers `403 SUPERUSER_REQUIRED` otherwise.
@@ -25,6 +27,7 @@ The [library creator's](groups-and-membership.md#library-creator) leftover moder
 - **Learning:** active accounts (any review, attempt, position, completion, or tutor turn that day), lessons completed, drill reviews, practice attempts (lesson, tutor, and AI practice), and pronunciation attempts.
 - **AI:** tutor turns, model requests, tokens in and out, and cost, per account and per provider and model, with failed requests counted separately.
 - **Speech:** on-demand speech requests and characters per account, split into cache hits and Azure calls.
+- **Time** (C15): minutes of [learning time](learning-time.md#analytics) per day and per account, by category (`GET /api/admin/analytics/time`).
 
 Accounts are listed by username. The page shows counts and costs only, never message text, answers, words, or scores. It is a desktop page with tables, and its reads are `GET /api/admin/analytics/{learning|ai|speech}?days=7|30|90` (7 when missing; any other value is `400 VALIDATION_ERROR`), validated and shaped by `@wordinator/contracts/admin`.
 

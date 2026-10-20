@@ -1,6 +1,6 @@
 # Wordinator
 
-Private, self-hosted social language learning for a small group of friends.
+A self-hosted practice space for committed Dutch and German learners.
 
 ## Local development
 

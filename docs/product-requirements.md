@@ -20,6 +20,7 @@ The current release is an installable, connectivity-required web application for
 - Desktop-first warm editorial design and an English localization catalog
 - A signed-out home page that addresses the target learner and names the skills they can practice
 - Progress measurement and interface guidance toward the next useful practice, without competitive mechanics
+- Planned (C15): [learning time](learning-time.md) per lesson, practice, and activity, typical lesson and practice times, weekly and monthly activity, a daily goal and streak, and a home dashboard
 - Planned (C14): an [AI tutor](ai-tutor.md) at `/ai`, private learning data (word memory, practice and pronunciation attempts), a lesson Progress tab with reset, a Weak words view, AI practices on lesson pages, and a superuser analytics page
 - Installable PWA metadata with an internet-required offline fallback
 - Manual local/production setup, migration, deployment, backup, and restore procedures
@@ -43,7 +44,7 @@ The current release is an installable, connectivity-required web application for
 
 ## Initial exclusions
 
-The release excludes phone-only features (features that exist only on phones), gamification (points, streaks, rankings, leaderboards), email verification, self-service password recovery, account deletion, a global admin UI (the C14 superuser analytics page is read-only apart from the AI settings), session management, reports, blocking, muting, search, formal accessibility conformance, offline application behavior, push/email notifications, notification badges, CI/CD, and automated backups.
+The release excludes phone-only features (features that exist only on phones), gamification (points, rankings, leaderboards, rewards; the personal streak of [learning time](learning-time.md#daily-goal-and-streak) is the exception), email verification, self-service password recovery, account deletion, a global admin UI (the C14 superuser analytics page is read-only apart from the AI settings), session management, reports, blocking, muting, search, formal accessibility conformance, offline application behavior, push/email notifications, notification badges, CI/CD, and automated backups.
 
 ## Acceptance summary
 

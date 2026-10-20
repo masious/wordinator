@@ -88,7 +88,7 @@ Opaque ID (the practice block's ID in the document), group ID, course ID, lesson
 
 ### `course_practice_progress`
 
-Practice ID, group ID, course ID, lesson ID, user ID, answered count, and updated timestamp, with primary key `(practice_id, user_id)` and an index on `(group_id, lesson_id)`. It records only how many questions of a [practice](courses.md#practice-answers) a learner has answered, never the answers, and saving keeps the highest count. Rows cascade from their practice anchor, course, and lesson. Migration `0022_course_practice_progress.sql` adds the table, turns each shared practice answer set into its author's row (the most items answered in any one set), and deletes every practice comment, its replies, response items, and reactions.
+Practice ID, group ID, course ID, lesson ID, user ID, answered count, and updated timestamp, with primary key `(practice_id, user_id)` and an index on `(group_id, lesson_id)`. It records only how many questions of a [practice](courses.md#practice-answers) a learner has answered, never the answers, and saving keeps the highest count. Since C15 a nullable `done_seconds` holds the learner's [practice time](learning-time.md#lesson-and-practice-times) in the practice at the save that first reached its question count; it is never updated afterwards. Rows cascade from their practice anchor, course, and lesson. Migration `0022_course_practice_progress.sql` adds the table, turns each shared practice answer set into its author's row (the most items answered in any one set), and deletes every practice comment, its replies, response items, and reactions.
 
 ### `course_media`
 
@@ -112,7 +112,7 @@ Group ID, course ID, user ID, state (`pending`, `active`, `rejected`, `left`, or
 
 ### `course_lesson_completions`
 
-Group ID, course ID, lesson ID, user ID, and completed timestamp. The primary key is `(lesson_id, user_id)`: a member finishes a lesson once, and repeating it keeps the first timestamp. Rows cascade from their course and lesson, and lesson deletion also removes them explicitly in its batch. No percentage is stored; [course progress](courses.md#lesson-player-and-progress) is derived at read time over the currently published lessons. Rows stay when a member leaves the group. Migration `0014_course_lesson_completions.sql` adds the table and its `(group_id, course_id, user_id)` index.
+Group ID, course ID, lesson ID, user ID, and completed timestamp. The primary key is `(lesson_id, user_id)`: a member finishes a lesson once, and repeating it keeps the first timestamp. Rows cascade from their course and lesson, and lesson deletion also removes them explicitly in its batch. No percentage is stored; [course progress](courses.md#lesson-player-and-progress) is derived at read time over the currently published lessons. Rows stay when a member leaves the group. Migration `0014_course_lesson_completions.sql` adds the table and its `(group_id, course_id, user_id)` index. Since C15 (migration `0034_learning_time.sql`) a nullable `reading_seconds` holds the learner's [reading time](learning-time.md#lesson-and-practice-times) in the lesson when the completion was recorded; it is null for completions from before C15 and is never updated.
 
 ### `course_lesson_positions`
 
@@ -138,6 +138,10 @@ ID, user ID, course ID, nullable lesson ID, practice kind (`lesson` or `ai`), pr
 
 ID, user ID, surface (`drill`, `word_card`, or `ai_chat`), reference text, nullable term key, lesson ID (its foreign key sets null), and word ID, overall, accuracy, fluency, and completeness scores (0–100), word scores (JSON text: word, accuracy, and error type per word), and created timestamp. Indexed by `(user_id, created_at)` and `(user_id, term_key)`. A lesson reset keeps these rows; lesson deletion sets their lesson and word IDs to null.
 
+### `learning_time`
+
+Added in C15 by migration `0034_learning_time.sql` ([learning time](learning-time.md)). User ID (cascading), entry key, local day (`YYYY-MM-DD` in the learner's browser time zone), activity (`reading`, `practice`, `ai_practice`, `tutor`, `drill`, or `words`), nullable focus (`lesson` or `grammar` for reading; the AI practice's focus for `ai_practice`; null otherwise), nullable course ID and lesson ID (both cascading), nullable practice ID (a practice block ID or an `ai_practices` ID, no foreign key, like `practice_attempts`), seconds (positive), and updated timestamp. The primary key is `(user_id, entry_key)`; the API builds the entry key from the day, activity, focus, course, lesson, and practice, so each send adds its seconds to one row per target and day. Checks limit the activity, the focus per activity, the day format, and seconds. Indexed by `(user_id, day)` for activity, `(user_id, updated_at)` for the elapsed-time limit, and `(lesson_id, activity)` for medians, reset, and lesson deletion. A lesson reset deletes the learner's rows for the lesson; rows for a removed practice block stay.
+
 ### `progress_events`
 
 Audit only, never read to undo. ID, user ID, actor (`user` or `agent`), kind (`lesson_completed` or `lesson_reset`), course ID, lesson ID, nullable conversation ID, and created timestamp. Course and lesson IDs have no foreign key, so the audit outlives a deleted lesson. A completion writes its row only when the completion is new (repeating a lesson writes none); every reset writes one. Indexed by `(user_id, created_at)`.
@@ -156,7 +160,7 @@ ID, conversation ID (cascading), user ID, role (`user` or `assistant`, check-con
 
 ### `learner_profiles`
 
-User ID (primary key), native language (default `en`), reply language (`native`, `target`, or `mixed`, default `native`, check-constrained), nullable goals (plain text, at most 500 characters), nullable tutor notes (plain text, at most 2,000 characters), and updated timestamp. A missing row reads as the defaults; the first save of either the learner's fields or the tutor's notes creates it.
+User ID (primary key), native language (default `en`), reply language (`native`, `target`, or `mixed`, default `native`, check-constrained), nullable goals (plain text, at most 500 characters), nullable tutor notes (plain text, at most 2,000 characters), nullable `daily_goal_minutes` (5–240, check-constrained; C15, the [daily goal](learning-time.md#daily-goal-and-streak)), and updated timestamp. A missing row reads as the defaults; the first save of either the learner's fields or the tutor's notes creates it.
 
 ### `ai_usage`
 
@@ -164,7 +168,7 @@ One row per model request, successful or not (a fallback writes one row per prov
 
 ### `ai_practices`
 
-ID, kind (`fill_in`, `translate`, `word_order`, `article`, `choice`, `dictation`, or `fix_mistake`), payload (JSON text per the contracts' schema for the kind, including its reference answer), created-by user ID (cascading from the user; never shown, since AI practices are unattributed), nullable conversation ID (no foreign key, like `ai_usage`), and created timestamp. The kind is check-constrained. Added in migration `0030_ai_practices.sql` (C14h). See [AI practices](courses.md#ai-practices).
+ID, kind (`fill_in`, `translate`, `word_order`, `article`, `choice`, `dictation`, or `fix_mistake`), payload (JSON text per the contracts' schema for the kind, including its reference answer), created-by user ID (cascading from the user; never shown, since AI practices are unattributed), nullable conversation ID (no foreign key, like `ai_usage`), and created timestamp. The kind is check-constrained. Since C15 (migration `0034_learning_time.sql`) `focus` (`grammar`, `vocabulary`, `reading`, `listening`, or `writing`, check-constrained) names the skill the practice works on, for [learning time](learning-time.md#what-is-measured); earlier rows were backfilled from their kind. Added in migration `0030_ai_practices.sql` (C14h). See [AI practices](courses.md#ai-practices).
 
 ### `ai_practice_lessons`
 
@@ -265,8 +269,8 @@ Opaque ID, group ID, recipient ID, actor ID, event type, optional post ID, optio
 - Comments are hard-deleted with replies, response items, and reactions.
 - Notifications survive target deletion.
 - Courses are never hard-deleted. Archiving sets status `archived`; restoring returns the course to `draft` so the owner chooses again when to publish. Archived courses keep their cover image. A course post stays when its course is archived and is deleted like any other post.
-- Lessons are hard-deleted with their documents, practice anchors, practice progress, practice attempts, word reviews recorded from them (memory rows of the affected terms are rebuilt in the same request), AI practice tags, and their lesson images (rows and R2 objects). The API deletes the R2 objects after the batch.
-- A lesson [reset](courses.md#reset) deletes one learner's position, completion, practice progress, practice attempts, and word reviews for the lesson, rebuilds the affected memory rows, and writes a `progress_events` row.
+- Lessons are hard-deleted with their documents, practice anchors, practice progress, practice attempts, learning time, word reviews recorded from them (memory rows of the affected terms are rebuilt in the same request), AI practice tags, and their lesson images (rows and R2 objects). The API deletes the R2 objects after the batch.
+- A lesson [reset](courses.md#reset) deletes one learner's position, completion, practice progress, practice attempts, word reviews, and [learning time](#learning_time) for the lesson, rebuilds the affected memory rows, and writes a `progress_events` row.
 - Tutor conversations are archived, never deleted. Usage rows and progress events are kept indefinitely; pronunciation attempts are too, except that a [lesson reset](courses.md#reset) deletes the learner's attempts for that lesson's words.
 - Since C14l: plans, notes, tutor words, observations, and lesson-less attempts are kept until the learner removes them (notes and tutor words) or the account is deleted. A lesson reset keeps tutor words, personal practices, and lesson-less attempts; lesson deletion removes the lesson's tutor word tags, observations, and personal practice tags.
 - Removing a block from a lesson is an ordinary draft edit. A practice removed from both documents loses its anchor and progress at the next publish or discard, after the editor warns the owner when anyone has started it; images referenced by neither document are cleaned up as described under `course_media`.
