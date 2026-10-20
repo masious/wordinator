@@ -1,14 +1,16 @@
 import { opaqueIdSchema } from "@wordinator/contracts";
 import { wordDrillGradeResponseSchema, wordDrillModeSchema, wordDrillSourceSchema, type WordDrillCard as DrillCard, type WordDrillGradeRequest, type WordDrillResult } from "@wordinator/contracts/lesson-document";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, ApiError, sessionQueryOptions, speechRecognitionTokenSource, wordDrillQueryOptions, type WordDrillSettings } from "../api";
 import { RevealSoundToggle } from "../molecules/Speech";
 import { RECOGNITION_LOCALES, SpeechRecognitionScope, type AssessmentHandler } from "../molecules/speechRecognition";
 import { sendPronunciationAttempt } from "../molecules/learningAttempts";
+import { unscored } from "../molecules/SpeakControls";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
-import { gradeDrill, startDrill } from "../organisms/WordDrill/drillSession";
+import { DrillResults, type FinishedDrill } from "../organisms/WordDrill/DrillResults";
+import { averageScore, gradeDrill, readLastDrill, startDrill, writeLastDrill } from "../organisms/WordDrill/drillSession";
 import { WordDrillCard } from "../organisms/WordDrill/WordDrillCard";
 import { Button, EmptyState, ErrorState, Eyebrow, LoadingState, Surface } from "../ui";
 import styles from "./WordDrillPage.module.css";
@@ -28,12 +30,16 @@ export function validateWordDrillSearch(search: Record<string, unknown>): WordDr
 }
 
 // One session's cards, shown one at a time. The first grade of each card is sent once, as soon as it is given; a failed save is
-// kept to retry, and a word that is gone (404) finishes from the session's copy with its grade ignored.
-function DrillRun({ groupId, cards, language, onAgain, onBack }: {
-  groupId: string; cards: readonly DrillCard[]; language: string; onAgain: () => void; onBack: () => void;
+// kept to retry, and a word that is gone (404) finishes from the session's copy with its grade ignored. The session is timed from
+// its first card to its last grade; with the pronunciation scores heard meanwhile, that is kept locally as the last session.
+function DrillRun({ groupId, accountId, cards, language, scores, onAgain, onBack }: {
+  groupId: string; accountId: string; cards: readonly DrillCard[]; language: string; scores: RefObject<number[]>; onAgain: () => void; onBack: () => void;
 }) {
   const { t } = useTranslation();
   const [state, setState] = useState(() => startDrill(cards.length));
+  const [startedAt] = useState(() => Date.now());
+  const [finished, setFinished] = useState<FinishedDrill | null>(null);
+  useEffect(() => { scores.current = []; }, [scores]);
   const [revealed, setRevealed] = useState(false);
   const [unsaved, setUnsaved] = useState<ReadonlyMap<number, WordDrillResult>>(new Map());
   const save = useMutation({
@@ -51,7 +57,15 @@ function DrillRun({ groupId, cards, language, onAgain, onBack }: {
     const index = state.queue[0];
     if (index === undefined) return;
     if (!state.first.has(index)) save.mutate({ index, result });
-    setState(gradeDrill(state, result));
+    const next = gradeDrill(state, result);
+    if (!next.queue.length) {
+      const got = [...next.first.values()].filter((value) => value === "got").length;
+      const summary = { durationMs: Date.now() - startedAt, pronunciation: averageScore(scores.current) };
+      const previous = readLastDrill(accountId);
+      writeLastDrill(accountId, { version: 1, accuracy: Math.round(got / cards.length * 100), ...summary, finishedAt: new Date().toISOString() });
+      setFinished({ ...summary, previous });
+    }
+    setState(next);
     setRevealed(false);
   };
   const retry = () => {
@@ -64,19 +78,8 @@ function DrillRun({ groupId, cards, language, onAgain, onBack }: {
   </p>;
   const current = state.queue[0];
   if (current === undefined) {
-    const firstResults = [...state.first.values()];
-    return <Surface className={styles.summary}>
-      <h2 className={styles.summaryTitle}>{t("drill.summary.title")}</h2>
-      <dl className={styles.counts}>
-        <div data-result="got"><dt>{t("drill.summary.got")}</dt><dd>{firstResults.filter((result) => result === "got").length}</dd></div>
-        <div data-result="again"><dt>{t("drill.summary.again")}</dt><dd>{firstResults.filter((result) => result === "again").length}</dd></div>
-      </dl>
-      {failure}
-      <div className={styles.summaryActions}>
-        <Button variant="secondary" onClick={onBack}>{t("drill.backToWords")}</Button>
-        <Button onClick={onAgain}>{t("drill.drillAgain")}</Button>
-      </div>
-    </Surface>;
+    return <DrillResults groupId={groupId} cards={cards} first={state.first} finished={finished ?? { durationMs: Date.now() - startedAt, pronunciation: null, previous: null }}
+      failure={failure} onAgain={onAgain} onBack={onBack} />;
   }
   return <div className={styles.session}>
     <div className={styles.toolbar}>
@@ -93,8 +96,8 @@ function DrillRun({ groupId, cards, language, onAgain, onBack }: {
 }
 
 // A session: its deck, fetched once, then the cards; Drill again starts the next session with a fresh deck.
-function DrillSession({ groupId, settings, run, language, onAgain, onBack }: {
-  groupId: string; settings: WordDrillSettings; run: number; language: string; onAgain: () => void; onBack: () => void;
+function DrillSession({ groupId, accountId, settings, run, language, scores, onAgain, onBack }: {
+  groupId: string; accountId: string; settings: WordDrillSettings; run: number; language: string; scores: RefObject<number[]>; onAgain: () => void; onBack: () => void;
 }) {
   const { t } = useTranslation();
   const deck = useQuery(wordDrillQueryOptions(groupId, settings, run));
@@ -110,17 +113,22 @@ function DrillSession({ groupId, settings, run, language, onAgain, onBack }: {
       {t({ weak: "drill.emptyWeak", lesson: "drill.emptyLesson", course: "drill.emptyCourse" }[settings.source])}
     </EmptyState></Surface>;
   }
-  return <DrillRun groupId={groupId} cards={deck.data.cards} language={language} onAgain={onAgain} onBack={onBack} />;
+  return <DrillRun groupId={groupId} accountId={accountId} cards={deck.data.cards} language={language} scores={scores} onAgain={onAgain} onBack={onBack} />;
 }
 
-// The drill page (C12e): self-graded cards one at a time, then a short summary. Desktop only, like other new work.
+// The drill page (C12e): self-graded cards one at a time, then the results. Desktop only, like other new work.
 export function WordDrillPage({ groupId, settings, onBack }: { groupId: string; settings: WordDrillSettings; onBack: () => void }) {
   const { t } = useTranslation();
   const session = useQuery(sessionQueryOptions());
   const [run, setRun] = useState(0);
   const token = useMemo(() => speechRecognitionTokenSource(groupId), [groupId]);
-  // Microsoft assessments of drill cards are stored as pronunciation attempts (docs/words.md#pronunciation-assessment).
-  const onAssessment = useCallback<AssessmentHandler>((reference, assessment, word) => sendPronunciationAttempt(groupId, "drill", reference, assessment, word), [groupId]);
+  // Microsoft assessments of drill cards are stored as pronunciation attempts (docs/words.md#pronunciation-assessment), and their
+  // overall scores make the session's pronunciation result.
+  const scores = useRef<number[]>([]);
+  const onAssessment = useCallback<AssessmentHandler>((reference, assessment, word) => {
+    if (!unscored(assessment)) scores.current.push(assessment.overall);
+    sendPronunciationAttempt(groupId, "drill", reference, assessment, word);
+  }, [groupId]);
   if (session.isPending) return <main className={styles.center}><LoadingState label={t("drill.loading")} /></main>;
   if (session.data?.status !== "signedIn") return null;
   const libraryLanguage = session.data.groups[0]?.language;
@@ -135,8 +143,8 @@ export function WordDrillPage({ groupId, settings, onBack }: { groupId: string; 
         <h1 className={styles.title}>{t("drill.title")}</h1>
         <p className={styles.settings}>{t("drill.settings", { source: subtitle, direction })}</p>
       </header>
-      <SpeechRecognitionScope locale={recognitionLocale} token={token} onAssessment={onAssessment}><DrillSession key={`${run}:${settings.source}:${settings.lesson ?? settings.course ?? ""}:${settings.direction}`} groupId={groupId} settings={settings} run={run}
-        language={language} onAgain={() => setRun((value) => value + 1)} onBack={onBack} /></SpeechRecognitionScope>
+      <SpeechRecognitionScope locale={recognitionLocale} token={token} onAssessment={onAssessment}><DrillSession key={`${run}:${settings.source}:${settings.lesson ?? settings.course ?? ""}:${settings.direction}`} groupId={groupId} accountId={session.data.user.id} settings={settings} run={run}
+        language={language} scores={scores} onAgain={() => setRun((value) => value + 1)} onBack={onBack} /></SpeechRecognitionScope>
     </div>
   </GroupFrame>;
 }

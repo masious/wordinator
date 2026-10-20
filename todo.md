@@ -1,15 +1,21 @@
 this file isn't meant for agents. don't read it if you're an agent.
 
 
-[ ] Lesson practice: e should match é in practices
 [ ] words drill: practice with space
-[ ] gamify results page
-[ ] reset progress of lesson, should reset word fluency
-[ ] mark course as complete at the end of the page
+[ ] drill results: gamify results page
+[ ] drill results: practice failed words with ai session in drill's results page
+[x] reset progress of lesson, should reset word fluency
 [x] remove contribution section from course, as well as author's name from course and lessons everywhere
-[ ] new words panel usability
 [ ] remove group-related tech-debts
 [ ] measure reading time
+
+
+Lesson Page
+===========
+[ ] leftrail indexes
+[ ] mark course as complete at the end of the page
+[ ] new words panel usability
+
 
 AI
 ===
@@ -30,9 +36,6 @@ AI
 [x] ai should also see a fluency level on a topic so that it can decide on moving on to the next sections or continuing with the existing ones.
 [x] if all existing practices of a topic/concept was done recently by the user, ai should gravitate toward generating new excersises.
 
-
-
-
 [~] redesign: mobile-friendly
 
 [x] hide wordpanel and highlight with hovercard
@@ -40,12 +43,12 @@ AI
 [ ] voice for reading practices
 [ ] add Jev: confidence in user's answer's correction
 
-[ ] remove members' tabs
+[x] remove members' tabs
 [x] fix failing tests
 [x] split e2e into different batches
 [x] document e2e test isolation so that a change doesn't trigger all of it
-[~] speech: autoplay of dialogue, fine-tunning
-[~] overview of a lesson
+[x] speech: autoplay of dialogue, fine-tunning
+[x] overview of a lesson
 [?] remove namespace
 [x] course page
 [x] practice: no new word panel when doing practices.
@@ -60,3 +63,4 @@ AI
 [x] progress tracking: show remaining practices from older lessons
 [x] order of courses in prod
 [x] decrease drill to 10 words
+[x] Lesson practice: e should match é in practices

@@ -1,0 +1,49 @@
+.body{display:grid;gap:var(--space-6)}
+/* The hero: the tier's medal in two soft rings, a muted eyebrow, the tiered headline, and its line. */
+.hero{display:grid;justify-items:center;gap:var(--space-2);text-align:center}
+.medal{--tier:var(--color-highlight);display:grid;place-items:center;width:calc(var(--space-16) + var(--space-4));aspect-ratio:1;margin-block-end:var(--space-3);border-radius:var(--radius-pill);color:var(--tier);background:color-mix(in srgb,var(--tier) 22%,var(--color-core));box-shadow:0 0 0 var(--space-3) color-mix(in srgb,var(--tier) 9%,transparent);animation:medal-pop var(--motion-reveal) var(--ease-physical) both}
+.medal[data-tier="good"]{--tier:var(--color-success)}
+.medal[data-tier="keepGoing"]{--tier:var(--color-action)}
+.eyebrow{margin:0;color:var(--color-foreground-muted);font:var(--weight-bold) var(--type-eyebrow)/var(--line-compact) var(--font-sans);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase}
+.title{margin:0;font-family:var(--font-display);font-size:var(--type-page-title);font-weight:var(--weight-semibold);line-height:var(--line-heading);letter-spacing:var(--tracking-display)}
+.intro{margin:0;color:var(--color-foreground-muted);font-size:var(--type-page-intro)}
+/* Three stats between hairlines, split by hairlines: the value large in mono, its label under it. */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:0;padding-block:var(--space-5);border-block:var(--ring-hairline)}
+.stats>div{display:flex;flex-direction:column-reverse;align-items:center;gap:var(--space-2);padding-inline:var(--space-2);text-align:center}
+.stats>div+div{border-inline-start:var(--ring-hairline)}
+.stats dd{margin:0;font:var(--weight-semibold) var(--text-3xl)/1 var(--font-mono);color:var(--color-foreground);font-variant-numeric:tabular-nums}
+.stats dt{color:var(--color-foreground-muted);font-size:var(--type-metadata)}
+/* Pronunciation: an inset panel with the score, the change since the last session, and a bar tinted by band. */
+.panel{display:grid;gap:var(--space-3);padding:var(--space-4) var(--space-5);background:var(--color-surface-muted);border-radius:var(--radius-md)}
+.panelHead{display:flex;align-items:baseline;justify-content:space-between;gap:var(--space-3);color:var(--color-foreground-muted);font-size:var(--type-metadata)}
+.panelScore{margin-inline-start:var(--space-1);color:var(--color-foreground);font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+.delta{font:var(--weight-semibold) var(--type-metadata)/1 var(--font-mono);font-variant-numeric:tabular-nums}
+.delta[data-trend="up"]{color:var(--color-success)}
+.delta[data-trend="down"]{color:var(--color-danger-text)}
+.track{height:var(--space-2);overflow:hidden;background:var(--color-hairline);border-radius:var(--radius-pill)}
+.fill{display:block;width:calc(var(--score) * 1%);height:100%;background:var(--band);border-radius:inherit;transform-origin:left;animation:fill-grow var(--motion-reveal) var(--ease-out) both}
+.fill[data-band="good"]{--band:var(--color-success)}
+.fill[data-band="fair"]{--band:var(--color-highlight)}
+.fill[data-band="weak"]{--band:var(--color-danger)}
+/* The words that needed Again, as compact rows like the Weak words view's. */
+.again{display:grid;gap:var(--space-3)}
+.againTitle{margin:0;font-size:var(--type-card-title);font-weight:var(--weight-semibold)}
+.againList{display:grid;gap:var(--space-2);margin:0;padding:0;list-style:none}
+.againRow{display:flex;align-items:center;justify-content:space-between;gap:var(--space-4);padding:var(--space-3) var(--space-4);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-md);transition:opacity var(--motion-press) var(--ease-physical)}
+.againRow[data-known]{opacity:.7}
+.againWord{display:grid;gap:var(--space-1);min-width:0}
+.againWord p{margin:0}
+.term{display:flex;align-items:center;gap:var(--space-2);font-family:var(--font-display);font-weight:var(--weight-semibold);overflow-wrap:anywhere}
+.speech{flex:none}
+.meaning{color:var(--color-foreground-muted);font-size:var(--type-metadata);overflow-wrap:anywhere}
+.knownMark{display:inline-flex;align-items:center;gap:var(--space-1);color:var(--color-success);font-size:var(--type-metadata);white-space:nowrap}
+.error{margin:0;font-size:var(--type-metadata);color:var(--color-danger-text)}
+.actions{display:flex;justify-content:center;gap:var(--space-3)}
+@keyframes medal-pop{from{opacity:0;transform:scale(.6)}}
+@keyframes fill-grow{from{transform:scaleX(0)}}
+/* Phones: smaller stat values, and the buttons share the width. */
+@media(max-width:48em){
+  .stats dd{font-size:var(--text-2xl)}
+  .actions>*{flex:1 1 0;min-width:0}
+}
+@media(prefers-reduced-motion:reduce){.medal,.fill{animation:none}.againRow{transition:none}}

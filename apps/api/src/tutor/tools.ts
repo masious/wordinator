@@ -7,7 +7,7 @@ import {
 import { z } from "zod";
 import type { AiToolDefinition } from "../ai";
 import { recordWordReviews } from "../learningData";
-import { completeLesson, readLessonProgress, resetLesson } from "../learning/progress";
+import { completeLesson, LESSON_TERMS, readLessonProgress, resetLesson } from "../learning/progress";
 import { listAiPractices, saveAiPractice } from "./aiPractices";
 import { recentLessons, recentMistakes, recentWords, searchWords, weakestWords } from "./learner";
 import { lessonForModel, nextLesson, readableCourse, readableCourses, readableLesson, hintViews, readableLessonList, readableWords, wordKey, type ReadableLesson } from "./library";
@@ -266,17 +266,22 @@ async function askConfirmation(context: ToolContext, action: TutorConfirmationAc
   if (lesson.course.status === "archived") return failed("COURSE_ARCHIVED", "This lesson's course is archived, so its progress cannot change.");
   if (action === "complete_lesson") return { kind: "confirmation", arguments: { lessonId }, summary: { action, ...titled(lesson) } };
   const counts = await db.prepare(
-    `SELECT EXISTS (SELECT 1 FROM course_lesson_positions WHERE lesson_id = ?1 AND user_id = ?2) AS position,
-       EXISTS (SELECT 1 FROM course_lesson_completions WHERE lesson_id = ?1 AND user_id = ?2) AS completion,
-       (SELECT COUNT(*) FROM course_practice_progress WHERE lesson_id = ?1 AND user_id = ?2) AS practiceProgress,
-       (SELECT COUNT(*) FROM practice_attempts WHERE lesson_id = ?1 AND user_id = ?2) AS attempts,
-       (SELECT COUNT(*) FROM word_reviews WHERE lesson_id = ?1 AND user_id = ?2) AS reviews`,
-  ).bind(lesson.id, userId).first<{ position: number; completion: number; practiceProgress: number; attempts: number; reviews: number }>();
+    `SELECT EXISTS (SELECT 1 FROM course_lesson_positions WHERE lesson_id = ?2 AND user_id = ?1) AS position,
+       EXISTS (SELECT 1 FROM course_lesson_completions WHERE lesson_id = ?2 AND user_id = ?1) AS completion,
+       (SELECT COUNT(*) FROM course_practice_progress WHERE lesson_id = ?2 AND user_id = ?1) AS practiceProgress,
+       (SELECT COUNT(*) FROM practice_attempts WHERE lesson_id = ?2 AND user_id = ?1) AS attempts,
+       (SELECT COUNT(*) FROM word_reviews WHERE user_id = ?1 AND (lesson_id = ?2 OR term_key IN (${LESSON_TERMS}))) AS reviews,
+       (SELECT COUNT(*) FROM pronunciation_attempts WHERE user_id = ?1 AND (lesson_id = ?2 OR term_key IN (${LESSON_TERMS}))) AS pronunciations,
+       (SELECT COUNT(*) FROM course_word_bookmarks WHERE user_id = ?1 AND lesson_id = ?2) AS bookmarks`,
+  ).bind(userId, lesson.id).first<{ position: number; completion: number; practiceProgress: number; attempts: number; reviews: number; pronunciations: number; bookmarks: number }>();
   return {
     kind: "confirmation", arguments: { lessonId },
     summary: {
       action, ...titled(lesson),
-      deletes: { position: counts?.position === 1, completion: counts?.completion === 1, practiceProgress: counts?.practiceProgress ?? 0, attempts: counts?.attempts ?? 0, reviews: counts?.reviews ?? 0 },
+      deletes: {
+        position: counts?.position === 1, completion: counts?.completion === 1, practiceProgress: counts?.practiceProgress ?? 0, attempts: counts?.attempts ?? 0,
+        reviews: counts?.reviews ?? 0, pronunciations: counts?.pronunciations ?? 0, bookmarks: counts?.bookmarks ?? 0,
+      },
     },
   };
 }

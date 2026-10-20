@@ -13,7 +13,7 @@
 .chip[data-tone="success"] { color: var(--color-success); background: var(--color-success-surface); }
 .chip[data-tone="warm"] { color: var(--color-highlight); background: var(--color-highlight-soft); }
 .chip[data-tone="info"] { color: var(--color-info); background: var(--color-info-soft); }
-.eyebrow { margin: 0; color: var(--color-action); font: var(--weight-bold) var(--type-eyebrow)/var(--line-compact) var(--font-sans); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; }
+.eyebrow { margin: 0; color: var(--color-action-soft-text); font: var(--weight-bold) var(--type-eyebrow)/var(--line-compact) var(--font-sans); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; }
 .avatar :global(.mantine-Avatar-placeholder) { color: var(--color-inverse-text); background: var(--color-inverse-surface); font-size: 0.66rem; font-weight: var(--weight-bold); }
 .avatar[data-tone="accent"] :global(.mantine-Avatar-placeholder) { color: var(--color-action-text); background: var(--color-action); }
 .avatar[data-tone="soft"] :global(.mantine-Avatar-placeholder) { color: var(--color-action-soft-text); background: var(--color-action-soft); }
@@ -62,19 +62,25 @@
 .iconButton[data-tone="primary"]:hover:not(:disabled, [data-disabled]) { color: var(--button-ink); background: var(--color-hover); border-color: var(--color-hover); }
 .control { width: 100%; }
 .choice { width: fit-content; max-width: 100%; }
-.status { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-4); background: var(--color-muted); border-radius: var(--radius-md); }
-.statusSuccess { background: var(--color-success-surface); }
-.statusError { color: var(--color-danger-text); background: var(--color-danger-surface); }
-.statusInfo { background: var(--color-info-soft); }
+/* Feedback panel (StatusPanel): a hairline card in the tone's Lumen tint, with a 35% line of the tone's own colour. */
+.status { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-4); background: var(--color-surface); border: var(--ring-hairline); border-radius: var(--radius-md); }
+.statusSuccess { background: var(--color-success-surface); border-color: color-mix(in srgb, var(--color-success) 35%, transparent); }
+.statusError { color: var(--color-danger-text); background: var(--color-danger-surface); border-color: color-mix(in srgb, var(--color-danger) 35%, transparent); }
+.statusInfo { background: var(--color-info-soft); border-color: color-mix(in srgb, var(--color-info) 35%, transparent); }
 .statusDot { width: 10px; height: 10px; flex: 0 0 auto; margin-top: 7px; background: currentColor; border: 1px solid currentColor; border-radius: 50%; }
 .statusBody { flex: 1; min-width: 0; }
 .statusTitle { margin: 0; font-weight: var(--weight-semibold); }
 .statusMessage { margin-top: var(--space-1); color: var(--color-foreground-muted); line-height: var(--line-body); }
-.state { display: grid; justify-items: start; gap: var(--space-3); padding-block: var(--space-4); }
-.state h3, .state p { margin: 0; }
+/* Empty, error, and loading states: plain copy with one recovery action, set in the card-title and body roles. Long text wraps inside narrow widths. */
+.state { display: grid; justify-items: start; gap: var(--space-3); min-width: 0; padding-block: var(--space-4); }
+.state h3 { margin: 0; color: var(--color-foreground); font-size: var(--type-card-title); font-weight: var(--weight-semibold); letter-spacing: var(--tracking-title); line-height: var(--line-compact); overflow-wrap: anywhere; }
+.state p { margin: 0; max-width: var(--width-reading); color: var(--color-foreground-muted); font-size: var(--type-body); line-height: var(--line-body); overflow-wrap: anywhere; }
+/* An error is a hairline paper card with a danger start edge (the answer components' inset-edge pattern), never a filled alarm. */
+.stateError { width: min(100%, var(--width-reading)); padding: var(--space-5); background: var(--color-core); border: var(--ring-hairline); border-inline-start: 3px solid var(--color-danger); border-radius: var(--radius-md); }
+.stateError h3 { color: var(--color-danger-text); }
 .help { display: block; margin-top: var(--space-1); color: var(--color-foreground-muted); font-size: var(--text-sm); line-height: var(--line-body); }
 .errorText { color: var(--color-danger-text); font-weight: var(--weight-semibold); }
-.skeletonWide, .skeletonShort { height: 14px; overflow: hidden; background: var(--color-muted); border-radius: var(--radius-sm); }
+.skeletonWide, .skeletonShort { height: 12px; overflow: hidden; background: var(--color-wash-strong); border-radius: var(--radius-pill); }
 .skeletonWide { width: 70%; }
 .skeletonShort { width: 45%; }
 .skeletonWide::after, .skeletonShort::after { display: block; width: 42%; height: 100%; content: ""; background: linear-gradient(90deg, transparent, var(--color-surface-raised), transparent); animation: loading 1.4s var(--ease-physical) infinite; }

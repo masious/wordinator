@@ -278,7 +278,7 @@ export function GroupFrame({ children, groupId, session, fill = false }: PropsWi
       <Brand />
       <AccountMenu trigger={<button aria-label={t("nav.accountMenu")} className={styles.headerAvatar} type="button"><Avatar name={session.user.displayName} src={session.user.avatarUrl} tone="soft" /></button>} />
     </header>
-    <Drawer opened={drawer} onClose={() => setDrawer(false)} size="var(--size-app-rail)" padding={0} withCloseButton={false} title={t("nav.primary")}
+    <Drawer opened={drawer} onClose={() => setDrawer(false)} size="80%" padding={0} withCloseButton={false} title={t("nav.primary")}
       classNames={{ content: styles.drawer, header: styles.drawerHeader }}>
       <Rail groupId={groupId} session={session} pathname={pathname} slots={narrow ? slotRefs : null} />
     </Drawer>

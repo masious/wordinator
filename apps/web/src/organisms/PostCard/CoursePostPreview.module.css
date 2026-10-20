@@ -52,7 +52,7 @@ a.preview:hover {
   overflow-wrap: anywhere;
 }
 .eyebrow {
-  color: var(--color-action);
+  color: var(--color-action-soft-text);
   font: var(--weight-bold) var(--type-eyebrow)/var(--line-compact) var(--font-sans);
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;

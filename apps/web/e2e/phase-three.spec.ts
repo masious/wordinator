@@ -1,8 +1,9 @@
 import { expect, test } from "@playwright/test";
-import { signIn } from "./auth";
+import { signIn, uniqueTag } from "./auth";
 
 test("a member publishes, browses, edits, and deletes every Phase 3 post shape", async ({ page }, testInfo) => {
-  const prefix = testInfo.project.name;
+  // Unique per run and repeat, so a reused e2e database never holds a matching post from an earlier run.
+  const prefix = uniqueTag(testInfo);
   await signIn(page);
   await page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Journal", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Journal", level: 1 })).toBeVisible();

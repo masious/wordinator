@@ -1,4 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
+import { WORD_DRILL_SESSION_SIZE } from "@wordinator/contracts/lesson-document";
 import { registerAccount, uniqueTag } from "./auth";
 import { courseApi, seedLesson, vocabulary } from "./lessonSeed";
 
@@ -30,7 +31,7 @@ async function walkSession(page: Page, pattern: RegExp, grade: (number: number, 
   const card = page.getByRole("article", { name: "Drill card" });
   const shown: number[] = [];
   for (let presentation = 0; presentation < 60; presentation += 1) {
-    const done = page.getByRole("heading", { name: "Session done" });
+    const done = page.getByRole("region", { name: "Session done" });
     const showAnswer = card.getByRole("button", { name: "Show answer" });
     await expect(done.or(showAnswer)).toBeVisible();
     if (await done.isVisible()) return shown;
@@ -64,10 +65,10 @@ test("a mixed drill never shows a term twice, revealing with Space and grading w
     await expect(card.getByRole("button", { name: "Got it" })).toBeVisible();
     terms.push(Number(new RegExp(`t(\\d)-${suffix}`).exec(await card.textContent() ?? "")?.[1]));
     await page.keyboard.press("2");
-    await expect(page.getByText(`${step + 1} of 5 done`).or(page.getByRole("heading", { name: "Session done" }))).toBeVisible();
+    await expect(page.getByText(`${step + 1} of 5 done`).or(page.getByRole("region", { name: "Session done" }))).toBeVisible();
   }
   expect([...terms].sort()).toEqual([1, 2, 3, 4, 5]);
-  await expect(page.getByRole("heading", { name: "Session done" })).toBeVisible();
+  await expect(page.getByRole("region", { name: "Session done" })).toBeVisible();
   await page.getByRole("button", { name: "Back to words" }).click();
   await expect(page).toHaveURL(/\/words$/);
 });
@@ -76,8 +77,9 @@ test("a Weak words drill starts with the word graded Again and the words never d
   test.setTimeout(180_000);
   const suffix = `drill-weak-${uniqueTag(testInfo)}`;
   await registerAccount(page, testInfo, "drillweak");
-  // More words than a session holds, so the next deck's choice shows the priority.
-  const words = Array.from({ length: 30 }, (_, index): SeedWord => ({ id: crypto.randomUUID(), term: `w${index + 1}-${suffix}`, meaning: `meaning ${index + 1}` }));
+  // More words than a session holds, so the next deck's choice shows the priority; few enough that the next deck fits the word
+  // graded Again and every word never drilled.
+  const words = Array.from({ length: WORD_DRILL_SESSION_SIZE + 5 }, (_, index): SeedWord => ({ id: crypto.randomUUID(), term: `w${index + 1}-${suffix}`, meaning: `meaning ${index + 1}` }));
   await seedBookmarkedLessons(page, suffix, [words]);
   const pattern = new RegExp(`w(\\d+)-${suffix}`);
 
@@ -88,14 +90,14 @@ test("a Weak words drill starts with the word graded Again and the words never d
     return presentation === 0 ? "Again" : "Got it";
   });
   const firstDeck = new Set(first);
-  expect(firstDeck.size).toBe(20);
+  expect(firstDeck.size).toBe(WORD_DRILL_SESSION_SIZE);
   // The word graded Again came back later in the session; only its first grade counted.
   expect(first.filter((number) => number === again)).toHaveLength(2);
 
-  // Drill again draws a fresh deck: the word graded Again, then the ten never drilled, then the rest.
+  // Drill again draws a fresh deck: the word graded Again, then the five never drilled, then the rest.
   await page.getByRole("button", { name: "Drill again" }).click();
   const second = new Set(await walkSession(page, pattern, () => "Got it"));
-  expect(second.size).toBe(20);
+  expect(second.size).toBe(WORD_DRILL_SESSION_SIZE);
   expect(second.has(again)).toBe(true);
   for (const number of words.map((_, index) => index + 1).filter((number) => !firstDeck.has(number))) expect(second.has(number), `w${number} never drilled`).toBe(true);
 });

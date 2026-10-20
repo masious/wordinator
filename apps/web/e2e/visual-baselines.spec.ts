@@ -44,11 +44,11 @@ test("capture pre-redesign wide and narrow references", async ({ browserName, pa
 
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto("/courses");
-  await expect(page.getByRole("heading", { name: "Courses", level: 1 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Course library", level: 1 })).toBeVisible();
   await capture("before-library-wide.png");
 
   await page.setViewportSize({ width: 390, height: 844 });
   await page.reload();
-  await expect(page.getByRole("heading", { name: "Courses", level: 1 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Course library", level: 1 })).toBeVisible();
   await capture("before-library-narrow.png");
 });

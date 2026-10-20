@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { PlainText } from "../../molecules/PlainText";
 import { Volume2 } from "lucide-react";
 import { playRevealSpeech, playSpeech, SpeechButton, useStopSpeechOnUnmount } from "../../molecules/Speech";
-import { Button, ButtonGroup, Eyebrow } from "../../ui";
+import { Button, Eyebrow } from "../../ui";
 import { blankExample } from "./drillSession";
 import { AssessmentBreakdown, ListenStatusLine, SCORE_FAIR, SpeakButton, SpokenVerdict } from "../../molecules/SpeakControls";
 import { useSpokenAnswer, type SpokenAnswer } from "../../molecules/speechRecognition";
@@ -104,10 +104,10 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
               <SpokenVerdict answer={answer} compact large term={word.term} />
               {answer.assessment && <AssessmentBreakdown assessment={answer.assessment} />}
             </> : <p className={styles.practicePrompt}>{t("drill.practice.prompt")}</p>}
-            <ButtonGroup label={t("drill.practice.label")} className={styles.practiceActions}>
-              {word.speech.term && <Button variant="secondary" onClick={hearAgain}><Volume2 size={16} className={styles.listenIcon} aria-hidden="true" />{t("drill.practice.listen")}</Button>}
+            <div className={styles.practiceActions}>
+              {word.speech.term && <Button variant="secondary" className={styles.listenButton} aria-label={t("drill.practice.listen")} onClick={hearAgain}><Volume2 size={20} aria-hidden="true" /></Button>}
               {spoken.available && <SpeakButton state={spoken} onListen={listen} />}
-            </ButtonGroup>
+            </div>
             <ListenStatusLine status={spoken.status} />
           </div>}
         </>}

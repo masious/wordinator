@@ -31,7 +31,7 @@ test("the workbench protects interaction, focus, and responsive composition", as
 test("the workbench honors reduced motion", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.goto("/ui");
-  const inventory = page.getByText("Surface depth", { exact: true });
+  const inventory = page.getByRole("heading", { name: "Inventory", level: 2 });
   await inventory.scrollIntoViewIfNeeded();
   await expect(inventory).toBeVisible();
   const duration = await inventory.evaluate((node) => Number.parseFloat(getComputedStyle(node.closest("section") ?? node).animationDuration));

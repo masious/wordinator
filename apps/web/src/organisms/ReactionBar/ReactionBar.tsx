@@ -69,13 +69,13 @@ export default function ReactionBar({
               className={styles.chip}
               data-active={summary?.reacted ?? false}
               aria-pressed={summary?.reacted ?? false}
-              aria-label={t("discussion.reactWith", { emoji })}
+              aria-label={t("discussion.reactWith", { emoji, total: summary?.count ?? 0 })}
               onClick={() => {
                 setOpen(emoji);
                 toggle(emoji);
               }}
             >
-              <span className={styles.emoji} aria-hidden="true">{emoji}</span>
+              <span className={styles.emoji} aria-hidden="true">{emoji}</span>{" "}
               <span className={styles.count}>{summary?.count ?? 0}</span>
             </button>
           );

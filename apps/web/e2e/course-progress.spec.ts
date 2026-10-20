@@ -25,24 +25,23 @@ test("the course card opens lessons on their page and follows the learner's prog
   // Progress is private, so the course page shows only the viewer's own bar; the course header carries it first (Lumen Batch 5).
   const progress = page.getByRole("progressbar", { name: "Your course progress" }).first();
   await expect(progress).toHaveAttribute("aria-valuenow", "0");
-  await page.getByRole("button", { name: "Start lesson 1", exact: true }).click();
+  await page.getByRole("button", { name: `Start lesson 1: ${suffix} first` }).click();
   await expect(page).toHaveURL(/\/lessons\/[^/?]+$/);
   await expect(page.getByRole("heading", { name: `${suffix} first`, level: 1 })).toBeVisible();
   await expect(page.getByRole("dialog")).toHaveCount(0);
 
   // A saved place on the dialogue's second line (as scrolling the lesson page saves it): two of four steps passed in one of two
-  // lessons is a quarter of the course, and the card offers to continue there.
+  // lessons is a quarter of the course, and the lesson's row offers to continue there (the course page has no resume card).
   await api(`/courses/${course.id}/lessons/${firstId}/position`, { stepKey: `${talk.id}:1` }, "PUT");
   await page.goto(`/courses/${course.id}`);
-  await expect(page.getByRole("heading", { name: "Pick up where you left off" })).toBeVisible();
   await expect(progress).toHaveAttribute("aria-valuenow", "25");
-  await page.getByRole("button", { name: "Continue lesson 1", exact: true }).click();
+  await page.getByRole("button", { name: `Continue lesson 1: ${suffix} first` }).click();
   await expect(page).toHaveURL(/\/lessons\/[^?]+\?resume=true$/);
 
-  // A completed lesson counts whole, and the card moves on to the next unfinished lesson.
+  // A completed lesson counts whole, and the next unfinished lesson offers Start.
   await api(`/courses/${course.id}/lessons/${firstId}/completion`, {}, "PUT");
   await page.goto(`/courses/${course.id}`);
   await expect(progress).toHaveAttribute("aria-valuenow", "50");
-  await expect(page.getByRole("button", { name: "Start lesson 2", exact: true })).toBeVisible();
+  await expect(page.getByRole("button", { name: `Start lesson 2: ${suffix} second` })).toBeVisible();
   await expect(page.getByRole("link", { name: /^Open lesson 1:/ }).getByRole("img", { name: "Finished" })).toBeVisible();
 });

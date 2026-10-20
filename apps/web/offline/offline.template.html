@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f4f3ef" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#121316" />
+    <title>Wordinator needs the internet</title>
+    <style>
+      /* The build inlines tokens.css in place of the marker below (apps/web/vite.config.ts, wordinator-offline-page). */
+      /* wordinator:tokens */
+      html { color-scheme: light; }
+      html[data-mantine-color-scheme="dark"] { color-scheme: dark; }
+      body { min-height: 100vh; margin: 0; display: grid; place-items: center; padding: 16px; box-sizing: border-box; background: var(--color-page); color: var(--color-foreground); font-family: var(--font-sans); }
+      main { width: min(100%, 35rem); padding: 32px; background: var(--color-core); border: 1px solid var(--color-hairline); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); box-sizing: border-box; }
+      .mark { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; width: 22px; height: 22px; margin-bottom: 24px; padding: 3px; background: var(--color-inverse-surface); border-radius: 6px; transform: rotate(-4deg); }
+      .mark span { background: var(--color-core); border-radius: 2px; }
+      .mark span:first-child { background: var(--color-action); }
+      h1 { margin: 0 0 12px; font-size: 1.5rem; font-weight: 600; line-height: 1.2; letter-spacing: -0.035em; }
+      p { margin: 0; color: var(--color-foreground-muted); font-size: 0.9375rem; line-height: 1.6; }
+      button { min-height: 44px; margin-top: 24px; padding: 0 16px; color: var(--color-action-text); background: var(--color-action); border: 0; border-radius: var(--radius-sm); font: inherit; font-size: 0.82rem; font-weight: 600; cursor: pointer; }
+      button:hover { background: var(--color-hover); }
+      button:focus-visible { outline: var(--focus-ring-width) solid var(--color-action); outline-offset: var(--focus-ring-offset); }
+      @media (max-width: 47.99em) { main { padding: 24px; } }
+    </style>
+    <script>
+      // Follows the OS scheme, as the page did before tokens were inlined. Without JavaScript the light scheme applies.
+      document.documentElement.dataset.mantineColorScheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    </script>
+  </head>
+  <body>
+    <main>
+      <div class="mark" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+      <h1>Connect to keep learning</h1>
+      <p>Wordinator needs an internet connection. Your local drafts remain on this device.</p>
+      <button type="button" onclick="location.reload()">Try again</button>
+    </main>
+  </body>
+</html>

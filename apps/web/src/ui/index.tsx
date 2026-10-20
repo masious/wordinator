@@ -32,6 +32,7 @@ import {
   type ReactNode,
   type RefObject,
 } from "react";
+import { useTranslation } from "react-i18next";
 import styles from "./WordinatorUi.module.css";
 
 export { ThemePreferenceControl } from "../colorScheme";
@@ -123,12 +124,13 @@ export function StatusPanel({ title, children, tone = "info" }: PropsWithChildre
   );
 }
 
-export function EmptyState({ title, children, action }: PropsWithChildren<{ title: string; action?: ReactNode }>) {
-  return <div className={styles.state}><h3>{title}</h3>{children && <p>{children}</p>}{action}</div>;
+export function EmptyState({ title, children, action, framed = false }: PropsWithChildren<{ title: string; action?: ReactNode; framed?: boolean }>) {
+  const state = <div className={styles.state}><h3>{title}</h3>{children && <p>{children}</p>}{action}</div>;
+  return framed ? <Surface tone="quiet">{state}</Surface> : state;
 }
 
 export function ErrorState({ title, children, action }: PropsWithChildren<{ title: string; action?: ReactNode }>) {
-  return <div className={styles.state} role="alert"><h3>{title}</h3>{children && <p>{children}</p>}{action}</div>;
+  return <div className={`${styles.state} ${styles.stateError}`} role="alert"><h3>{title}</h3>{children && <p>{children}</p>}{action}</div>;
 }
 
 export function LoadingState({ label }: { label: string }) {
@@ -198,7 +200,8 @@ function DialogBody({ children }: PropsWithChildren) { return <div className={st
 export function Dialog(props: ModalProps) {
   const { children, classNames, ...modalProps } = props;
   const customClassNames = typeof classNames === "object" ? classNames : {};
-  return <Modal classNames={{ inner: styles.dialogInner, content: styles.dialogShell, header: styles.dialogHeader, body: styles.dialogContent, ...customClassNames }} {...modalProps}><DialogBody>{children}</DialogBody></Modal>;
+  const { t } = useTranslation();
+  return <Modal closeButtonProps={{ "aria-label": t("common.close") }} classNames={{ inner: styles.dialogInner, content: styles.dialogShell, header: styles.dialogHeader, body: styles.dialogContent, ...customClassNames }} {...modalProps}><DialogBody>{children}</DialogBody></Modal>;
 }
 
 // Measures the element a docked dialog sits over, while the dialog is open, so the dialog can take its place on the page.

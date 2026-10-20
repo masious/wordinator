@@ -61,10 +61,11 @@ a { color: currentColor; }
 :where(.mantine-Input-input):focus { border-color: var(--color-action); box-shadow: 0 0 0 var(--focus-ring-width) var(--color-action-soft); outline: 0; }
 
 /* Switchers (segmented controls): a paper track with a line border; the active option sits on ink. */
-:where(.mantine-SegmentedControl-root) { padding: var(--space-1); background: var(--color-surface-raised); border: var(--ring-hairline); }
-:where(.mantine-SegmentedControl-indicator) { background: var(--color-inverse-surface); box-shadow: none; }
-:where(.mantine-SegmentedControl-label) { color: var(--color-foreground-muted); font-size: var(--type-control-label); font-weight: var(--weight-semibold); }
-:where(.mantine-SegmentedControl-label)[data-active] { color: var(--color-inverse-text); }
+/* Two classes deep, so these beat Mantine's own one-class rules (a :where() selector has zero specificity and lost to them). */
+.mantine-SegmentedControl-root.mantine-SegmentedControl-root { padding: var(--space-1); background: var(--color-surface-raised); border: var(--ring-hairline); }
+.mantine-SegmentedControl-root .mantine-SegmentedControl-indicator { background: var(--color-inverse-surface); box-shadow: none; }
+.mantine-SegmentedControl-root .mantine-SegmentedControl-label { color: var(--color-foreground-muted); font-size: var(--type-control-label); font-weight: var(--weight-semibold); }
+.mantine-SegmentedControl-root .mantine-SegmentedControl-label[data-active] { color: var(--color-inverse-text); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

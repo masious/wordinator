@@ -383,7 +383,7 @@ describe("Drill session", () => {
     press(" "); press("2");
     expect(shownTerm()).toBe("woord 1");
     press(" "); press("2");
-    expect(await screen.findByRole("heading", { name: "Session done" })).toBeInTheDocument();
+    expect(await screen.findByRole("region", { name: "Session done" })).toBeInTheDocument();
     await waitFor(() => expect(grades().map((call) => call.body)).toEqual([JSON.stringify({ result: "again" }), JSON.stringify({ result: "got" })]));
   });
 
@@ -395,15 +395,48 @@ describe("Drill session", () => {
     reveal(); gradeAs("Again");
     reveal(); gradeAs("Got it");
     reveal(); gradeAs("Got it");
-    const summary = await screen.findByRole("heading", { name: "Session done" });
-    const counts = summary.parentElement!;
-    expect(within(counts).getByText("Got it on the first try").nextSibling).toHaveTextContent("1");
-    expect(within(counts).getByText("Needed Again").nextSibling).toHaveTextContent("1");
-    expect(counts).not.toHaveTextContent("%");
+    const results = await screen.findByRole("region", { name: "Session done" });
+    expect(within(results).getByRole("heading", { name: "Keep going" })).toBeInTheDocument();
+    expect(within(results).getByText("Accuracy").previousSibling).toHaveTextContent("50%");
+    expect(within(results).getByText("Words recalled").previousSibling).toHaveTextContent("1/2");
+    expect(within(results).getByText("Practice time").previousSibling).toHaveTextContent(/\d+ (sec|min)/);
+    // Nothing was assessed, so there is no pronunciation panel.
+    expect(within(results).queryByRole("meter", { name: "Pronunciation" })).not.toBeInTheDocument();
+    expect(within(results).getByRole("heading", { name: "1 word needed Again" })).toBeInTheDocument();
+    expect(within(results).getByText("woord 1")).toBeInTheDocument();
+    expect(JSON.parse(localStorage.getItem(`wordinator:drill:last:v1:${id(2)}`)!)).toMatchObject({ version: 1, accuracy: 50, pronunciation: null });
     fireEvent.click(screen.getByRole("button", { name: "Drill again" }));
     expect(await screen.findByText("0 of 1 done")).toBeInTheDocument();
     expect(shownTerm()).toBe("woord 3");
     expect(fetchCalls().filter((call) => call.path === deckPath)).toHaveLength(2);
+  });
+
+  it("marks a word that needed Again as known from the results", async () => {
+    vi.spyOn(Math, "random").mockReturnValue(0);
+    renderPage();
+    await screen.findByRole("article", { name: "Drill card" });
+    reveal(); gradeAs("Again");
+    reveal(); gradeAs("Got it");
+    reveal(); gradeAs("Got it");
+    const results = await screen.findByRole("region", { name: "Session done" });
+    fireEvent.click(within(results).getByRole("button", { name: "I know woord 1" }));
+    expect(await within(results).findByText("Marked known")).toBeInTheDocument();
+    expect(fetchCalls().filter((call) => call.method === "PUT" && call.path === `/api/groups/${groupId}/word-memory/woord%201/known`)).toHaveLength(1);
+  });
+
+  it("calls a session without Again a perfect run and compares pronunciation with the last session", async () => {
+    localStorage.setItem(`wordinator:drill:last:v1:${id(2)}`, JSON.stringify({ version: 1, accuracy: 50, pronunciation: 70, durationMs: 60_000, finishedAt: "2026-10-19T10:00:00.000Z" }));
+    renderPage();
+    await screen.findByRole("article", { name: "Drill card" });
+    reveal(); gradeAs("Got it");
+    reveal(); gradeAs("Got it");
+    const results = await screen.findByRole("region", { name: "Session done" });
+    expect(within(results).getByRole("heading", { name: "Perfect run" })).toBeInTheDocument();
+    expect(within(results).getByText("Accuracy").previousSibling).toHaveTextContent("100%");
+    expect(within(results).queryByText(/needed Again/)).not.toBeInTheDocument();
+    // Without an assessment this session, the last session's score is kept for the record but not compared.
+    expect(within(results).queryByText(/since last drill/)).not.toBeInTheDocument();
+    expect(JSON.parse(localStorage.getItem(`wordinator:drill:last:v1:${id(2)}`)!)).toMatchObject({ accuracy: 100, pronunciation: null });
   });
 
   it("goes back to the Words tab", async () => {

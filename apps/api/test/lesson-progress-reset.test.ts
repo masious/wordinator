@@ -29,11 +29,11 @@ async function seedAttempt(userId: string, courseId: string, lessonId: string, p
      VALUES (?, ?, ?, ?, 'lesson', ?, 0, 'Prompt', 'Answer', 'Reference', 1, ?, ?)`,
   ).bind(crypto.randomUUID(), userId, courseId, lessonId, practiceId, source, Date.now()).run();
 }
-async function seedPronunciation(userId: string, lessonId: string, wordId: string) {
+async function seedPronunciation(userId: string, lessonId: string | null, wordId: string | null, termKey = "de hond") {
   await env.DB.prepare(
     `INSERT INTO pronunciation_attempts (id, user_id, surface, reference_text, term_key, lesson_id, word_id, overall, accuracy, fluency, completeness, word_scores, created_at)
-     VALUES (?, ?, 'drill', 'de hond', 'de hond', ?, ?, 80, 80, 80, 80, '[]', ?)`,
-  ).bind(crypto.randomUUID(), userId, lessonId, wordId, Date.now()).run();
+     VALUES (?, ?, 'drill', ?, ?, ?, ?, 80, 80, 80, 80, '[]', ?)`,
+  ).bind(crypto.randomUUID(), userId, termKey, termKey, lessonId, wordId, Date.now()).run();
 }
 const countWhere = async (table: string, where: string, ...values: unknown[]) =>
   (await env.DB.prepare(`SELECT COUNT(*) AS total FROM ${table} WHERE ${where}`).bind(...values).first<{ total: number }>())!.total;
@@ -119,7 +119,7 @@ describe("Lesson completion audit", () => {
 });
 
 describe("Lesson reset", () => {
-  it("deletes the viewer's lesson data, rebuilds memory from other lessons, and keeps everything else", async () => {
+  it("deletes the viewer's lesson data and everything recorded for its terms, and keeps everything else", async () => {
     const s = await setup();
     const { readerId, otherId, course, first, second } = s;
     // The reader learns "de hond" in both lessons and "de kat" in the first only, practises, and finishes the first lesson.
@@ -131,13 +131,19 @@ describe("Lesson reset", () => {
     await seedAttempt(readerId, course.id, first.id, s.practice.id, "ai_chat");
     await seedAttempt(readerId, course.id, second.id, "other-practice", "lesson");
     await seedPronunciation(readerId, first.id, s.hond.id);
+    await seedPronunciation(readerId, second.id, s.hondAgain.id);
+    await seedPronunciation(readerId, null, null, "de kat");
+    await seedPronunciation(readerId, null, null, "de vis");
     expect((await request(`${s.path}/lessons/${first.id}/words/${s.hond.id}/bookmark`, s.reader, undefined, "PUT")).status).toBe(200);
+    expect((await request(`${s.path}/lessons/${second.id}/words/${s.hondAgain.id}/bookmark`, s.reader, undefined, "PUT")).status).toBe(200);
     expect((await complete(s.path, first.id, s.reader)).status).toBe(200);
     expect((await place(s.path, first.id, s.firstSteps[1]!.id, s.reader)).status).toBe(200);
     // Another account has its own data in the same lesson.
     await grade(s.path, first.id, s.hond.id, s.other);
     await saveProgress(s.path, first.id, s.practice.id, 1, s.other);
     await seedAttempt(otherId, course.id, first.id, s.practice.id, "lesson");
+    await seedPronunciation(otherId, first.id, s.hond.id);
+    expect((await request(`${s.path}/lessons/${first.id}/words/${s.hond.id}/bookmark`, s.other, undefined, "PUT")).status).toBe(200);
     expect((await complete(s.path, first.id, s.other)).status).toBe(200);
     const otherMemory = await memoryOf(otherId);
 
@@ -153,24 +159,28 @@ describe("Lesson reset", () => {
     expect(await countWhere("course_practice_progress", "lesson_id = ? AND user_id = ?", first.id, readerId)).toBe(0);
     expect(await countWhere("practice_attempts", "user_id = ? AND lesson_id = ?", readerId, first.id)).toBe(0);
     expect(await countWhere("practice_attempts", "user_id = ? AND lesson_id = ?", readerId, second.id)).toBe(1);
-    expect(await countWhere("word_reviews", "user_id = ? AND lesson_id = ?", readerId, first.id)).toBe(0);
-    expect(await countWhere("word_reviews", "user_id = ? AND lesson_id = ?", readerId, second.id)).toBe(1);
-    // "de hond" is rebuilt from the second lesson's review alone; "de kat" had no other review and is forgotten.
-    expect(await memoryOf(readerId)).toEqual([{ termKey: "de hond", direction: "understand", lessonId: second.id, recent: "g", reps: 1 }]);
-    // Bookmarks and pronunciation attempts are kept.
-    expect(await countWhere("course_word_bookmarks", "user_id = ? AND lesson_id = ?", readerId, first.id)).toBe(1);
-    expect(await countWhere("pronunciation_attempts", "user_id = ? AND lesson_id = ?", readerId, first.id)).toBe(1);
+    // Reviews and memory of the lesson's terms go, also the second lesson's review of the shared "de hond".
+    expect(await countWhere("word_reviews", "user_id = ?", readerId)).toBe(0);
+    expect(await memoryOf(readerId)).toEqual([]);
+    // Pronunciation attempts recorded from the lesson or for its terms go; one for an unrelated term stays.
+    expect(await env.DB.prepare("SELECT term_key AS termKey FROM pronunciation_attempts WHERE user_id = ?").bind(readerId).all().then((rows) => rows.results))
+      .toEqual([{ termKey: "de vis" }]);
+    // The lesson's bookmarks go; another lesson's bookmark stays.
+    expect(await countWhere("course_word_bookmarks", "user_id = ? AND lesson_id = ?", readerId, first.id)).toBe(0);
+    expect(await countWhere("course_word_bookmarks", "user_id = ? AND lesson_id = ?", readerId, second.id)).toBe(1);
     // Another account's rows in the lesson are untouched.
     expect(await countWhere("course_lesson_completions", "lesson_id = ? AND user_id = ?", first.id, otherId)).toBe(1);
     expect(await countWhere("course_practice_progress", "lesson_id = ? AND user_id = ?", first.id, otherId)).toBe(1);
     expect(await countWhere("practice_attempts", "user_id = ? AND lesson_id = ?", otherId, first.id)).toBe(1);
     expect(await countWhere("word_reviews", "user_id = ? AND lesson_id = ?", otherId, first.id)).toBe(1);
+    expect(await countWhere("pronunciation_attempts", "user_id = ?", otherId)).toBe(1);
+    expect(await countWhere("course_word_bookmarks", "user_id = ?", otherId)).toBe(1);
     expect(await memoryOf(otherId)).toEqual(otherMemory);
     // The audit keeps the completion and adds the reset.
     expect(await eventsOf(readerId)).toEqual([
       { actor: "user", kind: "lesson_completed", lessonId: first.id }, { actor: "user", kind: "lesson_reset", lessonId: first.id },
     ]);
-    expect((await lessonProgress(s.path, s.reader)).lessons[0]).toMatchObject({ state: "not_started", practicesDone: 0, wordsReviewed: 1, wordsTotal: 2 });
+    expect((await lessonProgress(s.path, s.reader)).lessons[0]).toMatchObject({ state: "not_started", practicesDone: 0, wordsReviewed: 0, wordsTotal: 2 });
   });
 
   it("refuses archived courses, unreadable lessons, other accounts, and anonymous requests", async () => {

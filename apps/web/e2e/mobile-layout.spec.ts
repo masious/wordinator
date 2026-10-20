@@ -227,9 +227,9 @@ test("mobile word recap stays within the viewport", async ({ page }) => {
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-word-recap.png` });
 });
 
-test("mobile lesson page keeps new words in a collapsed bar at the bottom", async ({ page }) => {
+test("mobile lesson page opens new words as a bottom sheet from the action bar", async ({ page }) => {
   const api = courseApi(page);
-  const { course } = await api<{ course: { id: string } }>("/courses", { title: "Words bar course", summary: "Onderaan" });
+  const { course } = await api<{ course: { id: string } }>("/courses", { title: "Words sheet course", summary: "Onderaan" });
   await api(`/courses/${course.id}/visibility`, { status: "published" });
   await seedLesson(page, course.id, "Op het perron", [
     example("Het perron is aan de overkant van het spoor.", "The platform is across the track."),
@@ -238,25 +238,17 @@ test("mobile lesson page keeps new words in a collapsed bar at the bottom", asyn
 
   await page.goto(`/courses/${course.id}`, { waitUntil: "networkidle" });
   await openLesson(page);
-  const bar = page.getByRole("complementary", { name: "New words" });
-  const toggle = bar.getByRole("button", { name: /^New words/ });
-  await expect(toggle).toHaveAttribute("aria-expanded", "false");
-  await expect(toggle).toContainText("2 highlighted");
+  const words = page.getByRole("button", { name: "Words", exact: true });
+  await expect(words).toHaveAttribute("aria-expanded", "false");
+  await words.click();
+  const sheet = page.getByRole("dialog", { name: "New words" });
+  await expect(sheet).toBeVisible();
+  await expect(sheet.getByRole("listitem").filter({ hasText: "het perron" })).toBeVisible();
   const viewport = page.viewportSize()!;
-  const closed = (await bar.boundingBox())!;
-  expect(closed.y + closed.height).toBeLessThanOrEqual(viewport.height);
-  expect(closed.height).toBeLessThan(80);
-  // The bar stays in place while the page scrolls.
-  await page.evaluate(() => window.scrollBy(0, 400));
-  await expect.poll(async () => (await bar.boundingBox())!.y).toBeCloseTo(closed.y, 0);
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await toggle.click();
-  await expect(bar.getByRole("listitem").filter({ hasText: "het perron" })).toHaveAttribute("aria-current", "true");
-  const open = (await bar.boundingBox())!;
-  expect(open.y).toBeGreaterThanOrEqual(0);
-  expect(open.y + open.height).toBeLessThanOrEqual(viewport.height);
-  await expectNoHorizontalOverflow(page, "lesson new words bar");
-  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-lesson-words-bar.png` });
+  // The sheet slides up after opening, so wait for its box to settle inside the viewport.
+  await expect.poll(async () => { const box = (await sheet.boundingBox())!; return box.y + box.height; }).toBeLessThanOrEqual(viewport.height);
+  await expectNoHorizontalOverflow(page, "lesson new words sheet");
+  if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-lesson-words-sheet.png` });
 });
 
 test("mobile lesson reader stacks columns", async ({ page }) => {

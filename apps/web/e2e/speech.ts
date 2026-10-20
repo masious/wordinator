@@ -71,17 +71,22 @@ export async function playLessonSpeech(page: Page, testInfo: TestInfo) {
 
   await page.goto(`/courses/${course.id}`);
   await openLesson(page);
+  // On phones the panel is a bottom sheet opened from the lesson tools bar; elsewhere it sits beside or under the text.
+  const sheetButton = page.getByRole("navigation", { name: "Lesson tools" }).getByRole("button", { name: "Words", exact: true });
   const panel = page.getByRole("complementary", { name: "New words" });
-  // On phones the panel is a collapsed bar above the dock; open it first.
+  await expect(sheetButton.or(panel)).toBeVisible();
+  const phone = await sheetButton.isVisible();
+  if (phone) await sheetButton.click();
   await expect(panel).toBeVisible();
-  const toggle = panel.getByRole("button", { name: /^New words/ });
-  if (await toggle.count() && await toggle.getAttribute("aria-expanded") === "false") await toggle.click();
   const word = panel.getByRole("button", { name: "Play pronunciation of het water" });
   await word.click();
   await expect(word).toHaveAttribute("aria-pressed", "true");
   await expect(word).toHaveAttribute("aria-pressed", "false");
-  // The opened bar covers the page on phones; close it again.
-  if (await toggle.count() && await toggle.getAttribute("aria-expanded") === "true") await toggle.click();
+  // The sheet covers the page; close it again.
+  if (phone) {
+    await page.keyboard.press("Escape");
+    await expect(page.getByRole("dialog", { name: "New words" })).toBeHidden();
+  }
   const sentence = page.getByRole("button", { name: "Play the example sentence" });
   await sentence.click();
   await expect(sentence).toHaveAttribute("aria-pressed", "true");

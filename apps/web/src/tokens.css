@@ -9,7 +9,7 @@
   --palette-surface-control: #ffffff;
   --palette-ink: #191a1e;
   --palette-ink-muted: #595c67;
-  --palette-ink-faint: #858894;
+  --palette-ink-faint: #666a76;
   --palette-line: #e5e4df;
   --palette-line-strong: #d5d3cd;
   --palette-accent: #5b50d6;
@@ -20,15 +20,15 @@
   --palette-on-accent: #ffffff;
   --palette-lime: #71852a;
   --palette-lime-soft: #e5efb8;
-  --palette-warm: #a26724;
+  --palette-warm: #8a5519;
   --palette-warm-soft: #fff0d7;
-  --palette-blue: #4c78a8;
+  --palette-blue: #3a6692;
   --palette-blue-soft: #dcecff;
   --palette-violet-soft: #dedaf8;
   --palette-danger: #b53e48;
   --palette-danger-soft: #fbe3e5;
   --palette-danger-ink: #8a2a33;
-  --palette-success: #2f7d57;
+  --palette-success: #29694a;
   --palette-success-soft: #e5f4eb;
   --palette-focus: #5b50d6;
   /* The dark featured panel (continue-learning hero): it stays dark in both schemes. */
@@ -50,9 +50,9 @@
   --palette-lesson-orange-soft: #fff0d7;
   --palette-lesson-yellow: #7d6510;
   --palette-lesson-yellow-soft: #fbf1c7;
-  --palette-lesson-green: #2f7d57;
+  --palette-lesson-green: #29694a;
   --palette-lesson-green-soft: #e5f4eb;
-  --palette-lesson-blue: #4c78a8;
+  --palette-lesson-blue: #3a6692;
   --palette-lesson-blue-soft: #dcecff;
   --palette-lesson-purple: #5b50d6;
   --palette-lesson-purple-soft: #eeecff;
@@ -276,6 +276,8 @@
   /* The right rail's width between 62em and 75em, where the reading column needs the room. */
   --size-reference-panel-min: 16rem;
   --width-conversation: 48rem;
+  /* The sign-in, registration, setup, and invitation card: a narrow centred column. */
+  --size-auth-card: 26rem;
   --width-modal: 640px;
   --width-modal-reading: 760px;
   --aspect-course-cover: 2 / 1;
@@ -356,7 +358,7 @@
   --palette-surface-control: #2a2b31;
   --palette-ink: #ececef;
   --palette-ink-muted: #a6a8b2;
-  --palette-ink-faint: #7c7f8a;
+  --palette-ink-faint: #8f929c;
   --palette-line: #2c2d33;
   --palette-line-strong: #3a3b42;
   --palette-accent: #6c62e3;
@@ -435,7 +437,7 @@
   --palette-surface-control: #ffffff;
   --palette-ink: #191a1e;
   --palette-ink-muted: #595c67;
-  --palette-ink-faint: #858894;
+  --palette-ink-faint: #666a76;
   --palette-line: #e5e4df;
   --palette-line-strong: #d5d3cd;
   --palette-accent: #5b50d6;
@@ -446,15 +448,15 @@
   --palette-on-accent: #ffffff;
   --palette-lime: #71852a;
   --palette-lime-soft: #e5efb8;
-  --palette-warm: #a26724;
+  --palette-warm: #8a5519;
   --palette-warm-soft: #fff0d7;
-  --palette-blue: #4c78a8;
+  --palette-blue: #3a6692;
   --palette-blue-soft: #dcecff;
   --palette-violet-soft: #dedaf8;
   --palette-danger: #b53e48;
   --palette-danger-soft: #fbe3e5;
   --palette-danger-ink: #8a2a33;
-  --palette-success: #2f7d57;
+  --palette-success: #29694a;
   --palette-success-soft: #e5f4eb;
   --palette-focus: #5b50d6;
   --palette-feature: #202126;
@@ -474,9 +476,9 @@
   --palette-lesson-orange-soft: #fff0d7;
   --palette-lesson-yellow: #7d6510;
   --palette-lesson-yellow-soft: #fbf1c7;
-  --palette-lesson-green: #2f7d57;
+  --palette-lesson-green: #29694a;
   --palette-lesson-green-soft: #e5f4eb;
-  --palette-lesson-blue: #4c78a8;
+  --palette-lesson-blue: #3a6692;
   --palette-lesson-blue-soft: #dcecff;
   --palette-lesson-purple: #5b50d6;
   --palette-lesson-purple-soft: #eeecff;

@@ -6,6 +6,7 @@ import {
   Button,
   Checkbox,
   createTheme,
+  Drawer,
   Menu,
   Modal,
   PasswordInput,
@@ -124,11 +125,13 @@ export const theme = createTheme({
     Select: Select.extend({ defaultProps: inputDefaults }),
     Checkbox: Checkbox.extend({ defaultProps: { color: "accent", radius: "sm", size: "md" } }),
     Radio: Radio.extend({ defaultProps: { color: "accent", size: "md" } }),
+    // Overlays sit on the overlay layer, above the phone's fixed lesson action bar (docs/design-system.md, layer order).
     Modal: Modal.extend({
       defaultProps: {
         centered: true,
         radius: "lg",
         size: "var(--width-modal)",
+        zIndex: "var(--z-overlay)",
         transitionProps: { duration: motion.overlay, timingFunction: "var(--ease-physical)" },
       },
       styles: {
@@ -145,6 +148,7 @@ export const theme = createTheme({
         },
       },
     }),
+    Drawer: Drawer.extend({ defaultProps: { zIndex: "var(--z-overlay)" } }),
     Menu: Menu.extend({
       defaultProps: {
         radius: "md",

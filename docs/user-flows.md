@@ -79,7 +79,7 @@
 C14 (the Progress tab and reset since C14c). [Courses](courses.md#lesson-progress-tab) owns the rules.
 
 1. On a course page the learner opens the Progress tab. It says whether the course is complete and lists each published lesson with its state (Not started, In progress, Completed, or Missed when they skipped it and went on), how far through its storyline they are, practices done, words reviewed, and AI practices.
-2. Reset on a lesson opens a confirmation listing what will be deleted: their place in the lesson, its completion, practice progress and answers, and the word reviews from that lesson. Confirming deletes them for good and refreshes the tab; words also learnt in another lesson stay known.
+2. Reset on a lesson opens a confirmation listing what will be deleted: their place in the lesson, its completion, practice progress and answers, the word reviews and memory of the lesson's words, their pronunciation scores, and the bookmarks of the lesson's words. Confirming deletes them for good and refreshes the tab; a word the lesson shares with another lesson starts over there too.
 3. On a lesson page, Reset lesson does the same and returns to the course's lesson list.
 4. Every answer they check in a practice is kept privately for them and their tutor; the check itself still happens instantly on their device.
 

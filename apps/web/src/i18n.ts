@@ -15,6 +15,7 @@ export const resources = {
       retry: "Try again",
       common: {
         loading: "Loading Wordinator",
+        close: "Close",
         loadingGroup: "Opening your group",
         loadingInvitation: "Checking this invitation",
         loadError: "We could not load Wordinator",
@@ -28,7 +29,9 @@ export const resources = {
         back: "Back",
         next: "Next",
         dismiss: "Dismiss",
-        backToFeed: "Back to the journal"
+        backToFeed: "Back to the journal",
+        notFoundTitle: "This page is not here",
+        notFoundBody: "The link may be old, or the page may have moved."
       },
       emojiPicker: {
         title: "Insert emoji",
@@ -214,18 +217,38 @@ export const resources = {
         card: "Drill card",
         prompt: { understand: "What does it mean?", produce: "How do you say it in {{language}}?" },
         blank: "blank",
+        practice: { prompt: "Now say it aloud.", listen: "Listen" },
         showAnswer: "Show answer",
         again: "Again",
-        practice: { label: "Pronunciation practice", prompt: "Now say it aloud.", listen: "Listen" },
         got: "Got it",
         unsaved_one: "{{count}} answer could not be saved.",
         unsaved_other: "{{count}} answers could not be saved.",
         backToWords: "Back to words",
         drillAgain: "Drill again",
         summary: {
-          title: "Session done",
-          got: "Got it on the first try",
-          again: "Needed Again"
+          title: "Session done"
+        },
+        results: {
+          tier: {
+            perfect: { title: "Perfect run", body: "Every word came back on the first try." },
+            good: { title: "Nice work", body: "Most words came back on the first try." },
+            keepGoing: { title: "Keep going", body: "The words you missed come first next time." }
+          },
+          percent: "{{value}}%",
+          accuracy: "Accuracy",
+          recalledValue: "{{got}}/{{total}}",
+          recalled: "Words recalled",
+          seconds_one: "{{count}} sec",
+          seconds_other: "{{count}} sec",
+          minutes_one: "{{count}} min",
+          minutes_other: "{{count}} min",
+          time: "Practice time",
+          pronunciation: "Pronunciation",
+          delta: "{{delta}} since last drill",
+          deltaSame: "Same as last drill",
+          againTitle_one: "{{count}} word needed Again",
+          againTitle_other: "{{count}} words needed Again",
+          markedKnown: "Marked known"
         },
         setup: {
           title: "Drill words",
@@ -854,8 +877,10 @@ export const resources = {
           intro: "Start {{title}} over. This permanently deletes:",
           position: "Your place in the lesson and its completion",
           practices: "Your practice progress and checked answers, including answer drafts on this device",
-          reviews: "Your word reviews from this lesson; words you also learnt in other lessons stay known",
-          kept: "Bookmarks and pronunciation scores are kept. There is no undo.",
+          reviews: "Your word reviews and memory of this lesson’s words, also where they appear in other lessons",
+          pronunciation: "Your pronunciation scores for this lesson’s words",
+          bookmarks: "Your bookmarks of this lesson’s words",
+          kept: "There is no undo.",
           confirm: "Reset lesson"
         }
       },
@@ -966,7 +991,7 @@ export const resources = {
         unpin: "Remove pin",
         emptyTitle: "No responses yet",
         emptyBody: "Be the first person to add one.",
-        reactWith: "React with {{emoji}}",
+        reactWith: "React with {{emoji}} {{total}}",
         customEmoji: "Custom emoji",
         addReaction: "Add",
         emojiError: "Choose exactly one emoji."
@@ -1511,6 +1536,10 @@ export const resources = {
             attempts_other: "{{count}} answers",
             reviews_one: "{{count}} word review",
             reviews_other: "{{count}} word reviews",
+            pronunciations_one: "{{count}} pronunciation score",
+            pronunciations_other: "{{count}} pronunciation scores",
+            bookmarks_one: "{{count}} bookmark",
+            bookmarks_other: "{{count}} bookmarks",
           },
           confirmed: "Confirmed",
           cancelled: "Cancelled",

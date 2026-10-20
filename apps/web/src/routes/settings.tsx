@@ -9,5 +9,5 @@ export const Route = createFileRoute("/settings")({
 
 function SettingsRoute() {
   const { groupId } = Route.useRouteContext();
-  return <AccountSettingsPage groupId={groupId} global />;
+  return <AccountSettingsPage groupId={groupId} />;
 }

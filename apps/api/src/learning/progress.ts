@@ -60,6 +60,9 @@ export async function readLessonProgress(db: D1Database, course: CourseRef, user
   };
 }
 
+// The lesson's indexed terms, matched as in the lesson box (learning/metrics.ts); binds the lesson ID as ?2.
+export const LESSON_TERMS = "SELECT w.term_key FROM course_lesson_words w WHERE w.lesson_id = ?2 AND w.term_key IS NOT NULL";
+
 const eventStatement = (db: D1Database, target: LessonTarget, kind: "lesson_completed" | "lesson_reset", by: ProgressActor, now: number) => db.prepare(
   `INSERT INTO progress_events (id, user_id, actor, kind, course_id, lesson_id, conversation_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
 ).bind(crypto.randomUUID(), target.userId, by.actor, kind, target.courseId, target.lessonId, by.conversationId ?? null, now);
@@ -85,9 +88,11 @@ export async function completeLesson(db: D1Database, target: LessonTarget, by: P
 
 /**
  * Starts a lesson over for one user, in one D1 batch: deletes their position, completion, practice progress for the lesson's
- * practices, practice attempts for the lesson (any source), and word reviews recorded from it, then rebuilds the memory of the
- * terms those reviews touched from the reviews that remain, and writes a `lesson_reset` audit row. Bookmarks, pronunciation
- * attempts, shares, and conversations are kept. The caller checks that the course is not archived and the lesson is readable.
+ * practices, practice attempts for the lesson (any source), bookmarks of its words, and every word review, word memory row, and
+ * pronunciation attempt that the lesson box counts for it (recorded from the lesson or for any of its terms, so a term shared with
+ * another lesson starts over there too). Memory of other terms the lesson's reviews touched is rebuilt from the reviews that
+ * remain. Writes a `lesson_reset` audit row. Shares and conversations are kept. The caller checks that the course is not
+ * archived and the lesson is readable.
  */
 export async function resetLesson(db: D1Database, target: LessonTarget, by: ProgressActor, now = Date.now()): Promise<void> {
   const { groupId, courseId, lessonId, userId } = target;
@@ -97,8 +102,11 @@ export async function resetLesson(db: D1Database, target: LessonTarget, by: Prog
     db.prepare("DELETE FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND user_id = ?").bind(groupId, courseId, lessonId, userId),
     db.prepare("DELETE FROM course_practice_progress WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND user_id = ?").bind(groupId, courseId, lessonId, userId),
     db.prepare("DELETE FROM practice_attempts WHERE user_id = ? AND course_id = ? AND lesson_id = ?").bind(userId, courseId, lessonId),
-    db.prepare("DELETE FROM word_reviews WHERE user_id = ? AND lesson_id = ?").bind(userId, lessonId),
+    db.prepare(`DELETE FROM word_reviews WHERE user_id = ?1 AND (lesson_id = ?2 OR term_key IN (${LESSON_TERMS}))`).bind(userId, lessonId),
     ...memoryRebuild,
+    db.prepare(`DELETE FROM word_memory WHERE user_id = ?1 AND term_key IN (${LESSON_TERMS})`).bind(userId, lessonId),
+    db.prepare(`DELETE FROM pronunciation_attempts WHERE user_id = ?1 AND (lesson_id = ?2 OR term_key IN (${LESSON_TERMS}))`).bind(userId, lessonId),
+    db.prepare("DELETE FROM course_word_bookmarks WHERE user_id = ? AND lesson_id = ?").bind(userId, lessonId),
     eventStatement(db, target, "lesson_reset", by, now),
   ]);
 }

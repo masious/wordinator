@@ -22,6 +22,32 @@ export function gradeDrill(state: DrillState, result: WordDrillResult, random: (
   return { queue: rest, retired: state.retired, first, shown: state.shown + 1 };
 }
 
+// The results page's headline tier (docs/words.md#end-of-session), by the share of cards Got it on the first try.
+export type DrillTier = "perfect" | "good" | "keepGoing";
+export const DRILL_GOOD_ACCURACY = 70;
+export const drillTier = (accuracy: number): DrillTier => accuracy === 100 ? "perfect" : accuracy >= DRILL_GOOD_ACCURACY ? "good" : "keepGoing";
+
+// The rounded mean of a session's pronunciation scores, or null when nothing was assessed.
+export const averageScore = (scores: readonly number[]) => scores.length ? Math.round(scores.reduce((sum, score) => sum + score, 0) / scores.length) : null;
+
+// A session's length as a count and unit: seconds under a minute, otherwise whole minutes (rounded).
+export const drillDuration = (ms: number) => ms < 60_000
+  ? { unit: "seconds" as const, count: Math.max(1, Math.round(ms / 1000)) }
+  : { unit: "minutes" as const, count: Math.round(ms / 60_000) };
+
+// The learner's last finished session, kept in this browser only (never sent to the API), namespaced by account.
+export type LastDrill = { version: 1; accuracy: number; pronunciation: number | null; durationMs: number; finishedAt: string };
+export const lastDrillKey = (accountId: string) => `wordinator:drill:last:v1:${accountId}`;
+export function readLastDrill(accountId: string): LastDrill | null {
+  try {
+    const value = JSON.parse(localStorage.getItem(lastDrillKey(accountId)) ?? "null") as LastDrill | null;
+    return value?.version === 1 ? value : null;
+  } catch { return null; }
+}
+export function writeLastDrill(accountId: string, value: LastDrill) {
+  try { localStorage.setItem(lastDrillKey(accountId), JSON.stringify(value)); } catch { /* Kept for this visit only. */ }
+}
+
 // Folds one character like `wordSearchKey`, without trimming, so positions in the folded text map back to the original.
 const foldChar = (char: string) => char.normalize("NFKD").replace(/\p{M}/gu, "").replace(/[ßẞ]/g, "ss").toLowerCase();
 

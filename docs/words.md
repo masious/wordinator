@@ -87,7 +87,7 @@ A session holds at most `WORD_DRILL_SESSION_SIZE` (10) cards, or fewer when fewe
 - Once revealed, two buttons grade the card: **Again** and **Got it**. Keyboard: Space reveals; `1` is Again and `2` is Got it.
 - **Again** puts the card back three to five cards later in the session (at the end when fewer remain). **Got it** retires it. The session ends when every card has been retired.
 - Only a card's **first** grade in a session is recorded; repeats after Again only retire the card. The grade is saved as soon as it is given, so leaving midway loses nothing.
-- A mono counter shows cards retired of the session total. There is no timer.
+- A mono counter shows cards retired of the session total. There is no timer on the cards; the [results](#end-of-session) report the session's length.
 - A grade that cannot be saved does not stop the session: a quiet line says how many answers were not saved, with Try again, and stays on the summary until they are.
 - A card whose word disappears mid-session (edited out or unpublished) still finishes from the session's copy; its grade is refused and ignored.
 
@@ -145,7 +145,15 @@ When **Microsoft** listens, it also assesses how the term was pronounced (Azure'
 
 ### End of session
 
-A short summary says how many cards were Got it on the first try and how many needed Again, then offers Drill again (same settings, a fresh deck) and Back to words. It shows no score or comparison with earlier sessions.
+The results page (approved product change, 2026-10-20; it replaces the earlier two-count summary, which showed no score or comparison) shows:
+
+- **A tiered headline** by accuracy: Perfect run (every card Got it on the first try), Nice work (at least `DRILL_GOOD_ACCURACY`, 70%), or Keep going, each with its own icon and line, under a Session done eyebrow.
+- **Three stats:** Accuracy (the share of cards Got it on the first try, as a percentage), Words recalled (first-try Got it of the session's cards, for example 7/10), and Practice time (from the first card to the last grade, in seconds under a minute and whole minutes after). Timing is only for this page; there is still no timer on the cards.
+- **Pronunciation**, only when Microsoft scored at least one Say it attempt in the session: the mean overall score of every scored attempt (attempts where Azure scored nothing are left out), as a bar in the score's band, with the change since the last session when that session had a score too.
+- **The words that needed Again**, each with its speaker button and an icon button that marks the word known (the same `PUT .../word-memory/:termKey/known` as the Weak words view); the row then says Marked known. A failed request shows a message and leaves the button.
+- Drill again (same settings, a fresh deck) and Back to words.
+
+**Last session, kept locally.** When a session ends, its accuracy, pronunciation score, length, and end time are saved in the browser's `localStorage` under `wordinator:drill:last:v1:<accountId>`, replacing the previous one, which the results page reads first for the comparison. Only the last session is kept; nothing is sent to the API or stored in the database, so the comparison is per browser and is lost when site data is cleared.
 
 ### Word memory
 
@@ -161,7 +169,7 @@ C14 (approved product change, 2026-10-15) replaces C12's Leitner boxes before C1
 - **Seeding.** The C14 migration turns each C12 drill state into one `seed` review (its last result at its last drilled time) and a memory row whose stability follows its box (box 1: half a day, 2: 1 day, 3: 3 days, 4: 7 days, 5: 21 days) with the default difficulty, then drops `course_word_drill_states`. A seed is never a lapse. States whose word can no longer be keyed are skipped (see [`course_word_drill_states`](data-model.md#course_word_drill_states)).
 - There are still no due dates, intervals, or overdue counts in the interface.
 - Memory is a reference like a bookmark: it survives removing the bookmark, an author's edits, and the word's temporary removal. A row whose representative lesson is no longer visible falls back to another visible occurrence of the term, and is hidden while there is none.
-- **Private.** Reviews and memory belong to one account. The learner sees them only as deck order, the end-of-session summary, the Weak words dots, and the library dashboard's aggregate bands and recency; the [AI tutor](ai-tutor.md) reads them for that learner only. The superuser's [analytics](settings-and-administration.md#analytics) counts reviews per account, never which words. They create no notifications or feed activity.
+- **Private.** Reviews and memory belong to one account. The learner sees them only as deck order, the end-of-session results, the Weak words dots, and the library dashboard's aggregate bands and recency; the [AI tutor](ai-tutor.md) reads them for that learner only. The superuser's [analytics](settings-and-administration.md#analytics) counts reviews per account, never which words. They create no notifications or feed activity.
 
 ### Deferred
 

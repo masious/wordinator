@@ -25,9 +25,9 @@ test("the lesson index follows the reader, jumps to an entry, and sits above a c
   const index = page.getByRole("navigation", { name: "In this lesson" });
   await expect(index.getByRole("button")).toHaveText(["Greetings", "Practice: Translate into English", "Small talk", "Goodbyes"]);
   const words = page.getByRole("complementary", { name: "New words" });
-  // The index sits above the New words panel in the same column.
+  // The index sits in the app rail, left of the text; the New words panel is docked in the right rail.
   const [indexBox, wordsBox] = [await index.boundingBox(), await words.boundingBox()];
-  expect(indexBox!.y + indexBox!.height).toBeLessThanOrEqual(wordsBox!.y);
+  expect(indexBox!.x + indexBox!.width).toBeLessThanOrEqual(wordsBox!.x);
 
   // Choosing an entry scrolls to it; it becomes current and the entries before it are dimmed. The column stays in view.
   await index.getByRole("button", { name: "Goodbyes" }).click();

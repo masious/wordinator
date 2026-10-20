@@ -7,7 +7,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, type ReactNode, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiError, apiRequest, groupQueryOptions, invitationQueryOptions, sessionQueryOptions } from "../api";
-import { Button, ErrorState, Eyebrow, LabelChip, LoadingState, PageHeader, PasswordField, SplitLayout, StatusPanel, Surface, TextField } from "../ui";
+import { Button, ErrorState, Eyebrow, LoadingState, PageHeader, PasswordField, StatusPanel, Surface, TextField } from "../ui";
 import styles from "./PhaseOnePages.module.css";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { Feed } from "./PhaseThreePages";
@@ -27,11 +27,21 @@ function MutationError({ error }: { error: Error | null }) {
 }
 
 function AuthCard({ children, eyebrow, title, intro, story }: { children: ReactNode; eyebrow: string; title: string; intro: string; story?: ReactNode }) {
+  const { t } = useTranslation();
   return <main className={styles.authPage}>
-    <SplitLayout className={styles.authLayout} primary={<div className={styles.authStory}>
-      <LabelChip>{eyebrow}</LabelChip><h1>{title}</h1><p className={styles.intro}>{intro}</p>
-      {story ?? <div aria-hidden="true" className={styles.journalMotif}><span /><span /><span /></div>}
-    </div>} secondary={<Surface className={styles.authCard} tone="featured">{children}</Surface>} />
+    <div className={styles.authColumn}>
+      <div className={styles.brand}>
+        <span aria-hidden="true" className={styles.brandMark}><span /><span /><span /></span>
+        <span>{t("brand")}</span>
+      </div>
+      <Surface className={styles.authCard}>
+        <Eyebrow>{eyebrow}</Eyebrow>
+        <h1 className={styles.authTitle}>{title}</h1>
+        <p className={styles.intro}>{intro}</p>
+        {children}
+      </Surface>
+      {story && <div className={styles.authStory}>{story}</div>}
+    </div>
   </main>;
 }
 

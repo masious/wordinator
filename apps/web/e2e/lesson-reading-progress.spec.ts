@@ -16,7 +16,8 @@ test("scrolling a lesson page fills its bar, saves the furthest step, and Contin
 
   await page.goto(`/courses/${course.id}`);
   await openLesson(page);
-  const bar = page.getByRole("progressbar", { name: "Lesson progress" });
+  // The page's reading bar; the rail's lesson box carries a second Lesson progress meter.
+  const bar = page.getByRole("main").getByRole("progressbar", { name: "Lesson progress" });
   await expect(bar).toHaveAttribute("aria-valuenow", "0");
 
   // Part of the way down, the furthest step reached is saved through the position API, and after a reload the bar starts from
@@ -42,10 +43,9 @@ test("scrolling a lesson page fills its bar, saves the furthest step, and Contin
   await expect(page.getByText("Step 12 of 12")).toBeVisible();
 
   // Eleven of twelve steps passed in the only lesson.
-  await page.getByRole("link", { name: /^Back to / }).click();
-  await expect(page.getByRole("heading", { name: "Pick up where you left off" })).toBeVisible();
+  await page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("link", { name: `${suffix} course` }).click();
   await expect(page.getByRole("progressbar", { name: "Your course progress" }).first()).toHaveAttribute("aria-valuenow", "91");
-  await page.getByRole("button", { name: "Continue lesson 1", exact: true }).click();
+  await page.getByRole("button", { name: `Continue lesson 1: ${suffix} lesson` }).click();
   await expect(page).toHaveURL(/\/lessons\/[^?]+\?resume=true$/);
   await expect(page.getByText("Zin nummer 12 staat hier.")).toBeInViewport();
   await expect(page.getByRole("dialog")).toHaveCount(0);
@@ -63,14 +63,14 @@ test("Continue opens the lesson page scrolled to a saved step in the middle", as
 
   await page.goto(`/courses/${course.id}`);
   await openLesson(page);
-  await expect(page.getByRole("progressbar", { name: "Lesson progress" })).toHaveAttribute("aria-valuenow", "0");
+  await expect(page.getByRole("main").getByRole("progressbar", { name: "Lesson progress" })).toHaveAttribute("aria-valuenow", "0");
   const saved = page.waitForResponse((response) => response.url().endsWith("/position") && response.request().method() === "PUT");
   await page.mouse.wheel(0, 900);
   const { position } = await (await saved).json() as { position: { stepIndex: number } };
   expect(position.stepIndex).toBeGreaterThan(1);
   expect(position.stepIndex).toBeLessThan(10);
-  await page.getByRole("link", { name: /^Back to / }).click();
-  await page.getByRole("button", { name: "Continue lesson 1", exact: true }).click();
+  await page.getByRole("navigation", { name: "Breadcrumb" }).getByRole("link", { name: `${suffix} course` }).click();
+  await page.getByRole("button", { name: `Continue lesson 1: ${suffix} lesson` }).click();
   await expect(page).toHaveURL(/\?resume=true$/);
   // The saved step sits near the top of the window; the lesson's start is scrolled past.
   const step = page.getByText(sentences[position.stepIndex]!, { exact: true });

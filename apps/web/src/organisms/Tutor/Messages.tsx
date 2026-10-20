@@ -145,6 +145,8 @@ export function ConfirmationCard({ part, disabled, onRespond }: { part: Confirma
       <li>{t("tutor.confirm.deletes.practiceProgress", { count: summary.deletes.practiceProgress })}</li>
       <li>{t("tutor.confirm.deletes.attempts", { count: summary.deletes.attempts })}</li>
       <li>{t("tutor.confirm.deletes.reviews", { count: summary.deletes.reviews })}</li>
+      <li>{t("tutor.confirm.deletes.pronunciations", { count: summary.deletes.pronunciations })}</li>
+      <li>{t("tutor.confirm.deletes.bookmarks", { count: summary.deletes.bookmarks })}</li>
     </ul>}
     {summary.action === "save_ai_practice" && <ul className={styles.cardDetails}>
       {summary.lessons.map((entry) => <li key={entry.lesson.id}>{t("tutor.confirm.lessonIn", { lesson: entry.lesson.title, course: entry.course.title })}</li>)}

@@ -436,6 +436,8 @@ export const tutorConfirmationSummarySchema = z.discriminatedUnion("action", [
     deletes: z.strictObject({
       position: z.boolean(), completion: z.boolean(), practiceProgress: z.number().int().nonnegative(),
       attempts: z.number().int().nonnegative(), reviews: z.number().int().nonnegative(),
+      // Defaulted so cards stored before reset also cleared these still parse.
+      pronunciations: z.number().int().nonnegative().default(0), bookmarks: z.number().int().nonnegative().default(0),
     }),
   }),
   z.strictObject({

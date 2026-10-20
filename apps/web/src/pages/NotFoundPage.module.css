@@ -1,0 +1,7 @@
+.page { display: grid; place-items: center; min-height: 100dvh; padding: var(--space-4); box-sizing: border-box; background: var(--color-page); }
+.card { width: min(100%, 35rem); padding: var(--card-inset); display: grid; justify-items: start; gap: var(--space-3); background: var(--color-core); border: var(--ring-hairline); border-radius: var(--radius-lg); box-shadow: var(--shadow-card); }
+.card h1 { margin: 0; font-family: var(--font-display); font-size: var(--type-section-title); font-weight: var(--weight-semibold); line-height: var(--line-title); letter-spacing: var(--tracking-title); }
+.card p { margin: 0; color: var(--color-foreground-muted); font-size: var(--type-body); line-height: var(--line-body); }
+.action { display: inline-flex; align-items: center; min-height: var(--touch-target); margin-top: var(--space-2); padding-inline: var(--space-4); color: var(--color-action-text); background: var(--color-action); border-radius: var(--radius-sm); font-size: var(--type-control-label); font-weight: var(--weight-semibold); text-decoration: none; }
+.action:hover { background: var(--color-hover); }
+@media (min-width: 48em) { .page { padding: var(--space-8); } }

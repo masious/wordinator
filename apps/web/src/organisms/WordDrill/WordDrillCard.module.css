@@ -17,14 +17,10 @@
 .pronunciation{display:grid;align-content:start;gap:var(--space-3);justify-items:stretch;margin-top:var(--space-3);padding-top:var(--space-3);border-top:var(--ring-hairline)}
 .pronunciation ul{justify-content:flex-start}
 .practicePrompt{color:var(--color-foreground-muted)!important}
-/* Listen and Say it are one attached pair sharing the column's width: the outer ends are rounded and the seam is a line. */
-div.practiceActions{display:flex;width:100%;gap:0}
-.practiceActions>*{flex:1 1 0;min-width:0}
-.practiceActions button{border-radius:0}
-.practiceActions>:first-child:is(button,span>button),.practiceActions>:first-child>button{border-start-start-radius:var(--radius-sm);border-end-start-radius:var(--radius-sm)}
-.practiceActions>:last-child:is(button),.practiceActions>:last-child>button{border-start-end-radius:var(--radius-sm);border-end-end-radius:var(--radius-sm)}
-.listenIcon{margin-inline-end:var(--space-2)}
-.practiceActions>:last-child:not(:first-child){margin-inline-start:-1px}
+/* Listen is a square icon button; Say it takes the rest of the row, with its label centred. The listening hint wraps inside the column. */
+div.practiceActions{display:flex;align-items:flex-start;width:100%;gap:var(--space-2);--hint-max:100%;--hint-wrap:normal}
+.practiceActions>span{flex:1 1 0;min-width:0}
+.practiceActions.practiceActions .listenButton{flex:none;width:var(--control-height-lg);padding-inline:0}
 .practiceActions>span>button{width:100%}
 /* The verdict badge insets its icon and its ring by the same amount. */
 .pronunciation>[role="status"]:first-child{padding:var(--space-2);font-size:var(--text-md)}
@@ -67,4 +63,4 @@ div.practiceActions{display:flex;width:100%;gap:0}
 @keyframes cardIn{from{opacity:0;transform:translateY(var(--space-2))}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.card{animation:none}.faces,.front,.back{transition:none}}
 
-.practiceActions.practiceActions button{padding-inline:var(--space-3)}
+.practiceActions.practiceActions button:not(.listenButton){padding-inline:var(--space-3)}

@@ -324,7 +324,7 @@ describe("Tutor page", () => {
 
   it("answers a confirmation card, streams the resumed turn, and collapses the card", async () => {
     const card: Extract<TutorPart, { type: "confirmation" }> = { type: "confirmation", toolCallId: id(40), answer: null, outcome: null, answeredAt: null,
-      summary: { action: "reset_lesson", course: { id: id(50), title: "Basics" }, lesson: { id: id(51), title: "Lesson 6" }, deletes: { position: true, completion: false, practiceProgress: 2, attempts: 5, reviews: 1 } } };
+      summary: { action: "reset_lesson", course: { id: id(50), title: "Basics" }, lesson: { id: id(51), title: "Lesson 6" }, deletes: { position: true, completion: false, practiceProgress: 2, attempts: 5, reviews: 1, pronunciations: 3, bookmarks: 0 } } };
     messages[c1]!.push(message(id(2), "assistant", [text("Shall I?"), card], "awaiting_user"));
     turn = (path) => {
       expect(path).toBe(`/api/ai/conversations/${c1}/tool-calls/${id(40)}/respond`);

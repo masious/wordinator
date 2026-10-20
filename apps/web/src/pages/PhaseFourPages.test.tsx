@@ -64,7 +64,7 @@ describe("Phase 4 discussion UI", () => {
   it("renders the vertical reaction rail with an input in place of the Add button", async () => {
     const fetchMock = vi.fn().mockImplementation(() => json({ reactions: [] })); vi.stubGlobal("fetch", fetchMock);
     renderWithClient(<ReactionBar orientation="vertical" reactions={[{ emoji: "❤️", count: 2, reacted: true, members: [{ id: userId, displayName: "Ada" }] }]} quickReactions={["❤️", "💡", "👎"]} path="/reaction" onChanged={vi.fn()} />, true);
-    expect(await screen.findByRole("button", { name: "React with ❤️" })).toHaveAttribute("aria-pressed", "true");
+    expect(await screen.findByRole("button", { name: "React with ❤️ 2" })).toHaveAttribute("aria-pressed", "true");
     expect(screen.getAllByRole("button", { name: /React with/ })).toHaveLength(3);
     expect(screen.queryByRole("button", { name: "Add" })).not.toBeInTheDocument();
     const input = screen.getByLabelText("Custom emoji");

@@ -25,7 +25,7 @@ test("a drill's grades show as Weak words dots, the word graded Again first", as
   const card = page.getByRole("article", { name: "Drill card" });
   let missed = false;
   for (let step = 0; step < 10; step += 1) {
-    const done = page.getByRole("heading", { name: "Session done" });
+    const done = page.getByRole("region", { name: "Session done" });
     const showAnswer = card.getByRole("button", { name: "Show answer" });
     await expect(done.or(showAnswer)).toBeVisible();
     if (await done.isVisible()) break;
@@ -34,7 +34,7 @@ test("a drill's grades show as Weak words dots, the word graded Again first", as
     missed ||= again;
     await card.getByRole("button", { name: again ? "Again" : "Got it" }).click();
   }
-  await expect(page.getByRole("heading", { name: "Session done" })).toBeVisible();
+  await expect(page.getByRole("region", { name: "Session done" })).toBeVisible();
 
   await page.goto("/words");
   await page.getByRole("group", { name: "Show" }).getByText("Weak words", { exact: true }).click();

@@ -25,11 +25,31 @@ function selfHostedEmojibase(): Plugin {
   };
 }
 
+// The offline page is served without the app's stylesheets or JavaScript, so tokens.css is inlined into its template at build time.
+const offlineTemplate = new URL("./offline/offline.template.html", import.meta.url);
+const tokensStylesheet = new URL("./src/tokens.css", import.meta.url);
+const offlineSource = () => readFileSync(offlineTemplate, "utf8").replace("/* wordinator:tokens */", () => readFileSync(tokensStylesheet, "utf8"));
+function offlinePage(): Plugin {
+  return {
+    name: "wordinator-offline-page",
+    configureServer(server) {
+      server.middlewares.use("/offline.html", (_request, response) => {
+        response.setHeader("content-type", "text/html; charset=utf-8");
+        response.end(offlineSource());
+      });
+    },
+    generateBundle() {
+      this.emitFile({ type: "asset", fileName: "offline.html", source: offlineSource() });
+    },
+  };
+}
+
 export default defineConfig({
   plugins: [
     tanstackRouter({ target: "react", autoCodeSplitting: true }),
     react(),
     selfHostedEmojibase(),
+    offlinePage(),
     VitePWA({
       strategies: "injectManifest",
       srcDir: "src",
@@ -39,8 +59,8 @@ export default defineConfig({
         name: "Wordinator",
         short_name: "Wordinator",
         description: "A shared language-learning journal for friends.",
-        theme_color: "#F4EBDD",
-        background_color: "#F4EBDD",
+        theme_color: "#f4f3ef",
+        background_color: "#f4f3ef",
         display: "standalone",
         start_url: "/",
         icons: [
