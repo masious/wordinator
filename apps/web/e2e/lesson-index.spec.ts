@@ -15,15 +15,15 @@ test("the lesson index follows the reader, jumps to an entry, and sits above a c
   await seedLesson(page, course.id, `${suffix} lesson`, [
     heading("Greetings"), ...section("Groet"), vocabulary({ term: "hallo", meaning: "hello" }),
     practice("Translate into English", [{ prompt: "Hallo", authorsVersion: ["Hello"] }]),
-    // A level-3 heading right above a practice names it in the index, without the Practice prefix.
-    heading("Small talk", 3), practice("Answer the questions about the weather.", [{ prompt: "Regent het?", authorsVersion: ["Ja"] }]), ...section("Praat"), vocabulary({ term: "het weer", meaning: "the weather" }),
+    // Practices and level-3 headings are left out of the index.
+    heading("Weather", 3), heading("Small talk"), practice("Answer the questions about the weather.", [{ prompt: "Regent het?", authorsVersion: ["Ja"] }]), ...section("Praat"), vocabulary({ term: "het weer", meaning: "the weather" }),
     heading("Goodbyes"), ...section("Dag"),
   ]);
 
   await page.goto(`/courses/${course.id}`);
   await openLesson(page);
   const index = page.getByRole("navigation", { name: "In this lesson" });
-  await expect(index.getByRole("button")).toHaveText(["Greetings", "Practice: Translate into English", "Small talk", "Goodbyes"]);
+  await expect(index.getByRole("button")).toHaveText(["Greetings", "Small talk", "Goodbyes"]);
   const words = page.getByRole("complementary", { name: "New words" });
   // The index sits in the app rail, left of the text; the New words panel is docked in the right rail.
   const [indexBox, wordsBox] = [await index.boundingBox(), await words.boundingBox()];

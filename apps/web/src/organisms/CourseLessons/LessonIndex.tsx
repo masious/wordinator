@@ -1,13 +1,11 @@
-import { inlineText, readPracticeBlock, walkLessonBlocks, type LessonDocument } from "@wordinator/contracts/lesson-document";
+import { inlineText, walkLessonBlocks, type LessonDocument } from "@wordinator/contracts/lesson-document";
 import { type CSSProperties, type RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRevealCurrent } from "./LessonWords";
 import styles from "./LessonIndex.module.css";
 
-// One line of a lesson's index: a heading, or a practice under the heading before it. `depth` indents it: the document's
-// highest heading level is depth 0, and a practice sits one step deeper than its heading. A `titled` practice is named by the
-// level-3 heading right above it; its `id` is that heading's, so the index follows and jumps to the title.
-export type LessonIndexEntry = { id: string; kind: "heading" | "practice"; text: string; depth: number; titled?: true };
+// One line of a lesson's index: a heading. `depth` indents it: the document's highest heading level is depth 0.
+export type LessonIndexEntry = { id: string; text: string; depth: number };
 
 // The index shows only when it has at least this many entries; one entry tells the reader nothing.
 export const LESSON_INDEX_MIN = 2;
@@ -15,40 +13,17 @@ export const LESSON_INDEX_MIN = 2;
 const ACTIVE_SLACK_PX = 8;
 const BOTTOM_SLACK_PX = 2;
 
-// A practice is named by the first sentence of its instruction ("Fill in the verb. Start with…" reads "Fill in the verb"), up to
-// the first full stop, question or exclamation mark, colon, or semicolon followed by a space. A closing full stop or colon is dropped.
-export function shortInstruction(text: string) {
-  const flat = text.replace(/\s+/g, " ").trim();
-  const end = /[.!?:;](?=\s)/.exec(flat);
-  return (end ? flat.slice(0, end.index + 1) : flat).replace(/[.:;]$/, "").trim();
-}
-const instruction = (block: Parameters<typeof readPracticeBlock>[0]) => {
-  try { return shortInstruction(readPracticeBlock(block).instruction); } catch { return ""; }
-};
-
-// Headings and practices in reading order. Level-3 headings are too fine for the index, and headings inside columns title only
-// their column, so both are left out, as are empty headings; practices inside columns are kept. A top-level practice right below
-// a non-empty level-3 heading takes that heading as its name; any other practice is named by its instruction.
+// Level-1 and level-2 headings in reading order; practices and other blocks are left out. Level-3 headings are too fine for the
+// index, and headings inside columns title only their column, so both are left out, as are empty headings.
 export function lessonIndexEntries(document: LessonDocument): LessonIndexEntry[] {
-  const found: Array<Omit<LessonIndexEntry, "depth"> & { level: number | null }> = [];
-  let title: { id: string; text: string } | null = null;
+  const found: Array<{ id: string; text: string; level: number }> = [];
   for (const { block, depth } of walkLessonBlocks(document.blocks)) {
-    if (depth > 0) { if (block.type === "practice") found.push({ id: block.id, kind: "practice", text: instruction(block), level: null }); continue; }
-    const above = title; title = null;
-    if (block.type === "heading") {
-      const text = inlineText(block.content).replace(/\s+/g, " ").trim();
-      if (block.props.level === 3) title = text ? { id: block.id, text } : null;
-      else if (text) found.push({ id: block.id, kind: "heading", text, level: block.props.level });
-    } else if (block.type === "practice") {
-      found.push(above ? { ...above, kind: "practice", titled: true, level: null } : { id: block.id, kind: "practice", text: instruction(block), level: null });
-    }
+    if (depth > 0 || block.type !== "heading" || block.props.level === 3) continue;
+    const text = inlineText(block.content).replace(/\s+/g, " ").trim();
+    if (text) found.push({ id: block.id, text, level: block.props.level });
   }
-  const top = Math.min(...found.flatMap((entry) => entry.level ?? []));
-  let section = -1;
-  return found.map(({ level, ...entry }) => {
-    if (level !== null) { section = level - top; return { ...entry, depth: section }; }
-    return { ...entry, depth: section + 1 };
-  });
+  const top = Math.min(...found.map((entry) => entry.level));
+  return found.map(({ level, ...entry }) => ({ ...entry, depth: level - top }));
 }
 
 // The last entry whose top has reached `line` (window coordinates), or -1 before the first. At the bottom of the page the last
@@ -87,7 +62,7 @@ function useCurrentEntry(entries: readonly LessonIndexEntry[], reading: RefObjec
   return current;
 }
 
-// The lesson's index in the app rail, under the current course: every heading and practice, one line each, with the one the reader is in marked
+// The lesson's index in the app rail, under the current course: its headings, one line each, with the one the reader is in marked
 // as current on the rule and the ones already passed muted. Choosing an entry scrolls the page to it, then calls `onJump` (the
 // phone's drawer closes). A long index scrolls with the rail's navigation, which keeps the current entry in view.
 export function LessonIndex({ entries, reading, side, onJump }: {
@@ -97,9 +72,6 @@ export function LessonIndex({ entries, reading, side, onJump }: {
   const list = useRef<HTMLElement>(null);
   const current = useCurrentEntry(entries, reading, side);
   // Entries keep to one line in the rail, so each also carries its full label as a tooltip.
-  const labels = entries.map((entry) => entry.kind === "practice" && !entry.titled
-    ? entry.text ? t("courses.lessons.index.practice", { instruction: entry.text }) : t("courses.lessons.index.practiceUntitled")
-    : entry.text);
   // The index scrolls with the rail's navigation, so that is where the current entry is kept in view.
   const scroller = useRef<HTMLElement | null>(null);
   useLayoutEffect(() => { scroller.current = list.current?.closest<HTMLElement>("[data-rail-scroll]") ?? list.current; });
@@ -114,9 +86,9 @@ export function LessonIndex({ entries, reading, side, onJump }: {
   return <nav ref={list} className={styles.index} aria-label={t("courses.lessons.index.title")}>
     <p className={styles.title} aria-hidden="true">{t("courses.lessons.index.title")}</p>
     <ol className={styles.list}>{entries.map((entry, index) => <li key={entry.id}>
-      <button type="button" className={styles.entry} data-kind={entry.kind} data-passed={index < current || undefined}
-        style={{ "--index-depth": entry.depth } as CSSProperties} aria-current={index === current ? "location" : undefined} title={labels[index]} onClick={() => jump(entry.id)}>
-        {labels[index]}
+      <button type="button" className={styles.entry} data-passed={index < current || undefined}
+        style={{ "--index-depth": entry.depth } as CSSProperties} aria-current={index === current ? "location" : undefined} title={entry.text} onClick={() => jump(entry.id)}>
+        {entry.text}
       </button>
     </li>)}</ol>
   </nav>;

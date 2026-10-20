@@ -3,7 +3,7 @@ import { act, cleanup, fireEvent, render, screen, within } from "@testing-librar
 import { useRef } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
-import { currentEntry, LessonIndex, lessonIndexEntries, shortInstruction, type LessonIndexEntry } from "./LessonIndex";
+import { currentEntry, LessonIndex, lessonIndexEntries, type LessonIndexEntry } from "./LessonIndex";
 
 const blockId = (n: number) => `50000000-0000-4000-8000-0000000000${String(n).padStart(2, "0")}`;
 const plain = { textColor: "default", backgroundColor: "default" } as const;
@@ -18,52 +18,23 @@ const practice = (n: number, instruction: string): LessonTopBlock => ({
 const document = (blocks: LessonTopBlock[]): LessonDocument => ({ schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks });
 
 describe("lesson index entries", () => {
-  it("lists top-level level-1 and level-2 headings and every practice in reading order, and leaves out every other block", () => {
+  it("lists top-level level-1 and level-2 headings in reading order, and leaves out practices and every other block", () => {
     const entries = lessonIndexEntries(document([
       practice(1, "Warm up"),
-      heading(2, 2, "Greetings"), paragraph(3, "Hallo!"), example(4), practice(5, "Translate\ninto   English. Use the polite form."),
-      heading(6, 3, "Formal"), heading(7, 2, "  "),
-      { id: blockId(8), type: "columnList", props: {}, content: undefined, children: [
-        { id: blockId(9), type: "column", props: { width: 1 }, content: undefined, children: [heading(10, 2, "Left") as never] },
-        { id: blockId(11), type: "column", props: { width: 1 }, content: undefined, children: [practice(12, "Fill in") as never] },
+      heading(2, 2, "Greetings"), paragraph(3, "Hallo!"), example(4), practice(5, "Translate into English."),
+      heading(6, 3, "Formal"), practice(7, "Fill in the verb."), heading(8, 2, "  "),
+      { id: blockId(9), type: "columnList", props: {}, content: undefined, children: [
+        { id: blockId(10), type: "column", props: { width: 1 }, content: undefined, children: [heading(11, 2, "Left") as never] },
+        { id: blockId(12), type: "column", props: { width: 1 }, content: undefined, children: [practice(13, "Fill in") as never] },
       ] } as unknown as LessonTopBlock,
+      heading(14, 1, "Your  turn"), heading(15, 2, "Writing"),
     ]));
     expect(entries).toEqual([
-      // A practice before any heading starts at the top level.
-      { id: blockId(1), kind: "practice", text: "Warm up", depth: 0 },
-      // The highest heading level in the lesson is depth 0, whatever its level.
-      { id: blockId(2), kind: "heading", text: "Greetings", depth: 0 },
-      { id: blockId(5), kind: "practice", text: "Translate into English", depth: 1 },
-      // Level-3 headings are left out, so a practice after one stays under the heading before it.
-      // A heading inside a column titles only its column; a practice there is still listed.
-      { id: blockId(12), kind: "practice", text: "Fill in", depth: 1 },
+      // The highest heading level in the lesson is depth 0, whatever its level; lower levels are indented.
+      { id: blockId(2), text: "Greetings", depth: 1 },
+      { id: blockId(14), text: "Your turn", depth: 0 },
+      { id: blockId(15), text: "Writing", depth: 1 },
     ]);
-  });
-
-  it("names a top-level practice by the level-3 heading right above it, and falls back to its instruction otherwise", () => {
-    const entries = lessonIndexEntries(document([
-      heading(1, 2, "Practice"), heading(2, 3, "Fill  in\nthe verb"), practice(3, "Fill in the correct form."),
-      // Something between the heading and the practice, or an empty heading, leaves the practice named by its instruction.
-      heading(4, 3, "At breakfast"), paragraph(5, "Look."), practice(6, "Answer the questions."),
-      heading(7, 3, " "), practice(8, "Translate."),
-      heading(9, 2, "Your turn"), practice(10, "Write about your day."),
-    ]));
-    expect(entries).toEqual([
-      { id: blockId(1), kind: "heading", text: "Practice", depth: 0 },
-      // A titled practice takes the heading's id, so the index follows and jumps to the title.
-      { id: blockId(2), kind: "practice", text: "Fill in the verb", depth: 1, titled: true },
-      { id: blockId(6), kind: "practice", text: "Answer the questions", depth: 1 },
-      { id: blockId(8), kind: "practice", text: "Translate", depth: 1 },
-      { id: blockId(9), kind: "heading", text: "Your turn", depth: 0 },
-      { id: blockId(10), kind: "practice", text: "Write about your day", depth: 1 },
-    ]);
-  });
-
-  it("names a practice by the first sentence of its instruction", () => {
-    expect(shortInstruction("Fill in staat, ligt, zit or hangt. Start with the object's position.")).toBe("Fill in staat, ligt, zit or hangt");
-    expect(shortInstruction("Complete both blanks: first the action, then the result.")).toBe("Complete both blanks");
-    expect(shortInstruction("Wat zie je? Beschrijf het.")).toBe("Wat zie je?");
-    expect(shortInstruction("  Choose\nthe state.  ")).toBe("Choose the state");
   });
 
   it("marks the last entry that reached the line, none before the first, and the last at the bottom of the page", () => {
@@ -78,9 +49,9 @@ describe("lesson index entries", () => {
 
 // Three entries, 1000px apart, read through an 800px window. Every element's box follows `scrollY`.
 const entries: LessonIndexEntry[] = [
-  { id: blockId(1), kind: "heading", text: "Greetings", depth: 0 },
-  { id: blockId(2), kind: "practice", text: "Translate into English", depth: 1 },
-  { id: blockId(3), kind: "heading", text: "Goodbyes", depth: 0 },
+  { id: blockId(1), text: "Greetings", depth: 0 },
+  { id: blockId(2), text: "Small talk", depth: 1 },
+  { id: blockId(3), text: "Goodbyes", depth: 0 },
 ];
 const layout = new Map(entries.map((entry, index) => [entry.id, 300 + index * 1000]));
 let scrollY = 0;
@@ -116,7 +87,7 @@ describe("LessonIndex", () => {
     render(<Harness />);
     const index = screen.getByRole("navigation", { name: "In this lesson" });
     const buttons = within(index).getAllByRole("button");
-    expect(buttons.map((button) => button.textContent)).toEqual(["Greetings", "Practice: Translate into English", "Goodbyes"]);
+    expect(buttons.map((button) => button.textContent)).toEqual(["Greetings", "Small talk", "Goodbyes"]);
     await scroll(0);
     // Before the first heading nothing is current and nothing is passed.
     expect(index.querySelector("[aria-current]")).toBeNull();
@@ -132,21 +103,6 @@ describe("LessonIndex", () => {
     // The last entry is current at the bottom of the page, even below the line.
     await scroll(2200);
     expect(buttons[2]).toHaveAttribute("aria-current", "location");
-  });
-
-  it("shows a practice titled by its heading without the Practice prefix", () => {
-    const titled: LessonIndexEntry[] = [
-      { id: blockId(1), kind: "heading", text: "Practice", depth: 0 },
-      { id: blockId(2), kind: "practice", text: "Fill in the verb", depth: 1, titled: true },
-    ];
-    function Titled() {
-      const reading = useRef<HTMLDivElement>(null); const side = useRef<HTMLDivElement>(null);
-      return <><div ref={reading} /><div ref={side}><LessonIndex entries={titled} reading={reading} side={side} /></div></>;
-    }
-    render(<Titled />);
-    const buttons = within(screen.getByRole("navigation", { name: "In this lesson" })).getAllByRole("button");
-    expect(buttons.map((button) => button.textContent)).toEqual(["Practice", "Fill in the verb"]);
-    expect(buttons[1]).toHaveAttribute("data-kind", "practice");
   });
 
   it("scrolls the page to an entry when it is chosen", async () => {

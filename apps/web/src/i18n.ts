@@ -490,9 +490,7 @@ export const resources = {
           },
           readingProgress: "Lesson progress",
           index: {
-            title: "In this lesson",
-            practice: "Practice: {{instruction}}",
-            practiceUntitled: "Practice"
+            title: "In this lesson"
           },
           add: "Add lesson",
           addTitle: "Add a lesson",

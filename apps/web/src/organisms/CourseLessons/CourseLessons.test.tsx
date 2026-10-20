@@ -239,15 +239,15 @@ describe("Course lessons", () => {
     } finally { matchMedia.mockRestore(); }
   });
 
-  it("puts the lesson's headings and practices in the rail's index, and leaves it out with fewer than two", async () => {
+  it("puts the lesson's headings in the rail's index, and leaves it out with fewer than two", async () => {
     const heading = (id: string, title: string): LessonTopBlock => ({ id, type: "heading", props: { textColor: "default", backgroundColor: "default", level: 2 }, content: text(title), children: [] });
     const { slots } = renderInRails({ course: course(false), outline: [summary(1), summary(2)], lessons: [
-      lesson(1, [heading("50000000-0000-4000-8000-000000000031", "Wonen"), example("50000000-0000-4000-8000-000000000032", "Er is een balkon."), practice]),
+      lesson(1, [heading("50000000-0000-4000-8000-000000000031", "Wonen"), example("50000000-0000-4000-8000-000000000032", "Er is een balkon."), practice, heading("50000000-0000-4000-8000-000000000035", "Oefenen")]),
       lesson(2, [heading("50000000-0000-4000-8000-000000000033", "Alleen"), example("50000000-0000-4000-8000-000000000034", "Ik woon hier.")]),
     ] });
     const index = await screen.findByRole("navigation", { name: "In this lesson" });
     expect(slots.index.contains(index)).toBe(true);
-    expect(within(index).getAllByRole("button").map((entry) => entry.textContent)).toEqual(["Wonen", "Practice: Translate"]);
+    expect(within(index).getAllByRole("button").map((entry) => entry.textContent)).toEqual(["Wonen", "Oefenen"]);
     // Choosing an entry closes the phone's drawer (a no-op on wide screens).
     vi.stubGlobal("scrollTo", vi.fn());
     fireEvent.click(within(index).getByRole("button", { name: "Wonen" }));
