@@ -1,6 +1,18 @@
 import { expect, test } from "@playwright/test";
 import { signIn, uniqueTag } from "./auth";
+import type { Page } from "@playwright/test";
 import { courseApi, example, openLesson, seedLesson } from "./lessonSeed";
+
+// An unstarted lesson opens behind the start gate (docs/courses.md#lesson-pages); pressing it saves the first step as the position.
+async function pressStart(page: Page) {
+  await expect(page.getByRole("main").getByRole("progressbar", { name: "Lesson progress" })).toHaveCount(0);
+  const started = page.waitForResponse((response) => response.url().endsWith("/position") && response.request().method() === "PUT");
+  await page.getByRole("button", { name: "Start reading this lesson" }).click();
+  expect((await (await started).json()).position).toMatchObject({ stepIndex: 0 });
+  // Pressing it scrolled the button into view; start reading from the top again.
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: "instant" }));
+  await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+}
 
 test("scrolling a lesson page fills its bar, saves the furthest step, and Continue reopens the page there", async ({ page }, testInfo) => {
   test.setTimeout(60_000);
@@ -15,10 +27,11 @@ test("scrolling a lesson page fills its bar, saves the furthest step, and Contin
   await seedLesson(page, course.id, `${suffix} lesson`, sentences.map((sentence) => example(sentence, `Sentence ${sentence.length}.`, "Een notitie om de pagina langer te maken.")));
 
   await page.goto(`/courses/${course.id}`);
-  await openLesson(page);
-  // The page's reading bar; the rail's lesson box carries a second Lesson progress meter.
+  await openLesson(page, 1, { start: false });
+  await pressStart(page);
+  // The page's reading bar; the rail's lesson box carries a second Lesson progress meter. Starting saved step 1 of 12.
   const bar = page.getByRole("main").getByRole("progressbar", { name: "Lesson progress" });
-  await expect(bar).toHaveAttribute("aria-valuenow", "0");
+  await expect(bar).toHaveAttribute("aria-valuenow", "8");
 
   // Part of the way down, the furthest step reached is saved through the position API, and after a reload the bar starts from
   // that saved position at the top of the page, in the player's step unit.
@@ -62,8 +75,9 @@ test("Continue opens the lesson page scrolled to a saved step in the middle", as
   await seedLesson(page, course.id, `${suffix} lesson`, sentences.map((sentence) => example(sentence, `Sentence ${sentence.length}.`, "Een notitie om de pagina langer te maken.")));
 
   await page.goto(`/courses/${course.id}`);
-  await openLesson(page);
-  await expect(page.getByRole("main").getByRole("progressbar", { name: "Lesson progress" })).toHaveAttribute("aria-valuenow", "0");
+  await openLesson(page, 1, { start: false });
+  await pressStart(page);
+  await expect(page.getByRole("main").getByRole("progressbar", { name: "Lesson progress" })).toHaveAttribute("aria-valuenow", "8");
   const saved = page.waitForResponse((response) => response.url().endsWith("/position") && response.request().method() === "PUT");
   await page.mouse.wheel(0, 900);
   const { position } = await (await saved).json() as { position: { stepIndex: number } };

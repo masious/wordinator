@@ -43,6 +43,7 @@ DELETE FROM course_lesson_completions;
 DELETE FROM course_lesson_positions;
 DELETE FROM course_lesson_words;
 DELETE FROM course_word_bookmarks;
+DELETE FROM learning_time;
 DELETE FROM word_reviews;
 DELETE FROM word_memory;
 DELETE FROM practice_attempts;

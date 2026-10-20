@@ -36,7 +36,17 @@ export async function seedLesson(page: Page, courseId: string, title: string, bl
 }
 
 // Follows the course page's link to a lesson's own page, where its content and editor live.
-export async function openLesson(page: Page, number = 1) {
+// A published lesson the viewer has not started opens behind the start gate (docs/courses.md#lesson-pages); `start` presses it
+// when it shows, which also saves the first step as the viewer's position. Drafts and started lessons have no gate.
+export async function openLesson(page: Page, number = 1, { start = true } = {}) {
   await page.getByRole("link", { name: new RegExp(`^Open lesson ${number}:`) }).click();
   await expect(page).toHaveURL(/\/lessons\/[^/]+$/);
+  if (start) await startReading(page);
+}
+
+// Presses Start reading this lesson if the gate shows within a moment of the lesson rendering.
+export async function startReading(page: Page) {
+  await expect(page.locator("#lesson-title")).toBeVisible();
+  const gate = page.getByRole("button", { name: "Start reading this lesson" });
+  await gate.click({ timeout: 2_000 }).catch(() => undefined);
 }
