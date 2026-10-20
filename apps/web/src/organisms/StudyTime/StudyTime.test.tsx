@@ -6,7 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
 import { StudyTimeBox } from "./StudyTime";
 
-// The rail's study time on pages without a lesson box (docs/learning-time.md#study-time), with the activity read stubbed.
+// The rail's study time card (docs/learning-time.md#study-time), with the activity read stubbed.
 const groupId = "20000000-0000-4000-8000-000000000001";
 const zero = { lesson: 0, grammar: 0, practice: 0, vocabulary: 0, aiPractice: 0, total: 0, aiPracticeFocus: { grammar: 0, vocabulary: 0, reading: 0, listening: 0, writing: 0 } };
 const week = (today: Partial<typeof zero>, earlier: Partial<typeof zero> = {}) => {
@@ -27,7 +27,6 @@ afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 describe("StudyTimeBox", () => {
   it("offers Today and This week only, reads the past seven days, and says when a period is empty", async () => {
     vi.mocked(fetch).mockResolvedValue(response(week({}, { grammar: 120, total: 120 })));
-    localStorage.setItem("wordinator:ui:v1:study-figures-open", "1");
     renderBox();
     const box = screen.getByRole("region", { name: "Study time" });
     expect(within(box).queryByText("Lesson")).not.toBeInTheDocument();
@@ -39,24 +38,19 @@ describe("StudyTimeBox", () => {
     expect(within(box).getByText("Grammar").nextElementSibling).toHaveTextContent("2 min");
   });
 
-  it("starts closed on a summary row of today, with the goal when there is one, and opens on its chevron", async () => {
+  it("opens on a summary row of today, with the goal when there is one, over its figures", async () => {
     vi.mocked(fetch).mockResolvedValue(response({ ...week({ lesson: 600, total: 600 }, { grammar: 120, total: 120 }), dailyGoalMinutes: 30 }));
     renderBox();
     const box = screen.getByRole("region", { name: "Study time" });
     expect(await within(box).findByRole("progressbar", { name: "Today · 10 min of 30 min" })).toBeInTheDocument();
-    const chevron = within(box).getByRole("button", { name: "Show study figures" });
-    expect(document.getElementById(chevron.getAttribute("aria-controls")!)).toHaveAttribute("inert");
-    fireEvent.click(chevron);
-    expect(within(box).getByRole("button", { name: "Hide study figures" })).toHaveAttribute("aria-expanded", "true");
-    expect(document.getElementById(chevron.getAttribute("aria-controls")!)).not.toHaveAttribute("inert");
-    // The summary row carries the goal, so the opened figures do not repeat it.
+    // The profile row's Study time button shows and hides the whole card, so it has no chevron of its own.
+    expect(within(box).queryByRole("button", { name: /study figures/ })).not.toBeInTheDocument();
+    // The summary row carries the goal, so the figures do not repeat it.
     expect(within(box).getAllByRole("progressbar")).toHaveLength(1);
     // The summary stays on today whichever tab is chosen.
     fireEvent.click(within(box).getByText("This week"));
     expect(within(box).getByText("Grammar").nextElementSibling).toHaveTextContent("2 min");
     expect(within(box).getByRole("progressbar", { name: "Today · 10 min of 30 min" })).toBeInTheDocument();
-    // One choice for the card and the lesson box, kept on the device.
-    expect(localStorage.getItem("wordinator:ui:v1:study-figures-open")).toBe("1");
   });
 
   it("shows today's time alone without a goal", async () => {

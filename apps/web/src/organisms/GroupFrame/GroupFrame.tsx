@@ -17,8 +17,9 @@ import styles from "./GroupFrame.module.css";
 // rail on wide screens, the drawer's copy (while open) below the rail breakpoint. `openRail` and `closeRail` open and close that
 // drawer; closing does nothing on wide screens. `reference` is the right rail, a full-height column docked to the window's right
 // edge like the app rail, where the lesson page puts its vocabulary panel; it takes room only while filled.
-export type RailSlots = { index: HTMLElement | null; tutor?: HTMLElement | null; box: HTMLElement | null; actions?: HTMLElement | null; reference: HTMLElement | null; openRail: () => void; closeRail: () => void };
-export const RailSlotsContext = createContext<RailSlots>({ index: null, tutor: null, box: null, actions: null, reference: null, openRail: () => undefined, closeRail: () => undefined });
+// `studyOpen` says whether the rail's Study time card is shown; the lesson box shrinks while it is.
+export type RailSlots = { index: HTMLElement | null; tutor?: HTMLElement | null; box: HTMLElement | null; actions?: HTMLElement | null; reference: HTMLElement | null; openRail: () => void; closeRail: () => void; studyOpen?: boolean };
+export const RailSlotsContext = createContext<RailSlots>({ index: null, tutor: null, box: null, actions: null, reference: null, openRail: () => undefined, closeRail: () => undefined, studyOpen: false });
 export const useRailSlots = () => useContext(RailSlotsContext);
 type SlotRef = (element: HTMLElement | null) => void;
 type SlotRefs = { index: SlotRef; tutor: SlotRef; box: SlotRef; actions: SlotRef };
@@ -222,36 +223,42 @@ function RailScroll({ className, children }: { className?: string; children: Rea
   return <div ref={scroll} className={`${styles.railScroll} ${className ?? ""}`} data-rail-scroll data-more-below={moreBelow || undefined}>{children}</div>;
 }
 
-const LESSON_STUDY_OPEN_KEY = "wordinator:ui:v1:lesson-rail-study-open";
+// The Study time card's shown or hidden choice, one for every page (docs/learning-time.md#study-time).
+const STUDY_OPEN_KEY = "wordinator:ui:v1:rail-study-open";
+type StudyToggle = { open: boolean; onToggle: () => void };
 
-// The profile row: the avatar, display name and handle, the account menu, and, on a lesson page, the Study time toggle before it.
-function Profile({ user, study }: { user: SignedInSession["user"]; study?: { open: boolean; controls: string; onToggle: () => void } }) {
+// The Study time card above the profile row, while the profile row's toggle shows it: it grows in from zero height. Only the rail
+// on screen renders it, so its read runs once.
+function StudyCard({ id, groupId, open, shown }: { id: string; groupId: string; open: boolean; shown: boolean }) {
+  return <div id={id} className={styles.studyReveal} data-open={open || undefined} inert={!open}>
+    <div className={styles.studyInner}>{open && shown && <StudyTimeBox groupId={groupId} />}</div>
+  </div>;
+}
+
+// The profile row: the avatar, display name and handle, the Study time toggle, and the account menu.
+function Profile({ user, study, studyId }: { user: SignedInSession["user"]; study: StudyToggle; studyId: string }) {
   const { t } = useTranslation();
-  return <div className={styles.profile} data-study={study ? true : undefined}>
+  return <div className={styles.profile}>
     <Avatar name={user.displayName} src={user.avatarUrl} tone="soft" />
     <div className={styles.profileText}>
       <strong>{user.displayName}</strong>
       {user.username && <span>@{user.username}</span>}
     </div>
-    {study && <Tooltip label={t(study.open ? "nav.hideStudyTime" : "nav.showStudyTime")} withArrow events={{ hover: true, focus: true, touch: false }}>
-      <button type="button" className={styles.profileMenu} aria-label={t("studyTime.title")} aria-expanded={study.open} aria-controls={study.controls} onClick={study.onToggle}>
+    <Tooltip label={t(study.open ? "nav.hideStudyTime" : "nav.showStudyTime")} withArrow events={{ hover: true, focus: true, touch: false }}>
+      <button type="button" className={styles.profileMenu} aria-label={t("studyTime.title")} aria-expanded={study.open} aria-controls={studyId} onClick={study.onToggle}>
         <ChartNoAxesColumnIncreasing aria-hidden="true" />
       </button>
-    </Tooltip>}
+    </Tooltip>
     <AccountMenu trigger={<button aria-label={t("nav.accountMenu")} className={styles.profileMenu} type="button"><MoreHorizontal aria-hidden="true" /></button>} />
   </div>;
 }
 
-// A lesson page's rail (docs/courses.md#lesson-pages): Back to course, the lesson box, and the lesson's index, which alone scrolls;
-// then the other navigation items as a row of icons, the lesson's actions, the Study time card when the profile row's toggle shows
-// it, and the profile row.
-function LessonRail({ groupId, user, courseSlug, pathname, slots, others }: {
-  groupId: string; user: SignedInSession["user"]; courseSlug: string; pathname: string; slots: SlotRefs | null;
-  others: Array<{ to: NavTarget; active: boolean; icon: ReactNode; label: string }>;
+// A lesson page's rail (docs/courses.md#lesson-box): Back to course, the lesson box, and the lesson's index, which alone scrolls;
+// then the other navigation items as a row of icons and the lesson's actions.
+function LessonRail({ courseSlug, pathname, slots, others }: {
+  courseSlug: string; pathname: string; slots: SlotRefs | null; others: Array<{ to: NavTarget; active: boolean; icon: ReactNode; label: string }>;
 }) {
   const { t } = useTranslation();
-  const [studyOpen, toggleStudy] = useFiguresOpen(LESSON_STUDY_OPEN_KEY);
-  const studyId = useId();
   return <>
     <Link className={styles.back} to="/courses/$courseSlug" params={{ courseSlug }}><ChevronLeft aria-hidden="true" />{t("nav.backToCourse")}</Link>
     {slots && <div ref={slots.box} className={styles.lessonBoxSlot} />}
@@ -261,16 +268,13 @@ function LessonRail({ groupId, user, courseSlug, pathname, slots, others }: {
       {others.map((item) => <NavIcon key={item.to} {...item} />)}
     </nav>
     {slots && <div ref={slots.actions} className={styles.boxSlot} />}
-    <div id={studyId} className={styles.studyReveal} data-open={studyOpen || undefined} inert={!studyOpen}>
-      <div className={styles.studyInner}>{studyOpen && <StudyTimeBox groupId={groupId} expanded />}</div>
-    </div>
-    <Profile user={user} study={{ open: studyOpen, controls: studyId, onToggle: toggleStudy }} />
   </>;
 }
 
-function Rail({ groupId, session, pathname, slots }: { groupId: string; session: SignedInSession; pathname: string; slots: SlotRefs | null }) {
+function Rail({ groupId, session, pathname, slots, study }: { groupId: string; session: SignedInSession; pathname: string; slots: SlotRefs | null; study: StudyToggle }) {
   const { t } = useTranslation();
   const { user } = session;
+  const studyId = useId();
   const starts = (path: string) => pathname === path || pathname.startsWith(`${path}/`);
   // On course pages the course list follows the remembered choice; elsewhere it starts collapsed, and opening it there lasts only
   // until the viewer leaves for a course page or another page outside them.
@@ -289,22 +293,18 @@ function Rail({ groupId, session, pathname, slots }: { groupId: string; session:
     { to: "/journal", active: starts("/journal"), icon: <NotebookPen />, label: t("nav.journal") },
     { to: "/ai", active: starts("/ai"), icon: <MessageCircle />, label: t("nav.tutor") },
   ];
-  if (lessonCourse) return <div className={styles.railBody}>
-    <Brand />
-    <LessonRail groupId={groupId} user={user} courseSlug={decodeURIComponent(lessonCourse)} pathname={pathname} slots={slots} others={others} />
-  </div>;
   return <div className={styles.railBody}>
     <Brand />
-    <RailScroll>
-      <nav className={styles.nav} aria-label={t("nav.primary")}>
-        <CourseSubItems groupId={groupId} pathname={pathname} collapsed={collapsed} onToggle={toggle} />
-        {others.map((item) => <NavItem key={item.to} to={item.to} active={item.active} icon={item.icon}>{item.label}</NavItem>)}
-        {starts("/ai") && slots && <div ref={slots.tutor} className={styles.tutorSlot} />}
-      </nav>
-    </RailScroll>
-    {/* The course library's home dashboard already shows study time. */}
-    {slots && pathname !== "/courses" && <div className={styles.boxSlot}><StudyTimeBox groupId={groupId} /></div>}
-    <Profile user={user} />
+    {lessonCourse ? <LessonRail courseSlug={decodeURIComponent(lessonCourse)} pathname={pathname} slots={slots} others={others} />
+      : <RailScroll>
+        <nav className={styles.nav} aria-label={t("nav.primary")}>
+          <CourseSubItems groupId={groupId} pathname={pathname} collapsed={collapsed} onToggle={toggle} />
+          {others.map((item) => <NavItem key={item.to} to={item.to} active={item.active} icon={item.icon}>{item.label}</NavItem>)}
+          {starts("/ai") && slots && <div ref={slots.tutor} className={styles.tutorSlot} />}
+        </nav>
+      </RailScroll>}
+    <StudyCard id={studyId} groupId={groupId} open={study.open} shown={slots !== null} />
+    <Profile user={user} study={study} studyId={studyId} />
   </div>;
 }
 
@@ -329,11 +329,13 @@ export function GroupFrame({ children, groupId, session, fill = false }: PropsWi
   const openRail = useCallback(() => setDrawer(true), []);
   const closeRail = useCallback(() => setDrawer(false), []);
   const [referenceSlot, setReferenceSlot] = useState<HTMLElement | null>(null);
-  const slots = useMemo<RailSlots>(() => ({ index: indexSlot, tutor: tutorSlot, box: boxSlot, actions: actionsSlot, reference: referenceSlot, openRail, closeRail }), [indexSlot, tutorSlot, boxSlot, actionsSlot, referenceSlot, openRail, closeRail]);
+  const [studyOpen, toggleStudy] = useFiguresOpen(STUDY_OPEN_KEY);
+  const study = useMemo(() => ({ open: studyOpen, onToggle: toggleStudy }), [studyOpen, toggleStudy]);
+  const slots = useMemo<RailSlots>(() => ({ index: indexSlot, tutor: tutorSlot, box: boxSlot, actions: actionsSlot, reference: referenceSlot, openRail, closeRail, studyOpen }), [indexSlot, tutorSlot, boxSlot, actionsSlot, referenceSlot, openRail, closeRail, studyOpen]);
 
   return <RailSlotsContext.Provider value={slots}><div className={styles.shell} style={shellStyle} data-fill={fill || undefined}>
     <aside ref={rail} className={styles.rail}>
-      <Rail groupId={groupId} session={session} pathname={pathname} slots={narrow ? null : slotRefs} />
+      <Rail groupId={groupId} session={session} pathname={pathname} slots={narrow ? null : slotRefs} study={study} />
       <RailResizer accountId={session.user.id} rail={rail} width={railWidth} onWidth={setRailWidth} />
     </aside>
     <header className={styles.mobileHeader}>
@@ -343,7 +345,7 @@ export function GroupFrame({ children, groupId, session, fill = false }: PropsWi
     </header>
     <Drawer opened={drawer} onClose={() => setDrawer(false)} size="80%" padding={0} withCloseButton={false} title={t("nav.primary")}
       classNames={{ content: styles.drawer, header: styles.drawerHeader }}>
-      <Rail groupId={groupId} session={session} pathname={pathname} slots={narrow ? slotRefs : null} />
+      <Rail groupId={groupId} session={session} pathname={pathname} slots={narrow ? slotRefs : null} study={study} />
     </Drawer>
     <main className={styles.shellMain}>{children}</main>
     <div ref={setReferenceSlot} className={styles.referenceRail} />

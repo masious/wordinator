@@ -248,7 +248,7 @@
 /* The box keeps the profile row's end inset, so its border never meets the rail's. */
 .boxSlot { margin: var(--space-6) var(--space-5) 0 0; }
 .subItem[aria-current="page"] { color: var(--color-action-soft-text); background: var(--color-action-soft); font-weight: var(--weight-semibold); }
-/* A lesson page's Study time card, shown and hidden by the profile row's toggle: it grows in from zero height and fades in. */
+/* The Study time card, shown and hidden by the profile row's toggle: it grows in from zero height and fades in. */
 .studyReveal {
   display: grid;
   grid-template-rows: 0fr;
@@ -261,7 +261,7 @@
 
 .profile {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
   align-items: center;
   gap: 0.7rem;
   margin-top: auto;
@@ -284,9 +284,8 @@
 }
 .profileMenu { width: var(--control-height-sm); height: var(--control-height-sm); }
 .profileMenu:hover, .menuButton:hover, .profileMenu[aria-expanded="true"] { color: var(--color-action-soft-text); background: var(--color-action-soft); }
-/* On a lesson page the Study time toggle sits just before the account menu. */
-.profile[data-study] { grid-template-columns: auto minmax(0, 1fr) auto auto; }
-.profile[data-study] > .profileMenu:last-child { margin-left: calc(var(--space-2) - 0.7rem); }
+/* The Study time toggle sits just before the account menu. */
+.profile > .profileMenu:last-child { margin-left: calc(var(--space-2) - 0.7rem); }
 .profileMenu svg, .menuButton svg { width: 1.1rem; height: 1.1rem; }
 
 /* The right rail: docked to the window's right edge, sticky and full height like the app rail. Empty, it takes no column. */

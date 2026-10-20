@@ -3,7 +3,7 @@ import { act, cleanup, fireEvent, render, screen, within } from "@testing-librar
 import { useRef } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
-import { currentEntry, LessonIndex, lessonIndexEntries, type LessonIndexEntry } from "./LessonIndex";
+import { currentEntry, entryStates, LessonIndex, lessonIndexEntries, useCurrentEntry, type LessonIndexEntry } from "./LessonIndex";
 
 const blockId = (n: number) => `50000000-0000-4000-8000-0000000000${String(n).padStart(2, "0")}`;
 const plain = { textColor: "default", backgroundColor: "default" } as const;
@@ -31,10 +31,11 @@ describe("lesson index entries", () => {
     ]));
     expect(entries).toEqual([
       // The highest heading level in the lesson is depth 0, whatever its level; lower levels are indented.
-      // A section's category reads every step up to the next listed heading, level-3 sections included.
-      { id: blockId(2), text: "Greetings", depth: 1, category: "translate" },
-      { id: blockId(14), text: "Your turn", depth: 0, category: "topic" },
-      { id: blockId(15), text: "Writing", depth: 1, category: "topic" },
+      // A section's category reads every step up to the next listed heading, level-3 sections included. It starts at its first
+      // step; one with none of its own starts where the next does (here, after the last step).
+      { id: blockId(2), text: "Greetings", depth: 1, category: "translate", start: 1 },
+      { id: blockId(14), text: "Your turn", depth: 0, category: "topic", start: 6 },
+      { id: blockId(15), text: "Writing", depth: 1, category: "topic", start: 6 },
     ]);
   });
 
@@ -49,6 +50,18 @@ describe("lesson index entries", () => {
     expect(entries.map((entry) => entry.category)).toEqual(["intro", "story", "grammar", "culture", "wordOrder", "summary"]);
   });
 
+  it("locks the entries the reader has not reached, and keeps those reached unlocked when the current one moves back", () => {
+    const listed = [0, 3, 6].map((start, index) => ({ id: blockId(index), text: `Entry ${index}`, depth: 0, category: "topic" as const, start }));
+    expect(entryStates(listed, -1, -1)).toEqual(["locked", "locked", "locked"]);
+    expect(entryStates(listed, 0, 1)).toEqual(["current", "locked", "locked"]);
+    // The furthest step reached unlocks a section before it becomes current.
+    expect(entryStates(listed, 0, 3)).toEqual(["current", "passed", "locked"]);
+    expect(entryStates(listed, 2, 6)).toEqual(["passed", "passed", "current"]);
+    expect(entryStates(listed, 0, 6)).toEqual(["current", "passed", "passed"]);
+    // An entry visited on this visit (a jump from the index reads nothing) stays unlocked too.
+    expect(entryStates(listed, 0, -1, 2)).toEqual(["current", "passed", "passed"]);
+  });
+
   it("marks the last entry that reached the line, none before the first, and the last at the bottom of the page", () => {
     expect(currentEntry([100, 600, 1200], 50, false)).toBe(-1);
     expect(currentEntry([-400, 40, 1200], 50, false)).toBe(1);
@@ -61,18 +74,20 @@ describe("lesson index entries", () => {
 
 // Three entries, 1000px apart, read through an 800px window. Every element's box follows `scrollY`.
 const entries: LessonIndexEntry[] = [
-  { id: blockId(1), text: "Greetings", depth: 0, category: "intro" },
-  { id: blockId(2), text: "Small talk", depth: 1, category: "conversation" },
-  { id: blockId(3), text: "Goodbyes", depth: 0, category: "summary" },
+  { id: blockId(1), text: "Greetings", depth: 0, category: "intro", start: 0 },
+  { id: blockId(2), text: "Small talk", depth: 1, category: "conversation", start: 1 },
+  { id: blockId(3), text: "Goodbyes", depth: 0, category: "summary", start: 2 },
 ];
 const layout = new Map(entries.map((entry, index) => [entry.id, 300 + index * 1000]));
 let scrollY = 0;
 
+// The page shares the current entry with the headings, so the harness follows it the same way; nothing is reached beyond it.
 function Harness() {
   const reading = useRef<HTMLDivElement>(null); const side = useRef<HTMLDivElement>(null);
+  const current = useCurrentEntry(entries, reading, side);
   return <>
     <div ref={reading}>{entries.map((entry) => <div key={entry.id} data-block-id={entry.id}>{entry.text}</div>)}</div>
-    <div ref={side}><LessonIndex entries={entries} reading={reading} side={side} /></div>
+    <div ref={side}><LessonIndex entries={entries} current={current} states={entryStates(entries, current, -1)} reading={reading} side={side} /></div>
   </>;
 }
 const scroll = async (y: number) => {
@@ -95,22 +110,22 @@ describe("LessonIndex", () => {
   });
   afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
-  it("lists every entry, marks the one the reader is in, and greys the ones not reached yet", async () => {
+  it("lists every entry, marks the one the reader is in, and locks the ones not reached yet", async () => {
     render(<Harness />);
     const index = screen.getByRole("navigation", { name: "In this lesson" });
     const buttons = within(index).getAllByRole("button");
     expect(buttons.map((button) => button.textContent)).toEqual(["Greetings", "Small talk", "Goodbyes"]);
     await scroll(0);
-    // Before the first heading nothing is current and every entry is still ahead.
+    // Before the first heading nothing is current and every entry is locked.
     expect(index.querySelector("[aria-current]")).toBeNull();
-    expect(buttons.map((button) => button.dataset.state)).toEqual(["upcoming", "upcoming", "upcoming"]);
+    expect(buttons.map((button) => button.dataset.state)).toEqual(["locked", "locked", "locked"]);
     await scroll(1400);
     expect(buttons[1]).toHaveAttribute("aria-current", "location");
-    expect(buttons.map((button) => button.dataset.state)).toEqual(["passed", "current", "upcoming"]);
+    expect(buttons.map((button) => button.dataset.state)).toEqual(["passed", "current", "locked"]);
     // Scrolling back moves the current entry back.
     await scroll(400);
     expect(buttons[0]).toHaveAttribute("aria-current", "location");
-    expect(buttons.map((button) => button.dataset.state)).toEqual(["current", "upcoming", "upcoming"]);
+    expect(buttons.map((button) => button.dataset.state)).toEqual(["current", "locked", "locked"]);
     // The last entry is current at the bottom of the page, even below the line.
     await scroll(2200);
     expect(buttons[2]).toHaveAttribute("aria-current", "location");

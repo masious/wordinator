@@ -1,6 +1,12 @@
 /* The lesson box: a card at the top of the rail, for the open lesson only. */
 .box{--reveal-gap:var(--space-4);container-type:inline-size;display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-4);padding:var(--space-4);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
-.heading{display:grid;justify-items:start;gap:var(--space-2)}
+.heading{display:grid;justify-items:start;gap:var(--space-2);transition:gap var(--motion-standard) var(--ease-physical)}
+/* Shrunk while the rail's Study time card is shown: the title folds away (its figures close too), leaving the label and progress. */
+.titleReveal{display:grid;grid-template-rows:1fr;width:100%;opacity:1;transition:grid-template-rows var(--motion-standard) var(--ease-physical),opacity var(--motion-standard) ease}
+.titleReveal>.title{min-height:0}
+.box[data-compact] .heading{gap:0}
+.box[data-compact] .titleReveal{grid-template-rows:0fr;opacity:0}
+.box[data-compact]{gap:var(--space-3);padding-block:var(--space-3)}
 .title{display:-webkit-box;margin:0;overflow:hidden;color:var(--color-foreground);font-size:var(--text-md);font-weight:var(--weight-semibold);line-height:var(--line-compact);-webkit-box-orient:vertical;-webkit-line-clamp:3}
 /* The lesson's actions, above the profile row, outside the card. */
 .actions{container-type:inline-size;display:grid;gap:var(--space-2)}
@@ -14,4 +20,4 @@
 .action:hover{color:var(--color-action-soft-text);border-color:var(--color-action)}
 .action svg{flex:none;width:1rem;height:1rem;color:var(--color-action)}
 .note{margin:0;color:var(--color-foreground-faint);font-size:var(--text-xs);line-height:var(--line-compact)}
-@media(prefers-reduced-motion:reduce){.action{transition:none}}
+@media(prefers-reduced-motion:reduce){.action,.heading,.titleReveal{transition:none}}

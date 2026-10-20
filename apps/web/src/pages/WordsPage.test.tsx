@@ -10,6 +10,9 @@ import { learningClock } from "../learningTime";
 import { validateWordDrillSearch } from "./WordDrillPage";
 import { validateWordsSearch, WordsPage } from "./WordsPage";
 
+// A stubbed navigator keeps what the page's tooltips read: spreading the real one drops its prototype's getters.
+const navigatorBasics = () => ({ ...navigator, userAgent: navigator.userAgent, platform: navigator.platform, language: navigator.language, languages: navigator.languages });
+
 // A stand-in for Microsoft's Speech SDK: the test decides what its next recognition returns.
 const azure = vi.hoisted(() => ({ configs: [] as Array<{ token: string; region: string; speechRecognitionLanguage?: string }>, assessments: [] as unknown[], next: null as unknown,
   respond: null as ((result: unknown) => void) | null, written: 0, pushClosed: false }));
@@ -314,7 +317,7 @@ describe("Saying a word", () => {
 
   it("listens through Microsoft when chosen, with a token from the API", async () => {
     const getUserMedia = vi.fn(async () => ({ getTracks: () => [{ stop: vi.fn() }] }));
-    vi.stubGlobal("navigator", { ...navigator, mediaDevices: { getUserMedia } });
+    vi.stubGlobal("navigator", { ...navigatorBasics(), mediaDevices: { getUserMedia } });
     setRecognizer("microsoft");
     const fetcher = vi.mocked(fetch);
     const original = fetcher.getMockImplementation()!;
@@ -334,7 +337,7 @@ describe("Saying a word", () => {
   });
 
   it("scores pronunciation with Microsoft and opens the details from the passing verdict", async () => {
-    vi.stubGlobal("navigator", { ...navigator, mediaDevices: { getUserMedia: vi.fn(async () => ({ getTracks: () => [] })) } });
+    vi.stubGlobal("navigator", { ...navigatorBasics(), mediaDevices: { getUserMedia: vi.fn(async () => ({ getTracks: () => [] })) } });
     setRecognizer("microsoft");
     const fetcher = vi.mocked(fetch);
     const original = fetcher.getMockImplementation()!;
@@ -368,7 +371,7 @@ describe("Saying a word", () => {
   });
 
   it("feeds Microsoft the app's own capture and keeps the word when finished early", async () => {
-    vi.stubGlobal("navigator", { ...navigator, mediaDevices: { getUserMedia: vi.fn(async () => ({ getTracks: () => [] })) } });
+    vi.stubGlobal("navigator", { ...navigatorBasics(), mediaDevices: { getUserMedia: vi.fn(async () => ({ getTracks: () => [] })) } });
     const ports: Array<{ onmessage: ((event: { data: Float32Array }) => void) | null; close: () => void }> = [];
     vi.stubGlobal("AudioWorkletNode", class { port = { onmessage: null, close: () => undefined }; constructor() { ports.push(this.port); } });
     vi.stubGlobal("AudioContext", class {
@@ -400,7 +403,7 @@ describe("Saying a word", () => {
 
   it("says when Microsoft hears nothing or the microphone is blocked", async () => {
     const getUserMedia = vi.fn(async () => ({ getTracks: () => [] }));
-    vi.stubGlobal("navigator", { ...navigator, mediaDevices: { getUserMedia } });
+    vi.stubGlobal("navigator", { ...navigatorBasics(), mediaDevices: { getUserMedia } });
     setRecognizer("microsoft");
     const fetcher = vi.mocked(fetch);
     const original = fetcher.getMockImplementation()!;

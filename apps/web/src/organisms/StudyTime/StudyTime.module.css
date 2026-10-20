@@ -14,10 +14,10 @@
 .figures div[data-strong] dt{color:var(--color-foreground);font-weight:var(--weight-semibold)}
 .quiet{font-family:var(--font-mono);font-size:var(--type-badge)}
 .note{margin:0;color:var(--color-foreground-faint);font-size:var(--text-xs);line-height:var(--line-compact)}
-/* The card's summary row without a goal: today's time, then the chevron, like a progress meter's label row. */
+/* The card's summary row without a goal: today's time, like a progress meter's label row. */
 .summary{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);color:var(--color-foreground-muted);font-size:var(--text-xs);font-weight:var(--weight-semibold);font-variant-numeric:tabular-nums}
 .summary>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-/* The chevron at the end of the summary row (the lesson box's progress row, or the card's) shows and hides the figures. */
+/* The chevron at the end of the lesson box's progress row shows and hides its figures. */
 .disclosure{flex:none;display:grid;place-items:center;width:var(--control-height-sm);height:var(--control-height-sm);margin:calc(var(--space-1) * -1) calc(var(--space-1) * -1) calc(var(--space-1) * -1) 0;padding:0;color:var(--color-foreground-faint);background:transparent;border:0;border-radius:var(--radius-sm);cursor:pointer}
 .disclosure:hover{color:var(--color-action-soft-text);background:var(--color-wash)}
 .disclosure svg{width:1rem;height:1rem;transition:transform var(--motion-standard) var(--ease-physical)}
@@ -27,4 +27,6 @@
 .reveal{display:grid;grid-template-rows:0fr;margin-top:calc(var(--reveal-gap) * -1);opacity:0;transition:grid-template-rows var(--motion-standard) var(--ease-physical),margin-top var(--motion-standard) var(--ease-physical),opacity var(--motion-standard) ease}
 .reveal[data-open]{grid-template-rows:1fr;margin-top:0;opacity:1}
 .revealInner{display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:var(--space-3);min-height:0;overflow:hidden;padding-top:var(--space-3);border-top:var(--ring-hairline)}
+/* The card's switch and figures, under a hairline. */
+.figuresBlock{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-3);padding-top:var(--space-3);border-top:var(--ring-hairline)}
 @media(prefers-reduced-motion:reduce){.reveal,.disclosure svg{transition:none}}

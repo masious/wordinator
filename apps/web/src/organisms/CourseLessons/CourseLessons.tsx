@@ -7,7 +7,7 @@ import { Drawer } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { type FormEvent, lazy, type RefObject, Suspense, useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
+import { type FormEvent, lazy, type RefObject, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ArrowLeft, ArrowRight, BookA, Check, ChevronRight, ListTree, PencilLine } from "lucide-react";
 import { Trans, useTranslation } from "react-i18next";
@@ -28,12 +28,14 @@ import { lessonSteps, playableDocument } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
 import { LessonReadingProgress, type ReadingTracking, saveLessonPosition, useResumeScroll } from "./LessonReadingProgress";
 import { typicalMinutes, useReadingTime } from "./LessonTime";
-import { LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN, stickyInset } from "./LessonIndex";
+import { CategoryBadge, entryStates, LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN, stickyInset, useCurrentEntry, type LessonIndexEntry } from "./LessonIndex";
 import { LessonBox, LessonBoxActions, type LessonBoxLesson } from "./LessonBox";
 import { LessonWords, useVisibleWords, useWordsCollapsed } from "./LessonWords";
 import { practiceFromBlock, PracticeSummary } from "./PracticeBlock";
 import { PracticeStepper } from "./PracticeStepper";
 import { AiPracticeToggle, useAiPracticeSlots, type AiPracticeScope } from "./AiPractices";
+
+const NO_ENTRIES: LessonIndexEntry[] = [];
 
 // The editor and BlockNote load only when someone opens a lesson for editing.
 const LessonEditor = lazy(() => import("../LessonEditor/LessonEditor"));
@@ -115,6 +117,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const inline = useMediaQuery("(max-width: 62em)", undefined, { getInitialValueInEffect: false });
   const [sheetOpen, setSheetOpen] = useState(false);
   const [percent, setPercent] = useState(0);
+  const [reachedStep, setReachedStep] = useState(-1);
   const gateHeight = useGateHeight(reading, gate ? document : null);
   // Only words of the published document can be bookmarked, so a draft preview shows no toggles.
   const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
@@ -123,23 +126,34 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   // Examples and dialogues of a shareable lesson are selectable and reveal their Share action (docs/lesson-shares.md).
   const share = useLessonShareScope(scope.groupId, scope.courseId, lesson);
   const practiceScope = { groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId };
+  // The index and the headings it lists share each entry's state: current, passed, or locked until the reader reaches it. Behind
+  // the start gate there is neither.
+  const indexed = !gate && entries.length >= LESSON_INDEX_MIN ? entries : NO_ENTRIES;
+  const current = useCurrentEntry(indexed, reading, side);
+  const [visited, setVisited] = useState(-1);
+  useEffect(() => setVisited((furthest) => Math.max(furthest, current)), [current]);
+  const states = useMemo(() => entryStates(indexed, current, reachedStep, visited), [indexed, current, reachedStep, visited]);
+  const badges = useMemo(() => new Map(indexed.map((entry, index) => [entry.id, { category: entry.category, locked: states[index] === "locked" }])), [indexed, states]);
+  const renderHeadingBadge = useCallback((id: string) => {
+    const badge = badges.get(id);
+    return badge ? <CategoryBadge category={badge.category} locked={badge.locked} /> : null;
+  }, [badges]);
   const lessonBox = <>
     {rail.box && createPortal(<LessonBox lesson={box} percent={percent} />, rail.box)}
     {rail.actions && createPortal(<LessonBoxActions lesson={box} />, rail.actions)}
   </>;
   if (!document || !steps.length) return <div className={styles.body}><p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p>{lessonBox}</div>;
   const hasWords = steps.some((step) => step.words.length > 0);
-  const hasIndex = entries.length >= LESSON_INDEX_MIN;
   // Where the vocabulary panel goes: the right rail on wide screens, under the text below 62em (or outside the frame), a sheet on phones.
   const placement = !hasWords ? null : phone ? "sheet" : !inline && rail.reference ? "rail" : "under";
   const docked = placement === "rail";
   const words = (props: { docked?: boolean; collapsible?: boolean }) =>
     <LessonWords steps={steps} active={active} groupId={scope.groupId} collapsed={wordsCollapsed} onToggle={toggleWords} {...props} />;
   return <LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={styles.reader} data-action-bar={phone || undefined}>
-    {!gate && <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} onPercent={setPercent} />}
+    {!gate && <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} onPercent={setPercent} onReached={setReachedStep} />}
     <div ref={reading} className={gate ? `${styles.body} ${styles.gated}` : styles.body} style={gate && gateHeight !== null ? { maxBlockSize: gateHeight } : undefined}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
-      <LessonDocument document={document} anchored vocabulary={false} renderAfterBlock={slots?.afterBlock}
+      <LessonDocument document={document} anchored vocabulary={false} renderAfterBlock={slots?.afterBlock} renderHeadingBadge={renderHeadingBadge}
         renderShare={share ? (block) => <ShareButton piece={block.type === "example" ? { kind: "example", block } : { kind: "dialogue", block }}
           label={t(`lessonShares.shareNamed.${block.type}`)} /> : undefined}
         renderPractice={(block) =>
@@ -156,7 +170,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
     </div>}
     {docked && rail.reference && createPortal(<div ref={side} className={styles.side}>{words({ docked: true })}</div>, rail.reference)}
     {placement === "under" && <div ref={side} className={styles.under}>{words({})}</div>}
-    {hasIndex && !gate && rail.index && createPortal(<LessonIndex entries={entries} reading={reading} side={side} onJump={rail.closeRail} />, rail.index)}
+    {indexed.length > 0 && rail.index && createPortal(<LessonIndex entries={indexed} current={current} states={states} reading={reading} side={side} onJump={rail.closeRail} />, rail.index)}
     {lessonBox}
     {phone && createPortal(<nav className={styles.actionBar} aria-label={t("courses.lessons.actionBar")}>
       <button type="button" className={styles.barButton} onClick={rail.openRail}><ListTree aria-hidden="true" />{t("courses.lessons.contents")}</button>

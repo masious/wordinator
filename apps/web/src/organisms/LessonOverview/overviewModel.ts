@@ -102,10 +102,11 @@ export function categoryOf(kind: OverviewKind, title: string, steps: readonly Le
   return steps.some((step) => step.words.length > 0) ? "vocabulary" : "topic";
 }
 
-// The category of each listed heading (the lesson index's level-1 and level-2 headings, all top-level blocks), read from every step
-// up to the next listed heading, level-3 sections included. The first listed heading may be an Introduction; one with no steps of
-// its own (a level-1 heading straight above a level-2 one) reads from its title alone.
-export function headingCategories(document: LessonDocument, headings: ReadonlyArray<{ id: string; text: string }>): Map<string, OverviewCategory> {
+// Each listed heading's section (the lesson index's level-1 and level-2 headings, all top-level blocks): its category, read from
+// every step up to the next listed heading, level-3 sections included, and `start`, the index of its first step (for a heading
+// with no steps of its own, the next one's; the step count after the last). The first listed heading may be an Introduction; one
+// with no steps of its own (a level-1 heading straight above a level-2 one) reads its category from its title alone.
+export function headingSections(document: LessonDocument, headings: ReadonlyArray<{ id: string; text: string }>): Map<string, { category: OverviewCategory; start: number }> {
   const listed = new Set(headings.map((heading) => heading.id));
   const owners = new Map<string, string>();
   let owner: string | null = null;
@@ -114,14 +115,23 @@ export function headingCategories(document: LessonDocument, headings: ReadonlyAr
     if (owner) for (const { block } of walkLessonBlocks([top])) owners.set(block.id, owner);
   }
   const grouped = new Map<string, LessonStep[]>();
-  for (const step of flattenToSteps(document)) {
+  const firsts = new Map<string, number>();
+  const all = flattenToSteps(document);
+  all.forEach((step, index) => {
     const id = owners.get(lessonStepKey(step).split(":")[0]!);
-    if (id) grouped.set(id, [...grouped.get(id) ?? [], step]);
-  }
-  return new Map(headings.map((heading, index) => {
+    if (!id) return;
+    grouped.set(id, [...grouped.get(id) ?? [], step]);
+    if (!firsts.has(id)) firsts.set(id, index);
+  });
+  const sections = new Map<string, { category: OverviewCategory; start: number }>();
+  let next = all.length;
+  for (let index = headings.length - 1; index >= 0; index -= 1) {
+    const heading = headings[index]!;
     const steps = grouped.get(heading.id) ?? [];
-    return [heading.id, categoryOf(kindOf(steps), heading.text, steps, index === 0)];
-  }));
+    next = firsts.get(heading.id) ?? next;
+    sections.set(heading.id, { category: categoryOf(kindOf(steps), heading.text, steps, index === 0), start: next });
+  }
+  return sections;
 }
 
 function toStop(section: Section, steps: LessonStep[], start: number): OverviewStop {

@@ -340,7 +340,9 @@ function NewWord({ word }: { word: VocabularyWord }) {
 // blocks are on screen, and `vocabulary: false` leaves New words blocks out because the page lists them beside the text.
 // `renderPracticeGroup` shows two or more practices in a row, each under its level-3 title if it has one, as one component (the
 // lesson page's practice stepper); without it they read one after another.
-type ReaderOptions = { anchored: boolean; vocabulary: boolean; renderPracticeGroup?: PracticeGroupRenderer };
+// `renderHeadingBadge` may put a badge before a heading's text (the lesson page's category badges); null leaves it plain.
+type HeadingBadgeRenderer = (blockId: string) => ReactNode;
+type ReaderOptions = { anchored: boolean; vocabulary: boolean; renderPracticeGroup?: PracticeGroupRenderer; renderHeadingBadge?: HeadingBadgeRenderer };
 const ReaderOptionsContext = createContext<ReaderOptions>({ anchored: false, vocabulary: true });
 type Selection = { selected: string | null; select: (id: string | null) => void; renderShare: ShareRenderer };
 const SelectionContext = createContext<Selection | null>(null);
@@ -447,6 +449,24 @@ function ListItems({
   );
 }
 
+function Heading({ block }: { block: Extract<LessonBlock, { type: "heading" }> }) {
+  const badge = useContext(ReaderOptionsContext).renderHeadingBadge?.(block.id) ?? null;
+  const Tag = headingTags[block.props.level];
+  return (
+    <Tag
+      className={join(
+        styles.heading,
+        styles[`level${block.props.level}`],
+        blockColors(block.props),
+      )}
+      data-badged={badge ? true : undefined}
+    >
+      {badge}
+      {badge ? <span><InlineText content={block.content} /></span> : <InlineText content={block.content} />}
+    </Tag>
+  );
+}
+
 function Block({
   block,
   renderPractice,
@@ -461,20 +481,8 @@ function Block({
           <InlineText content={block.content} />
         </p>
       );
-    case "heading": {
-      const Tag = headingTags[block.props.level];
-      return (
-        <Tag
-          className={join(
-            styles.heading,
-            styles[`level${block.props.level}`],
-            blockColors(block.props),
-          )}
-        >
-          <InlineText content={block.content} />
-        </Tag>
-      );
-    }
+    case "heading":
+      return <Heading block={block} />;
     case "divider":
       return <hr className={styles.divider} />;
     case "image":
@@ -658,10 +666,12 @@ export function LessonDocument({
   anchored = false,
   vocabulary = true,
   renderPracticeGroup,
+  renderHeadingBadge,
 }: {
   document: LessonDocumentData;
   renderPractice?: PracticeRenderer;
   renderPracticeGroup?: PracticeGroupRenderer;
+  renderHeadingBadge?: HeadingBadgeRenderer;
   renderShare?: ShareRenderer;
   renderAfterBlock?: AfterBlockRenderer;
   anchored?: boolean;
@@ -674,7 +684,7 @@ export function LessonDocument({
     </div>
   );
   return (
-    <ReaderOptionsContext.Provider value={{ anchored, vocabulary, renderPracticeGroup }}>
+    <ReaderOptionsContext.Provider value={{ anchored, vocabulary, renderPracticeGroup, renderHeadingBadge }}>
       <AfterBlockContext.Provider value={renderAfterBlock ?? null}>
         {renderShare ? (
           <SelectionContext.Provider value={{ selected, select: setSelected, renderShare }}>{blocks}</SelectionContext.Provider>

@@ -33,11 +33,24 @@ test("the lesson index follows the reader, jumps to an entry, and sits above a c
   await index.getByRole("button", { name: "Goodbyes" }).click();
   await expect(index.getByRole("button", { name: "Goodbyes" })).toHaveAttribute("aria-current", "location");
   await expect(index.getByRole("button", { name: "Greetings" })).toHaveAttribute("data-state", "passed");
+  await expect(index.getByRole("button", { name: "Small talk" })).toHaveAttribute("data-state", "passed");
   await expect(page.getByText("Dag zin 1.")).toBeInViewport();
   await expect(index).toBeInViewport();
   await index.getByRole("button", { name: "Small talk" }).click();
   await expect(index.getByRole("button", { name: "Small talk" })).toHaveAttribute("aria-current", "location");
-  await expect(index.getByRole("button", { name: "Goodbyes" })).toHaveAttribute("data-state", "upcoming");
+  // Goodbyes was reached, so it stays unlocked after scrolling back.
+  await expect(index.getByRole("button", { name: "Goodbyes" })).toHaveAttribute("data-state", "passed");
+  // Each listed heading in the text carries the same badge as its entry.
+  await expect(page.getByRole("main").locator("[data-badged]")).toHaveCount(3);
+
+  // The profile row's Study time button shows the Study time card and shrinks the lesson box to its label and progress.
+  const box = page.getByRole("region", { name: "This lesson" });
+  await expect(box).not.toHaveAttribute("data-compact");
+  await page.getByRole("button", { name: "Study time" }).click();
+  await expect(page.getByRole("region", { name: "Study time" })).toBeVisible();
+  await expect(box).toHaveAttribute("data-compact", "true");
+  await page.getByRole("button", { name: "Study time" }).click();
+  await expect(box).not.toHaveAttribute("data-compact");
 
   // Collapsed, the panel keeps only its title with the number of highlighted words, and stays collapsed after a reload.
   const toggle = words.getByRole("button", { name: /^New words/ });
@@ -49,4 +62,12 @@ test("the lesson index follows the reader, jumps to an entry, and sits above a c
   await expect(page.getByRole("complementary", { name: "New words" }).getByRole("button", { name: /^New words/ })).toHaveAttribute("aria-expanded", "false");
   await page.getByRole("complementary", { name: "New words" }).getByRole("button", { name: /^New words/ }).click();
   await expect(page.getByRole("complementary", { name: "New words" }).getByText("het weer")).toBeVisible();
+
+  // Every page's profile row has the Study time button; the card stays hidden until it is pressed.
+  await page.goto("/journal");
+  const study = page.getByRole("button", { name: "Study time" });
+  await expect(study).toHaveAttribute("aria-expanded", "false");
+  await expect(page.getByRole("region", { name: "Study time" })).toHaveCount(0);
+  await study.click();
+  await expect(page.getByRole("region", { name: "Study time" })).toBeVisible();
 });

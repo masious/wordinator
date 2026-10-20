@@ -101,9 +101,11 @@ export type ReadingTracking = {
 // scrolls further; the bottom of the page reaches the last step, and a finished lesson shows full. While the reader scrolls a published lesson they have not finished,
 // the furthest step they reach is saved as their lesson position, the same one the player resumes from. Nothing is saved until
 // the reader scrolls, and never for a step at or before their saved one.
-// `onPercent` hears the bar's percentage, for the rail's lesson box.
-export function LessonReadingProgress({ steps, reading, tracking, onPercent }: {
+// `onPercent` hears the bar's percentage, for the rail's lesson box, and `onReached` the furthest step reached (every step once
+// the lesson is finished), for the lesson index's locks.
+export function LessonReadingProgress({ steps, reading, tracking, onPercent, onReached }: {
   steps: readonly LessonStep[]; reading: RefObject<HTMLElement | null>; tracking: ReadingTracking; onPercent?: (percent: number) => void;
+  onReached?: (step: number) => void;
 }) {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   // The furthest step reached on this visit; it fills the bar even where nothing is saved (previews, archived courses).
@@ -162,6 +164,8 @@ export function LessonReadingProgress({ steps, reading, tracking, onPercent }: {
     practicesDone: tracking.practicesDone, practicesTotal });
   const percent = sharePercent(share);
   useEffect(() => { onPercent?.(percent); }, [onPercent, percent]);
+  const furthestStep = tracking.completed ? steps.length - 1 : current;
+  useEffect(() => { onReached?.(furthestStep); }, [onReached, furthestStep]);
   return <div className={styles.bar} role="progressbar" aria-label={t("courses.lessons.readingProgress")} aria-valuemin={0} aria-valuemax={100} aria-valuenow={percent}
     data-complete={percent >= 100 || undefined}>
     <span className={styles.fill} style={{ transform: `scaleX(${share})` }} />

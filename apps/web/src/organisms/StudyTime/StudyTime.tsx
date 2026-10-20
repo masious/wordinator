@@ -2,7 +2,7 @@ import { SegmentedControl } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { localDayOf } from "@wordinator/contracts/learning";
 import { ChevronDown } from "lucide-react";
-import { useId, useState, type ReactNode } from "react";
+import { useCallback, useState, type ReactNode } from "react";
 import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 import { learningActivityQueryOptions } from "../../api";
@@ -99,16 +99,14 @@ export function StudyTimeFigures({ groupId, period, withGoal = true }: { groupId
   </div>;
 }
 
-// Whether a rail card's figures are open: the Study time card's (the default key) or, under its own key, the lesson box's lesson
-// figures or the lesson page's study time. They start closed, since the rail is short; the choice is a per-device convenience,
-// so storage that cannot be read or written leaves them closed.
-const FIGURES_OPEN_KEY = "wordinator:ui:v1:study-figures-open";
-export function useFiguresOpen(key = FIGURES_OPEN_KEY) {
+// Whether something in the rail is open, under its own key: the lesson box's figures or the Study time card. It starts closed,
+// since the rail is short; the choice is a per-device convenience, so storage that cannot be read or written leaves it closed.
+export function useFiguresOpen(key: string) {
   const [open, setOpen] = useState(() => { try { return localStorage.getItem(key) === "1"; } catch { return false; } });
-  const toggle = () => setOpen((current) => {
+  const toggle = useCallback(() => setOpen((current) => {
     try { localStorage.setItem(key, current ? "0" : "1"); } catch { /* storage unavailable */ }
     return !current;
-  });
+  }), [key]);
   return [open, toggle] as const;
 }
 
@@ -127,33 +125,29 @@ export function FiguresReveal({ id, open, children }: { id: string; open: boolea
 }
 
 // The card's summary row: today against the goal, with its meter, or today's time alone without a goal.
-function TodaySummary({ groupId, end }: { groupId: string; end: ReactNode }) {
+function TodaySummary({ groupId }: { groupId: string }) {
   const { t } = useTranslation();
   const study = useStudySeconds(groupId, "today");
   const known = study !== null && study !== "error";
   if (known && study.goal !== null) return <ProgressMeter size="compact" value={(goalShare(study.total, study.goal) ?? 0) * 100} showLabel
-    label={t("studyTime.summaryGoal", { time: railTime(t, study.total), goal: t("courses.lessonBox.minutes", { count: study.goal }) })} labelEnd={end} />;
+    label={t("studyTime.summaryGoal", { time: railTime(t, study.total), goal: t("courses.lessonBox.minutes", { count: study.goal }) })} />;
   return <div className={styles.summary}>
     <span>{known ? t("studyTime.summary", { time: study.total ? railTime(t, study.total) : t("studyTime.nothingYet") }) : t("studyTime.periods.today")}</span>
-    {end}
   </div>;
 }
 
 /**
- * The rail's study time card. Its summary row is always today; the chevron opens the Today | This week switch and its figures.
- * `expanded` (the lesson page, whose profile row shows and hides the whole card) keeps the figures open without the chevron.
+ * The rail's study time card, which the profile row's Study time button shows and hides: a summary row of today, then the
+ * Today | This week switch and its figures.
  */
-export function StudyTimeBox({ groupId, expanded = false }: { groupId: string; expanded?: boolean }) {
+export function StudyTimeBox({ groupId }: { groupId: string }) {
   const { t } = useTranslation();
   const [period, choose] = useStudyPeriod();
-  const [stored, toggle] = useFiguresOpen();
-  const open = expanded || stored;
-  const figuresId = useId();
   return <section className={styles.box} aria-label={t("studyTime.title")}>
-    <TodaySummary groupId={groupId} end={expanded ? null : <FiguresDisclosure open={open} controls={figuresId} onToggle={toggle} />} />
-    <FiguresReveal id={figuresId} open={open}>
+    <TodaySummary groupId={groupId} />
+    <div className={styles.figuresBlock}>
       <StudyPeriodSwitch value={period} onChange={choose} />
       <StudyPeriodPanel period={period}><StudyTimeFigures groupId={groupId} period={period} withGoal={false} /></StudyPeriodPanel>
-    </FiguresReveal>
+    </div>
   </section>;
 }

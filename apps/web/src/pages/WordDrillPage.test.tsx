@@ -8,6 +8,9 @@ import "../i18n";
 import { resetRevealSound, setRevealSound, stopSpeech } from "../molecules/Speech";
 import { validateWordDrillSearch, WordDrillPage } from "./WordDrillPage";
 
+// A stubbed navigator keeps what the page's tooltips read: spreading the real one drops its prototype's getters.
+const navigatorBasics = () => ({ ...navigator, userAgent: navigator.userAgent, platform: navigator.platform, language: navigator.language, languages: navigator.languages });
+
 const id = (n: number) => `90000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const groupId = id(1); const courseId = id(3); const lessonId = id(40);
 const session = { status: "signedIn", user: { id: id(2), displayName: "Ada", avatarUrl: null, mustChangePassword: false }, groups: [{ id: groupId, name: "Study", language: "nl", role: "member", icon: "🇳🇱", iconUrl: null }], requests: [], deletedGroups: [] };
@@ -190,7 +193,7 @@ describe("Spoken answers", () => {
     vi.spyOn(Date, "now").mockImplementation(() => now);
     vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => { frames.push(callback); return frames.length; });
     vi.stubGlobal("cancelAnimationFrame", () => undefined);
-    vi.stubGlobal("navigator", { ...navigator, mediaDevices: { getUserMedia: vi.fn(async () => ({ getTracks: () => [] })) } });
+    vi.stubGlobal("navigator", { ...navigatorBasics(), mediaDevices: { getUserMedia: vi.fn(async () => ({ getTracks: () => [] })) } });
     vi.stubGlobal("AudioContext", class {
       createAnalyser() { return { fftSize: 0, getFloatTimeDomainData: (samples: Float32Array) => samples.fill(level) }; }
       createMediaStreamSource() { return { connect: () => undefined }; }
@@ -259,7 +262,7 @@ describe("Spoken answers", () => {
     vi.spyOn(Date, "now").mockImplementation(() => now);
     vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => { frames.push(callback); return frames.length; });
     vi.stubGlobal("cancelAnimationFrame", () => undefined);
-    vi.stubGlobal("navigator", { ...navigator, mediaDevices: { getUserMedia: vi.fn(async () => ({ getTracks: () => [] })) } });
+    vi.stubGlobal("navigator", { ...navigatorBasics(), mediaDevices: { getUserMedia: vi.fn(async () => ({ getTracks: () => [] })) } });
     vi.stubGlobal("AudioContext", class {
       createAnalyser() { return { fftSize: 0, getFloatTimeDomainData: (samples: Float32Array) => samples.fill(level) }; }
       createMediaStreamSource() { return { connect: () => undefined }; }

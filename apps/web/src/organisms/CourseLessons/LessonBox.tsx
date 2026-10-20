@@ -10,6 +10,7 @@ import { learningClock, useMinuteRefresh } from "../../learningTime";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { relativeTime } from "../../relativeTime";
 import { LabelChip } from "../../ui";
+import { useRailSlots } from "../GroupFrame/GroupFrame";
 import { Figure, FigureList, FiguresDisclosure, FiguresReveal, useFiguresOpen } from "../StudyTime/StudyTime";
 import { typicalMinutes } from "./LessonTime";
 import styles from "./LessonBox.module.css";
@@ -20,7 +21,8 @@ export type LessonBoxLesson = { groupId: string; courseId: string; courseTitle: 
 // its progress, and, hidden until the chevron beside the percentage opens them, the viewer's figures for the lesson once they have
 // studied it: words remembered well, pronunciation fluency, and when they last studied it, and their reading and practice time
 // with the lesson's typical times (C15, docs/learning-time.md#lesson-and-practice-times), refreshed once a minute from the clock's
-// unsent seconds. Its actions sit apart, at the bottom of the rail (`LessonBoxActions`).
+// unsent seconds. While the rail's Study time card is shown the box shrinks to its label and progress. Its actions sit apart, at
+// the bottom of the rail (`LessonBoxActions`).
 const duration = (t: TFunction, seconds: number) => seconds < 60 ? t("courses.lessonBox.underMinute") : t("courses.lessonBox.minutes", { count: Math.floor(seconds / 60) });
 const typicalLine = (t: TFunction, typical: TypicalTime) =>
   t("courses.lessonBox.typical", { time: t("courses.lessonBox.minutes", { count: typicalMinutes(typical.seconds) }), count: typical.learners });
@@ -36,15 +38,17 @@ export function LessonBox({ lesson, percent }: { lesson: LessonBoxLesson; percen
   const pending = (activities: readonly string[]) => learningClock().pendingSeconds((target) => activities.includes(target.activity) && "lessonId" in target && target.lessonId === lesson.lessonId);
   const reading = (time?.readingSeconds ?? 0) + pending(["reading"]);
   const practice = (time?.practiceSeconds ?? 0) + pending(["practice", "ai_practice"]);
-  const [open, toggle] = useFiguresOpen(LESSON_FIGURES_OPEN_KEY);
+  const [stored, toggle] = useFiguresOpen(LESSON_FIGURES_OPEN_KEY);
+  const compact = useRailSlots().studyOpen === true;
+  const open = stored && !compact;
   const figuresId = useId();
   const studied = (words?.practised ?? 0) > 0 || fluency !== null || lastStudiedAt !== null || reading > 0 || practice > 0;
-  return <section className={styles.box} aria-label={t("courses.lessonBox.title")}>
+  return <section className={styles.box} aria-label={t("courses.lessonBox.title")} data-compact={compact || undefined}>
     <div className={styles.heading}>
       <LabelChip tone="accent">{t("courses.lessonBox.number", { number: lesson.number })}</LabelChip>
-      <p className={styles.title}>{lesson.title}</p>
+      <div className={styles.titleReveal} inert={compact}><p className={styles.title}>{lesson.title}</p></div>
     </div>
-    <ProgressMeter value={percent} label={t("courses.lessonBox.progress")} showLabel labelEnd={<FiguresDisclosure open={open} controls={figuresId} onToggle={toggle} />} />
+    <ProgressMeter value={percent} label={t("courses.lessonBox.progress")} showLabel labelEnd={compact ? null : <FiguresDisclosure open={open} controls={figuresId} onToggle={toggle} />} />
     <FiguresReveal id={figuresId} open={open}>
       {!studied ? <p className={styles.note}>{t("courses.lessonBox.notStudied")}</p>
         : <FigureList>

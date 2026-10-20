@@ -6,6 +6,9 @@
 .paragraph{margin:0;font-size:var(--type-authored);line-height:var(--line-reading);white-space:pre-wrap;overflow-wrap:anywhere}
 .tinted{padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm)}
 .heading{margin:var(--space-4) 0 0;font-family:var(--font-sans);font-weight:var(--weight-bold);letter-spacing:var(--tracking-title);line-height:var(--line-title);overflow-wrap:anywhere}
+/* A heading with a badge (the lesson page's category badges): the badge, sized from the heading's own font, then the text. */
+.heading[data-badged]{display:flex;align-items:center;gap:0.45em}
+.heading[data-badged]>:first-child{font-size:0.5em}
 .level1{font-size:var(--text-3xl)}
 .level2{font-size:var(--text-2xl)}
 .level3{font-size:var(--text-xl)}
