@@ -1,0 +1,32 @@
+.card{display:grid;gap:var(--space-5);min-width:0}
+.head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:var(--space-3)}
+.head h2{margin:0;font-size:var(--type-section-title);letter-spacing:-0.025em}
+.summary{display:grid;gap:var(--space-1)}
+.total{margin:0;font-size:var(--type-page-title);font-weight:var(--weight-bold);letter-spacing:var(--tracking-display);line-height:var(--line-heading);font-variant-numeric:tabular-nums}
+.muted,.empty{margin:0;color:var(--color-foreground-muted);font-size:var(--type-body)}
+.bars{display:flex;gap:clamp(2px,1vw,var(--space-2));height:9rem;margin:var(--space-6) 0 0;padding:0;list-style:none;align-items:stretch}
+.day{display:grid;grid-template-rows:minmax(0,1fr) auto;flex:1 1 0;min-width:0}
+.column{position:relative;display:flex;flex-direction:column;min-height:0;border-radius:var(--radius-sm);outline-offset:var(--space-1)}
+.column:focus-visible{outline:var(--focus-ring-width) solid var(--color-focus)}
+.day[data-today] .column{background:var(--color-wash-subtle)}
+.stack{display:flex;flex-direction:column-reverse;justify-content:flex-start;height:100%}
+.segment{display:block;flex:none;width:100%;min-height:2px;border-radius:2px;background:var(--category)}
+.dayLabel{display:block;min-height:1.25em;padding-top:var(--space-1);text-align:center;color:var(--color-foreground-muted);font-size:var(--text-xs);line-height:1.25;white-space:nowrap;overflow:visible}
+.day[data-today] .dayLabel{color:var(--color-foreground);font-weight:var(--weight-bold)}
+.tip{display:none;position:absolute;bottom:calc(100% + var(--space-2));left:50%;z-index:var(--z-content);min-width:11rem;transform:translateX(-50%);gap:var(--space-1);padding:var(--space-3);color:var(--color-foreground);background:var(--color-surface-raised);border:var(--ring-hairline);border-color:var(--color-hairline);border-radius:var(--radius-md);box-shadow:var(--shadow-floating);font-size:var(--text-sm);text-align:start;white-space:nowrap}
+.tip strong{font-variant-numeric:tabular-nums}
+.tipRow{display:flex;align-items:center;gap:var(--space-2);color:var(--color-foreground-muted)}
+.tipRow span:last-child{margin-inline-start:auto;padding-inline-start:var(--space-4);font-variant-numeric:tabular-nums}
+.day:nth-child(-n+2) .tip{left:0;transform:none}
+.day:nth-last-child(-n+2) .tip{left:auto;right:0;transform:none}
+.column:hover .tip,.column:focus-visible .tip{display:grid}
+.legend{display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-4);margin:0;padding:0;list-style:none;color:var(--color-foreground-muted);font-size:var(--text-sm)}
+.legend li,.tipRow{display:flex;align-items:center}
+.swatch{display:inline-block;flex:none;width:.6rem;height:.6rem;margin-inline-end:var(--space-2);border-radius:var(--radius-pill);background:var(--category)}
+.card [data-category]{--category:var(--color-vivid-blue)}
+.card [data-category="grammar"]{--category:var(--color-vivid-violet)}
+.card [data-category="practice"]{--category:var(--color-vivid-green)}
+.card [data-category="vocabulary"]{--category:var(--color-vivid-yellow)}
+.card [data-category="aiPractice"]{--category:var(--color-vivid-pink)}
+@media(max-width:48em){.bars{height:7rem}}
+@media(prefers-reduced-motion:reduce){.column{transition:none}}

@@ -1,6 +1,8 @@
 .stack{display:grid;gap:var(--space-10);animation:wordinator-enter var(--motion-reveal) var(--ease-physical) both}
 .library{display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--width-course-card-min),1fr));gap:var(--space-6)}
 .dashboardSection{display:grid;gap:var(--space-6)}
+.libraryActions{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:var(--space-3)}
+@media(max-width:48em){.dashboardSection>header{flex-direction:column;align-items:stretch}.libraryActions{justify-content:stretch}.libraryActions>*{flex:1 1 auto}}
 .dashboardCard{display:grid;align-content:start;overflow:hidden;background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);transition:transform var(--motion-standard) var(--ease-physical),box-shadow var(--motion-standard) var(--ease-physical)}
 .dashboardCard:hover{transform:translateY(-2px);box-shadow:var(--shadow-raised)}
 .cardLink{display:grid;color:var(--color-foreground);text-decoration:none}

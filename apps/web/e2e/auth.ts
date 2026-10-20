@@ -13,7 +13,7 @@ export async function signIn(page: Page, email = E2E_CREATOR_EMAIL, password = E
   await page.getByLabel("Email").fill(email);
   await page.getByRole("textbox", { name: "Password" }).fill(password);
   await page.getByRole("button", { name: "Sign in" }).click();
-  await expect(page.getByRole("heading", { name: "Course library", level: 1 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Course library", level: 2 })).toBeVisible();
 }
 
 // Open registration followed by the required username setup; the avatar stays optional.
@@ -25,7 +25,7 @@ export async function registerLearner(page: Page, email: string, password: strin
   await expect(page.getByRole("heading", { name: "Set up your account." })).toBeVisible();
   await page.getByRole("textbox", { name: "Username" }).fill(username);
   await page.getByRole("button", { name: "Open the lesson library" }).click();
-  await expect(page.getByRole("heading", { name: "Course library", level: 1 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Course library", level: 2 })).toBeVisible();
 }
 
 export async function signOut(page: Page) {

@@ -1,7 +1,7 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, lessonProgressResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema, speechRecognitionTokenResponseSchema, type SpeechRecognitionTokenResponse } from "@wordinator/contracts";
 import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
 import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorModelsResponseSchema, tutorProfileResponseSchema, tutorUsageResponseSchema } from "@wordinator/contracts/tutor";
-import { courseDashboardResponseSchema, learningGoalSchema, lessonMetricsResponseSchema, type LearningTimeEntry } from "@wordinator/contracts/learning";
+import { courseDashboardResponseSchema, learningActivityResponseSchema, learningGoalSchema, lessonMetricsResponseSchema, type LearningActivityRange, type LearningTimeEntry } from "@wordinator/contracts/learning";
 import { weakWordsPageSchema } from "@wordinator/contracts/weak-words";
 import { infiniteQueryOptions, queryOptions, type QueryClient } from "@tanstack/react-query";
 
@@ -321,6 +321,14 @@ export const tutorModelsQueryOptions = () => queryOptions({
 export const tutorProfileQueryOptions = () => queryOptions({
   queryKey: [...tutorKey, "profile"] as const,
   queryFn: () => apiRequest("/api/ai/profile", tutorProfileResponseSchema),
+  retry: false,
+});
+
+// The learner's activity for the week or month ending on `end` (their local today), on the home dashboard (C15e,
+// docs/learning-time.md#home-dashboard). Each range is its own query; the previous day window is shown while a new one loads.
+export const learningActivityQueryOptions = (groupId: string, range: LearningActivityRange, end: string) => queryOptions({
+  queryKey: ["learning", "activity", groupId, range, end] as const,
+  queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/learning-activity?range=${range}&end=${end}`, learningActivityResponseSchema),
   retry: false,
 });
 

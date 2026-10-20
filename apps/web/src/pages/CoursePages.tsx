@@ -12,8 +12,8 @@ import { ProgressMeter } from "../molecules/ProgressMeter";
 import { CourseErrorMessage as ErrorMessage } from "../organisms/CourseLessons/CourseErrorMessage";
 import { CourseLessons, CourseLessonTools, LessonView } from "../organisms/CourseLessons/CourseLessons";
 import { coursePanelId, CourseProgressTab, CourseTabs, courseTabId, type CourseTab } from "../organisms/CourseLessons/CourseProgress";
-import { CourseResume } from "../organisms/CourseLessons/CourseResume";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
+import { LearningHome } from "../organisms/LearningHome/LearningHome";
 import { SpeechCastFields } from "../organisms/SpeechCast/SpeechCastFields";
 import { AdaptiveDialog, Button, ConfirmDialog, EmptyState, ErrorState, Eyebrow, IconButton, LabelChip, LoadingState, MetadataItem, MetadataRow, PageHeader, SectionHeader, SelectField, Surface, TextAreaField, TextField } from "../ui";
 import { relativeTime } from "../relativeTime";
@@ -105,16 +105,17 @@ function LearningDashboard({ groupId, accountId, onCreate }: { groupId: string; 
   if (dashboard.isPending) return <LoadingState label={t("courses.dashboard.loading")} />;
   if (dashboard.isError) return <ErrorState title={t("courses.unavailable")} />;
   const items = view === "recent" ? dashboard.data.recentLessons : dashboard.data.notStarted;
-  return <>
-    {dashboard.data.resume && <CourseResume resume={dashboard.data.resume} />}
-    <section className={styles.dashboardSection}>
-      <SectionHeader eyebrow={<Eyebrow>{t("courses.dashboard.eyebrow")}</Eyebrow>} title={t("courses.dashboard.lessonsTitle")} action={<SelectField aria-label={t("courses.dashboard.viewLabel")} value={view} onChange={chooseView} data={[{ value: "recent", label: t("courses.dashboard.recent") }, { value: "not-started", label: t("courses.dashboard.notStarted") }]} />} />
-      {items.length ? <div className={styles.library}>{view === "recent"
-        ? dashboard.data.recentLessons.map((item, index) => <RecentLessonCard key={item.lesson.id} item={item} tone={index} />)
-        : dashboard.data.notStarted.map((course, index) => <NotStartedCard key={course.id} course={course} tone={index} />)}</div>
-        : <Surface><EmptyState title={view === "recent" ? t("courses.dashboard.noRecentTitle") : t("courses.dashboard.noNotStartedTitle")} action={!dashboard.data.resume ? <Button onClick={onCreate}>{t("courses.create")}</Button> : undefined}>{view === "recent" ? t("courses.dashboard.noRecentBody") : t("courses.dashboard.noNotStartedBody")}</EmptyState></Surface>}
-    </section>
-  </>;
+  return <section className={styles.dashboardSection}>
+    <SectionHeader eyebrow={<Eyebrow>{t("courses.dashboard.eyebrow")}</Eyebrow>} title={t("courses.title")}
+      action={<div className={styles.libraryActions}>
+        <SelectField aria-label={t("courses.dashboard.viewLabel")} value={view} onChange={chooseView} data={[{ value: "recent", label: t("courses.dashboard.recent") }, { value: "not-started", label: t("courses.dashboard.notStarted") }]} />
+        <Button onClick={onCreate}>{t("courses.create")}</Button>
+      </div>} />
+    {items.length ? <div className={styles.library}>{view === "recent"
+      ? dashboard.data.recentLessons.map((item, index) => <RecentLessonCard key={item.lesson.id} item={item} tone={index} />)
+      : dashboard.data.notStarted.map((course, index) => <NotStartedCard key={course.id} course={course} tone={index} />)}</div>
+      : <Surface><EmptyState title={view === "recent" ? t("courses.dashboard.noRecentTitle") : t("courses.dashboard.noNotStartedTitle")}>{view === "recent" ? t("courses.dashboard.noRecentBody") : t("courses.dashboard.noNotStartedBody")}</EmptyState></Surface>}
+  </section>;
 }
 
 export function CourseLibraryPage({ groupId }: { groupId: string }) {
@@ -132,7 +133,7 @@ export function CourseLibraryPage({ groupId }: { groupId: string }) {
   if (session.isPending) return <main className={shellStyles.center}><LoadingState label={t("courses.loading")} /></main>;
   if (session.data?.status !== "signedIn") return null;
   return <GroupFrame groupId={groupId} session={session.data}><div className={styles.stack}>
-    <PageHeader eyebrow={<Eyebrow>{t("courses.eyebrow")}</Eyebrow>} title={t("courses.title")} intro={t("courses.intro")} actions={<Button onClick={() => setCreateOpen(true)}>{t("courses.create")}</Button>} />
+    <LearningHome groupId={groupId} displayName={session.data.user.displayName} />
     <LearningDashboard groupId={groupId} accountId={session.data.user.id} onCreate={() => setCreateOpen(true)} />
     <AdaptiveDialog opened={createOpen} onClose={() => setCreateOpen(false)} title={t("courses.createTitle")}>
       {createOpen && <CourseForm submitLabel={t("courses.createSubmit")} pending={create.isPending} error={create.error} onSubmit={(input) => create.mutate(input)} onCancel={() => setCreateOpen(false)} />}

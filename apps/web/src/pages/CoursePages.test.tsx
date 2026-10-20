@@ -29,6 +29,11 @@ const dashboard = () => ({
   notStarted: [{ id: "30000000-0000-4000-8000-000000000002", slug: "next-course", title: "Next course", level: "A2", coverUrl: null, lessonCount: 3 }],
 });
 
+// The home dashboard's activity read (C15e): an empty week with no goal, so the Continue card shows the resume lesson.
+const activity = () => ({
+  range: "week", from: "2026-10-14", to: "2026-10-20", days: [], previousTotal: 0, dailyGoalMinutes: null, streak: 0,
+  totals: { lesson: 0, grammar: 0, practice: 0, vocabulary: 0, aiPractice: 0, total: 0, aiPracticeFocus: { grammar: 0, vocabulary: 0, reading: 0, listening: 0, writing: 0 } },
+});
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
 function renderPage(page: "library" | "course" | "manage", at = "/courses") {
   const root = createRootRoute();
@@ -49,6 +54,7 @@ beforeEach(() => {
     const path = String(input);
     if (path === "/api/session") return response(session);
     if (path === `/api/groups/${groupId}/course-dashboard`) return response(dashboard());
+    if (path.startsWith(`/api/groups/${groupId}/learning-activity`)) return response(activity());
     if (path === `/api/groups/${groupId}/courses` && init?.method === "POST") return response({ course: { ...current, ...JSON.parse(String(init.body)) } }, 201);
     if (path.startsWith(`/api/groups/${groupId}/courses?`) || path === `/api/groups/${groupId}/courses`) return response({ items: [current], nextCursor: null });
     if (path.endsWith("/visibility")) { current = course({ status: JSON.parse(String(init?.body)).status }); return response({ course: current }); }
@@ -127,8 +133,9 @@ describe("Course shell pages", () => {
 
   it("renders the learning dashboard, remembers its view, expands metrics, and validates the create form", async () => {
     renderPage("library");
-    expect(await screen.findByRole("heading", { name: "Course library", level: 1 })).toBeInTheDocument();
-    expect(await screen.findByRole("heading", { name: "Deutsch für Anfänger", level: 2 })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: /, Ada$/, level: 1 })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Course library", level: 2 })).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Hallo", level: 3 })).toBeInTheDocument();
     expect(screen.getByRole("link", { name: /Continue/ })).toHaveAttribute("href", "/courses/deutsch-fur-anfanger/lessons/hallo?resume=true");
     fireEvent.click(screen.getByRole("button", { name: "Show learning metrics" }));
     expect(screen.getByText("Strong 1 · Fading 1 · New 1")).toBeInTheDocument();

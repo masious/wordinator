@@ -23,7 +23,7 @@ test("a new person signs up, sets up a username, and lands in the one global lib
   await page.getByRole("textbox", { name: "Username" }).fill(username);
   await page.getByRole("button", { name: "Open the lesson library" }).click();
   await expect(page).toHaveURL(/\/courses$/);
-  await expect(page.getByRole("heading", { name: "Course library", level: 1 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Course library", level: 2 })).toBeVisible();
 
   // Legacy group URLs land on their global equivalents.
   // Each redirect is a client-side history change; WebKit treats one still settling as interrupting the next goto, so wait for
@@ -68,7 +68,7 @@ test("a new person signs up, sets up a username, and lands in the one global lib
   await expect(page.getByText("That username is already in use.")).toBeVisible();
   await page.getByRole("textbox", { name: "Username" }).fill(`${username}_2`);
   await page.getByRole("button", { name: "Open the lesson library" }).click();
-  await expect(page.getByRole("heading", { name: "Course library", level: 1 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Course library", level: 2 })).toBeVisible();
 });
 
 test("signing up again with a known email is refused", async ({ page }, testInfo) => {

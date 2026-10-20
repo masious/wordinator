@@ -2,7 +2,7 @@
 
 Approved product change (C15, 2026-10-20). Wordinator measures how long each learner actively spends reading lessons, answering practices, drilling and browsing words, and working with the AI tutor. Each learner sees their own time; every lesson and practice shows how long learners typically take; the home page summarises the learner's week or month by category against a daily goal they set.
 
-This document owns what is measured, the clock, how time reaches the server, the lesson and practice medians, activity categories, the daily goal and streak, and the planned home dashboard. Storage is in [data model](data-model.md#learning_time); the privacy exception for medians is in [security and privacy](security-and-privacy.md#learning-data).
+This document owns what is measured, the clock, how time reaches the server, the lesson and practice medians, activity categories, the daily goal and streak, and the home dashboard. Storage is in [data model](data-model.md#learning_time); the privacy exception for medians is in [security and privacy](security-and-privacy.md#learning-data).
 
 ## What is measured
 
@@ -65,12 +65,15 @@ The [lesson box](courses.md#lesson-box) shows the viewer's own **Reading** time 
 
 ## Home dashboard
 
-Planned (C15e). The signed-in home page becomes a study summary above the course library. It uses existing design tokens only, adds no colours, and follows the existing light and dark themes.
+C15e (completed 2026-10-20). The signed-in home page is the [course library](courses.md#library-page) and opens with a study summary: a header, a Continue card, and an Activity card. It uses existing tokens only, adds no API, and follows the light and dark themes. Its reads are the activity read above and the course dashboard's `resume`.
 
-- A header with today's date as an eyebrow, a greeting with the learner's display name, and a short calm line. **Practice with AI** sits on the right and opens `/ai`.
-- A wide **Continue** card. It shows a streak chip, a heading, and a line about today's goal ("One lesson away from today's goal"). It has a ring with today's share of the daily goal (or minutes studied today when there is no goal) and **Continue lesson**, which opens the most recent in-progress lesson at its saved step.
-- An **Activity** card. It has the period total (`4h 20m`), its change against the previous period (`+18%`), a Week / Month switch, and a bar per day split by category, with today highlighted and a category legend. Hovering or focusing a bar shows its day's categories.
-- Below `48em` the cards stack, and the activity bars stay one row with scaled labels.
+- **Header.** Today's date as an eyebrow, a greeting with the learner's display name (morning, afternoon, or evening by the browser's clock), a calm line, and **Practice with AI** on the right, linking to `/ai`.
+- **Continue.** A dark feature card with a streak chip (from one day), the resume lesson's title and its course, and today's goal line. The lesson is the library's choice (`resume`, see [library page](courses.md#library-page)): the newest unfinished lesson at its saved step, else the first unfinished published lesson. The action is **Continue lesson** (opening `?resume=true`, so it scrolls to the saved step) for a lesson in progress, **Start lesson** for one not started, and **Practice again** for a finished one. With no published lesson the card says where the next lesson will appear and offers no action.
+- **Goal ring.** Today's share of the goal, capped at full, in the success colour once the goal is met. The goal line says what is left, or that the goal is met. Without a goal the ring has no arc, its centre shows today's time, and the card links to Settings to set one.
+- **Activity.** The period total (`4h 20m`; `45 min`, `Under a minute`, or `0 min` below an hour), its change against the previous period as a whole percentage (`Nothing to compare with yet` when that period had no time), and a Week / Month switch that changes the read's `range`. `end` is the browser's local today, so the last bar is today. Each local day is one stacked bar by category, with today marked and the legend below. A day's bar is focusable and, on hover or focus, shows its categories. A period with no time shows a short empty state instead of bars.
+- **Colours.** Categories use the vivid tokens, in the order of the legend: lesson reading blue, grammar violet, practice green, vocabulary yellow, AI practice pink. The ring uses `--color-action` on the Continue card's `--color-feature-*` surface, which is dark in both themes.
+- **Layout.** The two cards sit side by side and stack below `48em`. The bars stay one row there; the month range labels every fifth day and today only.
+- **Decisions.** The Continue card replaces the library's former Continue learning panel and its tutor half, so the page has one resume entry. The library's section heading is the course library title, under the greeting.
 
 ## Analytics
 
@@ -87,4 +90,4 @@ The superuser's [analytics](settings-and-administration.md#analytics) adds a Tim
 - Contracts: the time request's day format, entry count, second limits, focus by activity, and target shape for each activity.
 - Workers integration: authentication; visibility refusals for an unpublished lesson, a practice of another lesson, and an AI practice of another lesson; the elapsed-time clamp; the day window; upserts adding seconds; completion and done snapshots; medians across accounts including the viewer, and the course read's typical fields; reset and lesson deletion; the activity read's categories, previous period, goal, and streak; goal validation.
 - Unit: the clock's idle cut-off, visibility and focus pauses, the first-block start, the reading and practice hand-over, midnight splitting, and send retries.
-- React Testing Library: the lesson box's own and typical times and their minute refresh; the lesson list's and Practice again's typical times; the Words and tutor clocks; the Study goal field; the tutor confirmation card's focus line.
+- React Testing Library: the lesson box's own and typical times and their minute refresh; the lesson list's and Practice again's typical times; the Words and tutor clocks; the Study goal field; the tutor confirmation card's focus line; the home dashboard's greeting, Continue card with and without a goal, range switch, bars, legend, and empty state (`organisms/LearningHome`), with its pure helpers in unit tests.
