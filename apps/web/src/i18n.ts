@@ -437,9 +437,16 @@ export const resources = {
           pronunciation: "Pronunciation fluency",
           score: "{{score}} / 100",
           spokenAttempts_one: "{{count}} spoken attempt",
-          spokenAttempts_other: "{{count}} spoken attempts"
+          spokenAttempts_other: "{{count}} spoken attempts",
+          reading: "Reading",
+          practice: "Practice",
+          minutes: "{{count}} min",
+          underMinute: "Under a minute",
+          typical_one: "Typically {{time}} · {{count}} learner",
+          typical_other: "Typically {{time}} · {{count}} learners"
         },
         lessons: {
+          startReading: "Start reading this lesson",
           outline: "Lessons",
           outlineEmpty: "No lessons yet.",
           outlineCount_one: "{{count}} lesson",
@@ -880,6 +887,7 @@ export const resources = {
           reviews: "Your word reviews and memory of this lesson’s words, also where they appear in other lessons",
           pronunciation: "Your pronunciation scores for this lesson’s words",
           bookmarks: "Your bookmarks of this lesson’s words",
+          time: "Your reading and practice time in this lesson",
           kept: "There is no undo.",
           confirm: "Reset lesson"
         }

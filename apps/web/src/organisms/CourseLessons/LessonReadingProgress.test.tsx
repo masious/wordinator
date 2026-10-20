@@ -2,7 +2,7 @@ import { MantineProvider } from "@mantine/core";
 import { LESSON_DOCUMENT_SCHEMA_VERSION, type CourseDetailResponse, type CourseLesson, type LessonDocument, type LessonTopBlock } from "@wordinator/contracts/lesson-document";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryHistory, createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
-import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
 import { LessonView } from "./CourseLessons";
@@ -52,6 +52,11 @@ const scrollTo = async (y: number) => {
 };
 const saved = () => vi.mocked(fetch).mock.calls.filter(([path, init]) => String(path).endsWith("/position") && init?.method === "PUT").map(([, init]) => JSON.parse(String(init?.body)).stepKey);
 const bar = () => screen.getByRole("progressbar", { name: "Lesson progress" });
+// An unstarted lesson opens behind the start gate; pressing it saves the first step.
+const startReading = async () => {
+  fireEvent.click(await screen.findByRole("button", { name: "Start reading this lesson" }));
+  await waitFor(() => expect(saved()).toEqual([blockId(1)]));
+};
 
 beforeEach(() => {
   scrollY = 0; served = progress();
@@ -79,29 +84,56 @@ afterEach(() => { cleanup(); vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 
 // Saves wait for the reader to pause, so these tests run on real timers for a few seconds each.
 describe("Lesson page reading progress", { timeout: 15_000 }, () => {
+  it("opens an unstarted lesson behind the start gate, and pressing it starts the lesson", async () => {
+    renderLesson(detail(lesson()));
+    expect(await screen.findByText("Zin 1.")).toBeInTheDocument();
+    expect(await screen.findByRole("button", { name: "Start reading this lesson" })).toBeInTheDocument();
+    // Nothing is tracked behind the gate: no progress bar, and scrolling saves nothing.
+    expect(screen.queryByRole("progressbar", { name: "Lesson progress" })).not.toBeInTheDocument();
+    await scrollTo(3000);
+    await new Promise((resolve) => setTimeout(resolve, 1400));
+    expect(saved()).toEqual([]);
+    scrollY = 0;
+    await startReading();
+    expect(screen.queryByRole("button", { name: "Start reading this lesson" })).not.toBeInTheDocument();
+    // The saved first step fills the bar to step 1 of 4.
+    await waitFor(() => expect(bar()).toHaveAttribute("aria-valuenow", "25"));
+  });
+
+  it("opens a started, finished, or archived lesson without the gate", async () => {
+    for (const [completed, positions, status] of [[[], [position(2)], "published"], [[lessonId], [], "published"], [[], [], "archived"]] as const) {
+      served = progress([...completed], [...positions]);
+      renderLesson(detail(lesson(), status));
+      expect(await screen.findByText("Zin 1.")).toBeInTheDocument();
+      await waitFor(() => expect(fetch).toHaveBeenCalledWith(expect.stringMatching(/\/progress$/), expect.anything()));
+      expect(await screen.findByRole("progressbar", { name: "Lesson progress" })).toBeInTheDocument();
+      expect(screen.queryByRole("button", { name: "Start reading this lesson" })).not.toBeInTheDocument();
+      cleanup();
+    }
+  });
+
   it("moves the bar step by step with the scroll and saves the furthest step reached once the reader pauses", async () => {
     renderLesson(detail(lesson()));
     expect(await screen.findByText("Zin 1.")).toBeInTheDocument();
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith(expect.stringMatching(/\/progress$/), expect.anything()));
-    expect(bar()).toHaveAttribute("aria-valuenow", "0");
+    await startReading();
     // The third block's top (1800 - 1200 = 600) is above the reading line at 750px; the fourth (1500) is not.
     await scrollTo(1200);
     // Step 3 of 4, in the player's unit.
     expect(bar()).toHaveAttribute("aria-valuenow", "75");
     // Saves wait for a pause, so several scroll events send one request.
     await scrollTo(1250);
-    expect(saved()).toEqual([]);
-    await waitFor(() => expect(saved()).toEqual([blockId(3)]), { timeout: 3000 });
+    expect(saved()).toEqual([blockId(1)]);
+    await waitFor(() => expect(saved()).toEqual([blockId(1), blockId(3)]), { timeout: 3000 });
     expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId}/position`, expect.objectContaining({ method: "PUT" }));
     // Scrolling back never moves the position back.
     await scrollTo(0);
     await new Promise((resolve) => setTimeout(resolve, 1400));
-    expect(saved()).toEqual([blockId(3)]);
+    expect(saved()).toEqual([blockId(1), blockId(3)]);
     expect(bar()).toHaveAttribute("aria-valuenow", "75");
     // The bottom of the page reaches the last step and fills the bar.
     await scrollTo(3000);
     expect(bar()).toHaveAttribute("aria-valuenow", "100");
-    await waitFor(() => expect(saved()).toEqual([blockId(3), blockId(4)]), { timeout: 3000 });
+    await waitFor(() => expect(saved()).toEqual([blockId(1), blockId(3), blockId(4)]), { timeout: 3000 });
   });
 
   it("saves nothing when the page is only opened, or before the saved position", async () => {
@@ -123,14 +155,14 @@ describe("Lesson page reading progress", { timeout: 15_000 }, () => {
   it("saves nothing for a scroll the reader did not make, such as the router resetting it on navigation", async () => {
     renderLesson(detail(lesson()));
     expect(await screen.findByText("Zin 1.")).toBeInTheDocument();
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith(expect.stringMatching(/\/progress$/), expect.anything()));
+    await startReading();
     scrollY = 3000;
     await act(async () => { window.dispatchEvent(new Event("scroll")); await new Promise((resolve) => setTimeout(resolve, 5)); });
-    expect(bar()).toHaveAttribute("aria-valuenow", "0");
+    expect(bar()).toHaveAttribute("aria-valuenow", "25");
     // Ordinary keys and clicks inside the page are not scrolling intent either.
     await act(async () => { window.dispatchEvent(new KeyboardEvent("keydown", { key: "a" })); window.dispatchEvent(new Event("scroll")); });
     await new Promise((resolve) => setTimeout(resolve, 1400));
-    expect(saved()).toEqual([]);
+    expect(saved()).toEqual([blockId(1)]);
   });
 
   it("never saves on a finished lesson, a draft preview, or an archived course, but still fills the bar", async () => {

@@ -257,9 +257,10 @@ describe("Course lessons", () => {
     expect(screen.queryByRole("navigation", { name: "In this lesson" })).not.toBeInTheDocument();
   });
 
+  const noTime = { readingSeconds: 0, practiceSeconds: 0, typical: { reading: null, practice: null } };
   it("pins the lesson box in the rail with progress, the course drill, the tutor requests, and figures only with data", async () => {
     const original = vi.mocked(fetch).getMockImplementation()!;
-    let metrics = { pronunciation: { attempts: 0, fluency: null as number | null }, words: { total: 2, practised: 0, strong: 0 }, lastStudiedAt: null as number | null };
+    let metrics = { pronunciation: { attempts: 0, fluency: null as number | null }, words: { total: 2, practised: 0, strong: 0 }, lastStudiedAt: null as number | null, time: noTime };
     vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/metrics") ? response(metrics) : original(input, init));
     const detail = { course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000011", "De hond blaft.")])] };
     const { slots } = renderInRails(detail);
@@ -274,7 +275,7 @@ describe("Course lessons", () => {
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/metrics`, expect.anything()));
     expect(within(box).queryByText("Fluency")).not.toBeInTheDocument();
     cleanup(); document.body.replaceChildren();
-    metrics = { pronunciation: { attempts: 3, fluency: 74 }, words: { total: 2, practised: 2, strong: 1 }, lastStudiedAt: Date.now() - 2 * 86_400_000 };
+    metrics = { pronunciation: { attempts: 3, fluency: 74 }, words: { total: 2, practised: 2, strong: 1 }, lastStudiedAt: Date.now() - 2 * 86_400_000, time: noTime };
     renderInRails(detail);
     const filled = await screen.findByRole("region", { name: "This lesson" });
     expect(await within(filled).findByText("Fluency")).toBeInTheDocument();
@@ -282,6 +283,20 @@ describe("Course lessons", () => {
     expect(within(filled).getByText("3 spoken attempts")).toBeInTheDocument();
     expect(within(filled).getByText("Words remembered well").nextElementSibling).toHaveTextContent("1 of 2");
     expect(within(filled).getByText("Last studied").nextElementSibling).toHaveTextContent("2 days ago");
+  });
+
+  it("shows the viewer's reading and practice time with the lesson's typical times", async () => {
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    const metrics = { pronunciation: { attempts: 0, fluency: null }, words: { total: 0, practised: 0, strong: 0 }, lastStudiedAt: null,
+      time: { readingSeconds: 150, practiceSeconds: 30, typical: { reading: { seconds: 290, learners: 3 }, practice: { seconds: 60, learners: 1 } } } };
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/metrics") ? response(metrics) : original(input, init));
+    renderInRails({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000011", "De hond blaft.")])] });
+    const box = await screen.findByRole("region", { name: "This lesson" });
+    expect(await within(box).findByText("Reading")).toBeInTheDocument();
+    expect(within(box).getByText("Reading").nextElementSibling).toHaveTextContent("2 min");
+    expect(within(box).getByText("Typically 5 min · 3 learners")).toBeInTheDocument();
+    expect(within(box).getByText("Practice").nextElementSibling).toHaveTextContent("Under a minute");
+    expect(within(box).getByText("Typically 1 min · 1 learner")).toBeInTheDocument();
   });
 
   it("shows a lesson outside the course outline as unavailable", async () => {

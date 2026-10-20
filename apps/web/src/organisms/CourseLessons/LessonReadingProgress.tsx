@@ -1,6 +1,6 @@
 import { lessonPositionResponseSchema, type CourseProgressResponse, type LessonPosition } from "@wordinator/contracts";
 import { lessonStepKey, resolveStepIndex, type LessonStep } from "@wordinator/contracts/lesson-document";
-import { useQueryClient } from "@tanstack/react-query";
+import { type QueryClient, useQueryClient } from "@tanstack/react-query";
 import { type RefObject, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions } from "../../api";
@@ -74,6 +74,22 @@ export function useResumeScroll({ steps, reading, position, inset }: {
 
 const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "]);
 
+/**
+ * Saves a step as the viewer's lesson position and puts it into the cached course progress. Refusals (an archived course, an
+ * unpublished lesson, a step the server no longer knows) are ignored, as in the player.
+ */
+export function saveLessonPosition(queryClient: QueryClient, target: { path: string; groupId: string; courseId: string }, step: LessonStep) {
+  const progressKey = courseProgressQueryOptions(target.groupId, target.courseId).queryKey;
+  return apiRequest(`${target.path}/position`, lessonPositionResponseSchema, { method: "PUT", body: JSON.stringify({ stepKey: lessonStepKey(step) }), keepalive: true })
+    .then(({ position }) => {
+      queryClient.setQueryData(progressKey, (data: CourseProgressResponse | undefined) => data && {
+        ...data, positions: [position, ...data.positions.filter((entry) => entry.lessonId !== position.lessonId)],
+      });
+      // Percentages depend on the new position, so the course page refetches them when it next shows them.
+      void queryClient.invalidateQueries({ queryKey: progressKey, refetchType: "none" });
+    }, () => undefined);
+}
+
 export type ReadingTracking = { save: boolean; completed: boolean; position: LessonPosition | undefined; path: string; groupId: string; courseId: string; lessonId: string };
 
 // A thin bar along the top of the window showing the viewer's lesson position, in the player's unit: step N of M fills N/M. It
@@ -100,16 +116,7 @@ export function LessonReadingProgress({ steps, reading, tracking, onPercent }: {
       const step = index === null ? undefined : steps[index];
       const current = trackingRef.current;
       if (!step || !current.save) return;
-      const progressKey = courseProgressQueryOptions(current.groupId, current.courseId).queryKey;
-      // Refusals (an archived course, an unpublished lesson, a step the server no longer knows) are ignored, as in the player.
-      apiRequest(`${current.path}/position`, lessonPositionResponseSchema, { method: "PUT", body: JSON.stringify({ stepKey: lessonStepKey(step) }), keepalive: true })
-        .then(({ position }) => {
-          queryClient.setQueryData(progressKey, (data: CourseProgressResponse | undefined) => data && {
-            ...data, positions: [position, ...data.positions.filter((entry) => entry.lessonId !== position.lessonId)],
-          });
-          // Percentages depend on the new position, so the course page refetches them when it next shows them.
-          void queryClient.invalidateQueries({ queryKey: progressKey, refetchType: "none" });
-        }, () => undefined);
+      void saveLessonPosition(queryClient, current, step);
     };
     const measure = () => {
       frame = 0;

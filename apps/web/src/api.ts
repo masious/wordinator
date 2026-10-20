@@ -1,9 +1,9 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, lessonProgressResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema, speechRecognitionTokenResponseSchema, type SpeechRecognitionTokenResponse } from "@wordinator/contracts";
 import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
 import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorModelsResponseSchema, tutorProfileResponseSchema, tutorUsageResponseSchema } from "@wordinator/contracts/tutor";
-import { courseDashboardResponseSchema, lessonMetricsResponseSchema } from "@wordinator/contracts/learning";
+import { courseDashboardResponseSchema, lessonMetricsResponseSchema, type LearningTimeEntry } from "@wordinator/contracts/learning";
 import { weakWordsPageSchema } from "@wordinator/contracts/weak-words";
-import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
+import { infiniteQueryOptions, queryOptions, type QueryClient } from "@tanstack/react-query";
 
 export class ApiError extends Error {
   // `body` is the whole error response, for errors that carry more than a code, such as a repeated lesson share's post ID.
@@ -239,6 +239,21 @@ export const lessonMetricsQueryOptions = (groupId: string, courseId: string, les
   queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}/metrics`, lessonMetricsResponseSchema),
   retry: false,
 });
+
+// Sends learning time (C15, docs/learning-time.md#sending-time) with `keepalive`, so a send from a closing page still arrives, then
+// moves the sent seconds into the cached lesson metrics so the lesson box does not dip until its next read.
+export const learningTimeSender = (client: QueryClient) => async (groupId: string, day: string, entries: LearningTimeEntry[]) => {
+  const response = await fetch(`/api/groups/${encodeURIComponent(groupId)}/learning-time`, {
+    method: "POST", keepalive: true, headers: { "content-type": "application/json" }, body: JSON.stringify({ day, entries }),
+  });
+  if (!response.ok) throw new ApiError(response.status, "LEARNING_TIME_REFUSED", "Learning time was not saved.", null);
+  for (const entry of entries) {
+    if (!("lessonId" in entry)) continue;
+    const field = entry.activity === "reading" ? "readingSeconds" : "practiceSeconds";
+    client.setQueryData(lessonMetricsQueryOptions(groupId, entry.courseId, entry.lessonId).queryKey,
+      (data) => data && { ...data, time: { ...data.time, [field]: data.time[field] + entry.seconds } });
+  }
+};
 
 export const lessonAiPracticesQueryOptions = (groupId: string, courseId: string, lessonId: string) => queryOptions({
   queryKey: ["course-lesson", groupId, courseId, lessonId, "ai-practices"] as const,

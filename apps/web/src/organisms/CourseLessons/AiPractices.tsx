@@ -9,6 +9,7 @@ import { RECOGNITION_LOCALES, SpeechRecognitionScope } from "../../molecules/spe
 import { Button, ConfirmDialog, LabelChip } from "../../ui";
 import { loadClip } from "../Tutor/tutorApi";
 import { AnswerComponent } from "../TutorComponents";
+import { useLearningClaim } from "../../learningTime";
 import styles from "./AiPractices.module.css";
 
 // AI practices on the lesson page (C14h, docs/courses.md#lesson-pages): behind Show AI practices (n), each practice the tutor saved
@@ -39,6 +40,9 @@ function AiPracticeCard({ scope, practice, canRemove }: { scope: AiPracticeScope
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const [result, setResult] = useState<{ answer: TutorComponentAnswer; grade: TutorGrade } | null>(null);
   const [confirming, setConfirming] = useState(false);
+  // Working inside the practice (focus or pointer in it) runs its AI practice clock instead of reading (C15).
+  const [focused, setFocused] = useState(false); const [pointed, setPointed] = useState(false);
+  useLearningClaim(focused || pointed ? { groupId: scope.groupId, target: () => ({ activity: "ai_practice", courseId: scope.courseId, lessonId: scope.lessonId, practiceId: practice.id }) } : null);
   const path = `${lessonAiPracticesPath(scope.groupId, scope.courseId, scope.lessonId)}/${encodeURIComponent(practice.id)}`;
   const token = useMemo(() => speechRecognitionTokenSource(scope.groupId), [scope.groupId]);
   const locale = scope.language ? RECOGNITION_LOCALES[scope.language as keyof typeof RECOGNITION_LOCALES] ?? null : null;
@@ -61,7 +65,9 @@ function AiPracticeCard({ scope, practice, canRemove }: { scope: AiPracticeScope
       await queryClient.invalidateQueries({ queryKey: lessonProgressQueryOptions(groupId, courseId).queryKey });
     },
   });
-  return <section className={styles.practice} aria-label={t("courses.lessons.aiPractices.label")}>
+  return <section className={styles.practice} aria-label={t("courses.lessons.aiPractices.label")}
+    onFocus={() => setFocused(true)} onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setFocused(false); }}
+    onPointerEnter={() => setPointed(true)} onPointerLeave={() => setPointed(false)}>
     <div className={styles.head}>
       <LabelChip>{t("courses.lessons.aiPractices.label")}</LabelChip>
       {canRemove && <Button variant="quiet" onClick={() => { remove.reset(); setConfirming(true); }}>{t("courses.lessons.aiPractices.remove")}</Button>}

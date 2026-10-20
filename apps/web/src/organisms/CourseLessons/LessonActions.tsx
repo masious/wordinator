@@ -63,7 +63,7 @@ function PracticeList({ scope, lesson, selected, onSelect }: { scope: PlayerScop
   const share = useLessonShareScope(scope.groupId, scope.courseId, lesson);
   if (selected) return <LessonShareScope scope={share}><div className={styles.answering}>
     <PracticeContent block={selected} prompts={false} />
-    <AnswerSetComposer scope={{ ...scope, lessonId: lesson.id }} block={selected} recordAttempts={lesson.document !== null} onDone={() => { saveProgress(selected); onSelect(null); }} />
+    <AnswerSetComposer scope={{ ...scope, lessonId: lesson.id }} block={selected} recordAttempts={lesson.document !== null} timed={lesson.document !== null} onDone={() => { saveProgress(selected); onSelect(null); }} />
   </div></LessonShareScope>;
   if (!practices.length) return <p className={styles.empty}>{t("courses.lessonActions.noPractices")}</p>;
   return <ol className={styles.practices}>{practices.map((practice, index) => <li key={practice.id}>

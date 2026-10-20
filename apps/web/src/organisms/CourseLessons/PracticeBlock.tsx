@@ -11,6 +11,7 @@ import { PlainText } from "../../molecules/PlainText";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { AdaptiveDialog, Button, TextAreaField, TextField } from "../../ui";
 import { PassageShareNote, ShareButton, type SharePiece } from "../LessonShare/LessonShare";
+import { flushLearningTime, useLearningClaim } from "../../learningTime";
 import styles from "./PracticeBlock.module.css";
 
 // A practice as readers see it: its block ID, the prompts with the authors' versions the answer check needs (never rendered before
@@ -57,7 +58,8 @@ export function usePracticeProgress(scope: PracticeScope, published: boolean) {
     const known = practice.progress.answered;
     if (known === null ? answered === 0 : answered <= known) return;
     const path = blockPath({ accountId, groupId, courseId, lessonId }, practice.id);
-    void apiRequest(`${path}/progress`, practiceProgressResponseSchema, { method: "PUT", body: JSON.stringify({ answered }) })
+    // The time in the practice is sent first, so a save that finishes it keeps that time for the practice's typical time (C15).
+    void flushLearningTime().then(() => apiRequest(`${path}/progress`, practiceProgressResponseSchema, { method: "PUT", body: JSON.stringify({ answered }) }))
       // The course page counts done practices and the last practice time from the course progress.
       .then(() => Promise.all([lessonQueryOptions(groupId, courseId, lessonId), courseProgressQueryOptions(groupId, courseId)]
         .map(({ queryKey }) => queryClient.invalidateQueries({ queryKey }))), () => undefined);
@@ -223,7 +225,7 @@ export function PracticeSummary({ scope, block, published, archived = false, doc
     <AdaptiveDialog opened={answering} onClose={close} title={t("courses.practice.dialogTitle")} dock={dock}>
       {answering && <div className={styles.dialogBody}>
         <PracticeContent block={block} prompts={false} />
-        <AnswerSetComposer scope={scope} block={block} recordAttempts={published && !archived} onDone={close} />
+        <AnswerSetComposer scope={scope} block={block} recordAttempts={published && !archived} timed={published} onDone={close} />
       </div>}
     </AdaptiveDialog>
   </div>;
@@ -233,9 +235,13 @@ export function PracticeSummary({ scope, block, published, archived = false, doc
 // blank) closes the dialog, which saves the answered count. The dialog opens on the first unanswered question; a matching answer
 // (or Enter where there is nothing to check) moves focus to the next question's field, and from the last question to Done.
 // The position bar follows the focused question and stays below the dialog's header while the answer set scrolls. With
-// `recordAttempts` (a published practice outside an archived course) each answer check is recorded as a practice attempt.
-export function AnswerSetComposer({ scope, block, recordAttempts = false, onDone }: { scope: PracticeScope; block: Practice; recordAttempts?: boolean; onDone: () => void }) {
+// `recordAttempts` (a published practice outside an archived course) each answer check is recorded as a practice attempt. With
+// `timed` (a published practice) the open answer set runs the practice's learning time clock (C15).
+export function AnswerSetComposer({ scope, block, recordAttempts = false, timed = false, onDone }: {
+  scope: PracticeScope; block: Practice; recordAttempts?: boolean; timed?: boolean; onDone: () => void;
+}) {
   const { t } = useTranslation();
+  useLearningClaim(timed ? { groupId: scope.groupId, target: () => ({ activity: "practice", courseId: scope.courseId, lessonId: scope.lessonId, practiceId: block.id }) } : null);
   const recordAttempt = usePracticeAttempt(scope, recordAttempts);
   const key = practiceDraftKey(scope.accountId, scope.groupId, "practice-answer", block.id);
   const questions = block.payload.items;

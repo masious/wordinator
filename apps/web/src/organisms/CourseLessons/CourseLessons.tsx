@@ -26,7 +26,8 @@ import { LessonResetAction } from "./CourseProgress";
 import { LessonActions } from "./LessonActions";
 import { lessonSteps, playableDocument } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
-import { LessonReadingProgress, type ReadingTracking, useResumeScroll } from "./LessonReadingProgress";
+import { LessonReadingProgress, type ReadingTracking, saveLessonPosition, useResumeScroll } from "./LessonReadingProgress";
+import { useReadingTime } from "./LessonTime";
 import { LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN, stickyInset } from "./LessonIndex";
 import { LessonBox, type LessonBoxLesson } from "./LessonBox";
 import { LessonWords, useVisibleWords, useWordsCollapsed } from "./LessonWords";
@@ -62,9 +63,12 @@ function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" 
 // vocabulary panel, where the words of the blocks on screen are highlighted, in the right rail. Below 62em the panel sits under the
 // text; phones get a lesson action bar whose Contents opens the rail drawer and whose Words opens the panel as a bottom sheet.
 // `aiPractices`, once expanded and read, places the lesson's AI practices after their anchor blocks and at the end.
-function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, box }: {
+// `gate` shows only the lesson's beginning, faded, behind Start reading this lesson (docs/courses.md#lesson-pages), with nothing
+// tracked or indexed until it is pressed. `started` is set once it has been pressed, which starts the reading clock at once.
+function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, box, gate, started }: {
   scope: Scope; lesson: CourseLesson; tracking: ReadingTracking; resume: LessonPosition | undefined; archived: boolean;
   aiPractices?: { scope: AiPracticeScope; data: LessonAiPracticesResponse | undefined }; box: LessonBoxLesson;
+  gate?: () => void; started: boolean;
 }) {
   const { t } = useTranslation();
   const document = playableDocument(lesson);
@@ -75,6 +79,8 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const reading = useRef<HTMLDivElement>(null); const side = useRef<HTMLDivElement>(null);
   const active = useVisibleWords(reading, side, steps);
   useResumeScroll({ steps, reading, position: resume, inset: () => stickyInset(side.current) });
+  // Only published lessons record time; draft previews never do.
+  useReadingTime({ reading, document: lesson.document, enabled: lesson.document !== null && !gate, started, groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id });
   const [wordsCollapsed, toggleWords] = useWordsCollapsed();
   const rail = useRailSlots();
   const phone = useMediaQuery("(max-width: 48em)", undefined, { getInitialValueInEffect: false });
@@ -97,8 +103,8 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const words = (props: { docked?: boolean; collapsible?: boolean }) =>
     <LessonWords steps={steps} active={active} groupId={scope.groupId} collapsed={wordsCollapsed} onToggle={toggleWords} {...props} />;
   return <LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={styles.reader} data-action-bar={phone || undefined}>
-    <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} onPercent={setPercent} />
-    <div ref={reading} className={styles.body}>
+    {!gate && <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} onPercent={setPercent} />}
+    <div ref={reading} className={gate ? `${styles.body} ${styles.gated}` : styles.body}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
       <LessonDocument document={document} anchored vocabulary={false} renderAfterBlock={slots?.afterBlock}
         renderShare={share ? (block) => <ShareButton piece={block.type === "example" ? { kind: "example", block } : { kind: "dialogue", block }}
@@ -107,10 +113,11 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
         <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.practiceProgress)}
           published={lesson.document !== null} archived={archived} dock={docked ? reading : undefined} />} />
       {slots?.end}
+      {gate && <div className={styles.gate}><Button onClick={gate}>{t("courses.lessons.startReading")}</Button></div>}
     </div>
     {docked && rail.reference && createPortal(<div ref={side} className={styles.side}>{words({ docked: true })}</div>, rail.reference)}
     {placement === "under" && <div ref={side} className={styles.under}>{words({})}</div>}
-    {hasIndex && rail.index && createPortal(<LessonIndex entries={entries} reading={reading} side={side} onJump={rail.closeRail} />, rail.index)}
+    {hasIndex && !gate && rail.index && createPortal(<LessonIndex entries={entries} reading={reading} side={side} onJump={rail.closeRail} />, rail.index)}
     {lessonBox}
     {phone && createPortal(<nav className={styles.actionBar} aria-label={t("courses.lessons.actionBar")}>
       <button type="button" className={styles.barButton} onClick={rail.openRail}><ListTree aria-hidden="true" />{t("courses.lessons.contents")}</button>
@@ -332,6 +339,9 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
   const lesson = useQuery({ ...lessonQueryOptions(groupId, courseId, lessonId), initialData: preloaded && { lesson: preloaded }, initialDataUpdatedAt: dataUpdatedAt, enabled: index >= 0 });
   const progress = useQuery(courseProgressQueryOptions(groupId, courseId));
   const [editing, setEditing] = useState(false);
+  const queryClient = useQueryClient();
+  // Pressing the start gate this visit; the saved position keeps the lesson open whole on later visits.
+  const [started, setStarted] = useState(false);
   // AI practices (C14h) expand on request and are read only then; the choice is not remembered.
   const [aiShown, setAiShown] = useState(false);
   const aiPracticeCount = lesson.data?.lesson.document ? lesson.data.lesson.aiPracticeCount ?? 0 : 0;
@@ -350,6 +360,16 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
   const previous = outline[index - 1]; const next = outline[index + 1];
   const steps = data ? lessonSteps(data) : [];
   const wordCount = new Set(steps.flatMap((step) => step.words.map((word) => word.id))).size;
+  const archived = detail.course.status === "archived";
+  const lessonPath = `${lessonsPath(scope)}/${encodeURIComponent(lessonId)}`;
+  // A published lesson the viewer has neither started nor finished opens behind the start gate, once their progress is known.
+  // Archived courses refuse positions, so nothing would record the start and they open whole.
+  const gated = !started && !editing && Boolean(data?.published && data.document) && !archived && progress.isSuccess && !completed && !saved;
+  const start = () => {
+    setStarted(true);
+    // The first step becomes the viewer's position, so the lesson is in progress.
+    if (steps[0]) void saveLessonPosition(queryClient, { path: lessonPath, groupId, courseId }, steps[0]);
+  };
   const lessonLink = (target: CourseLessonSummary) => ({ to: "/courses/$courseSlug/lessons/$lessonSlug" as const, params: { courseSlug: detail.course.slug, lessonSlug: target.slug } });
   return <article className={styles.page} aria-labelledby="lesson-title">
     {/* The lesson's cover: its first image, as on the course page's lesson list; decorative beside the title. */}
@@ -381,22 +401,22 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
         </div>}
       </div>}
     </header>
-    {aiPracticeCount > 0 && !editing && <AiPracticeToggle count={aiPracticeCount} shown={aiOpen} onToggle={() => setAiShown((shown) => !shown)}
+    {aiPracticeCount > 0 && !editing && !gated && <AiPracticeToggle count={aiPracticeCount} shown={aiOpen} onToggle={() => setAiShown((shown) => !shown)}
       state={aiPractices.isError ? "error" : aiPractices.isSuccess ? "success" : "pending"} onRetry={() => void aiPractices.refetch()} />}
     {lesson.isPending ? <LoadingState label={t("courses.lessons.loading")} />
       : lesson.isError || !data ? <ErrorState title={t("courses.lessons.unavailable")} />
       : editing ? <Suspense fallback={<LoadingState label={t("courses.editor.loading")} />}>
         <LessonEditor groupId={groupId} courseId={courseId} accountId={accountId} owner={scope.owner} lesson={data} onClose={() => setEditing(false)} />
       </Suspense>
-      : <LessonBody scope={scope} lesson={data} resume={resume ? saved : undefined} archived={detail.course.status === "archived"}
+      : <LessonBody scope={scope} lesson={data} resume={resume ? saved : undefined} archived={archived} gate={gated ? start : undefined} started={started}
         box={{ groupId, courseId, courseTitle: detail.course.title, lessonId, title: current.title, number }}
         aiPractices={aiOpen ? { scope: aiScope, data: aiPractices.data } : undefined} tracking={{
         // Scrolling saves the furthest step of a published lesson the viewer has not finished; previews and archived courses never save.
-        save: data.published && data.document !== null && !completed && detail.course.status !== "archived" && progress.isSuccess,
-        completed, position, path: `${lessonsPath(scope)}/${encodeURIComponent(lessonId)}`, groupId, courseId, lessonId,
+        save: data.published && data.document !== null && !completed && !archived && progress.isSuccess,
+        completed, position, path: lessonPath, groupId, courseId, lessonId,
       }} />}
     {/* The pager: Previous, the next lesson's title under Up next, and Next lesson. The links' names carry the titles. */}
-    {(previous || next) && <nav className={styles.pager} aria-label={t("courses.lessons.pager")}>
+    {(previous || next) && !gated && <nav className={styles.pager} aria-label={t("courses.lessons.pager")}>
       {previous ? <Link className={styles.previous} {...lessonLink(previous)} aria-label={t("courses.lessons.previous", { title: previous.title })}>
         <ArrowLeft aria-hidden="true" />{t("courses.lessons.previousShort")}
       </Link> : <span />}

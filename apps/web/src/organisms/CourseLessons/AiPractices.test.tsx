@@ -41,9 +41,9 @@ const lesson = (aiPracticeCount: number, { published = true } = {}): CourseLesso
   aiPracticeCount,
 });
 const practices: LessonAiPractice[] = [
-  { id: practiceId(1), kind: "choice", afterBlockId: block(1), view: { kind: "choice", question: "What does huis mean?", options: ["house", "tree"] }, createdAt: 1 },
-  { id: practiceId(2), kind: "dictation", afterBlockId: block(2), view: { kind: "dictation", translation: null }, createdAt: 2 },
-  { id: practiceId(3), kind: "fill_in", afterBlockId: null, view: { kind: "fill_in", prompt: "Ik … hier.", blanks: 1, translation: null }, createdAt: 3 },
+  { id: practiceId(1), kind: "choice", focus: "vocabulary", afterBlockId: block(1), view: { kind: "choice", question: "What does huis mean?", options: ["house", "tree"] }, createdAt: 1 },
+  { id: practiceId(2), kind: "dictation", focus: "listening", afterBlockId: block(2), view: { kind: "dictation", translation: null }, createdAt: 2 },
+  { id: practiceId(3), kind: "fill_in", focus: "grammar", afterBlockId: null, view: { kind: "fill_in", prompt: "Ik … hier.", blanks: 1, translation: null }, createdAt: 3 },
 ];
 
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
@@ -76,7 +76,8 @@ beforeEach(() => {
     if (path.endsWith("/answer")) return response({ grade: { correct: true, matched: true, verdict: null, note: null, reference: "house", items: [], score: null }, recorded: true });
     if (path.endsWith("/speech")) return response({ url: "https://media.test/dictation.mp3" });
     if (path.startsWith(base) && method === "DELETE") { listed = listed.filter((entry) => !path.endsWith(entry.id)); return response({ ok: true }); }
-    if (path.endsWith("/progress")) return response({ publishedLessons: 1, completedLessonIds: [], positions: [], practices: {}, participants: [] });
+    // A started lesson, so the page opens whole rather than behind the start gate.
+    if (path.endsWith("/progress")) return response({ publishedLessons: 1, completedLessonIds: [], positions: [{ lessonId, stepKey: block(1), stepIndex: 0, passedSteps: 0, totalSteps: 3, updatedAt: 1 }], practices: {}, participants: [] });
     return response({ ok: true });
   }));
 });

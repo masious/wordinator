@@ -14,9 +14,12 @@ import "./index.css";
 import { router } from "./router";
 import { theme } from "./theme";
 import { queryClient } from "./query";
+import { learningTimeSender } from "./api";
+import { configureLearningClock } from "./learningTime";
 import { COLOR_SCHEME_STORAGE_KEY, ThemeRuntimeSync } from "./colorScheme";
 
 registerSW({ immediate: true });
+configureLearningClock(learningTimeSender(queryClient));
 const colorSchemeManager = localStorageColorSchemeManager({ key: COLOR_SCHEME_STORAGE_KEY });
 
 createRoot(document.getElementById("root")!).render(

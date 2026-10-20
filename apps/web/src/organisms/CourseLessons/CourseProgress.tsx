@@ -71,6 +71,7 @@ export function ResetLessonDialog({ title, opened, pending, error, onConfirm, on
       <li>{t("courses.reset.position")}</li>
       <li>{t("courses.reset.practices")}</li>
       <li>{t("courses.reset.reviews")}</li>
+      <li>{t("courses.reset.time")}</li>
       <li>{t("courses.reset.pronunciation")}</li>
       <li>{t("courses.reset.bookmarks")}</li>
     </ul>
