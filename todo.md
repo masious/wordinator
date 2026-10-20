@@ -1,13 +1,12 @@
 this file isn't meant for agents. don't read it if you're an agent.
 
 
-[ ] words drill: practice with space
 [x] drill results: gamify results page
-[ ] drill results: practice failed words with ai session in drill's results page
 [x] reset progress of lesson, should reset word fluency
 [x] remove contribution section from course, as well as author's name from course and lessons everywhere
 [ ] measure reading time
 [ ] remove group-related tech-debts
+[ ] words drill: practice with space
 
 
 Lesson Page
@@ -31,19 +30,16 @@ AI
 [ ] index grammar topics for look-up
 [ ] practice for twenty minutes with timer
 [ ] summery of conversations and need for dispatching summerization events
+[ ] drill results: practice failed words with ai session in drill's results page
+
+
 
 [x] user can fix his mistakes after seeing author's version when hits enter on a question. are we storing those mistakes too?
 [x] "Pick up where you left off" should have multiple progresses for each lesson. also, for a lesson, undone practices mean incomplete progress.
 [x] ai should also see a fluency level on a topic so that it can decide on moving on to the next sections or continuing with the existing ones.
 [x] if all existing practices of a topic/concept was done recently by the user, ai should gravitate toward generating new excersises.
-
 [~] redesign: mobile-friendly
-
 [x] hide wordpanel and highlight with hovercard
-[ ] speech: Daan is female and sofia male! voices are not interactive and excited! no background noise
-[ ] voice for reading practices
-[ ] add Jev: confidence in user's answer's correction
-
 [x] remove members' tabs
 [x] fix failing tests
 [x] split e2e into different batches

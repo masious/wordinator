@@ -15,6 +15,13 @@ import styles from "./DrillResults.module.css";
 export type FinishedDrill = { durationMs: number; pronunciation: number | null; previous: LastDrill | null };
 
 const TIER_ICONS = { perfect: Trophy, good: Medal, keepGoing: Sprout } as const;
+
+// A perfect run's confetti: pieces burst from the medal along fixed angles and distances, so the burst is the same every time.
+const CONFETTI = Array.from({ length: 18 }, (_, index) => {
+  const angle = (index / 18) * 2 * Math.PI + (index % 2 ? 0.2 : -0.1);
+  const distance = 90 + (index % 3) * 34;
+  return { "--dx": `${Math.round(Math.cos(angle) * distance * 1.6)}px`, "--dy": `${Math.round(Math.sin(angle) * distance)}px`, "--spin": `${(index % 2 ? 1 : -1) * (180 + index * 25)}deg`, "--delay": `${(index % 4) * 40}ms` } as CSSProperties;
+});
 const band = (score: number) => score >= SCORE_GOOD ? "good" : score >= SCORE_FAIR ? "fair" : "weak";
 
 // The session's pronunciation score as a bar, with the change since the last session when both were assessed.
@@ -89,9 +96,12 @@ export function DrillResults({ groupId, cards, first, finished, failure, onAgain
   const duration = drillDuration(finished.durationMs);
   const again = cards.filter((_card, index) => first.get(index) === "again");
   return <Surface className={styles.results}>
-    <section aria-labelledby={labelId} className={styles.body}>
+    <section aria-labelledby={labelId} className={styles.body} data-tier={tier}>
       <div className={styles.hero}>
-        <span className={styles.medal} data-tier={tier}><Icon aria-hidden="true" size={32} strokeWidth={1.75} /></span>
+        <span className={styles.medalWrap}>
+          {tier === "perfect" && <span className={styles.confetti} aria-hidden="true">{CONFETTI.map((style, index) => <i key={index} style={style} />)}</span>}
+          <span className={styles.medal}><Icon aria-hidden="true" size={32} strokeWidth={1.75} /></span>
+        </span>
         <p id={labelId} className={styles.eyebrow}>{t("drill.summary.title")}</p>
         <h2 className={styles.title}>{t(`drill.results.tier.${tier}.title`)}</h2>
         <p className={styles.intro}>{t(`drill.results.tier.${tier}.body`)}</p>
