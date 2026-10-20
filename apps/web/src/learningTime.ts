@@ -130,9 +130,13 @@ export function configureLearningClock(send: Send) { sendTime = send; }
 /** Sends what the clock has, for flows whose next request reads the time (finishing a practice). */
 export const flushLearningTime = () => learningClock().flush();
 
-/** Runs a claim while `claim` is not null. The claim's target is read through a ref, so a new object each render is fine. */
+/**
+ * Runs a claim while `claim` is not null. The claim's target is read through a ref, so a new object each render is fine. The ref
+ * keeps the last claim until the effect ends it: a display settling the clock during the render that drops the claim (the rail's
+ * study time) still counts those seconds towards it.
+ */
 export function useLearningClaim(claim: TimeClaim | null) {
-  const latest = useRef(claim); latest.current = claim;
+  const latest = useRef(claim); if (claim) latest.current = claim;
   const on = claim !== null; const groupId = claim?.groupId;
   useEffect(() => {
     if (!on || !groupId) return;

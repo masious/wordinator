@@ -1,5 +1,6 @@
 import { MantineProvider } from "@mantine/core";
 import { LESSON_DOCUMENT_SCHEMA_VERSION, type CourseDetailResponse, type CourseLesson, type LessonDocument, type LessonTopBlock } from "@wordinator/contracts/lesson-document";
+import { localDayOf } from "@wordinator/contracts/learning";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryHistory, createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
@@ -273,16 +274,50 @@ describe("Course lessons", () => {
     // Ask AI opens a new tutor conversation prefilled to talk the lesson's grammar and topics through.
     expect(prompt("Ask AI")).toMatch(/^Let’s talk about lesson 1, “Lesson title 1”.*grammar and its topics/);
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/metrics`, expect.anything()));
-    expect(within(box).queryByText("Fluency")).not.toBeInTheDocument();
+    // Before the viewer studies the lesson, the Lesson tab says its figures are still to come.
+    expect(await within(box).findByText("Your figures for this lesson show up once you study it.")).toBeInTheDocument();
+    expect(within(box).queryByText("Words remembered well")).not.toBeInTheDocument();
     cleanup(); document.body.replaceChildren();
     metrics = { pronunciation: { attempts: 3, fluency: 74 }, words: { total: 2, practised: 2, strong: 1 }, lastStudiedAt: Date.now() - 2 * 86_400_000, time: noTime };
     renderInRails(detail);
     const filled = await screen.findByRole("region", { name: "This lesson" });
-    expect(await within(filled).findByText("Fluency")).toBeInTheDocument();
-    expect(within(filled).getByText("74 / 100")).toBeInTheDocument();
+    expect(await within(filled).findByText("74 / 100")).toBeInTheDocument();
     expect(within(filled).getByText("3 spoken attempts")).toBeInTheDocument();
     expect(within(filled).getByText("Words remembered well").nextElementSibling).toHaveTextContent("1 of 2");
     expect(within(filled).getByText("Last studied").nextElementSibling).toHaveTextContent("2 days ago");
+  });
+
+  it("switches the lesson box between the lesson's figures and today's and this week's study time, and remembers the choice", async () => {
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    const metrics = { pronunciation: { attempts: 0, fluency: null }, words: { total: 2, practised: 2, strong: 1 }, lastStudiedAt: null, time: noTime };
+    const zero = { lesson: 0, grammar: 0, practice: 0, vocabulary: 0, aiPractice: 0, total: 0, aiPracticeFocus: { grammar: 0, vocabulary: 0, reading: 0, listening: 0, writing: 0 } };
+    const today = localDayOf(new Date());
+    const activity = { range: "week", from: "2026-01-01", to: today, previousTotal: 0, dailyGoalMinutes: 30, streak: 2,
+      days: [{ ...zero, day: "2026-01-01", lesson: 600, total: 600 }, { ...zero, day: today, lesson: 300, vocabulary: 240, total: 540 }],
+      totals: { ...zero, lesson: 900, vocabulary: 240, total: 1140 } };
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/metrics") ? response(metrics)
+      : String(input).includes("/learning-activity?range=week") ? response(activity) : original(input, init));
+    const detail = { course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000011", "De hond blaft.")])] };
+    renderInRails(detail);
+    const box = await screen.findByRole("region", { name: "This lesson" });
+    expect(await within(box).findByText("Words remembered well")).toBeInTheDocument();
+    fireEvent.click(within(box).getByText("Today"));
+    expect(await within(box).findByText("Lesson reading")).toBeInTheDocument();
+    expect(within(box).getByText("Lesson reading").nextElementSibling).toHaveTextContent("5 min");
+    expect(within(box).getByText("Vocabulary").nextElementSibling).toHaveTextContent("4 min");
+    expect(within(box).getByText("Total").nextElementSibling).toHaveTextContent("9 min");
+    expect(within(box).queryByText("Grammar")).not.toBeInTheDocument();
+    expect(within(box).getByRole("progressbar", { name: "Today's goal: 9 min of 30 min" })).toBeInTheDocument();
+    fireEvent.click(within(box).getByText("Week"));
+    expect(within(box).getByText("Lesson reading").nextElementSibling).toHaveTextContent("15 min");
+    expect(within(box).getByText("Total").nextElementSibling).toHaveTextContent("19 min");
+    expect(within(box).queryByRole("progressbar", { name: /Today's goal/ })).not.toBeInTheDocument();
+    // The choice is kept on the device for the next lesson page.
+    cleanup(); document.body.replaceChildren();
+    renderInRails(detail);
+    const again = await screen.findByRole("region", { name: "This lesson" });
+    expect(await within(again).findByText("Total")).toBeInTheDocument();
+    expect(within(again).getByText("Total").nextElementSibling).toHaveTextContent("19 min");
   });
 
   it("shows the viewer's reading and practice time with the lesson's typical times", async () => {

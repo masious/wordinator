@@ -1,7 +1,8 @@
 import { accountSettingsResponseSchema, apiErrorSchema, courseContributorsResponseSchema, courseRefResponseSchema, courseSpeechCastResponseSchema, coursePageSchema, courseProgressResponseSchema, discussionResponseSchema, lessonProgressResponseSchema, groupShellResponseSchema, invitationResponseSchema, memberDirectoryResponseSchema, membershipAdminResponseSchema, notificationPageSchema, postPageSchema, postResponseSchema, profileResponseSchema, restrictedNotificationPageSchema, sessionResponseSchema, speechRecognitionTokenResponseSchema, type SpeechRecognitionTokenResponse } from "@wordinator/contracts";
 import { courseDetailResponseSchema, courseWordsResponseSchema, lessonResponseSchema, wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema, wordDrillDeckSchema, wordSearchPageSchema, type WordDrillMode, type WordDrillSource } from "@wordinator/contracts/lesson-document";
 import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConversationResponseSchema, tutorMessagePageSchema, tutorModelsResponseSchema, tutorProfileResponseSchema, tutorUsageResponseSchema } from "@wordinator/contracts/tutor";
-import { courseDashboardResponseSchema, learningActivityResponseSchema, learningGoalSchema, lessonMetricsResponseSchema, type LearningActivityRange, type LearningTimeEntry } from "@wordinator/contracts/learning";
+import { courseDashboardResponseSchema, learningActivityResponseSchema, learningGoalSchema, lessonMetricsResponseSchema, type LearningActivityRange, type LearningActivityResponse, type LearningTimeEntry } from "@wordinator/contracts/learning";
+import { withSentTime } from "./learningActivity";
 import { weakWordsPageSchema } from "@wordinator/contracts/weak-words";
 import { infiniteQueryOptions, queryOptions, type QueryClient } from "@tanstack/react-query";
 
@@ -241,7 +242,9 @@ export const lessonMetricsQueryOptions = (groupId: string, courseId: string, les
 });
 
 // Sends learning time (C15, docs/learning-time.md#sending-time) with `keepalive`, so a send from a closing page still arrives, then
-// moves the sent seconds into the cached lesson metrics so the lesson box does not dip until its next read.
+// moves the sent seconds into the cached lesson metrics and activity reads so the lesson box and the rail's study time do not dip
+// until their next read.
+const learningActivityKey = (groupId: string) => ["learning", "activity", groupId] as const;
 export const learningTimeSender = (client: QueryClient) => async (groupId: string, day: string, entries: LearningTimeEntry[]) => {
   const response = await fetch(`/api/groups/${encodeURIComponent(groupId)}/learning-time`, {
     method: "POST", keepalive: true, headers: { "content-type": "application/json" }, body: JSON.stringify({ day, entries }),
@@ -253,6 +256,7 @@ export const learningTimeSender = (client: QueryClient) => async (groupId: strin
     client.setQueryData(lessonMetricsQueryOptions(groupId, entry.courseId, entry.lessonId).queryKey,
       (data) => data && { ...data, time: { ...data.time, [field]: data.time[field] + entry.seconds } });
   }
+  client.setQueriesData<LearningActivityResponse>({ queryKey: learningActivityKey(groupId) }, (data) => data && withSentTime(data, day, entries));
 };
 
 export const lessonAiPracticesQueryOptions = (groupId: string, courseId: string, lessonId: string) => queryOptions({
@@ -324,10 +328,11 @@ export const tutorProfileQueryOptions = () => queryOptions({
   retry: false,
 });
 
-// The learner's activity for the week or month ending on `end` (their local today), on the home dashboard (C15e,
-// docs/learning-time.md#home-dashboard). Each range is its own query; the previous day window is shown while a new one loads.
+// The learner's activity for the week or month ending on `end` (their local today), on the home dashboard and, for the week, in the
+// rail's study time (docs/learning-time.md#home-dashboard, #study-time). Each range is its own query; the previous day window is
+// shown while a new one loads.
 export const learningActivityQueryOptions = (groupId: string, range: LearningActivityRange, end: string) => queryOptions({
-  queryKey: ["learning", "activity", groupId, range, end] as const,
+  queryKey: [...learningActivityKey(groupId), range, end] as const,
   queryFn: () => apiRequest(`/api/groups/${encodeURIComponent(groupId)}/learning-activity?range=${range}&end=${end}`, learningActivityResponseSchema),
   retry: false,
 });

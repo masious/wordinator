@@ -8,6 +8,7 @@ import { createContext, useCallback, useContext, useEffect, useId, useMemo, useR
 import { useTranslation } from "react-i18next";
 import { apiRequest, coursesQueryOptions } from "../../api";
 import { Avatar } from "../../ui";
+import { StudyTimeBox } from "../StudyTime/StudyTime";
 import type { SignedInSession } from "../types/auth";
 import styles from "./GroupFrame.module.css";
 
@@ -235,7 +236,8 @@ function Rail({ groupId, session, pathname, slots }: { groupId: string; session:
   };
   // On a lesson page with the course list expanded, Courses becomes the rail's heading and the other items shrink to one row of
   // icons above the lesson box, leaving the height to the course list and the lesson index.
-  const compact = !collapsed && /^\/courses\/[^/]+\/lessons\//.test(pathname);
+  const lessonPage = /^\/courses\/[^/]+\/lessons\//.test(pathname);
+  const compact = !collapsed && lessonPage;
   const others: Array<{ to: NavTarget; active: boolean; icon: ReactNode; label: string }> = [
     { to: "/words", active: starts("/words"), icon: <Bookmark />, label: t("nav.words") },
     { to: "/journal", active: starts("/journal"), icon: <NotebookPen />, label: t("nav.journal") },
@@ -256,6 +258,8 @@ function Rail({ groupId, session, pathname, slots }: { groupId: string; session:
       {others.map((item) => <NavIcon key={item.to} {...item} />)}
     </nav>}
     {slots && <div ref={slots.box} className={styles.boxSlot} />}
+    {/* Elsewhere the rail's study time takes the lesson box's place; the course library's home dashboard already shows it. */}
+    {slots && !lessonPage && pathname !== "/courses" && <div className={styles.boxSlot}><StudyTimeBox groupId={groupId} /></div>}
     <div className={styles.profile}>
       <Avatar name={user.displayName} src={user.avatarUrl} tone="soft" />
       <div className={styles.profileText}>

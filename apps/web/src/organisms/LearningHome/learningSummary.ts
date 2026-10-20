@@ -1,10 +1,11 @@
-import type { LearningActivityDay, TimeCategories } from "@wordinator/contracts/learning";
+import type { LearningActivityDay } from "@wordinator/contracts/learning";
 import type { TFunction } from "i18next";
+import type { ActivityCategory } from "../../learningActivity";
 
 // Pure helpers for the home dashboard (C15e, docs/learning-time.md#home-dashboard): the day's share of the goal, the change against
 // the previous period, and the durations the cards show. Colours live in the stylesheet, as design tokens.
 
-export type ActivityCategory = Exclude<keyof TimeCategories, "total">;
+export type { ActivityCategory };
 // The stacking order of a day's bar, from the bottom up, and the legend's order.
 export const ACTIVITY_CATEGORIES: readonly ActivityCategory[] = ["lesson", "grammar", "practice", "vocabulary", "aiPractice"];
 

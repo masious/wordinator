@@ -439,7 +439,8 @@ export const resources = {
           minutes: "{{count}} min",
           underMinute: "Under a minute",
           typical_one: "Typically {{time}} · {{count}} learner",
-          typical_other: "Typically {{time}} · {{count}} learners"
+          typical_other: "Typically {{time}} · {{count}} learners",
+          notStudied: "Your figures for this lesson show up once you study it."
         },
         lessons: {
           startReading: "Start reading this lesson",
@@ -1674,6 +1675,18 @@ export const resources = {
           legend: "Categories"
         },
         categories: { lesson: "Lesson reading", grammar: "Grammar", practice: "Practice", vocabulary: "Vocabulary", aiPractice: "AI practice" }
+      },
+      studyTime: {
+        title: "Study time",
+        period: "Study time period",
+        periods: { lesson: "Lesson", today: "Today", week: "This week", weekShort: "Week" },
+        total: "Total",
+        underMinute: "< 1 min",
+        goal: "Today's goal: {{time}} of {{goal}}",
+        emptyToday: "No study time yet today.",
+        emptyWeek: "No study time in the past seven days.",
+        loading: "Loading your study time",
+        unavailable: "Your study time could not be loaded."
       },
       studyGoal: {
         title: "Study goal",

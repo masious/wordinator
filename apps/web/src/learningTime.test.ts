@@ -1,6 +1,7 @@
+import { renderHook } from "@testing-library/react";
 import type { LearningTimeEntry } from "@wordinator/contracts/learning";
 import { describe, expect, it, vi } from "vitest";
-import { IDLE_MS, LearningClock, type TimeTarget } from "./learningTime";
+import { IDLE_MS, LearningClock, learningClock, useLearningClaim, type TimeClaim, type TimeTarget } from "./learningTime";
 
 // The learning time clock (docs/learning-time.md#the-clock): idle cut-off, pauses, the claim on top, day splitting, and sending.
 const groupId = "g"; const courseId = "c"; const lessonId = "l";
@@ -100,5 +101,22 @@ describe("LearningClock", () => {
     s.advance(60_000); s.clock.interact();
     await s.clock.flush();
     expect(s.send).not.toHaveBeenCalled();
+  });
+});
+
+describe("useLearningClaim", () => {
+  it("keeps the dropped claim's target until its effect ends it, so settling the clock in that render does not fail", () => {
+    // The shared clock counts only in a focused, visible window, and only once time has passed.
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.spyOn(document, "hasFocus").mockReturnValue(true);
+    const { rerender, unmount } = renderHook(({ claim }: { claim: TimeClaim | null }) => {
+      useLearningClaim(claim);
+      return learningClock().pendingSeconds(() => true);
+    }, { initialProps: { claim: { groupId, target: () => reading } as TimeClaim | null } });
+    vi.setSystemTime(Date.now() + 5_000);
+    expect(() => rerender({ claim: null })).not.toThrow();
+    expect(learningClock().running).toBe(false);
+    unmount();
+    vi.restoreAllMocks(); vi.useRealTimers();
   });
 });
