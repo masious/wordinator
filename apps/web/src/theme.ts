@@ -174,7 +174,8 @@ export const theme = createTheme({
       styles: { tooltip: { color: "var(--color-inverse-text)", fontSize: "var(--text-xs)", fontWeight: "var(--weight-semibold)" } },
     }),
     // The switcher look (a paper track, the active option on ink) lives in index.css so modules can still adjust it.
-    SegmentedControl: SegmentedControl.extend({ defaultProps: { radius: "sm", size: "sm" } }),
+    // No separator lines between options: the track's border is the only line.
+    SegmentedControl: SegmentedControl.extend({ defaultProps: { radius: "md", size: "sm", withItemsBorders: false } }),
     Badge: Badge.extend({
       defaultProps: { color: "accent", radius: "xl", variant: "filled" },
       styles: { root: { color: "var(--color-action-text)", fontFamily: "var(--font-sans)", fontSize: "var(--type-badge)" } },

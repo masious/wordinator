@@ -323,6 +323,8 @@
   /* Focus ring: one accent outline everywhere. */
   --focus-ring-width: 0.18rem;
   --focus-ring-offset: 0.15rem;
+  /* A compact switcher's options (size="xs"): one step under --control-height-sm. */
+  --control-height-xs: 26px;
   --control-height-sm: 32px;
   --control-height: 40px;
   --control-height-lg: 48px;

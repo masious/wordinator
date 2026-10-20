@@ -1,10 +1,11 @@
 import type { LearningActivityDay, LearningActivityRange, LearningActivityResponse } from "@wordinator/contracts/learning";
+import { SegmentedControl } from "@mantine/core";
 import { useTranslation } from "react-i18next";
-import { Button, ButtonGroup, Surface } from "../../ui";
+import { Surface } from "../../ui";
 import { ACTIVITY_CATEGORIES, barScale, periodChange, studyTime } from "./learningSummary";
 import styles from "./ActivityCard.module.css";
 
-// The Activity card (docs/learning-time.md#home-dashboard): the period's total and its change, a Week / Month switch, one stacked bar
+// The Activity card (docs/learning-time.md#home-dashboard): the period's total and its change, a compact Week / Month switcher, one stacked bar
 // per local day with today highlighted, and a category legend. Each day is focusable; focus or hover shows its categories.
 export function ActivityCard({ data, today, range, onRange, lang }: {
   data: LearningActivityResponse; today: string; range: LearningActivityRange; onRange: (range: LearningActivityRange) => void; lang: string;
@@ -24,10 +25,10 @@ export function ActivityCard({ data, today, range, onRange, lang }: {
   return <Surface className={styles.card}>
     <header className={styles.head}>
       <h2>{t("learningHome.activity.title")}</h2>
-      <ButtonGroup label={t("learningHome.activity.range")}>
-        <Button variant={range === "week" ? "secondary" : "quiet"} aria-pressed={range === "week"} onClick={() => onRange("week")}>{t("learningHome.activity.week")}</Button>
-        <Button variant={range === "month" ? "secondary" : "quiet"} aria-pressed={range === "month"} onClick={() => onRange("month")}>{t("learningHome.activity.month")}</Button>
-      </ButtonGroup>
+      <div role="group" aria-label={t("learningHome.activity.range")}>
+        <SegmentedControl size="xs" value={range} onChange={(next) => onRange(next === "month" ? "month" : "week")}
+          data={[{ value: "week", label: t("learningHome.activity.week") }, { value: "month", label: t("learningHome.activity.month") }]} />
+      </div>
     </header>
     <div className={styles.summary}>
       <p className={styles.total}>{studyTime(t, totals.total)}</p>

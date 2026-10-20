@@ -1,8 +1,8 @@
 /* Lessons | Progress: a Lumen switcher, a paper track with a line border whose selected tab sits on ink. */
 .tabs{display:flex;gap:var(--space-1);padding:var(--space-1);width:fit-content;max-width:100%;background:var(--color-surface-raised);border:var(--ring-hairline);border-radius:var(--radius-md)}
-.tabs a{display:inline-flex;align-items:center;min-height:var(--control-height-sm);padding:0 var(--space-4);border-radius:var(--radius-sm);color:var(--color-foreground-muted);font-size:var(--type-control-label);font-weight:var(--weight-semibold);text-decoration:none;transition:background-color var(--motion-standard) var(--ease-out),color var(--motion-standard) var(--ease-out)}
+.tabs a{display:inline-flex;align-items:center;min-height:var(--control-height-sm);padding:0 var(--space-4);border-radius:var(--radius-sm);color:var(--color-foreground-muted);font-size:var(--type-control-label);font-weight:var(--weight-bold);text-decoration:none;transition:background-color var(--motion-standard) var(--ease-out),color var(--motion-standard) var(--ease-out)}
 .tabs a:hover{color:var(--color-foreground)}
-.tabs a[aria-selected="true"]{background:var(--color-inverse-surface);color:var(--color-inverse-text)}
+.tabs a[aria-selected="true"]{background:var(--color-inverse-surface);color:var(--color-inverse-text);box-shadow:var(--shadow-card)}
 .tabs a:focus-visible{outline:var(--focus-ring-width) solid var(--color-action);outline-offset:var(--focus-ring-offset)}
 .panel{display:grid;gap:var(--space-4);min-width:0}
 .courseLine{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-3);margin:0;font-size:var(--text-sm)}

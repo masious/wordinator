@@ -106,14 +106,14 @@ describe("Home dashboard", () => {
 
   it("switches the activity range, asking for the month ending today", async () => {
     renderHome();
-    const week = await screen.findByRole("button", { name: "Week" });
-    expect(week).toHaveAttribute("aria-pressed", "true");
-    fireEvent.click(screen.getByRole("button", { name: "Month" }));
+    const week = await screen.findByRole("radio", { name: "Week" });
+    expect(week).toBeChecked();
+    fireEvent.click(screen.getByRole("radio", { name: "Month" }));
     const end = localDayOf(new Date());
     await waitFor(() => expect(activityRequests).toContain(`/api/groups/${groupId}/learning-activity?range=month&end=${end}`));
-    expect(screen.getByRole("button", { name: "Month" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("radio", { name: "Month" })).toBeChecked();
     expect(activityRequests[0]).toBe(`/api/groups/${groupId}/learning-activity?range=week&end=${end}`);
-    expect(screen.getByRole("button", { name: "Week" })).toHaveAttribute("aria-pressed", "false");
+    expect(screen.getByRole("radio", { name: "Week" })).not.toBeChecked();
   });
 
   it("shows the period total, its change, one bar per day, and the category legend", async () => {
