@@ -78,6 +78,8 @@ test("Continue opens the lesson page scrolled to a saved step in the middle", as
   await pressStart(page);
   await expect(page.getByRole("main").getByRole("progressbar", { name: "Lesson progress" })).toHaveAttribute("aria-valuenow", "8");
   const saved = page.waitForResponse((response) => response.url().endsWith("/position") && response.request().method() === "PUT");
+  // Over the text: a wheel over the app rail scrolls the rail's navigation, not the page.
+  await page.mouse.move(640, 400);
   await page.mouse.wheel(0, 900);
   const { position } = await (await saved).json() as { position: { stepIndex: number } };
   expect(position.stepIndex).toBeGreaterThan(1);
