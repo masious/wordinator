@@ -440,7 +440,9 @@ export const resources = {
           underMinute: "Under a minute",
           typical_one: "Typically {{time}} · {{count}} learner",
           typical_other: "Typically {{time}} · {{count}} learners",
-          notStudied: "Your figures for this lesson show up once you study it."
+          notStudied: "Your figures for this lesson show up once you study it.",
+          showFigures: "Show study figures",
+          hideFigures: "Hide study figures"
         },
         lessons: {
           startReading: "Start reading this lesson",

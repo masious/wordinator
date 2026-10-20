@@ -274,6 +274,13 @@ describe("Course lessons", () => {
     // Ask AI opens a new tutor conversation prefilled to talk the lesson's grammar and topics through.
     expect(prompt("Ask AI")).toMatch(/^Let’s talk about lesson 1, “Lesson title 1”.*grammar and its topics/);
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/metrics`, expect.anything()));
+    // The figures start hidden (inert, so nothing in them takes focus); the chevron after the percentage opens them.
+    const reveal = within(box).getByRole("button", { name: "Show study figures" });
+    expect(reveal).toHaveAttribute("aria-expanded", "false");
+    expect(document.getElementById(reveal.getAttribute("aria-controls")!)).toHaveAttribute("inert");
+    fireEvent.click(reveal);
+    expect(within(box).getByRole("button", { name: "Hide study figures" })).toHaveAttribute("aria-expanded", "true");
+    expect(document.getElementById(reveal.getAttribute("aria-controls")!)).not.toHaveAttribute("inert");
     // Before the viewer studies the lesson, the Lesson tab says its figures are still to come.
     expect(await within(box).findByText("Your figures for this lesson show up once you study it.")).toBeInTheDocument();
     expect(within(box).queryByText("Words remembered well")).not.toBeInTheDocument();
@@ -281,6 +288,8 @@ describe("Course lessons", () => {
     metrics = { pronunciation: { attempts: 3, fluency: 74 }, words: { total: 2, practised: 2, strong: 1 }, lastStudiedAt: Date.now() - 2 * 86_400_000, time: noTime };
     renderInRails(detail);
     const filled = await screen.findByRole("region", { name: "This lesson" });
+    // Opening is remembered on the device.
+    expect(within(filled).getByRole("button", { name: "Hide study figures" })).toBeInTheDocument();
     expect(await within(filled).findByText("74 / 100")).toBeInTheDocument();
     expect(within(filled).getByText("3 spoken attempts")).toBeInTheDocument();
     expect(within(filled).getByText("Words remembered well").nextElementSibling).toHaveTextContent("1 of 2");
@@ -300,6 +309,7 @@ describe("Course lessons", () => {
     const detail = { course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000011", "De hond blaft.")])] };
     renderInRails(detail);
     const box = await screen.findByRole("region", { name: "This lesson" });
+    fireEvent.click(within(box).getByRole("button", { name: "Show study figures" }));
     expect(await within(box).findByText("Words remembered well")).toBeInTheDocument();
     fireEvent.click(within(box).getByText("Today"));
     expect(await within(box).findByText("Lesson reading")).toBeInTheDocument();
@@ -327,6 +337,7 @@ describe("Course lessons", () => {
     vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/metrics") ? response(metrics) : original(input, init));
     renderInRails({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000011", "De hond blaft.")])] });
     const box = await screen.findByRole("region", { name: "This lesson" });
+    fireEvent.click(within(box).getByRole("button", { name: "Show study figures" }));
     expect(await within(box).findByText("Reading")).toBeInTheDocument();
     expect(within(box).getByText("Reading").nextElementSibling).toHaveTextContent("2 min");
     expect(within(box).getByText("Typically 5 min · 3 learners")).toBeInTheDocument();
