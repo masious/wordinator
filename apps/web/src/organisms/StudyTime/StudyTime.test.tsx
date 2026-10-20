@@ -27,6 +27,7 @@ afterEach(() => { cleanup(); vi.unstubAllGlobals(); });
 describe("StudyTimeBox", () => {
   it("offers Today and This week only, reads the past seven days, and says when a period is empty", async () => {
     vi.mocked(fetch).mockResolvedValue(response(week({}, { grammar: 120, total: 120 })));
+    localStorage.setItem("wordinator:ui:v1:study-figures-open", "1");
     renderBox();
     const box = screen.getByRole("region", { name: "Study time" });
     expect(within(box).queryByText("Lesson")).not.toBeInTheDocument();
@@ -36,6 +37,34 @@ describe("StudyTimeBox", () => {
     expect(within(box).queryByRole("progressbar")).not.toBeInTheDocument();
     fireEvent.click(within(box).getByText("This week"));
     expect(within(box).getByText("Grammar").nextElementSibling).toHaveTextContent("2 min");
+  });
+
+  it("starts closed on a summary row of today, with the goal when there is one, and opens on its chevron", async () => {
+    vi.mocked(fetch).mockResolvedValue(response({ ...week({ lesson: 600, total: 600 }, { grammar: 120, total: 120 }), dailyGoalMinutes: 30 }));
+    renderBox();
+    const box = screen.getByRole("region", { name: "Study time" });
+    expect(await within(box).findByRole("progressbar", { name: "Today · 10 min of 30 min" })).toBeInTheDocument();
+    const chevron = within(box).getByRole("button", { name: "Show study figures" });
+    expect(document.getElementById(chevron.getAttribute("aria-controls")!)).toHaveAttribute("inert");
+    fireEvent.click(chevron);
+    expect(within(box).getByRole("button", { name: "Hide study figures" })).toHaveAttribute("aria-expanded", "true");
+    expect(document.getElementById(chevron.getAttribute("aria-controls")!)).not.toHaveAttribute("inert");
+    // The summary row carries the goal, so the opened figures do not repeat it.
+    expect(within(box).getAllByRole("progressbar")).toHaveLength(1);
+    // The summary stays on today whichever tab is chosen.
+    fireEvent.click(within(box).getByText("This week"));
+    expect(within(box).getByText("Grammar").nextElementSibling).toHaveTextContent("2 min");
+    expect(within(box).getByRole("progressbar", { name: "Today · 10 min of 30 min" })).toBeInTheDocument();
+    // One choice for the card and the lesson box, kept on the device.
+    expect(localStorage.getItem("wordinator:ui:v1:study-figures-open")).toBe("1");
+  });
+
+  it("shows today's time alone without a goal", async () => {
+    vi.mocked(fetch).mockResolvedValue(response(week({})));
+    renderBox();
+    const box = screen.getByRole("region", { name: "Study time" });
+    expect(await within(box).findByText("Today · nothing yet")).toBeInTheDocument();
+    expect(within(box).queryByRole("progressbar")).not.toBeInTheDocument();
   });
 
   it("opens Today where the lesson box was left on Lesson, and reports a failed read", async () => {

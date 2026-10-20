@@ -440,9 +440,7 @@ export const resources = {
           underMinute: "Under a minute",
           typical_one: "Typically {{time}} · {{count}} learner",
           typical_other: "Typically {{time}} · {{count}} learners",
-          notStudied: "Your figures for this lesson show up once you study it.",
-          showFigures: "Show study figures",
-          hideFigures: "Hide study figures"
+          notStudied: "Your figures for this lesson show up once you study it."
         },
         lessons: {
           startReading: "Start reading this lesson",
@@ -1684,6 +1682,11 @@ export const resources = {
         periods: { lesson: "Lesson", today: "Today", week: "This week", weekShort: "Week" },
         total: "Total",
         underMinute: "< 1 min",
+        summary: "Today · {{time}}",
+        summaryGoal: "Today · {{time}} of {{goal}}",
+        nothingYet: "nothing yet",
+        showFigures: "Show study figures",
+        hideFigures: "Hide study figures",
         goal: "Today's goal: {{time}} of {{goal}}",
         emptyToday: "No study time yet today.",
         emptyWeek: "No study time in the past seven days.",

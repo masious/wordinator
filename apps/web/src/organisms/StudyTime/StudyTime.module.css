@@ -1,5 +1,5 @@
 /* The rail's study time: a card like the lesson box, the figure rows it shares with the lesson box, and a quiet note. */
-.box{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-3);padding:var(--space-4);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+.box{--reveal-gap:var(--space-3);display:grid;grid-template-columns:minmax(0,1fr);gap:var(--reveal-gap);padding:var(--space-4);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
 .panel{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-3)}
 /* The switch fits a narrow rail: tight label padding, smaller labels, and an ellipsis rather than overflow. One class deeper than
    the app's switcher rules in index.css. */
@@ -23,3 +23,17 @@
 .slideContent[data-from="right"]{--study-period-from:var(--entry-distance)}
 @keyframes study-period-in{from{opacity:0;transform:translateX(var(--study-period-from))}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){.slide[data-measured]{transition:none}.slideContent[data-from]{animation:none}}
+/* The card's summary row without a goal: today's time, then the chevron, like a progress meter's label row. */
+.summary{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);color:var(--color-foreground-muted);font-size:var(--text-xs);font-weight:var(--weight-semibold);font-variant-numeric:tabular-nums}
+.summary>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* The chevron at the end of the summary row (the lesson box's progress row, or the card's) shows and hides the figures. */
+.disclosure{flex:none;display:grid;place-items:center;width:var(--control-height-sm);height:var(--control-height-sm);margin:calc(var(--space-1) * -1) calc(var(--space-1) * -1) calc(var(--space-1) * -1) 0;padding:0;color:var(--color-foreground-faint);background:transparent;border:0;border-radius:var(--radius-sm);cursor:pointer}
+.disclosure:hover{color:var(--color-action-soft-text);background:var(--color-wash)}
+.disclosure svg{width:1rem;height:1rem;transition:transform var(--motion-standard) var(--ease-physical)}
+.disclosure[aria-expanded="true"] svg{transform:rotate(180deg)}
+/* Closed, the figures take no room (the box's gap, `--reveal-gap`, is cancelled too); opening grows them from zero height and
+   fades them in, under a hairline. */
+.reveal{display:grid;grid-template-rows:0fr;margin-top:calc(var(--reveal-gap) * -1);opacity:0;transition:grid-template-rows var(--motion-standard) var(--ease-physical),margin-top var(--motion-standard) var(--ease-physical),opacity var(--motion-standard) ease}
+.reveal[data-open]{grid-template-rows:1fr;margin-top:0;opacity:1}
+.revealInner{display:grid;grid-template-columns:minmax(0,1fr);align-content:start;gap:var(--space-3);min-height:0;overflow:hidden;padding-top:var(--space-3);border-top:var(--ring-hairline)}
+@media(prefers-reduced-motion:reduce){.reveal,.disclosure svg{transition:none}}
