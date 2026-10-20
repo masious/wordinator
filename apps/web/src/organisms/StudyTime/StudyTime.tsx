@@ -2,13 +2,14 @@ import { SegmentedControl } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { localDayOf } from "@wordinator/contracts/learning";
 import { ChevronDown } from "lucide-react";
-import { useCallback, useEffect, useId, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 import type { TFunction } from "i18next";
 import { useTranslation } from "react-i18next";
 import { learningActivityQueryOptions } from "../../api";
 import { categoryOf, type ActivityCategory } from "../../learningActivity";
 import { learningClock, useMinuteRefresh } from "../../learningTime";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
+import { SlidePanel } from "../../molecules/SlidePanel";
 import { ACTIVITY_CATEGORIES, dayOf, goalShare, studyTime } from "../LearningHome/learningSummary";
 import styles from "./StudyTime.module.css";
 
@@ -46,35 +47,10 @@ export function StudyPeriodSwitch({ value, onChange, withLesson }: { value: Stud
   </div>;
 }
 
-/**
- * The content of the chosen tab. Changing tab first eases the panel to the new content's height, then slides the new content in
- * from the side of the tab moved to (from the right when moving right) as it fades in. The first content shows without motion.
- */
+/** The content of the chosen tab, sliding in from the side of the tab moved to (see SlidePanel). */
 export function StudyPeriodPanel({ period, withLesson, children }: { period: StudyPeriod; withLesson: boolean; children: ReactNode }) {
   const order: StudyPeriod[] = withLesson ? ["lesson", "today", "week"] : ["today", "week"];
-  const [shown, setShown] = useState<{ period: StudyPeriod; from: "left" | "right" | null }>({ period, from: null });
-  if (shown.period !== period) setShown({ period, from: order.indexOf(period) > order.indexOf(shown.period) ? "right" : "left" });
-  const height = useContentHeight();
-  return <div className={styles.slide} style={height.style} data-measured={height.measured || undefined}>
-    <div ref={height.ref} key={period} className={styles.slideContent} data-from={shown.period === period ? shown.from ?? undefined : undefined}>{children}</div>
-  </div>;
-}
-
-// The content's height as an explicit panel height, so a change of height can be eased. It follows the content as it loads.
-function useContentHeight() {
-  const [height, setHeight] = useState<number | null>(null);
-  const [measured, setMeasured] = useState(false);
-  const observer = useRef<ResizeObserver | null>(null);
-  const ref = useCallback((element: HTMLDivElement | null) => {
-    observer.current?.disconnect(); observer.current = null;
-    if (!element || typeof ResizeObserver === "undefined") return;
-    observer.current = new ResizeObserver(() => setHeight(element.offsetHeight));
-    observer.current.observe(element);
-  }, []);
-  // The first height is set without easing; later ones ease.
-  useEffect(() => { if (height !== null && !measured) { const frame = requestAnimationFrame(() => setMeasured(true)); return () => cancelAnimationFrame(frame); } }, [height, measured]);
-  useEffect(() => () => observer.current?.disconnect(), []);
-  return { ref, measured, style: height === null ? undefined : { height } as CSSProperties };
+  return <SlidePanel index={order.indexOf(period)}>{children}</SlidePanel>;
 }
 
 /** A list of label and figure rows; a `quiet` row is a mono note under the row above it. */

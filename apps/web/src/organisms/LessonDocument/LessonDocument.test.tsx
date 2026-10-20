@@ -139,3 +139,35 @@ describe("Lesson document renderer", () => {
     expect(container).toHaveTextContent("rechts");
   });
 });
+
+describe("Practice groups", () => {
+  const heading = (n: number, level: 2 | 3, value: string) => ({ id: id(n), type: "heading", props: { ...plain, level }, content: [text(value)], children: [] });
+  const practice = (n: number) => ({ id: id(n), type: "practice", props: { data: JSON.stringify({ instruction: `Do ${n}.`, passage: null, items: [{ prompt: "Een", authorsVersion: ["One"], note: null }] }) }, children: [] });
+  const blank = (n: number) => ({ id: id(n), type: "paragraph", props: plain, content: [], children: [] });
+  const document = doc([
+    heading(1, 2, "Practice"), heading(2, 3, "Fill in"), practice(3), blank(4), heading(5, 3, "At breakfast"), practice(6), practice(7),
+    heading(8, 2, "Reading"), practice(9),
+  ]);
+  const renderGrouped = () => render(<MantineProvider><LessonDocument document={document} anchored renderPractice={(block) => <p>practice {block.id}</p>}
+    renderPracticeGroup={(items) => <ol aria-label="group">{items.map((item) => <li key={item.block.id}>{item.title ?? "untitled"} {item.block.id}</li>)}</ol>} /></MantineProvider>);
+
+  it("gathers two or more practices in a row, each with the level-3 title above it, and leaves a lone practice alone", () => {
+    const { container } = renderGrouped();
+    const groups = screen.getAllByRole("list", { name: "group" });
+    expect(groups).toHaveLength(1);
+    expect([...groups[0]!.querySelectorAll("li")].map((item) => item.textContent)).toEqual([`Fill in ${id(3)}`, `At breakfast ${id(6)}`, `untitled ${id(7)}`]);
+    // The titles live in the group; the level-2 headings and the lone practice read as usual.
+    expect(screen.queryByRole("heading", { name: "Fill in" })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Reading" })).toBeInTheDocument();
+    expect(screen.getByText(`practice ${id(9)}`)).toBeInTheDocument();
+    // Every block the group takes in keeps an anchor, so the page still finds it.
+    for (const n of [2, 3, 4, 5, 6, 7]) expect(container.querySelector(`[data-block-id="${id(n)}"]`)).not.toBeNull();
+  });
+
+  it("reads the practices one after another without a group renderer", () => {
+    renderDocument(document);
+    expect(screen.queryByRole("list", { name: "group" })).not.toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Fill in" })).toBeInTheDocument();
+    expect(screen.getByText(`practice ${id(3)}`)).toBeInTheDocument();
+  });
+});

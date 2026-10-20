@@ -1,0 +1,9 @@
+/* A change of content: the panel first eases to the new content's height, then the content slides in from the side it comes
+   from and fades in. Its animation waits out the height change and holds the hidden first frame until then. */
+.slide{overflow:hidden}
+.slide[data-measured]{transition:height var(--motion-standard) var(--ease-physical)}
+.content[data-from]{animation:slide-panel-in var(--motion-overlay) var(--ease-physical) var(--motion-standard) both}
+.content[data-from="left"]{--slide-panel-from:calc(var(--entry-distance) * -1)}
+.content[data-from="right"]{--slide-panel-from:var(--entry-distance)}
+@keyframes slide-panel-in{from{opacity:0;transform:translateX(var(--slide-panel-from))}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.slide[data-measured]{transition:none}.content[data-from]{animation:none}}

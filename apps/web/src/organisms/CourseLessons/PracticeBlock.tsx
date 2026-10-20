@@ -189,7 +189,7 @@ export function PracticeContent({ block, prompts = true }: { block: Practice; pr
 export const SUMMARY_PROMPTS = 3;
 
 // The viewer's own state: done once their saved count reaches the current number of questions, otherwise what is left.
-function ownStatus(practice: Practice) {
+export function ownStatus(practice: Practice) {
   const total = practice.payload.items.length;
   return { done: (practice.progress.answered ?? 0) >= total, left: Math.max(total - (practice.progress.answered ?? 0), 0) };
 }
@@ -197,17 +197,18 @@ function ownStatus(practice: Practice) {
 // A practice on the lesson page: its instruction and first prompts, how many people are done and how many questions the viewer has
 // left, and an Answer action that opens the answer set and any reading passage in a dialog. `dock` keeps the dialog over the
 // reading column so the lesson's New words panel stays usable beside it.
-export function PracticeSummary({ scope, block, published, archived = false, dock }: {
-  scope: PracticeScope; block: Practice; published: boolean; archived?: boolean; dock?: RefObject<HTMLElement | null>;
+// `step` shows it inside the practice stepper, which supplies the card and the Practice label.
+export function PracticeSummary({ scope, block, published, archived = false, dock, step = false }: {
+  scope: PracticeScope; block: Practice; published: boolean; archived?: boolean; dock?: RefObject<HTMLElement | null>; step?: boolean;
 }) {
   const { t } = useTranslation(); const [answering, setAnswering] = useState(false);
   const saveProgress = usePracticeProgress(scope, published);
   const { payload } = block; const more = payload.items.length - SUMMARY_PROMPTS; const own = ownStatus(block);
   // Closing the dialog in any way saves progress, exactly like its own button.
   const close = () => { saveProgress(block); setAnswering(false); };
-  return <div className={`${styles.practice} ${styles.summary}`}>
+  return <div className={step ? `${styles.summary} ${styles.step}` : `${styles.practice} ${styles.summary}`}>
     <p className={styles.summaryHeader}>
-      <span className={styles.eyebrow}>{t("courses.practice.label")}</span>
+      {!step && <span className={styles.eyebrow}>{t("courses.practice.label")}</span>}
       <span className={styles.summaryStatus}>
         {t("courses.practice.peopleDone", { count: block.progress.done })}
         {" · "}

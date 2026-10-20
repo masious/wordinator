@@ -32,6 +32,7 @@ import { LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN, stickyInset } from "
 import { LessonBox, type LessonBoxLesson } from "./LessonBox";
 import { LessonWords, useVisibleWords, useWordsCollapsed } from "./LessonWords";
 import { practiceFromBlock, PracticeSummary } from "./PracticeBlock";
+import { PracticeStepper } from "./PracticeStepper";
 import { AiPracticeToggle, useAiPracticeSlots, type AiPracticeScope } from "./AiPractices";
 
 // The editor and BlockNote load only when someone opens a lesson for editing.
@@ -121,6 +122,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const resolveSpeech = useCallback((key: string) => speech[key] ?? null, [speech]);
   // Examples and dialogues of a shareable lesson are selectable and reveal their Share action (docs/lesson-shares.md).
   const share = useLessonShareScope(scope.groupId, scope.courseId, lesson);
+  const practiceScope = { groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId };
   const lessonBox = rail.box && createPortal(<LessonBox lesson={box} percent={percent} />, rail.box);
   if (!document || !steps.length) return <div className={styles.body}><p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p>{lessonBox}</div>;
   const hasWords = steps.some((step) => step.words.length > 0);
@@ -138,7 +140,9 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
         renderShare={share ? (block) => <ShareButton piece={block.type === "example" ? { kind: "example", block } : { kind: "dialogue", block }}
           label={t(`lessonShares.shareNamed.${block.type}`)} /> : undefined}
         renderPractice={(block) =>
-        <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.practiceProgress)}
+        <PracticeSummary scope={practiceScope} block={practiceFromBlock(block, lesson.practiceProgress)}
+          published={lesson.document !== null} archived={archived} dock={docked ? reading : undefined} />}
+        renderPracticeGroup={(items) => <PracticeStepper items={items} scope={practiceScope} progress={lesson.practiceProgress}
           published={lesson.document !== null} archived={archived} dock={docked ? reading : undefined} />} />
       {slots?.end}
       {gate && <div className={styles.gateFade} aria-hidden="true" />}

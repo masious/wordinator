@@ -14,15 +14,6 @@
 .figures div[data-strong] dt{color:var(--color-foreground);font-weight:var(--weight-semibold)}
 .quiet{font-family:var(--font-mono);font-size:var(--type-badge)}
 .note{margin:0;color:var(--color-foreground-faint);font-size:var(--text-xs);line-height:var(--line-compact)}
-/* A tab change: the panel first eases to the new content's height, then the content slides in from the side of the tab moved
-   to and fades in. Its animation waits out the height change and holds the hidden first frame until then. */
-.slide{overflow:hidden}
-.slide[data-measured]{transition:height var(--motion-standard) var(--ease-physical)}
-.slideContent[data-from]{animation:study-period-in var(--motion-overlay) var(--ease-physical) var(--motion-standard) both}
-.slideContent[data-from="left"]{--study-period-from:calc(var(--entry-distance) * -1)}
-.slideContent[data-from="right"]{--study-period-from:var(--entry-distance)}
-@keyframes study-period-in{from{opacity:0;transform:translateX(var(--study-period-from))}to{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){.slide[data-measured]{transition:none}.slideContent[data-from]{animation:none}}
 /* The card's summary row without a goal: today's time, then the chevron, like a progress meter's label row. */
 .summary{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);color:var(--color-foreground-muted);font-size:var(--text-xs);font-weight:var(--weight-semibold);font-variant-numeric:tabular-nums}
 .summary>span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}

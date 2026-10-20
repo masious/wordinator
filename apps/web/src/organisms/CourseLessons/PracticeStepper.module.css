@@ -1,0 +1,19 @@
+/* The practice stepper: one practice card for a run of practices, with a header, a wizard bar of segments, and the current one. */
+.stepper{display:grid;gap:var(--space-3);padding:var(--space-5);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+.header{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3)}
+.heading{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-3);margin:0}
+.eyebrow{font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-action)}
+.count{font-size:var(--type-metadata);color:var(--color-foreground-muted);font-variant-numeric:tabular-nums}
+.arrows{display:flex;gap:var(--space-1);margin:calc(var(--space-1) * -1) calc(var(--space-2) * -1) calc(var(--space-1) * -1) 0}
+/* One segment per practice: done ones filled in the success colour, the current one in the accent, the rest on the hairline. The
+   button is a touch target; the bar it draws is thin. */
+.segments{display:grid;grid-auto-columns:minmax(0,1fr);grid-auto-flow:column;gap:var(--space-1);margin:0;padding:0;list-style:none}
+.segment{display:block;width:100%;height:var(--space-4);padding:0;background:none;border:0;cursor:pointer}
+.segment::before{display:block;height:var(--size-progress);background:var(--color-hairline);border-radius:var(--radius-pill);content:"";transition:background-color var(--motion-standard) ease,box-shadow var(--motion-standard) ease}
+.segment[data-done]::before{background:var(--color-success)}
+.segment[aria-current]::before{background:var(--color-action)}
+.segment:hover::before{box-shadow:0 0 0 2px var(--color-action-soft)}
+.segment:focus-visible{outline-offset:2px}
+.body{display:grid;gap:var(--space-2)}
+.title{margin:0;font-size:var(--type-card-title);line-height:var(--line-heading)}
+@media(prefers-reduced-motion:reduce){.segment::before{transition:none}}

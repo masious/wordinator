@@ -25,6 +25,8 @@
 @media(prefers-reduced-motion:reduce){.match,.matchMark,.checkReference{animation:none}}
 @media(max-width:40em){.actions>*{flex:1}}
 .summary{gap:var(--space-2)}
+/* Inside the practice stepper, which draws the card. */
+.step{display:grid}
 .summaryHeader{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-3);margin:0}
 .summaryStatus{font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 .ownDone{color:var(--color-success);font-weight:var(--weight-semibold)}

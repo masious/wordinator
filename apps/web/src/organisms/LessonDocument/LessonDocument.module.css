@@ -1,6 +1,8 @@
 .document{display:grid;gap:var(--space-5);min-width:0}
 .document>*,.column>*,.anchor>*{margin-block:0}
 .anchor{display:grid;min-width:0}
+/* A block a practice group takes in: an empty mark at the group's top, so the page can still find it. */
+.groupAnchor{display:block;height:0}
 .paragraph{margin:0;font-size:var(--type-authored);line-height:var(--line-reading);white-space:pre-wrap;overflow-wrap:anywhere}
 .tinted{padding:var(--space-2) var(--space-3);border-radius:var(--radius-sm)}
 .heading{margin:var(--space-4) 0 0;font-family:var(--font-sans);font-weight:var(--weight-bold);letter-spacing:var(--tracking-title);line-height:var(--line-title);overflow-wrap:anywhere}
