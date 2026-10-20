@@ -1,12 +1,13 @@
-/* The lesson's index in the app rail, indented under the current course. A long index scrolls on its own. */
-.index{display:grid;align-content:start;gap:var(--space-1);max-height:var(--size-lesson-index-max);overflow-y:auto;padding:var(--space-1) var(--space-1) var(--space-1) var(--space-2);overscroll-behavior:contain}
+/* The lesson's index in the app rail, indented under the current course. It scrolls with the rail's navigation, never on its own. */
+.index{display:grid;align-content:start;gap:var(--space-1);padding:var(--space-1) var(--space-1) var(--space-1) var(--space-2)}
 .title{margin:0;padding-inline-start:var(--space-2);font-size:var(--type-eyebrow);font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-faint)}
-.list{display:grid;margin:0;padding:0;list-style:none;border-left:var(--ring-hairline)}
-/* The current entry's marker sits on the list's hairline. An entry keeps to one line and ends in an ellipsis. */
-.entry{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:calc(100% + 1px);margin-left:-1px;padding:0.3rem var(--space-2) 0.3rem calc(var(--space-3) + var(--index-depth, 0) * var(--space-3));font:inherit;font-size:var(--text-xs);line-height:var(--line-compact);text-align:start;color:var(--color-foreground-muted);background:none;border:0;border-left:2px solid transparent;border-radius:0 var(--radius-sm) var(--radius-sm) 0;cursor:pointer;transition:color var(--motion-standard) var(--ease-physical),border-color var(--motion-standard) var(--ease-physical),background-color var(--motion-standard) var(--ease-physical)}
+.list{display:grid;grid-template-columns:minmax(0,1fr);margin:0;padding:0;list-style:none;border-left:var(--ring-hairline)}
+/* An entry keeps to one line and ends in an ellipsis. The current entry's marker is drawn over the list's hairline by an inset
+   shadow, so the entry stays inside the list and nothing scrolls sideways. */
+.entry{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;padding:0.3rem var(--space-2) 0.3rem calc(var(--space-3) + var(--index-depth, 0) * var(--space-3));font:inherit;font-size:var(--text-xs);line-height:var(--line-compact);text-align:start;color:var(--color-foreground-muted);background:none;border:0;border-radius:0 var(--radius-sm) var(--radius-sm) 0;cursor:pointer;transition:color var(--motion-standard) var(--ease-physical),box-shadow var(--motion-standard) var(--ease-physical),background-color var(--motion-standard) var(--ease-physical)}
 .entry[data-kind="practice"]{font-style:italic}
 .entry[data-passed]{color:var(--color-foreground-faint)}
-.entry[aria-current]{font-weight:var(--weight-semibold);color:var(--color-action-soft-text);border-left-color:var(--color-action)}
+.entry[aria-current]{font-weight:var(--weight-semibold);color:var(--color-action-soft-text);box-shadow:inset 2px 0 0 var(--color-action)}
 .entry:hover{color:var(--color-foreground);background:var(--color-wash)}
 .entry:focus-visible{outline-offset:-2px}
 @media(prefers-reduced-motion:reduce){.entry{transition:none}}

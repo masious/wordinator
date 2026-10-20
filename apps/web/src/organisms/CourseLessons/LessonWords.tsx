@@ -56,13 +56,13 @@ export function useVisibleWords(container: RefObject<HTMLElement | null>, panel:
   return visible;
 }
 
-// When `panel` scrolls on its own, brings its `[aria-current]` items into view whenever `highlighted` changes: centred when they
-// fit, otherwise starting at the first of them. A highlighted range already in view stays put.
-export function useRevealCurrent(panelRef: RefObject<HTMLElement | null>, highlighted: string) {
+// When `panel` scrolls on its own, brings its `selector` items (`[aria-current]` by default) into view whenever `highlighted`
+// changes: centred when they fit, otherwise starting at the first of them. A highlighted range already in view stays put.
+export function useRevealCurrent(panelRef: RefObject<HTMLElement | null>, highlighted: string, selector = "[aria-current]") {
   useEffect(() => {
     const panel = panelRef.current;
     if (!panel || !highlighted || panel.scrollHeight <= panel.clientHeight) return;
-    const items = [...panel.querySelectorAll<HTMLElement>("[aria-current]")]; if (!items.length) return;
+    const items = [...panel.querySelectorAll<HTMLElement>(selector)]; if (!items.length) return;
     const frame = panel.getBoundingClientRect();
     // Positions inside the panel's scrolled content.
     const top = items[0]!.getBoundingClientRect().top - frame.top + panel.scrollTop;
@@ -71,7 +71,7 @@ export function useRevealCurrent(panelRef: RefObject<HTMLElement | null>, highli
     if (top >= panel.scrollTop + margin && bottom <= panel.scrollTop + view - margin) return;
     const target = bottom - top + margin * 2 <= view ? (top + bottom - view) / 2 : top - margin;
     panel.scrollTo({ top: Math.max(0, Math.min(target, panel.scrollHeight - view)), behavior: "smooth" });
-  }, [highlighted, panelRef]);
+  }, [highlighted, panelRef, selector]);
 }
 
 // Whether the viewer keeps the lesson page's New words panel collapsed. It is a per-device convenience, so storage that cannot be

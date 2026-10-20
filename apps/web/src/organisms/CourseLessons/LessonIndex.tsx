@@ -1,5 +1,5 @@
 import { inlineText, readPracticeBlock, walkLessonBlocks, type LessonDocument } from "@wordinator/contracts/lesson-document";
-import { type CSSProperties, type RefObject, useEffect, useRef, useState } from "react";
+import { type CSSProperties, type RefObject, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRevealCurrent } from "./LessonWords";
 import styles from "./LessonIndex.module.css";
@@ -89,7 +89,7 @@ function useCurrentEntry(entries: readonly LessonIndexEntry[], reading: RefObjec
 
 // The lesson's index in the app rail, under the current course: every heading and practice, one line each, with the one the reader is in marked
 // as current on the rule and the ones already passed muted. Choosing an entry scrolls the page to it, then calls `onJump` (the
-// phone's drawer closes). A long index scrolls on its own and keeps the current entry in view.
+// phone's drawer closes). A long index scrolls with the rail's navigation, which keeps the current entry in view.
 export function LessonIndex({ entries, reading, side, onJump }: {
   entries: readonly LessonIndexEntry[]; reading: RefObject<HTMLElement | null>; side: RefObject<HTMLElement | null>; onJump?: () => void;
 }) {
@@ -100,7 +100,10 @@ export function LessonIndex({ entries, reading, side, onJump }: {
   const labels = entries.map((entry) => entry.kind === "practice" && !entry.titled
     ? entry.text ? t("courses.lessons.index.practice", { instruction: entry.text }) : t("courses.lessons.index.practiceUntitled")
     : entry.text);
-  useRevealCurrent(list, current >= 0 ? entries[current]!.id : "");
+  // The index scrolls with the rail's navigation, so that is where the current entry is kept in view.
+  const scroller = useRef<HTMLElement | null>(null);
+  useLayoutEffect(() => { scroller.current = list.current?.closest<HTMLElement>("[data-rail-scroll]") ?? list.current; });
+  useRevealCurrent(scroller, current >= 0 ? entries[current]!.id : "", '[aria-current="location"]');
   const jump = (id: string) => {
     const element = reading.current?.querySelector<HTMLElement>(`[data-block-id="${id}"]`); if (!element) return;
     const top = element.getBoundingClientRect().top + window.scrollY - stickyInset(side.current);

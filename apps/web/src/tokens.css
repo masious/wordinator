@@ -284,8 +284,8 @@
   --width-course-card-min: 17rem;
   /* The width of a lesson's first image, covering the left edge of its card in the course page's lesson list. */
   --size-lesson-image: 16rem;
-  /* The lesson page's index beside the text scrolls on its own beyond this height while New words are open below it. */
-  --size-lesson-index-max: 40dvh;
+  /* The app rail's navigation keeps at least this height above the rail's footer before the whole rail scrolls instead. */
+  --size-rail-nav-min: 10rem;
   /* Word cards (C9a): every card has one height so a page of them can be fitted to the viewport. */
   --size-word-card: 15rem;
   /* Words tab cards: room for the course · lesson line, a long term with forms, and the microphone without scrolling. */

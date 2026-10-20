@@ -17,7 +17,9 @@
   background: var(--color-surface-raised);
   border-right: var(--ring-hairline);
 }
-/* The body scrolls, not the rail, so the resize handle stays the rail's full height. */
+/* The body, not the rail, holds the contents, so the resize handle stays the rail's full height. Only the navigation scrolls: the
+   brand stays at the top and the icon row, lesson box, and profile stay at the bottom. The body itself scrolls only when the
+   window is too short to keep the navigation at its minimum height. */
 .railBody {
   display: flex;
   flex-direction: column;
@@ -26,6 +28,19 @@
   overflow-y: auto;
   /* No end inset: the navigation items run to the rail's border; the profile row keeps its own. */
   padding: var(--space-6) 0 var(--space-6) var(--space-5);
+}
+.railScroll {
+  flex: 1 1 auto;
+  min-height: var(--size-rail-nav-min);
+  margin-top: var(--space-10);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+/* More below the fold: the bottom edge fades out. */
+.railScroll[data-more-below] {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--space-8)), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - var(--space-8)), transparent);
 }
 
 /* The resize handle straddles the rail's right border and shows an accent line while hovered, focused, or dragged. */
@@ -85,7 +100,6 @@
   /* An auto column would grow to the widest nowrap course title and push the rail into horizontal scroll. */
   grid-template-columns: minmax(0, 1fr);
   gap: var(--space-1);
-  margin-top: var(--space-10);
 }
 .navGroup {
   position: relative;
@@ -215,7 +229,8 @@
 .lessonSlot:empty, .tutorSlot:empty, .boxSlot:empty { display: none; }
 .lessonSlot { margin: var(--space-1) 0 var(--space-2); }
 .tutorSlot { min-width: 0; margin: 0 0 var(--space-3) 1.45rem; }
-.boxSlot { margin-top: var(--space-6); }
+/* The box keeps the profile row's end inset, so its border never meets the rail's. */
+.boxSlot { margin: var(--space-6) var(--space-5) 0 0; }
 .subItem[aria-current="page"] { color: var(--color-action-soft-text); background: var(--color-action-soft); font-weight: var(--weight-semibold); }
 
 .profile {

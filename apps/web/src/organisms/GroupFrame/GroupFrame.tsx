@@ -201,6 +201,23 @@ function AccountMenu({ trigger }: { trigger: ReactNode }) {
   </Menu>;
 }
 
+// Whether the rail's scrolling part has more below its fold, so its bottom edge can fade. It follows the scroll and both the part's
+// and its content's size, since the lesson index grows the content without resizing the part.
+function useMoreBelow(scroller: RefObject<HTMLElement | null>) {
+  const [more, setMore] = useState(false);
+  useEffect(() => {
+    const element = scroller.current; if (!element) return;
+    const measure = () => setMore(element.scrollTop + element.clientHeight < element.scrollHeight - 1);
+    measure();
+    element.addEventListener("scroll", measure, { passive: true });
+    const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
+    observer?.observe(element);
+    if (element.firstElementChild) observer?.observe(element.firstElementChild);
+    return () => { element.removeEventListener("scroll", measure); observer?.disconnect(); };
+  }, [scroller]);
+  return more;
+}
+
 function Rail({ groupId, session, pathname, slots }: { groupId: string; session: SignedInSession; pathname: string; slots: SlotRefs | null }) {
   const { t } = useTranslation();
   const { user } = session;
@@ -224,13 +241,17 @@ function Rail({ groupId, session, pathname, slots }: { groupId: string; session:
     { to: "/journal", active: starts("/journal"), icon: <NotebookPen />, label: t("nav.journal") },
     { to: "/ai", active: starts("/ai"), icon: <MessageCircle />, label: t("nav.tutor") },
   ];
+  const scroll = useRef<HTMLDivElement>(null);
+  const moreBelow = useMoreBelow(scroll);
   return <div className={styles.railBody}>
     <Brand />
-    <nav className={styles.nav} aria-label={t("nav.primary")}>
-      <CourseSubItems groupId={groupId} pathname={pathname} slots={slots} collapsed={collapsed} onToggle={toggle} promoted={compact} />
-      {!compact && others.map((item) => <NavItem key={item.to} to={item.to} active={item.active} icon={item.icon}>{item.label}</NavItem>)}
-      {!compact && starts("/ai") && slots && <div ref={slots.tutor} className={styles.tutorSlot} />}
-    </nav>
+    <div ref={scroll} className={styles.railScroll} data-rail-scroll data-more-below={moreBelow || undefined}>
+      <nav className={styles.nav} aria-label={t("nav.primary")}>
+        <CourseSubItems groupId={groupId} pathname={pathname} slots={slots} collapsed={collapsed} onToggle={toggle} promoted={compact} />
+        {!compact && others.map((item) => <NavItem key={item.to} to={item.to} active={item.active} icon={item.icon}>{item.label}</NavItem>)}
+        {!compact && starts("/ai") && slots && <div ref={slots.tutor} className={styles.tutorSlot} />}
+      </nav>
+    </div>
     {compact && <nav className={styles.iconRow} aria-label={t("nav.more")}>
       {others.map((item) => <NavIcon key={item.to} {...item} />)}
     </nav>}
