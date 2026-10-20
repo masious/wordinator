@@ -2,41 +2,16 @@ import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryHistory, createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
-import { localDayOf, type LearningActivityRange } from "@wordinator/contracts/learning";
+import { localDayOf } from "@wordinator/contracts/learning";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
+import { activity, response } from "./activityFixture";
 import { LearningHome } from "./LearningHome";
 
 // The signed-in home dashboard (docs/learning-time.md#home-dashboard), with the activity and course dashboard reads stubbed.
 const groupId = "20000000-0000-4000-8000-000000000001";
 const courseId = "30000000-0000-4000-8000-000000000001";
 const lessonId = "40000000-0000-4000-8000-000000000001";
-const DAY = 86_400_000;
-
-type Totals = { lesson: number; grammar: number; practice: number; vocabulary: number; aiPractice: number };
-const emptyFocus = { grammar: 0, vocabulary: 0, reading: 0, listening: 0, writing: 0 };
-const dayRow = (day: string, parts: Partial<Totals> = {}) => {
-  const values = { lesson: 0, grammar: 0, practice: 0, vocabulary: 0, aiPractice: 0, ...parts };
-  return { day, ...values, total: Object.values(values).reduce((sum, seconds) => sum + seconds, 0), aiPracticeFocus: emptyFocus };
-};
-// Today is the last day of the range; `today` carries the parts.
-function activity(range: LearningActivityRange, options: { today?: Partial<Totals>; previousTotal?: number; goal?: number | null; streak?: number } = {}) {
-  const length = range === "week" ? 7 : 30;
-  const now = Date.now();
-  const days = Array.from({ length }, (_, index) => {
-    const offset = length - 1 - index;
-    const day = localDayOf(new Date(now - offset * DAY));
-    return dayRow(day, offset === 0 ? options.today : undefined);
-  });
-  const totals = days.reduce((sum, row) => ({
-    lesson: sum.lesson + row.lesson, grammar: sum.grammar + row.grammar, practice: sum.practice + row.practice,
-    vocabulary: sum.vocabulary + row.vocabulary, aiPractice: sum.aiPractice + row.aiPractice, total: sum.total + row.total, aiPracticeFocus: emptyFocus,
-  }), { lesson: 0, grammar: 0, practice: 0, vocabulary: 0, aiPractice: 0, total: 0, aiPracticeFocus: emptyFocus });
-  return {
-    range, from: days[0]!.day, to: days.at(-1)!.day, days, totals, previousTotal: options.previousTotal ?? 0,
-    dailyGoalMinutes: options.goal === undefined ? null : options.goal, streak: options.streak ?? 0,
-  };
-}
 const resume = {
   course: { id: courseId, slug: "deutsch-fur-anfanger", title: "Deutsch für Anfänger", summary: "Erste Schritte", level: "A1", coverUrl: null, lessonCount: 4, coursePercent: 25 },
   lesson: { id: lessonId, slug: "hallo", title: "Hallo", number: 1, total: 4, imageUrl: null, storylinePercent: 50 },
@@ -46,7 +21,6 @@ let activityBody: ReturnType<typeof activity>;
 let dashboardBody: { resume: typeof resume | null; recentLessons: []; notStarted: [] };
 let activityRequests: string[];
 
-function response(body: unknown) { return new Response(JSON.stringify(body), { status: 200, headers: { "content-type": "application/json" } }); }
 function renderHome(name = "Ada") {
   const root = createRootRoute();
   const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <LearningHome groupId={groupId} displayName={name} /> });
@@ -116,15 +90,25 @@ describe("Home dashboard", () => {
     expect(screen.getByRole("radio", { name: "Week" })).not.toBeChecked();
   });
 
-  it("shows the period total, its change, one bar per day, and the category legend", async () => {
+  it("shows the period total, its change, one single-colour bar per day, and a link to the Progress page", async () => {
     renderHome();
     expect((await screen.findAllByText("15 min")).length).toBeGreaterThan(0);
     expect(screen.getByText("Past 7 days · +100% on the previous period")).toBeInTheDocument();
     const bars = screen.getByRole("list", { name: "Study time by day" });
     expect(within(bars).getAllByRole("group")).toHaveLength(7);
-    expect(screen.getByRole("group", { name: "Today: 15 min" })).toHaveAttribute("tabindex", "0");
-    const legend = screen.getByRole("list", { name: "Categories" });
-    expect(within(legend).getAllByRole("listitem").map((item) => item.textContent)).toEqual(["Lesson reading", "Grammar", "Practice", "Vocabulary", "AI practice"]);
+    const today = screen.getByRole("group", { name: "Today: 15 min" });
+    expect(today).toHaveAttribute("tabindex", "0");
+    // One bar for the day, whatever its categories; the tip is the day's time only.
+    expect(today.querySelectorAll("[data-category]")).toHaveLength(0);
+    expect(today.textContent).toBe("15 min");
+    expect(screen.queryByRole("list", { name: "Categories" })).toBeNull();
+    expect(screen.getByRole("link", { name: "See progress details" })).toHaveAttribute("href", "/progress");
+  });
+
+  it("links to the Progress page's month when the card shows the month", async () => {
+    renderHome();
+    fireEvent.click(await screen.findByRole("radio", { name: "Month" }));
+    await waitFor(() => expect(screen.getByRole("link", { name: "See progress details" })).toHaveAttribute("href", "/progress?range=month"));
   });
 
   it("explains a learner with no time yet, with no bars", async () => {
@@ -132,7 +116,7 @@ describe("Home dashboard", () => {
     renderHome();
     expect(await screen.findByText("No study time in this period yet. Lessons, practice, drills, and tutor time show up here.")).toBeInTheDocument();
     expect(screen.queryByRole("list", { name: "Study time by day" })).toBeNull();
-    expect(screen.getByText(/Nothing to compare with yet$/)).toBeInTheDocument();
+    expect(screen.getByText("Past 7 days · Keep up the hard work and we'll report progress soon!")).toBeInTheDocument();
   });
 
   it("offers a next lesson without a saved step when the course read has no in-progress lesson", async () => {

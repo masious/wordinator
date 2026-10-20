@@ -6,7 +6,7 @@ import type { ActivityCategory } from "../../learningActivity";
 // the previous period, and the durations the cards show. Colours live in the stylesheet, as design tokens.
 
 export type { ActivityCategory };
-// The stacking order of a day's bar, from the bottom up, and the legend's order.
+// The order of the Progress page's category rows (and of the rail's figures).
 export const ACTIVITY_CATEGORIES: readonly ActivityCategory[] = ["lesson", "grammar", "practice", "vocabulary", "aiPractice"];
 
 /** The share of today's goal reached, from 0 to 1 (capped), or null without a goal. A day meets the goal at its full minutes. */
@@ -19,6 +19,14 @@ export function goalShare(seconds: number, dailyGoalMinutes: number | null): num
 export function periodChange(total: number, previousTotal: number): number | null {
   if (previousTotal === 0) return null;
   return Math.round(((total - previousTotal) / previousTotal) * 100);
+}
+
+/** The period's line against the previous one: up or down by a whole percentage, the same, or encouragement while there is nothing to compare. */
+export function changeLine(t: TFunction, total: number, previousTotal: number): string {
+  const change = periodChange(total, previousTotal);
+  if (change === null) return t("learningHome.activity.noEarlier");
+  if (change === 0) return t("learningHome.activity.same");
+  return change > 0 ? t("learningHome.activity.up", { percent: change }) : t("learningHome.activity.down", { percent: -change });
 }
 
 /** The day with the given local date, when the range holds it. */

@@ -17,7 +17,7 @@
 
 ## Browse courses and lessons
 
-1. `/courses` opens with the [home dashboard](learning-time.md#home-dashboard) (greeting, Continue, and Activity), then lists the courses in the one global library. There is no workspace, language namespace, or group switcher. The main navigation is the left rail: Courses (with every visible course listed beneath it), Words, Journal, and Tutor; Settings and Sign out live in the account menu at the rail's foot, and Settings links to Notices.
+1. `/courses` opens with the [home dashboard](learning-time.md#home-dashboard) (greeting, Continue, and Activity, whose See progress details link opens the [Progress page](learning-time.md#progress-page) at `/progress`), then lists the courses in the one global library. There is no workspace, language namespace, or group switcher. The main navigation is the left rail: Courses (with every visible course listed beneath it), Words, Journal, and Tutor; Settings and Sign out live in the account menu at the rail's foot, and Settings links to Notices.
 2. A course page presents its ordered lesson outline, the viewer's own progress, and the next lesson action.
 3. Each course and lesson has a readable, stable route built from its title, such as `/courses/dutch-foundations/lessons/er-is-een-huis`. Older ID links redirect to it.
 4. The lesson player, word recap, bookmarks, speech playback, and authoring behavior follow [courses.md](courses.md), [words.md](words.md), and [speech.md](speech.md).

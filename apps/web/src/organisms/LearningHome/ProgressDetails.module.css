@@ -1,0 +1,32 @@
+.page{display:grid;gap:var(--space-6);min-width:0;animation:wordinator-enter var(--motion-reveal) var(--ease-physical) both}
+.back{display:inline-flex;align-items:center;gap:var(--space-1);justify-self:start;color:var(--color-foreground-muted);font-size:var(--text-xs);font-weight:var(--weight-semibold);text-decoration:none}
+.back:hover{color:var(--color-foreground)}
+.back:focus-visible,.link:focus-visible{outline:var(--focus-ring-width) solid var(--color-focus);outline-offset:var(--focus-ring-offset);border-radius:var(--radius-sm)}
+.header.header{padding-block:0;align-items:flex-end}
+.summary{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:var(--space-5)}
+.total{margin:0;font-size:var(--type-page-title);font-weight:var(--weight-bold);letter-spacing:var(--tracking-display);line-height:var(--line-heading);font-variant-numeric:tabular-nums}
+.muted{margin:0;color:var(--color-foreground-muted);font-size:var(--type-body)}
+.figures{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:var(--space-4) var(--space-6);margin:0;min-width:min(100%,20rem)}
+.figures dt{color:var(--color-foreground-muted);font-size:var(--type-metadata)}
+.figures dd{margin:var(--space-1) 0 0;font-size:var(--text-lg);font-weight:var(--weight-semibold);font-variant-numeric:tabular-nums}
+.grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:var(--space-5);align-items:start}
+.section{display:grid;gap:var(--space-4);min-width:0}
+.categories,.days{display:grid;gap:var(--space-3);margin:0;padding:0;list-style:none}
+/* A row is the name and figure on one line over a share track. */
+.categories li,.days li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--space-1) var(--space-3);align-items:center;font-size:var(--text-sm)}
+.categoryName{display:flex;align-items:center;gap:var(--space-2);font-weight:var(--weight-medium)}
+.swatch{flex:none;width:.6rem;height:.6rem;border-radius:var(--radius-pill);background:var(--category)}
+.figure{color:var(--color-foreground-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.track{grid-column:1/-1;display:block;height:var(--size-progress);overflow:hidden;background:var(--color-hairline);border-radius:var(--radius-pill)}
+.fill{display:block;height:100%;background:var(--category,var(--color-action));border-radius:inherit}
+.days li[data-today] .dayName{font-weight:var(--weight-bold)}
+.days li[data-empty]{color:var(--color-foreground-faint)}
+.link{justify-self:start;color:var(--color-action-soft-text);font-size:var(--type-control-label);font-weight:var(--weight-semibold)}
+/* The category colours, which the home Activity card no longer uses. */
+.categories [data-category]{--category:var(--color-vivid-blue)}
+.categories [data-category="grammar"]{--category:var(--color-vivid-violet)}
+.categories [data-category="practice"]{--category:var(--color-vivid-green)}
+.categories [data-category="vocabulary"]{--category:var(--color-vivid-yellow)}
+.categories [data-category="aiPractice"]{--category:var(--color-vivid-pink)}
+@media(max-width:48em){.header.header{align-items:stretch}.grid{grid-template-columns:minmax(0,1fr)}}
+@media(prefers-reduced-motion:reduce){.page{animation:none}}

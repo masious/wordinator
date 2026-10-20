@@ -15,7 +15,7 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [lesson-shares.md](lesson-shares.md) | Sharing examples, dialogues, and practice questions to the journal: snapshots and references, entry points, duplicates, availability, and the shared answer check |
 | [words.md](words.md) | Word cards, word bookmarks, the Words tab, the Weak words view, Drill (including spoken answers), word memory and its review log, and stored pronunciation scores |
 | [speech.md](speech.md) | Lesson speech: spoken items, voices, dialogue cast, pronunciation overrides, background generation, and playback; on-demand audio for tutor messages |
-| [learning-time.md](learning-time.md) | Learning time (C15): what is measured, the clock, sending time, lesson and practice medians, activity categories, the daily goal and streak, and the home dashboard |
+| [learning-time.md](learning-time.md) | Learning time (C15): what is measured, the clock, sending time, lesson and practice medians, activity categories, the daily goal and streak, the home dashboard, and the Progress page |
 | [ai-tutor.md](ai-tutor.md) | The AI tutor: entry point, conversations, formatting, tools and their visibility, confirmation, answer components, next lesson, providers and fallback, the daily cap, and prompt-injection rules |
 | [tutor-sessions-and-memory.md](tutor-sessions-and-memory.md) | Tutor study plans and the session panel, per-conversation context scope, dated tutor notes, practice topics, tutor words, word observations, personal practices, the reading component, and short prompt references (C14l) |
 | [content/index.md](content/index.md) | Course curriculum, storyline, and taught-topic coverage for member-authored Dutch Foundations content |

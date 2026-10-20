@@ -14,6 +14,7 @@ import { Route as AiRouteImport } from './routes/ai'
 import { Route as CoursesRouteImport } from './routes/courses'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as NotificationsRouteImport } from './routes/notifications'
+import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as SettingsRouteImport } from './routes/settings'
 import { Route as UiRouteImport } from './routes/ui'
 import { Route as WordsRouteImport } from './routes/words'
@@ -63,6 +64,11 @@ const JournalRoute = JournalRouteImport.update({
 const NotificationsRoute = NotificationsRouteImport.update({
   id: '/notifications',
   path: '/notifications',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgressRoute = ProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SettingsRoute = SettingsRouteImport.update({
@@ -207,6 +213,7 @@ export interface FileRoutesByFullPath {
   '/courses': typeof CoursesRoute
   '/journal': typeof JournalRoute
   '/notifications': typeof NotificationsRoute
+  '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
@@ -239,6 +246,7 @@ export interface FileRoutesByTo {
   '/courses': typeof CoursesRoute
   '/journal': typeof JournalRoute
   '/notifications': typeof NotificationsRoute
+  '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
@@ -272,6 +280,7 @@ export interface FileRoutesById {
   '/courses': typeof CoursesRoute
   '/journal': typeof JournalRoute
   '/notifications': typeof NotificationsRoute
+  '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
@@ -306,6 +315,7 @@ export interface FileRouteTypes {
     | '/courses'
     | '/journal'
     | '/notifications'
+    | '/progress'
     | '/settings'
     | '/ui'
     | '/words'
@@ -338,6 +348,7 @@ export interface FileRouteTypes {
     | '/courses'
     | '/journal'
     | '/notifications'
+    | '/progress'
     | '/settings'
     | '/ui'
     | '/words'
@@ -370,6 +381,7 @@ export interface FileRouteTypes {
     | '/courses'
     | '/journal'
     | '/notifications'
+    | '/progress'
     | '/settings'
     | '/ui'
     | '/words'
@@ -403,6 +415,7 @@ export interface RootRouteChildren {
   CoursesRoute: typeof CoursesRoute
   JournalRoute: typeof JournalRoute
   NotificationsRoute: typeof NotificationsRoute
+  ProgressRoute: typeof ProgressRoute
   SettingsRoute: typeof SettingsRoute
   UiRoute: typeof UiRoute
   WordsRoute: typeof WordsRoute
@@ -465,6 +478,13 @@ declare module '@tanstack/react-router' {
       path: '/notifications'
       fullPath: '/notifications'
       preLoaderRoute: typeof NotificationsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progress': {
+      id: '/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProgressRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/settings': {
@@ -651,6 +671,7 @@ const rootRouteChildren: RootRouteChildren = {
   CoursesRoute: CoursesRoute,
   JournalRoute: JournalRoute,
   NotificationsRoute: NotificationsRoute,
+  ProgressRoute: ProgressRoute,
   SettingsRoute: SettingsRoute,
   UiRoute: UiRoute,
   WordsRoute: WordsRoute,

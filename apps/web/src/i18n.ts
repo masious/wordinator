@@ -1300,6 +1300,7 @@ export const resources = {
         groupReview: "Review words",
         groupPractice: "Practice again",
         groupView: "View",
+        compactView: "Compact view",
         groupDay: "Day",
         groupWeek: "Week",
         groupMonth: "Month",
@@ -1686,14 +1687,29 @@ export const resources = {
           up: "+{{percent}}% on the previous period",
           down: "−{{percent}}% on the previous period",
           same: "Same as the previous period",
-          noEarlier: "Nothing to compare with yet",
+          noEarlier: "Keep up the hard work and we'll report progress soon!",
           chart: "Study time by day",
           dayLabel: "{{day}}: {{time}}",
           today: "Today",
           empty: "No study time in this period yet. Lessons, practice, drills, and tutor time show up here.",
-          legend: "Categories"
+          details: "See progress details"
         },
         categories: { lesson: "Lesson reading", grammar: "Grammar", practice: "Practice", vocabulary: "Vocabulary", aiPractice: "AI practice" }
+      },
+      progress: {
+        back: "Back to home",
+        eyebrow: "Study time",
+        title: "Progress",
+        intro: "Where your study time went, how often you studied, and how your goal and streak are doing.",
+        loading: "Opening your progress",
+        unavailable: "Your progress could not be loaded.",
+        activeDays: "Days with study time",
+        average: "Daily average",
+        ofDays_one: "{{count}} of {{total}}",
+        ofDays_other: "{{count}} of {{total}}",
+        categories: { title: "By category", description: "Where the period's time went.", share: "{{percent}}%" },
+        goal: { title: "Goal and streak", daily: "Daily goal", none: "No daily goal", met: "Days at the goal", streak: "Streak", streakDays_one: "{{count}} day", streakDays_other: "{{count}} days" },
+        days: { title: "Day by day" }
       },
       studyTime: {
         title: "Study time",

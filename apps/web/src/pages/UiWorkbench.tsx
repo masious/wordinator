@@ -121,6 +121,8 @@ export function UiWorkbench() {
                 toggle={{ icon: <Languages aria-hidden="true" />, label: t("ui.searchLibraryToggle"), pressed: library, onToggle: () => setLibrary((on) => !on) }} />
               <SegmentedControl aria-label={t("ui.groupView")} value={view} onChange={setView} fullWidth
                 data={[{ value: "day", label: t("ui.groupDay") }, { value: "week", label: t("ui.groupWeek") }, { value: "month", label: t("ui.groupMonth") }]} />
+              <SegmentedControl aria-label={t("ui.compactView")} size="xs" value={view} onChange={setView}
+                data={[{ value: "week", label: t("ui.groupWeek") }, { value: "month", label: t("ui.groupMonth") }]} />
               <ProgressMeter value={64} label={t("ui.progressSample")} showLabel />
               <ProgressMeter value={100} label={t("ui.lessonSample")} showLabel />
             </Surface>

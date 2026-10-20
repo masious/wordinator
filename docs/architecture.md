@@ -47,7 +47,7 @@ The web app's only rich-text dependency is BlockNote, used solely for [course le
 
 Route loaders ensure authentication and critical route data. TanStack Query owns cache lifetime, pagination, refetching, and mutations. Do not maintain parallel hand-written server caches.
 
-The product routes are the global ones listed at the top of this document (`/`, `/courses`, course and lesson pages, `/words` and `/words/drill`, `/journal`, `/notifications`, and `/settings`). The earlier `/groups/$groupId/...` routes and `/invite/$token` remain only as redirects to their global equivalents (see the [roadmap](roadmap.md#global-course-library-flow--completed-2026-10-10)). Route loaders prime TanStack Query, while protected loaders redirect signed-out or forced-password-change sessions before private content renders. The notifications route queries only when it opens, as [notifications.md](notifications.md) requires. The production-safe `/ui` route remains outside authenticated product flows.
+The product routes are the global ones listed at the top of this document (`/`, `/courses`, course and lesson pages, `/words` and `/words/drill`, `/progress`, `/journal`, `/notifications`, and `/settings`). The earlier `/groups/$groupId/...` routes and `/invite/$token` remain only as redirects to their global equivalents (see the [roadmap](roadmap.md#global-course-library-flow--completed-2026-10-10)). Route loaders prime TanStack Query, while protected loaders redirect signed-out or forced-password-change sessions before private content renders. The notifications route queries only when it opens, as [notifications.md](notifications.md) requires. The production-safe `/ui` route remains outside authenticated product flows.
 
 ## API application
 
