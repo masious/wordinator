@@ -248,7 +248,16 @@ test("mobile lesson page opens new words as a bottom sheet from the action bar",
   // The sheet slides up after opening, so wait for its box to settle inside the viewport.
   await expect.poll(async () => { const box = (await sheet.boundingBox())!; return box.y + box.height; }).toBeLessThanOrEqual(viewport.height);
   await expectNoHorizontalOverflow(page, "lesson new words sheet");
+  // The sheet holds the words and the search, but not the lesson's actions: those are in the navigation drawer.
+  await expect(sheet.getByRole("searchbox")).toBeVisible();
+  await expect(sheet.getByRole("group", { name: "Lesson actions" })).toHaveCount(0);
+  await sheet.getByRole("button", { name: "Show more about het perron" }).click();
+  await expect(sheet.getByRole("button", { name: "Show less about het perron" })).toHaveAttribute("aria-expanded", "true");
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-lesson-words-sheet.png` });
+  await page.keyboard.press("Escape");
+  await expect(sheet).toBeHidden();
+  await page.getByRole("button", { name: "Contents" }).click();
+  await expect(page.getByRole("dialog", { name: "Main navigation" }).getByRole("group", { name: "Lesson actions" }).getByRole("link", { name: "Practise words" })).toBeVisible();
 });
 
 test("mobile lesson reader stacks columns", async ({ page }) => {

@@ -70,19 +70,20 @@ export function LessonBox({ lesson, percent }: { lesson: LessonBoxLesson; percen
 // The lesson's actions, above the profile row: Practise words (a drill of the course's words) beside Ask AI (a new tutor
 // conversation prefilled to talk the lesson's grammar and topics through), and Ask for more practices like this (a new tutor
 // conversation with a prefilled request naming the lesson). A prefilled conversation sends nothing until the learner sends it.
-export function LessonBoxActions({ lesson }: { lesson: LessonBoxLesson }) {
+// `compact` shows icons only, stacked (names stay as tooltips and accessible names).
+export function LessonBoxActions({ lesson, compact = false }: { lesson: LessonBoxLesson; compact?: boolean }) {
   const { t } = useTranslation();
   const named = { number: lesson.number, lesson: lesson.title, course: lesson.courseTitle };
-  return <div className={styles.actions} role="group" aria-label={t("courses.lessonBox.actions")}>
+  return <div className={styles.actions} data-compact={compact || undefined} role="group" aria-label={t("courses.lessonBox.actions")}>
     <div className={styles.pair}>
-      <Link className={styles.action} to="/words/drill" search={{ source: "course", course: lesson.courseId, direction: "mixed" }}>
+      <Link className={styles.action} title={compact ? t("courses.lessonBox.practiseWords") : undefined} to="/words/drill" search={{ source: "course", course: lesson.courseId, direction: "mixed" }}>
         <Dumbbell aria-hidden="true" /><span className={styles.label}>{t("courses.lessonBox.practiseWords")}</span>
       </Link>
-      <Link className={styles.action} to="/ai" search={{ prompt: t("courses.lessonBox.askAiPrompt", named) }}>
+      <Link className={styles.action} title={compact ? t("courses.lessonBox.askAi") : undefined} to="/ai" search={{ prompt: t("courses.lessonBox.askAiPrompt", named) }}>
         <MessageCircle aria-hidden="true" /><span className={styles.label}>{t("courses.lessonBox.askAi")}</span>
       </Link>
     </div>
-    <Link className={styles.action} to="/ai" search={{ prompt: t("courses.lessonBox.morePracticesPrompt", named) }}>
+    <Link className={styles.action} title={compact ? t("courses.lessonBox.morePractices") : undefined} to="/ai" search={{ prompt: t("courses.lessonBox.morePracticesPrompt", named) }}>
       <Sparkles aria-hidden="true" /><span className={styles.label}>{t("courses.lessonBox.morePractices")}</span>
     </Link>
   </div>;

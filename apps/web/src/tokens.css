@@ -275,6 +275,8 @@
   --size-reference-panel: 19.5rem;
   /* The right rail's width between 62em and 75em, where the reading column needs the room. */
   --size-reference-panel-min: 16rem;
+  /* The right rail collapsed to a column of small icon buttons: one --control-height-sm plus --space-3 each side. */
+  --size-reference-panel-slim: calc(var(--control-height-sm) + var(--space-3) * 2);
   --width-conversation: 48rem;
   /* The sign-in, registration, setup, and invitation card: a narrow centred column. */
   --size-auth-card: 26rem;

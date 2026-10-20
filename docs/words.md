@@ -180,7 +180,7 @@ Blanking misses many examples. A rough count over the Dutch course content on 20
 
 ## Word search
 
-The lesson page's [New words panel](courses.md#lesson-pages) has a search box above its words and a switch between This lesson and Library.
+The lesson page's [New words panel](courses.md#lesson-pages) has one search row above its words. It is the shared [`SearchField`](design-system.md#component-character): its start is a translate icon, a toggle `IconButton` that switches Library on (pressed while Library is searched; the magnifier stays when there is no library to search), and the browser's own search clear (×) ends it while there is a query.
 
 - **Folding.** Both modes compare search keys from `wordSearchKey` in the contracts: lower case, diacritics removed by Unicode decomposition, `ß` as `ss`, and runs of whitespace as one space, so `uber` finds `Über`. A query matches when its key is a substring of the key of a word's term, forms, or meaning.
 - **This lesson** (the default) filters the panel's own words in the browser; nothing is requested. Highlighting and scrolling to the words on screen keep working on the filtered list, and an empty result says that no word in the lesson matches.

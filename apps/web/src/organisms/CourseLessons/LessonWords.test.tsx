@@ -70,7 +70,38 @@ describe("New words search", () => {
   it("offers no library switch without a library", async () => {
     renderPanel(false);
     const panel = await screen.findByRole("complementary", { name: "New words" });
-    expect(within(panel).queryByRole("radio", { name: "Library" })).not.toBeInTheDocument();
+    expect(within(panel).queryByRole("button", { name: "Search the library" })).not.toBeInTheDocument();
+  });
+
+  it("collapses the rail panel to a slim column with Show new words and the compact footer", () => {
+    const toggle = vi.fn();
+    const footer = (compact: boolean) => <p>{compact ? "Compact actions" : "Footer actions"}</p>;
+    const panel = (collapsed: boolean) => <MantineProvider><LessonWords steps={steps} active={new Set([id(2)])} placement="rail" collapsed={collapsed} onToggle={toggle} footer={footer} /></MantineProvider>;
+    const { rerender } = render(panel(false));
+    expect(screen.getByText("Footer actions")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /New words/ })).toHaveAttribute("aria-expanded", "true");
+    rerender(panel(true));
+    const aside = screen.getByRole("complementary", { name: "New words" });
+    expect(aside).toHaveAttribute("data-rail-slim");
+    expect(within(aside).queryByRole("searchbox")).not.toBeInTheDocument();
+    expect(within(aside).getByLabelText("1 highlighted")).toHaveTextContent("1");
+    expect(within(aside).getByText("Compact actions")).toBeInTheDocument();
+    fireEvent.click(within(aside).getByRole("button", { name: "Show new words" }));
+    expect(toggle).toHaveBeenCalledOnce();
+  });
+
+  it("keeps the rail panel open where it cannot collapse, and gives the sheet no title or collapse of its own", () => {
+    const { unmount } = render(<MantineProvider><LessonWords steps={steps} active={new Set()} placement="rail" collapsible={false} collapsed onToggle={() => undefined} /></MantineProvider>);
+    let aside = screen.getByRole("complementary", { name: "New words" });
+    expect(aside).not.toHaveAttribute("data-rail-slim");
+    expect(within(aside).queryByRole("button", { name: /New words/ })).not.toBeInTheDocument();
+    expect(within(aside).getByRole("searchbox")).toBeInTheDocument();
+    unmount();
+    render(<MantineProvider><LessonWords steps={steps} active={new Set()} placement="sheet" collapsed onToggle={() => undefined} /></MantineProvider>);
+    aside = screen.getByRole("complementary", { name: "New words" });
+    expect(within(aside).queryByText("New words")).not.toBeInTheDocument();
+    expect(within(aside).getByRole("searchbox")).toBeInTheDocument();
+    expect(within(aside).getAllByRole("listitem")).toHaveLength(3);
   });
 
   it("searches the library after typing pauses and links each match to the lesson that introduced it", async () => {
@@ -79,7 +110,10 @@ describe("New words search", () => {
       : json({ items: [result(1, "der Hund"), result(2, "hundert")], nextCursor: "next-page" }));
     renderPanel();
     const panel = await screen.findByRole("complementary", { name: "New words" });
-    fireEvent.click(within(panel).getByRole("radio", { name: "Library" }));
+    const toggle = within(panel).getByRole("button", { name: "Search the library" });
+    expect(toggle).toHaveAttribute("aria-pressed", "false");
+    fireEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-pressed", "true");
     expect(within(panel).getByText("Type a word or a meaning to search every published lesson.")).toBeInTheDocument();
     const box = within(panel).getByRole("searchbox", { name: "Search words in the library" });
     fireEvent.change(box, { target: { value: "h" } });
@@ -105,7 +139,7 @@ describe("New words search", () => {
     expect(within(panel).queryByRole("button", { name: "Show more matches" })).not.toBeInTheDocument();
 
     // Back to the lesson, the same query filters its own words.
-    fireEvent.click(within(panel).getByRole("radio", { name: "This lesson" }));
+    fireEvent.click(within(panel).getByRole("button", { name: "Search the library" }));
     expect(within(panel).getByRole("status")).toHaveTextContent("No word in this lesson matches your search.");
   });
 
@@ -114,7 +148,7 @@ describe("New words search", () => {
       .mockResolvedValueOnce(json({ error: { code: "INTERNAL", message: "Down" } }, 500));
     renderPanel();
     const panel = await screen.findByRole("complementary", { name: "New words" });
-    fireEvent.click(within(panel).getByRole("radio", { name: "Library" }));
+    fireEvent.click(within(panel).getByRole("button", { name: "Search the library" }));
     const box = within(panel).getByRole("searchbox", { name: "Search words in the library" });
     fireEvent.change(box, { target: { value: "zebra" } });
     expect(await within(panel).findByText("No word in the library matches your search.")).toBeInTheDocument();

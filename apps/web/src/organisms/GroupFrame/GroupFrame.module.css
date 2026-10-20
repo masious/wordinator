@@ -38,9 +38,18 @@
   overscroll-behavior: contain;
 }
 /* More below the fold: the bottom edge fades out. */
+/* More beyond the fold: that edge fades out (the top, the bottom, or both). */
 .railScroll[data-more-below] {
   -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - var(--space-8)), transparent);
   mask-image: linear-gradient(to bottom, #000 calc(100% - var(--space-8)), transparent);
+}
+.railScroll[data-more-above] {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 var(--space-8));
+  mask-image: linear-gradient(to bottom, transparent, #000 var(--space-8));
+}
+.railScroll[data-more-above][data-more-below] {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 var(--space-8), #000 calc(100% - var(--space-8)), transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 var(--space-8), #000 calc(100% - var(--space-8)), transparent);
 }
 
 /* The resize handle straddles the rail's right border and shows an accent line while hovered, focused, or dragged. */
@@ -147,7 +156,9 @@
 .back:hover svg { transform: translateX(-2px); }
 .lessonBoxSlot { flex: none; margin: var(--space-5) var(--space-5) 0 0; }
 .lessonBoxSlot:empty { display: none; }
-.railScroll.lessonScroll { margin-top: var(--space-4); }
+/* The index takes every bit of height between the lesson box and the icon row; its faded edges stand in for the gaps. */
+.railScroll.lessonScroll { margin-top: var(--space-2); }
+.lessonScroll + .iconRow { margin-top: 0; }
 
 /* The compact navigation: the other items as one row of icon buttons above the lesson's actions. */
 .iconRow {
@@ -301,6 +312,8 @@
 }
 .referenceRail:empty { display: none; }
 .shell:has(> .referenceRail:not(:empty)) { --shell-inline-end: var(--size-reference-panel); grid-template-columns: var(--size-app-rail) minmax(0, 1fr) var(--size-reference-panel); }
+/* Content that marks itself `data-rail-slim` (the collapsed New words panel) narrows the right rail to a column of icons. */
+.shell:has(> .referenceRail [data-rail-slim]) { --size-reference-panel: var(--size-reference-panel-slim); }
 
 .mobileHeader { display: none; }
 .drawer { background: var(--color-surface-raised); }

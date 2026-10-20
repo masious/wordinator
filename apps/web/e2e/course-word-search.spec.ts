@@ -35,7 +35,9 @@ test("a learner searches the lesson's words and the library from the New words p
   await lessonBox.fill("trein");
   await expect(panel.getByRole("status")).toHaveText("No word in this lesson matches your search.");
 
-  await panel.getByText("Library", { exact: true }).click();
+  const library = panel.getByRole("button", { name: "Search the library" });
+  await library.click();
+  await expect(library).toHaveAttribute("aria-pressed", "true");
   const libraryBox = panel.getByRole("searchbox", { name: "Search words in the library" });
   await libraryBox.fill(tag);
   const results = panel.getByRole("list", { name: "Library matches" });

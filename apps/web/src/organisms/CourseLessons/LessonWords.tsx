@@ -1,8 +1,9 @@
 import { wordSearchKey, type LessonStep } from "@wordinator/contracts/lesson-document";
-import { ChevronDown } from "lucide-react";
-import { type RefObject, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { ChevronDown, PanelRightClose, PanelRightOpen } from "lucide-react";
+import { type ReactNode, type RefObject, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSpeechResolver } from "../../molecules/Speech";
+import { IconButton } from "../../ui";
 import { runWords, type RecapWord } from "../WordRecap/WordRecap";
 import { LibraryWordResults, WordSearchControls, type WordSearchMode } from "./LessonWordSearch";
 import styles from "./LessonWords.module.css";
@@ -88,11 +89,18 @@ export function useWordsCollapsed() {
 
 // Every new word of a lesson, in the order the player introduces them: the lesson page's vocabulary panel. Words whose blocks are on
 // screen are highlighted and brought into view. A search box at the top filters the lesson's words by term, forms, or meaning;
-// with a library, the search can instead run across the whole library (see LessonWordSearch). A `collapsible` panel (beside or
-// under the text) collapses to its title, which then counts the highlighted words; the phone's bottom sheet is not collapsible.
-// A `docked` panel fills the frame's right rail instead of being a card.
-export function LessonWords({ steps, active, groupId, collapsed = false, onToggle, collapsible = true, docked = false }: {
-  steps: readonly LessonStep[]; active: ReadonlySet<string>; groupId?: string; collapsed?: boolean; onToggle?: () => void; collapsible?: boolean; docked?: boolean;
+// with a library, the search can instead run across the whole library (see LessonWordSearch). Its `placement`:
+// - `rail`: fills the frame's right rail and scrolls on its own, the search row pinned to its top. A `collapsible` rail panel
+//   collapses to a slim column (`data-rail-slim` narrows the rail) holding only Show new words and the highlighted count.
+// - `under`: a card under the text, scrolled with the page; a `collapsible` one collapses to its title, which then counts the
+//   highlighted words.
+// - `sheet`: the body of the phone's bottom sheet, which names it, so the panel shows no title of its own; it scrolls on its own
+//   with the search row pinned, and never collapses.
+// A `footer` (told whether the panel is slim) sits in its own box pinned to the panel's bottom edge, also while it is slim.
+export type LessonWordsPlacement = "rail" | "under" | "sheet";
+export function LessonWords({ steps, active, groupId, collapsed = false, onToggle, collapsible = true, placement = "under", footer }: {
+  steps: readonly LessonStep[]; active: ReadonlySet<string>; groupId?: string; collapsed?: boolean; onToggle?: () => void; collapsible?: boolean;
+  placement?: LessonWordsPlacement; footer?: (compact: boolean) => ReactNode;
 }) {
   const { t } = useTranslation();
   const speech = useSpeechResolver();
@@ -103,17 +111,31 @@ export function LessonWords({ steps, active, groupId, collapsed = false, onToggl
   const key = wordSearchKey(query);
   const shown = useMemo(() => key ? words.filter((word) => [word.term, word.meaning, word.forms ?? ""].some((value) => wordSearchKey(value).includes(key))) : words, [words, key]);
   const library = mode === "library" && Boolean(groupId);
-  const closed = collapsible && collapsed;
+  const docked = placement === "rail"; const sheet = placement === "sheet";
+  const closed = collapsible && !sheet && collapsed;
   const highlighted = words.filter((word) => active.has(word.id)).length;
   useRevealCurrent(panelRef, library || closed ? "" : shown.filter((word) => active.has(word.id)).map((word) => word.id).join(" "));
   if (!words.length) return null;
+  const slim = docked && closed;
   const title = <><span className={styles.title}>{t("courses.words.title")}</span>
     <span className={styles.total} aria-hidden="true">{words.length}</span>
     {closed && highlighted > 0 && <span className={styles.count}>{t("courses.words.highlighted", { count: highlighted })}</span>}</>;
-  return <aside ref={panelRef} className={docked ? `${styles.panel} ${styles.docked}` : styles.panel} data-collapsed={closed || undefined} aria-label={t("courses.words.title")}>
-    {collapsible
+  const footerBox = footer && <div className={styles.footer}>{footer(slim)}</div>;
+  if (slim) return <aside ref={panelRef} className={`${styles.panel} ${styles.docked} ${styles.slim}`} data-collapsed data-rail-slim aria-label={t("courses.words.title")}>
+    <div className={styles.slimHead}>
+      <IconButton tone="quiet" size="sm" label={t("courses.words.show")} title={t("courses.words.show")} aria-expanded={false} onClick={onToggle}>
+        <PanelRightOpen aria-hidden="true" />
+      </IconButton>
+      {highlighted > 0 && <span className={styles.count} aria-label={t("courses.words.highlighted", { count: highlighted })}>{highlighted}</span>}
+    </div>
+    {footerBox}
+  </aside>;
+  return <aside ref={panelRef} className={`${styles.panel} ${docked ? styles.docked : sheet ? styles.sheet : ""}`} data-collapsed={closed || undefined} aria-label={t("courses.words.title")}>
+    {sheet ? null : collapsible
       ? <button type="button" className={styles.toggle} aria-expanded={!closed} aria-controls={closed ? undefined : bodyId} onClick={onToggle}>
-        {title}<ChevronDown aria-hidden="true" size={16} className={styles.chevron} />
+        {title}{docked
+          ? <PanelRightClose aria-hidden="true" size={16} className={styles.chevron} />
+          : <ChevronDown aria-hidden="true" size={16} className={styles.chevron} />}
       </button>
       : <div className={styles.toggle}>{title}</div>}
     {!closed && <div id={bodyId} className={styles.body}>
@@ -124,5 +146,6 @@ export function LessonWords({ steps, active, groupId, collapsed = false, onToggl
           active={active.has(word.id)} className={active.has(word.id) ? `${styles.word} ${styles.active}` : styles.word} />)}</ul>
       </>}
     </div>}
+    {footerBox}
   </aside>;
 }

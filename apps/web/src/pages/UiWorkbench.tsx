@@ -1,5 +1,5 @@
 import { Menu, Popover, SegmentedControl, Tooltip } from "@mantine/core";
-import { BookOpen, ChevronRight, Clock, Search, Sparkles, Volume2 } from "lucide-react";
+import { BookOpen, ChevronRight, Clock, Languages, Sparkles, Volume2 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { ProgressMeter } from "../molecules/ProgressMeter";
@@ -23,6 +23,7 @@ import {
   NavigationItem,
   PasswordField,
   RadioField,
+  SearchField,
   SectionHeader,
   SelectField,
   StarIcon,
@@ -50,6 +51,7 @@ export function UiWorkbench() {
   const [dialog, setDialog] = useState(false);
   const [confirm, setConfirm] = useState(false);
   const [view, setView] = useState("week");
+  const [library, setLibrary] = useState(false);
   const swatches = [
     ["foreground", t("ui.swatchInk")], ["page", t("ui.swatchCanvas")], ["surface-raised", t("ui.swatchPaper")],
     ["action", t("ui.swatchAccent")], ["info-soft", t("ui.swatchBlue")], ["support-soft", t("ui.swatchLime")],
@@ -100,6 +102,7 @@ export function UiWorkbench() {
                 <Tooltip label={t("ui.favoriteTip")}><IconButton label={t("ui.favorite")}><StarIcon /></IconButton></Tooltip>
                 <IconButton label={t("ui.groupReview")} tone="quiet"><Volume2 size={18} /></IconButton>
                 <IconButton label={t("ui.groupContinue")} tone="primary"><ChevronRight size={18} /></IconButton>
+                <IconButton label={t("ui.searchLibraryToggle")} tone="quiet" pressed={library} onClick={() => setLibrary((on) => !on)}><Languages size={18} /></IconButton>
               </div>
               <div className={styles.row}>
                 <Button size="sm">{t("ui.small")}</Button><Button size="md">{t("ui.medium")}</Button><Button size="lg">{t("ui.large")}</Button>
@@ -112,7 +115,10 @@ export function UiWorkbench() {
             </Surface>
             <Surface className={styles.demo}>
               <h3>{t("ui.fieldsTitle")}</h3>
-              <TextField aria-label={t("ui.searchLabel")} leftSection={<Search size={16} aria-hidden="true" />} placeholder={t("ui.searchPlaceholder")} />
+              <SearchField aria-label={t("ui.searchLabel")} placeholder={t("ui.searchPlaceholder")} />
+              <SearchField aria-label={library ? t("ui.librarySearchLabel") : t("ui.scopedSearchLabel")}
+                placeholder={library ? t("ui.librarySearchPlaceholder") : t("ui.scopedSearchPlaceholder")}
+                toggle={{ icon: <Languages aria-hidden="true" />, label: t("ui.searchLibraryToggle"), pressed: library, onToggle: () => setLibrary((on) => !on) }} />
               <SegmentedControl aria-label={t("ui.groupView")} value={view} onChange={setView} fullWidth
                 data={[{ value: "day", label: t("ui.groupDay") }, { value: "week", label: t("ui.groupWeek") }, { value: "month", label: t("ui.groupMonth") }]} />
               <ProgressMeter value={64} label={t("ui.progressSample")} showLabel />

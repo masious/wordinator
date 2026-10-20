@@ -60,7 +60,15 @@
 .iconButton[data-tone="quiet"]:disabled, .iconButton[data-tone="quiet"][data-disabled] { background: transparent; }
 .iconButton[data-tone="primary"] { --button-surface: var(--color-action); --button-ink: var(--color-action-text); border-color: var(--color-action); }
 .iconButton[data-tone="primary"]:hover:not(:disabled, [data-disabled]) { color: var(--button-ink); background: var(--color-hover); border-color: var(--color-hover); }
+/* Small: inside another control. Pressed (a toggle): the soft accent with an accent line and glyph, like a chosen tile. */
+.iconButton[data-size="sm"] { min-width: var(--control-height-sm); min-height: var(--control-height-sm); width: var(--control-height-sm); height: var(--control-height-sm); }
+.iconButton[data-size="sm"] svg { width: 1rem; height: 1rem; }
+.iconButton[aria-pressed="true"]:not([data-tone="primary"]), .iconButton[aria-pressed="true"]:not([data-tone="primary"]):hover:not(:disabled, [data-disabled]) { color: var(--color-action); background: var(--color-action-soft); border-color: color-mix(in srgb, var(--color-action) 35%, transparent); }
 .control { width: 100%; }
+/* SearchField: the browser's own clear button (WebKit and Chromium), drawn as a quiet line × and shown whenever there is text. */
+.control input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; width: 1rem; height: 1rem; margin-inline: var(--space-2) 0; background-color: var(--color-foreground-faint); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E") center / contain no-repeat; cursor: pointer; }
+.control input[type="search"]:not(:placeholder-shown)::-webkit-search-cancel-button { opacity: 1; pointer-events: auto; }
+.control input[type="search"]::-webkit-search-cancel-button:hover { background-color: var(--color-action-soft-text); }
 .choice { width: fit-content; max-width: 100%; }
 /* Feedback panel (StatusPanel): a hairline card in the tone's Lumen tint, with a 35% line of the tone's own colour. */
 .status { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-4); background: var(--color-surface); border: var(--ring-hairline); border-radius: var(--radius-md); }
@@ -135,3 +143,4 @@
 @media (prefers-reduced-motion: reduce) {
   .surfaceShell, .reveal, .stagger > * { opacity: 1; transform: none; animation: none; }
 }
+

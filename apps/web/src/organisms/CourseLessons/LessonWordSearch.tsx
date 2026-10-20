@@ -1,12 +1,11 @@
-import { SegmentedControl, TextInput } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { wordSearchKey, type WordSearchResult } from "@wordinator/contracts/lesson-document";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { BookOpen, Search } from "lucide-react";
+import { BookOpen, Languages } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { wordSearchQueryOptions } from "../../api";
-import { Button } from "../../ui";
+import { Button, SearchField } from "../../ui";
 import { WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import styles from "./LessonWords.module.css";
 import { PanelWord } from "./PanelWord";
@@ -15,20 +14,18 @@ export type WordSearchMode = "lesson" | "library";
 // Library requests wait until typing pauses.
 export const WORD_SEARCH_DEBOUNCE_MS = 300;
 
-// The search box of the New words panel and, when the panel can search the library, the switch between this lesson and the library.
+// The search box of the New words panel, one row (the shared SearchField). When the panel can search the library, its start is a
+// translate icon that switches the library on and off; without a library it stays a magnifier. The browser's own clear × ends it.
 export function WordSearchControls({ query, onQuery, mode, onMode }: {
   query: string; onQuery: (value: string) => void; mode: WordSearchMode | null; onMode: (mode: WordSearchMode) => void;
 }) {
   const { t } = useTranslation();
+  const library = mode === "library";
   return <div className={styles.search}>
-    <TextInput type="search" size="xs" value={query} onChange={(event) => onQuery(event.currentTarget.value)}
-      aria-label={mode === "library" ? t("courses.words.search.libraryLabel") : t("courses.words.search.lessonLabel")}
-      placeholder={mode === "library" ? t("courses.words.search.libraryPlaceholder") : t("courses.words.search.lessonPlaceholder")}
-      leftSection={<Search aria-hidden="true" size={14} />} />
-    {mode && <div role="group" aria-label={t("courses.words.search.scope")}>
-      <SegmentedControl size="xs" fullWidth value={mode} onChange={(value) => onMode(value as WordSearchMode)}
-        data={[{ value: "lesson", label: t("courses.words.search.thisLesson") }, { value: "library", label: t("courses.words.search.library") }]} />
-    </div>}
+    <SearchField value={query} onChange={(event) => onQuery(event.currentTarget.value)}
+      aria-label={library ? t("courses.words.search.libraryLabel") : t("courses.words.search.lessonLabel")}
+      placeholder={library ? t("courses.words.search.libraryPlaceholder") : t("courses.words.search.lessonPlaceholder")}
+      toggle={mode ? { icon: <Languages aria-hidden="true" />, label: t("courses.words.search.libraryToggle"), pressed: library, onToggle: () => onMode(library ? "lesson" : "library") } : undefined} />
   </div>;
 }
 

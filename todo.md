@@ -1,11 +1,47 @@
 this file isn't meant for agents. don't read it if you're an agent.
 
 
-[ ] show today's metrics in leftrail
+[x] practice progress (current session)
+[ ] re-write leftrail for lesson page:
+    [x] in this lesson
+    [x] story icon
+    [ ] back to course: needs name of course
+    [ ] change grammar icon (e.g., note, paper, sticky note, open book, book)
+    [ ] only animate the icon for corresponding active section
+    [ ] summary icon's color
+    [ ] no bg and border for headings inside content + bigger static icon
+[ ] answer dialog -> inline expansion with small animation:
+    [x] adding all questions
+    [x] inline answer boxes
+    [ ] show the question at the top box by rendering it "active"
+    [ ] remove the repeated question at the bottom box
+    [ ] skip question button
+    [ ] share icon (no text) at the right side 
+    [ ] put in order: drag and drop component
+    [ ] make everything smaller
+    [ ] remove "Nobody done yet · 8 questions left" subheading
+    [ ] for stacks, reuse the component for tutor's tool with multi-practices (dots)
+    [ ] "Matches the author’s version" should replace input(s) component
+    [x] hide for practices with many questions: "Press Enter to check Shift+Enter for a new line."
+[ ] lesson right section
+    [x] fixed search header
+    [x] click icon to reset query inside input
+    [x] move three buttons at the leftrail underneath, visible when not searching words
+    [ ] thicker library icon
+    [ ] smaller text in query input
+    [ ] matching items with query should be active (colorful)
+    [ ] header for footer section: Do more with AI (+ icon for header)
+[x] dashboard progress box
+    - no categories, single color
+    - a brand new page for extra details on progress
+    - Nothing to compare with yet -> Keep the hard work and we'll report progress soon!
+[ ] ai: find goal co-relation of every two lessons in the existing schema
+[~] measure reading time
 [x] drill results: gamify results page
 [x] reset progress of lesson, should reset word fluency
 [x] remove contribution section from course, as well as author's name from course and lessons everywhere
-[ ] measure reading time
+
+
 [ ] remove group-related tech-debts
 [ ] words drill: practice with space
 [ ] voice for reading practices
@@ -15,39 +51,52 @@ this file isn't meant for agents. don't read it if you're an agent.
 
 Lesson Page
 ===========
-[ ] leftrail indexes
-[ ] mark course as complete at the end of the page
-[ ] separate progress bar for practices
-[ ] new words panel usability
-[ ] 
+[x] leftrail indexes
+[x] mark course as complete at the end of the page
+[x] separate progress bar for practices
+[x] new words panel usability
 
 AI
 ===
-* Usages:
-    * after word drill
-        => generating paragraphs requires word knowledge.
-            => how about dictionary field in the tool call?
-    * once every two lessons (for each goal)
-        => listen and answer with read and type fallback
-    * twice every lesson (for each story)
-        => simple one-off practices
-    * "generate practice" after each block
-        => simple one-off practices
-    * refresh my grammar on "leggen of zetten"
-
 [ ] debug: tool calls, question answers with specific components fail to pass data from ui to the agent
-[ ] ctx: pull up practice blocks from in-progress lessons
+
+* Usages:
+    * tutor: refresh my grammar about "leggen of zetten"
+        - index grammar furthur for ai access.
+        - word batching for ai access ... graph db?
+    * words: after word drill
+        * generating paragraphs requires word knowledge.
+            - dictionary field in the tool call
+            - word batching for ai access (graph/tagging words)
+    * lesson: 
+        * after each story:
+            - summary and new words
+            - comprehension practice with one-off questions
+            - practice speaking dialog reading it loud
+        * content between the two stories
+            - explain grammar
+            - one-off grammar practice every section
+                - ask a question after every small section
+                - with one question underneath with 3 answer options
+            - tricky practices
+        * after every lesson:
+            - more practices including older vocab
+            - mix grammar
+        * every two-lessons:
+            - Practice making similar dialogs and follow lesson goals.
+            - some tricky grammar questions
+            - weakest words
+
 [ ] practice: attach and (later on) suggest ai-added practices
 [ ] suggest speaking practices: Fluentli's Bot
-[ ] read paragraphs and answer multiple questions
 [ ] ctx, practice: index grammar topics for look-up
-[ ] ctx: clean up initial prompt in tutor sections
+[ ] ctx: clean up initial prompt in tutor sessions
 [ ] (later) ctx: summery of conversations and need for dispatching summerization events
 [ ] drill results: practice failed words with ai session in drill's results page
-[ ] tool calls to update progress of a course
 
 
-
+Done
+======
 [x] user can fix his mistakes after seeing author's version when hits enter on a question. are we storing those mistakes too?
 [x] "Pick up where you left off" should have multiple progresses for each lesson. also, for a lesson, undone practices mean incomplete progress.
 [x] ai should also see a fluency level on a topic so that it can decide on moving on to the next sections or continuing with the existing ones.

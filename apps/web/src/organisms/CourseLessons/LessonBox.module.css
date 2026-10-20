@@ -13,11 +13,16 @@
 /* Practise words and Ask AI share one row; each label stays on one line. */
 .pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-2)}
 .pair .label{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-/* A narrow rail has no room for both labels on one row, so the pair stacks. */
-@container (max-width:16rem){.pair{grid-template-columns:minmax(0,1fr)}}
+/* Under 17rem (the phone drawer, the narrowed right rail) there is no room for both labels on one row, so the pair stacks. */
+@container (max-width:17rem){.pair{grid-template-columns:minmax(0,1fr)}}
 .label{min-width:0}
 .action{display:flex;align-items:center;gap:var(--space-2);min-height:var(--control-height-sm);padding:0.45rem 0.7rem;color:var(--color-foreground);background:var(--color-control-surface);border:var(--ring-hairline);border-radius:var(--radius-sm);font-size:var(--text-xs);font-weight:var(--weight-semibold);line-height:var(--line-compact);text-decoration:none;transition:border-color var(--motion-standard) ease,color var(--motion-standard) ease}
 .action:hover{color:var(--color-action-soft-text);border-color:var(--color-action)}
 .action svg{flex:none;width:1rem;height:1rem;color:var(--color-action)}
+/* Compact: icons only, stacked; the label stays for assistive technology. */
+.actions[data-compact]{justify-items:center}
+.actions[data-compact] .pair{grid-template-columns:minmax(0,1fr)}
+.actions[data-compact] .action{justify-content:center;width:var(--control-height-sm);padding:0}
+.actions[data-compact] .label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .note{margin:0;color:var(--color-foreground-faint);font-size:var(--text-xs);line-height:var(--line-compact)}
 @media(prefers-reduced-motion:reduce){.action,.heading,.titleReveal{transition:none}}

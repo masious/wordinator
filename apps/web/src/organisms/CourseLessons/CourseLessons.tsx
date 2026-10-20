@@ -20,7 +20,7 @@ import { LessonDocument } from "../LessonDocument/LessonDocument";
 import { LessonShareScope, ShareButton, useLessonShareScope } from "../LessonShare/LessonShare";
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import { WordRecap } from "../WordRecap/WordRecap";
-import { useRailSlots } from "../GroupFrame/GroupFrame";
+import { RAIL_DRAWER_QUERY, useRailSlots } from "../GroupFrame/GroupFrame";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import { LessonResetAction } from "./CourseProgress";
 import { LessonActions } from "./LessonActions";
@@ -30,7 +30,7 @@ import { LessonReadingProgress, type ReadingTracking, saveLessonPosition, useRes
 import { typicalMinutes, useReadingTime } from "./LessonTime";
 import { CategoryBadge, entryStates, LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN, stickyInset, useCurrentEntry, type LessonIndexEntry } from "./LessonIndex";
 import { LessonBox, LessonBoxActions, type LessonBoxLesson } from "./LessonBox";
-import { LessonWords, useVisibleWords, useWordsCollapsed } from "./LessonWords";
+import { LessonWords, useVisibleWords, useWordsCollapsed, type LessonWordsPlacement } from "./LessonWords";
 import { practiceFromBlock, PracticeSummary } from "./PracticeBlock";
 import { PracticeStepper } from "./PracticeStepper";
 import { AiPracticeToggle, useAiPracticeSlots, type AiPracticeScope } from "./AiPractices";
@@ -114,7 +114,12 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const [wordsCollapsed, toggleWords] = useWordsCollapsed();
   const rail = useRailSlots();
   const phone = useMediaQuery("(max-width: 48em)", undefined, { getInitialValueInEffect: false });
+  // Below the rail's drawer breakpoint the lesson's actions are in the drawer; above it they sit in the New words panel's footer.
+  const railDrawer = useMediaQuery(RAIL_DRAWER_QUERY, undefined, { getInitialValueInEffect: false });
   const inline = useMediaQuery("(max-width: 62em)", undefined, { getInitialValueInEffect: false });
+  // Up to 75em the right rail is narrowed for the reading column, so there the docked panel can collapse to a column of icons;
+  // wider, there is room for both and it stays open.
+  const roomy = !useMediaQuery("(max-width: 75em)", undefined, { getInitialValueInEffect: false });
   const [sheetOpen, setSheetOpen] = useState(false);
   const [percent, setPercent] = useState(0);
   const [reachedStep, setReachedStep] = useState(-1);
@@ -147,8 +152,9 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   // Where the vocabulary panel goes: the right rail on wide screens, under the text below 62em (or outside the frame), a sheet on phones.
   const placement = !hasWords ? null : phone ? "sheet" : !inline && rail.reference ? "rail" : "under";
   const docked = placement === "rail";
-  const words = (props: { docked?: boolean; collapsible?: boolean }) =>
-    <LessonWords steps={steps} active={active} groupId={scope.groupId} collapsed={wordsCollapsed} onToggle={toggleWords} {...props} />;
+  const words = (props: { placement: LessonWordsPlacement; collapsible?: boolean }) =>
+    <LessonWords steps={steps} active={active} groupId={scope.groupId} collapsed={wordsCollapsed} onToggle={toggleWords}
+      footer={railDrawer ? undefined : (compact) => <LessonBoxActions lesson={box} compact={compact} />} {...props} />;
   return <LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={styles.reader} data-action-bar={phone || undefined}>
     {!gate && <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} onPercent={setPercent} onReached={setReachedStep} />}
     <div ref={reading} className={gate ? `${styles.body} ${styles.gated}` : styles.body} style={gate && gateHeight !== null ? { maxBlockSize: gateHeight } : undefined}>
@@ -167,8 +173,8 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
       <p className={styles.gateNotice}>{t("courses.lessons.startNotice")}</p>
       <Button onClick={gate}>{t("courses.lessons.startReading")}</Button>
     </div>}
-    {docked && rail.reference && createPortal(<div ref={side} className={styles.side}>{words({ docked: true })}</div>, rail.reference)}
-    {placement === "under" && <div ref={side} className={styles.under}>{words({})}</div>}
+    {docked && rail.reference && createPortal(<div ref={side} className={styles.side}>{words({ placement: "rail", collapsible: !roomy })}</div>, rail.reference)}
+    {placement === "under" && <div ref={side} className={styles.under}>{words({ placement: "under" })}</div>}
     {indexed.length > 0 && rail.index && createPortal(<LessonIndex entries={indexed} current={current} states={states} reading={reading} side={side} onJump={rail.closeRail} />, rail.index)}
     {lessonBox}
     {phone && createPortal(<nav className={styles.actionBar} aria-label={t("courses.lessons.actionBar")}>
@@ -176,8 +182,8 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
       {hasWords && <button type="button" className={styles.barButton} aria-expanded={sheetOpen} onClick={() => setSheetOpen(true)}><BookA aria-hidden="true" />{t("courses.lessons.words")}</button>}
     </nav>, window.document.body)}
     {placement === "sheet" && <Drawer opened={sheetOpen} onClose={() => setSheetOpen(false)} position="bottom" size="75%" title={t("courses.words.title")}
-      classNames={{ content: styles.sheet, header: styles.sheetHeader }}>
-      {words({ collapsible: false })}
+      classNames={{ content: styles.sheet, header: styles.sheetHeader, body: styles.sheetBody }}>
+      {words({ placement: "sheet" })}
     </Drawer>}
   </div></SpeechScope></WordBookmarkScope></LessonShareScope>;
 }

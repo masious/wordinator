@@ -101,6 +101,26 @@ export function CategoryBadge({ category, locked = false, className }: { categor
   </span>;
 }
 
+// Whenever the scrolling part changes height (the Study time card or the lesson box's figures opening or closing, frame by frame
+// as they grow or fold, or the window resizing), the current entry is brought to its centre, as far as the content allows.
+function useCentreOnResize(scroller: RefObject<HTMLElement | null>, list: RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    const panel = scroller.current;
+    if (!panel || panel === list.current || typeof ResizeObserver === "undefined") return;
+    let height = panel.clientHeight;
+    const observer = new ResizeObserver(() => {
+      if (panel.clientHeight === height) return;
+      height = panel.clientHeight;
+      const item = panel.querySelector<HTMLElement>('[aria-current="location"]'); if (!item) return;
+      const frame = panel.getBoundingClientRect(); const box = item.getBoundingClientRect();
+      const middle = box.top - frame.top + panel.scrollTop + box.height / 2;
+      panel.scrollTop = Math.max(0, Math.min(middle - height / 2, panel.scrollHeight - height));
+    });
+    observer.observe(panel);
+    return () => observer.disconnect();
+  }, [scroller, list]);
+}
+
 // The lesson's index in the app rail, under the lesson box: its headings, one row each after their category's badge. The entry
 // the reader is in sits on the soft accent; locked entries are grey behind a lock. Choosing an entry scrolls the page to it, then
 // calls `onJump` (the phone's drawer closes). A long index scrolls with the rail's scrolling part, which keeps the current entry in
@@ -116,6 +136,7 @@ export function LessonIndex({ entries, current, states, reading, side, onJump }:
   const scroller = useRef<HTMLElement | null>(null);
   useLayoutEffect(() => { scroller.current = list.current?.closest<HTMLElement>("[data-rail-scroll]") ?? list.current; });
   useRevealCurrent(scroller, current >= 0 ? entries[current]!.id : "", '[aria-current="location"]');
+  useCentreOnResize(scroller, list);
   const jump = (id: string) => {
     const element = reading.current?.querySelector<HTMLElement>(`[data-block-id="${id}"]`); if (!element) return;
     const top = element.getBoundingClientRect().top + window.scrollY - stickyInset(side.current);

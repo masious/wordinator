@@ -1,10 +1,11 @@
 /* The vocabulary panel: a sticky column beside the text that scrolls on its own, under the text on narrower screens, and the body
    of the phone's bottom sheet. */
-.panel{display:grid;align-content:start;gap:var(--space-3);min-width:0;max-height:100%;overflow-y:auto;padding:var(--space-4);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);overscroll-behavior:contain}
-.panel[data-collapsed]{padding-block:var(--space-2)}
-/* Docked in the right rail: the rail is the surface, so the panel fills its height and scrolls on its own. */
-.docked{height:100%;max-height:none;padding:var(--space-6) var(--space-4);background:none;border:0;border-radius:0;box-shadow:none}
-.docked[data-collapsed]{padding-block:var(--space-6)}
+.panel{--pad-x:var(--space-4);--pad-y:var(--space-4);display:flex;flex-direction:column;gap:var(--space-3);min-width:0;max-height:100%;overflow-y:auto;padding:var(--pad-y) var(--pad-x);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card);overscroll-behavior:contain}
+.panel[data-collapsed]{--pad-y:var(--space-2)}
+/* Docked in the right rail: the rail is the surface, so the panel fills its height and scrolls on its own. In the phone's sheet the
+   sheet is the surface and names the panel; the panel fills the sheet's body and scrolls on its own. */
+.sheet{--pad-y:var(--space-2);flex:1;min-height:0;max-height:none;background:none;border:0;border-radius:0;box-shadow:none}
+.docked,.docked[data-collapsed]{--pad-y:var(--space-6);height:100%;max-height:none;background:none;border:0;border-radius:0;box-shadow:none}
 .toggle{display:flex;align-items:center;gap:var(--space-2);width:100%;min-height:var(--control-height-sm);padding:0;font:inherit;color:var(--color-foreground);text-align:start;background:none;border:0}
 button.toggle{cursor:pointer}
 button.toggle:focus-visible{outline-offset:2px;border-radius:var(--radius-sm)}
@@ -13,22 +14,32 @@ button.toggle:focus-visible{outline-offset:2px;border-radius:var(--radius-sm)}
 .count{padding:0.2rem var(--space-2);font:var(--weight-medium) var(--type-badge)/1 var(--font-mono);color:var(--color-action-soft-text);background:var(--color-action-soft);border-radius:var(--radius-pill)}
 .chevron{flex:none;margin-left:auto;color:var(--color-foreground-faint);transition:transform var(--motion-standard) var(--ease-physical)}
 .panel[data-collapsed] .chevron{transform:rotate(-90deg)}
-.body{display:grid;align-content:start;gap:var(--space-3);min-width:0}
+/* Docked and collapsed: a slim column of small icon buttons (--size-reference-panel-slim), Show new words at the top with the
+   number of highlighted words under it, the footer's actions at the bottom. */
+.slim{--pad-x:var(--space-3)}
+.slimHead{display:grid;justify-items:center;gap:var(--space-2)}
+.body{flex:none;display:grid;align-content:start;gap:var(--space-3);min-width:0}
 .list{display:grid;gap:var(--space-2);margin:0;padding:0;list-style:none}
 /* A Lumen reference item: the word on the card surface with a line border, its button stack at the row's end. Words of blocks off
    screen are dimmed; the ones on screen are on the soft accent. */
-.word{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:var(--space-3);min-width:0;padding:var(--space-3);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-md);opacity:0.6;transition:background-color var(--motion-standard) var(--ease-physical),border-color var(--motion-standard) var(--ease-physical),opacity var(--motion-standard) var(--ease-physical)}
+.word{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:0;min-width:0;overflow:hidden;background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-md);opacity:0.6;transition:background-color var(--motion-standard) var(--ease-physical),border-color var(--motion-standard) var(--ease-physical),opacity var(--motion-standard) var(--ease-physical)}
 .active{opacity:1;background:var(--color-action-soft);border-color:color-mix(in srgb,var(--color-action) 35%,transparent)}
-.copy{display:grid;gap:var(--space-1);min-width:0}
+.copy{display:grid;gap:var(--space-1);min-width:0;padding:var(--space-3)}
 .term{margin:0;font-weight:var(--weight-semibold);overflow-wrap:anywhere}
 .forms{margin:0;font:var(--type-metadata)/var(--line-compact) var(--font-mono);color:var(--color-foreground-muted);overflow-wrap:anywhere}
 .meaning{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}
+/* Closed, the term and the meaning keep to one line each and end in an ellipsis, so every closed row is the same height; opening
+   the row shows them in full. */
+.word:not([data-open]) :is(.term,.meaning){overflow:hidden;white-space:nowrap;text-overflow:ellipsis;overflow-wrap:normal}
 /* The attached vertical stack: Speak, Bookmark, Expand, each a square cell, joined by hairlines. */
-.stack{display:grid;overflow:hidden;background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-sm)}
+/* The row's end column, corner to corner: it spans the card's full height with only its inner edge lined, and the card clips its
+   outer corners. Closed, its cells share the height evenly; open, they keep their size at the top of the column. */
+.stack{display:grid;grid-auto-rows:minmax(var(--control-height-sm),1fr);align-self:stretch;background:var(--color-core);border-inline-start:var(--ring-hairline)}
+.word[data-open] .stack{grid-auto-rows:var(--control-height-sm);align-content:start}
 .stackCell{display:grid}
 .stackCell:empty{display:none}
 .stackCell+.stackCell{border-top:var(--ring-hairline)}
-.stackCell :is(button){display:grid;place-items:center;width:var(--control-height-sm);min-width:0;height:var(--control-height-sm);min-height:0;margin:0;padding:0;color:var(--color-foreground-muted);background:none;border:0;border-radius:0;cursor:pointer;transition:color var(--motion-press) var(--ease-physical),background-color var(--motion-press) var(--ease-physical)}
+.stackCell :is(button){display:grid;place-items:center;width:var(--control-height-sm);min-width:0;height:100%;min-height:0;margin:0;padding:0;color:var(--color-foreground-muted);background:none;border:0;border-radius:0;cursor:pointer;transition:color var(--motion-press) var(--ease-physical),background-color var(--motion-press) var(--ease-physical)}
 .stackCell :is(button):hover{color:var(--color-action-soft-text);background:var(--color-action-soft)}
 .stackCell :is(button):focus-visible{outline-offset:-3px}
 .stackCell :is(button) svg{width:1rem;height:1rem}
@@ -38,7 +49,15 @@ button.toggle:focus-visible{outline-offset:2px;border-radius:var(--radius-sm)}
 .details{display:grid;gap:var(--space-2);min-width:0;padding-top:var(--space-2);margin-top:var(--space-1);border-top:var(--ring-hairline)}
 .example{display:flex;align-items:center;gap:var(--space-2);margin:0;font-size:var(--type-metadata);font-style:italic;overflow-wrap:anywhere}
 .note{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}
-.search{display:grid;gap:var(--space-2)}
+.search{display:grid}
+/* Where the panel scrolls on its own (the rail and the sheet), the search row stays pinned to its very top edge, past its padding,
+   while the words scroll beneath it. Under the text the page scrolls, so it does not stick there. */
+.docked .search,.sheet .search{position:sticky;top:calc(-1 * var(--pad-y));z-index:1;padding-block:var(--space-2)}
+.docked .search{background:var(--color-surface-raised)}
+.sheet .search{background:var(--color-surface)}
+/* The lesson's actions in a box of their own, pinned to the panel's bottom edge (full width, past its padding), also when the
+   panel is collapsed. */
+.footer{position:sticky;bottom:calc(-1 * var(--pad-y));z-index:1;margin:auto calc(-1 * var(--pad-x)) calc(-1 * var(--pad-y));padding:var(--space-3) var(--pad-x);background:var(--color-surface);border-top:var(--ring-hairline)}
 .status{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 .result{opacity:1}
 .source{display:inline-flex;align-items:center;gap:var(--space-1);min-width:0;font-size:var(--type-metadata);color:var(--color-foreground-muted);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:0.18em;overflow-wrap:anywhere;border-radius:var(--radius-sm);transition:color var(--motion-press) var(--ease-physical)}

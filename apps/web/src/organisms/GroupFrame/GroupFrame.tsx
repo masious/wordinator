@@ -12,11 +12,12 @@ import { StudyTimeBox, useFiguresOpen } from "../StudyTime/StudyTime";
 import type { SignedInSession } from "../types/auth";
 import styles from "./GroupFrame.module.css";
 
-// The lesson page has its own rail (docs/courses.md#lesson-pages): Back to course, then its lesson box, its index, and, above the
-// profile row, its actions, all through portals into the slots below. Only the rail on screen offers slots: the sticky
-// rail on wide screens, the drawer's copy (while open) below the rail breakpoint. `openRail` and `closeRail` open and close that
-// drawer; closing does nothing on wide screens. `reference` is the right rail, a full-height column docked to the window's right
-// edge like the app rail, where the lesson page puts its vocabulary panel; it takes room only while filled.
+// The lesson page has its own rail (docs/courses.md#lesson-pages): Back to course, then its lesson box and its index, through
+// portals into the slots below; its actions have a slot in the drawer only (on wide screens they sit in the vocabulary panel).
+// Only the rail on screen offers slots: the sticky rail on wide screens, the drawer's copy (while open) below the rail breakpoint.
+// `openRail` and `closeRail` open and close that drawer; closing does nothing on wide screens. `reference` is the right rail, a
+// full-height column docked to the window's right edge like the app rail, where the lesson page puts its vocabulary panel; it
+// takes room only while filled, and only a slim column of icons while its content carries `data-rail-slim`.
 // `studyOpen` says whether the rail's Study time card is shown; the lesson box shrinks while it is.
 export type RailSlots = { index: HTMLElement | null; tutor?: HTMLElement | null; box: HTMLElement | null; actions?: HTMLElement | null; reference: HTMLElement | null; openRail: () => void; closeRail: () => void; studyOpen?: boolean };
 export const RailSlotsContext = createContext<RailSlots>({ index: null, tutor: null, box: null, actions: null, reference: null, openRail: () => undefined, closeRail: () => undefined, studyOpen: false });
@@ -24,7 +25,7 @@ export const useRailSlots = () => useContext(RailSlotsContext);
 type SlotRef = (element: HTMLElement | null) => void;
 type SlotRefs = { index: SlotRef; tutor: SlotRef; box: SlotRef; actions: SlotRef };
 // The rail's breakpoint, matching the `68rem` media query in GroupFrame.module.css.
-const RAIL_DRAWER_QUERY = "(max-width: 68rem)";
+export const RAIL_DRAWER_QUERY = "(max-width: 68rem)";
 
 // The collapsed course list is a per-device convenience, kept per account, for course and lesson pages only (other pages start
 // collapsed); storage may be unavailable, so it falls back to expanded.
@@ -199,13 +200,16 @@ function AccountMenu({ trigger }: { trigger: ReactNode }) {
   </Menu>;
 }
 
-// Whether the rail's scrolling part has more below its fold, so its bottom edge can fade. It follows the scroll and both the part's
-// and its content's size, since the lesson index grows the content without resizing the part.
-function useMoreBelow(scroller: RefObject<HTMLElement | null>) {
-  const [more, setMore] = useState(false);
+// Whether the rail's scrolling part has more above and below its fold, so those edges can fade. It follows the scroll and both the
+// part's and its content's size, since the lesson index grows the content without resizing the part.
+function useMoreBeyond(scroller: RefObject<HTMLElement | null>) {
+  const [more, setMore] = useState({ above: false, below: false });
   useEffect(() => {
     const element = scroller.current; if (!element) return;
-    const measure = () => setMore(element.scrollTop + element.clientHeight < element.scrollHeight - 1);
+    const measure = () => {
+      const above = element.scrollTop > 1; const below = element.scrollTop + element.clientHeight < element.scrollHeight - 1;
+      setMore((current) => current.above === above && current.below === below ? current : { above, below });
+    };
     measure();
     element.addEventListener("scroll", measure, { passive: true });
     const observer = typeof ResizeObserver === "undefined" ? null : new ResizeObserver(measure);
@@ -216,11 +220,12 @@ function useMoreBelow(scroller: RefObject<HTMLElement | null>) {
   return more;
 }
 
-// The rail's scrolling part; its bottom edge fades while there is more below.
+// The rail's scrolling part; its top and bottom edges fade while there is more beyond them.
 function RailScroll({ className, children }: { className?: string; children: ReactNode }) {
   const scroll = useRef<HTMLDivElement>(null);
-  const moreBelow = useMoreBelow(scroll);
-  return <div ref={scroll} className={`${styles.railScroll} ${className ?? ""}`} data-rail-scroll data-more-below={moreBelow || undefined}>{children}</div>;
+  const more = useMoreBeyond(scroll);
+  return <div ref={scroll} className={`${styles.railScroll} ${className ?? ""}`} data-rail-scroll
+    data-more-above={more.above || undefined} data-more-below={more.below || undefined}>{children}</div>;
 }
 
 // The Study time card's shown or hidden choice, one for every page (docs/learning-time.md#study-time).
@@ -254,9 +259,10 @@ function Profile({ user, study, studyId }: { user: SignedInSession["user"]; stud
 }
 
 // A lesson page's rail (docs/courses.md#lesson-box): Back to course, the lesson box, and the lesson's index, which alone scrolls;
-// then the other navigation items as a row of icons and the lesson's actions.
-function LessonRail({ courseSlug, pathname, slots, others }: {
-  courseSlug: string; pathname: string; slots: SlotRefs | null; others: Array<{ to: NavTarget; active: boolean; icon: ReactNode; label: string }>;
+// then the other navigation items as a row of icons. The lesson's actions sit in the drawer only: on wide screens they are in the
+// New words panel's footer (docs/courses.md#lesson-box).
+function LessonRail({ courseSlug, pathname, slots, others, drawer }: {
+  courseSlug: string; pathname: string; slots: SlotRefs | null; others: Array<{ to: NavTarget; active: boolean; icon: ReactNode; label: string }>; drawer: boolean;
 }) {
   const { t } = useTranslation();
   return <>
@@ -267,11 +273,11 @@ function LessonRail({ courseSlug, pathname, slots, others }: {
       <NavIcon to="/courses" active={pathname === "/courses"} icon={<BookOpen />} label={t("nav.courses")} />
       {others.map((item) => <NavIcon key={item.to} {...item} />)}
     </nav>
-    {slots && <div ref={slots.actions} className={styles.boxSlot} />}
+    {drawer && slots && <div ref={slots.actions} className={styles.boxSlot} />}
   </>;
 }
 
-function Rail({ groupId, session, pathname, slots, study }: { groupId: string; session: SignedInSession; pathname: string; slots: SlotRefs | null; study: StudyToggle }) {
+function Rail({ groupId, session, pathname, slots, study, drawer = false }: { groupId: string; session: SignedInSession; pathname: string; slots: SlotRefs | null; study: StudyToggle; drawer?: boolean }) {
   const { t } = useTranslation();
   const { user } = session;
   const studyId = useId();
@@ -295,7 +301,7 @@ function Rail({ groupId, session, pathname, slots, study }: { groupId: string; s
   ];
   return <div className={styles.railBody}>
     <Brand />
-    {lessonCourse ? <LessonRail courseSlug={decodeURIComponent(lessonCourse)} pathname={pathname} slots={slots} others={others} />
+    {lessonCourse ? <LessonRail courseSlug={decodeURIComponent(lessonCourse)} pathname={pathname} slots={slots} others={others} drawer={drawer} />
       : <RailScroll>
         <nav className={styles.nav} aria-label={t("nav.primary")}>
           <CourseSubItems groupId={groupId} pathname={pathname} collapsed={collapsed} onToggle={toggle} />
@@ -345,7 +351,7 @@ export function GroupFrame({ children, groupId, session, fill = false }: PropsWi
     </header>
     <Drawer opened={drawer} onClose={() => setDrawer(false)} size="80%" padding={0} withCloseButton={false} title={t("nav.primary")}
       classNames={{ content: styles.drawer, header: styles.drawerHeader }}>
-      <Rail groupId={groupId} session={session} pathname={pathname} slots={narrow ? slotRefs : null} study={study} />
+      <Rail groupId={groupId} session={session} pathname={pathname} slots={narrow ? slotRefs : null} study={study} drawer />
     </Drawer>
     <main className={styles.shellMain}>{children}</main>
     <div ref={setReferenceSlot} className={styles.referenceRail} />

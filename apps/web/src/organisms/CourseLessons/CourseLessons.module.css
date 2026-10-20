@@ -80,7 +80,9 @@
 .barButton{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);min-height:var(--touch-target);padding:0 var(--space-3);font:inherit;font-size:var(--type-control-label);font-weight:var(--weight-semibold);color:var(--color-foreground);background:none;border:0;border-radius:var(--radius-md);cursor:pointer}
 .barButton:hover,.barButton[aria-expanded="true"]{color:var(--color-action-soft-text);background:var(--color-action-soft)}
 .barButton svg{width:1.1rem;height:1.1rem}
-.sheet{background:var(--color-surface);border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+/* The sheet does not scroll itself: the panel in its body does, so the panel's search row can stay pinned. */
+.sheet{display:flex;flex-direction:column;overflow:hidden;background:var(--color-surface);border-radius:var(--radius-lg) var(--radius-lg) 0 0}
+.sheetBody{display:flex;flex-direction:column;flex:1;min-height:0;padding-block:0}
 .sheetHeader{background:var(--color-surface)}
 .start{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-3);margin-top:var(--space-2)}
 .position{font:var(--type-metadata)/1 var(--font-mono);color:var(--color-foreground-muted)}

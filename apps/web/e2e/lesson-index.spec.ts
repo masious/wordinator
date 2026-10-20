@@ -52,15 +52,25 @@ test("the lesson index follows the reader, jumps to an entry, and sits above a c
   await page.getByRole("button", { name: "Study time" }).click();
   await expect(box).not.toHaveAttribute("data-compact");
 
-  // Collapsed, the panel keeps only its title with the number of highlighted words, and stays collapsed after a reload.
+  // The lesson's actions sit in the panel's footer, not in the app rail. With room for the panel beside the text (above 75em) it
+  // cannot collapse.
+  const actions = page.getByRole("group", { name: "Lesson actions" });
+  await expect(actions).toHaveCount(1);
+  await expect(words.getByRole("group", { name: "Lesson actions" }).getByRole("link", { name: "Practise words" })).toBeVisible();
+  await expect(words.getByRole("button", { name: /^New words/ })).toHaveCount(0);
+
+  // Where the rail is narrowed (up to 75em), the panel collapses to a slim column of icons, stays collapsed after a reload, and
+  // keeps the actions as icons at its foot.
+  await page.setViewportSize({ width: 1150, height: 800 });
   const toggle = words.getByRole("button", { name: /^New words/ });
   await toggle.click();
-  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(words).toHaveAttribute("data-rail-slim");
   await expect(words.getByRole("searchbox")).toHaveCount(0);
-  await expect(toggle).toContainText(/\d+ highlighted/);
+  expect((await words.boundingBox())!.width).toBeLessThan(80);
+  await expect(words.getByRole("link", { name: "Ask AI" })).toBeVisible();
   await page.reload();
-  await expect(page.getByRole("complementary", { name: "New words" }).getByRole("button", { name: /^New words/ })).toHaveAttribute("aria-expanded", "false");
-  await page.getByRole("complementary", { name: "New words" }).getByRole("button", { name: /^New words/ }).click();
+  await expect(page.getByRole("complementary", { name: "New words" })).toHaveAttribute("data-rail-slim");
+  await page.getByRole("complementary", { name: "New words" }).getByRole("button", { name: "Show new words" }).click();
   await expect(page.getByRole("complementary", { name: "New words" }).getByText("het weer")).toBeVisible();
 
   // Every page's profile row has the Study time button; the card stays hidden until it is pressed.

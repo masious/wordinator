@@ -21,6 +21,7 @@ import {
   type TextInputProps,
 } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
+import { Search } from "lucide-react";
 import {
   useEffect,
   useRef,
@@ -59,10 +60,14 @@ export function ButtonGroup({ label, className, children, ...props }: Omit<Manti
 }
 
 // A square icon-only button. `tone="quiet"` drops the surface and edge for actions inside rows and cards (such as a list item's
-// archive button), and `primary` sits on the action colour (such as a composer's send).
+// archive button), and `primary` sits on the action colour (such as a composer's send). `size="sm"` is `--control-height-sm`
+// square, for buttons inside another control (such as a search field's start). Given `pressed`, it is a toggle button
+// (`aria-pressed`): pressed, it sits on the soft accent with an accent line and an accent glyph, in every tone but primary.
 export type IconButtonTone = "default" | "quiet" | "primary";
-export function IconButton({ label, className, children, tone = "default", ...props }: Omit<ActionIconProps, "variant"> & Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof ActionIconProps | "aria-label"> & { label: string; tone?: IconButtonTone }) {
-  return <ActionIcon aria-label={label} data-tone={tone} className={`${styles.iconButton} ${className ?? ""}`} {...props}>{children}</ActionIcon>;
+export function IconButton({ label, className, children, tone = "default", size = "md", pressed, ...props }: Omit<ActionIconProps, "variant" | "size"> & Omit<ButtonHTMLAttributes<HTMLButtonElement>, keyof ActionIconProps | "aria-label" | "aria-pressed"> & {
+  label: string; tone?: IconButtonTone; size?: "sm" | "md"; pressed?: boolean;
+}) {
+  return <ActionIcon aria-label={label} aria-pressed={pressed} data-tone={tone} data-size={size} className={`${styles.iconButton} ${className ?? ""}`} {...props}>{children}</ActionIcon>;
 }
 
 export function ArrowIcon() {
@@ -140,6 +145,17 @@ export function FieldHelp({ id, children, error = false }: PropsWithChildren<{ i
 }
 
 export function TextField({ className, ...props }: TextInputProps) { return <TextInput className={`${styles.control} ${className ?? ""}`} {...props} />; }
+// A one-line search box (`type="search"`, so the browser's own clear × ends it while there is text). Its start is a magnifier, or,
+// given `toggle`, a small quiet toggle `IconButton` that switches a search scope on and off (such as the library); its label is
+// also its tooltip.
+export type SearchToggle = { icon: ReactNode; label: string; pressed: boolean; onToggle: () => void };
+export function SearchField({ toggle, className, ...props }: Omit<TextInputProps, "type" | "leftSection" | "leftSectionPointerEvents"> & { toggle?: SearchToggle }) {
+  return <TextInput type="search" className={`${styles.control} ${className ?? ""}`} leftSectionPointerEvents={toggle ? "all" : "none"}
+    leftSection={toggle
+      ? <IconButton tone="quiet" size="sm" label={toggle.label} title={toggle.label} pressed={toggle.pressed} onClick={toggle.onToggle}>{toggle.icon}</IconButton>
+      : <Search aria-hidden="true" size={16} />}
+    {...props} />;
+}
 export function PasswordField({ className, ...props }: PasswordInputProps) { return <PasswordInput className={`${styles.control} ${className ?? ""}`} {...props} />; }
 export function TextAreaField({ className, ...props }: TextareaProps) { return <Textarea className={`${styles.control} ${className ?? ""}`} {...props} />; }
 export function SelectField({ className, ...props }: SelectProps) { return <Select className={`${styles.control} ${className ?? ""}`} {...props} />; }
