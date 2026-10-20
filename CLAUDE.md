@@ -64,7 +64,7 @@ Every implementation change must run the relevant subset of:
 - TypeScript type-checking
 - Vitest unit and integration tests
 - React Testing Library component/flow tests
-- Playwright critical-path tests
+- Playwright critical-path tests: only the affected specs, not the full `pnpm test:e2e` (see `docs/testing.md#running-playwright`)
 - Production builds for affected applications
 
 Authentication and global-resource authorization tests are mandatory for protected API work. Changes to registration or onboarding require negative authorization and validation tests. Do not claim commands passed until the workspace and commands exist and were actually run.

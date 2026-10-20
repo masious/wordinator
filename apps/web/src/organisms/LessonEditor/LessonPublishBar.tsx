@@ -7,8 +7,8 @@ import styles from "./LessonEditor.module.css";
 
 // The bar above the editor: save state, whether readers see the latest draft, who edited last, and the owner's actions.
 // Contributors see no publishing actions; their work stays a draft until the owner publishes it.
-export function LessonPublishBar({ owner, published, changed, status, editorName, problems, error, busy, onPublish, onDiscard, onUnpublish, onFocusProblem, onDone }: {
-  owner: boolean; published: boolean; changed: boolean; status: SaveStatus; editorName: string; problems: LessonPublishProblem[]; error: Error | null;
+export function LessonPublishBar({ owner, published, changed, status, problems, error, busy, onPublish, onDiscard, onUnpublish, onFocusProblem, onDone }: {
+  owner: boolean; published: boolean; changed: boolean; status: SaveStatus; problems: LessonPublishProblem[]; error: Error | null;
   busy: "publish" | "discard" | "unpublish" | "done" | null;
   onPublish: () => void; onDiscard: () => void; onUnpublish: () => void; onFocusProblem: (problem: LessonPublishProblem) => void; onDone: () => void;
 }) {
@@ -19,7 +19,6 @@ export function LessonPublishBar({ owner, published, changed, status, editorName
     <div className={styles.barStatus}>
       <span className={styles.saveState} data-status={status} role="status">{t(`courses.editor.status.${status}`)}</span>
       {!published ? <LabelChip>{t("courses.lessons.unpublished")}</LabelChip> : changed && <LabelChip>{t("courses.lessons.changed")}</LabelChip>}
-      <span className={styles.attribution}>{t("courses.lessons.updatedBy", { name: editorName })}</span>
     </div>
     {!owner && <p className={styles.help}>{t("courses.editor.contributorHelp")}</p>}
     <div className={styles.barActions}>

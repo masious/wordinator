@@ -376,7 +376,6 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
       </div>}
       {scope.contribute && <div className={styles.blockTools}>
         <StateChips lesson={current} />
-        <span className={styles.attribution}>{t("courses.lessons.updatedBy", { name: current.updatedBy.displayName })}</span>
         {data && !editing && <div className={styles.toolButtons}>
           <Button variant="secondary" onClick={() => setEditing(true)} aria-label={t("courses.lessons.editContentNamed", { number })}>{t("courses.lessons.editContent")}</Button>
         </div>}

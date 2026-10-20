@@ -17,7 +17,7 @@ Run these commands from the repository root:
 - `pnpm dev` — run the web app on `http://localhost:5173` and API Worker on `http://localhost:8787`; Vite proxies `/api` to the Worker
 - `pnpm typecheck`
 - `pnpm test`
-- `pnpm test:e2e`
+- `pnpm test:e2e` — every Playwright spec in every project; during work run only the affected specs ([running Playwright](testing.md#running-playwright))
 - `pnpm build`
 - `pnpm --filter @wordinator/web deploy` and `pnpm --filter @wordinator/api deploy` — deploy one app after production resource IDs and routes are configured
 - `pnpm db:generate` — generate a reviewed Drizzle migration after a schema change

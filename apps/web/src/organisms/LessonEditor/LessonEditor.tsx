@@ -155,7 +155,7 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
   // Blocks both sides changed in a merged conflict, until the author picks a version.
   const [conflicts, setConflicts] = useState<MergeConflict[]>([]);
   const [merged, setMerged] = useState(false);
-  const [current, setCurrent] = useState({ published: lesson.published, changed: lesson.changed, editorName: lesson.updatedBy.displayName });
+  const [current, setCurrent] = useState({ published: lesson.published, changed: lesson.changed });
 
   const editor = useCreateBlockNote({
     schema: lessonEditorSchema,
@@ -186,7 +186,7 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
 
   const setLesson = (next: CourseLesson) => {
     queryClient.setQueryData(lessonKey, { lesson: next });
-    setCurrent({ published: next.published, changed: next.changed, editorName: next.updatedBy.displayName });
+    setCurrent({ published: next.published, changed: next.changed });
   };
   const replaceContent = (document: LessonDocument) => {
     baseline.current = document;
@@ -197,7 +197,7 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
     path, initialVersion: serverDraft.version, localKey,
     onSaved: (saved, document) => {
       baseline.current = document;
-      setCurrent((value) => ({ ...value, changed: saved.changed, editorName: saved.updatedBy.displayName }));
+      setCurrent((value) => ({ ...value, changed: saved.changed }));
       queryClient.setQueryData(lessonKey, (value: { lesson: CourseLesson } | undefined) => value && {
         lesson: {
           ...value.lesson, changed: saved.changed, updatedBy: saved.updatedBy, updatedAt: saved.updatedAt, draft: { document, version: saved.draftVersion },
@@ -363,7 +363,7 @@ export default function LessonEditor({ groupId, courseId, accountId, owner, less
     return [...builtIn, ...columns, ...custom];
   }, [editor, t]);
   return <div className={styles.editorShell} aria-label={t("courses.editor.label")}>
-    <LessonPublishBar owner={owner} published={current.published} changed={current.changed} status={autosave.status} editorName={current.editorName}
+    <LessonPublishBar owner={owner} published={current.published} changed={current.changed} status={autosave.status}
       problems={problems} error={error} busy={busy} onPublish={requestPublish} onDiscard={() => setConfirm("discard")} onUnpublish={() => setConfirm("unpublish")}
       onFocusProblem={focusProblem} onDone={() => void done()} />
     {restored && <p className={styles.notice} role="status">{t("courses.editor.restored")} <button type="button" onClick={() => setRestored(false)}>{t("common.dismiss")}</button></p>}

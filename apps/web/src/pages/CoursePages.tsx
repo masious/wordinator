@@ -5,11 +5,10 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { type FormEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ArrowLeft, BookOpen, ChevronDown, UserRound } from "lucide-react";
+import { ArrowLeft, BookOpen, ChevronDown } from "lucide-react";
 import { apiRequest, courseDashboardQueryOptions, courseProgressQueryOptions, courseQueryOptions, courseSpeechCastQueryOptions, sessionQueryOptions } from "../api";
 import { PlainText } from "../molecules/PlainText";
 import { ProgressMeter } from "../molecules/ProgressMeter";
-import { CourseContributors } from "../organisms/CourseContributors/CourseContributors";
 import { CourseErrorMessage as ErrorMessage } from "../organisms/CourseLessons/CourseErrorMessage";
 import { CourseLessons, CourseLessonTools, LessonView } from "../organisms/CourseLessons/CourseLessons";
 import { coursePanelId, CourseProgressTab, CourseTabs, courseTabId, type CourseTab } from "../organisms/CourseLessons/CourseProgress";
@@ -176,7 +175,6 @@ export function CoursePage({ groupId, courseId, tab = "lessons" }: { groupId: st
         <h1>{data.title}</h1>
         <p className={styles.summary}><PlainText>{data.summary}</PlainText></p>
         <MetadataRow>
-          <MetadataItem icon={<UserRound />}>{t("courses.ownerLabel", { name: data.owner.displayName })}</MetadataItem>
           {lessonCount > 0 && <MetadataItem icon={<BookOpen />}>{t("courses.lessons.outlineCount", { count: lessonCount })}</MetadataItem>}
         </MetadataRow>
         {data.intendedLearner && <div className={styles.learner}><h2>{t("courses.fields.intendedLearner")}</h2><p><PlainText>{data.intendedLearner}</PlainText></p></div>}
@@ -188,8 +186,6 @@ export function CoursePage({ groupId, courseId, tab = "lessons" }: { groupId: st
       </div>}
     </header>
     {archived && <Surface tone="quiet"><EmptyState title={t("courses.archivedTitle")}>{t("courses.archivedBody")}</EmptyState></Surface>}
-    {/* The owner manages contributors on the manage page; everyone else asks, withdraws, or leaves here. */}
-    {!archived && !data.permissions.manageContributors && <CourseContributors groupId={groupId} course={data} />}
     <CourseTabs courseSlug={data.slug} tab={tab} />
     <div id={coursePanelId(tab)} role="tabpanel" aria-labelledby={courseTabId(tab)}>
       {tab === "progress"
@@ -199,7 +195,7 @@ export function CoursePage({ groupId, courseId, tab = "lessons" }: { groupId: st
   </div></GroupFrame>;
 }
 
-// Course details, visibility, archiving, the cover, and contributors live on their own page, away from the reader's course page.
+// Course details, visibility, archiving, the cover live on their own page, away from the reader's course page.
 export function ManageCoursePage({ groupId, courseId }: { groupId: string; courseId: string }) {
   const { t } = useTranslation(); const queryClient = useQueryClient();
   const [editOpen, setEditOpen] = useState(false); const [archiveOpen, setArchiveOpen] = useState(false);
@@ -242,7 +238,6 @@ export function ManageCoursePage({ groupId, courseId }: { groupId: string; cours
       <ErrorMessage error={visibility.error ?? restore.error} />
       {data.permissions.edit && <div className={styles.coverTools}><h3>{t("courses.coverTitle")}</h3><ImageUpload shape="wide" currentUrl={data.coverUrl} name={data.title} uploadPath={`${coursePath(groupId, courseId)}/cover`} removePath={`${coursePath(groupId, courseId)}/cover`} onChanged={refresh} /></div>}
     </Surface>}
-    {!archived && data.permissions.manageContributors && <CourseContributors groupId={groupId} course={data} />}
     {(data.permissions.contribute || data.permissions.removeContent) && <CourseLessonTools groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} />}
     <AdaptiveDialog opened={editOpen} onClose={() => setEditOpen(false)} title={t("courses.editTitle")}>
       {editOpen && <CourseForm initial={data} submitLabel={t("common.save")} pending={edit.isPending} error={edit.error} onSubmit={(input) => edit.mutate(input)} onCancel={() => setEditOpen(false)} />}

@@ -548,8 +548,9 @@ export const practiceProgressResponseSchema = z.object({ progress: practiceProgr
 
 // A sentence has many valid translations, so a check never says an answer is wrong: a match is confirmed and a miss shows the
 // item's author's version as a reference. The client and any server code share these functions, so matching cannot diverge.
-// Case, punctuation, quote style, and spacing are ignored.
-export const normalizeAnswer = (value: string) => value.normalize("NFKC").toLowerCase().replace(/[\p{P}\p{S}]+/gu, " ").replace(/\s+/g, " ").trim();
+// Case, punctuation, quote style, spacing, and accents on e/i are ignored.
+// NFD separates combining accents so plain e/i match Dutch ë/é/ï/í forms.
+export const normalizeAnswer = (value: string) => value.normalize("NFKD").replace(/([ei])\p{M}+/giu, "$1").toLowerCase().replace(/[\p{P}\p{S}]+/gu, " ").replace(/\s+/g, " ").trim();
 // An item can be checked only when every entry of its author's version is filled.
 export const hasAuthorsVersion = (item: { authorsVersion: readonly (string | null)[] }) =>
   item.authorsVersion.length > 0 && item.authorsVersion.every((entry) => entry !== null);

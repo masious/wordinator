@@ -40,6 +40,8 @@
 
 ## Contribute to a course
 
+> Retired in the UI (2026-10-20): no screen offers these steps. They describe the backend roles only; see [courses.md](courses.md#contributors-and-publishing).
+
 1. A member reading a published course chooses Ask to contribute in the Contributors panel. The panel then says the request is waiting, and they can withdraw it.
 2. The owner gets a notification that links to the course. The Contributors panel on the course's manage page (Manage course on the course page) lists pending requests, and the owner accepts or declines each one. The requester is notified of the decision.
 3. An accepted contributor sees unpublished lessons, every lesson's draft, and the draft course itself if the owner returns it to draft. They add lessons and edit the draft of any lesson, including a published one, while readers keep seeing the published version. The editor has no Publish, Discard, or Unpublish for them.

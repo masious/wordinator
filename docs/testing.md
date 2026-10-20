@@ -54,12 +54,22 @@ Maintain a small critical suite for current Chromium and WebKit:
 4. A member creates each post type in the journal; another member answers without spoilers, completes a reading, reacts, and receives reply and pin notices.
 5. Settings saves the profile and uploads an avatar through the cropper.
 6. A learner answers a practice in its Answer dialog, sees a miss keep focus with the author's version and a match move on (without any check request), finishes later, finds the answer kept on the device after a reload, and is counted as done.
-7. A member asks to contribute, the owner accepts, the contributor edits a lesson draft that autosaves without a publish option, and the owner publishes it.
+7. (Retired 2026-10-20 with the contributor UI; the e2e spec was removed. Contributor rules stay covered by API tests.)
 8. An author builds a lesson with headings, formatted text, a callout, columns, an image with alt text, words, and a practice, publishes it, and another member reads it; two editors' concurrent edits merge.
 9. A learner shares an example and a question to the journal, answers the question on its post page, and gets Already shared on a second attempt.
 10. The tutor flow, AI practices, Weak words, and analytics access (see [AI tutor and learning data](#ai-tutor-and-learning-data-c14)).
 
 Every UI decision ships a phone equivalent (see [product requirements](product-requirements.md#release-definition)); during the Lumen redesign its visual check is manual. The `mobile-*` specs run only in the `mobile-chromium` (Pixel 7), `mobile-narrow` (360px), and `mobile-webkit` (iPhone 13) projects and stay green, and changes to shared shell or layout code still run them, but new features add desktop Chromium/WebKit coverage only. `mobile-layout.spec.ts` asserts against the configured viewport width, not `innerWidth`, because mobile browsers widen the layout viewport to fit overflowing content; set `MOBILE_SHOTS=<directory>` to save a screenshot per route and project.
+
+### Running Playwright
+
+`pnpm test:e2e` runs every spec in every project (desktop specs in two browsers, `mobile-*` specs in three phone projects), so it is not the command for day-to-day work. Run only what the change touches:
+
+- **While working:** the affected specs in one desktop project, for example `pnpm --filter @wordinator/web exec playwright test e2e/words-tab.spec.ts --project=chromium`. Spec names follow the area they cover: `course-*` and `lesson-*` for courses and lessons, `words-*` for the Words tab and Drill, `tutor*`, `ai-practices`, and `learning-data` for C14, `phase-*` and `visual-redesign-journal` for the journal, sign-up, and notices, `settings-split` for Settings.
+- **Before calling the change done:** the affected specs in both `--project=chromium` and `--project=webkit`. Add the `mobile-*` projects when shared shell or layout code changed, and the visual gates (`dual-theme-gate`, `light-theme-gate`, `visual-baselines`, `ui-workbench`) when tokens or shared UI components changed.
+- **The full `pnpm test:e2e`:** for a release, and when changing shared e2e code (`auth.ts`, `editor.ts`, `global-setup.ts`, `start-api.ts`, `aiStub.ts`, `lessonSeed.ts`, `speech.ts`, `tutor.ts`, `wordRecap.ts`) or the Playwright configuration.
+
+Only one Playwright run at a time per checkout (see [Fixtures](#fixtures)).
 
 ## Fixtures
 
@@ -90,7 +100,7 @@ The e2e API serves media from its own `/api/media/` route (`PUBLIC_MEDIA_BASE_UR
 - Web component tests run React Testing Library in jsdom with Mantine browser APIs shimmed in shared setup.
 - Playwright starts both local applications and verifies `/api/health` through Vite in Chromium and WebKit.
 
-Use `pnpm test` for unit, component, and Workers integration tests. Use `pnpm test:e2e` for the browser harness after installing the configured Playwright browsers as described in [operations.md](operations.md).
+Use `pnpm test` for unit, component, and Workers integration tests. Use Playwright as described in [Running Playwright](#running-playwright) after installing the configured Playwright browsers as described in [operations.md](operations.md).
 
 ## Release gates
 
@@ -98,7 +108,7 @@ Before declaring a phase complete:
 
 - Affected TypeScript projects type-check in strict mode (`pnpm typecheck`).
 - Relevant Vitest and component tests pass (`pnpm test`).
-- Critical Playwright paths pass when user-visible flows changed (`pnpm test:e2e`).
+- The affected Playwright specs pass in Chromium and WebKit when user-visible flows changed, as described in [Running Playwright](#running-playwright); a release runs the full `pnpm test:e2e`.
 - Both affected deployables build for production (`pnpm build`).
 - Migrations apply to a fresh local D1 database and upgrade the previous schema state.
 - Affected documentation is updated.

@@ -171,7 +171,10 @@ describe("Course shell pages", () => {
   it("hides management controls from readers", async () => {
     current = course({ status: "published", owner: { id: "10000000-0000-4000-8000-000000000009", displayName: "Lin", avatarUrl: null }, permissions: readerPermissions });
     renderPage("course");
-    expect(await screen.findByText("By Lin")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Deutsch für Anfänger", level: 1 })).toBeInTheDocument();
+    expect(screen.queryByText("By Lin")).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading", { name: "Contributors" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Ask to contribute" })).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Manage course" })).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Requests" })).not.toBeInTheDocument();
   });
@@ -182,27 +185,6 @@ describe("Course shell pages", () => {
     expect(await screen.findByText("Only the course owner and its contributors can manage this course.")).toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Edit details" })).not.toBeInTheDocument();
     expect(screen.queryByRole("heading", { name: "Requests" })).not.toBeInTheDocument();
-  });
-
-  it("lets a reader ask to contribute and then withdraw the pending request", async () => {
-    current = course({ status: "published", owner: { id: "10000000-0000-4000-8000-000000000009", displayName: "Lin", avatarUrl: null }, permissions: readerPermissions });
-    renderPage("course");
-    fireEvent.click(await screen.findByRole("button", { name: "Ask to contribute" }));
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/contributors`, expect.objectContaining({ method: "POST" })));
-    expect(await screen.findByText("Your request is waiting for the course owner.")).toBeInTheDocument();
-    fireEvent.click(screen.getByRole("button", { name: "Withdraw request" }));
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/contributors/leave`, expect.objectContaining({ method: "POST" })));
-  });
-
-  it("shows the owner pending contributor requests to accept and current contributors to remove", async () => {
-    contributors = { active: [{ user: helper, state: "active", requestedAt: 1, decidedAt: 2 }], pending: [{ user: { ...helper, id: "10000000-0000-4000-8000-000000000003", displayName: "Cy" }, state: "pending", requestedAt: 3, decidedAt: null }] };
-    renderPage("manage");
-    fireEvent.click(await screen.findByRole("button", { name: "Accept Cy as a contributor" }));
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/contributors/10000000-0000-4000-8000-000000000003`, expect.objectContaining({ method: "PATCH", body: JSON.stringify({ decision: "accept" }) })));
-    fireEvent.click(screen.getByRole("button", { name: "Remove Bo as a contributor" }));
-    const dialog = await screen.findByRole("dialog", { name: "Remove this contributor?" });
-    fireEvent.click(within(dialog).getByRole("button", { name: "Remove" }));
-    await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/contributors/${helper.id}`, expect.objectContaining({ method: "DELETE" })));
   });
 
   it("lets the owner give speakers voices in the course details, with a sample for each ready voice", async () => {

@@ -1,24 +1,19 @@
 this file isn't meant for agents. don't read it if you're an agent.
 
 
-[ ] order of courses in prod
-[ ] fix failing tests
-[ ] split e2e into different batches
-[ ] document e2e test isolation so that a change doesn't trigger all of it
 [ ] Lesson practice: e should match é in practices
 [ ] words drill: practice with space
-[ ] decrease drill to 15 words
 [ ] gamify results page
 [ ] reset progress of lesson, should reset word fluency
 [ ] mark course as complete at the end of the page
-[ ] clean up initial prompt in tutor sections
-[ ] remove contribution section from course, as well as author's name from course and lessons everywhere
+[x] remove contribution section from course, as well as author's name from course and lessons everywhere
 [ ] new words panel usability
 [ ] remove group-related tech-debts
-
+[ ] measure reading time
 
 AI
 ===
+[ ] clean up initial prompt in tutor sections
 [ ] tool calls, question answers with specific components fail to pass data from ui to the agent
 [ ] tool calls to update progress of a course
 [ ] pull up practice blocks from in-progress lessons
@@ -46,7 +41,9 @@ AI
 [ ] add Jev: confidence in user's answer's correction
 
 [ ] remove members' tabs
-[ ] measure reading time
+[x] fix failing tests
+[x] split e2e into different batches
+[x] document e2e test isolation so that a change doesn't trigger all of it
 [~] speech: autoplay of dialogue, fine-tunning
 [~] overview of a lesson
 [?] remove namespace
@@ -61,4 +58,5 @@ AI
 [x] lesson page: no index and spyscrolls
 [x] bookmark slide/block, question of a practice, examples
 [x] progress tracking: show remaining practices from older lessons
-
+[x] order of courses in prod
+[x] decrease drill to 10 words

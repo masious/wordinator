@@ -106,7 +106,6 @@
 .managedTools{margin-inline-start:auto}
 /* Phones: the manage page's lesson tools take a full-width row; the shared group shares it between them. */
 @media(max-width:40em){.managedTools{flex:1 1 100%;width:100%}}
-.attribution{font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 .emptyLesson{margin:0;color:var(--color-foreground-muted)}
 .addBlock{padding:var(--card-inset)}
 .editor,.form{display:grid;gap:var(--space-4)}
