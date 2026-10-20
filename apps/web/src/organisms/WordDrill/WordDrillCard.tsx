@@ -82,8 +82,6 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
       {/* The back stays empty until revealed, so nothing is spoiled. */}
       <div ref={backRef} className={`${styles.face} ${styles.back}`} aria-hidden={!revealed || undefined} inert={!revealed} tabIndex={revealed ? -1 : undefined}>
         {revealed && <>
-          {answer && <SpokenVerdict answer={answer} />}
-          {answer?.assessment && <AssessmentBreakdown assessment={answer.assessment} />}
           {source && <p className={styles.source}>{source}</p>}
           <p className={styles.backTerm}>{word.term}<SpeechButton url={word.speech.term} label={termLabel} owner={termOwner} className={styles.speech} /></p>
           {word.forms && <p className={styles.forms}>{word.forms}</p>}
@@ -91,6 +89,8 @@ export function WordDrillCard({ card, language, revealed, autoFocus, onReveal, o
           {word.example && <p className={styles.example}><PlainText>{word.example}</PlainText>
             <SpeechButton url={word.speech.example} label={t("courses.speech.wordExample", { term: word.term })} className={styles.speech} /></p>}
           {word.note && <p className={styles.note}><PlainText>{word.note}</PlainText></p>}
+          {answer && <SpokenVerdict answer={answer} />}
+          {answer?.assessment && <AssessmentBreakdown assessment={answer.assessment} />}
         </>}
       </div>
     </div>
