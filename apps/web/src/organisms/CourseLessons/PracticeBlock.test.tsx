@@ -342,4 +342,17 @@ describe("Practice blocks", () => {
     await openPractice(value);
     expect(screen.getByText(/1 person done/)).toHaveTextContent("1 person done · You’re done");
   });
+
+  it("shows the Enter hint under the answers of a one-question practice", async () => {
+    const one: LessonTopBlock = { ...practiceBlock, props: { data: JSON.stringify({ instruction: "Vertaal.", passage: null, items: [{ prompt: "There is a garden.", authorsVersion: ["Er is een tuin."] }] }) } };
+    const value = detail(); value.lessons = [{ ...value.lessons[0]!, document: { ...document, blocks: [one] } }];
+    await openPractice(value);
+    expect(screen.getByText(/Your answers stay on this device/)).toHaveTextContent("Press Enter to check, Shift+Enter for a new line.");
+  });
+
+  it("does not show the Enter hint for a practice with two or more questions, and keeps the device note", async () => {
+    await openPractice(detail());
+    expect(screen.getByText(/Your answers stay on this device/)).toHaveTextContent("Your answers stay on this device, so you can come back and change them.");
+    expect(screen.queryByText(/Press Enter to check/)).not.toBeInTheDocument();
+  });
 });

@@ -44,6 +44,9 @@ export function storeAnswers(key: string, answers: string[]) {
   else localStorage.removeItem(key);
 }
 export const countAnswered = (answers: readonly string[]) => answers.filter((answer) => answer.trim()).length;
+// The Enter hint explains checking and line breaks in the answer field. It shows only for a practice with exactly one question; a
+// practice with two or more questions shows it nowhere (docs/courses.md#practice-answers).
+export const showsEnterHint = (questionCount: number) => questionCount === 1;
 
 export const blockPath = (scope: PracticeScope, blockId: string) => `/api/groups/${encodeURIComponent(scope.groupId)}/courses/${encodeURIComponent(scope.courseId)}/lessons/${encodeURIComponent(scope.lessonId)}/blocks/${encodeURIComponent(blockId)}`;
 
@@ -315,7 +318,7 @@ export function AnswerSetComposer({ scope, block, recordAttempts = false, timed 
         onCheck={(answer) => recordAttempt(block.id, index, answer)}
         share={<ShareButton iconOnly piece={questionPiece(block, index)} label={t("lessonShares.shareNamed.question", { number: index + 1 })} describedBy={passageNote} />} />
     </div>)}
-    <p className={styles.help}>{t("courses.practice.blankHelp")} {t("courses.practice.enterHelp")}</p>
+    <p className={styles.help}>{t("courses.practice.blankHelp")}{showsEnterHint(questions.length) && ` ${t("courses.practice.enterHelp")}`}</p>
     <div className={styles.actions}><Button type="submit">{complete ? t("courses.practice.done") : t("courses.practice.finishLater")}</Button></div>
   </form>;
 }

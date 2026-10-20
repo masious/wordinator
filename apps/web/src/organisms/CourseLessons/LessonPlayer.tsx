@@ -19,7 +19,7 @@ import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/Word
 import { runWords, WordRecap } from "../WordRecap/WordRecap";
 import { CourseErrorMessage } from "./CourseErrorMessage";
 import styles from "./LessonPlayer.module.css";
-import { AnswerField, type AnswerSubmit, PracticePosition, practiceDraftKey, practiceFromBlock, questionPiece, readAnswers, storeAnswers, usePracticeAttempt, usePracticeProgress, type Practice } from "./PracticeBlock";
+import { AnswerField, type AnswerSubmit, PracticePosition, practiceDraftKey, practiceFromBlock, questionPiece, readAnswers, showsEnterHint, storeAnswers, usePracticeAttempt, usePracticeProgress, type Practice } from "./PracticeBlock";
 
 // Readers play the published document. Editors preview the draft of a lesson that is not published yet; previews never count.
 export const playableDocument = (lesson: CourseLesson) => lesson.document ?? lesson.draft?.document ?? null;
@@ -66,7 +66,7 @@ function QuestionStep({ block, item, answers, onAnswer, onNext, onCheck, submitR
   const { payload } = block;
   return <div className={styles.question}>
     <QuestionPrompt block={block} item={item} />
-    <AnswerField key={item} question={payload.items[item]!} label={t("courses.player.yourAnswer")} description={t("courses.practice.enterHelp")}
+    <AnswerField key={item} question={payload.items[item]!} label={t("courses.player.yourAnswer")} description={showsEnterHint(payload.items.length) ? t("courses.practice.enterHelp") : undefined}
       value={answers[item] ?? ""} minRows={2} onChange={onAnswer} onAdvance={onNext} onCheck={onCheck} submitRef={submitRef} />
   </div>;
 }
