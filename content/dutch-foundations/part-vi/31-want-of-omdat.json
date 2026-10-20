@@ -1,0 +1,1508 @@
+{
+  "title": "Want of omdat?",
+  "goal": "Give reasons with want and omdat, and use the correct word order in both clauses.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Want of omdat?",
+      "id": "f55d51db-f919-4f0b-8d16-5fef2abc910a"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Tuesday 12 January 2027, and Sofia is at Dutch class in the library. She and her classmates explain why they do things. In this lesson you will choose between want and omdat and keep the right verb order.",
+      "id": "adb2239a-2256-4631-a269-d36cdfdbe5d7"
+    },
+    {
+      "type": "paragraph",
+      "content": "Reason clauses are bold; finite verbs are blue.",
+      "id": "d141aa27-8834-442c-94bd-b50ea72d7eb3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: before class begins",
+      "id": "0be84f8b-f83c-448e-9823-ad4fe4e5aff3"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Marieke. Ik zit hier, want het is rustig."
+          },
+          {
+            "speaker": "Marieke",
+            "text": "Goed idee. Is het rustig genoeg?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, want de bibliotheek is stil."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ik zit vooraan, omdat ik het bord goed zie."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dat snap ik. Ik zit liever bij het raam, want daar is het licht."
+          },
+          {
+            "speaker": "Marieke",
+            "text": "We beginnen om zeven uur. Hebben jullie een vraag?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ja. Ik begrijp de opdracht niet, omdat de uitleg kort is."
+          },
+          {
+            "speaker": "Marieke",
+            "text": "Dan geef ik nog een voorbeeld. Vraag gerust."
+          }
+        ]
+      },
+      "id": "92f07c87-a832-4d85-a96b-f76af4fb1d6c"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de opdracht",
+              "meaning": "assignment, task",
+              "forms": "de opdrachten",
+              "example": "Ik lees de opdracht.",
+              "id": "a0b7cf88-56a2-4730-b0e1-12fef8dce080"
+            },
+            {
+              "term": "het bord",
+              "meaning": "board (for writing on)",
+              "forms": "de borden",
+              "example": "Piotr ziet het bord goed.",
+              "note": "New classroom meaning. Earlier meanings: message board in 07-b and plate in 12-a.",
+              "id": "eead5b16-e171-4e48-9941-a8695daf6eaa"
+            },
+            {
+              "term": "vooraan",
+              "meaning": "at the front",
+              "example": "Ik zit vooraan.",
+              "id": "fa02472b-bd47-4203-bf4b-d43d0e4a29dd"
+            },
+            {
+              "term": "het voorbeeld",
+              "meaning": "example",
+              "forms": "de voorbeelden",
+              "example": "Marieke geeft nog een voorbeeld.",
+              "id": "29090dee-5fdc-4f74-83a3-5d275d44f53b"
+            },
+            {
+              "term": "snappen",
+              "meaning": "to understand (informal)",
+              "forms": "snapt · snapte · gesnapt",
+              "example": "Dat snap ik.",
+              "id": "687112e6-ccd9-4f80-b061-7893a18ea94d"
+            },
+            {
+              "term": "Vraag gerust!",
+              "meaning": "Feel free to ask!",
+              "example": "Vraag gerust.",
+              "id": "20123995-99e6-4f26-8769-e64565bf6f3e"
+            }
+          ]
+        }
+      },
+      "id": "be581793-9f3f-4239-b4e0-461f325c61e6"
+    },
+    {
+      "type": "divider",
+      "id": "b67c79bf-82ff-4596-b31e-068a8b5c9d3c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Two ways to give a reason",
+      "id": "2959e9a7-2252-4010-a4d1-4aa748be01a5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Want keeps main-clause order",
+      "id": "a3d9c6e2-0421-4fe0-95f9-ddb0f744dcc6"
+    },
+    {
+      "type": "paragraph",
+      "content": "Both want and omdat give a reason. After want, the next clause keeps ordinary main-clause V2 order. In these examples, the subject comes before the finite verb. The clause after want is not subordinate.",
+      "id": "6d9606c8-3cc8-4d27-a4f2-15f2fd62c91b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I take the bus because it is raining.",
+        "note": "After want: subject het + finite verb regent."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "neem",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " de bus",
+        {
+          "text": ", want het ",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "regent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ".",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "adb2ee89-dd83-4b9d-ae88-efc4ab0e11a7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia reads the assignment because she understands everything.",
+        "note": "The finite verb begrijpt follows subject zij."
+      },
+      "content": [
+        "Sofia ",
+        {
+          "text": "leest",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " de opdracht",
+        {
+          "text": ", want zij ",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "begrijpt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " alles.",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "939b8d02-b371-486a-b216-0b29989687e0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Piotr sits at the front because he sees the board well there.",
+        "note": "Want keeps hij ziet in main-clause order."
+      },
+      "content": [
+        "Piotr ",
+        {
+          "text": "zit",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " vooraan",
+        {
+          "text": ", want hij ",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "ziet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " het bord daar goed.",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "61daaeec-cd79-48dd-85ac-d03ae04db27e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Marieke gives an example because the explanation is short.",
+        "note": "The clause after want has subject de uitleg followed by is."
+      },
+      "content": [
+        "Marieke ",
+        {
+          "text": "geeft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " een voorbeeld",
+        {
+          "text": ", want de uitleg ",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " kort.",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "07f7db9b-3260-4570-85eb-1dffd585da3b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "Formula: main clause + want + another main clause in V2 order. When the subject starts that clause, use subject + finite verb.",
+      "id": "c4272630-0af8-4da1-9109-d00622ebfd51"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "uitleggen",
+              "meaning": "to explain",
+              "forms": "legt uit · legde uit · uitgelegd",
+              "example": "Marieke legt de opdracht uit.",
+              "id": "761110ac-b863-42cf-a82b-234dcfa53657"
+            }
+          ]
+        }
+      },
+      "id": "c60cf97b-e3eb-4707-8d89-f18b36e67e99"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Omdat sends the finite verb to the end",
+      "id": "555dd67c-c80f-4dcd-b464-6add0561cde0"
+    },
+    {
+      "type": "paragraph",
+      "content": "After omdat, put the finite verb at the end of that clause. Compare the same reason with want and omdat:",
+      "id": "35fde9ac-7eb3-4869-af96-22e9b72a58cd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I take the bus because it is raining.",
+        "note": "After omdat: subject het, then the finite verb regent at the end."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "neem",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " de bus",
+        {
+          "text": ", omdat het ",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "regent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ".",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "45e6a9d8-2bc3-4c90-8037-c8fb452a1226"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia reads the assignment because she understands everything.",
+        "note": "The finite verb begrijpt is at the end of the subordinate clause."
+      },
+      "content": [
+        "Sofia ",
+        {
+          "text": "leest",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " de opdracht",
+        {
+          "text": ", omdat zij alles ",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "begrijpt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ".",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "59d6be26-e333-464e-9287-a2d857368a2d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Piotr sits at the front because he sees the board well there.",
+        "note": "Finite verb ziet is last in the omdat-clause."
+      },
+      "content": [
+        "Piotr ",
+        {
+          "text": "zit",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " vooraan",
+        {
+          "text": ", omdat hij het bord daar goed ",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "ziet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ".",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "e7ffb9b1-b9fd-4792-bdf6-761035ff4f1a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Marieke gives an example because the explanation is short.",
+        "note": "Finite verb is comes last."
+      },
+      "content": [
+        "Marieke ",
+        {
+          "text": "geeft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " een voorbeeld",
+        {
+          "text": ", omdat de uitleg kort ",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ".",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "id": "ce01fa39-9924-4d21-9e7f-0d751b2438a5"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "The meaning can stay the same: want + V2; omdat + finite verb at the end.",
+      "id": "c59d9fa9-5acf-4c45-a1f5-987ed1a4dadc"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de woordvolgorde",
+              "meaning": "word order",
+              "forms": "de woordvolgordes",
+              "example": "De woordvolgorde is anders na omdat.",
+              "id": "e229eb26-c597-48cc-9223-192803ba7aa2"
+            },
+            {
+              "term": "het verschil",
+              "meaning": "difference",
+              "forms": "de verschillen",
+              "example": "Wat is het verschil?",
+              "id": "55ffd80d-0d11-43c5-924d-d9f5045ca4ab"
+            }
+          ]
+        }
+      },
+      "id": "82a9d7ee-a4f5-4a52-810e-2e95ab4bdf36"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "To check your sentence, find the finite verb: after want it stays in V2 position; after omdat it moves to the end.",
+      "id": "2c925cc2-4703-4e88-b1db-aac022fe674f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Put the omdat-clause first",
+      "id": "54a34946-e25b-4653-aa33-08ada61e164a"
+    },
+    {
+      "type": "paragraph",
+      "content": "An omdat-clause can come first. After its comma, the main clause has inversion: finite verb before subject. That is the usual main-clause rule after a clause at the start.",
+      "id": "fd0ab520-1693-417b-9cf9-dd6c26c27578"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Because it is raining, I take the bus.",
+        "note": "After the fronted clause and comma: neem ik (inversion)."
+      },
+      "content": [
+        {
+          "text": "Omdat het ",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "regent",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ",",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "neem",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ik de bus."
+      ],
+      "id": "659909c8-e5b0-490b-a3c8-36e1d4378fb2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Because she understands everything, Sofia reads the assignment.",
+        "note": "Main clause starts with leest, then subject Sofia."
+      },
+      "content": [
+        {
+          "text": "Omdat zij alles ",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "begrijpt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ",",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "leest",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Sofia de opdracht."
+      ],
+      "id": "b910b5f1-338a-496f-9e94-193beea98172"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Omdat het regent, ik neem de bus.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Omdat het regent, ",
+        {
+          "text": "neem ik",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " de bus. Fronted omdat-clause: invert the main clause."
+      ],
+      "id": "23c035df-8d0d-4447-a492-116ef6c5679b"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "voor de komma",
+              "meaning": "before the comma",
+              "example": "De bijzin staat voor de komma.",
+              "id": "397e579c-2dd9-40eb-9881-aa53dc2ed5f5"
+            },
+            {
+              "term": "na de komma",
+              "meaning": "after the comma",
+              "example": "Na de komma volgt de hoofdzin.",
+              "id": "243277c6-0d84-44e6-8e08-941efaf894a4"
+            }
+          ]
+        }
+      },
+      "id": "a073b5de-d0a4-4f1e-8a3c-3267e85fb61d"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "want",
+              "id": "4280f7ff-cb36-4c1a-977d-09ae3c3c5b5e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "main clause + want + another main clause in V2 order",
+              "id": "8a631501-0bac-4b7f-8fb7-7a3ddaef1338"
+            },
+            {
+              "type": "example",
+              "content": [
+                "Ik ",
+                {
+                  "text": "blijf",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " binnen",
+                {
+                  "text": ", want het ",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                {
+                  "text": "regent",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                {
+                  "text": ".",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "props": {
+                "translation": "I stay inside because it is raining."
+              },
+              "id": "a116d36e-62f4-467e-aad5-edc916a5b892"
+            }
+          ],
+          "id": "affb2197-e920-4035-b2fd-60f5eabb91b1"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "omdat",
+              "id": "1c4d71a2-82ba-4559-8f34-245576894154"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "main clause + omdat + subject + other words + finite verb",
+              "id": "48a041f2-4cf8-43d4-91ec-85c5a7731629"
+            },
+            {
+              "type": "example",
+              "content": [
+                "Ik ",
+                {
+                  "text": "blijf",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " binnen",
+                {
+                  "text": ", omdat het ",
+                  "styles": {
+                    "bold": true
+                  }
+                },
+                {
+                  "text": "regent",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                {
+                  "text": ".",
+                  "styles": {
+                    "bold": true
+                  }
+                }
+              ],
+              "props": {
+                "translation": "I stay inside because it is raining."
+              },
+              "id": "8af4104c-8f4f-48ae-b307-4d21992cbf18"
+            }
+          ],
+          "id": "4fd4a6f6-8b82-46a8-b84d-60c196410773"
+        }
+      ],
+      "id": "70f1eaf8-2aad-4ce0-8461-d44169fe4f12"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: sharing reasons in class",
+      "id": "a9854b14-25ed-4d62-bdaa-4c570d61b2b4"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Marieke",
+            "text": "Waarom zit je vooraan, Piotr?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ik zit vooraan, want ik zie het bord goed."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik zit bij het raam, omdat het daar rustig is."
+          },
+          {
+            "speaker": "Marieke",
+            "text": "En waarom lees je de opdracht nog een keer?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Omdat de uitleg kort is, lees ik de opdracht nog een keer."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ik vraag het aan Marieke, want ik begrijp de laatste zin niet."
+          },
+          {
+            "speaker": "Marieke",
+            "text": "Ik leg het graag uit, omdat die zin lastig is."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je. Ik begrijp het nu."
+          }
+        ]
+      },
+      "id": "c8e304c3-dca2-4577-96f6-272203132aa4"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de laatste zin",
+              "meaning": "the last sentence",
+              "forms": "de laatste zinnen",
+              "example": "Ik begrijp de laatste zin niet.",
+              "id": "288eacf1-98fd-41ab-a1d9-fe2c3c3c5293"
+            },
+            {
+              "term": "lastig",
+              "meaning": "difficult, tricky",
+              "example": "Die zin is lastig.",
+              "id": "17aef77a-6c9d-4747-ab27-795581e87237"
+            }
+          ]
+        }
+      },
+      "id": "17627bac-f4da-4beb-9956-594959adccfd"
+    },
+    {
+      "type": "divider",
+      "id": "8b432116-d6f0-4ea2-89cd-7897839de129"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "6c53e673-ff31-42b9-8d30-59c9b46f8e63"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "1. Choose the conjunction",
+      "id": "16b8e676-4871-43f4-b57a-e89e8b6cdaf6"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each sentence with want or omdat.",
+          "items": [
+            {
+              "prompt": "Ik neem mijn jas mee, … het is koud.",
+              "authorsVersion": [
+                "want"
+              ],
+              "note": "After want, the next clause keeps V2: het is."
+            },
+            {
+              "prompt": "Ik neem mijn jas mee … het koud is.",
+              "authorsVersion": [
+                "omdat"
+              ],
+              "note": "Finite verb is goes to the end."
+            },
+            {
+              "prompt": "Sofia leest de opdracht, … zij begrijpt alles.",
+              "authorsVersion": [
+                "want"
+              ],
+              "note": "Subject zij comes before the finite verb begrijpt."
+            },
+            {
+              "prompt": "Sofia leest de opdracht … zij alles begrijpt.",
+              "authorsVersion": [
+                "omdat"
+              ],
+              "note": "Finite verb begrijpt ends the subordinate clause."
+            },
+            {
+              "prompt": "… Piotr vooraan zit, ziet hij het bord goed.",
+              "authorsVersion": [
+                "Omdat"
+              ],
+              "note": "Fronted omdat-clause; main clause has inversion: ziet hij."
+            },
+            {
+              "prompt": "Marieke legt de zin uit, … Piotr de zin niet begrijpt.",
+              "authorsVersion": [
+                "omdat"
+              ],
+              "note": "Finite verb begrijpt goes to the end of the omdat-clause."
+            },
+            {
+              "prompt": "Piotr vraagt het, … hij begrijpt de zin niet.",
+              "authorsVersion": [
+                "want"
+              ],
+              "note": "After want: hij begrijpt."
+            }
+          ]
+        }
+      },
+      "id": "5f013486-52b4-4197-97f1-dd2f5f19fb70"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "2. Notice the word order",
+      "id": "a8eb24f6-297c-40f0-8ffd-8d5f8fe90188"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "For each sentence, name the conjunction and write the finite verb in the reason clause.",
+          "items": [
+            {
+              "prompt": "Ik blijf binnen, want het regent.",
+              "authorsVersion": [
+                "want; regent"
+              ],
+              "note": "Want keeps main-clause order; finite verb regent follows subject het."
+            },
+            {
+              "prompt": "Ik blijf binnen, omdat het regent.",
+              "authorsVersion": [
+                "omdat; regent"
+              ],
+              "note": "The finite verb is at the end of the omdat-clause."
+            },
+            {
+              "prompt": "Sofia vraagt het, omdat zij de opdracht niet begrijpt.",
+              "authorsVersion": [
+                "omdat; begrijpt"
+              ],
+              "note": "Finite verb begrijpt ends the subordinate clause."
+            },
+            {
+              "prompt": "Piotr zit vooraan, want hij ziet het bord goed.",
+              "authorsVersion": [
+                "want; ziet"
+              ],
+              "note": "After want, hij ziet keeps V2 order."
+            },
+            {
+              "prompt": "Omdat het stil is, leest Sofia.",
+              "authorsVersion": [
+                "omdat; is"
+              ],
+              "note": "The finite verb is ends the fronted subordinate clause."
+            },
+            {
+              "prompt": "Marieke helpt Piotr, want hij vraagt het.",
+              "authorsVersion": [
+                "want; vraagt"
+              ],
+              "note": "Main-clause order after want."
+            },
+            {
+              "prompt": "Omdat Sofia de uitleg begrijpt, leest zij verder.",
+              "authorsVersion": [
+                "omdat; begrijpt"
+              ],
+              "note": "The finite verb begrijpt ends the first clause."
+            }
+          ]
+        }
+      },
+      "id": "e9f350a0-ef9d-411d-bd08-832dc27eb601"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "3. Combine with want",
+      "id": "6e407243-dd21-4e4e-a01d-c5b2e350a997"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Join the two sentences with want. Keep main-clause order.",
+          "items": [
+            {
+              "prompt": "Ik neem de bus. Het regent.",
+              "authorsVersion": [
+                "Ik neem de bus, want het regent."
+              ],
+              "note": "The clause after want has subject het before regent."
+            },
+            {
+              "prompt": "Sofia leest de zin. Zij begrijpt hem.",
+              "authorsVersion": [
+                "Sofia leest de zin, want zij wil hem begrijpen."
+              ],
+              "note": "After want, zij wil keeps main-clause order; the infinitive begrijpen comes last."
+            },
+            {
+              "prompt": "Piotr zit vooraan. Hij ziet het bord beter.",
+              "authorsVersion": [
+                "Piotr zit vooraan, want hij ziet het bord beter."
+              ],
+              "note": "After want, finite verb ziet follows hij."
+            },
+            {
+              "prompt": "Marieke geeft een voorbeeld. De uitleg is kort.",
+              "authorsVersion": [
+                "Marieke geeft een voorbeeld, want de uitleg is kort."
+              ],
+              "note": "Subject de uitleg precedes finite verb is."
+            },
+            {
+              "prompt": "Ik vraag Marieke. Ik begrijp de opdracht niet.",
+              "authorsVersion": [
+                "Ik vraag Marieke, want ik begrijp de opdracht niet."
+              ],
+              "note": "Keep ik begrijp after want."
+            },
+            {
+              "prompt": "Sofia leest rustig. Het is stil.",
+              "authorsVersion": [
+                "Sofia leest rustig, want het is stil."
+              ],
+              "note": "After want: subject het + finite verb is."
+            },
+            {
+              "prompt": "Piotr vraagt het nog een keer. Hij hoort de zin niet goed.",
+              "authorsVersion": [
+                "Piotr vraagt het nog een keer, want hij hoort de zin niet goed."
+              ],
+              "note": "Main-clause order follows want."
+            }
+          ]
+        }
+      },
+      "id": "4842ae41-3040-4c4a-a218-47a295da08cd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "4. Combine with omdat",
+      "id": "80f94c83-1e9e-4cbc-9457-4f00005d241a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Join the sentences with omdat. Put the finite verb at the end of the reason clause.",
+          "items": [
+            {
+              "prompt": "Ik neem de bus. Het regent.",
+              "authorsVersion": [
+                "Ik neem de bus, omdat het regent."
+              ],
+              "note": "Finite verb regent ends the subordinate clause."
+            },
+            {
+              "prompt": "Sofia leest de zin. Zij begrijpt hem.",
+              "authorsVersion": [
+                "Sofia leest de zin, omdat zij hem begrijpt."
+              ],
+              "note": "Finite verb begrijpt ends the omdat-clause."
+            },
+            {
+              "prompt": "Piotr zit vooraan. Hij ziet het bord beter.",
+              "authorsVersion": [
+                "Piotr zit vooraan, omdat hij het bord beter ziet."
+              ],
+              "note": "Finite verb ziet goes last."
+            },
+            {
+              "prompt": "Marieke geeft een voorbeeld. De uitleg is kort.",
+              "authorsVersion": [
+                "Marieke geeft een voorbeeld, omdat de uitleg kort is."
+              ],
+              "note": "Finite verb is goes last."
+            },
+            {
+              "prompt": "Ik vraag Marieke. Ik begrijp de opdracht niet.",
+              "authorsVersion": [
+                "Ik vraag Marieke, omdat ik de opdracht niet begrijp."
+              ],
+              "note": "Finite verb begrijp is last."
+            },
+            {
+              "prompt": "Sofia leest rustig. Het is stil.",
+              "authorsVersion": [
+                "Sofia leest rustig, omdat het stil is."
+              ],
+              "note": "Finite verb is goes last."
+            },
+            {
+              "prompt": "Piotr vraagt het nog een keer. Hij hoort de zin niet goed.",
+              "authorsVersion": [
+                "Piotr vraagt het nog een keer, omdat hij de zin niet goed hoort."
+              ],
+              "note": "Finite verb hoort goes last."
+            }
+          ]
+        }
+      },
+      "id": "0cdf703c-9999-4ec7-9c0b-a88d8b427e1b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "5. Repair the word order",
+      "id": "10c88215-f5d6-4adf-89a4-7dd93d828e0a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Correct each sentence. Keep its meaning.",
+          "items": [
+            {
+              "prompt": "Ik neem de bus, want het koud is.",
+              "authorsVersion": [
+                "Ik neem de bus, want het is koud."
+              ],
+              "note": "After want use main-clause order: het is."
+            },
+            {
+              "prompt": "Sofia leest, omdat zij begrijpt de zin.",
+              "authorsVersion": [
+                "Sofia leest, omdat zij de zin begrijpt."
+              ],
+              "note": "Move the finite verb begrijpt to the end of the omdat-clause."
+            },
+            {
+              "prompt": "Omdat het regent, ik neem de bus.",
+              "authorsVersion": [
+                "Omdat het regent, neem ik de bus."
+              ],
+              "note": "Fronted subordinate clause requires inversion in the main clause."
+            },
+            {
+              "prompt": "Piotr vraagt het, omdat hij begrijpt de opdracht niet.",
+              "authorsVersion": [
+                "Piotr vraagt het, omdat hij de opdracht niet begrijpt."
+              ],
+              "note": "Finite verb begrijpt goes last."
+            },
+            {
+              "prompt": "Omdat de uitleg kort is, Sofia vraagt een voorbeeld.",
+              "authorsVersion": [
+                "Omdat de uitleg kort is, vraagt Sofia een voorbeeld."
+              ],
+              "note": "After the fronted clause: finite verb before subject."
+            },
+            {
+              "prompt": "Marieke helpt, want Piotr de zin niet begrijpt.",
+              "authorsVersion": [
+                "Marieke helpt, want Piotr begrijpt de zin niet."
+              ],
+              "note": "After want, use main-clause order."
+            },
+            {
+              "prompt": "Omdat Sofia rustig leest, zij begrijpt de opdracht.",
+              "authorsVersion": [
+                "Omdat Sofia rustig leest, begrijpt zij de opdracht."
+              ],
+              "note": "Fronted omdat-clause triggers inversion: begrijpt zij."
+            }
+          ]
+        }
+      },
+      "id": "d2407f13-dd60-415a-8c25-7105d5c5a017"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "6. Translate into Dutch",
+      "id": "f60a0b5b-0cab-4fda-8bbf-5973c880c2c6"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural Dutch. Use want or omdat as instructed.",
+          "items": [
+            {
+              "prompt": "I take the bus because it is raining. Use want.",
+              "authorsVersion": [
+                "Ik neem de bus, want het regent."
+              ],
+              "note": "After want, het regent has main-clause order."
+            },
+            {
+              "prompt": "I take the bus because it is raining. Use omdat.",
+              "authorsVersion": [
+                "Ik neem de bus, omdat het regent."
+              ],
+              "note": "Finite verb regent ends the subordinate clause."
+            },
+            {
+              "prompt": "Because it is raining, I take the bus.",
+              "authorsVersion": [
+                "Omdat het regent, neem ik de bus."
+              ],
+              "note": "Fronted subordinate clause; invert to neem ik."
+            },
+            {
+              "prompt": "Sofia reads because she understands the assignment. Use omdat.",
+              "authorsVersion": [
+                "Sofia leest, omdat zij de opdracht begrijpt."
+              ],
+              "note": "Finite verb begrijpt goes to the end."
+            },
+            {
+              "prompt": "Piotr sits at the front because he can see the board well. Use want.",
+              "authorsVersion": [
+                "Piotr zit vooraan, want hij kan het bord goed zien."
+              ],
+              "note": "After want, hij kan keeps main-clause order."
+            },
+            {
+              "prompt": "Because the explanation is short, Marieke gives an example.",
+              "authorsVersion": [
+                "Omdat de uitleg kort is, geeft Marieke een voorbeeld."
+              ],
+              "note": "Finite verb is ends the subordinate clause; main clause inverts."
+            },
+            {
+              "prompt": "Sofia asks again because she does not understand the last sentence. Use want.",
+              "authorsVersion": [
+                "Sofia vraagt het nog een keer, want zij begrijpt de laatste zin niet."
+              ],
+              "note": "After want, subject zij precedes begrijpt."
+            }
+          ]
+        }
+      },
+      "id": "156cae5a-a19b-46c3-99f0-afd25ff418ab"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "7. Translate into English",
+      "id": "c2d20f67-95db-4a58-a9e7-4ed0f21cdbdd"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Ik blijf binnen, want het regent.",
+              "authorsVersion": [
+                "I stay inside because it is raining."
+              ],
+              "note": "Want connects two main clauses."
+            },
+            {
+              "prompt": "Ik blijf binnen, omdat het regent.",
+              "authorsVersion": [
+                "I stay inside because it is raining."
+              ],
+              "note": "The reason clause has verb-final order in Dutch."
+            },
+            {
+              "prompt": "Omdat het stil is, leest Sofia de opdracht.",
+              "authorsVersion": [
+                "Because it is quiet, Sofia reads the assignment."
+              ],
+              "note": "The first clause is subordinate; the main clause follows the comma."
+            },
+            {
+              "prompt": "Piotr zit vooraan, want hij wil het bord goed zien.",
+              "authorsVersion": [
+                "Piotr sits at the front because he wants to see the board well."
+              ],
+              "note": "Want keeps hij wil in main-clause order."
+            },
+            {
+              "prompt": "Marieke legt de zin uit, omdat Piotr de zin niet begrijpt.",
+              "authorsVersion": [
+                "Marieke explains the sentence because Piotr does not understand it."
+              ],
+              "note": "Finite verb begrijpt comes at the end of the omdat-clause."
+            },
+            {
+              "prompt": "Omdat de uitleg kort is, vraagt Sofia een voorbeeld.",
+              "authorsVersion": [
+                "Because the explanation is short, Sofia asks for an example."
+              ],
+              "note": "After the fronted clause, vraagt Sofia is inverted."
+            },
+            {
+              "prompt": "Sofia leest nog een keer, want zij begrijpt de opdracht niet.",
+              "authorsVersion": [
+                "Sofia reads one more time because she does not understand the assignment."
+              ],
+              "note": "Nog een keer means one more time."
+            }
+          ]
+        }
+      },
+      "id": "3fe897b2-d46a-4b21-a482-7f4a57532628"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: reasons in the library",
+      "id": "57351348-8c66-4827-8ae2-110961f934b6"
+    },
+    {
+      "type": "paragraph",
+      "content": "Read the passage and answer the questions in Dutch.",
+      "id": "7a47c60c-cb8b-4449-bd7b-5669665cc1e9"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read and answer in Dutch.",
+          "items": [
+            {
+              "prompt": "Waar zijn Sofia en Piotr?",
+              "authorsVersion": [
+                "In de bibliotheek in het centrum."
+              ],
+              "note": "The library is in the centre."
+            },
+            {
+              "prompt": "Hoe laat zijn ze daar?",
+              "authorsVersion": [
+                "Om zeven uur."
+              ],
+              "note": "Class is at 19.00."
+            },
+            {
+              "prompt": "Waarom zit Sofia bij het raam?",
+              "authorsVersion": [
+                "Omdat het daar rustig is."
+              ],
+              "note": "The text says: want daar is het rustig."
+            },
+            {
+              "prompt": "Waarom zit Piotr vooraan?",
+              "authorsVersion": [
+                "Omdat hij het bord goed ziet."
+              ],
+              "note": "The finite verb ziet ends the subordinate clause."
+            },
+            {
+              "prompt": "Waarom vraagt Piotr om uitleg?",
+              "authorsVersion": [
+                "Omdat hij de laatste zin niet begrijpt."
+              ],
+              "note": "He does not understand the last sentence."
+            },
+            {
+              "prompt": "Waarom geeft Marieke een extra voorbeeld?",
+              "authorsVersion": [
+                "Omdat de uitleg kort is."
+              ],
+              "note": "The subordinate clause ends with is."
+            },
+            {
+              "prompt": "Waarom leest Sofia de opdracht nog een keer?",
+              "authorsVersion": [
+                "Omdat zij alles begrijpt."
+              ],
+              "note": "The finite verb begrijpt ends the clause."
+            },
+            {
+              "prompt": "Met wie praten Sofia en Piotr na de les?",
+              "authorsVersion": [
+                "Met Marieke."
+              ],
+              "note": "The last sentence names Marieke."
+            }
+          ],
+          "passage": {
+            "title": "In de bibliotheek",
+            "content": "Dinsdag 12 januari 2027. Sofia en Piotr zijn om zeven uur in de bibliotheek in het centrum. Marieke geeft Nederlandse les. Sofia zit bij het raam, want daar is het rustig. Piotr zit vooraan, omdat hij het bord goed ziet. Hij vraagt Marieke om uitleg, want hij begrijpt de laatste zin niet. Omdat de uitleg kort is, geeft Marieke een extra voorbeeld. Sofia leest de opdracht nog een keer, omdat zij alles begrijpt. Na de les praten Sofia en Piotr nog even met Marieke."
+          }
+        }
+      },
+      "id": "dadec17f-3977-42cb-83fc-2a44e625d2c1"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "extra",
+              "meaning": "extra, additional",
+              "example": "Marieke geeft een extra voorbeeld.",
+              "id": "db6c37c6-652b-4dc6-af34-3193f9f089ef"
+            },
+            {
+              "term": "om uitleg vragen",
+              "meaning": "to ask for an explanation",
+              "example": "Piotr vraagt Marieke om uitleg.",
+              "id": "8d2eb298-36b1-4183-ac0d-1101065087f3"
+            }
+          ]
+        }
+      },
+      "id": "50451577-00ff-41c0-806e-bbcfff89ae61"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "448ef3ce-6f3f-467d-9590-2bfbc5583148"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about why you do something. Use both want and omdat, and include one sentence that starts with an omdat-clause.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about why you do something. Use both want and omdat, and include one sentence that starts with an omdat-clause.",
+              "authorsVersion": [
+                "Ik lees de opdracht, want ik vind de opdracht lastig. Omdat het stil is, lees ik rustig. Omdat ik een vraag heb, praat ik met de docent."
+              ],
+              "note": "Model answer. After want, keep main-clause order; after omdat, put the finite verb at the end. When an omdat-clause comes first, invert the main clause."
+            }
+          ]
+        }
+      },
+      "id": "b8eba0d8-3675-409a-9d90-878cadb21bf8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "6cb510af-6a86-41c6-a324-7eab30dcf359"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Both want and omdat mean because.",
+      "id": "cd224f5b-61f4-4da3-be0e-9760050ca33e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "After want, keep main-clause order: want het regent.",
+      "id": "3a8fcf91-3d93-4c69-9d72-7954712636ec"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "After omdat, put the finite verb at the end: omdat het regent.",
+      "id": "ecca9eab-b587-4ba8-8271-312f7ad79e92"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "If an omdat-clause comes first, add a comma and invert the main clause: Omdat het regent, neem ik de bus.",
+      "id": "97476738-6011-4082-85cd-6f01e3f8597b"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: before class begins",
+      "description": "A Dutch class in the Utrecht city library at 19.00: Sofia sits by a window and Piotr near the front while Marieke prepares a simple board example.",
+      "alt": "Adult Dutch learners in a library classroom."
+    },
+    {
+      "afterHeading": "Two ways to give a reason",
+      "description": "A simple classroom handout with two paired Dutch sentences, want on one side and omdat on the other, showing the verb positions.",
+      "alt": "Two example sentences showing different word order after want and omdat."
+    }
+  ],
+  "id": "bb35fd08-6768-489d-9c83-56cf1723b996"
+}

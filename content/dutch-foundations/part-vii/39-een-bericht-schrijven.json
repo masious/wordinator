@@ -1,0 +1,1317 @@
+{
+  "title": "Een bericht schrijven",
+  "goal": "Connect clauses in short messages and choose an informal or formal tone.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Een bericht schrijven",
+      "id": "1e9da527-3e52-4dc8-96c7-ab9006c00f84"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Wednesday 27 January 2027. Sofia reviews the service role-plays with Noor and writes two practice messages. You will connect short clauses and choose a tone for your reader. Verbs are blue, subjects are green, and the new link words are bold.",
+      "id": "570569a6-7694-4a8a-8b4b-287226f57583"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: two messages",
+      "id": "b9ed1cfb-b060-482c-b6b9-d31e46cc941a"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sofia writes a short informal note and a formal request. They are model messages for practice, not real events.",
+      "id": "b584aefd-c95d-41f5-8a4f-89d3f0c828ed"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Ik schrijf Noor een bericht. Het is voor morgen."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Begin maar met Hoi! Je schrijft aan mij."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Noor, ik ben iets later, want de bus rijdt langzaam."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Prima. Zet de reden in een korte zin."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik neem mijn boek mee, terwijl ik op de bus wacht."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Goed. De bijzin met terwijl staat achteraan."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En de vraag: Ik wil graag weten of je tijd hebt."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, dat is duidelijk. Sluit af met Groetjes!"
+          }
+        ]
+      },
+      "id": "4d7303f1-c43c-4539-be85-6ed8595500cb"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de aanhef",
+              "meaning": "greeting at the start of a message",
+              "example": "“Hoi Noor” is de aanhef.",
+              "id": "ca331e05-fcbf-4edc-b7fd-3044cd26c78a"
+            },
+            {
+              "term": "de afsluiting",
+              "meaning": "closing at the end of a message",
+              "example": "Groetjes is een informele afsluiting.",
+              "id": "d4a1a846-a1af-4828-9458-f30ff6328239"
+            },
+            {
+              "term": "de onderwerpregel",
+              "meaning": "subject line",
+              "forms": "de onderwerpregels",
+              "example": "De onderwerpregel is kort.",
+              "id": "09185a18-5e7c-4117-a7b7-b397351db7b0"
+            },
+            {
+              "term": "de ontvanger",
+              "meaning": "recipient",
+              "forms": "de ontvangers",
+              "example": "Noor is de ontvanger.",
+              "id": "9d4fa94e-c64d-4713-8d64-9f70c31fa77a"
+            },
+            {
+              "term": "formeel",
+              "meaning": "formal",
+              "example": "De e-mail aan de balie is formeel.",
+              "id": "2e3ddc08-be0f-41e4-b0fb-132555cd4f85"
+            },
+            {
+              "term": "informeel",
+              "meaning": "informal",
+              "example": "Het bericht aan Noor is informeel.",
+              "id": "d6b55e45-dd50-4342-89f7-d0e8849415b1"
+            },
+            {
+              "term": "terwijl",
+              "meaning": "while; introduces a clause with its verb at the end",
+              "example": "Ik lees terwijl ik wacht.",
+              "id": "1d2c458c-c158-4479-81b6-354704dabd2b"
+            },
+            {
+              "term": "de klantenservice",
+              "meaning": "customer service",
+              "example": "Sofia schrijft een oefenmail aan de klantenservice.",
+              "id": "018c51d3-2c4a-4f66-9386-3ac2fce46184"
+            }
+          ]
+        }
+      },
+      "id": "19d83d9a-07a1-4011-8111-7056025304c9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Choose a link",
+      "id": "d7a271a0-8f2e-468f-b555-1f2ec18cee6c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Main clauses and subordinate clauses",
+      "id": "1effb495-0fb6-4722-b8a2-1dfa7613de70"
+    },
+    {
+      "type": "paragraph",
+      "content": "You know en, maar and want between main clauses: each main clause keeps its own verb in position two. You also know omdat and dat clauses, where the finite verb goes to the end. Choose the link by meaning.",
+      "id": "f33680ff-deaf-4ac2-b169-076e4bf669e5"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Ik ben iets later, ",
+        {
+          "text": "want",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " de bus is langzaam."
+      ],
+      "props": {
+        "translation": "I'm a little late because the bus is slow.",
+        "note": "After want, this is a main clause: de bus is + adjective. Want gives a reason."
+      },
+      "id": "ea113794-fcfa-49be-ac52-48dfb9b91630"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Ik ben iets later, ",
+        {
+          "text": "omdat",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " de bus langzaam ",
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "I'm a little late because the bus is slow.",
+        "note": "After omdat, the finite verb is at the end. Recycles row 30."
+      },
+      "id": "38439181-0f09-4ccc-87d6-4f213dee3188"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Ik schrijf ",
+        {
+          "text": "dat",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ik iets later ",
+        {
+          "text": "ben",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "I write that I am a little late.",
+        "note": "In a dat-clause the finite verb is at the end. Recycles row 30."
+      },
+      "id": "86df26dd-24d2-45b1-a51e-bf3e69ac3e30"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "Want + main clause (verb in position two). Omdat / dat / als + subordinate clause (finite verb at the end).",
+      "id": "dbb9b9e4-8329-4efe-883b-b422d89743ce"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Two useful links",
+      "id": "61f5ccb6-83c1-45f6-9ffb-6c36e2cc43d7"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Use ",
+        {
+          "text": "terwijl",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " for two things happening at the same time. Use ",
+        {
+          "text": "of",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " in this short indirect yes/no question frame: Ik wil graag weten of … . Here of means whether, not or."
+      ],
+      "id": "789c1667-da02-4b4f-be52-97de39e8d5a5"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Ik lees de e-mail, ",
+        {
+          "text": "terwijl",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " Noor ",
+        {
+          "text": "kookt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "I read the email while Noor cooks.",
+        "note": "The terwijl-clause has its verb at the end."
+      },
+      "id": "b5446503-291f-4e41-a8f1-a755f435eb20"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Ik wil graag weten ",
+        {
+          "text": "of",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " u het formulier ",
+        {
+          "text": "hebt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ontvangen."
+      ],
+      "props": {
+        "translation": "I would like to know whether you have received the form.",
+        "note": "This is an indirect yes/no question. The verb is at the end."
+      },
+      "id": "e0223db2-d4a7-454f-96a1-0529841f1d9d"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Wil je thee ",
+        {
+          "text": "of",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " koffie?"
+      ],
+      "props": {
+        "translation": "Would you like tea or coffee?",
+        "note": "Here of means or and links two choices."
+      },
+      "id": "962a4b04-0639-425c-bda2-330458c0c08e"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Noor vraagt of Sofia tijd heeft.",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "props": {
+        "translation": "Noor asks whether Sofia has time.",
+        "note": "The of-clause ends with the finite verb heeft."
+      },
+      "id": "62e14dc2-9592-4b4d-8274-e40337fd9549"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Ik stuur een bericht, terwijl ik op de bus wacht.",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "props": {
+        "translation": "I send a message while I wait for the bus.",
+        "note": "The finite verb wacht goes at the end of the terwijl-clause."
+      },
+      "id": "ac9c3f8e-6c44-4642-8900-85163b5d01eb"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Ik schrijf u, omdat ik een vraag heb.",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "props": {
+        "translation": "I am writing to you because I have a question.",
+        "note": "Omdat introduces a reason and sends heb to the end."
+      },
+      "id": "08288ee9-e2f2-4e75-95d2-153401824f00"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik wil weten of hebt u het formulier ontvangen.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik wil weten of u het formulier hebt ontvangen. In an indirect question, do not use direct-question order."
+      ],
+      "id": "fca88f36-d2e8-4967-8da0-df4f6b18f60e"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Informal",
+              "id": "699a3a27-65bc-459d-9078-3777c16f75ce"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Hoi Noor,",
+              "id": "b8f38972-e9c3-40bd-86de-a819bb1c529b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Je / jij",
+              "id": "b8ea4361-8f6b-4af2-9f91-fcd01ac3ab70"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Groetjes,",
+              "id": "cc9ae3d6-1da3-44d7-86d2-1a1f82488792"
+            }
+          ],
+          "id": "fa5e19fe-0a5b-4064-be2e-40d4881cc540"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Formal",
+              "id": "675bf07c-573a-418a-8b45-240b3d91a00d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Beste medewerker,",
+              "id": "62b852f4-d9db-48cf-8838-834be068e78b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "U",
+              "id": "10a1f1ee-dd75-4d1c-a678-7e22d17b9c36"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Met vriendelijke groet,",
+              "id": "bc28a98a-f28c-40b1-b11b-b3a896702771"
+            }
+          ],
+          "id": "db7f2553-8a66-42d6-881a-3ecdfdf13ce1"
+        }
+      ],
+      "id": "221c4340-a9be-4c6c-b0aa-3093b1ca0b34"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "Read the greeting first. It helps you keep je or u consistent through the whole message.",
+      "id": "589c37fe-7b9c-4984-a6af-c9eee7615d4a"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": "A short email often has a greeting, a reason, a request or answer, and a closing. A text message to a friend can be shorter.",
+      "id": "3e82289c-7aba-4b3e-974b-96969ba0f77d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "A formal request",
+      "id": "b151f0dd-9511-4dca-acbb-93595f747982"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sofia also prepares a practice email to a service desk about a form. It does not say that she sent it or received a reply.",
+      "id": "832d2287-6074-4a73-b2bf-47e5f44083a5"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Beste medewerker,",
+          "styles": {
+            "bold": true
+          }
+        },
+        "\nIk heb een vraag over het formulier. Ik wil graag weten of u het formulier digitaal kunt invullen. Ik stuur mijn vraag nu, terwijl ik de informatie lees.\nMet vriendelijke groet,\nSofia Moreno"
+      ],
+      "props": {
+        "translation": "Dear employee,\nI have a question about the form. I would like to know whether you can fill in the form digitally. I am sending my question now while I read the information.\nKind regards,\nSofia Moreno",
+        "note": "The greeting and closing are formal. U stays consistent. The request uses the bounded of-frame."
+      },
+      "id": "4bcbab12-ccce-46f2-907d-4f4dde7ecb64"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Message structure",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Greeting and suitable tone",
+          "id": "733befa3-812b-4f07-b345-69864f3b01b0"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Reason and request, in short sentences",
+          "id": "93e2ead0-cabf-4283-aa7a-9e35556ad87e"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Closing that matches the reader",
+          "id": "7a453aa6-f33e-4ebf-b35c-9a06bba57510"
+        }
+      ],
+      "id": "a01db76d-036e-49b7-aec5-0be56ab512a6"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Heb je het bericht aan de balie klaar?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja. Ik vraag of ze mijn formulier kunnen invullen."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Goed. Je schrijft aan een medewerker, dus gebruik u."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Beste medewerker. Ik wil graag weten of u mij kunt helpen."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Dat is beleefd en duidelijk."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik schrijf de vraag op, terwijl ik de e-mail lees."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Mooi. En je sluit af met Met vriendelijke groet."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je. De toon past nu bij de ontvanger."
+          }
+        ]
+      },
+      "id": "ec5f3044-9617-45f8-bb20-1a8d7661c2cb"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de medewerker",
+              "meaning": "employee, staff member",
+              "forms": "de medewerkers",
+              "example": "Beste medewerker, ik heb een vraag.",
+              "id": "6120437e-5e72-49f9-97c0-e602cee97454"
+            },
+            {
+              "term": "een vraag over",
+              "meaning": "question about",
+              "forms": "de vragen over",
+              "example": "Ik heb een vraag over het formulier.",
+              "id": "489db7ff-9a1f-4eb5-9a34-8b1612072b07"
+            },
+            {
+              "term": "digitaal",
+              "meaning": "digital; digitally",
+              "example": "Kunt u het formulier digitaal invullen?",
+              "id": "c673eb2c-852a-461c-896b-987803a5fac6"
+            },
+            {
+              "term": "Met vriendelijke groet",
+              "meaning": "Kind regards (formal closing)",
+              "example": "Met vriendelijke groet, Sofia Moreno.",
+              "id": "03611a2e-81e8-4ba0-bc0a-931bd20edd67"
+            },
+            {
+              "term": "de informatie",
+              "meaning": "information",
+              "example": "Ik lees de informatie.",
+              "id": "52ba8b9f-d1cd-4a81-893d-615b3385a431"
+            },
+            {
+              "term": "ontvangen",
+              "meaning": "to receive",
+              "forms": "ontvangt · ontving · ontvangen",
+              "example": "Ik wil weten of u mijn e-mail hebt ontvangen.",
+              "id": "85f1490a-f2b2-4adc-929d-7d31faf7c89a"
+            },
+            {
+              "term": "invullen",
+              "meaning": "to fill in",
+              "forms": "vult in · vulde in · ingevuld",
+              "example": "Kunt u het formulier invullen?",
+              "note": "Separable verb.",
+              "id": "3448df33-6b44-4e9a-bb84-65f0cd6445fb"
+            },
+            {
+              "term": "de reactie",
+              "meaning": "reply, response",
+              "forms": "de reacties",
+              "example": "De medewerker stuurt een reactie.",
+              "id": "8d494a5e-1d65-43e6-8469-1ac72cafabdc"
+            },
+            {
+              "term": "beantwoorden",
+              "meaning": "to answer, reply to",
+              "forms": "beantwoordt · beantwoordde · beantwoord",
+              "example": "De medewerker beantwoordt de vraag.",
+              "id": "69a9380e-8abb-441f-bcd0-f4412ad4f72d"
+            }
+          ]
+        }
+      },
+      "id": "63d53b8f-ea19-4341-89c8-9f4231b5326c"
+    },
+    {
+      "type": "divider",
+      "id": "e7711511-5a62-4ab8-aeea-96e041e3c258"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "07c98529-a1b6-4dac-ac6e-0f568ee61a9d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Choose the link",
+      "id": "51e1e3a8-a7c3-4dfa-9219-8c2bf02a1ed9"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in want, omdat, terwijl or of. Check the meaning and word order.",
+          "items": [
+            {
+              "prompt": "Ik stuur een bericht, … ik ben iets later. (reason; main clause)",
+              "authorsVersion": [
+                "want"
+              ],
+              "note": "Want links two main clauses; the verb stays in position two."
+            },
+            {
+              "prompt": "Ik stuur een bericht, … ik iets later ben. (reason)",
+              "authorsVersion": [
+                "omdat"
+              ],
+              "note": "Omdat introduces a subordinate clause; ben goes to the end."
+            },
+            {
+              "prompt": "Ik lees de mail, … Noor koffie maakt. (at the same time)",
+              "authorsVersion": [
+                "terwijl"
+              ],
+              "note": "Terwijl marks simultaneous actions; the finite verb ends its clause."
+            },
+            {
+              "prompt": "Ik wil graag weten … u het formulier hebt ontvangen. (whether)",
+              "authorsVersion": [
+                "of"
+              ],
+              "note": "Of means whether in this indirect yes/no question; the verb is at the end."
+            },
+            {
+              "prompt": "Wil je thee … koffie? (choice)",
+              "authorsVersion": [
+                "of"
+              ],
+              "note": "Here of means or and links choices."
+            },
+            {
+              "prompt": "Ik vraag … de balie open is. (whether)",
+              "authorsVersion": [
+                "of"
+              ],
+              "note": "This is an indirect question, so is comes at the end."
+            },
+            {
+              "prompt": "Sofia schrijft dat ze later … . (to be; clause)",
+              "authorsVersion": [
+                "is"
+              ],
+              "note": "In a dat-clause, the finite verb goes at the end."
+            }
+          ]
+        }
+      },
+      "id": "fadd33dc-cd6f-4775-ac8f-d34ac82a2f7c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the messages",
+      "id": "5b44160f-8262-47cd-8716-e274356eb456"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each message with the missing word or words.",
+          "items": [
+            {
+              "prompt": "Hoi Noor, ik ben later, … de bus rijdt langzaam.",
+              "authorsVersion": [
+                "want"
+              ],
+              "note": "Want is followed by a main clause."
+            },
+            {
+              "prompt": "Beste medewerker, ik wil graag weten … u het formulier hebt ontvangen.",
+              "authorsVersion": [
+                "of"
+              ],
+              "note": "Of introduces the indirect yes/no question; hebt is at the end."
+            },
+            {
+              "prompt": "Ik lees de informatie, terwijl ik op antwoord … . (wachten)",
+              "authorsVersion": [
+                "wacht"
+              ],
+              "note": "The finite verb wacht ends the terwijl-clause."
+            },
+            {
+              "prompt": "Ik schrijf u, … ik een vraag heb. (reason)",
+              "authorsVersion": [
+                "omdat"
+              ],
+              "note": "Omdat introduces the reason; heb is at the end."
+            },
+            {
+              "prompt": "Noor vraagt of Sofia morgen … . (komen)",
+              "authorsVersion": [
+                "komt"
+              ],
+              "note": "The finite verb ends the indirect question."
+            },
+            {
+              "prompt": "Hoi Noor, …, Sofia. (informal closing)",
+              "authorsVersion": [
+                "Groetjes"
+              ],
+              "note": "Groetjes is an informal closing."
+            },
+            {
+              "prompt": "… medewerker, (formal greeting)",
+              "authorsVersion": [
+                "Beste"
+              ],
+              "note": "Beste medewerker is a suitable formal greeting."
+            }
+          ]
+        }
+      },
+      "id": "72a4064d-8d60-480a-b90e-ba557c72fc49"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Put the words in order",
+      "id": "243b06ce-1059-4f1f-95ce-d52ed5ed09ec"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the chunks in order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: want / ik schrijf Noor / ik heb een vraag",
+              "authorsVersion": [
+                "Ik schrijf Noor, want ik heb een vraag."
+              ],
+              "note": "Want is followed by a main clause."
+            },
+            {
+              "prompt": "Put in order: omdat / de balie / vandaag / gesloten / is",
+              "authorsVersion": [
+                "Omdat de balie vandaag gesloten is."
+              ],
+              "note": "The finite verb is at the end of the subordinate clause."
+            },
+            {
+              "prompt": "Put in order: weten / ik / wil graag / of / u / mij / kunt helpen",
+              "authorsVersion": [
+                "Ik wil graag weten of u mij kunt helpen."
+              ],
+              "note": "The of-clause has subordinate word order."
+            },
+            {
+              "prompt": "Put in order: terwijl / Noor / kookt / ik / de mail / lees",
+              "authorsVersion": [
+                "Ik lees de mail terwijl Noor kookt."
+              ],
+              "note": "Main clause first; the terwijl-clause ends with kookt."
+            },
+            {
+              "prompt": "Put in order: als / tijd / je / hebt / stuur / een bericht",
+              "authorsVersion": [
+                "Als je tijd hebt, stuur een bericht."
+              ],
+              "note": "The als-clause ends with hebt; the next main clause has inversion: stuur."
+            },
+            {
+              "prompt": "Put in order: ik / vraag / of / de medewerker / antwoord / vandaag",
+              "authorsVersion": [
+                "Ik vraag of de medewerker vandaag antwoordt."
+              ],
+              "note": "The subordinate clause ends with antwoordt."
+            }
+          ]
+        }
+      },
+      "id": "069baa03-19a5-457b-8f26-62c2a832f70c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Choose the right tone",
+      "id": "7fa22da8-6b3d-4530-bcb8-bf457f202719"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each message for the named reader. Keep the pronoun and closing consistent.",
+          "items": [
+            {
+              "prompt": "To Noor: Beste medewerker, kunt u mij helpen? Met vriendelijke groet, Sofia.",
+              "authorsVersion": [
+                "Hoi Noor, kun je me helpen? Groetjes, Sofia."
+              ],
+              "note": "For a friend use an informal greeting and je. Also fine: Kun je me even helpen?"
+            },
+            {
+              "prompt": "To a service desk: Hoi, kun je het formulier bekijken? Groetjes, Sofia.",
+              "authorsVersion": [
+                "Beste medewerker, kunt u het formulier bekijken? Met vriendelijke groet, Sofia Moreno."
+              ],
+              "note": "For a formal recipient use u and a formal closing."
+            },
+            {
+              "prompt": "To Noor: Ik wil graag weten of u morgen tijd hebt.",
+              "authorsVersion": [
+                "Ik wil graag weten of je morgen tijd hebt."
+              ],
+              "note": "Change u to je for Noor; the subordinate word order stays the same."
+            },
+            {
+              "prompt": "To a staff member: Kun je zeggen of je de e-mail hebt ontvangen?",
+              "authorsVersion": [
+                "Kunt u zeggen of u de e-mail hebt ontvangen?"
+              ],
+              "note": "Use u consistently. Also fine: Ik wil graag weten of u de e-mail hebt ontvangen."
+            },
+            {
+              "prompt": "Choose a closing for an informal message to Noor.",
+              "authorsVersion": [
+                "Groetjes, Sofia."
+              ],
+              "note": "Met vriendelijke groet is also possible but sounds more formal."
+            },
+            {
+              "prompt": "Choose a closing for a formal email to the service desk.",
+              "authorsVersion": [
+                "Met vriendelijke groet, Sofia Moreno."
+              ],
+              "note": "Groetjes would be too informal here."
+            }
+          ]
+        }
+      },
+      "id": "ce748005-c62c-44fb-a765-c01d333ed790"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "92c7b9a8-3e0f-4a87-9d64-21da49a2f5e9"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Use a suitable tone for the reader.",
+          "items": [
+            {
+              "prompt": "I am a little late because the bus is slow. (to Noor)",
+              "authorsVersion": [
+                "Ik ben iets later, want de bus is langzaam."
+              ],
+              "note": "Also fine: Ik ben iets later omdat de bus langzaam rijdt. Want keeps main-clause order; omdat puts the verb at the end."
+            },
+            {
+              "prompt": "I would like to know whether you have received my email. (formal)",
+              "authorsVersion": [
+                "Ik wil graag weten of u mijn e-mail hebt ontvangen."
+              ],
+              "note": "U is formal; the finite verb ends the of-clause."
+            },
+            {
+              "prompt": "I read the information while Noor cooks.",
+              "authorsVersion": [
+                "Ik lees de informatie terwijl Noor kookt."
+              ],
+              "note": "The terwijl-clause ends with kookt."
+            },
+            {
+              "prompt": "Dear employee, I have a question about the form.",
+              "authorsVersion": [
+                "Beste medewerker, ik heb een vraag over het formulier."
+              ],
+              "note": "This is a formal greeting. "
+            },
+            {
+              "prompt": "Hi Noor, do you have time tomorrow? Best wishes, Sofia.",
+              "authorsVersion": [
+                "Hoi Noor, heb je morgen tijd? Groetjes, Sofia."
+              ],
+              "note": "Informal tone with Noor. Also fine: Hoi Noor, heb jij morgen tijd?"
+            },
+            {
+              "prompt": "I write because I have a question. (main clause after want)",
+              "authorsVersion": [
+                "Ik schrijf, want ik heb een vraag."
+              ],
+              "note": "Want is followed by a main clause. Use a comma before the link."
+            }
+          ]
+        }
+      },
+      "id": "cbb5e94a-ee3e-4d32-a0c7-9c1fc6123224"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "ffbde074-8ac5-48bf-976e-49ad7babeacc"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Ik wil graag weten of u morgen open bent.",
+              "authorsVersion": [
+                "I would like to know whether you are open tomorrow."
+              ],
+              "note": "Of means whether here, and the verb is at the end."
+            },
+            {
+              "prompt": "Ik lees de mail terwijl Noor kookt.",
+              "authorsVersion": [
+                "I read the email while Noor cooks."
+              ],
+              "note": "Terwijl marks two things happening at the same time."
+            },
+            {
+              "prompt": "Ik ben iets later, want de bus rijdt langzaam.",
+              "authorsVersion": [
+                "I'm a little late because the bus is slow."
+              ],
+              "note": "Want gives a reason and keeps main-clause word order."
+            },
+            {
+              "prompt": "Beste medewerker, ik heb een vraag over het formulier.",
+              "authorsVersion": [
+                "Dear employee, I have a question about the form."
+              ],
+              "note": "The greeting is formal."
+            },
+            {
+              "prompt": "Met vriendelijke groet, Sofia Moreno.",
+              "authorsVersion": [
+                "Kind regards, Sofia Moreno."
+              ],
+              "note": "This is a formal closing."
+            },
+            {
+              "prompt": "Wil je thee of koffie?",
+              "authorsVersion": [
+                "Would you like tea or coffee?"
+              ],
+              "note": "Of means or here and offers a choice."
+            }
+          ]
+        }
+      },
+      "id": "86ed332b-4d4d-4ebf-b41c-4d2bd419f0ac"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Repair the sentence",
+      "id": "dc68dd06-4af6-4669-8ee8-51a151b72bbf"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Correct the word order or punctuation. Write the whole corrected sentence.",
+          "items": [
+            {
+              "prompt": "Ik wil weten of hebt u tijd.",
+              "authorsVersion": [
+                "Ik wil weten of u tijd hebt."
+              ],
+              "note": "Indirect question: subject before verb, finite verb at the end."
+            },
+            {
+              "prompt": "Ik schrijf u omdat ik heb een vraag.",
+              "authorsVersion": [
+                "Ik schrijf u omdat ik een vraag heb."
+              ],
+              "note": "Omdat-clause ends with the finite verb."
+            },
+            {
+              "prompt": "Ik ben later want de bus rijdt langzaam.",
+              "authorsVersion": [
+                "Ik ben later, want de bus is langzaam."
+              ],
+              "note": "Use a comma before want when it connects the clauses."
+            },
+            {
+              "prompt": "Ik lees de mail, terwijl kookt Noor.",
+              "authorsVersion": [
+                "Ik lees de mail, terwijl Noor kookt."
+              ],
+              "note": "The subject comes before the verb in the subordinate clause."
+            },
+            {
+              "prompt": "Hoi Noor, ik wil graag weten of u tijd hebt. Groetjes, Sofia.",
+              "authorsVersion": [
+                "Hoi Noor, ik wil graag weten of je tijd hebt. Groetjes, Sofia."
+              ],
+              "note": "Keep the informal pronoun consistent with the greeting and closing."
+            },
+            {
+              "prompt": "Beste medewerker, kun je mij helpen? Groetjes, Sofia.",
+              "authorsVersion": [
+                "Beste medewerker, kunt u mij helpen? Met vriendelijke groet, Sofia Moreno."
+              ],
+              "note": "Use formal u and a matching closing for the service desk."
+            }
+          ]
+        }
+      },
+      "id": "6f9a83d3-527c-4476-84bb-5d89e85f6702"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Arrange a short message",
+      "id": "871a75f2-7e49-44df-8755-8d02991f19b2"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put these message parts in a clear order. Write the complete message.",
+          "items": [
+            {
+              "prompt": "Arrange: Groetjes, Sofia / Hoi Noor, / Ik ben iets later, want de bus rijdt langzaam.",
+              "authorsVersion": [
+                "Hoi Noor,\nIk ben iets later, want de bus is langzaam.\nGroetjes, Sofia."
+              ],
+              "note": "Greeting first, the message next, and the informal closing last."
+            },
+            {
+              "prompt": "Arrange: Met vriendelijke groet, Sofia Moreno / Beste medewerker, / Ik wil graag weten of u het formulier hebt ontvangen.",
+              "authorsVersion": [
+                "Beste medewerker,\nIk wil graag weten of u het formulier hebt ontvangen.\nMet vriendelijke groet, Sofia Moreno."
+              ],
+              "note": "Keep the formal greeting, u, and formal closing together."
+            },
+            {
+              "prompt": "Arrange: Ik schrijf u, omdat ik een vraag heb. / Beste medewerker, / Met vriendelijke groet, Sofia Moreno.",
+              "authorsVersion": [
+                "Beste medewerker,\nIk schrijf u, omdat ik een vraag heb.\nMet vriendelijke groet, Sofia Moreno."
+              ],
+              "note": "The message has a greeting, reason, and matching closing."
+            },
+            {
+              "prompt": "Arrange: Hoi Noor, / Ik wil graag weten of je morgen tijd hebt. / Groetjes, Sofia.",
+              "authorsVersion": [
+                "Hoi Noor,\nIk wil graag weten of je morgen tijd hebt.\nGroetjes, Sofia."
+              ],
+              "note": "This informal message keeps je consistent."
+            },
+            {
+              "prompt": "Arrange: Ik lees het antwoord, terwijl Noor koffie maakt. / Hoi Noor, / Groetjes, Sofia.",
+              "authorsVersion": [
+                "Hoi Noor,\nIk lees het antwoord, terwijl Noor koffie maakt.\nGroetjes, Sofia."
+              ],
+              "note": "Use a greeting, then the sentence, then the closing."
+            },
+            {
+              "prompt": "Arrange: Ik schrijf u, want ik heb een vraag. / Beste medewerker, / Met vriendelijke groet, Sofia Moreno.",
+              "authorsVersion": [
+                "Beste medewerker,\nIk schrijf u, want ik heb een vraag.\nMet vriendelijke groet, Sofia Moreno."
+              ],
+              "note": "Want is followed by a main clause; the register stays formal."
+            }
+          ]
+        }
+      },
+      "id": "c247fa34-0d48-46bd-9b7b-cdbc5c284371"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Sofia's email thread",
+      "id": "5ccfcbb0-50a8-4a46-b558-12e92fa7ff62"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the practice email thread and answer in Dutch.",
+          "passage": {
+            "title": "Een oefenmail aan de servicebalie",
+            "content": "Woensdag 27 januari 2027\n\nBeste medewerker,\nIk heb een vraag over het formulier. Ik wil graag weten of u het formulier digitaal kunt invullen. Ik lees de informatie, terwijl ik op uw antwoord wacht. Ik schrijf u, omdat het formulier niet duidelijk is.\n\nMet vriendelijke groet,\nSofia Moreno\n\nAntwoord van de medewerker:\nBeste mevrouw Moreno,\nU kunt het formulier digitaal invullen. Ik stuur u de informatie, want die is kort en duidelijk. U hoeft vandaag niets op te sturen.\n\nMet vriendelijke groet,\nDe medewerker"
+          },
+          "items": [
+            {
+              "prompt": "Aan wie schrijft Sofia?",
+              "authorsVersion": [
+                "Aan een medewerker van de servicebalie."
+              ],
+              "note": "The greeting says Beste medewerker."
+            },
+            {
+              "prompt": "Waarover heeft Sofia een vraag?",
+              "authorsVersion": [
+                "Over het formulier."
+              ],
+              "note": "She asks about the form."
+            },
+            {
+              "prompt": "Wat wil Sofia graag weten?",
+              "authorsVersion": [
+                "Of de medewerker het formulier digitaal kan invullen."
+              ],
+              "note": "The of-clause gives the indirect question."
+            },
+            {
+              "prompt": "Wat doet Sofia terwijl ze op antwoord wacht?",
+              "authorsVersion": [
+                "Ze leest de informatie."
+              ],
+              "note": "The passage says: Ik lees de informatie, terwijl ik op uw antwoord wacht."
+            },
+            {
+              "prompt": "Waarom schrijft Sofia?",
+              "authorsVersion": [
+                "Omdat het formulier niet duidelijk is."
+              ],
+              "note": "The omdat-clause explains her reason."
+            },
+            {
+              "prompt": "Klopt dit? Sofia moet het formulier vandaag opsturen.",
+              "authorsVersion": [
+                "Nee. Ze hoeft vandaag niets op te sturen."
+              ],
+              "note": "The reply says she does not have to send anything today."
+            },
+            {
+              "prompt": "Wat stuurt de medewerker?",
+              "authorsVersion": [
+                "De medewerker stuurt de informatie."
+              ],
+              "note": "The reply says the employee will send the information."
+            },
+            {
+              "prompt": "Welke aanhef en afsluiting gebruikt Sofia?",
+              "authorsVersion": [
+                "Ze gebruikt Beste medewerker en Met vriendelijke groet."
+              ],
+              "note": "Both are formal."
+            }
+          ]
+        }
+      },
+      "id": "e4703472-aec9-41c8-bb24-d734a91f4a35"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "ddfc9e27-a662-49d0-beee-941ad2435d15"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write a 4–6 sentence practice message to a friend or a service desk. Include a greeting, a reason, one request with of or a while-clause with terwijl, and a suitable closing.",
+          "items": [
+            {
+              "prompt": "Write a short message to Noor or a service desk using a suitable tone and one subordinate clause.",
+              "authorsVersion": [
+                "Hoi Noor,\nIk ben iets later, want de bus is langzaam. Ik wil graag weten of je al thuis bent. Ik lees je bericht terwijl ik op de bus wacht.\nGroetjes,\nSofia"
+              ],
+              "note": "Model answer to Noor: informal greeting and je throughout. For a service desk, use Beste medewerker, u, and Met vriendelijke groet. Keep terwijl / of clauses verb-final; want takes main-clause order."
+            }
+          ]
+        }
+      },
+      "id": "1e5838d1-926e-411d-869b-cdaf9e626afd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "cff57dbd-339b-42fb-a4ea-6fb8a3861e9e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Want joins main clauses; the finite verb stays in position two.",
+      "id": "e31dd5f4-873b-45cd-a318-e926fec262f0"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Omdat, dat, als, terwijl, and indirect of clauses put the finite verb at the end.",
+      "id": "f01943d0-5835-4d6d-bdff-9836937ffff0"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Of means or between choices, and whether in the short frame Ik wil graag weten of … .",
+      "id": "ef23a10c-9b12-45f2-bdb3-9f0b17c6b68b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Match the greeting, je/u pronouns, and closing to your reader.",
+      "id": "a76bc9e1-bfda-4b8e-bd08-a8988a075d49"
+    },
+    {
+      "type": "divider",
+      "id": "3211d73a-e708-4e36-aae3-abebad474b7a"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: two messages",
+      "description": "Sofia and Noor at a kitchen table, looking at a phone and a laptop with simple practice message drafts on the screens; no legible text.",
+      "alt": "Sofia and Noor review two short messages at a table."
+    },
+    {
+      "afterHeading": "A formal request",
+      "description": "A tidy laptop screen with an email draft addressed to a service desk, with greeting, short paragraph and sign-off visible as blurred lines.",
+      "alt": "A formal email draft on a laptop."
+    }
+  ],
+  "id": "17a5d675-4926-4edc-9824-390d4e4edb2e"
+}

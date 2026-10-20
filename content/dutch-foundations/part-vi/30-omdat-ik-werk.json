@@ -1,0 +1,1380 @@
+{
+  "title": "Omdat ik werk",
+  "goal": "Explain reasons and connect ideas with omdat, dat and temporal als, putting the verb at the end of a subordinate clause.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Omdat ik werk",
+      "id": "d9f80731-0df8-4c7a-b36a-41517e7930c0"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Monday 11 January 2027 at Sofia's IT office. She talks with Karin and Daan about ordinary work and Dutch study. In this lesson you will use omdat, dat and als (when), and place the verb at the end of each subordinate clause.",
+      "id": "254c0e3f-a412-4056-b8e8-67533b9fec6f"
+    },
+    {
+      "type": "paragraph",
+      "content": "Colours: subjects are green, finite verbs are blue, and the new conjunctions are bold.",
+      "id": "04ba0e0c-8bf4-4fec-9650-404907bb799d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: at the office",
+      "id": "892e4b2d-e398-401e-91be-6442377c4847"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Karin",
+            "text": "Sofia, werk je vandaag op kantoor?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja. Ik werk op kantoor omdat ik met Daan overleg."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ik denk dat de nieuwe tekst duidelijk is."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik lees de tekst nog een keer omdat ik Nederlands leer."
+          },
+          {
+            "speaker": "Karin",
+            "text": "Goed. Als ik vragen heb, praat ik met jullie."
+          },
+          {
+            "speaker": "Daan",
+            "text": "En als ik iets niet begrijp, vraag ik het aan Karin."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik vind dat de uitleg nu duidelijk is."
+          },
+          {
+            "speaker": "Karin",
+            "text": "Fijn. We praten straks verder."
+          }
+        ]
+      },
+      "id": "760b1036-c981-4827-ae3f-91b2b91c4068"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de bijzin",
+              "meaning": "subordinate clause",
+              "forms": "de bijzinnen",
+              "example": "Omdat ik werk, drink ik thee.",
+              "id": "cb40ed5e-22d2-45e1-84c6-f5a3fde576d1"
+            },
+            {
+              "term": "de hoofdzin",
+              "meaning": "main clause",
+              "forms": "de hoofdzinnen",
+              "example": "Ik drink thee omdat ik werk.",
+              "id": "bc050330-3b9e-4af3-ac78-508ae2474a4b"
+            },
+            {
+              "term": "de reden",
+              "meaning": "reason",
+              "forms": "de redenen",
+              "example": "De reden staat in de bijzin met omdat.",
+              "id": "56d0090e-78e4-42b3-9da0-efbc858c90fd"
+            },
+            {
+              "term": "de werkplek",
+              "meaning": "workplace",
+              "forms": "de werkplekken",
+              "example": "Sofia is op haar werkplek.",
+              "id": "ee3cf7ec-041a-4356-8ca5-827f44e3233a"
+            },
+            {
+              "term": "overleggen",
+              "meaning": "to discuss, consult",
+              "forms": "overlegt · overlegde · overlegd",
+              "example": "Sofia overlegt met Daan.",
+              "id": "8dbfb3d2-2cd3-4e91-b906-d94761fd7de6"
+            },
+            {
+              "term": "duidelijk",
+              "meaning": "clear",
+              "example": "De tekst is duidelijk.",
+              "id": "e63486f5-91bd-4e54-a06b-de0aadbb4ca3"
+            },
+            {
+              "term": "begrijpen",
+              "meaning": "to understand",
+              "forms": "begrijpt · begreep · begrepen",
+              "example": "Daan begrijpt de uitleg.",
+              "id": "f8618cff-d005-43c5-8c68-5139692d0cc4"
+            },
+            {
+              "term": "de uitleg",
+              "meaning": "explanation",
+              "forms": "de uitleggingen",
+              "example": "De uitleg is duidelijk.",
+              "id": "0d46f2f2-2ade-4c6b-8a2e-427cc8a8a80d"
+            },
+            {
+              "term": "de tekst",
+              "meaning": "text",
+              "forms": "de teksten",
+              "example": "Sofia leest de tekst.",
+              "id": "93c2fde1-9abb-4ac8-be9f-4d725e32ddba"
+            },
+            {
+              "term": "vragen aan",
+              "meaning": "to ask (someone)",
+              "example": "Daan vraagt het aan Karin.",
+              "id": "5fa5bb7d-aa1d-4203-904d-23d24b0ab2e4",
+              "forms": "vraagt · vroeg · gevraagd"
+            },
+            {
+              "term": "het onderwerp",
+              "meaning": "subject (in a sentence)",
+              "forms": "de onderwerpen",
+              "example": "Het onderwerp staat na dat.",
+              "id": "ed622e83-846e-4792-b0bd-9e628b011b1f"
+            },
+            {
+              "term": "de komma",
+              "meaning": "comma",
+              "forms": "de komma’s",
+              "example": "Na de bijzin staat een komma.",
+              "id": "8a92c8a8-cd90-4aec-8794-bccf62bc66e7"
+            },
+            {
+              "term": "aandachtig",
+              "meaning": "attentively",
+              "example": "Sofia leest aandachtig.",
+              "id": "ff3ea0a1-02e7-477c-b54d-7e4873b53b1b"
+            },
+            {
+              "term": "de zin",
+              "meaning": "sentence",
+              "forms": "de zinnen",
+              "example": "De zin is kort.",
+              "id": "3f510eed-508b-4b9e-a5ed-8a18ab34e096"
+            },
+            {
+              "term": "het antwoord",
+              "meaning": "answer",
+              "forms": "de antwoorden",
+              "example": "Karin geeft een duidelijk antwoord.",
+              "id": "5c492295-8301-4e5b-b9de-1300dd9f9b68"
+            }
+          ]
+        }
+      },
+      "id": "134f1d0d-80b6-4f51-90ec-0f0f962d7ba8"
+    },
+    {
+      "type": "divider",
+      "id": "181bbe51-2dd4-4dbc-9519-6e022f37f8d1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Three conjunctions, one word order",
+      "id": "1d9567e4-657c-4940-9cc0-f98f6a57732a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "The verb goes to the end",
+      "id": "b2f2a155-29ec-4e9c-900f-cac8c9773eff"
+    },
+    {
+      "type": "paragraph",
+      "content": "You already know dat after denken, vinden, hopen and zeggen. Now add omdat for a reason and als for when something happens repeatedly or is expected. In all three subordinate clauses, keep the subject after the conjunction and put the finite verb at the end.",
+      "id": "93371e9f-6d1c-4ec8-9edc-555a0e457d81"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think that the text is clear.",
+        "note": "Recycles denken dat from lesson 24-b. The finite verb is at the end of the dat-clause."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " denk ",
+        {
+          "text": "dat",
+          "styles": {
+            "bold": true
+          }
+        },
+        " de tekst duidelijk ",
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "9bb2c809-feb7-451d-b5ee-138620ed4327"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia works at the office because she has a meeting.",
+        "note": "omdat gives a reason; heeft is the finite verb at the end."
+      },
+      "content": [
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " werkt op kantoor ",
+        {
+          "text": "omdat",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ze een overleg ",
+        {
+          "text": "heeft",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "d7b07bbb-c5e2-478a-9ffc-80060e8bb57a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het overleg",
+              "meaning": "meeting, discussion",
+              "forms": "de overleggen",
+              "example": "Sofia heeft overleg met Daan.",
+              "id": "c4df0159-18df-4bd0-89c9-2d1f81ad35ba"
+            }
+          ]
+        }
+      },
+      "id": "14e9c0f3-1429-4d43-a8a8-71bcc128565f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "When Karin has a question, she talks to the team.",
+        "note": "Here als means when: it describes an expected situation."
+      },
+      "content": [
+        {
+          "text": "Als",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " een vraag ",
+        {
+          "text": "heeft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", ",
+        {
+          "text": "praat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " met het team."
+      ],
+      "id": "192992c3-ca13-4a95-b5dd-8867e358bfea"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "conjunction + subject + other words + finite verb. Use this order after dat, omdat and temporal als.",
+      "id": "254dbc9b-e541-4d48-b989-07c0af18d5c9"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Main clause",
+              "id": "c09f7a6e-9e89-4363-890f-16b6fbd6767d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Karin praat met Sofia.",
+              "id": "278742ef-2858-40d9-a0c0-d6482832ebcd"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "The finite verb is in second position.",
+              "id": "7fccd629-7f02-4cae-aa2f-2f46bfc8fd98"
+            }
+          ],
+          "id": "5441a41a-94c5-4c8e-8fd3-210e841f8291"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Subordinate clause",
+              "id": "afbb6d69-9edf-4cf4-933e-5df9b841fdab"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "omdat Karin met Sofia praat",
+              "id": "52ed6718-2dda-4153-8158-a37daca16883"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "The finite verb comes at the end.",
+              "id": "873dab01-2f47-42cd-a3b9-59bf30b519a8"
+            }
+          ],
+          "id": "a8b69142-13cb-44d1-810d-da2d44e5175b"
+        }
+      ],
+      "id": "3626c2f1-55a5-4cd8-a1e3-3871b36eec6b"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "A subordinate clause can follow the main clause.",
+      "id": "a9d3c570-6605-4eac-b686-fe240f364fdd"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "It can also come first.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Add a comma after the fronted clause.",
+          "id": "91d773ee-46ca-4fe2-9c4f-1483d795de78"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Then the main clause has inversion: verb before subject.",
+          "id": "cb50295c-dde7-4221-800b-7ddce8fe6760"
+        }
+      ],
+      "id": "1a14218e-564a-4a99-b4bf-d75d258dda77"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Find the conjunction.",
+      "id": "fa932014-3152-46c8-ad6a-25ff0a85decb"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Keep the subject after it.",
+      "id": "5d9ad6dc-1ace-42b4-92e7-9d489851fd8f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Put the finite verb at the end.",
+      "id": "b4a89510-e552-482c-99c0-e3c263afbdfa"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Because I work at the office, I drink tea at home.",
+        "note": "The fronted subordinate clause is followed by inversion: drink ik."
+      },
+      "content": [
+        {
+          "text": "Omdat",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ik op kantoor werk, ",
+        {
+          "text": "drink",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ik thuis thee."
+      ],
+      "id": "9506f1b2-d775-4079-87df-5254c399c22d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "When Daan asks a question, Karin answers.",
+        "note": "Fronted temporal als-clause; the main clause starts with the verb answers."
+      },
+      "content": [
+        {
+          "text": "Als",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Daan een vraag stelt, ",
+        {
+          "text": "antwoordt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " Karin."
+      ],
+      "id": "64850389-46e1-4491-b97e-0e2eae5d12d0"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Omdat ik werk, ik drink thee.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Omdat ik werk, drink ik thee. After a subordinate clause at the start, the main-clause verb comes before its subject."
+      ],
+      "id": "d51b2341-a814-4e60-bac3-6ac6321cb813"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "Temporal als means when here. It introduces a repeated or expected situation, not a condition.",
+      "id": "f5afe1a6-7679-4b60-8728-470dbf1141bf"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I hope that Daan understands the text.",
+        "note": "Recycles hopen dat from 24-b; begrijpt is at the end."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " hoop ",
+        {
+          "text": "dat",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " de tekst ",
+        {
+          "text": "begrijpt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "6f53caaf-d0c6-42ea-a239-18416ec90873"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Karin says that Sofia reads attentively.",
+        "note": "Recycles zeggen dat; leest is the final verb."
+      },
+      "content": [
+        {
+          "text": "Karin",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " zegt ",
+        {
+          "text": "dat",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " aandachtig ",
+        {
+          "text": "leest",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "2ee3318f-6bac-4ad2-be31-de98f595a09f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan asks Sofia questions because he works with her.",
+        "note": "The omdat-clause follows the main clause; werkt comes last."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " vraagt Sofia dingen ",
+        {
+          "text": "omdat",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "hij",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " met haar ",
+        {
+          "text": "werkt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "51510877-95b4-43ab-b1b6-e163ceb7ac53"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I ask Karin because I do not understand the explanation.",
+        "note": "Niet stays before the final verb begrijp."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " vraag het aan Karin ",
+        {
+          "text": "omdat",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " de uitleg niet ",
+        {
+          "text": "begrijp",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "bc1fc8ba-dfda-4965-85a1-03ebe3625eaa"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "When Sofia studies Dutch, she reads the text aloud.",
+        "note": "The subordinate clause is first; leest comes before Sofia in the main clause."
+      },
+      "content": [
+        {
+          "text": "Als",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " Nederlands studeert, ",
+        {
+          "text": "leest",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "ze",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " de tekst hardop."
+      ],
+      "id": "8d5f9fe9-d21e-45ce-a309-4cb2e478d5bb"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "hardop",
+              "meaning": "aloud",
+              "example": "Sofia leest de tekst hardop.",
+              "id": "7f06f888-95a9-40bd-a3c0-863778fef0e3"
+            }
+          ]
+        }
+      },
+      "id": "41451c36-51aa-41c9-9a68-d248faa52f2f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: a short study break",
+      "id": "ef4796ab-e03e-4591-9c54-b60d2f8f7454"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Ik lees deze tekst omdat ik mijn Nederlands oefen."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ik denk dat je de uitleg goed begrijpt."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je. Als ik een nieuw woord zie, schrijf ik het op."
+          },
+          {
+            "speaker": "Daan",
+            "text": "En als je een vraag hebt, vraag je het aan Karin?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja. Ik vraag het aan haar omdat zij de teamleider is."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ik vind dat we zo verder kunnen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goed. Als ik klaar ben, drink ik thee."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Prima. Dan praten we straks verder."
+          }
+        ]
+      },
+      "id": "46ef3591-27aa-4f0d-baa2-83579d68d6ef"
+    },
+    {
+      "type": "divider",
+      "id": "6b712de1-0d88-45e8-b845-40a00f4dd59b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "d538fcc6-9eb5-4741-9511-30f239e0a533"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Choose the conjunction",
+      "id": "1d8fb848-8398-4d13-8bbf-a0290fa99d06"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in dat, omdat or als. Use als for when.",
+          "items": [
+            {
+              "prompt": "Ik denk … de uitleg duidelijk is.",
+              "authorsVersion": [
+                "dat"
+              ],
+              "note": "After denken, use the known dat-clause."
+            },
+            {
+              "prompt": "Sofia leest de tekst … ze Nederlands leert.",
+              "authorsVersion": [
+                "omdat"
+              ],
+              "note": "This clause gives the reason."
+            },
+            {
+              "prompt": "… Karin een vraag heeft, praat ze met Sofia.",
+              "authorsVersion": [
+                "Als"
+              ],
+              "note": "A repeated or expected time situation: when."
+            },
+            {
+              "prompt": "Daan zegt … hij de tekst begrijpt.",
+              "authorsVersion": [
+                "dat"
+              ],
+              "note": "Zeggen dat introduces reported information."
+            },
+            {
+              "prompt": "Ik vraag het aan Karin … ik iets niet begrijp.",
+              "authorsVersion": [
+                "omdat"
+              ],
+              "note": "The subordinate clause explains why."
+            },
+            {
+              "prompt": "… ik op kantoor werk, drink ik thee in de pauze.",
+              "authorsVersion": [
+                "Als"
+              ],
+              "note": "Temporal als means when, not a condition."
+            },
+            {
+              "prompt": "Sofia hoopt … Daan tijd heeft.",
+              "authorsVersion": [
+                "dat"
+              ],
+              "note": "Recycles hopen dat from 24-b."
+            }
+          ]
+        }
+      },
+      "id": "8c42d888-ab94-4124-8b4e-4f9a1689db72"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Put the verb at the end",
+      "id": "fb2871fc-097c-492e-bc1b-d1be7088e706"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each subordinate clause. Use the verb in brackets.",
+          "items": [
+            {
+              "prompt": "Ik denk dat Sofia de tekst … (lezen).",
+              "authorsVersion": [
+                "leest"
+              ],
+              "note": "The finite verb goes last in the dat-clause."
+            },
+            {
+              "prompt": "Daan werkt rustig omdat hij de uitleg … (begrijpen).",
+              "authorsVersion": [
+                "begrijpt"
+              ],
+              "note": "omdat + subject + other words + finite verb."
+            },
+            {
+              "prompt": "Als Karin een vraag … (hebben), praat ze met ons.",
+              "authorsVersion": [
+                "heeft"
+              ],
+              "note": "The finite verb ends the als-clause."
+            },
+            {
+              "prompt": "Sofia zegt dat ze Nederlands … (leren).",
+              "authorsVersion": [
+                "leert"
+              ],
+              "note": "The finite verb leert comes last."
+            },
+            {
+              "prompt": "Als Daan iets niet … (weten), vraagt hij het aan Karin.",
+              "authorsVersion": [
+                "weet"
+              ],
+              "note": "The finite verb ends the subordinate clause."
+            },
+            {
+              "prompt": "Karin denkt dat Sofia de vraag … (begrijpen).",
+              "authorsVersion": [
+                "begrijpt"
+              ],
+              "note": "The subject stays after dat; the finite verb is last."
+            }
+          ]
+        }
+      },
+      "id": "e33a0d26-4e39-4ad5-a12d-6e8c38017c0a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Repair the word order",
+      "id": "98e13270-e6ff-445a-8a22-27523a6a53fc"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence with correct word order and punctuation.",
+          "items": [
+            {
+              "prompt": "Ik blijf op kantoor omdat / ik / met Daan / overleg.",
+              "authorsVersion": [
+                "Ik blijf op kantoor omdat ik met Daan overleg."
+              ],
+              "note": "In the subordinate clause, overleg comes last."
+            },
+            {
+              "prompt": "Ik denk dat / de tekst / duidelijk / is.",
+              "authorsVersion": [
+                "Ik denk dat de tekst duidelijk is."
+              ],
+              "note": "The finite verb is at the end of the dat-clause."
+            },
+            {
+              "prompt": "Als Karin een vraag heeft / ze praat met Sofia.",
+              "authorsVersion": [
+                "Als Karin een vraag heeft, praat ze met Sofia."
+              ],
+              "note": "Add a comma, then invert: praat ze."
+            },
+            {
+              "prompt": "Omdat ik de tekst lees / ik leer nieuwe woorden.",
+              "authorsVersion": [
+                "Omdat ik de tekst lees, leer ik nieuwe woorden."
+              ],
+              "note": "A fronted subordinate clause triggers inversion in the main clause."
+            },
+            {
+              "prompt": "Daan zegt dat / hij / het antwoord / weet.",
+              "authorsVersion": [
+                "Daan zegt dat hij het antwoord weet."
+              ],
+              "note": "The subject follows dat; weet is last."
+            },
+            {
+              "prompt": "Als Sofia thuiswerkt / ze leest de uitleg.",
+              "authorsVersion": [
+                "Als Sofia thuiswerkt, leest ze de uitleg."
+              ],
+              "note": "Comma after the subordinate clause; main-clause inversion."
+            },
+            {
+              "prompt": "Ik vraag het aan Karin omdat / ik / iets / niet begrijp.",
+              "authorsVersion": [
+                "Ik vraag het aan Karin omdat ik iets niet begrijp."
+              ],
+              "note": "Niet comes before the final verb begrijp."
+            }
+          ]
+        }
+      },
+      "id": "5c23d6ed-3b40-44ba-b5c8-8b753f576d42"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Move the subordinate clause to the front",
+      "id": "707b45d9-926d-4c6d-8cf5-be950b10a872"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence with the subordinate clause first.",
+          "items": [
+            {
+              "prompt": "Ik drink thee omdat ik werk.",
+              "authorsVersion": [
+                "Omdat ik werk, drink ik thee."
+              ],
+              "note": "Front the omdat-clause; invert drink ik."
+            },
+            {
+              "prompt": "Sofia leest de tekst als ze Nederlands studeert.",
+              "authorsVersion": [
+                "Als Sofia Nederlands studeert, leest ze de tekst."
+              ],
+              "note": "Put the als-clause first, then use inversion in the main clause."
+            },
+            {
+              "prompt": "Daan vraagt het aan Karin omdat hij iets niet begrijpt.",
+              "authorsVersion": [
+                "Omdat Daan iets niet begrijpt, vraagt hij het aan Karin."
+              ],
+              "note": "The main-clause verb vraagt comes before hij."
+            },
+            {
+              "prompt": "Karin praat met Sofia als ze een vraag heeft.",
+              "authorsVersion": [
+                "Als Karin een vraag heeft, praat ze met Sofia."
+              ],
+              "note": "The fronted clause ends with heeft; then praat ze."
+            },
+            {
+              "prompt": "Sofia blijft rustig omdat ze de uitleg begrijpt.",
+              "authorsVersion": [
+                "Omdat Sofia de uitleg begrijpt, blijft ze rustig."
+              ],
+              "note": "The second clause starts with the finite verb blijft."
+            },
+            {
+              "prompt": "Ik denk dat Daan tijd heeft.",
+              "authorsVersion": [
+                "Dat Daan tijd heeft, denk ik."
+              ],
+              "note": "This is a fronted dat-clause; the following main clause inverts. Also natural: Ik denk dat Daan tijd heeft (keep the original order)."
+            }
+          ]
+        }
+      },
+      "id": "5a42d8f3-a303-4f51-b595-79e8863b4870"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the dialogue",
+      "id": "a313fa15-d346-4fa3-998c-b5180d134c56"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the missing word or phrase.",
+          "items": [
+            {
+              "prompt": "Sofia: Ik werk op kantoor … ik met Daan overleg.",
+              "authorsVersion": [
+                "omdat"
+              ],
+              "note": "The subordinate clause gives a reason."
+            },
+            {
+              "prompt": "Daan: Ik denk … de tekst duidelijk is.",
+              "authorsVersion": [
+                "dat"
+              ],
+              "note": "Use dat after denken."
+            },
+            {
+              "prompt": "Karin: … je een vraag hebt, praat je met mij.",
+              "authorsVersion": [
+                "Als"
+              ],
+              "note": "Temporal als means when."
+            },
+            {
+              "prompt": "Sofia: Als ik iets niet begrijp, … ik het aan Karin. (vragen)",
+              "authorsVersion": [
+                "vraag"
+              ],
+              "note": "After the fronted subordinate clause, the main clause has inversion: vraag ik."
+            },
+            {
+              "prompt": "Daan: Ik lees de uitleg omdat ik de tekst niet … (begrijpen)",
+              "authorsVersion": [
+                "begrijp"
+              ],
+              "note": "The finite verb is at the end of the subordinate clause."
+            },
+            {
+              "prompt": "Karin: Ik vind dat jullie goed … (werken)",
+              "authorsVersion": [
+                "werken"
+              ],
+              "note": "The finite verb comes last after dat."
+            }
+          ]
+        }
+      },
+      "id": "4ec1727d-4be1-4b9b-833b-86a7360fb685"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "bf3a1ba9-5d78-474a-80ea-1391640c08a7"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural Dutch.",
+          "items": [
+            {
+              "prompt": "I work at the office because I have a meeting.",
+              "authorsVersion": [
+                "Ik werk op kantoor omdat ik overleg heb."
+              ],
+              "note": "The finite verb heb comes at the end after omdat."
+            },
+            {
+              "prompt": "I think that Karin understands the text.",
+              "authorsVersion": [
+                "Ik denk dat Karin de tekst begrijpt."
+              ],
+              "note": "Recycles dat; begrijpt is the final verb."
+            },
+            {
+              "prompt": "When Daan has a question, he talks to Sofia.",
+              "authorsVersion": [
+                "Als Daan een vraag heeft, praat hij met Sofia."
+              ],
+              "note": "Fronted temporal als-clause; then inversion."
+            },
+            {
+              "prompt": "Sofia reads the explanation because she learns Dutch.",
+              "authorsVersion": [
+                "Sofia leest de uitleg omdat ze Nederlands leert."
+              ],
+              "note": "leert goes at the end of the omdat-clause."
+            },
+            {
+              "prompt": "When I do not understand something, I ask Karin.",
+              "authorsVersion": [
+                "Als ik iets niet begrijp, vraag ik het aan Karin."
+              ],
+              "note": "The fronted subordinate clause is followed by inversion."
+            },
+            {
+              "prompt": "Daan says that the explanation is clear.",
+              "authorsVersion": [
+                "Daan zegt dat de uitleg duidelijk is."
+              ],
+              "note": "The finite verb is at the end after dat."
+            },
+            {
+              "prompt": "I read the text one more time because I do not understand it.",
+              "authorsVersion": [
+                "Ik lees de tekst nog een keer omdat ik hem niet begrijp."
+              ],
+              "note": "Also fine: Ik lees de tekst nog een keer omdat ik de tekst niet begrijp. Keep begrijp at the end."
+            }
+          ]
+        }
+      },
+      "id": "be44f4ad-14f3-406e-a3bf-b86df0e9a9c7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "f88134fb-4f1a-4345-8703-30189108da22"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Ik denk dat de tekst duidelijk is.",
+              "authorsVersion": [
+                "I think that the text is clear."
+              ],
+              "note": "The clause after dat reports a thought."
+            },
+            {
+              "prompt": "Sofia werkt op kantoor omdat ze met Daan overlegt.",
+              "authorsVersion": [
+                "Sofia works at the office because she is discussing something with Daan."
+              ],
+              "note": "omdat introduces the reason."
+            },
+            {
+              "prompt": "Als Karin een vraag heeft, praat ze met Sofia.",
+              "authorsVersion": [
+                "When Karin has a question, she talks to Sofia."
+              ],
+              "note": "This als-clause describes a repeated or expected situation."
+            },
+            {
+              "prompt": "Omdat ik werk, drink ik thee.",
+              "authorsVersion": [
+                "Because I work, I drink tea."
+              ],
+              "note": "Notice inversion in the Dutch main clause after the fronted subordinate clause."
+            },
+            {
+              "prompt": "Daan zegt dat hij de uitleg begrijpt.",
+              "authorsVersion": [
+                "Daan says that he understands the explanation."
+              ],
+              "note": "The Dutch finite verb is at the end of the dat-clause."
+            },
+            {
+              "prompt": "Als ik iets niet begrijp, vraag ik het aan Karin.",
+              "authorsVersion": [
+                "When I do not understand something, I ask Karin."
+              ],
+              "note": "Temporal als means when here."
+            },
+            {
+              "prompt": "Sofia hoopt dat ze de tekst goed begrijpt.",
+              "authorsVersion": [
+                "Sofia hopes that she understands the text well."
+              ],
+              "note": "Recycles hopen dat from 24-b."
+            }
+          ]
+        }
+      },
+      "id": "c34bbcf6-7b0c-4358-a6ea-8fc949325fea"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: a study note",
+      "id": "c42526a8-fda6-4ec7-afeb-60502a5920cc"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the note and answer in Dutch.",
+          "passage": {
+            "title": "Sofia leest een tekst",
+            "content": "Sofia is op kantoor. Ze leest een Nederlandse tekst omdat ze haar Nederlands oefent. Daan werkt naast haar. Als Sofia een woord niet begrijpt, vraagt ze het aan Daan. Daan zegt dat de tekst duidelijk is. Sofia denkt dat de uitleg helpt. Als Karin een vraag heeft, praat ze met Sofia en Daan. Daarna drinken ze thee."
+          },
+          "items": [
+            {
+              "prompt": "Waar is Sofia?",
+              "authorsVersion": [
+                "Ze is op kantoor."
+              ],
+              "note": "The first two sentences establish the place."
+            },
+            {
+              "prompt": "Waarom leest Sofia een Nederlandse tekst?",
+              "authorsVersion": [
+                "Omdat ze haar Nederlands oefent."
+              ],
+              "note": "Use the reason introduced by omdat."
+            },
+            {
+              "prompt": "Wie werkt naast Sofia?",
+              "authorsVersion": [
+                "Daan werkt naast haar."
+              ],
+              "note": "The passage says Daan works beside her."
+            },
+            {
+              "prompt": "Wat doet Sofia als ze een woord niet begrijpt?",
+              "authorsVersion": [
+                "Dan vraagt ze het aan Daan."
+              ],
+              "note": "The passage uses temporal als: when that happens."
+            },
+            {
+              "prompt": "Wat zegt Daan over de tekst?",
+              "authorsVersion": [
+                "Hij zegt dat de tekst duidelijk is."
+              ],
+              "note": "Repeat the dat-clause from the note."
+            },
+            {
+              "prompt": "Wat denkt Sofia over de uitleg?",
+              "authorsVersion": [
+                "Ze denkt dat de uitleg helpt."
+              ],
+              "note": "The finite verb helpt is at the end after dat."
+            },
+            {
+              "prompt": "Wanneer praat Karin met Sofia en Daan?",
+              "authorsVersion": [
+                "Als Karin een vraag heeft."
+              ],
+              "note": "Answer with the temporal als-clause."
+            },
+            {
+              "prompt": "Wat drinken ze daarna?",
+              "authorsVersion": [
+                "Ze drinken thee."
+              ],
+              "note": "The final sentence gives the answer."
+            }
+          ]
+        }
+      },
+      "id": "9b9b5bac-405a-4bf7-86c0-c3ae9e76e2d9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "07852e39-1bc0-494d-a9ef-818b9f4ae745"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write four short sentences about work or study. Include one dat-clause, one omdat-clause and one temporal als-clause. Put the finite verb at the end of each subordinate clause.",
+          "items": [
+            {
+              "prompt": "Write four short sentences about work or study using dat, omdat and temporal als.",
+              "authorsVersion": [
+                "Ik denk dat de tekst duidelijk is. Ik lees de tekst omdat ik Nederlands leer. Als ik een vraag heb, vraag ik het aan Karin. Als ik thuiswerk, drink ik thee."
+              ],
+              "note": "Model answer. In each subordinate clause, the finite verb is at the end; after each fronted als-clause, the main clause has inversion."
+            }
+          ]
+        }
+      },
+      "id": "b3eb9378-e8f3-47e2-909d-90ba1b62103d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "e4e86e1e-bb6d-4ad5-9017-cc79ae0bf2ad"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use dat after verbs such as denken, vinden, hopen and zeggen.",
+      "id": "0c798cbb-14d0-4d0b-9c12-2db99e4649e5"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use omdat to give a reason and temporal als to say when.",
+      "id": "47ca0066-0ce9-4b27-b93e-c25d3f924c3f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "After dat, omdat and temporal als, put the finite verb at the end of the subordinate clause.",
+      "id": "cdcaf98d-610e-49b4-8a4d-2f62fd72e48d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "When the subordinate clause comes first, use a comma and invert the main clause: Omdat ik werk, drink ik thee.",
+      "id": "1b8507a2-6a85-4c7b-8b20-e54c6d7cc434"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: at the office",
+      "description": "Sofia and Daan read a short screen of Dutch text at their desks in a small Utrecht IT office; Karin stands nearby and asks a question.",
+      "alt": "Sofia and Daan discuss a text at the office with Karin."
+    },
+    {
+      "afterHeading": "Story: a short study break",
+      "description": "Sofia reads a Dutch text at her desk while Daan points to a line; a cup of tea sits nearby.",
+      "alt": "Sofia and Daan study a Dutch text at work."
+    }
+  ],
+  "id": "70810a35-716b-40df-8bfa-88564bf8d513"
+}

@@ -1,0 +1,1253 @@
+{
+  "title": "Pakjesavond",
+  "goal": "Describe activities in progress with aan het, bezig zijn met, and positional verbs + te.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Pakjesavond",
+      "id": "40cbfba3-f7f3-43ef-9c47-3eaee86473ca"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Saturday 5 December, and Noor's flat is full of friends. They are celebrating Sinterklaas together. In this lesson you will describe activities as they happen, ask what people are busy with, and use zitten, staan, liggen or lopen with te. Verbs are blue; time is orange; place is purple.",
+      "id": "dcec7353-9065-446d-8320-d8d00347c53c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: around the table",
+      "id": "910c9d85-a04e-4eb8-8407-9ad3a186ea4d"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Wat gezellig! Wie is er aan het voorlezen?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ik zit Sofia’s Sinterklaasgedicht voor te lezen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En? Is het grappig?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ja! En ik zit erin met een fiets van karton."
+          },
+          {
+            "speaker": "Fleur",
+            "text": "Daan, ben je aan het raden?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Nee, ik ben niet aan het raden. Ik weet het!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Fleur, ben jij bezig met je pakje?"
+          },
+          {
+            "speaker": "Fleur",
+            "text": "Ja, ik ben bezig met mijn pakje."
+          }
+        ]
+      },
+      "id": "448e9ef4-ffd0-4a16-8ad6-0086dcef66a6"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "bezig",
+              "meaning": "busy",
+              "example": "Fleur is bezig. ",
+              "id": "8bf5d906-b335-4889-b099-1ab0e4053464"
+            },
+            {
+              "term": "bezig zijn met",
+              "meaning": "to be busy with",
+              "example": "Ik ben bezig met mijn pakje.",
+              "id": "26de7b57-5a95-460c-9822-7d11f389e8fb"
+            },
+            {
+              "term": "voorlezen",
+              "meaning": "to read aloud (separable)",
+              "forms": "leest voor · las voor · voorgelezen",
+              "example": "Daan leest het gedicht voor.",
+              "id": "fc199713-3ccf-45f3-afd0-301015a669f6"
+            },
+            {
+              "term": "raden",
+              "meaning": "to guess",
+              "forms": "raadt · raadde/ried · geraden",
+              "example": "Daan raadt het niet.",
+              "id": "6c07ca78-ab6e-41d4-9f0c-2aeb009e8687"
+            },
+            {
+              "term": "lachen",
+              "meaning": "to laugh",
+              "forms": "lacht · lachte · gelachen",
+              "example": "Iedereen lacht.",
+              "id": "cb9b3880-1542-4e38-8288-da9e8852dd4c"
+            },
+            {
+              "term": "het Sinterklaasgedicht",
+              "meaning": "poem for pakjesavond",
+              "forms": "de Sinterklaasgedichten",
+              "example": "Daan leest haar Sinterklaasgedicht voor.",
+              "id": "35293bd9-ade3-4649-ad42-f56956bc39d9"
+            }
+          ]
+        }
+      },
+      "id": "76758a0d-c15a-4c28-b8f5-37edab79f84d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "Use zijn + aan het + infinitive for an activity in progress. Put niet before aan het: Ik ben niet aan het raden.",
+      "id": "be5703cc-105e-46d8-bd59-05207d19b5df"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Ik",
+        {
+          "text": "ben",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " aan het luisteren."
+      ],
+      "props": {
+        "translation": "I am listening.",
+        "note": "The activity is happening now."
+      },
+      "id": "f37da771-56ec-4f96-9124-24f21521b92e"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Daan",
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " zijn gedicht aan het voorlezen."
+      ],
+      "props": {
+        "translation": "Daan is reading his poem aloud.",
+        "note": "The object comes before aan het; keep the separable infinitive together."
+      },
+      "id": "e74b578e-fb29-4562-ac61-e5ca6ff3d718"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Wie",
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " er aan het voorlezen?"
+      ],
+      "props": {
+        "translation": "Who is reading aloud?",
+        "note": "A question about the activity now."
+      },
+      "id": "755393d0-390a-4a0e-a3e2-a7e7f73e8b43"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Wat",
+        {
+          "text": "zijn",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " jullie aan het doen?"
+      ],
+      "props": {
+        "translation": "What are you doing?",
+        "note": "Recycles the fixed question from 22-a."
+      },
+      "id": "060b510c-78c4-46e4-9655-560406a67496"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "We gaan zo uitpakken.",
+          "styles": {
+            "bold": true
+          }
+        }
+      ],
+      "props": {
+        "translation": "We are going to open the gifts in a moment.",
+        "note": "For a plan, use gaan + infinitive, not aan het."
+      },
+      "id": "5e324b9f-30bc-4feb-b314-657a972859d0"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "uitpakken",
+              "meaning": "to unwrap (separable)",
+              "forms": "pakt uit · pakte uit · uitgepakt",
+              "example": "We gaan zo uitpakken.",
+              "id": "90bf0916-dcbd-49db-acea-75db2cf019c9"
+            },
+            {
+              "term": "Van wie is dit?",
+              "meaning": "Whose is this?",
+              "example": "Van wie is dit pakje?",
+              "id": "584aebee-bf94-4b47-bc25-09fd3762c934"
+            },
+            {
+              "term": "Wat is er aan de hand?",
+              "meaning": "What is going on?",
+              "example": "Wat is er aan de hand?",
+              "id": "ccd59c6f-292f-4458-a207-9445a2894b98"
+            },
+            {
+              "term": "Wat grappig!",
+              "meaning": "How funny!",
+              "example": "Wat grappig!",
+              "id": "601a697f-4db1-4235-a445-d9bfc790d654"
+            }
+          ]
+        }
+      },
+      "id": "aa510e09-d83c-43a9-b56b-d9fdaeea8c5e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "Three descriptions: Ik ben aan het lezen (activity); Ik zit te lezen (position plus activity); Ik ben bezig met mijn gedicht (busy with a noun).",
+      "id": "d2a83c93-3716-455d-b68a-b02a468ed6c6"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": "At pakjesavond, adults often read poems and open handmade surprises. People may guess who made each surprise.",
+      "id": "81c01825-106e-46a2-bb85-869de3a2e803"
+    },
+    {
+      "type": "paragraph",
+      "content": "Een Sinterklaasgedicht heeft vaak rijm. Daan leest een regel voor.",
+      "id": "30154f3d-1d8a-4d73-b58e-5f4c16f2a267"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het rijm",
+              "meaning": "rhyme",
+              "example": "Het rijm in het gedicht is grappig.",
+              "id": "321e507f-a914-48ef-b2cb-0e28037c4ae6"
+            },
+            {
+              "term": "de regel",
+              "meaning": "line (of a text)",
+              "forms": "de regels",
+              "example": "Daan leest een regel voor.",
+              "id": "a6dd7037-35bd-468a-adea-887a346f7bc0"
+            }
+          ]
+        }
+      },
+      "id": "6a7ce50f-8a84-4f8b-835f-ae5f8c9964dd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Three ways to describe an activity",
+      "id": "4f8a54c8-93d6-4853-9e04-ea4356c98b40"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Position plus te",
+      "id": "0827faf5-2d3d-475d-b23a-8113ca3a5b49"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sitting, standing, lying or walking can show the person’s position while an activity happens. Put te before the infinitive. With a separable verb, te goes between the prefix and verb.",
+      "id": "e0f4e2ef-14e6-47c6-87eb-c7fad43e088e"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "zitten / staan / liggen / lopen + … + te + infinitive. Example: Daan zit zijn gedicht voor te lezen. The infinitive with te comes last.",
+      "id": "ec73fe92-a335-4796-be0f-c2facd7aedfd"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Fleur",
+        {
+          "text": "staat",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " in de keuken te koken."
+      ],
+      "props": {
+        "translation": "Fleur is standing in the kitchen cooking.",
+        "note": "The standing position is clear and relevant."
+      },
+      "id": "06465d5c-cf20-4a15-b8ac-d657a64213c7"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Tijger",
+        {
+          "text": "ligt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " te slapen."
+      ],
+      "props": {
+        "translation": "Tijger is lying down asleep.",
+        "note": "Storyline fact: Henk’s cat is at home; this is a lesson example."
+      },
+      "id": "f66cefc5-7baf-4329-83eb-f3c5355c7b48"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Sofia",
+        {
+          "text": "zit",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " een berichtje te schrijven."
+      ],
+      "props": {
+        "translation": "Sofia is sitting and writing a message.",
+        "note": "The object comes before te."
+      },
+      "id": "adc2873b-2bdd-4fde-b9db-0ba0c210dfd3"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Daan",
+        {
+          "text": "zit",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " het pakje uit te pakken."
+      ],
+      "props": {
+        "translation": "Daan is sitting and unwrapping the gift.",
+        "note": "Separable uitpakken: uit + te + pakken."
+      },
+      "id": "3db18194-d81d-477d-898f-c1e05a4454f1"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Sofia",
+        {
+          "text": "staat",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " thee te maken."
+      ],
+      "props": {
+        "translation": "Sofia is standing and making tea.",
+        "note": "te goes before the infinitive."
+      },
+      "id": "2828ed7b-8eee-49fd-80e1-60d726533875"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Sofia ",
+        {
+          "text": "loopt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " te zingen."
+      ],
+      "props": {
+        "translation": "Sofia is walking around singing.",
+        "note": "lopen + te + infinitive; lopen describes movement during the activity."
+      },
+      "id": "59cfafc1-a9a8-4b66-9d10-05e0f9a71481"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Common mistake: ",
+        {
+          "text": "Daan zit te voorlezen.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Daan zit voor te lezen."
+      ],
+      "id": "59a05b21-c16a-4f39-8210-2c66307c01a4"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": "With a separable verb, put te between the prefix and the verb: *zit te uitpakken* → zit uit te pakken.",
+      "id": "ec88e833-2db8-442d-8f52-fa2e38087ccd"
+    },
+    {
+      "type": "paragraph",
+      "content": "Bezig zijn met takes a noun: Ik ben bezig met mijn surprise. Use aan het for an activity when the position is not important. Use zitten, staan, liggen or lopen + te when position or movement matters.",
+      "id": "967288b4-25b2-4a28-b9a8-d41f032d46ed"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "druk bezig",
+              "meaning": "very busy",
+              "example": "Noor is druk bezig.",
+              "id": "70e7f8f6-9949-4303-942a-f1a6dbc23bf5"
+            }
+          ]
+        }
+      },
+      "id": "e376da29-6352-4e28-adcd-0f6fac7985db"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "aan het",
+              "id": "3a42369b-53f2-4b7a-bcd3-d81ecf98a258"
+            },
+            {
+              "type": "paragraph",
+              "content": "Daan is zijn gedicht aan het voorlezen.",
+              "id": "9682042a-4922-4e15-bc80-b4fade572400"
+            }
+          ],
+          "id": "93286fa9-d057-45cd-bc9b-e19acbe3a53a"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "zitten / staan / liggen te",
+              "id": "2e05b317-4a48-4269-9aa6-66902281eb07"
+            },
+            {
+              "type": "paragraph",
+              "content": "Daan zit zijn gedicht voor te lezen.",
+              "id": "c21df6a5-69e4-4572-b3ba-6595a55a4b16"
+            }
+          ],
+          "id": "84a81ebb-9810-485b-9027-54a6c7b4288d"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "bezig met",
+              "id": "077227bb-46ba-4988-ad3d-d37e798f39d4"
+            },
+            {
+              "type": "paragraph",
+              "content": "Daan is bezig met zijn gedicht.",
+              "id": "c9886597-af48-40ba-9eda-7c434dd23f6f"
+            }
+          ],
+          "id": "f84ffcfc-a88c-4236-83b9-1710e59c58ef"
+        }
+      ],
+      "id": "13aeff81-2a7c-40cf-832c-b09b9182a881"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Remember the position",
+      "id": "c205d6d7-0098-45ee-a190-f59450313e3c"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Choose the form that matches what you mean.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Activity: Noor is aan het bakken.",
+          "id": "f118699a-6752-4802-af5c-c0bf2fdbb85d"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Position matters: Fleur staat te dansen.",
+          "id": "4c1cc1c9-520d-4916-a626-0e82ab91afa9"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Busy with a thing: Sofia is bezig met haar surprise.",
+          "id": "43fe81b7-24c6-4bf9-b726-8132b1a6d05c"
+        }
+      ],
+      "id": "49a1c31e-79fd-43d8-9ff1-44ba1c27a99e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: tea in the kitchen",
+      "id": "4db18daf-4c41-4649-8bad-2228d24b492b"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Lotte",
+            "text": "Wat zijn ze aan het doen in de woonkamer?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Noor zit te lachen. Fleur staat te dansen!"
+          },
+          {
+            "speaker": "Lotte",
+            "text": "En Daan?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hij zit zijn gedicht voor te lezen."
+          },
+          {
+            "speaker": "Lotte",
+            "text": "En wij?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "We zijn thee aan het maken."
+          },
+          {
+            "speaker": "Lotte",
+            "text": "Wat gezellig!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik ben bezig met mijn berichtje voor de les."
+          }
+        ]
+      },
+      "id": "d4c4f66b-5233-455f-ba20-078df2219ba3"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Sofia",
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " thee aan het maken."
+      ],
+      "props": {
+        "translation": "Sofia is making tea.",
+        "note": "Activity in progress."
+      },
+      "id": "c53a0039-335d-4163-aaa1-81aa5cd20bd0"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Lotte",
+        {
+          "text": "zit",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " op een stoel thee te drinken."
+      ],
+      "props": {
+        "translation": "Lotte is sitting on a chair drinking tea.",
+        "note": "Position plus activity."
+      },
+      "id": "2470a5e8-e666-4c3e-83aa-a6df65dd3271"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Sofia",
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " bezig met haar berichtje."
+      ],
+      "props": {
+        "translation": "Sofia is busy with her message.",
+        "note": "bezig met + noun."
+      },
+      "id": "1762ca11-88d9-4348-bf9c-f8da6b13d305"
+    },
+    {
+      "type": "divider",
+      "id": "cacede7b-b658-4766-bc6c-9fc7819c1ee6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "86eec672-684a-4dfe-b240-cc65f86efe3a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Choose the form",
+      "id": "5e2e2a65-4633-4899-9abd-b685baaf9110"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete with the correct form: aan het, zitten/staan/liggen/lopen te, or bezig met.",
+          "items": [
+            {
+              "prompt": "Daan is zijn gedicht … voorlezen.",
+              "authorsVersion": [
+                "aan het"
+              ],
+              "note": "Activity; no position is highlighted."
+            },
+            {
+              "prompt": "Fleur … te dansen. (staan)",
+              "authorsVersion": [
+                "staat"
+              ],
+              "note": "Position plus activity."
+            },
+            {
+              "prompt": "Ik ben … mijn surprise.",
+              "authorsVersion": [
+                "bezig met"
+              ],
+              "note": "Use bezig met + noun."
+            },
+            {
+              "prompt": "Noor is niet … raden.",
+              "authorsVersion": [
+                "aan het"
+              ],
+              "note": "niet comes before aan het."
+            },
+            {
+              "prompt": "Tijger … slapen. (liggen)",
+              "authorsVersion": [
+                "ligt te"
+              ],
+              "note": "Positional verb plus te."
+            },
+            {
+              "prompt": "Wat … jullie aan het doen? (zijn)",
+              "authorsVersion": [
+                "zijn"
+              ],
+              "note": "Question: zijn before jullie."
+            },
+            {
+              "prompt": "Lotte zit haar thee … drinken.",
+              "authorsVersion": [
+                "te"
+              ],
+              "note": "te before the infinitive."
+            },
+            {
+              "prompt": "Sofia is haar gedicht … schrijven.",
+              "authorsVersion": [
+                "aan het"
+              ],
+              "note": "Object comes before aan het."
+            },
+            {
+              "prompt": "Sofia … te zingen. (lopen)",
+              "authorsVersion": [
+                "loopt"
+              ],
+              "note": "lopen + te + infinitive."
+            }
+          ]
+        }
+      },
+      "id": "02e61ba5-0f2a-47b2-ba49-60b0ca53c94b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the conversation",
+      "id": "760f8b89-cf08-4ec4-96f9-bae572a29ec2"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill the gaps with suitable words.",
+          "items": [
+            {
+              "prompt": "Noor: Wie is er aan het …? / Daan: Ik zit het gedicht … te lezen.",
+              "authorsVersion": [
+                "voorlezen",
+                "voor"
+              ],
+              "note": "Separable voorlezen splits around te."
+            },
+            {
+              "prompt": "Fleur: Ben je aan het raden? / Sofia: Nee, ik ben … aan het raden.",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "Put niet before aan het."
+            },
+            {
+              "prompt": "Lotte: Wat zijn ze aan het doen? / Sofia: Fleur … te dansen.",
+              "authorsVersion": [
+                "staat"
+              ],
+              "note": "Fleur is standing while dancing."
+            },
+            {
+              "prompt": "Noor: Waar ben je mee bezig? / Sofia: Ik ben bezig … mijn berichtje.",
+              "authorsVersion": [
+                "met"
+              ],
+              "note": "The fixed pattern is bezig zijn met + noun."
+            },
+            {
+              "prompt": "Daan: Van wie is dit pakje? / Noor: Het is … jou.",
+              "authorsVersion": [
+                "voor"
+              ],
+              "note": "voor jou = for you."
+            },
+            {
+              "prompt": "Sofia: Wat grappig! / Daan: Ik zit mijn gedicht … te lezen.",
+              "authorsVersion": [
+                "voor"
+              ],
+              "note": "The prefix comes before te."
+            }
+          ]
+        }
+      },
+      "id": "ab14e512-3b0b-4c65-80bf-42b4428b6884"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Put the words in order",
+      "id": "b3ccdb74-8d44-412d-b7b0-70e99578c8ba"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: zit / Daan / voor te lezen / zijn gedicht",
+              "authorsVersion": [
+                "Daan zit zijn gedicht voor te lezen."
+              ],
+              "note": "Object before the split infinitive."
+            },
+            {
+              "prompt": "Put in order: aan het / ben / ik / niet / raden",
+              "authorsVersion": [
+                "Ik ben niet aan het raden."
+              ],
+              "note": "niet before aan het."
+            },
+            {
+              "prompt": "Put in order: staat / Fleur / te dansen / in de woonkamer",
+              "authorsVersion": [
+                "Fleur staat in de woonkamer te dansen."
+              ],
+              "note": "Place phrase before te + infinitive."
+            },
+            {
+              "prompt": "Put in order: bezig / met / Sofia / thee / is",
+              "authorsVersion": [
+                "Sofia is bezig met thee."
+              ],
+              "note": "bezig zijn met + noun."
+            },
+            {
+              "prompt": "Put in order: zo / gaan / we / uitpakken",
+              "authorsVersion": [
+                "We gaan zo uitpakken."
+              ],
+              "note": "Plan: gaan + bare infinitive."
+            },
+            {
+              "prompt": "Put in order: te / zit / het pakje / Daan / uitpakken",
+              "authorsVersion": [
+                "Daan zit het pakje uit te pakken."
+              ],
+              "note": "te sits between uit and pakken."
+            }
+          ]
+        }
+      },
+      "id": "a9874705-1071-4756-bf32-a0b401546562"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Change the sentence",
+      "id": "75e823a7-b63d-4bc0-bc89-662125242bf7"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Follow the instruction in each prompt.",
+          "items": [
+            {
+              "prompt": "Change to zitten + te: Daan is zijn gedicht aan het voorlezen. (zitten)",
+              "authorsVersion": [
+                "Daan zit zijn gedicht voor te lezen."
+              ],
+              "note": "Split voorlezen around te."
+            },
+            {
+              "prompt": "Change to staan + te: Fleur is aan het dansen. (staan)",
+              "authorsVersion": [
+                "Fleur staat te dansen."
+              ],
+              "note": "The position is part of the description."
+            },
+            {
+              "prompt": "Make negative: Ik ben aan het raden.",
+              "authorsVersion": [
+                "Ik ben niet aan het raden."
+              ],
+              "note": "niet before aan het."
+            },
+            {
+              "prompt": "Change to bezig met: Sofia maakt thee. (bezig)",
+              "authorsVersion": [
+                "Sofia is bezig met thee."
+              ],
+              "note": "Use a noun after met."
+            },
+            {
+              "prompt": "Change to aan het: Daan zit een pakje uit te pakken.",
+              "authorsVersion": [
+                "Daan is een pakje aan het uitpakken."
+              ],
+              "note": "Activity focus; separable infinitive remains together."
+            },
+            {
+              "prompt": "Make negative: Sofia zit te schrijven.",
+              "authorsVersion": [
+                "Sofia zit niet te schrijven."
+              ],
+              "note": "Negate before the te-infinitive."
+            }
+          ]
+        }
+      },
+      "id": "822cbcb0-df5d-4fef-bd68-99df58f4fac0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "53756598-d40c-4b1e-9bd5-20bd7d79af4d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural Dutch.",
+          "items": [
+            {
+              "prompt": "Daan is reading his poem aloud.",
+              "authorsVersion": [
+                "Daan is zijn gedicht aan het voorlezen."
+              ],
+              "note": "Activity in progress; object before aan het."
+            },
+            {
+              "prompt": "Fleur is standing and dancing.",
+              "authorsVersion": [
+                "Fleur staat te dansen."
+              ],
+              "note": "Positional progressive."
+            },
+            {
+              "prompt": "I am not guessing.",
+              "authorsVersion": [
+                "Ik ben niet aan het raden."
+              ],
+              "note": "niet before aan het."
+            },
+            {
+              "prompt": "Sofia is busy making tea.",
+              "authorsVersion": [
+                "Sofia is bezig met de thee."
+              ],
+              "note": "bezig met + noun."
+            },
+            {
+              "prompt": "What are you all doing?",
+              "authorsVersion": [
+                "Wat zijn jullie aan het doen?"
+              ],
+              "note": "Recycles fixed question from 22-a."
+            },
+            {
+              "prompt": "We are going to open the gifts soon.",
+              "authorsVersion": [
+                "We gaan zo uitpakken."
+              ],
+              "note": "Plan uses gaan + bare infinitive."
+            }
+          ]
+        }
+      },
+      "id": "b9446fb6-f4a6-4817-bb6e-689b67b66866"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "0331caeb-5b15-4e56-bccf-656940de9699"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Daan zit zijn gedicht voor te lezen.",
+              "authorsVersion": [
+                "Daan is sitting and reading his poem aloud."
+              ],
+              "note": "Position plus activity."
+            },
+            {
+              "prompt": "Fleur staat in de woonkamer te dansen.",
+              "authorsVersion": [
+                "Fleur is standing in the living room dancing."
+              ],
+              "note": "Place and position."
+            },
+            {
+              "prompt": "Ik ben bezig met mijn surprise.",
+              "authorsVersion": [
+                "I am busy with my surprise."
+              ],
+              "note": "bezig met + noun."
+            },
+            {
+              "prompt": "Sofia is thee aan het maken.",
+              "authorsVersion": [
+                "Sofia is making tea."
+              ],
+              "note": "Activity in progress."
+            },
+            {
+              "prompt": "Van wie is dit pakje?",
+              "authorsVersion": [
+                "Whose present is this?"
+              ],
+              "note": "pakje is a small present/package."
+            }
+          ]
+        }
+      },
+      "id": "250b2769-bc52-4210-a681-7d7229bf6b6f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Pakjesavond bij Noor",
+      "id": "a7557cb1-a68a-435b-8459-d99999bb659f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Read and answer in Dutch",
+      "id": "9a06042f-d115-4526-aabe-1b98047726d4"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia’s short message for her Dutch class. Answer in Dutch.",
+          "items": [
+            {
+              "prompt": "Wie zit het gedicht voor te lezen?",
+              "authorsVersion": [
+                "Daan."
+              ],
+              "note": "Find the person doing the activity."
+            },
+            {
+              "prompt": "Wat krijgt Daan van Sofia?",
+              "authorsVersion": [
+                "Een fiets van karton."
+              ],
+              "note": "Recycled from the surprise in 22-a."
+            },
+            {
+              "prompt": "Wat krijgt Sofia van Noor?",
+              "authorsVersion": [
+                "Een kookboek en een chocoladeletter S."
+              ],
+              "note": "Both gifts are named in the message."
+            },
+            {
+              "prompt": "Wat doet Fleur in de woonkamer?",
+              "authorsVersion": [
+                "Ze staat te dansen."
+              ],
+              "note": "Positional verb plus te."
+            },
+            {
+              "prompt": "Wat doet Noor?",
+              "authorsVersion": [
+                "Ze zit te lachen."
+              ],
+              "note": "Noor is sitting and laughing in the passage."
+            },
+            {
+              "prompt": "Is Sofia aan het raden?",
+              "authorsVersion": [
+                "Nee, ze is niet aan het raden."
+              ],
+              "note": "niet before aan het."
+            },
+            {
+              "prompt": "Wat eten de gasten?",
+              "authorsVersion": [
+                "Pepernoten en chocoladeletters."
+              ],
+              "note": "Both familiar Sinterklaas treats are named in the passage."
+            }
+          ],
+          "passage": {
+            "title": "Pakjesavond bij Noor",
+            "content": "Het is zaterdag 5 december. Noor, Fleur, Sofia, Daan en Lotte zijn bij Noor thuis. Daan zit Sofia’s Sinterklaasgedicht voor te lezen. Hij krijgt een fiets van karton. Hij lacht. Sofia krijgt van Noor een kookboek en een chocoladeletter S. In de keuken zijn Sofia en Lotte thee aan het maken. In de woonkamer staat Fleur te dansen. Noor zit te lachen. Ze eten pepernoten en chocoladeletters. Sofia schrijft een berichtje voor haar les. Wat een leuke avond!"
+          }
+        }
+      },
+      "id": "ed8c24b3-4ad6-494c-8460-46c1a003c3f0"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het kookboek",
+              "meaning": "cookbook",
+              "forms": "de kookboeken",
+              "example": "Sofia krijgt een kookboek.",
+              "id": "7084305e-cc89-4e07-ade4-34551b4f09c6"
+            },
+            {
+              "term": "de gast",
+              "meaning": "guest",
+              "forms": "de gasten",
+              "example": "De gasten eten pepernoten.",
+              "id": "dcd5a1a2-c347-4417-8de2-692fdc2ea8b1"
+            }
+          ]
+        }
+      },
+      "id": "4edeb76c-b8bc-4c3e-a1dc-3e2303a7e16a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "0a787193-f9c4-4b06-ba15-ec68802f03e1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Describe a celebration",
+      "id": "276db080-87e2-4269-bf52-fa721358278a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about a party or family evening as if it is happening now. Use one aan het sentence, one positional verb + te sentence, and one bezig met sentence.",
+          "items": [
+            {
+              "prompt": "Describe the scene in 3–4 sentences.",
+              "authorsVersion": [
+                "Sofia is thee aan het maken. Fleur staat te dansen. Daan zit een gedicht voor te lezen. Ik ben bezig met mijn berichtje."
+              ],
+              "note": "Model answer. The scene is happening now; use the three patterns."
+            }
+          ]
+        }
+      },
+      "id": "0daf5aa9-e1cf-4d4a-a4f2-11eb11929e54"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "c80003f6-28e9-4a24-80e9-4e0c9396cbc4"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use zijn + aan het + infinitive for an activity in progress; niet comes before aan het.",
+      "id": "b1fec983-5e50-4286-88ba-900fdd6aa33e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use zitten, staan, liggen or lopen + … + te when position or movement matters. Split a separable infinitive around te.",
+      "id": "c34b53d4-23ce-4479-b8e6-946d2dc13ed1"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use bezig zijn met + noun. For plans, use gaan + infinitive.",
+      "id": "b5619ede-2459-4978-a892-9f0eccd71745"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: around the table",
+      "description": "At Noor’s cozy Utrecht flat on Sinterklaas evening, five adult friends celebrate around a table with pepernoten and chocolate letters; Daan reads a poem aloud and a cardboard bicycle surprise sits nearby.",
+      "alt": "Friends celebrate pakjesavond as Daan reads a poem aloud."
+    },
+    {
+      "afterHeading": "Story: tea in the kitchen",
+      "description": "In Noor’s warm kitchen, Sofia and Lotte make tea while Fleur dances in the living room beyond the doorway.",
+      "alt": "Sofia and Lotte make tea while friends celebrate in the next room."
+    }
+  ],
+  "id": "43a360c2-126c-4b2c-aa79-ebb2eae25c0c"
+}

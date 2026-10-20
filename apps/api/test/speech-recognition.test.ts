@@ -1,7 +1,7 @@
-import { SELF } from "cloudflare:test";
 import { beforeEach, describe, expect, it } from "vitest";
 import { azureRecognitionToken } from "../src/speechRecognition";
 import { errorCode, request, resetDatabase, seedGroup, seedUser, signIn } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 // The Microsoft recognizer's token route (C13, docs/words.md#recognizers). The test Worker has no Azure key, so a member's
 // request reports the recognizer unavailable; the exchange itself is tested with a stand-in fetch.
@@ -13,7 +13,7 @@ describe("speech recognition token route", () => {
   it("requires a signed-in member of the library", async () => {
     const owner = await seedUser("owner"); const groupId = await seedGroup("owner", owner);
     await seedUser("stranger");
-    const anonymous = await SELF.fetch(`https://wordinator.test${tokenPath(groupId)}`, { method: "POST" });
+    const anonymous = await fetchWorker(`https://wordinator.test${tokenPath(groupId)}`, { method: "POST" });
     expect(anonymous.status).toBe(401);
     const stranger = await request(tokenPath(groupId), await signIn("stranger"), undefined, "POST");
     expect(stranger.status).toBe(404);

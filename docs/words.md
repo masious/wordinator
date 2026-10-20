@@ -72,7 +72,7 @@ Start opens `/words/drill?source=weak|lesson&lesson=<lessonId>&direction=mixed|u
 
 ### The deck
 
-A session holds at most `WORD_DRILL_SESSION_SIZE` (20) cards, or fewer when fewer words are eligible.
+A session holds at most `WORD_DRILL_SESSION_SIZE` (10) cards, or fewer when fewer words are eligible.
 
 - **Weak words** draws from the learner's visible bookmarks and every word they have memory for whose lesson they can still see (C14). **Lesson** draws from every word of the lesson's published document, bookmarked or not, under the lesson read's visibility rules. **Course** draws from every word of the course's published lessons, under the course read's visibility rules; Drill's Lesson and Course sources leave tutor words out.
 - **One term per session.** Words are compared by their term's search key (`wordSearchKey`), and a session holds each key once, in one direction only. So a mixed session that asks for *vrij* never also asks for *free*, and *vrij* from two lessons appears once. Of words sharing a key, the weakest is kept.

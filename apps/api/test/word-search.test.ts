@@ -1,9 +1,10 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { wordSearchPageSchema } from "@wordinator/contracts/lesson-document";
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   addLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, readLesson, request, resetDatabase, saveDraft, seedGroup, seedUser, signIn, word,
 } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 const searchPath = (groupId: string, query: string, extra = "") => `/api/groups/${groupId}/word-search?q=${encodeURIComponent(query)}${extra}`;
 async function search(groupId: string, cookie: string, query: string, extra = "") {
@@ -102,7 +103,7 @@ describe("Library word search", () => {
 
   it("denies anonymous requests, non-members, former members, and other groups", async () => {
     const { groupId, readerId, reader } = await setup();
-    expect((await SELF.fetch(`https://wordinator.test${searchPath(groupId, "hund")}`)).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test${searchPath(groupId, "hund")}`)).status).toBe(401);
     const outsiderId = await seedUser("outsider"); const otherGroup = await seedGroup("beta", outsiderId);
     const outsider = await signIn("outsider");
     const denied = await request(searchPath(groupId, "hund"), outsider);

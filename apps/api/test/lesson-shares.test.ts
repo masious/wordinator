@@ -1,4 +1,4 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { discussionResponseSchema, lessonShareExistsErrorSchema, lessonShareKey, postPageSchema, postResponseSchema, type Post } from "@wordinator/contracts";
 import { courseDetailResponseSchema } from "@wordinator/contracts/lesson-document";
 import { speechClipHash, speechItems } from "@wordinator/contracts/speech";
@@ -6,6 +6,7 @@ import { beforeEach, describe, expect, it } from "vitest";
 import {
   addLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, publishLesson, readLesson, request, resetDatabase, saveDraft, seedGroup, seedUser, signIn,
 } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 beforeEach(resetDatabase);
 
@@ -102,7 +103,7 @@ describe("Sharing a piece of a lesson", () => {
   it("refuses signed-out and unfinished accounts", async () => {
     const { groupId, course } = await shareSetup("guard");
     const body = { courseId: course.id, lessonId: crypto.randomUUID(), blockId: crypto.randomUUID() };
-    const anonymous = await SELF.fetch(`https://wordinator.test/api/groups/${groupId}/lesson-shares`, {
+    const anonymous = await fetchWorker(`https://wordinator.test/api/groups/${groupId}/lesson-shares`, {
       method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify(body),
     });
     expect(anonymous.status).toBe(401);

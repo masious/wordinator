@@ -1,0 +1,1416 @@
+{
+  "title": "Mag ik vrij nemen?",
+  "goal": "Ask for permission and talk about ability, possibility, rules and obligations with kunnen, mogen and moeten.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Mag ik vrij nemen?",
+      "id": "3c3f2ff3-b470-447b-8a7f-04cd6bde0de8"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Monday 7 December. Sofia wants to visit her family in Valencia at Christmas. She asks Karin about leave, then visits the pool on Wednesday. In this lesson you will choose between kunnen, mogen and moeten. Modal verbs are blue, infinitives are red, and the target modal forms are bold.",
+      "id": "6ad84220-f4a8-4743-854d-07d824b0fcb7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: asking Karin",
+      "id": "b4497d20-c456-4ede-9923-be8ccbe5ab3b"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Karin, mag ik vrij nemen van 21 december tot en met 31 december?"
+          },
+          {
+            "speaker": "Karin",
+            "text": "Dat mag. Je moet het wel in het systeem aanvragen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je. Kan ik vrijdag thuiswerken?"
+          },
+          {
+            "speaker": "Karin",
+            "text": "Ja, dat kan. Op vrijdag mag je thuiswerken."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Moet ik acht dagen aanvragen?"
+          },
+          {
+            "speaker": "Karin",
+            "text": "Ja. Eerste kerstdag en tweede kerstdag zijn feestdagen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En 1 januari is ook een feestdag."
+          },
+          {
+            "speaker": "Karin",
+            "text": "Precies. Dan begin je op maandag 4 januari weer, toch?"
+          }
+        ]
+      },
+      "id": "cfb56578-ec5a-40dc-9688-08e91de30bb0"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "vrij nemen",
+              "meaning": "to take time off",
+              "example": "Sofia neemt vrij van maandag 21 december tot en met donderdag 31 december.",
+              "id": "47f7fb40-5b2a-44c9-90ee-2db31589986f"
+            },
+            {
+              "term": "de vrije dag",
+              "meaning": "day off",
+              "forms": "de vrije dagen",
+              "id": "6e30f2e6-d415-4e52-91b3-a8ab9f54388a"
+            },
+            {
+              "term": "de kerstvakantie",
+              "meaning": "Christmas holiday",
+              "id": "855a093b-a545-4e48-a245-19993fabdf5e",
+              "forms": "de kerstvakanties"
+            },
+            {
+              "term": "de vakantie",
+              "meaning": "holiday, vacation",
+              "forms": "de vakanties",
+              "id": "81993a35-925d-4df2-b8cf-c4d19fcf90a0"
+            },
+            {
+              "term": "Kerstmis",
+              "meaning": "Christmas",
+              "id": "8dbae8cb-3e4a-48c8-922c-595ad0b75d7a"
+            },
+            {
+              "term": "aanvragen",
+              "meaning": "to request, apply for",
+              "forms": "vraagt aan · vroeg aan · aangevraagd",
+              "example": "Je moet het wel in het systeem aanvragen.",
+              "note": "Separable verb: vraagt … aan.",
+              "id": "17a7f96e-d4f2-43c1-b64d-84e62743bd9e"
+            },
+            {
+              "term": "het systeem",
+              "meaning": "system",
+              "id": "18c615c7-ced5-465a-9874-3aab9d086e15"
+            },
+            {
+              "term": "thuiswerken",
+              "meaning": "to work from home",
+              "forms": "werkt thuis · werkte thuis · thuisgewerkt",
+              "example": "Op vrijdag mag je thuiswerken.",
+              "id": "3741d2b4-93ef-4bbc-869c-5fa1ab612618"
+            },
+            {
+              "term": "de feestdag",
+              "meaning": "public holiday",
+              "forms": "de feestdagen",
+              "id": "58df27e0-e1ad-4446-b1aa-5246880ee7bc"
+            },
+            {
+              "term": "tot en met",
+              "meaning": "through, up to and including",
+              "example": "Van 21 tot en met 31 december.",
+              "id": "8ac43c19-c08a-4b8a-8aa4-673c8eabba10"
+            },
+            {
+              "term": "eerste kerstdag",
+              "meaning": "Christmas Day (25 December)",
+              "id": "d2e0d4c2-afea-49bb-bb4a-e01fe083ce29"
+            },
+            {
+              "term": "tweede kerstdag",
+              "meaning": "Boxing Day (26 December)",
+              "id": "cd152ee9-0b0b-48bb-9c91-84cbfcadeaff"
+            }
+          ]
+        }
+      },
+      "id": "e0049037-d97a-4854-bb95-2f55c20cf97b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Three modal verbs",
+      "id": "824dedec-f3cd-4bda-b3bf-65b06a655fed"
+    },
+    {
+      "type": "paragraph",
+      "content": "A modal verb is conjugated. The other verb, if there is one, stays as an infinitive at the end. With ik, kunnen becomes kan, mogen becomes mag, and moeten becomes moet.",
+      "id": "44ed2115-90f8-4b27-b9ba-a1205dd59be4"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "kunnen",
+              "id": "87055fb0-62c3-44e4-9621-50988a0388b8"
+            },
+            {
+              "type": "paragraph",
+              "content": "can: ability or possibility",
+              "id": "35def136-d61a-4d1d-b23d-5472583a9040"
+            },
+            {
+              "type": "example",
+              "content": [
+                "Ik ",
+                {
+                  "text": "kan",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " zwemmen."
+              ],
+              "props": {
+                "translation": "I can swim.",
+                "note": "Ability."
+              },
+              "id": "cb6d0482-1d16-4d03-9c72-6837b27b5ff3"
+            },
+            {
+              "type": "example",
+              "content": [
+                "Je ",
+                {
+                  "text": "kunt",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " op vrijdag thuiswerken."
+              ],
+              "props": {
+                "translation": "You can work from home on Friday.",
+                "note": "It is possible under the office rule."
+              },
+              "id": "5d9fd543-fd17-477b-8003-8d4c6e2e0056"
+            }
+          ],
+          "id": "160686e6-d999-4a7b-b9c0-efce22fec29e"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "mogen",
+              "id": "5e17fbcf-525b-4ce1-b3e3-982ac3c19f90"
+            },
+            {
+              "type": "paragraph",
+              "content": "may: permission; mogen niet means not allowed",
+              "id": "b63b0ee7-66cf-46d3-b293-cd56d1945ece"
+            },
+            {
+              "type": "example",
+              "content": [
+                {
+                  "text": "Mag",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " ik vrij nemen?"
+              ],
+              "props": {
+                "translation": "May I take time off?",
+                "note": "A polite request for permission."
+              },
+              "id": "df96ffc4-ab1c-46ba-8e2d-9b9b23ed0978"
+            },
+            {
+              "type": "example",
+              "content": [
+                "Hier ",
+                {
+                  "text": "mag",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " je niet rennen."
+              ],
+              "props": {
+                "translation": "You may not run here.",
+                "note": "Mogen niet means prohibited."
+              },
+              "id": "fee44051-caef-4906-bdf7-1d508b4baf76"
+            }
+          ],
+          "id": "283e61a3-5e70-4d09-a823-787908237ee3"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "moeten",
+              "id": "fcdb6752-2696-4597-8c81-ba3ceb23ec81"
+            },
+            {
+              "type": "paragraph",
+              "content": "must, have to: obligation",
+              "id": "a591a2ae-230e-4e0b-8156-60a0a2bc4cf9"
+            },
+            {
+              "type": "example",
+              "content": [
+                "Je ",
+                {
+                  "text": "moet",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " eerst douchen."
+              ],
+              "props": {
+                "translation": "You must shower first.",
+                "note": "A pool rule."
+              },
+              "id": "9c97d63c-f5dc-4131-aa63-116eb4f11c3d"
+            },
+            {
+              "type": "example",
+              "content": [
+                "Sofia ",
+                {
+                  "text": "moet",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                " het in het systeem aanvragen."
+              ],
+              "props": {
+                "translation": "Sofia has to request it in the system.",
+                "note": "An obligation at work."
+              },
+              "id": "fb0f68c8-9db9-4f52-9a57-d3c11fe7cff2"
+            }
+          ],
+          "id": "0d3c65c6-2045-4ddb-ba66-04f4429bc965"
+        }
+      ],
+      "id": "a1802aaa-fdbc-4561-ac5e-798a17296979"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "kunnen = can / possible; mogen = may / permitted; moeten = must / required. Modal + subject + (other words) + infinitive at the end.",
+      "id": "fc17385a-8031-4a54-8760-74323aee470e"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Daan ",
+        {
+          "text": "kan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " vandaag niet ",
+        {
+          "text": "overwerken",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "Daan can't work overtime today.",
+        "note": "The infinitive stays at the end. Recycles overwerken from 20-a."
+      },
+      "id": "6a0023fb-ac16-44f1-b7bd-c133beb28151"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Ik ",
+        {
+          "text": "mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " hier naar binnen."
+      ],
+      "props": {
+        "translation": "I may go inside here.",
+        "note": "Mogen can be followed by a direction without another infinitive."
+      },
+      "id": "810ffd8e-84ae-4537-939b-65c739ab3b77"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Dat ",
+        {
+          "text": "moet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "That is required.",
+        "note": "The modal can stand alone when the action is clear."
+      },
+      "id": "f612372e-0458-45c8-8f7a-3db0c16069db"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "At work, Mag ik …? is a safe, polite way to ask permission. Kan ik …? asks whether something is possible.",
+      "id": "fa85219c-8e6c-43dc-9c5b-9e5902d5104c"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Kan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ik op vrijdag thuiswerken?"
+      ],
+      "props": {
+        "translation": "Can I work from home on Friday?",
+        "note": "This asks about possibility; Mag ik thuiswerken? asks for permission."
+      },
+      "id": "8e0fdd0d-6d48-4302-8410-06a1da636363"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Je moet niet rennen.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " usually means you shouldn't run. For a clear prohibition, say ",
+        {
+          "text": "Je mag niet rennen.",
+          "styles": {
+            "bold": true
+          }
+        },
+        ". Do not confuse it with moeten niet; that contrast comes in 23-b."
+      ],
+      "id": "c218d66d-5157-4402-a810-851b9a151e49"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": "The Netherlands has two Christmas public holidays: eerste kerstdag (25 December) and tweede kerstdag (26 December). People arrange extra leave with their employer.",
+      "id": "a38fd716-e3d6-40fa-a6fd-49c8db70a052"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Permission, possibility or obligation?",
+      "id": "831a0ec4-6dba-4104-aeb8-be2de88bc1e7"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Ask permission: Mag ik …?",
+      "id": "b4d81e4b-9009-4735-8dc3-27b4a334b1d8"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Ask if it is possible: Kan ik …?",
+      "id": "7b0f5f06-a740-4bec-bc18-b05027c44037"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "State a rule: Je moet … / Je mag niet …",
+      "id": "c7ff1dd9-3859-483e-a9d7-dd2391e200d4"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "The modal can stand alone: Dat mag. Dat kan niet. Dat moet.",
+      "id": "91bea9a5-a82f-4af3-bd1b-e18ecde89ccd"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "At the pool:",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Niet rennen. → Je mag niet rennen.",
+          "id": "94e63ae4-efd9-45a8-89cc-c55d8437f218"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Eerst douchen. → Je moet eerst douchen.",
+          "id": "33002859-ceff-43bf-9834-3f56598142f5"
+        }
+      ],
+      "id": "6aa3a0a4-7854-43d3-a112-7bf5751a3255"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Useful forms and signs",
+      "id": "d1c3f612-8460-4a2c-b49d-4ab055c88799"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Op vrijdag ",
+        {
+          "text": "mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " je thuiswerken."
+      ],
+      "props": {
+        "translation": "You may work from home on Friday.",
+        "note": "Permission."
+      },
+      "id": "25a8747c-a8f6-48af-a8d4-1ec1cd7c1387"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Sofia ",
+        {
+          "text": "kan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " goed ",
+        {
+          "text": "zwemmen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "Sofia can swim well.",
+        "note": "Ability; zwemmen is a known word from 19-a."
+      },
+      "id": "8df2f656-88e6-4a60-8bc0-64951913e910"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Je ",
+        {
+          "text": "moet",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " je ticket ",
+        {
+          "text": "aanvragen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "You have to request your ticket.",
+        "note": "A separable infinitive stays together at the end."
+      },
+      "id": "e8da7865-845d-4804-91b0-8f4f3c2198ab"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het ticket",
+              "meaning": "ticket",
+              "forms": "de tickets",
+              "id": "615166aa-8d54-4f3a-bcb7-7fc5ae1d9030",
+              "example": "Je moet je ticket aanvragen."
+            }
+          ]
+        }
+      },
+      "id": "3a025f98-1cb5-48ef-b472-796775aef005"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Hier ",
+        {
+          "text": "mag",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " je niet ",
+        {
+          "text": "fietsen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "You are not allowed to cycle here.",
+        "note": "Mogen niet gives a prohibition."
+      },
+      "id": "51863afe-90e5-4efb-892d-83dd03822f85"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Dat ",
+        {
+          "text": "kan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " niet."
+      ],
+      "props": {
+        "translation": "That is not possible.",
+        "note": "The context supplies the action."
+      },
+      "id": "d4958762-d14f-4193-ab3a-28bc6fa3b581"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "A sign often uses a short infinitive: Niet rennen. In a full sentence, use mogen niet: Je mag hier niet rennen.",
+      "id": "9cf1f314-aa4a-46b7-b023-cc96f9638ed9"
+    },
+    {
+      "type": "paragraph",
+      "content": "Dutch pool rules often ask visitors to shower before swimming. The lifeguard is de badmeester. A kluis is a locker for your belongings.",
+      "id": "8721bba3-0de0-415a-a703-71d7d1f3501d"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de badmeester",
+              "meaning": "lifeguard",
+              "forms": "de badmeesters",
+              "id": "2b6ebaeb-6452-4904-9fed-c99ea677ab8a"
+            },
+            {
+              "term": "douchen",
+              "meaning": "to shower",
+              "forms": "doucht · douchte · gedoucht",
+              "example": "Je moet eerst douchen.",
+              "id": "ea550d34-ee60-48b8-85e0-d7f0672794ea"
+            },
+            {
+              "term": "de kluis",
+              "meaning": "locker",
+              "forms": "de kluizen",
+              "id": "619c23f8-a21f-4bcc-b227-8a15df4bc5f6"
+            },
+            {
+              "term": "het diepe",
+              "meaning": "the deep end of a swimming pool",
+              "example": "Sofia kan in het diepe zwemmen.",
+              "id": "00bc4cdc-e44b-489d-9275-1e89e5eb8f32"
+            }
+          ]
+        }
+      },
+      "id": "caf22170-c436-4b4b-b611-c8dd27b7ecf9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: at the swimming pool",
+      "id": "65a0bbdf-9dc0-424e-91f0-ba2b3ffcce21"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Badmeester",
+            "text": "Goedemorgen. Je moet eerst douchen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Natuurlijk. Mag mijn tas hier staan?"
+          },
+          {
+            "speaker": "Badmeester",
+            "text": "Nee, dat mag niet. Je moet je tas in een kluis doen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Mag ik hier zwemmen?"
+          },
+          {
+            "speaker": "Badmeester",
+            "text": "Ja, dat mag. Maar je mag hier niet rennen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En kan ik in het diepe zwemmen?"
+          },
+          {
+            "speaker": "Badmeester",
+            "text": "Dat kan. Je kunt goed zwemmen, toch?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ik kan goed zwemmen. Dank u wel."
+          }
+        ]
+      },
+      "id": "edb8f979-50e8-4575-ad68-89c17b89ee55"
+    },
+    {
+      "type": "divider",
+      "id": "bd4aa325-dd77-4937-aaa6-39f02da41621"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "75c8dd9f-4bf9-4760-8edb-2a12b4ee497d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Choose the modal verb",
+      "id": "967227c8-ef53-473a-a8ad-b3cae18739c8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in kunnen, mogen or moeten in the correct form. Decide: ability/possibility, permission, or obligation.",
+          "items": [
+            {
+              "prompt": "Ik … goed zwemmen.",
+              "authorsVersion": [
+                "kan"
+              ],
+              "note": "Ability: I can swim."
+            },
+            {
+              "prompt": "… ik vrij nemen?",
+              "authorsVersion": [
+                "Mag"
+              ],
+              "note": "Ask permission at work."
+            },
+            {
+              "prompt": "Je … het in het systeem aanvragen. (The rule says you have to.)",
+              "authorsVersion": [
+                "moet"
+              ],
+              "note": "It is required."
+            },
+            {
+              "prompt": "Op vrijdag … je thuiswerken.",
+              "authorsVersion": [
+                "kunt"
+              ],
+              "note": "It is possible under the office rule. Also fine: mag (permission)."
+            },
+            {
+              "prompt": "Hier … je niet rennen.",
+              "authorsVersion": [
+                "mag"
+              ],
+              "note": "Mogen niet means not allowed."
+            },
+            {
+              "prompt": "Dat … niet. Het zwembad is dicht.",
+              "authorsVersion": [
+                "kan"
+              ],
+              "note": "It is impossible; kan agrees with dat."
+            },
+            {
+              "prompt": "Je … eerst douchen.",
+              "authorsVersion": [
+                "moet"
+              ],
+              "note": "A required pool rule."
+            },
+            {
+              "prompt": "… ik mijn tas hier laten? (Ask permission.)",
+              "authorsVersion": [
+                "Mag"
+              ],
+              "note": "Ask permission."
+            },
+            {
+              "prompt": "Sofia … naar Valencia vliegen. (She is able to.)",
+              "authorsVersion": [
+                "kan"
+              ],
+              "note": "The parenthetical cues ability/possibility, so kunnen is intended."
+            },
+            {
+              "prompt": "Je … hier niet fietsen; het is een voetgangersgebied.",
+              "authorsVersion": [
+                "mag"
+              ],
+              "note": "A prohibition."
+            },
+            {
+              "prompt": "Wij … maandag weer beginnen. (It is required.)",
+              "authorsVersion": [
+                "moeten"
+              ],
+              "note": "A schedule or obligation."
+            }
+          ]
+        }
+      },
+      "id": "19c840ce-ea5f-4f93-ac6e-043146417abf"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "vliegen",
+              "meaning": "to fly",
+              "forms": "vliegt · vloog · gevlogen",
+              "example": "Ze vliegt op zaterdag 19 december naar Valencia.",
+              "id": "81a98aa1-3621-4826-a501-96682df74b88"
+            }
+          ]
+        }
+      },
+      "id": "47cd6439-a714-42f2-94ae-272575b19316"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the office conversation",
+      "id": "dcdb38ae-3bb4-4d75-8e72-644d142f04e2"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete Sofia and Karin's conversation. Fill each blank with one word.",
+          "items": [
+            {
+              "prompt": "Sofia: … ik vrij nemen van 21 tot en met 31 december? / Karin: Dat … .",
+              "authorsVersion": [
+                "Mag",
+                "mag"
+              ],
+              "note": "Ask permission with mogen; the short answer repeats mag."
+            },
+            {
+              "prompt": "Sofia: … ik vrijdag thuiswerken? / Karin: Ja, dat … .",
+              "authorsVersion": [
+                "Kan",
+                "kan"
+              ],
+              "note": "Ask about possibility; dat kan = it is possible."
+            },
+            {
+              "prompt": "Karin: Je … het wel in het systeem aanvragen.",
+              "authorsVersion": [
+                "moet"
+              ],
+              "note": "A requirement."
+            },
+            {
+              "prompt": "Sofia: … ik acht dagen aanvragen? / Karin: Ja, dat … .",
+              "authorsVersion": [
+                "Moet",
+                "moet"
+              ],
+              "note": "The question is whether the request is required; Karin confirms it."
+            },
+            {
+              "prompt": "Sofia: … ik het meteen aanvragen? (possibility) / Karin: Ja, dat … .",
+              "authorsVersion": [
+                "Kan",
+                "kan"
+              ],
+              "note": "This asks if it is possible now."
+            },
+            {
+              "prompt": "Sofia: Mag ik op vrijdag thuiswerken? / Karin: Ja, dat … .",
+              "authorsVersion": [
+                "mag"
+              ],
+              "note": "Permission; mogen can stand alone."
+            }
+          ]
+        }
+      },
+      "id": "6ac9c6b8-4217-45cb-b294-5cd4d6f79e90"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Put the words in order",
+      "id": "2194c1cd-7575-4add-aedb-7a6e2001495a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: ik / mag / vrij nemen / ?",
+              "authorsVersion": [
+                "Mag ik vrij nemen?"
+              ],
+              "note": "Yes/no question: modal first, subject next, infinitive at the end."
+            },
+            {
+              "prompt": "Put in order: aanvragen / moet / Sofia / het / in het systeem",
+              "authorsVersion": [
+                "Sofia moet het in het systeem aanvragen."
+              ],
+              "note": "The separable infinitive stays together at the end."
+            },
+            {
+              "prompt": "Put in order: op vrijdag / thuiswerken / je / kunt",
+              "authorsVersion": [
+                "Op vrijdag kun je thuiswerken."
+              ],
+              "note": "After a fronted time phrase, the finite verb comes before the subject."
+            },
+            {
+              "prompt": "Put in order: hier / je / niet / mag / rennen",
+              "authorsVersion": [
+                "Hier mag je niet rennen."
+              ],
+              "note": "Fronted place, then modal, subject, niet, infinitive."
+            },
+            {
+              "prompt": "Put in order: douchen / eerst / moeten / jullie",
+              "authorsVersion": [
+                "Jullie moeten eerst douchen."
+              ],
+              "note": "Subject, modal, time word, infinitive."
+            },
+            {
+              "prompt": "Put in order: kan / dat / niet",
+              "authorsVersion": [
+                "Dat kan niet."
+              ],
+              "note": "The modal stands alone; the action is understood."
+            },
+            {
+              "prompt": "Put in order: naar binnen / mag / ik / ?",
+              "authorsVersion": [
+                "Mag ik naar binnen?"
+              ],
+              "note": "Mogen can stand alone before a direction."
+            }
+          ]
+        }
+      },
+      "id": "114c7d6d-c338-4b55-b67e-4dda06dec370"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Turn signs into full rules",
+      "id": "9d183455-fb8d-405b-bbce-e18a2dd5506a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Turn each short sign into a sentence with mogen (permission) or moeten (obligation). Then rewrite the possibility questions as permission questions where asked.",
+          "items": [
+            {
+              "prompt": "Niet rennen. (you are not allowed)",
+              "authorsVersion": [
+                "Je mag niet rennen."
+              ],
+              "note": "For prohibition use mogen niet, not moeten niet."
+            },
+            {
+              "prompt": "Eerst douchen. (you have to)",
+              "authorsVersion": [
+                "Je moet eerst douchen."
+              ],
+              "note": "A requirement uses moeten."
+            },
+            {
+              "prompt": "Niet fietsen. (you are not allowed)",
+              "authorsVersion": [
+                "Je mag niet fietsen."
+              ],
+              "note": "A prohibition uses mogen niet."
+            },
+            {
+              "prompt": "Niet zwemmen. (you are not allowed)",
+              "authorsVersion": [
+                "Je mag niet zwemmen."
+              ],
+              "note": "Use mogen for permission; Ik mag niet zwemmen does not mean I cannot swim."
+            },
+            {
+              "prompt": "Is it possible for me to take leave? Rewrite as a polite permission request.",
+              "authorsVersion": [
+                "Mag ik vrij nemen?"
+              ],
+              "note": "At work, Mag ik…? asks permission politely."
+            },
+            {
+              "prompt": "Is it possible for me to work at home on Friday? Keep the possibility meaning.",
+              "authorsVersion": [
+                "Kan ik op vrijdag thuiswerken?"
+              ],
+              "note": "Kan ik…? asks about possibility."
+            },
+            {
+              "prompt": "Douchen eerst. (you have to)",
+              "authorsVersion": [
+                "Je moet eerst douchen."
+              ],
+              "note": "Natural sign: Eerst douchen. Full rule: Je moet eerst douchen."
+            }
+          ]
+        }
+      },
+      "id": "ab329709-2099-4e66-9cff-f5e6775bc330"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "1193b550-da5f-4906-9ca6-7a4ee07bc9b1"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "May I take time off?",
+              "authorsVersion": [
+                "Mag ik vrij nemen?"
+              ],
+              "note": "A polite request for permission."
+            },
+            {
+              "prompt": "Sofia can swim well.",
+              "authorsVersion": [
+                "Sofia kan goed zwemmen."
+              ],
+              "note": "Ability: kunnen + infinitive."
+            },
+            {
+              "prompt": "You are not allowed to run here.",
+              "authorsVersion": [
+                "Je mag hier niet rennen."
+              ],
+              "note": "Mogen niet means prohibited."
+            },
+            {
+              "prompt": "You have to request it in the system.",
+              "authorsVersion": [
+                "Je moet het in het systeem aanvragen."
+              ],
+              "note": "Moeten + infinitive at the end."
+            },
+            {
+              "prompt": "Can I work from home on Friday? (possibility)",
+              "authorsVersion": [
+                "Kan ik op vrijdag thuiswerken?"
+              ],
+              "note": "Use kan for possibility; also fine: Kan ik vrijdag thuiswerken?"
+            },
+            {
+              "prompt": "That is not possible.",
+              "authorsVersion": [
+                "Dat kan niet."
+              ],
+              "note": "The modal can stand alone."
+            },
+            {
+              "prompt": "You must shower first.",
+              "authorsVersion": [
+                "Je moet eerst douchen."
+              ],
+              "note": "An obligation."
+            }
+          ]
+        }
+      },
+      "id": "d46f0664-07d1-4547-a0a9-342a779c87b9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "9b04dab7-f8c7-4fb9-b422-89c418133c4d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Mag ik vrijdag vrij nemen?",
+              "authorsVersion": [
+                "May I take Friday off?"
+              ],
+              "note": "A request for permission."
+            },
+            {
+              "prompt": "Sofia kan goed zwemmen.",
+              "authorsVersion": [
+                "Sofia can swim well."
+              ],
+              "note": "Ability."
+            },
+            {
+              "prompt": "Hier mag je niet fietsen.",
+              "authorsVersion": [
+                "You are not allowed to cycle here."
+              ],
+              "note": "Mogen niet expresses prohibition."
+            },
+            {
+              "prompt": "Je moet eerst douchen.",
+              "authorsVersion": [
+                "You have to shower first."
+              ],
+              "note": "A requirement."
+            },
+            {
+              "prompt": "Dat mag.",
+              "authorsVersion": [
+                "That is allowed."
+              ],
+              "note": "Mogen can stand alone."
+            },
+            {
+              "prompt": "Dat kan niet.",
+              "authorsVersion": [
+                "That is not possible."
+              ],
+              "note": "Kunnen can stand alone."
+            }
+          ]
+        }
+      },
+      "id": "b5f0b10f-b595-4508-8389-be9c35acfeb0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Kerst op kantoor",
+      "id": "c359812f-3773-4920-bf77-a39571002aa5"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the office notice and answer in Dutch.",
+          "passage": {
+            "title": "Kerst op kantoor",
+            "content": "KERST OP KANTOOR\n\nSofia neemt vrij van maandag 21 december tot en met donderdag 31 december. Ze vliegt op zaterdag 19 december met het vliegtuig naar Valencia. De regel is eenvoudig: op vrijdag mag je thuiswerken. Iedereen moet vrije dagen in het systeem aanvragen. Eerste kerstdag en tweede kerstdag zijn feestdagen. Op 1 januari is het kantoor ook dicht. Op maandag 4 januari begint Sofia weer met werken.\n\nKarin: Voor de vlucht moet je op tijd op het vliegveld zijn.\nSofia: Ja, dat kan. Ik neem de trein naar Schiphol."
+          },
+          "items": [
+            {
+              "prompt": "Van wanneer tot wanneer neemt Sofia vrij?",
+              "authorsVersion": [
+                "Van maandag 21 december tot en met donderdag 31 december."
+              ],
+              "note": "The notice gives both dates."
+            },
+            {
+              "prompt": "Wanneer vliegt Sofia naar Valencia?",
+              "authorsVersion": [
+                "Op zaterdag 19 december."
+              ],
+              "note": "She flies before her leave starts."
+            },
+            {
+              "prompt": "Mag je op vrijdag thuiswerken?",
+              "authorsVersion": [
+                "Ja, dat mag."
+              ],
+              "note": "It is permitted."
+            },
+            {
+              "prompt": "Waar moet iedereen vrije dagen aanvragen?",
+              "authorsVersion": [
+                "In het systeem."
+              ],
+              "note": "A work requirement."
+            },
+            {
+              "prompt": "Welke twee dagen zijn feestdagen?",
+              "authorsVersion": [
+                "Eerste kerstdag en tweede kerstdag."
+              ],
+              "note": "25 and 26 December."
+            },
+            {
+              "prompt": "Wanneer begint Sofia weer met werken?",
+              "authorsVersion": [
+                "Op maandag 4 januari."
+              ],
+              "note": "The notice gives her return date."
+            },
+            {
+              "prompt": "Klopt dit? Sofia vliegt op 21 december.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Ze vliegt op zaterdag 19 december."
+              ],
+              "note": "Her flight is on 19 December."
+            },
+            {
+              "prompt": "Wat moet Sofia doen voor de vlucht?",
+              "authorsVersion": [
+                "Ze moet op tijd op het vliegveld zijn."
+              ],
+              "note": "The notice says she should be at the airport on time."
+            }
+          ]
+        }
+      },
+      "id": "e1267c42-9329-417e-bc94-495cbf3219e1"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het vliegtuig",
+              "meaning": "airplane",
+              "forms": "de vliegtuigen",
+              "id": "a087fbc8-7bbc-43b7-a0c7-34a5bddd30e4"
+            },
+            {
+              "term": "de vlucht",
+              "meaning": "flight",
+              "forms": "de vluchten",
+              "example": "Voor de vlucht moet je op tijd op het vliegveld zijn.",
+              "id": "b1d2225e-e493-404e-bbdf-68bdb7db23da"
+            },
+            {
+              "term": "het vliegveld",
+              "meaning": "airport",
+              "forms": "de vliegvelden",
+              "id": "bda78156-d276-449a-a6b0-2fb8c4d4d2db"
+            },
+            {
+              "term": "de regel",
+              "meaning": "rule",
+              "forms": "de regels",
+              "id": "71bf6777-da93-4d64-b0d4-306f905636f2",
+              "note": "New meaning: a rule; in 22-b, de regel means a line of a poem."
+            }
+          ]
+        }
+      },
+      "id": "0281546d-7d1b-41fc-8c1c-08f10b470255"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "36f08a36-283f-4511-8e49-1ded5b69b686"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 rules for your work, school or home. Say what you can, may and must do, and include one prohibition.",
+          "items": [
+            {
+              "prompt": "Write 3–4 rules about your work, school or home. Include kunnen, mogen and moeten.",
+              "authorsVersion": [
+                "Op vrijdag kan ik thuiswerken. Ik mag om negen uur beginnen. Ik moet mijn werk op tijd afmaken. In de bibliotheek mag ik niet hard praten."
+              ],
+              "note": "Model answer. Use kunnen for possibility, mogen for permission, moeten for obligation, and mogen niet for prohibition."
+            }
+          ]
+        }
+      },
+      "id": "ca712529-dffe-4bcd-a229-6469dc3ea915"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "8dc5d37a-76d6-447c-884f-1b925cdc8d03"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "kunnen = can: ability or possibility. Dat kan niet = that is impossible.",
+      "id": "5d006455-3537-4083-ad8e-5d9169ffef0c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "mogen = may / be allowed. Mogen niet = not allowed.",
+      "id": "4af3b03e-359d-42e0-b49c-1bb241e65d1a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "moeten = must / have to: an obligation.",
+      "id": "884c3992-a5f5-4c38-bc2f-7a1977a6afef"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Ask permission with Mag ik …? Ask about possibility with Kan ik …?",
+      "id": "46b43f63-1bf0-4d23-ba6d-1a12d7dd1fdf"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "The modal is conjugated; an infinitive goes at the end: Je moet het aanvragen.",
+      "id": "19d31a70-368d-4e8e-8071-19150c006238"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "A modal can stand alone: Dat mag. Dat kan. Dat moet.",
+      "id": "07bf22af-4d07-4675-90f6-a086856d0348"
+    },
+    {
+      "type": "divider",
+      "id": "2327c668-0bbd-4243-8b55-0a7b00d042aa"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: asking Karin",
+      "description": "Sofia speaks with Karin at the office beside a calendar marked 21–31 December; a laptop shows a leave-request system.",
+      "alt": "Sofia asks her team leader for Christmas leave.",
+      "location": "office",
+      "characters": [
+        "sofia",
+        "karin"
+      ],
+      "action": "Sofia asks Karin about holiday leave while Karin points to the request system."
+    },
+    {
+      "afterHeading": "Story: at the swimming pool",
+      "description": "Sofia stands beside a pool shower and locker while a lifeguard points to a no-running sign.",
+      "alt": "A lifeguard explains the pool rules to Sofia.",
+      "location": "swimming-pool",
+      "characters": [
+        "sofia"
+      ],
+      "action": "The lifeguard explains showering, lockers and the no-running rule."
+    }
+  ],
+  "id": "0bb2860f-98a5-4a2a-8ee9-046af4145f92"
+}

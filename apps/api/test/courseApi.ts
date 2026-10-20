@@ -1,10 +1,11 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { courseResponseSchema } from "@wordinator/contracts";
 import {
   LESSON_DOCUMENT_SCHEMA_VERSION, lessonDraftSavedResponseSchema, lessonResponseSchema, type CourseLesson, type LessonDocument,
 } from "@wordinator/contracts/lesson-document";
 import { expect } from "vitest";
 import { hashPassword } from "../src/auth";
+import { fetchWorker } from "./worker";
 
 // Shared seeding, request, and lesson document helpers for the course API suites.
 const PASSWORD = "course-api-password";
@@ -33,14 +34,14 @@ export async function seedGroup(label: string, creatorId: string) {
 }
 
 export async function signIn(label: string) {
-  const response = await SELF.fetch("https://wordinator.test/api/auth/sign-in", {
+  const response = await fetchWorker("https://wordinator.test/api/auth/sign-in", {
     method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email: `${label}@example.test`, password: PASSWORD }),
   });
   return response.headers.get("set-cookie")!.split(";", 1)[0]!;
 }
 
 export async function request(path: string, cookie: string, body?: unknown, method = body === undefined ? "GET" : "POST") {
-  return SELF.fetch(`https://wordinator.test${path}`, {
+  return fetchWorker(`https://wordinator.test${path}`, {
     method, headers: { cookie, ...(body === undefined ? {} : { "content-type": "application/json" }) },
     body: body === undefined ? undefined : JSON.stringify(body),
   });

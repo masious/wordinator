@@ -1,0 +1,1217 @@
+{
+  "title": "Wat gaan we morgen doen?",
+  "goal": "Choose present tense, gaan + infinitive or zullen + infinitive for timetables, plans, expectations, promises and offers.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Wat gaan we morgen doen?",
+      "id": "d3e40859-6e55-4384-91e4-186a8a834264"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Tuesday 19 January 2027. Sofia and Piotr talk after Marieke’s regular Dutch class at the library. In this lesson you will choose between a timetable, an intention and an expectation or offer. Verbs are blue, time expressions orange and the target future forms bold.",
+      "id": "7c9241c8-0a73-40e3-ab67-a06b7a5ad8d5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: after class",
+      "id": "c6d9c97c-a2ca-45d9-80a3-a56302986291"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "De les is bijna afgelopen. Hoe laat begint de les volgende week?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Volgende week dinsdag begint de les om zeven uur 's avonds. Dat staat in het rooster."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "O ja, vandaag is de les op dinsdagavond. Ik ga morgen mijn woorden herhalen."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Goed idee. Ik ga vanavond mijn aantekeningen lezen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Denk je dat het morgen regent?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ik denk dat het misschien regent, maar ik weet het niet zeker."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dan neem ik mijn jas mee."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ik zal je morgen een bericht sturen als ik meer weet."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je. Zal ik de woordenlijst voor je meenemen?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ja, graag. Dan kunnen we die voor de les bekijken."
+          }
+        ]
+      },
+      "id": "c9380fd2-5240-47d3-b8f0-6c74f61fe786"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het rooster",
+              "meaning": "timetable, schedule",
+              "forms": "de roosters",
+              "example": "De les staat in het rooster.",
+              "id": "a46a7825-55da-4e37-8ea1-ec14cf1439e5"
+            },
+            {
+              "term": "het tijdstip",
+              "meaning": "time, moment",
+              "forms": "de tijdstippen",
+              "example": "Het tijdstip van de les staat in het rooster.",
+              "id": "7d78c601-025d-4dc9-ba38-d7178fad9f7c"
+            },
+            {
+              "term": "bijna afgelopen",
+              "meaning": "nearly over",
+              "example": "De les is bijna afgelopen.",
+              "id": "5a309f85-7367-4854-bf8c-bad56d0e7145"
+            },
+            {
+              "term": "de verwachting",
+              "meaning": "expectation",
+              "forms": "de verwachtingen",
+              "example": "Mijn verwachting is dat het droog blijft.",
+              "id": "8c243896-4ca4-487d-88bf-bc404abc07ca"
+            },
+            {
+              "term": "zeker weten",
+              "meaning": "to know for sure",
+              "forms": "weet het zeker · wist het zeker · heeft het zeker geweten",
+              "example": "Ik weet het niet zeker.",
+              "id": "70de74c0-3d79-4083-8683-82c19deb94bc"
+            },
+            {
+              "term": "het weerbericht",
+              "meaning": "weather report",
+              "forms": "de weerberichten",
+              "example": "Ik kijk naar het weerbericht.",
+              "id": "cc1fe1a1-b7ea-4ad6-bf83-2c52ca86f936"
+            },
+            {
+              "term": "regenachtig",
+              "meaning": "rainy",
+              "example": "Morgen zal het regenachtig zijn.",
+              "id": "0978957d-6779-4cf5-b42b-20d577723dd6"
+            }
+          ]
+        }
+      },
+      "id": "0efb080e-01ce-4341-9379-c17a776746b7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Three ways to talk about the future",
+      "id": "611726ba-f439-41d6-a569-644480a7dda7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "A timetable or settled arrangement",
+      "id": "6dedc4e0-cdb1-4e17-80c8-c3614efb49cb"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use the present tense with a clear future time when the event is fixed in a timetable or arrangement. The time word makes the future meaning clear.",
+      "id": "b0a67beb-9730-4cc7-ba70-8371102ff13f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The class starts at seven next Tuesday evening.",
+        "note": "A scheduled class can use the present tense with a future time expression."
+      },
+      "content": [
+        "Volgende week dinsdag ",
+        {
+          "text": "begint",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " de les om zeven uur 's avonds."
+      ],
+      "id": "a48e22d7-16d3-46ef-a6d9-f2adfa2a8891"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The class starts at seven next Tuesday evening.",
+        "note": "This recycles the established regular Tuesday class time."
+      },
+      "content": [
+        "De les ",
+        {
+          "text": "begint",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " volgende week dinsdag om zeven uur 's avonds."
+      ],
+      "id": "c3e61895-d44e-4477-82d2-8ef242495c67"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We will see each other after class.",
+        "note": "Present tense can describe an arranged future meeting."
+      },
+      "content": [
+        "We ",
+        {
+          "text": "spreken",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " elkaar na de les."
+      ],
+      "id": "1a6e5acd-7822-4730-bad2-239242b799b3"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de starttijd",
+              "meaning": "start time",
+              "forms": "de starttijden",
+              "example": "De starttijd staat in het rooster.",
+              "id": "27908ebd-561b-48f8-872b-d8b87701302d"
+            },
+            {
+              "term": "de eindtijd",
+              "meaning": "end time",
+              "forms": "de eindtijden",
+              "example": "Wat is de eindtijd van de les?",
+              "id": "e2c0def2-abab-4637-bfef-c0837792d990"
+            },
+            {
+              "term": "de vaste tijd",
+              "meaning": "fixed time",
+              "forms": "de vaste tijden",
+              "example": "De les is op een vaste tijd.",
+              "id": "b8a45978-f940-4e2e-b7eb-142a00bc8446"
+            }
+          ]
+        }
+      },
+      "id": "c89b42fe-c6c8-455b-be67-787a50feab53"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "A future time word plus present tense often describes a timetable or settled arrangement: Volgende week dinsdag begint de les om zeven uur 's avonds.",
+      "id": "1656ff00-5ac9-41e7-860c-02bc64aeb985"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "An intention or plan: gaan + infinitive",
+      "id": "29776a2e-ea05-44b7-8ab5-c366a2c68b8b"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use a form of gaan plus an infinitive for an intention or plan. The infinitive goes at the end of its clause. The plan is about the future, but it has not happened yet.",
+      "id": "41f1c644-d76e-4c06-bd63-5ff07f262740"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I am going to review my words tomorrow.",
+        "note": "Ik ga + infinitive expresses Sofia’s intention."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "ga",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " morgen mijn woorden herhalen."
+      ],
+      "id": "9c91a6d3-5bda-4313-84d3-6c8232b659d5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Piotr is going to read his notes tonight.",
+        "note": "The infinitive lezen goes at the end."
+      },
+      "content": [
+        "Piotr ",
+        {
+          "text": "gaat",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " vanavond zijn aantekeningen lezen."
+      ],
+      "id": "f3910c5c-7995-4efb-ad37-f3f1063dbb2e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We are going to practise together before class.",
+        "note": "Recycle gaan + infinitive from 16-b."
+      },
+      "content": [
+        "We ",
+        {
+          "text": "gaan",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " voor de les samen oefenen."
+      ],
+      "id": "3b2a576c-fac2-4767-9f7c-b5765831d8d2"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "Ask yourself: is someone describing an intention? Use gaan + infinitive. Morgen ga ik oefenen has inversion because morgen is first.",
+      "id": "950f95bb-7925-4b09-b96c-f28e817ac49f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "An expectation, promise or offer: zullen + infinitive",
+      "id": "d584b90c-ffd6-4cc2-bf94-18e6306fddf0"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use zullen + an infinitive for an expectation or prediction, and for a promise or offer. Context tells you the meaning. Zullen also appears in suggestions and offers (row 21).",
+      "id": "7993739c-bb41-484c-9abe-d817d6080bc6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Perhaps it will rain tomorrow.",
+        "note": "Zal expresses an expectation; misschien makes it uncertain."
+      },
+      "content": [
+        "Misschien ",
+        {
+          "text": "zal",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " het morgen regenen."
+      ],
+      "id": "80cf8988-786a-43dc-b3b0-e3ba8658be2e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I will send you a message tomorrow.",
+        "note": "This is a promise. The infinitive sturen comes last."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "zal",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " je morgen een bericht sturen."
+      ],
+      "id": "69014383-d7a2-4ae1-bf82-a74082383ce6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Shall I bring the word list?",
+        "note": "This is an offer, not a prediction."
+      },
+      "content": [
+        "",
+        {
+          "text": "Zal",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ik de woordenlijst meenemen?"
+      ],
+      "id": "27f35a5e-16f5-4b85-96d0-179d33494b1a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Shall we practise together after class?",
+        "note": "This is a suggestion, recycled from row 21."
+      },
+      "content": [
+        "",
+        {
+          "text": "Zullen",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " we na de les samen oefenen?"
+      ],
+      "id": "46eaebf2-7d1d-43cc-82b9-6a769a33dbd1"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "waarschijnlijk",
+              "meaning": "probably",
+              "example": "Waarschijnlijk zal het morgen regenen.",
+              "id": "5003b4ef-cd19-4f85-bac4-887e81cd1a8e"
+            },
+            {
+              "term": "beloven",
+              "meaning": "to promise",
+              "forms": "belooft · beloofde · beloofd",
+              "example": "Ik beloof dat ik je een bericht zal sturen.",
+              "id": "1694031b-7ea0-417e-b32b-59de5a4a76f1"
+            },
+            {
+              "term": "het aanbod",
+              "meaning": "offer",
+              "forms": "de aanbiedingen",
+              "example": "Zal ik je helpen? Dat is een aanbod.",
+              "id": "1385fd7a-0449-452e-a1ea-fd60ecdc78ee"
+            }
+          ]
+        }
+      },
+      "id": "24eeb1e2-dba3-40c2-a26f-bd409a2f120b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "Both gaan and zullen are followed by an infinitive at the end: Ik ga oefenen. Ik zal oefenen. Choose by the meaning in context; Dutch use can overlap.",
+      "id": "eb37ef6b-f623-4238-960f-3edb27cf8a07"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Morgen ik ga oefenen.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Morgen ga ik oefenen. A time expression at the start is followed by the verb, then the subject."
+      ],
+      "id": "da93b523-5be6-4401-8519-fcfb13e7ee0b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": "A class timetable gives a settled time. A learner can still make a separate plan to study before that class.",
+      "id": "0691758b-c98d-4947-8b6e-f1d87de5162f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Compare the meanings",
+      "id": "09684d33-0739-40c8-80ae-f0411e215518"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Fixed arrangement",
+              "id": "082c8d93-d805-40b2-a919-8f1c004c8ad7"
+            },
+            {
+              "type": "paragraph",
+              "content": "Volgende week dinsdag begint de les om zeven uur 's avonds.",
+              "id": "c52ee5d3-f449-4df1-91d8-928fab82c222"
+            },
+            {
+              "type": "paragraph",
+              "content": "The established timetable gives the start time.",
+              "id": "40be0cf8-b706-47e2-8360-c5b169c39ebb"
+            }
+          ],
+          "id": "2d84a519-c7d3-46af-8c6a-108943ff8966"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Intention",
+              "id": "89883b5d-2fa5-4283-bb65-9ac34539b897"
+            },
+            {
+              "type": "paragraph",
+              "content": "Ik ga morgen oefenen.",
+              "id": "7aca6e40-276e-4d0e-95aa-9ab75e995cbe"
+            },
+            {
+              "type": "paragraph",
+              "content": "The speaker has a plan.",
+              "id": "5a653cc3-cca3-4440-bdda-9bd916e71b4e"
+            }
+          ],
+          "id": "22da973b-8427-4780-a102-e47018c70916"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Expectation or offer",
+              "id": "3725d17e-fc44-4253-8454-aea89abe1b35"
+            },
+            {
+              "type": "paragraph",
+              "content": "Het zal misschien regenen. / Zal ik helpen?",
+              "id": "4634f422-25d7-4dee-ab3b-545931b5d83d"
+            },
+            {
+              "type": "paragraph",
+              "content": "Prediction or offer, depending on context.",
+              "id": "503d6cc4-71b6-49aa-93ac-ec4ddc11ea61"
+            }
+          ],
+          "id": "d79bf869-22cc-48c9-bed2-b342aba7413d"
+        }
+      ],
+      "id": "01988c5a-d34b-41ca-ba94-3475159aa885"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: making a small plan",
+      "id": "ee36eac7-3e6e-4841-b465-1ed6b853c49a"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Piotr",
+            "text": "Staat de les van volgende week al in het rooster?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, dinsdag om zeven uur 's avonds. Dat is de vaste tijd."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ik ga morgenavond de nieuwe woorden leren."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik ga de woorden ook herhalen. Misschien oefen ik met Noor."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Denk je dat het morgen regenachtig is?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Misschien zal het morgen regenachtig zijn."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ik zal je na de les een bericht sturen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je. Zal ik mijn aantekeningen delen?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ja, graag. Dat is handig."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Prima. Dan zien we elkaar volgende week weer in de les."
+          }
+        ]
+      },
+      "id": "f4cd2515-1bfb-489b-a461-fb007a128306"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "delen",
+              "meaning": "to share",
+              "forms": "deelt · deelde · gedeeld",
+              "example": "Zal ik mijn aantekeningen delen?",
+              "id": "4cadd853-dd02-46ac-9bd9-5dc128679000"
+            },
+            {
+              "term": "de voorspelling",
+              "meaning": "prediction, forecast",
+              "forms": "de voorspellingen",
+              "example": "De voorspelling is onzeker.",
+              "id": "72907ae5-3b85-4782-91c5-4babf3174bb6"
+            }
+          ]
+        }
+      },
+      "id": "8ab065a3-e00b-447f-9a6f-aa44f1f90ddd"
+    },
+    {
+      "type": "divider",
+      "id": "31ac09af-8577-4cca-adbb-96c5e24f95a6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "544b9403-0af4-4fbc-8abf-713a80952985"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Choose the form by context",
+      "id": "82b19beb-f58e-42ef-a654-f9c56298c614"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each sentence with the best form: present tense, gaan or zullen.",
+          "items": [
+            {
+              "prompt": "The established timetable: Volgende week dinsdag … de les om zeven uur 's avonds. (beginnen)",
+              "authorsVersion": [
+                "begint"
+              ],
+              "note": "An established timetable works naturally with present tense."
+            },
+            {
+              "prompt": "I have a plan: Ik … vanavond mijn woorden … . (gaan, herhalen)",
+              "authorsVersion": [
+                "ga",
+                "herhalen"
+              ],
+              "note": "Gaan + infinitive expresses an intention."
+            },
+            {
+              "prompt": "A promise: Ik … je straks een bericht … . (zullen, sturen)",
+              "authorsVersion": [
+                "zal",
+                "sturen"
+              ],
+              "note": "Zal + infinitive expresses a promise."
+            },
+            {
+              "prompt": "A prediction: Het … morgen waarschijnlijk … . (zullen, regenen)",
+              "authorsVersion": [
+                "zal",
+                "regenen"
+              ],
+              "note": "Zal + infinitive expresses an expectation."
+            },
+            {
+              "prompt": "An offer: … ik de woordenlijst meenemen? (zullen)",
+              "authorsVersion": [
+                "Zal"
+              ],
+              "note": "Zal ik …? is an offer."
+            },
+            {
+              "prompt": "An arranged time: Volgende week … de les op dinsdag. (zijn)",
+              "authorsVersion": [
+                "is"
+              ],
+              "note": "Present tense can describe a settled schedule."
+            },
+            {
+              "prompt": "An intention: Wij … voor de les samen … . (gaan, oefenen)",
+              "authorsVersion": [
+                "gaan",
+                "oefenen"
+              ],
+              "note": "Plural subject wij takes gaan."
+            }
+          ]
+        }
+      },
+      "id": "bb9e1af4-f3a6-4102-b96f-f35f0ec84fe1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the dialogue",
+      "id": "583d209b-beb6-4153-82e2-88745c24901d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in each blank with the missing word or verb.",
+          "items": [
+            {
+              "prompt": "Sofia: Wat staat er in het …? / Piotr: Volgende week dinsdag … de les om zeven uur 's avonds.",
+              "authorsVersion": [
+                "rooster",
+                "begint"
+              ],
+              "note": "Use present tense for the timetable."
+            },
+            {
+              "prompt": "Sofia: Wat ga je vanavond doen? / Piotr: Ik … mijn aantekeningen … .",
+              "authorsVersion": [
+                "ga",
+                "lezen"
+              ],
+              "note": "The infinitive goes last."
+            },
+            {
+              "prompt": "Piotr: … ik je straks een bericht sturen? / Sofia: Ja, graag.",
+              "authorsVersion": [
+                "Zal"
+              ],
+              "note": "Zal ik …? is an offer."
+            },
+            {
+              "prompt": "Sofia: Denk je dat het regent? / Piotr: Het … misschien … .",
+              "authorsVersion": [
+                "zal",
+                "regenen"
+              ],
+              "note": "A prediction uses zullen + infinitive."
+            },
+            {
+              "prompt": "Piotr: Ga je oefenen? / Sofia: Ja, ik … morgen de woorden … .",
+              "authorsVersion": [
+                "ga",
+                "herhalen"
+              ],
+              "note": "This is a plan."
+            },
+            {
+              "prompt": "Sofia: … we na de les samen oefenen? / Piotr: Ja, goed idee.",
+              "authorsVersion": [
+                "Zullen"
+              ],
+              "note": "Zullen we …? makes a suggestion."
+            }
+          ]
+        }
+      },
+      "id": "b20ef61d-9738-4bd4-8b35-6ac43b6bd433"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "b1554208-94b4-4fad-acb9-5fe8d3c9115c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the chunks in order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: volgende week dinsdag / begint / de les / om zeven uur 's avonds.",
+              "authorsVersion": [
+                "Volgende week dinsdag begint de les om zeven uur 's avonds."
+              ],
+              "note": "Time first; then verb and subject."
+            },
+            {
+              "prompt": "Put in order: ik / ga / vanavond / mijn woorden / herhalen.",
+              "authorsVersion": [
+                "Ik ga vanavond mijn woorden herhalen."
+              ],
+              "note": "The infinitive goes at the end."
+            },
+            {
+              "prompt": "Put in order: straks / zal / Piotr / een bericht / sturen.",
+              "authorsVersion": [
+                "Straks zal Piotr een bericht sturen."
+              ],
+              "note": "Straks first causes inversion; sturen is last."
+            },
+            {
+              "prompt": "Put in order: misschien / regent / het / morgen.",
+              "authorsVersion": [
+                "Misschien regent het morgen."
+              ],
+              "note": "A present-tense prediction is also natural."
+            },
+            {
+              "prompt": "Put in order: je / zal / ik / na de les / helpen / ?",
+              "authorsVersion": [
+                "Zal ik je na de les helpen?"
+              ],
+              "note": "Zal ik …? is an offer."
+            },
+            {
+              "prompt": "Put in order: samen / gaan / we / oefenen / morgen.",
+              "authorsVersion": [
+                "Morgen gaan we samen oefenen."
+              ],
+              "note": "Also fine: Morgen oefenen we samen; this version keeps gaan + infinitive."
+            }
+          ]
+        }
+      },
+      "id": "ef54e46a-703d-4a72-a142-0bc5aa6d06c8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Arrange it, intend it, expect it",
+      "id": "2d68e118-336f-4ea3-986a-8bd0a6a8f618"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Label each as timetable, intention, prediction, promise, offer or suggestion.",
+          "items": [
+            {
+              "prompt": "Volgende week dinsdag begint de les om zeven uur 's avonds.",
+              "authorsVersion": [
+                "timetable"
+              ],
+              "note": "The time is part of the regular schedule."
+            },
+            {
+              "prompt": "Ik ga vanavond mijn woorden leren.",
+              "authorsVersion": [
+                "intention"
+              ],
+              "note": "The speaker describes a plan."
+            },
+            {
+              "prompt": "Het zal morgen waarschijnlijk koud zijn.",
+              "authorsVersion": [
+                "prediction"
+              ],
+              "note": "Waarschijnlijk signals an expectation."
+            },
+            {
+              "prompt": "Ik zal je straks bellen.",
+              "authorsVersion": [
+                "promise"
+              ],
+              "note": "The speaker commits to calling."
+            },
+            {
+              "prompt": "Zal ik de boeken meenemen?",
+              "authorsVersion": [
+                "offer"
+              ],
+              "note": "The speaker offers to do something."
+            },
+            {
+              "prompt": "Zullen we na de les koffie drinken?",
+              "authorsVersion": [
+                "suggestion"
+              ],
+              "note": "Zullen we …? proposes doing something together."
+            }
+          ]
+        }
+      },
+      "id": "8ee49e32-caf7-4082-a419-0adf49dc8255"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "77bc6886-4238-4d0b-838b-5f8c0b5b2eb2"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate naturally. Use the context to choose the future form.",
+          "items": [
+            {
+              "prompt": "The class starts at seven next Tuesday evening.",
+              "authorsVersion": [
+                "Volgende week dinsdag begint de les om zeven uur 's avonds."
+              ],
+              "note": "A timetable can use present tense."
+            },
+            {
+              "prompt": "I am going to review the words tonight.",
+              "authorsVersion": [
+                "Ik ga vanavond de woorden herhalen."
+              ],
+              "note": "Gaan + infinitive expresses intention."
+            },
+            {
+              "prompt": "Perhaps it will rain tomorrow.",
+              "authorsVersion": [
+                "Misschien zal het morgen regenen."
+              ],
+              "note": "Zal + infinitive expresses an expectation."
+            },
+            {
+              "prompt": "I will send you a message later.",
+              "authorsVersion": [
+                "Ik zal je straks een bericht sturen."
+              ],
+              "note": "A promise uses zal + infinitive."
+            },
+            {
+              "prompt": "Shall I bring the word list?",
+              "authorsVersion": [
+                "Zal ik de woordenlijst meenemen?"
+              ],
+              "note": "This is an offer."
+            },
+            {
+              "prompt": "Shall we practise together after class?",
+              "authorsVersion": [
+                "Zullen we na de les samen oefenen?"
+              ],
+              "note": "This is a suggestion."
+            }
+          ]
+        }
+      },
+      "id": "77fd7e74-01cb-41e5-ab70-edfddbca71b5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "2cbabfb2-821d-4878-994a-457cede30e1b"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "De les begint volgende week dinsdag om zeven uur 's avonds.",
+              "authorsVersion": [
+                "The class starts at seven next Tuesday evening."
+              ],
+              "note": "Present tense with a future time can describe a timetable."
+            },
+            {
+              "prompt": "Sofia gaat morgen haar woorden herhalen.",
+              "authorsVersion": [
+                "Sofia is going to review her words tomorrow."
+              ],
+              "note": "Gaan + infinitive expresses her intention."
+            },
+            {
+              "prompt": "Misschien zal Piotr later komen.",
+              "authorsVersion": [
+                "Perhaps Piotr will come later."
+              ],
+              "note": "Zal + infinitive gives an expectation."
+            },
+            {
+              "prompt": "Ik zal je een bericht sturen.",
+              "authorsVersion": [
+                "I will send you a message."
+              ],
+              "note": "A promise in context."
+            },
+            {
+              "prompt": "Zal ik je helpen?",
+              "authorsVersion": [
+                "Shall I help you?"
+              ],
+              "note": "An offer."
+            },
+            {
+              "prompt": "Zullen we na de les praten?",
+              "authorsVersion": [
+                "Shall we talk after class?"
+              ],
+              "note": "A suggestion."
+            }
+          ]
+        }
+      },
+      "id": "ffe7400a-f85f-41af-952f-6386b47462a8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: in the class timetable",
+      "id": "aa73cb68-b9bb-4649-83d9-52a6f7240df3"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the message and answer in Dutch.",
+          "passage": {
+            "title": "Een bericht van Piotr",
+            "content": "Hoi Sofia,\nIk kijk naar het rooster. De les begint volgende week dinsdag om zeven uur 's avonds en eindigt om negen uur 's avonds. Morgen heb ik geen les. Ik ga vanavond mijn woorden herhalen. Misschien zal het morgen regenen. Ik zal je straks een bericht sturen. Zal ik mijn woordenlijst meenemen naar de les?\nGroetjes, Piotr"
+          },
+          "items": [
+            {
+              "prompt": "Wanneer begint de les volgende week?",
+              "authorsVersion": [
+                "Dinsdag om zeven uur 's avonds."
+              ],
+              "note": "The timetable gives the fixed class time."
+            },
+            {
+              "prompt": "Hoe laat eindigt de les?",
+              "authorsVersion": [
+                "Om negen uur."
+              ],
+              "note": "Read the second timetable detail."
+            },
+            {
+              "prompt": "Heeft Piotr morgen les?",
+              "authorsVersion": [
+                "Nee, Piotr heeft morgen geen les."
+              ],
+              "note": "The message says: Morgen heb ik geen les."
+            },
+            {
+              "prompt": "Wat gaat Piotr vanavond doen?",
+              "authorsVersion": [
+                "Hij gaat zijn woorden herhalen."
+              ],
+              "note": "This is his intention."
+            },
+            {
+              "prompt": "Wat zal het morgen misschien doen?",
+              "authorsVersion": [
+                "Regenen."
+              ],
+              "note": "Piotr expects rain but is not certain."
+            },
+            {
+              "prompt": "Wat zal Piotr straks doen?",
+              "authorsVersion": [
+                "Hij zal Sofia een bericht sturen."
+              ],
+              "note": "Piotr makes a promise."
+            },
+            {
+              "prompt": "Wat stelt Piotr voor om mee te nemen?",
+              "authorsVersion": [
+                "Zijn woordenlijst."
+              ],
+              "note": "Zal ik …? is an offer."
+            }
+          ]
+        }
+      },
+      "id": "0a29baac-c5b9-424b-9b18-fa3a467e4d9e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "14bea462-f5f6-40ed-bf1c-4006212a258b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Make a plan",
+      "id": "b24e3988-f3fa-41a3-b838-10030a4b5b24"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about a study plan or timetable. Include one fixed time, one intention and one expectation or offer.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about a study plan or timetable.",
+              "authorsVersion": [
+                "Volgende week dinsdag begint de les om zeven uur 's avonds. Ik ga voor de les mijn woorden herhalen. Misschien zal Piotr me een bericht sturen. Zal ik mijn woordenlijst meenemen?"
+              ],
+              "note": "Model answer. The first sentence is a schedule, the second an intention, the third an expectation and the fourth an offer."
+            }
+          ]
+        }
+      },
+      "id": "9b22ea03-8430-46db-8577-25b01ca4cad5"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Choose by meaning and context.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "A timetable: present tense + a clear future time.",
+          "id": "548cbf88-1a96-43f4-83f7-6e9be38f1bde"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "An intention: gaan + infinitive.",
+          "id": "f5bf8edd-3745-49c7-b6f1-28588ba2c0fd"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "An expectation or promise: zullen + infinitive.",
+          "id": "80fa18bc-f59f-49c4-a5c6-60a4f28c7afd"
+        }
+      ],
+      "id": "6b76b5a7-1e2e-4c95-9116-0a2027114275"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "3489495f-6878-4595-893b-3a2e4c1762a0"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use present tense with a future time for a timetable or settled arrangement.",
+      "id": "83e080d0-62ad-4063-b85c-a9d0cc3d412c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use gaan + infinitive for an intention or plan; the infinitive is last.",
+      "id": "ea6d2f7a-8a23-4933-b72d-088530492e06"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use zullen + infinitive for expectations and promises; context gives the meaning.",
+      "id": "f171188b-8f6e-41f5-b5cc-757bd00f4c62"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Zal ik …? offers help; Zullen we …? makes a suggestion.",
+      "id": "3e1bca17-f585-46a2-a4f9-83c70e37dc13"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Dutch future forms can overlap; choose the form that fits the context.",
+      "id": "5fe50ab6-e286-463e-99f3-49e3ef5bdb87"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: after class",
+      "description": "Sofia and Piotr stand in a quiet library classroom after their Dutch lesson, with a simple weekly timetable on the wall.",
+      "alt": "Sofia and Piotr look at the class timetable after Dutch class."
+    },
+    {
+      "afterHeading": "Three ways to talk about the future",
+      "description": "A clean Dutch class timetable showing Tuesday at 19.00, beside an open notebook and word list.",
+      "alt": "A weekly timetable and Dutch study materials."
+    }
+  ],
+  "id": "8a187161-97b7-496c-a842-c46fbbd084cf"
+}

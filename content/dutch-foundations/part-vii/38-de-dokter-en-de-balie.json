@@ -1,0 +1,1324 @@
+{
+  "title": "De dokter en de balie",
+  "goal": "Use a small set of reflexive verbs and make clear, polite requests in service situations.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "De dokter en de balie",
+      "id": "39d42fb6-2e31-4684-851d-a5f3488797fb"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Tuesday 26 January 2027. In Dutch class at the central library, Marieke gives Sofia and Piotr two practice role-plays. They do not describe real appointments or problems. In examples, subjects are green, verbs blue, places purple, and the target forms are bold.",
+      "id": "8b91c48c-a10d-4258-b2aa-edab440a963d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: two role-plays",
+      "id": "3c326a6d-e37b-4b32-99d5-db6a47587bab"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Marieke",
+            "text": "We oefenen twee gesprekken. Eerst bij de huisarts, daarna bij de balie."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik voel me niet lekker. Is dat goed Nederlands?"
+          },
+          {
+            "speaker": "Marieke",
+            "text": "Ja. Je zegt: Ik voel me niet lekker."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "En als ik zeg: Ik ben ziek?"
+          },
+          {
+            "speaker": "Marieke",
+            "text": "Dat kan ook. Dat is een andere zin."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Kunt u mij helpen? Ik wil een afspraak maken."
+          },
+          {
+            "speaker": "Marieke",
+            "text": "Goed. En vraag rustig om herhaling als iets niet duidelijk is."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Zou u dat kunnen herhalen, alstublieft?"
+          },
+          {
+            "speaker": "Marieke",
+            "text": "Prima. Dit is een oefening; we bellen niemand."
+          }
+        ]
+      },
+      "id": "f1e16fc3-583b-4b7f-a34b-91f868203a44"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de dokter",
+              "meaning": "doctor",
+              "forms": "de dokters",
+              "id": "2b5ff7af-12fd-4b25-bd75-d0e7a7203bb9"
+            },
+            {
+              "term": "het rollenspel",
+              "meaning": "role-play",
+              "forms": "de rollenspellen",
+              "id": "21cbdb34-07f3-4e39-81f7-15ef906d6d50"
+            },
+            {
+              "term": "zich voelen",
+              "meaning": "to feel (oneself)",
+              "forms": "voelt zich · voelde zich · zich gevoeld",
+              "example": "Ik voel me niet lekker.",
+              "id": "6dc1a373-4ed8-44a5-bc16-8c0329900d84"
+            },
+            {
+              "term": "zich vergissen",
+              "meaning": "to be mistaken",
+              "forms": "vergist zich · vergiste zich · zich vergist",
+              "example": "Ik vergis me soms.",
+              "id": "be1ba753-4114-42c6-89de-c7a6e1628fed"
+            },
+            {
+              "term": "de herhaling",
+              "meaning": "repetition; repeating",
+              "forms": "de herhalingen",
+              "id": "86014e9a-fb94-4569-b685-482daf5c706e"
+            },
+            {
+              "term": "ziek",
+              "meaning": "ill",
+              "id": "cc183a0f-e179-47b6-b70c-615e09a3780e"
+            },
+            {
+              "term": "niet lekker",
+              "meaning": "unwell; not feeling well",
+              "example": "Ik voel me niet lekker.",
+              "id": "2506d3c6-df39-476d-bea9-5550f285e10d"
+            },
+            {
+              "term": "Ik voel me niet lekker.",
+              "meaning": "I do not feel well.",
+              "example": "Ik voel me niet lekker.",
+              "note": "A common sentence for describing how you feel; it does not give a diagnosis.",
+              "id": "3c5a92a6-8d10-42cc-adac-b214032be432"
+            }
+          ]
+        }
+      },
+      "id": "b9e6ac3f-85a7-41ca-9c88-1c121a6fcdce"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reflexive pronouns",
+      "id": "0006e477-2c06-4453-9853-b3187fa164b6"
+    },
+    {
+      "type": "paragraph",
+      "content": "Some Dutch verbs use a small pronoun that refers back to the subject. Learn the verb together with its pronoun. The set here is limited to four useful verbs.",
+      "id": "b214b2dc-f7ed-4998-b0a7-8d59a3c2e03f"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "In a plain main clause, put the reflexive pronoun after the finite verb: Ik voel me. In an inverted clause, the subject comes first, then the finite verb, then the pronoun: Vandaag voel ik me beter.",
+      "id": "9412ec8a-3b8c-4287-b14a-8288a1fa8009"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Subject + verb",
+              "id": "01c01898-24c5-4534-9722-550ea6bf1eb3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "ik voel me",
+              "id": "cca3a815-1a17-4da2-9ca4-9f5f4f124909"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "jij wast je",
+              "id": "cf3fb7ba-a4fe-42e6-8e54-7f1082dda3af"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "hij / zij vergist zich",
+              "id": "33cd77c3-7675-40e5-bff1-33c6c4c4e77b"
+            }
+          ],
+          "id": "ec2cb309-b4b6-48a7-a2d7-fab2d9603dd8"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Plural",
+              "id": "617a1581-6d6d-4df0-8230-cb29e5e02384"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "wij wassen ons",
+              "id": "68b25c64-5059-42af-b711-9976b3ea2a87"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "jullie vergissen je",
+              "id": "4d4c116e-91e1-4986-b4b1-907cd5a03a6b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zij voelen zich",
+              "id": "a2605011-c088-4819-a16b-383f8fe67e59"
+            }
+          ],
+          "id": "051c7222-9b04-4cfb-9da2-59ee0df0eb69"
+        }
+      ],
+      "id": "d0ef3732-e93e-42b2-9ff4-65dde7614cab"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I do not feel well.",
+        "note": "Fixed situation language; this is not a diagnosis."
+      },
+      "content": [
+        {
+          "text": "Ik voel me niet lekker.",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "edae60c4-42d4-48e0-8b5e-0874aac6e949"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Today I feel better.",
+        "note": "Fronted time expression: verb before subject."
+      },
+      "content": [
+        {
+          "text": "Vandaag voel ik me beter.",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "ec9abc5a-13f1-49e5-99da-b4b00547ef63"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I wash myself at home.",
+        "note": "The reflexive pronoun follows the finite verb."
+      },
+      "content": [
+        {
+          "text": "Ik was me thuis.",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "e34cbd19-a127-40a7-9019-8d9cf1e95791"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We wash ourselves before eating.",
+        "note": "Recycles time phrases."
+      },
+      "content": [
+        {
+          "text": "Wij wassen ons voor het eten.",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "513c4682-3d4a-43e1-8d23-e18ebc055814"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia is sometimes mistaken.",
+        "note": "zich belongs to zich vergissen."
+      },
+      "content": [
+        {
+          "text": "Sofia vergist zich soms.",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "f25c51ed-a606-43cd-bad9-41196b154d9d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": "With ik, use me: Ik voel me. Do not say: Ik voel zich.",
+      "id": "69e8568e-41e4-421b-bdd3-524ed3955f16"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "Memorize the verb and its pronoun as one unit: zich voelen, zich wassen, zich aankleden, zich vergissen.",
+      "id": "1eb85091-77d6-467b-8bb3-4e86221a53a3"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "zich wassen",
+              "meaning": "to wash oneself",
+              "forms": "wast zich · waste zich · zich gewassen",
+              "example": "Ik was me thuis.",
+              "id": "18af5891-c9f9-4ff6-aa89-568094d7e428"
+            },
+            {
+              "term": "zich aankleden",
+              "meaning": "to get dressed",
+              "forms": "kleedt zich aan · kleedde zich aan · zich aangekleed",
+              "example": "Sofia wil zich aankleden.",
+              "id": "9d37c9a1-3714-4836-995f-1b070fea41fd"
+            }
+          ]
+        }
+      },
+      "id": "e335f7eb-4e87-42a5-85b9-c0ef52626a75"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "With an infinitive",
+      "id": "8a1a7510-90d9-4767-8132-206da6594437"
+    },
+    {
+      "type": "paragraph",
+      "content": "When the reflexive verb is an infinitive, keep its pronoun with it: Ik wil me wassen. In a short purpose phrase, use om me aan te kleden. These are examples, not a full catalogue of reflexive grammar.",
+      "id": "7324e3de-9acb-4359-ad8b-9aec950b2a57"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I want to wash myself.",
+        "note": "The pronoun stays with the infinitive wassen."
+      },
+      "content": [
+        {
+          "text": "Ik wil me wassen.",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "86675723-ceba-4ea4-8444-d1d4f1b7904f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia wants to get dressed.",
+        "note": "The pronoun stays with aankleden."
+      },
+      "content": [
+        {
+          "text": "Sofia wil zich aankleden.",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "01270d98-83d9-4cf3-b057-c0882f567523"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Piotr is not mistaken.",
+        "note": "The negation follows the reflexive pronoun."
+      },
+      "content": [
+        {
+          "text": "Piotr vergist zich niet.",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "2323544d-12b9-4198-9971-4c8005471949"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "message-circle-warning"
+      },
+      "content": "Ik voel me niet lekker describes how someone feels. Ik ben ziek says “I am ill”; do not use the reflexive form with ziek.",
+      "id": "55735a01-649b-4fce-a28a-081dcca6915b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Formal requests at a service desk",
+      "id": "152bd9e6-4b8b-43c4-ac34-8ca6e2174946"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use u with a doctor’s office or a municipal service worker in these models. Kunt u…? asks politely; Wilt u…? asks what the other person would like to do. Zou u … kunnen? is a careful request.",
+      "id": "c5e751fc-6793-41d2-bf28-e0d52cef2562"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "Keep u consistent: Kunt u …? / Wilt u …? / Zou u … kunnen? Close with alstublieft and dank u wel.",
+      "id": "f0c67a52-0702-47ee-85c4-02dcaeb14f44"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Greet the staff member: Goedemiddag.",
+      "id": "72516a4f-dcd1-4581-a5de-2d44bc391bae"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Say what you need: Ik wil graag een afspraak maken.",
+      "id": "fdd05956-d817-48b1-b001-46238ec884f8"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Ask one clear question: Kunt u mij helpen?",
+      "id": "a6c859cc-a819-4fcd-a233-c82bd1e4e49c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "If needed, ask for repetition: Zou u dat kunnen herhalen, alstublieft?",
+      "id": "c774278b-0e1b-4b10-aded-11c91525a03f"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Useful service words",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "de afspraak — appointment",
+          "id": "d67f443c-d411-4f54-b667-73e49a344f02"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "het formulier — form",
+          "id": "052cbbc1-dd12-43ac-ac13-17c9fa641421"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "de balie — service counter",
+          "id": "e49ff0f1-2863-474f-a9d2-daa4f1961e5a"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "a copy of the form",
+          "id": "ca5bfccb-a112-40fb-a1c6-7c2ad4591272"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "a blank copy",
+          "id": "0151ead4-f7ff-4ddb-aeb5-240c232da0b7"
+        }
+      ],
+      "id": "c282c3d6-1f03-431d-9d97-b448def0bce5"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Can you help me?",
+        "note": "Formal u; mij is part of this fixed polite request frame."
+      },
+      "content": [
+        {
+          "text": "Kunt u mij helpen?",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "33e209f0-0e0e-41f8-b379-0a0b2638ba27"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Would you say the name one more time?",
+        "note": "Formal u request; the infinitive stays at the end."
+      },
+      "content": "Wilt u de naam nog een keer zeggen?",
+      "id": "b8628a5f-e977-45f8-b639-0ddcb969fe61"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Could you repeat that, please?",
+        "note": "Recycles zou + infinitive from Part VI."
+      },
+      "content": [
+        {
+          "text": "Zou u dat kunnen herhalen, alstublieft?",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "db6c7aaa-1cfc-46bf-84c2-76b565394423"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I would like to make an appointment.",
+        "note": "Graag is recycled in the request chunk."
+      },
+      "content": [
+        {
+          "text": "Ik wil graag een afspraak maken.",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "55937a61-6708-4ea6-adda-7f4913a91b15"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Where is the service desk?",
+        "note": "A simple direct question."
+      },
+      "content": [
+        {
+          "text": "Waar is de balie?",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "3e1b869f-4fe9-4194-b8b6-baa7929aa156"
+    },
+    {
+      "type": "divider",
+      "id": "b357a0e4-f2d2-448d-bdcc-53987206c1c6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: role-play at the desk",
+      "id": "b58ff1f4-f434-40af-985f-431bdf2c3a86"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Marieke",
+            "text": "Nu oefenen jullie bij een gemeentelijke balie."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Goedemiddag. Kunt u mij helpen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Natuurlijk. Wat zoekt u?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ik zoek een formulier."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Welk formulier zoekt u?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Dat weet ik niet. Het gaat om een adres."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Zou u de naam kunnen spellen?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ja, natuurlijk. Kunt u dat herhalen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "De naam van het formulier, alstublieft."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Dank u wel."
+          },
+          {
+            "speaker": "Marieke",
+            "text": "Goed gedaan. Dit blijft een rollenspel."
+          }
+        ]
+      },
+      "id": "a36426f8-8fd9-474a-a288-dfc204fb4ed9"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de gemeente",
+              "meaning": "municipality",
+              "forms": "de gemeenten",
+              "example": "In het rollenspel vraagt Piotr iets aan de gemeentelijke balie.",
+              "id": "0f1c1d0d-fe40-4148-a994-0169605ebe80"
+            },
+            {
+              "term": "de gemeentelijke balie",
+              "meaning": "municipal service desk",
+              "example": "In het rollenspel vraagt Piotr iets aan de gemeentelijke balie.",
+              "note": "The adjective comes from de gemeente. The role-play does not describe a specific local procedure.",
+              "id": "70024fa1-e4c5-48f9-bc35-6cb5ad001045"
+            },
+            {
+              "term": "het formulier",
+              "meaning": "form",
+              "forms": "de formulieren",
+              "id": "827bd81a-4720-412f-b2d7-b797d977fefc"
+            },
+            {
+              "term": "de balie",
+              "meaning": "service desk or counter",
+              "forms": "de balies",
+              "id": "5e3dca85-6cad-48f5-9994-bc650582b2d1"
+            },
+            {
+              "term": "spellen",
+              "meaning": "to spell",
+              "forms": "spelt · spelde · gespeld",
+              "example": "Kunt u de naam spellen?",
+              "id": "d8231f55-538e-48c0-bbce-397c6f66edda"
+            }
+          ]
+        }
+      },
+      "id": "fdbb6b6f-2267-4b2d-997c-481f242ec78d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": "At a service desk, ask the staff member which form you need. This lesson does not explain any specific Utrecht procedure.",
+      "id": "bef91830-10a2-4283-8b8d-f73962eacf67"
+    },
+    {
+      "type": "divider",
+      "id": "954c03db-4001-4122-b912-0859b313795d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "153dc249-f62a-46b7-8641-db2c11e5304c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Choose the pronoun",
+      "id": "a6fffaae-1b95-400b-9896-49397d0b581d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each sentence with the reflexive pronoun.",
+          "items": [
+            {
+              "prompt": "Ik voel … niet lekker.",
+              "authorsVersion": [
+                "me"
+              ],
+              "note": "Ik uses me."
+            },
+            {
+              "prompt": "Jij wast … voor het ontbijt.",
+              "authorsVersion": [
+                "je"
+              ],
+              "note": "Jij uses je."
+            },
+            {
+              "prompt": "Hij kleedt … snel aan.",
+              "authorsVersion": [
+                "zich"
+              ],
+              "note": "Hij uses zich."
+            },
+            {
+              "prompt": "Wij vergissen … soms.",
+              "authorsVersion": [
+                "ons"
+              ],
+              "note": "Wij uses ons."
+            },
+            {
+              "prompt": "Jullie voelen … goed.",
+              "authorsVersion": [
+                "je"
+              ],
+              "note": "Jullie uses je."
+            },
+            {
+              "prompt": "Zij wassen … thuis.",
+              "authorsVersion": [
+                "zich"
+              ],
+              "note": "Zij uses zich."
+            },
+            {
+              "prompt": "Vandaag voel ik … beter.",
+              "authorsVersion": [
+                "me"
+              ],
+              "note": "Inversion changes word order, not the pronoun."
+            }
+          ]
+        }
+      },
+      "id": "0a76015c-373f-459b-ab64-87d582dbdf8c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Reflexive or not?",
+      "id": "3262db7c-fd92-4c15-863f-33bac515b821"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each sentence with the correct verb form or reflexive pronoun.",
+          "items": [
+            {
+              "prompt": "Ik … me goed. (voelen)",
+              "authorsVersion": [
+                "voel"
+              ],
+              "note": "Finite verb for ik."
+            },
+            {
+              "prompt": "Wij … ons voor het eten. (wassen)",
+              "authorsVersion": [
+                "wassen"
+              ],
+              "note": "Wij form is wassen."
+            },
+            {
+              "prompt": "Voel jij … beter?",
+              "authorsVersion": [
+                "je"
+              ],
+              "note": "The reflexive pronoun remains after subject."
+            },
+            {
+              "prompt": "Vandaag … Sofia zich niet lekker. (voelen)",
+              "authorsVersion": [
+                "voelt"
+              ],
+              "note": "Fronted time triggers inversion."
+            },
+            {
+              "prompt": "Mijn broer … zich snel aan. (aankleden)",
+              "authorsVersion": [
+                "kleedt"
+              ],
+              "note": "Separable finite verb: kleedt … aan."
+            },
+            {
+              "prompt": "Ik wil … wassen.",
+              "authorsVersion": [
+                "me"
+              ],
+              "note": "Pronoun with infinitive."
+            },
+            {
+              "prompt": "Sofia wil … aankleden.",
+              "authorsVersion": [
+                "zich"
+              ],
+              "note": "Pronoun with infinitive."
+            }
+          ]
+        }
+      },
+      "id": "6b14846f-df11-4443-bba1-a32b21f2391b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fix the word order",
+      "id": "11aa2fb8-04d7-4a68-8d32-1ea7deb630ba"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence correctly.",
+          "items": [
+            {
+              "prompt": "Put in order: ik / voel / me / niet lekker",
+              "authorsVersion": [
+                "Ik voel me niet lekker."
+              ],
+              "note": "Plain clause: subject, verb, reflexive pronoun."
+            },
+            {
+              "prompt": "Put in order: vandaag / ik / kleed / me / snel / aan",
+              "authorsVersion": [
+                "Vandaag kleed ik me snel aan."
+              ],
+              "note": "Time first, then verb and subject."
+            },
+            {
+              "prompt": "Put in order: zich / Piotr / vergist / soms",
+              "authorsVersion": [
+                "Piotr vergist zich soms."
+              ],
+              "note": "The pronoun follows the finite verb."
+            },
+            {
+              "prompt": "Put in order: wassen / wij / ons / thuis",
+              "authorsVersion": [
+                "Wij wassen ons thuis."
+              ],
+              "note": "Keep the reflexive pronoun after the verb."
+            },
+            {
+              "prompt": "Put in order: wil / zich / Sofia / aankleden",
+              "authorsVersion": [
+                "Sofia wil zich aankleden."
+              ],
+              "note": "Pronoun is with the infinitive."
+            },
+            {
+              "prompt": "Put in order: voel / jij / je / beter / vandaag",
+              "authorsVersion": [
+                "Vandaag voel jij je beter."
+              ],
+              "note": "Time first causes inversion."
+            }
+          ]
+        }
+      },
+      "id": "8cce99fe-6896-4ec3-a88f-22e006b8f896"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Make the request formal",
+      "id": "68956b13-40c7-4bf1-9248-4175f3f35dc1"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the informal request with u. Use the cue.",
+          "items": [
+            {
+              "prompt": "Kun je mij helpen? (kunt u)",
+              "authorsVersion": [
+                "Kunt u mij helpen?"
+              ],
+              "note": "Formal u takes kunt u."
+            },
+            {
+              "prompt": "Wil je het formulier herhalen? (wilt u)",
+              "authorsVersion": [
+                "Wilt u het formulier herhalen?"
+              ],
+              "note": "Use the formal pair wilt u."
+            },
+            {
+              "prompt": "Kun je de naam spellen? (zou u … kunnen)",
+              "authorsVersion": [
+                "Zou u de naam kunnen spellen?"
+              ],
+              "note": "Polite frame: zou u + infinitive kunnen."
+            },
+            {
+              "prompt": "Zeg de naam nog een keer. (kunt u)",
+              "authorsVersion": [
+                "Kunt u de naam nog een keer zeggen?"
+              ],
+              "note": "Turn the imperative into a polite question."
+            },
+            {
+              "prompt": "Wil je een afspraak maken? (wilt u)",
+              "authorsVersion": [
+                "Wilt u een afspraak maken?"
+              ],
+              "note": "Change the informal pronoun and verb form to formal u; wilt u asks what the person would like to do."
+            },
+            {
+              "prompt": "Herhaal dat, alstublieft. (zou u … kunnen)",
+              "authorsVersion": [
+                "Zou u dat kunnen herhalen, alstublieft?"
+              ],
+              "note": "Formal request plus alstublieft."
+            }
+          ]
+        }
+      },
+      "id": "865f6889-fd23-47a1-b75d-b8f8afb83c5c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the service dialogue",
+      "id": "a7acca63-f8cf-454b-97ba-195a7162a71a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the missing words.",
+          "items": [
+            {
+              "prompt": "Sofia: Goedemiddag. Kunt u mij …? / Piotr: Ja, natuurlijk.",
+              "authorsVersion": [
+                "helpen"
+              ],
+              "note": "Fixed polite request."
+            },
+            {
+              "prompt": "Piotr: Ik wil graag een … maken.",
+              "authorsVersion": [
+                "afspraak"
+              ],
+              "note": "de afspraak is an appointment."
+            },
+            {
+              "prompt": "Sofia: Zou u dat kunnen …, alstublieft?",
+              "authorsVersion": [
+                "herhalen"
+              ],
+              "note": "Infinitive after kunnen."
+            },
+            {
+              "prompt": "Piotr: Welk … zoekt u?",
+              "authorsVersion": [
+                "formulier"
+              ],
+              "note": "het formulier."
+            },
+            {
+              "prompt": "Sofia: Dank u … .",
+              "authorsVersion": [
+                "wel"
+              ],
+              "note": "Fixed thanks expression."
+            },
+            {
+              "prompt": "Piotr: Waar is de …?",
+              "authorsVersion": [
+                "balie"
+              ],
+              "note": "de balie is the counter."
+            },
+            {
+              "prompt": "Sofia: Kunt u de naam …?",
+              "authorsVersion": [
+                "spellen"
+              ],
+              "note": "Infinitive at end."
+            },
+            {
+              "prompt": "Piotr: Ik … me soms.",
+              "authorsVersion": [
+                "vergis"
+              ],
+              "note": "ik vergis me."
+            }
+          ]
+        }
+      },
+      "id": "3b92a649-6ccf-4167-a28e-1f8c7cbe3ec3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "4f5d907a-0788-4be5-afa7-bde4c202aa20"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "I do not feel well.",
+              "authorsVersion": [
+                "Ik voel me niet lekker."
+              ],
+              "note": "Fixed situation phrase."
+            },
+            {
+              "prompt": "Today I feel better.",
+              "authorsVersion": [
+                "Vandaag voel ik me beter."
+              ],
+              "note": "Time-first inversion."
+            },
+            {
+              "prompt": "We wash ourselves at home.",
+              "authorsVersion": [
+                "Wij wassen ons thuis."
+              ],
+              "note": "Wij uses ons."
+            },
+            {
+              "prompt": "Sofia wants to get dressed.",
+              "authorsVersion": [
+                "Sofia wil zich aankleden."
+              ],
+              "note": "Pronoun with infinitive."
+            },
+            {
+              "prompt": "Could you repeat that, please?",
+              "authorsVersion": [
+                "Zou u dat kunnen herhalen, alstublieft?"
+              ],
+              "note": "Formal request; zou recycled from Part VI."
+            },
+            {
+              "prompt": "Can you help me? (formal)",
+              "authorsVersion": [
+                "Kunt u mij helpen?"
+              ],
+              "note": "Formal u request."
+            },
+            {
+              "prompt": "I would like to make an appointment.",
+              "authorsVersion": [
+                "Ik wil graag een afspraak maken."
+              ],
+              "note": "Polite request chunk."
+            }
+          ]
+        }
+      },
+      "id": "6b71c10a-0057-44cf-9ef1-c6c23e744a5d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "b867189c-1f76-4431-bfab-f9f1e664ec67"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Sofia vergist zich soms.",
+              "authorsVersion": [
+                "Sofia is sometimes mistaken."
+              ],
+              "note": "zich vergissen = be mistaken."
+            },
+            {
+              "prompt": "Ik wil me wassen.",
+              "authorsVersion": [
+                "I want to wash myself."
+              ],
+              "note": "The pronoun stays with the infinitive."
+            },
+            {
+              "prompt": "Kunt u mij helpen?",
+              "authorsVersion": [
+                "Can you help me?"
+              ],
+              "note": "Formal request."
+            },
+            {
+              "prompt": "Wilt u de naam nog een keer zeggen?",
+              "authorsVersion": [
+                "Would you say the name one more time?"
+              ],
+              "note": "Formal u."
+            },
+            {
+              "prompt": "Waar is de balie?",
+              "authorsVersion": [
+                "Where is the service desk?"
+              ],
+              "note": "balie means a service counter."
+            },
+            {
+              "prompt": "Zou u dat kunnen herhalen?",
+              "authorsVersion": [
+                "Could you repeat that?"
+              ],
+              "note": "Polite request with zou."
+            },
+            {
+              "prompt": "Ik voel me niet lekker.",
+              "authorsVersion": [
+                "I do not feel well."
+              ],
+              "note": "No diagnosis is implied."
+            }
+          ]
+        }
+      },
+      "id": "2bf325ef-06de-4963-ad5c-a8f17d997b64"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: a class handout",
+      "id": "7944eb95-4715-434f-8498-16cacbb52ddd"
+    },
+    {
+      "type": "paragraph",
+      "content": "This handout is a classroom model for a service conversation. It is not an actual notice from a doctor or the municipality.",
+      "id": "32eefaaa-7887-4e7f-8a07-5369606c8e32"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Read and answer in Dutch",
+      "id": "a5a6fbed-9946-44b9-a49a-b9bfe7f54f71"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the model notice. Answer in Dutch.",
+          "items": [
+            {
+              "prompt": "Waar oefenen Sofia en Piotr?",
+              "authorsVersion": [
+                "Bij de huisarts en bij de gemeentelijke balie."
+              ],
+              "note": "Both are practice role-plays."
+            },
+            {
+              "prompt": "Wat zegt iemand als hij zich niet goed voelt?",
+              "authorsVersion": [
+                "Ik voel me niet lekker."
+              ],
+              "note": "The handout gives this phrase."
+            },
+            {
+              "prompt": "Welke beleefde vraag staat in het voorbeeld?",
+              "authorsVersion": [
+                "Kunt u mij helpen?"
+              ],
+              "note": "One suitable answer; other quoted formal questions are possible."
+            },
+            {
+              "prompt": "Wat kan iemand vragen als hij iets niet begrijpt?",
+              "authorsVersion": [
+                "Zou u dat kunnen herhalen?"
+              ],
+              "note": "A polite request for repetition."
+            },
+            {
+              "prompt": "Wat zoekt Piotr in het tweede rollenspel?",
+              "authorsVersion": [
+                "Een formulier."
+              ],
+              "note": "It is a role-play."
+            },
+            {
+              "prompt": "Welke naam moet Piotr spellen?",
+              "authorsVersion": [
+                "De naam van het formulier."
+              ],
+              "note": "Sofia, in the staff role, asks Piotr to spell the name of the form."
+            },
+            {
+              "prompt": "Is dit een echte afspraak?",
+              "authorsVersion": [
+                "Nee, dit is een oefening."
+              ],
+              "note": "The passage says it is a classroom model."
+            }
+          ],
+          "passage": {
+            "title": "Oefenen in de les",
+            "content": "Op dinsdag oefenen Sofia en Piotr twee gesprekken met Marieke. Eerst spelen ze een gesprek bij de huisarts. Sofia zegt: “Ik voel me niet lekker.” Daarna oefenen ze bij een gemeentelijke balie. Piotr zoekt een formulier. Hij weet de naam niet. Sofia vraagt: “Zou u de naam kunnen spellen?” Piotr vraagt om herhaling. Marieke zegt dat het een oefening is. Niemand belt een huisarts en niemand levert een formulier in."
+          }
+        }
+      },
+      "id": "606953a5-be89-4957-92e2-139c76733354"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "3bcc1682-1783-4cb6-82c0-4000c7ae7174"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Make a polite request",
+      "id": "d1056754-e1b8-4ae1-894d-e1f9db11c4f9"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write two or three sentences for a pretend service conversation. Include one formal question and a polite closing.",
+          "items": [
+            {
+              "prompt": "Write a short request for help at a service desk.",
+              "authorsVersion": [
+                "Goedemiddag. Kunt u mij helpen met een formulier? Zou u de naam kunnen herhalen, alstublieft? Dank u wel."
+              ],
+              "note": "Model answer. Keep u consistent; other clear polite requests are fine."
+            }
+          ]
+        }
+      },
+      "id": "b1ccf8b0-c3ea-4112-9187-412a6d5ccdf8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "155589bc-a1ec-40d5-a4f1-079d183d79f5"
+    },
+    {
+      "type": "paragraph",
+      "content": "Remember: learn each reflexive verb with its pronoun. Use u consistently for formal service requests.",
+      "id": "4de52e77-dc09-4932-89a2-5b29e035ce30"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Plain clause: Ik voel me. Inversion: Vandaag voel ik me.",
+      "id": "f08907d6-e483-4b9f-adf6-7772caeb6dc0"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "With an infinitive: Ik wil me wassen. Ik wil me aankleden.",
+      "id": "77b30730-20e9-4792-a7a5-019e4dd21536"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Formal requests: Kunt u …? Wilt u …? Zou u … kunnen?",
+      "id": "2c6161f1-e241-4c77-bf2d-c3cc5367a118"
+    },
+    {
+      "type": "divider",
+      "id": "1b51c933-7629-46d2-8de3-ce1a68b3c719"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: two role-plays",
+      "description": "A Dutch classroom at the central library, Marieke points to two role-play cards labelled huisarts and gemeentelijke balie while Sofia and Piotr practise politely. No real medical visit or official process.",
+      "alt": "Marieke introduces two service role-plays to Sofia and Piotr."
+    }
+  ],
+  "id": "30ff6e9c-2baa-4e3d-8dcc-ba290e500784"
+}

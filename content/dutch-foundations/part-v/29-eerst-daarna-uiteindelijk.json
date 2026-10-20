@@ -1,0 +1,1252 @@
+{
+  "title": "Eerst, toen en uiteindelijk",
+  "goal": "Choose a natural past tense for familiar situations and events, and put a short account in order with time words.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Eerst, toen en uiteindelijk",
+      "id": "98458c54-b1f2-41a0-add8-01afea68f317"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Friday 8 January 2027. Sofia tells Noor about her return to Utrecht and her walk on Monday. In this lesson you will compare the perfect and simple past in everyday stories, then sequence events. Verbs are blue, time words are orange, and the new target forms are bold.",
+      "id": "db901445-e9d9-4c59-af29-5303794f8d3d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: a short account",
+      "id": "66306ecf-92f9-453e-a985-c7ea05c08e6e"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Vertel eens over maandag."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Eerst ben ik naar het centrum gegaan."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En toen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Toen ben ik door het park gegaan."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Was het druk?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, het was rustig."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En daarna?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Daarna ben ik naar huis gegaan. Uiteindelijk kwam ik thuis."
+          }
+        ]
+      },
+      "id": "17447302-1f96-45d2-96c1-bd7cfe616dc3"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de volgorde",
+              "meaning": "the order, sequence",
+              "forms": "de volgordes",
+              "example": "De volgorde is duidelijk.",
+              "id": "ed6e612c-90fc-4297-af51-16fb76f24a6f"
+            },
+            {
+              "term": "de gebeurtenis",
+              "meaning": "event",
+              "forms": "de gebeurtenissen",
+              "example": "Eerst komt de eerste gebeurtenis.",
+              "id": "ef4e731b-ac54-47e8-adab-6b27c3c130bc"
+            },
+            {
+              "term": "toen",
+              "meaning": "then, at that time (time word)",
+              "example": "Toen ging Sofia door het park.",
+              "note": "Here toen connects one event to the next in time; it is followed by a main clause.",
+              "id": "c70fc9bf-1013-4230-a0ca-413a8ed6e483"
+            },
+            {
+              "term": "uiteindelijk",
+              "meaning": "eventually, in the end",
+              "example": "Uiteindelijk kwam Sofia thuis.",
+              "id": "3ce9af59-96e0-4235-96a8-f8543d6e0676"
+            },
+            {
+              "term": "op dat moment",
+              "meaning": "at that moment",
+              "example": "Op dat moment was Sofia moe.",
+              "id": "5517d9e0-9da1-4012-ab32-77239f79d418"
+            },
+            {
+              "term": "in het begin",
+              "meaning": "at first, in the beginning",
+              "example": "In het begin was de straat rustig.",
+              "id": "27d4dee7-846f-48fc-b919-af8485a157b2"
+            },
+            {
+              "term": "aan het begin",
+              "meaning": "at the beginning",
+              "example": "Aan het begin ging Sofia naar het centrum.",
+              "id": "fe41c279-71f1-45a0-8eec-eee1fb7c1ea2"
+            },
+            {
+              "term": "aan het einde",
+              "meaning": "at the end",
+              "example": "Aan het einde kwam Sofia thuis.",
+              "id": "f40052f8-b17e-4786-b3b4-00193ba4a61d"
+            },
+            {
+              "term": "stap voor stap",
+              "meaning": "step by step",
+              "example": "Sofia vertelt haar dag stap voor stap.",
+              "id": "d2a84f12-4a26-48c2-8133-b49f1cc30e27"
+            },
+            {
+              "term": "in volgorde",
+              "meaning": "in order",
+              "example": "Zet de gebeurtenissen in volgorde.",
+              "id": "02eb4c01-cc92-4f7a-8ed3-ea528fa120d0"
+            }
+          ]
+        }
+      },
+      "id": "bbf954cf-d399-429b-8dd0-1ba8c7fe4931"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "Eerst, toen and daarna can mark the order of events. At the start of a sentence, each takes the verb before the subject: Toen ging Sofia …",
+      "id": "f8e1ae68-1c86-45ab-9a17-061547af22ce"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Eerst",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ben ik naar het centrum ",
+        {
+          "text": "gegaan",
+          "styles": {
+            "bold": true,
+            "textColor": "red",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "First I went to the city centre.",
+        "note": "Perfect: ben + gegaan. The subject ik follows the finite verb ben after fronted Eerst."
+      },
+      "id": "b3851c63-4593-475a-8fc3-b4976e4cf649"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Toen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "ging",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " Sofia door het park."
+      ],
+      "props": {
+        "translation": "Then Sofia went through the park.",
+        "note": "Simple past of gaan: ging. Toen is a time word here; this is a main clause."
+      },
+      "id": "2e677d48-9ce2-4ce5-a354-1ae77144c209"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Daarna",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " is Sofia naar huis ",
+        {
+          "text": "gegaan",
+          "styles": {
+            "bold": true,
+            "textColor": "red",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "After that Sofia went home.",
+        "note": "Perfect: is + gegaan. The auxiliary is second, before the subject."
+      },
+      "id": "f67116a7-3875-4582-9c05-f56bc19d00da"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Uiteindelijk",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "kwam",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " Sofia thuis."
+      ],
+      "props": {
+        "translation": "Eventually Sofia got home.",
+        "note": "Simple past of komen: kwam. The subject follows the finite verb after a fronted time word."
+      },
+      "id": "0cafe64b-fba9-4a0d-9586-0ee5c1ed5638"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "In het begin",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "was",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " het park rustig."
+      ],
+      "props": {
+        "translation": "At first the park was quiet.",
+        "note": "Was describes the background situation. In the beginning is also a natural translation of in het begin."
+      },
+      "id": "5521af76-7d4c-48f2-ade2-55467a4209cd"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Op dat moment",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "was",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " Sofia moe."
+      ],
+      "props": {
+        "translation": "At that moment Sofia was tired.",
+        "note": "The simple past describes her state at that time."
+      },
+      "id": "86daa5d8-7e93-44da-8260-23f71b21351d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Two ways to talk about the past",
+      "id": "e8f5c50a-13df-47d5-b384-d5bcedefb5d8"
+    },
+    {
+      "type": "paragraph",
+      "content": "You know the perfect from lessons 25–27 and the simple past from lesson 28. In everyday conversation, people often use the perfect for completed events. The simple past is common for past states and for events in a connected account. These are useful tendencies, not fixed rules: speakers may choose either tense, depending on how they tell the story.",
+      "id": "cff74389-f433-4db7-be99-2b53e78a2f93"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de voltooide tijd",
+              "meaning": "the perfect tense",
+              "example": "Ik ben naar het centrum gegaan.",
+              "id": "269fb1be-1e22-4211-8a51-05452be313c0"
+            },
+            {
+              "term": "de onvoltooid verleden tijd",
+              "meaning": "the simple past",
+              "example": "Het park was rustig.",
+              "id": "48875d4c-c550-4f0d-b893-31f1cfc6fa2f"
+            },
+            {
+              "term": "de herinnering",
+              "meaning": "memory",
+              "forms": "de herinneringen",
+              "example": "Sofia vertelt een herinnering.",
+              "id": "774ac67e-6475-44cf-83c9-7eb2baa5bb5e"
+            },
+            {
+              "term": "het verleden",
+              "meaning": "the past",
+              "example": "Noor en Sofia praten over het verleden.",
+              "id": "6de1f3ad-15cf-4b2f-bb5e-206db28ace3c"
+            },
+            {
+              "term": "de verteller",
+              "meaning": "the person telling a story",
+              "forms": "de vertellers",
+              "example": "Sofia is de verteller.",
+              "id": "b31c8bf0-122f-4641-8892-8ce2b4b0c7f2"
+            },
+            {
+              "term": "de situatie",
+              "meaning": "situation",
+              "forms": "de situaties",
+              "example": "De situatie was rustig.",
+              "id": "ea7cd48d-b3f6-42fa-b588-209d37abe5ae"
+            },
+            {
+              "term": "de samenvatting",
+              "meaning": "summary",
+              "forms": "de samenvattingen",
+              "example": "Noor geeft een korte samenvatting.",
+              "id": "6cd81398-366a-40ac-be28-d34bd5d4beb0"
+            },
+            {
+              "term": "een kort verhaal",
+              "meaning": "a short story or account",
+              "forms": "korte verhalen",
+              "example": "Sofia vertelt een kort verhaal.",
+              "id": "b313c7e6-6a1b-4df5-b135-b339b95516d5"
+            },
+            {
+              "term": "de eerste gebeurtenis",
+              "meaning": "the first event",
+              "forms": "de eerste gebeurtenissen",
+              "example": "De eerste gebeurtenis was haar wandeling.",
+              "id": "f01aeaa9-405e-4ffb-9bed-d68e9eae74ef"
+            },
+            {
+              "term": "de laatste gebeurtenis",
+              "meaning": "the last event",
+              "forms": "de laatste gebeurtenissen",
+              "example": "De laatste gebeurtenis was haar thuiskomst.",
+              "id": "e0fce181-fcf8-4f14-ba20-844d1831461e"
+            }
+          ]
+        }
+      },
+      "id": "2358fa39-90f7-4bc6-a71c-daa5bc4d0527"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "A completed event in conversation",
+              "id": "d7b58fa0-d942-4e6c-9a22-43589bf05925"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Wat heb je maandag gedaan?",
+              "id": "aa35257c-377c-44e9-a8ad-3ece688598a4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik ben naar het centrum gegaan.",
+              "id": "a32f58cc-b426-4ab6-a30c-a80dfbef1fef"
+            }
+          ],
+          "id": "ecac63e2-164b-44ea-bbfe-7b80f6708e39"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "A state or connected account",
+              "id": "7b1aa726-2872-41ec-a9ab-cc43bf0b9e15"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Het park was rustig.",
+              "id": "d58abe7a-6fe3-411c-b37e-502b667be9f5"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Toen ging Sofia door het park.",
+              "id": "a5603543-753c-4b2c-8238-89ad38fa7c33"
+            }
+          ],
+          "id": "85bbefff-edab-4bbf-a8ba-87a56b7325f3"
+        }
+      ],
+      "id": "2a374cc3-337f-4872-806c-2e2c18f2f464"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "Perfect: a present form of hebben or zijn + a past participle at the end. Simple past: one past verb, such as was, had, ging or kwam. Choose the form that sounds natural for the way you are telling the account.",
+      "id": "431d077b-a870-4ac6-8d9f-f56d70a13d64"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Wat heb je maandag ",
+        {
+          "text": "gedaan",
+          "styles": {
+            "bold": true,
+            "textColor": "red",
+            "backgroundColor": "yellow"
+          }
+        },
+        "?"
+      ],
+      "props": {
+        "translation": "What did you do on Monday?",
+        "note": "A common conversational question uses the perfect. Gedaan is the irregular participle from lesson 27."
+      },
+      "id": "e1d37e1b-5281-4940-b2f4-ea868c82c019"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Sofia ",
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " maandag naar het centrum ",
+        {
+          "text": "gegaan",
+          "styles": {
+            "bold": true,
+            "textColor": "red",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "Sofia went to the city centre on Monday.",
+        "note": "A natural way to report the completed outing in conversation."
+      },
+      "id": "5ad9660f-bfd4-4fef-81e3-9ff4f7d63047"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Maandag ",
+        {
+          "text": "ging",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " Sofia naar het centrum."
+      ],
+      "props": {
+        "translation": "On Monday Sofia went to the city centre.",
+        "note": "This simple-past version is also possible, especially as part of a connected account. It does not make the perfect wrong."
+      },
+      "id": "3ee28aac-caec-4bb4-b9fb-8139c7303511"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Sofia ",
+        {
+          "text": "was",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " moe na haar terugkeer."
+      ],
+      "props": {
+        "translation": "Sofia was tired after her return.",
+        "note": "Was gives background about a past state."
+      },
+      "id": "23818013-8fbe-4191-818c-1029f4357e40"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Op zondag ",
+        {
+          "text": "heeft",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " Sofia thee ",
+        {
+          "text": "gemaakt",
+          "styles": {
+            "bold": true,
+            "textColor": "red",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "On Sunday Sofia made tea.",
+        "note": "The perfect presents a completed event in conversation."
+      },
+      "id": "c7bd2a5e-f18c-461d-a8a9-6e3b332ea191"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Eerst",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " heeft Sofia haar kamer ",
+        {
+          "text": "opgeruimd",
+          "styles": {
+            "bold": true,
+            "textColor": "red",
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "First Sofia tidied her room.",
+        "note": "Opgeruimd is the participle of the separable verb opruimen."
+      },
+      "id": "a660c253-0ec0-4825-ab07-5485a771ea1a"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Toen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "belde",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " Sofia haar moeder."
+      ],
+      "props": {
+        "translation": "Then Sofia called her mother.",
+        "note": "A simple-past narration is natural here. Bellen has a regular weak past form; lesson 28 introduced the ending pattern."
+      },
+      "id": "d7878bd9-d239-4d5a-a330-6a650ff54488"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "A fronted time word takes the first place; the finite verb stays in second position, before the subject: Daarna ging Sofia … / Daarna is Sofia … gegaan.",
+      "id": "39beb659-b694-4935-9101-f412c27dfa49"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "*Toen Sofia ging door het park.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Toen ging Sofia door het park. In this lesson, toen begins a main clause, so the finite verb comes before the subject."
+      ],
+      "id": "9ab32420-b450-4c10-99fc-42643ea2ba63"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Tell a short account in order.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Say what happened first: Eerst …",
+          "id": "bc236c1f-b389-4b30-81c5-9067fc9e5585"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Move to the next event: Toen … / Daarna …",
+          "id": "ad8011e8-684a-40af-a6be-9e9053e170c8"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Finish the account: Uiteindelijk …",
+          "id": "9c392197-05c0-47d5-92eb-0cd19ab1478f"
+        }
+      ],
+      "id": "04b07f22-a2d9-4f29-9b5a-23adccd6e16f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: compare the two versions",
+      "id": "3d07ad96-a25b-4744-80b2-12b0859928ff"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Hoe was maandag?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Het was een rustige dag."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Wat heb je gedaan?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik ben naar het centrum gegaan."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En wat deed je toen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Toen ging ik door het park."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En daarna?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Daarna ben ik naar huis gegaan. Uiteindelijk kwam ik thuis."
+          }
+        ]
+      },
+      "id": "5e4ab70a-42fc-4583-bb11-469aff33697c"
+    },
+    {
+      "type": "divider",
+      "id": "3beb89f2-418f-4669-823d-efe2c6a766a2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "1bbc714d-b36e-4902-9dcf-1765cb5310ae"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Choose a natural tense",
+      "id": "e90101c8-b98f-4500-9d99-d909257419ac"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Choose a natural form for the context. The other tense may also be possible in a different context.",
+          "items": [
+            {
+              "prompt": "A friend asks about a completed outing: Sofia … naar het centrum gegaan. (is / ging)",
+              "authorsVersion": [
+                "is"
+              ],
+              "note": "The perfect is common for a completed event in conversation. Ging can also be natural in a connected account."
+            },
+            {
+              "prompt": "Describe how the park felt: Het park … rustig. (was / is geweest)",
+              "authorsVersion": [
+                "was"
+              ],
+              "note": "Was gives simple background. Het park is rustig geweest is possible with a different focus, but was is the natural choice here."
+            },
+            {
+              "prompt": "Continue a sequence after Eerst: Toen … Sofia door het park. (ging / is gegaan)",
+              "authorsVersion": [
+                "ging"
+              ],
+              "note": "Ging makes a compact connected account. Toen is followed by a main clause with V2; the perfect Toen is Sofia door het park gegaan is also possible."
+            },
+            {
+              "prompt": "Noor asks what Sofia did Sunday: Sofia … thee gemaakt. (heeft / maakte)",
+              "authorsVersion": [
+                "heeft"
+              ],
+              "note": "The perfect is a common conversational answer. Maakte is also possible in a narrative."
+            },
+            {
+              "prompt": "Give the background: Sofia … moe. (was / is geweest)",
+              "authorsVersion": [
+                "was"
+              ],
+              "note": "Was is a natural simple-past description of a state."
+            },
+            {
+              "prompt": "Complete a connected account: Eerst ging Sofia naar het centrum. Daarna … ze naar huis. (ging / is gegaan)",
+              "authorsVersion": [
+                "ging"
+              ],
+              "note": "Ging continues the connected simple-past account. Daarna is ze naar huis gegaan is also grammatical in another telling."
+            },
+            {
+              "prompt": "Ask in conversation about the return: Sofia … zondag teruggekomen. (is / kwam)",
+              "authorsVersion": [
+                "is"
+              ],
+              "note": "The perfect is common for a completed event in conversation. Zondag kwam Sofia terug is also a natural narrative form."
+            }
+          ]
+        }
+      },
+      "id": "3fec296a-4fce-45e7-b792-ad27de79a811"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Put events in order",
+      "id": "ec1776d4-8f11-42bc-a0e1-c8224136d853"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Begin with the time word and use a main clause.",
+          "items": [
+            {
+              "prompt": "Put in order: eerst / Sofia / is / naar het centrum / gegaan",
+              "authorsVersion": [
+                "Eerst is Sofia naar het centrum gegaan."
+              ],
+              "note": "After Eerst at the start, the finite verb is comes before the subject."
+            },
+            {
+              "prompt": "Put in order: toen / ging / Sofia / door het park",
+              "authorsVersion": [
+                "Toen ging Sofia door het park."
+              ],
+              "note": "Toen + finite verb + subject: V2."
+            },
+            {
+              "prompt": "Put in order: daarna / is / ze / naar huis / gegaan",
+              "authorsVersion": [
+                "Daarna is ze naar huis gegaan."
+              ],
+              "note": "In the perfect, is is finite and gegaan stays at the end."
+            },
+            {
+              "prompt": "Put in order: uiteindelijk / kwam / Sofia / thuis",
+              "authorsVersion": [
+                "Uiteindelijk kwam Sofia thuis."
+              ],
+              "note": "The time word is first; the finite verb kwam is second."
+            },
+            {
+              "prompt": "Put in order: op zondag / heeft / Sofia / haar moeder / gebeld",
+              "authorsVersion": [
+                "Op zondag heeft Sofia haar moeder gebeld."
+              ],
+              "note": "The perfect participle gebeld stays at the end."
+            },
+            {
+              "prompt": "Put in order: het park / was / in het begin / rustig",
+              "authorsVersion": [
+                "In het begin was het park rustig."
+              ],
+              "note": "Start with the time expression and use inversion: was het park."
+            }
+          ]
+        }
+      },
+      "id": "fb53e8e3-651f-4337-b50f-b946c4bf9e89"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the conversation",
+      "id": "c1f453c3-1a4e-42cf-b257-82fb100ea90e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each exchange with the missing word or words.",
+          "items": [
+            {
+              "prompt": "Noor: Wat … je maandag gedaan? / Sofia: Ik … naar het centrum gegaan.",
+              "authorsVersion": [
+                "heb",
+                "ben"
+              ],
+              "note": "The question uses hebben with gedaan; gaan uses zijn in the perfect (lesson 26)."
+            },
+            {
+              "prompt": "Noor: En …? / Sofia: Toen ging ik door het park.",
+              "authorsVersion": [
+                "toen"
+              ],
+              "note": "Toen marks the next event and starts a main clause."
+            },
+            {
+              "prompt": "Sofia: Het park … rustig. / Noor: Fijn!",
+              "authorsVersion": [
+                "was"
+              ],
+              "note": "Was describes a past state."
+            },
+            {
+              "prompt": "Noor: Wat deed je op zondag? / Sofia: Ik … thee gemaakt.",
+              "authorsVersion": [
+                "heb"
+              ],
+              "note": "Heb is the finite auxiliary; gemaakt is already present in the prompt."
+            },
+            {
+              "prompt": "Noor: En …? / Sofia: Daarna ben ik naar huis gegaan.",
+              "authorsVersion": [
+                "daarna"
+              ],
+              "note": "Daarna introduces the next event."
+            },
+            {
+              "prompt": "Sofia: … kwam ik thuis. / Noor: Was je moe?",
+              "authorsVersion": [
+                "Uiteindelijk"
+              ],
+              "note": "Uiteindelijk marks the last event in this short account."
+            }
+          ]
+        }
+      },
+      "id": "278795dd-24bd-43d5-99db-82de5a76a636"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Change the way you tell it",
+      "id": "ed069871-09cb-4b41-9a7b-3e2d0abf29c5"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence in the other past tense. Keep the meaning. Both versions can be natural; the note gives the form used in this exercise.",
+          "items": [
+            {
+              "prompt": "Sofia is naar het centrum gegaan. (simple past)",
+              "authorsVersion": [
+                "Sofia ging naar het centrum."
+              ],
+              "note": "Gaan has the simple-past form ging from lesson 28."
+            },
+            {
+              "prompt": "Het park was rustig. (perfect)",
+              "authorsVersion": [
+                "Het park is rustig geweest."
+              ],
+              "note": "This is grammatically possible, though was is more usual for simple background. The perfect adds a bounded past-period perspective."
+            },
+            {
+              "prompt": "Sofia heeft thee gemaakt. (simple past)",
+              "authorsVersion": [
+                "Sofia maakte thee."
+              ],
+              "note": "Maken has the regular simple past maakte. Both forms can report the event."
+            },
+            {
+              "prompt": "Toen ging Sofia door het park. (perfect)",
+              "authorsVersion": [
+                "Toen is Sofia door het park gegaan."
+              ],
+              "note": "Toen is followed by a main clause: finite is before the subject; gegaan is at the end."
+            },
+            {
+              "prompt": "Sofia kwam thuis. (perfect)",
+              "authorsVersion": [
+                "Sofia is thuisgekomen."
+              ],
+              "note": "Use the known perfect of thuisgekomen with zijn. The simple past remains natural in a connected account."
+            },
+            {
+              "prompt": "Sofia heeft haar moeder gebeld. (simple past)",
+              "authorsVersion": [
+                "Sofia belde haar moeder."
+              ],
+              "note": "Bellen takes the weak simple-past ending -de. Both versions can be used."
+            }
+          ]
+        }
+      },
+      "id": "9151d875-a23c-4de9-8dba-20f3e8238aa0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "bb2d04e3-978b-4939-bdf6-796a7aea5a58"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural Dutch. Use the sequence words when given.",
+          "items": [
+            {
+              "prompt": "First Sofia went to the city centre. (perfect)",
+              "authorsVersion": [
+                "Eerst is Sofia naar het centrum gegaan."
+              ],
+              "note": "The perfect is a natural conversational report."
+            },
+            {
+              "prompt": "Then she went through the park. (simple past)",
+              "authorsVersion": [
+                "Toen ging ze door het park."
+              ],
+              "note": "Toen begins a main clause; ging comes before ze."
+            },
+            {
+              "prompt": "After that she went home. (perfect)",
+              "authorsVersion": [
+                "Daarna is ze naar huis gegaan."
+              ],
+              "note": "The participle gegaan goes at the end."
+            },
+            {
+              "prompt": "Eventually she got home. (simple past)",
+              "authorsVersion": [
+                "Uiteindelijk kwam ze thuis."
+              ],
+              "note": "Fronted Uiteindelijk is followed by kwam, then the subject."
+            },
+            {
+              "prompt": "The park was quiet at first.",
+              "authorsVersion": [
+                "In het begin was het park rustig."
+              ],
+              "note": "Was describes the background situation."
+            },
+            {
+              "prompt": "On Sunday Sofia made tea. (perfect)",
+              "authorsVersion": [
+                "Op zondag heeft Sofia thee gemaakt."
+              ],
+              "note": "Completed event in the perfect; gemaakt stays at the end."
+            },
+            {
+              "prompt": "At that moment Sofia was tired.",
+              "authorsVersion": [
+                "Op dat moment was Sofia moe."
+              ],
+              "note": "The simple past gives background about her state."
+            }
+          ]
+        }
+      },
+      "id": "33d092dd-02a6-41de-815d-61faae4ea78d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "674e15aa-f04b-490c-b3fb-c88d40cb5493"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Eerst is Sofia naar het centrum gegaan.",
+              "authorsVersion": [
+                "First Sofia went to the city centre."
+              ],
+              "note": "A completed event told with the perfect."
+            },
+            {
+              "prompt": "Toen ging ze door het park.",
+              "authorsVersion": [
+                "Then she went through the park."
+              ],
+              "note": "Toen is a time word followed by a main clause."
+            },
+            {
+              "prompt": "Daarna is ze naar huis gegaan.",
+              "authorsVersion": [
+                "After that she went home."
+              ]
+            },
+            {
+              "prompt": "Uiteindelijk kwam ze thuis.",
+              "authorsVersion": [
+                "Eventually she got home."
+              ]
+            },
+            {
+              "prompt": "Het park was in het begin rustig.",
+              "authorsVersion": [
+                "The park was quiet at first."
+              ],
+              "note": "Was describes the past situation."
+            },
+            {
+              "prompt": "Wat heb je maandag gedaan?",
+              "authorsVersion": [
+                "What did you do on Monday?"
+              ],
+              "note": "English often uses did here; Dutch commonly uses the perfect in conversation."
+            }
+          ]
+        }
+      },
+      "id": "6049c454-6bd2-42fb-911b-6b31db0404bd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Sofia's Monday",
+      "id": "65b94f43-dc53-4b03-89c6-6646736f5825"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the account and answer in Dutch.",
+          "passage": {
+            "title": "Een maandag in Utrecht",
+            "content": "Op vrijdag 8 januari vertelt Sofia over maandag. In het begin was het rustig. Eerst is ze naar het centrum gegaan. Toen ging ze door het park. Daarna is ze naar huis gegaan. Uiteindelijk kwam ze thuis. Ze vertelt dit als een kort verhaal. Op zondag is ze teruggekomen in Utrecht. Ze heeft thee gemaakt, haar kamer opgeruimd en haar moeder gebeld."
+          },
+          "items": [
+            {
+              "prompt": "Op welke dag vertelt Sofia over maandag?",
+              "authorsVersion": [
+                "Op vrijdag 8 januari."
+              ],
+              "note": "The story frame is Friday 8 January 2027."
+            },
+            {
+              "prompt": "Hoe was het in het begin?",
+              "authorsVersion": [
+                "Het was rustig."
+              ],
+              "note": "Was describes the background."
+            },
+            {
+              "prompt": "Waar is Sofia eerst naartoe gegaan?",
+              "authorsVersion": [
+                "Naar het centrum."
+              ],
+              "note": "Eerst marks the first event."
+            },
+            {
+              "prompt": "Waar ging Sofia toen doorheen?",
+              "authorsVersion": [
+                "Door het park."
+              ],
+              "note": "The passage uses the simple past ging in a connected account."
+            },
+            {
+              "prompt": "Waar is Sofia daarna naartoe gegaan?",
+              "authorsVersion": [
+                "Naar huis."
+              ],
+              "note": "Daarna marks the next event."
+            },
+            {
+              "prompt": "Wat deed Sofia uiteindelijk?",
+              "authorsVersion": [
+                "Uiteindelijk kwam Sofia thuis."
+              ],
+              "note": "Uiteindelijk introduces the last event."
+            },
+            {
+              "prompt": "Wat heeft Sofia op zondag gemaakt?",
+              "authorsVersion": [
+                "Thee."
+              ],
+              "note": "On Sunday she made tea after returning to Utrecht."
+            }
+          ]
+        }
+      },
+      "id": "d1c3075e-539e-4f96-9cdf-c6728d58ef3f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "95e3fe22-931c-4d4f-8ce2-70599e3b5ca5"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write three or four sentences about a familiar day. Put at least three events in order and use both past tenses at least once.",
+          "items": [
+            {
+              "prompt": "Write a short account using eerst, toen, daarna or uiteindelijk. You may write about Sofia's established Sunday or Monday, or a day of your own.",
+              "authorsVersion": [
+                "Eerst is Sofia naar het centrum gegaan. Toen ging ze door het park. Daarna is ze naar huis gegaan. Uiteindelijk kwam ze thuis."
+              ],
+              "note": "Model answer. Other truthful accounts are welcome. The perfect and simple past can both be natural; use fronted time words with V2."
+            }
+          ]
+        }
+      },
+      "id": "b451f0d5-8c06-4bbf-b5a3-24f9bd13e638"
+    },
+    {
+      "type": "divider",
+      "id": "411f9c54-21bb-4b16-866f-826da8a5a5a8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "451e275e-929c-4c75-9fd3-ad4b8b6051ca"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "In conversation, the perfect is common for completed events.",
+      "id": "995a055c-8800-4fe5-b411-d800b457a243"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "The simple past is common for past states and connected accounts. The choice depends on context.",
+      "id": "f78834a8-73ba-46e4-bbc0-8897f242a8b4"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use eerst, toen, daarna and uiteindelijk to make the event order clear.",
+      "id": "ab0df352-9958-439a-99f9-6d8d3cd3f91f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "A fronted time word is followed by the finite verb, then the subject: Toen ging Sofia …",
+      "id": "4d795d08-325a-4896-84be-3f5fc871cf55"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: a short account",
+      "description": "Sofia and Noor sit together in Sofia's Utrecht home on a calm January day, talking through a simple route on a paper map: the city centre, the park, and home.",
+      "alt": "Sofia tells Noor about her walk through Utrecht."
+    }
+  ],
+  "id": "f91cda4a-0fe5-4276-9d91-2b28b554ab3c"
+}

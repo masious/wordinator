@@ -1,4 +1,4 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { courseProgressResponseSchema } from "@wordinator/contracts";
 import { beforeEach, describe, expect, it } from "vitest";
 import { lessonPositionResponseSchema } from "@wordinator/contracts";
@@ -6,6 +6,7 @@ import {
   addLesson as createLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, publishLesson, readLesson, request, resetDatabase, saveDraft, seedGroup,
   seedUser, signIn,
 } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 const complete = (path: string, lessonId: string, cookie: string) => request(`${path}/lessons/${lessonId}/completion`, cookie, undefined, "PUT");
 const progress = async (path: string, cookie: string) => courseProgressResponseSchema.parse(await (await request(`${path}/progress`, cookie)).json());
@@ -91,7 +92,7 @@ describe("Course progress API", () => {
 
   it("requires a session", async () => {
     const { path } = await setup();
-    expect((await SELF.fetch(`https://wordinator.test${path}/progress`)).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test${path}/progress`)).status).toBe(401);
   });
 });
 
@@ -172,7 +173,7 @@ describe("Lesson positions", () => {
     const outsider = await signIn("outsider");
     expect((await place(path, stepped.id, outsider, examples[0]!.id)).status).toBe(404);
     expect((await place(coursePath(otherGroup, course.id), stepped.id, outsider, examples[0]!.id)).status).toBe(404);
-    expect((await SELF.fetch(`https://wordinator.test${path}/lessons/${stepped.id}/position`, { method: "PUT", body: JSON.stringify({ stepKey: examples[0]!.id }) })).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test${path}/lessons/${stepped.id}/position`, { method: "PUT", body: JSON.stringify({ stepKey: examples[0]!.id }) })).status).toBe(401);
     const rows = await env.DB.prepare("SELECT COUNT(*) AS total FROM course_lesson_positions WHERE group_id IN (?, ?)").bind(groupId, otherGroup).first<{ total: number }>();
     expect(rows?.total).toBe(0);
     await request(`${path}/archive`, owner, {});

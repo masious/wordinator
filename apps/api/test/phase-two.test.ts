@@ -1,7 +1,8 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { accountSettingsResponseSchema, profileResponseSchema } from "@wordinator/contracts";
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { hashPassword, verifyPassword } from "../src/auth";
+import { fetchWorker } from "./worker";
 
 const PASSWORD = "shared-test-password";
 let passwordHash: string;
@@ -24,7 +25,7 @@ async function seedGroup(label: string): Promise<Seed> {
 }
 
 async function request(path: string, body: unknown, cookie: string, method = "PATCH") {
-  return SELF.fetch(`https://wordinator.test${path}`, {
+  return fetchWorker(`https://wordinator.test${path}`, {
     method,
     headers: { "content-type": "application/json", cookie },
     body: JSON.stringify(body),
@@ -32,7 +33,7 @@ async function request(path: string, body: unknown, cookie: string, method = "PA
 }
 
 async function signIn(email: string, password = PASSWORD): Promise<string> {
-  const response = await SELF.fetch("https://wordinator.test/api/auth/sign-in", {
+  const response = await fetchWorker("https://wordinator.test/api/auth/sign-in", {
     method: "POST",
     headers: { "content-type": "application/json" },
     body: JSON.stringify({ email, password }),
@@ -55,7 +56,7 @@ describe("Phase 2 API", () => {
   it("updates account settings and active group profile snapshots", async () => {
     const alpha = await seedGroup("alpha");
     const cookie = await signIn("alpha@example.test");
-    const initialResponse = await SELF.fetch("https://wordinator.test/api/settings", { headers: { cookie } });
+    const initialResponse = await fetchWorker("https://wordinator.test/api/settings", { headers: { cookie } });
     expect(accountSettingsResponseSchema.parse(await initialResponse.json()).quickReactions).toEqual(["👍", "❤️", "😂"]);
     const updated = await request("/api/settings", {
       displayName: "Ada Learner",
@@ -64,7 +65,7 @@ describe("Phase 2 API", () => {
     }, cookie);
     expect(updated.status).toBe(200);
 
-    const settingsResponse = await SELF.fetch("https://wordinator.test/api/settings", { headers: { cookie } });
+    const settingsResponse = await fetchWorker("https://wordinator.test/api/settings", { headers: { cookie } });
     const settings = accountSettingsResponseSchema.parse(await settingsResponse.json());
     expect(settings).toMatchObject({ displayName: "Ada Learner", bio: "Collecting useful Dutch phrases.", quickReactions: ["👏", "🌱", "🤔"] });
     const snapshot = await env.DB.prepare("SELECT profile_display_name AS displayName, profile_bio AS bio FROM memberships WHERE group_id = ? AND user_id = ?")
@@ -97,10 +98,10 @@ describe("Phase 2 API", () => {
       .bind(alpha.groupId, beta.userId, now, now, "Beta before leaving", "Remembered bio", now).run();
     await env.DB.prepare("UPDATE users SET display_name = 'Private new name', bio = 'Private new bio' WHERE id = ?").bind(beta.userId).run();
 
-    const visible = await SELF.fetch(`https://wordinator.test/api/groups/${alpha.groupId}/members/${beta.userId}`, { headers: { cookie: alphaCookie } });
+    const visible = await fetchWorker(`https://wordinator.test/api/groups/${alpha.groupId}/members/${beta.userId}`, { headers: { cookie: alphaCookie } });
     const profile = profileResponseSchema.parse(await visible.json());
     expect(profile.profile).toMatchObject({ displayName: "Beta before leaving", bio: "Remembered bio", membership: "former" });
-    const isolated = await SELF.fetch(`https://wordinator.test/api/groups/${alpha.groupId}/members/${alpha.userId}`, { headers: { cookie: betaCookie } });
+    const isolated = await fetchWorker(`https://wordinator.test/api/groups/${alpha.groupId}/members/${alpha.userId}`, { headers: { cookie: betaCookie } });
     expect(isolated.status).toBe(404);
   });
 

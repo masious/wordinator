@@ -120,7 +120,7 @@ describe("AI settings form", () => {
     renderPage();
     const enabled = await screen.findByRole("checkbox", { name: "OpenRouter on" });
     fireEvent.click(enabled);
-    fireEvent.click(screen.getByRole("button", { name: "Move Azure up" }));
+    fireEvent.click(screen.getByRole("button", { name: "Move Azure down" }));
     fireEvent.change(screen.getByLabelText("Azure model"), { target: { value: "gpt-4.1-nano" } });
     fireEvent.change(screen.getByLabelText("Daily turn cap per account"), { target: { value: "12" } });
     fireEvent.click(screen.getByRole("button", { name: "Save AI settings" }));
@@ -130,7 +130,7 @@ describe("AI settings form", () => {
       providers: [
         { provider: "openrouter", enabled: false, model: "openai/gpt-oss-120b:free" },
         { provider: "azure", enabled: true, model: "gpt-4.1-nano" },
-        { provider: "workers_ai", enabled: true, model: "@cf/meta/llama-4-scout-17b-16e-instruct" },
+        { provider: "workers_ai", enabled: true, model: "@cf/openai/gpt-oss-120b" },
       ],
       dailyTurnCap: 12,
       dailySpeechCharCap: 5000,

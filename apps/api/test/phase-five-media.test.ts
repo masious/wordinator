@@ -1,16 +1,17 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { memberDirectoryResponseSchema } from "@wordinator/contracts";
 import { beforeAll, describe, expect, it } from "vitest";
 import { hashPassword } from "../src/auth";
+import { fetchWorker } from "./worker";
 
 const PASSWORD = "phase-five-media-password"; let passwordHash: string;
 async function signIn(email: string) {
-  const response = await SELF.fetch("https://wordinator.test/api/auth/sign-in", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email, password: PASSWORD }) });
+  const response = await fetchWorker("https://wordinator.test/api/auth/sign-in", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email, password: PASSWORD }) });
   return response.headers.get("set-cookie")!.split(";", 1)[0]!;
 }
 async function imageRequest(path: string, cookie: string, bytes: Uint8Array) {
   const form = new FormData(); form.set("image", new File([bytes.slice().buffer as ArrayBuffer], "avatar.png", { type: "image/png" }));
-  return SELF.fetch(`https://wordinator.test${path}`, { method: "POST", headers: { cookie }, body: form });
+  return fetchWorker(`https://wordinator.test${path}`, { method: "POST", headers: { cookie }, body: form });
 }
 beforeAll(async () => { passwordHash = await hashPassword(PASSWORD); });
 
@@ -28,12 +29,12 @@ describe("Phase 5 public media API", () => {
     expect((await imageRequest("/api/settings/avatar", member, new Uint8Array([1, 2, 3]))).status).toBe(400);
     const png = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 0, 73, 72, 68, 82]);
     const first = await imageRequest("/api/settings/avatar", member, png); expect(first.status).toBe(200); const firstBody = await first.json<{ url: string }>();
-    expect((await SELF.fetch(firstBody.url)).status).toBe(200);
+    expect((await fetchWorker(firstBody.url)).status).toBe(200);
     expect((await imageRequest("/api/settings/avatar", member, new Uint8Array([...png, 1]))).status).toBe(200);
-    expect((await SELF.fetch(firstBody.url)).status).toBe(404);
+    expect((await fetchWorker(firstBody.url)).status).toBe(404);
     expect((await imageRequest(`/api/groups/${groupId}/icon`, member, png)).status).toBe(403);
     expect((await imageRequest(`/api/groups/${groupId}/icon`, creator, png)).status).toBe(200);
-    const directory = memberDirectoryResponseSchema.parse(await (await SELF.fetch(`https://wordinator.test/api/groups/${groupId}/members`, { headers: { cookie: creator } })).json());
+    const directory = memberDirectoryResponseSchema.parse(await (await fetchWorker(`https://wordinator.test/api/groups/${groupId}/members`, { headers: { cookie: creator } })).json());
     expect(directory.active.find((item) => item.id === memberId)?.avatarUrl).toContain("/api/media/avatars/");
   });
 });

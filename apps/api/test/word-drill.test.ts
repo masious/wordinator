@@ -1,4 +1,4 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { WORD_DRILL_SESSION_SIZE, wordDrillDeckSchema, wordDrillGradeResponseSchema, type WordDrillDeck, type WordDrillResult } from "@wordinator/contracts/lesson-document";
 import { beforeEach, describe, expect, it } from "vitest";
 import { rebuildWordMemory, type FoldableWordReview } from "../src/wordMemory";
@@ -6,6 +6,7 @@ import {
   addLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, publishLesson, readLesson, request, resetDatabase, saveDraft, seedGroup, seedUser,
   signIn, word,
 } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 // Drill API (C12d, C14a; docs/words.md#drill): the deck read ranked by word memory and the first-grade write, over real rows.
 const DAY = 86_400_000;
@@ -53,8 +54,8 @@ beforeEach(resetDatabase);
 describe("Word drill access", () => {
   it("refuses anonymous requests and accounts that have not finished onboarding", async () => {
     const { groupId, path, lesson, hond } = await setup();
-    expect((await SELF.fetch(`https://wordinator.test/api/groups/${groupId}/word-drill?source=weak`)).status).toBe(401);
-    const anonymous = await SELF.fetch(`https://wordinator.test${drillPath(path, lesson.lesson.id, hond.id, "understand")}`, {
+    expect((await fetchWorker(`https://wordinator.test/api/groups/${groupId}/word-drill?source=weak`)).status).toBe(401);
+    const anonymous = await fetchWorker(`https://wordinator.test${drillPath(path, lesson.lesson.id, hond.id, "understand")}`, {
       method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ result: "got" }),
     });
     expect(anonymous.status).toBe(401);
@@ -82,7 +83,7 @@ describe("Word drill access", () => {
     for (const response of [
       await grade(path, lesson.lesson.id, hond.id, "sideways", "got", reader), await grade(path, lesson.lesson.id, hond.id, "mixed", "got", reader),
       await grade(path, lesson.lesson.id, hond.id, "understand", "maybe", reader), await request(drillPath(path, lesson.lesson.id, hond.id, "produce"), reader, {}, "PUT"),
-      await SELF.fetch(`https://wordinator.test${drillPath(path, lesson.lesson.id, hond.id, "produce")}`, { method: "PUT", headers: { cookie: reader }, body: "not json" }),
+      await fetchWorker(`https://wordinator.test${drillPath(path, lesson.lesson.id, hond.id, "produce")}`, { method: "PUT", headers: { cookie: reader }, body: "not json" }),
     ]) {
       expect(response.status).toBe(400);
       expect(await errorCode(response)).toBe("INVALID_DRILL");

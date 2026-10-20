@@ -1,0 +1,1432 @@
+{
+  "title": "Wat ben je aan het doen?",
+  "goal": "Say what someone is doing right now with zijn + aan het + infinitive, and choose between the plain present and aan het.",
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: a phone call on Thursday",
+      "description": "Sofia sits at a table in her Lombok apartment, writing a Sinterklaas poem beside cardboard shaped like a bicycle; a new bicycle bell is visible inside the cardboard surprise.",
+      "alt": "Sofia writes a poem beside her cardboard bicycle surprise."
+    },
+    {
+      "afterHeading": "Story: Henk at the door",
+      "description": "Henk helps Sofia glue a cardboard bicycle at her worktable while Tijger the cat sits inside an open cardboard box.",
+      "alt": "Henk helps Sofia glue a cardboard bicycle while Tijger sits in a box."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Wat ben je aan het doen?",
+      "id": "61e839f5-65cd-460b-a0f0-9483fd924463"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Thursday 3 December. Sofia is making Daan's Sinterklaas surprise at home. In this lesson you will describe what is happening now and compare it with a usual activity. Verbs are blue, subjects green, and time words orange; the new form is bold.",
+      "id": "da6d1b0a-8b74-444d-a475-dc1d8de76eed"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: a phone call on Thursday",
+      "id": "239e6d3e-d4b3-44f2-9742-623e97ff471f"
+    },
+    {
+      "type": "paragraph",
+      "content": "Noor calls Sofia in the evening. They talk about their Sinterklaas preparations.",
+      "id": "6613fd4d-295f-4c71-a8f8-46920c2ec225"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Hoi Sofia! Wat ben je aan het doen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik ben een gedicht aan het schrijven. Het is heel moeilijk!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "O, leuk! Ik ben pepernoten aan het bakken."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En wat doet Fleur?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Zij is cadeautjes aan het inpakken."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wat gezellig. Ik maak een surprise voor Daan."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Wat ben je aan het maken?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Een fiets van karton. De nieuwe bel zit in de fiets!"
+          }
+        ]
+      },
+      "id": "a3c60c48-ac89-4c7e-9919-2d4d186fb829"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "aan het … zijn",
+              "meaning": "to be in the middle of doing something",
+              "example": "Ik ben een gedicht aan het schrijven.",
+              "id": "59b90714-6755-4e29-ad80-cd99840d2932"
+            },
+            {
+              "term": "Wat ben je aan het doen?",
+              "meaning": "What are you doing right now?",
+              "example": "Wat ben je aan het doen? Ik ben aan het koken.",
+              "id": "99cfc64a-5284-4f3a-99fd-f64233cee15b"
+            },
+            {
+              "term": "Wat ben je aan het maken?",
+              "meaning": "What are you making right now?",
+              "example": "Wat ben je aan het maken? Een fiets van karton.",
+              "id": "8020880e-829d-4255-8d69-44fb4e8a54fd"
+            },
+            {
+              "term": "het karton",
+              "meaning": "cardboard",
+              "example": "Ik maak een fiets van karton.",
+              "id": "2d6c4e1d-80e1-4e26-833e-0ed61d0ad7b1"
+            }
+          ]
+        }
+      },
+      "id": "97ebd328-fb56-4cc2-a6ee-5cd44c0354bd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Say what is happening now",
+      "id": "e5dcaaa2-57ce-4a59-9202-ee2193264001"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Zijn + aan het + infinitive",
+      "id": "806371c4-964f-44c2-91c3-b4ad7f14392c"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use a form of zijn, put any object before aan het, then use aan het + the whole infinitive. The finite verb zijn is in the usual main-clause position; the activity comes at the end. This form puts extra focus on an activity in progress right now.",
+      "id": "b1a27266-b31d-434e-8379-1f45d6161bf6"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "Subject + zijn + (object) + aan het + infinitive",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ". The verb zijn changes; the activity verb stays whole at the end."
+      ],
+      "id": "8ffe398f-a366-4212-bcd7-9223d1e1bcb1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I am cooking.",
+        "note": "The finite verb ben is blue; the activity at the end is the new target form."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "aan het koken",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ""
+      ],
+      "id": "f8751b22-e676-43e0-90b3-c2da4de9fcfd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor is baking pepernoten.",
+        "note": "Noor is doing it now. Bakken is already known from Part II."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "pepernoten aan het bakken",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "7fa6709f-5b79-4c40-87b9-0da11bb736e2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We are working.",
+        "note": "Use zijn with a plural subject: we zijn."
+      },
+      "content": [
+        {
+          "text": "We",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "aan het werken",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "958cfeef-5b8c-4787-bf6e-d9311ab141e4"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Plain present",
+              "id": "29c72ad2-ec9d-432d-9daf-989085daf3d0"
+            },
+            {
+              "type": "paragraph",
+              "content": "Sofia schrijft elke avond een gedicht.",
+              "id": "15d32801-5f2b-435d-be77-b2e31eb80115"
+            },
+            {
+              "type": "paragraph",
+              "content": "She writes a poem every evening: a usual activity.",
+              "id": "6ca4af40-4656-4f72-b892-686c72656899"
+            },
+            {
+              "type": "paragraph",
+              "content": "Noor bakt pepernoten op donderdag.",
+              "id": "e0b544ee-0a86-4367-b77f-bcac510ac10f"
+            },
+            {
+              "type": "paragraph",
+              "content": "Noor bakes pepernoten on Thursdays.",
+              "id": "b583ec1c-37ba-4e80-94b6-e6ee3521f421"
+            }
+          ],
+          "id": "f04489c8-18dd-437a-b7a0-77691f7d982d"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Aan het",
+              "id": "5d6aebb7-7567-4042-a4b1-8e9b64cf0c08"
+            },
+            {
+              "type": "paragraph",
+              "content": "Sofia is nu een gedicht aan het schrijven.",
+              "id": "f97afd1f-294c-4359-b81b-e4444757a74b"
+            },
+            {
+              "type": "paragraph",
+              "content": "Sofia is writing a poem right now.",
+              "id": "622312bf-22ad-4a02-beed-b8d7b26bdf28"
+            },
+            {
+              "type": "paragraph",
+              "content": "Noor is pepernoten aan het bakken.",
+              "id": "0f3066e0-1ac5-4c55-a622-7306ff664844"
+            },
+            {
+              "type": "paragraph",
+              "content": "Noor is baking pepernoten right now.",
+              "id": "11248180-ee8c-4d60-aaf9-8a97fa47b45d"
+            }
+          ],
+          "id": "4ff8f5c2-1dab-49b9-ab96-dcb1bd21a117"
+        }
+      ],
+      "id": "db8d4f93-dfda-4d25-8a3f-a678abd03541"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "The plain present can also describe something happening now. Use aan het when you want to stress that it is in progress at this moment. For a habit with elke dag or elke donderdag, use the plain present.",
+      "id": "5dbebc12-0aeb-457b-bf8d-f80928bbf8fd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia swims every Wednesday.",
+        "note": "A regular activity takes the plain present, not aan het."
+      },
+      "content": [
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " zwemt ",
+        {
+          "text": "elke woensdag",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        "."
+      ],
+      "id": "50fc3efe-c46e-4626-8dc4-c8c1295365e0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia is swimming right now.",
+        "note": "Compare with the habit sentence above."
+      },
+      "content": [
+        {
+          "text": "Sofia",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "nu aan het zwemmen",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "b8cc63d7-5a3c-489d-b586-5422d849aeb7"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik ben een gedicht aan het schrijven.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Keep the object before aan het. Wrong: ",
+        {
+          "text": "Ik ben aan het schrijven een gedicht.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        "."
+      ],
+      "id": "e574b807-9ba3-4a85-aa40-1f0db48f1d45"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I am writing a poem.",
+        "note": "The object een gedicht comes before aan het schrijven."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "een gedicht",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " ",
+        {
+          "text": "aan het schrijven",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "295ec629-d6e6-4db6-9230-2c6615382901"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Whole separable infinitives",
+      "id": "19f14f30-0a71-45ec-9949-ad737bafa1c7"
+    },
+    {
+      "type": "paragraph",
+      "content": "After aan het, keep a separable verb together as one infinitive. Inpakken stays inpakken; opruimen stays opruimen. In a normal present-tense sentence the prefix separates, as you learned earlier.",
+      "id": "790ad92b-b0bb-4b8e-8054-730a1d43b6be"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Fleur is wrapping presents.",
+        "note": "Inpakken stays together after aan het. The word cadeautjes is already familiar from 21-a."
+      },
+      "content": [
+        {
+          "text": "Fleur",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " is cadeautjes ",
+        {
+          "text": "aan het inpakken",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "8660415c-51fa-4a04-8077-a61c3bec4355"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I am tidying the room.",
+        "note": "Opruimen stays as one infinitive; the object comes before aan het."
+      },
+      "content": [
+        "Ik ben de kamer ",
+        {
+          "text": "aan het opruimen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "700cb58a-7913-4182-a96b-f3db42393937"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "Aan het goes with zijn for an activity in progress, not with states such as hebben, weten, kennen, vinden or houden van. Do not use it with staan, liggen or zitten when those verbs describe a position.",
+      "id": "8cd383a9-b8d8-4679-98b9-5af17e37c93a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The scissors are on the table.",
+        "note": "This describes where something is. Liggen is a position verb, so do not say aan het liggen here."
+      },
+      "content": [
+        "De schaar ligt op tafel."
+      ],
+      "id": "e3dd0515-15d7-4b94-9406-a415421d9a80"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Questions",
+      "id": "70ce8b42-6898-44fb-91ed-6bdceb7aafac"
+    },
+    {
+      "type": "paragraph",
+      "content": "For a yes/no question, put zijn first. For a question with wat, put wat first and then the finite verb.",
+      "id": "6043b7d8-5f23-429c-849e-7b40ceb72280"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Are you cooking?",
+        "note": "Yes/no question: finite verb first."
+      },
+      "content": [
+        {
+          "text": "Ben",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " je aan het koken?"
+      ],
+      "id": "66a6168f-3c79-4b4e-a298-60635efe7700"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What are you doing?",
+        "note": "This is a useful fixed question; doen is not used with aan het in the answer pattern itself."
+      },
+      "content": [
+        {
+          "text": "Wat",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        {
+          "text": " ben",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " je aan het doen?"
+      ],
+      "id": "b5e3b76b-f8fa-4408-ba21-837dac00afaf"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": "At an adult Sinterklaas evening, friends write a gedicht and make a surprise. Poems often rhyme and are signed “Sint”. Sofia is making a cardboard bicycle with a new bell inside for Daan.",
+      "id": "4ce3f9ad-aed8-41a2-a0c4-f506a0b120b7"
+    },
+    {
+      "type": "paragraph",
+      "content": "For this surprise Sofia needs cardboard, scissors and glue. Noor is in the kitchen with pepernoten, and Fleur is wrapping the gifts.",
+      "id": "df748ad8-5ced-47f6-b3ca-be0948489023"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de schaar",
+              "meaning": "scissors",
+              "forms": "de scharen",
+              "example": "De schaar ligt op tafel.",
+              "id": "43b5efa2-015d-4c8d-b750-5dde3f1392d6"
+            },
+            {
+              "term": "de lijm",
+              "meaning": "glue",
+              "example": "Ik gebruik lijm voor het karton.",
+              "id": "ba8e2d34-f482-4245-b2ea-81ebe62c087c"
+            },
+            {
+              "term": "plakken",
+              "meaning": "to stick, to glue",
+              "forms": "plakt · plakte · geplakt",
+              "example": "Sofia plakt de fiets van karton.",
+              "id": "ac3f08ec-e58a-4c77-81fc-d93dcc1d32d1"
+            },
+            {
+              "term": "het plakband",
+              "meaning": "adhesive tape",
+              "example": "Ik gebruik plakband voor het papier.",
+              "id": "bbcd91bd-adf8-4d69-aea2-39862cbab12d"
+            },
+            {
+              "term": "het inpakpapier",
+              "meaning": "wrapping paper",
+              "example": "Fleur pakt cadeautjes in met inpakpapier.",
+              "id": "0d3a84bd-b118-4331-8715-45df964e7cd0"
+            },
+            {
+              "term": "rijmen",
+              "meaning": "to rhyme",
+              "forms": "rijmt · rijmde · gerijmd",
+              "example": "Sofia schrijft een gedicht. De regels rijmen.",
+              "id": "52483b2c-ccf6-4034-b574-b66ec2e19bff"
+            },
+            {
+              "term": "de oven",
+              "meaning": "oven",
+              "forms": "de ovens",
+              "example": "De pepernoten staan in de oven.",
+              "id": "f6ba5d23-6c48-4825-9519-5bf3e47e3193"
+            },
+            {
+              "term": "de werktafel",
+              "meaning": "work table",
+              "forms": "de werktafels",
+              "example": "De lijm staat op de werktafel.",
+              "id": "9d8308b2-8feb-49b1-aecf-9f0af6d58700"
+            },
+            {
+              "term": "de vorm",
+              "meaning": "shape, form",
+              "forms": "de vormen",
+              "example": "De surprise heeft de vorm van een fiets.",
+              "id": "9eb08a1f-e047-4a6e-920d-6f7bef1c86f6"
+            },
+            {
+              "term": "vastplakken",
+              "meaning": "to stick firmly",
+              "forms": "plakt vast · plakte vast · vastgeplakt",
+              "note": "Separable verb; after aan het keep it together: aan het vastplakken.",
+              "id": "fbfe47e9-983b-41ce-b022-ebc29708025c"
+            },
+            {
+              "term": "de versiering",
+              "meaning": "decoration",
+              "forms": "de versieringen",
+              "example": "De versiering zit op de fiets.",
+              "id": "8828b55b-d8dd-4450-a176-0e1052610744"
+            },
+            {
+              "term": "stevig",
+              "meaning": "sturdy, firmly",
+              "example": "De fiets is stevig.",
+              "id": "e0fe1d96-9e71-493d-b9a2-603e09b522e9"
+            },
+            {
+              "term": "Het is geheim!",
+              "meaning": "It's a secret!",
+              "note": "A useful sentence with geheim, learned in 21-a.",
+              "id": "7a463acf-e8a3-45de-a0e1-7c20af383100"
+            }
+          ]
+        }
+      },
+      "id": "10dd33cc-0d1f-4322-badb-99957a45fdf3"
+    },
+    {
+      "type": "divider",
+      "id": "15887427-77de-47c1-ba78-07fbf6de87de"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Henk at the door",
+      "id": "2ae48bf3-8db1-4297-8f8c-4788090a1ba7"
+    },
+    {
+      "type": "paragraph",
+      "content": "On Friday 4 December, Henk knocks at Sofia's door. Tijger slips inside while Sofia shows Henk the surprise.",
+      "id": "e9f0c1ba-dd39-479d-a9d4-e3c98e9c8f4e"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Henk",
+            "text": "Hoi Sofia! Wat ben je aan het maken?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Een fiets van karton. Voor Daan!"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Wat een goed idee. Is de fiets al klaar?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik ben de bel aan het vastplakken."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Zal ik even helpen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, graag. De lijm staat op de tafel."
+          },
+          {
+            "speaker": "Henk",
+            "text": "En Tijger? Hij zit in de doos."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Tijger is niet aan het helpen!"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Nee, hij kijkt alleen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik ben ook een gedicht aan het schrijven. Het is geheim!"
+          }
+        ]
+      },
+      "id": "eba28f00-351a-4890-a3af-64dc2e9c3a42"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "kloppen",
+              "meaning": "to knock",
+              "forms": "klopt · klopte · geklopt",
+              "example": "Henk klopt op de deur.",
+              "id": "e18ff1f2-9964-4a42-ab3d-a4c5594304e9"
+            }
+          ]
+        }
+      },
+      "id": "cda57b32-8f48-47da-a74a-72bb904a1c42"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sofia writes the poem while Henk helps with the cardboard bike. Notice the present and the in-progress form side by side.",
+      "id": "bbc725e5-c798-47e3-bfa7-b4e1cd9755c9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia is writing a poem.",
+        "note": "Recycles writing and the Sinterklaas gedicht from 21-a."
+      },
+      "content": [
+        "Sofia is ",
+        {
+          "text": "een gedicht aan het schrijven",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "106f081e-f37b-4e65-8204-4316c4bbd2c9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia writes poems every year.",
+        "note": "A regular activity uses the plain present."
+      },
+      "content": [
+        "Sofia schrijft ",
+        {
+          "text": "elk jaar",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " gedichten."
+      ],
+      "id": "4e4c995f-dd12-4727-977d-540a59b8715c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Henk is sticking the bell firmly in place.",
+        "note": "The separable infinitive vastplakken remains whole."
+      },
+      "content": [
+        "Henk is de bel ",
+        {
+          "text": "aan het vastplakken",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "67fdd1fe-7acd-47bd-87fa-1f82c6ce4e70"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Tijger is sitting in the box.",
+        "note": "This says where Tijger is. It is not the positional te construction from 22-b."
+      },
+      "content": [
+        "Tijger zit in de doos."
+      ],
+      "id": "3efab60d-2d78-4bdf-baa8-10ee25bd0e16"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "In spoken Dutch, people often pronounce ",
+        {
+          "text": "aan het",
+          "styles": {
+            "bold": true,
+            "italic": true
+          }
+        },
+        " quickly as “aan 't”. Keep the full form in writing."
+      ],
+      "id": "c8fdc766-468d-42eb-9dba-2467884575a1"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": "In quick speech, aan het is often reduced to aan 't. This changes the sound, not the written spelling or the word order.",
+      "id": "51366c87-1452-4480-8878-005160d2163e"
+    },
+    {
+      "type": "divider",
+      "id": "c926210c-845f-4bb6-b4c2-f70c33700541"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "e4cabfc0-494d-40b2-b8be-466af42c232f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "1. Fill in: zijn + aan het",
+      "id": "75ab0925-0583-4522-a597-a5b77051c43f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in all three blanks with the correct form of zijn, aan het, and the infinitive in brackets.",
+          "items": [
+            {
+              "prompt": "Ik … een gedicht … … (schrijven).",
+              "authorsVersion": [
+                "ben",
+                "aan het",
+                "schrijven"
+              ],
+              "note": "Ben agrees with ik. Put the object before aan het and the infinitive last."
+            },
+            {
+              "prompt": "Noor … pepernoten … … (bakken).",
+              "authorsVersion": [
+                "is",
+                "aan het",
+                "bakken"
+              ],
+              "note": "Noor is singular; the infinitive bakken stays whole."
+            },
+            {
+              "prompt": "Wij … … … (werken) aan de surprise.",
+              "authorsVersion": [
+                "zijn",
+                "aan het",
+                "werken"
+              ],
+              "note": "Wij takes zijn."
+            },
+            {
+              "prompt": "Fleur … cadeautjes … … (inpakken).",
+              "authorsVersion": [
+                "is",
+                "aan het",
+                "inpakken"
+              ],
+              "note": "Keep separable inpakken as one infinitive."
+            },
+            {
+              "prompt": "Henk en Sofia … het karton … … (plakken).",
+              "authorsVersion": [
+                "zijn",
+                "aan het",
+                "plakken"
+              ],
+              "note": "A plural subject takes zijn."
+            },
+            {
+              "prompt": "Jij … een fiets … … (maken).",
+              "authorsVersion": [
+                "bent",
+                "aan het",
+                "maken"
+              ],
+              "note": "Jij takes bent."
+            },
+            {
+              "prompt": "Tijger … naar de doos … … (kijken).",
+              "authorsVersion": [
+                "is",
+                "aan het",
+                "kijken"
+              ],
+              "note": "Tijger is one cat, so use is."
+            },
+            {
+              "prompt": "Jullie … de tafel … … (opruimen).",
+              "authorsVersion": [
+                "zijn",
+                "aan het",
+                "opruimen"
+              ],
+              "note": "Jullie takes zijn; keep opruimen together."
+            }
+          ]
+        }
+      },
+      "id": "13d561c8-6b23-4185-ab91-fc49a7df8481"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "2. Complete the phone call",
+      "id": "fd25c6db-4ba1-40fb-aefd-a7d066d1400d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the dialogue. Fill each blank with one word or word group.",
+          "items": [
+            {
+              "prompt": "Noor: Wat … je aan het doen? / Sofia: Ik … een gedicht aan het schrijven.",
+              "authorsVersion": [
+                "ben",
+                "ben"
+              ],
+              "note": "Questions put ben before je; the answer uses ben after ik."
+            },
+            {
+              "prompt": "Sofia: Wat … Noor aan het doen? / Noor … pepernoten aan het bakken.",
+              "authorsVersion": [
+                "is",
+                "is"
+              ],
+              "note": "Noor is singular, so use is in both sentences."
+            },
+            {
+              "prompt": "Sofia: En Fleur? / Noor: Zij … cadeautjes aan het … . (inpakken)",
+              "authorsVersion": [
+                "is",
+                "inpakken"
+              ],
+              "note": "The object comes before aan het; separable infinitive inpakken stays together."
+            },
+            {
+              "prompt": "Noor: … je aan het koken? / Sofia: Nee, ik ben een surprise aan het … . (maken)",
+              "authorsVersion": [
+                "Ben",
+                "maken"
+              ],
+              "note": "A yes/no question starts with ben. Maken is the infinitive at the end."
+            },
+            {
+              "prompt": "Sofia: Wat … Henk aan het maken? / Noor: Hij … een kaartje aan het schrijven.",
+              "authorsVersion": [
+                "is",
+                "is"
+              ],
+              "note": "Hij takes is. The object kaartje is in a known diminutive pattern."
+            },
+            {
+              "prompt": "Noor: Zijn jullie aan het bakken? / Sofia: Nee, wij … een fiets aan het … . (maken)",
+              "authorsVersion": [
+                "zijn",
+                "maken"
+              ],
+              "note": "Wij takes zijn. Put the object before aan het."
+            }
+          ]
+        }
+      },
+      "id": "b172f266-c7b3-4d55-962f-f838754b3e16"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "3. Put the words in order",
+      "id": "79b534f0-a09a-4584-95ca-f33d7f59a8ae"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the chunks in order. Write the full Dutch sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: ben / ik / een gedicht / aan het schrijven",
+              "authorsVersion": [
+                "Ik ben een gedicht aan het schrijven."
+              ],
+              "note": "The object precedes aan het; the infinitive is last."
+            },
+            {
+              "prompt": "Put in order: cadeautjes / Fleur / is / aan het inpakken",
+              "authorsVersion": [
+                "Fleur is cadeautjes aan het inpakken."
+              ],
+              "note": "The finite verb is in position 2; the object precedes the complete infinitive."
+            },
+            {
+              "prompt": "Put in order: opruimen / wij / de tafel / zijn / aan het",
+              "authorsVersion": [
+                "Wij zijn de tafel aan het opruimen."
+              ],
+              "note": "Opruimen stays whole after aan het."
+            },
+            {
+              "prompt": "Put in order: aan het maken / wat / je / ben / ?",
+              "authorsVersion": [
+                "Wat ben je aan het maken?"
+              ],
+              "note": "With wat, put the question word first, then ben and je."
+            },
+            {
+              "prompt": "Put in order: aan het bakken / ben / pepernoten / Noor / ?",
+              "authorsVersion": [
+                "Is Noor pepernoten aan het bakken?"
+              ],
+              "note": "A yes/no question starts with the finite verb; Noor follows it."
+            },
+            {
+              "prompt": "Put in order: de bel / Henk / vastplakken / is / aan het",
+              "authorsVersion": [
+                "Henk is de bel aan het vastplakken."
+              ],
+              "note": "The object de bel comes before aan het; keep vastplakken as one word."
+            },
+            {
+              "prompt": "Put in order: nu / we / zijn / aan het werken",
+              "authorsVersion": [
+                "We zijn nu aan het werken."
+              ],
+              "note": "This is a natural order with nu in the middle; the new verb phrase remains at the end."
+            }
+          ]
+        }
+      },
+      "id": "a3a51957-2166-4f0c-859e-7a0248b7e8fa"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "4. Change the sentence",
+      "id": "c691f48d-3701-4c83-84ae-388447d6d331"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence as an activity happening right now. For habits, keep the plain present and explain why.",
+          "items": [
+            {
+              "prompt": "Noor bakt pepernoten. (now)",
+              "authorsVersion": [
+                "Noor is pepernoten aan het bakken."
+              ],
+              "note": "Add zijn + aan het + infinitive; place the object before aan het."
+            },
+            {
+              "prompt": "Fleur pakt cadeautjes in. (now)",
+              "authorsVersion": [
+                "Fleur is cadeautjes aan het inpakken."
+              ],
+              "note": "The separated present-tense verb pakt … in becomes the complete infinitive inpakken."
+            },
+            {
+              "prompt": "Ik ruim de tafel op. (now)",
+              "authorsVersion": [
+                "Ik ben de tafel aan het opruimen."
+              ],
+              "note": "Keep opruimen together after aan het."
+            },
+            {
+              "prompt": "Sofia schrijft een gedicht. (now)",
+              "authorsVersion": [
+                "Sofia is een gedicht aan het schrijven."
+              ],
+              "note": "This version stresses that it is in progress now."
+            },
+            {
+              "prompt": "Sofia zwemt elke woensdag. (habit)",
+              "authorsVersion": [
+                "Sofia zwemt elke woensdag."
+              ],
+              "note": "Keep the present: a repeated habit does not take aan het."
+            },
+            {
+              "prompt": "Noor bakt elke donderdag pepernoten. (habit)",
+              "authorsVersion": [
+                "Noor bakt elke donderdag pepernoten."
+              ],
+              "note": "A weekly routine stays in the plain present."
+            },
+            {
+              "prompt": "Henk plakt de bel vast. (now)",
+              "authorsVersion": [
+                "Henk is de bel aan het vastplakken."
+              ],
+              "note": "The object comes before aan het and vastplakken is one infinitive."
+            }
+          ]
+        }
+      },
+      "id": "7878d4a2-7624-46cb-81f6-36c34fdcdd2e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "5. Translate into Dutch",
+      "id": "0170441c-b3f3-4fd0-a89b-cbc1fed339c8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Use aan het when the sentence stresses that an activity is in progress now.",
+          "items": [
+            {
+              "prompt": "I am writing a poem.",
+              "authorsVersion": [
+                "Ik ben een gedicht aan het schrijven."
+              ],
+              "note": "Put the object before aan het."
+            },
+            {
+              "prompt": "Noor is baking pepernoten right now.",
+              "authorsVersion": [
+                "Noor is nu pepernoten aan het bakken."
+              ],
+              "note": "Nu makes the current moment explicit; Noor takes is."
+            },
+            {
+              "prompt": "Fleur is wrapping presents.",
+              "authorsVersion": [
+                "Fleur is cadeautjes aan het inpakken."
+              ],
+              "note": "Inpakken stays one word after aan het."
+            },
+            {
+              "prompt": "Are you making a surprise? (jij)",
+              "authorsVersion": [
+                "Ben jij een surprise aan het maken?"
+              ],
+              "note": "A yes/no question begins with ben; jij follows the finite verb."
+            },
+            {
+              "prompt": "What is Henk doing?",
+              "authorsVersion": [
+                "Wat is Henk aan het doen?"
+              ],
+              "note": "Wat first, then the finite verb is and subject Henk."
+            },
+            {
+              "prompt": "We are tidying the room.",
+              "authorsVersion": [
+                "Wij zijn de kamer aan het opruimen."
+              ],
+              "note": "Wij takes zijn; opruimen stays whole."
+            }
+          ]
+        }
+      },
+      "id": "0b60421f-6b5c-47e8-88de-ef4c402740be"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "6. Translate into English",
+      "id": "a5027d9e-d0b0-47b3-aabd-5a12c99c94c5"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Ik ben een gedicht aan het schrijven.",
+              "authorsVersion": [
+                "I am writing a poem."
+              ],
+              "note": "The phrase stresses the activity in progress now."
+            },
+            {
+              "prompt": "Fleur is cadeautjes aan het inpakken.",
+              "authorsVersion": [
+                "Fleur is wrapping presents."
+              ],
+              "note": "Inpakken is a separable infinitive kept whole after aan het."
+            },
+            {
+              "prompt": "Ben je aan het koken?",
+              "authorsVersion": [
+                "Are you cooking?"
+              ],
+              "note": "A yes/no question with zijn."
+            },
+            {
+              "prompt": "Sofia zwemt elke woensdag.",
+              "authorsVersion": [
+                "Sofia swims every Wednesday."
+              ],
+              "note": "The present describes a regular habit."
+            },
+            {
+              "prompt": "Henk is de bel aan het vastplakken.",
+              "authorsVersion": [
+                "Henk is sticking the bell firmly in place."
+              ],
+              "note": "The object comes before aan het; vastplakken stays together."
+            }
+          ]
+        }
+      },
+      "id": "7d2840c5-6f40-40b1-84ac-8b402cc92df1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Sofia's message",
+      "id": "e920ef89-4c9e-428c-98f5-a626a10a72fb"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sofia sends her mother a message on Thursday evening about the preparations. Read it and answer in Dutch.",
+      "id": "f897bea1-13a0-4988-b754-5655944441dc"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's message and answer the questions in Dutch.",
+          "passage": {
+            "title": "Berichtje aan mama",
+            "content": "Hoi mama! Het is donderdagavond. Ik ben een gedicht aan het schrijven voor Daan. Het is nog niet klaar! Noor is pepernoten aan het bakken in de keuken. Fleur is cadeautjes aan het inpakken. Ik maak een fiets van karton voor Daan. De bel zit in de fiets. Morgen komt Henk langs. Hij helpt met de lijm. Tijger zit nu in de doos en kijkt naar ons. Om half acht eet ik een boterham. Daarna schrijf ik verder. Het is geheim! Liefs, Sofia"
+          },
+          "items": [
+            {
+              "prompt": "Wat is Sofia aan het schrijven?",
+              "authorsVersion": [
+                "Een gedicht voor Daan."
+              ],
+              "note": "The message says she is writing a poem for Daan."
+            },
+            {
+              "prompt": "Voor wie maakt Sofia een fiets van karton?",
+              "authorsVersion": [
+                "Voor Daan."
+              ],
+              "note": "The cardboard bicycle is his surprise."
+            },
+            {
+              "prompt": "Wat is Noor aan het bakken?",
+              "authorsVersion": [
+                "Pepernoten."
+              ],
+              "note": "Noor is baking pepernoten in the kitchen."
+            },
+            {
+              "prompt": "Wat is Fleur aan het doen?",
+              "authorsVersion": [
+                "Ze is cadeautjes aan het inpakken."
+              ],
+              "note": "Fleur is wrapping presents; ze refers to Fleur."
+            },
+            {
+              "prompt": "Wanneer komt Henk langs?",
+              "authorsVersion": [
+                "Morgen."
+              ],
+              "note": "Sofia writes this Thursday evening, so morgen is Friday 4 December."
+            },
+            {
+              "prompt": "Wat doet Henk morgen?",
+              "authorsVersion": [
+                "Hij helpt met de lijm."
+              ],
+              "note": "The message says he helps with the glue."
+            },
+            {
+              "prompt": "Waar zit Tijger?",
+              "authorsVersion": [
+                "In de doos."
+              ],
+              "note": "This is a position, not an aan het activity."
+            },
+            {
+              "prompt": "Klopt dit? Sofia is aan het eten om half acht.",
+              "authorsVersion": [
+                "Nee, dat klopt niet. Om half acht eet ze een boterham."
+              ],
+              "note": "The time is in the future relative to the message; Sofia says she eats at half past seven."
+            }
+          ]
+        }
+      },
+      "id": "33d0fd71-72eb-4490-a5f8-f04ccb731b04"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "e66035af-1be8-4c01-b0af-bbf0fd8c445a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about what you, your family or friends are doing right now. Include one object before aan het and one plain present habit.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences: what are you, your family or friends doing right now? Include a habit in the plain present.",
+              "authorsVersion": [
+                "Ik ben deze les aan het maken. Mijn vriendin is thee aan het drinken. Mijn broer kijkt elke avond naar een serie. Wij zijn nu samen aan het werken."
+              ],
+              "note": "Model answer. Use zijn + aan het + infinitive for activities in progress; keep a repeated habit in the plain present."
+            }
+          ]
+        }
+      },
+      "id": "801fcb1d-3525-4344-95bd-445966f05af7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "578e39dc-c066-4862-a4bd-f19abf26ba02"
+    },
+    {
+      "type": "paragraph",
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "content": "Remember: zijn changes; aan het + infinitive stays together at the end. The plain present can also mean something is happening now, while aan het adds focus on the activity in progress.",
+      "id": "4a92316c-e90e-4602-93ad-df5d8163b2bd"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use subject + form of zijn + … + aan het + infinitive: Ik ben een gedicht aan het schrijven.",
+      "id": "5261e70e-61cd-40db-9cb6-c99e5903477d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Put the object before aan het: Noor is pepernoten aan het bakken.",
+      "id": "a6f1146e-016c-4fd6-8654-89871f570b73"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Keep a separable infinitive whole: aan het inpakken, aan het opruimen.",
+      "id": "2f5217ff-8926-4b45-b4cf-0b2e0f32e573"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use the plain present for habits: Sofia zwemt elke woensdag.",
+      "id": "7038a4dc-4749-45d3-86cb-ce17048801d0"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Do not use aan het with position zijn or with weten, kennen, vinden, hebben, or houden van.",
+      "id": "3d8d6625-0ea5-492d-bedd-d075a63c5f01"
+    }
+  ],
+  "id": "ce83b982-8974-438e-b3ec-1ebd521a4a9b"
+}

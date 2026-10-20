@@ -32,20 +32,20 @@ Being written, lesson by lesson, starting with 01-a (user's priority, 2026-10-12
 
 ### Part IV (rows 19–24)
 
-19-a, 19-b and 20-a are written, reviewed and accepted (see [ledger-part-iv.md](ledger-part-iv.md)); 9 lessons remain (20-b … 24-b) in [briefs-part-iv.md](briefs-part-iv.md), story beats in [storyline.md](storyline.md), skeleton in [ledger-part-iv.md](ledger-part-iv.md). The Part IV course exists (`part-iv/course.json`, `part-iv/course.prod.json`).
+19-a through 24-b are written, reviewed and accepted (see [ledger-part-iv.md](ledger-part-iv.md)); Part IV content is complete. The Part IV course exists (`part-iv/course.json`, `part-iv/course.prod.json`). Lesson imports remain tracked in the ledger.
 
-- Row 20 systematises what Parts II–III did ad hoc (willen/mogen 11, kunnen 15, gaan 16-b) and adds moeten (20-a, done); niet position and inversion triggers go to 20-b.
-- Row 23 overlaps with 11 (mogen) and 15-a (kunnen); 23-a contrasts kunnen/mogen/moeten, 23-b focuses on hoeven and moeten ↔ niet hoeven.
-- Object pronouns are moved forward from row 37 to 21-b (basic: me/mij … ze, hem/het/ze for things). Row 37 keeps hen/hun, er- forms and polite zou.
+- Row 20 systematises what Parts II–III did ad hoc (willen/mogen 11, kunnen 15, gaan 16-b) and adds moeten (20-a); 20-b now covers the full niet system and fronting with inversion.
+- Row 23 overlaps with 11 (mogen) and 15-a (kunnen); 23-a contrasts kunnen/mogen/moeten, while 23-b covers hoeven and moeten ↔ niet hoeven.
+- Object pronouns moved forward from row 37 are now taught at basic depth in 21-b (me/mij … ze, hem/het/ze for things, position, and personal forms after prepositions). Row 37 keeps hen/hun, er- forms, independent possessives and polite zou.
 - New recurring characters (Fleur as cast, Marieke, Piotr Kowalski, Karin Smit) are in `illustrations/cast.json` but have no frozen sheets yet: generate and freeze them before any Part IV scene is generated (see [illustrations.md](illustrations.md#visual-canon)).
 
 ### Parts V–VII (rows 25–40)
 
-Not written. See the `missing` rows in [topic-map.md](topic-map.md). Notes for whoever writes them:
+Part V (rows 25–29) is complete. All five lessons are accepted and in production as unpublished drafts. Part VI (rows 30–36) is complete; all seven lessons are accepted and in production as unpublished drafts. Part VII (rows 37–40) is complete and published in production. See [ledger-part-vii.md](ledger-part-vii.md) and the remaining `missing` rows in [topic-map.md](topic-map.md). Notes on the progression:
 
-- The storyline ends on Friday 18 December 2026 (end of Part IV): Sofia flies to Valencia on za 19 december and returns on zo 3 januari 2027. Part V can open in January 2027 and retell Parts II–IV and the holiday in the past tense ("Sofia is in september naar Utrecht gekomen", "Wat heb je met kerst gedaan?").
-- Parts II–IV have no past tense at all.
-- Part IV leaves partial te-constructions (hoeven … te, zitten te) and dat-clauses after four verbs; row 30 should start from these and add omdat/als, row 34 om … te.
+- The storyline ends Friday 18 December 2026: Sofia flies to Valencia on Saturday 19 December and returns to Utrecht Sunday 3 January 2027. Lesson 25 opens Monday 4 January and introduces the perfect with hebben using regular participles. It records that Sofia made tea, tidied her room and called her mother after returning on Sunday, and cooked with her mother at Christmas.
+- Parts II–IV did not teach past-tense grammar. Part V now covers regular perfect forms with hebben (25), a selected zijn-perfect set (26), common irregular participles and bounded ge- patterns (27), selected simple-past forms (28), and context-sensitive tense choice plus narrative sequencing (29). Inseparable-prefix exceptions and broad strong-verb paradigms remain outside this beginner scope.
+- Part IV left partial te-constructions (hoeven … te, positional verb + te) and dat-clauses after four verbs. Row 30 reviews the dat-clauses and adds omdat and temporal als. Row 34 remains responsible for purpose om … te and other infinitive constructions.
 
 ## 2. Simplified or deferred in Parts II–IV
 
@@ -55,21 +55,21 @@ Planned simplifications (from the briefs). Confirm or revise after each lesson i
 | --- | --- | --- | --- |
 | er is / er zijn | 13-1, 13-2 (existing) | Existing lessons are thin and have typos; "er" after a fronted place is presented as normal although natives usually drop it. | Fix the existing lessons (owner decision); 14-a explains that *er* is optional after a fronted place. |
 | Modal + infinitive | 11-a, 11-b, 15-a | Only short sentences; no two verbs at the end, no separable-infinitive drills until 16. | Planned: 20-a (system, moeten, modal + gaan + infinitive intro). |
-| Inversion triggers | 08-b | Taught with time words and dan/daarna; other fronted elements (objects, adverbs of manner) only implicitly. | Planned: 20-b (any element first). Integration in row 40. |
-| Position of niet | throughout | Only "niet before the infinitive / adjective / at the end"; no systematic rules. | Planned: 20-b (system), 24-b (in dat-clauses). Not in the outline. |
-| Diminutives | 10-b | Only "-je words are het"; formation -tje/-pje/-etje not taught. | Planned: 21-a (section with Sinterklaas words). Not in the outline. |
-| Object pronouns | throughout | Only fixed chunks (Dank je, Kunt u mij helpen?, Die jas staat je goed). hem/haar/ze for things avoided. | Planned: 21-b (basic, people and things). hen/hun and er- forms stay in row 37. |
+| Inversion triggers | 08-b | Taught with time words and dan/daarna; 20-b generalises to any one fronted element before the finite verb. | Integration in row 40. |
+| Position of niet | throughout | Parts I–III teach several local positions; 20-b systematises placement. | 24-b applies the system in dat-clauses. Not in the outline. |
+| Diminutives | 10-b | Only "-je words are het"; formation -tje/-pje/-etje not taught. | 21-a covers formation with Sinterklaas vocabulary. Not in the outline. |
+| Object pronouns | throughout | Only fixed chunks (Dank je, Kunt u mij helpen?, Die jas staat je goed). hem/haar/ze for things avoided. | 21-b now teaches basic people and things forms. hen/hun and er- forms stay in row 37. |
 | Superlatives | 18-b | Comparative only. | Row 32. |
 | graag (liking), liever | 11-a, 18-b | Only "Ik wil graag", "Ja, graag". | Planned: 19-b. het liefst deferred to row 32. |
 | Reflexive daily-routine verbs | 07-a, 07-b | zich aankleden, zich wassen avoided. | Row 38. |
 | Imperative before 15-b | 07–14 | Only fixed chunks (Kijk!, Wacht even!, Ga zitten). | 15-b (done there). |
 | Superlative het liefst | 19-b (planned) | Preference stops at liever. | Row 32. |
-| zullen as future/promise | 21-a (planned) | Only Zullen we …? / Zal ik …?. | Row 36. |
-| te + infinitive | 22-b, 23-b (planned) | Only zitten/staan/liggen te (intro) and hoeven … te. | Row 34 (om … te, proberen te, beginnen te). |
-| hen/hun, er- pronominal adverbs, independent possessives (de mijne) | 21-b, 24-a (planned) | Only me/mij … ze and hem/het/ze; "Wat vind je ervan?" as a chunk. | Row 37. |
-| Subordinate clauses beyond dat | 24-b (planned) | Only dat after vinden, denken, hopen, zeggen; no weten dat, no fronted dat-clause; chunks like "Leuk dat je komt!" avoided before 24-b. | Rows 30, 31, 33, 39, 40. |
+| zullen as future/promise | 21-a | Row 21-a covers suggestions and offers (Zullen we …? / Zal ik …?). Row 36 adds expectations and promises, alongside the distinction between fixed timetable present and intention with *gaan*. | Covered in row 36. |
+| te + infinitive | 22-b; 23-b | Positional verb + te and hoeven … te are introduced in restricted patterns. | Row 34 (om … te, proberen te, beginnen te). |
+| hen/hun, er- pronominal adverbs, independent possessives (de mijne) | 21-b, 24-a | 21-b teaches me/mij … ze and hem/het/ze; "Wat vind je ervan?" remains a chunk in 24-a. | Row 37. |
+| Subordinate clauses beyond dat | 24-b | Only dat after vinden, denken, hopen, zeggen; no weten dat, no fronted dat-clause; chunks like "Leuk dat je komt!" remain outside this lesson. | Rows 30, 31, 33, 39, 40. |
 | Reflexive verbs in leisure contexts | 19–24 (planned) | zich vervelen, zich verheugen op avoided (saai, Ik heb zin in … instead). | Row 38. |
-| Diminutive noun used before the rule | 19-a | "het spelletje" is listed as a plain vocabulary noun (meaning "game"); the -je ending is never explained as a diminutive. | 21-a teaches diminutive formation; recycle het spelletje there as a worked example. |
+| Diminutive noun used before the rule | 19-a | “het spelletje” was listed as a plain noun meaning “game”; formation was not explained there. | Resolved in 21-a, which recycles it as a worked example. |
 | Two infinitives at the end (modal + gaan + infinitive) | 20-a | Recognition only, a handful of drill items ("Ik wil vanavond gaan zwemmen."); not drilled as a system. | Deepen as later Part IV/V lessons add more modal combinations. |
 
 ## 3. Vocabulary and skills to revisit
@@ -84,8 +84,8 @@ Planned simplifications (from the briefs). Confirm or revise after each lesson i
 
 - Row 13 grammar (er is/er zijn) is needed for natural descriptions in Part II, which therefore avoids it (uses "hebben" and "is" instead).
 - Rows 11 and 15 introduce modals with an infinitive at the end before row 20 "modal verbs + infinitive"; row 20 should be a consolidation lesson. Planned that way in 20-a.
-- Row 22 (aan het) has a natural sibling, zitten/staan/liggen te + infinitive, which uses te before row 34; planned as an intro in 22-b (approved by the user, 2026-10-11).
-- Row 23 needs te for hoeven ("Je hoeft niet te komen"), also before row 34.
+- Row 22 (aan het) has a natural sibling, positional verb + te + infinitive, which uses te before row 34; introduced in 22-b (approved by the user, 2026-10-11).
+- Row 23 introduces *hoeven … te* as a restricted use before row 34; accepted in 23-b.
 - Row 37's object pronouns are needed for invitations (row 21); planned in 21-b at basic depth (approved by the user, 2026-10-11).
 
 ## Part II review follow-ups (2026-10-08)
@@ -113,7 +113,7 @@ Planned simplifications (from the briefs). Confirm or revise after each lesson i
 - **Superlatives** (18-a, 18-b): both lessons stop at the comparative; no superlative forms appear anywhere in Part III. Row 32, Part VI.
 - **Independent possessives** ("het jouwe", "de mijne"): avoided in 18-b (a worker draft used "net zo … als het jouwe"; the reviewer replaced it with a full noun phrase). Not in the outline; not planned in Part IV (21-b teaches object pronouns only). Deferred to row 37.
 - **te + infinitive**: a worker draft of 18-a briefly used "om te kijken"; the reviewer removed it. Confirms the off-limits list is still being tested against in practice, not just by convention. Row 34; Part IV allows only hoeven … te (23-b) and zitten/staan/liggen te (22-b).
-- **dan vs toen/als**: 18-b's "dan" (than, after a comparative) is a new use of an already-known word (dan = then, 08-b/15-b); both uses now coexist and are distinguished by context and by note. Watch for confusion if a later lesson adds "als" (when/if, row 30). Part IV adds a third "dat" (conjunction, 24-b) next to the demonstrative; 24-b must contrast them.
+- **dan vs toen/als**: 18-b's "dan" (than, after a comparative) is a new use of an already-known word (dan = then, 08-b/15-b); both uses now coexist and are distinguished by context and by note. Watch for confusion if a later lesson adds "als" (when/if, row 30). Part IV adds a third "dat" (conjunction, 24-b) next to the demonstrative; later lessons should preserve this distinction.
 
 ## Part IV review follow-ups 19-a … 20-a (2026-10-11)
 
@@ -123,3 +123,8 @@ Planned simplifications (from the briefs). Confirm or revise after each lesson i
 - **Fleur's dinner at Noor's (19-b)**: the worker's draft had Fleur decline dinner and leave for a friend's; this contradicted brief 19-b's own Dialogue 2 cast (Sofia, Noor, Fleur together) and its required "Blijf je eten?" / "Ja, graag!" exchange. The reviewer fixed it so Fleur stays; see the ledger and review log for the corrected version. Treat Fleur as present for the rest of that scene in any later reference to this evening.
 - **makkelijk (19-a/19-b)**: both lessons' workers listed "makkelijk" as new vocabulary; since 19-a introduces it first, the coordinator removed the duplicate entry from 19-b after both reviews finished. 19-b now recycles it unglossed. Watch for this kind of duplicate whenever two lessons in the same batch share source material (here: both lessons compare swimming/skating difficulty).
 - **Karin Smit's team-leader voice (20-a)**: established as direct, calm and organised, per storyline.md; she assigns tasks explicitly (Daan tests, Sofia does screens, Karin prepares the presentation) rather than asking the team to volunteer. Keep this consistent in 23-a, her other appearance.
+
+## Part IV review follow-ups 23-a (2026-10-19)
+
+- **Modal contrast**: 23-a practices *kunnen* for ability/possibility, *mogen* for permission, *mogen niet* for prohibition, and *moeten* for obligation. 23-b also contrasts prohibition with lack of necessity; keep “not allowed” distinct from “cannot” in later recycling.
+- **New sense**: *de regel* now means a rule (23-a); 22-b taught *de regel* as a line of a poem. The lesson notes the new meaning.

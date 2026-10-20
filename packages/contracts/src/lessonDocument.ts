@@ -581,7 +581,7 @@ export type WordSearchPage = z.infer<typeof wordSearchPageSchema>;
 // Drill (C12): self-graded flashcards of words; see docs/words.md#drill. A session holds at most this many cards, each word
 // in one direction. `lessonId` names the lesson of `source=lesson` and `courseId` the course of `source=course`; each is refused
 // for every other source.
-export const WORD_DRILL_SESSION_SIZE = 20;
+export const WORD_DRILL_SESSION_SIZE = 10;
 export const wordDrillSourceSchema = z.enum(["weak", "lesson", "course"]);
 export type WordDrillSource = z.infer<typeof wordDrillSourceSchema>;
 export const wordDrillDirectionSchema = z.enum(["understand", "produce"]);

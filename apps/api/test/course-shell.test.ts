@@ -1,7 +1,8 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { coursePageSchema, courseResponseSchema } from "@wordinator/contracts";
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { hashPassword } from "../src/auth";
+import { fetchWorker } from "./worker";
 
 const PASSWORD = "course-shell-password";
 let passwordHash: string;
@@ -28,14 +29,14 @@ async function join(groupId: string, userId: string, state = "active") {
 }
 
 async function signIn(label: string) {
-  const response = await SELF.fetch("https://wordinator.test/api/auth/sign-in", {
+  const response = await fetchWorker("https://wordinator.test/api/auth/sign-in", {
     method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email: `${label}@example.test`, password: PASSWORD }),
   });
   return response.headers.get("set-cookie")!.split(";", 1)[0]!;
 }
 
 async function request(path: string, cookie: string, body?: unknown, method = body === undefined ? "GET" : "POST") {
-  return SELF.fetch(`https://wordinator.test${path}`, {
+  return fetchWorker(`https://wordinator.test${path}`, {
     method, headers: { cookie, ...(body === undefined ? {} : { "content-type": "application/json" }) },
     body: body === undefined ? undefined : JSON.stringify(body),
   });
@@ -196,6 +197,6 @@ describe("Readable course URLs", () => {
 
     expect((await resolve(otherGroupId, outsider, course.slug)).status).toBe(404);
     expect((await resolve(groupId, outsider, course.slug)).status).toBe(404);
-    expect((await SELF.fetch(`https://wordinator.test/api/groups/${groupId}/course-refs/${course.slug}`)).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test/api/groups/${groupId}/course-refs/${course.slug}`)).status).toBe(401);
   });
 });

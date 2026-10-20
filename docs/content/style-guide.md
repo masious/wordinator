@@ -64,7 +64,7 @@ One rule per callout, 1–3 short sentences. Icons:
 - Fill-in prompts: use `…` only for blanks. If a base form must be given, put it in brackets after the sentence: "Wij … om zeven uur op. (opstaan)". Authors' versions contain only the missing words, capitalised as they would appear in the sentence.
 - Word-order items: "Put in order: morgen / ik / ga / naar de markt". Separate chunks with " / ". Authors' version is the full sentence with capital and full stop.
 - Translations into English in notes and authors' versions use natural English.
-- No past tense anywhere (see off-limits). Plan the story so everything is said in the present.
+- In Parts I–IV, keep the story in the present as required by those parts' off-limits rules. From Part V onward, use only past forms already taught in the ledgers.
 - No gamification words (points, score, streak, badge, level up, win). No images in blocks; use `imageIdeas`.
 
 ## Global off-limits for Parts II–III (later in the outline)

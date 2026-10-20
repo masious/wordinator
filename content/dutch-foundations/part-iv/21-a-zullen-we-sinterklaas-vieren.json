@@ -179,6 +179,14 @@
               "id": "8ab5f199-5033-415a-8867-9f11ccdb9981"
             },
             {
+              "term": "zullen",
+              "meaning": "shall; will (in suggestions and offers here)",
+              "forms": "zal · zou · —",
+              "example": "Zullen we samen koken?",
+              "note": "The past form is listed as a form only; future and promise uses are taught later.",
+              "id": "0e789888-1403-4f87-a520-ab47508be250"
+            },
+            {
               "term": "vieren",
               "meaning": "to celebrate",
               "forms": "viert · vierde · gevierd",
@@ -754,13 +762,13 @@
     {
       "type": "paragraph",
       "content": [
-        "Among adult friends, Sinterklaas works differently than for children. Nobody gets a present from every guest — everyone draws one name and makes one present for that person. Sofia, Noor, Fleur, Daan and Lotte already drew their lootjes at dinner. Now what happens before the evening itself?"
+        "Among adult friends, Sinterklaas works differently than for children. Nobody gets a present from every guest — everyone draws one name and makes one present for that person. Sofia, Noor, Fleur, Daan and Lotte draw their lootjes at dinner. What happens before the evening itself?"
       ],
       "id": "28c35b90-dc56-45ff-b968-273eef85a745"
     },
     {
       "type": "numberedListItem",
-      "content": "Je trekt een lootje met de app. Wie je hebt, is geheim.",
+      "content": "Je trekt een lootje met de app. De naam blijft geheim.",
       "id": "766c5410-d0c8-4056-a8f9-49e92c3e2a72"
     },
     {
@@ -785,7 +793,7 @@
     {
       "type": "numberedListItem",
       "content": [
-        "Op vijf december is het de ",
+        "Op vijf december is het ",
         {
           "text": "pakjesavond",
           "styles": {
@@ -923,7 +931,7 @@
     {
       "type": "paragraph",
       "content": [
-        "Noor maakt pepernoten en warme chocolademelk, en Fleur koopt voor iedereen een chocoladeletter. Bij een surprise hoort soms ook een klein briefje met een grapje. Het wordt een gezellig feestje!"
+        "Noor maakt pepernoten en warme chocolademelk, en Fleur koopt voor iedereen een chocoladeletter. Bij een surprise hoort soms ook een klein briefje met een grapje. Het is een gezellig feestje!"
       ],
       "id": "c8a9651c-119c-4e12-8dfa-a4057e272831"
     },
@@ -994,6 +1002,24 @@
         "A Dutch diminutive is a noun with -je, -tje, -pje or -etje added. It can mean literally small, but it often just means friendly, casual, or 'a nice little …'. You already know het spelletje (19-a): spel + letje, with the l doubled because of the short e. Now you know why."
       ],
       "id": "4b39db0e-3487-4ee1-b488-dfb9ed4e5a6a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het pakje",
+              "meaning": "a little package",
+              "forms": "de pakjes",
+              "example": "het pak → het pakje",
+              "note": "New diminutive use; het pak is known from 09-b.",
+              "id": "755f032b-5493-402e-9101-a73ec9ca43b0"
+            }
+          ]
+        }
+      },
+      "id": "136c1b9c-4936-4df6-82fd-ab0a080ca15c"
     },
     {
       "type": "callout",
@@ -1100,7 +1126,7 @@
                         "italic": true
                       }
                     },
-                    ": de pan is short a + n, so this one is actually -etje below, not -tje — see next column."
+                    ": "
                   ],
                   "id": "37dba53c-038c-4202-a977-d94122c0bd4b"
                 }
@@ -1295,7 +1321,7 @@
     {
       "type": "example",
       "props": {
-        "translation": "It's maximum twenty euros per person.",
+        "translation": "It costs at most twenty euros per person.",
         "note": "per persoon recycles 10-b."
       },
       "content": [
@@ -1734,7 +1760,7 @@
               ]
             },
             {
-              "prompt": "The present costs maximum twenty euros.",
+              "prompt": "The present costs at most twenty euros.",
               "authorsVersion": [
                 "Het cadeautje kost maximaal twintig euro."
               ]
@@ -1773,7 +1799,7 @@
             {
               "prompt": "Ik trek een lootje. Dat is geheim!",
               "authorsVersion": [
-                "I'm drawing a lot. That's a secret!"
+                "I'm drawing a name. It's a secret!"
               ]
             },
             {
@@ -1848,16 +1874,16 @@
               ]
             },
             {
-              "prompt": "Klopt dit? Iedereen vertelt wie ze hebben.",
+              "prompt": "Klopt dit? Iedereen vertelt een naam.",
               "authorsVersion": [
-                "Nee, dat klopt niet. Het is geheim."
+                "Nee, dat klopt niet. Niemand vertelt een naam."
               ],
-              "note": "Noor writes: niemand vertelt wie ze hebben."
+              "note": "Noor writes: De namen blijven geheim."
             }
           ],
           "passage": {
             "title": "Sinterklaas bij Noor",
-            "content": "Hoi allemaal!\nOp zaterdag 5 december vieren we Sinterklaas bij mij, vanaf 19.00 uur. Daan, Lotte, Fleur en Sofia komen ook.\nWe trekken de lootjes al met de app. Dat is geheim: niemand vertelt wie ze hebben!\nIedereen schrijft een gedicht en maakt een surprise. Het cadeautje kost maximaal twintig euro.\nIk maak pepernoten en warme chocolademelk. Fleur koopt een chocoladeletter voor iedereen.\nHeb je zin in een biertje? Neem er gerust een mee.\nTot vijf december!\nGroetjes, Noor"
+            "content": "Hoi allemaal!\nOp zaterdag 5 december vieren we Sinterklaas bij mij, vanaf 19.00 uur. Daan, Lotte, Fleur en Sofia komen ook.\nWe trekken de lootjes al met de app. De namen blijven geheim. Niemand vertelt een naam!\nIedereen schrijft een gedicht en maakt een surprise. Het cadeautje kost maximaal twintig euro.\nIk maak pepernoten en warme chocolademelk. Fleur koopt een chocoladeletter voor iedereen.\nHeb je zin in een biertje? Neem er gerust een mee.\nTot vijf december!\nGroetjes, Noor"
           }
         }
       },

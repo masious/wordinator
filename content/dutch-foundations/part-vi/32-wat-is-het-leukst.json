@@ -1,0 +1,1688 @@
+{
+  "title": "Wat is het leukst?",
+  "goal": "Review comparisons and use regular and common irregular superlatives to compare familiar cities, food and activities.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Wat is het leukst?",
+      "id": "4be5e46f-3de5-4d57-b3e6-ab81fdd198d9"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Wednesday 13 January 2027. Sofia and Noor compare familiar places, food and activities. You will review comparatives and learn superlatives.",
+      "id": "cc09deae-2c50-4d57-96c2-7bd085daada7"
+    },
+    {
+      "type": "paragraph",
+      "content": "Verbs are blue, subjects green, and de- and het-forms pink and brown. The new superlative forms are bold.",
+      "id": "4eedfb6f-9b3c-4d21-9e6f-b58206778519"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: a friendly comparison",
+      "id": "677f5f13-fe54-4652-a92f-c2e67528df99"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Noor, welke stad is groter: Utrecht of Valencia?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Utrecht is kleiner dan Valencia, maar Valencia is warmer."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En welke stad is het grootst?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Valencia is het grootst."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wat vindt Henk lekkerder: de paella of de boerenkoolstamppot?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Henk vindt de boerenkoolstamppot lekkerder dan de paella."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En de pierogi?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Die zijn ook lekker. Kasia vindt ze heerlijk."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ik vind alles lekker."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En welke activiteit vind je het leukst?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik zwem het liefst. Schaatsen vind ik best eng."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Dan vind je zwemmen misschien het leukst!"
+          }
+        ]
+      },
+      "id": "2452b6a0-28b9-414a-8681-7c6f3076aaec"
+    },
+    {
+      "type": "divider",
+      "id": "3cd51107-f988-4f32-bec1-3dd6d96c8414"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Review: comparatives",
+      "id": "ca458764-566b-41e2-a87a-e8788cadbe5c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Comparative + dan",
+      "id": "cd623c5a-d723-4ddc-9650-ba190f840059"
+    },
+    {
+      "type": "paragraph",
+      "content": "You already know adjective + -er + dan, and even/net zo/niet zo … als. This lesson adds the superlative; it does not repeat the full comparative lesson.",
+      "id": "0842d14b-1732-4a56-915c-7cf52bd12965"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Utrecht is smaller than Valencia.",
+        "note": "Recycles 18-b: comparative + dan."
+      },
+      "content": [
+        {
+          "text": "Utrecht",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "kleiner",
+          "styles": {
+            "bold": true
+          }
+        },
+        " dan Valencia."
+      ],
+      "id": "abf8acf3-b449-4353-94ea-5894720f9a71"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The street is just as narrow as that street.",
+        "note": "Recycles net zo … als from 18-b."
+      },
+      "content": [
+        {
+          "text": "De",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " ",
+        {
+          "text": "straat",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "net zo smal als",
+          "styles": {
+            "bold": true
+          }
+        },
+        " ",
+        {
+          "text": "die",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " straat."
+      ],
+      "id": "f92cbbc2-8964-4047-bfb8-f2fcd847ee6b"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "helder",
+              "meaning": "clear, bright",
+              "example": "De lucht is helder.",
+              "id": "9155a3cc-6415-463a-ac69-88c92a3ae6a4"
+            },
+            {
+              "term": "donker",
+              "meaning": "dark",
+              "example": "De lucht is donker.",
+              "id": "19380ea1-238d-4f7f-bff9-fc1de2696f29",
+              "note": "Previously used in colour compounds such as donkerblauw (18-a); this lesson uses it as a standalone adjective."
+            },
+            {
+              "term": "smal",
+              "meaning": "narrow",
+              "example": "Deze straat is smal.",
+              "id": "ce9e9159-4a11-4eac-918d-bddaeef44adb"
+            },
+            {
+              "term": "breed",
+              "meaning": "wide",
+              "example": "Die straat is breed.",
+              "id": "c9c8ce6f-cf7b-4b7e-9f4a-6e22ea966d5c"
+            }
+          ]
+        }
+      },
+      "id": "8c0e9eed-3445-43cd-964c-68db493f7197"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "Comparative: adjective + -er + dan. Equality: even/net zo/niet zo + base adjective + als.",
+      "id": "23411e1f-51d4-406d-b78c-9fbb3560e781"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Superlatives",
+      "id": "971b6d16-85ad-4ec9-acb3-ef89d8de09f2"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Most: het + -st",
+      "id": "881b8d74-030d-4e5c-853c-47037ae2bd1b"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use the superlative to name the top degree in a group. With zijn or as an adverb, use het + the superlative form: Utrecht is het rustigst. In writing, the adverb form usually ends in -st.",
+      "id": "3e6cd936-8817-4372-b6d8-940516e9d8e2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Utrecht is the quietest in the morning.",
+        "note": "Predicative adjective used as a superlative; het + rustigst."
+      },
+      "content": [
+        {
+          "text": "Utrecht",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " ",
+        {
+          "text": "rustigst",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " in de ochtend."
+      ],
+      "id": "ad2b34db-f02d-426c-b1f9-b1b849702a53"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Which activity do you like most?",
+        "note": "het leukst is a superlative adverbial phrase; compare the options."
+      },
+      "content": [
+        "Welke activiteit ",
+        {
+          "text": "vind",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " ",
+        {
+          "text": "leukst",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "?"
+      ],
+      "id": "d7ff961a-d5ce-4410-aaf8-e2947202a0b7"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "The adverbial or predicative form commonly uses het + -st: het rustigst, het leukst.",
+      "id": "2c116edb-002c-4a76-b623-97dc536403aa"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Before a noun: -ste",
+      "id": "fe8cfb90-9ab6-4c19-9361-ccc26cabc349"
+    },
+    {
+      "type": "paragraph",
+      "content": "Before a noun, use the article that belongs to that noun, then an adjective ending in -ste. The adjective also takes -e, as other adjectives do before nouns.",
+      "id": "3eec8194-d4c1-463c-a022-00b17477042e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The quietest street is here.",
+        "note": "De straat is a de-word: de rustigste straat."
+      },
+      "content": [
+        {
+          "text": "De",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " ",
+        {
+          "text": "rustigste",
+          "styles": {
+            "textColor": "green",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "straat",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " hier."
+      ],
+      "id": "55e37f4c-80d0-4383-a039-74dbe3512838"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The quietest café is small.",
+        "note": "Het café is a het-word: het rustigste café."
+      },
+      "content": [
+        {
+          "text": "Het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " ",
+        {
+          "text": "rustigste",
+          "styles": {
+            "textColor": "green",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "café",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " klein."
+      ],
+      "id": "d39c25d6-2919-4d56-a257-6467f6271168"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "comfortabel",
+              "meaning": "comfortable",
+              "example": "Deze stoel is comfortabel.",
+              "id": "8188049c-13fd-4727-80d2-dc03df91b7b5"
+            },
+            {
+              "term": "aantrekkelijk",
+              "meaning": "attractive",
+              "example": "De stad is aantrekkelijk.",
+              "id": "f5cd9693-0688-4fe7-8fd5-77157387bfd5"
+            },
+            {
+              "term": "rommelig",
+              "meaning": "messy",
+              "example": "De kamer is rommelig.",
+              "id": "1d722dfb-80d1-40d7-b13a-6017a61a53c2"
+            },
+            {
+              "term": "netjes",
+              "meaning": "tidy",
+              "example": "De tafel is netjes.",
+              "id": "84a17ecb-f0b4-427c-901f-9b49e787fc8d"
+            },
+            {
+              "term": "modern",
+              "meaning": "modern",
+              "example": "Het gebouw is modern.",
+              "id": "759d51bb-3ec9-41ca-a247-7e7b6cb70369"
+            },
+            {
+              "term": "ouderwets",
+              "meaning": "old-fashioned",
+              "example": "Deze stoel is ouderwets.",
+              "id": "f2018e23-87f0-43f3-91a4-2a09e232e95b"
+            }
+          ]
+        }
+      },
+      "id": "7efc1b0c-0a4e-48b5-835e-859729e727cd"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "Before a noun: de/het + adjective + -ste + noun. The article follows the noun’s gender.",
+      "id": "67248622-8f51-4d7e-bc17-fb8c68cf333c"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Before a noun",
+              "id": "2e821a3f-6e48-4e12-a4b0-dd68b9e01f02"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de breedste straat",
+              "id": "1d920a49-08fe-4772-a1c0-4eb8161f6420"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "het breedste plein",
+              "id": "6a2509b4-bb26-4a19-abb8-70a13f7dbb1f"
+            }
+          ],
+          "id": "914de089-7e05-485d-848d-c2fdac6c1b76"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "As a predicate/adverb",
+              "id": "de95ef11-0a14-4643-826c-3e584aeeedff"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "De straat is het breedst.",
+              "id": "f780fef5-bb03-4c61-89aa-84de43823c9b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Het plein is het breedst.",
+              "id": "78840ea1-106a-4457-8f3a-0232487d093d"
+            }
+          ],
+          "id": "bbf2d3b3-2ab4-49c6-bfa0-95aaba922c57"
+        }
+      ],
+      "id": "4edc51c7-5e73-425c-8127-57d5f065e7b7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Spelling and irregular forms",
+      "id": "855a9727-5cc9-4d55-9150-464e5f515c72"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Keep the adjective spelling",
+      "id": "3e639734-540e-4d4c-a1d6-b431d3e2a5f5"
+    },
+    {
+      "type": "paragraph",
+      "content": "Add -st for the common adverbial form; add -ste before a noun. Keep the base spelling pattern: a long vowel stays long, and a short vowel keeps its double consonant where needed. Some superlatives end in -tst: groot → grootst.",
+      "id": "8724a5a4-fefd-4ca6-8daf-b2cf31af00e9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The biggest city is Valencia.",
+        "note": "groot → grootst; before a de-word noun: grootste."
+      },
+      "content": [
+        {
+          "text": "De",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " ",
+        {
+          "text": "grootste",
+          "styles": {
+            "textColor": "green",
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "stad",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Valencia."
+      ],
+      "id": "8e34f23b-a8e7-4fd0-a128-166eb09155e6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "This rule is the simplest.",
+        "note": "eenvoudig → eenvoudigst."
+      },
+      "content": [
+        {
+          "text": "Deze regel",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " ",
+        {
+          "text": "eenvoudigst",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "e2a9cbcb-6bd8-49cd-8d47-866bfa771915"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "populair",
+              "meaning": "popular",
+              "example": "Voetbal is populair.",
+              "id": "7706383a-e6f6-4b97-b7b1-838475bd4697"
+            },
+            {
+              "term": "eenvoudig",
+              "meaning": "simple",
+              "example": "De vraag is eenvoudig.",
+              "id": "9d6f26bd-c200-4580-b6b7-83e894839fca"
+            },
+            {
+              "term": "ingewikkeld",
+              "meaning": "complicated",
+              "example": "Deze regel is ingewikkeld.",
+              "id": "ab100a8f-dc62-4821-a752-2ef4998a87ad"
+            },
+            {
+              "term": "verrassend",
+              "meaning": "surprising",
+              "example": "De prijs is verrassend.",
+              "id": "41e72a7c-0b15-45fa-967b-fc87f5259808"
+            }
+          ]
+        }
+      },
+      "id": "5d1dd1bc-f93e-443f-947c-7c88ca943d23"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Use the adjective spelling before the ending: ",
+        {
+          "text": "grotst",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "grootst",
+          "styles": {
+            "bold": true
+          }
+        },
+        "; ",
+        {
+          "text": "de grootst stad",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "de grootste stad",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "fca0282d-9668-4737-8b28-dd46f6d56cbf"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Common irregular forms",
+      "id": "7a05855e-b440-4d40-a3d6-a86ded9dc963"
+    },
+    {
+      "type": "paragraph",
+      "content": "Two common comparisons have special forms. Learn the three forms together.",
+      "id": "2b4c04af-32f4-44e4-8dbd-796ea696f191"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de superlatief",
+              "meaning": "superlative",
+              "forms": "de superlatieven",
+              "example": "De superlatief van goed is best.",
+              "id": "b01a827e-3ecc-4241-9890-02dd32e16baa"
+            }
+          ]
+        }
+      },
+      "id": "6c342074-3475-4c47-a19a-be8361b009b7"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "goed",
+              "id": "82a06245-9e73-4bbc-b0a3-3fb832342915"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "goed → beter → best",
+              "id": "9c43c268-a707-4746-9155-1e4a44614acf"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "het best / de beste",
+              "id": "3a42c150-cb7d-45d7-aa2e-31aae4aad9be"
+            }
+          ],
+          "id": "db0ab249-09d0-4261-825c-1c0eda2da968"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "veel",
+              "id": "10549193-4574-4a40-b160-13619229c74a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "veel → meer → meest",
+              "id": "b0d8da6f-6254-4a00-a2a9-e11bab865b59"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "het meest / de meeste",
+              "id": "58d5e98c-fccc-4416-817a-4725dbfd0f6c"
+            }
+          ],
+          "id": "e3361b63-5b92-4c4f-8518-c62920433148"
+        }
+      ],
+      "id": "4dd315e3-8760-4245-a242-36499c532ab9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The paella is good, but the stamppot is better.",
+        "note": "Recycles the irregular comparative from 18-b."
+      },
+      "content": [
+        {
+          "text": "De",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " ",
+        {
+          "text": "paella",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " goed, maar ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " ",
+        {
+          "text": "stamppot",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "beter",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "01ec9b3b-05b0-4cf2-a5f8-dd5d3c426e98"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Of the two, Henk thinks the stamppot is the best.",
+        "note": "Recasts Henk’s known preference from the housewarming as a superlative over those two dishes."
+      },
+      "content": [
+        "Van ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " twee ",
+        {
+          "text": "vindt",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "Henk",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " stamppot ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " ",
+        {
+          "text": "best",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "59f910d1-99a7-48fd-99a5-b52e4a396c46"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Which sport is the most popular?",
+        "note": "Adverbial/predicative form: het populairst."
+      },
+      "content": [
+        {
+          "text": "Welke sport",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het",
+          "styles": {
+            "textColor": "brown"
+          }
+        },
+        " ",
+        {
+          "text": "populairst",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "?"
+      ],
+      "id": "55c27dba-5e41-457f-b96f-d88d1873f908"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Which film do you think is the best?",
+        "note": "Before a noun or noun understood, use the inflected form de beste."
+      },
+      "content": [
+        "Welke film ",
+        {
+          "text": "vind",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "de",
+          "styles": {
+            "textColor": "pink"
+          }
+        },
+        " ",
+        {
+          "text": "beste",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "?"
+      ],
+      "id": "5b55e331-7552-45d1-ad42-6d14747cbdc6"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": "best can mean “best” in a superlative. It is not the English adverb “best” in every sentence; read the whole phrase.",
+      "id": "ab4f9017-a367-4e0a-bab2-7a5db2d55bba"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "A preference you already know",
+      "id": "88be492f-30b9-460e-9b46-715d1c4cc4a3"
+    },
+    {
+      "type": "paragraph",
+      "content": "You already learned graag → liever → het liefst in Part IV. Het liefst expresses preference; it is not the regular superlative pattern for every adjective.",
+      "id": "09c971ce-8286-4f41-8174-118ba2115bc1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I like swimming best.",
+        "note": "Recycles Sofia’s established preference from Part IV; het liefst is a preference expression, not a regular superlative pattern."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " ",
+        {
+          "text": "zwem",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "het liefst",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "0539929e-404f-49bd-9f85-a2127fd4660b"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "Remember the difference: het best = best in quality; het liefst = preferred.",
+      "id": "0afc0d16-ddb4-4602-945c-9e7bef1a8ff1"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "With a group, compare clearly:",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Utrecht is kleiner dan Valencia.",
+          "id": "1db12e4e-05c5-4444-8cc6-1d409acc1b37"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Utrecht is het rustigst.",
+          "id": "db97863c-c807-4527-b746-07b93e745991"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "De rustigste straat is dichtbij.",
+          "id": "0bced043-35bf-495a-9a9f-78b68946181e"
+        }
+      ],
+      "id": "3feb1fc9-7b1d-47a1-b60a-f62a94e56b0a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Choose a group: one city, three foods or two activities.",
+      "id": "0758508c-44b1-49ed-ab0a-316dcada4dba"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use -er + dan to compare two things.",
+      "id": "50330a1f-394a-4ff3-9583-6debb5c54bee"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use het + -st, or de/het + -ste before a noun.",
+      "id": "7d060cff-b2d9-464e-bde1-d0c39117e32b"
+    },
+    {
+      "type": "divider",
+      "id": "45eff330-27bf-4477-a85f-31354cc70098"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: two familiar cities",
+      "id": "73d3779e-18f2-49db-b5c5-6ca272d79c16"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "We vergelijken Utrecht en Valencia."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Valencia is warmer dan Utrecht."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Utrecht is kleiner dan Valencia."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Welke stad is het grootst?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Valencia is het grootst van de twee."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En welke stad is het warmst?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Valencia is het warmst van de twee."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Utrecht is kleiner en kouder."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, Utrecht is kleiner en kouder dan Valencia."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dan klopt de vergelijking."
+          }
+        ]
+      },
+      "id": "5a80bce6-0323-49ee-98a3-c3abc31883fd"
+    },
+    {
+      "type": "divider",
+      "id": "1a3a6472-3d5f-4cbf-bd60-c0d40c975524"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "69346d7c-9554-4ddb-82c4-914605d7fa69"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Choose the form",
+      "id": "2374d19f-de1f-469f-964e-0e7df95b3537"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each sentence with the correct form.",
+          "items": [
+            {
+              "prompt": "Utrecht is … dan Valencia. (klein)",
+              "authorsVersion": [
+                "kleiner"
+              ],
+              "note": "Comparative + dan."
+            },
+            {
+              "prompt": "Welke straat is …, deze of die? (breed)",
+              "authorsVersion": [
+                "breder"
+              ],
+              "note": "Comparative of breed is breder."
+            },
+            {
+              "prompt": "Van de drie, welke stad is het …? (warm)",
+              "authorsVersion": [
+                "warmst"
+              ],
+              "note": "With zijn: het + -st."
+            },
+            {
+              "prompt": "Dit is … gerecht van de drie. (goed)",
+              "authorsVersion": [
+                "het beste"
+              ],
+              "note": "Before the het-word noun: het beste gerecht."
+            },
+            {
+              "prompt": "Welke activiteit is het …? (spannend)",
+              "authorsVersion": [
+                "spannendst"
+              ],
+              "note": "Adverbial/predicative superlative."
+            },
+            {
+              "prompt": "De … straat is in Lombok. (smal)",
+              "authorsVersion": [
+                "smalste"
+              ],
+              "note": "Before de straat, add -ste."
+            },
+            {
+              "prompt": "Het … plein is in Valencia. (groot)",
+              "authorsVersion": [
+                "grootste"
+              ],
+              "note": "groot → grootst, then -e before the noun."
+            }
+          ]
+        }
+      },
+      "id": "118429cf-07b6-4a7c-ad07-99995fd274a1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in a short exchange",
+      "id": "5a7f3bbf-2682-40da-bf1c-395337785741"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the exchange with the right form.",
+          "items": [
+            {
+              "prompt": "Noor: Welke stad is …, Utrecht of Valencia? (warm) / Sofia: Valencia is … dan Utrecht.",
+              "authorsVersion": [
+                "warmer",
+                "warmer"
+              ],
+              "note": "Comparative takes -er + dan."
+            },
+            {
+              "prompt": "Sofia: Welke stad is het …? (groot) / Noor: Valencia is … dan Utrecht.",
+              "authorsVersion": [
+                "grootst",
+                "groter"
+              ],
+              "note": "Superlative is het grootst; comparative is groter."
+            },
+            {
+              "prompt": "Noor: Wat vindt Henk …: de paella of de stamppot? / Sofia: De stamppot. Henk vindt die het ….",
+              "authorsVersion": [
+                "het lekkerst",
+                "lekkerst"
+              ],
+              "note": "Henk prefers the stamppot to paella (24-a); the prompt already supplies het in the final blank."
+            },
+            {
+              "prompt": "Sofia: Is deze regel … dan die? (eenvoudig) / Noor: Nee, die is het ….",
+              "authorsVersion": [
+                "eenvoudiger",
+                "eenvoudigst"
+              ],
+              "note": "Comparative -er; superlative het + -st."
+            },
+            {
+              "prompt": "Noor: Is dit … café? (comfortabel) / Sofia: Ja, dit is het … café.",
+              "authorsVersion": [
+                "het comfortabelste",
+                "comfortabelste"
+              ],
+              "note": "het café takes het; before noun the form ends -ste."
+            }
+          ]
+        }
+      },
+      "id": "891a98e8-f0d8-44da-914f-7902a215d40c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Build the sentence",
+      "id": "8a9b1abf-91a9-48b0-b3ca-f3c9ee401f5a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the chunks in order.",
+          "items": [
+            {
+              "prompt": "Put in order: dan / Valencia / warmer / is / Utrecht",
+              "authorsVersion": [
+                "Utrecht is warmer dan Valencia."
+              ],
+              "note": "V2: is follows the subject; dan follows the comparative."
+            },
+            {
+              "prompt": "Put in order: het / Utrecht / rustigst / is",
+              "authorsVersion": [
+                "Utrecht is het rustigst."
+              ],
+              "note": "Use het + superlative."
+            },
+            {
+              "prompt": "Put in order: straat / is / de / smalste / dit",
+              "authorsVersion": [
+                "Dit is de smalste straat."
+              ],
+              "note": "Use de + -ste before a de-word noun."
+            },
+            {
+              "prompt": "Put in order: beste / dit / gerecht / het / is",
+              "authorsVersion": [
+                "Dit is het beste gerecht."
+              ],
+              "note": "goed → best; before het gerecht, use beste."
+            },
+            {
+              "prompt": "Put in order: als / deze / net / straat / zo / is / breed / die",
+              "authorsVersion": [
+                "Deze straat is net zo breed als die."
+              ],
+              "note": "Recycles equality: net zo … als."
+            },
+            {
+              "prompt": "Put in order: het / vind / zwemmen / leukst / ik",
+              "authorsVersion": [
+                "Ik vind zwemmen het leukst."
+              ],
+              "note": "The superlative phrase follows the activity."
+            }
+          ]
+        }
+      },
+      "id": "f3049f71-250e-48ce-ad70-dd2cc2fdeda3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Transform the comparison",
+      "id": "3858b4c8-fbe7-43c1-b733-7c9d3d65a93d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite as instructed. Keep the meaning.",
+          "items": [
+            {
+              "prompt": "Make a superlative: Utrecht is rustig. (quietest of these cities)",
+              "authorsVersion": [
+                "Utrecht is het rustigst van deze steden."
+              ],
+              "note": "Use het + -st and name the group."
+            },
+            {
+              "prompt": "Make a comparative: Valencia is warm. Utrecht is warm. (compare Valencia with Utrecht)",
+              "authorsVersion": [
+                "Valencia is warmer dan Utrecht."
+              ],
+              "note": "Comparative + dan."
+            },
+            {
+              "prompt": "Make a superlative before a noun: Dit café is comfortabel. (most comfortable café)",
+              "authorsVersion": [
+                "Dit is het comfortabelste café."
+              ],
+              "note": "Before het café, use het + -ste."
+            },
+            {
+              "prompt": "Change to a comparison of equality: De straat is breed. De andere straat is breed.",
+              "authorsVersion": [
+                "De straat is even breed als de andere straat."
+              ],
+              "note": "Recycles even … als."
+            },
+            {
+              "prompt": "Correct the mistake: Utrecht is het meest klein.",
+              "authorsVersion": [
+                "Utrecht is het kleinst."
+              ],
+              "note": "For a regular one-syllable adjective, use -st, not meest + base adjective."
+            },
+            {
+              "prompt": "Correct the mistake: De grootst stad is Valencia.",
+              "authorsVersion": [
+                "De grootste stad is Valencia."
+              ],
+              "note": "Before a noun, use -ste with adjective inflection."
+            }
+          ]
+        }
+      },
+      "id": "dd6b162b-4452-413a-9e4d-939c4ecf7e3a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "6783ab80-df1c-4c78-8344-2b65b0d88978"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate naturally into Dutch.",
+          "items": [
+            {
+              "prompt": "Utrecht is smaller than Valencia.",
+              "authorsVersion": [
+                "Utrecht is kleiner dan Valencia."
+              ],
+              "note": "Comparative + dan."
+            },
+            {
+              "prompt": "Which city is the quietest?",
+              "authorsVersion": [
+                "Welke stad is het rustigst?"
+              ],
+              "note": "Adverbial/predicative superlative uses het + -st."
+            },
+            {
+              "prompt": "This is the narrowest street.",
+              "authorsVersion": [
+                "Dit is de smalste straat."
+              ],
+              "note": "de straat takes de; adjective ends -ste."
+            },
+            {
+              "prompt": "The paella is good, but the stamppot is better.",
+              "authorsVersion": [
+                "De paella is goed, maar de stamppot is beter."
+              ],
+              "note": "Irregular comparative goed → beter."
+            },
+            {
+              "prompt": "Of these three activities, swimming is the most fun.",
+              "authorsVersion": [
+                "Van deze drie activiteiten is zwemmen het leukst."
+              ],
+              "note": "Use het + -st for the activity."
+            },
+            {
+              "prompt": "I like skating best.",
+              "authorsVersion": [
+                "Ik schaats het liefst."
+              ],
+              "note": "Recycles het liefst as a preference expression from Part IV."
+            }
+          ]
+        }
+      },
+      "id": "fced0389-8670-422c-a954-25e96c70fc61"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "7c74433b-5084-4744-af98-ff9e4775e2b7"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Welke straat is smaller, deze of die?",
+              "authorsVersion": [
+                "Which street is narrower, this one or that one?"
+              ],
+              "note": "Comparative + -er."
+            },
+            {
+              "prompt": "Valencia is het warmst in de zomer.",
+              "authorsVersion": [
+                "Valencia is warmest in the summer."
+              ],
+              "note": "het + superlative."
+            },
+            {
+              "prompt": "Het rustigste café is klein.",
+              "authorsVersion": [
+                "The quietest café is small."
+              ],
+              "note": "Before a het-word, use het rustigste."
+            },
+            {
+              "prompt": "De Domtoren is hoger dan het gebouw.",
+              "authorsVersion": [
+                "The Dom Tower is higher than the building."
+              ],
+              "note": "Comparative + dan."
+            },
+            {
+              "prompt": "Van deze drie is dit het beste.",
+              "authorsVersion": [
+                "Of these three, this is the best."
+              ],
+              "note": "goed → best; het best."
+            },
+            {
+              "prompt": "Ik vind zwemmen het fijnst.",
+              "authorsVersion": [
+                "I like swimming best."
+              ],
+              "note": "The phrase ranks the activity as most pleasant."
+            }
+          ]
+        }
+      },
+      "id": "b7173185-d45b-4294-84ef-ba5b00bee86b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Reading: three cities and familiar food",
+      "id": "0628c8cc-5f0f-401a-94ee-ef57dd2be61c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the text and answer in Dutch.",
+          "items": [
+            {
+              "prompt": "Welke twee steden vergelijken Sofia en Noor?",
+              "authorsVersion": [
+                "Utrecht en Valencia."
+              ],
+              "note": "Find the two city names."
+            },
+            {
+              "prompt": "Welke stad is groter dan Utrecht?",
+              "authorsVersion": [
+                "Valencia."
+              ],
+              "note": "The passage says Valencia is groter dan Utrecht."
+            },
+            {
+              "prompt": "Welke stad is het warmst?",
+              "authorsVersion": [
+                "Valencia."
+              ],
+              "note": "Valencia is warmer than Utrecht, so it is the warmest of these two."
+            },
+            {
+              "prompt": "Waar woont Sofia?",
+              "authorsVersion": [
+                "In Utrecht."
+              ],
+              "note": "The passage states where Sofia lives."
+            },
+            {
+              "prompt": "Waar woont Sofia’s moeder?",
+              "authorsVersion": [
+                "In Valencia."
+              ],
+              "note": "The passage states where her mother lives."
+            },
+            {
+              "prompt": "Wat vindt Henk lekkerder dan de paella?",
+              "authorsVersion": [
+                "De boerenkoolstamppot."
+              ],
+              "note": "Henk’s preference was established at the housewarming."
+            },
+            {
+              "prompt": "Welke twee gerechten vindt Sofia heerlijk?",
+              "authorsVersion": [
+                "De paella en de pierogi."
+              ],
+              "note": "The passage recalls Sofia’s established opinions."
+            },
+            {
+              "prompt": "Welke activiteit vindt Sofia het leukst?",
+              "authorsVersion": [
+                "Zwemmen."
+              ],
+              "note": "Sofia prefers swimming to skating (Part IV)."
+            }
+          ],
+          "passage": {
+            "title": "Twee bekende steden en bekende gerechten",
+            "content": "Sofia en Noor vergelijken Utrecht en Valencia. Valencia is groter en warmer dan Utrecht. Van deze twee steden is Valencia het grootst en het warmst. Sofia woont in Utrecht en haar moeder woont in Valencia. Sofia mist de zon van Valencia. Op haar housewarming maakt Sofia paella. Noor brengt boerenkoolstamppot mee. Henk vindt de boerenkoolstamppot lekkerder dan de paella. Van die twee vindt Henk de boerenkoolstamppot het lekkerst. Piotr en Kasia brengen pierogi mee. Sofia vindt alle gerechten lekker. Ze vindt de paella en de pierogi heerlijk. Sofia zwemt liever dan ze schaatst. Van deze twee activiteiten vindt ze zwemmen het leukst."
+          }
+        }
+      },
+      "id": "06a19db8-425b-4bf1-97f0-ff3b8a5b0dde"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Your turn",
+      "id": "5e50cff5-c86d-416c-8355-d900e09c9e1e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences comparing familiar places, foods or activities. Use one comparative and one superlative.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences comparing familiar places, foods or activities.",
+              "authorsVersion": [
+                "Utrecht is kleiner dan Valencia. Valencia is het grootst en het warmst. Henk vindt de stamppot lekkerder dan de paella. Ik zwem het liefst."
+              ],
+              "note": "Model answer; use -er + dan for a comparison, het + -st for a superlative, and het liefst for Sofia’s established preference."
+            }
+          ]
+        }
+      },
+      "id": "a5c94224-f496-4d10-9392-a52166601174"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "d19fec43-cecd-48da-93da-3fb2c2cf7ac4"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Comparative: adjective + -er + dan; equality: even/net zo/niet zo … als.",
+      "id": "c3988e94-52bb-49a1-b905-be11b8ace1f7"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "As a predicate or adverb, use het + -st: het rustigst.",
+      "id": "b031c164-fe6e-48bd-a56b-2586b0d8dd80"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Before a noun, use de/het + -ste + noun: de rustigste straat, het rustigste café.",
+      "id": "2f408f7e-2f91-46e8-9aa9-00459582b2af"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Irregular: goed → beter → best(e); veel → meer → meest(e).",
+      "id": "3d9176cd-9439-49c2-a401-ff98e35b999b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Recycled preference: het liefst means “prefer/like best”.",
+      "id": "b1b48ece-9441-4ddd-b9b8-6fa33664d5ad"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: a friendly comparison",
+      "description": "Sofia and Noor sit at a table with familiar dishes and a simple map showing Utrecht, Valencia and Groningen, chatting warmly.",
+      "alt": "Sofia and Noor compare familiar cities and food."
+    },
+    {
+      "afterHeading": "Story: three familiar choices",
+      "description": "A simple illustrated three-column comparison of Utrecht, Valencia and Groningen beside Sofia and Noor, without scores or rankings.",
+      "alt": "Sofia and Noor compare three familiar cities."
+    }
+  ],
+  "id": "81169131-8cf2-4ac2-8454-02ea0e215531"
+}

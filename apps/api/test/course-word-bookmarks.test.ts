@@ -1,4 +1,4 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { WORD_BOOKMARKS_MAX } from "@wordinator/contracts";
 import { wordBookmarkKeysResponseSchema, wordBookmarkLessonsResponseSchema, wordBookmarkPageSchema } from "@wordinator/contracts/lesson-document";
 import { beforeEach, describe, expect, it } from "vitest";
@@ -6,6 +6,7 @@ import {
   addLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, publishLesson, readLesson, request, resetDatabase, saveDraft, seedGroup, seedUser,
   signIn, word,
 } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 const bookmarkPath = (path: string, lessonId: string, wordId: string) => `${path}/lessons/${lessonId}/words/${wordId}/bookmark`;
 const bookmark = (path: string, lessonId: string, wordId: string, cookie: string) => request(bookmarkPath(path, lessonId, wordId), cookie, undefined, "PUT");
@@ -179,8 +180,8 @@ describe("Word bookmarks", () => {
     await bookmark(coursePath(otherGroup, betaCourse.id), betaLesson.lesson.id, fiets.id, outsider);
     expect(await terms(otherGroup, outsider)).toEqual(["de fiets"]);
     expect(await terms(groupId, reader)).toEqual(["der Hund"]);
-    expect((await SELF.fetch(`https://wordinator.test/api/groups/${groupId}/word-bookmarks/keys`)).status).toBe(401);
-    expect((await SELF.fetch(`https://wordinator.test${bookmarkPath(path, lesson.lesson.id, hund.id)}`, { method: "PUT" })).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test/api/groups/${groupId}/word-bookmarks/keys`)).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test${bookmarkPath(path, lesson.lesson.id, hund.id)}`, { method: "PUT" })).status).toBe(401);
     // A former member keeps the rows but cannot read or change them.
     await env.DB.prepare("UPDATE memberships SET state = 'left' WHERE group_id = ? AND user_id = ?").bind(groupId, readerId).run();
     expect((await request(`/api/groups/${groupId}/word-bookmarks`, reader)).status).toBe(404);
@@ -257,7 +258,7 @@ describe("Word bookmark lesson filter", () => {
     const denied = await request(`/api/groups/${groupId}/word-bookmarks/lessons`, outsider);
     expect(denied.status).toBe(404);
     expect(await errorCode(denied)).toBe("GROUP_NOT_FOUND");
-    const anonymous = await SELF.fetch(`https://wordinator.test/api/groups/${groupId}/word-bookmarks/lessons`);
+    const anonymous = await fetchWorker(`https://wordinator.test/api/groups/${groupId}/word-bookmarks/lessons`);
     expect(anonymous.status).toBe(401);
   });
 });

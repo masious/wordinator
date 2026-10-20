@@ -29,7 +29,8 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [architecture.md](architecture.md) | Runtime topology, monorepo boundaries, client/server responsibilities, and API conventions |
 | [data-model.md](data-model.md) | Conceptual entities, relationships, constraints, retention, and deletion semantics |
 | [security-and-privacy.md](security-and-privacy.md) | Security baseline, privacy boundaries, tradeoffs, and deferred work |
-| [testing.md](testing.md) | Test layers, critical scenarios, and release gates |
+| [testing.md](testing.md) | Test layers, required negative cases, critical browser paths, fixture rules, the harness, and release gates |
+| [workers-tests-port-exhaustion.md](workers-tests-port-exhaustion.md) | Running the API Workers test suite without exhausting local ports: symptoms, draining, batches, and orphaned runtimes |
 | [operations.md](operations.md) | Local setup, bootstrap, migrations, deployments, backups, and recovery |
 | [roadmap.md](roadmap.md) | Initial delivery phases and unprioritized future backlog |
 

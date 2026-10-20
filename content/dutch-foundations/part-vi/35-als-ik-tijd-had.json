@@ -1,0 +1,1269 @@
+{
+  "title": "Als ik tijd had",
+  "goal": "Use hypothetical als-clauses and zou/zouden + an infinitive to talk about imagined choices.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Als ik tijd had",
+      "id": "5951fa62-a2b5-4041-b90e-e6c70760203a"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Monday 18 January 2027. Sofia and Noor imagine a few different choices in Utrecht and Valencia. In this lesson you will use hypothetical als-clauses and zou/zouden to say what you would do.",
+      "id": "632fe7c3-c785-4408-81d1-2cc63f0fa9f8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: a few imagined choices",
+      "id": "361af608-95c1-405f-96c8-04dcad676edd"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Noor, stel: als ik vandaag vrij had, zou ik naar het park gaan."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Zou je daar gaan wandelen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja. En als het zonnig was, zou ik ook buiten zitten."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Als we samen tijd hadden, zouden we kunnen zwemmen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Zou jij liever zwemmen of schaatsen?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Als ik moest kiezen, zou ik zwemmen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik ook. Maar dit is alleen een idee."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Natuurlijk. We maken nu geen afspraak."
+          }
+        ]
+      },
+      "id": "20004243-eb38-4df1-8fe1-9e7429be8cdc"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "The speakers imagine possibilities. They are not saying that they have free time or making a real plan.",
+      "id": "b302bde2-0a75-4b00-ac5b-d40f2e6b902b"
+    },
+    {
+      "type": "divider",
+      "id": "620fe7f0-5ddb-43b8-81a5-3ce0ba274800"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Hypothetical als means “if”",
+      "id": "2b164bcf-68bb-4529-980d-510add00b91d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Verb at the end",
+      "id": "50fd92be-2be2-4201-8800-f09a1063b023"
+    },
+    {
+      "type": "paragraph",
+      "content": "You already know temporal als from row 30: Als ik thuiswerk, drink ik thee means “When I work from home, I drink tea.” Here als means “if” and introduces an imagined condition. The finite verb goes to the end of this clause: Als ik tijd had.",
+      "id": "6816f3ff-5c1f-40df-937a-37a9eb443bf9"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "If I had more time, I would swim.",
+        "note": "Hypothetical als = if. The finite verb had is at the end of the condition."
+      },
+      "content": [
+        "Als ",
+        {
+          "text": "ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " meer tijd ",
+        {
+          "text": "had",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        ", zou ik zwemmen."
+      ],
+      "id": "073f50bb-39ba-4125-a1a0-157733320a33"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I would swim if I had more time.",
+        "note": "The condition can follow the main clause; it still keeps verb-final order."
+      },
+      "content": [
+        "Ik zou zwemmen, als ik meer tijd ",
+        {
+          "text": "had",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "9a7f183f-d4f1-4876-b16f-61a995b25b6f"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "Pattern: als + subject + … + finite verb at the end. Put a comma between the condition and the main clause.",
+      "id": "08ae6b29-9cbb-4577-b7d2-8c71c165ba8d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": "Do not confuse temporal als (“when”) with hypothetical als (“if”). Use the meaning and context to decide.",
+      "id": "eda77614-85ec-4336-9020-3a577ec9e374"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "When — a real or expected situation",
+              "id": "dc347de4-db15-45e7-9c9c-57ee49c12c5f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Als ik thuiswerk, drink ik thee.",
+              "id": "15f73eda-57c5-44a3-9aab-6791f2a4998f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "When I work from home, I drink tea.",
+              "id": "3a64a418-91dd-4d16-9dad-ae5bb39ad70a"
+            }
+          ],
+          "id": "fc07bc29-9f65-47ff-85f2-31ea44536dee"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "If — an imagined situation",
+              "id": "78e1a29f-3103-447a-8bc1-955ee1bc08ba"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Als ik tijd had, zou ik zwemmen.",
+              "id": "377d8068-1025-479f-86d8-5a74078faf30"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "If I had time, I would swim.",
+              "id": "e52ed97f-713a-4547-98d5-683672821242"
+            }
+          ],
+          "id": "48381c87-b35f-4f72-b28f-c68445cd43f0"
+        }
+      ],
+      "id": "81a9c253-dab3-4277-b283-e3a64dec2cd2"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Check the meaning first: when or if?",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Temporal als: a real or expected event.",
+          "id": "75d0ee72-38b9-4ca6-888d-3db24c8ee234"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Hypothetical als: an imagined condition.",
+          "id": "40a9460c-e43c-4d2d-921e-169c394213b9"
+        }
+      ],
+      "id": "f4ed6295-2474-4fb1-991d-e01fd35dc825"
+    },
+    {
+      "type": "paragraph",
+      "content": "The simple past forms had and hadden are familiar from row 28. Here they help make the condition hypothetical; this is not a story about the past.",
+      "id": "616bcad8-db33-48b0-b6ff-5387a99b13c4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "zou and zouden + infinitive",
+      "id": "e75754e9-17be-407a-9457-5b33df255b31"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Choose the form",
+      "id": "cad23692-a36e-4c11-9431-d7c083e981dc"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use zou with ik, jij/je, u, hij, zij/ze and a singular name. Use zouden with wij/we, jullie and plural subjects. Put the infinitive at the end of the main clause.",
+      "id": "0f4f4c7d-fe88-4c72-b7f3-fb40bde13871"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "If Noor had time, she would go to the park.",
+        "note": "Singular subject ze → zou; infinitive gaan goes at the end."
+      },
+      "content": [
+        "Als Noor tijd had, ",
+        {
+          "text": "zou",
+          "styles": {
+            "bold": true,
+            "textColor": "blue",
+            "backgroundColor": "yellow"
+          }
+        },
+        " ze naar het park ",
+        {
+          "text": "gaan",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "a33ba27f-2048-4487-931e-05bdbfeaf082"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "If Sofia and Noor had time, they would swim together.",
+        "note": "Plural subject ze → zouden; infinitive zwemmen goes at the end."
+      },
+      "content": [
+        "Als Sofia en Noor tijd hadden, ",
+        {
+          "text": "zouden",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ze samen ",
+        {
+          "text": "zwemmen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "018306c7-1c41-4b3a-a4f8-92f74d57be01"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "If I were in Valencia, I would call my mother.",
+        "note": "The condition is imagined; it does not change the established timeline."
+      },
+      "content": [
+        "Als ik in Valencia was, ",
+        {
+          "text": "zou",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " ik mijn moeder ",
+        {
+          "text": "bellen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "1e5a8d8b-eac7-4a88-b58c-1b34bfd35f29"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "If you were free, you would cycle together.",
+        "note": "Jullie takes zouden. This is an imagined choice, not a new plan."
+      },
+      "content": [
+        "Als jullie vrij waren, ",
+        {
+          "text": "zouden",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " jullie samen ",
+        {
+          "text": "fietsen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "55962067-780e-4bce-b593-539ca09addb1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "If you had time, you would sit in the park.",
+        "note": "Polite u takes zou."
+      },
+      "content": [
+        "Als u tijd had, ",
+        {
+          "text": "zou",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " u in het park ",
+        {
+          "text": "zitten",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "ed520313-2c48-4c3a-8a5f-577539adeff3"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "info"
+      },
+      "content": "After zou/zouden, use the whole infinitive: zou gaan, zouden zwemmen. Do not conjugate the second verb.",
+      "id": "a885b802-13f7-430c-8e3d-f6feaaefc5a8"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de optie",
+              "meaning": "option",
+              "forms": "de opties",
+              "example": "Een rustig park is ook een optie.",
+              "id": "3b90943b-2423-42dc-8708-62663e5b0100"
+            },
+            {
+              "term": "het alternatief",
+              "meaning": "alternative",
+              "forms": "de alternatieven",
+              "example": "Zwemmen is een alternatief voor schaatsen.",
+              "id": "acb5dd76-4c71-478c-b72c-aa33bc71e6c1"
+            },
+            {
+              "term": "de voorwaarde",
+              "meaning": "condition; requirement",
+              "forms": "de voorwaarden",
+              "example": "De voorwaarde is: als we tijd hadden.",
+              "id": "55bbdc13-daca-49fd-9d32-fa44beeac2d6"
+            },
+            {
+              "term": "de mogelijkheid",
+              "meaning": "possibility",
+              "forms": "de mogelijkheden",
+              "example": "In gedachten is alles een mogelijkheid.",
+              "id": "0a971111-93dc-41d4-9a77-5ee4f3d059dd"
+            },
+            {
+              "term": "de kans",
+              "meaning": "chance",
+              "forms": "de kansen",
+              "example": "Als er een kans was, zou Noor gaan zwemmen.",
+              "id": "d04d896e-6b15-4f5c-8448-51296f706d1a"
+            },
+            {
+              "term": "beschikbaar",
+              "meaning": "available",
+              "example": "Als het zwembad beschikbaar was, zouden ze zwemmen.",
+              "id": "b3017a14-8b6b-4e5a-bc8b-1ee56bbec631"
+            },
+            {
+              "term": "haalbaar",
+              "meaning": "feasible; possible to do",
+              "example": "Als de wandeling kort was, zou die haalbaar zijn.",
+              "id": "40ad92a7-87d5-46b0-bc80-6a27275793f7"
+            },
+            {
+              "term": "overwegen",
+              "meaning": "to consider",
+              "forms": "overweegt · overwoog · overwogen",
+              "example": "Sofia zou een wandeling overwegen.",
+              "id": "66987516-5502-4632-be70-c62e8e551e18"
+            }
+          ]
+        }
+      },
+      "id": "f5450424-b558-4b6c-bd91-b30192ebe67a"
+    },
+    {
+      "type": "paragraph",
+      "content": "You can put dan in the main clause after a fronted condition. It is common, but optional. The main clause keeps V2: dan + zou/zouden + subject + infinitive.",
+      "id": "39eb5243-3882-45dd-a4d5-2105a8f13a09"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "If the weather were nice, I would go to the park.",
+        "note": "Dan is optional. With dan first in the main clause, zou comes before ik."
+      },
+      "content": [
+        "Als het mooi weer was, ",
+        {
+          "text": "dan",
+          "styles": {
+            "bold": true,
+            "italic": true
+          }
+        },
+        " ",
+        {
+          "text": "zou",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ik naar het park ",
+        {
+          "text": "gaan",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "7f4dfb79-4b40-49e4-81ef-429ed35fbc15"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "If Noor had more time, maybe she would go to the swimming pool.",
+        "note": "Misschien is a familiar word; it does not change the word order."
+      },
+      "content": [
+        "Als Noor meer tijd had, zou ze ",
+        {
+          "text": "misschien",
+          "styles": {
+            "italic": true
+          }
+        },
+        " naar het zwembad gaan."
+      ],
+      "id": "ca00e9b7-dcde-4e17-a2a6-3167eefd88e3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Make the condition clear",
+      "id": "3564bcc1-b302-45e4-8968-cc17d2dd769c"
+    },
+    {
+      "type": "paragraph",
+      "content": "A fronted condition is followed by a comma. If the main clause comes first, the condition still has a comma before it. Do not put dan inside the als-clause.",
+      "id": "29627b05-448e-4bc2-a48e-9e4f3a3b58c9"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Start the condition with als.",
+      "id": "d466d7c3-0816-4f86-a9b3-c0c095dbc8e4"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Put the finite verb at the end of the condition.",
+      "id": "1f6970d0-e9ad-4d78-a2eb-cea3a9245c9d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "In the main clause, use zou/zouden + subject + infinitive; dan may come before zou/zouden.",
+      "id": "4ebf5e92-2943-4624-90d7-75a978c2fd85"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "If we had more time, would we walk together then?",
+        "note": "Question intonation is possible; the main clause still has V2 after fronted dan."
+      },
+      "content": [
+        "Als we meer tijd hadden, ",
+        {
+          "text": "zouden",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " we dan samen ",
+        {
+          "text": "wandelen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        "?"
+      ],
+      "id": "6c90efaf-f6f9-42cb-bff5-cee0813fb091"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "besluiten",
+              "meaning": "to decide",
+              "forms": "besluit · besloot · besloten",
+              "example": "Als Noor moest besluiten, zou ze rustig nadenken.",
+              "id": "ddb700c1-7b24-4f9c-be29-539cee92c258"
+            },
+            {
+              "term": "de beslissing",
+              "meaning": "decision",
+              "forms": "de beslissingen",
+              "example": "Ze nemen alleen in gedachten een beslissing.",
+              "id": "0274a412-398f-454a-9071-5fb00be00f74"
+            },
+            {
+              "term": "het voordeel",
+              "meaning": "advantage",
+              "forms": "de voordelen",
+              "example": "Een voordeel van zwemmen is dat het binnen kan.",
+              "id": "151da456-380e-4814-b113-5a00ee523b2d"
+            },
+            {
+              "term": "het nadeel",
+              "meaning": "disadvantage",
+              "forms": "de nadelen",
+              "example": "Een nadeel van wandelen is regen.",
+              "id": "545cf543-f18d-4432-bac8-81f1522ebfd4"
+            },
+            {
+              "term": "de voorkeur",
+              "meaning": "preference",
+              "forms": "de voorkeuren",
+              "example": "Sofia zou de voorkeur aan zwemmen geven.",
+              "id": "f6798dd5-ca66-4409-8e56-84c7e535390d"
+            },
+            {
+              "term": "nadenken over",
+              "meaning": "to think about",
+              "forms": "denkt na · dacht na · nagedacht",
+              "example": "Noor zou over de opties nadenken.",
+              "id": "f960079c-46e8-4816-86dd-abf6a59b5496"
+            },
+            {
+              "term": "de combinatie",
+              "meaning": "combination",
+              "forms": "de combinaties",
+              "example": "Als het zonnig was, zou een wandeling met zwemmen een fijne combinatie zijn.",
+              "id": "f8dabb61-4966-425b-967b-6e96e0bf8104"
+            }
+          ]
+        }
+      },
+      "id": "b55a0b2b-c5ef-4c3b-8913-9716b131ba21"
+    },
+    {
+      "type": "divider",
+      "id": "19beea9b-c4a1-47f1-b7d8-506661d78df0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: imagining a free afternoon",
+      "id": "44096cae-5f84-4c9e-b676-abb1022798bc"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Als we een vrije middag hadden, wat zouden we dan doen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dan zou ik naar het park gaan."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En als het regende?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dan zouden we naar het zwembad gaan."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Zou je ook naar Valencia gaan?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Als ik daar was, zou ik mijn moeder bellen."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Dat klinkt gezellig."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, maar het is alleen een denkbeeldige middag."
+          }
+        ]
+      },
+      "id": "bacf9131-d097-444d-b19e-18e1051a22d2"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": "The English “would” often matches zou/zouden here. Dutch uses zou/zouden with an infinitive, not the future verb zal/zullen. Future choices are for row 36.",
+      "id": "3068bf30-d7e6-4f8e-99d7-c7d5ce7edaa6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "072b37df-fce7-42c5-91f3-af4c3108c32c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "1. Is als temporal or hypothetical?",
+      "id": "cfe5e554-333e-44da-a33c-5d7396cbbb69"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Label each sentence: WHEN (temporal) or IF (hypothetical).",
+          "items": [
+            {
+              "prompt": "Als ik thuiswerk, drink ik thee.",
+              "authorsVersion": [
+                "WHEN"
+              ],
+              "note": "Row 30: this describes a repeated real situation."
+            },
+            {
+              "prompt": "Als ik tijd had, zou ik zwemmen.",
+              "authorsVersion": [
+                "IF"
+              ],
+              "note": "The imagined condition and zou mark a hypothetical."
+            },
+            {
+              "prompt": "Als Noor naar kantoor gaat, neemt ze de bus.",
+              "authorsVersion": [
+                "WHEN"
+              ],
+              "note": "Present tense describes an expected real situation."
+            },
+            {
+              "prompt": "Als Noor meer tijd had, zou ze wandelen.",
+              "authorsVersion": [
+                "IF"
+              ],
+              "note": "Had + zou signals an imagined condition."
+            },
+            {
+              "prompt": "Als Sofia in Valencia was, zou ze haar moeder bellen.",
+              "authorsVersion": [
+                "IF"
+              ],
+              "note": "The location is imagined; bellen is the infinitive."
+            },
+            {
+              "prompt": "Als het regent, nemen we de bus.",
+              "authorsVersion": [
+                "WHEN"
+              ],
+              "note": "A real or expected condition in the present."
+            },
+            {
+              "prompt": "Als we konden kiezen, zouden we zwemmen.",
+              "authorsVersion": [
+                "IF"
+              ],
+              "note": "Konden + zouden expresses an imagined choice."
+            }
+          ]
+        }
+      },
+      "id": "085c8440-cb07-4baf-9af3-7eb61198dd72"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "2. Complete zou or zouden",
+      "id": "d03b05f0-33ba-4842-a0a3-1e95d124d864"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct form of zou or zouden.",
+          "items": [
+            {
+              "prompt": "Ik … naar het park gaan.",
+              "authorsVersion": [
+                "zou"
+              ],
+              "note": "Ik takes zou."
+            },
+            {
+              "prompt": "Noor … liever zwemmen.",
+              "authorsVersion": [
+                "zou"
+              ],
+              "note": "A singular name takes zou."
+            },
+            {
+              "prompt": "Wij … samen wandelen.",
+              "authorsVersion": [
+                "zouden"
+              ],
+              "note": "Wij takes zouden."
+            },
+            {
+              "prompt": "Jullie … naar het zwembad gaan.",
+              "authorsVersion": [
+                "zouden"
+              ],
+              "note": "Jullie takes zouden."
+            },
+            {
+              "prompt": "Sofia en Noor … thuis blijven.",
+              "authorsVersion": [
+                "zouden"
+              ],
+              "note": "A plural subject takes zouden."
+            },
+            {
+              "prompt": "U … daar kunnen zitten.",
+              "authorsVersion": [
+                "zou"
+              ],
+              "note": "Polite u takes zou."
+            },
+            {
+              "prompt": "Als ik thuis was, … ik mijn moeder bellen.",
+              "authorsVersion": [
+                "zou"
+              ],
+              "note": "Ik takes zou; bellen is the infinitive at the end."
+            }
+          ]
+        }
+      },
+      "id": "42ab9695-ae98-4401-b98e-3c25888338e9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "3. Put the words in order",
+      "id": "b557b71f-a2d7-47e8-adfd-e72c65e11ee8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Build a correct sentence. Keep the comma.",
+          "items": [
+            {
+              "prompt": "Put in order: tijd / als / had / ik / zou / zwemmen / ik",
+              "authorsVersion": [
+                "Als ik tijd had, zou ik zwemmen."
+              ],
+              "note": "Verb had ends the condition; zwemmen ends the main clause."
+            },
+            {
+              "prompt": "Put in order: als / Noor / vrij / was / zou / ze / wandelen",
+              "authorsVersion": [
+                "Als Noor vrij was, zou ze wandelen."
+              ],
+              "note": "The singular subject ze takes zou."
+            },
+            {
+              "prompt": "Put in order: we / als / tijd / hadden / zouden / samen / koken / we",
+              "authorsVersion": [
+                "Als we tijd hadden, zouden we samen koken."
+              ],
+              "note": "Fronted condition, comma, then zou/zouden in V2 position."
+            },
+            {
+              "prompt": "Put in order: als / het / zonnig / was / dan / zou / ik / fietsen",
+              "authorsVersion": [
+                "Als het zonnig was, dan zou ik fietsen."
+              ],
+              "note": "Dan is optional: Als het zonnig was, zou ik fietsen."
+            },
+            {
+              "prompt": "Put in order: Valencia / als / ik / in / was / zou / ik / mijn moeder / bellen",
+              "authorsVersion": [
+                "Als ik in Valencia was, zou ik mijn moeder bellen."
+              ],
+              "note": "Was ends the condition; bellen ends the main clause."
+            },
+            {
+              "prompt": "Put in order: zwemmen / zou / Noor / als / tijd / had / ze",
+              "authorsVersion": [
+                "Noor zou zwemmen als ze tijd had."
+              ],
+              "note": "The main clause can come first; the following als-clause remains verb-final."
+            }
+          ]
+        }
+      },
+      "id": "d18dbe2e-fab3-4f09-b2a9-341ca4b2ccde"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "4. Change it into an imagined choice",
+      "id": "e7e123a5-569c-4e7c-a5d8-1afd8a2b09d1"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite with als + a hypothetical condition and zou/zouden. Keep the meaning.",
+          "items": [
+            {
+              "prompt": "I have time. I go swimming. (imagine more time)",
+              "authorsVersion": [
+                "Als ik meer tijd had, zou ik gaan zwemmen."
+              ],
+              "note": "Use had for the imagined condition and zou + infinitive gaan; zwemmen follows gaan."
+            },
+            {
+              "prompt": "Noor is free. She walks in the park. (imagine)",
+              "authorsVersion": [
+                "Als Noor vrij was, zou ze in het park wandelen."
+              ],
+              "note": "Singular ze takes zou."
+            },
+            {
+              "prompt": "We are in Valencia. We call Sofia’s mother. (imagine)",
+              "authorsVersion": [
+                "Als we in Valencia waren, zouden we Sofia’s moeder bellen."
+              ],
+              "note": "Plural we takes waren and zouden."
+            },
+            {
+              "prompt": "The weather is sunny. We sit outside. (imagine)",
+              "authorsVersion": [
+                "Als het zonnig was, zouden we buiten zitten."
+              ],
+              "note": "The subordinate finite verb was goes at the end."
+            },
+            {
+              "prompt": "I choose between swimming and skating. I choose swimming. (imagine)",
+              "authorsVersion": [
+                "Als ik moest kiezen, zou ik zwemmen."
+              ],
+              "note": "The fixed conditional uses moest + kiezen; the main clause has zou + zwemmen."
+            },
+            {
+              "prompt": "Sofia has a free afternoon. She goes to Valencia. (imagine)",
+              "authorsVersion": [
+                "Als Sofia een vrije middag had, zou ze naar Valencia gaan."
+              ],
+              "note": "Do not present this as a real plan."
+            }
+          ]
+        }
+      },
+      "id": "7ab9cf68-10f5-4bab-8296-24b9f52ca5fc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "5. Finish the conversation",
+      "id": "625cb75c-1b89-495d-a037-fd92dd3cc8be"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in each blank with one word. Use the cue in parentheses.",
+          "items": [
+            {
+              "prompt": "Sofia: Als ik tijd … (had), zou ik wandelen.",
+              "authorsVersion": [
+                "had"
+              ]
+            },
+            {
+              "prompt": "Noor: En als we samen tijd … (had, plural)?",
+              "authorsVersion": [
+                "hadden"
+              ]
+            },
+            {
+              "prompt": "Sofia: Dan … we naar het park gaan. (would, plural)",
+              "authorsVersion": [
+                "zouden"
+              ]
+            },
+            {
+              "prompt": "Noor: … jij liever zwemmen? (would, singular)",
+              "authorsVersion": [
+                "Zou"
+              ]
+            },
+            {
+              "prompt": "Sofia: Als het zonnig …, zou ik buiten zitten. (was)",
+              "authorsVersion": [
+                "was"
+              ]
+            },
+            {
+              "prompt": "Noor: Als het regende, … ik naar het zwembad gaan. (would, singular)",
+              "authorsVersion": [
+                "zou"
+              ]
+            },
+            {
+              "prompt": "Sofia: Wat … we doen als we vrij waren? (would, plural)",
+              "authorsVersion": [
+                "zouden"
+              ]
+            }
+          ]
+        }
+      },
+      "id": "e90951fa-0b63-4da9-b8d9-dd00fa180fd1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "6. Translate into Dutch",
+      "id": "ceb90c6e-8929-47c0-a776-a43c883e46a3"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. These are imagined situations.",
+          "items": [
+            {
+              "prompt": "If I had time, I would go to the park.",
+              "authorsVersion": [
+                "Als ik tijd had, zou ik naar het park gaan."
+              ],
+              "note": "Also fine: Als ik meer tijd had, zou ik naar het park gaan."
+            },
+            {
+              "prompt": "If Noor were free, she would swim.",
+              "authorsVersion": [
+                "Als Noor vrij was, zou ze zwemmen."
+              ],
+              "note": "A singular name takes zou."
+            },
+            {
+              "prompt": "If we had a free afternoon, we would walk together.",
+              "authorsVersion": [
+                "Als we een vrije middag hadden, zouden we samen wandelen."
+              ],
+              "note": "Plural we takes zouden."
+            },
+            {
+              "prompt": "If the weather were nice, I would sit outside.",
+              "authorsVersion": [
+                "Als het mooi weer was, zou ik buiten zitten."
+              ],
+              "note": "The condition has verb-final was."
+            },
+            {
+              "prompt": "If I were in Valencia, I would call my mother.",
+              "authorsVersion": [
+                "Als ik in Valencia was, zou ik mijn moeder bellen."
+              ],
+              "note": "This is imagined, not a new story event."
+            },
+            {
+              "prompt": "If you (plural) could choose, would you swim?",
+              "authorsVersion": [
+                "Als jullie konden kiezen, zouden jullie dan zwemmen?"
+              ],
+              "note": "Also fine without dan. Jullie takes zouden."
+            }
+          ]
+        }
+      },
+      "id": "01f008fd-0e84-4953-8e34-c7fd5e9b3fe6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "7. Translate into English",
+      "id": "f38f3521-62d5-4f56-b5c4-5af266b6a107"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Als ik tijd had, zou ik naar het park gaan.",
+              "authorsVersion": [
+                "If I had time, I would go to the park."
+              ],
+              "note": "Hypothetical als means if."
+            },
+            {
+              "prompt": "Als we in Valencia waren, zouden we Sofia’s moeder bellen.",
+              "authorsVersion": [
+                "If we were in Valencia, we would call Sofia’s mother."
+              ],
+              "note": "Waren is the plural past form used in the imagined condition."
+            },
+            {
+              "prompt": "Als het zonnig was, zou Noor buiten zitten.",
+              "authorsVersion": [
+                "If it were sunny, Noor would sit outside."
+              ],
+              "note": "Zou + infinitive zitten."
+            },
+            {
+              "prompt": "Ik zou zwemmen als ik kon kiezen.",
+              "authorsVersion": [
+                "I would swim if I could choose."
+              ],
+              "note": "The condition follows the main clause."
+            },
+            {
+              "prompt": "Als ik thuiswerk, drink ik thee.",
+              "authorsVersion": [
+                "When I work from home, I drink tea."
+              ],
+              "note": "This is temporal als, recycled from row 30."
+            },
+            {
+              "prompt": "Als we tijd hadden, zouden we dan samen wandelen.",
+              "authorsVersion": [
+                "If we had time, we would walk together then."
+              ],
+              "note": "Dan is optional/frequent; it does not change the conditional meaning."
+            }
+          ]
+        }
+      },
+      "id": "98157b23-797e-40ac-bd9e-7b69cd930f70"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "8. Reading: Een denkbeeldige middag",
+      "id": "6fbd4c41-0e00-4147-91d4-17d8cf005e7c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the passage and answer in Dutch.",
+          "items": [
+            {
+              "prompt": "Waar zijn Sofia en Noor in het verhaal?",
+              "authorsVersion": [
+                "Ze zijn in Utrecht."
+              ],
+              "note": "They imagine activities; the scene is not a trip."
+            },
+            {
+              "prompt": "Wat zou Sofia doen als ze meer tijd had?",
+              "authorsVersion": [
+                "Ze zou naar het park gaan."
+              ],
+              "note": "The text says she would go to the park."
+            },
+            {
+              "prompt": "Wat zouden ze doen als het regende?",
+              "authorsVersion": [
+                "Ze zouden naar het zwembad gaan."
+              ],
+              "note": "Plural ze takes zouden."
+            },
+            {
+              "prompt": "Wat zou Sofia doen als ze in Valencia was?",
+              "authorsVersion": [
+                "Ze zou haar moeder bellen."
+              ],
+              "note": "This is hypothetical, not a real visit."
+            },
+            {
+              "prompt": "Gaan Sofia en Noor nu echt naar het zwembad?",
+              "authorsVersion": [
+                "Nee, ze gaan nu niet echt naar het zwembad."
+              ],
+              "note": "The last sentence says there is no actual plan."
+            },
+            {
+              "prompt": "Is “Als ik thuiswerk, drink ik thee” een voorwaarde of een gewoonte?",
+              "authorsVersion": [
+                "Een gewoonte."
+              ],
+              "note": "Temporal als means when and describes a repeated situation."
+            },
+            {
+              "prompt": "Noem één activiteit die Noor en Sofia samen zouden doen.",
+              "authorsVersion": [
+                "Ze zouden samen zwemmen."
+              ],
+              "note": "Also fine: Ze zouden samen naar het zwembad gaan."
+            }
+          ],
+          "passage": {
+            "title": "Een denkbeeldige middag",
+            "content": "Sofia en Noor praten in Utrecht over een denkbeeldige middag. Ze maken geen afspraak. Als Sofia meer tijd had, zou ze naar het park gaan. Als het zonnig was, zou ze buiten zitten. Als het regende, zouden Noor en Sofia naar het zwembad gaan. Als Sofia in Valencia was, zou ze haar moeder bellen. Daarna zouden ze samen thee drinken. Maar vandaag hebben ze geen vrije middag. Het is alleen een denkbeeldig verhaal."
+          }
+        }
+      },
+      "id": "e0d846c5-11ff-45c3-9c1f-e0083163d64a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Your turn",
+      "id": "7ec5fb10-45e5-4058-8bf3-dbe123e6f2b8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about an imagined free afternoon. Use als + a verb at the end and zou/zouden + an infinitive.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about an imagined free afternoon.",
+              "authorsVersion": [
+                "Als ik een vrije middag had, zou ik naar het park gaan. Als het zonnig was, zou ik buiten zitten. Als Noor ook tijd had, zouden we samen wandelen."
+              ],
+              "note": "Model answer only; this does not establish a real preference or plan."
+            }
+          ]
+        }
+      },
+      "id": "1d3255c8-b4f2-4ec4-9ab0-402f7d223d15"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "6fc8133e-202c-4161-9748-585ca9a6c4b9"
+    },
+    {
+      "type": "paragraph",
+      "content": "Remember: hypothetical als means “if”; the finite verb ends its clause. Use zou with a singular subject and zouden with plural or polite u, followed by an infinitive at the end. Dan is optional after a fronted condition.",
+      "id": "e1bd3860-8eee-4998-b844-2e2f12ff15d8"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: a few imagined choices",
+      "description": "Sofia and Noor sit at a café table in Utrecht and imagine choices for a free afternoon; a simple sketch map shows a park and swimming pool, with thought bubbles clearly marking imagined possibilities.",
+      "alt": "Sofia and Noor imagining a free afternoon in Utrecht."
+    },
+    {
+      "afterHeading": "Story: imagining a free afternoon",
+      "description": "A split illustration of the imagined options: a sunny park on one side and an indoor swimming pool on the other, with Sofia and Noor pictured as thought-bubble silhouettes rather than taking a real trip.",
+      "alt": "Two imagined choices for a free afternoon, a park or a swimming pool."
+    }
+  ],
+  "id": "6aeafc17-c280-463c-8596-757cd0b023f3"
+}

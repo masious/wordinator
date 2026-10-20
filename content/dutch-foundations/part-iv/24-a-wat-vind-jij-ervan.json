@@ -1,0 +1,1508 @@
+{
+  "title": "Wat vind jij ervan?",
+  "goal": "Ask for and give opinions in main clauses, agree and disagree.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Wat vind jij ervan?",
+      "id": "89d9782c-e926-48f0-9ca5-015f645fdbf2"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Saturday 12 December, 19.00. Sofia welcomes her friends to her housewarming at Kastanjestraat 14.",
+      "id": "74082d73-fa98-4101-9c76-cb3fcb5d107e"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sofia makes paella, Piotr and Kasia bring pierogi, and Noor brings boerenkoolstamppot. In this lesson you will ask for opinions, agree and disagree politely, and say what you think.",
+      "id": "273c1736-15fe-4d8a-9343-e60245f87ef5"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de paella",
+              "meaning": "paella",
+              "forms": "de paella’s",
+              "example": "Ik vind de paella heerlijk.",
+              "id": "1bc19778-6b35-4427-bb2b-56dcba786968"
+            },
+            {
+              "term": "de stamppot",
+              "meaning": "a Dutch dish of mashed potatoes and vegetables",
+              "forms": "de stamppotten",
+              "example": "De stamppot vind ik lekkerder.",
+              "id": "3b43aba7-6579-43d7-a60f-d39aeb5d9e15"
+            },
+            {
+              "term": "de boerenkool",
+              "meaning": "kale, often eaten in stamppot",
+              "example": "Noor maakt boerenkoolstamppot.",
+              "id": "c8e297fa-60fa-40a7-9fd6-38861820ea80"
+            },
+            {
+              "term": "de boerenkoolstamppot",
+              "meaning": "kale mash, a Dutch dish",
+              "example": "Noor brengt boerenkoolstamppot mee.",
+              "id": "3d140919-d123-4762-925b-c9953e0d05d0"
+            },
+            {
+              "term": "de pierogi",
+              "meaning": "Polish dumplings (plural)",
+              "example": "De pierogi zijn heerlijk.",
+              "note": "Plural form; the word is used as plural in this lesson.",
+              "id": "0b649f64-2a4b-4daa-a73a-122491edea8d"
+            }
+          ]
+        }
+      },
+      "id": "34f2d2b5-0488-4233-b929-1b102170b9c0"
+    },
+    {
+      "type": "paragraph",
+      "content": "New opinion forms are bold with a yellow highlight. English glosses are italic.",
+      "id": "07a18ce8-96c8-4c0c-be58-82dbccfea028"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: around the dinner table",
+      "id": "87047f81-eacd-46b2-afd3-41b2320c0b29"
+    },
+    {
+      "type": "paragraph",
+      "content": "Daan and Lotte arrive together. Henk brings cheese, Daan brings wine, and everyone sits down to eat.",
+      "id": "e3a13ff6-53e5-45ee-8041-dd440bb66886"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Goedenavond, allemaal! Hier is de paella. Eet smakelijk!"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Wat vind je van de paella, Henk?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Ik vind hem heerlijk. Maar de stamppot vind ik lekkerder."
+          },
+          {
+            "speaker": "Fleur",
+            "text": "Ik ben het niet met je eens, Henk! De paella is heerlijk."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ik ben het met Fleur eens. Wat vind je van de boerenkoolstamppot?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Die vind ik ook lekker. Eerlijk gezegd vind ik allebei lekker."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Wat vind jij van de pierogi, Sofia?"
+          },
+          {
+            "speaker": "Kasia",
+            "text": "Ik vind ze heerlijk. De paella is ook lekker."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dat vind ik ook. Piotr, je hebt gelijk: de pierogi zijn heerlijk."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Wat is jouw mening, Sofia?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik vind alles lekker. Het is een gezellige avond."
+          }
+        ]
+      },
+      "id": "4225dbc5-8f30-4629-80a7-0363790da73d"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de mening",
+              "meaning": "the opinion",
+              "forms": "de meningen",
+              "example": "Wat is jouw mening, Sofia?",
+              "id": "5009222a-7515-4aa6-86c5-e30bb45dcf16"
+            },
+            {
+              "term": "Wat vind je van …?",
+              "meaning": "What do you think of …?",
+              "example": "Wat vind je van de paella?",
+              "id": "b99554f9-4195-44ed-8096-d4d3c5dc9cff"
+            },
+            {
+              "term": "het eens zijn met",
+              "meaning": "to agree with",
+              "example": "Ik ben het met Fleur eens.",
+              "id": "e93c7b97-573f-47ff-98a8-89f47e9127e2"
+            },
+            {
+              "term": "Ik ben het (niet) met je eens.",
+              "meaning": "I agree / disagree with you.",
+              "example": "Ik ben het niet met je eens, Henk.",
+              "id": "a2d692d3-2c7c-40de-b697-51e004bc3eb5"
+            },
+            {
+              "term": "gelijk hebben",
+              "meaning": "to be right",
+              "forms": "heeft gelijk · had gelijk · gelijk gehad",
+              "example": "Je hebt gelijk.",
+              "id": "f0bc4731-3df8-47d6-a577-655b97013492"
+            },
+            {
+              "term": "Je hebt gelijk.",
+              "meaning": "You’re right.",
+              "example": "Piotr, je hebt gelijk.",
+              "id": "f73cdc16-b24e-4717-9d6b-1bef3c7b7f75"
+            },
+            {
+              "term": "Dat vind ik ook.",
+              "meaning": "I think so too.",
+              "example": "Dat vind ik ook.",
+              "id": "4f7ef9d9-068a-4aee-9bff-ba101548c779"
+            },
+            {
+              "term": "eerlijk",
+              "meaning": "honest; honestly",
+              "example": "Eerlijk gezegd vind ik allebei lekker.",
+              "id": "eb14cae1-8d89-4588-ae94-f6135932a788"
+            },
+            {
+              "term": "allebei",
+              "meaning": "both (of two things)",
+              "example": "Ik vind allebei lekker.",
+              "id": "db7d80e4-9663-4ad8-a6b1-8d0457fd89e5"
+            },
+            {
+              "term": "Eerlijk gezegd",
+              "meaning": "honestly; to be honest",
+              "example": "Eerlijk gezegd vind ik allebei lekker.",
+              "id": "916a510f-f628-40ad-8fb8-841e5418a7b6"
+            }
+          ]
+        }
+      },
+      "id": "b96ba2d8-9b77-432d-a9b5-b620b49a521d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Give an opinion with vinden",
+      "id": "99a81a50-4a16-43ad-b3c5-122ca8b5437b"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use vinden for a personal opinion about a taste, thing or place. The object comes after vinden; the adjective comes after the object.",
+      "id": "59831edf-89c2-4530-a570-74be3aff8b62"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think the paella is delicious.",
+        "note": "This extends the known pattern Ik vind … leuk / lekker (19-a)."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "vind",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " de paella heerlijk."
+      ],
+      "id": "46d35423-51e6-48c0-970f-b21fdb5bd544"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think it is delicious.",
+        "note": "Hem replaces de paella, a de-word. The object pronoun comes after vind."
+      },
+      "content": [
+        "Ik vind ",
+        {
+          "text": "hem",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " heerlijk."
+      ],
+      "id": "5e8ec0a6-228c-426d-aa02-a1b3fc64c08e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think it is nice.",
+        "note": "Het replaces an het-word noun."
+      },
+      "content": [
+        "Ik vind ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " mooi."
+      ],
+      "id": "73b0b8c2-ce1d-4348-ba8c-5d458e8dea2d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think they are tasty.",
+        "note": "Ze replaces a plural noun such as pierogi."
+      },
+      "content": [
+        "Ik vind ",
+        {
+          "text": "ze",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " lekker."
+      ],
+      "id": "6f4defcb-6322-4520-b48b-7f81f11f7b2c"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "vinden + object + adjective. Replace a de-word with hem, an het-word with het, and a plural with ze: Ik vind hem lekker.",
+      "id": "b59739d1-5ef2-41d4-9bc6-f3303e6d1ae3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Ask what someone thinks",
+      "id": "c6057534-d868-4b53-8419-b754368852ed"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Ask ",
+        {
+          "text": "Wat vind je van …?",
+          "styles": {
+            "bold": true,
+            "italic": true
+          }
+        },
+        " before a noun. For a person, you can say ",
+        {
+          "text": "Wat vind je van hem?",
+          "styles": {
+            "italic": true
+          }
+        },
+        ". The full question ",
+        {
+          "text": "Wat vind jij ervan?",
+          "styles": {
+            "bold": true,
+            "italic": true
+          }
+        },
+        " is a fixed chunk meaning “What do you think of it?”"
+      ],
+      "id": "401be3cf-20f8-4006-b995-20cff6bba8a9"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Wat vind jij ervan?",
+              "meaning": "What do you think of it?",
+              "example": "Wat vind jij ervan, Sofia?",
+              "note": "Fixed chunk; only ervan is used as an er-form here.",
+              "id": "6794f26d-1f29-480a-90a2-faa5a99732d0"
+            }
+          ]
+        }
+      },
+      "id": "a29c9019-010a-4494-8000-78f78fd32568"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What do you think of the stamppot?",
+        "note": "Use vinden for an opinion about the food."
+      },
+      "content": [
+        "Wat ",
+        {
+          "text": "vind",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " je van de stamppot?"
+      ],
+      "id": "39454ea1-9608-46a8-9b66-3b58c7e8fb11"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What do you think of him?",
+        "note": "Van is followed by the object form hem."
+      },
+      "content": [
+        "Wat vind jij van ",
+        {
+          "text": "hem",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "?"
+      ],
+      "id": "eaf88ae4-5cc4-420d-950d-415824049f54"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "What do you think of it?",
+        "note": "Fixed chunk; ervan is not a general system in this lesson."
+      },
+      "content": [
+        "Wat vind jij ",
+        {
+          "text": "ervan",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "?"
+      ],
+      "id": "56d108f7-d837-4150-82d7-0b09043eb6c7"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": "*Ik vind het de paella lekker.* → Ik vind de paella lekker. Do not put het before a noun that is already the object.",
+      "id": "7d122201-a219-47be-bcd4-fa4041101e9d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Opinion words",
+      "id": "9faf9f01-5398-4d8c-bebc-44a9cc4e0520"
+    },
+    {
+      "type": "paragraph",
+      "content": "Many adjectives can follow the object: lekker, grappig, saai, spannend, vies, raar and gezellig. Grappig, saai, spannend, lekker and gezellig are recycled from earlier lessons.",
+      "id": "1818f3cf-3918-4e52-8d2d-4ca63a8acf66"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "vies",
+              "meaning": "disgusting; unpleasant in taste",
+              "example": "Ik vind de kaas vies.",
+              "id": "6ea9ddcf-6811-4a89-9235-1bd1487fcd95"
+            },
+            {
+              "term": "raar",
+              "meaning": "strange; odd",
+              "example": "Ik vind de pierogi raar.",
+              "id": "c81687fa-6f42-401b-9a11-c47363ffd90d"
+            }
+          ]
+        }
+      },
+      "id": "5e6798c9-3e99-42fa-87ed-7ecc14aca910"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think the cheese tastes bad.",
+        "note": "vies describes an unpleasant taste."
+      },
+      "content": [
+        "Ik vind de kaas ",
+        {
+          "text": "vies",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "d4062392-06ec-4e04-9dbb-bdb5cbcb03bc"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Use vies for food you dislike.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Ik vind de kaas vies.",
+          "id": "1cf1c2a9-bca7-4e06-8698-e66c2a645b48"
+        }
+      ],
+      "id": "29500b96-9be1-431a-bdf8-851b546f4315"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Use gezellig for a pleasant evening or place.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Ik vind de avond gezellig.",
+          "id": "7144aaaf-874b-455a-8163-a02ad1655b50"
+        }
+      ],
+      "id": "73441c77-f1cc-4998-8626-2b5f44e1ae3e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "denken or vinden?",
+      "id": "57338a62-e248-4140-af0e-fe15a5016e21"
+    },
+    {
+      "type": "paragraph",
+      "content": "vinden gives a personal judgement or taste opinion. denken expresses what you believe or expect. Keep each idea in a main clause; the dat-clause comes in 24-b.",
+      "id": "75ae263f-10f6-40c2-9cf0-60e524b113f7"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "denken",
+              "meaning": "to think, believe",
+              "forms": "denkt · dacht · gedacht",
+              "example": "Ik denk het niet.",
+              "id": "eafae6f9-76ae-4fc1-b872-67079c016e20"
+            }
+          ]
+        }
+      },
+      "id": "e1df45a9-4a11-4690-8696-01ab38c1af20"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think Utrecht is beautiful.",
+        "note": "An opinion or judgement: use vinden."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "vind",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " Utrecht mooi."
+      ],
+      "id": "0aebddd4-b79c-4de3-8837-d3fe3d44a020"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I don’t think so.",
+        "note": "A belief or expectation: denken + het + niet."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "denk",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " het niet."
+      ],
+      "id": "c33caacc-0246-4404-a654-04263423c377"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Ik denk het wel. / Ik denk het niet.",
+              "meaning": "I think so. / I don’t think so.",
+              "example": "Ik denk het wel.",
+              "id": "c5869774-c9f7-4cb0-b354-8d460a0ea911"
+            }
+          ]
+        }
+      },
+      "id": "08c9bfc9-6e85-4ad7-b21b-9a905d8db833"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": "vinden can mean “to find” a lost object, but with an adjective it means “to think / consider.” Wat denk je van de paella? can suggest “How about paella?”; ask Wat vind je van de paella? for an opinion.",
+      "id": "4e387df9-e1ea-46ee-b48c-a688c879f6ec"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "Ik denk het wel / niet answers what you believe. Ik vind van wel / niet gives your opinion as yes or no.",
+      "id": "8e43b014-6f31-4c3d-bc4a-b7be05b9923a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Ik denk van wel. / Ik denk van niet.",
+              "meaning": "I think so. / I don’t think so.",
+              "example": "Ja, ik denk van wel.",
+              "id": "7d9792d4-1ab7-44c4-bbdc-1985cb036c93"
+            },
+            {
+              "term": "Ik vind van wel. / Ik vind van niet.",
+              "meaning": "I think so. / I don’t think so (giving an opinion).",
+              "example": "Ik vind van wel.",
+              "id": "eb1c5eec-7560-4a40-90bc-e9d41384405a"
+            }
+          ]
+        }
+      },
+      "id": "2b897c21-8f3a-461f-8554-6c34d7696ae7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Agree and disagree",
+      "id": "0edb2e9a-ae2c-42eb-b813-c1fd9f65de2f"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use these short replies to respond politely. The phrase het eens zijn met uses met; keep het in the sentence.",
+      "id": "577daa07-55c3-44d8-a900-ae8b3f42c203"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Agree",
+              "id": "e2a23189-4b14-4969-82ea-6a4802f67445"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Je hebt gelijk.",
+              "id": "a0407d74-e98a-4644-9acc-e04896abc045"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik ben het met je eens.",
+              "id": "678468af-a284-4c1f-8eb9-b796313d0d59"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Dat vind ik ook.",
+              "id": "8bdd7eea-7258-45f4-a809-ab2faa8ce41d"
+            }
+          ],
+          "id": "29cdd98e-1696-40f7-a274-820d0e1617ea"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Disagree",
+              "id": "ef1ddb77-a5e7-487d-bb2c-ec95f54fdf30"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik ben het niet met je eens.",
+              "id": "74e89aed-ff03-496e-8287-7b3e8a6ac374"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik vind van niet.",
+              "id": "0bb7c585-a000-4bfd-84e4-a0899cb88a40"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik denk het niet.",
+              "id": "59638b00-909c-4464-8a2a-9ce1d9738537"
+            }
+          ],
+          "id": "e81af6e6-8a8f-4433-86be-9381c3f3358a"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Not sure",
+              "id": "7e27965a-596c-4c2c-9e72-cdff8a37ea15"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Misschien.",
+              "id": "1fa30c2a-e945-4f01-828b-b71d012f114a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik weet het niet.",
+              "id": "0524c967-739b-4216-b513-3b04faeab16f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik twijfel.",
+              "id": "d016eb2d-59b7-42eb-afe3-cbc04929df74"
+            }
+          ],
+          "id": "18d10715-3bc0-4911-9ab0-c85b88964b07"
+        }
+      ],
+      "id": "74ae02dd-4a7a-4c9e-9bcf-c9ccf4c2cbcd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I agree with you.",
+        "note": "Fixed pattern: Ik ben het met … eens."
+      },
+      "content": [
+        "Ik ben het met je ",
+        {
+          "text": "eens",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "ae2142a0-f633-4a83-99b7-164e57e31ae2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I don’t agree with Henk.",
+        "note": "Niet comes before met."
+      },
+      "content": [
+        "Ik ben het ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " met Henk eens."
+      ],
+      "id": "4ae716bc-1db0-488c-a050-d9e36952e004"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You’re right.",
+        "note": "Recycles hebben from earlier lessons."
+      },
+      "content": [
+        "Je hebt ",
+        {
+          "text": "gelijk",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "effc6c47-5857-4c04-9fb4-b9581bd3068c"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": "*Ik ben eens met jou.* → Ik ben het met je eens. Keep het in this phrase and put met before the person.",
+      "id": "e8665548-f807-4b8f-82c7-bf412eaba387"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": "Dutch friends often say their food opinions directly, while still keeping the conversation friendly. Stamppot with boerenkool is a familiar winter meal; a housewarming is a relaxed chance to share food and welcome friends into a new home.",
+      "id": "5eeb06c8-9b08-4b4b-a139-3bee9ef1dec3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "According to me: volgens mij",
+      "id": "e0aa74e9-2cc0-4a8f-bba1-4bdfc9d91a65"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "volgens mij",
+              "meaning": "in my opinion; I think",
+              "example": "Volgens mij gaat het volgende week sneeuwen.",
+              "id": "b741ec03-291b-4d95-b92d-c49ed5fc6cfd"
+            }
+          ]
+        }
+      },
+      "id": "85733b38-2ebd-41cb-8582-d875e588bbe5"
+    },
+    {
+      "type": "paragraph",
+      "content": "Volgens mij means “in my opinion.” It is one phrase at the start of a sentence, so the finite verb comes next and the subject follows it.",
+      "id": "3c9f6a2d-39a5-444c-beac-84f082df482a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think it will snow next week.",
+        "note": "Volgens mij is first; the finite verb gaat comes next, then subject het. Weather and gaan + infinitive are recycled from 17-a."
+      },
+      "content": [
+        "",
+        {
+          "text": "Volgens mij",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " gaat het volgende week sneeuwen."
+      ],
+      "id": "587b9d32-e909-40e9-954e-bfe167e0bc73"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "Volgens mij + finite verb + subject + rest. Example: Volgens mij gaat het sneeuwen.",
+      "id": "093290fd-ff28-4f18-ac84-fedfd470cd91"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: by the balcony door",
+      "id": "19144b00-1823-4337-93d1-2cd844f453a1"
+    },
+    {
+      "type": "paragraph",
+      "content": "Daan, Piotr and Sofia stand by the open balcony door. They talk about the weather and cycling.",
+      "id": "84df8787-bcb0-40b4-8979-0a17ae09ac34"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Volgens mij gaat het volgende week sneeuwen."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ik denk het niet. Het is niet koud genoeg."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Wat vind jij ervan, Sofia?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik denk het wel. Het is koud."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Denk je van wel?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ik denk van wel."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Vind je sneeuw leuk?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik vind van wel. Maar fietsen in de sneeuw vind ik niet leuk."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ik vind van niet. Ik fiets liever bij droog weer."
+          }
+        ]
+      },
+      "id": "6c8a8533-444b-458b-afa7-3a913e34eb7c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "d43c7fc7-444a-4f45-b3e1-3add3d4fd7ff"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in vinden, denken or an object pronoun",
+      "id": "0e17bbe9-2c10-4c12-8774-f6c585ed3b25"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct form. Some items have two blanks.",
+          "items": [
+            {
+              "prompt": "Ik … de paella heerlijk.",
+              "authorsVersion": [
+                "vind"
+              ],
+              "note": "Use vinden to give a taste opinion."
+            },
+            {
+              "prompt": "Ik vind de paella lekker. De paella? Ik vind … heerlijk.",
+              "authorsVersion": [
+                "hem"
+              ],
+              "note": "Paella is a de-word, so use hem."
+            },
+            {
+              "prompt": "Wat … je van de stamppot?",
+              "authorsVersion": [
+                "vind"
+              ],
+              "note": "Use vinden to ask for an opinion."
+            },
+            {
+              "prompt": "Ik vind de pierogi lekker. Ik vind … ook heerlijk.",
+              "authorsVersion": [
+                "ze"
+              ],
+              "note": "Pierogi is plural, so use ze."
+            },
+            {
+              "prompt": "Ik … het niet. Het is warm buiten.",
+              "authorsVersion": [
+                "denk"
+              ],
+              "note": "Use denken for a belief or expectation."
+            },
+            {
+              "prompt": "De film? Ik vind … grappig.",
+              "authorsVersion": [
+                "hem"
+              ],
+              "note": "Film is a de-word; use hem."
+            },
+            {
+              "prompt": "Het feest? Ik vind … gezellig.",
+              "authorsVersion": [
+                "het"
+              ],
+              "note": "Feest is an het-word; use het."
+            },
+            {
+              "prompt": "Wat vind jij …? (the paella)",
+              "authorsVersion": [
+                "van de paella"
+              ],
+              "note": "Wat vind je van + noun asks for an opinion."
+            }
+          ]
+        }
+      },
+      "id": "f5a68382-1f3f-44ed-ab89-53baed09a68f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the table conversation",
+      "id": "7e24efcf-7062-4a58-aa53-280d4657cb87"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each exchange with the right word or short phrase.",
+          "items": [
+            {
+              "prompt": "Noor: Wat vind je … de paella? / Henk: Ik vind … heerlijk.",
+              "authorsVersion": [
+                "van",
+                "hem"
+              ],
+              "note": "Ask with Wat vind je van; hem replaces the de-word paella."
+            },
+            {
+              "prompt": "Fleur: Ik ben het niet met … eens. / Henk: Dat vind ik … .",
+              "authorsVersion": [
+                "je",
+                "ook"
+              ],
+              "note": "The set phrase is het met je eens; ook agrees with the previous opinion."
+            },
+            {
+              "prompt": "Sofia: Wat vind je van de pierogi? / Kasia: Ik vind … heerlijk.",
+              "authorsVersion": [
+                "ze"
+              ],
+              "note": "Plural food takes ze."
+            },
+            {
+              "prompt": "Noor: De stamppot is lekker. / Henk: Je hebt … .",
+              "authorsVersion": [
+                "gelijk"
+              ],
+              "note": "Je hebt gelijk means “You’re right.”"
+            },
+            {
+              "prompt": "Daan: Ik vind paella lekker. / Sofia: Dat … ik ook.",
+              "authorsVersion": [
+                "vind"
+              ],
+              "note": "Use the fixed reply Dat vind ik ook."
+            },
+            {
+              "prompt": "Fleur: Ik … het met Henk eens. / Noor: Ik … het niet met hem eens.",
+              "authorsVersion": [
+                "ben",
+                "ben"
+              ],
+              "note": "The phrase is ik ben het met iemand eens; insert niet before met for disagreement."
+            }
+          ]
+        }
+      },
+      "id": "289ece12-dedf-495b-a3be-1232a15a32b4"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Put the words in order",
+      "id": "b6d3ebd9-c2a4-43af-8ce8-1c58ba6bcd01"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: volgens mij / gaat / sneeuwen / het / volgende week",
+              "authorsVersion": [
+                "Volgens mij gaat het volgende week sneeuwen."
+              ],
+              "note": "Volgens mij is first; the verb goes next, then the subject."
+            },
+            {
+              "prompt": "Put in order: lekker / ik / vind / de paella",
+              "authorsVersion": [
+                "Ik vind de paella lekker."
+              ],
+              "note": "vinden + object + adjective."
+            },
+            {
+              "prompt": "Put in order: ervan / wat / vind / jij",
+              "authorsVersion": [
+                "Wat vind jij ervan?"
+              ],
+              "note": "This is the fixed question chunk."
+            },
+            {
+              "prompt": "Put in order: eens / het / met / ik / ben / je",
+              "authorsVersion": [
+                "Ik ben het met je eens."
+              ],
+              "note": "Keep het in the phrase; met comes before the person."
+            },
+            {
+              "prompt": "Put in order: niet / het / denk / ik",
+              "authorsVersion": [
+                "Ik denk het niet."
+              ],
+              "note": "The chunk is denken + het + niet."
+            },
+            {
+              "prompt": "Put in order: hem / ik / vind / heerlijk",
+              "authorsVersion": [
+                "Ik vind hem heerlijk."
+              ],
+              "note": "The object pronoun comes after vind and before the adjective."
+            },
+            {
+              "prompt": "Put in order: lekkerder / stamppot / vind / ik / de",
+              "authorsVersion": [
+                "Ik vind de stamppot lekkerder."
+              ],
+              "note": "Use the known comparative lekkerder; keep the object before the adjective."
+            }
+          ]
+        }
+      },
+      "id": "2875eee5-d6ce-4ecd-8b7a-0a6d6fd0b51c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Turn it into an opinion",
+      "id": "33ddf349-1616-4844-86c7-75b5f5bb879f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence as an opinion with vinden, or replace the noun with a pronoun.",
+          "items": [
+            {
+              "prompt": "De paella is lekker. (ik)",
+              "authorsVersion": [
+                "Ik vind de paella lekker."
+              ],
+              "note": "Use vinden + object + adjective."
+            },
+            {
+              "prompt": "De stamppot is lekker. (ik)",
+              "authorsVersion": [
+                "Ik vind de stamppot lekker."
+              ],
+              "note": "Use the full noun as the object."
+            },
+            {
+              "prompt": "Ik vind de stamppot lekker. (replace de stamppot)",
+              "authorsVersion": [
+                "Ik vind hem lekker."
+              ],
+              "note": "Stamppot is a de-word, so use hem."
+            },
+            {
+              "prompt": "Ik vind het boek grappig. (replace het boek)",
+              "authorsVersion": [
+                "Ik vind het grappig."
+              ],
+              "note": "Boek is an het-word, so use het."
+            },
+            {
+              "prompt": "Ik vind de pierogi heerlijk. (replace de pierogi)",
+              "authorsVersion": [
+                "Ik vind ze heerlijk."
+              ],
+              "note": "Plural noun: use ze."
+            },
+            {
+              "prompt": "Ik vind Utrecht mooi. (make a question with Wat vind je van)",
+              "authorsVersion": [
+                "Wat vind je van Utrecht?"
+              ],
+              "note": "Ask for an opinion with Wat vind je van + noun."
+            },
+            {
+              "prompt": "Daan denkt het wel. (replace the subject with Sofia)",
+              "authorsVersion": [
+                "Sofia denkt het wel."
+              ],
+              "note": "Sofia is third person singular; denken becomes denkt."
+            }
+          ]
+        }
+      },
+      "id": "74bce7c3-a7b3-4e31-b877-71ae1251b8a3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "dbbe365a-bf41-441a-b29b-07aa5e1409ed"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "What do you think of the paella?",
+              "authorsVersion": [
+                "Wat vind je van de paella?"
+              ],
+              "note": "Ask with Wat vind je van + noun."
+            },
+            {
+              "prompt": "I think the pierogi are delicious.",
+              "authorsVersion": [
+                "Ik vind de pierogi heerlijk."
+              ],
+              "note": "Use vinden for a taste opinion."
+            },
+            {
+              "prompt": "I think they are delicious. (the pierogi)",
+              "authorsVersion": [
+                "Ik vind ze heerlijk."
+              ],
+              "note": "Plural object: ze."
+            },
+            {
+              "prompt": "I agree with you.",
+              "authorsVersion": [
+                "Ik ben het met je eens."
+              ],
+              "note": "Use the fixed pattern with het and met."
+            },
+            {
+              "prompt": "I don’t agree with Henk.",
+              "authorsVersion": [
+                "Ik ben het niet met Henk eens."
+              ],
+              "note": "Niet goes before met."
+            },
+            {
+              "prompt": "I think so. (belief)",
+              "authorsVersion": [
+                "Ik denk het wel."
+              ],
+              "note": "Use denken + het + wel."
+            },
+            {
+              "prompt": "I think it will snow next week.",
+              "authorsVersion": [
+                "Volgens mij gaat het volgende week sneeuwen."
+              ],
+              "note": "Volgens mij + verb + subject; recycles weather and gaan."
+            }
+          ]
+        }
+      },
+      "id": "ae07f6ae-a631-445c-99a7-23e44f0b0507"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "8ddecce6-7a5b-4240-a4aa-0b0051435098"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Wat vind jij ervan?",
+              "authorsVersion": [
+                "What do you think of it?"
+              ],
+              "note": "Fixed chunk with ervan."
+            },
+            {
+              "prompt": "Ik vind hem heerlijk.",
+              "authorsVersion": [
+                "I think it is delicious."
+              ],
+              "note": "Hem refers to a de-word such as de paella."
+            },
+            {
+              "prompt": "Ik ben het niet met je eens.",
+              "authorsVersion": [
+                "I don’t agree with you."
+              ],
+              "note": "A polite disagreement."
+            },
+            {
+              "prompt": "Je hebt gelijk.",
+              "authorsVersion": [
+                "You’re right."
+              ],
+              "note": "Fixed agreement phrase."
+            },
+            {
+              "prompt": "Ik denk het niet.",
+              "authorsVersion": [
+                "I don’t think so."
+              ],
+              "note": "Use it for a belief or expectation."
+            },
+            {
+              "prompt": "Volgens mij gaat het volgende week sneeuwen.",
+              "authorsVersion": [
+                "I think it will snow next week."
+              ],
+              "note": "Volgens mij expresses an opinion; the verb follows it."
+            }
+          ]
+        }
+      },
+      "id": "b1b4c535-0223-4e37-a448-e10a92fcb63a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: a message from Sofia",
+      "id": "76d00d10-42c3-4535-82f1-85477262413f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia’s message and answer in Dutch.",
+          "items": [
+            {
+              "prompt": "Wat maakt Sofia voor de housewarming?",
+              "authorsVersion": [
+                "Ze maakt paella."
+              ],
+              "note": "Sofia cooks paella."
+            },
+            {
+              "prompt": "Wat brengt Noor mee?",
+              "authorsVersion": [
+                "Noor brengt boerenkoolstamppot mee."
+              ],
+              "note": "The message names Noor’s dish."
+            },
+            {
+              "prompt": "Wat brengen Piotr en Kasia mee?",
+              "authorsVersion": [
+                "Ze brengen pierogi mee."
+              ],
+              "note": "Ze refers to Piotr and Kasia."
+            },
+            {
+              "prompt": "Wat vindt Henk lekkerder?",
+              "authorsVersion": [
+                "Hij vindt de stamppot lekkerder."
+              ],
+              "note": "Henk prefers the stamppot."
+            },
+            {
+              "prompt": "Is Fleur het met Henk eens?",
+              "authorsVersion": [
+                "Nee, ze is het niet met hem eens."
+              ],
+              "note": "Fleur disagrees with Henk."
+            },
+            {
+              "prompt": "Wat vindt Sofia van de pierogi?",
+              "authorsVersion": [
+                "Ze vindt ze heerlijk."
+              ],
+              "note": "The first ze refers to Sofia; the second replaces the plural pierogi."
+            },
+            {
+              "prompt": "Wat denkt Daan over het weer volgende week?",
+              "authorsVersion": [
+                "Volgens hem gaat het sneeuwen."
+              ],
+              "note": "The message reports Daan’s belief."
+            },
+            {
+              "prompt": "Klopt dit? Ahmed komt ook naar de housewarming.",
+              "authorsVersion": [
+                "Nee. Ahmed is bij zijn familie."
+              ],
+              "note": "Ahmed’s reply in 21-b says he cannot come."
+            }
+          ],
+          "passage": {
+            "title": "Sofia’s berichtje",
+            "content": "Hoi mam!\nMijn housewarming is vanavond. Ik maak paella. Noor brengt boerenkoolstamppot mee. Piotr en Kasia brengen pierogi mee. Henk heeft kaas bij zich.\nHenk vindt de paella heerlijk, maar hij vindt de stamppot lekkerder. Fleur is het niet met hem eens. Ik vind de paella en de pierogi heerlijk.\nDaan zegt: “Volgens mij gaat het volgende week sneeuwen.” Piotr denkt het niet. Ik denk het wel.\nAhmed komt niet. Hij is bij zijn familie. Het is een gezellige avond!\nLiefs, Sofia"
+          }
+        }
+      },
+      "id": "d06528c3-a3e0-485c-8f40-199f08c5c172"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "146e163a-7e46-4cbf-aca2-a723d041aa60"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Give your opinion in 3–4 sentences about a food, a city and a film.",
+          "items": [
+            {
+              "prompt": "Give your opinion in 3–4 sentences about a food, a city and a film.",
+              "authorsVersion": [
+                "Ik vind paella heerlijk. Ik vind Utrecht mooi, maar druk. De Lange Zomer vind ik grappig. Volgens mij is het een leuke film."
+              ],
+              "note": "Model answer. Check that the object comes after vinden and the adjective follows the object. Keep each idea in a main clause."
+            }
+          ]
+        }
+      },
+      "id": "e94e13c7-8b46-4889-82cf-f3682880a755"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "676c5d1d-9fc3-4f7c-a1e1-81026c35f00e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Ask: Wat vind je van + noun? Wat vind jij ervan?",
+      "id": "be92baad-b85c-4821-ae65-ae8e8f3bceb5"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Give an opinion: vinden + object + adjective. Use hem for a de-word, het for an het-word and ze for plural.",
+      "id": "ec599772-6ce2-4b33-b342-f738795c074e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Agree: Ik ben het met je eens. Disagree: Ik ben het niet met je eens.",
+      "id": "c4b3e2b0-c6ad-4a05-a21f-73cb7c79882e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Think/believe: Ik denk het wel / niet. Give your view: Ik vind van wel / niet.",
+      "id": "d832c76f-12df-444c-823b-bf066936746a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Volgens mij + verb + subject: Volgens mij gaat het sneeuwen.",
+      "id": "e311aca2-9b4d-4cd9-b4d9-df512193292c"
+    },
+    {
+      "type": "divider",
+      "id": "8ee7ff48-d7c4-4e4d-b22f-2a86858db5f0"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: around the dinner table",
+      "description": "Sofia welcomes her friends at the dining table in her Lombok apartment. There is a paella pan, a bowl of boerenkoolstamppot, a platter of pierogi, bread and Henk’s cheese; everyone is talking warmly.",
+      "alt": "Friends share paella, stamppot, pierogi and cheese at Sofia’s housewarming.",
+      "location": "sofia-dining-room",
+      "characters": [
+        "sofia",
+        "noor",
+        "henk",
+        "piotr",
+        "kasia"
+      ],
+      "action": "Sofia serves paella while friends share their opinions about the dishes."
+    },
+    {
+      "afterHeading": "Story: by the balcony door",
+      "description": "Daan, Piotr and Sofia stand by the open balcony door of Sofia’s apartment on a cold December evening, chatting about the weather; warm dinner light behind them.",
+      "alt": "Daan, Piotr and Sofia talk about next week’s weather by the balcony door.",
+      "location": "sofia-balcony",
+      "characters": [
+        "daan",
+        "piotr",
+        "sofia"
+      ],
+      "action": "The three friends look at the winter sky and discuss whether it will snow."
+    }
+  ],
+  "id": "d6d55f4c-33e9-4e79-84e0-2c1a8516b2ec"
+}

@@ -1,9 +1,10 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { courseProgressResponseSchema, lessonProgressResponseSchema } from "@wordinator/contracts";
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   addLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, request, resetDatabase, seedGroup, seedUser, signIn, word,
 } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 // Lesson progress read, completion audit, and lesson reset (C14c; docs/courses.md#lesson-progress-tab, #reset).
 const lessonProgress = async (path: string, cookie: string) => {
@@ -100,7 +101,7 @@ describe("Lesson progress read", () => {
 
   it("refuses anonymous requests, outsiders, and hidden courses", async () => {
     const s = await setup();
-    expect((await SELF.fetch(`https://wordinator.test${s.path}/progress/lessons`)).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test${s.path}/progress/lessons`)).status).toBe(401);
     const outsiderId = await seedUser("outsider"); await seedGroup("beta", outsiderId);
     expect((await request(`${s.path}/progress/lessons`, await signIn("outsider"))).status).toBe(404);
     await request(`${s.path}/archive`, s.owner, {});
@@ -180,7 +181,7 @@ describe("Lesson reset", () => {
     expect(hidden.status).toBe(404); expect(await errorCode(hidden)).toBe("LESSON_NOT_FOUND");
     expect((await reset(s.path, crypto.randomUUID(), s.reader)).status).toBe(404);
     // Anonymous requests and accounts outside the course's group never reach it.
-    expect((await SELF.fetch(`https://wordinator.test${s.path}/lessons/${s.first.id}/reset`, { method: "POST" })).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test${s.path}/lessons/${s.first.id}/reset`, { method: "POST" })).status).toBe(401);
     const outsiderId = await seedUser("outsider"); const otherGroup = await seedGroup("beta", outsiderId); const outsider = await signIn("outsider");
     expect((await reset(s.path, s.first.id, outsider)).status).toBe(404);
     expect((await reset(coursePath(otherGroup, s.course.id), s.first.id, outsider)).status).toBe(404);

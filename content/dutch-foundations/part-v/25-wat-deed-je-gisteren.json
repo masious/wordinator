@@ -1,0 +1,1366 @@
+{
+  "title": "Wat heb je gisteren gemaakt?",
+  "goal": "Talk about yesterday with hebben and a regular past participle.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Wat heb je gisteren gemaakt?",
+      "id": "a90bc6bc-58ed-4b98-a275-7c564b187a14"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Monday 4 January 2027. Sofia is back in Utrecht and sees Noor. They talk about the holidays and Sunday. In this lesson you will use hebben + a past participle to talk about completed activities. Verbs are blue, subjects green, time expressions orange and the new participle is bold.",
+      "id": "1dd832ca-3cf0-4061-8db4-ac74e867a46d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: back in Utrecht",
+      "id": "513029a0-fdbb-4c34-89b4-7ba28b2c3b2d"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Hoi Sofia! Fijn dat je terug bent!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Noor! Ik ben blij dat ik thuis ben."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Wat heb je gisteren gemaakt?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik heb thee gemaakt en mijn kamer opgeruimd."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En heb je ook gekookt?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik heb niet gekookt. Ik heb thee gemaakt."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En heb je thee gemaakt?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, en ik heb mijn moeder gebeld."
+          }
+        ]
+      },
+      "id": "9b9c890b-079a-4ff2-b65c-3e550fb99076"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Heb je …?",
+              "meaning": "Have you …?; a question with hebben",
+              "example": "Heb je ook gekookt?",
+              "id": "8c868377-6a27-479d-adb2-ab12d98b0930"
+            },
+            {
+              "term": "Wat heb je …?",
+              "meaning": "What did you …?; asks about a completed activity",
+              "example": "Wat heb je gisteren gemaakt?",
+              "id": "a36f64fe-83c2-4d7d-a26f-e1ba70efea25"
+            },
+            {
+              "term": "gisteren",
+              "meaning": "yesterday",
+              "example": "Ik heb gisteren gewerkt.",
+              "id": "16509e73-1d99-42cb-9db9-18abd045e35e"
+            },
+            {
+              "term": "maken",
+              "meaning": "to make",
+              "forms": "maakt · maakte · gemaakt",
+              "example": "Ik heb thee gemaakt.",
+              "id": "6606e1c5-33bd-4fd5-b5cb-c49c7b6ecd66",
+              "note": "The infinitive is known from an earlier lesson; this lesson introduces its past participle."
+            },
+            {
+              "term": "koken",
+              "meaning": "to cook",
+              "forms": "kookt · kookte · gekookt",
+              "example": "Heb je gisteren gekookt?",
+              "id": "4eccdd5a-d849-4567-b3dc-6709718adf7e",
+              "note": "The infinitive is known from an earlier lesson; this lesson introduces its past participle."
+            },
+            {
+              "term": "bellen",
+              "meaning": "to call",
+              "forms": "belt · belde · gebeld",
+              "example": "Noor heeft Sofia gebeld.",
+              "id": "c2d7f002-b590-4c0d-bcce-a9d69670859a",
+              "note": "The infinitive is known from an earlier lesson; this lesson introduces its past participle."
+            },
+            {
+              "term": "Ik heb …",
+              "meaning": "I have …; a sentence starter for a completed activity",
+              "example": "Ik heb gisteren gewerkt.",
+              "id": "897dfdbe-4be6-4c44-a88b-85329364245d"
+            },
+            {
+              "term": "opruimen",
+              "meaning": "to tidy up",
+              "forms": "ruimt op · ruimde op · opgeruimd",
+              "note": "The infinitive is known from an earlier lesson; this lesson introduces its past participle.",
+              "example": "Ik heb mijn kamer opgeruimd.",
+              "id": "744fb812-c244-466c-b390-2bd7b3d8ae4c"
+            }
+          ]
+        }
+      },
+      "id": "cdff3e59-836f-41c3-9443-67ff993c74cb"
+    },
+    {
+      "type": "divider",
+      "id": "0a4cc446-e495-47dd-ad9c-8c8ab6ec6907"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "The perfect: hebben + past participle",
+      "id": "c5daa47b-7062-487c-9edf-4c9e434e9db2"
+    },
+    {
+      "type": "paragraph",
+      "content": "For a completed activity, use the present form of hebben and put the past participle at the end. The helper verb changes; the participle usually starts with ge-.",
+      "id": "65c5fada-15b9-4402-a0a2-0c3ae37b0c5d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "Subject + hebben + other words + past participle: Ik heb gisteren gewerkt. In a yes/no question, hebben comes first: Heb je gewerkt?",
+      "id": "f66281d1-e8e3-41b8-8785-6081cc944da0"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het voltooid deelwoord",
+              "meaning": "the past participle",
+              "example": "Gewerkt is het voltooid deelwoord van werken.",
+              "id": "648744d0-56c3-4418-9df1-769af1948c9b"
+            },
+            {
+              "term": "het hulpwerkwoord",
+              "meaning": "the auxiliary verb",
+              "example": "Hebben is het hulpwerkwoord in Ik heb gewerkt.",
+              "id": "86a3c50c-ccb1-44c1-ae77-29ecd88524ed"
+            }
+          ]
+        }
+      },
+      "id": "85d82328-11e1-43db-8350-b6082dd8b59f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I worked yesterday.",
+        "note": "The present form heb is the helper; gewerkt is the past participle."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " gisteren ",
+        {
+          "text": "gewerkt",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "1219eef6-edea-4d93-9295-e2d2860856d1"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "werken",
+              "meaning": "to work",
+              "forms": "werkt · werkte · gewerkt",
+              "example": "Ik heb gisteren gewerkt.",
+              "id": "d27eb976-f050-4bff-b43d-6f56c8c2fb99",
+              "note": "The infinitive is known from an earlier lesson; this lesson introduces its past participle."
+            }
+          ]
+        }
+      },
+      "id": "614de25d-f15b-400c-8f54-0fe2cbc5f61c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor called Sofia.",
+        "note": "Noor is the subject; heeft is the form of hebben for she."
+      },
+      "content": [
+        {
+          "text": "Noor",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " heeft",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " Sofia ",
+        {
+          "text": "gebeld",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "df091192-e833-4dbc-984c-a20f82fead2c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Did you cook yesterday?",
+        "note": "In a yes/no question, heb comes before the subject."
+      },
+      "content": [
+        {
+          "text": "Heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " je",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " gisteren ",
+        {
+          "text": "gekookt",
+          "styles": {
+            "bold": true
+          }
+        },
+        "?"
+      ],
+      "id": "38d908d1-b662-4635-8b6e-482a8ff9ebe7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We made tea at home.",
+        "note": "Recycles thuis and thee from earlier lessons."
+      },
+      "content": [
+        {
+          "text": "We",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " hebben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " thuis thee ",
+        {
+          "text": "gemaakt",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "7f4544e8-e69c-4a01-80f2-086eced22b8c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia learned Dutch.",
+        "note": "The participle geleerd ends in -d because the stem ends in r."
+      },
+      "content": [
+        "Sofia heeft Nederlands ",
+        {
+          "text": "geleerd",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "b4490965-ba39-4d75-bfc2-17b5d40cf473"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "leren",
+              "meaning": "to learn",
+              "forms": "leert · leerde · geleerd",
+              "example": "Ik heb Nederlands geleerd.",
+              "id": "5a775ce3-a10b-4acf-a0e8-f5d2892cc3cc",
+              "note": "The infinitive is known from an earlier lesson; this lesson introduces its past participle."
+            }
+          ]
+        }
+      },
+      "id": "31e2320a-cabc-4cbe-8604-9b5f23e042a3"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Did you call your mother?",
+        "note": "Heb comes first in the yes/no question; the object comes before gebeld."
+      },
+      "content": [
+        {
+          "text": "Heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " je je moeder ",
+        {
+          "text": "gebeld",
+          "styles": {
+            "bold": true
+          }
+        },
+        "?"
+      ],
+      "id": "815a9f1f-0044-44a0-ad94-6a869d5bfdb8"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan worked yesterday.",
+        "note": "The time expression comes before the participle."
+      },
+      "content": [
+        {
+          "text": "Daan",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        " heeft gisteren ",
+        {
+          "text": "gewerkt",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "679b995f-e026-40fa-927e-f091196db447"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Did you learn Dutch?",
+        "note": "The helper verb comes first; geleerd is at the end."
+      },
+      "content": [
+        {
+          "text": "Heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " je Nederlands ",
+        {
+          "text": "geleerd",
+          "styles": {
+            "bold": true
+          }
+        },
+        "?"
+      ],
+      "id": "2b3758c7-5ad8-4ecb-8961-ed9280246e0d"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Infinitive",
+              "id": "0e99d96c-f0ee-437b-a274-c02c09cea50d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "werken",
+              "id": "dd12fdc8-4e07-4347-bb7d-af3ff74f1061"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "maken",
+              "id": "4cdcf641-bdaf-4185-a6fd-520f0ea18cf9"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "koken",
+              "id": "80af8b43-e79e-4bff-ac27-e0fa661e6d44"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "wonen",
+              "id": "5c3d5f9a-ce9e-4f08-b680-71af65d5f137"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "leren",
+              "id": "8cb80cc9-4287-4de2-90ed-33cda08d5dfa"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "bellen",
+              "id": "26717511-182a-460d-b7da-7d9c0004888e"
+            }
+          ],
+          "id": "cdc48d7a-aaf4-457f-ab1f-42ba4a186364"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Past participle",
+              "id": "4f2000fa-2e3f-426b-a83e-62ef73399eb0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "gewerkt",
+              "id": "6c12af31-4c3f-4473-b446-57434aa8dbc2"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "gemaakt",
+              "id": "8d1301ad-b668-4c22-8654-9845933dd251"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "gekookt",
+              "id": "bdb90d70-9270-42a7-98d5-9053d7b32e68"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "gewoond",
+              "id": "b8565689-a50d-4b62-905e-32ab686b48d7"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "geleerd",
+              "id": "0ba18bb7-3aae-46fa-8b06-bc40368937a4"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "gebeld",
+              "id": "7ec2e682-b873-40fb-b5ae-31240a329da1"
+            }
+          ],
+          "id": "700db566-37cd-468f-91a1-52acca41c06b"
+        }
+      ],
+      "id": "3c2f3c38-4885-43ba-8d01-53ec75e9787a"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "wonen",
+              "meaning": "to live, reside",
+              "forms": "woont · woonde · gewoond",
+              "example": "Sofia heeft in Utrecht gewoond.",
+              "id": "f55e7192-94c8-4406-9f27-c96b0225b941",
+              "note": "The infinitive is known from an earlier lesson; this lesson introduces its past participle."
+            }
+          ]
+        }
+      },
+      "id": "56de17eb-e8b3-41c4-b9b4-c451b2f9b451"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "How do you choose -t or -d?",
+      "id": "bcf4e067-b90d-4db0-9c4b-ec599382dd01"
+    },
+    {
+      "type": "paragraph",
+      "content": "Take the verb stem (de stam). Its final sound (de eindklank) decides the ending. If it is in 't kofschip (t, k, f, s, ch, p), the participle ends in -t. Otherwise it ends in -d. Keep the spelling of the stem: maken becomes gemaakt; wonen becomes gewoond.",
+      "id": "8dcac270-c52c-4ea9-9ed0-6ab69361d466"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de stam",
+              "meaning": "the verb stem",
+              "example": "De stam van werken is werk.",
+              "id": "c1d827ce-b7bf-4178-a962-eea8e5ff0ae0"
+            },
+            {
+              "term": "de eindklank",
+              "meaning": "the final sound",
+              "example": "De eindklank van werk is k.",
+              "id": "f15a32fe-83d0-4b82-af4c-aa5a4ed38352"
+            }
+          ]
+        }
+      },
+      "id": "87df8939-4018-4f50-8731-1abef7b8e0c0"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": "The final -t or -d is often quiet in everyday speech, but it stays in the spelling. Say gewerkt with a clear final t and gewoond with a final d.",
+      "id": "8be0adba-bf88-4b3b-9dd2-4695ef594caf"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I cleaned my room.",
+        "note": "The final stem sound of opruim is m, so the participle ends in -d."
+      },
+      "content": [
+        {
+          "text": "Ik",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": " heb",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " mijn kamer ",
+        {
+          "text": "opgeruimd",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "86cf0853-779a-4703-855c-7f66bc53ce38"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We studied Dutch.",
+        "note": "The final stem sound of leer is r, so the participle ends in -d."
+      },
+      "content": [
+        "We hebben Nederlands ",
+        {
+          "text": "geleerd",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "id": "e5ee9805-714a-462d-b787-554f3debb328"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "The participle goes at the end: Ik heb mijn kamer gisteren opgeruimd. Put other sentence parts before it.",
+      "id": "41991fd2-145d-47c4-a795-cce266cd39b5"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Wrong: ",
+        {
+          "text": "Ik heb gewerkt gisteren.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " Correct: Ik heb gisteren gewerkt."
+      ],
+      "id": "47a11c66-ad50-4d08-ab5d-241912d81478"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "A Christmas catch-up",
+      "id": "1bfc3b80-e8c3-4fcc-a967-706b7cbf69cd"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sofia and Noor also remember Christmas. These are familiar events, told now with a new verb form.",
+      "id": "cf0fcf19-f774-478a-bac5-c6f64d4a5878"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "At Christmas, I cooked with my mother.",
+        "note": "Met kerst is a time expression. In a statement, the finite verb comes before the subject after a fronted time expression."
+      },
+      "content": [
+        {
+          "text": "Met kerst",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " heb ik met mijn moeder gekookt."
+      ],
+      "id": "d0a39613-c7c3-4aff-bd3d-78ee25269cd0"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "met kerst",
+              "meaning": "at Christmas",
+              "example": "Met kerst heb ik gewerkt.",
+              "id": "243e8683-48a7-4437-8be7-ab9a431677f8"
+            }
+          ]
+        }
+      },
+      "id": "5bcbef04-ca32-4a4b-a005-d7f2f5d7b550"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Heb je met kerst gekookt?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ik heb met mijn moeder gekookt."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Heb je ook gekookt?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik heb niet gekookt. Ik heb thee gemaakt."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Heb je veel Nederlands geleerd?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ik heb veel Nederlands geleerd."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Heb je Nederlands geleerd?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ik heb Nederlands geleerd."
+          }
+        ]
+      },
+      "id": "df05b8f6-dc0e-4dbb-8892-2b3cb0cea5f1"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Regular participles usually begin with ge-.",
+      "id": "738e76be-ea53-4d1b-a956-e5e3a9c58bd8"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "The stem's final sound decides -t or -d.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "'t kofschip sound: -t (gewerkt, gekookt).",
+          "id": "5667c000-3a0e-4908-b6c3-db7c3c3e48fd"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Other sounds: -d (gebeld, geleerd).",
+          "id": "7fbbde80-d597-4e73-a543-e1df1ac1e624"
+        }
+      ],
+      "id": "d16c9953-8126-4721-b84a-12cd21e80946"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "A separable verb puts ge between prefix and verb: opruimen → opgeruimd.",
+      "id": "2ec988e1-9c06-42bf-b4a0-1fdc14de38b6"
+    },
+    {
+      "type": "divider",
+      "id": "a4a371c7-f626-4aba-bc51-f3fffe6125f5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "46c47502-4cbd-41ff-8544-7be3dfdcb23e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the sentence",
+      "id": "300de1bc-b483-4295-8530-0e93826f7a69"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the present form of hebben and the past participle.",
+          "items": [
+            {
+              "prompt": "Ik … gisteren … . (werken)",
+              "authorsVersion": [
+                "heb",
+                "gewerkt"
+              ],
+              "note": "Ik takes heb; werken has -t after k."
+            },
+            {
+              "prompt": "Noor … thee … . (maken)",
+              "authorsVersion": [
+                "heeft",
+                "gemaakt"
+              ],
+              "note": "Noor takes heeft; the stem spelling maak stays visible."
+            },
+            {
+              "prompt": "Wij … thuis … . (koken)",
+              "authorsVersion": [
+                "hebben",
+                "gekookt"
+              ],
+              "note": "The stem ends in k, so use -t."
+            },
+            {
+              "prompt": "Sofia … Nederlands … . (leren)",
+              "authorsVersion": [
+                "heeft",
+                "geleerd"
+              ],
+              "note": "The stem ends in r, so use -d."
+            },
+            {
+              "prompt": "Daan … Noor … . (bellen)",
+              "authorsVersion": [
+                "heeft",
+                "gebeld"
+              ],
+              "note": "The stem ends in l, so use -d."
+            },
+            {
+              "prompt": "Jullie … gisteren … . (wonen)",
+              "authorsVersion": [
+                "hebben",
+                "gewoond"
+              ],
+              "note": "The plural helper is hebben; the stem ends in n, so use -d."
+            },
+            {
+              "prompt": "Ik … mijn kamer … . (opruimen)",
+              "authorsVersion": [
+                "heb",
+                "opgeruimd"
+              ],
+              "note": "Separable prefix op surrounds ge in the participle."
+            }
+          ]
+        }
+      },
+      "id": "305cdcb5-3dc0-4b2f-914c-4263e323dc37"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Choose the ending",
+      "id": "2e0a4485-1189-405f-945d-18059433ab07"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each participle with -t or -d.",
+          "items": [
+            {
+              "prompt": "gewerk…",
+              "authorsVersion": [
+                "gewerkt"
+              ],
+              "note": "The stem ends in k, a 't kofschip sound."
+            },
+            {
+              "prompt": "gewoon…",
+              "authorsVersion": [
+                "gewoond"
+              ],
+              "note": "The stem ends in n, so use d."
+            },
+            {
+              "prompt": "gemaak…",
+              "authorsVersion": [
+                "gemaakt"
+              ],
+              "note": "The stem ends in k, so use t."
+            },
+            {
+              "prompt": "gebel…",
+              "authorsVersion": [
+                "gebeld"
+              ],
+              "note": "The stem ends in l, so use d."
+            },
+            {
+              "prompt": "gekook…",
+              "authorsVersion": [
+                "gekookt"
+              ],
+              "note": "The stem ends in k, so use t."
+            },
+            {
+              "prompt": "geleer…",
+              "authorsVersion": [
+                "geleerd"
+              ],
+              "note": "The stem ends in r, so use d."
+            }
+          ]
+        }
+      },
+      "id": "525d4a0e-5fee-4183-85f0-26e99da1f769"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the dialogue",
+      "id": "98e026c8-63c5-4902-aa85-bdb9b24c7d9f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the missing helper or participle.",
+          "items": [
+            {
+              "prompt": "Noor: Wat … je gisteren …? (maken) / Sofia: Ik … thee … .",
+              "authorsVersion": [
+                "heb",
+                "gemaakt",
+                "heb",
+                "gemaakt"
+              ],
+              "note": "Heb comes first in the question; heb je in the answer."
+            },
+            {
+              "prompt": "Sofia: … Noor ook …? (koken) / Noor: Ja, ik … pasta … .",
+              "authorsVersion": [
+                "Heeft",
+                "gekookt",
+                "heb",
+                "gekookt"
+              ],
+              "note": "Noor is she, so the question starts with Heeft."
+            },
+            {
+              "prompt": "Daan: … jullie thuis …? (werken) / Sofia: Ja, we … thuis … .",
+              "authorsVersion": [
+                "Hebben",
+                "gewerkt",
+                "hebben",
+                "gewerkt"
+              ],
+              "note": "Plural subject jullie/we takes hebben."
+            },
+            {
+              "prompt": "Noor: … je de kamer …? (opruimen) / Sofia: Ja, ik … hem … .",
+              "authorsVersion": [
+                "Heb",
+                "opgeruimd",
+                "heb",
+                "opgeruimd"
+              ],
+              "note": "Keep the separable prefix around ge. hem refers to the room here."
+            },
+            {
+              "prompt": "Sofia: … je Nederlands …? (leren) / Noor: Ja, ik … veel … .",
+              "authorsVersion": [
+                "Heb",
+                "geleerd",
+                "heb",
+                "geleerd"
+              ],
+              "note": "The participle goes at the end."
+            },
+            {
+              "prompt": "Noor: … je moeder …? (bellen) / Sofia: Ja, ik … haar … .",
+              "authorsVersion": [
+                "Heb",
+                "gebeld",
+                "heb",
+                "gebeld"
+              ],
+              "note": "The direct object comes before the participle."
+            }
+          ]
+        }
+      },
+      "id": "25967393-60b0-42f0-ac5c-7dcabda261ad"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Put the participle last",
+      "id": "bd1dadbc-9036-454f-a4ad-9d19fb754036"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the chunks in order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "gisteren / ik / heb / gewerkt",
+              "authorsVersion": [
+                "Ik heb gisteren gewerkt."
+              ],
+              "note": "The participle closes the sentence."
+            },
+            {
+              "prompt": "heeft / Sofia / thee / gemaakt",
+              "authorsVersion": [
+                "Sofia heeft thee gemaakt."
+              ],
+              "note": "The object comes before the participle."
+            },
+            {
+              "prompt": "gisteren / hebben / we / gekookt / samen",
+              "authorsVersion": [
+                "We hebben gisteren samen gekookt."
+              ],
+              "note": "The time and manner phrase come before the participle."
+            },
+            {
+              "prompt": "heb / opgeruimd / ik / mijn kamer",
+              "authorsVersion": [
+                "Ik heb mijn kamer opgeruimd."
+              ],
+              "note": "The separable participle stays together at the end."
+            },
+            {
+              "prompt": "geleerd / Nederlands / heeft / Noor",
+              "authorsVersion": [
+                "Noor heeft Nederlands geleerd."
+              ],
+              "note": "The helper follows the subject; the participle is last."
+            },
+            {
+              "prompt": "gebeld / heb / mijn moeder / ik",
+              "authorsVersion": [
+                "Ik heb mijn moeder gebeld."
+              ],
+              "note": "Keep the object before the participle."
+            }
+          ]
+        }
+      },
+      "id": "b21a17bd-e083-440a-8a97-c1e435c879a8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Change present to perfect",
+      "id": "e23c2ef1-3395-4760-905e-8deed028505b"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence with hebben + a past participle.",
+          "items": [
+            {
+              "prompt": "Ik werk thuis.",
+              "authorsVersion": [
+                "Ik heb thuis gewerkt."
+              ],
+              "note": "Add heb and put gewerkt at the end."
+            },
+            {
+              "prompt": "Noor maakt thee.",
+              "authorsVersion": [
+                "Noor heeft thee gemaakt."
+              ],
+              "note": "Noor takes heeft."
+            },
+            {
+              "prompt": "Wij koken samen.",
+              "authorsVersion": [
+                "Wij hebben samen gekookt."
+              ],
+              "note": "Plural subject takes hebben."
+            },
+            {
+              "prompt": "Sofia ruimt haar kamer op.",
+              "authorsVersion": [
+                "Sofia heeft haar kamer opgeruimd."
+              ],
+              "note": "Separable op goes around ge in the participle."
+            },
+            {
+              "prompt": "Daan belt Lotte.",
+              "authorsVersion": [
+                "Daan heeft Lotte gebeld."
+              ],
+              "note": "The object comes before the participle."
+            },
+            {
+              "prompt": "Ik leer Nederlands.",
+              "authorsVersion": [
+                "Ik heb Nederlands geleerd."
+              ],
+              "note": "The stem ends in r, so geleerd ends in d."
+            }
+          ]
+        }
+      },
+      "id": "8b84bf3a-f51c-4876-a25c-21786a43b822"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "9f130f41-83db-47d7-82bd-84f25f1d6dd2"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural Dutch.",
+          "items": [
+            {
+              "prompt": "I worked yesterday.",
+              "authorsVersion": [
+                "Ik heb gisteren gewerkt."
+              ]
+            },
+            {
+              "prompt": "Noor made tea.",
+              "authorsVersion": [
+                "Noor heeft thee gemaakt."
+              ],
+              "note": "The participle goes at the end."
+            },
+            {
+              "prompt": "Did you cook yesterday?",
+              "authorsVersion": [
+                "Heb je gisteren gekookt?"
+              ],
+              "note": "Heb comes before je in a yes/no question."
+            },
+            {
+              "prompt": "We tidied the room.",
+              "authorsVersion": [
+                "We hebben de kamer opgeruimd."
+              ],
+              "note": "Use opgeruimd as one participle."
+            },
+            {
+              "prompt": "I called my mother.",
+              "authorsVersion": [
+                "Ik heb mijn moeder gebeld."
+              ]
+            },
+            {
+              "prompt": "At Christmas, we studied Dutch.",
+              "authorsVersion": [
+                "Met kerst hebben we Nederlands geleerd."
+              ],
+              "note": "Also fine: We hebben met kerst Nederlands geleerd."
+            }
+          ]
+        }
+      },
+      "id": "8804a93c-744d-49fd-af2c-ccdd57b05014"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "63b7d0f6-089d-4cca-b6ef-d12108b782f1"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Ik heb gisteren gewerkt.",
+              "authorsVersion": [
+                "I worked yesterday."
+              ]
+            },
+            {
+              "prompt": "Heb je thee gemaakt?",
+              "authorsVersion": [
+                "Did you make tea?"
+              ],
+              "note": "Dutch uses hebben + participle; natural English uses the simple past."
+            },
+            {
+              "prompt": "Noor heeft Sofia gebeld.",
+              "authorsVersion": [
+                "Noor called Sofia."
+              ]
+            },
+            {
+              "prompt": "We hebben samen gekookt.",
+              "authorsVersion": [
+                "We cooked together."
+              ]
+            },
+            {
+              "prompt": "Ik heb mijn kamer opgeruimd.",
+              "authorsVersion": [
+                "I tidied my room."
+              ]
+            },
+            {
+              "prompt": "Met kerst heeft Daan thuis gewerkt.",
+              "authorsVersion": [
+                "At Christmas, Daan worked from home."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "7b882b4e-34b0-4c15-813c-f1467bfc9757"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Sunday at home",
+      "id": "2dca9bb2-16f5-4bf5-8f08-6e2c1059f8fb"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's note and answer in Dutch.",
+          "passage": {
+            "title": "Een bericht van Sofia",
+            "content": "Maandag 4 januari\nGisteren heb ik thee gemaakt en mijn kamer opgeruimd. Daarna heb ik mijn moeder gebeld. Vandaag zie ik Noor. Met kerst heb ik met mijn moeder gekookt en Nederlands geleerd."
+          },
+          "items": [
+            {
+              "prompt": "Welke dag is het in het verhaal?",
+              "authorsVersion": [
+                "Maandag 4 januari."
+              ]
+            },
+            {
+              "prompt": "Wat heeft Sofia gemaakt?",
+              "authorsVersion": [
+                "Thee."
+              ]
+            },
+            {
+              "prompt": "Wat heeft Sofia met kerst geleerd?",
+              "authorsVersion": [
+                "Nederlands."
+              ]
+            },
+            {
+              "prompt": "Wie heeft thee gemaakt?",
+              "authorsVersion": [
+                "Sofia."
+              ],
+              "note": "The note is written by Sofia."
+            },
+            {
+              "prompt": "Wat heeft Sofia gisteren opgeruimd?",
+              "authorsVersion": [
+                "Haar kamer."
+              ],
+              "note": "The answer is in the first sentence."
+            },
+            {
+              "prompt": "Met wie heeft Sofia met kerst gekookt?",
+              "authorsVersion": [
+                "Met haar moeder."
+              ],
+              "note": "Met wie asks who she cooked with."
+            }
+          ]
+        }
+      },
+      "id": "57309903-1cdd-45e7-ac54-cd2376856895"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "1f742b7d-11ee-4e64-8d7f-eba0dca4ec0a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write three short sentences about yesterday or another recent day. Use at least two participles and a time expression.",
+          "items": [
+            {
+              "prompt": "Write three short sentences about a recent day.",
+              "authorsVersion": [
+                "Gisteren heb ik thuis gewerkt. Ik heb thee gemaakt en mijn kamer opgeruimd."
+              ],
+              "note": "Answers will vary. Keep hebben after the subject and put each participle at the end."
+            }
+          ]
+        }
+      },
+      "id": "2d09cb0b-d766-4b91-9043-80a46a15f08b"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "8218dc0f-851e-4067-9580-8dcb7bb3355b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use a present form of hebben + a past participle for a completed activity.",
+      "id": "c43db5cc-5e9e-4561-ac55-76d8f1f9da0d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Put the participle at the end: Ik heb gisteren gewerkt.",
+      "id": "589316dd-3c01-47d5-ad75-eed4957bf2c2"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "The stem's final sound decides -t or -d: gewerkt, gemaakt, gebeld, geleerd.",
+      "id": "c51aeafe-c0ef-42e9-b0ce-c7bc3e2c1629"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "With a separable verb, ge goes between the prefix and the verb: opgeruimd.",
+      "id": "483f487c-6bd4-437d-a56d-38f3cf78a266"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: back in Utrecht",
+      "description": "Sofia and Noor greet each other in Noor's familiar Utrecht kitchen on a winter morning. Sofia has a mug of tea; a small travel bag rests beside her chair.",
+      "alt": "Sofia and Noor catch up over tea in the kitchen."
+    },
+    {
+      "afterHeading": "The perfect: hebben + past participle",
+      "description": "A clean two-column classroom graphic: infinitives on the left and their past participles on the right, including werken/gewerkt and maken/gemaakt.",
+      "alt": "Infinitives paired with their Dutch past participles."
+    }
+  ],
+  "id": "6862c0df-e8af-4e09-9e29-d0ea7945be74"
+}

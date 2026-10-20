@@ -73,6 +73,7 @@ export function TutorChat({ accountId, conversationId, conversation, newProvider
   const [refusal, setRefusal] = useState<Refusal>(null);
   const [limitUntil, setLimitUntil] = useState<number | null>(null);
   const [text, setText] = useState(initialText ?? "");
+  const [skipSetMode, setSkipSetMode] = useState(false);
   const abort = useRef<AbortController | null>(null);
   const bottom = useRef<HTMLDivElement>(null);
 
@@ -84,7 +85,7 @@ export function TutorChat({ accountId, conversationId, conversation, newProvider
     previous.current = conversationId;
     if (conversationId !== null && conversationId === ownId) return;
     abort.current?.abort(); abort.current = null;
-    setOwnId(conversationId); setStreaming(null); setBusy(false); setRefusal(null); setText("");
+    setOwnId(conversationId); setStreaming(null); setBusy(false); setRefusal(null); setText(""); setSkipSetMode(false);
   }, [conversationId, ownId]);
   useEffect(() => () => abort.current?.abort(), []);
   useEffect(() => {
@@ -153,12 +154,17 @@ export function TutorChat({ accountId, conversationId, conversation, newProvider
     }
     await run(target, `${conversationPath(target)}/messages`, { text: message });
   };
+  const sendSkipReason = async (message: string) => {
+    if (!id || !last) return;
+    await run(id, `${conversationPath(id)}/messages/${encodeURIComponent(last.id)}/skip-set`, { reason: message });
+    setSkipSetMode(false);
+  };
   const submit = (event?: FormEvent) => {
     event?.preventDefault();
     const message = text.trim();
     if (!message || composerLocked) return;
     setText("");
-    void send(message).catch(() => { setText((current) => current || message); });
+    void (skipSetMode ? sendSkipReason(message) : send(message)).catch(() => { setText((current) => current || message); });
   };
   const respond = (toolCallId: string, request: TutorRespondRequest) => {
     if (!id) return Promise.reject(new Error("No conversation"));
@@ -168,10 +174,9 @@ export function TutorChat({ accountId, conversationId, conversation, newProvider
     if (!id || !last) return Promise.reject(new Error("No conversation"));
     return run(id, `${conversationPath(id)}/messages/${encodeURIComponent(last.id)}/answers`, { answers });
   };
-  const skipAll = () => answerSet(dockParts.map((part) => ({ toolCallId: part.toolCallId, skip: true })));
   const retry = lastUser && !archived ? () => { void send(textOf(lastUser)).catch(() => undefined); } : undefined;
 
-  const composerLocked = busy || archived || awaiting || limitUntil !== null;
+  const composerLocked = busy || archived || (awaiting && !skipSetMode) || limitUntil !== null;
   const handlers = (message: TutorMessage | null, live: boolean): PartHandlers => {
     const messageId = message?.id ?? null;
     const isLast = message !== null && message.id === last?.id;
@@ -207,17 +212,17 @@ export function TutorChat({ accountId, conversationId, conversation, newProvider
         </div>}
         <div ref={bottom} />
       </div>
-      {docked && last ? <div className={styles.dockSlot}>
+      {docked && last && !skipSetMode ? <div className={styles.dockSlot}>
         {limitUntil !== null && <p className={styles.composerNote} role="status">{t("tutor.limit", { time: resets })}</p>}
-        <QuestionDock key={last.id} components={dockParts} onSubmit={answerSet} onSkipAll={skipAll} language={languageName} disabled={busy || limitUntil !== null}
+        <QuestionDock key={last.id} components={dockParts} onSubmit={answerSet} onSkipSet={() => { setText(""); setSkipSetMode(true); }} language={languageName} disabled={busy || limitUntil !== null}
           clip={id ? (toolCallId) => tutorClip(id, last.id, { toolCallId }) : undefined} />
       </div> : <form className={styles.composer} onSubmit={submit}>
         {limitUntil !== null ? <p className={styles.composerNote} role="status">{t("tutor.limit", { time: resets })}</p>
           : archived ? <p className={styles.composerNote}>{t("tutor.archivedNote")}</p>
           : <>
             <div className={styles.composerInput}>
-              <TextAreaField className={styles.composerField} aria-label={t("tutor.composerLabel")} placeholder={awaiting ? t("tutor.answerFirst") : t("tutor.composerPlaceholder")}
-                value={text} maxLength={TUTOR_MESSAGE_TEXT_MAX} autosize minRows={1} maxRows={6} disabled={awaiting}
+              <TextAreaField className={styles.composerField} aria-label={t("tutor.composerLabel")} placeholder={skipSetMode ? t("tutor.skipSetReason") : awaiting ? t("tutor.answerFirst") : t("tutor.composerPlaceholder")}
+                value={text} maxLength={TUTOR_MESSAGE_TEXT_MAX} autosize minRows={1} maxRows={6} disabled={awaiting && !skipSetMode}
                 onChange={(event) => setText(event.currentTarget.value)}
                 onKeyDown={(event) => { if (event.key === "Enter" && !event.shiftKey && !event.nativeEvent.isComposing) { event.preventDefault(); submit(); } }} />
               <p className={styles.composerHint}>{t("tutor.enterToSend")}</p>

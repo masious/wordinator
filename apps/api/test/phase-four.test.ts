@@ -1,7 +1,8 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { commentResponseSchema, discussionResponseSchema, postResponseSchema, reactionTargetResponseSchema } from "@wordinator/contracts";
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { hashPassword } from "../src/auth";
+import { fetchWorker } from "./worker";
 
 const PASSWORD = "phase-four-password"; let passwordHash: string;
 async function seedGroup(label: string) {
@@ -16,11 +17,11 @@ async function seedGroup(label: string) {
   return { creatorId, memberId, groupId };
 }
 async function signIn(email: string) {
-  const response = await SELF.fetch("https://wordinator.test/api/auth/sign-in", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email, password: PASSWORD }) });
+  const response = await fetchWorker("https://wordinator.test/api/auth/sign-in", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email, password: PASSWORD }) });
   return response.headers.get("set-cookie")!.split(";", 1)[0]!;
 }
 function request(path: string, cookie: string, body?: unknown, method = "GET") {
-  return SELF.fetch(`https://wordinator.test${path}`, { method, headers: { cookie, ...(body === undefined ? {} : { "content-type": "application/json" }) }, body: body === undefined ? undefined : JSON.stringify(body) });
+  return fetchWorker(`https://wordinator.test${path}`, { method, headers: { cookie, ...(body === undefined ? {} : { "content-type": "application/json" }) }, body: body === undefined ? undefined : JSON.stringify(body) });
 }
 async function createPost(groupId: string, cookie: string, input: unknown) {
   return postResponseSchema.parse(await (await request(`/api/groups/${groupId}/posts`, cookie, input, "POST")).json()).post;

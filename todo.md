@@ -1,5 +1,22 @@
 this file isn't meant for agents. don't read it if you're an agent.
 
+
+[ ] order of courses in prod
+[ ] fix failing tests
+[ ] split e2e into different batches
+[ ] document e2e test isolation so that a change doesn't trigger all of it
+[ ] Lesson practice: e should match é in practices
+[ ] words drill: practice with space
+[ ] decrease drill to 15 words
+[ ] gamify results page
+[ ] reset progress of lesson, should reset word fluency
+[ ] mark course as complete at the end of the page
+[ ] clean up initial prompt in tutor sections
+[ ] remove contribution section from course, as well as author's name from course and lessons everywhere
+[ ] new words panel usability
+[ ] remove group-related tech-debts
+
+
 AI
 ===
 [ ] tool calls, question answers with specific components fail to pass data from ui to the agent
@@ -11,6 +28,7 @@ AI
 [ ] read paragraphs and answer multiple questions
 [ ] index grammar topics for look-up
 [ ] practice for twenty minutes with timer
+[ ] summery of conversations and need for dispatching summerization events
 
 [x] user can fix his mistakes after seeing author's version when hits enter on a question. are we storing those mistakes too?
 [x] "Pick up where you left off" should have multiple progresses for each lesson. also, for a lesson, undone practices mean incomplete progress.

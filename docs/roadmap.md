@@ -190,6 +190,10 @@ The [courses blueprint](courses.md) owns every course rule. Each phase is comple
 - **Practice progress** (approved and completed 2026-10-10, migration `0022_course_practice_progress.sql` not yet applied remotely): practice answer threads, reveal, replies, and reactions are retired; the server records only how many questions each learner answered (highest count wins), Done or Finish later and closing the answer dialog both save it, the player saves it when leaving a question, and a practice shows how many people are done and the viewer's questions left. Existing shared answer sets became their authors' progress and were deleted. Beside the New words panel on wide screens the answer dialog is docked over the reading column. See [practice answers](courses.md#practice-answers).
 - **Lesson overview prototype** (experimental, started 2026-10-08, not approved): a development-only per-lesson overview road reading authored lesson files, to settle the design before any data layer or API; a zigzag variation with a docked section panel lives at `/2overview` (added 2026-10-10). See [lesson overview](courses.md#lesson-overview-prototype).
 
+## Dutch Foundations content
+
+Parts II–VI have accepted lessons, with Parts V and VI imported to production as unpublished drafts. Part I remains in progress. Part VII's four accepted lessons and new course were published to production on 2026-10-20. The [content index](content/index.md) owns the detailed status.
+
 ## Settings split
 
 Completed on 2026-10-06. The [settings and administration blueprint](settings-and-administration.md) owns the rules: Settings becomes Account, Group (creator only), and Members (creator only) pages. Membership decisions, removal, and password regeneration move to the Members page, the member directory becomes a social view, and image uploads gain an interactive move-and-zoom cropper.

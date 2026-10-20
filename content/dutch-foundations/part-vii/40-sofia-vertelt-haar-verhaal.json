@@ -1,0 +1,1185 @@
+{
+  "title": "Sofia vertelt haar verhaal",
+  "goal": "Integrate known tense choices and main- and subordinate-clause word order in a short account of past events, present life and a plausible next step.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Sofia vertelt haar verhaal",
+      "id": "87cab665-13a1-43ad-957d-42eb4e417b08"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "It is Friday 29 January 2027. Sofia is preparing a short account for Marieke’s Dutch class and talks it through with Noor. In this lesson you will connect the times in her story with word order you already know. Verbs are ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", subjects are ",
+        {
+          "text": "green",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        ", time expressions are ",
+        {
+          "text": "orange",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        ". A finished-past form is ",
+        {
+          "text": "bold and blue",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "8d2a72d5-960e-40f6-82e2-9b0e33e15cfe"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: a life in Utrecht",
+      "id": "eee943d2-7669-4743-9fc4-c728ea1a77b9"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Heb je je verhaal voor de les klaar?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Bijna. Ik wil vertellen over mijn eerste maanden in Utrecht."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Begin maar bij je aankomst."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Op 1 september kwam ik op Utrecht Centraal aan. Jij stond daar."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Daarna woonde je een tijd bij mij."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja. Op 17 oktober verhuisde ik naar mijn appartement in de Kastanjestraat."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En je werk en je Nederlandse les?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik werk bij een klein IT-bedrijf en ik studeer Nederlands."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Je hebt ook vrienden gemaakt."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, en met kerst ben ik naar Valencia gegaan. Op 3 januari kwam ik terug."
+          }
+        ]
+      },
+      "id": "b51e4cea-aa06-4b0e-8391-6d93c560cac2"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "Use short sentences to keep the timeline clear. Reuse the past forms you learned in Part V.",
+      "id": "d17402e7-171b-4167-9461-2931c128a385"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Choose the time frame",
+      "id": "4f5a400d-cba4-4de5-b6f7-1e619eaea943"
+    },
+    {
+      "type": "paragraph",
+      "content": "A story can move between a finished event, a repeated or current situation, and a next step. Choose the tense that fits the time phrase and meaning; there is no new tense here.",
+      "id": "0dc34372-7e8e-4768-81e3-9c2a98a6a621"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia arrived in Utrecht in September.",
+        "note": "A finished event in the past; kwam is the simple past of komen."
+      },
+      "content": [
+        "In september ",
+        {
+          "text": "kwam",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " Sofia in Utrecht aan."
+      ],
+      "id": "2bead06e-f221-4dac-8cd0-171c99dff4cc"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia studied Dutch in Valencia.",
+        "note": "A completed event; perfect with heeft + participle."
+      },
+      "content": [
+        "Sofia ",
+        {
+          "text": "heeft",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " in Valencia Nederlands gestudeerd."
+      ],
+      "id": "4b09029d-b54e-4560-8d2b-2a4d8b363fa7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Now Sofia lives in her own apartment.",
+        "note": "Nu signals the present situation."
+      },
+      "content": [
+        "Nu ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " Sofia in haar eigen appartement."
+      ],
+      "id": "b2755d57-dc0d-4cb4-8fc0-4eed9f730236"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia is going to continue telling her story.",
+        "note": "A plan with gaan + infinitive, recycled from row 36."
+      },
+      "content": [
+        "Sofia ",
+        {
+          "text": "gaat",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " haar verhaal verder vertellen."
+      ],
+      "id": "719344c1-7c7b-4eb5-aefa-06fe26bf1b2a"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "Use a past form for a finished past event, the present for now or a repeated situation, and a taught future form for a next step.",
+      "id": "b89f3384-a81f-4eec-ad76-ca181bbc93c1"
+    },
+    {
+      "type": "columnList",
+      "props": {},
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Finished past",
+              "id": "f42b9efd-f02d-4091-ba49-02aec27bf6e3"
+            },
+            {
+              "type": "paragraph",
+              "content": "Op 17 oktober verhuisde Sofia.",
+              "id": "241ada53-34df-40e9-9f43-60c302793c30"
+            },
+            {
+              "type": "paragraph",
+              "content": "Sofia is naar Valencia gegaan.",
+              "id": "4857b1a4-1372-48eb-bac4-215102f1e0f4"
+            }
+          ],
+          "id": "80ac8f95-0d77-4671-a0de-89bc1abb4403"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Now / next",
+              "id": "05fca1ac-b634-4973-834a-469d0866db18"
+            },
+            {
+              "type": "paragraph",
+              "content": "Nu woont Sofia in Utrecht.",
+              "id": "ff3aee7d-b72c-495c-8c4b-71aa96989dff"
+            },
+            {
+              "type": "paragraph",
+              "content": "Morgen gaat ze verder schrijven.",
+              "id": "ea893db7-2d5c-4d82-a5c0-6fff5dcb69f0"
+            }
+          ],
+          "id": "93ee1193-5ec9-42b8-885e-bc8e4e07e463"
+        }
+      ],
+      "id": "abd79453-f0cd-45dd-a148-9150bb113481"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Avoid changing tense without a time or meaning change: ",
+        {
+          "text": "Vorige week woont Sofia in Utrecht.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Vorige week woonde Sofia in Utrecht."
+      ],
+      "id": "58971c17-f4de-4fb7-91f8-bd7f45554085"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Keep the main clause clear",
+      "id": "61b70126-61b1-458b-804d-056a68b52330"
+    },
+    {
+      "type": "paragraph",
+      "content": "In a main clause, the finite verb is in position two. A time or place phrase can take the first position; then the subject follows the verb. A subordinate clause before the main clause also triggers inversion.",
+      "id": "cdbdd5c4-af56-4e39-866f-160ff706086f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "In November Sofia moved to her apartment.",
+        "note": "Fronted time phrase; verhuisde stays in position two."
+      },
+      "content": [
+        "Op 17 oktober **",
+        {
+          "text": "verhuisde",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "** Sofia naar haar appartement."
+      ],
+      "id": "2186757d-ee84-4f3c-9c29-2f0646fadd59"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "In Valencia Sofia studied Dutch.",
+        "note": "Fronted place phrase; the subject follows the finite verb."
+      },
+      "content": [
+        "In Valencia **",
+        {
+          "text": "studeerde",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "** Sofia Nederlands."
+      ],
+      "id": "caded708-e228-416b-9233-ec5a974528fe"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Because she was looking for her own place, she moved in November.",
+        "note": "The omdat-clause has the finite verb at the end; the following main clause has inversion."
+      },
+      "content": [
+        "Omdat ze haar eigen plek zocht, **",
+        {
+          "text": "verhuisde",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "** ze op 17 oktober."
+      ],
+      "id": "9caea3ef-3d9c-423d-8477-9af26158a9db"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia called her mother in January.",
+        "note": "Perfect main clause: the participle is at the end."
+      },
+      "content": [
+        "Sofia **",
+        {
+          "text": "heeft",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "** in januari haar moeder gebeld."
+      ],
+      "id": "92bed197-98c3-4863-ab16-a32550827a5c"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "After a fronted time, place or subordinate clause, use inversion: first element + finite verb + subject.",
+      "id": "302e1061-120d-4137-8cec-b3e6bea133e7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Join ideas one boundary at a time",
+      "id": "296ba867-0f7e-4176-b22e-e9151d92ed1a"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use a conjunction for the relationship you mean. A subordinate clause puts its finite verb at the end; a main clause after a fronted subordinate clause uses inversion.",
+      "id": "0ff57e2b-35e1-4f01-97e4-7b66ddafa53f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia studies Dutch because she lives here.",
+        "note": "The finite verb woont is at the end of the omdat-clause."
+      },
+      "content": [
+        "Sofia studeert Nederlands, omdat ze hier ",
+        {
+          "text": "woont",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "3c7d995b-abb3-453a-aade-a79ec25b5eb8"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Noor thinks that Sofia tells her story clearly.",
+        "note": "The dat-clause ends with vertelt."
+      },
+      "content": [
+        "Noor ",
+        {
+          "text": "denkt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " dat Sofia haar verhaal duidelijk vertelt."
+      ],
+      "id": "ae1ee4d5-6c76-4b3b-a6a0-5f82f04cb0b2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "If Sofia has time, she writes one more sentence.",
+        "note": "Here als means if; the subordinate clause comes first."
+      },
+      "content": [
+        "Als Sofia tijd ",
+        {
+          "text": "heeft",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        ", schrijft ze nog een zin."
+      ],
+      "id": "0413867e-708e-4078-853a-6174b507efc3"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia writes while Noor listens to her.",
+        "note": "The terwijl-clause ends with luistert."
+      },
+      "content": [
+        "Sofia schrijft, terwijl Noor naar haar ",
+        {
+          "text": "luistert",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "807c7804-45a4-434d-a845-fcf5dff88f58"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia wants to know whether Noor understands her story.",
+        "note": "Indirect yes/no question with of; verb-final order."
+      },
+      "content": [
+        "Sofia wil weten of Noor haar verhaal ",
+        {
+          "text": "begrijpt",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        "."
+      ],
+      "id": "7ff4c6ed-e1be-4c9c-a47d-f7b1f0579898"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Sofia came back because she wanted to see Noor.",
+        "note": "Want links two main clauses, each with V2."
+      },
+      "content": [
+        "Sofia ",
+        {
+          "text": "kwam",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " terug, want ze wilde Noor zien."
+      ],
+      "id": "a12b63fe-0ff9-447e-aad6-eefc2fbbfe19"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "false-friend",
+        "icon": "message-circle-warning"
+      },
+      "content": "Toen in “Toen kwam Sofia terug” means “then.” It is not a subordinate conjunction here: the main clause keeps V2.",
+      "id": "e303749d-408e-4b6c-a86b-1e3094a9c042"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "A simple story plan",
+      "id": "07159fce-16c8-47b3-b7cc-ae616ec352b3"
+    },
+    {
+      "type": "numberedListItem",
+      "props": {},
+      "content": "1. Say when the event happened.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Use an established date or time phrase.",
+          "id": "26f25995-e003-4380-b732-0c0da81c4934"
+        }
+      ],
+      "id": "137d6af5-c1b6-4b16-ae16-8c6e35d628cc"
+    },
+    {
+      "type": "numberedListItem",
+      "props": {},
+      "content": "2. Say what happened, with a suitable past form.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Keep one main idea in each sentence.",
+          "id": "7795eeee-f139-412e-96b7-5e3a291b0ec2"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Add a reason with omdat when useful.",
+          "id": "399b1fad-4294-457c-ba8e-b9bef6c73acb"
+        }
+      ],
+      "id": "1a121a08-1168-4a77-96b3-b6282add83f8"
+    },
+    {
+      "type": "numberedListItem",
+      "props": {},
+      "content": "3. Connect it to life now or a plausible next step.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Use the present for now and a taught future form for a next step.",
+          "id": "c9831f17-7deb-41d1-8047-b3588ca216bd"
+        }
+      ],
+      "id": "33010052-ccd5-41f9-a2dc-b984e027509f"
+    },
+    {
+      "type": "divider",
+      "id": "9f3ae266-46ba-4c0e-856c-61fa32f6bef5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: read it aloud",
+      "id": "a0eae011-14b0-4ddc-aa86-1f0f357e891f"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Lees je verhaal eens voor."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Eerst kwam ik naar Utrecht voor mijn werk."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En waar woonde je toen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Eerst woonde ik bij jou. Daarna vond ik een appartement in Lombok."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Wat deed je met kerst?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik ging naar Valencia. Ik kookte met mijn moeder en studeerde Nederlands."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En toen je terug was?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Op 3 januari kwam ik terug. Nu woon ik hier en leer ik nog steeds Nederlands."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Wat is een mogelijke volgende stap?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Misschien vertel ik mijn verhaal in de les. Als ik een woord niet weet, vraag ik om hulp."
+          }
+        ]
+      },
+      "id": "c3ceb5eb-d2d7-4bbd-b555-c5fa19286aa0"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": "In a Dutch class, it is natural to tell a personal story in short parts and ask for a word when you need one.",
+      "id": "00877abd-d66e-40db-937b-5d5ccfd7a29d"
+    },
+    {
+      "type": "divider",
+      "id": "70f41e3b-543b-433d-a963-1575fa0fe0b9"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "c9cd2d84-2312-4b63-828f-c4028fc41e7c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Choose the form",
+      "id": "347b1829-82b5-44d3-ba51-7be6dcc98f7d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the verb form that fits the time phrase.",
+          "items": [
+            {
+              "prompt": "In september … Sofia in Utrecht aan. (komen)",
+              "authorsVersion": [
+                "kwam"
+              ],
+              "note": "A finished event in the past: simple past kwam."
+            },
+            {
+              "prompt": "Nu … Sofia in Lombok. (wonen)",
+              "authorsVersion": [
+                "woont"
+              ],
+              "note": "Nu signals the present."
+            },
+            {
+              "prompt": "Met kerst … Sofia Nederlands in Valencia. (studeren, perfect)",
+              "authorsVersion": [
+                "heeft gestudeerd"
+              ],
+              "note": "Perfect: heeft + participle gestudeerd."
+            },
+            {
+              "prompt": "Sofia … op 3 januari terug. (komen, perfect)",
+              "authorsVersion": [
+                "is gekomen"
+              ],
+              "note": "Selected movement verb komen uses zijn in the perfect (row 26)."
+            },
+            {
+              "prompt": "Volgende week … ze haar verhaal … . (gaan, vertellen)",
+              "authorsVersion": [
+                "gaat",
+                "vertellen"
+              ],
+              "note": "Gaan is finite; the infinitive goes at the end."
+            },
+            {
+              "prompt": "Toen … Noor naar Sofia. (luisteren, past)",
+              "authorsVersion": [
+                "luisterde"
+              ],
+              "note": "A finished past event takes luisterde."
+            },
+            {
+              "prompt": "Vandaag … Sofia haar account af. (schrijven, present)",
+              "authorsVersion": [
+                "schrijft"
+              ],
+              "note": "Today/current context; present tense."
+            }
+          ]
+        }
+      },
+      "id": "0e0968ea-a2f7-44e7-b136-b23756c53971"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the story dialogue",
+      "id": "683ce0cc-0405-4311-89c1-fe1492cfc275"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each short exchange with the missing word or words.",
+          "items": [
+            {
+              "prompt": "Noor: Waar … Sofia eerst? / Sofia: Ik … eerst bij jou.",
+              "authorsVersion": [
+                "woonde",
+                "woonde"
+              ],
+              "note": "Both ask about a past living situation; woonde is the simple past."
+            },
+            {
+              "prompt": "Noor: … je in oktober verhuisd? / Sofia: Ja, ik … naar Lombok verhuisd.",
+              "authorsVersion": [
+                "Ben",
+                "ben"
+              ],
+              "note": "Verhuizen uses zijn in the perfect here."
+            },
+            {
+              "prompt": "Sofia: Ik ging naar Valencia, … ik mijn familie wilde zien.",
+              "authorsVersion": [
+                "omdat"
+              ],
+              "note": "A reason clause with omdat; wilde is at the end."
+            },
+            {
+              "prompt": "Noor: … je daarna weer naar Utrecht? / Sofia: Ja, op 3 januari.",
+              "authorsVersion": [
+                "Kwam"
+              ],
+              "note": "Direct past-tense question uses inversion."
+            },
+            {
+              "prompt": "Sofia: Ik wil graag weten … je mijn tekst begrijpt.",
+              "authorsVersion": [
+                "of"
+              ],
+              "note": "Indirect yes/no question frame with of."
+            },
+            {
+              "prompt": "Noor: Je kunt het rustig vertellen … ik luister.",
+              "authorsVersion": [
+                "terwijl"
+              ],
+              "note": "Terwijl links simultaneous actions; finite verb at the end."
+            }
+          ]
+        }
+      },
+      "id": "5ce5b65e-19bf-41c3-9f28-46eee33ddf1e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Put the story in order",
+      "id": "e320ff6d-782d-4c10-a78c-d38020a5eaa1"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the complete sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: september / kwam / in / Sofia / Utrecht / naar",
+              "authorsVersion": [
+                "In september kwam Sofia naar Utrecht."
+              ],
+              "note": "Fronted time expression triggers inversion."
+            },
+            {
+              "prompt": "Put in order: bij Noor / eerst / woonde / Sofia",
+              "authorsVersion": [
+                "Eerst woonde Sofia bij Noor."
+              ],
+              "note": "Eerst at the start; finite verb second."
+            },
+            {
+              "prompt": "Put in order: in Valencia / Nederlands / studeerde / Sofia",
+              "authorsVersion": [
+                "In Valencia studeerde Sofia Nederlands."
+              ],
+              "note": "Fronted place expression; verb second."
+            },
+            {
+              "prompt": "Put in order: naar Utrecht / op 3 januari / terug / kwam / ze",
+              "authorsVersion": [
+                "Op 3 januari kwam ze terug naar Utrecht."
+              ],
+              "note": "Fronted date; finite verb before subject."
+            },
+            {
+              "prompt": "Put in order: omdat / ze / hier / werkt / Sofia / woont",
+              "authorsVersion": [
+                "Omdat Sofia hier werkt, woont ze in Utrecht."
+              ],
+              "note": "The subordinate verb werkt is at the end; main clause inverts."
+            },
+            {
+              "prompt": "Put in order: Noor / of / vraagt / Sofia / haar verhaal / begrijpt",
+              "authorsVersion": [
+                "Noor vraagt of Sofia haar verhaal begrijpt."
+              ],
+              "note": "In the indirect question, begrijpt goes at the end."
+            }
+          ]
+        }
+      },
+      "id": "f934f139-1c8d-4907-bb5a-59413d193972"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Repair the word order",
+      "id": "6b485d89-157e-4167-8677-fa2467d7342c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence correctly. Keep its meaning.",
+          "items": [
+            {
+              "prompt": "Op 17 oktober Sofia verhuisde naar Lombok.",
+              "authorsVersion": [
+                "Op 17 oktober verhuisde Sofia naar Lombok."
+              ],
+              "note": "After a fronted time phrase, put the finite verb before the subject."
+            },
+            {
+              "prompt": "Omdat Sofia woonde eerst bij Noor, leerde ze Nederlands.",
+              "authorsVersion": [
+                "Omdat Sofia eerst bij Noor woonde, leerde ze Nederlands."
+              ],
+              "note": "In the omdat-clause, woonde goes at the end."
+            },
+            {
+              "prompt": "Sofia wil weten of heeft Noor tijd.",
+              "authorsVersion": [
+                "Sofia wil weten of Noor tijd heeft."
+              ],
+              "note": "Indirect question order: subject before verb."
+            },
+            {
+              "prompt": "Toen Sofia kwam terug, belde ze Noor.",
+              "authorsVersion": [
+                "Toen Sofia terugkwam, belde ze Noor."
+              ],
+              "note": "Toen means then here; use a main clause with V2. Also fine: Toen kwam Sofia terug en belde ze Noor."
+            },
+            {
+              "prompt": "Vorige week woont Sofia in Lombok.",
+              "authorsVersion": [
+                "Vorige week woonde Sofia in Lombok."
+              ],
+              "note": "Vorige week is past, so use woonde."
+            },
+            {
+              "prompt": "Sofia werkte bij een IT-bedrijf, terwijl ze studeert Nederlands.",
+              "authorsVersion": [
+                "Sofia werkte bij een IT-bedrijf, terwijl ze Nederlands studeerde."
+              ],
+              "note": "The account is in the past; the terwijl-clause has its verb at the end."
+            }
+          ]
+        }
+      },
+      "id": "85a314e2-c417-4508-87f0-1144609bb54e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "26ff7280-03fa-45e9-b078-ea85d6f3665f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural Dutch. Use the time frame in the English sentence.",
+          "items": [
+            {
+              "prompt": "In September Sofia arrived in Utrecht.",
+              "authorsVersion": [
+                "In september kwam Sofia in Utrecht aan."
+              ],
+              "note": "Finished past event; separable verb prefix aan is at the end."
+            },
+            {
+              "prompt": "Now she lives in Lombok.",
+              "authorsVersion": [
+                "Nu woont ze in Lombok."
+              ],
+              "note": "Fronted nu triggers inversion."
+            },
+            {
+              "prompt": "At Christmas she studied Dutch in Valencia.",
+              "authorsVersion": [
+                "Met kerst studeerde ze Nederlands in Valencia."
+              ],
+              "note": "Simple past is appropriate for a finished past account."
+            },
+            {
+              "prompt": "She came back on 3 January.",
+              "authorsVersion": [
+                "Ze is op 3 januari teruggekomen."
+              ],
+              "note": "Perfect of terugkomen uses zijn; participle at the end."
+            },
+            {
+              "prompt": "Because she works here, she lives in Utrecht.",
+              "authorsVersion": [
+                "Omdat ze hier werkt, woont ze in Utrecht."
+              ],
+              "note": "Verb-final werkt; main clause inversion woont ze."
+            },
+            {
+              "prompt": "She wants to know whether Noor understands the story.",
+              "authorsVersion": [
+                "Ze wil weten of Noor het verhaal begrijpt."
+              ],
+              "note": "Indirect question with of and verb-final begrijpt."
+            }
+          ]
+        }
+      },
+      "id": "f334f47b-1181-4273-82a3-837a3af1881a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "4c98ae7d-6cc4-4093-b1af-803f50950e71"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Op 17 oktober verhuisde Sofia naar haar appartement.",
+              "authorsVersion": [
+                "In November Sofia moved to her apartment."
+              ],
+              "note": "Simple past verhuisde."
+            },
+            {
+              "prompt": "Sofia heeft met kerst in Valencia gekookt.",
+              "authorsVersion": [
+                "Sofia cooked in Valencia at Christmas."
+              ],
+              "note": "Perfect with heeft + gekookt."
+            },
+            {
+              "prompt": "Nu studeert ze Nederlands en werkt ze bij een klein IT-bedrijf.",
+              "authorsVersion": [
+                "Now she studies Dutch and works at a small IT company."
+              ],
+              "note": "Present tense describes current facts."
+            },
+            {
+              "prompt": "Als ze een woord niet weet, vraagt ze om hulp.",
+              "authorsVersion": [
+                "If she does not know a word, she asks for help."
+              ],
+              "note": "Als means if; subordinate verb weet at the end."
+            },
+            {
+              "prompt": "Noor luistert, terwijl Sofia haar verhaal vertelt.",
+              "authorsVersion": [
+                "Noor listens while Sofia tells her story."
+              ],
+              "note": "The terwijl-clause ends with vertelt."
+            },
+            {
+              "prompt": "Sofia gaat haar verhaal verder vertellen.",
+              "authorsVersion": [
+                "Sofia is going to continue telling her story."
+              ],
+              "note": "Gaan + infinitive expresses an intention; the sentence does not set a date."
+            }
+          ]
+        }
+      },
+      "id": "bbebf6ac-fc1c-4062-8d4a-c2aea7facd08"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Read Sofia’s account",
+      "id": "2dea1b19-3be9-4caf-8d18-3eeceecda3bb"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the passage. Answer each question in Dutch.",
+          "items": [
+            {
+              "prompt": "Wanneer kwam Sofia in Utrecht aan?",
+              "authorsVersion": [
+                "Op 1 september."
+              ],
+              "note": "The first sentence gives the date."
+            },
+            {
+              "prompt": "Bij wie woonde Sofia eerst?",
+              "authorsVersion": [
+                "Bij Noor."
+              ],
+              "note": "She first lived with her friend Noor."
+            },
+            {
+              "prompt": "Waar werkt Sofia?",
+              "authorsVersion": [
+                "Bij een klein IT-bedrijf."
+              ],
+              "note": "The passage repeats the established job."
+            },
+            {
+              "prompt": "Wanneer verhuisde ze naar haar appartement in Lombok?",
+              "authorsVersion": [
+                "Op 17 oktober."
+              ],
+              "note": "The passage gives the date of her move."
+            },
+            {
+              "prompt": "Waar ging Sofia met kerst naartoe?",
+              "authorsVersion": [
+                "Naar Valencia."
+              ],
+              "note": "Her established Christmas visit was to Valencia."
+            },
+            {
+              "prompt": "Wat deed Sofia in Valencia?",
+              "authorsVersion": [
+                "Ze kookte met haar moeder en studeerde Nederlands."
+              ],
+              "note": "Both activities appear in the passage."
+            },
+            {
+              "prompt": "Klopt dit? Sofia kwam op 3 januari terug naar Utrecht.",
+              "authorsVersion": [
+                "Ja, dat klopt."
+              ],
+              "note": "The passage confirms the return date."
+            },
+            {
+              "prompt": "Wat doet Sofia misschien in de volgende les?",
+              "authorsVersion": [
+                "Misschien vertelt ze haar verhaal in de les."
+              ],
+              "note": "A plausible next step from the row 40 scene; it makes no fixed long-term commitment."
+            }
+          ],
+          "passage": {
+            "title": "Sofia vertelt over haar tijd in Utrecht",
+            "content": "Op vrijdag 29 januari vertelt Sofia haar verhaal voor de Nederlandse les.\n\nOp 1 september kwam ik in Utrecht aan. Ik was nieuw in de stad. Eerst woonde ik bij mijn vriendin Noor. Ik werkte bij een klein IT-bedrijf en ging elke dinsdag naar de Nederlandse les. Op 17 oktober verhuisde ik naar mijn appartement in de Kastanjestraat, in Lombok. Ik heb daar Nederlands gestudeerd. Met kerst ben ik naar Valencia gegaan. Ik heb daar met mijn moeder gekookt en Nederlands gestudeerd. Op 3 januari kwam ik terug naar Utrecht. Nu woon ik in Lombok en werk ik nog steeds bij hetzelfde bedrijf. Misschien vertel ik mijn verhaal in de volgende les. Als ik een woord niet weet, vraag ik om hulp. Ik leer nog steeds Nederlands."
+          }
+        }
+      },
+      "id": "6ffa1b27-19fc-4887-966e-257fe42568cb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Your turn",
+      "id": "2e6446b1-ad0b-41a6-b1e9-0860191bd519"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write a connected 5–7 sentence account of a few past events, life now and a plausible next step. Use only facts you know or your own life.",
+          "items": [
+            {
+              "prompt": "Write your account.",
+              "authorsVersion": [
+                "Op 1 september kwam Sofia in Utrecht aan. Eerst woonde ze bij Noor. Op 17 oktober verhuisde ze naar Lombok. Met kerst ging ze naar Valencia. Op 3 januari kwam ze terug. Nu woont en werkt ze in Utrecht. Misschien vertelt ze haar verhaal in de volgende les."
+              ],
+              "note": "Model answer about Sofia, not a claim that she has mastered Dutch. Your own account may use different true details. Keep the timeline clear and use V2 after a fronted phrase."
+            }
+          ]
+        }
+      },
+      "id": "b63331fc-4b41-4687-8877-4e9b09d5b7e7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "ecb3afd7-c056-472d-9075-f04bfb4ebad1"
+    },
+    {
+      "type": "paragraph",
+      "content": "A clear story can use short sentences. Keep the time frame and clause word order in view.",
+      "id": "4e23e3c6-4b78-4bd5-8da6-8ca9808f7050"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Choose a taught tense that fits the time and meaning.",
+      "id": "ac4ca96e-3370-40f8-ac49-80fdcb823c1c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "In a main clause, put the finite verb in position two, including after a fronted element.",
+      "id": "2e1a275e-650a-4250-b372-dd2d67e11b6f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "In dat, omdat, als, terwijl and indirect of clauses, put the finite verb at the end.",
+      "id": "dc39e7ff-e654-42d3-bd8e-40b7b7d1fefc"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "When a subordinate clause comes first, use inversion in the following main clause.",
+      "id": "20d16808-5a18-4d3a-8a22-b7f85f1e9fed"
+    },
+    {
+      "type": "divider",
+      "id": "2a8a259a-99c1-433c-bbc5-5ffa6adf1dfe"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: a life in Utrecht",
+      "description": "Sofia and Noor at a kitchen table in Utrecht, looking at Sofia’s handwritten short timeline for Dutch class; a notebook shows simple dated entries from September, November, Christmas and January.",
+      "alt": "Sofia and Noor review a simple timeline for a Dutch class."
+    },
+    {
+      "afterHeading": "Story: read it aloud",
+      "description": "Sofia reads a short handwritten account aloud while Noor listens supportively at the table; ordinary Utrecht apartment interior, no dramatic props.",
+      "alt": "Sofia reads her story aloud to Noor."
+    }
+  ],
+  "id": "7e4924ee-d85c-4511-82ea-87685c90c07b"
+}

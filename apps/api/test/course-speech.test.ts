@@ -1,4 +1,4 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { courseResponseSchema, courseSpeechCastResponseSchema } from "@wordinator/contracts";
 import { courseWordsResponseSchema, wordBookmarkPageSchema } from "@wordinator/contracts/lesson-document";
 import { SPEECH_SAMPLE_TEXT, speechClipHash, speechClipKey } from "@wordinator/contracts/speech";
@@ -7,6 +7,7 @@ import { azureSynthesizer, runSpeechJobs, runSpeechSamples, SPEECH_CLAIM_LEASE_M
 import {
   addLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, lessonPath, publishLesson, readLesson, request, resetDatabase, saveDraft, seedGroup, seedUser, signIn, word,
 } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 // A synthesizer stand-in that records every request and answers with a few bytes of "audio".
 function fakeAzure(answer: (ssml: string, call: number) => SynthesisResult = () => ({ ok: true, audio: new Uint8Array([0xff, 0xf3, 1, 2]).buffer })) {
@@ -94,7 +95,7 @@ describe("Speech worker and reads", () => {
     expect(stored?.httpMetadata?.contentType).toBe("audio/mpeg");
     expect(stored?.httpMetadata?.cacheControl).toBe("public, max-age=31536000, immutable");
     await stored?.arrayBuffer();
-    const served = await SELF.fetch(learnerView.speech[`word:${hond.id}`]!);
+    const served = await fetchWorker(learnerView.speech[`word:${hond.id}`]!);
     expect(served.status).toBe(200);
     await served.arrayBuffer();
 

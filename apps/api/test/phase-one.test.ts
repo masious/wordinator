@@ -1,7 +1,8 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { beforeAll, beforeEach, describe, expect, it } from "vitest";
 import { healthResponseSchema, sessionResponseSchema } from "@wordinator/contracts";
 import { hashPassword } from "../src/auth";
+import { fetchWorker } from "./worker";
 
 const PASSWORD = "shared-test-password";
 let passwordHash: string;
@@ -25,7 +26,7 @@ async function seedGroup(label: string, mustChangePassword = false): Promise<See
 }
 
 async function jsonRequest(path: string, body: unknown, cookie?: string, method = "POST") {
-  return SELF.fetch(`https://wordinator.test${path}`, {
+  return fetchWorker(`https://wordinator.test${path}`, {
     method,
     headers: { "content-type": "application/json", ...(cookie ? { cookie } : {}) },
     body: JSON.stringify(body),
@@ -52,7 +53,7 @@ beforeEach(async () => {
 
 describe("Phase 1 API", () => {
   it("keeps the typed health endpoint available", async () => {
-    const response = await SELF.fetch("https://wordinator.test/api/health");
+    const response = await fetchWorker("https://wordinator.test/api/health");
     expect(response.status).toBe(200);
     expect(healthResponseSchema.parse(await response.json()).status).toBe("ok");
   });
@@ -67,7 +68,7 @@ describe("Phase 1 API", () => {
     expect(setCookie).toContain("Secure");
     const cookie = setCookie.split(";", 1)[0]!;
     const tampered = `${cookie.slice(0, -1)}${cookie.endsWith("a") ? "b" : "a"}`;
-    const session = await SELF.fetch("https://wordinator.test/api/session", { headers: { cookie: tampered } });
+    const session = await fetchWorker("https://wordinator.test/api/session", { headers: { cookie: tampered } });
     expect(await session.json()).toEqual({ status: "signedOut" });
   });
 
@@ -79,18 +80,18 @@ describe("Phase 1 API", () => {
     });
     expect(registration.status).toBe(201);
     const memberCookie = registration.headers.get("set-cookie")!.split(";", 1)[0]!;
-    const setupSession = sessionResponseSchema.parse(await (await SELF.fetch("https://wordinator.test/api/session", { headers: { cookie: memberCookie } })).json());
+    const setupSession = sessionResponseSchema.parse(await (await fetchWorker("https://wordinator.test/api/session", { headers: { cookie: memberCookie } })).json());
     expect(setupSession.status).toBe("signedIn");
     if (setupSession.status !== "signedIn") throw new Error("expected signed-in session");
     expect(setupSession.user.onboardingComplete).toBe(false);
     expect(setupSession.groups[0]?.id).toBe(creator.groupId);
     expect(setupSession.requests).toEqual([]);
-    expect((await SELF.fetch(`https://wordinator.test/api/groups/${creator.groupId}`, { headers: { cookie: memberCookie } })).status).toBe(403);
+    expect((await fetchWorker(`https://wordinator.test/api/groups/${creator.groupId}`, { headers: { cookie: memberCookie } })).status).toBe(403);
 
     expect((await jsonRequest("/api/auth/complete-onboarding", { username: "new_learner" }, memberCookie)).status).toBe(200);
-    const readySession = sessionResponseSchema.parse(await (await SELF.fetch("https://wordinator.test/api/session", { headers: { cookie: memberCookie } })).json());
+    const readySession = sessionResponseSchema.parse(await (await fetchWorker("https://wordinator.test/api/session", { headers: { cookie: memberCookie } })).json());
     expect(readySession.status === "signedIn" && readySession.user.username).toBe("new_learner");
-    expect((await SELF.fetch(`https://wordinator.test/api/groups/${creator.groupId}`, { headers: { cookie: memberCookie } })).status).toBe(200);
+    expect((await fetchWorker(`https://wordinator.test/api/groups/${creator.groupId}`, { headers: { cookie: memberCookie } })).status).toBe(200);
   });
 
   it("rejects invalid, duplicate, and premature registrations", async () => {
@@ -114,7 +115,7 @@ describe("Phase 1 API", () => {
     const first = await register("first@example.test");
     const second = await register("second@example.test");
     const coursesPath = `/api/groups/${creator.groupId}/courses`;
-    const blocked = await SELF.fetch(`https://wordinator.test${coursesPath}`, { headers: { cookie: first } });
+    const blocked = await fetchWorker(`https://wordinator.test${coursesPath}`, { headers: { cookie: first } });
     expect(blocked.status).toBe(403);
     expect(await blocked.json()).toMatchObject({ error: { code: "ONBOARDING_REQUIRED" } });
     for (const username of ["ab", "has space", "no-dashes", "x".repeat(31), ""]) {
@@ -124,15 +125,15 @@ describe("Phase 1 API", () => {
     const taken = await jsonRequest("/api/auth/complete-onboarding", { username: "taken_name" }, second);
     expect(taken.status).toBe(409);
     expect(await taken.json()).toMatchObject({ error: { code: "USERNAME_TAKEN" } });
-    expect((await SELF.fetch(`https://wordinator.test${coursesPath}`, { headers: { cookie: second } })).status).toBe(403);
-    expect((await SELF.fetch(`https://wordinator.test${coursesPath}`, { headers: { cookie: first } })).status).toBe(200);
+    expect((await fetchWorker(`https://wordinator.test${coursesPath}`, { headers: { cookie: second } })).status).toBe(403);
+    expect((await fetchWorker(`https://wordinator.test${coursesPath}`, { headers: { cookie: first } })).status).toBe(200);
   });
 
   it("isolates group reads and creator decisions across tenants", async () => {
     const alpha = await seedGroup("alpha");
     const beta = await seedGroup("beta");
     const betaCookie = await signIn("beta@example.test");
-    const crossTenantRead = await SELF.fetch(`https://wordinator.test/api/groups/${alpha.groupId}`, { headers: { cookie: betaCookie } });
+    const crossTenantRead = await fetchWorker(`https://wordinator.test/api/groups/${alpha.groupId}`, { headers: { cookie: betaCookie } });
     expect(crossTenantRead.status).toBe(404);
     const now = Date.now();
     await env.DB.prepare("INSERT INTO memberships (group_id, user_id, state, requested_at, decided_at, updated_at) VALUES (?, ?, 'active', ?, ?, ?)")
@@ -144,9 +145,9 @@ describe("Phase 1 API", () => {
   it("requires a forced password change before group access", async () => {
     const alpha = await seedGroup("alpha", true);
     const cookie = await signIn("alpha@example.test");
-    expect((await SELF.fetch(`https://wordinator.test/api/groups/${alpha.groupId}`, { headers: { cookie } })).status).toBe(403);
+    expect((await fetchWorker(`https://wordinator.test/api/groups/${alpha.groupId}`, { headers: { cookie } })).status).toBe(403);
     expect((await jsonRequest("/api/auth/change-password", { password: "replacement-password" }, cookie)).status).toBe(200);
-    expect((await SELF.fetch(`https://wordinator.test/api/groups/${alpha.groupId}`, { headers: { cookie } })).status).toBe(200);
+    expect((await fetchWorker(`https://wordinator.test/api/groups/${alpha.groupId}`, { headers: { cookie } })).status).toBe(200);
   });
 
   it("throttles repeated login failures without revealing account existence", async () => {

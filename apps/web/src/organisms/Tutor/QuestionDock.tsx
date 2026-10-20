@@ -20,8 +20,8 @@ const ADVANCES = new Set(["choice", "fill_in", "translate", "dictation", "fix_mi
 // left unanswered go as skips). The questions stay mounted while hidden, so what was typed survives moving between them.
 // Minimized, the dock keeps only its head (position, pips, and the toggle), leaving the chat's height to earlier messages; the
 // questions stay mounted then too, and a pip or the toggle brings them back where the learner left off.
-export function QuestionDock({ components, onSubmit, onSkipAll, clip, language, disabled }: {
-  components: readonly OpenComponent[]; onSubmit: (answers: TutorSetAnswer[]) => Promise<unknown>; onSkipAll?: () => void;
+export function QuestionDock({ components, onSubmit, onSkipSet, clip, language, disabled }: {
+  components: readonly OpenComponent[]; onSubmit: (answers: TutorSetAnswer[]) => Promise<unknown>; onSkipSet?: () => void;
   clip?: (toolCallId: string) => ClipSource | undefined; language: string; disabled: boolean;
 }) {
   const { t } = useTranslation();
@@ -82,6 +82,7 @@ export function QuestionDock({ components, onSubmit, onSkipAll, clip, language, 
   };
   const currentReady = Boolean(ready[current.toolCallId]) || state(current) === "answered";
   const unanswered = components.filter((part) => part !== current && state(part) !== "answered").length + (currentReady ? 0 : 1);
+  const canDeclineSet = count > 1 && last && components.every((part) => state(part) !== "answered");
   const locked = disabled || sending;
 
   return <section className={styles.dock} aria-label={t("tutor.dock.label")} data-minimized={minimized || undefined}>
@@ -113,9 +114,10 @@ export function QuestionDock({ components, onSubmit, onSkipAll, clip, language, 
       {count > 1 && <Button variant="quiet" disabled={index === 0 || locked} onClick={() => go(index - 1)}><ArrowLeft size={16} aria-hidden="true" />{t("tutor.dock.previous")}</Button>}
       <span className={styles.dockSpacer} />
       {last && unanswered > 0 && count > 1 && <p className={styles.dockNote}>{t("tutor.dock.unanswered", { count: unanswered })}</p>}
-      {count > 1 && onSkipAll && <Button variant="quiet" disabled={locked} onClick={onSkipAll}>{t("tutor.dock.skipAll")}</Button>}
       {failed && <p className={styles.errorLine} role="alert">{t("tutor.dock.failed")}</p>}
-      {state(current) !== "skipped" && <Button variant="quiet" disabled={locked} onClick={skip}>{t("tutor.dock.skip")}</Button>}
+      {canDeclineSet && onSkipSet
+        ? <Button variant="quiet" disabled={locked} onClick={onSkipSet}>{t("tutor.dock.skipAll")}</Button>
+        : state(current) !== "skipped" && <Button variant="quiet" disabled={locked} onClick={skip}>{t("tutor.dock.skip")}</Button>}
       {last
         ? <Button loading={sending} disabled={locked || (count === 1 ? !currentReady : unanswered === count)} onClick={() => void send()} trailingIcon={<Check size={16} />}>
           {count > 1 ? t("tutor.dock.checkAll") : t("tutorComponents.check")}

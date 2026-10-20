@@ -12,7 +12,7 @@ One row per grammar topic: the outline topics of all 40 rows, plus topics the le
 - `deferred` — deliberately postponed to a later row or part; the notes say where.
 - `missing` — no lesson yet. While a part is being written, its rows show `missing (planned: …)` until the lesson is accepted.
 
-Lesson IDs: `01-a` … `06-b` = `part-i/` (plan: [briefs-part-i.md](briefs-part-i.md)); `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`; `19-a` … `24-b` = `part-iv/` (plan: [briefs-part-iv.md](briefs-part-iv.md)).
+Lesson IDs: `01-a` … `06-b` = `part-i/` (plan: [briefs-part-i.md](briefs-part-i.md)); `07-a` = `part-ii/07-a-*.json`; `13-1`/`13-2` = `part-iii/existing/`; `19-a` … `24-b` = `part-iv/` (plan: [briefs-part-iv.md](briefs-part-iv.md)); `25` = `part-v/` (plan: [briefs-part-v.md](briefs-part-v.md)).
 
 ## Outline topics
 
@@ -49,29 +49,29 @@ Lesson IDs: `01-a` … `06-b` = `part-i/` (plan: [briefs-part-i.md](briefs-part-
 | 19 | houden van; infinitive as a het-noun; vinden + activity + adjective | 19-a | — | covered | "Ik vind … lekker/leuk" used as a main-clause chunk earlier; full vinden pattern practiced here. |
 | 19 | graag (liking), liever; infinitive constructions with gaan/komen/blijven/leren | 19-b | — | covered | "Ik wil graag", "Ja, graag" used as chunks from 11-a. het liefst deferred to row 32. |
 | 20 | Modal verbs + infinitive (system); moeten; modal + direction without infinitive; two infinitives at the end (intro) | 20-a | — | covered | Consolidates willen/mogen (11), kunnen (15), gaan (16-b). Two infinitives at the end is recognition-only (intro), deepened in later rows. |
-| 21 | zullen for suggestions and offers (Zullen we …? Zal ik …?); Laten we …; reacting | — | — | missing (planned: 21-a) | Future/promise zullen deferred to row 36. |
-| 21 | Invitations and arrangements (with object pronouns) | — | — | missing (planned: 21-b) | |
-| 22 | aan het + infinitive | — | — | missing (planned: 22-a, 22-b) | 22-b adds questions/negation, bezig zijn met, zitten/staan/liggen te. |
-| 23 | kunnen, mogen, moeten contrasted; mogen niet | — | — | missing (planned: 23-a) | kunnen and mogen already taught (15-a, 11). |
-| 23 | hoeven + niet + te; moeten ↔ niet hoeven | — | — | missing (planned: 23-b) | |
-| 24 | Opinions in main clauses (vinden + object + adjective, Ik denk het wel, het eens zijn) | — | — | missing (planned: 24-a) | |
-| 24 | vinden/denken/hopen/zeggen + dat; subordinate clause intro (verb last) | — | — | missing (planned: 24-b) | Only dat-clauses; omdat/als/want in Part VI. |
-| 25 | Perfect with hebben | — | — | missing | Part V. No past tense anywhere in Parts II–III. |
-| 26 | Perfect with zijn | — | — | missing | Part V. |
-| 27 | Irregular participles; ge- rules | — | — | missing | Part V. |
-| 28 | Simple past of zijn, hebben, common verbs | — | — | missing | Part V. |
-| 29 | Perfect vs simple past; sequencing words | — | — | missing | Part V. eerst/dan/daarna used in the present from 08-b/15-b. |
-| 30 | Subordinate clauses: omdat, dat, als | — | — | missing | Part VI. |
-| 31 | want vs omdat | — | — | missing | Part VI. |
-| 32 | Comparative and superlative | — | — | missing | Part VI. Comparative covered in 18-b; superlative still missing, including het liefst (19-b stops at liever). |
-| 33 | Relative clauses die/dat | — | — | missing | Part VI. |
-| 34 | om … te; te + infinitive | — | — | missing | Part VI. "te + adjective" (too) from 12-b is a different structure. Planned partial uses: hoeven … te (23-b), zitten/staan/liggen te (22-b). |
-| 35 | als, dan; zou/zouden | — | — | missing | Part VI. |
-| 36 | Present vs gaan vs zullen for the future | — | — | missing | Part VI. Present + time word and gaan + infinitive taught in 08–09 and 16-b; zullen for suggestions/offers planned in 21-a. |
-| 37 | Object pronouns; polite zou | — | — | missing | Part VII. Object pronouns for people and things planned at basic depth in 21-b (moved earlier); row 37 adds hen/hun, er- forms and polite zou. |
-| 38 | Reflexive verbs; formal requests | — | — | missing | Part VII. Daily-routine reflexives (zich aankleden) deliberately avoided in 07. |
-| 39 | Conjunctions; clause linking; register | — | — | missing | Part VII. |
-| 40 | Integrated word order | — | — | missing | Part VII. |
+| 21 | zullen for suggestions and offers (Zullen we …? Zal ik …?); Laten we …; reacting | 21-a | — | covered | Future/promise zullen deferred to row 36. |
+| 21 | Invitations and arrangements (with object pronouns) | — | — | covered | Basic people and thing pronouns, their position, forms after prepositions, and invitation/pickup arrangements. Hen/hun and er- forms deferred to row 37. |
+| 22 | aan het + infinitive | 22-a | 22-b | covered | 22-a introduces the pattern, object position, separable infinitives, and present vs ongoing activity; 22-b adds questions/negation and contrasts it with bezig zijn met and positional verb + te. |
+| 23 | kunnen, mogen, moeten contrasted; mogen niet | 23-a | — | covered | Contrasts ability/possibility (*kunnen*), permission and prohibition (*mogen*, *mogen niet*), and obligation (*moeten*); includes modal-without-infinitive uses and pool/office rules. |
+| 23 | hoeven + niet + te; moeten ↔ niet hoeven | 23-b | — | covered | *hoeven* with niet/geen/niets/nooit/alleen; te placement in separable infinitives; contrasts necessity, no necessity and prohibition. |
+| 24 | Opinions in main clauses (vinden + object + adjective, Ik denk het wel, het eens zijn) | 24-a | — | covered | *Wat vind jij ervan?* remains a fixed chunk; er-forms are not taught as a system. |
+| 24 | vinden/denken/hopen/zeggen + dat; subordinate clause intro (verb last) | — | — | covered | 24-b: only dat-clauses after these four verbs; *niet* placement, no inversion, and verb clusters at the end. |
+| 25 | Perfect with hebben | 25 | — | partial | 25 (accepted 2026-10-19): practiced with regular weak participles in affirmative statements and yes/no questions; the present form of hebben changes, the participle goes last, and stem final sound selects -t/-d. Separable participle introduced with opruimen → opgeruimd. Irregular participles and broader ge- rules are deferred to 27; zijn auxiliary to 26. |
+| 26 | Perfect with zijn | Part V | — | covered | 26 (accepted 2026-10-19): zijn + participle for a bounded set of movement/change verbs; question inversion and participle-final order; selected irregular participles learned as whole forms. Broad irregular patterns stay row 27. |
+| 27 | Irregular participles; ge- rules | 27 | — | covered | 27 (accepted 2026-10-19): common irregular participles as whole forms; no ge- with inseparable prefixes; one ge- for -eren verbs; ge between a separable prefix and stem. Perfect word order recycled. |
+| 28 | Simple past of zijn, hebben, common verbs | 28 | — | covered | 28 (accepted 2026-10-19): was/waren, had/hadden, selected weak -te/-de patterns, and common strong forms ging, kwam, deed; singular/plural endings, V2 and question inversion. |
+| 29 | Perfect vs simple past; sequencing words | 29 | — | covered | 29 (accepted 2026-10-19): context-sensitive tendencies, not absolute rules; sequences with eerst/toen/daarna/uiteindelijk and V2 in main clauses. Eerst/dan/daarna are also recycled from present contexts in 08-b/15-b. |
+| 30 | Subordinate clauses: omdat, dat, als | 30 | — | covered | 30 (accepted 2026-10-19): reviews dat after denken/vinden/hopen/zeggen; adds omdat (reason) and temporal als (repeated/expected “when”); subordinate verb-final and inversion after fronting. Conditional als stays row 35. |
+| 31 | want vs omdat | 30 | 31 | covered | 31 (accepted 2026-10-19): want coordinates main clauses and preserves V2; omdat subordinates and puts the finite verb at the end; fronted omdat clause triggers inversion. |
+| 32 | Comparative and superlative | 18-b | 32 | covered | 32 (accepted 2026-10-19): recycles comparatives; adds regular -st/-ste, predicative/adverbial het + -st, spelling, and best/beter, meest/meer. Het liefst is recycled as a preference chunk. |
+| 33 | Relative clauses die/dat | 33 | — | covered | Subject relatives with clause-final finite verb; object and prepositional relatives deferred. |
+| 34 | om … te; te + infinitive | 34 | — | covered | Purpose *om … te*, *proberen te*, and separable infinitives; positional verb + te (22-b) and *hoeven … te* (23-b) remain earlier partial uses. "te + adjective" (too) from 12-b is a different structure. |
+| 35 | als, dan; zou/zouden | 35 | — | covered | Hypothetical *als* contrasted with temporal *als*; *zou/zouden* + infinitive and optional *dan*. |
+| 36 | Present vs gaan vs zullen for the future | 36 | — | covered | Present + future time for timetables/settled arrangements; *gaan* for intentions; *zullen* for expectations, promises and offers. Recycles 21-a suggestions/offers. |
+| 37 | Object pronouns; polite zou | 21-b | — | covered | 37 (accepted 2026-10-20): practices *hen* as direct object/after a preposition, *hun* as indirect object without a preposition, and common *ze* alternatives; adds *ermee, ernaar,* and *erover*, *van mij/jou*, *de/het mijne/jouwe*, and optional polite *zou*. |
+| 38 | Reflexive verbs; formal requests | 38 | — | covered | 38 (accepted 2026-10-20): bounded *me, je, zich, ons* with *zich voelen, wassen, aankleden,* and *vergissen*; finite-verb and infinitive placement; formal service requests with *u*. |
+| 39 | Conjunctions; clause linking; register | 30, 31 | — | covered | 39 (accepted 2026-10-20): recycles *want/omdat/dat/als*, adds simultaneous *terwijl* and the bounded indirect yes/no *of* frame, and practices message structure/register. |
+| 40 | Integrated word order | 40 | — | covered | 40 (accepted 2026-10-20): integrates known present, perfect and simple past choices, main-clause V2/inversion, and verb-final clauses with *dat, omdat, als, terwijl,* and indirect *of*. |
 
 ## Topics beyond the outline (added by Parts I–IV)
 
@@ -103,10 +103,10 @@ Lesson IDs: `01-a` … `06-b` = `part-i/` (plan: [briefs-part-i.md](briefs-part-
 | Seasons (in de lente/zomer/herfst/winter) | 17-a | — | covered | |
 | Intensifiers heel, erg, best, een beetje, te | 17-b | — | covered | |
 | Non-inflecting adjectives (oranje, roze, -en materials) | 18-a | — | covered | |
-| Position of niet (system); niet … maar; wel for contrast | — | — | missing (planned: 20-b) | Parts II–III used only simple niet rules. 24-b applies them in dat-clauses. |
-| Any element first + inversion (objects, dat, prepositional phrases) | — | — | missing (planned: 20-b) | Time/place/dan first covered in 08-b, 14-a, 15-a. Integration in row 40. |
-| Diminutive formation (-je, -tje, -pje, -etje) | — | — | missing (planned: 21-a) | Completes the 10-b vocabulary rule. |
-| Object pronouns for things (hem/het/ze) | — | — | missing (planned: 21-b) | Subject forms hij/het/ze covered in 14-a. |
-| zin hebben in + noun | — | — | missing (planned: 21-a) | "zin hebben om … te" is row 34. |
-| bezig zijn met | — | — | missing (planned: 22-b) | |
+| Position of niet (system); niet … maar; wel for contrast | 20-b | — | covered | Simple negation in Parts I–III; 20-b systematises placement and contrast. 24-b applies it in dat-clauses. |
+| Any element first + inversion (objects, dat, prepositional phrases) | 20-b | — | covered | Time/place/dan first covered in 08-b, 14-a, 15-a; integration in row 40. |
+| Diminutive formation (-je, -tje, -pje, -etje) | 21-a | — | covered | Completes the 10-b vocabulary rule; includes *het spelletje* from 19-a as the worked example. |
+| Object pronouns for people and things | — | — | covered | 21-b teaches me/mij … ze for people and hem/het/ze for things, plus pronoun position and person forms after prepositions. Hen/hun, er- forms and independent possessives stay deferred to row 37. |
+| zin hebben in + noun | 21-a | — | covered | “zin hebben om … te” is row 34. |
+| bezig zijn met | 22-b | — | covered | Basic pattern with met + noun; not followed by an infinitive. |
 | al + present for a period up to now (Ik woon al twee jaar …) | — | — | missing (planned: 19-a) | Intro chunk. |

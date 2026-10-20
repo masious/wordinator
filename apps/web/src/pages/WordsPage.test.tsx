@@ -25,7 +25,8 @@ vi.mock("microsoft-cognitiveservices-speech-sdk", () => ({
   PronunciationAssessmentConfig: { fromJSON: (json: string) => ({ applyTo: () => { azure.assessments.push(JSON.parse(json)); } }) },
   // With `azure.next` set to "wait", recognition waits until the test calls `azure.respond`.
   SpeechRecognizer: class {
-    recognizeOnceAsync(done: (result: unknown) => void) { if (azure.next === "wait") azure.respond = done; else done(azure.next); }
+    sessionStarted?: () => void;
+    recognizeOnceAsync(done: (result: unknown) => void) { this.sessionStarted?.(); if (azure.next === "wait") azure.respond = done; else done(azure.next); }
     close() {}
   },
 }));

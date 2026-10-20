@@ -1,0 +1,1388 @@
+{
+  "title": "Dat hoeft niet",
+  "goal": "Say that something is not necessary with hoeven + niet/geen/niets + te + infinitive, and distinguish it from moeten niet and mogen niet.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Dat hoeft niet",
+      "id": "13197178-43dc-45b8-b5fc-f450b39a04ba"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Thursday 10 December. Sofia is getting ready for her housewarming and her trip to Valencia. In this lesson you will say what is necessary, what is not necessary, and what is not allowed. The target forms are bold; verbs are blue and infinitives at the end are red.",
+      "id": "c1611540-d18e-46b8-87d8-98746bc3bfb6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: messages about the housewarming",
+      "id": "e5cc08a3-c1f7-40a6-9bd9-17396e06257d"
+    },
+    {
+      "type": "paragraph",
+      "content": "Guests message Sofia to ask what they should bring. She answers politely and keeps the plan simple.",
+      "id": "c6051e5e-48d8-4e2f-9a9c-d17190e3fc08"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Piotr",
+            "text": "Moet ik iets meenemen naar de housewarming?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, je hoeft niets mee te nemen!"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Moet ik echt niets meenemen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee hoor. Ik maak veel eten."
+          },
+          {
+            "speaker": "Lotte",
+            "text": "Moeten we bloemen kopen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dat hoeft niet. Er staan bloemen op tafel."
+          },
+          {
+            "speaker": "Lotte",
+            "text": "Oké. Henk neemt kaas mee, toch?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, Henk neemt kaas mee. Dat vindt hij leuk."
+          }
+        ]
+      },
+      "id": "8ac1e041-8a3a-4bff-a547-0bce49055266"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "hoeven",
+              "meaning": "to need to; to have to",
+              "example": "Je hoeft niets mee te nemen.",
+              "id": "3e0ffbe7-00d0-417f-b772-9ebc83a674e3",
+              "forms": "hoeft · hoefde · gehoeven"
+            },
+            {
+              "term": "Dat hoeft niet.",
+              "meaning": "That is not necessary.",
+              "example": "Bloemen kopen? Dat hoeft niet.",
+              "id": "9b462504-027f-4eac-a131-4688ffaca000"
+            },
+            {
+              "term": "niets",
+              "meaning": "nothing; not anything",
+              "example": "Je hoeft niets mee te nemen.",
+              "note": "Used here with hoeven to say that no thing is needed.",
+              "id": "f6e7bd00-aaa6-4c02-bfc8-e5d8e99442ac"
+            }
+          ]
+        }
+      },
+      "id": "1f342f4e-07cb-4594-baf9-295f463ee4cc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Hoef je iets te doen?",
+      "id": "8c4d15ef-da99-4c2e-9730-8bf55ac2762c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "hoeven needs a negative or restrictive word",
+      "id": "56fb2f16-9322-44ea-9814-e0b5ebd53dae"
+    },
+    {
+      "type": "paragraph",
+      "content": "In statements, use hoeven with a negative or restrictive word when something is not necessary. Questions can use hoeven to ask whether something is necessary. It normally appears with niet, geen, niets, nooit or alleen. Conjugate it like this: ik hoef, jij/u/hij/zij hoeft, wij/jullie/zij hoeven. In a question with jij, the t drops: Hoef je …?",
+      "id": "61c8f5e2-7c27-48ed-9d24-0fa639a21948"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Moeten",
+              "id": "3e24c8f8-8499-4f2a-ae1a-9d28b56b9cdd"
+            },
+            {
+              "type": "paragraph",
+              "content": "You must. The action is necessary.",
+              "id": "2e9b76a0-bfa1-4660-b422-0f91ab9a22dd"
+            },
+            {
+              "type": "example",
+              "content": "Ik moet de post pakken.",
+              "props": {
+                "translation": "I have to get the mail.",
+                "note": "A necessary task."
+              },
+              "id": "a7b47577-9788-429a-90ef-99976282766d"
+            }
+          ],
+          "id": "d4ff5db3-1393-4efb-a477-4efc2f82bf71"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Niet hoeven",
+              "id": "7ddaefdd-0ce6-4fc7-8c38-34fcb4615238"
+            },
+            {
+              "type": "paragraph",
+              "content": "You do not have to. The action is not necessary.",
+              "id": "b20b4311-9d11-4276-8d96-86dc6942eec6"
+            },
+            {
+              "type": "example",
+              "content": "Je hoeft niet te komen.",
+              "props": {
+                "translation": "You do not have to come.",
+                "note": "The negative niet makes hoeven possible."
+              },
+              "id": "6f2eab0f-53d3-4790-9f48-59a05e06262a"
+            }
+          ],
+          "id": "1ab5ccbd-9a18-4a56-bcf2-14fa25e77421"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Niet mogen",
+              "id": "15831bfc-43f8-4d6c-b81d-65dc5e4882d9"
+            },
+            {
+              "type": "paragraph",
+              "content": "You must not. The action is not allowed.",
+              "id": "df85ffec-a116-46f5-95df-e758676cb8fb"
+            },
+            {
+              "type": "example",
+              "content": "Je mag hier niet roken.",
+              "props": {
+                "translation": "You are not allowed to smoke here.",
+                "note": "Recycles mogen niet from 23-a."
+              },
+              "id": "0c09ac7b-a014-444f-8d5c-3217fbd7b222"
+            }
+          ],
+          "id": "c965b1a2-6766-4995-9abc-69830589b8dd"
+        }
+      ],
+      "id": "b95da816-a851-4de1-ae03-3a4bbede30b9"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "hoeven + a negative or restrictive word + te + infinitive. Say what is not necessary: Je hoeft niet te komen.",
+      "id": "fc75031f-1c7b-433f-a331-100b571d71c8"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I do not have to work today.",
+        "note": "hoef is the ik-form; niet makes this a non-necessity."
+      },
+      "content": [
+        {
+          "text": "Ik hoef nu niet te werken.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "981a6c70-c92e-42bd-83f9-020fab19dbf3"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Do you need to take anything along?",
+        "note": "A question with jij uses hoef je. niets makes the question negative."
+      },
+      "content": [
+        {
+          "text": "Hoef je niets mee te nemen?",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "c59a95f4-625b-4281-8772-47bfd2ba1b3d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We do not have to get up early tomorrow.",
+        "note": "Wij takes hoeven. The separable verb is op te staan."
+      },
+      "content": [
+        {
+          "text": "Wij hoeven morgen niet vroeg op te staan.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "1eb0ba02-1412-46ce-9eb7-c8dd2f59f035"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You do not need to buy flowers.",
+        "note": "Use geen before a noun without an article."
+      },
+      "content": [
+        {
+          "text": "U hoeft geen bloemen te kopen.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "66b687eb-2ade-46a6-92a8-9729d28e0086"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "te goes inside a separable verb",
+      "id": "ad10e5ee-ce66-44d9-9a7c-27ff8711a011"
+    },
+    {
+      "type": "paragraph",
+      "content": "With a separable verb, place te between the prefix and the verb: meenemen → mee te nemen; opstaan → op te staan. Write these as three separate words. With a regular verb, te comes before the infinitive: te komen, te werken.",
+      "id": "6de6dacb-db64-427d-8c85-4b6b5454e670"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You do not need to bring anything.",
+        "note": "The prefix mee- stays in front of te."
+      },
+      "content": [
+        {
+          "text": "Je hoeft niets mee te nemen.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "5e99d11c-a7ef-4074-ad6e-2f69db52a0e0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I do not have to pack my suitcase early.",
+        "note": "inpakken becomes in te pakken."
+      },
+      "content": [
+        {
+          "text": "Ik hoef mijn koffer niet vroeg in te pakken.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "873b40dc-e820-4c33-8443-bc7f32cd7563"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de koffer",
+              "meaning": "suitcase",
+              "forms": "de koffers",
+              "example": "Ik hoef mijn koffer niet vroeg in te pakken.",
+              "id": "c24e98e5-7695-46ad-a6d7-0254fbb6c538"
+            }
+          ]
+        }
+      },
+      "id": "0cd402fb-e974-474b-99c3-aa47b1a13b3b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Henk does not have to come every day.",
+        "note": "The ordinary infinitive komen follows te."
+      },
+      "content": [
+        {
+          "text": "Henk hoeft niet elke dag te komen.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "ce54f5c2-682a-4927-93e3-412ac55541d1"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "Remember the split: mee + te + nemen; op + te + staan; in + te + pakken. The prefix stays before te.",
+      "id": "2ef94424-7129-468d-a2c8-68296b20fec1"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        "Do not write ",
+        {
+          "text": "te meenemen",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        ". The correct form is ",
+        {
+          "text": "mee te nemen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "f845c58a-2c08-46ef-81a3-7bc6c4da3fef"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "The negative word comes before te: niet te komen, niets mee te nemen.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "A separable prefix stays at the front: op te staan.",
+          "id": "d37590ae-0107-41c1-8054-ee17e1ce680a"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "The verb stays at the end: Je hoeft niet op tijd op te staan.",
+          "id": "b4ff22b0-5a64-4edc-af6f-06c0933804cd"
+        }
+      ],
+      "id": "1635ac6a-1786-4d6b-9b16-9782033fa081"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Choose the meaning: necessity, no necessity, or prohibition.",
+      "id": "379ed634-8769-47c7-b9d2-a19528053160"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "For no necessity, use hoeven with a negative or restrictive word.",
+      "id": "edc2fc28-aaaf-4c30-ba5d-62a0a964b5f5"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Put te before an ordinary infinitive, or inside a separable infinitive.",
+      "id": "bba81ade-5e07-4d96-a956-d1daf9d102ee"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You only need to water the plants.",
+        "note": "With alleen, the task is limited to this one. water geven is not separable."
+      },
+      "content": [
+        {
+          "text": "Je hoeft alleen de planten water te geven.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "a7014306-21f0-4080-8f78-7763b0a48163"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "water geven",
+              "meaning": "to water; to give water",
+              "example": "Je hoeft de planten water te geven.",
+              "id": "87f58c6e-933a-4be8-8edd-56bb354c47d4",
+              "forms": "geeft water · gaf water · water gegeven"
+            }
+          ]
+        }
+      },
+      "id": "f3a5a453-9f66-4001-8ea2-de7386fc7308"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "Moeten = necessary. Niet hoeven = not necessary. Niet mogen = not allowed. The negative changes the meaning, so choose carefully.",
+      "id": "9616641d-24aa-4747-85f0-a08237db9fe7"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": "When someone offers to help in the Netherlands, a short, polite answer is common. Sofia can say “Nee hoor, dat hoeft niet” and still accept help later.",
+      "id": "f39223fc-d90d-4187-8b38-0723e2e72139"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Henk offers to help",
+      "id": "b6dea541-9863-455a-80d3-d9e7cb6d4a84"
+    },
+    {
+      "type": "paragraph",
+      "content": "On Friday evening, Henk visits Sofia in the hallway. She is leaving for Valencia soon, and he offers to look after the flat. He uses a watering can for the plants.",
+      "id": "549ba36e-27bc-4be9-9944-60464de81494"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Henk",
+            "text": "Ik geef de planten water. Ik heb een gieter."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Wat lief! Je hoeft niet elke dag te komen."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Hoe vaak is genoeg?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Twee keer per week is genoeg."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Moet ik de post ook pakken?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, graag. Je hoeft de post niet elke dag te pakken."
+          },
+          {
+            "speaker": "Henk",
+            "text": "En de sleutel?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Hier is de reservesleutel. Je hoeft me niets te betalen, hoor!"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Natuurlijk niet. Ik kijk graag naar Tijger."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je wel, Henk. Dat is heel aardig."
+          }
+        ]
+      },
+      "id": "1128c91b-532d-4a07-b448-3171403c5c75"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de post",
+              "meaning": "mail; the post",
+              "example": "Moet ik de post ook pakken?",
+              "id": "945c1179-37b5-41ac-a66b-8396c78c81ff"
+            },
+            {
+              "term": "de reservesleutel",
+              "meaning": "spare key",
+              "forms": "de reservesleutels",
+              "example": "Hier is de reservesleutel.",
+              "id": "24cc5e99-4abf-4480-9151-5e19b9a8b850"
+            },
+            {
+              "term": "de keer",
+              "meaning": "time; occasion",
+              "forms": "de keren",
+              "example": "Twee keer per week is genoeg.",
+              "id": "223f6683-cc73-45aa-a383-3bdc5c5c694b"
+            },
+            {
+              "term": "per week",
+              "meaning": "per week",
+              "example": "Twee keer per week is genoeg.",
+              "id": "8442b0ef-1a4e-4eea-b3ea-1dd512e9ba60"
+            },
+            {
+              "term": "pakken",
+              "meaning": "to get; to collect",
+              "example": "Moet ik de post ook pakken?",
+              "note": "Here it means to collect the mail.",
+              "id": "9b15b14f-5ff3-4c25-b96f-fbc1bf5a6582",
+              "forms": "pakt · pakte · gepakt"
+            },
+            {
+              "term": "hoor",
+              "meaning": "softening word at the end of a sentence",
+              "example": "Je hoeft me niets te betalen, hoor!",
+              "note": "A new use; “Nee hoor” is already known.",
+              "id": "dd3f698f-56e7-45f0-a5b4-c58c2e400653"
+            },
+            {
+              "term": "op vakantie gaan",
+              "meaning": "to go on holiday",
+              "example": "Sofia gaat op vakantie.",
+              "id": "4278f3bb-e40f-428c-994a-4d978f864bab",
+              "forms": "gaat op vakantie · ging op vakantie · op vakantie gegaan"
+            },
+            {
+              "term": "de gieter",
+              "meaning": "watering can",
+              "forms": "de gieters",
+              "example": "Ik heb een gieter.",
+              "id": "5a368715-7cdf-4965-a22d-47a878899cab"
+            }
+          ]
+        }
+      },
+      "id": "b5850a7c-0115-470a-b7af-0d30fba107c7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Compare the meanings",
+      "id": "84655822-d8d8-4275-8213-33737b972b41"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use the same situation to see the difference between must, do not have to, and must not.",
+      "id": "f667b279-70ec-411a-b335-c1e8e36e07e4"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You must close the door.",
+        "note": "A necessary task."
+      },
+      "content": [
+        {
+          "text": "Je moet de deur sluiten.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "37e5ea54-ff76-45af-900e-95a6423acc33"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "sluiten",
+              "meaning": "to close",
+              "example": "Je moet de deur sluiten.",
+              "id": "7ddf1a11-9005-429f-b79e-93aaf01976d5",
+              "forms": "sluit · sloot · gesloten"
+            }
+          ]
+        }
+      },
+      "id": "dca1792a-2876-40a4-933d-969b531e5dc2"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You do not have to close the door.",
+        "note": "It is not necessary."
+      },
+      "content": [
+        {
+          "text": "Je hoeft de deur niet te sluiten.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "cfc3ea89-4bf8-4568-9577-99d3c696dd2a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You must not open the door.",
+        "note": "It is not allowed."
+      },
+      "content": [
+        {
+          "text": "Je mag de deur niet openen.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "fce3d4cb-db56-4aa8-826f-a8d9608fa4f1"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "openen",
+              "meaning": "to open",
+              "example": "Je mag de deur niet openen.",
+              "id": "7520ee76-082e-4b59-a4e1-8aa661306759",
+              "forms": "opent · opende · geopend"
+            }
+          ]
+        }
+      },
+      "id": "f4c8debc-562d-486a-8fee-322f501f7e45"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I do not need any coffee, thank you.",
+        "note": "hoeven can be used without te + infinitive; geen comes before the noun."
+      },
+      "content": [
+        {
+          "text": "Ik hoef geen koffie, dank je.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "90d86dca-4982-415d-9beb-b774d52884a1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "That is not necessary.",
+        "note": "A short answer; the action is understood from the conversation."
+      },
+      "content": [
+        {
+          "text": "Dat hoeft niet.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "31c73423-f971-4ab7-b134-4dcc0a76b848"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "You never have to cook alone.",
+        "note": "nooit is a negative/restrictive word with hoeven."
+      },
+      "content": [
+        {
+          "text": "Je hoeft nooit alleen te koken.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "349704b0-94b7-4180-ae6b-53cef860680d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "He only needs to keep the key.",
+        "note": "alleen limits what is necessary."
+      },
+      "content": [
+        {
+          "text": "Hij hoeft alleen de sleutel te bewaren.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "f346c6d0-b229-4c94-a89b-67d0ad92771b"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "bewaren",
+              "meaning": "to keep; to look after",
+              "example": "Hij hoeft alleen de sleutel te bewaren.",
+              "id": "9f8f070b-1196-40a5-8205-ee4ac20a9132",
+              "forms": "bewaart · bewaarde · bewaard"
+            }
+          ]
+        }
+      },
+      "id": "26fcf4a3-fc94-47fe-a46c-ac1c9744fc68"
+    },
+    {
+      "type": "divider",
+      "id": "863ce6fb-9868-4830-8b25-6bc4030086d1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "9252acc7-5ea2-4ecd-965f-ded4f9e82d04"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Fill in: hoeven",
+      "id": "abf281ff-9abd-4b92-be98-feadcc44642d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each sentence with the correct form of hoeven and te where needed.",
+          "items": [
+            {
+              "prompt": "Ik … nu niet … werken.",
+              "authorsVersion": [
+                "hoef",
+                "te"
+              ],
+              "note": "Ik takes hoef; place te before the infinitive."
+            },
+            {
+              "prompt": "Jij … geen bloemen … kopen.",
+              "authorsVersion": [
+                "hoeft",
+                "te"
+              ],
+              "note": "Jij takes hoeft; geen comes before the noun."
+            },
+            {
+              "prompt": "… je niets … meenemen?",
+              "authorsVersion": [
+                "Hoef",
+                "te"
+              ],
+              "note": "In a question, the verb comes first. niets makes it negative."
+            },
+            {
+              "prompt": "Wij … niet vroeg … opstaan.",
+              "authorsVersion": [
+                "hoeven",
+                "te"
+              ],
+              "note": "Wij takes hoeven; split opstaan as op te staan."
+            },
+            {
+              "prompt": "U … de post niet … pakken.",
+              "authorsVersion": [
+                "hoeft",
+                "te"
+              ],
+              "note": "U takes hoeft; niet te pakken means no need to collect it."
+            },
+            {
+              "prompt": "Sofia … alleen de planten water … geven.",
+              "authorsVersion": [
+                "hoeft",
+                "te"
+              ],
+              "note": "Zij (she) takes hoeft; only this task is necessary."
+            }
+          ]
+        }
+      },
+      "id": "7d7ae03a-4830-4831-9fdd-8eed4cfe40ca"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the messages",
+      "id": "499fac2b-7072-41d5-9b6d-87804e0f5a9f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill the blanks with the missing Dutch words.",
+          "items": [
+            {
+              "prompt": "Piotr: Moet ik iets …? / Sofia: Nee, je … niets mee te nemen!",
+              "authorsVersion": [
+                "meenemen",
+                "hoeft"
+              ],
+              "note": "The answer says taking something is not necessary."
+            },
+            {
+              "prompt": "Lotte: Moeten we bloemen …? / Sofia: Nee, dat … niet.",
+              "authorsVersion": [
+                "kopen",
+                "hoeft"
+              ],
+              "note": "Dat takes hoeft in the fixed answer Dat hoeft niet."
+            },
+            {
+              "prompt": "Piotr: Moet ik kaas meenemen? / Sofia: Nee, dat … niet. Henk neemt kaas … .",
+              "authorsVersion": [
+                "hoeft",
+                "mee"
+              ],
+              "note": "The second sentence says Henk does bring cheese."
+            },
+            {
+              "prompt": "Sofia: Ik maak … eten. Je hoeft niets mee te nemen.",
+              "authorsVersion": [
+                "genoeg"
+              ],
+              "note": "voldoende means enough."
+            },
+            {
+              "prompt": "Henk: Moet ik iets meenemen? / Sofia: Nee …, dat hoeft niet.",
+              "authorsVersion": [
+                "hoor"
+              ],
+              "note": "Here hoor softens the answer."
+            },
+            {
+              "prompt": "Lotte: … we bloemen kopen? / Sofia: Dat hoeft niet.",
+              "authorsVersion": [
+                "Moeten"
+              ],
+              "note": "Lotte asks whether it is necessary."
+            }
+          ]
+        }
+      },
+      "id": "b5e28bdf-f3b1-4092-b32d-490303e38688"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Put te in the right place",
+      "id": "59df1881-d6bd-4840-8d44-b2ec8fa3660f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the complete sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: niets / je / mee / hoeft / te / nemen",
+              "authorsVersion": [
+                "Je hoeft niets mee te nemen."
+              ],
+              "note": "The prefix mee comes before te."
+            },
+            {
+              "prompt": "Put in order: op / ik / hoef / niet / te / staan / vroeg",
+              "authorsVersion": [
+                "Ik hoef niet vroeg op te staan."
+              ],
+              "note": "The separable verb becomes op te staan."
+            },
+            {
+              "prompt": "Put in order: de post / hoeft / Henk / niet / te / pakken",
+              "authorsVersion": [
+                "Henk hoeft de post niet te pakken."
+              ],
+              "note": "The negative comes before te + infinitive."
+            },
+            {
+              "prompt": "Put in order: alleen / hoeft / water / de planten / te / geven / je",
+              "authorsVersion": [
+                "Je hoeft alleen de planten water te geven."
+              ],
+              "note": "alleen limits the required task."
+            },
+            {
+              "prompt": "Put in order: niet / de koffer / in / hoef / ik / te / pakken / vroeg",
+              "authorsVersion": [
+                "Ik hoef de koffer niet vroeg in te pakken."
+              ],
+              "note": "The prefix in stays before te."
+            },
+            {
+              "prompt": "Put in order: per week / twee keer / genoeg / is",
+              "authorsVersion": [
+                "Twee keer per week is genoeg."
+              ],
+              "note": "A time phrase can begin the sentence."
+            }
+          ]
+        }
+      },
+      "id": "e140d525-2316-4fbd-a15d-a3677203e8dc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Change the meaning",
+      "id": "73e0826f-5d4d-4747-9947-a3bb3a22137b"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite as instructed. Keep the situation the same.",
+          "items": [
+            {
+              "prompt": "Moet ik iets meenemen? (Answer: no, not necessary.)",
+              "authorsVersion": [
+                "Nee, je hoeft niets mee te nemen."
+              ],
+              "note": "Use niets with hoeven; the separable infinitive is mee te nemen."
+            },
+            {
+              "prompt": "Ik moet elke dag komen. (Say it is not necessary.)",
+              "authorsVersion": [
+                "Ik hoef niet elke dag te komen."
+              ],
+              "note": "Replace must with hoef niet te."
+            },
+            {
+              "prompt": "Henk moet elke dag komen. (Say it is not necessary.)",
+              "authorsVersion": [
+                "Henk hoeft niet elke dag te komen."
+              ],
+              "note": "Henk takes hoeft."
+            },
+            {
+              "prompt": "Je hoeft niet te betalen. (Say it is forbidden to pay.)",
+              "authorsVersion": [
+                "Je mag niet betalen."
+              ],
+              "note": "mogen niet means not allowed; no te follows mogen."
+            },
+            {
+              "prompt": "Je mag de post niet pakken. (Say it is not necessary.)",
+              "authorsVersion": [
+                "Je hoeft de post niet te pakken."
+              ],
+              "note": "hoeven + niet te means no need."
+            },
+            {
+              "prompt": "Ik moet bloemen kopen. (Say flowers are not necessary.)",
+              "authorsVersion": [
+                "Ik hoef geen bloemen te kopen."
+              ],
+              "note": "Use geen before a plural noun without an article."
+            }
+          ]
+        }
+      },
+      "id": "dc95835f-5793-4c3e-ae5a-2d642691cae0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "19a2181d-3792-47e7-9958-23a1490698df"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate each sentence into Dutch.",
+          "items": [
+            {
+              "prompt": "You do not have to bring anything.",
+              "authorsVersion": [
+                "Je hoeft niets mee te nemen."
+              ],
+              "note": "niets means not anything; put te between mee and nemen."
+            },
+            {
+              "prompt": "Do I need to get the mail?",
+              "authorsVersion": [
+                "Moet ik de post pakken?"
+              ],
+              "note": "Use a normal moeten question when asking if a task is necessary."
+            },
+            {
+              "prompt": "You do not have to come every day.",
+              "authorsVersion": [
+                "Je hoeft niet elke dag te komen."
+              ],
+              "note": "Use hoeven with niet and te."
+            },
+            {
+              "prompt": "We do not need to buy flowers.",
+              "authorsVersion": [
+                "We hoeven geen bloemen te kopen."
+              ],
+              "note": "Wij takes hoeven; geen comes before bloemen."
+            },
+            {
+              "prompt": "That is not necessary.",
+              "authorsVersion": [
+                "Dat hoeft niet."
+              ],
+              "note": "This is the short answer."
+            },
+            {
+              "prompt": "You are not allowed to open the door.",
+              "authorsVersion": [
+                "Je mag de deur niet openen."
+              ],
+              "note": "mogen niet expresses prohibition."
+            },
+            {
+              "prompt": "Henk only needs to water the plants twice a week.",
+              "authorsVersion": [
+                "Henk hoeft de planten maar twee keer per week water te geven."
+              ],
+              "note": "maar limits the task; water geven stays together."
+            }
+          ]
+        }
+      },
+      "id": "27582bb1-4ab0-478f-b209-376811495feb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "23512c41-3d7b-47cd-82d0-9c47c3e3a953"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Je hoeft niets mee te nemen.",
+              "authorsVersion": [
+                "You do not have to bring anything."
+              ],
+              "note": "niets means nothing / not anything."
+            },
+            {
+              "prompt": "Dat hoeft niet.",
+              "authorsVersion": [
+                "That is not necessary."
+              ],
+              "note": "A short answer about a known action."
+            },
+            {
+              "prompt": "Je hoeft niet elke dag te komen.",
+              "authorsVersion": [
+                "You do not have to come every day."
+              ],
+              "note": "This does not mean that coming is forbidden."
+            },
+            {
+              "prompt": "Ik hoef geen koffie, dank je.",
+              "authorsVersion": [
+                "I do not need any coffee, thank you."
+              ],
+              "note": "hoeven can be followed by a noun phrase."
+            },
+            {
+              "prompt": "Je mag de post niet pakken.",
+              "authorsVersion": [
+                "You are not allowed to get the mail."
+              ],
+              "note": "mogen niet expresses prohibition."
+            },
+            {
+              "prompt": "Twee keer per week is genoeg.",
+              "authorsVersion": [
+                "Twice a week is enough."
+              ],
+              "note": "keer means time or occasion."
+            }
+          ]
+        }
+      },
+      "id": "085d1b5f-98aa-4fbb-913e-02c9d2c0f9e3"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Reading: Sofia’s list",
+      "id": "c3cff6eb-4aa2-435a-892b-6bfc5a96938a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia’s list. Answer in Dutch.",
+          "items": [
+            {
+              "prompt": "Wat hoeft Sofia niet te kopen?",
+              "authorsVersion": [
+                "Ze hoeft geen bloemen te kopen."
+              ],
+              "note": "The list says there is no need to buy flowers."
+            },
+            {
+              "prompt": "Moet Lotte iets meenemen?",
+              "authorsVersion": [
+                "Nee, ze hoeft niets mee te nemen."
+              ],
+              "note": "niets means not anything."
+            },
+            {
+              "prompt": "Wat neemt Henk mee naar de housewarming?",
+              "authorsVersion": [
+                "Hij neemt kaas mee."
+              ],
+              "note": "The list says Henk brings cheese."
+            },
+            {
+              "prompt": "Wat moet Sofia nog doen?",
+              "authorsVersion": [
+                "Ze moet haar koffer nog inpakken."
+              ],
+              "note": "This is a necessary task."
+            },
+            {
+              "prompt": "Wat gaat er ook in de koffer?",
+              "authorsVersion": [
+                "De oplader en haar toilettas."
+              ],
+              "note": "These items are on Sofia’s list."
+            },
+            {
+              "prompt": "Hoe vaak geeft Henk de planten water?",
+              "authorsVersion": [
+                "Twee keer per week."
+              ],
+              "note": "The list gives the frequency."
+            },
+            {
+              "prompt": "Wat doet Henk met de post?",
+              "authorsVersion": [
+                "Hij pakt de post."
+              ],
+              "note": "pakken means collect/get here."
+            },
+            {
+              "prompt": "Moet Sofia Henk betalen?",
+              "authorsVersion": [
+                "Nee, ze hoeft Henk niets te betalen."
+              ],
+              "note": "No payment is necessary."
+            },
+            {
+              "prompt": "Klopt dit? Henk komt elke dag.",
+              "authorsVersion": [
+                "Nee, hij hoeft niet elke dag te komen."
+              ],
+              "note": "The text says he does not need to come daily."
+            }
+          ],
+          "passage": {
+            "title": "Sofia’s list for Thursday and Friday",
+            "content": "Donderdag 10 december\nDe boodschappen zijn klaar. Ik hoef geen bloemen te kopen. Lotte hoeft niets mee te nemen. Henk neemt kaas mee. Ik moet mijn koffer nog inpakken. De oplader en mijn toilettas gaan ook in de koffer.\n\nVrijdag 11 december\nIk geef Henk de reservesleutel. Hij hoeft niet elke dag te komen. Hij geeft de planten twee keer per week water en pakt de post. Ik hoef Henk niets te betalen. Dat hoeft niet."
+          }
+        }
+      },
+      "id": "9390427b-f258-4355-a3ff-f8afc427e05e"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de oplader",
+              "meaning": "charger",
+              "forms": "de opladers",
+              "example": "De oplader gaat ook in de koffer.",
+              "id": "f35168bb-f9d7-43d4-aebb-85ee83e4f9db"
+            },
+            {
+              "term": "de toilettas",
+              "meaning": "toiletry bag",
+              "forms": "de toilettassen",
+              "example": "Mijn toilettas gaat ook in de koffer.",
+              "id": "686697d0-fde8-4b04-90b1-2483697743b6"
+            }
+          ]
+        }
+      },
+      "id": "7a1b668c-8cc2-4b59-917e-1e4343e10223"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "b57da367-27d1-4368-ae3e-cf5fed6c2685"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Write about your week",
+      "id": "d2adb1a7-e7b4-4836-82ba-317eb1e43f28"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about what you have to do this week and what you do not have to do.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about what you have to do this week and what you do not have to do.",
+              "authorsVersion": [
+                "Deze week moet ik werken. Ik moet ook boodschappen doen. Ik hoef zaterdag geen boodschappen te doen. Ik hoef niets mee te nemen naar een feestje."
+              ],
+              "note": "Model answer. Use moeten for necessary tasks and hoeven + niet/geen/niets + te for what is not necessary."
+            }
+          ]
+        }
+      },
+      "id": "205e4019-9b69-434c-8d58-20f4ad451ef0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "01888ff4-7e28-4d49-8ad2-0fdb9e208293"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use hoeven with a negative or restrictive word: niet, geen, niets, nooit or alleen.",
+      "id": "cfaf8df1-aba9-4057-be96-bc29f1df5c3a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "For an infinitive, use te: Je hoeft niet te komen.",
+      "id": "3420f050-6ec0-49a7-ab23-d1a8081d1b6b"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "In a separable verb, put te between the prefix and verb: mee te nemen, op te staan.",
+      "id": "de137e48-28f0-4b1f-accc-c125fac545b3"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Moeten = must; niet hoeven = do not have to; niet mogen = must not / not allowed.",
+      "id": "05f7c286-638b-47a2-be19-252f09ebfc35"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "A short answer is Dat hoeft niet. Use geen with a noun: Ik hoef geen koffie.",
+      "id": "1344bb9a-16a5-4ddf-8e83-a7ec26cd3350"
+    },
+    {
+      "type": "divider",
+      "id": "b6d31296-5af0-493a-a9ac-0f6c3351e875"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: messages about the housewarming",
+      "description": "Sofia sits at her kitchen table and reads messages on her phone about the housewarming. A simple list of food and flowers is visible nearby.",
+      "alt": "Sofia reads messages about what guests should bring."
+    },
+    {
+      "afterHeading": "Story: Henk offers to help",
+      "description": "In the hallway of Sofia’s Utrecht flat, Henk accepts a spare key from Sofia while Tijger stands beside him.",
+      "alt": "Henk receives Sofia’s spare key in the hallway."
+    }
+  ],
+  "id": "28848928-0874-4a8f-89e8-0e085973a1a1"
+}

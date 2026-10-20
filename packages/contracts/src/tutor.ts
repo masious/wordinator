@@ -475,7 +475,7 @@ export type TutorPart = z.infer<typeof tutorPartSchema>;
 export const tutorStoredPartSchema = z.discriminatedUnion("type", [
   textPart, toolCallPart, errorPart,
   publicToolResultPart.extend({ content: z.string() }),
-  publicComponentPart.extend({ component: tutorComponentSchema }),
+  publicComponentPart.extend({ component: tutorComponentSchema, skipReason: z.string().max(TUTOR_MESSAGE_TEXT_MAX).optional() }),
   publicConfirmationPart.extend({ arguments: z.record(z.string(), z.unknown()) }),
 ]);
 export type TutorStoredPart = z.infer<typeof tutorStoredPartSchema>;
@@ -485,7 +485,7 @@ export function toPublicPart(part: TutorStoredPart): TutorPart {
     // An `ask_*` call's arguments are the component's full payload, reference answer included.
     case "tool_call": return part.name.startsWith("ask_") ? { ...part, arguments: {} } : part;
     case "tool_result": { const { content: _content, ...rest } = part; return rest; }
-    case "component": { const { component: _component, ...rest } = part; return rest; }
+    case "component": { const { component: _component, skipReason: _skipReason, ...rest } = part; return rest; }
     case "confirmation": { const { arguments: _arguments, ...rest } = part; return rest; }
     default: return part;
   }
@@ -585,6 +585,7 @@ export type TutorSetAnswer = z.input<typeof tutorSetAnswerSchema>;
 export const tutorSetAnswersRequestSchema = z.strictObject({ answers: z.array(tutorSetAnswerSchema).min(1).max(TUTOR_SET_ANSWERS_MAX) })
   .refine((value) => new Set(value.answers.map((entry) => entry.toolCallId)).size === value.answers.length, { message: "Answer each question once." });
 export type TutorSetAnswersRequest = z.input<typeof tutorSetAnswersRequestSchema>;
+export const tutorSkipSetRequestSchema = z.strictObject({ reason: z.string().trim().min(1).max(TUTOR_MESSAGE_TEXT_MAX) });
 // On-demand audio of a stored assistant message: a target-language span by index, or the sentence of a Say it or Dictation component.
 export const tutorSpeechRequestSchema = z.union([
   z.strictObject({ spanIndex: z.number().int().nonnegative().max(1_000) }),

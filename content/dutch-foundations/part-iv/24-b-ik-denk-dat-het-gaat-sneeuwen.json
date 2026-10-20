@@ -1,0 +1,1443 @@
+{
+  "title": "Ik denk dat het gaat sneeuwen",
+  "goal": "Give opinions and expectations with a dat-clause after vinden, denken, hopen and zeggen, with the verb at the end of the clause.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Ik denk dat het gaat sneeuwen",
+      "id": "66eb1d61-e597-4e31-aeec-e846c7469aec"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Tuesday 15 December, Sofia's last Dutch class before Christmas. On Friday evening she says goodbye to Henk before her flight home. In this lesson you will give opinions, expectations, hopes and reports with dat. Verbs are blue; the verb at the end of a dat-clause is red.",
+      "id": "93b790dd-c2ae-4509-95ce-a3149be2c29d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: the last class",
+      "id": "00ca8e9f-dea0-4440-99b0-9ee410fb769c"
+    },
+    {
+      "type": "paragraph",
+      "content": "Marieke asks the class about life in the Netherlands. The new word allemaal can mean all of you when Marieke speaks to the group.",
+      "id": "7fbb697c-4e43-4496-b48b-8119424c9fc1"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Marieke",
+            "text": "Wat vinden jullie van Nederland?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Ik vind dat Nederlanders heel direct zijn."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik denk dat Nederlands minder moeilijk is dan Pools!"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Echt? Ik denk dat Nederlands soms moeilijk is."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, maar ik vind de mensen hier aardig."
+          },
+          {
+            "speaker": "Marieke",
+            "text": "Ik hoop dat jullie in januari allemaal terugkomen."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Marieke zegt dat Sofia goed Nederlands spreekt."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je! Ik hoop dat ik in januari weer naar de les kom."
+          }
+        ]
+      },
+      "id": "99a61470-673d-431d-a28a-37ae4c85ea2b"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "dat",
+              "meaning": "that (conjunction introducing a clause)",
+              "note": "New use: demonstrative dat is known from 12-a.",
+              "id": "d0523974-7742-4e55-90af-e603ab474fcf"
+            },
+            {
+              "term": "direct",
+              "meaning": "direct, blunt",
+              "example": "Ik vind dat Nederlanders direct zijn.",
+              "id": "f850bcfe-c96c-433c-a5d8-67d4d1814cac"
+            },
+            {
+              "term": "Pools",
+              "meaning": "Polish (language or adjective)",
+              "example": "Ik denk dat Nederlands minder moeilijk is dan Pools.",
+              "id": "1f079595-0ad4-46ea-8329-d68a7d46580e"
+            },
+            {
+              "term": "allemaal",
+              "meaning": "all of you (to a group)",
+              "note": "New use: Hoi allemaal (08-b) is a greeting to everyone.",
+              "id": "3a6cf2e4-2653-477f-8993-e31959113630"
+            },
+            {
+              "term": "hopen",
+              "meaning": "to hope",
+              "forms": "hoopt · hoopte · gehoopt",
+              "example": "Ik hoop dat jullie terugkomen.",
+              "id": "7c81d3da-db64-4e9d-994b-9357f8bfb976"
+            }
+          ]
+        }
+      },
+      "id": "4b23cc8a-ba0f-4443-bcf5-89599ffcd7cd"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Main clause + dat-clause",
+      "id": "d2d757d8-9fcf-44db-9ef9-3c83207e1d5a"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "You know short opinions such as ",
+        {
+          "text": "Ik denk het wel.",
+          "styles": {
+            "italic": true
+          }
+        },
+        " Now you can say the whole idea. Put dat after the main clause. After dat, say the subject, then the other words, and put the conjugated verb at the end."
+      ],
+      "id": "b4668161-d50f-4c6c-a91c-5a5b7deb2aab"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think that it is going to snow.",
+        "note": "The main verb is denk. In the dat-clause, gaat is the conjugated verb and goes last."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "denk",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " dat het ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "sneeuwen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "7f3508e0-6c0d-4ae0-bdd4-f89eda946412"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think that the Netherlands is beautiful.",
+        "note": "Nederland is the subject; its verb is goes at the end."
+      },
+      "content": [
+        "Ik vind dat Nederland mooi ",
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "84bb2206-a420-4e01-9f0e-efad4eb19429"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "Main clause + dat + subject + other words + verb(s) at the end.",
+          "styles": {
+            "bold": true
+          }
+        },
+        " Ik vind dat Utrecht gezellig is."
+      ],
+      "id": "58905116-44a7-4e38-912f-05290a273cbb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "No inversion after dat",
+      "id": "3cff5ed3-2526-402b-9a49-a3a434b6e864"
+    },
+    {
+      "type": "paragraph",
+      "content": "Even when a time comes first in the dat-clause, keep the subject directly after dat. Do not put the verb before the subject.",
+      "id": "82057f94-71c0-440b-9b3c-461594712781"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think that it will snow tomorrow.",
+        "note": "Morgen is inside the dat-clause. The order stays dat + subject + time + verb cluster."
+      },
+      "content": [
+        "Ik denk dat het ",
+        {
+          "text": "morgen",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "sneeuwen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "3aac8559-7dd5-4b1b-8630-8f53855f83e9"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "*Ik denk dat morgen gaat het sneeuwen.*",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik denk dat het morgen gaat sneeuwen. No inversion after dat."
+      ],
+      "id": "e459cc8d-fa59-4e38-8ecf-8cdd6670d939"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Verb clusters and separable verbs",
+      "id": "5efdf608-5c2e-484e-bf39-26381f618588"
+    },
+    {
+      "type": "paragraph",
+      "content": "When the dat-clause has two verbs, put the conjugated verb first and the infinitive after it at the end. Join a separable verb again at the end.",
+      "id": "d71bda16-d5f3-4d00-b707-29da4254adf3"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Main clause",
+              "id": "545a0bb9-6c06-455d-b936-ac2fbf007a87"
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                "Volgens mij ",
+                {
+                  "text": "gaat",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " het ",
+                {
+                  "text": "sneeuwen",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "blue"
+                  }
+                },
+                "."
+              ],
+              "id": "d7cb597e-b41f-4d27-8a46-de8511ac5f2e"
+            },
+            {
+              "type": "paragraph",
+              "content": "The main verb is second.",
+              "id": "6f9e05ea-a4b7-4610-af85-1c026d3d6fa8"
+            }
+          ],
+          "id": "6ed83430-ad8b-4c46-9f33-9499fca124ab"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Dat-clause",
+              "id": "83ce607e-081e-4716-a020-3b36b889c252"
+            },
+            {
+              "type": "paragraph",
+              "content": [
+                "Ik denk dat het ",
+                {
+                  "text": "gaat",
+                  "styles": {
+                    "textColor": "blue"
+                  }
+                },
+                " ",
+                {
+                  "text": "sneeuwen",
+                  "styles": {
+                    "bold": true,
+                    "textColor": "red"
+                  }
+                },
+                "."
+              ],
+              "id": "f67d2a97-b650-44a3-8f3b-5bd982f84cdb"
+            },
+            {
+              "type": "paragraph",
+              "content": "The verb cluster is at the end.",
+              "id": "c700d801-fa1b-4d4a-b481-19b5e3976f85"
+            }
+          ],
+          "id": "8c604926-9618-49d6-b373-f68ea4a9ae9e"
+        }
+      ],
+      "id": "cccf670c-00af-462d-b008-a81502dc4a86"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I hope that you all come back in January.",
+        "note": "Terugkomen joins together at the end of the dat-clause."
+      },
+      "content": [
+        "Ik hoop dat jullie in januari ",
+        {
+          "text": "terugkomen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "c568580e-2da3-4fe3-a028-0d4489622537"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think that the train arrives at eight o'clock.",
+        "note": "A separable verb joins together at the end: aankomen → aankomt."
+      },
+      "content": [
+        "Ik denk dat de trein om acht uur ",
+        {
+          "text": "aankomt",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "935bc6f7-7753-4f75-9142-f6c7bad7cf59"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think that Piotr cannot come.",
+        "note": "With a modal, put the conjugated modal first, then the infinitive."
+      },
+      "content": [
+        "Ik denk dat Piotr niet ",
+        {
+          "text": "kan",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "komen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "e5b10508-ec04-4893-8a04-5f5ad42be04a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Negation with niet",
+      "id": "b434f444-bead-44ef-8b60-5137efdd9425"
+    },
+    {
+      "type": "paragraph",
+      "content": "Niet comes before the verb or verb cluster at the end: Ik denk dat het niet gaat sneeuwen. You can also negate the opinion in the main clause: Ik denk niet dat het gaat sneeuwen.",
+      "id": "ea13fc71-4695-428f-bfc7-635e594857d6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I don't think that it is going to snow.",
+        "note": "Here niet negates denk in the main clause."
+      },
+      "content": [
+        "Ik ",
+        {
+          "text": "denk",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " niet dat het ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "sneeuwen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "f0e67656-82d4-4663-91b3-2d437004057f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think that it is not going to snow.",
+        "note": "Here niet is inside the dat-clause, before the verb cluster."
+      },
+      "content": [
+        "Ik denk dat het ",
+        {
+          "text": "niet",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "sneeuwen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "89f2c0e1-1b66-4785-9d49-0c2f1ecd4cdb"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "Main clause: the conjugated verb is in position 2. Dat-clause: the subject follows dat and the verb(s) go to the end.",
+      "id": "267a648f-03a9-4996-8bd5-5594b2d7be10"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Main clause: Ik denk …",
+      "id": "3090e237-e321-4b46-87a2-3f3cfd354478"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Add dat + subject: Ik denk dat het …",
+      "id": "69f5b9fa-e4e7-4a5a-82aa-cb1a26034887"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Add the other words, then put the verb or verb cluster at the end: Ik denk dat het morgen gaat sneeuwen.",
+      "id": "61a56ea8-56c1-4a3b-85b0-4fba1e1980a7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Saying what you think, hope and hear",
+      "id": "c13835c5-1a81-427b-a542-02ba24290a41"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use vinden dat for an opinion, denken dat for a belief or expectation, hopen dat for a hope, and zeggen dat to report someone's words. Keep the main clause in its usual order.",
+      "id": "9aeb24a7-5110-442e-b8ff-7e551be5abb0"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I think that Utrecht is my city now.",
+        "note": "vinden dat introduces Sofia's opinion."
+      },
+      "content": [
+        "Ik vind dat Utrecht nu echt mijn stad ",
+        {
+          "text": "is",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "b047e090-012a-45e4-9051-d1e59792b0cc"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Henk says that it is going to snow at Christmas.",
+        "note": "zeggen dat reports what Henk says."
+      },
+      "content": [
+        "Henk zegt dat het met kerst ",
+        {
+          "text": "gaat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        " ",
+        {
+          "text": "sneeuwen",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "b2f79418-45f7-4fce-b784-a5db8c8f8a39"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I hope that you have a lovely Christmas.",
+        "note": "Fijne kerst! is also a natural short wish."
+      },
+      "content": [
+        "Ik hoop dat je een fijne kerst ",
+        {
+          "text": "hebt",
+          "styles": {
+            "bold": true,
+            "textColor": "red"
+          }
+        },
+        "."
+      ],
+      "id": "50e5a817-ce9a-4ea1-b621-14db04bb15a6"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Fijne kerst!",
+              "meaning": "Merry Christmas!",
+              "example": "Ik hoop dat je een fijne kerst hebt.",
+              "id": "8b7df143-c30e-47fb-a9ee-7b220895aa8e"
+            }
+          ]
+        }
+      },
+      "id": "82ee5c9e-b096-47a3-bc7e-d6e1c9ad4639"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Ik denk het wel. = I think so. The short answer has no dat-clause.",
+      "id": "425218a1-24d1-4274-b95f-b69e163e6e31"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Ik denk dat … = I think that … Then use subject + other words + verb(s) at the end.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Ik denk dat het morgen gaat sneeuwen.",
+          "id": "66834032-07d8-40d4-9bcc-c7a5843d85e0"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Ik denk dat mijn trein om acht uur aankomt.",
+          "id": "109cd764-0bb6-4ab6-b273-dacd1e1cd583"
+        }
+      ],
+      "id": "89584d22-3deb-4ef9-a685-0937b16c8653"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "First find the clause after dat. Keep its subject next, then move the conjugated verb to the end. Check the final verb cluster as one unit.",
+      "id": "faaea8a3-1ffb-4a19-8835-6cedd929d5ac"
+    },
+    {
+      "type": "divider",
+      "id": "c1200049-ba9e-433c-a9cb-eac91d56d36e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "624aee83-b13c-4519-9648-54a657100a0d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "1. Complete the dat-clause",
+      "id": "92dfd9b9-1112-47c7-b48f-1d987c37692a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each sentence. Put the verb at the end.",
+          "items": [
+            {
+              "prompt": "Ik denk dat het morgen … . (sneeuwen)",
+              "authorsVersion": [
+                "gaat sneeuwen"
+              ],
+              "note": "Subject het stays after dat; the verb cluster goes at the end."
+            },
+            {
+              "prompt": "Ik vind dat Nederlanders heel … . (direct zijn)",
+              "authorsVersion": [
+                "direct zijn"
+              ],
+              "note": "zijn is the conjugated verb, so it goes last."
+            },
+            {
+              "prompt": "Ik hoop dat jullie in januari … . (terugkomen)",
+              "authorsVersion": [
+                "terugkomen"
+              ],
+              "note": "Join the separable verb again at the end."
+            },
+            {
+              "prompt": "Henk zegt dat Tijger om zes uur … . (thuiskomen)",
+              "authorsVersion": [
+                "thuiskomt"
+              ],
+              "note": "The separable verb joins and is conjugated at the end."
+            },
+            {
+              "prompt": "Sofia denkt dat ze haar fiets … . (gaan missen)",
+              "authorsVersion": [
+                "gaat missen"
+              ],
+              "note": "The verb cluster goes at the end: conjugated gaan + infinitive."
+            },
+            {
+              "prompt": "Ik vind dat de trein om acht uur … . (aankomen)",
+              "authorsVersion": [
+                "aankomt"
+              ],
+              "note": "Aankomen joins together and is conjugated at the end."
+            },
+            {
+              "prompt": "Piotr zegt dat hij morgen niet … . (kunnen komen)",
+              "authorsVersion": [
+                "kan komen"
+              ],
+              "note": "Put the modal first, then the infinitive."
+            },
+            {
+              "prompt": "Ik hoop dat Sofia een fijne kerst … . (hebben)",
+              "authorsVersion": [
+                "heeft"
+              ],
+              "note": "The conjugated verb goes at the end."
+            },
+            {
+              "prompt": "Ik denk dat het met kerst niet … . (gaan sneeuwen)",
+              "authorsVersion": [
+                "gaat sneeuwen"
+              ],
+              "note": "Niet comes before the verb cluster."
+            },
+            {
+              "prompt": "Marieke zegt dat de les in januari weer … . (beginnen)",
+              "authorsVersion": [
+                "begint"
+              ],
+              "note": "The subject stays after dat; the verb ends the clause."
+            }
+          ]
+        }
+      },
+      "id": "8578c924-d952-4b7a-bcc1-3eea786cc902"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "2. Complete the class conversation",
+      "id": "91b1ca13-c093-45ec-ad38-8c96a5f05356"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each reply with the words that belong at the end of its dat-clause.",
+          "items": [
+            {
+              "prompt": "Marieke: Wat vind je van Nederland? / Sofia: Ik vind dat de mensen hier … . (aardig zijn)",
+              "authorsVersion": [
+                "aardig zijn"
+              ],
+              "note": "The adjective comes before the final verb zijn."
+            },
+            {
+              "prompt": "Piotr: Denk je dat het morgen sneeuwt? / Sofia: Ik denk dat het morgen … . (gaan sneeuwen)",
+              "authorsVersion": [
+                "gaat sneeuwen"
+              ],
+              "note": "Time does not cause inversion inside the dat-clause."
+            },
+            {
+              "prompt": "Marieke: Komen jullie in januari terug? / Piotr: Ik hoop dat wij … . (terugkomen)",
+              "authorsVersion": [
+                "terugkomen"
+              ],
+              "note": "Join terugkomen at the end."
+            },
+            {
+              "prompt": "Sofia: Wat zegt Marieke? / Piotr: Ze zegt dat de les om zeven uur … . (beginnen)",
+              "authorsVersion": [
+                "begint"
+              ],
+              "note": "The subject is de les; the conjugated verb ends the clause."
+            },
+            {
+              "prompt": "Piotr: Kan Daan naar de les komen? / Sofia: Ik denk dat hij niet … . (kunnen komen)",
+              "authorsVersion": [
+                "kan komen"
+              ],
+              "note": "Niet precedes the final verb cluster."
+            },
+            {
+              "prompt": "Marieke: Wat hoop je voor januari? / Sofia: Ik hoop dat ik mijn vrienden … . (gaan zien)",
+              "authorsVersion": [
+                "ga zien"
+              ],
+              "note": "The verb cluster goes to the end: conjugated gaan + infinitive zien."
+            }
+          ]
+        }
+      },
+      "id": "e3d1a4ea-4c04-4e0e-9d43-395d866030f5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "3. Build the sentence",
+      "id": "b5d9f8d4-d5f6-4f66-a392-e9d004d6ba3d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "denk / dat / het / ik / gaat sneeuwen",
+              "authorsVersion": [
+                "Ik denk dat het gaat sneeuwen."
+              ],
+              "note": "Main clause first; verb cluster at the end of the dat-clause."
+            },
+            {
+              "prompt": "dat / Nederlanders / direct / vind / ik / zijn",
+              "authorsVersion": [
+                "Ik vind dat Nederlanders direct zijn."
+              ],
+              "note": "No inversion after dat."
+            },
+            {
+              "prompt": "morgen / hoop / jullie / ik / dat / terugkomen / in januari",
+              "authorsVersion": [
+                "Ik hoop dat jullie in januari terugkomen."
+              ],
+              "note": "The subject jullie follows dat, even with a time expression."
+            },
+            {
+              "prompt": "dat / niet / Sofia / denk / haar fiets / missen / ik / gaat",
+              "authorsVersion": [
+                "Ik denk dat Sofia haar fiets niet gaat missen."
+              ],
+              "note": "Niet comes before the final verb cluster. Sofia is the subject."
+            },
+            {
+              "prompt": "zegt / dat / de trein / Henk / om acht uur / aankomt",
+              "authorsVersion": [
+                "Henk zegt dat de trein om acht uur aankomt."
+              ],
+              "note": "Aankomen joins together at the end."
+            },
+            {
+              "prompt": "dat / niet / Piotr / ik / denk / komen / kan",
+              "authorsVersion": [
+                "Ik denk dat Piotr niet kan komen."
+              ],
+              "note": "The conjugated modal comes before the infinitive at the end."
+            },
+            {
+              "prompt": "dat / Utrecht / vind / nu / ik / mijn stad / echt / is",
+              "authorsVersion": [
+                "Ik vind dat Utrecht nu echt mijn stad is."
+              ],
+              "note": "The verb is the last word in the dat-clause."
+            }
+          ]
+        }
+      },
+      "id": "2987458d-e0ef-47f8-a6bf-a67979c982cb"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "4. Join the ideas",
+      "id": "556186ee-143f-45e2-8378-dd9701fdb18a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Make one sentence with the cue. Keep the second idea after dat.",
+          "items": [
+            {
+              "prompt": "Het gaat sneeuwen. Dat denk ik. (Ik denk …)",
+              "authorsVersion": [
+                "Ik denk dat het gaat sneeuwen."
+              ],
+              "note": "Use denken dat and place gaat sneeuwen at the end."
+            },
+            {
+              "prompt": "Nederlanders zijn direct. Dat vind ik. (Ik vind …)",
+              "authorsVersion": [
+                "Ik vind dat Nederlanders direct zijn."
+              ],
+              "note": "The verb zijn goes at the end."
+            },
+            {
+              "prompt": "Jullie komen in januari terug. Dat hoop ik. (Ik hoop …)",
+              "authorsVersion": [
+                "Ik hoop dat jullie in januari terugkomen."
+              ],
+              "note": "Join the separable verb terugkomen."
+            },
+            {
+              "prompt": "Volgens mij gaat het morgen sneeuwen. (Ik denk …)",
+              "authorsVersion": [
+                "Ik denk dat het morgen gaat sneeuwen."
+              ],
+              "note": "Also fine: Ik denk dat het morgen sneeuwt. Both keep the subject after dat and the verb at the end."
+            },
+            {
+              "prompt": "Volgens mij komt Piotr niet. (Ik denk …)",
+              "authorsVersion": [
+                "Ik denk dat Piotr niet komt."
+              ],
+              "note": "The negative remains before the final verb."
+            },
+            {
+              "prompt": "Henk zegt: ‘Je hebt een fijne kerst.’ (Henk zegt …)",
+              "authorsVersion": [
+                "Henk zegt dat je een fijne kerst hebt."
+              ],
+              "note": "Reported words go after dat; hebt moves to the end."
+            }
+          ]
+        }
+      },
+      "id": "59d738d2-4e23-43d5-8b76-013d0065bc34"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "5. Translate into Dutch",
+      "id": "edc3f200-c389-4d97-9159-2cd9ddeac89a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "I think that it is going to snow.",
+              "authorsVersion": [
+                "Ik denk dat het gaat sneeuwen."
+              ],
+              "note": "The verb cluster goes to the end."
+            },
+            {
+              "prompt": "I hope that you all come back in January.",
+              "authorsVersion": [
+                "Ik hoop dat jullie in januari terugkomen."
+              ],
+              "note": "Jullie is the subject after dat."
+            },
+            {
+              "prompt": "Henk says that Tijger is at home.",
+              "authorsVersion": [
+                "Henk zegt dat Tijger thuis is."
+              ],
+              "note": "The conjugated verb is last."
+            },
+            {
+              "prompt": "I think that Piotr cannot come tomorrow.",
+              "authorsVersion": [
+                "Ik denk dat Piotr morgen niet kan komen."
+              ],
+              "note": "The time and niet come before the final cluster."
+            },
+            {
+              "prompt": "I think that Utrecht is my city now.",
+              "authorsVersion": [
+                "Ik vind dat Utrecht nu mijn stad is."
+              ],
+              "note": "Use vinden dat for an opinion."
+            },
+            {
+              "prompt": "I hope that you have a lovely Christmas.",
+              "authorsVersion": [
+                "Ik hoop dat je een fijne kerst hebt."
+              ],
+              "note": "Use hopen dat; hebt goes last."
+            },
+            {
+              "prompt": "Sofia says that she is going to miss her bike.",
+              "authorsVersion": [
+                "Sofia zegt dat ze haar fiets gaat missen."
+              ],
+              "note": "Gaat + missen forms the final cluster."
+            }
+          ]
+        }
+      },
+      "id": "ec8b2a03-5e7b-4004-b341-bc4e7a8b72a0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "6. Translate into English",
+      "id": "6d3c7ab6-0c4e-4f43-b84f-9da089c88871"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Ik vind dat Nederlanders heel direct zijn.",
+              "authorsVersion": [
+                "I think Dutch people are very direct."
+              ],
+              "note": "vinden dat expresses an opinion."
+            },
+            {
+              "prompt": "Ik denk dat het morgen gaat sneeuwen.",
+              "authorsVersion": [
+                "I think that it is going to snow tomorrow."
+              ],
+              "note": "Morgen is inside the dat-clause."
+            },
+            {
+              "prompt": "Ik hoop dat jullie in januari terugkomen.",
+              "authorsVersion": [
+                "I hope that you all come back in January."
+              ],
+              "note": "Terugkomen joins together in Dutch."
+            },
+            {
+              "prompt": "Henk zegt dat het met kerst niet gaat sneeuwen.",
+              "authorsVersion": [
+                "Henk says that it is not going to snow at Christmas."
+              ],
+              "note": "Niet comes before the verb cluster."
+            },
+            {
+              "prompt": "Ik vind dat Utrecht nu echt mijn stad is.",
+              "authorsVersion": [
+                "I think Utrecht really is my city now."
+              ],
+              "note": "An English translation may omit that."
+            },
+            {
+              "prompt": "Ik hoop dat je een fijne kerst hebt.",
+              "authorsVersion": [
+                "I hope you have a lovely Christmas."
+              ],
+              "note": "The verb hebt is last in Dutch."
+            }
+          ]
+        }
+      },
+      "id": "52b60456-bbab-482e-8cd7-887d9b400632"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: a message to Valencia",
+      "id": "03a45b42-a7c9-446c-908a-28dfda70d6e8"
+    },
+    {
+      "type": "paragraph",
+      "content": "On Friday 18 December, Sofia writes to her mother before bed. She flies from Schiphol to Valencia tomorrow.",
+      "id": "ba312a99-1f21-4364-ab89-6e97c012ccb8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read Sofia's message. Answer in Dutch.",
+          "passage": {
+            "title": "Vrijdagavond",
+            "content": "Hoi mam!\nMorgen kom ik naar huis! Mijn vlucht is om tien uur vanaf Schiphol. Ik ben blij en ik vind het fijn dat ik jou en de zon weer zie. Henk zegt dat het met kerst misschien gaat sneeuwen in Utrecht. Ik denk dat hij gelijk heeft, maar ik hoop dat het in Utrecht niet sneeuwt. Ik ben dan in Valencia.\nIk vind dat Utrecht nu echt mijn stad is. De mensen zijn lief. Ik denk dat ik mijn fiets ga missen. Ik hoop dat mijn vrienden in januari allemaal terugkomen.\nTot morgen! Ik kom zondag 3 januari weer terug naar Utrecht. Veel liefs, Sofia"
+          },
+          "items": [
+            {
+              "prompt": "Wanneer komt Sofia naar huis?",
+              "authorsVersion": [
+                "Morgen, zaterdag 19 december."
+              ],
+              "note": "The message is on Friday evening, 18 December."
+            },
+            {
+              "prompt": "Hoe laat is haar vlucht?",
+              "authorsVersion": [
+                "Om tien uur."
+              ],
+              "note": "The message says: Mijn vlucht is om tien uur."
+            },
+            {
+              "prompt": "Wat zegt Henk over het weer?",
+              "authorsVersion": [
+                "Hij zegt dat het met kerst misschien gaat sneeuwen in Utrecht."
+              ],
+              "note": "Repeat the reported idea with dat and the verb cluster at the end."
+            },
+            {
+              "prompt": "Wat hoopt Sofia over het weer?",
+              "authorsVersion": [
+                "Ze hoopt dat het in Utrecht niet sneeuwt."
+              ],
+              "note": "The answer repeats the idea from Sofia’s message with a dat-clause."
+            },
+            {
+              "prompt": "Wat vindt Sofia van Utrecht?",
+              "authorsVersion": [
+                "Ze vindt dat Utrecht nu echt haar stad is."
+              ],
+              "note": "Use vinden dat for an opinion."
+            },
+            {
+              "prompt": "Wat denkt Sofia over haar fiets?",
+              "authorsVersion": [
+                "Ze denkt dat ze haar fiets gaat missen."
+              ],
+              "note": "Use denken dat and put the verb cluster at the end."
+            },
+            {
+              "prompt": "Wanneer komt Sofia terug naar Utrecht?",
+              "authorsVersion": [
+                "Op zondag 3 januari."
+              ],
+              "note": "The message gives the return date."
+            }
+          ]
+        }
+      },
+      "id": "28b364ea-074b-49d5-bc35-1eea7c104860"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "5fc32785-d9e5-4f82-9dea-75d0cb192fa9"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about the city or country where you live. Use Ik vind dat …, Ik denk dat … and Ik hoop dat … .",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about your city or country, using the three sentence starters.",
+              "authorsVersion": [
+                "Ik vind dat mijn stad mooi is. Ik denk dat het in de winter gaat sneeuwen. Ik hoop dat mijn vrienden in januari terugkomen."
+              ],
+              "note": "This is a model. Keep the subject after dat and put the verb(s) at the end."
+            }
+          ]
+        }
+      },
+      "id": "9b3af9d0-f891-452d-ab78-8355d235e199"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": "At the end of December people say Fijne feestdagen! or Prettige kerstdagen! (end-of-year wishes). At midnight on oudejaarsavond, people often eat oliebollen (Dutch doughnuts) and watch fireworks. These are end-of-year customs. A Christmas greeting is a kerstgroet.",
+      "id": "69e51b37-3010-4873-8d4a-6dba4af7aa3f"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de oliebol",
+              "meaning": "Dutch doughnut eaten at New Year",
+              "forms": "de oliebollen",
+              "example": "We eten oliebollen op oudejaarsavond.",
+              "id": "46112301-2777-4119-b3ba-ff54a3031128"
+            },
+            {
+              "term": "het vuurwerk",
+              "meaning": "fireworks",
+              "example": "We kijken naar het vuurwerk.",
+              "id": "1e43b3cd-c19a-4ff7-8939-de5bfcee0878"
+            },
+            {
+              "term": "de wens",
+              "meaning": "wish",
+              "forms": "de wensen",
+              "example": "Fijne feestdagen is een wens.",
+              "id": "e76df72e-17db-43b2-8176-3b2998ec4c0b"
+            },
+            {
+              "term": "Fijne feestdagen!",
+              "meaning": "Happy holidays!",
+              "example": "Ik wens je fijne feestdagen!",
+              "id": "63f55c24-09ff-4a5e-b273-cc02bef29ab1"
+            },
+            {
+              "term": "Prettige kerstdagen!",
+              "meaning": "Merry Christmas! (formal or neutral)",
+              "example": "We zeggen: Prettige kerstdagen!",
+              "id": "c5159b20-373a-4ade-8ae1-041d5ea10295"
+            },
+            {
+              "term": "de oudejaarsavond",
+              "meaning": "New Year’s Eve",
+              "example": "We eten oliebollen op oudejaarsavond.",
+              "id": "128f3a61-5189-4426-ad9a-4fe0432c5dc6"
+            },
+            {
+              "term": "de kerstgroet",
+              "meaning": "Christmas greeting",
+              "forms": "de kerstgroeten",
+              "example": "Fijne kerst! is een kerstgroet.",
+              "id": "0e51c69f-c8f9-4e93-aee5-a4cb6e38b471"
+            }
+          ]
+        }
+      },
+      "id": "89a18816-d06f-47f6-b698-af720964bdb6"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Goodbye in the hallway",
+      "id": "8d276ede-638e-4a3f-831a-503cd65748f3"
+    },
+    {
+      "type": "paragraph",
+      "content": "On Friday evening, 18 December, Sofia is going to the airport tomorrow. Henk and Tijger are in the hallway.",
+      "id": "bcefbc60-f99f-4f70-a950-562a7c1e536f"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Henk",
+            "text": "Ik denk dat het met kerst gaat sneeuwen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Misschien! Ik denk dat ik mijn fiets ga missen."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Ik hoop dat je een fijne kerst hebt."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je, Henk. Ik vind dat Utrecht nu echt mijn stad is."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Dat vind ik fijn. Tijger mist je ook."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik hoop dat jullie allebei een fijne kerst hebben."
+          },
+          {
+            "speaker": "Henk",
+            "text": "We zien je in januari. Goede reis!"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je! Tot volgend jaar!"
+          }
+        ]
+      },
+      "id": "389ce6b9-03d6-47f9-9025-3243c1bae340"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Gelukkig nieuwjaar!",
+              "meaning": "Happy New Year!",
+              "example": "Tot volgend jaar! Gelukkig nieuwjaar!",
+              "id": "99ae0ace-a6bd-4f94-88ed-4cf22d134d03"
+            },
+            {
+              "term": "Tot volgend jaar!",
+              "meaning": "See you next year!",
+              "example": "Sofia says goodbye to Henk.",
+              "id": "b04aa7a7-ca51-4642-b13f-7d11f0d85207"
+            }
+          ]
+        }
+      },
+      "id": "cfafe1a6-8855-4604-b1ab-8d0afec7fcb5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "End-of-year wishes",
+      "id": "c9eb0efe-b532-4679-a2c2-ae8ff7cb005c"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Happy holidays!",
+        "note": "A general wish for the holiday period."
+      },
+      "content": [
+        {
+          "text": "Fijne feestdagen!",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "2e390ef0-1efd-4f40-aa9d-94cc2eb45a4f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Merry Christmas!",
+        "note": "A short, common Christmas wish."
+      },
+      "content": [
+        {
+          "text": "Fijne kerst!",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "f8ddee74-03a8-44ab-b161-47ed304bd094"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Happy New Year!",
+        "note": "Used around New Year's Day."
+      },
+      "content": [
+        {
+          "text": "Gelukkig nieuwjaar!",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        }
+      ],
+      "id": "b9f3e7f1-14b9-4a2a-a0bc-3e57ed817c47"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "content": "In gelukkig, the g is the familiar Dutch throat sound. Say the word clearly: ge-luk-kig.",
+      "id": "721117e9-fe0a-4ac4-a443-37261377c6b0"
+    },
+    {
+      "type": "divider",
+      "id": "5e82899d-6d03-4585-b47c-af17aac3789a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "f7bf049e-dbe5-4589-93d7-19233906fcb6"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Use vinden dat for opinions, denken dat for beliefs, hopen dat for hopes and zeggen dat for reports.",
+      "id": "be20c659-35bf-4da8-94a6-c09d0259ec36"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "After dat, keep the subject first. Do not invert, even when a time expression comes next.",
+      "id": "7c99a947-058b-4253-b1ad-c5a84918ade6"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Put the conjugated verb at the end. With two verbs, the conjugated verb comes before the infinitive.",
+      "id": "b41c719a-8059-4326-b59d-42b55b568f2e"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Join a separable verb at the end: aankomen → aankomt; terugkomen → terugkomen.",
+      "id": "f5ba5652-db9e-46a5-883b-1dac7d8aea81"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Niet can be inside the dat-clause before the verb cluster, or before dat to negate the opinion.",
+      "id": "9e1c0ebf-b2e1-4a28-b425-1668c03ea564"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: the last class",
+      "description": "Sofia, Piotr and a few classmates sit around a table at a Dutch class in the Utrecht city library. Marieke smiles and asks a question; winter coats hang nearby.",
+      "alt": "Sofia and Piotr talk with their Dutch teacher in the library."
+    },
+    {
+      "afterHeading": "Goodbye in the hallway",
+      "description": "Sofia stands by the front door of Kastanjestraat 14 with a small suitcase; Henk and Tijger say goodbye in the warm hallway.",
+      "alt": "Sofia says goodbye to Henk and Tijger before her Christmas trip."
+    }
+  ],
+  "id": "0f9dd136-9aa7-43f1-9d0c-bffe7d509ef1"
+}

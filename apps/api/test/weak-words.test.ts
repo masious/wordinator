@@ -1,10 +1,11 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { WEAK_WORDS_PAGE_SIZE, weakWordsPageSchema, type WeakWordsPage } from "@wordinator/contracts/weak-words";
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   addLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, publishLesson, readLesson, request, resetDatabase, saveDraft, seedGroup, seedUser,
   signIn, word,
 } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 // The Weak words view and "I know this word" (C14d, docs/words.md#weak-words-view) over real rows.
 const DAY = 86_400_000;
@@ -44,8 +45,8 @@ beforeEach(resetDatabase);
 describe("Weak words access", () => {
   it("refuses anonymous requests, other libraries, and malformed cursors and keys", async () => {
     const { groupId, reader } = await setup();
-    expect((await SELF.fetch(`https://wordinator.test${weakPath(groupId)}`)).status).toBe(401);
-    expect((await SELF.fetch(`https://wordinator.test${knownPath(groupId, "de hond")}`, { method: "PUT" })).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test${weakPath(groupId)}`)).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test${knownPath(groupId, "de hond")}`, { method: "PUT" })).status).toBe(401);
     const outsiderId = await seedUser("outsider"); await seedGroup("beta", outsiderId);
     const outsider = await signIn("outsider");
     const foreign = await request(weakPath(groupId), outsider);

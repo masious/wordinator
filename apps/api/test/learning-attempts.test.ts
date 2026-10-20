@@ -1,9 +1,10 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { beforeEach, describe, expect, it } from "vitest";
 import { insertPracticeAttempt, lessonPracticeCheck } from "../src/learning/attempts";
 import {
   addLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, readLesson, request, resetDatabase, saveDraft, seedGroup, seedUser, signIn, word,
 } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 // Practice and pronunciation attempts (C14b; docs/courses.md#practice-attempts, docs/words.md#pronunciation-assessment).
 const practice = {
@@ -76,7 +77,7 @@ describe("Practice attempts API", () => {
 
   it("refuses anonymous requests, unfinished setup, and invalid bodies", async () => {
     const { groupId, reader, attemptPath } = await setup();
-    const anonymous = await SELF.fetch(`https://wordinator.test${attemptPath}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ item: 0, answer: "x" }) });
+    const anonymous = await fetchWorker(`https://wordinator.test${attemptPath}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ item: 0, answer: "x" }) });
     expect(anonymous.status).toBe(401);
     const newcomerId = await seedUser("newcomer"); await join(groupId, newcomerId);
     await env.DB.prepare("UPDATE users SET display_name = 'New learner' WHERE id = ?").bind(newcomerId).run();
@@ -186,7 +187,7 @@ describe("Pronunciation attempts API", () => {
   it("refuses anonymous requests, unfinished setup, and invalid bodies", async () => {
     const { groupId, reader, lesson, hond } = await setup();
     const path = `/api/groups/${groupId}/pronunciation-attempts`;
-    const anonymous = await SELF.fetch(`https://wordinator.test${path}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...scores, surface: "drill" }) });
+    const anonymous = await fetchWorker(`https://wordinator.test${path}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...scores, surface: "drill" }) });
     expect(anonymous.status).toBe(401);
     const newcomerId = await seedUser("newcomer"); await join(groupId, newcomerId);
     await env.DB.prepare("UPDATE users SET display_name = 'New learner' WHERE id = ?").bind(newcomerId).run();

@@ -1,10 +1,11 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { courseWordsResponseSchema, lessonNotReadySchema } from "@wordinator/contracts/lesson-document";
 import { beforeEach, describe, expect, it } from "vitest";
 import {
   addLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, publishLesson, readLesson, request, resetDatabase, saveDraft, seedGroup, seedUser,
   signIn, word,
 } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 const complete = (path: string, lessonId: string, cookie: string) => request(`${path}/lessons/${lessonId}/completion`, cookie, undefined, "PUT");
 const recap = async (path: string, cookie: string) => {
@@ -150,7 +151,7 @@ describe("Course word recap", () => {
     expect(await terms(coursePath(otherGroup, betaCourse.id), outsider)).toEqual(["het fiets"]);
     expect(await terms(path, reader)).toEqual(["der Hund", "die Katze"]);
     expect((await request(`${coursePath(groupId, betaCourse.id)}/words`, reader)).status).toBe(404);
-    expect((await SELF.fetch(`https://wordinator.test${path}/words`)).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test${path}/words`)).status).toBe(401);
     await env.DB.prepare("UPDATE memberships SET state = 'left' WHERE group_id = ? AND user_id = ?").bind(groupId, readerId).run();
     expect((await request(`${path}/words`, reader)).status).toBe(404);
   });

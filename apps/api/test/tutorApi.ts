@@ -1,10 +1,9 @@
-import { createExecutionContext, env } from "cloudflare:test";
 import { tutorStreamEventSchema, type TutorStreamEvent } from "@wordinator/contracts/tutor";
 import { expect } from "vitest";
-import { app } from "../src/app";
 import { addLesson, blocks, createCourse, documentOf, join, seedGroup, seedUser, signIn, word } from "./courseApi";
+import { fetchWorker } from "./worker";
 
-// Shared helpers for the tutor suites (C14g): requests through `app.fetch` with a stubbed Workers AI binding (the only
+// Shared helpers for the tutor suites (C14g): requests to the Worker entry point with a stubbed Workers AI binding (the only
 // configured provider in tests, since no provider keys are set), scripted model replies, and a server-sent-event reader. No
 // test reaches a real provider.
 
@@ -61,10 +60,7 @@ export async function call(method: string, path: string, cookie: string | null, 
   const headers: Record<string, string> = {};
   if (cookie) headers.cookie = cookie;
   if (body !== undefined) headers["content-type"] = "application/json";
-  return app.fetch(
-    new Request(`https://wordinator.test${path}`, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) }),
-    { ...env, ...extraEnv }, createExecutionContext(),
-  );
+  return fetchWorker(`https://wordinator.test${path}`, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) }, extraEnv);
 }
 
 export async function readEvents(response: Response): Promise<TutorStreamEvent[]> {

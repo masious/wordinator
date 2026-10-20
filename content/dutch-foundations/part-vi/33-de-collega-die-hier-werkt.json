@@ -1,0 +1,1299 @@
+{
+  "title": "De collega die hier werkt",
+  "goal": "Describe people and things with subject relative clauses using die and dat.",
+  "blocks": [
+    {
+      "type": "heading",
+      "content": "De collega die hier werkt",
+      "props": {
+        "level": 1
+      },
+      "id": "5a9aa9b4-3c55-49b2-b1a8-e1cf6572ae50"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Thursday 14 January 2027. Sofia is at the IT office with Daan and Karin. In this lesson you will join sentences with a relative clause using die or dat.",
+      "id": "54542eb5-109f-4c03-b655-2365651ea228"
+    },
+    {
+      "type": "paragraph",
+      "content": "Colours: subjects are green, finite verbs are blue, de-forms are pink, het-forms are brown, and the new relative word is bold.",
+      "id": "228b4f87-d5af-4c3f-a466-5ee21ae6908d"
+    },
+    {
+      "type": "heading",
+      "content": "Story: a photo at the office",
+      "props": {
+        "level": 2
+      },
+      "id": "b4c9c882-7783-45c9-80e5-84914dd7f821"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Karin, wie staat er op deze foto?"
+          },
+          {
+            "speaker": "Karin",
+            "text": "Dat is mijn collega Daan."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "De collega die hier werkt?"
+          },
+          {
+            "speaker": "Karin",
+            "text": "Ja. En de man die naast hem staat, is Piotr."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik ken Piotr uit de Nederlandse les."
+          },
+          {
+            "speaker": "Karin",
+            "text": "Precies. Het boek dat op tafel ligt, is open."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En de tas die naast het boek staat?"
+          },
+          {
+            "speaker": "Karin",
+            "text": "Die tas is van mij."
+          }
+        ]
+      },
+      "id": "c447a54d-9262-4880-8802-200677c81866"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de omschrijving",
+              "meaning": "description",
+              "forms": "de omschrijvingen",
+              "example": "De omschrijving is kort.",
+              "id": "76b6b9d8-5951-401b-bc70-c27dac60e92e"
+            },
+            {
+              "term": "het portret",
+              "meaning": "portrait",
+              "forms": "de portretten",
+              "example": "Het portret staat op het bureau.",
+              "id": "ce68909b-1a15-49e6-bff0-a02c6d20bc19"
+            },
+            {
+              "term": "het gezicht",
+              "meaning": "face",
+              "forms": "de gezichten",
+              "example": "Ik herken haar gezicht.",
+              "id": "8b6dcc0a-5e3a-4e42-9120-01ecea944ac1"
+            },
+            {
+              "term": "de bril",
+              "meaning": "glasses",
+              "forms": "de brillen",
+              "example": "De man met de bril is Daan.",
+              "id": "41e8b1e8-5099-4695-95bb-5a9963a42626"
+            },
+            {
+              "term": "krullend",
+              "meaning": "curly",
+              "forms": "",
+              "example": "Ze heeft krullend haar.",
+              "id": "2446d8f5-2a64-4127-b57a-ecbf5beebc34"
+            },
+            {
+              "term": "blond",
+              "meaning": "blond",
+              "forms": "",
+              "example": "Het blonde haar is kort.",
+              "id": "0d505d8a-7b38-4a5d-89d5-786795bf4478"
+            },
+            {
+              "term": "het kapsel",
+              "meaning": "hairstyle",
+              "forms": "de kapsels",
+              "example": "Het kapsel is eenvoudig.",
+              "id": "70d4bbee-2a4e-4ac1-85da-c03ca642a05e"
+            },
+            {
+              "term": "herkennen",
+              "meaning": "to recognise",
+              "forms": "herkent · herkende · herkend",
+              "example": "Sofia herkent Daan.",
+              "id": "927d16b9-a948-4880-8b51-2cfb19c74967"
+            },
+            {
+              "term": "aanwijzen",
+              "meaning": "to point out",
+              "forms": "wijst aan · wees aan · aangewezen",
+              "example": "Karin wijst Daan aan.",
+              "id": "5b10093f-6998-421a-86da-880c7d7e7d67"
+            },
+            {
+              "term": "de afbeelding",
+              "meaning": "image, picture",
+              "forms": "de afbeeldingen",
+              "example": "De afbeelding staat op het scherm.",
+              "id": "713f6121-173c-4195-9b4c-33d841f46005"
+            },
+            {
+              "term": "het voorwerp",
+              "meaning": "object",
+              "forms": "de voorwerpen",
+              "example": "Het voorwerp ligt op tafel.",
+              "id": "8efd3802-af19-4f4b-93b7-844f9efd5ec4"
+            },
+            {
+              "term": "hetzelfde",
+              "meaning": "the same",
+              "forms": "",
+              "example": "Dit is hetzelfde boek.",
+              "id": "e38c3755-9f12-4905-9874-40fc161bc21d"
+            },
+            {
+              "term": "bedoelen",
+              "meaning": "to mean",
+              "forms": "bedoelt · bedoelde · bedoeld",
+              "example": "Wie bedoel je?",
+              "id": "adaea602-276e-4587-be5c-09cf9bec36ba"
+            },
+            {
+              "term": "naast elkaar",
+              "meaning": "next to each other",
+              "forms": "",
+              "example": "De foto’s staan naast elkaar.",
+              "id": "e75009ac-baf0-43c5-aaf1-d4953bc35ccd"
+            }
+          ]
+        }
+      },
+      "id": "0d54ff84-8aaf-42f5-8fac-c1214f862f8c"
+    },
+    {
+      "type": "divider",
+      "id": "11d1fe90-71cd-4a01-85ef-ae8cfd3d43f2"
+    },
+    {
+      "type": "heading",
+      "content": "Subject relatives with die and dat",
+      "props": {
+        "level": 2
+      },
+      "id": "1404bcf0-4de6-48cd-b656-99cbc68a6db3"
+    },
+    {
+      "type": "heading",
+      "content": "Join two sentences",
+      "props": {
+        "level": 3
+      },
+      "id": "5ae74495-02d1-445b-a4ff-a66cc0391d5f"
+    },
+    {
+      "type": "paragraph",
+      "content": "A relative clause describes the person or thing just mentioned. Use die for a de-word or any plural, and dat for one singular het-word.",
+      "id": "91b48b86-edd5-4cc1-a20f-2c2e88ef856a"
+    },
+    {
+      "type": "callout",
+      "content": "de-word or plural + die + relative clause; singular het-word + dat + relative clause. The finite verb goes at the end of the relative clause.",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "id": "b6091b45-daff-4862-a65d-ac3100fff212"
+    },
+    {
+      "type": "example",
+      "content": [
+        "",
+        {
+          "text": "De collega die hier werkt, heet Daan.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ""
+      ],
+      "props": {
+        "translation": "The colleague who works here is called Daan.",
+        "note": "Collega is a de-word; werkt ends the relative clause."
+      },
+      "id": "619ff937-0532-4e2e-925c-5a8b234521db"
+    },
+    {
+      "type": "example",
+      "content": [
+        "",
+        {
+          "text": "Het boek dat op tafel ligt, is open.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ""
+      ],
+      "props": {
+        "translation": "The book that is on the table is open.",
+        "note": "Boek is a singular het-word; ligt ends the relative clause."
+      },
+      "id": "32d69448-18f1-4645-bdd6-cebbcadac81c"
+    },
+    {
+      "type": "example",
+      "content": [
+        "",
+        {
+          "text": "De foto’s die naast elkaar staan, zijn duidelijk.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ""
+      ],
+      "props": {
+        "translation": "The photos that are next to each other are clear.",
+        "note": "A plural antecedent takes die."
+      },
+      "id": "9160b9ca-ffe8-4d1e-a302-c90ad6de13d2"
+    },
+    {
+      "type": "example",
+      "content": [
+        "",
+        {
+          "text": "De tas die naast het boek staat, is van Karin.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ""
+      ],
+      "props": {
+        "translation": "The bag that is next to the book belongs to Karin.",
+        "note": "Tas is a de-word."
+      },
+      "id": "3c5e5e2d-21ec-47d3-906a-62076c85ee31"
+    },
+    {
+      "type": "example",
+      "content": [
+        "",
+        {
+          "text": "Het kaartje dat op tafel ligt, is voor Sofia.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ""
+      ],
+      "props": {
+        "translation": "The card that is on the table is for Sofia.",
+        "note": "Kaartje is singular het-word."
+      },
+      "id": "b6cd15fe-62fe-4bfd-b324-764c8cd422a0"
+    },
+    {
+      "type": "callout",
+      "content": "This lesson practises subject relatives: the person or thing in the clause does the action. Object and prepositional relatives come later.",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "id": "1134034b-e755-490a-9e8a-a48710c53567"
+    },
+    {
+      "type": "heading",
+      "content": "Relative dat and conjunction dat",
+      "props": {
+        "level": 3
+      },
+      "id": "760a7841-0166-4f99-a6ed-ea7230e65826"
+    },
+    {
+      "type": "paragraph",
+      "content": "The same word dat has two jobs. In “Ik denk dat Daan hier werkt”, it introduces what Sofia thinks. In “het boek dat hier ligt”, it points back to a noun and describes it.",
+      "id": "dd8f45ab-30e2-4674-a207-54f4de3d7a4d"
+    },
+    {
+      "type": "example",
+      "content": [
+        "",
+        {
+          "text": "Ik denk dat Daan hier werkt.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ""
+      ],
+      "props": {
+        "translation": "I think that Daan works here.",
+        "note": "Conjunction dat does not refer to a noun."
+      },
+      "id": "bab3442b-0954-445a-8550-5d518a66650f"
+    },
+    {
+      "type": "example",
+      "content": [
+        "",
+        {
+          "text": "Het boek dat hier ligt, is open.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ""
+      ],
+      "props": {
+        "translation": "The book that is lying here is open.",
+        "note": "Relative dat points back to het boek."
+      },
+      "id": "22e6b317-eb42-4f98-9344-40d86143c8c4"
+    },
+    {
+      "type": "callout",
+      "content": "Choose die or dat from the noun before it, not from the person doing the action: de foto die …; het boek dat …",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "id": "7d7ab80f-c2d1-40d5-8adb-cbf25d8abc42"
+    },
+    {
+      "type": "heading",
+      "content": "Spot the antecedent",
+      "props": {
+        "level": 3
+      },
+      "id": "410b2db7-6d26-42d6-9870-831a4812073b"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Use die",
+              "id": "2bdd88dd-7ccd-4164-9b53-12c25cc39480"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de collega die hier werkt",
+              "id": "3b6bf46e-f10a-4c58-a1ae-150761fc3298"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "de foto’s die naast elkaar staan",
+              "id": "d384229c-9a98-478e-b0ce-03bfc6689781"
+            }
+          ],
+          "id": "e879fe3f-d64e-4e63-854e-708c9970e97b"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Use dat",
+              "id": "dda8914e-5ed7-4de7-89ba-14e6b06cc6d7"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "het boek dat op tafel ligt",
+              "id": "5d7329bd-c1ce-4dfb-8ed4-9ef3b4b0b974"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "het kaartje dat naast de tas ligt",
+              "id": "2e3303b6-1485-41b4-9e6b-bff03e4292e6"
+            }
+          ],
+          "id": "9482b50d-ac39-4938-8912-20c07a37f4b7"
+        }
+      ],
+      "id": "5a58777b-ff81-4547-a4c8-b8421104400e"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Check the noun first.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "de-word or plural → die",
+          "id": "4d011467-6b3d-447f-8cfd-5653fcb29733"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "singular het-word → dat",
+          "id": "904d67e5-78f3-4f8f-8d1e-9cdfa4433432"
+        }
+      ],
+      "id": "440db2bb-26e4-466c-9ab3-cfe6fd02067f"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        {
+          "text": "Relative words: "
+        },
+        {
+          "text": "die",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        {
+          "text": " for de-words and plurals; "
+        },
+        {
+          "text": "dat",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        {
+          "text": " for singular het-words."
+        }
+      ],
+      "id": "3a2adef0-383c-470b-b8b7-8ad30e8597df"
+    },
+    {
+      "type": "paragraph",
+      "content": "A quick check:",
+      "id": "b6a76c47-f665-4cc2-b7df-717a6fda8953"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Find the noun the clause describes.",
+      "id": "a988ab39-a825-4ae6-9e10-c9bb50b9753c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Check de-word, singular het-word, or plural.",
+      "id": "a6e5e5df-c7ec-4616-a02a-bf8b6b33f3ff"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Choose die or dat, then put the finite verb at the end.",
+      "id": "b0a8044f-dc82-4c27-9ba0-95ed7b675d30"
+    },
+    {
+      "type": "callout",
+      "content": "Read the noun with the relative word: de collega die; het boek dat. Then check the last verb.",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "id": "1a0ccf9a-a88d-40a2-b147-d214736d0418"
+    },
+    {
+      "type": "heading",
+      "content": "More examples",
+      "props": {
+        "level": 2
+      },
+      "id": "4575917d-76b2-428a-9824-c9bbf5574998"
+    },
+    {
+      "type": "example",
+      "content": [
+        "",
+        {
+          "text": "De afbeelding die op het scherm staat, is duidelijk.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ""
+      ],
+      "props": {
+        "translation": "The picture that is on the screen is clear.",
+        "note": "Afbeelding is a de-word; staat ends its clause."
+      },
+      "id": "dd938584-0c01-4049-a198-efa44ecd81ef"
+    },
+    {
+      "type": "example",
+      "content": [
+        "",
+        {
+          "text": "Het voorwerp dat naast de tas ligt, is klein.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ""
+      ],
+      "props": {
+        "translation": "The object that is next to the bag is small.",
+        "note": "Voorwerp is singular het-word."
+      },
+      "id": "cad5c600-ee55-4ac4-aca4-e96db3a69ca7"
+    },
+    {
+      "type": "example",
+      "content": [
+        "",
+        {
+          "text": "De collega’s die hier werken, kennen Sofia.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ""
+      ],
+      "props": {
+        "translation": "The colleagues who work here know Sofia.",
+        "note": "Plural antecedent: die."
+      },
+      "id": "7d0f0114-b488-453f-bca7-88efab99361c"
+    },
+    {
+      "type": "example",
+      "content": [
+        "",
+        {
+          "text": "Het portret dat op tafel staat, is duidelijk.",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        ""
+      ],
+      "props": {
+        "translation": "The portrait that is on the table is clear.",
+        "note": "Portret is singular het-word."
+      },
+      "id": "075a73f0-ed2b-4a92-b4ad-dde838980f92"
+    },
+    {
+      "type": "divider",
+      "id": "43bc94e9-b887-43e0-b57b-c115985651bf"
+    },
+    {
+      "type": "heading",
+      "content": "Story: choosing the right picture",
+      "props": {
+        "level": 2
+      },
+      "id": "5a954ca3-76f1-4fed-a829-aaf16ec9608e"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Daan",
+            "text": "Sofia, welk kaartje zoek je?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Het kaartje dat naast de computer ligt."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Dit kaartje?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, het kaartje dat bij de foto ligt."
+          },
+          {
+            "speaker": "Daan",
+            "text": "O, dit kaartje. Hier staat je naam."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, en de afbeelding die ernaast staat, is mooi."
+          },
+          {
+            "speaker": "Daan",
+            "text": "De afbeelding die op het scherm staat?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, precies. Ik herken het gebouw."
+          }
+        ]
+      },
+      "id": "f7b17a0f-4740-4163-9608-92136e05b38d"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "ernaast",
+              "meaning": "next to it",
+              "forms": "",
+              "example": "De afbeelding staat ernaast.",
+              "id": "40ee8753-724d-417f-ba36-495534212a9b"
+            }
+          ]
+        }
+      },
+      "id": "ec90c12d-ff79-456f-a921-b736bd23b452"
+    },
+    {
+      "type": "divider",
+      "id": "5f7df254-6a62-4829-984c-faf086098483"
+    },
+    {
+      "type": "heading",
+      "content": "Practice",
+      "props": {
+        "level": 2
+      },
+      "id": "22269ab9-061d-41f6-9808-3e397086b67e"
+    },
+    {
+      "type": "heading",
+      "content": "Choose die or dat",
+      "props": {
+        "level": 3
+      },
+      "id": "678b88b9-6595-4867-8be7-e4e2031e1981"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each relative clause with die or dat.",
+          "items": [
+            {
+              "prompt": "de collega … bij Karin staat",
+              "authorsVersion": [
+                "die"
+              ],
+              "note": "Collega is a de-word."
+            },
+            {
+              "prompt": "het boek … op tafel ligt",
+              "authorsVersion": [
+                "dat"
+              ],
+              "note": "Boek is singular het-word."
+            },
+            {
+              "prompt": "de foto’s … op het scherm staan",
+              "authorsVersion": [
+                "die"
+              ],
+              "note": "Plural nouns take die."
+            },
+            {
+              "prompt": "het kaartje … naast de tas ligt",
+              "authorsVersion": [
+                "dat"
+              ],
+              "note": "Kaartje is singular het-word."
+            },
+            {
+              "prompt": "de afbeelding … op het scherm staat",
+              "authorsVersion": [
+                "die"
+              ],
+              "note": "Afbeelding is a de-word; use die."
+            },
+            {
+              "prompt": "het voorwerp … hier ligt",
+              "authorsVersion": [
+                "dat"
+              ],
+              "note": "Voorwerp is singular het-word."
+            },
+            {
+              "prompt": "de collega’s … Sofia kennen",
+              "authorsVersion": [
+                "die"
+              ],
+              "note": "Plural nouns take die."
+            },
+            {
+              "prompt": "het portret … op tafel staat",
+              "authorsVersion": [
+                "dat"
+              ],
+              "note": "Portret is singular het-word."
+            }
+          ]
+        }
+      },
+      "id": "74d57375-b657-4346-ad6c-33b65fd594fb"
+    },
+    {
+      "type": "heading",
+      "content": "Build a relative clause",
+      "props": {
+        "level": 3
+      },
+      "id": "3836124a-b1d9-4dd1-8da1-aa24f7184b4d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Join the two sentences. Use the bracketed noun.",
+          "items": [
+            {
+              "prompt": "Daan werkt hier. Daan is mijn collega. (de collega)",
+              "authorsVersion": [
+                "De collega die hier werkt, is mijn collega."
+              ],
+              "note": "Relative clause describes de collega."
+            },
+            {
+              "prompt": "Het boek ligt op tafel. Het boek is open. (het boek)",
+              "authorsVersion": [
+                "Het boek dat op tafel ligt, is open."
+              ],
+              "note": "Finite verb lies at the end."
+            },
+            {
+              "prompt": "De tas staat naast de stoel. De tas is van Karin. (de tas)",
+              "authorsVersion": [
+                "De tas die naast de stoel staat, is van Karin."
+              ],
+              "note": "Tas is a de-word."
+            },
+            {
+              "prompt": "De foto’s staan op het scherm. De foto’s zijn duidelijk. (de foto’s)",
+              "authorsVersion": [
+                "De foto’s die op het scherm staan, zijn duidelijk."
+              ],
+              "note": "Plural takes die."
+            },
+            {
+              "prompt": "Het kaartje ligt bij de foto. Het kaartje is voor Sofia. (het kaartje)",
+              "authorsVersion": [
+                "Het kaartje dat bij de foto ligt, is voor Sofia."
+              ],
+              "note": "Singular het-word takes dat."
+            },
+            {
+              "prompt": "Piotr staat naast Daan. Piotr kent Sofia. (de man)",
+              "authorsVersion": [
+                "De man die naast Daan staat, kent Sofia."
+              ],
+              "note": "The man is the subject of staat."
+            },
+            {
+              "prompt": "De afbeelding staat op het scherm. De afbeelding is duidelijk. (de afbeelding)",
+              "authorsVersion": [
+                "De afbeelding die op het scherm staat, is duidelijk."
+              ],
+              "note": "Relative clause describes de afbeelding; staat comes at its end."
+            }
+          ]
+        }
+      },
+      "id": "3b988ae1-713d-4db4-88ca-b39172cb1ec2"
+    },
+    {
+      "type": "heading",
+      "content": "Word order",
+      "props": {
+        "level": 3
+      },
+      "id": "3eefc768-2ce8-43ee-abb5-c20625bbc780"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: de collega / die / werkt / hier / heet Daan",
+              "authorsVersion": [
+                "De collega die hier werkt, heet Daan."
+              ],
+              "note": "The relative clause ends with werkt."
+            },
+            {
+              "prompt": "Put in order: op tafel / dat / ligt / het boek / is open",
+              "authorsVersion": [
+                "Het boek dat op tafel ligt, is open."
+              ],
+              "note": "Clause ends with ligt."
+            },
+            {
+              "prompt": "Put in order: naast elkaar / die / staan / de foto’s / zijn duidelijk",
+              "authorsVersion": [
+                "De foto’s die naast elkaar staan, zijn duidelijk."
+              ],
+              "note": "Plural antecedent takes die."
+            },
+            {
+              "prompt": "Put in order: de afbeelding / die / staat / op het scherm / is duidelijk",
+              "authorsVersion": [
+                "De afbeelding die op het scherm staat, is duidelijk."
+              ],
+              "note": "The relative clause ends with staat."
+            },
+            {
+              "prompt": "Put in order: dat / naast de tas / ligt / het kaartje / is voor Sofia",
+              "authorsVersion": [
+                "Het kaartje dat naast de tas ligt, is voor Sofia."
+              ],
+              "note": "Singular het-word."
+            },
+            {
+              "prompt": "Put in order: hier / die / werkt / de collega / is Daan",
+              "authorsVersion": [
+                "De collega die hier werkt, is Daan."
+              ],
+              "note": "Verb at end of relative clause."
+            },
+            {
+              "prompt": "Put in order: op het bureau / staat / dat / het portret / is duidelijk",
+              "authorsVersion": [
+                "Het portret dat op het bureau staat, is duidelijk."
+              ],
+              "note": "Portret is singular het-word."
+            }
+          ]
+        }
+      },
+      "id": "2a140f4d-1cd0-4d92-a766-8fefddbc0fe6"
+    },
+    {
+      "type": "heading",
+      "content": "Fill in die/dat and the verb",
+      "props": {
+        "level": 3
+      },
+      "id": "5a7320a4-5e30-4341-9494-76494f235103"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each relative clause with the verb.",
+          "items": [
+            {
+              "prompt": "De collega die hier … . (werken)",
+              "authorsVersion": [
+                "werkt"
+              ],
+              "note": "Die refers to de collega."
+            },
+            {
+              "prompt": "Het boek dat op tafel … . (liggen)",
+              "authorsVersion": [
+                "ligt"
+              ],
+              "note": "Dat refers to het boek."
+            },
+            {
+              "prompt": "De foto’s die op het scherm … . (staan)",
+              "authorsVersion": [
+                "staan"
+              ],
+              "note": "Plural takes die."
+            },
+            {
+              "prompt": "Het kaartje dat naast de telefoon … . (liggen)",
+              "authorsVersion": [
+                "ligt"
+              ],
+              "note": "Kaartje is singular het-word."
+            },
+            {
+              "prompt": "De collega’s die bij de deur … . (staan)",
+              "authorsVersion": [
+                "staan"
+              ],
+              "note": "Plural takes die."
+            },
+            {
+              "prompt": "Het portret dat op het bureau … . (staan)",
+              "authorsVersion": [
+                "staat"
+              ],
+              "note": "Portret is singular het-word."
+            },
+            {
+              "prompt": "De afbeelding die op het scherm … . (staan)",
+              "authorsVersion": [
+                "staat"
+              ],
+              "note": "The finite verb staat ends the relative clause."
+            }
+          ]
+        }
+      },
+      "id": "ee8153fc-bd36-4037-84b9-1a701395add8"
+    },
+    {
+      "type": "heading",
+      "content": "Dialogue completion",
+      "props": {
+        "level": 3
+      },
+      "id": "e115e550-81c2-49c0-bf96-5ba466e093c0"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the dialogue with die or dat.",
+          "items": [
+            {
+              "prompt": "Sofia: Welk boek zoek je? / Daan: Het boek … naast de computer ligt.",
+              "authorsVersion": [
+                "dat"
+              ],
+              "note": "Boek is singular het-word."
+            },
+            {
+              "prompt": "Karin: Wie is dat? / Sofia: De collega … hier werkt.",
+              "authorsVersion": [
+                "die"
+              ],
+              "note": "Collega is a de-word."
+            },
+            {
+              "prompt": "Daan: Welke foto’s bedoel je? / Sofia: De foto’s … op het scherm staan.",
+              "authorsVersion": [
+                "die"
+              ],
+              "note": "Plural antecedent."
+            },
+            {
+              "prompt": "Sofia: Is dit jouw kaartje? / Karin: Nee, het kaartje … naast de tas ligt.",
+              "authorsVersion": [
+                "dat"
+              ],
+              "note": "Kaartje is singular het-word."
+            },
+            {
+              "prompt": "Karin: Welke afbeelding? / Daan: De afbeelding … op het scherm staat.",
+              "authorsVersion": [
+                "die"
+              ],
+              "note": "Afbeelding is a de-word."
+            },
+            {
+              "prompt": "Daan: Welk voorwerp? / Sofia: Het voorwerp … hier ligt.",
+              "authorsVersion": [
+                "dat"
+              ],
+              "note": "Voorwerp is singular het-word."
+            }
+          ]
+        }
+      },
+      "id": "e5e34bfe-3874-40ee-b22a-c5321da22d40"
+    },
+    {
+      "type": "heading",
+      "content": "Translate into Dutch",
+      "props": {
+        "level": 3
+      },
+      "id": "6e1b80fc-54c7-4d54-8d30-4223b8aa7919"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch. Use a relative clause.",
+          "items": [
+            {
+              "prompt": "The colleague who works here is Daan.",
+              "authorsVersion": [
+                "De collega die hier werkt, is Daan."
+              ],
+              "note": "Collega is a de-word."
+            },
+            {
+              "prompt": "The book that is on the table is open.",
+              "authorsVersion": [
+                "Het boek dat op tafel ligt, is open."
+              ],
+              "note": "Boek is singular het-word."
+            },
+            {
+              "prompt": "The photos that are on the screen are clear.",
+              "authorsVersion": [
+                "De foto’s die op het scherm staan, zijn duidelijk."
+              ],
+              "note": "Plural takes die."
+            },
+            {
+              "prompt": "The card that is next to the bag is for Sofia.",
+              "authorsVersion": [
+                "Het kaartje dat naast de tas ligt, is voor Sofia."
+              ],
+              "note": "Kaartje is singular het-word."
+            },
+            {
+              "prompt": "The man who stands next to Daan is Piotr.",
+              "authorsVersion": [
+                "De man die naast Daan staat, is Piotr."
+              ],
+              "note": "Man is a de-word."
+            },
+            {
+              "prompt": "The picture that is on the screen is clear.",
+              "authorsVersion": [
+                "De afbeelding die op het scherm staat, is duidelijk."
+              ],
+              "note": "Staat is last in the clause."
+            },
+            {
+              "prompt": "The object that lies next to the book is small.",
+              "authorsVersion": [
+                "Het voorwerp dat naast het boek ligt, is klein."
+              ],
+              "note": "Voorwerp is singular het-word."
+            }
+          ]
+        }
+      },
+      "id": "c1c3bca5-94b4-48ef-8e00-33768b68da93"
+    },
+    {
+      "type": "heading",
+      "content": "Translate into English",
+      "props": {
+        "level": 3
+      },
+      "id": "6cb76754-b64b-473a-adc3-29861c22bad8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "De collega die hier werkt, heet Daan.",
+              "authorsVersion": [
+                "The colleague who works here is called Daan."
+              ],
+              "note": "Die describes de collega."
+            },
+            {
+              "prompt": "Het boek dat op tafel ligt, is open.",
+              "authorsVersion": [
+                "The book that is on the table is open."
+              ],
+              "note": "Dat points back to het boek."
+            },
+            {
+              "prompt": "De foto’s die naast elkaar staan, zijn duidelijk.",
+              "authorsVersion": [
+                "The photos that are next to each other are clear."
+              ],
+              "note": "Plural antecedent takes die."
+            },
+            {
+              "prompt": "Het kaartje dat naast de tas ligt, is voor Sofia.",
+              "authorsVersion": [
+                "The card that is next to the bag is for Sofia."
+              ],
+              "note": "Kaartje is singular het-word."
+            },
+            {
+              "prompt": "De afbeelding die op het scherm staat, is duidelijk.",
+              "authorsVersion": [
+                "The picture that is on the screen is clear."
+              ],
+              "note": "Relative clause describes afbeelding."
+            },
+            {
+              "prompt": "Ik denk dat Daan hier werkt.",
+              "authorsVersion": [
+                "I think that Daan works here."
+              ],
+              "note": "Here dat is a conjunction."
+            },
+            {
+              "prompt": "Het portret dat op het bureau staat, is duidelijk.",
+              "authorsVersion": [
+                "The portrait that is on the desk is clear."
+              ],
+              "note": "Here dat refers to het portret."
+            }
+          ]
+        }
+      },
+      "id": "cafa1a1f-67d9-42a3-93c6-50c1b589190e"
+    },
+    {
+      "type": "heading",
+      "content": "Reading: a photo and some objects",
+      "props": {
+        "level": 3
+      },
+      "id": "69c466ae-718f-463e-a857-474a655b9180"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the passage. Answer in Dutch.",
+          "items": [
+            {
+              "prompt": "Wie staat op de foto bij Karin?",
+              "authorsVersion": [
+                "Daan."
+              ],
+              "note": "The passage says the photo shows Daan."
+            },
+            {
+              "prompt": "Waar ligt het boek?",
+              "authorsVersion": [
+                "Op tafel."
+              ],
+              "note": "The book is on the table."
+            },
+            {
+              "prompt": "Wat ligt er op tafel?",
+              "authorsVersion": [
+                "Het boek."
+              ],
+              "note": "The passage says the book lies on the table."
+            },
+            {
+              "prompt": "Waar staat het kaartje?",
+              "authorsVersion": [
+                "Naast de tas."
+              ],
+              "note": "The card is next to the bag."
+            },
+            {
+              "prompt": "Wie wijst de afbeelding aan?",
+              "authorsVersion": [
+                "Karin."
+              ],
+              "note": "Karin points to the image."
+            },
+            {
+              "prompt": "Wat staat er op de afbeelding?",
+              "authorsVersion": [
+                "Een gebouw."
+              ],
+              "note": "It shows a building."
+            },
+            {
+              "prompt": "Klopt dit? De foto’s staan op het bureau.",
+              "authorsVersion": [
+                "Nee. De foto’s staan op het scherm."
+              ],
+              "note": "The photos are on the screen."
+            }
+          ],
+          "passage": {
+            "title": "Op kantoor",
+            "content": "Sofia staat bij Karin op kantoor. Karin wijst een foto aan die op het scherm staat. De foto toont Daan, de collega die hier werkt. Naast de foto’s staat een afbeelding van een gebouw. Het boek dat op tafel ligt, is open. Bij de tas die naast de stoel staat, ligt een kaartje. Op het kaartje staat Sofia’s naam. Sofia zegt dat ze de afbeelding herkent."
+          }
+        }
+      },
+      "id": "5c5cd32a-98a9-4311-a5a7-5e7a855b74f4"
+    },
+    {
+      "type": "heading",
+      "content": "Your turn",
+      "props": {
+        "level": 3
+      },
+      "id": "534892b4-0ccd-4868-b38e-c380b1ae78e8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about a familiar person or object. Use one die-clause and one dat-clause.",
+          "items": [
+            {
+              "prompt": "Write three sentences.",
+              "authorsVersion": [
+                "De collega die hier werkt, is Daan. Het boek dat op tafel ligt, is open. Ik denk dat Sofia de foto herkent."
+              ],
+              "note": "Model answer: first two are relative clauses; the last dat is a conjunction."
+            }
+          ]
+        }
+      },
+      "id": "005b9df6-b7fd-4fe3-9da3-94024f652f8b"
+    },
+    {
+      "type": "heading",
+      "content": "Summary",
+      "props": {
+        "level": 2
+      },
+      "id": "3a4b52c8-e00a-48c8-82a8-418dfcd842b1"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use die for a de-word or a plural antecedent.",
+      "id": "b4d2b478-e10f-4513-8755-d0c97d7ac407"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use dat for a singular het-word antecedent.",
+      "id": "7eb8cc9f-6b34-4228-a7a8-de6cbf5bb20a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Put the finite verb at the end of the relative clause.",
+      "id": "2ed2d63f-cdf9-4eb5-b079-96b7ceb41df3"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Conjunction dat introduces what someone thinks; relative dat describes a singular het-word.",
+      "id": "02a9f4a4-6e5e-43fb-b5cd-5d1fafab4d9b"
+    },
+    {
+      "type": "divider",
+      "id": "2abaafc0-0baa-4a38-b1bb-6a94774ed363"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: a photo at the office",
+      "description": "Sofia and Karin look at an office screen showing Daan and a picture of a building; a book and bag are nearby.",
+      "alt": "Sofia and Karin identify a colleague in an office photo."
+    },
+    {
+      "afterHeading": "Story: choosing the right picture",
+      "description": "Daan and Sofia look for a small card beside a computer and a picture on a screen.",
+      "alt": "Sofia and Daan find a card beside a computer."
+    }
+  ],
+  "id": "faea82e8-e635-4ada-9e68-0fd0bb69135c"
+}

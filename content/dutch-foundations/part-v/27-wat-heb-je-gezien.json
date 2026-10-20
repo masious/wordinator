@@ -1,0 +1,1321 @@
+{
+  "title": "Wat heb je gezien en gedaan?",
+  "goal": "Talk about familiar experiences with common irregular participles and three ge- spelling patterns.",
+  "blocks": [
+    {
+      "type": "heading",
+      "content": "Wat heb je gezien en gedaan?",
+      "props": {
+        "level": 1
+      },
+      "id": "f131afe7-063c-4870-8445-82f8f2203be8"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Wednesday 6 January 2027. Sofia and Noor continue their holiday catch-up at home. They talk about Christmas and familiar moments in Utrecht. In this lesson you will learn several common irregular past participles and three useful spelling patterns. Verbs are blue, subjects green, places purple, and new participles are bold.",
+      "id": "7c88dfcb-26cf-4ff5-a38d-0940b96539f6"
+    },
+    {
+      "type": "heading",
+      "content": "Story: holiday memories",
+      "props": {
+        "level": 2
+      },
+      "id": "4e9b7173-2e2e-43d2-994a-45643fca442b"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Heb je foto’s uit Valencia?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ik heb foto’s gezien en veel gegeten."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Wat heb je met je moeder gedaan?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "We hebben samen gekookt. Ik heb ook een boek gelezen."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Heb je Nederlands gestudeerd?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, en ik heb een brief aan mijn moeder geschreven."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Heb je veel gedronken?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Water en thee. Ik heb geen wijn gedronken."
+          }
+        ]
+      },
+      "id": "73fab6e5-e342-4e36-9726-493822060a05"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de ervaring",
+              "meaning": "experience",
+              "forms": "de ervaringen",
+              "example": "Dat is een fijne ervaring.",
+              "id": "961f082c-458b-4217-906d-adf0f1099ec2"
+            },
+            {
+              "term": "de smaak",
+              "meaning": "taste, flavour",
+              "forms": "de smaken",
+              "example": "De paella heeft veel smaak.",
+              "id": "2a746a94-1b33-461d-a6bb-90346b01f12a"
+            },
+            {
+              "term": "de brief",
+              "meaning": "letter",
+              "forms": "de brieven",
+              "example": "Sofia heeft een brief geschreven.",
+              "id": "7c5d7538-5b0f-43de-9fc2-9723f8c2e202"
+            },
+            {
+              "term": "zien",
+              "meaning": "to see",
+              "forms": "ziet · zag · gezien",
+              "example": "Ik heb foto’s gezien.",
+              "note": "The infinitive is familiar; this lesson introduces the irregular participle gezien.",
+              "id": "78bef5e2-d32b-4bda-b201-0cc7086b1422"
+            },
+            {
+              "term": "eten",
+              "meaning": "to eat",
+              "forms": "eet · at · gegeten",
+              "example": "We hebben samen gegeten.",
+              "note": "The infinitive is familiar; this lesson introduces the irregular participle gegeten.",
+              "id": "ab4c858e-e688-4948-aadc-369be361b708"
+            },
+            {
+              "term": "drinken",
+              "meaning": "to drink",
+              "forms": "drinkt · dronk · gedronken",
+              "example": "Ik heb water gedronken.",
+              "note": "The infinitive is familiar; this lesson introduces the irregular participle gedronken.",
+              "id": "8735fcbb-0dec-4f08-9db7-98b79308c35f"
+            }
+          ]
+        }
+      },
+      "id": "ad6e5106-7af5-47e5-bf95-c8571026c780"
+    },
+    {
+      "type": "divider",
+      "id": "9393fe9d-bf36-47b5-b90a-55277c9bff62"
+    },
+    {
+      "type": "heading",
+      "content": "Common irregular participles",
+      "props": {
+        "level": 2
+      },
+      "id": "65ffc472-04c8-4b66-bb59-cccfb66d804e"
+    },
+    {
+      "type": "paragraph",
+      "content": "Many common verbs have a participle that you learn as a complete form. The helper follows the patterns from lessons 25 and 26; the participle stays at the end.",
+      "id": "bc3b6f05-de60-41ad-99a9-0fc1d5a88007"
+    },
+    {
+      "type": "callout",
+      "content": "Perfect: present-tense hebben or zijn + the participle at the end. Learn these irregular participles as whole forms: doen → gedaan; zien → gezien; eten → gegeten; drinken → gedronken; lezen → gelezen; schrijven → geschreven; hebben → gehad; zijn → geweest.",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "id": "8f597bb8-8a41-405d-8de5-3ce662dd33be"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Common forms",
+              "id": "4191153e-ff69-4e5f-b3ff-b2ff20441750"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "doen → gedaan",
+              "id": "6f5ea8a8-4d96-4cf3-98e3-c92d7529a0da"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zien → gezien",
+              "id": "e0754f71-6a4a-42f9-a4ee-668b4f9fd912"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "eten → gegeten",
+              "id": "c1abe575-bb4c-4245-82db-b7cd48f981ff"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "drinken → gedronken",
+              "id": "6c93b03b-13db-4034-815f-a3a9dbfe95d7"
+            }
+          ],
+          "id": "71bfc1e2-fcc8-4458-a9e5-259afa493ce8"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "More forms",
+              "id": "b5ef0dbb-cd35-46b2-b511-4a1e2ce5d04e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "lezen → gelezen",
+              "id": "11113e35-0fe9-4853-b330-9775207b523d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "schrijven → geschreven",
+              "id": "465aeb24-6f30-423d-890c-d665e9af5ad6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "hebben → gehad",
+              "id": "9d922e97-af69-4176-bf50-ef474c299d8f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zijn → geweest",
+              "id": "818e776c-053a-4496-a9da-41e1ff60a5cd"
+            }
+          ],
+          "id": "a50caa0c-eda2-4fd4-9987-127a762c956b"
+        }
+      ],
+      "id": "eacf22a3-0bff-4d54-83c4-5783e55b23a6"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Ik heb de paella ",
+        {
+          "text": "gegeten",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "I ate the paella.",
+        "note": "Eten uses hebben here; the participle is gegeten."
+      },
+      "id": "068b6583-c327-4216-8ad9-00a648e4c186"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Noor heeft de foto’s ",
+        {
+          "text": "gezien",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "Noor saw the photos.",
+        "note": "The participle of zien is gezien."
+      },
+      "id": "7425b964-485d-410a-b4e6-1a6e1273df96"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Sofia heeft een boek ",
+        {
+          "text": "gelezen",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "Sofia read a book.",
+        "note": "The participle is gelezen."
+      },
+      "id": "7ad8da17-2399-4bb5-b131-e149739af5d2"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Ze heeft een brief ",
+        {
+          "text": "geschreven",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "She wrote a letter.",
+        "note": "Schrijven has the irregular participle geschreven."
+      },
+      "id": "ae6caaaf-2c1b-4bd9-a17c-5d5b220dd776"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Ik heb water ",
+        {
+          "text": "gedronken",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "I drank water.",
+        "note": "The participle is gedronken."
+      },
+      "id": "adc8f5c6-5932-47b7-a80a-69484d77bb85"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "doen",
+              "meaning": "to do",
+              "forms": "doet · deed · gedaan",
+              "example": "Wat heb je gedaan?",
+              "note": "The infinitive is familiar; this lesson introduces the irregular participle gedaan.",
+              "id": "8fcf858e-7358-4391-92e3-3a0b45a84d50"
+            },
+            {
+              "term": "lezen",
+              "meaning": "to read",
+              "forms": "leest · las · gelezen",
+              "example": "Ik heb een boek gelezen.",
+              "note": "The infinitive is familiar; this lesson introduces the irregular participle gelezen.",
+              "id": "11d1ea7b-bc9e-4d8a-bf1c-aa2468713888"
+            },
+            {
+              "term": "schrijven",
+              "meaning": "to write",
+              "forms": "schrijft · schreef · geschreven",
+              "example": "Sofia heeft een brief geschreven.",
+              "note": "The infinitive is familiar; this lesson introduces the irregular participle geschreven.",
+              "id": "db462735-69ea-4d2c-a9e6-2963f22c2b8b"
+            },
+            {
+              "term": "hebben",
+              "meaning": "to have",
+              "forms": "heeft · had · gehad",
+              "example": "Ik heb een fijne kerst gehad.",
+              "note": "The infinitive is familiar; this lesson introduces gehad as a participle.",
+              "id": "da049a92-111c-4db1-abaf-c12779efe670"
+            },
+            {
+              "term": "zijn",
+              "meaning": "to be",
+              "forms": "is · was · geweest",
+              "example": "Sofia is in Valencia geweest.",
+              "note": "The infinitive is familiar; this lesson introduces geweest as a participle.",
+              "id": "c39f1384-cb00-40bc-bae9-26ca19cd604c"
+            }
+          ]
+        }
+      },
+      "id": "5614c7a7-1275-43f5-90ad-78ae5f4ea036"
+    },
+    {
+      "type": "callout",
+      "content": "The auxiliary is still finite: ik heb / zij heeft; ik ben / zij is. Put the participle at the end, even when the sentence begins with a time or place phrase.",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "id": "eaf144a2-099c-4545-b243-e73a41582d45"
+    },
+    {
+      "type": "callout",
+      "content": [
+        {
+          "text": "*Ik heb gezien de foto’s.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik heb de foto’s gezien."
+      ],
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "id": "7ee0227a-d4e7-4cb0-9edf-cf114768015c"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Learn each irregular participle together with its infinitive.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Say the infinitive, then the participle: zien → gezien.",
+          "id": "34e3cc39-d14f-47f7-a2e8-785e806e5cf8"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Use the correct helper already learned: Sofia is in Valencia geweest.",
+          "id": "0bd37034-2041-48c2-a737-19c5b2f98d3c"
+        }
+      ],
+      "id": "aeec9313-68c4-4bf8-a13a-0b7fa7e18f74"
+    },
+    {
+      "type": "heading",
+      "content": "Examples in the story",
+      "props": {
+        "level": 3
+      },
+      "id": "be64de18-68bf-4777-ac2c-1bbd3ff70463"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Sofia heeft met kerst gekookt."
+      ],
+      "props": {
+        "translation": "Sofia cooked at Christmas.",
+        "note": "Recycles the regular participle from lesson 25."
+      },
+      "id": "f56618ad-aa0d-40ec-9703-6fe40cd8ce1d"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Noor heeft de foto’s bekeken."
+      ],
+      "props": {
+        "translation": "Noor looked at the photos.",
+        "note": "The inseparable prefix be- means there is no ge-. The participle bekeken also changes the vowel."
+      },
+      "id": "dae7009a-0ba1-4b4c-bd3d-5198ae31870d"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Sofia is in Valencia ",
+        {
+          "text": "geweest",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "Sofia was in Valencia.",
+        "note": "Recycles zijn + geweest as a fixed form."
+      },
+      "id": "5ed289dd-083a-4d32-80c2-32d7d78f84ec"
+    },
+    {
+      "type": "divider",
+      "id": "37c99996-16bc-4766-a4a3-3bf3d3868f8c"
+    },
+    {
+      "type": "heading",
+      "content": "Three patterns with ge-",
+      "props": {
+        "level": 2
+      },
+      "id": "f2593e2b-a18f-4e3f-943d-de1867fae221"
+    },
+    {
+      "type": "paragraph",
+      "content": "Review: many regular verbs use ge- + stem + -t/-d. Three common spelling patterns change where ge appears, or leave it out.",
+      "id": "b879ca93-7fe7-4957-988a-7cb608f201e8"
+    },
+    {
+      "type": "callout",
+      "content": "1. Inseparable prefixes be-, ver- and ont-: no ge- (bezoeken → bezocht; vertellen → verteld; ontdekken → ontdekt). 2. Verbs ending in -eren take one ge- before the stem (studeren → gestudeerd). 3. Separable verbs: ge goes between the prefix and verb (opbellen → opgebeld).",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "id": "2f4b00f1-847f-4869-bd08-2b1611d38c8d"
+    },
+    {
+      "type": "callout",
+      "content": "In studied, the ending is -eerd: studeren → gestudeerd. Say the complete form aloud; do not add another ge- at the front.",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "id": "a464afe4-6af5-478c-b00f-da4312dfcf03"
+    },
+    {
+      "type": "callout",
+      "content": "A prefix stays attached in an inseparable verb: bezoeken. A separable prefix moves in a present main clause, but stays around ge in the participle: opbellen → opgebeld.",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "id": "2b6ab13a-96f0-4321-aa86-8fd19ab86732"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Check the infinitive: does it begin with be-, ver- or ont-?",
+      "id": "f2c562a6-dbde-4811-b906-2a34771ed0af"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "If yes, write the participle without ge-: bezocht, verteld, ontdekt.",
+      "id": "bc2ca51f-be6d-463b-9c51-90ff60fe8ca7"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "If it ends in -eren, use ge- before the stem ending: gestudeerd.",
+      "id": "3f23f896-b6a5-4b65-b882-94a4dc5c4f13"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "If it is separable, put ge between prefix and verb: opgebeld.",
+      "id": "e11ad705-4e5b-484c-b6e5-4e16935e9903"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Sofia heeft haar moeder ",
+        {
+          "text": "bezocht",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "Sofia visited her mother.",
+        "note": "The inseparable prefix be- means no ge-."
+      },
+      "id": "e9075b1d-89ff-422a-9643-e5d8011f2e7a"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Noor heeft het verhaal ",
+        {
+          "text": "verteld",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "Noor told the story.",
+        "note": "The inseparable prefix ver- means no ge-."
+      },
+      "id": "fffbc697-d744-4715-b171-f83ba3ef632a"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Sofia heeft Nederlands ",
+        {
+          "text": "gestudeerd",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "Sofia studied Dutch.",
+        "note": "The verb ends in -eren: gestudeerd."
+      },
+      "id": "9e9f08a7-6964-4e39-8807-2e8b076dbafc"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Noor heeft Sofia ",
+        {
+          "text": "opgebeld",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "props": {
+        "translation": "Noor called Sofia.",
+        "note": "With separable opbellen, ge comes between op and bellen."
+      },
+      "id": "eeb2c0f9-6fc8-4e29-b3e1-d26d79dcc047"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "bezoeken",
+              "meaning": "to visit",
+              "forms": "bezoekt · bezocht · bezocht",
+              "example": "Sofia heeft haar moeder bezocht.",
+              "id": "3f373bc3-781b-4371-92ba-bba6cb11d61e"
+            },
+            {
+              "term": "vertellen",
+              "meaning": "to tell",
+              "forms": "vertelt · vertelde · verteld",
+              "example": "Noor heeft een verhaal verteld.",
+              "id": "401dcd3d-b36a-4b2d-8ff7-15ee7497f6ac"
+            },
+            {
+              "term": "ontdekken",
+              "meaning": "to discover",
+              "forms": "ontdekt · ontdekte · ontdekt",
+              "example": "We hebben een nieuwe plek ontdekt.",
+              "id": "f8e90d14-3361-4002-93fc-db5b5202befa"
+            },
+            {
+              "term": "studeren",
+              "meaning": "to study",
+              "forms": "studeert · studeerde · gestudeerd",
+              "example": "Sofia heeft Nederlands gestudeerd.",
+              "note": "The infinitive is familiar; this lesson introduces the -eren participle pattern.",
+              "id": "3eda22c8-7e85-4379-bd0a-97aebf529e4f"
+            },
+            {
+              "term": "het verhaal",
+              "meaning": "story",
+              "forms": "de verhalen",
+              "example": "Noor heeft een verhaal verteld.",
+              "id": "54b549e2-ae29-490d-b202-bab412d82515"
+            },
+            {
+              "term": "het voorvoegsel",
+              "meaning": "prefix",
+              "forms": "de voorvoegsels",
+              "example": "Bij bezoeken is be- een voorvoegsel.",
+              "id": "19ab9fb4-6f97-47fb-80f3-949ffa38083b"
+            },
+            {
+              "term": "onscheidbaar",
+              "meaning": "inseparable",
+              "example": "Be- is onscheidbaar in bezoeken.",
+              "id": "91c62838-3f11-4219-a0d1-a1a031f417e7"
+            },
+            {
+              "term": "scheidbaar",
+              "meaning": "separable",
+              "example": "Opbellen is scheidbaar.",
+              "id": "304a0e64-6f65-4e31-8128-cf1af7601af6"
+            }
+          ]
+        }
+      },
+      "id": "66b41d45-9ad7-48e6-b1b3-c05c70c4463f"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Heb je de foto van het huisfeest gezien?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ik heb alle foto’s bekeken."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Heb je ook de foto met de paella gezien?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, die heb ik gezien. De paella is lekker."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Heb je het recept opgeschreven?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik heb alleen de naam opgeschreven."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Heb je het recept aan je moeder verteld?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik heb haar over het huisfeest verteld."
+          }
+        ]
+      },
+      "id": "95f0ffd7-e3e3-49a8-a35c-a516966b0ef7"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "bekijken",
+              "meaning": "to look at, view",
+              "forms": "bekijkt · bekeek · bekeken",
+              "example": "Sofia heeft alle foto’s bekeken.",
+              "note": "New meaning and perfect form; be- is inseparable, so no ge-.",
+              "id": "50222039-94ce-4fe1-8ca1-d7eaf77c3719"
+            },
+            {
+              "term": "opschrijven",
+              "meaning": "to write down",
+              "forms": "schrijft op · schreef op · opgeschreven",
+              "example": "Sofia heeft de naam opgeschreven.",
+              "note": "Separable verb: ge comes between op and schrijven.",
+              "id": "07313fe1-4714-4c96-8a7c-923a669c13f9"
+            }
+          ]
+        }
+      },
+      "id": "17abb297-9a25-4954-897b-92f525e1d967"
+    },
+    {
+      "type": "divider",
+      "id": "50876f86-6eee-45cb-8cc4-67d96c4a3abc"
+    },
+    {
+      "type": "heading",
+      "content": "Practice",
+      "props": {
+        "level": 2
+      },
+      "id": "d82c34cc-9964-42f4-8598-bff4e3acc921"
+    },
+    {
+      "type": "heading",
+      "content": "Irregular forms",
+      "props": {
+        "level": 3
+      },
+      "id": "4ded91a1-34a5-4a55-a9f6-1254c693d4a3"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each perfect sentence.",
+          "items": [
+            {
+              "prompt": "Ik heb thee … (drinken).",
+              "authorsVersion": [
+                "gedronken"
+              ],
+              "note": "Drinken has the irregular participle gedronken."
+            },
+            {
+              "prompt": "Noor heeft de foto … (zien).",
+              "authorsVersion": [
+                "gezien"
+              ],
+              "note": "The participle goes at the end: lezen → gelezen."
+            },
+            {
+              "prompt": "We hebben samen … (eten).",
+              "authorsVersion": [
+                "gegeten"
+              ],
+              "note": "The participle goes at the end: lezen → gelezen."
+            },
+            {
+              "prompt": "Sofia heeft een brief … (schrijven).",
+              "authorsVersion": [
+                "geschreven"
+              ],
+              "note": "The participle of schrijven is geschreven; put it at the end."
+            },
+            {
+              "prompt": "Heb je dat boek … (lezen)?",
+              "authorsVersion": [
+                "gelezen"
+              ],
+              "note": "The participle goes at the end: lezen → gelezen."
+            },
+            {
+              "prompt": "Wat heb je gisteren … (doen)?",
+              "authorsVersion": [
+                "gedaan"
+              ],
+              "note": "Doen is irregular; its participle is gedaan."
+            },
+            {
+              "prompt": "Ik heb een fijne kerst … (hebben).",
+              "authorsVersion": [
+                "gehad"
+              ],
+              "note": "The participle goes at the end: lezen → gelezen."
+            }
+          ]
+        }
+      },
+      "id": "888d3fd4-1fb7-470a-b2aa-b145a1f96506"
+    },
+    {
+      "type": "heading",
+      "content": "Recognize the pattern",
+      "props": {
+        "level": 3
+      },
+      "id": "150300ce-5dc2-48e1-a000-e2d58fc44e3b"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete the participle.",
+          "items": [
+            {
+              "prompt": "bezoeken → …",
+              "authorsVersion": [
+                "bezocht"
+              ],
+              "note": "Inseparable be- takes no ge-."
+            },
+            {
+              "prompt": "vertellen → …",
+              "authorsVersion": [
+                "verteld"
+              ],
+              "note": "Inseparable ver- takes no ge-."
+            },
+            {
+              "prompt": "ontdekken → …",
+              "authorsVersion": [
+                "ontdekt"
+              ],
+              "note": "Inseparable ont- takes no ge-."
+            },
+            {
+              "prompt": "studeren → …",
+              "authorsVersion": [
+                "gestudeerd"
+              ],
+              "note": "An -eren verb uses ge- before the stem."
+            },
+            {
+              "prompt": "opbellen → …",
+              "authorsVersion": [
+                "opgebeld"
+              ],
+              "note": "Put ge between op and bellen."
+            },
+            {
+              "prompt": "bekijken → …",
+              "authorsVersion": [
+                "bekeken"
+              ],
+              "note": "Be- is inseparable, so there is no ge-. The participle is bekeken."
+            },
+            {
+              "prompt": "Wat is correct: geverteld or verteld?",
+              "authorsVersion": [
+                "verteld"
+              ],
+              "note": "Do not add ge- after inseparable ver-."
+            }
+          ]
+        }
+      },
+      "id": "13397231-b97a-47f3-897f-53ac6ea5402c"
+    },
+    {
+      "type": "heading",
+      "content": "Complete the dialogue",
+      "props": {
+        "level": 3
+      },
+      "id": "64968ec1-db13-4a5e-97f1-b434d09f6635"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill each blank with the correct participle.",
+          "items": [
+            {
+              "prompt": "Noor: Heb je het boek …? (lezen) / Sofia: Ja, ik heb het … .",
+              "authorsVersion": [
+                "gelezen",
+                "gelezen"
+              ],
+              "note": "The participle goes at the end."
+            },
+            {
+              "prompt": "Sofia: Heb je de paella …? (eten) / Noor: Ja, ik heb ervan … .",
+              "authorsVersion": [
+                "gegeten",
+                "gegeten"
+              ],
+              "note": "Eten → gegeten."
+            },
+            {
+              "prompt": "Noor: Heb je mijn bericht …? (zien) / Sofia: Ja, ik heb het … .",
+              "authorsVersion": [
+                "gezien",
+                "gezien"
+              ],
+              "note": "Zien has the irregular participle gezien; put it at the end of each clause."
+            },
+            {
+              "prompt": "Sofia: Heb je je moeder …? (opbellen) / Noor: Ja, ik heb haar … .",
+              "authorsVersion": [
+                "opgebeld",
+                "opgebeld"
+              ],
+              "note": "Separable prefix op surrounds ge."
+            },
+            {
+              "prompt": "Noor: Wat heb je met kerst …? (doen) / Sofia: Ik heb met mijn moeder … .",
+              "authorsVersion": [
+                "gedaan",
+                "gedaan"
+              ],
+              "note": "Zien has the irregular participle gezien; put it at the end of each clause."
+            },
+            {
+              "prompt": "Sofia: Heb je het verhaal …? (vertellen) / Noor: Ja, ik heb het … .",
+              "authorsVersion": [
+                "verteld",
+                "verteld"
+              ],
+              "note": "Ver- is inseparable."
+            }
+          ]
+        }
+      },
+      "id": "ebe7825e-dd5c-422b-b198-4a0200a71022"
+    },
+    {
+      "type": "heading",
+      "content": "Put the participle last",
+      "props": {
+        "level": 3
+      },
+      "id": "89c8e383-3148-4368-bc7a-15e8a409bf4b"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the chunks in order. Include punctuation.",
+          "items": [
+            {
+              "prompt": "Put in order: heb / ik / de foto’s / gezien",
+              "authorsVersion": [
+                "Ik heb de foto’s gezien."
+              ],
+              "note": "The participle goes at the end."
+            },
+            {
+              "prompt": "Put in order: heeft / Sofia / een boek / gelezen",
+              "authorsVersion": [
+                "Sofia heeft een boek gelezen."
+              ],
+              "note": "Keep the participle at the end of the statement."
+            },
+            {
+              "prompt": "Put in order: heb / je / de paella / gegeten / ?",
+              "authorsVersion": [
+                "Heb je de paella gegeten?"
+              ],
+              "note": "In a yes/no question, the helper comes first."
+            },
+            {
+              "prompt": "Put in order: heeft / Noor / Sofia / opgebeld",
+              "authorsVersion": [
+                "Noor heeft Sofia opgebeld."
+              ],
+              "note": "In a yes/no question, put the finite helper first; the participle stays last."
+            },
+            {
+              "prompt": "Put in order: is / in Valencia / Sofia / geweest",
+              "authorsVersion": [
+                "Sofia is in Valencia geweest."
+              ],
+              "note": "The participle stays at the end."
+            },
+            {
+              "prompt": "Put in order: met kerst / heeft / Nederlands / Sofia / gestudeerd",
+              "authorsVersion": [
+                "Met kerst heeft Sofia Nederlands gestudeerd."
+              ],
+              "note": "A fronted time phrase is followed by the finite verb, then the subject."
+            }
+          ]
+        }
+      },
+      "id": "9d1b855e-1ecd-474d-9822-1acfa07fad4d"
+    },
+    {
+      "type": "heading",
+      "content": "Change to the perfect",
+      "props": {
+        "level": 3
+      },
+      "id": "dd97f2d4-570c-4249-a7af-cd7f9cafed5e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite using the perfect. Keep the meaning.",
+          "items": [
+            {
+              "prompt": "Sofia ziet de foto. → Sofia …",
+              "authorsVersion": [
+                "Sofia heeft de foto gezien."
+              ],
+              "note": "Use the matching present form of hebben and the irregular participle at the end."
+            },
+            {
+              "prompt": "Noor leest het boek. → Noor …",
+              "authorsVersion": [
+                "Noor heeft het boek gelezen."
+              ],
+              "note": "Use the matching present form of hebben and the irregular participle at the end."
+            },
+            {
+              "prompt": "Sofia schrijft een brief. → Sofia …",
+              "authorsVersion": [
+                "Sofia heeft een brief geschreven."
+              ],
+              "note": "Use the matching present form of hebben and the irregular participle at the end."
+            },
+            {
+              "prompt": "Noor belt Sofia op. → Noor …",
+              "authorsVersion": [
+                "Noor heeft Sofia opgebeld."
+              ],
+              "note": "The participle keeps the separable prefix around ge."
+            },
+            {
+              "prompt": "Sofia studeert Nederlands. → Sofia …",
+              "authorsVersion": [
+                "Sofia heeft Nederlands gestudeerd."
+              ],
+              "note": "Use the matching present form of hebben and the irregular participle at the end."
+            },
+            {
+              "prompt": "Sofia is in Valencia. → Sofia … geweest.",
+              "authorsVersion": [
+                "Sofia is in Valencia geweest."
+              ],
+              "note": "Use the already-taught zijn perfect with geweest."
+            }
+          ]
+        }
+      },
+      "id": "65bd323c-d1e8-412a-ab29-6f41733635cb"
+    },
+    {
+      "type": "heading",
+      "content": "Translate into Dutch",
+      "props": {
+        "level": 3
+      },
+      "id": "211440ac-457b-40df-9c09-88f77e993c4c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate each sentence into natural Dutch.",
+          "items": [
+            {
+              "prompt": "I drank water.",
+              "authorsVersion": [
+                "Ik heb water gedronken."
+              ],
+              "note": "Use the irregular participle at the end with the present form of hebben."
+            },
+            {
+              "prompt": "Noor saw the photos.",
+              "authorsVersion": [
+                "Noor heeft de foto’s gezien."
+              ],
+              "note": "Use the irregular participle at the end with the present form of hebben."
+            },
+            {
+              "prompt": "Sofia read a book.",
+              "authorsVersion": [
+                "Sofia heeft een boek gelezen."
+              ],
+              "note": "Use the irregular participle at the end with the present form of hebben."
+            },
+            {
+              "prompt": "Did you eat the paella?",
+              "authorsVersion": [
+                "Heb je de paella gegeten?"
+              ],
+              "note": "The helper comes first in a yes/no question."
+            },
+            {
+              "prompt": "Sofia studied Dutch at Christmas.",
+              "authorsVersion": [
+                "Sofia heeft met kerst Nederlands gestudeerd."
+              ],
+              "note": "Use the irregular participle at the end with the present form of hebben."
+            },
+            {
+              "prompt": "Noor called Sofia.",
+              "authorsVersion": [
+                "Noor heeft Sofia opgebeld."
+              ],
+              "note": "Opbellen is separable; its participle is opgebeld."
+            }
+          ]
+        }
+      },
+      "id": "e4ae7fa0-a7bc-438c-9d83-6495f4a6e410"
+    },
+    {
+      "type": "heading",
+      "content": "Translate into English",
+      "props": {
+        "level": 3
+      },
+      "id": "9c198f40-c14a-4da6-b139-963b656a13aa"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate each sentence into natural English.",
+          "items": [
+            {
+              "prompt": "Sofia heeft een brief geschreven.",
+              "authorsVersion": [
+                "Sofia wrote a letter."
+              ],
+              "note": "The Dutch perfect commonly translates as the English simple past here."
+            },
+            {
+              "prompt": "Noor heeft het verhaal verteld.",
+              "authorsVersion": [
+                "Noor told the story."
+              ],
+              "note": "The Dutch perfect commonly translates as the English simple past here."
+            },
+            {
+              "prompt": "Ik heb een fijne kerst gehad.",
+              "authorsVersion": [
+                "I had a lovely Christmas."
+              ],
+              "note": "The Dutch perfect commonly translates as the English simple past here."
+            },
+            {
+              "prompt": "Sofia is in Valencia geweest.",
+              "authorsVersion": [
+                "Sofia was in Valencia."
+              ],
+              "note": "The Dutch perfect commonly translates as the English simple past here."
+            },
+            {
+              "prompt": "We hebben samen gegeten.",
+              "authorsVersion": [
+                "We ate together."
+              ],
+              "note": "The Dutch perfect commonly translates as the English simple past here."
+            },
+            {
+              "prompt": "Noor heeft de foto’s bekeken.",
+              "authorsVersion": [
+                "Noor looked at the photos."
+              ],
+              "note": "The Dutch perfect commonly translates as the English simple past here."
+            }
+          ]
+        }
+      },
+      "id": "a4c8d718-18a2-4fe1-82b1-ac9b65c737a7"
+    },
+    {
+      "type": "heading",
+      "content": "Read and answer",
+      "props": {
+        "level": 3
+      },
+      "id": "d451e97b-066b-4c44-a315-5c5903cbddfa"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the passage and answer in Dutch.",
+          "items": [
+            {
+              "prompt": "Waar zijn Sofia en Noor?",
+              "authorsVersion": [
+                "Thuis."
+              ]
+            },
+            {
+              "prompt": "Wat bekijken ze?",
+              "authorsVersion": [
+                "Foto’s van het huisfeest."
+              ]
+            },
+            {
+              "prompt": "Aan wie heeft Sofia het verhaal verteld?",
+              "authorsVersion": [
+                "Aan haar moeder."
+              ]
+            },
+            {
+              "prompt": "Met wie heeft Sofia met kerst gekookt?",
+              "authorsVersion": [
+                "Met haar moeder."
+              ]
+            },
+            {
+              "prompt": "Wat heeft Sofia gelezen?",
+              "authorsVersion": [
+                "Een boek."
+              ]
+            },
+            {
+              "prompt": "Wat hebben ze gedronken?",
+              "authorsVersion": [
+                "Thee."
+              ]
+            },
+            {
+              "prompt": "Wie heeft Sofia opgebeld?",
+              "authorsVersion": [
+                "Noor."
+              ]
+            }
+          ],
+          "passage": {
+            "title": "Foto’s en verhalen",
+            "content": "Op woensdag 6 januari zijn Sofia en Noor thuis. Ze bekijken foto’s van het huisfeest. Sofia heeft de foto’s gezien en het verhaal aan haar moeder verteld. Met kerst heeft Sofia met haar moeder gekookt. Ze hebben samen gegeten. Sofia heeft ook een boek gelezen en Nederlands gestudeerd. Noor heeft haar opgebeld. Ze hebben veel thee gedronken."
+          }
+        }
+      },
+      "id": "8be07834-f0d6-44f5-ad6c-e3b059709567"
+    },
+    {
+      "type": "heading",
+      "content": "Your turn",
+      "props": {
+        "level": 3
+      },
+      "id": "dc5bbfba-28f6-48de-ae20-6e4522ba9326"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences about something you have seen, eaten, read or done. Use at least two participles from this lesson.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences.",
+              "authorsVersion": [
+                "Sofia heeft foto’s gezien. Ze heeft een boek gelezen en een brief geschreven. Met kerst heeft ze samen met haar moeder gekookt en gegeten."
+              ],
+              "note": "Answers will vary. This is one model; use correct helpers and put each participle at the end."
+            }
+          ]
+        }
+      },
+      "id": "29a9fc9b-c657-40e0-bc17-1404c380173c"
+    },
+    {
+      "type": "divider",
+      "id": "275442f5-aa50-4bc7-8fb3-b6002faa0823"
+    },
+    {
+      "type": "heading",
+      "content": "Summary",
+      "props": {
+        "level": 2
+      },
+      "id": "ad82bb49-3761-4a66-8a42-47a78066fff7"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Learn common irregular participles as complete forms: gedaan, gezien, gegeten, gedronken, gelezen, geschreven, gehad, geweest.",
+      "id": "692e8f26-693c-4cd1-982e-ebafaee31994"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "In inseparable be-, ver- and ont- verbs, do not add ge-.",
+      "id": "74c3d84b-fe03-4348-8a7a-564f256efa8a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "With verbs ending in -eren, use ge- before the stem; with separable verbs, place ge between prefix and verb.",
+      "id": "85114ffa-48d4-42b1-8e7c-5a54a30be732"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: holiday memories",
+      "description": "Sofia and Noor look at photos together at home in Utrecht, with a book and cups of tea on the table.",
+      "alt": "Sofia and Noor share holiday photos at home."
+    },
+    {
+      "afterHeading": "Three patterns with ge-",
+      "description": "A simple notebook page showing bezoeken → bezocht, studeren → gestudeerd and opbellen → opgebeld.",
+      "alt": "Three Dutch participle spelling patterns."
+    }
+  ],
+  "id": "eadeda2c-c70e-417d-bdf1-ed8cbf181d1d"
+}

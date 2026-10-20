@@ -1,0 +1,1707 @@
+{
+  "title": "Ik haal je op",
+  "goal": "Use object pronouns for people and things, and invite, accept, decline and make arrangements.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Ik haal je op",
+      "id": "faa7bbb9-33b5-4bbb-bca1-5a0a0ea80cbf"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Monday 30 November. Sofia invites her friends to a housewarming at Kastanjestraat 14 on Saturday 12 December at 19.00.",
+      "id": "422f053a-c43e-4ef8-8349-f36ceae4353c"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de housewarming",
+              "meaning": "housewarming party",
+              "forms": "de housewarmings",
+              "example": "Sofia geeft een housewarming.",
+              "id": "e335e7c1-746a-402a-862a-8c0a914db8b8"
+            }
+          ]
+        }
+      },
+      "id": "f0a44c41-800f-4c29-ae11-b85bdfa5fe79"
+    },
+    {
+      "type": "paragraph",
+      "content": "In this lesson you will use object pronouns for people and things, invite people, and arrange who picks whom up and where.",
+      "id": "951d2586-026f-44ef-88d5-57f4545f9479"
+    },
+    {
+      "type": "paragraph",
+      "content": [
+        "Colours: the finite verb is ",
+        {
+          "text": "blue",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        ", the object pronoun is bold, and time and place are ",
+        {
+          "text": "orange",
+          "styles": {
+            "textColor": "orange"
+          }
+        },
+        " and ",
+        {
+          "text": "purple",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        "."
+      ],
+      "id": "3e5cb7db-ae40-4bf0-9df7-47fa9ebe1d17"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: the housewarming invitation",
+      "id": "3a5c604b-5ec6-4e8d-b8a0-899163903067"
+    },
+    {
+      "type": "paragraph",
+      "content": "Sofia sends her invitation to Henk, Noor, Fleur, Daan, Lotte, Piotr, Kasia and Ahmed. Daan sees it at the office and answers.",
+      "id": "a371be6a-4a1c-4a60-8cbd-f42b53177feb"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Daan! Op zaterdag 12 december geef ik een housewarming. Kom je ook?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ja, natuurlijk! Ik kom graag. Hoe laat begint het?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Om zeven uur, op Kastanjestraat 14. Ken je het adres?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ja, ik ken het. Ik haal Lotte op en we komen samen."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Leuk! Ik nodig Piotr ook uit. Ken je hem?"
+          },
+          {
+            "speaker": "Daan",
+            "text": "Ja, ik ken hem van jouw Nederlandse les."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En Noor en Fleur? Ik app ze straks."
+          },
+          {
+            "speaker": "Daan",
+            "text": "Goed. Laat je het even weten? Dan app ik Lotte ook."
+          }
+        ]
+      },
+      "id": "ebdec1cd-27a7-4619-8c12-8bf68032ce5f"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "uitnodigen",
+              "meaning": "to invite",
+              "forms": "nodigt uit · nodigde uit · uitgenodigd",
+              "example": "Ik nodig Piotr uit.",
+              "note": "Separable: ik nodig … uit.",
+              "id": "69980b48-9bef-4eec-8aaa-fcceb33f2841"
+            },
+            {
+              "term": "de uitnodiging",
+              "meaning": "the invitation",
+              "forms": "de uitnodigingen",
+              "example": "Sofia stuurt de uitnodiging.",
+              "id": "8620a5f2-5de9-4aaf-aa24-a5ece379680c"
+            },
+            {
+              "term": "het adres",
+              "meaning": "the address",
+              "forms": "de adressen",
+              "example": "Ken je het adres?",
+              "id": "41950f28-4f78-4141-9a18-c7860d8213c3"
+            },
+            {
+              "term": "appen",
+              "meaning": "to message (by app)",
+              "forms": "appt · appte · geappt",
+              "example": "Ik app je straks.",
+              "id": "8c91beb0-4288-4014-ba8d-b340b79c5bec"
+            },
+            {
+              "term": "Ik app je.",
+              "meaning": "I’ll message you.",
+              "example": "Ik app je vanavond.",
+              "id": "9cea3a17-91b3-4742-bec6-026fa69f9706"
+            },
+            {
+              "term": "Laat je het even weten?",
+              "meaning": "Will you let me know?",
+              "example": "Laat je het even weten?",
+              "id": "ebd8904f-3fa7-480b-b9bf-9ed5184b3752"
+            },
+            {
+              "term": "Ik kom graag!",
+              "meaning": "I’d love to come!",
+              "example": "Ik kom graag naar je housewarming.",
+              "id": "ad161903-2db3-4e48-964c-3c721b31c5aa"
+            }
+          ]
+        }
+      },
+      "id": "bcd8cb65-072a-4e13-9b04-736a91680878"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Object pronouns: people",
+      "id": "52d820f5-4a95-4adf-873a-2fd05c70a19b"
+    },
+    {
+      "type": "paragraph",
+      "content": "An object pronoun replaces a person after the verb. You already know a few fixed chunks; now you can use the forms as a system.",
+      "id": "89daed61-4c73-4578-a0ec-28e2002992a8"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Subject",
+              "id": "8f024c7c-c5c0-4de1-8934-be55565996a6"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "ik",
+              "id": "ec9b50a4-0f23-443e-aba8-0aa5baa459f9"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "jij / je",
+              "id": "68a662cd-3e80-4474-9d5d-3bba8fef9097"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "u",
+              "id": "813a0214-c57e-45d6-a71a-93ba61cc0034"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "hij",
+              "id": "df3c0c38-475d-484a-b4bf-8604630a9d97"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zij / ze (she)",
+              "id": "8922478b-14c1-43c4-b82a-cdd3b906f117"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "wij / we",
+              "id": "099edaa8-4ef1-4bb1-ba23-64a05d607a2b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "jullie",
+              "id": "6e11e062-3003-4ab9-b800-452e17843050"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "zij / ze (they)",
+              "id": "e3267300-e8c6-4f32-9044-05fd9f9b070d"
+            }
+          ],
+          "id": "c701538d-d85f-4446-9040-c1abfe056de7"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Object: unstressed / stressed",
+              "id": "3e73f266-d6f7-4cd5-86ca-316e8a01f35b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "me / mij",
+              "id": "b9aee7c3-e733-40e6-ba36-c5866070640b"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "je / jou",
+              "id": "5d220dd9-8859-463a-a3b0-201e69c234a0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "u",
+              "id": "9bdb4e59-962e-4b03-9740-849b92084285"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "hem",
+              "id": "32f83617-f181-447a-ae91-c2ec71cac4b3"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "ze / haar (her; unstressed / stressed)",
+              "id": "6a29bf08-555e-4078-b1fc-92035f38fd1a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "ons",
+              "id": "2bcb7bff-d68b-48db-9417-d544d7112e9e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "jullie",
+              "id": "b8005733-ad27-43a2-b6c6-e75b8c8ea782"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "ze (them)",
+              "id": "8cf7d2f4-d9b7-44e5-8827-93d98d4a7c55"
+            }
+          ],
+          "id": "50c3a791-dfbd-4e0f-9d36-1b3505fbb4a1"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Examples",
+              "id": "b2230000-29cb-41c1-b6d3-bf039f3e79f0"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Sofia belt me. / Sofia belt mij.",
+              "id": "b0022493-2013-4530-bfa8-4cfda110dc05"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik haal je op. / Ik haal jou op.",
+              "id": "ebc50a00-a628-463e-824f-4934179a237f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik nodig hem uit.",
+              "id": "ee8134e1-85f7-4432-ad26-0280223c7564"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik zie ze zaterdag.",
+              "id": "bd0fd1a3-81b0-4ba7-adbd-f66307d9b668"
+            }
+          ],
+          "id": "d96deeb0-0e27-4a0a-9dd4-a2bda38cdc9c"
+        }
+      ],
+      "id": "60311f69-de2c-4340-94e8-a885526c9984"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "me / mij",
+              "meaning": "me (unstressed / stressed)",
+              "example": "Daan haalt me op.",
+              "id": "caf1728b-0824-4de0-859b-c7a1e2ef7f95"
+            },
+            {
+              "term": "je / jou",
+              "meaning": "you (informal object; unstressed / stressed)",
+              "example": "Ik haal je op.",
+              "id": "0e3bcc3c-2d2b-4c79-aa9e-d54da18912e4"
+            },
+            {
+              "term": "u",
+              "meaning": "you (formal object)",
+              "example": "Ik bel u morgen.",
+              "id": "4d453a88-2bb2-425e-9a9c-03cb5016d8e1"
+            },
+            {
+              "term": "hem",
+              "meaning": "him; it for a de-word",
+              "example": "Ik ken hem. De wijn? Ik neem hem mee.",
+              "id": "999905f6-1731-4c8b-a965-274b3bef0d95"
+            },
+            {
+              "term": "haar",
+              "meaning": "her",
+              "example": "Daan haalt haar op.",
+              "id": "bc166f3a-f1e0-462c-8c6d-cd2d6da3d2bc"
+            },
+            {
+              "term": "ons",
+              "meaning": "us",
+              "example": "Henk haalt ons op.",
+              "id": "5dac5dc1-a2cd-4840-9287-c6cec335ecd1"
+            },
+            {
+              "term": "jullie",
+              "meaning": "you all (object)",
+              "example": "Ik haal jullie op.",
+              "id": "81a6a1db-ab58-49d3-ae86-6b7fa59467b3"
+            },
+            {
+              "term": "ze",
+              "meaning": "them; her (unstressed)",
+              "example": "Ik app ze straks.",
+              "id": "b0df21d4-2f21-4e6d-91aa-94e3966b802c",
+              "note": "Its object use for plural people is new here; ze as a subject is known from 14-a."
+            }
+          ]
+        }
+      },
+      "id": "ba25e8b2-d09f-4608-ab20-9afb2b124c92"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "In an ordinary sentence, me, je and ze are light forms; mij, jou and haar carry more stress. U has the same form as a subject and an object.",
+      "id": "a1f8504b-5a14-470d-b23e-e1c3bafde328"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan is picking me up at six.",
+        "note": "The object pronoun follows the finite verb and comes before the time."
+      },
+      "content": [
+        "Daan haalt ",
+        {
+          "text": "me",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " om zes uur op."
+      ],
+      "id": "9f331ea6-4704-45ce-9b4e-e208863703ab"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I’ll pick you up at the bus stop.",
+        "note": "Jou is stressed here; je is also possible without emphasis."
+      },
+      "content": [
+        "Ik haal ",
+        {
+          "text": "jou",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " op bij de bushalte."
+      ],
+      "id": "ea1cb69e-105e-4389-a2f7-09e187dd91d6"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I’m inviting him too.",
+        "note": "Hem replaces a male person. The separable prefix uit stays at the end."
+      },
+      "content": [
+        "Ik nodig ",
+        {
+          "text": "hem",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ook uit."
+      ],
+      "id": "6bc0ffc2-23b1-4225-8699-b2d596f74021"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan is taking her home.",
+        "note": "Haar replaces Lotte."
+      },
+      "content": [
+        "Daan brengt ",
+        {
+          "text": "haar",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " naar huis."
+      ],
+      "id": "021364de-2ee8-4fe5-9741-35e11e897cc1"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "brengen",
+              "meaning": "to bring; to take someone somewhere",
+              "forms": "brengt · bracht · gebracht",
+              "example": "Ik breng Lotte naar huis.",
+              "id": "cc8bd3a3-1bd6-4494-b19b-d1fa5291f9fd"
+            }
+          ]
+        }
+      },
+      "id": "635e7332-e500-4a2a-95d2-f66ea06ce61b"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Henk is picking us up.",
+        "note": "Ons is the object pronoun for wij/we."
+      },
+      "content": [
+        "Henk haalt ",
+        {
+          "text": "ons",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " op."
+      ],
+      "id": "c809144d-b085-42e4-a2fb-b545aed7ebfa"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I’ll message you all later.",
+        "note": "Jullie is both subject and object form."
+      },
+      "content": [
+        "Ik app ",
+        {
+          "text": "jullie",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " straks."
+      ],
+      "id": "259b3095-c3db-4b0d-931d-1685823c4343"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I’ll see them Saturday.",
+        "note": "Ze is the object form for plural people."
+      },
+      "content": [
+        "Ik zie ",
+        {
+          "text": "ze",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " zaterdag."
+      ],
+      "id": "23238eb5-36f1-403a-bcac-c1c55abb7c27"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "Mij and jou are stressed forms; me and je are lighter. Ze is also a light form for her. After a preposition, use person forms such as met mij, voor jou, bij ons or zonder hem.",
+      "id": "16374d5d-86eb-408d-bfef-60a5597db128"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Ik zie jij",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → Ik zie je / Ik zie jou. After a verb, use an object form, not the subject form jij."
+      ],
+      "id": "ef127967-3761-4b79-b7fd-d7e4aafd7826"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "After a preposition",
+      "id": "63f53dd1-b3a1-43bf-b89e-589dcd4cc203"
+    },
+    {
+      "type": "paragraph",
+      "content": "After a preposition such as met, voor, bij or zonder, use the stressed person form. For a thing after a preposition, repeat the noun; do not use an er-form in this lesson.",
+      "id": "b4fd1286-7077-4361-a8be-b2b67f3e6350"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Piotr is coming with me and Kasia.",
+        "note": "After met, use mij."
+      },
+      "content": [
+        "Piotr komt met ",
+        {
+          "text": "mij",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " en Kasia."
+      ],
+      "id": "31ef1381-b10b-4ca3-831b-3ce244b0511a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Without her, I don’t know the address.",
+        "note": "After zonder, use haar."
+      },
+      "content": [
+        "Zonder haar weet ik het adres niet."
+      ],
+      "id": "67862f68-3920-4148-8088-b2f0d0aadf5d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": "For a housewarming, hosts usually give a clear date and start time. Guests plan social events in their agendas weeks ahead and arrive on time. At the door, a guest rings the bell (de bel) or rings (aanbellen).",
+      "id": "646c5e5a-9af6-41e9-9d2f-1652e8bd1f0c"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de bel",
+              "meaning": "doorbell (new meaning)",
+              "forms": "de bellen",
+              "example": "De bel gaat.",
+              "note": "This meaning is new; de bel = a bicycle bell in 16-b.",
+              "id": "6f16b543-b6fc-4a7d-a59e-8c980744f3df"
+            },
+            {
+              "term": "aanbellen",
+              "meaning": "to ring the doorbell",
+              "forms": "belt aan · belde aan · aangebeld",
+              "example": "Bel maar aan bij nummer 14.",
+              "note": "Separable: ik bel … aan.",
+              "id": "b9e39413-7c28-4208-9fbf-61a0896bd13f"
+            }
+          ]
+        }
+      },
+      "id": "4e47f6f7-c2c0-4945-8ef0-f25a3df2a2d5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Object pronouns: things",
+      "id": "fd02ab4e-66c0-4cf8-8ea4-3ed4ff0a94a4"
+    },
+    {
+      "type": "paragraph",
+      "content": "The object pronoun for a thing follows the noun’s grammatical gender: hem for a de-word, het for a singular het-word, and ze for plural nouns.",
+      "id": "a147367f-6740-4923-a6de-8d5ebac12f57"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "A de-word → hem",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "De wijn? Ik neem hem mee.",
+          "id": "41410be0-7d89-40dd-8c6f-83f6da6dd1bc"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "De uitnodiging? Ik stuur hem vandaag.",
+          "id": "47ce2113-ae18-429e-913f-898165815660"
+        }
+      ],
+      "id": "f2bcb41b-4df7-4569-9005-8e9cb061ae6a"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "A het-word → het",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Het adres? Ik app het straks.",
+          "id": "057d9789-27cc-43f4-a554-e1b212ec1adc"
+        }
+      ],
+      "id": "4203e986-81ec-4211-b491-314ad7aafa5c"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "A plural noun → ze",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "De bloemen? Lotte koopt ze.",
+          "id": "a34763e4-5c08-463a-8a36-9755466521a9"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "The same ze works for plural people: Ik app ze straks.",
+          "id": "da9f4151-85a4-431a-9476-09445975848c"
+        }
+      ],
+      "id": "1755a376-a616-42a0-9848-288e21333472"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "For things: de-word → hem; het-word → het; plural → ze. The pronoun matches the noun’s gender, not the object itself.",
+      "id": "3ea95928-62db-4cfe-8c6c-86bb88df3f00"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The wine? I’ll bring it along.",
+        "note": "Wijn is a de-word, so the object pronoun is hem."
+      },
+      "content": [
+        "De wijn? Ik neem ",
+        {
+          "text": "hem",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " mee."
+      ],
+      "id": "f308b9b6-afb4-4df3-9cb9-f161468a9fa1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The address? I’ll send it later.",
+        "note": "Adres is a het-word, so use het."
+      },
+      "content": [
+        "Het adres? Ik stuur ",
+        {
+          "text": "het",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " straks."
+      ],
+      "id": "1897aa52-4e15-4262-9602-48d7e284489e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "The flowers? Lotte is buying them.",
+        "note": "Plural nouns use ze."
+      },
+      "content": [
+        "De bloemen? Lotte koopt ",
+        {
+          "text": "ze",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        "."
+      ],
+      "id": "bce5db1c-b4d5-470a-8271-edf21aa6f61d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "De wijn? Ik neem het mee.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → De wijn? Ik neem hem mee. A de-word takes hem as its object pronoun."
+      ],
+      "id": "ff1dd618-e4f8-45c6-84ca-8c8ccc2a79f8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Where does the pronoun go?",
+      "id": "11575400-37d8-4ef1-82be-3118471c44d0"
+    },
+    {
+      "type": "paragraph",
+      "content": "Put the pronoun right after the finite verb, after the subject when the subject follows the verb. It stays before a time or place phrase and before a separable prefix at the end.",
+      "id": "112aaf26-3cdb-4c67-b0c0-a5587495b8dd"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I’ll pick you up at seven.",
+        "note": "Pronoun after haal; time follows; separable prefix op is last."
+      },
+      "content": [
+        "Ik haal ",
+        {
+          "text": "je",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " om zeven uur op."
+      ],
+      "id": "cbf9d09b-6a65-4739-9d27-e30883e022b8"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "On Saturday I’ll pick you all up at the bus stop.",
+        "note": "After a fronted time, the subject follows the finite verb; the pronoun follows the subject."
+      },
+      "content": [
+        "Zaterdag haal ik ",
+        {
+          "text": "jullie",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " bij de bushalte op."
+      ],
+      "id": "7b91cb96-88d3-4ada-bb30-eea357c4dfeb"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Daan is taking her along.",
+        "note": "The pronoun comes before the separable prefix mee."
+      },
+      "content": [
+        "Daan neemt ",
+        {
+          "text": "haar",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " mee."
+      ],
+      "id": "69ec16b2-1830-4d5a-9a4e-256fb1bbdffc"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Can you help me?",
+        "note": "After the finite verb kun, the subject je comes first in this question, then the object me."
+      },
+      "content": [
+        "Kun je ",
+        {
+          "text": "me",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " helpen?"
+      ],
+      "id": "a81e2782-f49c-47cb-b0c6-98df90cb0358"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "In a main clause: subject + finite verb + object pronoun + time/place + separable prefix. With a fronted time: time + finite verb + subject + object pronoun + place + prefix.",
+      "id": "0cc2a37d-c38e-4e1d-b50a-7f9ef952c0e9"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Find the finite verb. Then put the person or thing after it. If the subject follows the verb, put the object after the subject.",
+      "id": "5cb911f1-93c4-4aae-a29f-6ea0056e5f5e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Add time and place after the pronoun; keep a separable prefix at the end: Ik haal je om zes uur bij de halte op.",
+      "id": "988dddc7-8d44-4a4a-a45c-228618304a5e"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Inviting and arranging",
+      "id": "02adc043-f72d-4aa2-b4b0-babbf3fc34db"
+    },
+    {
+      "type": "paragraph",
+      "content": "Invite someone with uitnodigen. The verb separates: Ik nodig je uit. You can accept with Ik kom graag!, decline with Helaas kan ik niet., or ask for a reply. For things after a preposition, repeat the noun: Ik kom met de fiets.",
+      "id": "52020e65-594a-4bd9-9790-e7def6e57c4e"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Helaas kan ik niet.",
+              "meaning": "Unfortunately, I can’t.",
+              "example": "Helaas kan ik niet.",
+              "id": "0fa90cba-8516-44c5-95c3-ae29752fd21d"
+            }
+          ]
+        }
+      },
+      "id": "0c5e4de7-82fc-4944-8e3a-e8ba96788c7a"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I’m inviting you to my housewarming.",
+        "note": "The object pronoun comes between nodig and the prefix uit."
+      },
+      "content": [
+        "Ik nodig ",
+        {
+          "text": "je",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " uit voor mijn housewarming."
+      ],
+      "id": "ebc1169f-dd77-4e82-aad4-8d4a0afba99f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Shall I pick you up?",
+        "note": "With a modal, the object pronoun comes before the final separable infinitive ophalen."
+      },
+      "content": [
+        "Zal ik ",
+        {
+          "text": "je",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " ophalen?"
+      ],
+      "id": "cd4223e6-d8ae-4e25-99bf-60048c9cf476"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Just call me at the bus stop.",
+        "note": "Recycles the imperative and chunk Bel me maar! (15-b)."
+      },
+      "content": [
+        "Bel ",
+        {
+          "text": "me",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " maar bij de bushalte."
+      ],
+      "id": "40f2ed65-fb05-4e84-8b9a-7a5884c189aa"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Ik zie ",
+        {
+          "text": "je",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        " zaterdag."
+      ],
+      "props": {
+        "translation": "See you Saturday.",
+        "note": "A familiar chunk; this lesson shows je as an object pronoun."
+      },
+      "id": "2fdde20e-3b51-4edf-aaa7-aa362e9047a8"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "Ik zie je zaterdag.",
+              "meaning": "See you Saturday.",
+              "example": "Tot zaterdag! Ik zie je zaterdag.",
+              "id": "43ca10f3-91ab-4cb3-8b14-d5bf8a10aede",
+              "note": "This chunk is known from 07-a; this lesson explains je as an object pronoun."
+            }
+          ]
+        }
+      },
+      "id": "3084d449-80b5-48a9-8413-3475a1035fba"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I’m coming by bike.",
+        "note": "Repeat the thing after met; no er-form yet."
+      },
+      "content": [
+        {
+          "text": "Ik kom met de fiets.",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        }
+      ],
+      "id": "bc0fd2fb-adf7-465c-b5fa-16f7d608c514"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: Sofia phones Piotr",
+      "id": "c931108f-9d51-423c-9395-4e9fe94e1150"
+    },
+    {
+      "type": "paragraph",
+      "content": "Piotr and Kasia do not know Lombok well. Sofia offers to meet them at the bus stop.",
+      "id": "d406b1aa-258c-4e94-9f9f-6e06fe7f5798"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Piotr! Ik app je over mijn housewarming."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Hoi Sofia! Ja, Kasia en ik komen graag."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Fijn! Ken je het adres?"
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Nee, stuur je het naar mij?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ik stuur het straks. Kastanjestraat 14."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Dank je. Wij kennen Lombok niet goed."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Geen probleem. Ik haal jullie om half zeven op bij de bushalte."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Dat is fijn. Bel je me bij de halte?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik bel je bij de bushalte. Ik kom met de fiets."
+          },
+          {
+            "speaker": "Piotr",
+            "text": "Prima. Tot zaterdag!"
+          }
+        ]
+      },
+      "id": "d6aabb94-9dcb-413e-acf3-e503a7e3896c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "a69b14a4-b823-4b6f-ac72-90df6678ba32"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Replace the noun with an object pronoun",
+      "id": "857e7e60-6a51-4cae-88f9-6c255393ba58"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Replace the bold noun with the correct object pronoun.",
+          "items": [
+            {
+              "prompt": "Ik haal **Noor** om zes uur op.",
+              "authorsVersion": [
+                "haar"
+              ],
+              "note": "Noor is a woman; use haar."
+            },
+            {
+              "prompt": "Sofia belt **Daan**.",
+              "authorsVersion": [
+                "hem"
+              ],
+              "note": "Daan is a man; use hem."
+            },
+            {
+              "prompt": "Ik app **Piotr en Kasia** straks.",
+              "authorsVersion": [
+                "ze"
+              ],
+              "note": "Plural people take ze; not hen/hun."
+            },
+            {
+              "prompt": "Neem **de wijn** mee.",
+              "authorsVersion": [
+                "hem"
+              ],
+              "note": "Wijn is a de-word, so use hem."
+            },
+            {
+              "prompt": "Ik stuur **het adres** naar Piotr.",
+              "authorsVersion": [
+                "het"
+              ],
+              "note": "Adres is a het-word; use het."
+            },
+            {
+              "prompt": "Daan neemt **de bloemen** mee.",
+              "authorsVersion": [
+                "ze"
+              ],
+              "note": "Plural things take ze."
+            },
+            {
+              "prompt": "Sofia haalt **Lotte en Daan** op.",
+              "authorsVersion": [
+                "ze"
+              ],
+              "note": "Two people are plural, so use ze."
+            },
+            {
+              "prompt": "Bel **Sofia** vanavond.",
+              "authorsVersion": [
+                "haar"
+              ],
+              "note": "Sofia is a woman; use haar."
+            },
+            {
+              "prompt": "Ik nodig **jou** uit. (replace with unstressed form)",
+              "authorsVersion": [
+                "je"
+              ],
+              "note": "Unstressed je is the normal lighter form."
+            },
+            {
+              "prompt": "Henk brengt **Sofia en Noor** naar huis.",
+              "authorsVersion": [
+                "ze"
+              ],
+              "note": "Plural people: ze; do not use hen/hun."
+            }
+          ]
+        }
+      },
+      "id": "440f76a4-f143-4243-9232-bae79ae5f349"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the invitation",
+      "id": "e24893d7-334a-4daf-bf2e-88e24a019126"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill each blank with one word.",
+          "items": [
+            {
+              "prompt": "Sofia: Ik nodig … uit. / Daan: Leuk! Ik kom graag.",
+              "authorsVersion": [
+                "je"
+              ],
+              "note": "The object pronoun follows nodig and comes before the separable prefix uit."
+            },
+            {
+              "prompt": "Daan: Ik haal Lotte op. / Sofia: Ken je …?",
+              "authorsVersion": [
+                "haar"
+              ],
+              "note": "Lotte is a woman; the object form is haar."
+            },
+            {
+              "prompt": "Sofia: Ik app Piotr en Kasia. / Daan: App … vanavond.",
+              "authorsVersion": [
+                "ze"
+              ],
+              "note": "Plural people take ze."
+            },
+            {
+              "prompt": "Piotr: Stuur je het adres naar …? / Sofia: Ja, ik app het … .",
+              "authorsVersion": [
+                "mij",
+                "straks"
+              ],
+              "note": "After naar use stressed mij; straks is the time word."
+            },
+            {
+              "prompt": "Sofia: Zal ik … ophalen? / Piotr: Ja, graag!",
+              "authorsVersion": [
+                "jullie"
+              ],
+              "note": "Piotr and Kasia are jullie; after the modal phrase use the object before ophalen."
+            },
+            {
+              "prompt": "Noor: Kom je ook? / Ahmed: Helaas kan ik … .",
+              "authorsVersion": [
+                "niet"
+              ],
+              "note": "A polite decline: Helaas kan ik niet."
+            }
+          ]
+        }
+      },
+      "id": "3b24c678-a52d-4999-be94-cba70a5f2227"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Put the words in order",
+      "id": "653f017d-f082-46b3-a3e3-6c1d7ba57ead"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write the full sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: haal / je / ik / morgen / op",
+              "authorsVersion": [
+                "Ik haal je morgen op."
+              ],
+              "note": "Pronoun follows the finite verb and comes before time and prefix."
+            },
+            {
+              "prompt": "Put in order: zaterdag / jullie / haal / ik / bij de bushalte / op",
+              "authorsVersion": [
+                "Zaterdag haal ik jullie bij de bushalte op."
+              ],
+              "note": "Fronted time causes inversion; the object follows the subject."
+            },
+            {
+              "prompt": "Put in order: uit / nodig / hem / ik / ook",
+              "authorsVersion": [
+                "Ik nodig hem ook uit."
+              ],
+              "note": "Object pronoun follows nodig; separable prefix uit is last."
+            },
+            {
+              "prompt": "Put in order: haar / Daan / neemt / mee",
+              "authorsVersion": [
+                "Daan neemt haar mee."
+              ],
+              "note": "Object pronoun comes before the separable prefix mee."
+            },
+            {
+              "prompt": "Put in order: mij / stuur / je / het adres / naar",
+              "authorsVersion": [
+                "Je stuurt het adres naar mij."
+              ],
+              "note": "After naar use stressed mij. Keep the object noun before the prepositional phrase."
+            },
+            {
+              "prompt": "Put in order: je / haal / zal / ik / op / ?",
+              "authorsVersion": [
+                "Zal ik je ophalen?"
+              ],
+              "note": "Modal zal + subject ik + object je + infinitive ophalen."
+            },
+            {
+              "prompt": "Put in order: niet / ken / ik / hem",
+              "authorsVersion": [
+                "Ik ken hem niet."
+              ],
+              "note": "The object pronoun follows the verb; niet stays after the definite object pronoun."
+            }
+          ]
+        }
+      },
+      "id": "4a6e323e-dffe-4b46-b2ac-54311efa3e75"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Transform the sentence",
+      "id": "92a9e976-a85f-47bb-9302-323f7f85b3ea"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence using the object pronoun.",
+          "items": [
+            {
+              "prompt": "Ik haal Noor op.",
+              "authorsVersion": [
+                "Ik haal haar op."
+              ],
+              "note": "Noor is a woman; her object pronoun is haar."
+            },
+            {
+              "prompt": "Ik nodig Piotr uit.",
+              "authorsVersion": [
+                "Ik nodig hem uit."
+              ],
+              "note": "Piotr is a man; hem goes before uit."
+            },
+            {
+              "prompt": "Ik neem de wijn mee.",
+              "authorsVersion": [
+                "Ik neem hem mee."
+              ],
+              "note": "Wijn is a de-word; use hem."
+            },
+            {
+              "prompt": "Ik stuur het adres.",
+              "authorsVersion": [
+                "Ik stuur het."
+              ],
+              "note": "Adres is a het-word; use het."
+            },
+            {
+              "prompt": "Daan koopt de bloemen.",
+              "authorsVersion": [
+                "Daan koopt ze."
+              ],
+              "note": "Plural things take ze."
+            },
+            {
+              "prompt": "Zal ik Lotte ophalen?",
+              "authorsVersion": [
+                "Zal ik haar ophalen?"
+              ],
+              "note": "Lotte is a woman; the pronoun comes before the infinitive."
+            },
+            {
+              "prompt": "Ik zie jou zaterdag. (make the object unstressed)",
+              "authorsVersion": [
+                "Ik zie je zaterdag."
+              ],
+              "note": "Je is the unstressed form; jou is stressed."
+            }
+          ]
+        }
+      },
+      "id": "462a6cf0-6c53-40a0-b049-6851a4e0cc74"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "03d42451-35af-404d-8a19-21b963ee3bb8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch.",
+          "items": [
+            {
+              "prompt": "I’ll pick you up at the bus stop.",
+              "authorsVersion": [
+                "Ik haal je op bij de bushalte."
+              ],
+              "note": "Object pronoun after the finite verb; prefix op is at the end."
+            },
+            {
+              "prompt": "I’m inviting him too.",
+              "authorsVersion": [
+                "Ik nodig hem ook uit."
+              ],
+              "note": "Hem replaces a male person; uit is the separable prefix."
+            },
+            {
+              "prompt": "Shall I pick you all up?",
+              "authorsVersion": [
+                "Zal ik jullie ophalen?"
+              ],
+              "note": "Jullie is the object; the separable infinitive is ophalen."
+            },
+            {
+              "prompt": "I’ll send it later. (the address)",
+              "authorsVersion": [
+                "Ik stuur het straks."
+              ],
+              "note": "Het adres is a het-word."
+            },
+            {
+              "prompt": "Daan is taking her along.",
+              "authorsVersion": [
+                "Daan neemt haar mee."
+              ],
+              "note": "Haar replaces Lotte; mee is the prefix."
+            },
+            {
+              "prompt": "Unfortunately, I can’t.",
+              "authorsVersion": [
+                "Helaas kan ik niet."
+              ],
+              "note": "Fixed polite decline; no subordinate clause."
+            },
+            {
+              "prompt": "I’m coming by bike.",
+              "authorsVersion": [
+                "Ik kom met de fiets."
+              ],
+              "note": "Repeat the noun after met; avoid an er-form."
+            }
+          ]
+        }
+      },
+      "id": "d3daaa61-f05c-48b1-9922-5ec66daf5293"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "e78591c2-d09a-4799-bfb2-c02b9766ff26"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Ik haal je om zeven uur op.",
+              "authorsVersion": [
+                "I’ll pick you up at seven."
+              ],
+              "note": "Pronoun before time and separable prefix."
+            },
+            {
+              "prompt": "Ken je hem?",
+              "authorsVersion": [
+                "Do you know him?"
+              ],
+              "note": "Hem is the object form of hij."
+            },
+            {
+              "prompt": "Het adres? Ik stuur het straks.",
+              "authorsVersion": [
+                "The address? I’ll send it later."
+              ],
+              "note": "Het replaces het adres."
+            },
+            {
+              "prompt": "De bloemen? Lotte koopt ze.",
+              "authorsVersion": [
+                "The flowers? Lotte is buying them."
+              ],
+              "note": "Ze replaces a plural noun."
+            },
+            {
+              "prompt": "Zaterdag haal ik jullie bij de bushalte op.",
+              "authorsVersion": [
+                "On Saturday I’ll pick you all up at the bus stop."
+              ],
+              "note": "Time first, then inversion; pronoun follows subject."
+            },
+            {
+              "prompt": "Ik nodig je uit voor mijn housewarming.",
+              "authorsVersion": [
+                "I’m inviting you to my housewarming."
+              ],
+              "note": "Uitnodigen separates in a main clause."
+            }
+          ]
+        }
+      },
+      "id": "486191fa-6e08-4e79-b4bc-7f8f89e77320"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Sofia’s invitation and replies",
+      "id": "588d5e1c-57cd-47ef-9649-26e42b147733"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the invitation and replies. Answer in Dutch.",
+          "items": [
+            {
+              "prompt": "Wanneer is de housewarming?",
+              "authorsVersion": [
+                "Op zaterdag 12 december."
+              ],
+              "note": "The invitation gives the date."
+            },
+            {
+              "prompt": "Hoe laat begint het feest?",
+              "authorsVersion": [
+                "Om zeven uur."
+              ],
+              "note": "The start time is 19.00."
+            },
+            {
+              "prompt": "Waar is het feest?",
+              "authorsVersion": [
+                "Op Kastanjestraat 14."
+              ],
+              "note": "The address is given in the invitation."
+            },
+            {
+              "prompt": "Wie haalt Lotte op?",
+              "authorsVersion": [
+                "Daan haalt haar op."
+              ],
+              "note": "Daan picks up Lotte; haar replaces her."
+            },
+            {
+              "prompt": "Komt Henk ook?",
+              "authorsVersion": [
+                "Ja, hij komt graag."
+              ],
+              "note": "Henk accepts the invitation."
+            },
+            {
+              "prompt": "Komen Piotr en Kasia graag?",
+              "authorsVersion": [
+                "Ja, ze komen graag."
+              ],
+              "note": "Ze refers to Piotr and Kasia."
+            },
+            {
+              "prompt": "Waarom komt Ahmed niet?",
+              "authorsVersion": [
+                "Hij is bij zijn familie."
+              ],
+              "note": "The reply says he is with his family."
+            },
+            {
+              "prompt": "Waar haalt Sofia Piotr en Kasia op?",
+              "authorsVersion": [
+                "Bij de bushalte."
+              ],
+              "note": "Sofia meets them at the bus stop."
+            },
+            {
+              "prompt": "Klopt dit? De housewarming begint om acht uur.",
+              "authorsVersion": [
+                "Nee. Het feest begint om zeven uur."
+              ],
+              "note": "It begins at 19.00, not 20.00."
+            }
+          ],
+          "passage": {
+            "title": "De uitnodiging",
+            "content": "Hoi allemaal!\nOp zaterdag 12 december geef ik een housewarming. Het feest begint om 19.00 uur op Kastanjestraat 14. Kom je ook? Laat je het even weten?\n\nHenk: Ik kom graag! Tot zaterdag.\nDaan: Ja, natuurlijk! Ik haal Lotte op en we komen samen.\nLotte: Ja, graag! Daan haalt me op.\nNoor: Ik kom graag! Fleur komt ook.\nPiotr: Kasia en ik komen graag. We kennen Lombok niet goed.\nAhmed: Helaas kan ik niet. Dan ben ik bij mijn familie.\n\nSofia: Fijn! Ik haal Piotr en Kasia om half zeven op bij de bushalte. Ik app jullie het adres.\nTot zaterdag! Sofia"
+          }
+        }
+      },
+      "id": "380377e4-c8ed-47f5-aa61-147f6c9a8522"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "2f8e4013-7ac6-4be3-a320-447bbc000a9a"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write a short invitation (3–4 sentences) for a party or dinner: say when and where, and who picks someone up.",
+          "items": [
+            {
+              "prompt": "Write a short invitation (3–4 sentences) for a party or dinner. Include a day, time, place and who picks someone up.",
+              "authorsVersion": [
+                "Hoi Noor! Kom je zaterdag om zeven uur naar mijn huis? Ik haal je om half zeven op bij de bushalte. Laat je het even weten? Tot zaterdag!"
+              ],
+              "note": "Model answer. Check the object pronoun after the verb, time and place, and op at the end."
+            }
+          ]
+        }
+      },
+      "id": "7e7dd15d-a261-420e-b17b-73c706bad089"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "9b632203-8276-4510-9ec1-6995a58f68d7"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "People: me/mij, je/jou, u, hem, ze/haar (her), ons, jullie, ze (them).",
+      "id": "47b83f22-08a3-4ef1-a101-db744f30847e"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Things: de-word → hem; het-word → het; plural → ze.",
+      "id": "a0a26267-09a4-401c-ac77-d9d12db1cce3"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Position: finite verb + subject (if present) + object pronoun; then time/place; separable prefix last.",
+      "id": "dabb2472-b6cc-45cf-aba9-daab64d0d473"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "After a preposition use stressed person forms: met mij, voor jou, bij ons. Repeat a thing noun after a preposition.",
+      "id": "6bee638b-db6c-4667-ba64-33945e93bd2f"
+    },
+    {
+      "type": "divider",
+      "id": "94b863a0-74cc-4af4-a65f-74f5b15f47a3"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: the housewarming invitation",
+      "description": "Sofia at the office desk writing a cheerful housewarming invitation on her phone, with a calendar showing Saturday 12 December at 19:00; Daan is beside her looking at the message.",
+      "alt": "Sofia sends Daan a housewarming invitation at the office.",
+      "location": "office",
+      "characters": [
+        "sofia",
+        "daan"
+      ],
+      "action": "Sofia shows Daan the invitation on her phone; he smiles and replies."
+    },
+    {
+      "afterHeading": "Story: Sofia phones Piotr",
+      "description": "Sofia stands by a bus stop in Lombok with her bicycle, looking toward Piotr and Kasia as they arrive; nearby supermarket across the street, no tram tracks.",
+      "alt": "Sofia meets Piotr and Kasia by the Lombok bus stop.",
+      "location": "kanaalstraat-bus-stop",
+      "characters": [
+        "sofia",
+        "piotr"
+      ],
+      "action": "Sofia waits with her bicycle and greets Piotr and Kasia by the bus stop."
+    }
+  ],
+  "id": "906fa061-53a9-428a-846c-5cf84cdab821"
+}

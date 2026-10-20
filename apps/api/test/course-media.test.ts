@@ -1,18 +1,19 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { courseResponseSchema } from "@wordinator/contracts";
 import { lessonImageUploadResponseSchema, lessonResponseSchema } from "@wordinator/contracts/lesson-document";
 import { beforeAll, describe, expect, it } from "vitest";
 import { sweepLessonMedia } from "../src/app";
 import { hashPassword } from "../src/auth";
+import { fetchWorker } from "./worker";
 
 const PASSWORD = "course-media-password"; let passwordHash: string;
 async function signIn(email: string) {
-  const response = await SELF.fetch("https://wordinator.test/api/auth/sign-in", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email, password: PASSWORD }) });
+  const response = await fetchWorker("https://wordinator.test/api/auth/sign-in", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email, password: PASSWORD }) });
   return response.headers.get("set-cookie")!.split(";", 1)[0]!;
 }
 async function coverRequest(path: string, cookie: string, bytes: Uint8Array) {
   const form = new FormData(); form.set("image", new File([bytes.slice().buffer as ArrayBuffer], "cover.png", { type: "image/png" }));
-  return SELF.fetch(`https://wordinator.test${path}`, { method: "POST", headers: { cookie }, body: form });
+  return fetchWorker(`https://wordinator.test${path}`, { method: "POST", headers: { cookie }, body: form });
 }
 beforeAll(async () => { passwordHash = await hashPassword(PASSWORD); });
 
@@ -35,13 +36,13 @@ describe("Course cover media", () => {
     const first = await coverRequest(path, owner, png); expect(first.status).toBe(200);
     const firstUrl = (await first.json<{ url: string }>()).url;
     expect(firstUrl).toContain("/api/media/courses/");
-    expect((await SELF.fetch(firstUrl)).status).toBe(200);
+    expect((await fetchWorker(firstUrl)).status).toBe(200);
     const second = await coverRequest(path, owner, new Uint8Array([...png, 1])); expect(second.status).toBe(200);
-    expect((await SELF.fetch(firstUrl)).status).toBe(404);
-    const course = courseResponseSchema.parse(await (await SELF.fetch(`https://wordinator.test/api/groups/${groupId}/courses/${courseId}`, { headers: { cookie: member } })).json()).course;
+    expect((await fetchWorker(firstUrl)).status).toBe(404);
+    const course = courseResponseSchema.parse(await (await fetchWorker(`https://wordinator.test/api/groups/${groupId}/courses/${courseId}`, { headers: { cookie: member } })).json()).course;
     expect(course.coverUrl).toBe((await second.json<{ url: string }>()).url);
-    expect((await SELF.fetch(`https://wordinator.test${path}`, { method: "DELETE", headers: { cookie: owner } })).status).toBe(200);
-    expect((await SELF.fetch(course.coverUrl!)).status).toBe(404);
+    expect((await fetchWorker(`https://wordinator.test${path}`, { method: "DELETE", headers: { cookie: owner } })).status).toBe(200);
+    expect((await fetchWorker(course.coverUrl!)).status).toBe(404);
   });
 
   it("uploads lesson images per lesson, accepts only this lesson's keys, and cleans up unreferenced images", async () => {
@@ -60,7 +61,7 @@ describe("Course cover media", () => {
     const owner = await signIn("lesson-owner@test.local"); const reader = await signIn("lesson-reader@test.local");
     const lessonPath = (lessonId: string) => `/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId}`;
     const path = lessonPath(lessonIds[0]!);
-    const send = (url: string, body: unknown, method = "POST") => SELF.fetch(`https://wordinator.test${url}`, { method, headers: { cookie: owner, "content-type": "application/json" }, body: JSON.stringify(body) });
+    const send = (url: string, body: unknown, method = "POST") => fetchWorker(`https://wordinator.test${url}`, { method, headers: { cookie: owner, "content-type": "application/json" }, body: JSON.stringify(body) });
     // A 3×2 PNG header is enough for the type sniffing and the reported size.
     const png = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 3, 0, 0, 0, 2]);
     expect((await coverRequest(`${path}/images`, reader, png)).status).toBe(403);
@@ -89,20 +90,20 @@ describe("Course cover media", () => {
 
     // Publishing keeps recent uploads (they may belong to an editor's unsaved change) and removes older unreferenced ones.
     expect((await send(`${path}/publish`, { draftVersion: 3 })).status).toBe(200);
-    expect((await SELF.fetch(dropped.url)).status).toBe(200);
+    expect((await fetchWorker(dropped.url)).status).toBe(200);
     await env.DB.prepare("UPDATE course_media SET created_at = ? WHERE lesson_id = ?").bind(now - 2 * 24 * 60 * 60 * 1000, lessonIds[0]).run();
     expect((await send(`${path}/draft`, { document: document(kept.url, dropped.url), draftVersion: 3 }, "PUT")).status).toBe(200);
     expect((await send(`${path}/discard`, {})).status).toBe(200);
-    expect((await SELF.fetch(dropped.url)).status).toBe(404);
-    expect((await SELF.fetch(kept.url)).status).toBe(200);
-    const read = lessonResponseSchema.parse(await (await SELF.fetch(`https://wordinator.test${path}`, { headers: { cookie: reader } })).json()).lesson;
+    expect((await fetchWorker(dropped.url)).status).toBe(404);
+    expect((await fetchWorker(kept.url)).status).toBe(200);
+    const read = lessonResponseSchema.parse(await (await fetchWorker(`https://wordinator.test${path}`, { headers: { cookie: reader } })).json()).lesson;
     expect(read.document!.blocks[0]).toMatchObject({ type: "image", props: { url: kept.url } });
     const keys = await env.DB.prepare("SELECT key FROM course_media WHERE lesson_id = ?").bind(lessonIds[0]).all<{ key: string }>();
     expect(keys.results.map((row) => row.key)).toEqual([kept.key]);
 
     // Deleting the lesson deletes its images.
-    expect((await SELF.fetch(`https://wordinator.test${path}`, { method: "DELETE", headers: { cookie: owner } })).status).toBe(200);
-    expect((await SELF.fetch(kept.url)).status).toBe(404);
+    expect((await fetchWorker(`https://wordinator.test${path}`, { method: "DELETE", headers: { cookie: owner } })).status).toBe(200);
+    expect((await fetchWorker(kept.url)).status).toBe(404);
   });
 
   it("sweeps old lesson images that neither document references", async () => {
@@ -116,7 +117,7 @@ describe("Course cover media", () => {
     ]);
     const owner = await signIn("sweep-owner@test.local");
     const path = `/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId}`;
-    const send = (url: string, body: unknown, method = "POST") => SELF.fetch(`https://wordinator.test${url}`, { method, headers: { cookie: owner, "content-type": "application/json" }, body: JSON.stringify(body) });
+    const send = (url: string, body: unknown, method = "POST") => fetchWorker(`https://wordinator.test${url}`, { method, headers: { cookie: owner, "content-type": "application/json" }, body: JSON.stringify(body) });
     const png = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 3, 0, 0, 0, 2]);
     const upload = async () => lessonImageUploadResponseSchema.parse(await (await coverRequest(`${path}/images`, owner, png)).json());
     const published = await upload(); const drafted = await upload(); const removed = await upload(); const fresh = await upload();
@@ -133,8 +134,8 @@ describe("Course cover media", () => {
     await env.DB.prepare("UPDATE course_lessons SET published_doc = json(?) WHERE id = ?").bind(JSON.stringify({ schemaVersion: 2, blocks: [{ ...image(published.key) }] }), lessonId).run();
 
     expect(await sweepLessonMedia(env as never)).toBe(1);
-    expect((await SELF.fetch(removed.url)).status).toBe(404);
-    for (const kept of [published, drafted, fresh]) expect((await SELF.fetch(kept.url)).status).toBe(200);
+    expect((await fetchWorker(removed.url)).status).toBe(404);
+    for (const kept of [published, drafted, fresh]) expect((await fetchWorker(kept.url)).status).toBe(200);
     const keys = await env.DB.prepare("SELECT key FROM course_media WHERE lesson_id = ? ORDER BY key").bind(lessonId).all<{ key: string }>();
     expect(keys.results.map((row) => row.key)).toEqual([published.key, drafted.key, fresh.key].sort());
     expect(await sweepLessonMedia(env as never)).toBe(0);

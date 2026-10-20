@@ -1,0 +1,1677 @@
+{
+  "title": "Een klein probleem",
+  "goal": "Use object forms, a limited set of er + preposition forms, simple ownership phrases and polite zou requests in a practical conversation.",
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Een klein probleem",
+      "id": "ae9f2f30-a941-4796-9eec-e56f9d75d051"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Wednesday 20 January 2027. Sofia stops at Ahmed’s bike shop in the Kanaalstraat with a small question about her bicycle. In this lesson you will talk about people and things, ask who owns an item, and make a polite request.",
+      "id": "cbb422df-3239-4b29-8fe6-b618f3373e0c"
+    },
+    {
+      "type": "paragraph",
+      "content": "Colours: subjects are green, finite verbs are blue, and new target forms are bold. Pink marks de-words; brown marks het-words.",
+      "id": "512bf433-e2a4-4bdd-b5ed-6142af2ea767"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: a question for Ahmed",
+      "id": "8e661514-21cc-4bfd-a886-715ae8868054"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Ahmed! Heb je even tijd?"
+          },
+          {
+            "speaker": "Ahmed",
+            "text": "Hoi Sofia! Ja hoor. Wat is er?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Mijn fiets maakt een vreemd geluid."
+          },
+          {
+            "speaker": "Ahmed",
+            "text": "Wanneer hoor je het geluid?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Vooral als ik fiets. Kun je ernaar luisteren?"
+          },
+          {
+            "speaker": "Ahmed",
+            "text": "Ja, natuurlijk. Zet je fiets maar hier."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Dank je. Ik weet niet wat ik ermee moet doen."
+          },
+          {
+            "speaker": "Ahmed",
+            "text": "Geen probleem. Ik kijk er even naar."
+          }
+        ]
+      },
+      "id": "a83289eb-1681-4e36-8d54-b7c7a3af5807"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "het geluid",
+              "meaning": "the sound",
+              "forms": "de geluiden",
+              "example": "Mijn fiets maakt een vreemd geluid.",
+              "id": "61eda66b-312f-420d-baa8-b2dd4a40ea00"
+            },
+            {
+              "term": "vreemd",
+              "meaning": "strange, unusual",
+              "example": "Mijn fiets maakt een vreemd geluid.",
+              "id": "90dff541-144a-4dd2-b3ee-27e4eb037195"
+            }
+          ]
+        }
+      },
+      "id": "e79d1c73-1f1c-49b1-b833-592463cb03e0"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "People and things as objects",
+      "id": "9d2871fc-47dc-4004-9b73-2da9ffc4b001"
+    },
+    {
+      "type": "paragraph",
+      "content": "You already know object forms such as me, je, hem, haar and ze from row 21-b. This lesson applies them in a repair conversation. For a group of people, use hen as a direct object or after a preposition; use hun as an indirect object without a preposition.",
+      "id": "84e14242-58e1-4a9b-9bae-795c5b472439"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "Direct object or after a preposition: hen. Indirect object without a preposition: hun. In everyday speech, ze is also common.",
+      "id": "f3fcc26f-c06a-4992-b75a-04b810c720d1"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I see them at the shop.",
+        "note": "Hen is the direct object."
+      },
+      "content": [
+        {
+          "text": "Ik "
+        },
+        {
+          "text": "zie",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "hen",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " bij de winkel."
+        }
+      ],
+      "id": "9584bf23-13dc-4fd4-97a2-12f2a32b75a7"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I give them the key.",
+        "note": "Hun receives the key; there is no preposition."
+      },
+      "content": [
+        {
+          "text": "Ik "
+        },
+        {
+          "text": "geef",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "hun",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " de sleutel."
+        }
+      ],
+      "id": "f0e04deb-8fd6-438d-bc68-337f296f4596"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I talk with them.",
+        "note": "Use hen after met in the standard distinction; ze is also common in everyday speech."
+      },
+      "content": [
+        {
+          "text": "Ik "
+        },
+        {
+          "text": "praat",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " met "
+        },
+        {
+          "text": "hen",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "."
+        }
+      ],
+      "id": "8b22058d-a3d3-4a09-ae3b-9682ae2a0287"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "People",
+              "id": "e9341f2e-7e8e-4be3-9998-0d5b113444bb"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ahmed helpt hen.",
+              "id": "de4ccf3c-234d-42f0-82d7-b3aa904adc8a"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik geef hun een briefje.",
+              "id": "a9389005-75eb-4126-a8af-3cb1558527a8"
+            }
+          ],
+          "id": "99909cd8-9cd4-46ea-b1b8-4e13f87d8c50"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Things",
+              "id": "0940e7c5-434e-44c3-8384-a85f6e91ac21"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik luister naar het geluid.",
+              "id": "b16f9699-a74d-475a-b703-dd64adbb8f27"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Ik kijk naar de fiets.",
+              "id": "ef80b2a8-25d9-4e79-8575-82d6d989b2ea"
+            }
+          ],
+          "id": "561a52ea-1055-41f2-ab0d-716bceaf29cf"
+        }
+      ],
+      "id": "332a1199-0bbf-44ee-8392-a9435e1b8522"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Use hen after a preposition.",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "Ik loop met hen naar de winkel.",
+          "id": "56cfecc8-2b3e-48b1-809f-613c17eec8fb"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "Ik praat over hen.",
+          "id": "bb8b0b7c-da41-4d44-ac13-7022bc949251"
+        }
+      ],
+      "id": "2918d17b-0dc4-48ff-b21e-c7f019cc0520"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "For people: Ik praat met ",
+          "styles": {}
+        },
+        {
+          "text": "hun",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        {
+          "text": " → Ik praat met hen.",
+          "styles": {}
+        }
+      ],
+      "id": "e92c9d4d-8fe8-4ef7-947c-1ddf870d5a0e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I’ll see them tomorrow and give them the card.",
+        "note": "Ze is a natural everyday object form; hun is the recipient."
+      },
+      "content": [
+        {
+          "text": "Ik "
+        },
+        {
+          "text": "zie",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "ze",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " morgen en ik "
+        },
+        {
+          "text": "geef",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "hun",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " de kaart."
+        }
+      ],
+      "id": "e4271737-d918-45e5-861f-e6fdc9ddf995"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Things with er + a preposition",
+      "id": "aa482b3b-9cd7-441f-bf2a-c5e991838bf3"
+    },
+    {
+      "type": "paragraph",
+      "content": "For a thing or idea, you can sometimes use er + a preposition: ermee (with it), ernaar (at/to it) and erover (about it). The preposition stays after er. For a person, say met hem/haar/hen, not ermee. Recycles ervan from row 24-a as a known chunk.",
+      "id": "bc36ad10-2977-4c1c-b233-697a5e6c9425"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "er + preposition refers to a thing or idea: ermee, ernaar, erover. Put the preposition after er.",
+      "id": "05477c9e-c9c3-4cfd-a2fa-ee350f49dd94"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I don’t know what to do with it.",
+        "note": "Ermee = met de fiets; the modal construction is recycled."
+      },
+      "content": [
+        {
+          "text": "Ik "
+        },
+        {
+          "text": "weet",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " niet wat ik "
+        },
+        {
+          "text": "ermee",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "moet",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "doen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        {
+          "text": "."
+        }
+      ],
+      "id": "8119698e-bd22-420f-83ca-65edf127d836"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Could you take a look at it?",
+        "note": "Ernaar refers to the bicycle; the request reuses zou from row 35."
+      },
+      "content": [
+        {
+          "text": "Zou",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " je "
+        },
+        {
+          "text": "ernaar",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "kunnen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "kijken",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        {
+          "text": "?"
+        }
+      ],
+      "id": "39372da0-924a-4413-b6e7-976b7a52541d"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "We’ll talk about it after class.",
+        "note": "Erover = over het probleem."
+      },
+      "content": [
+        {
+          "text": "We "
+        },
+        {
+          "text": "praten",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "erover",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " na de les."
+        }
+      ],
+      "id": "0f0c3082-5a88-4bb3-9cfb-2e46c06aed74"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "If the reference is not clear, repeat the noun: Ik kijk naar de fiets. This is often the clearest choice.",
+      "id": "233a5d98-0521-45ec-adff-b121876f25ae"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Compare a person and a thing",
+      "id": "a9b88442-a399-44ac-824a-98445605ed9a"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Name the person or thing first.",
+      "id": "40720f61-49c9-4796-9657-0afe697c5fd6"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "For a person, keep the ordinary pronoun or use hen after a preposition.",
+      "id": "3307ab74-6081-44f2-971d-ab80faee961c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "For a thing, use ermee, ernaar or erover only when the preposition fits.",
+      "id": "0b461608-c6df-4454-b61a-a53714e08a6d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Who owns it?",
+      "id": "0904ab39-8d7e-4003-9054-9a4622763155"
+    },
+    {
+      "type": "paragraph",
+      "content": "For a simple ownership answer, use van mij or van jou. You can also leave the noun out: de mijne for a de-word and het mijne for a het-word. Jouwe works the same way in these two patterns.",
+      "id": "636cbd62-4fe8-41f9-99e1-87d0c02b6fe6"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": "The ending matches the missing noun: de fiets → de mijne; het slot → het mijne.",
+      "id": "c3134ec0-0315-4f10-bdbb-b5bb5fe60b6e"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Is this bicycle yours? No, it is mine.",
+        "note": "Van mij/jou does not change for de- or het-words."
+      },
+      "content": [
+        {
+          "text": "Is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " deze fiets "
+        },
+        {
+          "text": "van jou",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "? Nee, die "
+        },
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "van mij",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "."
+        }
+      ],
+      "id": "7707cfaf-6429-4d31-bee7-bb1c0fad0d03"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Which key is yours? Mine.",
+        "note": "De sleutel is a de-word, so use de mijne."
+      },
+      "content": [
+        {
+          "text": "Welke sleutel "
+        },
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "van jou",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "? "
+        },
+        {
+          "text": "De",
+          "styles": {
+            "bold": true,
+            "textColor": "pink"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "mijne",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "."
+        }
+      ],
+      "id": "1629ed4b-228e-4760-82e9-28843b947d39"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Which lock is yours? Mine.",
+        "note": "Het slot is a het-word, so use het mijne."
+      },
+      "content": [
+        {
+          "text": "Welk slot "
+        },
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "van jou",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "? "
+        },
+        {
+          "text": "Het",
+          "styles": {
+            "bold": true,
+            "textColor": "brown"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "mijne",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "."
+        }
+      ],
+      "id": "0f70bcec-bcb3-4c27-94bf-79f20a176769"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "Use only the forms in this lesson: van mij/jou, de mijne/jouwe and het mijne/jouwe.",
+      "id": "7dc19b72-4711-49f6-bcef-3d4f572fa54f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "A polite request with zou",
+      "id": "f10bc82d-bb68-4547-af32-22e8e08f9d08"
+    },
+    {
+      "type": "paragraph",
+      "content": "Row 35 introduced zou + infinitive. Use it here for a softer request; it is helpful, but it is not required for every polite question. In a request with kunnen, the infinitives stay together at the end.",
+      "id": "f1deaf11-1488-446e-a710-90abc1f3d030"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Could you take a look at it?",
+        "note": "zou + subject + infinitives kunnen kijken."
+      },
+      "content": [
+        {
+          "text": "Zou",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " je "
+        },
+        {
+          "text": "ernaar",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "kunnen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "kijken",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        {
+          "text": "?"
+        }
+      ],
+      "id": "774885b0-d527-4323-9dbe-379a4dfd20eb"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "Could you help me?",
+        "note": "Formal u; mij is already known from row 21-b."
+      },
+      "content": [
+        {
+          "text": "Zou",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " u mij "
+        },
+        {
+          "text": "kunnen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "helpen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        {
+          "text": "?"
+        }
+      ],
+      "id": "93f6935f-acd1-46b2-9066-197ef789605f"
+    },
+    {
+      "type": "example",
+      "props": {
+        "translation": "I would like to ask a question.",
+        "note": "A common polite chunk; infinitives at the end."
+      },
+      "content": [
+        {
+          "text": "Ik "
+        },
+        {
+          "text": "zou",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " graag een vraag "
+        },
+        {
+          "text": "willen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        {
+          "text": " "
+        },
+        {
+          "text": "stellen",
+          "styles": {
+            "textColor": "red"
+          }
+        },
+        {
+          "text": "."
+        }
+      ],
+      "id": "f51120be-dbd1-4741-8645-68190fbaf98d"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "culture",
+        "icon": "globe"
+      },
+      "content": "Sofia and Ahmed use jij and je. Use u with a person you address formally, as in the model request to a service worker.",
+      "id": "42beb9a0-ae0a-434e-8b4b-d0a00fe804db"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: whose tools are these?",
+      "id": "b2d49ce5-da85-45ee-a5c8-1901c8dc4d30"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Hoi Henk. Zijn deze sleutels van jou?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Nee, die zijn van Ahmed."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik geef hem de sleutels straks."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Goed. Ik praat straks met hem."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "En deze fietspomp? Is die van jou?"
+          },
+          {
+            "speaker": "Henk",
+            "text": "Nee, de mijne is kleiner. Die pomp is van Noor."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik zet hem bij de deur."
+          },
+          {
+            "speaker": "Henk",
+            "text": "Dank je. Dan ziet Noor hem meteen."
+          }
+        ]
+      },
+      "id": "c6715475-68e5-416e-8f54-f121ebf6f430"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de fietspomp",
+              "meaning": "the bicycle pump",
+              "forms": "de fietspompen",
+              "example": "Is deze fietspomp van jou?",
+              "id": "b7d89b86-3901-49db-87e6-eeff13107a41"
+            },
+            {
+              "term": "meteen",
+              "meaning": "right away",
+              "example": "Dan ziet Noor hem meteen.",
+              "id": "b99b5e66-b3f6-4548-a73b-4961593d6f5b"
+            }
+          ]
+        }
+      },
+      "id": "40e911aa-2b01-470e-bab6-734360c4aa19"
+    },
+    {
+      "type": "paragraph",
+      "content": "Words for this scene: de werkbank (workbench), het ventiel (valve), de remkabel (brake cable), de controle (check), de monteur (mechanic), de reparatie (repair), het onderdeel (part), los (loose) and in orde (OK). A pump (de fietspomp) is next to the tools; this passage does not say that Sofia’s bicycle has a fault or needs work.",
+      "id": "95d5e6bf-5f37-46b3-a91f-f75b7a5d66f9"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "los",
+              "meaning": "loose",
+              "example": "Het ventiel zit los.",
+              "id": "0da4ae4d-39e7-4592-b71b-554c5d18da46"
+            },
+            {
+              "term": "de werkbank",
+              "meaning": "the workbench",
+              "forms": "de werkbanken",
+              "example": "De pomp staat bij de werkbank.",
+              "id": "ef7ce2c3-d4b6-45f7-a2b6-e20a8cf578c1"
+            },
+            {
+              "term": "de reparatie",
+              "meaning": "the repair",
+              "forms": "de reparaties",
+              "example": "Ahmed praat over een mogelijke reparatie.",
+              "id": "3a3c214c-7f1f-40f6-a0b0-56d499f67f7e"
+            },
+            {
+              "term": "het onderdeel",
+              "meaning": "part, component",
+              "forms": "de onderdelen",
+              "example": "Een ventiel is een onderdeel van de fiets.",
+              "id": "346418f6-169c-40fd-b0df-2aac65f5d4f3"
+            },
+            {
+              "term": "in orde",
+              "meaning": "in order; OK",
+              "example": "Ahmed zegt: “Alles is in orde.”",
+              "id": "9f7d4059-8928-4fa1-8a18-00d0f3edc83e"
+            },
+            {
+              "term": "de controle",
+              "meaning": "the check, inspection",
+              "forms": "de controles",
+              "example": "Ahmed doet een korte controle.",
+              "id": "bf1f4df3-1aa5-42f9-8381-0e3f076ec1e8"
+            },
+            {
+              "term": "de monteur",
+              "meaning": "the mechanic",
+              "forms": "de monteurs",
+              "example": "Een monteur kan naar de fiets kijken.",
+              "id": "5b69cd26-beb3-4c5f-8cf7-b74a2f20f9e8"
+            },
+            {
+              "term": "het ventiel",
+              "meaning": "the valve (on a tyre)",
+              "forms": "de ventielen",
+              "example": "Het ventiel zit aan de band.",
+              "id": "5d0818dd-bb9c-4295-b445-3d7ea87b94c4"
+            },
+            {
+              "term": "de remkabel",
+              "meaning": "the brake cable",
+              "forms": "de remkabels",
+              "example": "De remkabel loopt langs het stuur.",
+              "id": "fbe9e290-8075-4fe2-b1fb-c80e8ead3102"
+            }
+          ]
+        }
+      },
+      "id": "a6f3dd7f-ec65-4299-b30d-a174632ab865"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "30928af1-49d7-411d-89dc-623b95b839b8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Choose the object form",
+      "id": "bf202283-957e-44af-ba32-1a186018423f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each sentence with hen, hun or ze.",
+          "items": [
+            {
+              "prompt": "Ik zie … bij Ahmed.",
+              "authorsVersion": [
+                "hen"
+              ],
+              "note": "Formal direct-object form. Everyday ze is also fine."
+            },
+            {
+              "prompt": "Ik geef … de sleutel.",
+              "authorsVersion": [
+                "hun"
+              ],
+              "note": "Hun is the standard indirect-object form without a preposition; ze is common in everyday speech."
+            },
+            {
+              "prompt": "Ik praat met … over de fiets.",
+              "authorsVersion": [
+                "hen"
+              ],
+              "note": "Use hen after met in the standard distinction; ze is also common in everyday speech."
+            },
+            {
+              "prompt": "Sofia kent … al.",
+              "authorsVersion": [
+                "hen"
+              ],
+              "note": "Formal direct-object form; ze is also natural in everyday speech."
+            },
+            {
+              "prompt": "Ahmed stuurt … een bericht.",
+              "authorsVersion": [
+                "hun"
+              ],
+              "note": "Hun is the standard indirect-object form without a preposition; ze is common in everyday speech."
+            },
+            {
+              "prompt": "Ik loop met … naar de winkel.",
+              "authorsVersion": [
+                "hen"
+              ],
+              "note": "Use hen after met in the standard distinction; ze is also common in everyday speech."
+            },
+            {
+              "prompt": "Ik zie … straks en ik geef … de pomp.",
+              "authorsVersion": [
+                "ze",
+                "hun"
+              ],
+              "note": "Ze is a natural direct object; hun is the standard indirect-object form. Ze is also common for indirect objects in everyday speech."
+            }
+          ]
+        }
+      },
+      "id": "b84aee4e-e836-43f8-9f50-3e44e640aa66"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Choose the right er form",
+      "id": "05c65733-4987-4344-90a1-af841b20f42d"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Replace the phrase naming a thing with ermee, ernaar or erover.",
+          "items": [
+            {
+              "prompt": "Ik luister naar het geluid. Ik luister … .",
+              "authorsVersion": [
+                "ernaar"
+              ],
+              "note": "Naar + it becomes ernaar."
+            },
+            {
+              "prompt": "Ik weet niet wat ik met de fiets moet doen. Ik weet niet wat ik … moet doen.",
+              "authorsVersion": [
+                "ermee"
+              ],
+              "note": "Met + it becomes ermee."
+            },
+            {
+              "prompt": "We praten over het probleem. We praten … .",
+              "authorsVersion": [
+                "erover"
+              ],
+              "note": "Over + it becomes erover."
+            },
+            {
+              "prompt": "Zou je naar de fiets kunnen kijken? Zou je … kunnen kijken?",
+              "authorsVersion": [
+                "ernaar"
+              ],
+              "note": "Naar the bicycle → ernaar."
+            },
+            {
+              "prompt": "Ahmed praat over het geluid. Ahmed praat … .",
+              "authorsVersion": [
+                "erover"
+              ],
+              "note": "Over the sound → erover."
+            },
+            {
+              "prompt": "Ik kan niets met deze pomp. Ik kan … niets doen.",
+              "authorsVersion": [
+                "ermee"
+              ],
+              "note": "Met this pump → ermee."
+            }
+          ]
+        }
+      },
+      "id": "60c55f9b-bcc7-4136-8a2e-16bab71dd898"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Ownership",
+      "id": "f2baff7c-5b35-4f33-8edd-741e861e40c3"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the missing possessive form.",
+          "items": [
+            {
+              "prompt": "Deze fiets is van … . (I)",
+              "authorsVersion": [
+                "mij"
+              ],
+              "note": "Van mij is a fixed pattern."
+            },
+            {
+              "prompt": "Is dit slot van jou? Ja, het is … .",
+              "authorsVersion": [
+                "het mijne"
+              ],
+              "note": "Het slot is a het-word."
+            },
+            {
+              "prompt": "Welke sleutel is van jou? … .",
+              "authorsVersion": [
+                "De mijne."
+              ],
+              "note": "De sleutel is a de-word."
+            },
+            {
+              "prompt": "Deze pomp is van mij. Die is … . (you)",
+              "authorsVersion": [
+                "de jouwe"
+              ],
+              "note": "De pomp is a de-word."
+            },
+            {
+              "prompt": "Is dit kaartje van mij? Nee, het is … . (you)",
+              "authorsVersion": [
+                "het jouwe"
+              ],
+              "note": "Het kaartje is a het-word."
+            },
+            {
+              "prompt": "De fiets is van jou. Hij is … . (I)",
+              "authorsVersion": [
+                "de mijne"
+              ],
+              "note": "De fiets is a de-word."
+            }
+          ]
+        }
+      },
+      "id": "498f5769-f15f-4718-b535-3797ba704388"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Make the request softer",
+      "id": "5e451b7a-1c99-4d9f-8628-46920f28cd54"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite as a polite request with zou. Keep the meaning.",
+          "items": [
+            {
+              "prompt": "Look at the bicycle, please. (je)",
+              "authorsVersion": [
+                "Zou je naar de fiets kunnen kijken?"
+              ],
+              "note": "Use zou + subject + kunnen + infinitive."
+            },
+            {
+              "prompt": "Help me, please. (u)",
+              "authorsVersion": [
+                "Zou u mij kunnen helpen?"
+              ],
+              "note": "Formal u; infinitives at the end."
+            },
+            {
+              "prompt": "Can you listen to the sound? (je)",
+              "authorsVersion": [
+                "Zou je naar het geluid kunnen luisteren?"
+              ],
+              "note": "A direct question is also polite; this is the softer form."
+            },
+            {
+              "prompt": "Could I ask a question?",
+              "authorsVersion": [
+                "Zou ik een vraag mogen stellen?"
+              ],
+              "note": "Mogen + stellen are infinitives at the end."
+            },
+            {
+              "prompt": "Please talk about the problem with me. (je)",
+              "authorsVersion": [
+                "Zou je met mij over het probleem willen praten?"
+              ],
+              "note": "Also fine: Zou je er met mij over willen praten? The separated er construction is not part of the new rule; prefer the noun."
+            },
+            {
+              "prompt": "Could you look at it? (u)",
+              "authorsVersion": [
+                "Zou u ernaar kunnen kijken?"
+              ],
+              "note": "Ernaar refers to a thing; u is formal."
+            }
+          ]
+        }
+      },
+      "id": "119a808e-7d21-4fe7-9650-81e55fc95a7c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Word order",
+      "id": "b714320c-bd57-4ade-bf07-b706a00f9cdc"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the words in order. Write a complete sentence.",
+          "items": [
+            {
+              "prompt": "Put in order: ernaar / zou / kijken / kunnen / je / ?",
+              "authorsVersion": [
+                "Zou je ernaar kunnen kijken?"
+              ],
+              "note": "Question inversion follows zou; infinitives at the end."
+            },
+            {
+              "prompt": "Put in order: straks / ik / hun / geef / de sleutels",
+              "authorsVersion": [
+                "Straks geef ik hun de sleutels."
+              ],
+              "note": "Fronted time expression: verb before subject."
+            },
+            {
+              "prompt": "Put in order: ermee / wat / moet / ik / doen / ?",
+              "authorsVersion": [
+                "Wat moet ik ermee doen?"
+              ],
+              "note": "Question word + finite verb; infinitive at the end."
+            },
+            {
+              "prompt": "Put in order: van / deze / is / jou / fiets / ?",
+              "authorsVersion": [
+                "Is deze fiets van jou?"
+              ],
+              "note": "Yes/no question: finite verb first."
+            },
+            {
+              "prompt": "Put in order: hen / met / ik / praat / morgen",
+              "authorsVersion": [
+                "Ik praat morgen met hen."
+              ],
+              "note": "Hen follows the preposition met."
+            },
+            {
+              "prompt": "Put in order: het mijne / slot / is / dit",
+              "authorsVersion": [
+                "Dit slot is het mijne."
+              ],
+              "note": "Het slot is a het-word."
+            }
+          ]
+        }
+      },
+      "id": "f8e4dc7d-d936-44fb-8e8f-c26bcf3c7db8"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Complete the exchange",
+      "id": "7df75b81-621f-451b-a625-f19e8da1265c"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each short exchange. One answer per blank.",
+          "items": [
+            {
+              "prompt": "Sofia: Zou je … kunnen luisteren? / Ahmed: Ja, ik luister … .",
+              "authorsVersion": [
+                "ernaar",
+                "ernaar"
+              ],
+              "note": "Naar the sound becomes ernaar."
+            },
+            {
+              "prompt": "Henk: Is die sleutel van jou? / Sofia: Nee, die is niet van … .",
+              "authorsVersion": [
+                "mij"
+              ],
+              "note": "Van mij is the ownership pattern."
+            },
+            {
+              "prompt": "Noor en Fleur komen straks. Sofia: Ik geef … de fietspomp. / Henk: Goed, ik praat met … .",
+              "authorsVersion": [
+                "hun",
+                "hen"
+              ],
+              "note": "Noor and Fleur are the recipients; use hun without a preposition and hen after met. Everyday ze is also common."
+            },
+            {
+              "prompt": "Sofia: Is dit slot van jou? / Noor: Ja, het is … .",
+              "authorsVersion": [
+                "het jouwe"
+              ],
+              "note": "Het slot is a het-word."
+            },
+            {
+              "prompt": "Sofia: Ahmed, luister je naar het geluid? / Ahmed: Ja, ik luister … .",
+              "authorsVersion": [
+                "ernaar"
+              ],
+              "note": "Ernaar replaces naar het geluid."
+            },
+            {
+              "prompt": "Sofia: Zou u … kunnen helpen? / Medewerker: Ja, natuurlijk.",
+              "authorsVersion": [
+                "mij"
+              ],
+              "note": "Mij is the known object form in this request."
+            }
+          ]
+        }
+      },
+      "id": "d85dd00b-e23b-4322-9467-b56da18f8cad"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into Dutch",
+      "id": "ede018bd-ad57-4236-830f-8b01697e1b36"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural Dutch.",
+          "items": [
+            {
+              "prompt": "Could you take a look at it? (informal)",
+              "authorsVersion": [
+                "Zou je ernaar kunnen kijken?"
+              ],
+              "note": "Ernaar refers to a thing already mentioned."
+            },
+            {
+              "prompt": "I give them the key.",
+              "authorsVersion": [
+                "Ik geef hun de sleutel."
+              ],
+              "note": "Hun is the standard indirect-object form; ze is common in everyday speech."
+            },
+            {
+              "prompt": "I am talking with them.",
+              "authorsVersion": [
+                "Ik praat met hen."
+              ],
+              "note": "Use hen after met in the standard distinction; ze is also common in everyday speech."
+            },
+            {
+              "prompt": "Is this bicycle yours?",
+              "authorsVersion": [
+                "Is deze fiets van jou?"
+              ],
+              "note": "Van jou is a simple ownership form."
+            },
+            {
+              "prompt": "Mine is smaller. (the pump)",
+              "authorsVersion": [
+                "De mijne is kleiner."
+              ],
+              "note": "De fietspomp is a de-word; de mijne."
+            },
+            {
+              "prompt": "I do not know what to do with it.",
+              "authorsVersion": [
+                "Ik weet niet wat ik ermee moet doen."
+              ],
+              "note": "Ermee = met de fiets; familiar subordinate word order from row 24-b."
+            }
+          ]
+        }
+      },
+      "id": "16dc02bb-bc15-4576-827d-5f7c4dd986ba"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Translate into English",
+      "id": "dcc848e8-b2f5-4d9a-a24b-f2b5709b20b2"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Ik praat met hen over de fiets.",
+              "authorsVersion": [
+                "I am talking with them about the bicycle."
+              ],
+              "note": "Hen follows met."
+            },
+            {
+              "prompt": "Ik geef hun straks de sleutels.",
+              "authorsVersion": [
+                "I’ll give them the keys later."
+              ],
+              "note": "Hun receives the keys."
+            },
+            {
+              "prompt": "Deze fietspomp is van mij. De jouwe is kleiner.",
+              "authorsVersion": [
+                "This bicycle pump is mine. Yours is smaller."
+              ],
+              "note": "De jouwe refers to de fietspomp."
+            },
+            {
+              "prompt": "Zou u mij kunnen helpen?",
+              "authorsVersion": [
+                "Could you help me?"
+              ],
+              "note": "A polite formal request."
+            },
+            {
+              "prompt": "Ik weet niet wat ik ermee moet doen.",
+              "authorsVersion": [
+                "I don’t know what to do with it."
+              ],
+              "note": "Ermee = met it."
+            },
+            {
+              "prompt": "We praten erover na de les.",
+              "authorsVersion": [
+                "We’ll talk about it after class."
+              ],
+              "note": "Erover = over it."
+            }
+          ]
+        }
+      },
+      "id": "43f19d4b-41aa-4018-994e-1a44acaf1a38"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: a small question at the bike shop",
+      "id": "703c50a6-0049-4000-be59-764c8cff96b1"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Read and answer in Dutch",
+      "id": "3f3e4a26-7f51-4015-8bf4-d07e01ced179"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the passage and answer each question in Dutch.",
+          "items": [
+            {
+              "prompt": "Waar is Sofia?",
+              "authorsVersion": [
+                "Bij Ahmed in de fietsenwinkel in de Kanaalstraat."
+              ],
+              "note": "The passage names the shop and street."
+            },
+            {
+              "prompt": "Wat hoort Sofia aan haar fiets?",
+              "authorsVersion": [
+                "Ze hoort een vreemd geluid."
+              ],
+              "note": "Rephrase with a full answer."
+            },
+            {
+              "prompt": "Wanneer hoort ze het geluid vooral?",
+              "authorsVersion": [
+                "Vooral als ze fietst."
+              ],
+              "note": "Present tense describes a repeated situation."
+            },
+            {
+              "prompt": "Wat vraagt Sofia aan Ahmed?",
+              "authorsVersion": [
+                "Ze vraagt of hij naar haar fiets wil luisteren."
+              ],
+              "note": "A complete answer; also: Ze vraagt of hij ernaar wil luisteren."
+            },
+            {
+              "prompt": "Wat vraagt Ahmed aan Sofia?",
+              "authorsVersion": [
+                "Hij vraagt wanneer ze het geluid vooral hoort."
+              ],
+              "note": "The question is repeated as an embedded clause."
+            },
+            {
+              "prompt": "Van wie zijn de sleutels?",
+              "authorsVersion": [
+                "Ze zijn van Ahmed."
+              ],
+              "note": "The passage says the keys belong to Ahmed."
+            },
+            {
+              "prompt": "Wat doet Sofia met de sleutels?",
+              "authorsVersion": [
+                "Ze geeft de sleutels straks aan Ahmed."
+              ],
+              "note": "The passage says Ahmed owns the keys and Sofia gives them to him."
+            },
+            {
+              "prompt": "Is de fietspomp van Henk?",
+              "authorsVersion": [
+                "Nee, die is van Noor."
+              ],
+              "note": "The passage says the pump belongs to Noor."
+            }
+          ],
+          "passage": {
+            "title": "In de fietsenwinkel",
+            "content": "Op woensdag 20 januari gaat Sofia naar de fietsenwinkel van Ahmed in de Kanaalstraat. Haar fiets maakt een vreemd geluid. Ahmed vraagt: “Wanneer hoor je het geluid?” Sofia zegt: “Vooral als ik fiets.”\n“Zou je ernaar kunnen luisteren?” vraagt ze. Ahmed zegt: “Ja, natuurlijk. Zet je fiets maar hier.” Sofia weet niet wat ze ermee moet doen.\nBij de deur ziet Sofia een paar sleutels en een fietspomp. Ze vraagt aan Henk van wie de sleutels zijn. Henk zegt: “Die sleutels zijn van Ahmed. De pomp is van Noor, niet van mij.” Sofia zegt: “Ik geef de sleutels straks aan Ahmed. De pomp zet ik bij de deur.”"
+          }
+        }
+      },
+      "id": "dd0805b8-50ac-4f24-861d-79161726817f"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "70d97470-0d8d-4508-b95b-efc733fa8d32"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write 3–4 sentences asking someone for help with a small problem. Use one polite request and one object or ownership form.",
+          "items": [
+            {
+              "prompt": "Write 3–4 sentences about a small problem and ask for help.",
+              "authorsVersion": [
+                "Mijn fiets maakt een vreemd geluid. Zou je ernaar kunnen luisteren? Ik weet niet wat ik ermee moet doen. Is deze pomp van jou?"
+              ],
+              "note": "Model answer. Other simple problems and a direct polite request are fine."
+            }
+          ]
+        }
+      },
+      "id": "cdf4e6c9-d27e-486c-b9c3-91f0e7a7f38a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "7ec2ef9d-d126-4be6-a619-97e5f8d1a972"
+    },
+    {
+      "type": "paragraph",
+      "content": "Remember: choose the form by its job in the sentence, and keep the noun when that is clearer.",
+      "id": "e34ae35f-f1da-4f5b-8071-b9ee6255052d"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Hen is a direct object or follows a preposition; hun is an indirect object without one. Everyday ze is common too.",
+      "id": "119e537e-166a-467d-9009-a63105e64b9c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use ermee, ernaar and erover for a thing when the preposition fits; repeat the noun if clearer.",
+      "id": "58a5a021-9a7a-463f-95e4-65d27f3d548f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Use van mij/jou; de mijne/jouwe for a missing de-word and het mijne/jouwe for a missing het-word.",
+      "id": "948729d4-0dba-46d1-b97b-f319eb268c95"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Zou + subject + infinitives makes a request softer; it is optional.",
+      "id": "c56e8790-81cf-4fc9-bb71-feb83c6c97d7"
+    },
+    {
+      "type": "divider",
+      "id": "a456d867-6d25-4907-9a84-768a1711fbab"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: a question for Ahmed",
+      "description": "Inside Ahmed’s practical bicycle shop on the Kanaalstraat, Sofia stands beside her familiar bicycle while Ahmed listens near the wheel. Friendly, low stakes; no visible damage or repair work.",
+      "alt": "Sofia asks Ahmed about a sound from her bicycle."
+    },
+    {
+      "afterHeading": "Who owns it?",
+      "description": "Inside Ahmed’s practical bicycle shop, Henk helps Sofia identify a ring of keys and a bicycle pump near the workbench.",
+      "alt": "Sofia and Henk identify keys and a bicycle pump."
+    }
+  ],
+  "id": "b1de9d01-4a70-43ab-8bc3-fab999f3830c"
+}

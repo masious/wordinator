@@ -1,7 +1,8 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { courseDashboardResponseSchema } from "@wordinator/contracts/learning";
 import { beforeEach, describe, expect, it } from "vitest";
 import { addLesson, blocks, createCourse, documentOf, errorCode, join, request, resetDatabase, seedGroup, seedUser, signIn, word } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 beforeEach(resetDatabase);
 
@@ -46,7 +47,7 @@ describe("Course dashboard", () => {
     await addLesson(groupId, hidden.id, owner, "Secret", { document: documentOf(blocks.paragraph("Secret")) });
     const dashboard = courseDashboardResponseSchema.parse(await (await request(`/api/groups/${groupId}/course-dashboard`, reader)).json());
     expect(JSON.stringify(dashboard)).not.toContain(hidden.id);
-    expect((await SELF.fetch(`https://wordinator.test/api/groups/${groupId}/course-dashboard`)).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test/api/groups/${groupId}/course-dashboard`)).status).toBe(401);
     const outsiderId = await seedUser("outsider"); await seedGroup("beta", outsiderId);
     const outsider = await request(`/api/groups/${groupId}/course-dashboard`, await signIn("outsider"));
     expect(outsider.status).toBe(404);

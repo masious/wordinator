@@ -1,9 +1,10 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { aiAnalyticsResponseSchema, learningAnalyticsResponseSchema, speechAnalyticsResponseSchema } from "@wordinator/contracts/admin";
 import { DEFAULT_AI_SETTINGS, type AiSettings } from "@wordinator/contracts/ai";
 import { beforeEach, describe, expect, it } from "vitest";
 import { readAiSettings } from "../src/ai";
 import { addLesson, createCourse, errorCode, join, request, resetDatabase, seedGroup, seedUser, signIn } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 // Superuser routes (C14e, docs/settings-and-administration.md#superuser): the flag check on every route, counts by UTC day
 // and account over seeded rows, no text in the responses, and the AI settings round trip.
@@ -17,7 +18,7 @@ const ROUTES = [
   ["GET", "/api/admin/ai-settings"],
   ["PUT", "/api/admin/ai-settings"],
 ] as const;
-const call = (method: string, path: string, cookie?: string) => SELF.fetch(`https://wordinator.test${path}`, {
+const call = (method: string, path: string, cookie?: string) => fetchWorker(`https://wordinator.test${path}`, {
   method, headers: { ...(cookie ? { cookie } : {}), ...(method === "PUT" ? { "content-type": "application/json" } : {}) },
   body: method === "PUT" ? JSON.stringify(DEFAULT_AI_SETTINGS) : undefined,
 });
@@ -256,7 +257,7 @@ describe("AI settings", () => {
       expect(response.status, JSON.stringify(body)).toBe(400);
       expect(await errorCode(response)).toBe("AI_SETTINGS_INVALID");
     }
-    const malformed = await SELF.fetch("https://wordinator.test/api/admin/ai-settings", { method: "PUT", headers: { cookie: admin, "content-type": "application/json" }, body: "{" });
+    const malformed = await fetchWorker("https://wordinator.test/api/admin/ai-settings", { method: "PUT", headers: { cookie: admin, "content-type": "application/json" }, body: "{" });
     expect(malformed.status).toBe(400);
     expect(await readAiSettings(env.DB)).toEqual(DEFAULT_AI_SETTINGS);
   });

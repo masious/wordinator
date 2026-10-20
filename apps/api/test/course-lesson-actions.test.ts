@@ -1,4 +1,4 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { outlineResponseSchema } from "@wordinator/contracts";
 import { courseDetailResponseSchema, lessonImageUploadResponseSchema } from "@wordinator/contracts/lesson-document";
 import { beforeEach, describe, expect, it } from "vitest";
@@ -6,6 +6,7 @@ import {
   addLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, publishLesson, readLesson, request, resetDatabase, saveDraft, seedGroup, seedUser,
   signIn, word,
 } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 // The course page's per-lesson actions (Review words, Practice again) are offered from counts in the outline, so learners never
 // load a lesson just to find out it has nothing to review.
@@ -27,7 +28,7 @@ async function readCourse(path: string, cookie: string) {
 const png = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 3, 0, 0, 0, 2]);
 async function uploadImage(lessonPathValue: string, cookie: string) {
   const form = new FormData(); form.set("image", new File([png.slice().buffer as ArrayBuffer], "picture.png", { type: "image/png" }));
-  const response = await SELF.fetch(`https://wordinator.test${lessonPathValue}/images`, { method: "POST", headers: { cookie }, body: form });
+  const response = await fetchWorker(`https://wordinator.test${lessonPathValue}/images`, { method: "POST", headers: { cookie }, body: form });
   expect(response.status).toBe(201);
   return lessonImageUploadResponseSchema.parse(await response.json());
 }
@@ -95,7 +96,7 @@ describe("Lesson action counts", () => {
     expect(counts((await readCourse(coursePath(otherGroup, betaCourse.id), outsider)).outline)).toEqual([["Beta", 1, 0]]);
     expect(counts((await readCourse(path, reader)).outline)).toEqual([["Rich", 3, 2], ["Plain", 0, 0]]);
     expect((await request(coursePath(groupId, betaCourse.id), reader)).status).toBe(404);
-    expect((await SELF.fetch(`https://wordinator.test${path}`)).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test${path}`)).status).toBe(401);
     await env.DB.prepare("UPDATE memberships SET state = 'left' WHERE group_id = ? AND user_id = ?").bind(groupId, readerId).run();
     expect((await request(path, reader)).status).toBe(404);
   });

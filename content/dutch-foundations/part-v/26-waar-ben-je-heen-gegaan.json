@@ -1,0 +1,1451 @@
+{
+  "title": "Waar ben je heen gegaan?",
+  "goal": "Talk about a journey or a change of place with zijn and a past participle.",
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: catching up again",
+      "description": "Sofia and Noor talk at the kitchen table in Sofia's Utrecht apartment, with a simple map of Utrecht nearby.",
+      "alt": "Sofia tells Noor about her return to Utrecht and a walk in the city."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "heading",
+      "props": {
+        "level": 1
+      },
+      "content": "Waar ben je heen gegaan?",
+      "id": "7d985d6c-15b5-4215-abff-ce0551cf9f98"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Tuesday 5 January 2027. Sofia and Noor continue their holiday catch-up. Sofia tells Noor about returning to Utrecht and taking a short walk in the city. In this lesson you will use zijn with a past participle for a small set of movement and change verbs.",
+      "id": "c3b5310d-4763-40fc-9d3a-15e2bf700022"
+    },
+    {
+      "type": "paragraph",
+      "content": "Colours: finite verbs are blue, subjects are green, places are purple, and the new participles are bold.",
+      "id": "60798312-a459-4d1e-8fbe-92f3d77ddb91"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Story: catching up again",
+      "id": "f8715a9d-caa0-4270-8e64-96491bc08b08"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Hoi Sofia! Hoe gaat het?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Goed, dank je. Ik ben weer terug in Utrecht."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Fijn! Ben je zondag aangekomen?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ik ben zondag teruggekomen."
+          },
+          {
+            "speaker": "Noor",
+            "text": "En gisteren? Ben je thuisgebleven?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik ben naar het centrum gegaan."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ben je ook naar het park gegaan?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, en daarna ben ik naar huis gegaan."
+          }
+        ]
+      },
+      "id": "1fa1ee41-5c92-4c5c-99a3-7775bdd2b8d7"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "content": [
+        {
+          "text": "For this lesson's selected movement and change verbs, use ",
+          "styles": {}
+        },
+        {
+          "text": "zijn + past participle",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ". The finite form of zijn changes; the participle goes at the end: Sofia is naar huis gegaan.",
+          "styles": {}
+        }
+      ],
+      "id": "3ebe42f7-18c2-487a-a2e8-d97a50f724d5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "A small set of verbs with zijn",
+      "id": "42ea54e1-baba-4deb-ba3c-347a2cc6bb78"
+    },
+    {
+      "type": "paragraph",
+      "content": "You already know how a participle sits at the end from row 25. Here, learn these complete verb forms as useful chunks. The lesson does not explain how irregular participles are made.",
+      "id": "322e0783-7667-4d90-b9ed-67aa636b780c"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Infinitive",
+              "id": "ec6c031b-7d6c-480c-acd3-35aa73f8f3da"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "gaan",
+              "id": "39bfc342-7e88-4b57-b616-27ed468b10ce"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "komen",
+              "id": "59299643-e316-4862-aea3-70ce5c40e9b7"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "aankomen",
+              "id": "51342e38-88b1-44e6-82dc-32ff93bcf710"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "terugkomen",
+              "id": "78a7f0d2-283e-4b33-9f6b-d09093958557"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "vertrekken",
+              "id": "0d8bd798-ba15-4acc-9159-b4266a62d68e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "blijven",
+              "id": "08524017-6cfd-4598-88d9-c3bcb1b2b19e"
+            }
+          ],
+          "id": "c9885b20-6f94-4352-9876-3ee416133ade"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Participle",
+              "id": "a174d390-a12f-4af6-a153-39effadb5eb8"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "gegaan",
+              "id": "4e5e77ed-35bc-45e4-9514-d625b12c6b64"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "gekomen",
+              "id": "477ab094-13de-4972-896f-baf38ed89b4d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "aangekomen",
+              "id": "d9069367-4c53-4032-ba48-9dfe53ce0f17"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "teruggekomen",
+              "id": "34d6753d-cd36-49d1-946c-b6cddaab616d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "vertrokken",
+              "id": "bf791022-ba16-423e-8415-dc93eca57f4f"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "gebleven",
+              "id": "f5d7b2b9-822f-4df5-adb9-993849ce0142"
+            }
+          ],
+          "id": "be37d8ac-80af-4c2e-94d0-c8097f7faf7d"
+        }
+      ],
+      "id": "fd10d977-72e1-47c8-98c6-05f529c9a49a"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Ik ",
+          "styles": {}
+        },
+        {
+          "text": "ben",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " zondag ",
+          "styles": {}
+        },
+        {
+          "text": "aangekomen",
+          "styles": {
+            "bold": true,
+            "backgroundColor": "yellow"
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "I arrived on Sunday.",
+        "note": "Aankomen is one of this lesson's selected verbs with zijn."
+      },
+      "id": "8c301d1d-6712-4bce-9801-177f950d1f3c"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Noor ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " thuis ",
+          "styles": {}
+        },
+        {
+          "text": "gebleven",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "Noor stayed at home.",
+        "note": "Learn gebleven as a complete participle."
+      },
+      "id": "cdd37ffe-6773-42b4-87b7-18566c02a4ed"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Wij ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "zijn",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " naar het centrum ",
+          "styles": {
+            "textColor": "purple"
+          }
+        },
+        {
+          "text": "gegaan",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "We went to the city centre.",
+        "note": "The participle stays at the end."
+      },
+      "id": "8cc426d9-986d-420c-97ca-783c2597dbc3"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "content": "Keep the same order as row 25: subject + finite zijn + other information + participle. In a yes/no question, finite zijn comes first.",
+      "id": "f992870f-73f8-480a-a031-f987ec6e6b49"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "",
+          "styles": {}
+        },
+        {
+          "text": "Ben",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " je naar Utrecht ",
+          "styles": {}
+        },
+        {
+          "text": "teruggekomen",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "?",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "Did you return to Utrecht?",
+        "note": "A yes/no question starts with the finite verb ben."
+      },
+      "id": "c4049b73-a81a-4707-8691-3022a212836d"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Sofia ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " gisteren door het park ",
+          "styles": {}
+        },
+        {
+          "text": "gegaan",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "Sofia went through the park yesterday.",
+        "note": "Gaan can describe going through a place; the example describes Sofia’s Monday walk."
+      },
+      "id": "67ddcd27-d0fd-4a20-b9a8-8dd8988c9bf3"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Daan ",
+          "styles": {
+            "textColor": "green"
+          }
+        },
+        {
+          "text": "is",
+          "styles": {
+            "textColor": "blue"
+          }
+        },
+        {
+          "text": " vroeg ",
+          "styles": {}
+        },
+        {
+          "text": "vertrokken",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "Daan left early.",
+        "note": "Vertrekken is a selected change-of-location verb; learn vertrokken as a whole form."
+      },
+      "id": "1cef7b29-b81a-4a30-b635-a80c2431ebf1"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "content": [
+        {
+          "text": "Put the participle at the end: ",
+          "styles": {}
+        },
+        {
+          "text": "*Ik ben gegaan naar huis.",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        {
+          "text": " → ",
+          "styles": {}
+        },
+        {
+          "text": "Ik ben naar huis gegaan.",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "",
+          "styles": {}
+        }
+      ],
+      "id": "2814b930-36eb-4761-a6d1-85fac6e520cc"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "Destination and location",
+      "id": "b997bfbf-dee0-4008-9310-42924c627b3e"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use naar for a destination: naar huis, naar het centrum. Use thuis when someone is at home. The forms answer different questions: Waar ga je heen? Naar huis. Waar ben je? Thuis.",
+      "id": "27a6c8ac-b598-4b4e-8f61-fa675e238baa"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Waar ben je heen ",
+          "styles": {}
+        },
+        {
+          "text": "gegaan",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "? — Naar huis.",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "Where did you go? — Home.",
+        "note": "Heen is part of the question chunk; naar names the destination."
+      },
+      "id": "ca94bdc0-7224-4198-8fad-a2ea91d8d4b1"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Ik ben onderweg naar huis.",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "I am on my way home.",
+        "note": "Onderweg describes the journey in progress; this sentence is in the present."
+      },
+      "id": "d6048d44-8cfe-4703-bf11-156c0fd7e07d"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "aankomen",
+              "meaning": "to arrive",
+              "forms": "hij komt aan · kwam aan · aangekomen",
+              "note": "The infinitive is familiar from the timetable lesson; the participle is new.",
+              "id": "70ba471f-e92b-414c-a0ac-59ed2d71a90a"
+            },
+            {
+              "term": "terugkomen",
+              "meaning": "to come back",
+              "forms": "hij komt terug · kwam terug · teruggekomen",
+              "note": "The participle is new here; use it as a complete form.",
+              "id": "231cae6b-16b2-4a02-bf28-034378b5ba09"
+            },
+            {
+              "term": "vertrekken",
+              "meaning": "to leave, depart",
+              "forms": "hij vertrekt · vertrok · vertrokken",
+              "note": "The participle is new here; use it as a complete form.",
+              "id": "9986bc09-6bc9-4bff-98c1-37a50e19bedd"
+            },
+            {
+              "term": "blijven",
+              "meaning": "to stay",
+              "forms": "hij blijft · bleef · gebleven",
+              "note": "The participle is new here; use it as a complete form.",
+              "id": "3fdc22b4-c990-4e37-9326-e439bb801f29"
+            },
+            {
+              "term": "de aankomst",
+              "meaning": "arrival",
+              "forms": "de aankomsten",
+              "example": "De aankomst in Utrecht is op zondag.",
+              "id": "60126b37-dc01-4e77-9fdc-2a1f86c57e80"
+            },
+            {
+              "term": "de terugkeer",
+              "meaning": "return",
+              "forms": "de terugkeren",
+              "example": "Sofia's terugkeer naar Utrecht is op zondag.",
+              "id": "f5d80197-c74f-49c5-98fa-f727cb9e1716"
+            },
+            {
+              "term": "de bestemming",
+              "meaning": "destination",
+              "forms": "de bestemmingen",
+              "example": "Utrecht is mijn bestemming.",
+              "id": "de1c8542-b127-4f50-84c1-1e646921d1a2"
+            },
+            {
+              "term": "de terugweg",
+              "meaning": "the way back",
+              "forms": "de terugwegen",
+              "example": "De terugweg naar huis is kort.",
+              "id": "fc696a36-398b-45f4-88ce-158a20a013ea"
+            },
+            {
+              "term": "onderweg",
+              "meaning": "on the way",
+              "example": "Ik ben onderweg naar huis.",
+              "id": "a9f6d4d6-9ac9-409c-a5cf-9e3c2ecfd1d7"
+            },
+            {
+              "term": "naar huis",
+              "meaning": "homeward; to home",
+              "example": "Ik ben naar huis gegaan.",
+              "id": "d4d8f33e-8829-449b-927b-58cfa6d8057c"
+            },
+            {
+              "term": "Waar ben je heen gegaan?",
+              "meaning": "Where did you go?",
+              "example": "Waar ben je heen gegaan? — Naar het centrum.",
+              "id": "d294d95c-1fc5-4a29-b2ff-5052e9f9e3ac"
+            },
+            {
+              "term": "Ben je aangekomen?",
+              "meaning": "Have you arrived?",
+              "example": "Ben je zondag aangekomen?",
+              "id": "b90cdcc9-3819-44ee-913b-e9b3c9e1acf4"
+            },
+            {
+              "term": "Ik ben teruggekomen.",
+              "meaning": "I came back.",
+              "example": "Ik ben zondag teruggekomen.",
+              "id": "2383b883-e39c-45fb-ae4c-a9a668d49766"
+            },
+            {
+              "term": "Ik ben thuisgebleven.",
+              "meaning": "I stayed at home.",
+              "example": "Gisteren ben ik thuisgebleven.",
+              "id": "fbfa1eb0-e40b-4973-898d-aa966c26f887"
+            },
+            {
+              "term": "We zijn naar het centrum gegaan.",
+              "meaning": "We went to the city centre.",
+              "example": "We zijn naar het centrum gegaan.",
+              "id": "e1c8cb4c-0bf2-4cc8-af35-b0b1c6b213a2"
+            },
+            {
+              "term": "de eindbestemming",
+              "meaning": "final destination",
+              "forms": "de eindbestemmingen",
+              "note": "New focus here: a journey as a movement from one place to another; previously used for travel by train.",
+              "id": "16eda50f-2f09-4ce9-b17d-0f3f11c22ff3",
+              "example": "Utrecht is mijn eindbestemming."
+            },
+            {
+              "term": "door het park",
+              "meaning": "through the park",
+              "example": "Sofia is door het park gegaan.",
+              "id": "9d9ed07a-1e80-4381-b523-93ac88c76014"
+            }
+          ]
+        }
+      },
+      "id": "1aa2ac5c-a4f1-446b-819e-6793485eed34"
+    },
+    {
+      "type": "divider",
+      "id": "616c3087-58fd-4bc3-8bed-3c8789ba7e22"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "A short walk in Utrecht",
+      "id": "6e7c6ada-0750-4bf3-a129-c347e646f54c"
+    },
+    {
+      "type": "paragraph",
+      "content": "On Monday 4 January, Sofia went for a short walk in the city. These examples use familiar places and past participles as whole forms.",
+      "id": "8fdcf3e8-51a5-4920-9a3c-597c64da70b8"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Ik ben naar het centrum ",
+          "styles": {}
+        },
+        {
+          "text": "gegaan",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "I went to the city centre.",
+        "note": "Destination follows naar; gegaan is at the end."
+      },
+      "id": "8c210185-f548-4258-bd91-3ff88499085c"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Noor is naar de markt ",
+          "styles": {}
+        },
+        {
+          "text": "gegaan",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "Noor went to the market.",
+        "note": "A familiar destination from row 12."
+      },
+      "id": "44c4ad6f-aac4-4bd5-813a-04c0aedf036e"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Sofia is door het park ",
+          "styles": {}
+        },
+        {
+          "text": "gegaan",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "Sofia went through the park.",
+        "note": "Door the park describes the route."
+      },
+      "id": "40017fb2-7cb2-403a-a17d-c397933c7a78"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Ben je naar huis ",
+          "styles": {}
+        },
+        {
+          "text": "gegaan",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": "?",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "Did you go home?",
+        "note": "Question order: finite zijn before the subject."
+      },
+      "id": "37296ee8-375e-4243-b6c4-1345d6325599"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "We zijn samen ",
+          "styles": {}
+        },
+        {
+          "text": "teruggekomen",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "We came back together.",
+        "note": "Samen is familiar; teruggekomen is the target participle."
+      },
+      "id": "77388d31-2463-4394-9da4-3f1908be239b"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "De trein is om acht uur ",
+          "styles": {}
+        },
+        {
+          "text": "vertrokken",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "The train left at eight o'clock.",
+        "note": "A train can be the subject of vertrekken. This is a practice example, not a new story event."
+      },
+      "id": "4af25a68-9300-471c-83bb-caad5ce1d078"
+    },
+    {
+      "type": "example",
+      "content": [
+        {
+          "text": "Sofia is zondag in Utrecht ",
+          "styles": {}
+        },
+        {
+          "text": "aangekomen",
+          "styles": {
+            "bold": true
+          }
+        },
+        {
+          "text": ".",
+          "styles": {}
+        }
+      ],
+      "props": {
+        "translation": "Sofia arrived in Utrecht on Sunday.",
+        "note": "This does not state how she travelled."
+      },
+      "id": "0fc4ac3e-a7fc-407f-b3a9-85c0c238a5c8"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Remember the complete forms:",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "gaan → gegaan; komen → gekomen",
+          "id": "f866fdc4-dfb8-4b89-9bc7-5a107e837121"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "aankomen → aangekomen; terugkomen → teruggekomen",
+          "id": "984a8f0f-bf8c-4bbd-88cc-25739f00f768"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "vertrekken → vertrokken; blijven → gebleven",
+          "id": "f0176b46-4dd4-487e-863e-8d28fd81db94"
+        }
+      ],
+      "id": "6c01091f-d252-4e4b-b4aa-8cb5085abcad"
+    },
+    {
+      "type": "callout",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "content": "Learn the six infinitive–participle pairs as complete chunks. Row 27 will explain how these participle forms are built.",
+      "id": "9f626cdf-1c59-4df9-ab12-c09d0aa78d87"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Gisteren ben ik naar het centrum gegaan."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ben je ook naar de gracht gegaan?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ja, ik ben langs de gracht gegaan."
+          },
+          {
+            "speaker": "Noor",
+            "text": "We zijn met de trein naar Zandvoort gegaan."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ben je daar met Daan en mij naartoe gegaan?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, ik ben met jullie naar Zandvoort gegaan."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Daar zijn we in een strandcafé gebleven."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Wat gezellig!"
+          }
+        ]
+      },
+      "id": "838c88f5-e1d1-4f84-82bd-9d0f31bfb35e"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "langs de gracht",
+              "meaning": "along the canal",
+              "example": "Ik ben langs de gracht gegaan.",
+              "id": "a4a64798-a705-4451-a92d-1e0fc80eca47"
+            }
+          ]
+        }
+      },
+      "id": "b9fbb15a-ae65-4867-9bbb-e645c2dbc683"
+    },
+    {
+      "type": "divider",
+      "id": "fd6da697-0f01-4ba6-b580-73f7860926a7"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Practice",
+      "id": "a194c601-abd3-4720-9923-cb0d94a626d5"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "1. Choose the right form",
+      "id": "1bebff81-9826-48a6-bd6f-074fa33b2cf2"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete each sentence with the correct form of zijn and the participle in brackets.",
+          "items": [
+            {
+              "prompt": "Sofia … zondag in Utrecht … . (aankomen)",
+              "authorsVersion": [
+                "is",
+                "aangekomen"
+              ],
+              "note": "Sofia takes is; put the participle at the end."
+            },
+            {
+              "prompt": "Wij … naar huis … . (gaan)",
+              "authorsVersion": [
+                "zijn",
+                "gegaan"
+              ],
+              "note": "Wij takes zijn; the destination comes before the participle."
+            },
+            {
+              "prompt": "Wij … thuis … . (blijven)",
+              "authorsVersion": [
+                "zijn",
+                "gebleven"
+              ],
+              "note": "Wij takes zijn; learn gebleven as a whole form."
+            },
+            {
+              "prompt": "Daan … vroeg … . (vertrekken)",
+              "authorsVersion": [
+                "is",
+                "vertrokken"
+              ],
+              "note": "Daan takes is; vertrokken is the selected participle."
+            },
+            {
+              "prompt": "Ik … gisteren … . (terugkomen)",
+              "authorsVersion": [
+                "ben",
+                "teruggekomen"
+              ],
+              "note": "Ik takes ben; teruggekomen stays at the end."
+            },
+            {
+              "prompt": "Jullie … samen … . (komen)",
+              "authorsVersion": [
+                "zijn",
+                "gekomen"
+              ],
+              "note": "Jullie takes zijn."
+            },
+            {
+              "prompt": "De trein … om acht uur … . (vertrekken)",
+              "authorsVersion": [
+                "is",
+                "vertrokken"
+              ],
+              "note": "A singular subject takes is."
+            }
+          ]
+        }
+      },
+      "id": "b6409428-3257-405a-9df5-ae451ad3d842"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "2. Recall the participle",
+      "id": "15cf1322-3817-4942-8850-ec07c8ebaa6e"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write the past participle. Learn these forms as complete words.",
+          "items": [
+            {
+              "prompt": "gaan → …",
+              "authorsVersion": [
+                "gegaan"
+              ],
+              "note": "This irregular form is introduced as a whole; its pattern is for row 27."
+            },
+            {
+              "prompt": "komen → …",
+              "authorsVersion": [
+                "gekomen"
+              ],
+              "note": "This irregular form is introduced as a whole; its pattern is for row 27."
+            },
+            {
+              "prompt": "aankomen → …",
+              "authorsVersion": [
+                "aangekomen"
+              ],
+              "note": "Keep aan together at the beginning of this participle."
+            },
+            {
+              "prompt": "terugkomen → …",
+              "authorsVersion": [
+                "teruggekomen"
+              ],
+              "note": "Keep terug together at the beginning of this participle."
+            },
+            {
+              "prompt": "vertrekken → …",
+              "authorsVersion": [
+                "vertrokken"
+              ],
+              "note": "Learn vertrokken as a complete form."
+            },
+            {
+              "prompt": "blijven → …",
+              "authorsVersion": [
+                "gebleven"
+              ],
+              "note": "Learn gebleven as a complete form."
+            },
+            {
+              "prompt": "Fill in: Ik ben naar huis … . (gaan)",
+              "authorsVersion": [
+                "gegaan"
+              ],
+              "note": "The participle closes the sentence."
+            }
+          ]
+        }
+      },
+      "id": "120cc613-c4fc-462b-a6a4-1e346f9d529a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "3. Complete the conversation",
+      "id": "58fcd4af-9bbd-43cd-a3e1-364cc882e600"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Complete Noor and Sofia's chat with the right form.",
+          "items": [
+            {
+              "prompt": "Noor: … je zondag …? (aankomen)",
+              "authorsVersion": [
+                "Ben",
+                "aangekomen"
+              ],
+              "note": "Start a yes/no question with ben."
+            },
+            {
+              "prompt": "Sofia: Ja, ik … zondag … . (terugkomen)",
+              "authorsVersion": [
+                "ben",
+                "teruggekomen"
+              ],
+              "note": "Ik takes ben; the participle goes last."
+            },
+            {
+              "prompt": "Noor: … je gisteren naar het centrum …? (gaan)",
+              "authorsVersion": [
+                "Ben",
+                "gegaan"
+              ],
+              "note": "Put finite ben first in the question."
+            },
+            {
+              "prompt": "Sofia: Ja, ik … naar het centrum … . (gaan)",
+              "authorsVersion": [
+                "ben",
+                "gegaan"
+              ],
+              "note": "The destination comes before gegaan."
+            },
+            {
+              "prompt": "Noor: Ik … thuis … . (blijven)",
+              "authorsVersion": [
+                "ben",
+                "gebleven"
+              ],
+              "note": "Ik takes ben; gebleven ends the sentence."
+            },
+            {
+              "prompt": "Sofia: … Daan al …? (vertrekken)",
+              "authorsVersion": [
+                "Is",
+                "vertrokken"
+              ],
+              "note": "Daan is singular, so the question begins with is."
+            }
+          ]
+        }
+      },
+      "id": "f8173fff-42be-4fbe-a865-3fe6df26d13a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "4. Put the participle last",
+      "id": "522e2072-9244-409c-8d4b-0f398097d171"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Put the chunks in order. Write a complete sentence.",
+          "items": [
+            {
+              "prompt": "gisteren / ik / ben / naar huis / gegaan",
+              "authorsVersion": [
+                "Gisteren ben ik naar huis gegaan."
+              ],
+              "note": "A fronted time word is followed by the finite verb, then the subject; the participle is last."
+            },
+            {
+              "prompt": "is / Sofia / zondag / aangekomen / in Utrecht",
+              "authorsVersion": [
+                "Sofia is zondag in Utrecht aangekomen."
+              ],
+              "note": "Use subject + finite verb + other information + participle."
+            },
+            {
+              "prompt": "ben / je / naar het centrum / gegaan",
+              "authorsVersion": [
+                "Ben je naar het centrum gegaan?"
+              ],
+              "note": "A yes/no question starts with ben."
+            },
+            {
+              "prompt": "thuis / zijn / Noor en Fleur / gebleven",
+              "authorsVersion": [
+                "Noor en Fleur zijn thuisgebleven."
+              ],
+              "note": "The compound thuisgebleven is written as one word."
+            },
+            {
+              "prompt": "om acht uur / de trein / is / vertrokken",
+              "authorsVersion": [
+                "De trein is om acht uur vertrokken."
+              ],
+              "note": "Place the participle at the end."
+            },
+            {
+              "prompt": "samen / zijn / wij / teruggekomen",
+              "authorsVersion": [
+                "Wij zijn samen teruggekomen."
+              ],
+              "note": "Subject + zijn + other information + participle."
+            }
+          ]
+        }
+      },
+      "id": "59172432-0846-450e-91dc-a7f1bf949a1d"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "5. Change present to perfect",
+      "id": "adbf92d6-7699-442e-8da7-44df3870f4ef"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite each sentence in the perfect. Keep the meaning and use zijn.",
+          "items": [
+            {
+              "prompt": "Ik ga naar huis.",
+              "authorsVersion": [
+                "Ik ben naar huis gegaan."
+              ],
+              "note": "In this selected set, gaan uses zijn; put gegaan at the end."
+            },
+            {
+              "prompt": "Noor komt naar het centrum.",
+              "authorsVersion": [
+                "Noor is naar het centrum gekomen."
+              ],
+              "note": "Noor takes is; gekomen is the participle."
+            },
+            {
+              "prompt": "Sofia komt terug naar Utrecht.",
+              "authorsVersion": [
+                "Sofia is naar Utrecht teruggekomen."
+              ],
+              "note": "The participle goes at the end. Also fine: Sofia is teruggekomen in Utrecht."
+            },
+            {
+              "prompt": "Daan vertrekt vroeg.",
+              "authorsVersion": [
+                "Daan is vroeg vertrokken."
+              ],
+              "note": "Use is for singular Daan."
+            },
+            {
+              "prompt": "Wij blijven thuis.",
+              "authorsVersion": [
+                "Wij zijn thuisgebleven."
+              ],
+              "note": "Wij takes zijn; thuisgebleven is one word."
+            },
+            {
+              "prompt": "Jullie komen zondag aan.",
+              "authorsVersion": [
+                "Jullie zijn zondag aangekomen."
+              ],
+              "note": "Jullie takes zijn; aangekomen ends the sentence."
+            }
+          ]
+        }
+      },
+      "id": "97e75315-2d1a-452e-9d9a-47e8d423001a"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 3
+      },
+      "content": "6. Translate",
+      "id": "a215253f-d36c-4baf-9ded-e79cb289f7cc"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into Dutch or English.",
+          "items": [
+            {
+              "prompt": "I arrived in Utrecht on Sunday.",
+              "authorsVersion": [
+                "Ik ben zondag in Utrecht aangekomen."
+              ],
+              "note": "Do not add a way of travelling; the story does not establish one."
+            },
+            {
+              "prompt": "I stayed at home yesterday.",
+              "authorsVersion": [
+                "Ik ben gisteren thuisgebleven."
+              ],
+              "note": "Ik takes ben; use thuisgebleven as one word."
+            },
+            {
+              "prompt": "Did you go to the city centre?",
+              "authorsVersion": [
+                "Ben je naar het centrum gegaan?"
+              ],
+              "note": "The question starts with ben."
+            },
+            {
+              "prompt": "We came back together.",
+              "authorsVersion": [
+                "We zijn samen teruggekomen."
+              ],
+              "note": "We and wij both take zijn."
+            },
+            {
+              "prompt": "Daan left early.",
+              "authorsVersion": [
+                "Daan is vroeg vertrokken."
+              ],
+              "note": "Vertrokken is the participle of vertrekken."
+            },
+            {
+              "prompt": "Sofia is naar huis gegaan.",
+              "authorsVersion": [
+                "Sofia went home."
+              ],
+              "note": "Naar huis names the destination; gegaan is the participle."
+            },
+            {
+              "prompt": "Ik ben naar het centrum gegaan.",
+              "authorsVersion": [
+                "I went to the city centre."
+              ],
+              "note": "Gaan is one of this lesson's selected verbs with zijn."
+            }
+          ]
+        }
+      },
+      "id": "5cfce7bd-8655-4210-af14-e6be9a9a3f0c"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Reading: Sofia's return and walk",
+      "id": "9c0e64dd-25cb-494d-b9b0-5b2daad623f8"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the passage and answer in Dutch.",
+          "passage": {
+            "title": "Sofia vertelt over zondag en maandag",
+            "content": "Op dinsdag praat Sofia met Noor. Sofia is zondag 3 januari naar Utrecht teruggekomen. Ze zegt niets over haar reis. Op maandag is Sofia naar het centrum gegaan. Ze is door het park gegaan en daarna naar huis gegaan. Noor is eerder met Sofia en Daan naar Zandvoort gegaan. Sofia is blij met haar eigen huis en praat met Noor over de wandeling."
+          },
+          "items": [
+            {
+              "prompt": "Wanneer is Sofia teruggekomen in Utrecht?",
+              "authorsVersion": [
+                "Op zondag 3 januari."
+              ],
+              "note": "Read the first two sentences; do not guess her transport."
+            },
+            {
+              "prompt": "Waar is Sofia op maandag naartoe gegaan?",
+              "authorsVersion": [
+                "Naar het centrum."
+              ],
+              "note": "The destination is naar het centrum."
+            },
+            {
+              "prompt": "Is Sofia door het park gegaan?",
+              "authorsVersion": [
+                "Ja, Sofia is door het park gegaan."
+              ],
+              "note": "The passage says she went through the park."
+            },
+            {
+              "prompt": "Waar is Sofia daarna naartoe gegaan?",
+              "authorsVersion": [
+                "Naar huis."
+              ],
+              "note": "Daarna is ze naar huis gegaan."
+            },
+            {
+              "prompt": "Is Noor met Sofia en Daan naar Zandvoort gegaan?",
+              "authorsVersion": [
+                "Ja, Noor is met Sofia en Daan naar Zandvoort gegaan."
+              ],
+              "note": "The passage retells their established trip to Zandvoort."
+            },
+            {
+              "prompt": "Met wie praat Sofia op dinsdag?",
+              "authorsVersion": [
+                "Met Noor."
+              ],
+              "note": "Sofia praat met Noor."
+            },
+            {
+              "prompt": "Wat zegt de tekst over Sofia's reis?",
+              "authorsVersion": [
+                "Ze zegt niets over haar reis."
+              ],
+              "note": "The passage deliberately leaves the travel mode unspecified."
+            }
+          ]
+        }
+      },
+      "id": "9c3a7878-41ec-4e07-ab8a-889e06071410"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Your turn",
+      "id": "cfad500c-d416-440f-8016-656906a388dd"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write two or three Dutch sentences about a journey or movement. Use at least one form of zijn and a participle from this lesson.",
+          "items": [
+            {
+              "prompt": "Tell a friend where you went or whether you stayed at home. Include a time or place.",
+              "authorsVersion": [
+                "Gisteren ben ik naar het park gegaan. Daarna ben ik naar huis gegaan."
+              ],
+              "note": "Answers vary. Keep the participle at the end of each sentence; also fine: Ik ben thuisgebleven."
+            }
+          ]
+        }
+      },
+      "id": "8467b1be-4b74-4c04-82e9-9bd1fcbae010"
+    },
+    {
+      "type": "heading",
+      "props": {
+        "level": 2
+      },
+      "content": "Summary",
+      "id": "e4a581ce-ccdd-4850-84e8-424053a0b10e"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "For this lesson's selected movement and change verbs, use a form of zijn plus the participle.",
+      "id": "41000613-48ea-4452-8a38-9f043c87817f"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "In statements, put the participle at the end. In yes/no questions, put ben/is/zijn first.",
+      "id": "08d3344a-182d-4c1a-8d15-455cc0c5d943"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Learn gegaan, gekomen, aangekomen, teruggekomen, vertrokken and gebleven as whole forms; row 27 explains participle patterns.",
+      "id": "9b430f12-8f2e-454a-9057-db95a7e46859"
+    }
+  ],
+  "id": "6f360b93-0a7b-46a2-ba35-b958dfe907f0"
+}

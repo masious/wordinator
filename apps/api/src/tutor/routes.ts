@@ -1,7 +1,7 @@
 import {
   conversationTitle, messageSpanTexts, toPublicPart, tutorConversationPageSchema, tutorConversationResponseSchema,
   tutorConversationsQuerySchema, tutorMessagePageSchema, tutorMessageRequestSchema, tutorMessagesQuerySchema, tutorProfileResponseSchema,
-  tutorModelsResponseSchema, tutorRespondRequestSchema, tutorSetAnswersRequestSchema, tutorSpeechRequestSchema, tutorUsageQuerySchema, tutorUsageResponseSchema, updateTutorConversationRequestSchema, updateTutorProfileRequestSchema, type TutorStoredPart, type TutorStreamEvent,
+  tutorModelsResponseSchema, tutorRespondRequestSchema, tutorSetAnswersRequestSchema, tutorSkipSetRequestSchema, tutorSpeechRequestSchema, tutorUsageQuerySchema, tutorUsageResponseSchema, updateTutorConversationRequestSchema, updateTutorProfileRequestSchema, type TutorStoredPart, type TutorStreamEvent,
 } from "@wordinator/contracts/tutor";
 import { Hono, type Context } from "hono";
 import { createMiddleware } from "hono/factory";
@@ -301,6 +301,37 @@ tutorRoutes.post("/conversations/:conversationId/messages/:messageId/answers", a
       if (current) await emit({ type: "done", message: presentMessage(current) });
       return;
     }
+    await runAgentTurn({ ...turnOptions(context, conversationId), settings, emit, turnStart: true });
+  });
+});
+
+// The learner declines an entire unanswered practice set and explains what they wanted instead. Preserve the reason as the
+// failed result for each ask_* call, add their text as a user turn, and only then resume the agent.
+tutorRoutes.post("/conversations/:conversationId/messages/:messageId/skip-set", async (context) => {
+  const found = await ownConversation(context); if ("error" in found) return found.error;
+  const db = context.env.DB; const userId = userIdOf(context); const conversationId = found.row.id;
+  if (found.row.archivedAt !== null) return apiError(context, 409, "CONVERSATION_ARCHIVED", "Unarchive this conversation to continue it.");
+  const message = await readMessage(db, userId, conversationId, context.req.param("messageId"));
+  if (!message || message.role !== "assistant") return apiError(context, 404, "MESSAGE_NOT_FOUND", "This message is not available.");
+  const parsed = await parseJson(context, tutorSkipSetRequestSchema, 32_768); if ("response" in parsed) return parsed.response;
+  const all = message.parts.flatMap((part) => part.type === "component" ? [part] : []);
+  const open = all.filter((part) => part.answeredAt === null);
+  if (message.status !== "awaiting_user" || !open.length || open.length !== all.length) return apiError(context, 409, "TOOL_CALL_ANSWERED", "This practice set can no longer be skipped as a whole.");
+  const settings = preferProvider(await readAiSettings(db), found.row.provider);
+  try { await assertDailyTurnCap(db, userId, settings); } catch (error) {
+    const response = aiErrorResponse(context, error); if (response) return response; throw error;
+  }
+  const now = Date.now();
+  for (const part of open) {
+    const stored = await storeAnswer(db, userId, message, { ...part, answer: null, grade: null, answeredAt: now, skipped: true, skipReason: parsed.data.reason });
+    if (!stored.stored) return apiError(context, 409, "TOOL_CALL_ANSWERED", "This practice set has already been answered.");
+  }
+  const createdAt = Math.max(Date.now(), (await lastMessageAt(db, conversationId)) + 1);
+  const userMessage = { id: crypto.randomUUID(), conversationId, role: "user" as const, status: "complete" as const,
+    parts: [{ type: "text" as const, text: parsed.data.reason, spans: [] }], provider: null, model: null, createdAt };
+  await db.batch([insertMessageStatement(db, userId, userMessage), touchConversationStatement(db, userId, conversationId, createdAt)]);
+  return streamTurn(context, async (emit) => {
+    await emit({ type: "user_message", message: presentMessage(userMessage) });
     await runAgentTurn({ ...turnOptions(context, conversationId), settings, emit, turnStart: true });
   });
 });

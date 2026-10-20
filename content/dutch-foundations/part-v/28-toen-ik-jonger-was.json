@@ -1,0 +1,1263 @@
+{
+  "title": "Vroeger",
+  "goal": "Describe past states and familiar childhood routines with the simple past of zijn, hebben, and a few common verbs.",
+  "blocks": [
+    {
+      "type": "heading",
+      "content": "Vroeger",
+      "props": {
+        "level": 1
+      },
+      "id": "7931b52d-90a7-4608-a73c-78a805e5c25e"
+    },
+    {
+      "type": "paragraph",
+      "content": "It is Thursday 7 January 2027. Sofia and Noor talk about growing up in Valencia and Groningen. In this lesson you will describe past states and familiar routines with the simple past. Verbs are blue, time expressions orange, and the new past forms are bold.",
+      "id": "7953a653-a03a-4c55-94ef-d3fc45b15996"
+    },
+    {
+      "type": "heading",
+      "content": "Story: childhood memories",
+      "props": {
+        "level": 2
+      },
+      "id": "acef16c7-459b-49c7-953a-411cd30372df"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Noor",
+            "text": "Sofia, waar woonde je als kind?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik woonde in Valencia, in een rustige straat."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ik woonde in Groningen, vlak bij mijn school."
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Had je een step?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, ik had een rode step. En jij?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik had een blauwe step."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Wat deed je na school?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik speelde vaak buiten met vriendinnen."
+          }
+        ]
+      },
+      "id": "3cae05f8-db7d-4efd-9ed0-4bbbc3aee4e7"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "vroeger",
+              "meaning": "in the past; when someone was younger",
+              "example": "Vroeger woonde ik in Valencia.",
+              "id": "d80cf566-d0e1-41c8-b808-51e8545892f7"
+            },
+            {
+              "term": "als kind",
+              "meaning": "as a child",
+              "example": "Als kind woonde Noor in Groningen.",
+              "id": "4fc4e532-1880-497f-9506-9f02fba9058f"
+            },
+            {
+              "term": "de basisschool",
+              "meaning": "primary school",
+              "forms": "de basisscholen",
+              "example": "Mijn basisschool was vlak bij huis.",
+              "id": "72c96cdc-7511-4032-93e2-afdcf225c777"
+            },
+            {
+              "term": "de speelplaats",
+              "meaning": "school playground",
+              "forms": "de speelplaatsen",
+              "example": "Op de speelplaats speelde ik vaak.",
+              "id": "5cf99cbb-2dd3-4bac-82a3-db3676a1d85f"
+            },
+            {
+              "term": "de step",
+              "meaning": "scooter (kick scooter)",
+              "forms": "de steps",
+              "example": "Noor had een rode step.",
+              "id": "b9ea1f2b-53db-4d70-91b4-3cab0cc0c92e"
+            },
+            {
+              "term": "na school",
+              "meaning": "after school",
+              "example": "Na school speelde ik buiten.",
+              "id": "017d2114-bc4b-444b-be43-10eeb9e3e358"
+            },
+            {
+              "term": "buiten spelen",
+              "meaning": "to play outside",
+              "example": "Sofia speelde vaak buiten.",
+              "id": "418eaaa6-622c-4301-8e41-7851101a033e"
+            }
+          ]
+        }
+      },
+      "id": "70cc171b-96b4-4413-a85d-bad682229dad"
+    },
+    {
+      "type": "divider",
+      "id": "26f71b13-35de-48dd-871f-faed5519e582"
+    },
+    {
+      "type": "heading",
+      "content": "The simple past",
+      "props": {
+        "level": 2
+      },
+      "id": "9f3e40c5-64e8-4063-a8ec-45bb30ca6165"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use these forms to talk about a past state or situation. For a regular verb, add -te/-ten or -de/-den to the stem. The last sound of the stem decides which ending you use.",
+      "id": "340b9673-e989-4733-b03f-abdc193f5bc5"
+    },
+    {
+      "type": "callout",
+      "content": "zijn: ik was, jij was, hij/zij was; wij/jullie/zij waren. hebben: ik had, jij had, hij/zij had; wij/jullie/zij hadden.",
+      "props": {
+        "variant": "grammar",
+        "icon": "book-open"
+      },
+      "id": "97b468ca-3fb5-4836-b778-ecd5bed37111"
+    },
+    {
+      "type": "columnList",
+      "children": [
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Singular",
+              "id": "ad9066bf-ed60-41a8-a535-af28d088e01d"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "ik was / had",
+              "id": "10419807-1533-49ee-acae-278ec919a430"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "jij was / had",
+              "id": "13e3923d-204f-43c2-8f12-feb29e9a547e"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Sofia was / had",
+              "id": "168ee5ac-5e55-4bbc-b676-f7fe7b7f133e"
+            }
+          ],
+          "id": "1f15bff5-acae-4a41-a3ac-b7c5701d9802"
+        },
+        {
+          "type": "column",
+          "children": [
+            {
+              "type": "heading",
+              "props": {
+                "level": 3
+              },
+              "content": "Plural",
+              "id": "5606e41c-961f-480a-a2c2-4be4e6962369"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "wij waren / hadden",
+              "id": "c6962358-aa18-4324-903a-4c021025ce82"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "jullie waren / hadden",
+              "id": "b1f7a418-492b-444c-bf5d-21354e29ec07"
+            },
+            {
+              "type": "bulletListItem",
+              "content": "Noor en Sofia waren / hadden",
+              "id": "fae952ad-5de8-4788-9ddd-1f14e173a85e"
+            }
+          ],
+          "id": "c8b51d33-78b2-416b-a413-819032a26df9"
+        }
+      ],
+      "id": "b74f9999-b6e0-4597-9af3-cd726adcedf9"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Vroeger ",
+        {
+          "text": "was",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " Sofia vaak thuis."
+      ],
+      "props": {
+        "translation": "Sofia was often at home as a child.",
+        "note": "was is the simple past of zijn."
+      },
+      "id": "c718c992-7629-4fea-a15a-cc8f355f6d82"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Noor ",
+        {
+          "text": "had",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " een rode step."
+      ],
+      "props": {
+        "translation": "Noor had a red scooter.",
+        "note": "had is the simple past of hebben."
+      },
+      "id": "9d061da3-3995-48c1-a7c2-5625737d1955"
+    },
+    {
+      "type": "callout",
+      "content": "The ending also shows singular or plural: ik woonde, wij woonden.",
+      "props": {
+        "variant": "important",
+        "icon": "star"
+      },
+      "id": "3ee86de3-cc62-45cd-8769-945acbed5bc4"
+    },
+    {
+      "type": "paragraph",
+      "content": "A stem ending in a sound from ’t kofschip takes -te/-ten. Other final sounds take -de/-den. Add the ending to the verb stem: woon → woonde; fiets → fietste.",
+      "id": "0eaaad57-5dbc-4fc9-b93b-8458b9c4a549"
+    },
+    {
+      "type": "callout",
+      "content": "The -te ending starts with a clear t; -de starts with d. Keep the stem spelling: fiets + te = fietste.",
+      "props": {
+        "variant": "pronunciation",
+        "icon": "volume-2"
+      },
+      "id": "e4bcbfaa-76b5-4dae-b34d-d0f3431d310a"
+    },
+    {
+      "type": "callout",
+      "content": [
+        "Do not use a present form for a finished past situation: ",
+        {
+          "text": "ik woon",
+          "styles": {
+            "italic": true,
+            "backgroundColor": "gray"
+          }
+        },
+        " → ",
+        {
+          "text": "ik woonde",
+          "styles": {
+            "bold": true
+          }
+        },
+        "."
+      ],
+      "props": {
+        "variant": "warning",
+        "icon": "triangle-alert"
+      },
+      "id": "08913ce9-a6f1-4ddf-952b-930cdb4cae7a"
+    },
+    {
+      "type": "heading",
+      "content": "A few familiar verbs",
+      "props": {
+        "level": 3
+      },
+      "id": "2a483680-c98f-4c52-a9f9-3761dd568828"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Regular verbs",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "wonen → woonde / woonden",
+          "id": "4a955dd5-4b92-4c5b-80b9-2a2beb4e3d63"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "fietsen → fietste / fietsten",
+          "id": "97311be8-f766-412d-9bde-bf85982d5dc3"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "spelen → speelde / speelden",
+          "id": "b52720bf-c36e-40e6-bcc5-e2b6f67d3be9"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "werken → werkte / werkten",
+          "id": "e85a6cb6-3a9b-4020-b4ba-bd84fe497ce6"
+        }
+      ],
+      "id": "96f81b6a-34aa-48b2-a0d6-1f0fad334952"
+    },
+    {
+      "type": "bulletListItem",
+      "content": "Learn these common forms as individual words",
+      "children": [
+        {
+          "type": "bulletListItem",
+          "content": "gaan → ging / gingen",
+          "id": "84ff4313-4fcf-48fc-be2e-2417e172f20e"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "komen → kwam / kwamen",
+          "id": "ec85cb4b-7d36-41c4-ab62-32287b13a150"
+        },
+        {
+          "type": "bulletListItem",
+          "content": "doen → deed / deden",
+          "id": "4016a7f7-e83e-4fce-860a-6ab03d940d2a"
+        }
+      ],
+      "id": "386755bc-7ac7-40ab-aa45-deb384c6f078"
+    },
+    {
+      "type": "callout",
+      "content": "The short strong forms are common: ik ging, ik kwam, ik deed. Learn each pair as a set.",
+      "props": {
+        "variant": "hint",
+        "icon": "lightbulb"
+      },
+      "id": "2689ec5b-db86-4601-890f-21fd8d182970"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Noor ",
+        {
+          "text": "fietste",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " vaak naar school."
+      ],
+      "props": {
+        "translation": "Noor often cycled to school.",
+        "note": "The stem fiets ends in s, so the past ending is -te."
+      },
+      "id": "a4e3e990-70fb-45f8-b709-c10b1d69f8a5"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Sofia ",
+        {
+          "text": "speelde",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " na school buiten."
+      ],
+      "props": {
+        "translation": "Sofia played outside after school.",
+        "note": "The stem speel ends in l, so the past ending is -de."
+      },
+      "id": "c1c9f2c3-3d7c-48cc-b52f-924306b1c978"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Wij ",
+        {
+          "text": "woonden",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " in Groningen."
+      ],
+      "props": {
+        "translation": "We lived in Groningen.",
+        "note": "Plural subject wij takes -den."
+      },
+      "id": "b448daee-437b-4408-92d3-e8f17856d49c"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Mijn school ",
+        {
+          "text": "was",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " klein."
+      ],
+      "props": {
+        "translation": "My school was small.",
+        "note": "was is a past form of zijn."
+      },
+      "id": "66aa1c98-3cdd-4a45-b05f-c030916b0b1c"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Ik ",
+        {
+          "text": "had",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " een blauwe step."
+      ],
+      "props": {
+        "translation": "I had a blue scooter.",
+        "note": "had is a past form of hebben."
+      },
+      "id": "2098441a-9b3c-4dd3-988f-67051b5fe8d9"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Noor ",
+        {
+          "text": "ging",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " vaak naar de speelplaats."
+      ],
+      "props": {
+        "translation": "Noor often went to the playground.",
+        "note": "ging is learned as an individual strong form."
+      },
+      "id": "08687c72-a841-4faf-999a-b3f237e68c23"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Soms ",
+        {
+          "text": "kwam",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " Sofia lopend naar huis."
+      ],
+      "props": {
+        "translation": "Sometimes Sofia came home on foot.",
+        "note": "kwam is singular; lopend is familiar vocabulary."
+      },
+      "id": "d34b7f5c-c71d-413c-b2ce-1f4c95467cbe"
+    },
+    {
+      "type": "example",
+      "content": [
+        "Na school ",
+        {
+          "text": "deed",
+          "styles": {
+            "bold": true,
+            "textColor": "blue"
+          }
+        },
+        " Noor haar huiswerk."
+      ],
+      "props": {
+        "translation": "After school Noor did her homework.",
+        "note": "deed is learned as an individual strong form."
+      },
+      "id": "abececde-9d67-447f-87bd-7f811c4ab844"
+    },
+    {
+      "type": "divider",
+      "id": "ac7bd098-aeeb-4a36-8079-e3f0e82e3389"
+    },
+    {
+      "type": "heading",
+      "content": "Story: a school afternoon",
+      "props": {
+        "level": 2
+      },
+      "id": "fee2ee1c-068e-41bc-a413-e4fedaab86f2"
+    },
+    {
+      "type": "dialogue",
+      "props": {
+        "turns": [
+          {
+            "speaker": "Sofia",
+            "text": "Was je school klein?"
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ja, mijn school was klein. En jouw school?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Mijn school was ook klein."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Fietste je naar school?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Nee, ik ging meestal lopend. Mijn school was dichtbij."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Wat deed je na school?"
+          },
+          {
+            "speaker": "Sofia",
+            "text": "Ik speelde buiten of ik fietste naar de speelplaats."
+          },
+          {
+            "speaker": "Noor",
+            "text": "Ik ging soms naar de speelplaats."
+          }
+        ]
+      },
+      "id": "0ef35c3d-e71a-4d6a-a588-44f05b3f8574"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "wonen",
+              "meaning": "to live; past forms",
+              "forms": "woont · woonde · gewoond",
+              "example": "Vroeger woonde Noor in Groningen.",
+              "note": "The simple past woonde/woonden is the new focus; the participle is a reference form from Part V, row 25.",
+              "id": "d328ebc6-22f4-4dc4-b346-91e1b35d0c14"
+            },
+            {
+              "term": "fietsen",
+              "meaning": "to cycle; past forms",
+              "forms": "fietst · fietste · gefietst",
+              "example": "Noor fietste naar school.",
+              "note": "The simple past fietste/fietsten is new; the participle is reference data.",
+              "id": "f3affecd-1893-4374-ae63-272688b41c3e"
+            },
+            {
+              "term": "spelen",
+              "meaning": "to play; past forms",
+              "forms": "speelt · speelde · gespeeld",
+              "example": "Sofia speelde vaak buiten.",
+              "note": "The simple past speelde/speelden is new; the participle is reference data.",
+              "id": "7783f5bf-b136-4a26-b98f-83cc940824c2"
+            },
+            {
+              "term": "gaan",
+              "meaning": "to go; past forms",
+              "forms": "gaat · ging · gegaan",
+              "example": "Noor ging naar de speelplaats.",
+              "note": "The simple past ging/gingen is introduced as a fixed common form; participle known from Part V, row 26.",
+              "id": "26fab668-af56-42fc-abc8-7f9f73ce3fed"
+            },
+            {
+              "term": "komen",
+              "meaning": "to come; past forms",
+              "forms": "komt · kwam · gekomen",
+              "example": "Sofia kwam lopend naar huis.",
+              "note": "The simple past kwam/kwamen is introduced as a fixed common form; participle known from Part V, row 26.",
+              "id": "f10ec397-3a1f-4b77-8863-d859a0840a28"
+            },
+            {
+              "term": "doen",
+              "meaning": "to do; past forms",
+              "forms": "doet · deed · gedaan",
+              "example": "Wat deed Noor na school?",
+              "note": "The simple past deed/deden is introduced as a fixed common form; participle known from Part V, row 27.",
+              "id": "8b215010-dac0-4b66-afdf-bcd8fbeb1134"
+            },
+            {
+              "term": "het huiswerk",
+              "meaning": "homework",
+              "example": "Noor deed haar huiswerk.",
+              "id": "d0092142-9b3c-4290-8cbc-0de772c0a458"
+            },
+            {
+              "term": "werken",
+              "meaning": "to work; past forms",
+              "forms": "werkt · werkte · gewerkt",
+              "example": "Ik werkte vroeger vaak.",
+              "note": "The simple past werkte/werkten is new; the participle is reference data from Part V, row 25.",
+              "id": "edd83739-76ce-4d43-91ef-0c68f1affb03"
+            }
+          ]
+        }
+      },
+      "id": "95c388d3-c9dc-419b-b2f2-4b2f864f4a6d"
+    },
+    {
+      "type": "heading",
+      "content": "Remember the patterns",
+      "props": {
+        "level": 2
+      },
+      "id": "4a830f15-8132-4770-8906-98281d86e240"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "Find the subject: one person or more than one?",
+      "id": "f1303f43-3f8e-41b6-a8b1-03c411fe335c"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "For zijn and hebben, choose was/waren or had/hadden.",
+      "id": "b50ec438-4b32-45d1-82f1-0aea47df9466"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "For a regular verb, choose -te/-ten or -de/-den from the final stem sound.",
+      "id": "56bb0a8d-a18f-4835-b4a3-f148e0f5ed37"
+    },
+    {
+      "type": "numberedListItem",
+      "content": "For gaan, komen and doen, learn ging, kwam and deed as fixed forms.",
+      "id": "697413b6-787f-4cf6-933d-1bbf4aac4bba"
+    },
+    {
+      "type": "paragraph",
+      "content": "In the examples, the verb is blue and time words are orange.",
+      "id": "8858b914-cb62-4eed-a668-e14efbdbc745"
+    },
+    {
+      "type": "paragraph",
+      "content": "Remember: was/waren, had/hadden, -te/-ten, -de/-den.",
+      "props": {
+        "backgroundColor": "blue"
+      },
+      "id": "fb38dbc4-d3e5-46a5-bb78-41b510152636"
+    },
+    {
+      "type": "divider",
+      "id": "fc1c4a42-a366-4acc-8cab-25e9c6f67a95"
+    },
+    {
+      "type": "heading",
+      "content": "Practice",
+      "props": {
+        "level": 2
+      },
+      "id": "713f9c29-cb5e-4887-87a6-9866793a982f"
+    },
+    {
+      "type": "heading",
+      "content": "Choose was, waren, had or hadden",
+      "props": {
+        "level": 3
+      },
+      "id": "308e7ed2-98a6-40e9-aa0d-4ff99b2235ae"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the correct past form.",
+          "items": [
+            {
+              "prompt": "Sofia … acht jaar. (was)",
+              "authorsVersion": [
+                "was"
+              ]
+            },
+            {
+              "prompt": "Noor en haar klas … klein. (waren)",
+              "authorsVersion": [
+                "waren"
+              ]
+            },
+            {
+              "prompt": "Ik … een step. (had)",
+              "authorsVersion": [
+                "had"
+              ]
+            },
+            {
+              "prompt": "Wij … een speelplaats. (hadden)",
+              "authorsVersion": [
+                "hadden"
+              ]
+            },
+            {
+              "prompt": "Jij … vaak buiten. (was)",
+              "authorsVersion": [
+                "was"
+              ]
+            },
+            {
+              "prompt": "Sofia en Noor … veel tijd. (hadden)",
+              "authorsVersion": [
+                "hadden"
+              ]
+            },
+            {
+              "prompt": "De basisschool … dichtbij. (was)",
+              "authorsVersion": [
+                "was"
+              ]
+            }
+          ]
+        }
+      },
+      "id": "19161a1e-ab09-4c36-bea8-e406c7688bc3"
+    },
+    {
+      "type": "vocabulary",
+      "props": {
+        "data": {
+          "words": [
+            {
+              "term": "de klas",
+              "meaning": "class; classroom group",
+              "forms": "de klassen",
+              "example": "Noor en haar klas waren klein.",
+              "id": "26da55d5-5e74-457c-9b6b-75eacf1fc6a4"
+            }
+          ]
+        }
+      },
+      "id": "daba43d3-7b8c-4f8e-a3be-9f8b654343a0"
+    },
+    {
+      "type": "heading",
+      "content": "Regular past endings",
+      "props": {
+        "level": 3
+      },
+      "id": "df29a96e-5e6b-4185-ab8b-f7e58ac5774f"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill in the past form of the verb in brackets.",
+          "items": [
+            {
+              "prompt": "Ik … in Valencia. (wonen)",
+              "authorsVersion": [
+                "woonde"
+              ],
+              "note": "wonen: stem woon + -de."
+            },
+            {
+              "prompt": "Wij … in Groningen. (wonen)",
+              "authorsVersion": [
+                "woonden"
+              ],
+              "note": "Plural wij takes -den."
+            },
+            {
+              "prompt": "Noor … naar school. (fietsen)",
+              "authorsVersion": [
+                "fietste"
+              ],
+              "note": "The stem ends in s, so use -te."
+            },
+            {
+              "prompt": "De kinderen … buiten. (spelen)",
+              "authorsVersion": [
+                "speelden"
+              ],
+              "note": "Plural subject takes -den."
+            },
+            {
+              "prompt": "Ik … vaak. (werken)",
+              "authorsVersion": [
+                "werkte"
+              ],
+              "note": "The stem ends in k, so use -te."
+            },
+            {
+              "prompt": "Jullie … Nederlands. (leren)",
+              "authorsVersion": [
+                "leerden"
+              ],
+              "note": "The stem ends in r, so use -den."
+            },
+            {
+              "prompt": "Ik … vaak in het park. (wandelen)",
+              "authorsVersion": [
+                "wandelde"
+              ],
+              "note": "The stem ends in l, so use -de."
+            }
+          ]
+        }
+      },
+      "id": "e995a0a6-ed88-40f2-9fb3-e8bfda5889a8"
+    },
+    {
+      "type": "heading",
+      "content": "Complete the conversation",
+      "props": {
+        "level": 3
+      },
+      "id": "fef84d92-9ca7-4d65-a073-7fb3a9a7f744"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Fill each blank with the correct past form.",
+          "items": [
+            {
+              "prompt": "Noor: Waar … je vroeger? (wonen) / Sofia: Ik … in Valencia. (wonen)",
+              "authorsVersion": [
+                "woonde",
+                "woonde"
+              ],
+              "note": "jij has woonde; ik has woonde."
+            },
+            {
+              "prompt": "Sofia: … je een step? (hebben) / Noor: Ja, ik … een rode step. (hebben)",
+              "authorsVersion": [
+                "Had",
+                "had"
+              ],
+              "note": "In a yes/no question, the verb comes first."
+            },
+            {
+              "prompt": "Noor: Wat … je na school? (doen) / Sofia: Ik … vaak buiten. (spelen)",
+              "authorsVersion": [
+                "deed",
+                "speelde"
+              ],
+              "note": "doen has the fixed form deed; spelen is regular."
+            },
+            {
+              "prompt": "Sofia: … jullie naar school? (fietsen) / Noor: Ja, wij … samen. (fietsen)",
+              "authorsVersion": [
+                "Fietsten",
+                "fietsten"
+              ],
+              "note": "Plural subject: fietsten."
+            },
+            {
+              "prompt": "Noor: … je school groot? (zijn) / Sofia: Nee, mijn school … klein. (zijn)",
+              "authorsVersion": [
+                "Was",
+                "was"
+              ],
+              "note": "Singular past form of zijn."
+            },
+            {
+              "prompt": "Sofia: … jullie vaak huiswerk? (hebben) / Noor: Ja, wij … huiswerk. (hebben)",
+              "authorsVersion": [
+                "Hadden",
+                "hadden"
+              ],
+              "note": "Plural subject takes hadden."
+            }
+          ]
+        }
+      },
+      "id": "65fd0740-cdc9-4a1d-af7e-faa2fc48be17"
+    },
+    {
+      "type": "heading",
+      "content": "Put the words in order",
+      "props": {
+        "level": 3
+      },
+      "id": "73136294-0fd8-4165-9e35-45872b380edc"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write a complete sentence or question.",
+          "items": [
+            {
+              "prompt": "Put in order: vroeger / woonde / Sofia / in Valencia",
+              "authorsVersion": [
+                "Vroeger woonde Sofia in Valencia."
+              ]
+            },
+            {
+              "prompt": "Put in order: had / Noor / een rode step",
+              "authorsVersion": [
+                "Noor had een rode step."
+              ]
+            },
+            {
+              "prompt": "Put in order: naar school / fietste / soms / ik",
+              "authorsVersion": [
+                "Soms fietste ik naar school."
+              ]
+            },
+            {
+              "prompt": "Put in order: was / de speelplaats / klein",
+              "authorsVersion": [
+                "De speelplaats was klein."
+              ]
+            },
+            {
+              "prompt": "Put in order: vroeger / waar / woonde / je / ?",
+              "authorsVersion": [
+                "Waar woonde je vroeger?"
+              ]
+            },
+            {
+              "prompt": "Put in order: na school / wat / deed / Noor / ?",
+              "authorsVersion": [
+                "Wat deed Noor na school?"
+              ]
+            }
+          ]
+        }
+      },
+      "id": "c3258693-a387-474a-b21f-976787c961f8"
+    },
+    {
+      "type": "heading",
+      "content": "Change the sentence to the past",
+      "props": {
+        "level": 3
+      },
+      "id": "e6c9526d-f087-4494-bd93-e11e9acfa4b0"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Rewrite the sentence in the simple past. Keep the subject and other words.",
+          "items": [
+            {
+              "prompt": "Ik woon in Valencia.",
+              "authorsVersion": [
+                "Ik woonde in Valencia."
+              ],
+              "note": "wonen: woonde."
+            },
+            {
+              "prompt": "Wij fietsen naar school.",
+              "authorsVersion": [
+                "Wij fietsten naar school."
+              ],
+              "note": "Plural subject and -te ending."
+            },
+            {
+              "prompt": "Noor speelt buiten.",
+              "authorsVersion": [
+                "Noor speelde buiten."
+              ],
+              "note": "spelen: speelde."
+            },
+            {
+              "prompt": "Sofia heeft een step.",
+              "authorsVersion": [
+                "Sofia had een step."
+              ],
+              "note": "Use the past form of hebben."
+            },
+            {
+              "prompt": "De school is klein.",
+              "authorsVersion": [
+                "De school was klein."
+              ],
+              "note": "Use the past form of zijn."
+            },
+            {
+              "prompt": "Noor gaat naar de speelplaats.",
+              "authorsVersion": [
+                "Noor ging naar de speelplaats."
+              ],
+              "note": "gaan: fixed form ging."
+            },
+            {
+              "prompt": "Ik doe mijn huiswerk.",
+              "authorsVersion": [
+                "Ik deed mijn huiswerk."
+              ],
+              "note": "doen: fixed form deed."
+            }
+          ]
+        }
+      },
+      "id": "466bd1b3-0d11-4d21-831e-b6254295358d"
+    },
+    {
+      "type": "heading",
+      "content": "Translate into Dutch",
+      "props": {
+        "level": 3
+      },
+      "id": "9c1265da-4db3-4b93-a452-3351c9ef6601"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural Dutch.",
+          "items": [
+            {
+              "prompt": "When I was a child, I lived in Valencia.",
+              "authorsVersion": [
+                "Als kind woonde ik in Valencia."
+              ]
+            },
+            {
+              "prompt": "Noor had a red scooter.",
+              "authorsVersion": [
+                "Noor had een rode step."
+              ]
+            },
+            {
+              "prompt": "We often cycled to school.",
+              "authorsVersion": [
+                "Wij fietsten vaak naar school."
+              ]
+            },
+            {
+              "prompt": "Was your school small?",
+              "authorsVersion": [
+                "Was je school klein?"
+              ]
+            },
+            {
+              "prompt": "What did you do after school?",
+              "authorsVersion": [
+                "Wat deed je na school?"
+              ]
+            },
+            {
+              "prompt": "Sometimes Sofia came home on foot.",
+              "authorsVersion": [
+                "Soms kwam Sofia lopend naar huis."
+              ]
+            },
+            {
+              "prompt": "My mother worked in Valencia.",
+              "authorsVersion": [
+                "Mijn moeder werkte in Valencia."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "c8f26804-a490-408d-abeb-788da4ca883f"
+    },
+    {
+      "type": "heading",
+      "content": "Translate into English",
+      "props": {
+        "level": 3
+      },
+      "id": "b99ac110-5023-46cc-9428-a95255e8be61"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Translate into natural English.",
+          "items": [
+            {
+              "prompt": "Vroeger woonde Noor in Groningen.",
+              "authorsVersion": [
+                "Noor used to live in Groningen."
+              ],
+              "note": "Also fine: Noor lived in Groningen as a child."
+            },
+            {
+              "prompt": "Wij hadden een kleine speelplaats.",
+              "authorsVersion": [
+                "We had a small playground."
+              ]
+            },
+            {
+              "prompt": "Sofia fietste soms naar school.",
+              "authorsVersion": [
+                "Sofia sometimes cycled to school."
+              ]
+            },
+            {
+              "prompt": "Na school speelde ik buiten.",
+              "authorsVersion": [
+                "After school I played outside."
+              ]
+            },
+            {
+              "prompt": "Waar was je basisschool?",
+              "authorsVersion": [
+                "Where was your primary school?"
+              ]
+            },
+            {
+              "prompt": "Noor deed haar huiswerk.",
+              "authorsVersion": [
+                "Noor did her homework."
+              ]
+            }
+          ]
+        }
+      },
+      "id": "57f722d9-985e-42c8-a214-331d5afeafdf"
+    },
+    {
+      "type": "heading",
+      "content": "Reading: school days",
+      "props": {
+        "level": 3
+      },
+      "id": "4e7ae287-447c-41af-bbbe-94fd5f2a29dd"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Read the passage and answer in Dutch.",
+          "items": [
+            {
+              "prompt": "Waar woonde Sofia als kind?",
+              "authorsVersion": [
+                "In Valencia."
+              ]
+            },
+            {
+              "prompt": "Waar woonde Noor?",
+              "authorsVersion": [
+                "In Groningen."
+              ]
+            },
+            {
+              "prompt": "Was Noors school groot?",
+              "authorsVersion": [
+                "Nee, haar school was klein."
+              ]
+            },
+            {
+              "prompt": "Had Noor een step?",
+              "authorsVersion": [
+                "Ja, ze had een rode step."
+              ]
+            },
+            {
+              "prompt": "Wat deed Sofia vaak na school?",
+              "authorsVersion": [
+                "Ze speelde vaak buiten."
+              ]
+            },
+            {
+              "prompt": "Hoe ging Noor soms naar school?",
+              "authorsVersion": [
+                "Ze fietste soms naar school."
+              ]
+            },
+            {
+              "prompt": "Wat deed Noor na school?",
+              "authorsVersion": [
+                "Ze deed haar huiswerk."
+              ]
+            }
+          ],
+          "passage": {
+            "title": "Een middag vroeger",
+            "content": "Sofia woonde vroeger in Valencia. Haar basisschool was dichtbij. Na school speelde ze vaak buiten met vriendinnen. Soms fietste ze naar een speelplaats. Noor woonde in Groningen. Haar school was klein en ze had een rode step. Noor fietste vaak naar school. Na school deed ze haar huiswerk."
+          }
+        }
+      },
+      "id": "829be3b0-235d-4416-b8ec-5a8ed9277719"
+    },
+    {
+      "type": "heading",
+      "content": "Your turn",
+      "props": {
+        "level": 3
+      },
+      "id": "d9af4c5e-958f-41d2-9d14-3a5e2631c690"
+    },
+    {
+      "type": "practice",
+      "props": {
+        "data": {
+          "instruction": "Write three or four sentences about a familiar place or routine from when you were younger. Do not add private family details.",
+          "items": [
+            {
+              "prompt": "Write about where you lived, what your school was like, or what you did after school. Use at least two simple-past forms.",
+              "authorsVersion": [
+                "Vroeger woonde ik in een kleine stad. Mijn school was dichtbij. Na school speelde ik vaak buiten. Soms fietste ik naar het plein."
+              ],
+              "note": "Model answer. Personal answers will differ; check past forms and singular/plural endings."
+            }
+          ]
+        }
+      },
+      "id": "75bc5c1f-e09f-458d-b522-c810770c914d"
+    },
+    {
+      "type": "heading",
+      "content": "Summary",
+      "props": {
+        "level": 2
+      },
+      "id": "2931a45d-4ae5-4c6e-8964-aacb2fdd7e83"
+    },
+    {
+      "type": "paragraph",
+      "content": "Use was/waren and had/hadden for past states. Regular past forms use -te/-ten or -de/-den. The common forms are ging/gingen, kwam/kwamen and deed/deden.",
+      "id": "7d3db310-6732-4fca-bc6e-f75635a8b796"
+    },
+    {
+      "type": "divider",
+      "id": "9661af1f-f2d2-4804-b9bc-2b9f8bc11a07"
+    }
+  ],
+  "imageIdeas": [
+    {
+      "afterHeading": "Story: childhood memories",
+      "description": "Sofia and Noor sit at a kitchen table in Utrecht, smiling as they remember childhood scooters and school playgrounds; warm natural light, no family members depicted.",
+      "alt": "Sofia and Noor share childhood memories at a table."
+    }
+  ],
+  "id": "b04dd97b-c66a-4250-b481-85ae993ed774"
+}

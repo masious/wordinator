@@ -1,7 +1,8 @@
-import { env, SELF } from "cloudflare:test";
+import { env } from "cloudflare:test";
 import { lessonMetricsResponseSchema, type LessonMetricsResponse } from "@wordinator/contracts/learning";
 import { beforeEach, describe, expect, it } from "vitest";
 import { addLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, request, resetDatabase, seedGroup, seedUser, signIn, word } from "./courseApi";
+import { fetchWorker } from "./worker";
 
 // Lesson metrics (Lumen Batch 6, docs/courses.md#lesson-box): the viewer's own pronunciation, word memory, and recency figures
 // for one lesson.
@@ -101,7 +102,7 @@ describe("Lesson metrics", () => {
 
   it("refuses anonymous requests, unfinished setup, and lessons the viewer cannot read", async () => {
     const { groupId, owner, reader, course, lesson } = await setup();
-    expect((await SELF.fetch(`https://wordinator.test${lesson.path}/metrics`)).status).toBe(401);
+    expect((await fetchWorker(`https://wordinator.test${lesson.path}/metrics`)).status).toBe(401);
     const newcomerId = await seedUser("newcomer"); await join(groupId, newcomerId);
     await env.DB.prepare("UPDATE users SET display_name = 'New learner' WHERE id = ?").bind(newcomerId).run();
     const newcomer = await request(`${lesson.path}/metrics`, await signIn("newcomer"));

@@ -1,10 +1,10 @@
-# Continue: Dutch Foundations Part III
+# Continue: Dutch Foundations Part VI
 
-You are the **main session**. Your job is to finish Part III of the Dutch Foundations course with as little context noise as possible. Do not write or review lessons yourself. For each batch, spawn **one coordinator agent** (`general-purpose`, foreground). The coordinator spawns the worker and reviewer agents, waits for all of them, and returns a short report. Relay that report to the user and wait for their go-ahead before starting the next batch.
+You are the **main session**. Continue Dutch Foundations in batches of up to three lessons at a time (user update, 2026-10-19). Each lesson gets a fresh author and independent reviewer; do not leave a batch half-reviewed or import any lesson before it is accepted. Record accepted content and production import status, then proceed in curriculum order.
 
 Repo: `/Users/jsninja/myworkspace/2wordinator`. Read `CLAUDE.md` and `content/dutch-foundations/README.md` first. Everything else is listed below; read it only when you need it.
 
-## Where things stand (2026-10-08)
+## Where things stand (2026-10-19)
 
 - **Part II (rows 7–12), 12 lessons:** finished. Written, reviewed, with New words. It is in the local DB and in production as a **draft** course with **unpublished** lessons, course ID `cc2bc79f-6a98-4944-81fa-082b17873e62`. The user publishes from the app.
 - **Part III (rows 13–18), course ID `b885c80c-9118-4ce7-80e0-03500c8e05d5`:**
@@ -14,19 +14,15 @@ Repo: `/Users/jsninja/myworkspace/2wordinator`. Read `CLAUDE.md` and `content/du
   - **14-b is left out of production Part III by the user's decision.** It exists in production only as the standalone one-lesson course "Leggen of zetten?", lesson ID `e2b961ef-9449-4112-8b32-53fd8cec3135`, so production Part III has a gap at position 3. Every production Part III import must strip that ID from the SQL (see below).
   - 17-b, 18-a and 18-b are not written. Their briefs are in `docs/content/briefs-part-iii.md`.
 
-## Part priority (user's order, updated 2026-10-12)
+## Current priority
 
-**Part I now comes first**, starting with lesson 1. After Part I: finish Part IV, then Parts V → VI → VII. Parts II and III are finished and published.
+Parts IV, V and VI are complete. Part VI's seven lessons are written, independently reviewed, accepted, validated, documented and imported to production as unpublished drafts. Part VII rows 37–40 are written, independently reviewed, accepted, validated, documented and published in the new production course at positions 0–3. The course is `0aeb92c0-4a9c-45ad-be2f-5f23338027b9`; see `part-vii/course.prod.json` and `docs/content/ledger-part-vii.md`. Publishing the lessons and course through the application preserved the word index and created the one-time course announcement as specified.
 
-**Paused (user, 2026-10-13):** 06-a is finished (reviewed, imported into production, docs updated). Next is the 06-b review (06-b is written: `part-i/06-b-een-mooie-stad.json`, check OK), using the accepted 06-a as known; then its production import and docs; then Part IV.
+**Part V progress (updated 2026-10-19):** Lessons 25–29 are written, independently reviewed, accepted, validated, documented, and imported into production as unpublished drafts at positions 0–4. Course “Dutch Foundations — Part V: Talking about the past” remains draft course `d586e8b0-7d68-4519-bc6e-7fb9dc51ee1b`; manifest `part-v/course.prod.json`. Read-only production verification confirmed all five lessons at positions 0–4, all unpublished, and the course remains draft for the user to publish from the app. Lessons 27–29 completed together as a three-lesson author/review batch. See `docs/content/ledger-part-v.md` for lesson IDs and details. Do not reimport lessons 25–29.
 
-**Autopilot (user, 2026-10-13):** go from lesson to lesson without asking. Per lesson: brief (opus) → write (sonnet) → review (opus) → production import of that lesson only → docs (sonnet). Stop only for decisions that are genuinely the user's. (The earlier 05:00 cut-off was dropped by the user on 2026-10-13.) After Part I, continue with the remaining lessons of the next courses (finish Part IV, then plan and write Parts V–VII).
+**Part I progress:** 01-a, 01-b, 02-a, 02-b, 03-a, 03-b, 04-a, 04-b, 05-a, 05-b and 06-a accepted (01-a … 03-a 2026-10-12, 03-b, 04-a, 04-b, 05-a, 05-b and 06-a 2026-10-13; written, reviewed, docs). 01-a, 01-b, 02-a and 02-b are published; 03-a, 03-b, 04-a, 04-b, 05-a, 05-b and 06-a are in production (03-a 2026-10-12, 03-b, 04-a, 04-b, 05-a, 05-b and 06-a 2026-10-13), imported as unpublished drafts at positions 4, 5, 6, 7, 8, 9 and 10 (10, 10, 11, 11, 11, 10 and 10 practice anchors). 06-b remains outstanding (brief already written). Production course exists (`part-i/course.prod.json`); 01-a, 01-b, 02-a, 02-b, 03-a, 03-b, 04-a, 04-b, 05-a, 05-b and 06-a imported there as unpublished drafts. No local course yet. Single-lesson prod import: see "New lessons only" below. Note: the Antwerpen colleague (02-a, 02-b, returns in 03-a and 03-b) stays unnamed ("Collega") by user decision, 2026-10-12.
 
-**No more batches (user, 2026-10-12):** work lesson by lesson. Each lesson goes write → review → verify → docs as soon as the previous step for it is done, without waiting for other lessons or for a batch go-ahead.
-
-**Part I progress:** 01-a, 01-b, 02-a, 02-b, 03-a, 03-b, 04-a, 04-b, 05-a, 05-b and 06-a accepted (01-a … 03-a 2026-10-12, 03-b, 04-a, 04-b, 05-a, 05-b and 06-a 2026-10-13; written, reviewed, docs). 01-a, 01-b, 02-a and 02-b are published; 03-a, 03-b, 04-a, 04-b, 05-a, 05-b and 06-a are in production (03-a 2026-10-12, 03-b, 04-a, 04-b, 05-a, 05-b and 06-a 2026-10-13), imported as unpublished drafts at positions 4, 5, 6, 7, 8, 9 and 10 (10, 10, 11, 11, 11, 10 and 10 practice anchors). Next: 06-b (brief already written; review, import, docs). Production course exists (`part-i/course.prod.json`); 01-a, 01-b, 02-a, 02-b, 03-a, 03-b, 04-a, 04-b, 05-a, 05-b and 06-a imported there as unpublished drafts. No local course yet. Single-lesson prod import: see "New lessons only" below. Note: the Antwerpen colleague (02-a, 02-b, returns in 03-a and 03-b) stays unnamed ("Collega") by user decision, 2026-10-12.
-
-**Part IV paused (2026-10-12):** 19-a, 19-b, 20-a are accepted. 20-b and 21-a are written but not reviewed (their worker notes may be missing from `part-iv/REVIEW-NOTES.md`). 21-b is not written. The course now exists: `part-iv/course.json` and `course.prod.json` were added by the user.
+**Part IV progress (updated 2026-10-19):** All 12 lessons 19-a through 24-b are accepted and imported locally/production as unpublished drafts at positions 0–11. Both databases contain the complete course; production positions were verified with a read-only query. The local and production manifests exist: `part-iv/course.json` and `part-iv/course.prod.json`. Never re-send lessons already present in a target database.
 
 ## Agent models (cost)
 
@@ -34,12 +30,15 @@ Use the cheapest model that does the job: coordinator and workers on `sonnet`; r
 
 ## Part IV (rows 19–24)
 
-Planned in `docs/content/briefs-part-iv.md` (12 lessons, 19-a … 24-b). User decisions are in `part-iv/REVIEW-NOTES.md`. The course does not exist yet, so batches stop after docs: no import until the user gives the course ID. Use the Part III coordinator prompt below with `part-iv` paths, `briefs-part-iv.md`, `ledger-part-iv.md`, and `terms.py` over `part-iii/*.json part-iii/existing/*.json part-iv/*.json`.
+Planned in `docs/content/briefs-part-iv.md` (12 lessons, 19-a … 24-b). User decisions are in `part-iv/REVIEW-NOTES.md`. The local and production manifests exist. Use the Part III coordinator prompt below with `part-iv` paths, `briefs-part-iv.md`, `ledger-part-iv.md`, and `terms.py` over `part-iii/*.json part-iii/existing/*.json part-iv/*.json`. The user's per-lesson autopilot authorizes importing each newly accepted lesson to production; filter generated SQL to IDs of only newly accepted lessons, never reimport existing production lessons.
 
-- **Batch A:** 19-a, 19-b, 20-a. **Done** (written, reviewed, docs updated, 2026-10-11). Not imported: no course ID yet.
-- **Batch B:** 20-b, 21-a, 21-b.
-- **Batch C:** 22-a, 22-b, 23-a.
-- **Batch D:** 23-b, 24-a, 24-b.
+- **Batch A:** 19-a, 19-b, 20-a. **Done** (written, reviewed, documented, and imported locally/production; 2026-10-19 local imports).
+- **Batch B:** 20-b, 21-a, 21-b. Written, reviewed, documented, and imported locally/production.
+- **Batch C:** 22-a, 22-b and 23-a/b written, reviewed, documented and imported locally/production (2026-10-19).
+- **24-a:** written, reviewed, documented and imported locally/production (2026-10-19).
+- **24-b:** written, independently reviewed, documented, accepted and imported locally/production (2026-10-19).
+- **Part VI progress (updated 2026-10-19):** Rows 30–36 are accepted, independently reviewed, validated, documented and imported into production as unpublished drafts at positions 0–6. Production course “Dutch Foundations — Part VI: More complex Dutch” is draft course `ec7fb520-dfad-4b9e-af85-7debf4994600`; manifest `part-vi/course.prod.json`. Lesson IDs: row 30 `70810a35-716b-40df-8bfa-88564bf8d513`, row 31 `bb35fd08-6768-489d-9c83-56cf1723b996`, row 32 `81169131-8cf2-4ac2-8454-02ea0e215531`, row 33 `faea82e8-e635-4ada-9e68-0fd0bb69135c`, row 34 `83f35487-3c1c-486c-bc40-60f474305fe3`, row 35 `6aeafc17-c280-463c-8596-757cd0b023f3`, row 36 `8a187161-97b7-496c-a842-c46fbbd084cf`. Read-only verification confirmed positions 0–6, all unpublished, and the course remains unpublished for the user to publish from the app. See `docs/content/ledger-part-vi.md` for actual coverage. Do not reimport rows 30–36 or publish.
+- **Next:** Part VII publication and production status are recorded. Resume the user's chosen next course priority.
 
 ## Part III batches (the user's rule: finish a batch completely before starting the next)
 
