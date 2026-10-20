@@ -1,6 +1,6 @@
 # Wordinator agent guide
 
-Wordinator is a self-hosted practice space for committed Dutch and German learners, with open registration, one global course library, and a shared journal (see [docs/what_is_it.md](docs/what_is_it.md)). Read [docs/index.md](docs/index.md) before changing product behavior or architecture.
+Wordinator is a private, self-hosted practice space for committed Dutch and German learners the owner knows, with one global course library and a shared journal (see [docs/what_is_it.md](docs/what_is_it.md)). Read [docs/index.md](docs/index.md) before changing product behavior or architecture.
 
 ## Source of truth
 

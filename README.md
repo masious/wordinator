@@ -1,6 +1,6 @@
 # Wordinator
 
-A self-hosted practice space for committed Dutch and German learners.
+A private, self-hosted practice space for committed Dutch and German learners the owner knows.
 
 ## Local development
 
