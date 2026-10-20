@@ -214,6 +214,7 @@ Completed on 2026-10-07. The mobile plan (`MOBILE_PLAN.md`, removed in `1ab9f54`
 No ordering is implied.
 
 - Replace the tutor context rail's temporary deterministic session excerpt with a more useful prompt or recap concept if product use reveals one (the prototype's “Try asking” position, changed 2026-10-16)
+- Per-account Azure speech quota (owner request, 2026-10-20): a daily or monthly allowance per account for Microsoft speech recognition (counted when `POST .../speech-recognition/token` issues a token, or by recognized seconds reported back) and for on-demand speech characters, refused with a clear message once spent and visible in the superuser's analytics; replaces the accepted "small trusted group" limitation in [security and privacy](security-and-privacy.md#spoken-drill-answers)
 - Replace the initial authentication/recovery model; add verified recovery and session revocation
 - Account deletion and a broader privacy/data lifecycle
 - Dutch and German UI catalogs with immediate active-group locale switching
