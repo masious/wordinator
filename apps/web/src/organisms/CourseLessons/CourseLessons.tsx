@@ -1,13 +1,13 @@
 import {
   COURSE_TEXT_MAX, COURSE_TITLE_MAX, okResponseSchema, outlineResponseSchema, type CourseLessonSummary, type CourseProgressResponse, type LessonInput, type LessonPosition,
 } from "@wordinator/contracts";
-import { lessonResponseSchema, type CourseDetailResponse, type CourseLesson } from "@wordinator/contracts/lesson-document";
+import { lessonResponseSchema, type CourseDetailResponse, type CourseLesson, type LessonDocument as LessonDocumentData } from "@wordinator/contracts/lesson-document";
 import type { LessonAiPracticesResponse } from "@wordinator/contracts/tutor";
 import { Drawer } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { type FormEvent, lazy, Suspense, useCallback, useMemo, useRef, useState } from "react";
+import { type FormEvent, lazy, type RefObject, Suspense, useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ArrowLeft, ArrowRight, BookA, Check, ChevronRight, ListTree, PencilLine } from "lucide-react";
 import { Trans, useTranslation } from "react-i18next";
@@ -48,6 +48,33 @@ const swap = (ids: string[], index: number, offset: -1 | 1) => {
 };
 const canEditDetails = (scope: Scope, lesson: { published: boolean }) => scope.owner || (scope.contribute && !lesson.published);
 
+// Behind the start gate the lesson shows up to and including its first top-level dialogue (in Dutch Foundations the story that
+// opens every lesson), then a short faded strip of what follows. A long dialogue on a narrow or short window is cut at two window
+// heights (at least 48rem), so the button stays near. Without a dialogue the stylesheet's height cut applies. The cut follows
+// resizes and orientation changes.
+const GATE_FADE_PX = 96;
+function useGateHeight(reading: RefObject<HTMLElement | null>, document: LessonDocumentData | null) {
+  const [height, setHeight] = useState<number | null>(null);
+  const dialogueId = document?.blocks.find((block) => block.type === "dialogue")?.id ?? null;
+  useLayoutEffect(() => {
+    const root = reading.current;
+    if (!root || !dialogueId) { setHeight(null); return; }
+    const measure = () => {
+      const dialogue = root.querySelector<HTMLElement>(`[data-block-id="${CSS.escape(dialogueId)}"]`);
+      if (!dialogue) return setHeight(null);
+      const rem = parseFloat(getComputedStyle(window.document.documentElement).fontSize) || 16;
+      const limit = Math.max(2 * window.innerHeight, 48 * rem);
+      setHeight(Math.min(Math.ceil(dialogue.getBoundingClientRect().bottom - root.getBoundingClientRect().top) + GATE_FADE_PX, limit));
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    for (const child of root.children) observer.observe(child);
+    window.addEventListener("resize", measure);
+    return () => { observer.disconnect(); window.removeEventListener("resize", measure); };
+  }, [reading, dialogueId]);
+  return height;
+}
+
 function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" | "changed"> }) {
   const { t } = useTranslation();
   return <>
@@ -87,6 +114,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const inline = useMediaQuery("(max-width: 62em)", undefined, { getInitialValueInEffect: false });
   const [sheetOpen, setSheetOpen] = useState(false);
   const [percent, setPercent] = useState(0);
+  const gateHeight = useGateHeight(reading, gate ? document : null);
   // Only words of the published document can be bookmarked, so a draft preview shows no toggles.
   const bookmarkTarget = useLessonBookmarkTarget(scope.groupId, scope.courseId, lesson.id, lesson.document);
   const speech = useMemo(() => lessonSpeech(lesson), [lesson]);
@@ -104,7 +132,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
     <LessonWords steps={steps} active={active} groupId={scope.groupId} collapsed={wordsCollapsed} onToggle={toggleWords} {...props} />;
   return <LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={styles.reader} data-action-bar={phone || undefined}>
     {!gate && <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} onPercent={setPercent} />}
-    <div ref={reading} className={gate ? `${styles.body} ${styles.gated}` : styles.body}>
+    <div ref={reading} className={gate ? `${styles.body} ${styles.gated}` : styles.body} style={gate && gateHeight !== null ? { maxBlockSize: gateHeight } : undefined}>
       {!lesson.document && <p className={styles.preview}>{t("courses.lessons.draftPreview")}</p>}
       <LessonDocument document={document} anchored vocabulary={false} renderAfterBlock={slots?.afterBlock}
         renderShare={share ? (block) => <ShareButton piece={block.type === "example" ? { kind: "example", block } : { kind: "dialogue", block }}
@@ -113,8 +141,12 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
         <PracticeSummary scope={{ groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId }} block={practiceFromBlock(block, lesson.practiceProgress)}
           published={lesson.document !== null} archived={archived} dock={docked ? reading : undefined} />} />
       {slots?.end}
-      {gate && <div className={styles.gate}><Button onClick={gate}>{t("courses.lessons.startReading")}</Button></div>}
+      {gate && <div className={styles.gateFade} aria-hidden="true" />}
     </div>
+    {gate && <div className={styles.gate}>
+      <p className={styles.gateNotice}>{t("courses.lessons.startNotice")}</p>
+      <Button onClick={gate}>{t("courses.lessons.startReading")}</Button>
+    </div>}
     {docked && rail.reference && createPortal(<div ref={side} className={styles.side}>{words({ docked: true })}</div>, rail.reference)}
     {placement === "under" && <div ref={side} className={styles.under}>{words({})}</div>}
     {hasIndex && !gate && rail.index && createPortal(<LessonIndex entries={entries} reading={reading} side={side} onJump={rail.closeRail} />, rail.index)}
@@ -387,19 +419,18 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
         {wordCount > 0 && <MetadataItem icon={<BookA />}>{t("courses.lessons.wordCount", { count: wordCount })}</MetadataItem>}
         {current.practiceCount > 0 && <MetadataItem icon={<PencilLine />}>{t("courses.lessons.practiceCount", { count: current.practiceCount })}</MetadataItem>}
       </MetadataRow>}
-      {/* Reset (C14) sits beside the saved step or Finished label, for published lessons in courses that are not archived. */}
-      {!editing && ((playable && (completed || position)) || resettable) && <div className={styles.start}>
+      {/* One row: the saved step or Finished label, then Reset (C14, published lessons in courses that are not archived) and, for
+          editors, Edit lesson, as buttons side by side. */}
+      {!editing && ((playable && (completed || position)) || resettable || (scope.contribute && data)) && <div className={styles.start}>
         {playable && completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
         {playable && !completed && position && <span className={styles.position}>{t("courses.player.step", { current: position.stepIndex + 1, total: position.totalSteps })}</span>}
-        {resettable && data && <LessonResetAction groupId={groupId} courseId={courseId} accountId={accountId} lesson={data}
-          onReset={() => void navigate({ to: "/courses/$courseSlug", params: { courseSlug: detail.course.slug } })} />}
+        <div className={styles.headerActions}>
+          {resettable && data && <LessonResetAction groupId={groupId} courseId={courseId} accountId={accountId} lesson={data}
+            onReset={() => void navigate({ to: "/courses/$courseSlug", params: { courseSlug: detail.course.slug } })} />}
+          {scope.contribute && data && <Button variant="secondary" onClick={() => setEditing(true)} aria-label={t("courses.lessons.editContentNamed", { number })}>{t("courses.lessons.editContent")}</Button>}
+        </div>
       </div>}
-      {scope.contribute && <div className={styles.blockTools}>
-        <StateChips lesson={current} />
-        {data && !editing && <div className={styles.toolButtons}>
-          <Button variant="secondary" onClick={() => setEditing(true)} aria-label={t("courses.lessons.editContentNamed", { number })}>{t("courses.lessons.editContent")}</Button>
-        </div>}
-      </div>}
+      {scope.contribute && <div className={styles.blockTools}><StateChips lesson={current} /></div>}
     </header>
     {aiPracticeCount > 0 && !editing && !gated && <AiPracticeToggle count={aiPracticeCount} shown={aiOpen} onToggle={() => setAiShown((shown) => !shown)}
       state={aiPractices.isError ? "error" : aiPractices.isSuccess ? "success" : "pending"} onRetry={() => void aiPractices.refetch()} />}

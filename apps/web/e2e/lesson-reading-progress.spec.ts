@@ -36,7 +36,9 @@ test("scrolling a lesson page fills its bar, saves the furthest step, and Contin
   // Part of the way down, the furthest step reached is saved through the position API, and after a reload the bar starts from
   // that saved position at the top of the page, in the player's step unit.
   const partway = page.waitForResponse((response) => response.url().endsWith("/position") && response.request().method() === "PUT");
-  await page.mouse.wheel(0, 400);
+  // Starting saved step 1, so the wheel has to pass at least the second step.
+  await page.mouse.move(640, 400);
+  await page.mouse.wheel(0, 700);
   const { position: middle } = await (await partway).json() as { position: { stepIndex: number; totalSteps: number } };
   expect(middle.stepIndex).toBeGreaterThan(0);
   expect(middle.stepIndex).toBeLessThan(11);

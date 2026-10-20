@@ -447,6 +447,7 @@ export const resources = {
         },
         lessons: {
           startReading: "Start reading this lesson",
+          startNotice: "Once you start, Wordinator tracks your reading and practice time and shows you your progress. Your own times stay private; lessons show typical times combined from every learner who finished them.",
           outline: "Lessons",
           outlineEmpty: "No lessons yet.",
           outlineCount_one: "{{count}} lesson",

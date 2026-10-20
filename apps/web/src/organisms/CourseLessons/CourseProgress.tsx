@@ -140,7 +140,7 @@ export function LessonResetAction({ groupId, courseId, accountId, lesson, onRese
   const [opened, setOpened] = useState(false);
   const reset = useResetLesson({ groupId, courseId, accountId });
   return <>
-    <Button variant="quiet" className={styles.reset} onClick={() => { reset.reset(); setOpened(true); }}>{t("courses.reset.lessonAction")}</Button>
+    <Button variant="secondary" className={styles.reset} onClick={() => { reset.reset(); setOpened(true); }}>{t("courses.reset.lessonAction")}</Button>
     <ResetLessonDialog title={lesson.title} opened={opened} pending={reset.isPending} error={reset.error} onClose={() => setOpened(false)}
       onConfirm={() => reset.mutate({ lessonId: lesson.id, practiceIds: lessonPracticeIds(lesson) }, { onSuccess: () => { setOpened(false); onReset(); } })} />
   </>;
