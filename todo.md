@@ -2,18 +2,19 @@ this file isn't meant for agents. don't read it if you're an agent.
 
 
 [ ] words drill: practice with space
-[ ] drill results: gamify results page
+[x] drill results: gamify results page
 [ ] drill results: practice failed words with ai session in drill's results page
 [x] reset progress of lesson, should reset word fluency
 [x] remove contribution section from course, as well as author's name from course and lessons everywhere
-[ ] remove group-related tech-debts
 [ ] measure reading time
+[ ] remove group-related tech-debts
 
 
 Lesson Page
 ===========
 [ ] leftrail indexes
 [ ] mark course as complete at the end of the page
+[ ] separate progress bar for practices
 [ ] new words panel usability
 
 
