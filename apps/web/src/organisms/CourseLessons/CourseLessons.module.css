@@ -23,6 +23,7 @@
 .itemTitle{font-size:var(--type-card-title);font-weight:var(--weight-semibold);line-height:var(--line-title);overflow-wrap:anywhere;transition:color var(--motion-standard) ease}
 .itemGoal{font-size:var(--text-sm);line-height:var(--line-body);color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}
 .itemStatus{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-1) var(--space-3);margin-top:var(--space-1)}
+.typical{font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 .itemChips{display:flex;flex-wrap:wrap;gap:var(--space-2);padding-inline-start:calc(var(--control-height-sm) + var(--space-4))}
 /* A lesson's first image covers the row's full height along its left edge and fades into the card surface, so the text beside it
    stays on --color-core; it sits under the row's content and may be cropped. The list clips it at its rounded corners. */

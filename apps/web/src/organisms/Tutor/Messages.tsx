@@ -149,6 +149,8 @@ export function ConfirmationCard({ part, disabled, onRespond }: { part: Confirma
       <li>{t("tutor.confirm.deletes.bookmarks", { count: summary.deletes.bookmarks })}</li>
     </ul>}
     {summary.action === "save_ai_practice" && <ul className={styles.cardDetails}>
+      {/* Cards stored before C15 have no focus, so they show none. */}
+      {summary.focus && <li>{t("tutor.confirm.focus", { focus: t(`tutor.confirm.focuses.${summary.focus}`) })}</li>}
       {summary.lessons.map((entry) => <li key={entry.lesson.id}>{t("tutor.confirm.lessonIn", { lesson: entry.lesson.title, course: entry.course.title })}</li>)}
     </ul>}
     {failed && <p className={styles.errorLine} role="alert">{t("tutorComponents.sendFailed")}</p>}

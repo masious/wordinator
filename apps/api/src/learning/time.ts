@@ -65,6 +65,44 @@ export async function readLessonTime(db: D1Database, lessonId: string, userId: s
   };
 }
 
+// A lesson's typical times as the course read carries them: reading plus practice, in seconds, and each practice's median.
+export type TypicalLesson = { seconds: number; practices: Record<string, number> };
+
+/**
+ * Every lesson's typical times in a course, for the course read: the reading median plus each practice's median, which is the
+ * same as the lesson box's figures. A lesson without snapshots has no entry. Callers authorize the course first.
+ */
+export async function readCourseTypicalTimes(db: D1Database, courseId: string): Promise<Map<string, TypicalLesson>> {
+  const [completions, practices] = await db.batch([
+    db.prepare("SELECT lesson_id AS lessonId, reading_seconds AS seconds FROM course_lesson_completions WHERE course_id = ? AND reading_seconds IS NOT NULL").bind(courseId),
+    db.prepare("SELECT lesson_id AS lessonId, practice_id AS practiceId, done_seconds AS seconds FROM course_practice_progress WHERE course_id = ? AND done_seconds IS NOT NULL").bind(courseId),
+  ]);
+  const reading = groupSeconds(rowsOf<{ lessonId: string; seconds: number }>(completions), (row) => row.lessonId);
+  const practiceRows = rowsOf<{ lessonId: string; practiceId: string; seconds: number }>(practices);
+  const lessonOf = new Map(practiceRows.map((row) => [row.practiceId, row.lessonId]));
+  const medians = new Map<string, Record<string, number>>();
+  for (const [practiceId, values] of groupSeconds(practiceRows, (row) => row.practiceId)) {
+    const lessonId = lessonOf.get(practiceId)!;
+    medians.set(lessonId, { ...medians.get(lessonId), [practiceId]: median(values)! });
+  }
+  const lessonIds = new Set([...reading.keys(), ...medians.keys()]);
+  return new Map([...lessonIds].map((lessonId) => {
+    const practicesOf = medians.get(lessonId) ?? {};
+    const readingSeconds = reading.has(lessonId) ? median(reading.get(lessonId)!)! : 0;
+    return [lessonId, { seconds: readingSeconds + Object.values(practicesOf).reduce((sum, value) => sum + value, 0), practices: practicesOf }];
+  }));
+}
+
+/** The course read's typical fields for one outline entry; a lesson without data has none. */
+export const typicalFields = (lesson: TypicalLesson | undefined) => ({ typicalSeconds: lesson?.seconds ?? null, typicalPractices: lesson?.practices ?? {} });
+
+// Seconds grouped by a key, in row order.
+function groupSeconds<T extends { seconds: number }>(rows: readonly T[], key: (row: T) => string) {
+  const groups = new Map<string, number[]>();
+  for (const row of rows) groups.set(key(row), [...groups.get(key(row)) ?? [], row.seconds]);
+  return groups;
+}
+
 /** The practice block IDs of a published document, at any depth. An unreadable document has none. */
 function publishedPracticeIds(publishedDoc: string): Set<string> {
   try {

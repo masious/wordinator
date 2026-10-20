@@ -22,6 +22,9 @@ export function grammarBlocks(document: LessonDocument): Set<string> {
   return grammar;
 }
 
+// A typical time in whole minutes, at least one: the course list, Practice again, and the lesson box show minutes.
+export const typicalMinutes = (seconds: number) => Math.max(1, Math.round(seconds / 60));
+
 // The block at the reading line: the last block whose top has crossed it.
 function blockAtLine(root: HTMLElement): string | null {
   const line = window.innerHeight * READING_LINE; let found: string | null = null;

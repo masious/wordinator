@@ -8,6 +8,7 @@ import { lessonMetricsQueryOptions } from "../../api";
 import { learningClock, useMinuteRefresh } from "../../learningTime";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { relativeTime } from "../../relativeTime";
+import { typicalMinutes } from "./LessonTime";
 import styles from "./LessonBox.module.css";
 
 export type LessonBoxLesson = { groupId: string; courseId: string; courseTitle: string; lessonId: string; title: string; number: number };
@@ -20,7 +21,7 @@ export type LessonBoxLesson = { groupId: string; courseId: string; courseTitle: 
 // refreshed once a minute from the clock's unsent seconds. A prefilled conversation sends nothing until the learner sends it.
 const duration = (t: TFunction, seconds: number) => seconds < 60 ? t("courses.lessonBox.underMinute") : t("courses.lessonBox.minutes", { count: Math.floor(seconds / 60) });
 const typicalLine = (t: TFunction, typical: TypicalTime | null) => typical
-  && t("courses.lessonBox.typical", { time: t("courses.lessonBox.minutes", { count: Math.max(1, Math.round(typical.seconds / 60)) }), count: typical.learners });
+  && t("courses.lessonBox.typical", { time: t("courses.lessonBox.minutes", { count: typicalMinutes(typical.seconds) }), count: typical.learners });
 
 export function LessonBox({ lesson, percent }: { lesson: LessonBoxLesson; percent: number }) {
   const { t } = useTranslation();

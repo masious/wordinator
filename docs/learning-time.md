@@ -14,7 +14,7 @@ Each measured second belongs to one **activity**. Rows are kept per account, loc
 | `practice` | A lesson practice's answer set: the lesson page's Answer dialog and [Practice again](courses.md#lesson-actions) | course, lesson, practice block | none |
 | `ai_practice` | An expanded [AI practice](courses.md#ai-practices) on the lesson page, while the learner works inside it | course, lesson, AI practice | the practice's focus |
 | `tutor` | An open [tutor](ai-tutor.md) conversation at `/ai` | none | none |
-| `drill` | A [drill](words.md#drill) at `/words/drill` | the course for a course drill, otherwise none | none |
+| `drill` | A [drill](words.md#drill) at `/words/drill` while its cards show (not during setup or the results) | the course for a course drill, otherwise none | none |
 | `words` | The [Words tab](words.md) at `/words` | none | none |
 
 - **Reading focus.** Reading time is `grammar` while the lesson section at the [reading line](courses.md#lesson-positions) (from one heading to the next) holds a grammar callout or a column layout, the same rule the lesson overview uses for its Grammar stop. Otherwise it is `lesson`.
@@ -41,7 +41,7 @@ The [lesson box](courses.md#lesson-box) shows the viewer's own **Reading** time 
 - **Typical reading** is the median, over every learner who has completed the lesson (the viewer included), of their reading time up to their first completion. That time is saved on the completion (`reading_seconds`), so rereading a finished lesson adds to the learner's own total but not to the median. A completion with no recorded time, such as one from before C15, is left out.
 - **Typical practice time of a practice** is the median, over every learner who has finished that practice, of their `practice` time in it up to the save that finished it (`done_seconds` on their [practice progress](courses.md#practice-answers)). A lesson's typical practice time is the sum of its practices' medians. AI practices have no median: few learners answer the same one.
 - The course page's lesson list shows each lesson's typical total (reading plus practice) as `about 20 min`, and the Practice again list shows each practice's typical time.
-- Medians come from `GET .../lessons/:lessonId/metrics` (the lesson box) and the course read (lesson list and Practice again), computed at read time, rounded to whole minutes, and shown only with at least one learner. They include no account IDs or individual times.
+- Medians come from `GET .../lessons/:lessonId/metrics` (the lesson box) and the course read (lesson list and Practice again, as the outline's `typicalSeconds` and `typicalPractices`), computed at read time, rounded to whole minutes, and shown only with at least one learner. They include no account IDs or individual times.
 - Lessons and practices edited after people finished them keep their earlier times. No version is recorded.
 
 ## Activity
@@ -85,6 +85,6 @@ The superuser's [analytics](settings-and-administration.md#analytics) adds a Tim
 ## Verification
 
 - Contracts: the time request's day format, entry count, second limits, focus by activity, and target shape for each activity.
-- Workers integration: authentication; visibility refusals for an unpublished lesson, a practice of another lesson, and an AI practice of another lesson; the elapsed-time clamp; the day window; upserts adding seconds; completion and done snapshots; medians across accounts including the viewer; reset and lesson deletion; the activity read's categories, previous period, goal, and streak; goal validation.
+- Workers integration: authentication; visibility refusals for an unpublished lesson, a practice of another lesson, and an AI practice of another lesson; the elapsed-time clamp; the day window; upserts adding seconds; completion and done snapshots; medians across accounts including the viewer, and the course read's typical fields; reset and lesson deletion; the activity read's categories, previous period, goal, and streak; goal validation.
 - Unit: the clock's idle cut-off, visibility and focus pauses, the first-block start, the reading and practice hand-over, midnight splitting, and send retries.
-- React Testing Library: the lesson box's own and typical times and their minute refresh; the lesson list's and Practice again's typical times; the Study goal field.
+- React Testing Library: the lesson box's own and typical times and their minute refresh; the lesson list's and Practice again's typical times; the Words and tutor clocks; the Study goal field; the tutor confirmation card's focus line.

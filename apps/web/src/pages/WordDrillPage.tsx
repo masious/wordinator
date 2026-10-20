@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef, useState, type RefObject } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, ApiError, sessionQueryOptions, speechRecognitionTokenSource, wordDrillQueryOptions, type WordDrillSettings } from "../api";
+import { useLearningClaim } from "../learningTime";
 import { RevealSoundToggle } from "../molecules/Speech";
 import { RECOGNITION_LOCALES, SpeechRecognitionScope, type AssessmentHandler } from "../molecules/speechRecognition";
 import { sendPronunciationAttempt } from "../molecules/learningAttempts";
@@ -32,8 +33,8 @@ export function validateWordDrillSearch(search: Record<string, unknown>): WordDr
 // One session's cards, shown one at a time. The first grade of each card is sent once, as soon as it is given; a failed save is
 // kept to retry, and a word that is gone (404) finishes from the session's copy with its grade ignored. The session is timed from
 // its first card to its last grade; with the pronunciation scores heard meanwhile, that is kept locally as the last session.
-function DrillRun({ groupId, accountId, cards, language, scores, onAgain, onBack }: {
-  groupId: string; accountId: string; cards: readonly DrillCard[]; language: string; scores: RefObject<number[]>; onAgain: () => void; onBack: () => void;
+function DrillRun({ groupId, accountId, cards, language, scores, course, onAgain, onBack }: {
+  groupId: string; accountId: string; cards: readonly DrillCard[]; language: string; scores: RefObject<number[]>; course: string | undefined; onAgain: () => void; onBack: () => void;
 }) {
   const { t } = useTranslation();
   const [state, setState] = useState(() => startDrill(cards.length));
@@ -42,6 +43,8 @@ function DrillRun({ groupId, accountId, cards, language, scores, onAgain, onBack
   useEffect(() => { scores.current = []; }, [scores]);
   const [revealed, setRevealed] = useState(false);
   const [unsaved, setUnsaved] = useState<ReadonlyMap<number, WordDrillResult>>(new Map());
+  // Cards on screen count as drill time, against the course of a course drill (C15, docs/learning-time.md#what-is-measured).
+  useLearningClaim(state.queue.length ? { groupId, target: () => (course ? { activity: "drill", courseId: course } : { activity: "drill" }) } : null);
   const save = useMutation({
     mutationFn: ({ index, result }: { index: number; result: WordDrillResult }) => {
       const { word, course, direction } = cards[index]!;
@@ -113,7 +116,8 @@ function DrillSession({ groupId, accountId, settings, run, language, scores, onA
       {t({ weak: "drill.emptyWeak", lesson: "drill.emptyLesson", course: "drill.emptyCourse" }[settings.source])}
     </EmptyState></Surface>;
   }
-  return <DrillRun groupId={groupId} accountId={accountId} cards={deck.data.cards} language={language} scores={scores} onAgain={onAgain} onBack={onBack} />;
+  return <DrillRun groupId={groupId} accountId={accountId} cards={deck.data.cards} language={language} scores={scores} course={settings.source === "course" ? settings.course : undefined}
+    onAgain={onAgain} onBack={onBack} />;
 }
 
 // The drill page (C12e): self-graded cards one at a time, then the results. Desktop only, like other new work.

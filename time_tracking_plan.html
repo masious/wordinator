@@ -1,0 +1,268 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Learning Time Plan</title>
+<style>
+  :root { --bg: #f7f7f4; --fg: #1d2420; --muted: #5f6b64; --card: #ffffff; --line: #e2e5e0; --link: #2a6b8a;
+    --done: #2f7a4f; --done-bg: #e3f2e9; --doing: #9a6212; --doing-bg: #fbefd9; --todo: #5b6470; --todo-bg: #eceef1; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #151a17; --fg: #e8ece9; --muted: #9aa69f; --card: #1e2521; --line: #2e3732; --link: #7cc0e0;
+      --done: #7fd3a1; --done-bg: #1f3a2a; --doing: #f0c070; --doing-bg: #3d3018; --todo: #b6bec8; --todo-bg: #2a3036; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 820px; margin: 0 auto; padding: 32px 16px 56px; }
+  h1 { margin: 0 0 12px; font-size: 28px; line-height: 1.2; }
+  h2 { margin: 0 0 10px; font-size: 18px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+  p { margin: 0 0 12px; }
+  a { color: var(--link); }
+  code { font: 13px ui-monospace, SFMono-Regular, Menlo, monospace; overflow-wrap: anywhere; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; margin: 16px 0; }
+  ul { margin: 0; padding-left: 20px; }
+  li { margin: 6px 0; overflow-wrap: anywhere; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { position: relative; padding-left: 28px; }
+  ul.check li::before { position: absolute; left: 0; top: 1px; width: 18px; height: 18px; border-radius: 4px; border: 1.5px solid var(--todo);
+    display: grid; place-items: center; font-size: 12px; line-height: 1; content: ""; }
+  ul.check li.x::before { content: "✓"; color: var(--card); background: var(--done); border-color: var(--done); }
+  ul.check li.w::before { content: "~"; color: var(--doing); border-color: var(--doing); }
+  /* Nested lists are details of their checked item, so they are plain bullets, not checkboxes. */
+  ul.check ul { list-style: disc; padding-left: 20px; }
+  ul.check ul li { padding-left: 0; }
+  ul.check ul li::before { content: none; display: none; }
+  .badge { font-size: 12px; font-weight: 600; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+  .b-done { color: var(--done); background: var(--done-bg); }
+  .b-doing { color: var(--doing); background: var(--doing-bg); }
+  .b-todo { color: var(--todo); background: var(--todo-bg); }
+  .meta { color: var(--muted); font-size: 13px; margin: -4px 0 10px; }
+  .legend { color: var(--muted); font-size: 13px; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Learning time plan (C15)</h1>
+  <p>This is the working plan for learning time. It covers:</p>
+  <ul>
+    <li>active time per lesson, per practice, and per activity;</li>
+    <li>typical lesson and practice times built from every learner who finished;</li>
+    <li>the lesson start gate;</li>
+    <li>weekly and monthly activity by category;</li>
+    <li>a personal daily goal and streak;</li>
+    <li>a home dashboard.</li>
+  </ul>
+  <p>C15.0 moved every rule into its owning document. This file holds delivery steps only. Phase status is mirrored in <a href="docs/roadmap.md">docs/roadmap.md</a> under Course phases.</p>
+
+  <section>
+    <h2>Decisions live in their owning documents</h2>
+    <p>Change the owner, not this file:</p>
+    <ul>
+      <li><a href="docs/learning-time.md">docs/learning-time.md</a>: what is measured, the clock, sending time and its limits, lesson and practice medians, activity categories, the daily goal and streak, the home dashboard, reset and deletion.</li>
+      <li><a href="docs/courses.md">docs/courses.md</a>:
+        <ul>
+          <li>the start gate on lesson pages;</li>
+          <li>the lesson box's Reading and Practice times;</li>
+          <li>typical times in the lesson list and in Practice again;</li>
+          <li>reset deleting lesson time.</li>
+        </ul>
+      </li>
+      <li><a href="docs/data-model.md">docs/data-model.md</a>:
+        <ul>
+          <li><code>learning_time</code>;</li>
+          <li><code>course_lesson_completions.reading_seconds</code>;</li>
+          <li><code>course_practice_progress.done_seconds</code>;</li>
+          <li><code>ai_practices.focus</code>;</li>
+          <li><code>learner_profiles.daily_goal_minutes</code>;</li>
+          <li>deletion and retention.</li>
+        </ul>
+      </li>
+      <li><a href="docs/security-and-privacy.md">docs/security-and-privacy.md</a>: learning time as private learning data, and the cross-account exception for medians.</li>
+      <li><a href="docs/settings-and-administration.md">docs/settings-and-administration.md</a>: the Study goal setting and the analytics Time section.</li>
+      <li><a href="docs/ai-tutor.md">docs/ai-tutor.md</a>: the focus on <code>save_ai_practice</code>.</li>
+      <li><a href="docs/words.md">docs/words.md</a>: drill and Words tab time, counted as Vocabulary.</li>
+      <li><a href="docs/what_is_it.md">docs/what_is_it.md</a>: the mission allows a personal streak and a daily goal.</li>
+      <li><a href="docs/roadmap.md">docs/roadmap.md</a>: phase status.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Decisions settled with the user (2026-10-20)</h2>
+    <ul>
+      <li><strong>Who counts.</strong> Medians include every learner who finished, the viewer included, with no minimum number of learners.</li>
+      <li><strong>Median, not mean.</strong> Typical times are medians.</li>
+      <li><strong>Reading median.</strong> It uses each learner's reading time up to their first completion. That snapshot is saved on the completion, so rereading doesn't move it.</li>
+      <li><strong>Practice median.</strong> It uses each learner's time up to the save that finished the practice. A lesson's typical practice time is the sum of its practices' medians.</li>
+      <li><strong>Reset.</strong> A lesson reset deletes the learner's reading, practice, and AI practice time for that lesson.</li>
+      <li><strong>AI practices.</strong> Their time counts as practice time. Each AI practice carries a focus: grammar, vocabulary, reading, listening, or writing.</li>
+      <li><strong>Practice again.</strong> Time in the Practice again dialog counts as practice time for its lesson.</li>
+      <li><strong>Edited lessons</strong> keep the times recorded before the edit. No versioning.</li>
+      <li><strong>Mission.</strong> It now allows a personal streak and a daily goal. There are still no points, rankings, leaderboards, or rewards.</li>
+      <li><strong>Daily goal.</strong> Set in Settings, from 5 to 240 minutes per day, or no goal.</li>
+      <li><strong>Start gate.</strong> An unstarted lesson shows its faded beginning with Start reading this lesson. Pressing it starts the lesson and the reading clock.</li>
+      <li><strong>Dashboard.</strong> It uses the existing tokens only, with no new colours.</li>
+    </ul>
+  </section>
+
+  <p class="legend">Status legend: ☐ to do · ~ in progress · ✓ done</p>
+
+  <section>
+    <h2>C15.0 — Docs and decisions <span class="badge b-done">Done · 203c075</span></h2>
+    <ul class="check">
+      <li class="x">New owner <a href="docs/learning-time.md">docs/learning-time.md</a>, added to <a href="docs/index.md">docs/index.md</a>.</li>
+      <li class="x">Updated the owner documents in the list above.</li>
+      <li class="x">Updated the mission wording in <a href="docs/what_is_it.md">what_is_it.md</a>, <a href="docs/product-requirements.md">product-requirements.md</a>, <code>CLAUDE.md</code>, and <code>README.md</code>. The old "small group of friends" framing is retired.</li>
+      <li class="x">Added the start gate rule to <a href="docs/courses.md">courses.md</a>.</li>
+      <li class="x">Added the C15 entry and its phases to the roadmap.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>C15a — Storage and API <span class="badge b-done">Done · 70261a4</span> <span class="badge b-doing">Migration not applied remotely</span></h2>
+    <ul class="check">
+      <li class="x">Migration <code>0034_learning_time.sql</code>, which adds:
+        <ul>
+          <li><code>learning_time</code>, with activity and focus checks;</li>
+          <li><code>reading_seconds</code> on completions;</li>
+          <li><code>done_seconds</code> on practice progress;</li>
+          <li><code>ai_practices.focus</code>, backfilled from each practice's kind;</li>
+          <li><code>learner_profiles.daily_goal_minutes</code>.</li>
+        </ul>
+      </li>
+      <li class="x">Contracts: <code>learningTimeRequestSchema</code>, the focus enums, <code>lessonTimeSchema</code> on lesson metrics, and an optional <code>focus</code> on <code>save_ai_practice</code>.</li>
+      <li class="x"><code>POST /api/groups/:groupId/learning-time</code>:
+        <ul>
+          <li>refuses the whole send when any target is unreadable;</li>
+          <li>accepts only a day within one day of the server's date;</li>
+          <li>limits each send to the time elapsed since the account's previous accepted send (600 s for the first);</li>
+          <li>adds seconds to the existing row for the same target and day.</li>
+        </ul>
+      </li>
+      <li class="x">Snapshots: reading time is saved on the first completion; practice time is saved at the save that finishes a practice.</li>
+      <li class="x">Lesson metrics now carry the learner's own times and the typical reading and practice medians.</li>
+      <li class="x">Reset deletes the learner's time for the lesson. Lesson deletion deletes every account's time for it.</li>
+      <li class="x">Tests:
+        <ul>
+          <li>Workers suite <code>learning-time.test.ts</code>: authentication, refusals, the elapsed-time limit, upserts, snapshots, medians, reset, and deletion;</li>
+          <li>contract tests;</li>
+          <li>affected API suites.</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>C15b — Lesson page <span class="badge b-done">Done · cfe7f79 · 25a0a83 · a98b2ae</span></h2>
+    <ul class="check">
+      <li class="x">Browser clock <code>apps/web/src/learningTime.ts</code>:
+        <ul>
+          <li>the most recently started timer counts;</li>
+          <li>counting stops after 90 s without interaction;</li>
+          <li>it pauses while the page is hidden or unfocused;</li>
+          <li>time is split by local day;</li>
+          <li>it sends once a minute, when the page is hidden, and when a timer ends; a failed send is retried.</li>
+        </ul>
+      </li>
+      <li class="x">Start gate: the faded beginning of the lesson with Start reading this lesson. The first press saves the first step as the learner's position.</li>
+      <li class="x">Reading time, with grammar focus while a section with a grammar callout or a column layout is at the reading line.</li>
+      <li class="x">Practice time in the Answer and Practice again dialogs. It is sent before each practice save.</li>
+      <li class="x">AI practice time while the learner works inside an expanded practice.</li>
+      <li class="x">The lesson box shows the learner's own times and the typical times, refreshed once a minute.</li>
+      <li class="x">Tests: clock unit tests, the gate and reading progress, and the lesson box times.</li>
+      <li class="x">E2E updates (25a0a83):
+        <ul>
+          <li><code>openLesson</code> presses the start gate;</li>
+          <li>the reading-progress spec is adjusted for the gate;</li>
+          <li>the e2e reset clears <code>learning_time</code>.</li>
+        </ul>
+      </li>
+      <li class="x">Gate revision (a98b2ae):
+        <ul>
+          <li>The gate shows the lesson up to and including its first top-level dialogue. On production, 59 of 62 published lessons reach a dialogue within their first 8 blocks. The exceptions are Mijn huis, Lekker weer, and Een huis beschrijven.</li>
+          <li>Below that, a 96px fade into <code>--color-surface</code>.</li>
+          <li>A long dialogue is capped at max(2 window heights, 48rem).</li>
+          <li>A lesson without a dialogue is cut at clamp(24rem, 80svh, 40rem).</li>
+          <li>The cut is measured again on resize and orientation change.</li>
+          <li>A notice above Start explains time tracking: the learner's own times are private, and typical times combine everyone who finished.</li>
+          <li>Reset lesson and Edit lesson are now a pair of secondary buttons.</li>
+        </ul>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>C15c — Other surfaces <span class="badge b-done">Done · this change</span></h2>
+    <ul class="check">
+      <li class="x">Drill time while a session's cards show, with the course for a course drill (<code>WordDrillPage.tsx</code>).</li>
+      <li class="x">Words tab time while <code>/words</code> is open (<code>WordsPage.tsx</code>).</li>
+      <li class="x">Tutor time while a conversation is open at <code>/ai</code> (<code>TutorPage.tsx</code>).</li>
+      <li class="x">Typical times in the course page's lesson list ("about 20 min") and in the Practice again list. The course read gains <code>typicalSeconds</code> and <code>typicalPractices</code> (per practice ID) as optional outline fields, computed by <code>readCourseTypicalTimes</code>.</li>
+      <li class="x">The lesson box and the new list lines share <code>typicalMinutes</code> from <code>LessonTime.ts</code>.</li>
+      <li class="x">Show the practice focus on the tutor's confirmation card ("Focus: Listening"). Cards saved before C15 have no focus and show no line.</li>
+      <li class="x">Tests: API course read medians (<code>learning-time.test.ts</code>); RTL for the course list and Practice again times; RTL for the card focus line and the Words and tutor clocks.</li>
+      <li class="x">Fixed in tests: a card whose view is not a valid component view makes the page drop the whole message, so the focus test uses a valid dictation view; clock tests wait for the routed page to mount.</li>
+      <li class="x">Docs: <code>learning-time.md</code>, <code>courses.md</code>, and the roadmap's C15c entry updated; <code>ai-tutor.md</code> already described the card's focus.</li>
+      <li class="x">Checks run: contracts, API, and web typecheck; web production build; API course-related suites (39 tests in 6 files); web suite (391 of 392 pass).</li>
+      <li>Not run: the drill clock has no RTL test; Playwright specs for the course list are not run.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>C15d — Activity and goal <span class="badge b-todo">To do</span></h2>
+    <ul class="check">
+      <li><code>GET /api/groups/:groupId/learning-activity?range=week|month&amp;end=YYYY-MM-DD</code>:
+        <ul>
+          <li>time per day by category (Lesson reading, Grammar, Practice, Vocabulary, AI practice), with AI practice broken down by focus;</li>
+          <li>the previous period's total;</li>
+          <li>the goal and the streak.</li>
+        </ul>
+      </li>
+      <li>A Study goal setting in Settings (5–240 min, or no goal), saved through <code>PUT /api/learning/goal</code>.</li>
+      <li>A streak of consecutive days that met the goal.</li>
+      <li>A Time section in analytics, showing counts only.</li>
+      <li>Tests: categories, the previous period, the streak, goal validation, and the superuser-only analytics route.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>C15e — Home dashboard <span class="badge b-todo">To do</span></h2>
+    <ul class="check">
+      <li>A greeting header with the date, and a Practice with AI action.</li>
+      <li>A Continue card: streak chip, a daily-goal ring, and Continue lesson.</li>
+      <li>An Activity card:
+        <ul>
+          <li>the period total and its change against the previous period;</li>
+          <li>a Week / Month switch;</li>
+          <li>bars per day split by category, with a legend and day details.</li>
+        </ul>
+      </li>
+      <li>Existing tokens only; light and dark themes; the cards stack below <code>48em</code>.</li>
+      <li>Tests: RTL for the dashboard states.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Verification and release <span class="badge b-doing">In progress</span></h2>
+    <ul class="check">
+      <li class="x">Playwright specs updated for the start gate:
+        <ul>
+          <li><code>lesson-*</code>, <code>course-*</code>, and <code>words-*</code> pass in chromium (19);</li>
+          <li>the gate specs pass in webkit;</li>
+          <li><code>mobile-layout</code> passes on all 3 phone projects (33).</li>
+        </ul>
+      </li>
+      <li>Apply migration <code>0034_learning_time.sql</code> to production with an explicit <code>--remote</code> target before deploying.</li>
+      <li>Type-check, Vitest, Workers, and RTL suites, plus production builds for web and API.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>Notes</h2>
+    <ul>
+      <li>The reset-dialog test in <code>CourseProgress.test.tsx</code> was already failing before C15. Its expected string no longer matches the copy.</li>
+      <li>The "small trusted group" risk acceptances in <a href="docs/security-and-privacy.md">docs/security-and-privacy.md</a> stand: Wordinator is a private hobby app among people the owner knows (owner, 2026-10-20). A per-account Azure speech quota is planned in the <a href="docs/roadmap.md">roadmap</a> backlog (9859b5d).</li>
+    </ul>
+  </section>
+</main>
+</body>
+</html>

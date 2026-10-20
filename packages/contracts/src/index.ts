@@ -523,6 +523,10 @@ export const courseLessonSummarySchema = z.object({
   wordCount: z.number().int().nonnegative(), practiceCount: z.number().int().nonnegative(),
   // The first uploaded image of the published document (the draft's for an unpublished lesson), shown beside the lesson in the list.
   imageUrl: z.string().nullable(),
+  // The course read's typical times (docs/learning-time.md#lesson-and-practice-times): the lesson's reading plus practice median in
+  // seconds, and each practice's median by practice ID. Optional so lessons read elsewhere still parse; a missing value means no data.
+  typicalSeconds: z.number().int().nonnegative().nullable().optional(),
+  typicalPractices: z.record(z.string(), z.number().int().nonnegative()).optional(),
 });
 export type CourseLessonSummary = z.infer<typeof courseLessonSummarySchema>;
 // Resolves a course (and optionally a lesson) URL segment, either a slug or a legacy ID, to IDs and canonical slugs.

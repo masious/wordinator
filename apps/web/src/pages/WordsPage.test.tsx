@@ -6,6 +6,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../i18n";
 import { resetRevealSound, setRevealSound, stopSpeech } from "../molecules/Speech";
 import { setRecognizer } from "../molecules/speechRecognition";
+import { learningClock } from "../learningTime";
 import { validateWordDrillSearch } from "./WordDrillPage";
 import { validateWordsSearch, WordsPage } from "./WordsPage";
 
@@ -539,5 +540,14 @@ describe("Weak words view", () => {
     expect(within(dialog).getByRole("radio", { name: "Weak words" })).toBeChecked();
     fireEvent.click(within(dialog).getByRole("button", { name: "Start" }));
     await waitFor(() => expect(router.state.location.search).toEqual({ source: "weak", direction: "mixed" }));
+  });
+});
+
+describe("learning time", () => {
+  it("counts the Words tab as learning time while it is open", async () => {
+    renderPage();
+    await waitFor(() => expect(learningClock().running).toBe(true));
+    cleanup();
+    expect(learningClock().running).toBe(false);
   });
 });

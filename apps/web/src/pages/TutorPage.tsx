@@ -8,6 +8,7 @@ import { useMemo, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { useTranslation } from "react-i18next";
 import { apiRequest, sessionQueryOptions, speechRecognitionTokenSource, tutorConversationQueryOptions, tutorConversationsKey } from "../api";
+import { useLearningClaim } from "../learningTime";
 import { RECOGNITION_LOCALES } from "../molecules/speechRecognition";
 import { GroupFrame, useRailSlots } from "../organisms/GroupFrame/GroupFrame";
 import { TutorChat } from "../organisms/Tutor/Chat";
@@ -43,6 +44,8 @@ export function TutorPage({ groupId, conversationId, prompt, onOpen }: { groupId
     onSuccess: (response) => { queryClient.setQueryData(tutorConversationQueryOptions(response.conversation.id).queryKey, response); },
   });
   const insights = useTutorSessionInsights(conversationId);
+  // An open conversation counts as tutor time (C15, docs/learning-time.md#what-is-measured).
+  useLearningClaim(conversationId ? { groupId, target: () => ({ activity: "tutor" }) } : null);
   if (session.isPending) return <main className={shellStyles.center}><LoadingState label={t("tutor.loading")} /></main>;
   if (session.data?.status !== "signedIn") return null;
   const language = session.data.groups.find((group) => group.id === groupId)?.language ?? "nl";

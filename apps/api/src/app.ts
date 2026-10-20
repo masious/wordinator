@@ -100,7 +100,7 @@ import { readLessonMetrics } from "./learning/metrics";
 import { readCourseDashboard } from "./learning/dashboard";
 import { completeLesson, readLessonProgress, resetLesson } from "./learning/progress";
 import { registerAttemptRoutes } from "./learning/attempts";
-import { practiceSecondsSql, readLessonTime, registerLearningTimeRoutes } from "./learning/time";
+import { practiceSecondsSql, readCourseTypicalTimes, readLessonTime, registerLearningTimeRoutes, typicalFields } from "./learning/time";
 import { registerAiPracticeRoutes } from "./learning/aiPracticeRoutes";
 import { aiPracticeCounts, lessonAiPracticeDeletion } from "./tutor/aiPractices";
 import { recentResults } from "./wordMemory";
@@ -1884,9 +1884,11 @@ app.get("/api/groups/:groupId/courses/:courseId", requireGroupAccess, async (con
   const outline = await readOutline(context.env.DB, found.row, user.id);
   const preloaded = await readLessonRows(context.env.DB, found.row, outline.slice(0, COURSE_PRELOADED_LESSONS).map((lesson) => lesson.id));
   const lessons = await presentLessons(context.env.DB, found.row, user.id, preloaded, context.env.PUBLIC_MEDIA_BASE_URL, group.language);
+  // The typical times of the outline come from every learner who finished (docs/learning-time.md#lesson-and-practice-times).
+  const typical = await readCourseTypicalTimes(context.env.DB, found.row.id);
   return context.json(courseDetailResponseSchema.parse({
     course: presentCourse(found.row, user.id, group.creatorUserId, context.env.PUBLIC_MEDIA_BASE_URL),
-    outline: outline.map((row) => presentLessonSummary(row, seesCourseDrafts(found.row, user.id), context.env.PUBLIC_MEDIA_BASE_URL)), lessons,
+    outline: outline.map((row) => ({ ...presentLessonSummary(row, seesCourseDrafts(found.row, user.id), context.env.PUBLIC_MEDIA_BASE_URL), ...typicalFields(typical.get(row.id)) })), lessons,
   }));
 });
 

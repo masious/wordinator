@@ -5,6 +5,7 @@ import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { sessionQueryOptions, speechRecognitionTokenSource, weakWordsQueryOptions, wordBookmarkLessonsQueryOptions, wordBookmarksQueryOptions, type WordDrillSettings } from "../api";
+import { useLearningClaim } from "../learningTime";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
 import { WeakWords } from "../organisms/WeakWords/WeakWords";
 import { WordBookmarkScope } from "../organisms/WordBookmark/WordBookmark";
@@ -112,6 +113,8 @@ export function WordsPage({ groupId, view = "bookmarks", lessonId, onView, onLes
   const hasMemory = weak.data?.pages[0]?.hasMemory ?? false;
   const hasWeakRows = Boolean(weak.data?.pages.some((page) => page.items.length));
   const [drillOpen, setDrillOpen] = useState(false);
+  // The open Words tab counts as learning time (C15, docs/learning-time.md#what-is-measured).
+  useLearningClaim({ groupId, target: () => ({ activity: "words" }) });
   const token = useMemo(() => speechRecognitionTokenSource(groupId), [groupId]);
   // Microsoft assessments of word cards are stored as pronunciation attempts (docs/words.md#pronunciation-assessment).
   const onAssessment = useCallback<AssessmentHandler>((reference, assessment, word) => sendPronunciationAttempt(groupId, "word_card", reference, assessment, word), [groupId]);

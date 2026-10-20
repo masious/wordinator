@@ -11,6 +11,7 @@ import { LessonShareScope, useLessonShareScope } from "../LessonShare/LessonShar
 import { useLessonBookmarkTarget, WordBookmarkScope } from "../WordBookmark/WordBookmark";
 import { runWords, WordRecap } from "../WordRecap/WordRecap";
 import { lessonSteps, type PlayerScope } from "./LessonPlayer";
+import { typicalMinutes } from "./LessonTime";
 import styles from "./LessonActions.module.css";
 import { AnswerSetComposer, practiceFromBlock, PracticeContent, usePracticeProgress, type Practice } from "./PracticeBlock";
 
@@ -54,9 +55,12 @@ function PracticeStatus({ practice }: { practice: Practice }) {
   return <span className={styles.status}>{answered ? t("courses.lessonActions.practiceAnswered", { answered, total }) : t("courses.lessonActions.questions", { count: total })}</span>;
 }
 
-// The lesson's practices as a short list. Choosing one opens its answer set, the same one the lesson page's Answer button opens;
-// finishing it (Done or Finish later) saves progress and returns to the list.
-function PracticeList({ scope, lesson, selected, onSelect }: { scope: PlayerScope; lesson: CourseLesson; selected: Practice | null; onSelect: (practice: Practice | null) => void }) {
+// The lesson's practices as a short list, each with its typical time from the course read when there is one. Choosing one opens its
+// answer set, the same one the lesson page's Answer button opens; finishing it (Done or Finish later) saves progress and returns to
+// the list.
+function PracticeList({ scope, lesson, selected, typicalPractices, onSelect }: {
+  scope: PlayerScope; lesson: CourseLesson; selected: Practice | null; typicalPractices: Record<string, number> | undefined; onSelect: (practice: Practice | null) => void;
+}) {
   const { t } = useTranslation();
   const practices = lessonPractices(lesson);
   const saveProgress = usePracticeProgress({ ...scope, lessonId: lesson.id }, lesson.document !== null);
@@ -72,6 +76,7 @@ function PracticeList({ scope, lesson, selected, onSelect }: { scope: PlayerScop
       <span className={styles.practiceCopy}>
         <span className={styles.instruction}><PlainText>{practice.payload.instruction}</PlainText></span>
         <PracticeStatus practice={practice} />
+        {typicalPractices?.[practice.id] !== undefined && <span className={styles.status}>{t("courses.lessonActions.typical", { minutes: typicalMinutes(typicalPractices[practice.id]!) })}</span>}
       </span>
     </button>
   </li>)}</ol>;
@@ -105,7 +110,7 @@ export function LessonActions({ scope, summary, number, completed, position, arc
     </AdaptiveDialog>
     <AdaptiveDialog opened={practising} onClose={closePractices} title={t("courses.lessonActions.practicesTitle", named)}>
       {practising && <LoadedLesson scope={scope} lessonId={summary.id}>
-        {(lesson) => <PracticeList scope={scope} lesson={lesson} selected={selected} onSelect={setSelected} />}
+        {(lesson) => <PracticeList scope={scope} lesson={lesson} selected={selected} typicalPractices={summary.typicalPractices} onSelect={setSelected} />}
       </LoadedLesson>}
     </AdaptiveDialog>
   </>;

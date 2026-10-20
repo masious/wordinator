@@ -5,6 +5,7 @@ import type { TutorConversation, TutorMessage, TutorModelOption, TutorPart, Tuto
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../i18n";
+import { learningClock } from "../learningTime";
 import { stopSpeech } from "../molecules/Speech";
 import { TutorSettings } from "../organisms/Tutor/TutorSettings";
 import { resetOnDemandSpeech } from "../organisms/TutorComponents";
@@ -346,7 +347,22 @@ describe("Tutor page", () => {
     expect(composer()).toBeEnabled();
   });
 
-  it("cancels a card and shows an answered card as a muted line", async () => {
+  it("shows the focus of a saved AI practice on its confirmation card", async () => {
+    const card: Extract<TutorPart, { type: "confirmation" }> = { type: "confirmation", toolCallId: id(43), answer: null, outcome: null, answeredAt: null,
+      summary: { action: "save_ai_practice", focus: "listening", view: { kind: "dictation", translation: null }, lessons: [{ course: { id: id(50), title: "Basics" }, lesson: { id: id(51), title: "Lesson 6" }, afterBlockId: id(60) }] } };
+    messages[c1]!.push(message(id(2), "assistant", [card], "awaiting_user"));
+    renderPage();
+    expect(await screen.findByText("Focus: Listening")).toBeInTheDocument();
+  });
+
+  it("counts an open conversation as tutor time", async () => {
+    renderPage();
+    await waitFor(() => expect(learningClock().running).toBe(true));
+    cleanup();
+    expect(learningClock().running).toBe(false);
+  });
+
+it("cancels a card and shows an answered card as a muted line", async () => {
     const card: Extract<TutorPart, { type: "confirmation" }> = { type: "confirmation", toolCallId: id(41), answer: null, outcome: null, answeredAt: null,
       summary: { action: "complete_lesson", course: { id: id(50), title: "Basics" }, lesson: { id: id(51), title: "Lesson 6" } } };
     messages[c1]!.push(message(id(2), "assistant", [card], "awaiting_user"));

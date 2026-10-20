@@ -3,7 +3,7 @@ import { lessonMetricsResponseSchema, type LearningTimeEntry, type LessonTime } 
 import { beforeEach, describe, expect, it } from "vitest";
 import { clampSeconds, median } from "../src/learning/time";
 import { saveAiPractice } from "../src/tutor/aiPractices";
-import { addLesson, blocks, createCourse, documentOf, errorCode, join, request, resetDatabase, seedGroup, seedUser, signIn } from "./courseApi";
+import { addLesson, blocks, coursePath, createCourse, documentOf, errorCode, join, request, resetDatabase, seedGroup, seedUser, signIn } from "./courseApi";
 import { fetchWorker } from "./worker";
 
 // Learning time (C15, docs/learning-time.md): sending time, its limits, the snapshots, the lesson box's times and medians, reset,
@@ -180,6 +180,30 @@ describe("typical times", () => {
     expect((await send(s, s.reader, [practising(s, 500)])).status).toBe(204);
     expect((await answer(s, s.reader, 2)).status).toBe(200);
     expect((await timeOf(s, s.owner)).typical.practice).toEqual({ seconds: 200, learners: 2 });
+  });
+});
+
+describe("course read", () => {
+  it("gives each outline lesson its typical reading plus practice time, and each practice's median", async () => {
+    const s = await setup();
+    expect((await send(s, s.reader, [reading(s, 120), practising(s, 60)])).status).toBe(204);
+    expect((await complete(s, s.reader)).status).toBe(200);
+    expect((await answer(s, s.reader, 2)).status).toBe(200);
+    const response = await request(coursePath(s.groupId, s.course.id), s.other);
+    expect(response.status, await response.clone().text()).toBe(200);
+    const body = (await response.json()) as { outline: Array<{ id: string; typicalSeconds?: number | null; typicalPractices?: Record<string, number> }> };
+    const [lesson] = body.outline;
+    expect(lesson?.id).toBe(s.lesson.lesson.id);
+    expect(lesson?.typicalSeconds).toBe(180);
+    expect(lesson?.typicalPractices).toEqual({ [s.practiceId]: 60 });
+  });
+
+  it("has no typical times for a lesson nobody has finished", async () => {
+    const s = await setup();
+    const response = await request(coursePath(s.groupId, s.course.id), s.reader);
+    const body = (await response.json()) as { outline: Array<{ typicalSeconds?: number | null; typicalPractices?: Record<string, number> }> };
+    expect(body.outline[0]?.typicalSeconds ?? null).toBeNull();
+    expect(body.outline[0]?.typicalPractices ?? {}).toEqual({});
   });
 });
 

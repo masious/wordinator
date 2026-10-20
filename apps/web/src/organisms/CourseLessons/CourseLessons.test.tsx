@@ -299,6 +299,12 @@ describe("Course lessons", () => {
     expect(within(box).getByText("Typically 1 min · 1 learner")).toBeInTheDocument();
   });
 
+  it("shows each lesson's typical time from the course read in minutes, and nothing without data", async () => {
+    renderLessons({ course: course(false), outline: [{ ...summary(1), typicalSeconds: 1200 }, summary(2)], lessons: [lesson(1), lesson(2)] });
+    expect(await screen.findByRole("link", { name: "Open lesson 1: Lesson title 1" })).toHaveTextContent("about 20 min");
+    expect(screen.getByRole("link", { name: "Open lesson 2: Lesson title 2" })).not.toHaveTextContent("about");
+  });
+
   it("shows a lesson outside the course outline as unavailable", async () => {
     renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1)] }, lessonId(4));
     expect(await screen.findByText("This lesson is not available.")).toBeInTheDocument();
@@ -627,6 +633,13 @@ describe("Lesson actions", () => {
     expect(await within(dialog).findByRole("button", { name: /Translate\./ })).toBeInTheDocument();
     // The course progress is read again, so the lesson's remaining practices and last practice update.
     await waitFor(() => expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith(`/courses/${courseId}/progress`)).length).toBeGreaterThan(1));
+  });
+
+  it("gives each practice its typical time from the course read", async () => {
+    renderLessons({ course: course(false), outline: [{ ...summary(1, true, { practiceCount: 1 }), typicalSeconds: 600, typicalPractices: { [practice.id]: 300 } }], lessons: [lesson(1, [practice])] });
+    fireEvent.click(await screen.findByRole("button", { name: "Practice lesson 1 again: Lesson title 1" }));
+    const dialog = await screen.findByRole("dialog", { name: "Practices in lesson 1" });
+    expect(await within(dialog).findByRole("button", { name: /Translate\./ })).toHaveTextContent("Typically about 5 min");
   });
 
   it("previews an editor's unpublished lesson and leaves practising out of archived courses", async () => {

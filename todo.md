@@ -1,12 +1,16 @@
 this file isn't meant for agents. don't read it if you're an agent.
 
 
+[ ] show today's metrics in leftrail
 [x] drill results: gamify results page
 [x] reset progress of lesson, should reset word fluency
 [x] remove contribution section from course, as well as author's name from course and lessons everywhere
 [ ] measure reading time
 [ ] remove group-related tech-debts
 [ ] words drill: practice with space
+[ ] voice for reading practices
+[ ] add Jev: confidence in user's answer's correction
+[ ] speech: Daan is female and sofia male! voices are not interactive and excited! no background noise
 
 
 Lesson Page
@@ -15,22 +19,32 @@ Lesson Page
 [ ] mark course as complete at the end of the page
 [ ] separate progress bar for practices
 [ ] new words panel usability
-
+[ ] 
 
 AI
 ===
-[ ] clean up initial prompt in tutor sections
-[ ] tool calls, question answers with specific components fail to pass data from ui to the agent
-[ ] tool calls to update progress of a course
-[ ] pull up practice blocks from in-progress lessons
-[ ] attach and (later on) suggest ai-added practices
-[ ] ai can also help the user complete current practices interactively.
-[ ] suggest speaking practices
+* Usages:
+    * after word drill
+        => generating paragraphs requires word knowledge.
+            => how about dictionary field in the tool call?
+    * once every two lessons (for each goal)
+        => listen and answer with read and type fallback
+    * twice every lesson (for each story)
+        => simple one-off practices
+    * "generate practice" after each block
+        => simple one-off practices
+    * refresh my grammar on "leggen of zetten"
+
+[ ] debug: tool calls, question answers with specific components fail to pass data from ui to the agent
+[ ] ctx: pull up practice blocks from in-progress lessons
+[ ] practice: attach and (later on) suggest ai-added practices
+[ ] suggest speaking practices: Fluentli's Bot
 [ ] read paragraphs and answer multiple questions
-[ ] index grammar topics for look-up
-[ ] practice for twenty minutes with timer
-[ ] summery of conversations and need for dispatching summerization events
+[ ] ctx, practice: index grammar topics for look-up
+[ ] ctx: clean up initial prompt in tutor sections
+[ ] (later) ctx: summery of conversations and need for dispatching summerization events
 [ ] drill results: practice failed words with ai session in drill's results page
+[ ] tool calls to update progress of a course
 
 
 

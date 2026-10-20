@@ -27,7 +27,7 @@ import { LessonActions } from "./LessonActions";
 import { lessonSteps, playableDocument } from "./LessonPlayer";
 import styles from "./CourseLessons.module.css";
 import { LessonReadingProgress, type ReadingTracking, saveLessonPosition, useResumeScroll } from "./LessonReadingProgress";
-import { useReadingTime } from "./LessonTime";
+import { typicalMinutes, useReadingTime } from "./LessonTime";
 import { LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN, stickyInset } from "./LessonIndex";
 import { LessonBox, type LessonBoxLesson } from "./LessonBox";
 import { LessonWords, useVisibleWords, useWordsCollapsed } from "./LessonWords";
@@ -204,6 +204,8 @@ function LessonRow({ scope, summary, number, completed, saved, practices, archiv
   const { t } = useTranslation();
   const position = completed ? undefined : saved;
   const activity = summary.published && (summary.practiceCount > 0 || practices);
+  // The lesson's typical reading plus practice time, from the course read (C15, docs/learning-time.md#lesson-and-practice-times).
+  const typical = summary.typicalSeconds ?? null;
   // The number circle: a success check once finished, the accent while a saved step is waiting, otherwise the plain number.
   const marker = completed ? "done" : position ? "current" : "upcoming";
   return <li className={summary.imageUrl ? `${styles.item} ${styles.itemWithImage}` : styles.item}>
@@ -218,10 +220,11 @@ function LessonRow({ scope, summary, number, completed, saved, practices, archiv
         <span className={styles.itemCopy}>
           <span className={styles.itemTitle}>{summary.title}</span>
           {summary.goal && <span className={styles.itemGoal}>{summary.goal}</span>}
-          {(completed || position || activity) && <span className={styles.itemStatus}>
+          {(completed || position || activity || typical !== null) && <span className={styles.itemStatus}>
             {completed && <span className={styles.completed}>{t("courses.progress.completed")}</span>}
             {!completed && position && <span className={styles.position}>{t("courses.player.step", { current: position.stepIndex + 1, total: position.totalSteps })}</span>}
             {activity && <PracticeActivity summary={summary} practices={practices} archived={archived} />}
+            {typical !== null && <span className={styles.typical}>{t("courses.lessons.typical", { minutes: typicalMinutes(typical) })}</span>}
           </span>}
         </span>
       </Link>
