@@ -3,15 +3,17 @@ import {
 } from "@wordinator/contracts";
 import { readPracticeBlock, type LessonBlockOf } from "@wordinator/contracts/lesson-document";
 import { useQueryClient } from "@tanstack/react-query";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { type FocusEvent, type FormEvent, type KeyboardEvent, type ReactNode, type RefObject, useCallback, useEffect, useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, lessonQueryOptions } from "../../api";
 import { sendPracticeAttempt } from "../../molecules/learningAttempts";
 import { PlainText } from "../../molecules/PlainText";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
-import { Button, TextAreaField, TextField } from "../../ui";
+import { Button, IconButton, TextAreaField, TextField } from "../../ui";
 import { PassageShareNote, ShareButton, type SharePiece } from "../LessonShare/LessonShare";
 import { flushLearningTime, useLearningClaim } from "../../learningTime";
+import { joinWordOrder, wordOrderFromAnswer, wordOrderWords } from "./wordOrder";
 import styles from "./PracticeBlock.module.css";
 
 // A practice as readers see it: its block ID, the prompts with the authors' versions the answer check needs (never rendered before
@@ -136,6 +138,7 @@ export function AnswerField({ question, label, description, value, onChange, min
     submitRef.current = submit;
     return () => { submitRef.current = null; };
   });
+  const words = wordOrderWords(question.prompt);
   const blanks = countBlanks(question.prompt); const blankInputs = useRef<(HTMLInputElement | null)[]>([]);
   const parts = blanks > 1 ? splitBlanks(value, blanks) : [];
   // Enter in a blank checks that blank against its own entry and moves to the next blank on a match; a miss keeps focus and shows
@@ -155,7 +158,9 @@ export function AnswerField({ question, label, description, value, onChange, min
     <div className={styles.answerRow}>
       {share && <div className={styles.answerShare}>{share}</div>}
       <div className={styles.answerBox}>
-        {blanks > 1
+        {words
+          ? <WordOrderField words={words} label={label} description={description} value={value} onChange={onChange} onEnter={submit} matched={matched} initialFocus={initialFocus} />
+          : blanks > 1
           ? <fieldset className={`${styles.blanks} ${matched ? styles.matched : ""}`}>
             <legend>{label}</legend>
             {description && <p className={styles.help}>{description}</p>}
@@ -176,6 +181,48 @@ export function AnswerField({ question, label, description, value, onChange, min
       </div>}
     </div>
   </div>;
+}
+
+// A "Put in order" question: its words are chips the learner moves into order with the move controls, or with the left and right arrow
+// keys on a word. The chips start in the prompt's order and the answer stays empty until one moves, so an untouched question counts as
+// unanswered, like an empty typed answer. A saved answer restores its order; one that is not these words in some order falls back to
+// the prompt's order and is cleared, so it cannot count as an answer. Enter anywhere in the row checks the current order.
+function WordOrderField({ words, label, description, value, onChange, onEnter, matched, initialFocus }: {
+  words: string[]; label: string; description?: ReactNode; value: string; onChange: (value: string) => void; onEnter: () => void; matched: boolean; initialFocus: boolean;
+}) {
+  const { t } = useTranslation();
+  const [order, setOrder] = useState(() => (value && wordOrderFromAnswer(words, value)) || words);
+  const chips = useRef<(HTMLButtonElement | null)[]>([]);
+  // The chip that keeps focus after a move, focused once the moved order has rendered.
+  const focusIndex = useRef<number | null>(null);
+  useEffect(() => { if (value && !wordOrderFromAnswer(words, value)) onChange(""); }, []);
+  useEffect(() => {
+    if (focusIndex.current === null) return;
+    chips.current[focusIndex.current]?.focus();
+    focusIndex.current = null;
+  });
+  const move = (index: number, to: number) => {
+    if (to < 0 || to >= order.length) return;
+    const next = [...order];
+    [next[index], next[to]] = [next[to]!, next[index]!];
+    setOrder(next); onChange(joinWordOrder(next)); focusIndex.current = to;
+  };
+  return <fieldset className={`${styles.blanks} ${matched ? styles.matched : ""}`} onKeyDown={(event) => { if (plainEnter(event)) { event.preventDefault(); onEnter(); } }}>
+    <legend>{label}</legend>
+    {description && <p className={styles.help}>{description}</p>}
+    <p className={styles.help}>{t("courses.practice.wordOrderHelp")}</p>
+    <ol className={styles.words}>
+      {order.map((word, index) => <li key={index} className={styles.word}>
+        <button type="button" ref={(node) => { chips.current[index] = node; }} data-word-chip data-autofocus={(initialFocus && index === 0) || undefined} className={styles.chip}
+          onKeyDown={(event) => {
+            if (event.key === "ArrowLeft") { event.preventDefault(); move(index, index - 1); }
+            if (event.key === "ArrowRight") { event.preventDefault(); move(index, index + 1); }
+          }}>{word}</button>
+        <IconButton tone="quiet" label={t("courses.practice.moveWordEarlier", { word })} disabled={index === 0} onClick={() => move(index, index - 1)}><ArrowLeft aria-hidden="true" /></IconButton>
+        <IconButton tone="quiet" label={t("courses.practice.moveWordLater", { word })} disabled={index === order.length - 1} onClick={() => move(index, index + 1)}><ArrowRight aria-hidden="true" /></IconButton>
+      </li>)}
+    </ol>
+  </fieldset>;
 }
 
 // Learners see the instruction, optional passage, and prompts, never the authors' versions.
@@ -287,7 +334,7 @@ export function AnswerSetComposer({ scope, block, recordAttempts = false, timed 
   const form = useRef<HTMLFormElement>(null);
   const passageNote = useId();
   const focusQuestion = (index: number) => {
-    const field = form.current?.querySelectorAll("[data-answer-field]")[index]?.querySelector<HTMLElement>("textarea, input");
+    const field = form.current?.querySelectorAll("[data-answer-field]")[index]?.querySelector<HTMLElement>("textarea, input, [data-word-chip]");
     (field ?? form.current?.querySelector<HTMLElement>("button[type=submit]"))?.focus();
   };
   // Moving on focuses the next question once it has rendered, so a staged question is revealed first.

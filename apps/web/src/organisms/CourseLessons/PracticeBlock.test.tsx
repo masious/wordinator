@@ -8,6 +8,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
 import { LessonView } from "./CourseLessons";
 import { AnswerField, joinBlanks, practiceDraftKey, splitBlanks } from "./PracticeBlock";
+import { wordOrderWords } from "./wordOrder";
 
 const groupId = "20000000-0000-4000-8000-000000000001";
 const accountId = "10000000-0000-4000-8000-000000000001";
@@ -50,6 +51,26 @@ async function openPractice(value: CourseDetailResponse) {
   fireEvent.click(await screen.findByRole("button", { name: "Answer" }));
   return screen.findByRole("region", { name: "Answer the practice" });
 }
+
+// A word-order question (first) and an ordinary one, as the lesson page shows them.
+const orderItems = [
+  { prompt: "Put in order: koffie / ik / altijd / drink", authorsVersion: ["Ik drink altijd koffie."], note: null },
+  { prompt: "There are two bedrooms.", authorsVersion: ["Er zijn twee slaapkamers."], note: null },
+];
+function orderDetail(): CourseDetailResponse {
+  const value = detail();
+  const data = JSON.stringify({ instruction: "Put the words in the right order.", passage: null, items: orderItems.map(({ prompt, authorsVersion }) => ({ prompt, authorsVersion })) });
+  const block: LessonTopBlock = { id: blockId, type: "practice", children: [], props: { data } };
+  value.lessons = [{ ...value.lessons[0]!, document: { ...document, blocks: [block] } }];
+  return value;
+}
+// The first word-order question on its own, with its chips' current order.
+function OrderField({ initial = "", onChange, onAdvance }: { initial?: string; onChange?: (value: string) => void; onAdvance?: () => void }) {
+  const [value, setValue] = useState(initial);
+  return <AnswerField question={orderItems[0]!} label="Your answer" value={value} minRows={1} onAdvance={onAdvance}
+    onChange={(next) => { setValue(next); onChange?.(next); }} />;
+}
+const chipOrder = () => Array.from(window.document.querySelectorAll("[data-word-chip]"), (chip) => chip.textContent);
 
 beforeEach(() => {
   localStorage.clear();
@@ -122,6 +143,82 @@ describe("Practice blocks", () => {
     expect(onAdvance).toHaveBeenCalledTimes(1);
     expect(screen.queryByText("Author’s version")).not.toBeInTheDocument();
     expect(screen.queryByText("Matches the author’s version")).not.toBeInTheDocument();
+  });
+
+  it("detects a word-order question by its prompt prefix only", () => {
+    expect(wordOrderWords("Put in order: koffie / ik / altijd / drink")).toEqual(["koffie", "ik", "altijd", "drink"]);
+    expect(wordOrderWords("Put in order:  Noor / vaak / kookt ")).toEqual(["Noor", "vaak", "kookt"]);
+    expect(wordOrderWords("Ik drink altijd koffie.")).toBeNull();
+    expect(wordOrderWords("Ik zet nu put in order: de koffie.")).toBeNull();
+    expect(wordOrderWords("Put in order:")).toBeNull();
+    expect(wordOrderWords("… een kleine keuken.")).toBeNull();
+  });
+
+  it("shows the words of a word-order question as chips in the prompt's order instead of a text field", () => {
+    render(<MantineProvider><OrderField /></MantineProvider>);
+    expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
+    expect(chipOrder()).toEqual(["koffie", "ik", "altijd", "drink"]);
+    // The first and last words have no move in the direction that would leave the row.
+    expect(screen.getByRole("button", { name: "Move koffie earlier" })).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Move drink later" })).toBeDisabled();
+  });
+
+  it("reorders word chips with the move controls and the arrow keys, and each move updates the answer", () => {
+    const onChange = vi.fn();
+    render(<MantineProvider><OrderField onChange={onChange} /></MantineProvider>);
+    fireEvent.click(screen.getByRole("button", { name: "Move ik later" }));
+    expect(chipOrder()).toEqual(["koffie", "altijd", "ik", "drink"]);
+    expect(onChange).toHaveBeenLastCalledWith("koffie altijd ik drink");
+    // Focus follows the moved word to its new place.
+    expect(screen.getByRole("button", { name: "ik" })).toHaveFocus();
+    fireEvent.keyDown(screen.getByRole("button", { name: "ik" }), { key: "ArrowLeft" });
+    expect(chipOrder()).toEqual(["koffie", "ik", "altijd", "drink"]);
+    expect(onChange).toHaveBeenLastCalledWith("koffie ik altijd drink");
+    fireEvent.click(screen.getByRole("button", { name: "Move drink earlier" }));
+    expect(onChange).toHaveBeenLastCalledWith("koffie ik drink altijd");
+    expect(onChange).toHaveBeenCalledTimes(3);
+  });
+
+  it("checks the current order on Enter and shows the author's version under the chips after a miss", () => {
+    const onAdvance = vi.fn();
+    render(<MantineProvider><OrderField onAdvance={onAdvance} /></MantineProvider>);
+    // Enter on untouched chips is an empty answer: it moves on without a check.
+    fireEvent.keyDown(screen.getByRole("button", { name: "koffie" }), { key: "Enter" });
+    expect(onAdvance).toHaveBeenCalledTimes(1);
+    expect(screen.queryByText("Author’s version")).not.toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Move koffie later" }));
+    fireEvent.keyDown(screen.getByRole("button", { name: "koffie" }), { key: "Enter" });
+    expect(screen.getByText("Author’s version")).toBeInTheDocument();
+    expect(screen.getByText("Ik drink altijd koffie.")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "koffie" })).toHaveFocus();
+    expect(onAdvance).toHaveBeenCalledTimes(1);
+  });
+
+  it("restores a saved order, and falls back to the prompt's order when the saved answer is not these words", () => {
+    const onChange = vi.fn();
+    const { unmount } = render(<MantineProvider><OrderField initial="altijd koffie ik drink" onChange={onChange} /></MantineProvider>);
+    expect(chipOrder()).toEqual(["altijd", "koffie", "ik", "drink"]);
+    expect(onChange).not.toHaveBeenCalled();
+    unmount();
+    render(<MantineProvider><OrderField initial="wat is dit" onChange={onChange} /></MantineProvider>);
+    expect(chipOrder()).toEqual(["koffie", "ik", "altijd", "drink"]);
+    // The stale answer is cleared, so it does not count as answered.
+    expect(onChange).toHaveBeenCalledWith("");
+  });
+
+  it("moves a word-order question on a match, revealing and focusing the next question", async () => {
+    await openPractice(orderDetail());
+    // Four moves turn the prompt's order into "Ik drink altijd koffie".
+    fireEvent.click(await screen.findByRole("button", { name: "Move koffie later" }));
+    fireEvent.click(screen.getByRole("button", { name: "Move koffie later" }));
+    fireEvent.click(screen.getByRole("button", { name: "Move koffie later" }));
+    fireEvent.click(screen.getByRole("button", { name: "Move drink earlier" }));
+    expect(chipOrder()).toEqual(["ik", "drink", "altijd", "koffie"]);
+    expect(screen.queryByLabelText(/^2\. There are two bedrooms\./)).not.toBeInTheDocument();
+    fireEvent.keyDown(screen.getByRole("button", { name: "drink" }), { key: "Enter" });
+    expect(screen.getByText("Matches the author’s version")).toBeInTheDocument();
+    const second = screen.getByLabelText(/^2\. There are two bedrooms\./);
+    expect(second).toHaveFocus();
   });
 
   it("lists at most three prompts on the lesson page and keeps the answers closed until the Answer button opens them", async () => {

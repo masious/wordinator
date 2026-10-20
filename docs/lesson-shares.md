@@ -51,7 +51,7 @@ The note is the only part of a share that can be edited later. Deleting follows 
 
 ## Answer check
 
-A shared question's post page offers the lesson's [answer check](courses.md#practice-answers): one field per blank for fill-in items, Enter (or the Check button, for touch) to check, "Matches the author's version" on a match, and the author's version as a reference on a miss, never marked wrong. It uses the contracts' `answerMatches` and `blankMatches`, so it agrees with the lesson. The snapshot carries the author's version as published at share time; a question with no author's version has nothing to check against.
+A shared question's post page offers the lesson's [answer check](courses.md#practice-answers): one field per blank for fill-in items, the word chips of a [word-order](courses.md#practice-answers) item, Enter (or the Check button, for touch) to check, "Matches the author's version" on a match, and the author's version as a reference on a miss, never marked wrong. It uses the contracts' `answerMatches` and `blankMatches`, so it agrees with the lesson. The snapshot carries the author's version as published at share time; a question with no author's version has nothing to check against.
 
 The check runs in the browser. The answer is never sent or stored on the server, is never shown to anyone else, and counts toward no progress. It is kept as a local draft (draft kind `share-answer`, with the post as target) under the [draft-key rules](posts-and-feed.md#composer-and-drafts). The web shows the author's version only after a miss, which prevents accidental spoilers and is not authorization.
 
