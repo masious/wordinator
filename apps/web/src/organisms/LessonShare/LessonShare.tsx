@@ -1,13 +1,15 @@
+import { Tooltip } from "@mantine/core";
 import {
   createPostResponseSchema, lessonShareExistsErrorSchema, lessonShareKey, POST_NOTES_MAX, type CreateLessonShareRequest, type PostLessonShare,
 } from "@wordinator/contracts";
 import { readDialogueTurns, type CourseDetailResponse, type CourseLesson, type LessonBlockOf } from "@wordinator/contracts/lesson-document";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
+import { Check, Share2 } from "lucide-react";
 import { createContext, useContext, useId, useMemo, useState, type FormEvent, type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
 import { ApiError, apiRequest, courseQueryOptions, lessonQueryOptions, sessionQueryOptions } from "../../api";
-import { AdaptiveDialog, Avatar, Button, TextAreaField } from "../../ui";
+import { AdaptiveDialog, Avatar, Button, IconButton, TextAreaField } from "../../ui";
 import { CourseErrorMessage } from "../CourseLessons/CourseErrorMessage";
 import { LessonShareByline, LessonSharePreview } from "./LessonSharePreview";
 import styles from "./LessonShare.module.css";
@@ -128,23 +130,40 @@ function ShareDialog({ scope, piece, onClose }: { scope: ShareScope; piece: Shar
 
 // The share action for one piece: Share, which opens the confirmation, or Already shared, which links to the post. A question of a
 // practice with a reading passage cannot be shared, so its action is disabled with the reason (`describedBy` names a reason the
-// caller shows once for several questions). Renders nothing where sharing is not offered.
-export function ShareButton({ piece, label, describedBy }: { piece: SharePiece; label?: string; describedBy?: string }) {
+// caller shows once for several questions). `iconOnly` shows the same states as icons (a share glyph, or a check on a tile that
+// links to the post): `label` names it and shows as its tooltip. Practice answer rows use it; other surfaces keep the text button.
+// Renders nothing where sharing is not offered.
+const TOOLTIP_EVENTS = { hover: true, focus: true, touch: false };
+export function ShareButton({ piece, label, describedBy, iconOnly = false }: { piece: SharePiece; label?: string; describedBy?: string; iconOnly?: boolean }) {
   const { t } = useTranslation();
   const scope = useContext(ShareScopeContext);
   const [open, setOpen] = useState(false);
   const reasonId = useId();
   if (!scope) return null;
   const postId = scope.lesson.myShares[sharePieceKey(piece)];
-  if (postId) return <Link className={styles.already} to="/journal/$postId" params={{ postId }} aria-label={t("lessonShares.alreadySharedOpen")}>
-    <span aria-hidden="true">✓</span>{t("lessonShares.alreadyShared")}
-  </Link>;
+  const name = label ?? t("lessonShares.share");
+  if (postId) return iconOnly
+    ? <Tooltip label={t("lessonShares.alreadyShared")} withArrow events={TOOLTIP_EVENTS}>
+      <Link className={styles.alreadyIcon} to="/journal/$postId" params={{ postId }} aria-label={t("lessonShares.alreadySharedOpen")}>
+        <Check aria-hidden="true" />
+      </Link>
+    </Tooltip>
+    : <Link className={styles.already} to="/journal/$postId" params={{ postId }} aria-label={t("lessonShares.alreadySharedOpen")}>
+      <span aria-hidden="true">✓</span>{t("lessonShares.alreadyShared")}
+    </Link>;
   if (piece.kind === "question" && piece.passage) return <span className={styles.unshareable}>
-    <Button variant="quiet" disabled aria-describedby={describedBy ?? reasonId}>{t("lessonShares.share")}</Button>
+    {iconOnly
+      ? <IconButton label={name} disabled aria-describedby={describedBy ?? reasonId}><Share2 aria-hidden="true" /></IconButton>
+      : <Button variant="quiet" disabled aria-describedby={describedBy ?? reasonId}>{t("lessonShares.share")}</Button>}
     {!describedBy && <span id={reasonId} className={styles.help}>{t("lessonShares.passageHelp")}</span>}
   </span>;
+  const trigger = iconOnly
+    ? <Tooltip label={name} withArrow events={TOOLTIP_EVENTS}>
+      <IconButton label={name} onClick={() => setOpen(true)}><Share2 aria-hidden="true" /></IconButton>
+    </Tooltip>
+    : <Button variant="secondary" className={styles.share} onClick={() => setOpen(true)} aria-label={label}>{t("lessonShares.share")}</Button>;
   return <>
-    <Button variant="secondary" className={styles.share} onClick={() => setOpen(true)} aria-label={label}>{t("lessonShares.share")}</Button>
+    {trigger}
     <AdaptiveDialog opened={open} onClose={() => setOpen(false)} title={t(`lessonShares.dialogTitle.${piece.kind}`)}>
       {open && <ShareDialog scope={scope} piece={piece} onClose={() => setOpen(false)} />}
     </AdaptiveDialog>

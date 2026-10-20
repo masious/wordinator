@@ -31,16 +31,16 @@ The server builds every snapshot itself from the published document. It never ac
 
 - Any account that has finished its [setup](profiles-and-settings.md#current-account-setup), from the published document of a lesson it can read, in a course that is not archived.
 - Editors' draft previews, unpublished lessons, and archived courses offer no share action, and the API refuses them.
-- A person can share a given example or dialogue once, and a given question once. Afterwards the share action reads **Already shared** and links to the post. Deleting the post allows sharing again.
+- A person can share a given example or dialogue once, and a given question once. Afterwards the share action reads **Already shared** and links to the post (in a practice's answer rows, as an icon with the same name). Deleting the post allows sharing again.
 - A question is identified for this purpose by its block and its prompt text (normalised with the contracts' `normalizeAnswer`), not by its position, because practice items have no stable IDs and authors reorder them.
 - Sharing creates no notification. Comments and reactions on a share notify its author like any post.
 
 ## Where to share
 
 - **Lesson page.** Clicking an example or dialogue block selects it and reveals its Share button; clicking elsewhere or Escape clears the selection. It clears on the click, not on the press, so the collapsing Share row never moves the control being clicked. Clicks on the block's own controls (speaker buttons, the dialogue transport, links) do not select it. Keyboard users focus the block and press Enter. There is no hover-only affordance, so touch behaves the same.
-- **Answers and Practice again.** Each shown question has its own Share button, in the answers opened under a practice and in Practice again's dialog. Questions are not shared from the practice summary on the lesson page.
+- **Answers and Practice again.** Each shown question has its own share control, in the answers opened under a practice and in Practice again's dialog. It is an icon-only button named by its question (its tooltip shows the same words) at the left of the question's answer box, and once shared it is a check icon that links to the post. Its look is owned by the [design system](design-system.md). Questions are not shared from the practice summary on the lesson page.
 - **Lesson player.** Example, dialogue, and question steps offer Share; a dialogue's steps share the whole dialogue.
-- A question of a practice with a passage shows a disabled Share with the reason.
+- A question of a practice with a passage shows its share control disabled, with the reason written once above the questions.
 - The share actions read the viewer's `myShares` from the lesson read; a successful share, or a `409 LESSON_SHARE_EXISTS` from another tab, is written into the cached lesson at once, so the action turns into Already shared without another request, and the journal's feeds are refetched.
 
 ## Confirmation

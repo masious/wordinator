@@ -107,10 +107,11 @@ export type AnswerSubmit = RefObject<(() => void) | null>;
 type PracticeQuestion = LearnerPracticePayload["items"][number];
 // `blank` names the blank a check covered, or null for the whole item.
 type Check = { answer: string; match: boolean; blank: number | null };
-// `initialFocus` marks the field a dialog's focus trap focuses when it opens.
-export function AnswerField({ question, label, description, value, onChange, minRows, onAdvance, submitRef, onCheck, initialFocus = false }: {
+// `initialFocus` marks the field a dialog's focus trap focuses when it opens. `share` is an optional control placed at the left of the
+// answer box (a practice answer row's share, which is icon-only); the feedback below stays under the box, not under the control.
+export function AnswerField({ question, label, description, value, onChange, minRows, onAdvance, submitRef, onCheck, initialFocus = false, share }: {
   question: PracticeQuestion; label: string; description?: ReactNode; value: string; onChange: (value: string) => void; minRows: number;
-  onAdvance?: () => void; submitRef?: AnswerSubmit; onCheck?: (answer: string) => void; initialFocus?: boolean;
+  onAdvance?: () => void; submitRef?: AnswerSubmit; onCheck?: (answer: string) => void; initialFocus?: boolean; share?: ReactNode;
 }) {
   const { t } = useTranslation();
   const [checked, setChecked] = useState<Check | null>(null);
@@ -148,16 +149,21 @@ export function AnswerField({ question, label, description, value, onChange, min
     if (match) next();
   };
   return <div className={styles.answerField} data-answer-field>
-    {blanks > 1
-      ? <fieldset className={`${styles.blanks} ${matched ? styles.matched : ""}`}>
-        <legend>{label}</legend>
-        {description && <p className={styles.help}>{description}</p>}
-        <div className={styles.blankRow}>{parts.map((part, index) => <TextField key={index} ref={(input) => { blankInputs.current[index] = input; }}
-          label={t("discussion.blankNumber", { number: index + 1 })} value={part} data-autofocus={(initialFocus && index === 0) || undefined} maxLength={RESPONSE_ANSWER_MAX} onKeyDown={blankKeyDown(index)}
-          onChange={(event) => { const text = event.currentTarget.value; onChange(joinBlanks(parts.map((entry, current) => current === index ? text : entry))); }} />)}</div>
-      </fieldset>
-      : <TextAreaField label={label} description={description} value={value} data-autofocus={initialFocus || undefined} maxLength={RESPONSE_ANSWER_MAX} autosize minRows={minRows}
-        className={matched ? styles.matched : undefined} onKeyDown={(event) => { if (plainEnter(event)) { event.preventDefault(); submit(); } }} onChange={(event) => onChange(event.currentTarget.value)} />}
+    <div className={styles.answerRow}>
+      {share && <div className={styles.answerShare}>{share}</div>}
+      <div className={styles.answerBox}>
+        {blanks > 1
+          ? <fieldset className={`${styles.blanks} ${matched ? styles.matched : ""}`}>
+            <legend>{label}</legend>
+            {description && <p className={styles.help}>{description}</p>}
+            <div className={styles.blankRow}>{parts.map((part, index) => <TextField key={index} ref={(input) => { blankInputs.current[index] = input; }}
+              label={t("discussion.blankNumber", { number: index + 1 })} value={part} data-autofocus={(initialFocus && index === 0) || undefined} maxLength={RESPONSE_ANSWER_MAX} onKeyDown={blankKeyDown(index)}
+              onChange={(event) => { const text = event.currentTarget.value; onChange(joinBlanks(parts.map((entry, current) => current === index ? text : entry))); }} />)}</div>
+          </fieldset>
+          : <TextAreaField label={label} description={description} value={value} data-autofocus={initialFocus || undefined} maxLength={RESPONSE_ANSWER_MAX} autosize minRows={minRows}
+            className={matched ? styles.matched : undefined} onKeyDown={(event) => { if (plainEnter(event)) { event.preventDefault(); submit(); } }} onChange={(event) => onChange(event.currentTarget.value)} />}
+      </div>
+    </div>
     <div aria-live="polite">
       {matched && <p className={styles.match}><span className={styles.matchMark} aria-hidden="true">✓</span>{t("courses.practice.match")}</p>}
       {reference && <div className={styles.checkReference}>
@@ -306,8 +312,8 @@ export function AnswerSetComposer({ scope, block, recordAttempts = false, timed 
     {questions.slice(0, shown).map((question, index) => <div key={index} className={staged ? `${styles.question} ${styles.reveal}` : styles.question}>
       <AnswerField question={question} label={t("courses.practice.answerLabel", { number: index + 1, prompt: question.prompt })} value={answers[index] ?? ""} minRows={1} initialFocus={index === initial}
         onChange={(text) => setAnswers((value) => value.map((entry, current) => current === index ? text : entry))} onAdvance={() => advance(index)}
-        onCheck={(answer) => recordAttempt(block.id, index, answer)} />
-      <div className={styles.questionShare}><ShareButton piece={questionPiece(block, index)} label={t("lessonShares.shareNamed.question", { number: index + 1 })} describedBy={passageNote} /></div>
+        onCheck={(answer) => recordAttempt(block.id, index, answer)}
+        share={<ShareButton iconOnly piece={questionPiece(block, index)} label={t("lessonShares.shareNamed.question", { number: index + 1 })} describedBy={passageNote} />} />
     </div>)}
     <p className={styles.help}>{t("courses.practice.blankHelp")} {t("courses.practice.enterHelp")}</p>
     <div className={styles.actions}><Button type="submit">{complete ? t("courses.practice.done") : t("courses.practice.finishLater")}</Button></div>

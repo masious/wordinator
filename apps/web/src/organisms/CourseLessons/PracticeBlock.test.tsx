@@ -94,6 +94,23 @@ describe("Practice blocks", () => {
     expect(onAdvance).toHaveBeenCalledTimes(1);
   });
 
+  it("places a share control at the left of the answer box, with the author's version under the box", () => {
+    function Field() {
+      const [value, setValue] = useState("Er is een tuin.");
+      return <AnswerField question={{ prompt: "There is a garden.", authorsVersion: ["Er is een tuin."] }} label="Your answer" value={value} onChange={setValue} minRows={1}
+        share={<button type="button" aria-label="Share question 1" />} />;
+    }
+    render(<MantineProvider><Field /></MantineProvider>);
+    const share = screen.getByRole("button", { name: "Share question 1" });
+    const field = screen.getByRole("textbox", { name: "Your answer" });
+    expect(share.compareDocumentPosition(field) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    fireEvent.change(field, { target: { value: "Daar is een tuin." } });
+    fireEvent.keyDown(field, { key: "Enter" });
+    const reference = screen.getByText("Author’s version", { exact: true });
+    expect(share.compareDocumentPosition(reference) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(field.compareDocumentPosition(reference) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
+
   it("moves on at once where there is nothing to check", () => {
     const onAdvance = vi.fn();
     function Field() {

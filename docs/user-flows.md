@@ -117,7 +117,7 @@ Owned by [tutor sessions and memory](tutor-sessions-and-memory.md).
 
 In progress (C11): sharing works from the lesson page, the dialogs, and the player; share posts get their own journal cards in C11d. [Lesson shares](lesson-shares.md) owns the rules.
 
-1. On a published lesson's page, a member clicks an example or a dialogue and presses the Share button that appears. In a practice's answers or the Practice again dialog, each shown question has its own Share button, except in a practice with a reading passage. The lesson player offers Share on example, dialogue, and question steps.
+1. On a published lesson's page, a member clicks an example or a dialogue and presses the Share button that appears. In a practice's answers or the Practice again dialog, each shown question has its own share icon at the left of its answer box, except in a practice with a reading passage. The lesson player offers Share on example, dialogue, and question steps.
 2. A confirmation dialog previews the post and offers an optional note, already holding the example's note when it has one. Share publishes it; Cancel changes nothing.
 3. The journal shows the post, for example “Masoud shared a question from lesson 3 of Dutch Foundations 5 hours ago.” Friends react and comment as on any post.
 4. On a shared question's post page, anyone can type an answer and press Enter to see whether it matches the author's version, or see that version as a reference. The answer stays on their device.

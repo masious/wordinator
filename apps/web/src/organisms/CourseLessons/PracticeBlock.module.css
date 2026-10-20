@@ -45,5 +45,9 @@
 .expansion{display:grid;gap:var(--space-3);min-width:0;padding-top:var(--space-4);border-top:var(--ring-hairline);animation:expandIn var(--motion-standard) var(--ease-physical)}
 .expansion .passage{padding:0;background:none;border:0;border-radius:0}
 .expansion .composer{padding:0;background:none;border:0}
-.questionShare{display:flex;justify-content:flex-end}
-.questionShare:empty{display:none}
+/* A row's share control (icon only) sits at the left of the answer box and lines up with the box's bottom edge; with no share control
+   (where sharing is not offered) the cell is empty, hidden, and the box takes the full row. */
+.answerRow{display:flex;align-items:flex-end;gap:var(--space-3);min-width:0}
+.answerBox{flex:1;display:grid;min-width:0}
+.answerShare{display:flex;flex:none}
+.answerShare:empty{display:none}

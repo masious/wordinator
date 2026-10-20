@@ -187,7 +187,9 @@ describe("Lesson shares", () => {
     fireEvent.click(screen.getByRole("button", { name: "Answer" }));
     const answers = await screen.findByRole("region", { name: "Answer the practice" });
     // Only the first question shows until it is answered; it was shared, so it links to the post, and the second is not there yet.
-    expect(within(answers).getAllByRole("link", { name: "Already shared. Open the post" })).toHaveLength(1);
+    const sharedLinks = within(answers).getAllByRole("link", { name: "Already shared. Open the post" });
+    expect(sharedLinks).toHaveLength(1);
+    expect(sharedLinks[0]).toHaveAttribute("href", `/journal/${postId}`);
     expect(within(answers).queryByRole("button", { name: "Share question 1" })).not.toBeInTheDocument();
     expect(within(answers).queryByRole("button", { name: "Share question 2" })).not.toBeInTheDocument();
   });
@@ -217,12 +219,27 @@ describe("Lesson shares", () => {
     expect(screen.getByRole("region", { name: "Answer the practice" })).toBeInTheDocument();
   });
 
-  it("disables sharing the questions of a reading practice and says why", async () => {
+  it("shows each answer row's share as an icon with no text, named by its question, at the left of the answer box", async () => {
+  renderPage(detail(lesson()));
+  fireEvent.click(await screen.findByRole("button", { name: "Answer" }));
+  const answers = await screen.findByRole("region", { name: "Answer the practice" });
+  const share = within(answers).getByRole("button", { name: "Share question 1" });
+  expect(share.textContent).toBe("");
+  expect(share.querySelector("svg")).not.toBeNull();
+  // Document order is visual order in the row: the share control comes before the answer field.
+  const field = within(answers).getByRole("textbox", { name: /There is a garden/ });
+  expect(share.compareDocumentPosition(field) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  // Focusing it shows a tooltip with the same words as its name.
+  share.focus();
+  expect(await screen.findByText("Share question 1")).toBeInTheDocument();
+});
+
+it("disables sharing the questions of a reading practice and says why", async () => {
     renderPage(detail(lesson({ passage: true })));
     fireEvent.click(await screen.findByRole("button", { name: "Answer" }));
     const answers = await screen.findByRole("region", { name: "Answer the practice" });
     // The second question shows once the first one matches, so only the first one's share is there for now.
-    const buttons = within(answers).getAllByRole("button", { name: "Share" });
+    const buttons = within(answers).getAllByRole("button", { name: /^Share question \d+$/ });
     expect(buttons).toHaveLength(1);
     for (const button of buttons) {
       expect(button).toBeDisabled();
