@@ -100,6 +100,7 @@ import { readLessonMetrics } from "./learning/metrics";
 import { readCourseDashboard } from "./learning/dashboard";
 import { completeLesson, readLessonProgress, resetLesson } from "./learning/progress";
 import { registerAttemptRoutes } from "./learning/attempts";
+import { practiceSecondsSql, readLessonTime, registerLearningTimeRoutes } from "./learning/time";
 import { registerAiPracticeRoutes } from "./learning/aiPracticeRoutes";
 import { aiPracticeCounts, lessonAiPracticeDeletion } from "./tutor/aiPractices";
 import { recentResults } from "./wordMemory";
@@ -2174,7 +2175,9 @@ app.get("/api/groups/:groupId/courses/:courseId/progress/lessons", requireGroupA
 app.get(`${lessonPath}/metrics`, requireGroupAccess, async (context) => {
   const found = await visibleCourse(context); if ("error" in found) return found.error;
   const lesson = await visibleLesson(context, found.row); if ("error" in lesson) return lesson.error;
-  return context.json(lessonMetricsResponseSchema.parse(await readLessonMetrics(context.env.DB, lesson.lesson.id, context.get("user")!.id)));
+  const userId = context.get("user")!.id;
+  const [metrics, time] = await Promise.all([readLessonMetrics(context.env.DB, lesson.lesson.id, userId), readLessonTime(context.env.DB, lesson.lesson.id, userId)]);
+  return context.json(lessonMetricsResponseSchema.parse({ ...metrics, time }));
 });
 
 // The course word recap: words of the currently published lessons the viewer has finished, in lesson order and then document
@@ -2594,6 +2597,7 @@ app.delete(lessonPath, requireGroupAccess, async (context) => {
     db.prepare("DELETE FROM course_word_bookmarks WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     db.prepare("DELETE FROM word_reviews WHERE course_id = ? AND lesson_id = ?").bind(courseId, lessonId),
     db.prepare("DELETE FROM practice_attempts WHERE course_id = ? AND lesson_id = ?").bind(courseId, lessonId),
+    db.prepare("DELETE FROM learning_time WHERE lesson_id = ?").bind(lessonId),
     db.prepare("UPDATE pronunciation_attempts SET lesson_id = NULL, word_id = NULL WHERE lesson_id = ?").bind(lessonId),
     db.prepare("DELETE FROM speech_jobs WHERE group_id = ? AND course_id = ? AND lesson_id = ?").bind(groupId, courseId, lessonId),
     ...lessonAiPracticeDeletion(db, lessonId),
@@ -2745,15 +2749,38 @@ app.put(`${practicePath}/progress`, requireGroupAccess, async (context) => {
   const questions = found.practice.items.length;
   if (parsed.data.answered > questions) return apiError(context, 400, "PRACTICE_PROGRESS_INVALID", "This practice does not have that many questions.");
   const user = context.get("user")!; const { groupId, id: courseId } = found.course;
-  await context.env.DB.prepare(`INSERT INTO course_practice_progress (practice_id, group_id, course_id, lesson_id, user_id, answered, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)
-    ON CONFLICT (practice_id, user_id) DO UPDATE SET answered = max(answered, excluded.answered), updated_at = excluded.updated_at`)
-    .bind(found.block.id, groupId, courseId, found.lessonId, user.id, parsed.data.answered, Date.now()).run();
+  // The save that first reaches the question count keeps the practice time so far, for the practice's typical time (C15).
+  await context.env.DB.prepare(`INSERT INTO course_practice_progress (practice_id, group_id, course_id, lesson_id, user_id, answered, done_seconds, updated_at)
+    VALUES (?1, ?2, ?3, ?4, ?5, ?6, CASE WHEN ?6 >= ?8 THEN ${practiceSecondsSql("?5", "?4", "?1")} END, ?7)
+    ON CONFLICT (practice_id, user_id) DO UPDATE SET answered = max(answered, excluded.answered),
+      done_seconds = CASE WHEN course_practice_progress.answered < ?8 AND excluded.answered >= ?8 THEN excluded.done_seconds ELSE course_practice_progress.done_seconds END,
+      updated_at = excluded.updated_at`)
+    .bind(found.block.id, groupId, courseId, found.lessonId, user.id, parsed.data.answered, Date.now(), questions).run();
   const progress = await practiceProgress(context.env.DB, groupId, user.id, new Map([[found.block.id, questions]]));
   return context.json(practiceProgressResponseSchema.parse({ progress: progress[found.block.id] }));
 });
 
 // Practice and pronunciation attempts (C14b) live in their own module.
 registerAttemptRoutes(app, { requireGroupAccess, practiceBlock, readableLesson: drillLesson });
+
+// Learning time (C15): a target is a course the viewer can see and a published lesson of it.
+registerLearningTimeRoutes(app, {
+  requireGroupAccess,
+  targets: {
+    course: async (context, courseId) => {
+      const group = context.get("groupAccess"); const user = context.get("user")!;
+      const row = await readCourseRow(context.env.DB, user.id, group.id, courseId);
+      return Boolean(row && courseVisible(row, user.id, group.creatorUserId));
+    },
+    lesson: async (context, courseId, lessonId) => {
+      const group = context.get("groupAccess"); const user = context.get("user")!;
+      const course = await readCourseRow(context.env.DB, user.id, group.id, courseId);
+      if (!course || !courseVisible(course, user.id, group.creatorUserId)) return null;
+      const [lesson] = await readLessonRows(context.env.DB, course, [lessonId]);
+      return lesson?.publishedDoc ? { publishedDoc: lesson.publishedDoc } : null;
+    },
+  },
+});
 
 // AI practices on the lesson page (C14h): the lesson read's rules for reading and answering, the owner and active contributors
 // of a course that is not archived for removing a tag.

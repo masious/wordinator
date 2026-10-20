@@ -17,7 +17,7 @@ const rowsOf = <T,>(result: D1Result | undefined) => (result?.results ?? []) as 
  * `LESSON_STRONG_RECALL` in each reviewed direction). Last studied: the latest of the reading position, a lesson completion, a
  * practice attempt, a word review of the lesson's words, and a spoken attempt counted above.
  */
-export async function readLessonMetrics(db: D1Database, lessonId: string, userId: string, now = Date.now()): Promise<LessonMetricsResponse> {
+export async function readLessonMetrics(db: D1Database, lessonId: string, userId: string, now = Date.now()): Promise<Omit<LessonMetricsResponse, "time">> {
   const lessonTerms = "SELECT w.term_key FROM course_lesson_words w WHERE w.lesson_id = ?2 AND w.term_key IS NOT NULL";
   const spoken = `p.user_id = ?1 AND (p.lesson_id = ?2 OR p.term_key IN (${lessonTerms}))`;
   const [pronunciation, terms, memory, recency] = await db.batch([

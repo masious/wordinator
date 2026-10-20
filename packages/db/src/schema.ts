@@ -358,6 +358,8 @@ export const courseLessonCompletions = sqliteTable(
     lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
     userId: text("user_id").notNull().references(() => users.id),
     completedAt: integer("completed_at").notNull(),
+    // C15: the learner's reading time in the lesson when the completion was recorded; null before C15 (docs/learning-time.md).
+    readingSeconds: integer("reading_seconds"),
   },
   (table) => [
     primaryKey({ columns: [table.lessonId, table.userId] }),
@@ -376,12 +378,40 @@ export const coursePracticeProgress = sqliteTable(
     lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
     userId: text("user_id").notNull().references(() => users.id),
     answered: integer("answered").notNull(),
+    // C15: the learner's practice time at the save that first reached the question count (docs/learning-time.md).
+    doneSeconds: integer("done_seconds"),
     updatedAt: integer("updated_at").notNull(),
   },
   (table) => [
     primaryKey({ columns: [table.practiceId, table.userId] }),
     index("course_practice_progress_lesson_idx").on(table.groupId, table.lessonId),
     check("course_practice_progress_answered_check", sql`${table.answered} >= 0`),
+  ],
+);
+
+// Active learning time (C15): seconds per account, local day, activity, and target; see docs/data-model.md#learning_time. The
+// API builds the entry key from the day, activity, focus, course, lesson, and practice, so each send adds to one row per target.
+export const learningTime = sqliteTable(
+  "learning_time",
+  {
+    userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+    entryKey: text("entry_key").notNull(),
+    day: text("day").notNull(),
+    activity: text("activity", { enum: ["reading", "practice", "ai_practice", "tutor", "drill", "words"] }).notNull(),
+    focus: text("focus"),
+    courseId: text("course_id").references(() => courses.id, { onDelete: "cascade" }),
+    lessonId: text("lesson_id").references(() => courseLessons.id, { onDelete: "cascade" }),
+    practiceId: text("practice_id"),
+    seconds: integer("seconds").notNull(),
+    updatedAt: integer("updated_at").notNull(),
+  },
+  (table) => [
+    primaryKey({ columns: [table.userId, table.entryKey] }),
+    index("learning_time_user_day_idx").on(table.userId, table.day),
+    index("learning_time_user_updated_idx").on(table.userId, table.updatedAt),
+    index("learning_time_lesson_idx").on(table.lessonId, table.activity),
+    check("learning_time_day_check", sql`${table.day} GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'`),
+    check("learning_time_seconds_check", sql`${table.seconds} > 0`),
   ],
 );
 
@@ -719,9 +749,14 @@ export const learnerProfiles = sqliteTable(
     replyLanguage: text("reply_language", { enum: ["native", "target", "mixed"] }).notNull().default("native"),
     goals: text("goals"),
     tutorNotes: text("tutor_notes"),
+    // C15: the daily goal in minutes (docs/learning-time.md#daily-goal-and-streak); null is no goal.
+    dailyGoalMinutes: integer("daily_goal_minutes"),
     updatedAt: integer("updated_at").notNull(),
   },
-  (table) => [check("learner_profiles_reply_language_check", sql`${table.replyLanguage} in ('native', 'target', 'mixed')`)],
+  (table) => [
+    check("learner_profiles_reply_language_check", sql`${table.replyLanguage} in ('native', 'target', 'mixed')`),
+    check("learner_profiles_daily_goal_check", sql`${table.dailyGoalMinutes} IS NULL OR ${table.dailyGoalMinutes} BETWEEN 5 AND 240`),
+  ],
 );
 
 // AI practices (C14h): practices the tutor saved with the learner's confirmation and the lessons they are tagged to; see
@@ -732,12 +767,15 @@ export const aiPractices = sqliteTable(
     id: text("id").primaryKey(),
     kind: text("kind", { enum: ["fill_in", "translate", "word_order", "article", "choice", "dictation", "fix_mistake"] }).notNull(),
     payload: text("payload").notNull(),
+    // C15: the skill the practice works on, for learning time (docs/learning-time.md#what-is-measured).
+    focus: text("focus", { enum: ["grammar", "vocabulary", "reading", "listening", "writing"] }).notNull().default("grammar"),
     createdByUserId: text("created_by_user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     conversationId: text("conversation_id"),
     createdAt: integer("created_at").notNull(),
   },
   (table) => [
     check("ai_practices_kind_check", sql`${table.kind} in ('fill_in', 'translate', 'word_order', 'article', 'choice', 'dictation', 'fix_mistake')`),
+    check("ai_practices_focus_check", sql`${table.focus} in ('grammar', 'vocabulary', 'reading', 'listening', 'writing')`),
   ],
 );
 

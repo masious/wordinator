@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { aiProviderSchema } from "./ai";
 import { blankMatches, countBlanks, normalizeAnswer, opaqueIdSchema } from "./index";
-import { practiceAttemptVerdictSchema, pronunciationScoresSchema } from "./learning";
+import { aiPracticeFocusSchema, practiceAttemptVerdictSchema, pronunciationScoresSchema, type AiPracticeFocus } from "./learning";
 import { wordDrillDirectionSchema, wordDrillResultSchema } from "./lessonDocument";
 
 // The AI tutor (C14g): conversations, messages and their parts, the streamed turn's events, the answer components with their
@@ -399,9 +399,14 @@ export const aiPracticeContentSchema = tutorComponentSchema.refine(
   (value): value is AiPracticeContent => (AI_PRACTICE_KINDS as readonly string[]).includes(value.kind), { message: "This kind cannot be saved as a practice." },
 ) as unknown as z.ZodType<AiPracticeContent>;
 export const AI_PRACTICE_LESSONS_MAX = 5;
+// The focus a practice takes when the tutor names none (and that practices saved before C15 were given): dictation is listening,
+// translate and choice are vocabulary, every other kind is grammar (docs/learning-time.md#what-is-measured).
+export const defaultAiPracticeFocus = (kind: AiPracticeKind): AiPracticeFocus =>
+  kind === "dictation" ? "listening" : kind === "translate" || kind === "choice" ? "vocabulary" : "grammar";
 // The tutor's `save_ai_practice` arguments: the practice and the lessons it is tagged to, each after a block of the published document.
 export const saveAiPracticeArgsSchema = z.object({
   practice: aiPracticeContentSchema,
+  focus: aiPracticeFocusSchema.optional().describe("The skill the practice works on; defaults from its kind."),
   lessons: z.array(z.object({ lessonId: opaqueIdSchema, afterBlockId: opaqueIdSchema })).min(1).max(AI_PRACTICE_LESSONS_MAX),
 });
 export type SaveAiPracticeArgs = z.infer<typeof saveAiPracticeArgsSchema>;
@@ -411,7 +416,7 @@ export type SaveAiPracticeArgs = z.infer<typeof saveAiPracticeArgsSchema>;
 // anchor is no longer in the document and it is shown at the end of the lesson. `canRemove` is true for the course owner and
 // active contributors while the course is not archived.
 export const lessonAiPracticeSchema = z.strictObject({
-  id: opaqueIdSchema, kind: aiPracticeKindSchema, afterBlockId: opaqueIdSchema.nullable(), view: tutorComponentViewSchema, createdAt: z.number().int(),
+  id: opaqueIdSchema, kind: aiPracticeKindSchema, focus: aiPracticeFocusSchema, afterBlockId: opaqueIdSchema.nullable(), view: tutorComponentViewSchema, createdAt: z.number().int(),
 });
 export type LessonAiPractice = z.infer<typeof lessonAiPracticeSchema>;
 export const lessonAiPracticesResponseSchema = z.strictObject({ practices: z.array(lessonAiPracticeSchema), canRemove: z.boolean() });
@@ -441,7 +446,8 @@ export const tutorConfirmationSummarySchema = z.discriminatedUnion("action", [
     }),
   }),
   z.strictObject({
-    action: z.literal("save_ai_practice"), view: tutorComponentViewSchema,
+    // `focus` is optional so cards stored before C15 still parse.
+    action: z.literal("save_ai_practice"), view: tutorComponentViewSchema, focus: aiPracticeFocusSchema.optional(),
     lessons: z.array(z.strictObject({ course: titledRef, lesson: titledRef, afterBlockId: opaqueIdSchema })).min(1).max(AI_PRACTICE_LESSONS_MAX),
   }),
 ]);

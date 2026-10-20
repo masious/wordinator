@@ -1,5 +1,6 @@
 import { parseStoredLessonDocument, walkLessonBlocks } from "@wordinator/contracts/lesson-document";
-import { aiPracticeContentSchema, componentHints, tutorComponentView, type AiPracticeContent, type LessonAiPractice } from "@wordinator/contracts/tutor";
+import { aiPracticeContentSchema, componentHints, defaultAiPracticeFocus, tutorComponentView, type AiPracticeContent, type LessonAiPractice } from "@wordinator/contracts/tutor";
+import type { AiPracticeFocus } from "@wordinator/contracts/learning";
 import { hintViews, readableWords } from "./library";
 
 // AI practices (C14h, docs/courses.md#ai-practices): practices the tutor saved with the learner's confirmation, tagged to one or
@@ -9,7 +10,7 @@ import { hintViews, readableWords } from "./library";
 // helpers here trust the lesson they are given.
 
 export type AiPracticeLessonTag = { lessonId: string; courseId: string; afterBlockId: string };
-export type SaveAiPracticeInput = { userId: string; conversationId: string; practice: AiPracticeContent; lessons: AiPracticeLessonTag[]; now?: number };
+export type SaveAiPracticeInput = { userId: string; conversationId: string; practice: AiPracticeContent; focus?: AiPracticeFocus; lessons: AiPracticeLessonTag[]; now?: number };
 export type SaveAiPracticeResult = { ok: true; practiceId: string } | { ok: false; error: "AI_PRACTICES_UNAVAILABLE" | "ANCHOR_NOT_FOUND" };
 
 /** Every block ID of a published document, at any depth, in reading order. An unreadable document has none. */
@@ -39,8 +40,8 @@ export async function saveAiPractice(db: D1Database, input: SaveAiPracticeInput)
   const practiceId = crypto.randomUUID();
   const now = input.now ?? Date.now();
   await db.batch([
-    db.prepare("INSERT INTO ai_practices (id, kind, payload, created_by_user_id, conversation_id, created_at) VALUES (?, ?, ?, ?, ?, ?)")
-      .bind(practiceId, input.practice.kind, JSON.stringify(input.practice.payload), input.userId, input.conversationId, now),
+    db.prepare("INSERT INTO ai_practices (id, kind, focus, payload, created_by_user_id, conversation_id, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)")
+      .bind(practiceId, input.practice.kind, input.focus ?? defaultAiPracticeFocus(input.practice.kind), JSON.stringify(input.practice.payload), input.userId, input.conversationId, now),
     ...tags.map((tag) => db.prepare(
       `INSERT INTO ai_practice_lessons (practice_id, lesson_id, course_id, after_block_id, position)
        SELECT ?1, ?2, ?3, ?4, COALESCE(MAX(position) + 1, 0) FROM ai_practice_lessons WHERE lesson_id = ?2 AND after_block_id = ?4`,
@@ -49,17 +50,17 @@ export async function saveAiPractice(db: D1Database, input: SaveAiPracticeInput)
   return { ok: true, practiceId };
 }
 
-export type ListedAiPractice = { practiceId: string; afterBlockId: string; position: number; practice: AiPracticeContent; createdAt: number };
+export type ListedAiPractice = { practiceId: string; focus: AiPracticeFocus; afterBlockId: string; position: number; practice: AiPracticeContent; createdAt: number };
 
-type PracticeRow = { practiceId: string; kind: string; payload: string; afterBlockId: string; position: number; createdAt: number };
-const PRACTICE_SELECT = `SELECT p.id AS practiceId, p.kind, p.payload, t.after_block_id AS afterBlockId, t.position, p.created_at AS createdAt
+type PracticeRow = { practiceId: string; kind: string; focus: AiPracticeFocus; payload: string; afterBlockId: string; position: number; createdAt: number };
+const PRACTICE_SELECT = `SELECT p.id AS practiceId, p.kind, p.focus, p.payload, t.after_block_id AS afterBlockId, t.position, p.created_at AS createdAt
   FROM ai_practice_lessons t JOIN ai_practices p ON p.id = t.practice_id`;
 
 // A stored row read back through the contracts; a row they no longer accept is skipped rather than failing the lesson.
 function toListed(row: PracticeRow): ListedAiPractice | null {
   try {
     const parsed = aiPracticeContentSchema.safeParse({ kind: row.kind, payload: JSON.parse(row.payload) });
-    return parsed.success ? { practiceId: row.practiceId, afterBlockId: row.afterBlockId, position: row.position, practice: parsed.data, createdAt: row.createdAt } : null;
+    return parsed.success ? { practiceId: row.practiceId, focus: row.focus, afterBlockId: row.afterBlockId, position: row.position, practice: parsed.data, createdAt: row.createdAt } : null;
   } catch {
     return null;
   }
@@ -104,7 +105,7 @@ export async function readLessonAiPractices(db: D1Database, lesson: { id: string
   return listed
     .sort((a, b) => rank(a) - rank(b) || a.position - b.position || a.createdAt - b.createdAt || a.practiceId.localeCompare(b.practiceId))
     .map((practice) => ({
-      id: practice.practiceId, kind: practice.practice.kind, afterBlockId: order.has(practice.afterBlockId) ? practice.afterBlockId : null,
+      id: practice.practiceId, kind: practice.practice.kind, focus: practice.focus, afterBlockId: order.has(practice.afterBlockId) ? practice.afterBlockId : null,
       view: tutorComponentView(practice.practice, { hints: hintViews(componentHints(practice.practice), words), random: seededRandom(practice.practiceId) }), createdAt: practice.createdAt,
     }));
 }

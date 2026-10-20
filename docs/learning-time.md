@@ -30,8 +30,8 @@ Each measured second belongs to one **activity**. Rows are kept per account, loc
 
 ## Sending time
 
-- The browser adds seconds up per entry (activity, focus, course, lesson, practice) and per local day (`YYYY-MM-DD` in the browser's time zone), splitting at midnight. Once a minute, on route change, and when the page is hidden (`keepalive`), it sends what it has to `POST /api/learning/time` (`learningTimeRequestSchema` in `@wordinator/contracts/learning`): a day and at most 20 entries of 1–600 seconds each. A failed send keeps its seconds for the next one. Nothing is stored in browser storage, so seconds still unsent when the browser closes are lost.
-- The API accepts a day within one day of its own UTC date. It checks that the learner can read each course and lesson, that a practice block is a practice of that lesson's published document, and that an AI practice is tagged to that lesson and readable by the learner; it refuses the whole request otherwise (`400 VALIDATION_ERROR`, `404`). It then limits the request's total to the time since the account's previous accepted send (600 seconds for the first one) and scales entries down proportionally when the total is over. A client cannot record more time than has passed.
+- The browser adds seconds up per entry (activity, focus, course, lesson, practice) and per local day (`YYYY-MM-DD` in the browser's time zone), splitting at midnight. Once a minute, on route change, and when the page is hidden (`keepalive`), it sends what it has to `POST /api/groups/:groupId/learning-time` (the library path, like the other learning routes) (`learningTimeRequestSchema` in `@wordinator/contracts/learning`): a day and at most 20 entries of 1–600 seconds each. A failed send keeps its seconds for the next one. Nothing is stored in browser storage, so seconds still unsent when the browser closes are lost.
+- The API accepts a day within one day of its own UTC date. It checks that the learner can read each course and lesson, that a practice block is a practice of that lesson's published document, and that an AI practice is tagged to that lesson and readable by the learner; it refuses the whole request otherwise (`400 VALIDATION_ERROR` for a day outside that window or a malformed entry, `404 LEARNING_TARGET_NOT_FOUND` for an unreadable target). It answers `204`. An AI practice's focus is read from the practice, never taken from the request. It then limits the request's total to the time since the account's previous accepted send (600 seconds for the first one) and scales entries down proportionally when the total is over. A client cannot record more time than has passed.
 - Displays refresh once a minute from the server total plus the seconds not yet sent; nothing ticks every second.
 
 ## Lesson and practice times
@@ -39,14 +39,14 @@ Each measured second belongs to one **activity**. Rows are kept per account, loc
 The [lesson box](courses.md#lesson-box) shows the viewer's own **Reading** time (all `reading` time in the lesson) and **Practice** time (`practice` plus `ai_practice`) in whole minutes, and, once anyone has data, the **typical** times below with the number of learners behind them. Own time counts as data under the lesson box's rule that the section appears only once the viewer has studied the lesson.
 
 - **Typical reading** is the median, over every learner who has completed the lesson (the viewer included), of their reading time up to their first completion. That time is saved on the completion (`reading_seconds`), so rereading a finished lesson adds to the learner's own total but not to the median. A completion with no recorded time, such as one from before C15, is left out.
-- **Typical practice time of a practice** is the median, over every learner who has finished that practice, of their `practice` time in it up to the save that finished it (`done_seconds` on their [practice progress](courses.md#practice-answers)). A lesson's typical practice time is the sum of its practices' medians. AI practices are personal and have no median.
+- **Typical practice time of a practice** is the median, over every learner who has finished that practice, of their `practice` time in it up to the save that finished it (`done_seconds` on their [practice progress](courses.md#practice-answers)). A lesson's typical practice time is the sum of its practices' medians. AI practices have no median: few learners answer the same one.
 - The course page's lesson list shows each lesson's typical total (reading plus practice) as `about 20 min`, and the Practice again list shows each practice's typical time.
 - Medians come from `GET .../lessons/:lessonId/metrics` (the lesson box) and the course read (lesson list and Practice again), computed at read time, rounded to whole minutes, and shown only with at least one learner. They include no account IDs or individual times.
 - Lessons and practices edited after people finished them keep their earlier times. No version is recorded.
 
 ## Activity
 
-`GET /api/learning/activity?range=week|month&end=YYYY-MM-DD` returns the viewer's time per local day for the seven or thirty days ending on `end`, by category, with the previous period's total for comparison, the daily goal, and the streak. **Categories**:
+`GET /api/groups/:groupId/learning-activity?range=week|month&end=YYYY-MM-DD` returns the viewer's time per local day for the seven or thirty days ending on `end`, by category, with the previous period's total for comparison, the daily goal, and the streak. **Categories**:
 
 | Category | Activities |
 | --- | --- |

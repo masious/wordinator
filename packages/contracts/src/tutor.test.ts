@@ -151,7 +151,7 @@ describe("payloads and views", () => {
   });
 
   it("shape the lesson page's AI practice read and answer", () => {
-    const practice = { id: id(1), kind: "dictation", afterBlockId: null, view: { kind: "dictation", translation: null }, createdAt: 1 };
+    const practice = { id: id(1), kind: "dictation", focus: "listening", afterBlockId: null, view: { kind: "dictation", translation: null }, createdAt: 1 };
     expect(lessonAiPracticesResponseSchema.safeParse({ practices: [practice], canRemove: false }).success).toBe(true);
     expect(lessonAiPracticesResponseSchema.safeParse({ practices: [{ ...practice, view: { kind: "dictation", translation: null, sentence: "Hoi" } }], canRemove: false }).success).toBe(false);
     expect(lessonAiPracticesResponseSchema.safeParse({ practices: [{ ...practice, kind: "say_it" }], canRemove: false }).success).toBe(false);

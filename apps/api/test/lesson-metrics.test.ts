@@ -29,6 +29,7 @@ async function metrics(path: string, cookie: string): Promise<LessonMetricsRespo
 const none = { attempts: 0, fluency: null };
 const untouched = (total: number) => ({ total, practised: 0, strong: 0 });
 const DAY = 86_400_000;
+const noTime = { readingSeconds: 0, practiceSeconds: 0, typical: { reading: null, practice: null } };
 // A memory row as folding would leave it; only stability, the last review, and the known mark matter to the metrics.
 const remember = (userId: string, lessonId: string, courseId: string, termKey: string, direction: "understand" | "produce", stability: number, lastReviewedAt: number, known = 0) =>
   env.DB.prepare(`INSERT INTO word_memory (user_id, term_key, direction, course_id, lesson_id, word_id, recent, reps, lapses, stability, difficulty, last_reviewed_at, known_override)
@@ -39,7 +40,7 @@ beforeEach(resetDatabase);
 describe("Lesson metrics", () => {
   it("is empty before any spoken attempt", async () => {
     const { reader, lesson } = await setup();
-    expect(await metrics(lesson.path, reader)).toEqual({ pronunciation: none, words: untouched(2), lastStudiedAt: null });
+    expect(await metrics(lesson.path, reader)).toEqual({ pronunciation: none, words: untouched(2), lastStudiedAt: null, time: noTime });
   });
 
   it("averages the viewer's fluency on the lesson's words, by lesson word or term", async () => {
@@ -54,13 +55,13 @@ describe("Lesson metrics", () => {
     expect((await metrics(lesson.path, reader)).pronunciation).toEqual({ attempts: 3, fluency: 80 });
     // A lesson without those words has none.
     const other = await addLesson(groupId, course.id, owner, "Travel", { document: documentOf(blocks.vocabulary(word("de trein"))) });
-    expect(await metrics(other.path, reader)).toEqual({ pronunciation: none, words: untouched(1), lastStudiedAt: null });
+    expect(await metrics(other.path, reader)).toEqual({ pronunciation: none, words: untouched(1), lastStudiedAt: null, time: noTime });
   });
 
   it("never shows another account's attempts", async () => {
     const { groupId, owner, reader, hond, lesson } = await setup();
     expect((await speak(groupId, owner, { ...scores(40), surface: "word_card", lessonId: lesson.lesson.id, wordId: hond.id })).status).toBe(204);
-    expect(await metrics(lesson.path, reader)).toEqual({ pronunciation: none, words: untouched(2), lastStudiedAt: null });
+    expect(await metrics(lesson.path, reader)).toEqual({ pronunciation: none, words: untouched(2), lastStudiedAt: null, time: noTime });
     expect((await metrics(lesson.path, owner)).pronunciation).toEqual({ attempts: 1, fluency: 40 });
   });
 
@@ -114,7 +115,7 @@ describe("Lesson metrics", () => {
     expect(unpublished.status).toBe(404);
     expect(await errorCode(unpublished)).toBe("LESSON_NOT_FOUND");
     // The word index holds published words only, so a draft counts none.
-    expect(await metrics(draft.path, owner)).toEqual({ pronunciation: none, words: untouched(0), lastStudiedAt: null });
+    expect(await metrics(draft.path, owner)).toEqual({ pronunciation: none, words: untouched(0), lastStudiedAt: null, time: noTime });
     const hidden = await createCourse(groupId, owner, false, { title: "Hidden", summary: "Not yet." });
     const secret = await addLesson(groupId, hidden.id, owner, "Secret", { document: documentOf(blocks.vocabulary(word("het geheim"))) });
     const invisible = await request(`${secret.path}/metrics`, reader);

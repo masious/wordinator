@@ -1,6 +1,6 @@
 import { wordDrillDirectionSchema, wordDrillResultSchema } from "@wordinator/contracts/lesson-document";
 import {
-  TUTOR_TITLE_MAX, componentHints, componentWords, saveAiPracticeArgsSchema, stripTargetMarks, TUTOR_COMPONENT_KINDS, TUTOR_HINT_KINDS, TUTOR_NOTES_MAX, tutorComponentPayloadSchemas, tutorComponentView,
+  TUTOR_TITLE_MAX, componentHints, componentWords, saveAiPracticeArgsSchema, defaultAiPracticeFocus, stripTargetMarks, TUTOR_COMPONENT_KINDS, TUTOR_HINT_KINDS, TUTOR_NOTES_MAX, tutorComponentPayloadSchemas, tutorComponentView,
   type QuickReviewCardView, type TutorComponent, type TutorComponentKind, type TutorComponentView, type TutorConfirmationAction,
   type TutorConfirmationSummary, type TutorStoredPart, type TutorToolDetail,
 } from "@wordinator/contracts/tutor";
@@ -258,7 +258,8 @@ async function askConfirmation(context: ToolContext, action: TutorConfirmationAc
     const found = await readableWords(db, userId, words);
     if (words.some((ref) => !found.has(wordKey(ref)))) return notFound("word");
     const hints = hintViews(componentHints(input.practice), found);
-    return { kind: "confirmation", arguments: input as unknown as Record<string, unknown>, summary: { action, view: tutorComponentView(input.practice, { hints, random: context.random }), lessons } };
+    const focus = input.focus ?? defaultAiPracticeFocus(input.practice.kind);
+    return { kind: "confirmation", arguments: input as unknown as Record<string, unknown>, summary: { action, view: tutorComponentView(input.practice, { hints, random: context.random }), focus, lessons } };
   }
   const { lessonId } = parsed.data as { lessonId: string };
   const lesson = await readableLesson(db, userId, lessonId);
@@ -301,7 +302,7 @@ export async function applyConfirmation(context: ToolContext, action: TutorConfi
       if (!lesson || lesson.course.status === "archived") return { ok: false, error: "LESSON_NOT_FOUND", data: { error: "LESSON_NOT_FOUND" } };
       tags.push({ lessonId: lesson.id, courseId: lesson.course.id, afterBlockId: tag.afterBlockId });
     }
-    const saved = await saveAiPractice(db, { userId, conversationId, practice: parsed.data.practice, lessons: tags, now: context.now() });
+    const saved = await saveAiPractice(db, { userId, conversationId, practice: parsed.data.practice, focus: parsed.data.focus, lessons: tags, now: context.now() });
     return saved.ok
       ? { ok: true, error: null, data: { saved: true, practiceId: saved.practiceId } }
       : { ok: false, error: saved.error, data: { saved: false, error: saved.error, message: saved.error === "ANCHOR_NOT_FOUND"

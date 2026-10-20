@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { courseDashboardResponseSchema, lessonMetricsResponseSchema, practiceAttemptRequestSchema, pronunciationAttemptRequestSchema, PRONUNCIATION_WORDS_MAX } from "./learning";
+import { courseDashboardResponseSchema, learningTimeRequestSchema, lessonMetricsResponseSchema, localDayOf, practiceAttemptRequestSchema, pronunciationAttemptRequestSchema, PRONUNCIATION_WORDS_MAX } from "./learning";
 
 describe("practiceAttemptRequestSchema", () => {
   it("accepts an item and a non-empty answer up to 2,000 characters", () => {
@@ -51,10 +51,11 @@ describe("pronunciationAttemptRequestSchema", () => {
 
 describe("lessonMetricsResponseSchema", () => {
   const words = { total: 4, practised: 2, strong: 1 };
+  const time = { readingSeconds: 120, practiceSeconds: 0, typical: { reading: { seconds: 300, learners: 2 }, practice: null } };
   it("carries an attempt count and a whole fluency score, or none, with word counts and the last study time", () => {
     for (const pronunciation of [{ attempts: 0, fluency: null }, { attempts: 3, fluency: 74 }, { attempts: 1, fluency: 100 }]) {
       for (const lastStudiedAt of [null, 1_700_000_000_000]) {
-        const body = { pronunciation, words, lastStudiedAt };
+        const body = { pronunciation, words, lastStudiedAt, time };
         expect(lessonMetricsResponseSchema.parse(body)).toEqual(body);
       }
     }
@@ -84,5 +85,33 @@ describe("courseDashboardResponseSchema", () => {
     expect(courseDashboardResponseSchema.safeParse({ ...body, recentLessons: [{ ...body.recentLessons[0], metrics: { ...body.recentLessons[0]!.metrics, memory: { strong: 2, fading: 1, new: 1, total: 2 } } }] }).success).toBe(false);
     expect(courseDashboardResponseSchema.safeParse({ ...body, userId: id }).success).toBe(false);
     expect(courseDashboardResponseSchema.safeParse({ ...body, recentLessons: Array.from({ length: 10 }, () => body.recentLessons[0]) }).success).toBe(false);
+  });
+});
+
+describe("learningTimeRequestSchema", () => {
+  const id = "11111111-1111-4111-8111-111111111111";
+  const ok = (entries: unknown[], day = "2026-10-20") => learningTimeRequestSchema.safeParse({ day, entries }).success;
+  it("takes each activity with its own target shape", () => {
+    expect(ok([
+      { activity: "reading", focus: "grammar", courseId: id, lessonId: id, seconds: 60 },
+      { activity: "practice", courseId: id, lessonId: id, practiceId: id, seconds: 1 },
+      { activity: "ai_practice", courseId: id, lessonId: id, practiceId: id, seconds: 600 },
+      { activity: "drill", courseId: id, seconds: 30 }, { activity: "drill", seconds: 30 },
+      { activity: "tutor", seconds: 30 }, { activity: "words", seconds: 30 },
+    ])).toBe(true);
+  });
+  it("refuses other shapes, seconds outside 1–600, too many entries, and days that do not exist", () => {
+    expect(ok([])).toBe(false);
+    expect(ok([{ activity: "reading", courseId: id, lessonId: id, seconds: 60 }])).toBe(false);
+    expect(ok([{ activity: "ai_practice", focus: "grammar", courseId: id, lessonId: id, practiceId: id, seconds: 60 }])).toBe(false);
+    expect(ok([{ activity: "tutor", courseId: id, seconds: 60 }])).toBe(false);
+    expect(ok([{ activity: "words", seconds: 0 }])).toBe(false);
+    expect(ok([{ activity: "words", seconds: 601 }])).toBe(false);
+    expect(ok([{ activity: "words", seconds: 1.5 }])).toBe(false);
+    expect(ok(Array.from({ length: 21 }, () => ({ activity: "words", seconds: 1 })))).toBe(false);
+    for (const day of ["2026-02-30", "2026-1-01", "20261020", "2026-13-01"]) expect(ok([{ activity: "words", seconds: 1 }], day)).toBe(false);
+  });
+  it("names a date's local day", () => {
+    expect(localDayOf(new Date(2026, 0, 5, 23, 59))).toBe("2026-01-05");
   });
 });

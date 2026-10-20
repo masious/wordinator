@@ -52,7 +52,7 @@ export const errorCode = async (response: Response) => ((await response.json()) 
 export async function resetDatabase() {
   await env.DB.batch([
     env.DB.prepare("DELETE FROM reactions"), env.DB.prepare("DELETE FROM comment_response_items"), env.DB.prepare("DELETE FROM comments"),
-    env.DB.prepare("DELETE FROM word_reviews"), env.DB.prepare("DELETE FROM word_memory"), env.DB.prepare("DELETE FROM practice_attempts"), env.DB.prepare("DELETE FROM pronunciation_attempts"), env.DB.prepare("DELETE FROM progress_events"),
+    env.DB.prepare("DELETE FROM learning_time"), env.DB.prepare("DELETE FROM word_reviews"), env.DB.prepare("DELETE FROM word_memory"), env.DB.prepare("DELETE FROM practice_attempts"), env.DB.prepare("DELETE FROM pronunciation_attempts"), env.DB.prepare("DELETE FROM progress_events"),
     env.DB.prepare("DELETE FROM ai_usage"), env.DB.prepare("DELETE FROM speech_usage"),
     env.DB.prepare("DELETE FROM ai_practice_lessons"), env.DB.prepare("DELETE FROM ai_practices"),
     env.DB.prepare("DELETE FROM ai_messages"), env.DB.prepare("DELETE FROM ai_conversations"), env.DB.prepare("DELETE FROM learner_profiles"),

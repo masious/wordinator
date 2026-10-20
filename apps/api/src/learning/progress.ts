@@ -2,6 +2,7 @@ import type { LessonProgressResponse } from "@wordinator/contracts";
 import { lessonMemoryKeys, memoryRebuildStatements } from "../learningData";
 import { aiPracticeCounts } from "../tutor/aiPractices";
 import { courseComplete, deriveLessonStates } from "./lessonStates";
+import { readingSecondsSql } from "./time";
 
 // The viewer's lesson progress, lesson completion, and lesson reset (docs/courses.md#lesson-states, #lesson-progress-tab,
 // #reset), shared by the course routes and the AI tutor. Callers authorize first: these helpers trust the course, lesson, and
@@ -68,7 +69,7 @@ const eventStatement = (db: D1Database, target: LessonTarget, kind: "lesson_comp
 ).bind(crypto.randomUUID(), target.userId, by.actor, kind, target.courseId, target.lessonId, by.conversationId ?? null, now);
 
 /**
- * Records the lesson's completion once (repeating keeps the first) and drops its saved position, in one batch. Only a new
+ * Records the lesson's completion once (repeating keeps the first, with its reading-time snapshot) and drops its saved position, in one batch. Only a new
  * completion writes a `lesson_completed` audit row. The caller checks that the course is not archived and the lesson is published.
  */
 export async function completeLesson(db: D1Database, target: LessonTarget, by: ProgressActor, now = Date.now()): Promise<void> {
@@ -79,7 +80,7 @@ export async function completeLesson(db: D1Database, target: LessonTarget, by: P
        SELECT ?, ?, ?, 'lesson_completed', ?, ?, ?, ? WHERE NOT EXISTS (SELECT 1 FROM course_lesson_completions WHERE lesson_id = ? AND user_id = ?)`,
     ).bind(crypto.randomUUID(), userId, by.actor, courseId, lessonId, by.conversationId ?? null, now, lessonId, userId),
     db.prepare(
-      `INSERT INTO course_lesson_completions (group_id, course_id, lesson_id, user_id, completed_at) VALUES (?, ?, ?, ?, ?)
+      `INSERT INTO course_lesson_completions (group_id, course_id, lesson_id, user_id, completed_at, reading_seconds) VALUES (?1, ?2, ?3, ?4, ?5, ${readingSecondsSql("?4", "?3")})
        ON CONFLICT (lesson_id, user_id) DO NOTHING`,
     ).bind(groupId, courseId, lessonId, userId, now),
     db.prepare("DELETE FROM course_lesson_positions WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND user_id = ?").bind(groupId, courseId, lessonId, userId),
@@ -88,7 +89,7 @@ export async function completeLesson(db: D1Database, target: LessonTarget, by: P
 
 /**
  * Starts a lesson over for one user, in one D1 batch: deletes their position, completion, practice progress for the lesson's
- * practices, practice attempts for the lesson (any source), bookmarks of its words, and every word review, word memory row, and
+ * practices, practice attempts for the lesson (any source), learning time in it, bookmarks of its words, and every word review, word memory row, and
  * pronunciation attempt that the lesson box counts for it (recorded from the lesson or for any of its terms, so a term shared with
  * another lesson starts over there too). Memory of other terms the lesson's reviews touched is rebuilt from the reviews that
  * remain. Writes a `lesson_reset` audit row. Shares and conversations are kept. The caller checks that the course is not
@@ -107,6 +108,7 @@ export async function resetLesson(db: D1Database, target: LessonTarget, by: Prog
     db.prepare(`DELETE FROM word_memory WHERE user_id = ?1 AND term_key IN (${LESSON_TERMS})`).bind(userId, lessonId),
     db.prepare(`DELETE FROM pronunciation_attempts WHERE user_id = ?1 AND (lesson_id = ?2 OR term_key IN (${LESSON_TERMS}))`).bind(userId, lessonId),
     db.prepare("DELETE FROM course_word_bookmarks WHERE user_id = ? AND lesson_id = ?").bind(userId, lessonId),
+    db.prepare("DELETE FROM learning_time WHERE user_id = ? AND lesson_id = ?").bind(userId, lessonId),
     eventStatement(db, target, "lesson_reset", by, now),
   ]);
 }

@@ -74,6 +74,7 @@ export const lessonMetricsResponseSchema = z.strictObject({
   words: z.strictObject({ total: z.number().int().nonnegative(), practised: z.number().int().nonnegative(), strong: z.number().int().nonnegative() })
     .refine((words) => words.strong <= words.practised && words.practised <= words.total, { message: "Counts must nest." }),
   lastStudiedAt: z.number().int().nonnegative().nullable(),
+  time: z.lazy(() => lessonTimeSchema),
 });
 export type LessonMetricsResponse = z.infer<typeof lessonMetricsResponseSchema>;
 
@@ -106,3 +107,52 @@ export const courseDashboardResponseSchema = z.strictObject({
   notStarted: z.array(dashboardCourseRefSchema.omit({ summary: true, coursePercent: true })),
 });
 export type CourseDashboardResponse = z.infer<typeof courseDashboardResponseSchema>;
+
+// ---- Learning time (C15) ----
+
+// docs/learning-time.md owns what is measured and how it is sent; docs/data-model.md#learning_time the rows.
+export const LEARNING_TIME_ENTRIES_MAX = 20;
+export const LEARNING_TIME_SECONDS_MAX = 600;
+export const learningActivitySchema = z.enum(["reading", "practice", "ai_practice", "tutor", "drill", "words"]);
+export type LearningActivity = z.infer<typeof learningActivitySchema>;
+export const readingFocusSchema = z.enum(["lesson", "grammar"]);
+export type ReadingFocus = z.infer<typeof readingFocusSchema>;
+// The skill an AI practice works on; the tutor names it when it saves the practice.
+export const aiPracticeFocusSchema = z.enum(["grammar", "vocabulary", "reading", "listening", "writing"]);
+export type AiPracticeFocus = z.infer<typeof aiPracticeFocusSchema>;
+
+// A calendar day in the learner's own time zone, `YYYY-MM-DD`.
+export const localDaySchema = z.string().regex(/^\d{4}-\d{2}-\d{2}$/)
+  .refine((value) => { const date = new Date(`${value}T00:00:00Z`); return !Number.isNaN(date.getTime()) && date.toISOString().startsWith(value); }, { message: "Give a real day." });
+export const localDayOf = (date: Date) =>
+  `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+
+const timeSecondsSchema = z.number().int().min(1).max(LEARNING_TIME_SECONDS_MAX);
+// One target's seconds. An AI practice's focus is read from the practice on the server, never taken from the client.
+export const learningTimeEntrySchema = z.discriminatedUnion("activity", [
+  z.strictObject({ activity: z.literal("reading"), focus: readingFocusSchema, courseId: opaqueIdSchema, lessonId: opaqueIdSchema, seconds: timeSecondsSchema }),
+  z.strictObject({ activity: z.literal("practice"), courseId: opaqueIdSchema, lessonId: opaqueIdSchema, practiceId: opaqueIdSchema, seconds: timeSecondsSchema }),
+  z.strictObject({ activity: z.literal("ai_practice"), courseId: opaqueIdSchema, lessonId: opaqueIdSchema, practiceId: opaqueIdSchema, seconds: timeSecondsSchema }),
+  z.strictObject({ activity: z.literal("drill"), courseId: opaqueIdSchema.optional(), seconds: timeSecondsSchema }),
+  z.strictObject({ activity: z.literal("tutor"), seconds: timeSecondsSchema }),
+  z.strictObject({ activity: z.literal("words"), seconds: timeSecondsSchema }),
+]);
+export type LearningTimeEntry = z.infer<typeof learningTimeEntrySchema>;
+// `POST /api/groups/:groupId/learning-time`; answered with 204.
+export const learningTimeRequestSchema = z.strictObject({
+  day: localDaySchema,
+  entries: z.array(learningTimeEntrySchema).min(1).max(LEARNING_TIME_ENTRIES_MAX),
+});
+export type LearningTimeRequest = z.input<typeof learningTimeRequestSchema>;
+
+// A median over the learners who finished, in seconds, with how many learners it covers.
+export const typicalTimeSchema = z.strictObject({ seconds: z.number().int().nonnegative(), learners: z.number().int().positive() });
+export type TypicalTime = z.infer<typeof typicalTimeSchema>;
+// The lesson box's times (docs/learning-time.md#lesson-and-practice-times): the viewer's own reading and practice (lesson and AI
+// practices) seconds in the lesson, and the typical times, null until anyone finished.
+export const lessonTimeSchema = z.strictObject({
+  readingSeconds: z.number().int().nonnegative(),
+  practiceSeconds: z.number().int().nonnegative(),
+  typical: z.strictObject({ reading: typicalTimeSchema.nullable(), practice: typicalTimeSchema.nullable() }),
+});
+export type LessonTime = z.infer<typeof lessonTimeSchema>;
