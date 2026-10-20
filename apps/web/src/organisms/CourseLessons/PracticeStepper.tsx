@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState, type RefObject } from "react";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { CourseLesson } from "@wordinator/contracts/lesson-document";
 import { SlidePanel } from "../../molecules/SlidePanel";
@@ -12,9 +12,8 @@ import styles from "./PracticeStepper.module.css";
 // how many the viewer has done and has one segment per practice (done, current, or ahead), which moves to that practice, with
 // Previous and Next arrows. Only the current practice shows, under its title; changing practice slides it in from the side of the
 // move. It opens on the first practice the viewer has not done, and stays where they put it while their progress refreshes.
-export function PracticeStepper({ items, scope, progress, published, archived, dock }: {
+export function PracticeStepper({ items, scope, progress, published, archived }: {
   items: PracticeGroupItem[]; scope: PracticeScope; progress: CourseLesson["practiceProgress"]; published: boolean; archived: boolean;
-  dock?: RefObject<HTMLElement | null>;
 }) {
   const { t } = useTranslation();
   const practices = items.map((item) => ({ ...item, practice: practiceFromBlock(item.block, progress) }));
@@ -46,7 +45,7 @@ export function PracticeStepper({ items, scope, progress, published, archived, d
     <SlidePanel index={current}>
       <div className={styles.body}>
         {active.title && <h3 className={styles.title}>{active.title}</h3>}
-        <PracticeSummary step scope={scope} block={active.practice} published={published} archived={archived} dock={dock} />
+        <PracticeSummary step scope={scope} block={active.practice} published={published} archived={archived} />
       </div>
     </SlidePanel>
   </section>;

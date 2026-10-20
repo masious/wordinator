@@ -21,8 +21,9 @@
 .checkReferenceLabel{margin:0;font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
 .checkReferenceText{margin:0;font-size:var(--type-authored);line-height:var(--line-body);white-space:pre-wrap;overflow-wrap:anywhere}
 @keyframes matchIn{from{opacity:0;transform:translateY(var(--space-1))}to{opacity:1;transform:none}}
+@keyframes expandIn{from{opacity:0;transform:translateY(calc(var(--space-1) * -1))}to{opacity:1;transform:none}}
 @keyframes matchPop{0%{transform:scale(0.4) rotate(-20deg);opacity:0}60%{transform:scale(1.2) rotate(0);opacity:1}100%{transform:scale(1)}}
-@media(prefers-reduced-motion:reduce){.match,.matchMark,.checkReference{animation:none}}
+@media(prefers-reduced-motion:reduce){.match,.matchMark,.checkReference,.expansion,.reveal{animation:none}}
 @media(max-width:40em){.actions>*{flex:1}}
 .summary{gap:var(--space-2)}
 /* Inside the practice stepper, which draws the card. */
@@ -36,10 +37,13 @@
 .summaryList li{white-space:pre-wrap;overflow-wrap:anywhere}
 .summaryAnswer{flex:none}
 @media(max-width:30em){.summaryBody{flex-direction:column;align-items:stretch}}
-.dialogBody{display:grid;gap:var(--space-4);min-width:0}
 .position{display:grid;gap:var(--space-2)}
 .positionLabel{margin:0;font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
-.stickyPosition{position:sticky;top:var(--practice-position-top,0);z-index:1;margin:calc(var(--space-4) * -1) calc(var(--space-4) * -1) 0;padding:var(--space-3) var(--space-4);background:var(--mantine-color-body);border-bottom:var(--ring-hairline);border-radius:var(--radius-md) var(--radius-md) 0 0}
 .question{display:grid;gap:var(--space-1);min-width:0}
+.reveal{animation:matchIn var(--motion-standard) var(--ease-physical)}
+/* The answer set opened in place under the prompts (no dialog frame, so its passage and answers sit on the card). */
+.expansion{display:grid;gap:var(--space-3);min-width:0;padding-top:var(--space-4);border-top:var(--ring-hairline);animation:expandIn var(--motion-standard) var(--ease-physical)}
+.expansion .passage{padding:0;background:none;border:0;border-radius:0}
+.expansion .composer{padding:0;background:none;border:0}
 .questionShare{display:flex;justify-content:flex-end}
 .questionShare:empty{display:none}

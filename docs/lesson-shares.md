@@ -38,7 +38,7 @@ The server builds every snapshot itself from the published document. It never ac
 ## Where to share
 
 - **Lesson page.** Clicking an example or dialogue block selects it and reveals its Share button; clicking elsewhere or Escape clears the selection. It clears on the click, not on the press, so the collapsing Share row never moves the control being clicked. Clicks on the block's own controls (speaker buttons, the dialogue transport, links) do not select it. Keyboard users focus the block and press Enter. There is no hover-only affordance, so touch behaves the same.
-- **Answer dialog and Practice again.** Each question has its own Share button. Questions are not shared from the practice summary on the lesson page.
+- **Answers and Practice again.** Each shown question has its own Share button, in the answers opened under a practice and in Practice again's dialog. Questions are not shared from the practice summary on the lesson page.
 - **Lesson player.** Example, dialogue, and question steps offer Share; a dialogue's steps share the whole dialogue.
 - A question of a practice with a passage shows a disabled Share with the reason.
 - The share actions read the viewer's `myShares` from the lesson read; a successful share, or a `409 LESSON_SHARE_EXISTS` from another tab, is written into the cached lesson at once, so the action turns into Already shared without another request, and the journal's feeds are refetched.

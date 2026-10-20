@@ -1,8 +1,8 @@
 import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { LessonBlockOf } from "@wordinator/contracts/lesson-document";
-import { cleanup, fireEvent, render, screen, within } from "@testing-library/react";
-import { afterEach, describe, expect, it } from "vitest";
+import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
 import { PracticeStepper } from "./PracticeStepper";
 
@@ -43,5 +43,20 @@ describe("PracticeStepper", () => {
     expect(within(stepper).getByText("Instruction 3.")).toBeInTheDocument();
     expect(within(stepper).queryByRole("heading")).not.toBeInTheDocument();
     expect(within(stepper).getByRole("button", { name: "Next practice" })).toBeDisabled();
+  });
+
+  it("saves the answered count of a practice whose answers are open when the stepper moves on", async () => {
+    const fetchMock = vi.fn(async () => new Response(JSON.stringify({ progress: { done: 0, started: 1, answered: 1 } }), { status: 200, headers: { "content-type": "application/json" } }));
+    vi.stubGlobal("fetch", fetchMock);
+    renderStepper({});
+    const stepper = screen.getByRole("region", { name: "Practices" });
+    fireEvent.click(within(stepper).getByRole("button", { name: "Answer" }));
+    const answers = within(stepper).getByRole("region", { name: "Answer the practice" });
+    fireEvent.change(within(answers).getByLabelText(/^1\. Prompt 1\.1/), { target: { value: "x" } });
+    // Moving on unmounts the open answers, which saves their count just as closing them does.
+    fireEvent.click(within(stepper).getByRole("button", { name: "Next practice" }));
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledWith(`/api/groups/${id(90)}/courses/${id(91)}/lessons/${id(92)}/blocks/${id(1)}/progress`,
+      expect.objectContaining({ method: "PUT", body: JSON.stringify({ answered: 1 }) })));
+    vi.unstubAllGlobals();
   });
 });

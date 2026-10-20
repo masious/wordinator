@@ -157,10 +157,9 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
         renderShare={share ? (block) => <ShareButton piece={block.type === "example" ? { kind: "example", block } : { kind: "dialogue", block }}
           label={t(`lessonShares.shareNamed.${block.type}`)} /> : undefined}
         renderPractice={(block) =>
-        <PracticeSummary scope={practiceScope} block={practiceFromBlock(block, lesson.practiceProgress)}
-          published={lesson.document !== null} archived={archived} dock={docked ? reading : undefined} />}
+        <PracticeSummary scope={practiceScope} block={practiceFromBlock(block, lesson.practiceProgress)} published={lesson.document !== null} archived={archived} />}
         renderPracticeGroup={(items) => <PracticeStepper items={items} scope={practiceScope} progress={lesson.practiceProgress}
-          published={lesson.document !== null} archived={archived} dock={docked ? reading : undefined} />} />
+          published={lesson.document !== null} archived={archived} />} />
       {slots?.end}
       {gate && <div className={styles.gateFade} aria-hidden="true" />}
     </div>

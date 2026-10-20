@@ -20,17 +20,18 @@ test("a learner answers a practice with on-device checks, finishes it later, and
   page.on("request", (request) => { if (request.url().includes("/check")) checks.push(request.url()); });
   await page.goto(`/courses/${course.id}`);
   await openLesson(page);
-  // The lesson page lists the prompts with who is done and what is left; answering happens in a dialog.
+  // The lesson page lists the prompts with who is done and what is left; answering opens in place below them.
   await expect(page.getByText("Vul in of vertaal.")).toBeVisible();
   await expect(page.getByText("There are two bedrooms.")).toBeVisible();
   await expect(page.getByText("Nobody done yet · 2 questions left")).toBeVisible();
   await page.getByRole("button", { name: "Answer", exact: true }).click();
-  const dialog = page.getByRole("dialog", { name: "Answer the practice" });
+  const dialog = page.getByRole("region", { name: "Answer the practice" });
   await expect(dialog.getByRole("button", { name: "Reveal answers" })).toHaveCount(0);
   await expect(dialog.getByText("Er zijn twee slaapkamers.")).toHaveCount(0);
-  // The dialog opens on the first question, with the practice's progress bar at its top.
+  // The answers open on the first question, with the practice's progress bar at its top; the second waits for a match.
   const first = dialog.getByLabel(/^1\. … een kleine keuken\./); const second = dialog.getByLabel(/^2\. There are two bedrooms\./);
   await expect(first).toBeFocused();
+  await expect(second).toHaveCount(0);
   await expect(dialog.getByText("Question 1 of 2")).toBeVisible();
   await expect(dialog.getByRole("progressbar", { name: "Practice progress" })).toHaveAttribute("aria-valuenow", "50");
   // A miss keeps focus and shows the author's version; a match moves on to the next question.
@@ -45,7 +46,7 @@ test("a learner answers a practice with on-device checks, finishes it later, and
   await expect(dialog.getByText("Question 2 of 2")).toBeVisible();
   await expect(dialog.getByRole("progressbar", { name: "Practice progress" })).toHaveAttribute("aria-valuenow", "100");
   await first.fill("Er is");
-  // Closing the dialog saves progress just like its button.
+  // Closing the answers saves progress just like the button does.
   await dialog.getByRole("button", { name: "Finish later" }).click();
   await expect(dialog).toHaveCount(0);
   await expect(page.getByText("Nobody done yet · 1 question left")).toBeVisible();
@@ -54,7 +55,7 @@ test("a learner answers a practice with on-device checks, finishes it later, and
   await page.reload();
   await page.getByRole("button", { name: "Answer", exact: true }).click();
   await expect(dialog.getByLabel(/^1\. … een kleine keuken\./)).toHaveValue("Er is");
-  // The dialog reopens on the unanswered question; a match in the last question moves focus to Done.
+  // The answers reopen on the unanswered question; a match in the last question moves focus to Done.
   await expect(second).toBeFocused();
   await second.fill("Er zijn twee slaapkamers");
   await second.press("Enter");

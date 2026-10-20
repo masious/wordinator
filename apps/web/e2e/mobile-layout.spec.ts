@@ -196,8 +196,8 @@ test("mobile course page lists lessons that open their own page", async ({ page 
   await expectNoHorizontalOverflow(page, "lesson page");
   if (process.env.MOBILE_SHOTS) await page.screenshot({ path: `${process.env.MOBILE_SHOTS}/${test.info().project.name}-lesson-page.png` });
   await page.getByRole("button", { name: "Answer", exact: true }).click();
-  await expect(page.getByRole("dialog", { name: "Answer the practice" }).getByRole("button", { name: "Finish later" })).toBeVisible();
-  await expectNoHorizontalOverflow(page, "practice answer dialog");
+  await expect(page.getByRole("region", { name: "Answer the practice" }).getByRole("button", { name: "Finish later" })).toBeVisible();
+  await expectNoHorizontalOverflow(page, "practice answers");
 });
 
 test("mobile word recap stays within the viewport", async ({ page }) => {

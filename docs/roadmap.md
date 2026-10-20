@@ -48,6 +48,8 @@ The design-system foundation batch (DS-01 through DS-05) was completed on 2026-0
 
 ## Lumen visual redesign — in progress
 
+Practice answers open in place on the lesson page (2026-10-21): the Answer dialog is retired for practices, and questions appear one by one as they are matched. See [lesson pages](courses.md#lesson-pages).
+
 Started 2026-10-16 through [REDESIGN_PLAN.md](../REDESIGN_PLAN.md). Batches 0–3 shipped the Lumen tokens and shared components, rebuilt `/ui`, and the left-rail shell. Batch 6 shipped the three-column lesson experience and its lesson actions and private metrics read; its follow-up compacted the reading rail and extended the lesson box. Batches 4, 5, 8, and 9 shipped the course dashboard, course page, Words and Drill, and the Journal, post-detail, discussion, and notification families. Batch 7 is complete: its Tutor shell, context rail, details dialog, conversation list, avatar turns, bordered tutor cards, lesson source chips, Markdown step treatment, and floating composer are shipped. Batch A's Storybook accessibility gate was scaffolded on 2026-10-17 and then paused by owner direction; it is not passing or release-ready. Auth/settings/states, management surfaces, and final cleanup remain. Visual matching is manual and is recorded only when performed.
 
 ## Cross-phase premium visual redesign — completed

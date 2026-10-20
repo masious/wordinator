@@ -3,13 +3,13 @@ import {
 } from "@wordinator/contracts";
 import { readPracticeBlock, type LessonBlockOf } from "@wordinator/contracts/lesson-document";
 import { useQueryClient } from "@tanstack/react-query";
-import { type FocusEvent, type FormEvent, type KeyboardEvent, type ReactNode, type RefObject, useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { type FocusEvent, type FormEvent, type KeyboardEvent, type ReactNode, type RefObject, useCallback, useEffect, useId, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, lessonQueryOptions } from "../../api";
 import { sendPracticeAttempt } from "../../molecules/learningAttempts";
 import { PlainText } from "../../molecules/PlainText";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
-import { AdaptiveDialog, Button, TextAreaField, TextField } from "../../ui";
+import { Button, TextAreaField, TextField } from "../../ui";
 import { PassageShareNote, ShareButton, type SharePiece } from "../LessonShare/LessonShare";
 import { flushLearningTime, useLearningClaim } from "../../learningTime";
 import styles from "./PracticeBlock.module.css";
@@ -177,15 +177,21 @@ export function PracticeContent({ block, prompts = true }: { block: Practice; pr
   return <div className={styles.practice}>
     <p className={styles.eyebrow}>{t("courses.practice.label")}</p>
     <p className={styles.instruction}><PlainText>{payload.instruction}</PlainText></p>
-    {payload.passage && <article className={styles.passage} aria-label={payload.passage.title ?? t("courses.practice.passage")}>
-      {payload.passage.title && <h4>{payload.passage.title}</h4>}
-      <p><PlainText>{payload.passage.content}</PlainText></p>
-    </article>}
+    {payload.passage && <PracticePassage passage={payload.passage} />}
     {prompts && <ol className={styles.prompts}>{payload.items.map((item, index) => <li key={index}><PlainText>{item.prompt}</PlainText></li>)}</ol>}
   </div>;
 }
 
-// The lesson page lists at most this many prompts of a practice; the answer dialog shows them all.
+// A reading passage, shown above its answer set. Neither it nor its questions can be shared (docs/lesson-shares.md).
+function PracticePassage({ passage }: { passage: NonNullable<LearnerPracticePayload["passage"]> }) {
+  const { t } = useTranslation();
+  return <article className={styles.passage} aria-label={passage.title ?? t("courses.practice.passage")}>
+    {passage.title && <h4>{passage.title}</h4>}
+    <p><PlainText>{passage.content}</PlainText></p>
+  </article>;
+}
+
+// The lesson page lists at most this many prompts of a practice; the answers show them all.
 export const SUMMARY_PROMPTS = 3;
 
 // The viewer's own state: done once their saved count reaches the current number of questions, otherwise what is left.
@@ -195,17 +201,22 @@ export function ownStatus(practice: Practice) {
 }
 
 // A practice on the lesson page: its instruction and first prompts, how many people are done and how many questions the viewer has
-// left, and an Answer action that opens the answer set and any reading passage in a dialog. `dock` keeps the dialog over the
-// reading column so the lesson's New words panel stays usable beside it.
+// left, and an Answer button that opens and closes the answer set in place, below the prompts. There is no dialog: the answers open
+// in the reading column, and on the lesson page they appear one question at a time (`staged`).
 // `step` shows it inside the practice stepper, which supplies the card and the Practice label.
-export function PracticeSummary({ scope, block, published, archived = false, dock, step = false }: {
-  scope: PracticeScope; block: Practice; published: boolean; archived?: boolean; dock?: RefObject<HTMLElement | null>; step?: boolean;
+export function PracticeSummary({ scope, block, published, archived = false, step = false }: {
+  scope: PracticeScope; block: Practice; published: boolean; archived?: boolean; step?: boolean;
 }) {
   const { t } = useTranslation(); const [answering, setAnswering] = useState(false);
   const saveProgress = usePracticeProgress(scope, published);
+  const toggle = useId(); const panel = useId();
   const { payload } = block; const more = payload.items.length - SUMMARY_PROMPTS; const own = ownStatus(block);
-  // Closing the dialog in any way saves progress, exactly like its own button.
-  const close = () => { saveProgress(block); setAnswering(false); };
+  // Closing the answers in any way saves progress, exactly like the dialog's close did, and hands focus back to the Answer button.
+  const close = () => { saveProgress(block); setAnswering(false); document.getElementById(toggle)?.focus(); };
+  // Leaving the practice while its answers are open, such as moving to another step of the stepper, saves them like closing does.
+  const latest = useRef({ answering, block, saveProgress });
+  useEffect(() => { latest.current = { answering, block, saveProgress }; });
+  useEffect(() => () => { const last = latest.current; if (last.answering) last.saveProgress(last.block); }, []);
   return <div className={step ? `${styles.summary} ${styles.step}` : `${styles.practice} ${styles.summary}`}>
     <p className={styles.summaryHeader}>
       {!step && <span className={styles.eyebrow}>{t("courses.practice.label")}</span>}
@@ -221,25 +232,35 @@ export function PracticeSummary({ scope, block, published, archived = false, doc
         <ol className={styles.summaryList}>{payload.items.slice(0, SUMMARY_PROMPTS).map((item, index) => <li key={index}><PlainText>{item.prompt}</PlainText></li>)}</ol>
         {more > 0 && <p className={styles.help}>{t("courses.practice.morePrompts", { count: more })}</p>}
       </div>
-      <Button className={styles.summaryAnswer} onClick={() => setAnswering(true)}>{t("courses.practice.answer")}</Button>
+      <Button id={toggle} className={styles.summaryAnswer} aria-expanded={answering} aria-controls={panel}
+        onClick={() => answering ? close() : setAnswering(true)}>{t("courses.practice.answer")}</Button>
     </div>
-    <AdaptiveDialog opened={answering} onClose={close} title={t("courses.practice.dialogTitle")} dock={dock}>
-      {answering && <div className={styles.dialogBody}>
-        <PracticeContent block={block} prompts={false} />
-        <AnswerSetComposer scope={scope} block={block} recordAttempts={published && !archived} timed={published} onDone={close} />
-      </div>}
-    </AdaptiveDialog>
+    {answering && <section id={panel} aria-label={t("courses.practice.dialogTitle")} className={styles.expansion}
+      onKeyDown={(event) => { if (event.key === "Escape") close(); }}>
+      {payload.passage && <PracticePassage passage={payload.passage} />}
+      <AnswerSetComposer staged scope={scope} block={block} recordAttempts={published && !archived} timed={published} onDone={close} />
+    </section>}
   </div>;
 }
 
+// How many questions show when an answer set opens: through the first one whose saved answer is not matched yet (see
+// `AnswerSetComposer`), or all of them when every one is matched.
+const matchedAnswer = (question: PracticeQuestion, answer: string) => hasAuthorsVersion(question) ? answerMatches(question, answer) : answer.trim() !== "";
+function revealedThrough(questions: readonly PracticeQuestion[], answers: readonly string[]) {
+  const open = questions.findIndex((question, index) => !matchedAnswer(question, answers[index] ?? ""));
+  return open < 0 ? questions.length : open + 1;
+}
+
 // The answers stay in the local draft so the learner can come back and change them. Done (or Finish later, while some questions are
-// blank) closes the dialog, which saves the answered count. The dialog opens on the first unanswered question; a matching answer
-// (or Enter where there is nothing to check) moves focus to the next question's field, and from the last question to Done.
-// The position bar follows the focused question and stays below the dialog's header while the answer set scrolls. With
-// `recordAttempts` (a published practice outside an archived course) each answer check is recorded as a practice attempt. With
-// `timed` (a published practice) the open answer set runs the practice's learning time clock (C15).
-export function AnswerSetComposer({ scope, block, recordAttempts = false, timed = false, onDone }: {
-  scope: PracticeScope; block: Practice; recordAttempts?: boolean; timed?: boolean; onDone: () => void;
+// blank) closes the answers, which saves the answered count. The set opens focused on its first unanswered question (on the first
+// unmatched one when answers are saved), and a matching answer (or Enter where there is nothing to check) moves focus to the next question's field, and from the last question to
+// Done. With `staged` only the questions up to the first unmatched one show, and moving on reveals the next question before it is
+// focused. A saved answer counts as matched when it matches the author's version; an item with nothing to check counts once it has
+// an answer. The position bar follows the focused question. With `recordAttempts` (a published practice outside an archived course)
+// each answer check is recorded as a practice attempt. With `timed` (a published practice) the open answer set runs the practice's
+// learning time clock (C15).
+export function AnswerSetComposer({ scope, block, recordAttempts = false, timed = false, staged = false, onDone }: {
+  scope: PracticeScope; block: Practice; recordAttempts?: boolean; timed?: boolean; staged?: boolean; onDone: () => void;
 }) {
   const { t } = useTranslation();
   useLearningClaim(timed ? { groupId: scope.groupId, target: () => ({ activity: "practice", courseId: scope.courseId, lessonId: scope.lessonId, practiceId: block.id }) } : null);
@@ -248,25 +269,28 @@ export function AnswerSetComposer({ scope, block, recordAttempts = false, timed 
   const questions = block.payload.items;
   const [answers, setAnswers] = useState(() => readAnswers(key, questions.length));
   useEffect(() => storeAnswers(key, answers), [answers, key]);
-  const [active, setActive] = useState(() => { const blank = answers.findIndex((answer) => !answer.trim()); return blank < 0 ? questions.length - 1 : blank; });
-  const form = useRef<HTMLFormElement>(null); const position = useRef<HTMLDivElement>(null);
+  const [revealed, setRevealed] = useState(() => staged ? revealedThrough(questions, answers) : questions.length);
+  const shown = staged ? revealed : questions.length;
+  const [active, setActive] = useState(() => {
+    if (staged) return revealed - 1;
+    const blank = answers.findIndex((answer) => !answer.trim()); return blank < 0 ? questions.length - 1 : blank;
+  });
+  const form = useRef<HTMLFormElement>(null);
   const passageNote = useId();
   const focusQuestion = (index: number) => {
     const field = form.current?.querySelectorAll("[data-answer-field]")[index]?.querySelector<HTMLElement>("textarea, input");
     (field ?? form.current?.querySelector<HTMLElement>("button[type=submit]"))?.focus();
   };
-  // A centred dialog's focus trap focuses the `initialFocus` field; a docked dialog has no trap, so the field is focused here.
+  // Moving on focuses the next question once it has rendered, so a staged question is revealed first.
+  const [focusRequest, setFocusRequest] = useState<{ index: number } | null>(null);
+  useEffect(() => { if (focusRequest) focusQuestion(focusRequest.index); }, [focusRequest]);
+  const advance = (index: number) => {
+    if (staged) setRevealed((count) => Math.max(count, Math.min(index + 2, questions.length)));
+    setFocusRequest({ index: index + 1 });
+  };
+  // A centred dialog's focus trap focuses the `initialFocus` field; without a trap, the field is focused here.
   const [initial] = useState(active);
   useEffect(() => { const frame = requestAnimationFrame(() => focusQuestion(initial)); return () => cancelAnimationFrame(frame); }, [initial]);
-  // The dialog's own header is sticky too, so the bar sticks just below it.
-  useLayoutEffect(() => {
-    const bar = position.current; const header = bar?.closest(".mantine-Modal-content")?.querySelector<HTMLElement>(".mantine-Modal-header");
-    if (!bar || !header) return;
-    const place = () => bar.style.setProperty("--practice-position-top", `${header.offsetHeight}px`);
-    place();
-    const observer = new ResizeObserver(place); observer.observe(header);
-    return () => observer.disconnect();
-  }, []);
   const onFocus = (event: FocusEvent<HTMLFormElement>) => {
     const field = event.target.closest("[data-answer-field]");
     const index = field ? [...(form.current?.querySelectorAll("[data-answer-field]") ?? [])].indexOf(field) : -1;
@@ -275,13 +299,13 @@ export function AnswerSetComposer({ scope, block, recordAttempts = false, timed 
   const complete = countAnswered(answers) === questions.length;
   const submit = (event: FormEvent) => { event.preventDefault(); onDone(); };
   return <form ref={form} className={styles.composer} onSubmit={submit} onFocus={onFocus} aria-label={t("courses.practice.yourAnswers")}>
-    <div ref={position} className={styles.stickyPosition}><PracticePosition current={active + 1} total={questions.length} /></div>
+    <PracticePosition current={active + 1} total={questions.length} />
     <h4>{t("courses.practice.yourAnswers")}</h4>
     {/* Each question can be shared on its own, except in a reading practice (docs/lesson-shares.md#where-to-share). */}
     {block.payload.passage && <PassageShareNote id={passageNote} />}
-    {questions.map((question, index) => <div key={index} className={styles.question}>
+    {questions.slice(0, shown).map((question, index) => <div key={index} className={staged ? `${styles.question} ${styles.reveal}` : styles.question}>
       <AnswerField question={question} label={t("courses.practice.answerLabel", { number: index + 1, prompt: question.prompt })} value={answers[index] ?? ""} minRows={1} initialFocus={index === initial}
-        onChange={(text) => setAnswers((value) => value.map((entry, current) => current === index ? text : entry))} onAdvance={() => focusQuestion(index + 1)}
+        onChange={(text) => setAnswers((value) => value.map((entry, current) => current === index ? text : entry))} onAdvance={() => advance(index)}
         onCheck={(answer) => recordAttempt(block.id, index, answer)} />
       <div className={styles.questionShare}><ShareButton piece={questionPiece(block, index)} label={t("lessonShares.shareNamed.question", { number: index + 1 })} describedBy={passageNote} /></div>
     </div>)}

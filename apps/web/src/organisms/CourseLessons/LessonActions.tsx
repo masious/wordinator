@@ -57,8 +57,8 @@ function PracticeStatus({ practice }: { practice: Practice }) {
 }
 
 // The lesson's practices as a short list, each with its typical time from the course read when there is one. Choosing one opens its
-// answer set, the same one the lesson page's Answer button opens; finishing it (Done or Finish later) saves progress and returns to
-// the list.
+// answer set with every question shown (the lesson page's Answer reveals them one by one); finishing it (Done or Finish later) saves
+// progress and returns to the list.
 function PracticeList({ scope, lesson, selected, typicalPractices, onSelect }: {
   scope: PlayerScope; lesson: CourseLesson; selected: Practice | null; typicalPractices: Record<string, number> | undefined; onSelect: (practice: Practice | null) => void;
 }) {

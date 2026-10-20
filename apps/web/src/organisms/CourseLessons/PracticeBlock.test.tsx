@@ -36,15 +36,19 @@ const detail = (): CourseDetailResponse => ({
   lessons: [{ ...summary, document, practiceProgress: { [blockId]: { done: 3, started: 4, answered: null } }, draft: null, speech: {}, draftSpeech: null, myShares: {} }],
 });
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
-// Renders the lesson page and opens the practice's answer dialog, which is closed by default.
-async function openPractice(value: CourseDetailResponse) {
+// Renders the lesson page, with the practice's answers closed.
+function renderLesson(value: CourseDetailResponse) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false, staleTime: 20_000 }, mutations: { retry: false } } });
   const root = createRootRoute();
   const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <LessonView groupId={groupId} courseId={courseId} accountId={accountId} detail={value} lessonId={lessonId} dataUpdatedAt={Date.now()} /> });
   const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: [`/groups/${groupId}/courses/${courseId}/lessons/${lessonId}`] }) });
   render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>);
+}
+// Renders the lesson page and opens the practice's answers.
+async function openPractice(value: CourseDetailResponse) {
+  renderLesson(value);
   fireEvent.click(await screen.findByRole("button", { name: "Answer" }));
-  return screen.findByRole("dialog", { name: "Answer the practice" });
+  return screen.findByRole("region", { name: "Answer the practice" });
 }
 
 beforeEach(() => {
@@ -103,12 +107,12 @@ describe("Practice blocks", () => {
     expect(screen.queryByText("Matches the author’s version")).not.toBeInTheDocument();
   });
 
-  it("lists at most three prompts on the lesson page and keeps the answer set in a closed dialog", async () => {
+  it("lists at most three prompts on the lesson page and keeps the answers closed until the Answer button opens them", async () => {
     const items = ["Een.", "Twee.", "Drie.", "Vier.", "Vijf."].map((prompt) => ({ prompt, authorsVersion: [], note: null }));
     const long: LessonTopBlock = { ...practiceBlock, props: { data: JSON.stringify({ instruction: "Vertaal.", passage: { title: "Mijn huis", content: "Ik woon hier." }, items }) } };
     const value = detail(); value.lessons = [{ ...value.lessons[0]!, document: { ...document, blocks: [long] } }];
-    const dialog = openPractice(value);
-    // Before the dialog opens, the page shows the instruction and the first three prompts only.
+    renderLesson(value);
+    // Before the answers open, the page shows the instruction and the first three prompts only.
     expect(await screen.findByText("Vertaal.")).toBeInTheDocument();
     for (const prompt of ["Een.", "Twee.", "Drie."]) expect(screen.getByText(prompt)).toBeInTheDocument();
     expect(screen.queryByText("Vier.")).not.toBeInTheDocument();
@@ -116,18 +120,19 @@ describe("Practice blocks", () => {
     expect(screen.getByText(/3 people done/)).toHaveTextContent("3 people done · 5 questions left");
     expect(screen.queryByRole("button", { name: "Finish later" })).not.toBeInTheDocument();
     expect(screen.queryByText("Ik woon hier.")).not.toBeInTheDocument();
-    // The dialog holds the passage and one answer field per prompt.
-    const opened = await dialog;
+    // The opened answers hold the passage, and show the first question only until it is answered.
+    fireEvent.click(screen.getByRole("button", { name: "Answer" }));
+    const opened = await screen.findByRole("region", { name: "Answer the practice" });
     expect(within(opened).getByText("Ik woon hier.")).toBeInTheDocument();
-    expect(within(opened).getByLabelText(/^5\. Vijf\./)).toBeInTheDocument();
+    expect(within(opened).getByLabelText(/^1\. Een\./)).toBeInTheDocument();
+    expect(within(opened).queryByLabelText(/^2\. Twee\./)).not.toBeInTheDocument();
     expect(within(opened).getByRole("button", { name: "Finish later" })).toBeInTheDocument();
   });
 
   it("checks an answer on Enter on the device, celebrating a match and moving focus, or keeping focus to show the author's version", async () => {
     await openPractice(detail());
     const field = screen.getByLabelText(/^1\. … een kleine keuken\./);
-    const second = screen.getByLabelText(/^2\. There are two bedrooms\./);
-    // The dialog opens on the first unanswered question, and no author's version shows before a check.
+    // The answers open on the first unanswered question, and no author's version shows before a check.
     await waitFor(() => expect(field).toHaveFocus());
     expect(screen.queryByText("Er is")).not.toBeInTheDocument();
     expect(screen.queryByText("Er zijn twee slaapkamers.")).not.toBeInTheDocument();
@@ -143,10 +148,13 @@ describe("Practice blocks", () => {
     expect(screen.queryByText("Matches the author’s version")).not.toBeInTheDocument();
     fireEvent.change(field, { target: { value: "Er is" } });
     expect(screen.getByText(/can still be right/)).toBeInTheDocument();
-    // A match is confirmed and focus moves to the next question.
+    // The next question stays hidden until the answer matches.
+    expect(screen.queryByLabelText(/^2\. There are two bedrooms\./)).not.toBeInTheDocument();
+    // A match is confirmed, the next question is revealed, and focus moves to it.
     fireEvent.keyDown(field, { key: "Enter" });
     expect(screen.getByText("Matches the author’s version")).toBeInTheDocument();
     expect(screen.queryByText(/can still be right/)).not.toBeInTheDocument();
+    const second = screen.getByLabelText(/^2\. There are two bedrooms\./);
     expect(second).toHaveFocus();
     // Editing the answer clears the feedback until it is checked again.
     fireEvent.change(field, { target: { value: "Er is een" } });
@@ -155,6 +163,40 @@ describe("Practice blocks", () => {
     fireEvent.change(second, { target: { value: "er zijn twee slaapkamers" } });
     fireEvent.keyDown(second, { key: "Enter" });
     expect(screen.getByRole("button", { name: "Done" })).toHaveFocus();
+  });
+
+  it("shows the author's version under the question it belongs to after a miss", async () => {
+    await openPractice(detail());
+    const field = screen.getByLabelText(/^1\. … een kleine keuken\./);
+    fireEvent.change(field, { target: { value: "Daar is" } });
+    fireEvent.keyDown(field, { key: "Enter" });
+    const row = field.closest("[data-answer-field]") as HTMLElement;
+    expect(within(row).getByText("Er is")).toBeInTheDocument();
+    expect(within(row).getByText(/can still be right/)).toBeInTheDocument();
+    expect(screen.queryByLabelText(/^2\. There are two bedrooms\./)).not.toBeInTheDocument();
+  });
+
+  it("moves on with Enter on an empty answer, revealing and focusing the next question", async () => {
+    await openPractice(detail());
+    const first = screen.getByLabelText(/^1\. … een kleine keuken\./);
+    await waitFor(() => expect(first).toHaveFocus());
+    expect(screen.queryByLabelText(/^2\. There are two bedrooms\./)).not.toBeInTheDocument();
+    fireEvent.keyDown(first, { key: "Enter" });
+    expect(screen.getByLabelText(/^2\. There are two bedrooms\./)).toHaveFocus();
+    expect(screen.getByText("Question 2 of 2")).toBeInTheDocument();
+  });
+
+  it("reveals saved answers through the first question they have not matched, and focuses that one", async () => {
+    const items = [{ prompt: "Een.", authorsVersion: ["Eén."] }, { prompt: "Twee.", authorsVersion: ["Twee."] }, { prompt: "Drie.", authorsVersion: ["Drie."] }];
+    const three: LessonTopBlock = { ...practiceBlock, props: { data: JSON.stringify({ instruction: "Vertaal.", passage: null, items }) } };
+    const value = detail(); value.lessons = [{ ...value.lessons[0]!, document: { ...document, blocks: [three] } }];
+    localStorage.setItem(practiceDraftKey(accountId, groupId, "practice-answer", blockId), JSON.stringify({ version: 1, answers: ["Eén.", "Dit is fout.", ""] }));
+    const opened = await openPractice(value);
+    // The first question matches its saved answer; the second does not, so it is the last one shown and it has focus.
+    await waitFor(() => expect(within(opened).getByLabelText(/^2\. Twee\./)).toHaveFocus());
+    expect(within(opened).getByLabelText(/^1\. Een\./)).toHaveValue("Eén.");
+    expect(within(opened).queryByLabelText(/^3\. Drie\./)).not.toBeInTheDocument();
+    expect(screen.getByText("Question 2 of 3")).toBeInTheDocument();
   });
 
   it("shows the focused question's position within the practice as a progress bar", async () => {
@@ -179,13 +221,18 @@ describe("Practice blocks", () => {
 
     // The button reads Finish later while a question is blank and Done once every question has an answer.
     const key = practiceDraftKey(accountId, groupId, "practice-answer", blockId);
-    fireEvent.change(screen.getByLabelText(/^1\. … een kleine keuken\./), { target: { value: "Er is" } });
+    const first = screen.getByLabelText(/^1\. … een kleine keuken\./);
+    fireEvent.change(first, { target: { value: "Er is" } });
+    fireEvent.keyDown(first, { key: "Enter" });
     expect(screen.getByRole("button", { name: "Finish later" })).toBeInTheDocument();
     fireEvent.change(screen.getByLabelText(/^2\. There are two bedrooms\./), { target: { value: "Er zijn twee kamers." } });
     await waitFor(() => expect(JSON.parse(localStorage.getItem(key)!)).toEqual({ version: 1, answers: ["Er is", "Er zijn twee kamers."] }));
     fireEvent.click(screen.getByRole("button", { name: "Done" }));
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${blockPath}/progress`, expect.objectContaining({ method: "PUT", body: JSON.stringify({ answered: 2 }) })));
-    await waitFor(() => expect(screen.queryByRole("dialog", { name: "Answer the practice" })).not.toBeInTheDocument());
+    await waitFor(() => expect(screen.queryByRole("region", { name: "Answer the practice" })).not.toBeInTheDocument());
+    // Focus returns to the Answer button, which now reads as closed.
+    expect(screen.getByRole("button", { name: "Answer" })).toHaveFocus();
+    expect(screen.getByRole("button", { name: "Answer" })).toHaveAttribute("aria-expanded", "false");
     // The answers stay in the local draft, so the learner can come back and change them.
     expect(JSON.parse(localStorage.getItem(key)!)).toEqual({ version: 1, answers: ["Er is", "Er zijn twee kamers."] });
   });
@@ -193,11 +240,12 @@ describe("Practice blocks", () => {
   it("saves progress when the dialog closes with its close button, and nothing when no question is answered", async () => {
     await openPractice(detail());
     fireEvent.click(screen.getByRole("button", { name: "Finish later" }));
-    await waitFor(() => expect(screen.queryByRole("dialog", { name: "Answer the practice" })).not.toBeInTheDocument());
+    await waitFor(() => expect(screen.queryByRole("region", { name: "Answer the practice" })).not.toBeInTheDocument());
     expect(fetch).not.toHaveBeenCalledWith(`${blockPath}/progress`, expect.anything());
 
     fireEvent.click(screen.getByRole("button", { name: "Answer" }));
-    const dialog = await screen.findByRole("dialog", { name: "Answer the practice" });
+    expect(screen.getByRole("button", { name: "Answer" })).toHaveAttribute("aria-expanded", "true");
+    const dialog = await screen.findByRole("region", { name: "Answer the practice" });
     fireEvent.change(within(dialog).getByLabelText(/^1\. … een kleine keuken\./), { target: { value: "Er is" } });
     fireEvent.keyDown(dialog, { key: "Escape" });
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${blockPath}/progress`, expect.objectContaining({ method: "PUT", body: JSON.stringify({ answered: 1 }) })));
@@ -253,7 +301,7 @@ describe("Practice blocks", () => {
     expect(screen.getByLabelText(/^2\. There are two bedrooms\./)).toHaveFocus();
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${blockPath}/attempts`, expect.anything()));
     expect(screen.queryByRole("alert")).not.toBeInTheDocument();
-    expect(screen.getByRole("dialog", { name: "Answer the practice" })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Answer the practice" })).toBeInTheDocument();
   });
 
   it("records nothing in a draft preview or an archived course", async () => {

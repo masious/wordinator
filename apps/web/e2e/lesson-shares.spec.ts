@@ -27,9 +27,9 @@ test("a learner shares an example and a question, opens them in the journal, and
   const already = page.getByRole("link", { name: "Already shared. Open the post" });
   await expect(already).toBeVisible();
 
-  // A question is shared from the Answer dialog; a second attempt reads Already shared.
+  // A question is shared from the answers opened under the practice; a second attempt reads Already shared.
   await page.getByRole("button", { name: "Answer", exact: true }).click();
-  const answers = page.getByRole("dialog", { name: "Answer the practice" });
+  const answers = page.getByRole("region", { name: "Answer the practice" });
   await answers.getByRole("button", { name: "Share question 1" }).click();
   const shareQuestion = page.getByRole("dialog", { name: "Share a question" });
   await expect(shareQuestion.getByLabel(/Your note/)).toHaveValue("");

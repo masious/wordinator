@@ -11,7 +11,7 @@ Each measured second belongs to one **activity**. Rows are kept per account, loc
 | Activity | Where the clock runs | Target | Focus |
 | --- | --- | --- | --- |
 | `reading` | A published [lesson page](courses.md#lesson-pages), outside every practice and AI practice | course, lesson | `grammar` or `lesson` |
-| `practice` | A lesson practice's answer set: the lesson page's Answer dialog and [Practice again](courses.md#lesson-actions) | course, lesson, practice block | none |
+| `practice` | A lesson practice's answer set: the lesson page's answers and [Practice again](courses.md#lesson-actions) | course, lesson, practice block | none |
 | `ai_practice` | An expanded [AI practice](courses.md#ai-practices) on the lesson page, while the learner works inside it | course, lesson, AI practice | the practice's focus |
 | `tutor` | An open [tutor](ai-tutor.md) conversation at `/ai` | none | none |
 | `drill` | A [drill](words.md#drill) at `/words/drill` while its cards show (not during setup or the results) | the course for a course drill, otherwise none | none |
@@ -25,7 +25,7 @@ Each measured second belongs to one **activity**. Rows are kept per account, loc
 
 - Time counts only while the page is visible, the window has focus, and the learner has interacted in the last 90 seconds (`IDLE_MS`): a scroll, wheel, key, pointer, or touch, or typing in a field. Each idle gap stops the clock at the last interaction, so a tab left open adds at most 90 seconds.
 - **Reading starts at the lesson.** A lesson behind the [start gate](courses.md#lesson-pages) starts its reading clock when the learner presses Start reading this lesson. A lesson that opens whole (started or finished) starts it the first time the reader's own scrolling (as defined for [lesson positions](courses.md#lesson-positions)) brings the first lesson block to the reading line. Time on the cover and header before that is not counted. After that the reading clock runs whenever the page is active.
-- Opening a practice's Answer dialog pauses reading and runs that practice's clock until the dialog closes. Working inside an expanded AI practice (focus or pointer inside it) runs its clock instead of reading.
+- Opening a practice's answers on the lesson page pauses reading and runs that practice's clock until they close. Working inside an expanded AI practice (focus or pointer inside it) runs its clock instead of reading.
 - Only one clock runs at a time. Changing route stops the clock and sends what it has.
 
 ## Sending time

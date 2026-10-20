@@ -180,15 +180,16 @@ describe("Lesson shares", () => {
   });
 
   it("shows Already shared for pieces the viewer has shared, linking to the post", async () => {
-    renderPage(detail(lesson({ myShares: { [exampleId]: postId, [lessonShareKey({ blockId: practiceId, prompt: "No." })]: postId } })));
+    renderPage(detail(lesson({ myShares: { [exampleId]: postId, [lessonShareKey({ blockId: practiceId, prompt: "There is a garden." })]: postId } })));
     fireEvent.click(await block("Example"));
     expect(screen.getByRole("link", { name: "Already shared. Open the post" })).toHaveAttribute("href", `/journal/${postId}`);
     expect(screen.queryByRole("button", { name: "Share this example" })).not.toBeInTheDocument();
     fireEvent.click(screen.getByRole("button", { name: "Answer" }));
-    const dialog = await screen.findByRole("dialog", { name: "Answer the practice" });
-    expect(within(dialog).getByRole("button", { name: "Share question 1" })).toBeInTheDocument();
-    expect(within(dialog).queryByRole("button", { name: "Share question 2" })).not.toBeInTheDocument();
-    expect(within(dialog).getAllByRole("link", { name: "Already shared. Open the post" })).toHaveLength(1);
+    const answers = await screen.findByRole("region", { name: "Answer the practice" });
+    // Only the first question shows until it is answered; it was shared, so it links to the post, and the second is not there yet.
+    expect(within(answers).getAllByRole("link", { name: "Already shared. Open the post" })).toHaveLength(1);
+    expect(within(answers).queryByRole("button", { name: "Share question 1" })).not.toBeInTheDocument();
+    expect(within(answers).queryByRole("button", { name: "Share question 2" })).not.toBeInTheDocument();
   });
 
   it("links to the existing post when the piece was already shared elsewhere", async () => {
@@ -203,7 +204,7 @@ describe("Lesson shares", () => {
   it("shares one question from the Answer dialog without closing it, never prefilling the note or showing the author's version", async () => {
     renderPage(detail(lesson()));
     fireEvent.click(await screen.findByRole("button", { name: "Answer" }));
-    const answers = await screen.findByRole("dialog", { name: "Answer the practice" });
+    const answers = await screen.findByRole("region", { name: "Answer the practice" });
     fireEvent.click(within(answers).getByRole("button", { name: "Share question 1" }));
     const dialog = await screen.findByRole("dialog", { name: "Share a question" });
     expect(within(dialog).getByText("Translate.")).toBeInTheDocument();
@@ -213,15 +214,16 @@ describe("Lesson shares", () => {
     fireEvent.click(within(dialog).getByRole("button", { name: "Share" }));
     await within(answers).findByRole("link", { name: "Already shared. Open the post" });
     expect(shareBody()).toEqual({ courseId, lessonId, blockId: practiceId, itemIndex: 0, note: null });
-    expect(screen.getByRole("dialog", { name: "Answer the practice" })).toBeInTheDocument();
+    expect(screen.getByRole("region", { name: "Answer the practice" })).toBeInTheDocument();
   });
 
   it("disables sharing the questions of a reading practice and says why", async () => {
     renderPage(detail(lesson({ passage: true })));
     fireEvent.click(await screen.findByRole("button", { name: "Answer" }));
-    const answers = await screen.findByRole("dialog", { name: "Answer the practice" });
+    const answers = await screen.findByRole("region", { name: "Answer the practice" });
+    // The second question shows once the first one matches, so only the first one's share is there for now.
     const buttons = within(answers).getAllByRole("button", { name: "Share" });
-    expect(buttons).toHaveLength(2);
+    expect(buttons).toHaveLength(1);
     for (const button of buttons) {
       expect(button).toBeDisabled();
       expect(button).toHaveAccessibleDescription("Questions of a reading practice can’t be shared.");

@@ -53,7 +53,7 @@ Maintain a small critical suite for current Chromium and WebKit:
 3. Global shell navigation shows Courses, Words, Journal, and Tutor in the left rail on desktop, and the same rail in a drawer behind the slim header's Open navigation button below `68rem`.
 4. A member creates each post type in the journal; another member answers without spoilers, completes a reading, reacts, and receives reply and pin notices.
 5. Settings saves the profile and uploads an avatar through the cropper.
-6. A learner answers a practice in its Answer dialog, sees a miss keep focus with the author's version and a match move on (without any check request), finishes later, finds the answer kept on the device after a reload, and is counted as done.
+6. A learner opens a practice's answers with its Answer button, sees a miss keep focus with the author's version and a match reveal and focus the next question (without any check request), finishes later, finds the answer kept on the device after a reload, and is counted as done.
 7. (Retired 2026-10-20 with the contributor UI; the e2e spec was removed. Contributor rules stay covered by API tests.)
 8. An author builds a lesson with headings, formatted text, a callout, columns, an image with alt text, words, and a practice, publishes it, and another member reads it; two editors' concurrent edits merge.
 9. A learner shares an example and a question to the journal, answers the question on its post page, and gets Already shared on a second attempt.
