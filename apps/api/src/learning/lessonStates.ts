@@ -3,12 +3,12 @@ import type { LessonState } from "@wordinator/contracts";
 // Lesson states and course completion (docs/courses.md#lesson-states), derived at read time and never stored. Pure, so the
 // course progress read and the tutor derive them the same way.
 
-/** One published lesson as the viewer stands in it, in outline order. `started` means a saved position. */
+/** One published lesson as the viewer stands in it, in outline order. `started` means a saved position or an answered practice question. */
 export type LessonStanding = { completed: boolean; started: boolean };
 
 /**
- * Completed with a completion; in progress with a saved position; missed when neither, while a later published lesson is in
- * progress or completed; otherwise not started.
+ * Completed with a completion; in progress with a saved position or an answered practice question; missed when neither, while
+ * a later published lesson is in progress or completed; otherwise not started.
  */
 export function deriveLessonStates(lessons: readonly LessonStanding[]): LessonState[] {
   const states: LessonState[] = new Array(lessons.length);
