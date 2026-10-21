@@ -89,20 +89,12 @@
   letter-spacing: -0.04em;
   text-decoration: none;
 }
-/* The 2×2 mark: one tall accent tile and two paper tiles on ink, slightly rotated. */
+/* The book icon, the same file as the favicon; it is taller than wide, so the height sets its size. */
 .brandMark {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.18rem;
-  width: 1.75rem;
-  height: 1.75rem;
-  padding: 0.28rem;
-  background: var(--color-inverse-surface);
-  border-radius: var(--radius-sm);
-  transform: rotate(-4deg);
+  display: block;
+  width: auto;
+  height: 2rem;
 }
-.brandMark span { background: var(--color-inverse-text); border-radius: 0.12rem; }
-.brandMark span:first-child { grid-row: span 2; background: var(--color-action); }
 
 .nav {
   display: grid;

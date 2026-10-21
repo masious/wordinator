@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 780" width="680" height="780">
+  <!-- tabs -->
+  <path d="M590 105 H620 Q655 105 655 140 V205 Q655 240 620 240 H590 Z" fill="#ef4044"/>
+  <path d="M590 105 H620 Q655 105 655 140 V150 H590 Z" fill="#ef4044"/>
+  <path d="M590 215 H655 V205 Q655 240 620 240 H590 Z" fill="#c92b30"/>
+  <path d="M590 250 H620 Q655 250 655 285 V350 Q655 385 620 385 H590 Z" fill="#ffcd34"/>
+  <path d="M590 360 H655 V350 Q655 385 620 385 H590 Z" fill="#f0ad27"/>
+  <path d="M590 392 H620 Q655 392 655 427 V492 Q655 527 620 527 H590 Z" fill="#2ec06d"/>
+  <path d="M590 502 H655 V492 Q655 527 620 527 H590 Z" fill="#0a9d51"/>
+
+  <!-- bottom pages and cover edge -->
+  <path d="M35 575 Q35 700 110 700 H520 Q595 700 595 640 V560 Z" fill="#003a8c"/>
+  <path d="M65 615 Q65 595 90 592 H578 V650 Q578 680 548 680 H100 Q65 680 65 640 Z" fill="#f4f2ec"/>
+  <path d="M65 640 Q65 680 100 680 H548 Q578 680 578 650 V640 Z" fill="#e8e4d9"/>
+
+  <!-- cover -->
+  <path d="M30 120 Q30 35 115 35 H500 Q595 35 595 120 V500 Q595 575 520 575 H120 Q30 575 30 500 Z" fill="#0050b5"/>
+  <!-- spine -->
+  <path d="M30 120 Q30 35 115 35 H138 V575 H120 Q30 575 30 500 Z" fill="#0043a0"/>
+  <rect x="115" y="35" width="23" height="540" fill="#003a8c"/>
+  <!-- cover highlight edge -->
+  <path d="M138 35 H500 Q595 35 595 120 V500" fill="none" stroke="#0a6ad6" stroke-width="10"/>
+
+  <!-- gold bands -->
+  <g fill="#ffcd34">
+    <path d="M30 160 Q30 150 40 147 L115 122 V148 L30 188 Z"/>
+    <path d="M30 215 L115 175 V205 L40 240 Q30 243 30 233 Z"/>
+    <path d="M30 470 L115 442 V470 L30 500 Z"/>
+    <path d="M30 525 L115 495 V525 L40 555 Q30 558 30 548 Z"/>
+  </g>
+  <g fill="#f0ad27">
+    <path d="M30 160 Q30 150 40 147 L115 122 L90 130 L30 160 Z" opacity="0"/>
+    <rect x="30" y="125" width="45" height="120" opacity="0"/>
+  </g>
+
+  <!-- letter W -->
+  <path d="M225 190 L292 375 L360 235 L428 375 L495 190" fill="none" stroke="#f4f2ec" stroke-width="32" stroke-linejoin="round" stroke-linecap="round"/>
+
+  <!-- text lines -->
+  <path d="M215 443 H505" stroke="#5599f5" stroke-width="24" stroke-linecap="round"/>
+  <path d="M215 490 H425" stroke="#5599f5" stroke-width="24" stroke-linecap="round"/>
+
+  <!-- bookmark -->
+  <path d="M128 613 H220 V740 L174 700 L128 740 Z" fill="#ef4044"/>
+  <path d="M174 613 H220 V740 L174 700 Z" fill="#c92b30"/>
+  <rect x="128" y="613" width="92" height="24" fill="#b52a30"/>
+</svg>

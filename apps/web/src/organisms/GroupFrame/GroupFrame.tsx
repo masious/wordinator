@@ -105,7 +105,7 @@ function RailResizer({ accountId, rail, width, onWidth }: { accountId: string; r
 function Brand() {
   const { t } = useTranslation();
   return <Link aria-label={t("brand")} className={styles.brand} to="/courses">
-    <span aria-hidden="true" className={styles.brandMark}><span /><span /><span /></span>
+    <img alt="" className={styles.brandMark} src="/favicon.svg" />
     <span className={styles.brandName}>{t("brand")}</span>
   </Link>;
 }
