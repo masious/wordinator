@@ -19,7 +19,7 @@ Run these commands from the repository root:
 - `pnpm test`
 - `pnpm test:e2e` — every Playwright spec in every project; during work run only the affected specs ([running Playwright](testing.md#running-playwright))
 - `pnpm build`
-- `pnpm --filter @wordinator/web deploy` and `pnpm --filter @wordinator/api deploy` — deploy one app after production resource IDs and routes are configured
+- `pnpm --filter @wordinator/web run deploy` and `pnpm --filter @wordinator/api run deploy` (the `run` is required: plain `pnpm deploy` is pnpm's own command and fails) — deploy one app after production resource IDs and routes are configured
 - `pnpm db:generate` — generate a reviewed Drizzle migration after a schema change
 - `pnpm db:migrate:local` — apply committed migrations to local D1
 - `pnpm db:studio` — open Drizzle Studio on the local D1 SQLite file (most recently written file under `apps/api/.wrangler/state/v3/d1`); run `pnpm db:migrate:local` first
@@ -137,7 +137,7 @@ Then:
 
 1. Complete the backup procedure below before any destructive migration.
 2. Run `pnpm db:migrate:remote`; the command contains an explicit `--remote` flag.
-3. Run `pnpm --filter @wordinator/api deploy`, then `pnpm --filter @wordinator/web deploy`.
+3. Run `pnpm --filter @wordinator/api run deploy`, then `pnpm --filter @wordinator/web run deploy`.
 4. Run `pnpm bootstrap --remote` only for a clean installation. Never run bootstrap against an installation containing users.
 5. In current desktop Chrome, desktop Safari, Chrome on Android, and Safari on iOS, record date/version/pass-fail for sign-in, group switch, composer, notification destination, discussion reply, and mobile navigation.
 6. Verify the offline fallback says the internet is required and that reconnect/retry preserves a local draft.
@@ -207,11 +207,11 @@ A tool that throws no longer ends the turn: the model receives `TOOL_FAILED` and
 
 ## Lesson activity operations
 
-Approved 2026-10-21; implemented in the working tree, not deployed. [The delivery plan](../LESSON_ACTIVITIES_PLAN.html) records the checks run. Reuse existing model/speech secrets and provider fallback; no new production service is assumed. Generation leases recover abandoned jobs, and source/version keys invalidate relevant edits. Stale cache versions are not purged yet (see [lesson activities](lesson-activities.md#shared-cached-content)).
+Approved and deployed to production 2026-10-21. [The delivery plan](../LESSON_ACTIVITIES_PLAN.html) records the checks run. Reuse existing model/speech secrets and provider fallback; no new production service is assumed. Generation leases recover abandoned jobs, and source/version keys invalidate relevant edits. Stale cache versions are not purged yet (see [lesson activities](lesson-activities.md#shared-cached-content)).
 
-Migrations `0036_lesson_activities.sql` and `0037_speech_usage_lesson_activity.sql` are committed and not applied to any D1 database by this work. Each is a table rebuild (`learning_time`, and `speech_usage` in 0037), so take the [backup](#backup) before a production migration. The order is:
+Migrations `0036_lesson_activities.sql` and `0037_speech_usage_lesson_activity.sql` (with `0035_lesson_reading_progress.sql`) were applied to production D1 on 2026-10-21 after a D1 export backup. Each is a table rebuild (`learning_time`, and `speech_usage` in 0037), so take the [backup](#backup) before a production migration. The order is:
 
 1. Local: `pnpm db:migrate:local`, then the local checks.
-2. Production, when requested: `pnpm db:migrate:remote`, which carries its own `--remote` flag and applies every pending migration. Then `pnpm --filter @wordinator/api deploy`, and only then `pnpm --filter @wordinator/web deploy`. The web bundle calls the activity routes, so the API must serve them first.
+2. Production, when requested: `pnpm db:migrate:remote`, which carries its own `--remote` flag and applies every pending migration. Then `pnpm --filter @wordinator/api run deploy`, and only then `pnpm --filter @wordinator/web run deploy`. The web bundle calls the activity routes, so the API must serve them first.
 
 Always select local versus production D1 explicitly. Deployment remains a separate action.

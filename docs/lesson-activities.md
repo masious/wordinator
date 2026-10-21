@@ -1,6 +1,6 @@
 # Lesson activities
 
-Approved 2026-10-21; implemented in the working tree, not deployed. This document owns section-aware lesson activities. Delivery tasks and live verification status are in [the execution plan](../LESSON_ACTIVITIES_PLAN.html). The [lesson page](courses.md#lesson-pages), [Tutor](ai-tutor.md), and [Tutor-saved practices](courses.md#ai-practices) retain their own owners.
+Approved 2026-10-21; deployed to production 2026-10-21. This document owns section-aware lesson activities. Delivery tasks and live verification status are in [the execution plan](../LESSON_ACTIVITIES_PLAN.html). The [lesson page](courses.md#lesson-pages), [Tutor](ai-tutor.md), and [Tutor-saved practices](courses.md#ai-practices) retain their own owners.
 
 ## Scope and entry point
 

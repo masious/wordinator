@@ -219,16 +219,16 @@ describe("Lesson shares", () => {
     expect(screen.getByRole("region", { name: "Answer the practice" })).toBeInTheDocument();
   });
 
-  it("shows each answer row's share as an icon with no text, named by its question, at the left of the answer box", async () => {
+  it("shows each answer row's share as an icon with no text, named by its question, at the end of the answer row", async () => {
   renderPage(detail(lesson()));
   fireEvent.click(await screen.findByRole("button", { name: "Answer" }));
   const answers = await screen.findByRole("region", { name: "Answer the practice" });
   const share = within(answers).getByRole("button", { name: "Share question 1" });
   expect(share.textContent).toBe("");
   expect(share.querySelector("svg")).not.toBeNull();
-  // Document order is visual order in the row: the share control comes before the answer field.
+  // Document order is visual order in the row: the share control comes after the answer field.
   const field = within(answers).getByRole("textbox", { name: /There is a garden/ });
-  expect(share.compareDocumentPosition(field) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  expect(share.compareDocumentPosition(field) & Node.DOCUMENT_POSITION_PRECEDING).toBeTruthy();
   // Focusing it shows a tooltip with the same words as its name.
   share.focus();
   expect(await screen.findByText("Share question 1")).toBeInTheDocument();

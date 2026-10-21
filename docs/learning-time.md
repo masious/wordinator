@@ -23,7 +23,7 @@ Each measured second belongs to one **activity**. Rows are kept per account, loc
 
 ### Lesson activity time
 
-Approved 2026-10-21; implemented in the working tree, not deployed. [Lesson activities](lesson-activities.md#learning-time) adds `lesson_activity`, targeted to the lesson and shared activity ID, with reading/grammar/speaking focus. It counts in the existing AI-practice aggregate and daily goal, while retaining its own activity/focus row. Generation waits and completed/inactive work do not claim time. It never changes required-practice or lesson-reading medians.
+Approved 2026-10-21; deployed to production 2026-10-21. [Lesson activities](lesson-activities.md#learning-time) adds `lesson_activity`, targeted to the lesson and shared activity ID, with reading/grammar/speaking focus. It counts in the existing AI-practice aggregate and daily goal, while retaining its own activity/focus row. Generation waits and completed/inactive work do not claim time. It never changes required-practice or lesson-reading medians.
 
 ## The clock
 
