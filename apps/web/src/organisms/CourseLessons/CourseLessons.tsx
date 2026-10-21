@@ -38,7 +38,7 @@ import { AiPracticeToggle, useAiPracticeSlots, type AiPracticeScope } from "./Ai
 
 const NO_ENTRIES: LessonIndexEntry[] = [];
 
-function useCurrentActivitySection(descriptors: readonly ActivityDescriptor[], reading: RefObject<HTMLElement | null>, side: RefObject<HTMLElement | null>) {
+export function useCurrentActivitySection(descriptors: readonly ActivityDescriptor[], reading: RefObject<HTMLElement | null>, side: RefObject<HTMLElement | null>) {
   const [current, setCurrent] = useState<ActivityDescriptor | undefined>();
   useEffect(() => {
     let frame = 0;
