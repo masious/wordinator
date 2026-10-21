@@ -836,7 +836,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <dt>Done when</dt><dd><ul><li>All three test cases pass.</li><li><code>LessonWords</code> keeps its existing behaviour (any existing <code>LessonWords</code> tests still pass).</li></ul></dd>
 <dt>Depends on</dt><dd>T4.1, T4.3, T1.2</dd>
 <dt>Parallel-safe</dt><dd>yes, with T4.5 and T4.6 (new files). Not with T4.3, which edits the words panel layout.</dd>
-<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Status</dt><dd class="status">Done 2026-10-21 — SummaryActivity 3/3, LessonWords 10/10, LessonBox 7/7</dd>
 <dt>Risk</dt><dd>normal</dd>
 </dl>
 <p class="orch"><strong>Orchestrator note:</strong> D1 says the dictionary is on the left. The brief’s placement options for <code>LessonWords</code> (rail, under, sheet) have no left option. The worker lays out a left column inside <code>SummaryActivity</code> and passes plain items to <code>WordList</code>. Confirm.</p>
@@ -1078,6 +1078,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <tr><td>T4.5</td><td>2026-10-21</td><td>GuidedGrammarActivity.test.tsx 3/3; no type errors in its files</td><td>Done; segmented step bar, LessonBlocks per step, choice + Continue, resume by cursor</td></tr>
 <tr><td>T4.3</td><td>2026-10-21</td><td>LessonBox.test.tsx + LessonWords.test.tsx 17/17; no CourseLessons type errors</td><td>Done; lesson-wide completed badge (hidden at 0), taller AI area, words rail list scrolls</td></tr>
 <tr><td>T3.2</td><td>2026-10-21</td><td>lesson-activities.test.ts 75/75; 0 API type errors in lessonActivities</td><td>Done; numbered chunks, range/ascending/overlap checks, original-ID snapshots, eligible followUps only</td></tr>
+<tr><td>T4.4</td><td>2026-10-21</td><td>SummaryActivity 3/3, LessonWords 10/10, LessonBox 7/7</td><td>Done; image header, linked pair hover/focus, display-only WordList (New words | Dutch | English)</td></tr>
 </tbody>
 </table></div>
 </section>

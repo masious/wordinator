@@ -5,6 +5,7 @@ import { PlainText } from "../../molecules/PlainText";
 import { SpeechButton } from "../../molecules/Speech";
 import { WordBookmarkToggle } from "../WordBookmark/WordBookmark";
 import styles from "./LessonWords.module.css";
+import { WordCopy } from "./WordList";
 
 export type PanelWordData = { id: string; term: string; meaning: string; forms: string | null; example: string | null; note: string | null };
 
@@ -20,8 +21,7 @@ export function PanelWord({ word, termSpeech, exampleSpeech, active, className, 
   const forms = word.forms?.trim(); const example = word.example?.trim(); const note = word.note?.trim();
   return <li className={className} aria-current={active || undefined} data-open={open || undefined}>
     <div className={styles.copy}>
-      <p className={styles.term}>{word.term}</p>
-      <p className={styles.meaning}><PlainText>{word.meaning}</PlainText></p>
+      <WordCopy term={word.term} meaning={word.meaning} />
       {open && <div id={detailsId} className={styles.details}>
         {forms && <p className={styles.forms}>{forms}</p>}
         {example && <p className={styles.example}><span><PlainText>{example}</PlainText></span>
