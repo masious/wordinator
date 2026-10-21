@@ -11,9 +11,9 @@
 /* The lesson's actions, above the profile row, outside the card. */
 .actions{container-type:inline-size;display:grid;gap:var(--space-2)}
 .actionsHeading{display:flex;align-items:center;gap:var(--space-2);margin:0;color:var(--color-foreground-muted);font-size:var(--type-eyebrow);font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase}
-.actionsHeading svg{width:1rem;height:1rem;flex:none;color:var(--color-action)}
+.actionsHeading svg{width:1.5rem;height:1.5rem;flex:none;color:var(--color-action)}
 /* The active section's name, once, under the heading: one line with an ellipsis (the full text is its title). */
-.section{margin:0;overflow:hidden;color:var(--color-foreground-muted);font-size:var(--type-body);line-height:var(--line-compact);text-overflow:ellipsis;white-space:nowrap}
+.section{margin:0;overflow:hidden;color:var(--color-foreground);font-size:var(--type-card-title);font-weight:var(--weight-semibold);line-height:var(--line-title);text-overflow:ellipsis;white-space:nowrap}
 /* Every action takes the full row, so its label never truncates against a neighbour; long labels wrap to a second line. */
 .pair{display:grid;grid-template-columns:minmax(0,1fr);gap:var(--space-2)}
 .label{min-width:0;flex:1}
@@ -21,24 +21,23 @@
 .done{display:inline-flex;flex:none;color:var(--color-success)}
 .action .done svg{width:1rem;height:1rem}
 .doneText{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-/* Actions use the action-label role (sans, like the lesson's examples, larger than body) and sit on a tint per activity category
-   (--focus-accent / --focus-surface, set by data-category): grammar, story, or words for Practise words. */
-.action{--focus-accent:var(--color-action);--focus-surface:var(--color-control-surface);position:relative;display:flex;align-items:center;gap:var(--space-3);min-height:var(--touch-target);padding:var(--space-3) var(--space-4);color:var(--color-foreground);background:var(--color-control-surface);border:var(--ring-hairline);border-radius:var(--radius-md);font-family:var(--font-sans);font-size:var(--type-action-label);font-weight:var(--weight-medium);line-height:var(--line-compact);text-decoration:none;transition:border-color var(--motion-standard) ease,background var(--motion-standard) ease}
-.action[data-category]{background:linear-gradient(135deg,var(--focus-surface),var(--color-control-surface))}
+/* An action is a white control with a solid category block on its start side (--focus-accent / --focus-surface, set by data-category:
+   grammar, story, or words for Practise words). The icon fills that block, which is one touch target wide and the row's full height. */
+.action{--focus-accent:var(--color-action);--focus-surface:var(--color-control-surface);position:relative;display:flex;align-items:center;min-height:var(--touch-target);overflow:hidden;color:var(--color-foreground);background:var(--color-control-surface);border:var(--ring-hairline);border-radius:var(--radius-md);font-size:var(--type-body);font-weight:var(--weight-medium);line-height:var(--line-compact);text-decoration:none;transition:border-color var(--motion-standard) ease}
 .action[data-category="grammar"]{--focus-accent:var(--color-category-grammar-accent);--focus-surface:var(--color-category-grammar-surface)}
 .action[data-category="story"]{--focus-accent:var(--color-category-story-accent);--focus-surface:var(--color-category-story-surface)}
 .action[data-category="words"]{--focus-accent:var(--color-category-words-accent);--focus-surface:var(--color-category-words-surface)}
-.action[data-category="words"]:hover{border-color:var(--color-category-words-deep)}
 .action:hover{border-color:var(--focus-accent)}
-.action[data-category]:hover{background:linear-gradient(135deg,var(--focus-surface),var(--focus-surface))}
-.action svg{flex:none;width:1.375rem;height:1.375rem;color:var(--focus-accent)}
-.action[data-category] svg:first-child{box-sizing:content-box;padding:var(--space-1);background:var(--focus-surface);border-radius:var(--radius-sm)}
+.action[data-category="words"]:hover{border-color:var(--color-category-words-deep)}
+.action > svg:first-child{flex:none;box-sizing:content-box;align-self:stretch;width:1.125rem;height:auto;padding-inline:calc((var(--touch-target) - 1.125rem) / 2);color:var(--focus-accent);background:var(--focus-surface)}
+.action .label{padding:var(--space-2) var(--space-3)}
+.action .done{margin-inline-end:var(--space-3)}
 /* Compact: icons only, stacked; the label stays for assistive technology. */
 .actions[data-compact]{justify-items:center}
 .actions[data-compact] .pair{grid-template-columns:minmax(0,1fr)}
 .actions[data-compact] .actionsHeading{justify-content:center}
 .actions[data-compact] .actionsHeading span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.actions[data-compact] .action{justify-content:center;width:var(--touch-target);padding:0}
+.actions[data-compact] .action{justify-content:center;width:var(--touch-target)}
 .actions[data-compact] .section{display:none}
 .actions[data-compact] .label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 /* Compact Done: the check sits on a small success tint at the icon's corner. */
