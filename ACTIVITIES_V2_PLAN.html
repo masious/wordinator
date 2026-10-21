@@ -883,18 +883,17 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <li><code>apps/web/src/molecules/speechRecognition.ts:18</code> (<code>PronunciationAssessment</code>), :379 (<code>useSpokenAnswer</code>).</li>
 <li><code>apps/web/src/molecules/SpeakControls.tsx:70</code> (<code>ScoreRing</code>), :100 (<code>AssessmentBreakdown</code>).</li>
 <li><code>apps/web/src/molecules/Speech.tsx</code> (<code>playSpeech</code>; directory inferred).</li>
-<li><code>apps/web/src/organisms/LessonActivities/activityAnswers.ts</code> (drafts).</li>
 <li><code>apps/web/src/organisms/LessonActivities/RoleplayActivity.test.tsx</code> (test pattern).</li>
 </ul></dd>
 <dt>Change</dt><dd><ol>
 <li>Create <code>ReadAloudActivity.tsx</code>. It shows the Dutch line and a Listen control, which plays audio from the speech route (T3.4). The learner speaks with hold-to-talk. An explicit Send submits the attempt. <code>ScoreRing</code> and <code>AssessmentBreakdown</code> show the feedback. Then Retry, typed fallback, and Continue.</li>
 <li>Create <code>SpeakFromEnglishActivity.tsx</code>. It shows the English line. The learner speaks or types the Dutch. An explicit Send submits. The Dutch reference is revealed after Send. Feedback as above.</li>
 <li>Reuse <code>useSpokenAnswer</code> and the existing components. Extract a shared <code>HoldToTalk</code> molecule only if it removes duplication cleanly from <code>RoleplayActivity</code> and the two new components. Otherwise copy the minimal pattern and report.</li>
-<li>Save drafts through <code>activityAnswers.ts</code>, keyed by activity and line.</li>
+<li>Keep no drafts: read-aloud and speak-from-English answers are not saved to the device (owner, 2026-10-21; see <code>docs/lesson-activities.md</code>).</li>
 <li>Release recognition and audio on cancel, blur, hidden tab and unmount, as <code>RoleplayActivity</code> does.</li>
 </ol></dd>
 <dt>Do not</dt><dd><ul><li>Add hints or self-navigation (out of scope).</li><li>Change role-play behaviour, except for the <code>HoldToTalk</code> extraction if made.</li><li>Call any server route other than the existing answer and speech routes.</li><li>Use Tailwind.</li></ul></dd>
-<dt>Tests to add/update</dt><dd>New <code>ReadAloudActivity.test.tsx</code> and <code>SpeakFromEnglishActivity.test.tsx</code>. Send submits. Releasing the hold without Send never submits. The typed fallback submits a typed sentence.</dd>
+<dt>Tests to add/update</dt><dd>New <code>ReadAloudActivity.test.tsx</code> and <code>SpeakFromEnglishActivity.test.tsx</code>. Send submits. Releasing the hold without Send never submits. The typed fallback submits a typed sentence. Typed or transcribed text is not restored after remount (no drafts).</dd>
 <dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/web exec vitest run src/organisms/LessonActivities/RoleplayActivity.test.tsx src/organisms/LessonActivities/ReadAloudActivity.test.tsx src/organisms/LessonActivities/SpeakFromEnglishActivity.test.tsx</code></dd>
 <dt>Done when</dt><dd><ul><li>The role-play suite still passes.</li><li>The three test cases pass for each new component.</li></ul></dd>
 <dt>Depends on</dt><dd>T4.1, T3.4 (speech route), T1.2</dd>

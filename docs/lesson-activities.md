@@ -24,7 +24,7 @@ Attaching an activity to its source and suggesting it are one feature. Suggestio
 | Mixed practice | Summary or lesson endpoint | Six questions combining this lesson's concepts | All answered |
 | Role-play | Original dialogue containing Sofia and a partner | Original dialogue; learner produces Sofia's lines | All Sofia turns sent |
 
-Counts are fixed generation-recipe defaults, except guided grammar (2-12 steps) and speaking lines (at most 60 per section). Activities are finite, not chats. Text is escaped plain text: each paragraph and example is its own element, and activity pages do not parse links, except the snapshotted lesson blocks of a guided grammar step (see [Guided grammar](#guided-grammar)). Structured explanation components do not extend lesson rich text to other surfaces.
+Counts are fixed generation-recipe defaults, except guided grammar (2-12 steps) and speaking lines (at most 60 per section). Activities are finite, not chats.
 
 **Progress.** Answering a guided grammar step marks the lesson blocks shown in that step as read for lesson progress. The viewer's saved lesson position advances to the step key of the last shown block only if it is further than the current saved position (it never moves backwards), then the existing completion check runs. Archived courses and unsaved runs make no progress write. Word memory never changes through activities.
 
@@ -69,7 +69,7 @@ The recap shows Dutch sentences with their English translations. Hovering or foc
 
 - The model receives the grammar section's blocks as a numbered list of chunks and returns ordered steps. Each step has 1-4 chunk indices (prefer atomic: one sub-rule or one example group per step) and one small choice question with three options, `correctIndex` and `explanation`, that checks or continues teaching that chunk. An activity has 2-12 steps in total.
 - Chunks ascend in document order across steps, should cover the section, and never overlap.
-- UI: one slide per step. A step progress bar sits at the top. Below it are the step's lesson blocks, rendered with the read-only lesson renderer (`LessonBlocks`). Under those is the small question with feedback. Once the answer is checked, Continue appears. These step blocks are the one rich-text exception on an activity page, as the lesson share's example sentence is elsewhere.
+- UI: one slide per step. A step progress bar sits at the top. Below it are the step's lesson blocks, rendered with the read-only lesson renderer (`LessonBlocks`). Under those is the small question with feedback. Once the answer is checked, Continue appears.
 - Answering a step applies the progress rule under [Activity catalogue](#activity-catalogue).
 - Completion offers "Back to the lesson's practices": a link to the first practice block inside the source section (hash = block ID), otherwise the normal return link. The rest of the completion order is under [Completion and progress](#completion-and-progress).
 
@@ -113,7 +113,7 @@ The route is `/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$act
 
 Each account has its own resumable run per activity version. Submitted answers, retries, feedback, cue choice and completion are private. Explicit Start again reuses shared content while restarting the learner's position; attempts remain private. Answer submission is idempotent. Server grading uses stored references, which question views omit until the relevant answer is submitted. Client pronunciation scores are self-study feedback, not trusted evidence for permissions or proficiency.
 
-Preserve unsent drafts on the device, namespaced by account, activity version, run, item and schema version. Fill-in answers and Sofia's role-play lines keep drafts; choice and word-order answers do not. Sign-out preserves them, and another account cannot load them. Old drafts never silently populate changed questions. Resetting a lesson deletes that learner's runs and answers for the lesson's activities in the same batch as the rest of the [reset](courses.md#reset), while the shared activity rows remain. Deleting the lesson removes both shared activities and private work.
+Preserve unsent drafts on the device, namespaced by account, activity version, run, item and schema version. Fill-in answers and Sofia's role-play lines keep drafts; choice, word-order, read-aloud and speak-from-English answers do not. Sign-out preserves them, and another account cannot load them. Old drafts never silently populate changed questions. Resetting a lesson deletes that learner's runs and answers for the lesson's activities in the same batch as the rest of the [reset](courses.md#reset), while the shared activity rows remain. Deleting the lesson removes both shared activities and private work.
 
 A readable archived course can serve ready activity content without creating shared content or durable private work; the activity shows that it is unsaved. The lesson page shows no suggestions for an archived course, but its activity URLs still work. Ordinary authentication/setup and current lesson visibility apply to every endpoint, including polling and speech. Nested IDs and run ownership are checked independently.
 
