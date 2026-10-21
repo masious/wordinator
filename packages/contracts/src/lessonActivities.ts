@@ -147,13 +147,17 @@ export const activityRunPatchRequestSchema = z.discriminatedUnion("action", [
   z.strictObject({ action: z.literal("continue"), expectedCursor: z.number().int().nonnegative() }),
   z.strictObject({ action: z.literal("complete") }), z.strictObject({ action: z.literal("restart") }),
 ]);
-export const activityRunPatchResponseSchema = z.strictObject({ run: lessonActivityRunSchema });
+// Completion (action "complete") also returns before/after values (0-1) for the activity's requested metric keys.
+export const activityMetricChangeSchema = z.strictObject({ key: lessonActivityMetricSchema, before: z.number().min(0).max(1), after: z.number().min(0).max(1) });
+export type ActivityMetricChange = z.infer<typeof activityMetricChangeSchema>;
+export const activityRunPatchResponseSchema = z.strictObject({ run: lessonActivityRunSchema, metrics: z.array(activityMetricChangeSchema).max(3).optional() });
 export const activitySpeechRequestSchema = z.strictObject({ runId: opaqueIdSchema, turnId: opaqueIdSchema, chunkIndex: z.number().int().nonnegative().optional() });
 export const activitySpeechResponseSchema = z.discriminatedUnion("status", [
   z.strictObject({ status: z.literal("ready"), url: z.string().url() }), z.strictObject({ status: z.literal("pending"), retryAfterMs: z.number().int().min(250).max(10_000) }),
 ]);
 
-export function toLessonActivityView(activity: Omit<LessonActivityView, "payload"> & { payload: LessonActivityPayload }): LessonActivityView {
+// answeredItemIds lists items whose answer was submitted; only those speak_from_english lines reveal their Dutch text.
+export function toLessonActivityView(activity: Omit<LessonActivityView, "payload"> & { payload: LessonActivityPayload }, answeredItemIds: ReadonlySet<string> = new Set()): LessonActivityView {
   const { payload, ...rest } = activity;
   const stripQuestion = (question: z.infer<typeof questionPayloadSchema>): z.infer<typeof questionViewSchema> => {
     if (question.kind === "choice") return { id: question.id, kind: question.kind, prompt: question.prompt, options: question.options };
@@ -169,13 +173,20 @@ export function toLessonActivityView(activity: Omit<LessonActivityView, "payload
           : content.type === "story_summary" ? { ...content, image: null }
             : content.type === "guided_grammar" ? { type: content.type, recipeVersion: content.recipeVersion, schemaVersion: content.schemaVersion, steps: content.steps.map(({ blocks, question }) => ({ blocks, question: stripChoice(question) })), followUps: content.followUps }
               : content.type === "read_aloud" ? { ...content, lines: content.lines.map(({ referenceText: _, ...line }) => line) }
-                : content.type === "speak_from_english" ? { ...content, lines: content.lines.map(({ referenceText: _, ...line }) => ({ ...line, dutchText: null })) } : content;
+                : content.type === "speak_from_english" ? { ...content, lines: content.lines.map(({ referenceText: _, ...line }) => ({ ...line, dutchText: answeredItemIds.has(line.id) ? line.dutchText : null })) } : content;
   return lessonActivityViewSchema.parse({ ...rest, payload: clean });
 }
 
 export function gradeLessonActivityAnswer(payload: LessonActivityPayload, itemId: string, answer: z.infer<typeof activityAnswerSchema>) {
+  // Speaking lines are compared with the same sentence rule as role-play; a mismatch is a plain non-match, never "incorrect" copy.
+  if (payload.type === "read_aloud" || payload.type === "speak_from_english") {
+    const line = payload.lines.find((candidate) => candidate.id === itemId);
+    if (!line) return null;
+    return { correct: answer.kind === "text" && sameLessonSentence(answer.text, line.referenceText), reference: line.referenceText, explanation: null };
+  }
   const items = payload.type === "story_comprehension" || payload.type === "tricky_grammar" || payload.type === "mixed_practice" ? payload.questions
-    : payload.type === "roleplay" ? payload.turns.filter((turn) => turn.isLearner) : [];
+    : payload.type === "roleplay" ? payload.turns.filter((turn) => turn.isLearner)
+      : payload.type === "guided_grammar" ? payload.steps.map((step) => step.question) : [];
   const item = items.find((candidate) => candidate.id === itemId);
   if (!item) return null;
   if ("isLearner" in item) return { correct: answer.kind === "text" && sameLessonSentence(answer.text, item.referenceText), reference: item.referenceText, explanation: null };

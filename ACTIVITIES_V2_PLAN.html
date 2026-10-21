@@ -494,14 +494,14 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <li><code>packages/contracts/src/lessonActivities.ts:148</code> (<code>gradeLessonActivityAnswer</code>).</li>
 <li><code>packages/contracts/src/lessonActivities.ts:172</code> (fingerprint, for reference).</li>
 <li>The sentence normaliser <code>normalizeLessonSentence</code> (its location is not in the brief; find it under <code>packages/contracts/src/</code> by name, as role-play uses it).</li>
-<li>The completion response schema, <code>activityCompletionResponseSchema</code> (in the same file).</li>
+<li>The completion response schema, <code>activityRunPatchResponseSchema</code> (in the same file).</li>
 <li><code>packages/contracts/src/lessonActivities.test.ts</code>.</li>
 </ul></dd>
 <dt>Change</dt><dd><ol>
 <li><code>gradeLessonActivityAnswer</code>: guided grammar step questions are graded as choice answers (compare with <code>correctIndex</code>), the same as existing choice questions.</li>
 <li>Read-aloud and speak-from-english lines: the sentence answer is compared with <code>normalizeLessonSentence</code>, as role-play does. A match is correct. The brief says a mismatch is never reported as “incorrect”. Use the same result shape role-play uses for a non-match.</li>
 <li><code>toLessonActivityView</code>: strip <code>referenceText</code> for the new types and apply the T1.2 view rules.</li>
-<li><code>activityCompletionResponseSchema</code>: add <code>metrics</code>, an array of <code>{key, before, after}</code>, where <code>key</code> comes from the metric enum and <code>before</code> and <code>after</code> are numbers.</li>
+<li><code>activityRunPatchResponseSchema</code> (the run PATCH response; completion is <code>action: "complete"</code>; corrected at dispatch, the brief’s <code>activityCompletionResponseSchema</code> does not exist): add optional <code>metrics</code>, an array of <code>{key, before, after}</code>, where <code>key</code> comes from the metric enum and <code>before</code> and <code>after</code> are numbers.</li>
 </ol></dd>
 <dt>Do not</dt><dd><ul><li>Touch the database, the API or the web.</li><li>Invent a new normaliser.</li></ul></dd>
 <dt>Tests to add/update</dt><dd>Guided step: correct index is correct, wrong index is incorrect. Read-aloud: a sentence matching after normalisation (case and punctuation as <code>normalizeLessonSentence</code> defines) is correct. A mismatch never returns “incorrect”. The view strips <code>referenceText</code> and <code>correctIndex</code>. The completion schema accepts a valid metrics array and rejects an unknown key.</dd>
@@ -509,7 +509,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <dt>Done when</dt><dd><ul><li>Grading and view tests pass.</li><li>The completion schema accepts and rejects the cases above.</li><li>Contracts typecheck passes.</li></ul></dd>
 <dt>Depends on</dt><dd>T1.3</dd>
 <dt>Parallel-safe</dt><dd>no</dd>
-<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Status</dt><dd class="status">Done 2026-10-21 — contracts typecheck pass; lessonActivities.test.ts 29/29</dd>
 <dt>Risk</dt><dd>normal</dd>
 </dl>
 <p class="orch"><strong>Resolved:</strong> grading returns <code>correct: boolean</code> (true = matches the reference after <code>normalizeLessonSentence</code>). UI copy says “different from the original line”, never “incorrect”, the same as role-play.</p>
@@ -1071,6 +1071,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <tr><td>T2.1</td><td>2026-10-21</td><td>db typecheck pass; lesson-activities-migration.test.ts 20/20; orchestrator full-diff review</td><td>Done; 0038 recreates three tables, nine-type CHECK, metrics_before</td></tr>
 <tr><td>T1.2</td><td>2026-10-21</td><td>contracts typecheck pass; lessonActivities.test.ts 19/19</td><td>Done; v2 payload/view shapes, metrics on every payload; guided view keeps followUps for Up next</td></tr>
 <tr><td>T1.3</td><td>2026-10-21</td><td>contracts typecheck pass; lessonActivities.test.ts 24/24</td><td>Done; story/grammar types, storySpeakingLines, firstImage, practiceBlockId (nested)</td></tr>
+<tr><td>T1.4</td><td>2026-10-21</td><td>contracts typecheck pass; lessonActivities.test.ts 29/29</td><td>Done; guided/speaking grading, answer-aware speak reveal, optional metrics on run PATCH response</td></tr>
 </tbody>
 </table></div>
 </section>

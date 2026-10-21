@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { emptyLessonDocument, type LessonBlock, type LessonDocument } from "./lessonDocument";
-import { LESSON_ACTIVITY_RECIPE_VERSION, LESSON_ACTIVITY_SCHEMA_VERSION, gradeLessonActivityAnswer, lessonActivityFocus, lessonActivityMetricSchema, lessonActivityPayloadSchema, lessonActivityTypeSchema, lessonActivityViewSchema, normalizeLessonSentence, resolveLessonActivitySources, storySpeakingLines, firstImage, toLessonActivityView, verifyLessonActivitySource } from "./lessonActivities";
+import { LESSON_ACTIVITY_RECIPE_VERSION, activityRunPatchResponseSchema, LESSON_ACTIVITY_SCHEMA_VERSION, gradeLessonActivityAnswer, lessonActivityFocus, lessonActivityMetricSchema, lessonActivityPayloadSchema, lessonActivityTypeSchema, lessonActivityViewSchema, normalizeLessonSentence, resolveLessonActivitySources, storySpeakingLines, firstImage, toLessonActivityView, verifyLessonActivitySource } from "./lessonActivities";
 
 const uid = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const props = { textColor: "default" as const, backgroundColor: "default" as const };
@@ -288,5 +288,51 @@ describe("lesson activity contracts", () => {
     expect(sources.find((source) => source.sourceId === uid(1))?.practiceBlockId).toBe(uid(3));
     expect(sources.find((source) => source.sourceKind === "dialogue")?.practiceBlockId).toBeNull();
     expect(sources.find((source) => source.sourceKind === "lesson_end")?.practiceBlockId).toBeNull();
+  });
+
+  it("grades guided grammar steps as choice answers against the correct option", () => {
+    const payload = lessonActivityPayloadSchema.parse(guidedPayload);
+    expect(gradeLessonActivityAnswer(payload, uid(10), { kind: "choice", optionId: uid(101) })).toMatchObject({ correct: true, explanation: "Omdat." });
+    expect(gradeLessonActivityAnswer(payload, uid(10), { kind: "choice", optionId: uid(102) })).toMatchObject({ correct: false, reference: "Optie 1" });
+    expect(gradeLessonActivityAnswer(payload, uid(20), { kind: "text", text: "Optie 1" })?.correct).toBe(false);
+    expect(gradeLessonActivityAnswer(payload, uid(999), { kind: "choice", optionId: uid(101) })).toBeNull();
+  });
+
+  it("grades read-aloud lines by normalized sentence and reports a mismatch as a plain non-match", () => {
+    const payload = lessonActivityPayloadSchema.parse(readAloudPayload);
+    expect(gradeLessonActivityAnswer(payload, uid(50), { kind: "text", text: "  goedemorgen!  " })).toEqual({ correct: true, reference: "Goedemorgen.", explanation: null });
+    expect(gradeLessonActivityAnswer(payload, uid(50), { kind: "text", text: "Goedemiddag." })).toEqual({ correct: false, reference: "Goedemorgen.", explanation: null });
+    expect(gradeLessonActivityAnswer(payload, uid(50), { kind: "text", text: "   " })?.correct).toBe(false);
+    expect(gradeLessonActivityAnswer(payload, uid(50), { kind: "choice", optionId: uid(51) })?.correct).toBe(false);
+    expect(gradeLessonActivityAnswer(payload, uid(999), { kind: "text", text: "Goedemorgen." })).toBeNull();
+  });
+
+  it("grades speak-from-English lines by normalized sentence and never reports a mismatch as incorrect", () => {
+    const payload = lessonActivityPayloadSchema.parse(speakPayload);
+    const correct = gradeLessonActivityAnswer(payload, uid(60), { kind: "text", text: "Goedemorgen" });
+    const wrong = gradeLessonActivityAnswer(payload, uid(60), { kind: "text", text: "Dag." });
+    expect(correct?.correct).toBe(true);
+    expect(wrong).toEqual({ correct: false, reference: "Goedemorgen.", explanation: null });
+    expect(JSON.stringify(wrong)).not.toMatch(/incorrect/i);
+  });
+
+  it("strips guided correct options and speaking reference text from views, revealing speak-from-English Dutch only after answers", () => {
+    const guided = viewOf(guidedPayload);
+    expect(JSON.stringify(guided)).not.toContain("correctOptionId");
+    expect(JSON.stringify(guided)).not.toContain("referenceText");
+    const base = { id: uid(10), sourceId: uid(11), sourceLabel: "Lesson", sourceFingerprint: fingerprint };
+    const unanswered = toLessonActivityView({ ...base, payload: lessonActivityPayloadSchema.parse(speakPayload) });
+    expect(unanswered.payload).toMatchObject({ type: "speak_from_english", lines: [{ dutchText: null }] });
+    const answered = toLessonActivityView({ ...base, payload: lessonActivityPayloadSchema.parse(speakPayload) }, new Set([uid(60)]));
+    expect(lessonActivityViewSchema.parse(answered).payload).toMatchObject({ type: "speak_from_english", lines: [{ dutchText: "Goedemorgen." }] });
+    expect(JSON.stringify(answered)).not.toContain("referenceText");
+  });
+
+  it("returns metric changes with completion and rejects unknown metric keys", () => {
+    const run = { id: uid(70), status: "completed", cursor: 0, cueMode: "english", startedAt: 1, updatedAt: 2, completedAt: 2 };
+    expect(activityRunPatchResponseSchema.parse({ run }).metrics).toBeUndefined();
+    expect(activityRunPatchResponseSchema.parse({ run, metrics: [{ key: "lesson_grammar", before: 0.25, after: 0.5 }] }).metrics).toEqual([{ key: "lesson_grammar", before: 0.25, after: 0.5 }]);
+    expect(activityRunPatchResponseSchema.safeParse({ run, metrics: [{ key: "course_progress", before: 0, after: 1 }] }).success).toBe(false);
+    expect(activityRunPatchResponseSchema.safeParse({ run, metrics: [{ key: "lesson_share", before: 0, after: 1.5 }] }).success).toBe(false);
   });
 });
