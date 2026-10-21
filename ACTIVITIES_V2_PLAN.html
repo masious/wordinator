@@ -945,7 +945,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <dt>Done when</dt><dd><ul><li>Web typecheck reports zero errors.</li><li>Every listed suite passes, with its counts reported.</li><li>The web build succeeds.</li></ul></dd>
 <dt>Depends on</dt><dd>T4.1 to T4.7</dd>
 <dt>Parallel-safe</dt><dd>no</dd>
-<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Status</dt><dd class="status">Done 2026-10-21 — web typecheck 0; LessonBox 7, Roleplay 11, LessonActivityPage 14, Summary 3, Guided 3, ReadAloud 5, SpeakFromEnglish 5, ActivityCompletion 5, LessonWords 10; web build ok</dd>
 <dt>Risk</dt><dd>normal</dd>
 </dl>
 <p class="orch"><strong>Orchestrator note:</strong> after this card passes, the orchestrator commits T4.8; from here every commit typechecks again.</p>
@@ -1084,6 +1084,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <tr><td>T4.6</td><td>2026-10-21</td><td>Roleplay 11 + ReadAloud 5 + SpeakFromEnglish 5 = 21/21</td><td>Done; shared SpokenLineActivity (read/speak modes), lineId speech, no drafts; no HoldToTalk extraction</td></tr>
 <tr><td>T3.5</td><td>2026-10-21</td><td>lesson-activities.test.ts 90/90; course-progress.test.ts 12/12; orchestrator full-diff review</td><td>Done; metrics.ts, metrics_before on create/restart, guided first-answer reading credit (forward only), completion before/after</td></tr>
 <tr><td>T4.7</td><td>2026-10-21</td><td>LessonActivityPage 14/14; ActivityCompletion 5/5; web typecheck 0 errors</td><td>Done; ActivityCompletion (changed metrics only, Up next D6, back to practices), page branches for nine types</td></tr>
+<tr><td>T4.8</td><td>2026-10-21</td><td>web typecheck 0; LessonBox 7, Roleplay 11, LessonActivityPage 14, Summary 3, Guided 3, ReadAloud 5, SpeakFromEnglish 5, ActivityCompletion 5, LessonWords 10; web build ok</td><td>Done; web compiles and builds</td></tr>
 </tbody>
 </table></div>
 </section>
