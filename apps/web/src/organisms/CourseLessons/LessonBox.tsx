@@ -1,10 +1,12 @@
 import { Badge } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { Check, Dumbbell, MessageCircle, Sparkles } from "lucide-react";
+import { Check, Dumbbell, Sparkles } from "lucide-react";
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import type { TypicalTime } from "@wordinator/contracts/learning";
+import { CategoryBadge } from "./LessonIndex";
+import type { OverviewCategory } from "../LessonOverview/overviewModel";
 import { lessonActivityFocus, type ActivityDescriptor, type ActivityType } from "@wordinator/contracts/lesson-activities";
 import type { TFunction } from "i18next";
 import { lessonMetricsQueryOptions } from "../../api";
@@ -91,7 +93,7 @@ function ActivityGlyph({ type }: { type: ActivityType }) {
 // which compact mode reduces to a check on the icon while its text stays for assistive technology. The header's badge counts the
 // completed suggestions, and shows nothing until there is one.
 // `completedCount` is the lesson-wide count of the viewer's completed activities (the completed list), not only this section's.
-export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSlug, suggestions = [], completedCount = 0 }: { lesson: LessonBoxLesson; compact?: boolean; courseSlug?: string; lessonSlug?: string; suggestions?: readonly LessonActivitySuggestion[]; completedCount?: number }) {
+export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSlug, suggestions = [], completedCount = 0, sectionCategory }: { lesson: LessonBoxLesson; compact?: boolean; courseSlug?: string; lessonSlug?: string; suggestions?: readonly LessonActivitySuggestion[]; completedCount?: number; sectionCategory?: OverviewCategory | undefined }) {
   const { t } = useTranslation();
   const named = { number: lesson.number, lesson: lesson.title, course: lesson.courseTitle };
   const activityLabel: Record<ActivityType, string> = {
@@ -110,8 +112,8 @@ export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSl
   return <div className={styles.actions} data-compact={compact || undefined} role="group" aria-label={t("courses.lessonBox.actions")}>
     <h2 className={styles.actionsHeading}><Sparkles aria-hidden="true" /><span>{t("courses.lessonBox.doMoreWithAi")}</span>
       {completedCount > 0 && <Badge component="span" variant="light" size="sm" aria-label={t("courses.lessonBox.activitiesDoneCount", { count: completedCount })}>{completedCount}</Badge>}
-      {/* The AI mark the navigation rail uses for the AI tutor, at the row's end. */}
-      <MessageCircle aria-hidden="true" className={styles.aiMark} /></h2>
+      {/* The active section's category badge, as its row in the lesson index shows it, at the row's end. */}
+      {sectionCategory && <span className={styles.sectionBadge}><CategoryBadge category={sectionCategory} active /></span>}</h2>
     {sectionLabel && <p className={styles.section} title={sectionLabel}>{sectionLabel}</p>}
     <div className={styles.pair}>
       <Link className={styles.action} data-category="words" title={compact ? t("courses.lessonBox.practiseWords") : undefined} to="/words/drill" search={{ source: "course", course: lesson.courseId, direction: "mixed" }}>

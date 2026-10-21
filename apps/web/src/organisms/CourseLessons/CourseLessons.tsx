@@ -158,6 +158,8 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
     ...allActivityDescriptors.filter((entry) => entry.sourceKind === "dialogue" && entry.returnHeadingId === activeActivitySection.returnHeadingId)
       .flatMap((entry) => entry.activityTypes.map((type) => suggestion(entry, type))),
   ] : [];
+  // The active section's category, so the Do more with AI area shows the same badge as the section's row in the lesson index.
+  const activeSectionCategory = entries.find((entry) => entry.id === activeActivitySection?.returnHeadingId)?.category;
   const active = useVisibleWords(reading, side, steps);
   // The URL's hash, set when an activity returns to its section, wins over the saved step for that load.
   const hash = useRouterState({ select: (state) => state.location.hash });
@@ -200,14 +202,14 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   }, [badges]);
   const lessonBox = <>
     {rail.box && createPortal(<LessonBox lesson={box} percent={percent} />, rail.box)}
-    {rail.actions && createPortal(<LessonBoxActions lesson={box} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} suggestions={activitySuggestions} completedCount={doneActivities.size} />, rail.actions)}
+    {rail.actions && createPortal(<LessonBoxActions lesson={box} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} suggestions={activitySuggestions} completedCount={doneActivities.size} sectionCategory={activeSectionCategory} />, rail.actions)}
   </>;
   if (!document || !steps.length) return <div className={styles.body}><p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p>{lessonBox}</div>;
   const hasWords = steps.some((step) => step.words.length > 0);
   // Where the vocabulary panel goes: the right rail on wide screens, under the text below 62em (or outside the frame), a sheet on phones.
   const placement = !hasWords ? null : phone ? "sheet" : !inline && rail.reference ? "rail" : "under";
   const docked = placement === "rail";
-  const actions = (compact: boolean) => <LessonBoxActions lesson={box} compact={compact} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} suggestions={activitySuggestions} completedCount={doneActivities.size} />;
+  const actions = (compact: boolean) => <LessonBoxActions lesson={box} compact={compact} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} suggestions={activitySuggestions} completedCount={doneActivities.size} sectionCategory={activeSectionCategory} />;
   const words = (props: { placement: LessonWordsPlacement; collapsible?: boolean }) =>
     <LessonWords steps={steps} active={active} groupId={scope.groupId} collapsed={wordsCollapsed} onToggle={toggleWords}
       footer={railDrawer ? undefined : actions} {...props} />;

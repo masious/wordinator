@@ -15,7 +15,7 @@ const grammar: ActivityDescriptor = { sourceId: "section-grammar", sourceKind: "
 afterEach(() => cleanup());
 
 // The rail's actions in a router, so the activity links resolve to the activity route.
-function renderActions(suggestions: LessonActivitySuggestion[], options: { compact?: boolean; completedCount?: number } = {}) {
+function renderActions(suggestions: LessonActivitySuggestion[], options: { compact?: boolean; completedCount?: number; sectionCategory?: "story" | "grammar" } = {}) {
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   const root = createRootRoute();
   const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <LessonBoxActions lesson={lesson} courseSlug="dutch-foundations" lessonSlug="lesson-title" suggestions={suggestions} {...options} /> });
@@ -108,6 +108,15 @@ describe("Lesson box actions", () => {
     ], { completedCount: 3 });
     const group = await screen.findByRole("group", { name: "Lesson actions" });
     expect(within(group).getByLabelText("3 activities completed")).toHaveTextContent("3");
+  });
+
+  it("ends the heading row with the active section's category badge, and has none without a section category", async () => {
+    renderActions([{ descriptor: story, type: "story_summary" }], { sectionCategory: "story" });
+    const heading = await screen.findByRole("heading", { name: /Do more with AI/i });
+    expect(heading.lastElementChild?.querySelector("[data-tone]")).not.toBeNull();
+    cleanup();
+    renderActions([{ descriptor: story, type: "story_summary" }]);
+    expect((await screen.findByRole("heading", { name: /Do more with AI/i })).querySelector("[data-tone]")).toBeNull();
   });
 
   it("shows no completed badge when no suggestion is completed", async () => {

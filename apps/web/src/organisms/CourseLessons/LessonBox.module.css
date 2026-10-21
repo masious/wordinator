@@ -12,7 +12,8 @@
 .actions{container-type:inline-size;display:grid;gap:var(--space-2)}
 .actionsHeading{display:flex;align-items:center;gap:var(--space-2);margin:0;color:var(--color-foreground-muted);font-size:var(--type-eyebrow);font-weight:var(--weight-bold);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase}
 .actionsHeading svg{width:1.5rem;height:1.5rem;flex:none;color:var(--color-action)}
-.actionsHeading .aiMark{margin-inline-start:auto}
+/* The section badge sits at the heading row's end, sized like a lesson index row (the badge is sized in em). */
+.sectionBadge{display:inline-flex;margin-inline-start:auto;font-size:var(--type-body);letter-spacing:normal;text-transform:none}
 /* The active section's name, once, under the heading: one line with an ellipsis (the full text is its title). */
 .section{margin:0;overflow:hidden;color:var(--color-foreground);font-size:var(--type-card-title);font-weight:var(--weight-semibold);line-height:var(--line-title);text-overflow:ellipsis;white-space:nowrap}
 /* Every action takes the full row, so its label never truncates against a neighbour; long labels wrap to a second line. */
@@ -39,7 +40,7 @@
 .actions[data-compact] .actionsHeading{justify-content:center}
 .actions[data-compact] .actionsHeading span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .actions[data-compact] .action{justify-content:center;width:var(--touch-target)}
-.actions[data-compact] .section,.actions[data-compact] .aiMark{display:none}
+.actions[data-compact] .section,.actions[data-compact] .sectionBadge{display:none}
 .actions[data-compact] .label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 /* Compact Done: the check sits on a small success tint at the icon's corner. */
 .actions[data-compact] .done{position:absolute;inset-block-start:calc(var(--space-1) * -1);inset-inline-end:calc(var(--space-1) * -1);justify-content:center;background:var(--color-success-surface);border-radius:var(--radius-pill)}
