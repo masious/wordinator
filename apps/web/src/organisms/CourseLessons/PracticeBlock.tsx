@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, lessonQueryOptions } from "../../api";
 import { sendPracticeAttempt } from "../../molecules/learningAttempts";
 import { PlainText } from "../../molecules/PlainText";
+import { DialoguePrompt, dialogueTurns } from "./DialoguePrompt";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { Button, IconButton, TextAreaField, TextField } from "../../ui";
 import { PassageShareNote, ShareButton, type SharePiece } from "../LessonShare/LessonShare";
@@ -398,7 +399,11 @@ export function AnswerSetComposer({ scope, block, recordAttempts = false, timed 
   return <form ref={form} className={styles.composer} onSubmit={submit} onFocus={onFocus} aria-label={t("courses.practice.yourAnswers")}>
     {!staged && <PracticePosition current={active + 1} total={questions.length} />}
     {staged
-      ? <h4 className={styles.activeQuestion}><PlainText>{questions[active]?.prompt ?? ""}</PlainText></h4>
+      ? (() => {
+        // A dialogue prompt ("Noor: … / Sofia: …") shows its turns separately; any other prompt stays one heading.
+        const prompt = questions[active]?.prompt ?? ""; const turns = dialogueTurns(prompt);
+        return turns ? <DialoguePrompt turns={turns} className={styles.activeQuestion} /> : <h4 className={styles.activeQuestion}><PlainText>{prompt}</PlainText></h4>;
+      })()
       : <h4>{t("courses.practice.yourAnswers")}</h4>}
     {/* Each question can be shared on its own, except in a reading practice (docs/lesson-shares.md#where-to-share). */}
     {block.payload.passage && <PassageShareNote id={passageNote} />}

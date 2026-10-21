@@ -1,0 +1,8 @@
+/* A practice prompt's dialogue turns: one card per turn, the first speaker on the start side and the second on the end side. */
+.dialogue{display:grid;gap:var(--space-2);margin:0;padding:0;list-style:none}
+.turn{display:grid;gap:var(--space-1);max-width:85%;padding:var(--space-2) var(--space-3);border-radius:var(--radius-md);background:var(--color-surface-muted);overflow-wrap:anywhere}
+.turn[data-side="end"]{justify-self:end;background:var(--color-action-soft);color:var(--color-action-soft-text)}
+.speaker{font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
+.turn[data-side="end"] .speaker{color:inherit}
+.text{font-size:var(--type-body);font-weight:var(--weight-semibold);line-height:var(--line-body)}
+@media(max-width:30em){.turn{max-width:100%}}
