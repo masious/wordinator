@@ -37,7 +37,7 @@
 <div class="eyebrow">Wordinator · Execution plan · 21 October 2026</div>
 <h1>Lesson activities v2 — execution plan</h1>
 <p>Nine activity types, guided grammar, speaking practice, a reversed progress rule, gamified completion and a reworked “Do more with AI” area. Delivered in six batches: the orchestrator dispatches one task card at a time to a Haiku 5.5 worker.</p>
-<p class="meta">Date: 2026-10-21 · Status: Planned — not started · Source: owner brief captured 2026-10-21 (decisions D1–D7)</p>
+<p class="meta">Date: 2026-10-21 · Status: Deployed to production 2026-10-21 (T5.1 e2e spec in progress) · Source: owner brief captured 2026-10-21 (decisions D1–D7)</p>
 <p class="meta">Revision 2 (2026-10-21): course_progress metric removed; orchestrator notes resolved; migration rebuild made cascade-safe.</p>
 <p class="meta">Revision 4: one commit per task; each commit marks its card done and adds a Status log row. Revision 5: v1 is only partly deployed and has no production data, so no v1 compatibility handling or data-preserving migration is needed. Revision 3 (superseded by 5) had assumed production data.</p>
 <nav aria-label="Plan sections"><a href="#summary">Summary</a><a href="#decisions">Owner decisions</a><a href="#out-of-scope">Out of scope</a><a href="#code-map">Code map</a><a href="#commands">Commands</a><a href="#protocol">Execution protocol</a><a href="#batches">Batches and tasks</a><a href="#risks">Open risks</a><a href="#status-log">Status log</a></nav>
@@ -997,7 +997,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <dt>Done when</dt><dd><ul><li>The Status log has a row for each task.</li><li>The roadmap status is correct.</li><li>No document claims v2 deployment before T5.3 completes.</li></ul></dd>
 <dt>Depends on</dt><dd>T5.1</dd>
 <dt>Parallel-safe</dt><dd>no</dd>
-<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Status</dt><dd class="status">Done 2026-10-21 — status docs reconciled: 15 docs, roadmap, index, v1 plan note; Status log has a row per task except T5.1 (in progress)</dd>
 <dt>Risk</dt><dd>normal</dd>
 </dl>
 <p class="orch"><strong>Resolved:</strong> add one line at the top of <code>LESSON_ACTIVITIES_PLAN.html</code>: “Partly superseded by ACTIVITIES_V2_PLAN.html (quick_grammar replaced, progress rule reversed).” Nothing else in that file is rewritten.</p>
@@ -1023,7 +1023,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <dt>Done when</dt><dd><ul><li>Migration applied remotely.</li><li>Both apps deployed.</li><li>Smoke check passed.</li><li>Status log row filled.</li></ul></dd>
 <dt>Depends on</dt><dd>T5.1</dd>
 <dt>Parallel-safe</dt><dd>no (orchestrator only; never in parallel with any other task)</dd>
-<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Status</dt><dd class="status">Done 2026-10-21 — owner ran the rollout: both Workers deployed 2026-10-21 04:51Z (after commit 172d946, from the working tree); remote D1 migrations list: no pending (0038 applied). Restore-point bookmark and smoke check not recorded by the orchestrator</dd>
 <dt>Risk</dt><dd>⚠ changes production data and deploys; owner go-ahead required</dd>
 </dl>
 <p class="orch"><strong>Orchestrator note:</strong> no worker runs this task. Ask the owner first; the orchestrator runs every remote command itself.</p>
@@ -1086,13 +1086,15 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <tr><td>T4.7</td><td>2026-10-21</td><td>LessonActivityPage 14/14; ActivityCompletion 5/5; web typecheck 0 errors</td><td>Done; ActivityCompletion (changed metrics only, Up next D6, back to practices), page branches for nine types</td></tr>
 <tr><td>T4.8</td><td>2026-10-21</td><td>web typecheck 0; LessonBox 7, Roleplay 11, LessonActivityPage 14, Summary 3, Guided 3, ReadAloud 5, SpeakFromEnglish 5, ActivityCompletion 5, LessonWords 10; web build ok</td><td>Done; web compiles and builds</td></tr>
 <tr><td>T3.6</td><td>2026-10-21</td><td>API typecheck 0 errors; lesson-activities 92/92; full API suite in 8 batches of 6: 44 files 429 tests pass; R2 4 files 20 tests pass; API build ok</td><td>Done; list counts new types, archived list unchanged; Batch 3 closed</td></tr>
+<tr><td>T5.3</td><td>2026-10-21</td><td>owner ran the rollout: both Workers deployed 2026-10-21 04:51Z (after commit 172d946, from the working tree); remote D1 migrations list: no pending (0038 applied). Restore-point bookmark and smoke check not recorded by the orchestrator</td><td>Done by owner; Done-badge commit c4a197a not yet deployed</td></tr>
+<tr><td>T5.2</td><td>2026-10-21</td><td>status docs reconciled: 15 docs, roadmap, index, v1 plan note; Status log has a row per task except T5.1 (in progress)</td><td>Done; docs say v2 deployed 2026-10-21</td></tr>
 </tbody>
 </table></div>
 </section>
 
 </main>
 <footer>
-<p>Wordinator · Lesson activities v2 execution plan · Planned — not started · 21 October 2026. Authoritative product rules live in <code>docs/lesson-activities.md</code> once T0.1 lands.</p>
+<p>Wordinator · Lesson activities v2 execution plan · Deployed 2026-10-21 · 21 October 2026. Authoritative product rules live in <code>docs/lesson-activities.md</code> once T0.1 lands.</p>
 </footer>
 </body>
 </html>

@@ -52,4 +52,4 @@ The release is ready when the critical flows in [user-flows.md](user-flows.md) w
 
 ## Section-aware lesson activities
 
-v1 partly deployed (no production data); v2 planned in [ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2_PLAN.html). [Lesson activities](lesson-activities.md) owns the finite, section-aware activity pages, shared generated content and private learner work. Original-dialogue replay is the narrow role-play exception: learner Sofia, selectable English/Dutch cue, held recording, explicit Send and typed fallback. Activities are optional and never change word fluency; only answered guided grammar steps advance lesson reading progress.
+v2 deployed to production 2026-10-21 ([ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2_PLAN.html)). [Lesson activities](lesson-activities.md) owns the finite, section-aware activity pages, shared generated content and private learner work. Original-dialogue replay is the narrow role-play exception: learner Sofia, selectable English/Dutch cue, held recording, explicit Send and typed fallback. Activities are optional and never change word fluency; only answered guided grammar steps advance lesson reading progress.
