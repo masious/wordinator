@@ -104,6 +104,7 @@ import { registerAttemptRoutes } from "./learning/attempts";
 import { practiceSecondsSql, readCourseTypicalTimes, readLessonTime, registerLearningTimeRoutes, typicalFields } from "./learning/time";
 import { registerAiPracticeRoutes } from "./learning/aiPracticeRoutes";
 import { registerLearningActivityRoutes } from "./learning/activity";
+import { registerLessonActivityRoutes, type ActivityLesson } from "./lessonActivities/routes";
 import { aiPracticeCounts, lessonAiPracticeDeletion } from "./tutor/aiPractices";
 import { recentResults } from "./wordMemory";
 import { decodeWeakCursor, readWeakWords, setWordKnown } from "./weakWords";
@@ -936,11 +937,23 @@ async function reorderLessons(context: Context<AppEnvironment>, course: CourseRo
 
 export const app = new Hono<AppEnvironment>();
 
-const requireGroupAccess = createMiddleware<AppEnvironment>(async (context, next) => {
+// Every library route needs a signed-in account that finished setup; group routes add their membership check on top.
+function accountError(context: Context<AppEnvironment>) {
   const user = context.get("user");
   if (!user) return apiError(context, 401, "AUTH_REQUIRED", "Sign in to continue.");
   if (user.mustChangePassword) return apiError(context, 403, "PASSWORD_CHANGE_REQUIRED", "Change your password to continue.");
   if (!user.onboardingComplete) return apiError(context, 403, "ONBOARDING_REQUIRED", "Finish setting up your account to continue.");
+  return null;
+}
+
+const requireActivityAccess = createMiddleware<AppEnvironment>(async (context, next) => {
+  const error = accountError(context); if (error) return error;
+  await next();
+});
+
+const requireGroupAccess = createMiddleware<AppEnvironment>(async (context, next) => {
+  const error = accountError(context); if (error) return error;
+  const user = context.get("user")!;
   const groupId = context.req.param("groupId");
   if (!groupId) return apiError(context, 404, "GROUP_NOT_FOUND", "This group is not available.");
   const [group] = await createDatabase(context.env.DB)
@@ -2821,6 +2834,31 @@ registerAiPracticeRoutes(app, {
     };
   },
 });
+
+// Lesson activities (docs/lesson-activities.md#api-and-persistence) are global: the course is found by its own ID and only its
+// published document is read, so drafts and unpublished previews offer nothing. The stored group supplies the language and the
+// library creator, which the archived-course rule needs, exactly as the group-scoped lesson read does.
+async function activityLesson(context: Context<AppEnvironment>): Promise<{ error: Response } | ActivityLesson> {
+  const db = context.env.DB; const user = context.get("user")!;
+  const missing = { error: apiError(context, 404, "LESSON_NOT_FOUND", "This lesson is not available.") };
+  // Active membership of the stored group is the same gate the group-scoped lesson read applies (requireGroupAccess).
+  const located = await db.prepare(`SELECT g.id AS groupId, g.creator_user_id AS creatorUserId, g.language AS language
+    FROM courses c JOIN groups g ON g.id = c.group_id AND g.deleted_at IS NULL
+    JOIN memberships m ON m.group_id = g.id AND m.user_id = ? AND m.state = 'active'
+    WHERE c.id = ?`)
+    .bind(user.id, context.req.param("courseId") ?? "").first<{ groupId: string; creatorUserId: string; language: "nl" | "de" }>();
+  if (!located) return missing;
+  const course = await readCourseRow(db, user.id, located.groupId, context.req.param("courseId") ?? "");
+  if (!course || !courseVisible(course, user.id, located.creatorUserId)) return missing;
+  const [lesson] = await readLessonRows(db, course, [context.req.param("lessonId") ?? ""]);
+  if (!lesson?.publishedDoc || lesson.publishedAt === null) return missing;
+  return {
+    courseId: course.id, lessonId: lesson.id, archived: course.status === "archived", language: located.language, title: lesson.title, goal: lesson.goal,
+    publishedAt: lesson.publishedAt, document: storedDocument(lesson.publishedDoc, lesson.id),
+  };
+}
+
+registerLessonActivityRoutes(app, { requireActivityAccess, lessonFor: activityLesson });
 
 app.notFound((context) => apiError(context, 404, "NOT_FOUND", "The requested resource was not found."));
 app.onError((error, context) => {

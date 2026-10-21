@@ -120,7 +120,7 @@ describe("Progress tab", () => {
     fireEvent.click(await screen.findByRole("button", { name: "Reset lesson 2: Lesson title 2" }));
     let dialog = await screen.findByRole("dialog", { name: "Reset this lesson?" });
     expect(within(dialog).getByText("Your place in the lesson and its completion")).toBeInTheDocument();
-    expect(within(dialog).getByText(/Your word reviews from this lesson/)).toBeInTheDocument();
+    expect(within(dialog).getByText(/Your word reviews and memory of this lesson’s words/)).toBeInTheDocument();
     fireEvent.click(within(dialog).getByRole("button", { name: "Cancel" }));
     await waitFor(() => expect(screen.queryByRole("dialog")).not.toBeInTheDocument());
     expect(resetCalls()).toHaveLength(0);

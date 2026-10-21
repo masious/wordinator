@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { Dumbbell, MessageCircle, Sparkles } from "lucide-react";
+import { Check, Dumbbell, MessageCircle, Sparkles } from "lucide-react";
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import type { TypicalTime } from "@wordinator/contracts/learning";
@@ -68,11 +68,16 @@ export function LessonBox({ lesson, percent }: { lesson: LessonBoxLesson; percen
   </section>;
 }
 
+// A suggested activity for the section at the reading line. `done` marks the viewer's own completed run of the current version
+// (docs/lesson-activities.md#scope-and-entry-point).
+export type LessonActivitySuggestion = { descriptor: ActivityDescriptor; type: ActivityType; done?: boolean };
+
 // The lesson's actions, above the profile row: Practise words (a drill of the course's words) beside Ask AI (a new tutor
 // conversation prefilled to talk the lesson's grammar and topics through), and Ask for more practices like this (a new tutor
 // conversation with a prefilled request naming the lesson). A prefilled conversation sends nothing until the learner sends it.
-// `compact` shows icons only, stacked (names stay as tooltips and accessible names).
-export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSlug, suggestions = [] }: { lesson: LessonBoxLesson; compact?: boolean; courseSlug?: string; lessonSlug?: string; suggestions?: readonly { descriptor: ActivityDescriptor; type: ActivityType }[] }) {
+// `compact` shows icons only, stacked (names stay as tooltips and accessible names). A done suggestion ends with a Done badge,
+// which compact mode reduces to a check on the icon while its text stays for assistive technology.
+export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSlug, suggestions = [] }: { lesson: LessonBoxLesson; compact?: boolean; courseSlug?: string; lessonSlug?: string; suggestions?: readonly LessonActivitySuggestion[] }) {
   const { t } = useTranslation();
   const named = { number: lesson.number, lesson: lesson.title, course: lesson.courseTitle };
   const activityLabel: Record<ActivityType, string> = {
@@ -80,22 +85,27 @@ export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSl
     grammar_explanation: t("lessonActivities.types.grammar_explanation"), quick_grammar: t("lessonActivities.types.quick_grammar"),
     tricky_grammar: t("lessonActivities.types.tricky_grammar"), mixed_practice: t("lessonActivities.types.mixed_practice"), roleplay: t("lessonActivities.types.roleplay"),
   };
+  // A check-only mark: the word is visually hidden (so the accessible name reads "Story summary Done") and shows as a title tooltip.
+  // A space separates it from the label.
+  const doneBadge = (done: boolean | undefined) => done ? <>
+    {" "}<span className={styles.done} title={t("courses.lessonBox.activityDone")}><Check aria-hidden="true" /><span className={styles.doneText}>{t("courses.lessonBox.activityDone")}</span></span>
+  </> : null;
   return <div className={styles.actions} data-compact={compact || undefined} role="group" aria-label={t("courses.lessonBox.actions")}>
     <h2 className={styles.actionsHeading}><Sparkles aria-hidden="true" /><span>{t("courses.lessonBox.doMoreWithAi")}</span></h2>
     <div className={styles.pair}>
       <Link className={styles.action} title={compact ? t("courses.lessonBox.practiseWords") : undefined} to="/words/drill" search={{ source: "course", course: lesson.courseId, direction: "mixed" }}>
         <Dumbbell aria-hidden="true" /><span className={styles.label}>{t("courses.lessonBox.practiseWords")}</span>
       </Link>
-      {suggestions.slice(0, 1).map(({ descriptor, type }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action}
-        title={compact ? `${activityLabel[type]} · ${descriptor.sourceLabel}` : undefined} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
+      {suggestions.slice(0, 1).map(({ descriptor, type, done }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action}
+        title={`${activityLabel[type]} · ${descriptor.sourceLabel}`} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
         params={{ courseSlug: courseSlug!, lessonSlug: lessonSlug!, sourceId: descriptor.sourceId, activityType: type }}>
-        <MessageCircle aria-hidden="true" /><span className={styles.label}>{activityLabel[type]}</span>
+        <MessageCircle aria-hidden="true" /><span className={styles.label}>{activityLabel[type]}</span>{doneBadge(done)}
       </Link>)}
     </div>
-    {suggestions.slice(1).map(({ descriptor, type }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action}
-      title={compact ? `${activityLabel[type]} · ${descriptor.sourceLabel}` : undefined} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
+    {suggestions.slice(1).map(({ descriptor, type, done }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action}
+      title={`${activityLabel[type]} · ${descriptor.sourceLabel}`} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
       params={{ courseSlug: courseSlug!, lessonSlug: lessonSlug!, sourceId: descriptor.sourceId, activityType: type }}>
-      <Sparkles aria-hidden="true" /><span className={styles.label}>{activityLabel[type]} · {descriptor.sourceLabel}</span>
+      <Sparkles aria-hidden="true" /><span className={styles.label}>{activityLabel[type]} · {descriptor.sourceLabel}</span>{doneBadge(done)}
     </Link>)}
   </div>;
 }

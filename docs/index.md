@@ -20,13 +20,13 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [ai-tutor.md](ai-tutor.md) | The AI tutor: entry point, conversations, formatting, tools and their visibility, confirmation, answer components, next lesson, providers and fallback, the daily cap, and prompt-injection rules |
 | [tutor-sessions-and-memory.md](tutor-sessions-and-memory.md) | Tutor study plans and the session panel, per-conversation context scope, dated tutor notes, practice topics, tutor words, word observations, personal practices, the reading component, and short prompt references (C14l) |
 | [content/index.md](content/index.md) | Course curriculum, storyline, and taught-topic coverage for member-authored Dutch Foundations content |
-| [settings-and-administration.md](settings-and-administration.md) | Settings page structure, the Tutor settings section, the superuser flag, analytics and AI settings, retired creator membership administration, and the interactive image cropper |
+| [settings-and-administration.md](settings-and-administration.md) | Settings page structure, the Tutor settings section, the superuser flag, analytics, the AI providers and models page, retired creator membership administration, and the interactive image cropper |
 | [notifications.md](notifications.md) | Notification triggers, read state, retention, and links |
 | [profiles-and-settings.md](profiles-and-settings.md) | Required account setup, public identity fields, and account preferences |
 | [design-system.md](design-system.md) | Visual language and canonical UI tokens |
 | [design-system-plan.md](design-system-plan.md) | Phase 0 design-system implementation tasks, sequencing, and completion criteria |
 | [AI_PLAN.md](../AI_PLAN.md) | AI tutor and learning data (C14, including C14l tutor sessions and memory) delivery steps, status, and release procedure |
-| [LESSON_ACTIVITIES_PLAN.html](../LESSON_ACTIVITIES_PLAN.html) | Planned section-aware lesson activities: resolved decisions, shared content cache, dedicated activity pages, original-dialogue role-play, delivery batches, and acceptance gates; implementation not started |
+| [LESSON_ACTIVITIES_PLAN.html](../LESSON_ACTIVITIES_PLAN.html) | Planned section-aware lesson activities: resolved decisions, shared content cache, dedicated activity pages, original-dialogue role-play, delivery batches, and acceptance gates; implemented in the working tree, not deployed |
 | [SPEECH_PLAN.md](../SPEECH_PLAN.md) | Lesson speech (C10) delivery steps, status, and release procedure |
 | [REDESIGN_PLAN.md](../REDESIGN_PLAN.md) | Lumen visual redesign: batch order, component mapping, open decisions, and status |
 | [architecture.md](architecture.md) | Runtime topology, monorepo boundaries, client/server responsibilities, and API conventions |

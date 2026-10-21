@@ -20,6 +20,7 @@ import { Route as TempRouteImport } from './routes/temp'
 import { Route as UiRouteImport } from './routes/ui'
 import { Route as WordsRouteImport } from './routes/words'
 import { Route as R2overviewLessonSlugRouteImport } from './routes/2overview.$lessonSlug'
+import { Route as AdminAiRouteImport } from './routes/admin.ai'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
 import { Route as CoursesCourseSlugRouteImport } from './routes/courses_.$courseSlug'
 import { Route as GroupsGroupIdRouteImport } from './routes/groups.$groupId'
@@ -96,6 +97,11 @@ const WordsRoute = WordsRouteImport.update({
 const R2overviewLessonSlugRoute = R2overviewLessonSlugRouteImport.update({
   id: '/2overview/$lessonSlug',
   path: '/2overview/$lessonSlug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAiRoute = AdminAiRouteImport.update({
+  id: '/admin/ai',
+  path: '/admin/ai',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
@@ -234,6 +240,7 @@ export interface FileRoutesByFullPath {
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
+  '/admin/ai': typeof AdminAiRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/courses/$courseSlug': typeof CoursesCourseSlugRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
@@ -269,6 +276,7 @@ export interface FileRoutesByTo {
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
+  '/admin/ai': typeof AdminAiRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/courses/$courseSlug': typeof CoursesCourseSlugRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
@@ -305,6 +313,7 @@ export interface FileRoutesById {
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
+  '/admin/ai': typeof AdminAiRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/courses_/$courseSlug': typeof CoursesCourseSlugRoute
   '/groups/$groupId': typeof GroupsGroupIdRoute
@@ -342,6 +351,7 @@ export interface FileRouteTypes {
     | '/ui'
     | '/words'
     | '/2overview/$lessonSlug'
+    | '/admin/ai'
     | '/admin/analytics'
     | '/courses/$courseSlug'
     | '/groups/$groupId'
@@ -377,6 +387,7 @@ export interface FileRouteTypes {
     | '/ui'
     | '/words'
     | '/2overview/$lessonSlug'
+    | '/admin/ai'
     | '/admin/analytics'
     | '/courses/$courseSlug'
     | '/groups/$groupId'
@@ -412,6 +423,7 @@ export interface FileRouteTypes {
     | '/ui'
     | '/words'
     | '/2overview/$lessonSlug'
+    | '/admin/ai'
     | '/admin/analytics'
     | '/courses_/$courseSlug'
     | '/groups/$groupId'
@@ -448,6 +460,7 @@ export interface RootRouteChildren {
   UiRoute: typeof UiRoute
   WordsRoute: typeof WordsRoute
   R2overviewLessonSlugRoute: typeof R2overviewLessonSlugRoute
+  AdminAiRoute: typeof AdminAiRoute
   AdminAnalyticsRoute: typeof AdminAnalyticsRoute
   CoursesCourseSlugRoute: typeof CoursesCourseSlugRoute
   GroupsGroupIdRoute: typeof GroupsGroupIdRoute
@@ -549,6 +562,13 @@ declare module '@tanstack/react-router' {
       path: '/2overview/$lessonSlug'
       fullPath: '/2overview/$lessonSlug'
       preLoaderRoute: typeof R2overviewLessonSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/ai': {
+      id: '/admin/ai'
+      path: '/admin/ai'
+      fullPath: '/admin/ai'
+      preLoaderRoute: typeof AdminAiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin/analytics': {
@@ -720,6 +740,7 @@ const rootRouteChildren: RootRouteChildren = {
   UiRoute: UiRoute,
   WordsRoute: WordsRoute,
   R2overviewLessonSlugRoute: R2overviewLessonSlugRoute,
+  AdminAiRoute: AdminAiRoute,
   AdminAnalyticsRoute: AdminAnalyticsRoute,
   CoursesCourseSlugRoute: CoursesCourseSlugRoute,
   GroupsGroupIdRoute: GroupsGroupIdRoute,

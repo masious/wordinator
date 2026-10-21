@@ -1,19 +1,18 @@
 import {
   ADMIN_ANALYTICS_RANGES, aiAnalyticsResponseSchema, learningAnalyticsResponseSchema, speechAnalyticsResponseSchema, timeAnalyticsResponseSchema, type AdminAnalyticsRange,
 } from "@wordinator/contracts/admin";
-import { AI_SPEECH_CHAR_CAP_MAX, AI_TURN_CAP_MAX, aiModelIdSchema, aiSettingsSchema, type AiProviderSetting, type AiSettings } from "@wordinator/contracts/ai";
-import { queryOptions, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ArrowDown, ArrowUp } from "lucide-react";
-import { type FormEvent, type ReactNode, useEffect, useState } from "react";
+import { queryOptions, useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
+import { type ReactNode } from "react";
 import { useTranslation } from "react-i18next";
-import { ApiError, apiRequest, sessionQueryOptions } from "../api";
+import { apiRequest, sessionQueryOptions } from "../api";
 import { GroupFrame } from "../organisms/GroupFrame/GroupFrame";
-import { Button, CheckboxField, ErrorState, IconButton, LabelChip, LoadingState, PageHeader, SectionHeader, SelectField, Surface, TextField } from "../ui";
+import { Button, ErrorState, LabelChip, LoadingState, PageHeader, SectionHeader, SelectField, Surface } from "../ui";
 import styles from "./AdminAnalyticsPage.module.css";
 
 // The superuser analytics page (C14e, docs/settings-and-administration.md#analytics): plain tables of counts, costs, and learning
-// minutes by day and account for the chosen range, and the AI settings form. Other accounts get a not-available state; the API
-// refuses them anyway.
+// minutes by day and account for the chosen range. The AI providers and models page is linked from here. Other accounts get a
+// not-available state; the API refuses them anyway.
 
 export function validateAnalyticsSearch(search: Record<string, unknown>): { days?: AdminAnalyticsRange } {
   const days = Number(search.days);
@@ -35,10 +34,6 @@ const speechQuery = (days: AdminAnalyticsRange) => queryOptions({
 const timeQuery = (days: AdminAnalyticsRange) => queryOptions({
   queryKey: ["admin-analytics", "time", days] as const,
   queryFn: () => apiRequest(`/api/admin/analytics/time?days=${days}`, timeAnalyticsResponseSchema),
-});
-const aiSettingsQuery = () => queryOptions({
-  queryKey: ["admin-ai-settings"] as const,
-  queryFn: () => apiRequest("/api/admin/ai-settings", aiSettingsSchema),
 });
 
 // A column reads one number from a row; the footer sums it across the rows.
@@ -181,90 +176,6 @@ function TimeSection({ days }: { days: AdminAnalyticsRange }) {
   </Section>;
 }
 
-type SettingsDraft = { providers: AiProviderSetting[]; dailyTurnCap: string; dailySpeechCharCap: string };
-const draftOf = (settings: AiSettings): SettingsDraft => ({
-  providers: settings.providers.map((item) => ({ ...item })), dailyTurnCap: String(settings.dailyTurnCap), dailySpeechCharCap: String(settings.dailySpeechCharCap),
-});
-
-// Checks the draft before saving and returns the first problem's message key, or the settings to send. The API validates again.
-export function checkAiSettingsDraft(draft: SettingsDraft): { error: string } | { settings: AiSettings } {
-  if (!draft.providers.some((item) => item.enabled)) return { error: "noProvider" };
-  if (draft.providers.some((item) => !aiModelIdSchema.safeParse(item.model).success)) return { error: "model" };
-  const whole = (value: string, max: number) => /^\d+$/.test(value.trim()) && Number(value) <= max ? Number(value) : null;
-  const dailyTurnCap = whole(draft.dailyTurnCap, AI_TURN_CAP_MAX); if (dailyTurnCap === null) return { error: "turnCap" };
-  const dailySpeechCharCap = whole(draft.dailySpeechCharCap, AI_SPEECH_CHAR_CAP_MAX); if (dailySpeechCharCap === null) return { error: "speechCap" };
-  const parsed = aiSettingsSchema.safeParse({ providers: draft.providers.map((item) => ({ ...item, model: item.model.trim() })), dailyTurnCap, dailySpeechCharCap });
-  return parsed.success ? { settings: parsed.data } : { error: "generic" };
-}
-
-function AiSettingsForm() {
-  const { t } = useTranslation();
-  const queryClient = useQueryClient();
-  const query = useQuery(aiSettingsQuery());
-  const [draft, setDraft] = useState<SettingsDraft | null>(null);
-  const [problem, setProblem] = useState<string | null>(null);
-  useEffect(() => { if (query.data) setDraft(draftOf(query.data)); }, [query.data]);
-  const save = useMutation({
-    mutationFn: (settings: AiSettings) => apiRequest("/api/admin/ai-settings", aiSettingsSchema, { method: "PUT", body: JSON.stringify(settings) }),
-    onSuccess: (saved) => { queryClient.setQueryData(aiSettingsQuery().queryKey, saved); },
-  });
-
-  const section = (body: ReactNode) => <Section title={t("analytics.settings.title")} description={t("analytics.settings.description")}>{body}</Section>;
-  if (!draft) return section(query.isError ? <SectionState query={query} /> : <LoadingState label={t("analytics.settings.loading")} />);
-
-  const update = (next: SettingsDraft) => { setDraft(next); setProblem(null); save.reset(); };
-  const updateProvider = (index: number, change: Partial<AiProviderSetting>) =>
-    update({ ...draft, providers: draft.providers.map((item, current) => current === index ? { ...item, ...change } : item) });
-  const move = (index: number, offset: -1 | 1) => {
-    const providers = [...draft.providers];
-    const [item] = providers.splice(index, 1);
-    providers.splice(index + offset, 0, item!);
-    update({ ...draft, providers });
-  };
-  const submit = (event: FormEvent) => {
-    event.preventDefault();
-    const checked = checkAiSettingsDraft(draft);
-    if ("error" in checked) { setProblem(checked.error); return; }
-    save.mutate(checked.settings);
-  };
-  const apiProblem = save.error ? (save.error instanceof ApiError && ["AI_SETTINGS_INVALID", "SUPERUSER_REQUIRED"].includes(save.error.code) ? save.error.code : "generic") : null;
-  const message = problem ?? apiProblem;
-
-  return section(<form className={styles.form} onSubmit={submit} noValidate>
-    <fieldset className={styles.fieldset}>
-      <legend className={styles.tableTitle}>{t("analytics.settings.order")}</legend>
-      <p className={styles.muted}>{t("analytics.settings.modelHelp")}</p>
-      <ol className={styles.providers}>
-        {draft.providers.map((item, index) => {
-          const provider = t(`analytics.providers.${item.provider}`);
-          return <li key={item.provider} className={styles.provider}>
-            <span className={styles.position}>{index + 1}</span>
-            <strong className={styles.providerName}>{provider}</strong>
-            <CheckboxField label={t("analytics.settings.enabled", { provider })} checked={item.enabled} onChange={(event) => updateProvider(index, { enabled: event.currentTarget.checked })} />
-            <TextField className={styles.modelField} label={t("analytics.settings.model", { provider })} value={item.model} maxLength={200}
-              onChange={(event) => updateProvider(index, { model: event.currentTarget.value })} />
-            <span className={styles.moves}>
-              <IconButton label={t("analytics.settings.moveUp", { provider })} disabled={index === 0} onClick={() => move(index, -1)}><ArrowUp size={16} aria-hidden="true" /></IconButton>
-              <IconButton label={t("analytics.settings.moveDown", { provider })} disabled={index === draft.providers.length - 1} onClick={() => move(index, 1)}><ArrowDown size={16} aria-hidden="true" /></IconButton>
-            </span>
-          </li>;
-        })}
-      </ol>
-    </fieldset>
-    <div className={styles.caps}>
-      <TextField label={t("analytics.settings.turnCap")} description={t("analytics.settings.turnCapHelp")} inputMode="numeric" value={draft.dailyTurnCap}
-        onChange={(event) => update({ ...draft, dailyTurnCap: event.currentTarget.value })} />
-      <TextField label={t("analytics.settings.speechCap")} description={t("analytics.settings.speechCapHelp")} inputMode="numeric" value={draft.dailySpeechCharCap}
-        onChange={(event) => update({ ...draft, dailySpeechCharCap: event.currentTarget.value })} />
-    </div>
-    <div className={styles.actions}>
-      <Button type="submit" loading={save.isPending}>{t("analytics.settings.save")}</Button>
-      {message && <p className={styles.error} role="alert">{t(`analytics.settings.errors.${message}`)}</p>}
-      {save.isSuccess && <p className={styles.success}>{t("analytics.settings.saved")}</p>}
-    </div>
-  </form>);
-}
-
 export function AdminAnalyticsPage({ groupId, days, onDays }: { groupId: string; days: AdminAnalyticsRange; onDays: (days: AdminAnalyticsRange) => void }) {
   const { t } = useTranslation();
   const session = useQuery(sessionQueryOptions());
@@ -282,7 +193,8 @@ export function AdminAnalyticsPage({ groupId, days, onDays }: { groupId: string;
         <AiSection days={days} />
         <SpeechSection days={days} />
         <TimeSection days={days} />
-        <AiSettingsForm />
+        <Surface className={styles.section}><SectionHeader title={t("aiAdmin.linkTitle")} description={t("aiAdmin.linkBody")} />
+          <Link className={styles.link} to="/admin/ai">{t("aiAdmin.link")}</Link></Surface>
       </> : <ErrorState title={t("analytics.unavailableTitle")}>{t("analytics.unavailableBody")}</ErrorState>}
     </div>
   </GroupFrame>;

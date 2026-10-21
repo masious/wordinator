@@ -7,7 +7,7 @@ import type { ActivityDescriptor, ActivityType } from "@wordinator/contracts/les
 import { Drawer } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { type FormEvent, lazy, type RefObject, Suspense, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ArrowLeft, ArrowRight, BookA, Check, ChevronRight, ListTree, PencilLine } from "lucide-react";
@@ -30,7 +30,7 @@ import styles from "./CourseLessons.module.css";
 import { LessonReadingProgress, type ReadingTracking, saveLessonPosition, useResumeScroll } from "./LessonReadingProgress";
 import { typicalMinutes, useReadingTime } from "./LessonTime";
 import { CategoryBadge, entryStates, LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN, stickyInset, useCurrentEntry, type LessonIndexEntry } from "./LessonIndex";
-import { LessonBox, LessonBoxActions, type LessonBoxLesson } from "./LessonBox";
+import { LessonBox, LessonBoxActions, type LessonActivitySuggestion, type LessonBoxLesson } from "./LessonBox";
 import { LessonWords, useVisibleWords, useWordsCollapsed, type LessonWordsPlacement } from "./LessonWords";
 import { practiceFromBlock, PracticeSummary } from "./PracticeBlock";
 import { PracticeStepper } from "./PracticeStepper";
@@ -99,6 +99,25 @@ function useGateHeight(reading: RefObject<HTMLElement | null>, document: LessonD
   return height;
 }
 
+// A return from an activity lands on the section it came from (docs/lesson-activities.md): the block the URL's hash names goes just
+// under the sticky inset, as the resume scroll places a step, with an instant jump under reduced motion. It happens once per hash,
+// never behind the start gate, and a block that is no longer on the page leaves the lesson at its normal place.
+function useHashScroll({ hash, reading, inset, gated }: { hash: string; reading: RefObject<HTMLElement | null>; inset: () => number; gated: boolean }) {
+  const done = useRef<string | null>(null);
+  const insetRef = useRef(inset); insetRef.current = inset;
+  useEffect(() => {
+    if (!hash || gated || done.current === hash) return;
+    const frame = requestAnimationFrame(() => {
+      done.current = hash;
+      const target = reading.current?.querySelector<HTMLElement>(`[data-block-id="${CSS.escape(hash)}"]`);
+      if (!target) return;
+      const still = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+      window.scrollTo({ top: Math.max(0, target.getBoundingClientRect().top + window.scrollY - insetRef.current()), behavior: still ? "auto" : "smooth" });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [hash, gated, reading]);
+}
+
 function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" | "changed"> }) {
   const { t } = useTranslation();
   return <>
@@ -125,19 +144,26 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const document = playableDocument(lesson);
   const activityDescriptorsQuery = useQuery({ ...lessonActivitiesQueryOptions(scope.groupId, scope.courseId, lesson.id), enabled: Boolean(lesson.published && document && !gate && !archived) });
   const allActivityDescriptors = activityDescriptorsQuery.data?.descriptors ?? [];
+  // The viewer's completed activities (current versions only), keyed as `sourceId:type`, mark their suggestions Done.
+  const doneActivities = new Set((activityDescriptorsQuery.data?.completed ?? []).map((entry) => `${entry.sourceId}:${entry.type}`));
   // Draft previews show no AI practices; they are tagged to the published document only.
   const slots = useAiPracticeSlots(aiPractices?.scope ?? null, lesson.document, aiPractices?.data);
   const steps = useMemo(() => lessonSteps(lesson), [lesson]);
   const entries = useMemo(() => document ? lessonIndexEntries(document) : [], [document]);
   const reading = useRef<HTMLDivElement>(null); const side = useRef<HTMLDivElement>(null);
   const activeActivitySection = useCurrentActivitySection(allActivityDescriptors, reading, side);
-  const activitySuggestions: { descriptor: ActivityDescriptor; type: ActivityType }[] = activeActivitySection ? [
-    ...activeActivitySection.activityTypes.map((type) => ({ descriptor: activeActivitySection, type })),
+  const suggestion = (descriptor: ActivityDescriptor, type: ActivityType): LessonActivitySuggestion => ({ descriptor, type, done: doneActivities.has(`${descriptor.sourceId}:${type}`) });
+  const activitySuggestions: LessonActivitySuggestion[] = activeActivitySection ? [
+    ...activeActivitySection.activityTypes.map((type) => suggestion(activeActivitySection, type)),
     ...allActivityDescriptors.filter((entry) => entry.sourceKind === "dialogue" && entry.returnHeadingId === activeActivitySection.returnHeadingId)
-      .flatMap((entry) => entry.activityTypes.map((type) => ({ descriptor: entry, type }))),
+      .flatMap((entry) => entry.activityTypes.map((type) => suggestion(entry, type))),
   ] : [];
   const active = useVisibleWords(reading, side, steps);
-  useResumeScroll({ steps, reading, position: resume, inset: () => stickyInset(side.current) });
+  // The URL's hash, set when an activity returns to its section, wins over the saved step for that load.
+  const hash = useRouterState({ select: (state) => state.location.hash });
+  const inset = () => stickyInset(side.current);
+  useResumeScroll({ steps, reading, position: resume, inset, anchor: hash || undefined });
+  useHashScroll({ hash, reading, inset, gated: Boolean(gate) });
   // Only published lessons record time; draft previews never do.
   useReadingTime({ reading, document: lesson.document, enabled: lesson.document !== null && !gate, started, groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id });
   const [wordsCollapsed, toggleWords] = useWordsCollapsed();
@@ -181,9 +207,12 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   // Where the vocabulary panel goes: the right rail on wide screens, under the text below 62em (or outside the frame), a sheet on phones.
   const placement = !hasWords ? null : phone ? "sheet" : !inline && rail.reference ? "rail" : "under";
   const docked = placement === "rail";
+  const actions = (compact: boolean) => <LessonBoxActions lesson={box} compact={compact} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} suggestions={activitySuggestions} />;
   const words = (props: { placement: LessonWordsPlacement; collapsible?: boolean }) =>
     <LessonWords steps={steps} active={active} groupId={scope.groupId} collapsed={wordsCollapsed} onToggle={toggleWords}
-      footer={railDrawer ? undefined : (compact) => <LessonBoxActions lesson={box} compact={compact} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} suggestions={activitySuggestions} />} {...props} />;
+      footer={railDrawer ? undefined : actions} {...props} />;
+  // Without a New words panel the actions it would carry stand alone in the same place: the right rail, or under the text.
+  const actionsAlone = !hasWords && !railDrawer && !rail.actions ?(!inline && rail.reference ? "rail" : "under") : null;
   return <LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={styles.reader} data-action-bar={phone || undefined}>
     {!gate && <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} onPercent={setPercent} onReached={setReachedStep} />}
     <div ref={reading} className={gate ? `${styles.body} ${styles.gated}` : styles.body} style={gate && gateHeight !== null ? { maxBlockSize: gateHeight } : undefined}>
@@ -204,6 +233,8 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
     </div>}
     {docked && rail.reference && createPortal(<div ref={side} className={styles.side}>{words({ placement: "rail", collapsible: !roomy })}</div>, rail.reference)}
     {placement === "under" && <div ref={side} className={styles.under}>{words({ placement: "under" })}</div>}
+    {actionsAlone === "rail" && rail.reference && createPortal(<div ref={side} className={styles.side}><div className={styles.actionsAlone}>{actions(false)}</div></div>, rail.reference)}
+    {actionsAlone === "under" && <div ref={side} className={styles.under}><div className={styles.actionsAlone}>{actions(false)}</div></div>}
     {indexed.length > 0 && rail.index && createPortal(<LessonIndex entries={indexed} current={current} states={states} reading={reading} side={side} onJump={rail.closeRail} />, rail.index)}
     {lessonBox}
     {phone && createPortal(<nav className={styles.actionBar} aria-label={t("courses.lessons.actionBar")}>

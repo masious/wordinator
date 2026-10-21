@@ -1,7 +1,8 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { lessonQueryOptions, courseQueryOptions, courseRefQueryOptions, sessionQueryOptions } from "../api";
 import { lessonActivityTypeSchema } from "@wordinator/contracts/lesson-activities";
+import { useTranslation } from "react-i18next";
+import { lessonQueryOptions, courseQueryOptions, courseRefQueryOptions, sessionQueryOptions } from "../api";
 import { requireLibrary } from "../libraryRoute";
 import { LessonActivityPage } from "../organisms/LessonActivities/LessonActivityPage";
 import { LoadingState } from "../ui";
@@ -22,11 +23,15 @@ export const Route = createFileRoute("/courses_/$courseSlug_/lessons/$lessonSlug
 });
 
 function LessonActivityRoute() {
+  const { t } = useTranslation();
   const { courseId, lessonId } = Route.useLoaderData(); const { groupId } = Route.useRouteContext(); const { courseSlug, lessonSlug, sourceId, activityType } = Route.useParams();
+  // An unknown type is not a fallback activity: the page renders its unavailable state with the return link.
   const type = lessonActivityTypeSchema.safeParse(activityType);
   const session = useQuery(sessionQueryOptions()); const course = useQuery(courseQueryOptions(groupId, courseId)); const lesson = useQuery(lessonQueryOptions(groupId, courseId, lessonId));
-  if (session.isPending || course.isPending || lesson.isPending) return <LoadingState label="Opening lesson activity" />;
+  if (session.isPending || course.isPending || lesson.isPending) return <LoadingState label={t("lessonActivities.opening")} />;
+  const language = session.data?.status === "signedIn" ? session.data.groups.find((group) => group.id === groupId)?.language : undefined;
   if (session.data?.status !== "signedIn" || course.isError || lesson.isError) return null;
-  return <LessonActivityPage groupId={groupId} courseId={courseId} courseSlug={courseSlug} lessonId={lessonId} lessonSlug={lessonSlug}
-    lessonTitle={lesson.data.lesson.title} accountId={session.data.user.id} type={type.success ? type.data : "story_summary"} sourceId={sourceId} archived={course.data.course.status === "archived"} />;
+  // Keyed by source and type, so a different activity never inherits the open page's run or drafts.
+  return <LessonActivityPage key={`${sourceId}/${activityType}`} groupId={groupId} courseId={courseId} courseSlug={courseSlug} lessonId={lessonId} lessonSlug={lessonSlug}
+    lessonTitle={lesson.data.lesson.title} language={language} accountId={session.data.user.id} type={type.success ? type.data : null} sourceId={sourceId} archived={course.data.course.status === "archived"} />;
 }

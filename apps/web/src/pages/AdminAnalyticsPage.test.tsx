@@ -1,18 +1,16 @@
 import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createMemoryHistory, createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
-import { DEFAULT_AI_SETTINGS } from "@wordinator/contracts/ai";
 import type { AdminAnalyticsRange } from "@wordinator/contracts/admin";
 import { cleanup, fireEvent, render, screen, waitFor, within } from "@testing-library/react";
 import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../i18n";
-import { AdminAnalyticsPage, checkAiSettingsDraft } from "./AdminAnalyticsPage";
+import { AdminAnalyticsPage } from "./AdminAnalyticsPage";
 
 const groupId = "20000000-0000-4000-8000-000000000001";
 const userId = "10000000-0000-4000-8000-000000000001";
 let superuser = true;
-let saveStatus = 200;
 
 const session = () => ({
   status: "signedIn",
@@ -59,7 +57,6 @@ function renderPage() {
 
 beforeEach(() => {
   superuser = true;
-  saveStatus = 200;
   vi.stubGlobal("fetch", vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
     const path = String(input);
     if (path === "/api/session") return json(session());
@@ -68,12 +65,8 @@ beforeEach(() => {
       const count = Number(analytics[2]);
       return json(analytics[1] === "learning" ? learning(count) : analytics[1] === "ai" ? ai(count) : speech(count));
     }
-    if (path === "/api/admin/ai-settings" && init?.method === "PUT") {
-      return saveStatus === 200 ? json(JSON.parse(String(init.body))) : json({ error: { code: "AI_SETTINGS_INVALID", message: "Invalid." } }, saveStatus);
-    }
     const timed = /^\/api\/admin\/analytics\/time\?days=(\d+)$/.exec(path);
     if (timed) return json(time(Number(timed[1])));
-    if (path === "/api/admin/ai-settings") return json(DEFAULT_AI_SETTINGS);
     return json({ ok: true });
   }));
 });
@@ -86,7 +79,7 @@ describe("Analytics page", () => {
   it("shows the Learning, AI, and Speech tables and the AI settings for the superuser", async () => {
     renderPage();
     expect(await screen.findByRole("heading", { name: "Analytics" })).toBeVisible();
-    for (const title of ["Learning", "AI", "Speech", "AI settings"]) expect(screen.getByRole("heading", { name: title })).toBeVisible();
+    for (const title of ["Learning", "AI", "Speech"]) expect(screen.getByRole("heading", { name: title })).toBeVisible();
     // Figures are formatted counts and costs; the newest day comes first.
     const learningTable = (await screen.findAllByRole("table"))[0]!;
     expect(within(learningTable).getAllByRole("row")[1]).toHaveTextContent("2026-10-16");
@@ -135,54 +128,11 @@ describe("Analytics page", () => {
   });
 });
 
-describe("AI settings form", () => {
-  it("reorders providers, turns one off, changes a model and the caps, and saves the whole value", async () => {
+describe("AI providers link", () => {
+  it("links to the AI providers and models page and loads no provider settings here", async () => {
     renderPage();
-    const enabled = await screen.findByRole("checkbox", { name: "OpenRouter on" });
-    fireEvent.click(enabled);
-    fireEvent.click(screen.getByRole("button", { name: "Move Azure down" }));
-    fireEvent.change(screen.getByLabelText("Azure model"), { target: { value: "gpt-4.1-nano" } });
-    fireEvent.change(screen.getByLabelText("Daily turn cap per account"), { target: { value: "12" } });
-    fireEvent.click(screen.getByRole("button", { name: "Save AI settings" }));
-    expect(await screen.findByText("Saved.")).toBeVisible();
-    const put = vi.mocked(fetch).mock.calls.find(([input, init]) => String(input) === "/api/admin/ai-settings" && init?.method === "PUT")!;
-    expect(JSON.parse(String(put[1]!.body))).toEqual({
-      providers: [
-        { provider: "openrouter", enabled: false, model: "openai/gpt-oss-120b:free" },
-        { provider: "azure", enabled: true, model: "gpt-4.1-nano" },
-        { provider: "workers_ai", enabled: true, model: "@cf/openai/gpt-oss-120b" },
-      ],
-      dailyTurnCap: 12,
-      dailySpeechCharCap: 5000,
-    });
-    expect(screen.getByRole("button", { name: "Move OpenRouter up" })).toBeDisabled();
-  });
-
-  it("refuses to save with every provider off or a cap out of range", async () => {
-    renderPage();
-    for (const provider of ["OpenRouter", "Workers AI", "Azure"]) fireEvent.click(await screen.findByRole("checkbox", { name: `${provider} on` }));
-    fireEvent.click(screen.getByRole("button", { name: "Save AI settings" }));
-    expect(await screen.findByRole("alert")).toHaveTextContent("Turn on at least one provider.");
-    fireEvent.click(screen.getByRole("checkbox", { name: "Azure on" }));
-    fireEvent.change(screen.getByLabelText("Daily speech characters per account"), { target: { value: "100001" } });
-    fireEvent.click(screen.getByRole("button", { name: "Save AI settings" }));
-    expect(await screen.findByRole("alert")).toHaveTextContent("The speech cap must be a whole number from 0 to 100,000.");
-    expect(vi.mocked(fetch).mock.calls.some(([, init]) => init?.method === "PUT")).toBe(false);
-  });
-
-  it("shows the API's refusal", async () => {
-    saveStatus = 400;
-    renderPage();
-    fireEvent.click(await screen.findByRole("button", { name: "Save AI settings" }));
-    expect(await screen.findByRole("alert")).toHaveTextContent("The settings were refused.");
-  });
-
-  it("checks drafts before saving", () => {
-    const draft = { providers: DEFAULT_AI_SETTINGS.providers.map((item) => ({ ...item })), dailyTurnCap: "40", dailySpeechCharCap: "5000" };
-    expect(checkAiSettingsDraft(draft)).toEqual({ settings: DEFAULT_AI_SETTINGS });
-    expect(checkAiSettingsDraft({ ...draft, dailyTurnCap: "501" })).toEqual({ error: "turnCap" });
-    expect(checkAiSettingsDraft({ ...draft, dailyTurnCap: "1.5" })).toEqual({ error: "turnCap" });
-    expect(checkAiSettingsDraft({ ...draft, dailySpeechCharCap: "" })).toEqual({ error: "speechCap" });
-    expect(checkAiSettingsDraft({ ...draft, providers: draft.providers.map((item) => ({ ...item, model: "has space" })) })).toEqual({ error: "model" });
+    expect(await screen.findByRole("link", { name: "Open AI providers and models" })).toHaveAttribute("href", "/admin/ai");
+    expect(screen.queryByRole("heading", { name: "AI settings" })).not.toBeInTheDocument();
+    expect(fetched().some((path) => path.startsWith("/api/admin/ai-"))).toBe(false);
   });
 });

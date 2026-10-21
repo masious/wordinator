@@ -92,7 +92,75 @@ function practiceSetScript(messages: Message[]): Reply {
   return { text: `You answered ${answered} of ${results.length}.` };
 }
 
+// Lesson activities (apps/api/src/lessonActivities/generate.ts) ask the same provider for one strict JSON output per activity, and
+// for English cues of a role-play dialogue. The stub answers each with fixed content in the shape the generator reads, so generation
+// is deterministic.
+const ACTIVITY_SYSTEM_MARK = "language-learning activity data";
+const ROLEPLAY_CUE_MARK = "Create English translations and cues for one original dialogue";
+// The model's share of an activity (the generator assigns every ID and shuffles word order itself): choices give three option texts
+// and the index of the correct one; word order gives the sentence's tokens in their correct order.
+type ModelChoice = { prompt: string; options: [string, string, string]; correctIndex: number; explanation: string };
+const choice = (prompt: string, options: [string, string, string], correctIndex: number, explanation: string): ModelChoice => ({ prompt, options, correctIndex, explanation });
+
+// The tricky set: the first question is answered "het", so the browser tests can check it and move on; the second is left open for
+// the reload test. The mixed set adds two more choices after the same four.
+const trickyQuestions = () => [
+  { kind: "choice", ...choice("Which article goes with “boek”?", ["de", "het", "een"], 1, "Boek is a het-word, so it takes het.") },
+  { kind: "fill_in", prompt: "Ik ___ naar school.", referenceAnswers: ["ga"], explanation: "The verb after ik is ga." },
+  { kind: "word_order", prompt: "Put the words in order: “I go to school.”", tokens: ["Ik", "ga", "naar", "school"], explanation: "The verb stands second, the place last." },
+  { kind: "choice", ...choice("Which is the plural of “boek”?", ["boeken", "boekjes", "boek"], 0, "The plural adds -en.") },
+];
+
+// Dutch lines of the stub's dialogue and their English translations and cues; any other line is spoken back as it is.
+const DIALOGUE_LINES: Record<string, { english: string; cue: string }> = {
+  "Hallo! Ik ben Anna.": { english: "Hello! I am Anna.", cue: "Anna greets you and introduces herself." },
+  "Hoi, ik ben Sofia.": { english: "Hi, I am Sofia.", cue: "Introduce yourself as Sofia." },
+  "Leuk je te ontmoeten.": { english: "Nice to meet you.", cue: "Anna says it is nice to meet you." },
+  "Ook leuk, dank je.": { english: "Nice too, thank you.", cue: "Reply that it is nice to meet her too." },
+  "Tot ziens!": { english: "Goodbye!", cue: "Anna says goodbye." },
+};
+
+// The model's JSON for each non-roleplay type, in the shape the generator's model schemas read.
+function activityOutput(type: string): Record<string, unknown> | null {
+  if (type === "story_summary") return { englishSummary: "Sofia orders a coffee in a café and asks a stranger the way to the station.", dutchRecap: "Sofia bestelt koffie in een café en vraagt de weg naar het station." };
+  if (type === "story_comprehension") return { questions: [
+    choice("Where does Sofia order a coffee?", ["At a café", "At the station", "At school"], 0, "The scene opens in a café."),
+    choice("What does Sofia ask for?", ["Directions", "Money", "A menu"], 0, "She asks the way to the station."),
+    choice("Who does Sofia talk to?", ["A waiter", "A stranger", "Her teacher"], 1, "She talks to a stranger on the street."),
+    choice("How does the conversation end?", ["Politely", "Angrily", "Abruptly"], 0, "They say goodbye politely."),
+  ] };
+  if (type === "grammar_explanation") return {
+    paragraphs: ["Use de with most nouns and het with the neuter ones.", "Learn each noun with its article, because the article cannot be guessed reliably."],
+    examples: [{ dutch: "de fiets", english: "the bicycle" }, { dutch: "het huis", english: "the house" }],
+  };
+  if (type === "quick_grammar") return { question: choice("Which article goes with “huis”?", ["de", "het", "die"], 1, "Huis is a het-word: het huis.") };
+  if (type === "tricky_grammar") return { questions: trickyQuestions() };
+  if (type === "mixed_practice") return { questions: [
+    ...trickyQuestions(),
+    { kind: "choice", ...choice("Which article goes with “fiets”?", ["de", "het", "een"], 0, "Fiets is a de-word.") },
+    { kind: "choice", ...choice("Which article goes with “water”?", ["de", "het", "een"], 1, "Water is a het-word.") },
+  ] };
+  return null;
+}
+
+// The reply for an activity generation or a role-play cue request, or null for any other conversation.
+function activityReply(messages: Message[]): Reply | null {
+  const system = messages.find((message) => message.role === "system")?.content ?? "";
+  if (!system.includes(ACTIVITY_SYSTEM_MARK)) return null;
+  const user = messages.find((message) => message.role === "user")?.content ?? "";
+  if (user.includes(ROLEPLAY_CUE_MARK)) {
+    const turns = JSON.parse(/Source turns \(JSON, in order\): (\[.*\])/.exec(user)?.[1] ?? "[]") as Array<{ text: string }>;
+    const cues = turns.map((turn, index) => ({ index, englishText: DIALOGUE_LINES[turn.text]?.english ?? turn.text, cue: DIALOGUE_LINES[turn.text]?.cue ?? "Say this line." }));
+    return { text: JSON.stringify({ cues }) };
+  }
+  const type = /Activity type: ([a-z_]+)\./.exec(user)?.[1] ?? "";
+  const output = activityOutput(type);
+  return output ? { text: JSON.stringify(output) } : null;
+}
+
 export function stubReply(messages: Message[]): Reply {
+  const activity = activityReply(messages);
+  if (activity) return activity;
   const first = messages.find((message) => message.role === "user")?.content ?? "";
   if (first.includes(NEXT_LESSON_REQUEST)) return nextLessonScript(messages);
   if (first.includes(SAVE_PRACTICE_REQUEST)) return savePracticeScript(messages);

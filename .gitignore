@@ -12,3 +12,6 @@ apps/api/wrangler.e2e.json
 storybook-static/
 .env
 .env.*
+
+# TanStack Router dev cache
+apps/web/.tanstack/

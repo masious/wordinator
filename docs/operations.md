@@ -186,7 +186,7 @@ Automated backup and CI/CD are future work.
 
 ## Logging and incidents
 
-Use structured Worker logs for request ID, route, status, timing, safe error code, and opaque actor/group IDs when useful. Exclude credentials, cookies, invitation tokens, temporary passwords, and authored bodies. For this initial project, operational recovery may use direct Cloudflare/D1 access because there is no global admin UI; the C14 analytics page is read-only. The tutor logs `ai.request` lines (provider, model, status, tokens, duration) and `ai.fallback` when it moves to the next provider, and never prompts, answers, or tool payloads; repeated `ai.fallback` or `AI_UNAVAILABLE` lines mean a provider key or model needs attention.
+Use structured Worker logs for request ID, route, status, timing, safe error code, and opaque actor/group IDs when useful. Exclude credentials, cookies, invitation tokens, temporary passwords, and authored bodies. For this initial project, operational recovery may use direct Cloudflare/D1 access because there is no global admin UI; the C14 analytics page is read-only. The tutor logs `ai.request` lines (provider, model, status, tokens, duration) and `ai.fallback` when it moves to the next provider, and `ai.provider_test` for each connection test on the [AI providers and models page](settings-and-administration.md#ai-providers-and-models) (provider, model, status, ok, and latency), and never prompts, answers, or tool payloads; repeated `ai.fallback` or `AI_UNAVAILABLE` lines mean a provider key or model needs attention.
 
 **Failed tutor tool calls.** Every failed tool call writes one `ai.tool_failed` event, at warning level (error level when the tool itself threw). Workers Logs indexes every top-level JSON field, so each field is a tag to filter on in the dashboard's Observability query builder (for example `event = ai.tool_failed AND category = model`, grouped by `tool` or `errorCode`):
 
@@ -207,4 +207,11 @@ A tool that throws no longer ends the turn: the model receives `TOOL_FAILED` and
 
 ## Lesson activity operations
 
-Approved 2026-10-21; implementation in progress. [The delivery plan](../LESSON_ACTIVITIES_PLAN.html) records migration identifiers and actual checks. Reuse existing model/speech secrets and provider fallback; no new production service is assumed. Generation leases recover abandoned jobs and source/version keys invalidate relevant edits. Unreferenced stale cache versions may be purged; keep versions with private runs. Always select local versus production D1 explicitly. Deployment remains a separate action; apply compatible committed migrations/API before the consuming web release.
+Approved 2026-10-21; implemented in the working tree, not deployed. [The delivery plan](../LESSON_ACTIVITIES_PLAN.html) records the checks run. Reuse existing model/speech secrets and provider fallback; no new production service is assumed. Generation leases recover abandoned jobs, and source/version keys invalidate relevant edits. Stale cache versions are not purged yet (see [lesson activities](lesson-activities.md#shared-cached-content)).
+
+Migrations `0036_lesson_activities.sql` and `0037_speech_usage_lesson_activity.sql` are committed and not applied to any D1 database by this work. Each is a table rebuild (`learning_time`, and `speech_usage` in 0037), so take the [backup](#backup) before a production migration. The order is:
+
+1. Local: `pnpm db:migrate:local`, then the local checks.
+2. Production, when requested: `pnpm db:migrate:remote`, which carries its own `--remote` flag and applies every pending migration. Then `pnpm --filter @wordinator/api deploy`, and only then `pnpm --filter @wordinator/web deploy`. The web bundle calls the activity routes, so the API must serve them first.
+
+Always select local versus production D1 explicitly. Deployment remains a separate action.

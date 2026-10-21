@@ -78,6 +78,8 @@ export function AccountSettingsPage({ groupId }: { groupId: string }) {
           <Link className={styles.settingsLink} to="/notifications"><Bell size={16} aria-hidden="true" />{t("settings.openNotices")}</Link></Surface>
         {session.data.user.isSuperuser === true && <Surface className={styles.settingsPanel} tone="inset"><SectionHeader title={t("analytics.settingsLinkTitle")} description={t("analytics.settingsLinkBody")} />
           <Link className={styles.settingsLink} to="/admin/analytics">{t("analytics.settingsLink")}</Link></Surface>}
+        {session.data.user.isSuperuser === true && <Surface className={styles.settingsPanel} tone="inset"><SectionHeader title={t("aiAdmin.linkTitle")} description={t("aiAdmin.linkBody")} />
+          <Link className={styles.settingsLink} to="/admin/ai">{t("aiAdmin.link")}</Link></Surface>}
         <Surface className={styles.settingsPanel}><ThemePreferenceControl /></Surface>
         <Surface className={styles.settingsPanel}><RecognizerPreferenceControl /></Surface>
         <Surface className={styles.settingsPanel}><TutorSettings /></Surface>

@@ -336,6 +336,30 @@ export const resources = {
         leave: "Leave group",
         manage: "Manage members"
       },
+      lessonActivities: {
+        backToSection: "Back to {{section}}", loadingSources: "Finding activities for this lesson", unavailable: "This activity is not available for this section.",
+        openFailed: "The activity could not be opened.", preparing: "Preparing your activity", checkAgain: "Check again", generationTimedOut: "This is taking longer than expected. Try again in a moment.", archivedUnsaved: "This archived lesson is open for read-only practice. Your answers will not be saved.",
+        finished: "Activity complete", finishedBody: "Your work stays private and does not change lesson completion.", backToLesson: "Back to lesson", progress: "Question {{current}} of {{total}}",
+        englishSummary: "Scene summary", dutchRecap: "Dutch recap", explanation: "The idea", done: "Done", answerLabel: "Your answer", correct: "Correct", tryAgain: "Here is the reference answer.", retry: "Try again", finish: "Finish", continue: "Continue", checkAnswer: "Check answer",
+        cueLanguage: "Cue language", english: "English", dutch: "Dutch", roleplayIntro: "You are {{speaker}} in the original dialogue.", startDialogue: "Start dialogue", yourTurn: "Your reply", holdToSpeak: "Hold to speak", send: "Send",
+        opening: "Opening activity", startAgain: "Start again", saveFailed: "Your progress could not be saved. Try again.", answerFailed: "Your answer could not be checked. Try again.",
+        wordOrderHint: "Tap the words in order to build the sentence.", wordOrderAnswer: "Your sentence", wordOrderEmpty: "Tap the words below, in order.", wordOrderRemove: "Remove {{word}}", wordOrderBank: "Words", reset: "Reset",
+        roleplay: {
+          cueHeading: "Your line as {{speaker}}", revealDutch: "Reveal Dutch", replay: "Replay", replayLine: "Replay the line from {{speaker}}",
+          preparingDialogue: "Preparing the dialogue audio…", playing: "Playing the dialogue…", yourTurn: "Your turn as {{speaker}}.", afterLast: "The dialogue continues",
+          holdHint: "Hold the button, or hold Space or Enter while it is focused, and speak. Release to stop. Nothing is sent until you press Send.",
+          listen: { preparing: "Starting the microphone…", listening: "Speak now…", quiet: "Can't hear anything yet. Is the right microphone on?", hearing: "Hearing you…", heardSoFar: "“{{interim}}…”", checking: "Working out what you said…" },
+          draftFromSpeech: "Draft from your speech. Check it, edit it if needed, then press Send.",
+          unavailable: "Speaking is not available on this device. Type your reply instead.",
+          blocked: "The microphone is blocked. Allow it in the browser, or type your reply.",
+          failed: "Speech recognition is not available right now. Type your reply instead.",
+          noSpeech: "No speech was heard. Hold to speak again, or type your reply.",
+          audioUnavailable: "Dialogue audio is unavailable right now. The text is shown, so you can carry on.",
+          different: "Different from Sofia's line", original: "Sofia's line: {{text}}", pronunciation: "Pronunciation of this line",
+          listenSofia: "Listen to Sofia"
+        },
+        types: { story_summary: "Story summary", story_comprehension: "Story comprehension", grammar_explanation: "Grammar explanation", quick_grammar: "Quick grammar question", tricky_grammar: "Tricky grammar practice", mixed_practice: "Mixed lesson practice", roleplay: "Dialogue role-play" }
+      },
       courses: {
         loading: "Opening the course library",
         loadingCourse: "Opening this course",
@@ -427,8 +451,6 @@ export const resources = {
           practiseWords: "Practise words",
           askAi: "Ask AI",
           askAiPrompt: "Let’s talk about lesson {{number}}, “{{lesson}}”, of the course “{{course}}”. Walk me through its grammar and its topics, then check that I understood them.",
-          morePractices: "Ask for more practices like this",
-          morePracticesPrompt: "Give me more practices like the ones in lesson {{number}}, “{{lesson}}”, of the course “{{course}}”, on the same topics.",
           fluency: "Fluency",
           wordsStrong: "Words remembered well",
           wordsCount: "{{strong}} of {{total}}",
@@ -443,7 +465,8 @@ export const resources = {
           underMinute: "Under a minute",
           typical_one: "Typically {{time}} · {{count}} learner",
           typical_other: "Typically {{time}} · {{count}} learners",
-          notStudied: "Your figures for this lesson show up once you study it."
+          notStudied: "Your figures for this lesson show up once you study it.",
+          activityDone: "Done"
         },
         lessons: {
           startReading: "Start reading this lesson",
@@ -507,14 +530,6 @@ export const resources = {
           deleteTitle: "Delete this lesson?",
           deleteConfirm: "Delete “{{title}}” with its content, images, and practice answers? This cannot be undone.",
           fields: { title: "Lesson title", goal: "Goal" }
-        },
-        lessonActivities: {
-          backToSection: "Back to {{section}}", loadingSources: "Finding activities for this lesson", unavailable: "This activity is not available for this section.",
-          openFailed: "The activity could not be opened.", preparing: "Preparing your activity", checkAgain: "Check again", archivedUnsaved: "This archived lesson is open for read-only practice. Your answers will not be saved.",
-          finished: "Activity complete", finishedBody: "Your work stays private and does not change lesson completion.", backToLesson: "Back to lesson", progress: "Question {{current}} of {{total}}",
-          englishSummary: "Scene summary", dutchRecap: "Dutch recap", explanation: "The idea", done: "Done", answerLabel: "Your answer", correct: "Correct", tryAgain: "Here is the reference answer.", retry: "Try again", finish: "Finish", continue: "Continue", checkAnswer: "Check answer",
-          cueLanguage: "Cue language", english: "English", dutch: "Dutch", roleplayIntro: "You are {{speaker}} in the original dialogue.", startDialogue: "Start dialogue", yourTurn: "Your reply", holdToSpeak: "Hold to speak", send: "Send", reference: "Reference: {{text}}",
-          types: { story_summary: "Story summary", story_comprehension: "Story comprehension", grammar_explanation: "Grammar explanation", quick_grammar: "Quick grammar question", tricky_grammar: "Tricky grammar practice", mixed_practice: "Mixed lesson practice", roleplay: "Dialogue role-play" }
         },
         lessonActions: {
           label: "Lesson {{number}}: {{title}}",
@@ -1171,7 +1186,7 @@ export const resources = {
       },
       analytics: {
         settingsLinkTitle: "Analytics",
-        settingsLinkBody: "Activity counts, AI and speech usage, and the AI settings. Only you see this as the superuser.",
+        settingsLinkBody: "Activity counts and AI, speech, and time usage. Only you see this as the superuser.",
         settingsLink: "Open analytics",
         eyebrow: "Superuser",
         title: "Analytics",
@@ -1203,11 +1218,26 @@ export const resources = {
         speech: { title: "Speech", description: "On-demand speech requests and characters, split into cache hits and Azure calls." },
         time: { title: "Time", description: "Minutes of learning time by category. Each learner's days are their own local days, under the chosen range." },
         providers: { openrouter: "OpenRouter", workers_ai: "Workers AI", azure: "Azure" },
+      },
+      aiAdmin: {
+        eyebrow: "Superuser",
+        title: "AI providers and models",
+        intro: "Choose the providers the tutor uses, in this order, and the model each one calls. A connection test sends one short request to that provider. Tests are not counted toward any cap.",
+        loading: "Opening AI providers",
+        unavailableTitle: "AI providers are not available",
+        unavailableBody: "This page is only for the superuser.",
+        back: "Back to analytics",
+        linkTitle: "AI providers and models",
+        linkBody: "Choose the providers and models the tutor uses, test each connection, and set the daily caps.",
+        link: "Open AI providers and models",
+        credentials: { checking: "Checking", configured: "Credentials set", missing: "Credentials missing", unknown: "Status unavailable" },
+        endpoint: "Endpoint {{host}}",
         settings: {
-          title: "AI settings",
+          title: "Providers and caps",
           description: "The tutor tries the providers that are on, in this order. Changes apply to the next turn.",
           order: "Provider order",
           enabled: "{{provider}} on",
+          switchLabel: "On",
           model: "{{provider}} model",
           modelHelp: "Only tool-calling models work. The ID's format is checked, not the model's abilities.",
           moveUp: "Move {{provider}} up",
@@ -1228,6 +1258,17 @@ export const resources = {
             SUPERUSER_REQUIRED: "Only the superuser can change these settings.",
             generic: "The settings could not be saved. Try again."
           }
+        },
+        test: {
+          button: "Test connection",
+          help: "Sends one short request to this provider with the model in this row. Not counted toward any cap.",
+          testing: "Testing {{provider}}",
+          connected: "Connected in {{latency}} ms (HTTP {{status}}).",
+          reply: "Connected in {{latency}} ms (HTTP {{status}}). Reply: {{message}}",
+          refused: "Not connected: HTTP {{status}} after {{latency}} ms. {{message}}",
+          noAnswer: "Not connected after {{latency}} ms. {{message}}",
+          invalidModel: "Enter a valid model ID before testing.",
+          error: "The test could not run. Try again."
         }
       },
       ui: {

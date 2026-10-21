@@ -81,7 +81,7 @@ export async function completeLesson(db: D1Database, target: LessonTarget, by: P
 
 /**
  * Starts a lesson over for one user, in one D1 batch: deletes their position, completion, practice progress for the lesson's
- * practices, practice attempts for the lesson (any source), learning time in it, bookmarks of its words, and every word review, word memory row, and
+ * practices, practice attempts for the lesson (any source), the learner's lesson activity runs (and their answers) for the lesson's activities, learning time in it, bookmarks of its words, and every word review, word memory row, and
  * pronunciation attempt that the lesson box counts for it (recorded from the lesson or for any of its terms, so a term shared with
  * another lesson starts over there too). Memory of other terms the lesson's reviews touched is rebuilt from the reviews that
  * remain. Writes a `lesson_reset` audit row. Shares and conversations are kept. The caller checks that the course is not
@@ -95,6 +95,7 @@ export async function resetLesson(db: D1Database, target: LessonTarget, by: Prog
     db.prepare("DELETE FROM course_lesson_completions WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND user_id = ?").bind(groupId, courseId, lessonId, userId),
     db.prepare("DELETE FROM course_practice_progress WHERE group_id = ? AND course_id = ? AND lesson_id = ? AND user_id = ?").bind(groupId, courseId, lessonId, userId),
     db.prepare("DELETE FROM practice_attempts WHERE user_id = ? AND course_id = ? AND lesson_id = ?").bind(userId, courseId, lessonId),
+    db.prepare("DELETE FROM lesson_activity_runs WHERE user_id = ? AND activity_id IN (SELECT id FROM lesson_activities WHERE lesson_id = ?)").bind(userId, lessonId),
     db.prepare(`DELETE FROM word_reviews WHERE user_id = ?1 AND (lesson_id = ?2 OR term_key IN (${LESSON_TERMS}))`).bind(userId, lessonId),
     ...memoryRebuild,
     db.prepare(`DELETE FROM word_memory WHERE user_id = ?1 AND term_key IN (${LESSON_TERMS})`).bind(userId, lessonId),

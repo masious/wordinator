@@ -1,101 +1,223 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { ArrowLeft, Mic, Send } from "lucide-react";
-import { z } from "zod";
-import { activityAnswerResponseSchema, activityRunPatchResponseSchema, type ActivityDescriptor, type ActivityType } from "@wordinator/contracts/lesson-activities";
-import { Button, ErrorState, LoadingState, ProgressMeter, Surface, TextAreaField } from "../../ui";
-import { apiRequest, lessonActivitiesQueryOptions, lessonActivityEndpoint, lessonActivityOpen, lessonActivityStatusQueryOptions } from "../../api";
+import { ArrowLeft } from "lucide-react";
+import {
+  activityRunPatchResponseSchema, lessonActivityFocus,
+  type ActivityDescriptor, type ActivityType, type LessonActivityRun, type LessonActivityViewPayload,
+} from "@wordinator/contracts/lesson-activities";
+import { ProgressMeter } from "../../molecules/ProgressMeter";
+import { Button, ErrorState, LoadingState, Surface, TextAreaField } from "../../ui";
+import {
+  ApiError, apiRequest, lessonActivitiesQueryOptions, lessonActivityEndpoint, lessonActivityOpen, lessonActivityStatusQueryOptions,
+  type LessonActivityOpenResponse,
+} from "../../api";
 import { useLearningClaim } from "../../learningTime";
+import { draftKey, readDraft, useAnswerAttempt, writeDraft, type AnswerInput } from "./activityAnswers";
+import { RoleplayActivity } from "./RoleplayActivity";
 import styles from "./LessonActivity.module.css";
 
-type Props = { groupId: string; courseId: string; courseSlug: string; lessonId: string; lessonSlug: string; lessonTitle: string; accountId: string; type: ActivityType; sourceId: string; archived: boolean };
-type ActivityReady = { status: "ready"; activity: { id: string; sourceLabel: string; payload: { type: ActivityType; [key: string]: unknown } }; run: { id: string; cursor: number; status: "active" | "completed"; cueMode: "english" | "dutch" }; ephemeral?: boolean };
-type OpenState = { status: "generating"; activityId: string; retryAfterMs: number } | ActivityReady;
-const nonce = () => crypto.randomUUID();
-const draftKey = (accountId: string, activityId: string, runId: string, itemId: string) => `wordinator:lesson-activity:v1:${accountId}:${activityId}:${runId}:${itemId}`;
-const lessonHref = (props: Props, descriptor?: ActivityDescriptor) => ({ to: "/courses/$courseSlug/lessons/$lessonSlug" as const, params: { courseSlug: props.courseSlug, lessonSlug: props.lessonSlug }, hash: descriptor?.returnHeadingId ?? undefined });
+export type LessonActivityPageProps = {
+  groupId: string; courseId: string; courseSlug: string; lessonId: string; lessonSlug: string; lessonTitle: string; accountId: string;
+  // The library language (`nl` or `de`), for the microphone of role-play.
+  language?: string | undefined;
+  // Null when the URL names no known activity type; the page then shows the unavailable state.
+  type: ActivityType | null; sourceId: string; archived: boolean;
+};
 
-export function LessonActivityPage(props: Props) {
-  const { t } = useTranslation(); const client = useQueryClient();
-  const descriptors = useQuery({ ...lessonActivitiesQueryOptions(props.groupId, props.courseId, props.lessonId), enabled: !props.archived });
-  const descriptor = descriptors.data?.descriptors.find((entry) => entry.sourceId === props.sourceId && entry.activityTypes.includes(props.type));
-  const [opened, setOpened] = useState<OpenState | null>(null); const [openError, setOpenError] = useState<Error | null>(null);
+type ReadyActivity = Extract<LessonActivityOpenResponse, { status: "ready" }>;
+type Payload = LessonActivityViewPayload;
+type Question = Extract<Payload, { type: "tricky_grammar" }>["questions"][number];
+type CueMode = LessonActivityRun["cueMode"];
+type RunAction = { action: "set_cue_mode"; cueMode: CueMode } | { action: "continue"; expectedCursor: number } | { action: "complete" } | { action: "restart" };
+
+// How long a generation may take before the page offers Retry instead of polling on (docs/lesson-activities.md#shared-cached-content).
+export const GENERATION_WAIT_MS = 60_000;
+
+// The return link: the canonical lesson URL and the section's heading (or block) anchor; the lesson top when there is none.
+const lessonTarget = (props: Pick<LessonActivityPageProps, "courseSlug" | "lessonSlug">, descriptor?: ActivityDescriptor) => ({
+  to: "/courses/$courseSlug/lessons/$lessonSlug" as const,
+  params: { courseSlug: props.courseSlug, lessonSlug: props.lessonSlug },
+  hash: descriptor?.returnHeadingId ?? descriptor?.returnBlockId ?? undefined,
+});
+
+export function LessonActivityPage(props: LessonActivityPageProps) {
+  const { t } = useTranslation();
+  const client = useQueryClient();
+  const navigate = useNavigate();
+  const descriptorsOptions = lessonActivitiesQueryOptions(props.groupId, props.courseId, props.lessonId);
+  const descriptors = useQuery(descriptorsOptions);
+  const type = props.type;
+  const descriptor = type ? descriptors.data?.descriptors.find((entry) => entry.sourceId === props.sourceId && entry.activityTypes.includes(type)) : undefined;
+  const fingerprint = descriptor?.fingerprint;
+
+  const [opened, setOpened] = useState<LessonActivityOpenResponse | null>(null);
+  const [openFailed, setOpenFailed] = useState(false);
+  const [generationTimedOut, setGenerationTimedOut] = useState(false);
   const open = async () => {
-    if (!descriptor) return;
-    setOpenError(null);
+    if (!descriptor || !type) return;
+    setOpenFailed(false); setGenerationTimedOut(false);
     try {
-      const response = await lessonActivityOpen(props.groupId, props.courseId, props.lessonId, { sourceId: props.sourceId, type: props.type, expectedFingerprint: descriptor.fingerprint });
-      setOpened(response);
-      if (response.status === "ready") await client.invalidateQueries({ queryKey: ["lesson-activity", props.groupId, props.courseId, props.lessonId, response.activity.id] });
-    } catch (error) { setOpenError(error instanceof Error ? error : new Error("Could not open activity")); }
+      setOpened(await lessonActivityOpen(props.groupId, props.courseId, props.lessonId, { sourceId: props.sourceId, type, expectedFingerprint: descriptor.fingerprint }));
+    } catch (error) {
+      // The section changed since the descriptors loaded: refresh them, which opens again with the new fingerprint.
+      if (error instanceof ApiError && error.code === "SOURCE_CHANGED") void client.invalidateQueries({ queryKey: descriptorsOptions.queryKey });
+      setOpenFailed(true);
+    }
   };
-  useEffect(() => { if (descriptor) void open(); }, [descriptor?.fingerprint]);
-  const pendingId = opened?.status === "generating" ? opened.activityId : "";
-  const status = useQuery({ ...lessonActivityStatusQueryOptions(props.groupId, props.courseId, props.lessonId, pendingId), enabled: Boolean(pendingId), refetchInterval: (query) => query.state.data?.status === "generating" ? Math.min(query.state.data.retryAfterMs, 4000) : false });
-  const ready = opened?.status === "ready" ? opened : status.data?.status === "ready" ? status.data as ActivityReady : null;
-  const [cursor, setCursor] = useState(0); const [answer, setAnswer] = useState(""); const [selected, setSelected] = useState(""); const [feedback, setFeedback] = useState<{ correct: boolean; reference: string | null; explanation: string | null } | null>(null);
-  const [language, setLanguage] = useState<"english" | "dutch">("english"); const [started, setStarted] = useState(false); const [done, setDone] = useState(false);
-  const [inputMode, setInputMode] = useState<"typed" | "spoken">("typed");
-  const claimFocus = props.type === "roleplay" ? "speaking" : props.type.startsWith("story_") ? "reading" : "grammar";
-  useLearningClaim(ready && !done && ready.run.status !== "completed" && !ready.ephemeral && ready.status === "ready" && opened?.status !== "generating"
-    ? { groupId: props.groupId, target: () => ({ activity: "lesson_activity", courseId: props.courseId, lessonId: props.lessonId, activityId: ready.activity.id, focus: claimFocus }) } : null);
-  const payload = ready?.activity.payload;
-  const questions = payload?.type === "story_comprehension" || payload?.type === "tricky_grammar" || payload?.type === "mixed_practice" ? payload.questions
-    : payload?.type === "quick_grammar" ? [payload.question] : [];
-  const roleTurns = payload?.type === "roleplay" ? payload.turns : [];
-  const learnerTurns = roleTurns.filter((turn) => turn.isLearner);
-  const activeQuestion = questions[cursor];
-  const activeTurn = learnerTurns[cursor];
-  const currentItemId = activeQuestion?.id ?? activeTurn?.id ?? (cursor === 0 ? "reading" : "");
+  useEffect(() => { void open(); }, [fingerprint]);
+  // A generation that runs past the wait stops polling and shows the timeout state; Retry opens the activity again.
   useEffect(() => {
-    if (!ready || !currentItemId) return;
-    const saved = window.localStorage.getItem(draftKey(props.accountId, ready.activity.id, ready.run.id, currentItemId));
-    setAnswer(saved ?? ""); setSelected("");
-  }, [ready?.activity.id, ready?.run.id, currentItemId, props.accountId]);
-  const saveDraft = (value: string) => { setAnswer(value); if (ready && currentItemId) window.localStorage.setItem(draftKey(props.accountId, ready.activity.id, ready.run.id, currentItemId), value); };
-  const updateRun = useMutation({ mutationFn: (input: unknown) => apiRequest(`${lessonActivityEndpoint(props.groupId, props.courseId, props.lessonId, ready!.activity.id)}/run`, activityRunPatchResponseSchema, { method: "PATCH", body: JSON.stringify({ runId: ready!.run.id, ...input }) }) });
-  const submit = useMutation({ mutationFn: (input: unknown) => apiRequest(`${lessonActivityEndpoint(props.groupId, props.courseId, props.lessonId, ready!.activity.id)}/answers`, activityAnswerResponseSchema, { method: "POST", body: JSON.stringify({ runId: ready!.run.id, itemId: currentItemId, answer: input, inputMode, idempotencyKey: nonce() }) }), onSuccess: (result) => {
-    setFeedback({ correct: result.correct, reference: result.reference, explanation: result.explanation });
-    window.localStorage.removeItem(draftKey(props.accountId, ready!.activity.id, ready!.run.id, currentItemId));
-  } });
-  const advance = async () => {
-    const next = cursor + 1; await updateRun.mutateAsync({ action: next >= (questions.length || learnerTurns.length) ? "complete" : "continue", expectedCursor: cursor });
-    if (next >= (questions.length || learnerTurns.length)) setDone(true); else { setCursor(next); setFeedback(null); setAnswer(""); setSelected(""); }
+    if (opened?.status !== "generating") return;
+    const timer = window.setTimeout(() => setGenerationTimedOut(true), GENERATION_WAIT_MS);
+    return () => window.clearTimeout(timer);
+  }, [opened]);
+
+  const pendingId = opened?.status === "generating" ? opened.activityId : "";
+  const status = useQuery({
+    ...lessonActivityStatusQueryOptions(props.groupId, props.courseId, props.lessonId, pendingId), enabled: Boolean(pendingId),
+    refetchInterval: (query) => query.state.data?.status === "generating" && !generationTimedOut ? Math.min(query.state.data.retryAfterMs, 4000) : false,
+  });
+  const statusReady = status.data?.status === "ready" ? status.data : null;
+  const ready: ReadyActivity | null = opened?.status === "ready" ? opened : statusReady;
+  const failed = openFailed || status.isError || status.data?.status === "failed";
+
+  // The server's run is authoritative when the activity loads (so a refresh resumes at run.cursor). Our own updates replace it
+  // with the run each successful PATCH returns.
+  const [runOverride, setRunOverride] = useState<{ runId: string; run: LessonActivityRun } | null>(null);
+  const run = ready ? (runOverride?.runId === ready.run.id ? runOverride.run : ready.run) : null;
+  const activityId = ready?.activity.id ?? "";
+  const endpoint = lessonActivityEndpoint(props.groupId, props.courseId, props.lessonId, activityId);
+  const payload = ready?.activity.payload;
+
+  const patchRun = useMutation({
+    mutationFn: (input: RunAction) => apiRequest(`${endpoint}/run`, activityRunPatchResponseSchema, { method: "PATCH", body: JSON.stringify(input) }),
+    onSuccess: ({ run: next }, input) => {
+      setRunOverride({ runId: next.id, run: next });
+      // Completing or restarting changes the Done marks on the lesson's suggestions, so the list reloads for the lesson page.
+      if (input.action === "complete" || input.action === "restart") void client.invalidateQueries({ queryKey: descriptorsOptions.queryKey });
+    },
+  });
+
+  useLearningClaim(ready && run && payload && !ready.ephemeral && !props.archived && run.status !== "completed"
+    ? { groupId: props.groupId, target: () => ({ activity: "lesson_activity", courseId: props.courseId, lessonId: props.lessonId, activityId: ready.activity.id, focus: lessonActivityFocus(payload.type) }) }
+    : null);
+
+  const items: Question[] = payload?.type === "story_comprehension" || payload?.type === "tricky_grammar" || payload?.type === "mixed_practice" ? payload.questions
+    : payload?.type === "quick_grammar" ? [payload.question] : [];
+  const learnerTurns = payload?.type === "roleplay" ? payload.turns.filter((turn) => turn.isLearner) : [];
+  const total = payload?.type === "roleplay" ? learnerTurns.length : items.length;
+  const cursor = run?.cursor ?? 0;
+  const completed = run?.status === "completed";
+  const keyFor = (itemId: string) => run && ready ? draftKey(props.accountId, ready.activity.id, run.id, itemId) : null;
+  const advance = () => {
+    if (!run) return;
+    const next = run.cursor + 1;
+    patchRun.mutate(next >= total ? { action: "complete" } : { action: "continue", expectedCursor: run.cursor });
   };
-  const back = <Link className={styles.back} {...lessonHref(props, descriptor)}><ArrowLeft aria-hidden="true" />{t("lessonActivities.backToSection", { section: descriptor?.sourceLabel ?? props.lessonTitle })}</Link>;
-  if (descriptors.isPending && !props.archived) return <main className={styles.page}>{back}<LoadingState label={t("lessonActivities.loadingSources")} /></main>;
-  if (!descriptor) return <main className={styles.page}>{back}<ErrorState title={t("lessonActivities.unavailable")} /></main>;
+
+  const back = <Link className={styles.back} {...lessonTarget(props, descriptor)}><ArrowLeft aria-hidden="true" />{t("lessonActivities.backToSection", { section: descriptor?.sourceLabel ?? props.lessonTitle })}</Link>;
+  if (!type) return <main className={styles.page}>{back}<ErrorState title={t("lessonActivities.unavailable")} /></main>;
   if (descriptors.isError) return <main className={styles.page}>{back}<ErrorState title={t("lessonActivities.unavailable")} action={<Button onClick={() => void descriptors.refetch()}>{t("common.retry")}</Button>} /></main>;
-  if (!ready) return <main className={styles.page}>{back}<header className={styles.header}><span className={styles.eyebrow}>{props.lessonTitle}</span><h1>{t(`lessonActivities.types.${props.type}`)}</h1><p>{descriptor.sourceLabel}</p></header>
-    <Surface className={styles.panel} role="status">{status.isError || openError ? <><p>{t("lessonActivities.openFailed")}</p><Button onClick={() => { setOpened(null); void open(); }}>{t("common.retry")}</Button></> : <><LoadingState label={t("lessonActivities.preparing")} />{opened?.status === "generating" && <Button variant="quiet" onClick={() => void status.refetch()}>{t("lessonActivities.checkAgain")}</Button>}</>}</Surface></main>;
-  return <main className={styles.page}>{back}<header className={styles.header}><span className={styles.eyebrow}>{props.lessonTitle} · {ready.activity.sourceLabel}</span><h1>{t(`lessonActivities.types.${props.type}`)}</h1>{questions.length > 0 && <ProgressMeter value={done ? 100 : (100 * cursor) / questions.length} label={t("lessonActivities.progress", { current: cursor + 1, total: questions.length })} showLabel />}</header>
-    {props.archived || ready.ephemeral ? <Surface tone="quiet"><p>{t("lessonActivities.archivedUnsaved")}</p></Surface> : null}
-    {done || ready.run.status === "completed" ? <Surface className={styles.panel}><h2>{t("lessonActivities.finished")}</h2><p>{t("lessonActivities.finishedBody")}</p><Button component={Link} {...lessonHref(props, descriptor)}>{t("lessonActivities.backToLesson")}</Button></Surface>
-      : payload?.type === "story_summary" ? <Surface className={styles.panel}><h2>{t("lessonActivities.englishSummary")}</h2><p>{payload.englishSummary}</p><h2>{t("lessonActivities.dutchRecap")}</h2><p>{payload.dutchRecap}</p><Button onClick={async () => { await updateRun.mutateAsync({ action: "complete" }); setDone(true); }}>{t("lessonActivities.done")}</Button></Surface>
-      : payload?.type === "grammar_explanation" ? <Surface className={styles.panel}><h2>{t("lessonActivities.explanation")}</h2>{payload.paragraphs.map((line, i) => <p key={i}>{line}</p>)}{payload.examples.map((example, i) => <div className={styles.turn} key={i}><strong lang="nl">{example.dutch}</strong><p>{example.english}</p></div>)}<Button onClick={async () => { await updateRun.mutateAsync({ action: "complete" }); setDone(true); }}>{t("lessonActivities.done")}</Button></Surface>
-      : payload?.type === "roleplay" ? <Roleplay {...{ t, payload, learnerTurns, activeTurn, cursor, started, setStarted, language, setLanguage, answer, saveDraft, feedback, setFeedback, submit, advance, ready, updateRun, inputMode, setInputMode }} />
-      : activeQuestion ? <Surface className={styles.panel}><p>{activeQuestion.prompt}</p>
-        {activeQuestion.kind === "choice" && <div className={styles.choices}>{activeQuestion.options.map((option) => <Button key={option.id} variant={selected === option.id ? "primary" : "secondary"} className={styles.choice} aria-pressed={selected === option.id} onClick={() => setSelected(option.id)}>{option.text}</Button>)}</div>}
-        {activeQuestion.kind === "fill_in" && <TextAreaField label={t("lessonActivities.answerLabel")} value={answer} onChange={(event) => saveDraft(event.currentTarget.value)} autosize minRows={2} />}
-        {activeQuestion.kind === "word_order" && <><p>{activeQuestion.tokens.join(" · ")}</p><TextAreaField label={t("lessonActivities.answerLabel")} value={answer} onChange={(event) => saveDraft(event.currentTarget.value)} autosize minRows={2} /></>}
-        {feedback ? <div className={styles.feedback} role="status"><strong>{feedback.correct ? t("lessonActivities.correct") : t("lessonActivities.tryAgain")}</strong>{feedback.reference && <p>{feedback.reference}</p>}{feedback.explanation && <p>{feedback.explanation}</p>}<div className={styles.actions}><Button onClick={() => { setFeedback(null); setAnswer(""); setSelected(""); }}>{t("lessonActivities.retry")}</Button><Button onClick={() => void advance()}>{cursor + 1 === questions.length ? t("lessonActivities.finish") : t("lessonActivities.continue")}</Button></div></div>
-          : <div className={styles.actions}><Button loading={submit.isPending} disabled={activeQuestion.kind === "choice" ? !selected : !answer.trim()} onClick={() => void submit.mutateAsync(activeQuestion.kind === "choice" ? { kind: "choice", optionId: selected } : activeQuestion.kind === "fill_in" ? { kind: "text", text: answer } : { kind: "text", text: answer })}>{t("lessonActivities.checkAnswer")}</Button></div>}</Surface>
+  if (descriptors.isPending) return <main className={styles.page}>{back}<LoadingState label={t("lessonActivities.loadingSources")} /></main>;
+  if (!descriptor) return <main className={styles.page}>{back}<ErrorState title={t("lessonActivities.unavailable")} /></main>;
+  if (!ready) return <main className={styles.page}>{back}
+    {failed
+      ? <ErrorState title={t("lessonActivities.openFailed")} action={<Button onClick={() => { setOpened(null); void open(); }}>{t("common.retry")}</Button>} />
+      : generationTimedOut
+        ? <ErrorState title={t("lessonActivities.generationTimedOut")} action={<Button onClick={() => { setOpened(null); void open(); }}>{t("common.retry")}</Button>} />
+        : <Surface className={styles.panel}><div role="status"><p>{t("lessonActivities.preparing")}</p><LoadingState label={t("lessonActivities.preparing")} /></div>
+        {opened?.status === "generating" && <Button variant="quiet" onClick={() => void status.refetch()}>{t("lessonActivities.checkAgain")}</Button>}</Surface>}
+  </main>;
+
+  const restart = () => patchRun.mutate({ action: "restart" });
+  return <main className={styles.page}>{back}
+    <header className={styles.header}>
+      <span className={styles.eyebrow}>{props.lessonTitle} · {ready.activity.sourceLabel}</span>
+      <h1 className={styles.title}>{t(`lessonActivities.types.${ready.activity.payload.type}`)}</h1>
+      {total > 0 && <ProgressMeter value={completed ? 100 : (100 * cursor) / total} label={t("lessonActivities.progress", { current: Math.min(cursor + 1, total), total })} showLabel />}
+    </header>
+    {(props.archived || ready.ephemeral) && <Surface tone="quiet"><p>{t("lessonActivities.archivedUnsaved")}</p></Surface>}
+    {completed
+      ? <Surface className={styles.panel}><h2>{t("lessonActivities.finished")}</h2><p>{t("lessonActivities.finishedBody")}</p>
+        <div className={styles.actions}><Button onClick={() => void navigate(lessonTarget(props, descriptor))}>{t("lessonActivities.backToLesson")}</Button>
+          <Button variant="secondary" loading={patchRun.isPending} onClick={restart}>{t("lessonActivities.startAgain")}</Button></div></Surface>
+      : payload?.type === "story_summary" ? <Surface className={styles.panel}><h2>{t("lessonActivities.englishSummary")}</h2><p>{payload.englishSummary}</p>
+        <h2>{t("lessonActivities.dutchRecap")}</h2><p>{payload.dutchRecap}</p>
+        <div className={styles.actions}><Button loading={patchRun.isPending} onClick={() => patchRun.mutate({ action: "complete" })}>{t("lessonActivities.done")}</Button></div></Surface>
+      : payload?.type === "grammar_explanation" ? <Surface className={styles.panel}><h2>{t("lessonActivities.explanation")}</h2>
+        {payload.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
+        {payload.examples.map((example, index) => <div className={styles.turn} key={index}><strong lang="nl">{example.dutch}</strong><p>{example.english}</p></div>)}
+        <div className={styles.actions}><Button loading={patchRun.isPending} onClick={() => patchRun.mutate({ action: "complete" })}>{t("lessonActivities.done")}</Button></div></Surface>
+      : payload?.type === "roleplay" && run ? <RoleplayActivity groupId={props.groupId} language={props.language} endpoint={endpoint} runId={run.id} turns={payload.turns}
+        cursor={cursor} cueMode={run.cueMode} keyFor={keyFor} advancing={patchRun.isPending} onCueMode={(cueMode) => patchRun.mutate({ action: "set_cue_mode", cueMode })}
+        onContinue={() => advance()} backToLesson={<Link className={styles.back} {...lessonTarget(props, descriptor)}>{t("lessonActivities.backToLesson")}</Link>} />
+      : items[cursor] && run ? <ActivityItem key={items[cursor].id} endpoint={endpoint} runId={run.id} item={items[cursor]} draftKey={items[cursor].kind === "fill_in" ? keyFor(items[cursor].id) : null}
+        last={cursor + 1 >= items.length} advancing={patchRun.isPending} onContinue={() => advance()} />
       : <Surface className={styles.panel}><p>{t("lessonActivities.unavailable")}</p><Button onClick={() => { setOpened(null); void open(); }}>{t("common.retry")}</Button></Surface>}
+    {patchRun.isError && <p className={styles.alert} role="alert">{t("lessonActivities.saveFailed")}</p>}
   </main>;
 }
 
-function Roleplay({ t, payload, learnerTurns, activeTurn, cursor, started, setStarted, language, setLanguage, answer, saveDraft, feedback, setFeedback, submit, advance, ready, updateRun, inputMode, setInputMode }: any) {
-  const partner = payload.turns.filter((turn: { isLearner: boolean }) => !turn.isLearner);
-  const turn = payload.turns[0];
-  const cue = activeTurn ? (language === "english" ? activeTurn.cue ?? activeTurn.englishText : activeTurn.dutchText) : "";
-  return <Surface className={styles.panel}><div className={styles.actions}><label>{t("lessonActivities.cueLanguage")}<select value={language} onChange={(event) => { setLanguage(event.currentTarget.value); void updateRun.mutate({ action: "set_cue_mode", cueMode: event.currentTarget.value }); }}><option value="english">{t("lessonActivities.english")}</option><option value="dutch">{t("lessonActivities.dutch")}</option></select></label></div>
-    {!started ? <><p>{t("lessonActivities.roleplayIntro", { speaker: "Sofia" })}</p><Button onClick={() => setStarted(true)}>{t("lessonActivities.startDialogue")}</Button></>
-      : <><div className={styles.turn}><strong>{turn.speaker}</strong><p>{turn.dutchText}</p>{turn.englishText && <p>{turn.englishText}</p>}</div><p>{cue}</p>
-        <TextAreaField className={styles.draft} label={t("lessonActivities.yourTurn")} value={answer} onChange={(event) => { saveDraft(event.currentTarget.value); setInputMode("typed"); }} autosize minRows={2} />
-        <div className={styles.actions}><Button variant="secondary" aria-label={t("lessonActivities.holdToSpeak")} onPointerDown={(event) => { event.preventDefault(); setInputMode("spoken"); }} onPointerUp={() => undefined}><Mic aria-hidden="true" />{t("lessonActivities.holdToSpeak")}</Button><Button disabled={!answer.trim() || submit.isPending} loading={submit.isPending} onClick={() => void submit.mutateAsync({ kind: "text", text: answer })}><Send aria-hidden="true" />{t("lessonActivities.send")}</Button></div>
-        {feedback && <div className={styles.feedback} role="status"><p>{feedback.correct ? t("lessonActivities.correct") : t("lessonActivities.reference", { text: feedback.reference ?? "" })}</p><div className={styles.actions}><Button onClick={() => { setFeedback(null); saveDraft(""); }}>{t("lessonActivities.retry")}</Button><Button onClick={() => void advance()}>{cursor + 1 === learnerTurns.length ? t("lessonActivities.finish") : t("lessonActivities.continue")}</Button></div></div>}
-      </>}
+type ActivityItemProps = { endpoint: string; runId: string; item: Question; draftKey: string | null; last: boolean; advancing: boolean; onContinue: () => void };
+function ActivityItem({ endpoint, runId, item, draftKey, last, advancing, onContinue }: ActivityItemProps) {
+  const { t } = useTranslation();
+  const [draft, setDraft] = useState(() => readDraft(draftKey));
+  const attempt = useAnswerAttempt(endpoint, runId, item.id, () => writeDraft(draftKey, ""));
+  const [selected, setSelected] = useState("");
+  const [order, setOrder] = useState<number[]>([]);
+  const result = attempt.result;
+  const locked = result !== null;
+  const input: AnswerInput | null = item.kind === "choice" ? (selected ? { kind: "choice", optionId: selected } : null)
+    : item.kind === "fill_in" ? (draft.trim() ? { kind: "text", text: draft } : null)
+      : (order.length === item.tokens.length ? { kind: "word_order", order } : null);
+  const save = (value: string) => { setDraft(value); writeDraft(draftKey, value); };
+  const retry = () => { attempt.retry(); setSelected(""); setOrder([]); save(""); };
+
+  return <Surface className={styles.panel}>
+    <p className={styles.prompt}>{item.prompt}</p>
+    {item.kind === "choice" && <div className={styles.choices} role="group" aria-label={item.prompt}>
+      {item.options.map((option) => <Button key={option.id} variant={selected === option.id ? "primary" : "secondary"} className={styles.choice}
+        aria-pressed={selected === option.id} disabled={locked} onClick={() => setSelected(option.id)}>{option.text}</Button>)}
+    </div>}
+    {item.kind === "fill_in" && <TextAreaField label={t("lessonActivities.answerLabel")} value={draft} disabled={locked} onChange={(event) => save(event.currentTarget.value)} autosize minRows={2} />}
+    {item.kind === "word_order" && <WordOrder tokens={item.tokens} order={order} disabled={locked} onChange={setOrder} />}
+    {result
+      ? <div className={styles.feedback} role="status">
+        <strong>{result.correct ? t("lessonActivities.correct") : t("lessonActivities.tryAgain")}</strong>
+        {result.reference && <p>{result.reference}</p>}
+        {result.explanation && <p>{result.explanation}</p>}
+        <div className={styles.actions}>
+          <Button variant="secondary" onClick={retry}>{t("lessonActivities.retry")}</Button>
+          <Button loading={advancing} disabled={advancing} onClick={onContinue}>{last ? t("lessonActivities.finish") : t("lessonActivities.continue")}</Button>
+        </div>
+      </div>
+      : <div className={styles.actions}><Button loading={attempt.pending} disabled={!input || attempt.pending} onClick={() => { if (input) attempt.check(input); }}>{t("lessonActivities.checkAnswer")}</Button></div>}
+    {attempt.error && <p className={styles.alert} role="alert">{t("lessonActivities.answerFailed")}</p>}
   </Surface>;
+}
+
+// Word order: tap the words in sequence to build the answer; tap a word in the answer to take it back; Reset clears the row. Every
+// control is a button, so the keyboard reaches each word.
+function WordOrder({ tokens, order, disabled, onChange }: { tokens: readonly string[]; order: readonly number[]; disabled: boolean; onChange: (order: number[]) => void }) {
+  const { t } = useTranslation();
+  const placed = new Set(order);
+  return <div className={styles.wordOrder}>
+    <p className={styles.hint}>{t("lessonActivities.wordOrderHint")}</p>
+    <ol className={styles.answerRow} aria-label={t("lessonActivities.wordOrderAnswer")}>
+      {order.length === 0 && <li className={styles.placeholder}>{t("lessonActivities.wordOrderEmpty")}</li>}
+      {order.map((tokenIndex, position) => <li key={`${position}-${tokenIndex}`}>
+        <button type="button" className={styles.token} disabled={disabled} aria-label={t("lessonActivities.wordOrderRemove", { word: tokens[tokenIndex] ?? "" })}
+          onClick={() => onChange(order.filter((_, index) => index !== position))}>{tokens[tokenIndex]}</button>
+      </li>)}
+    </ol>
+    <ul className={styles.bank} aria-label={t("lessonActivities.wordOrderBank")}>
+      {tokens.map((token, index) => <li key={index}>
+        <button type="button" className={styles.token} data-used={placed.has(index) || undefined} aria-disabled={placed.has(index) || disabled || undefined}
+          onClick={() => { if (!placed.has(index) && !disabled) onChange([...order, index]); }}>{token}</button>
+      </li>)}
+    </ul>
+    <div className={styles.actions}><Button variant="quiet" disabled={disabled || order.length === 0} onClick={() => onChange([])}>{t("lessonActivities.reset")}</Button></div>
+  </div>;
 }

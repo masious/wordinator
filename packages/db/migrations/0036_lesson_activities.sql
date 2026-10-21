@@ -102,7 +102,7 @@ CREATE TABLE `learning_time` (
     (`activity` = 'reading' AND `focus` IN ('lesson','grammar') AND `course_id` IS NOT NULL AND `lesson_id` IS NOT NULL AND `practice_id` IS NULL)
     OR (`activity` = 'practice' AND `focus` IS NULL AND `course_id` IS NOT NULL AND `lesson_id` IS NOT NULL AND `practice_id` IS NOT NULL)
     OR (`activity` = 'ai_practice' AND `focus` IN ('grammar','vocabulary','reading','listening','writing') AND `course_id` IS NOT NULL AND `lesson_id` IS NOT NULL AND `practice_id` IS NOT NULL)
-    OR (`activity` = 'lesson_activity' AND `focus` IN ('reading','grammar','speaking') AND `course_id` IS NOT NULL AND `lesson_id` IS NOT NULL AND `practice_id` IS NOT NULL)
+    OR (`activity` = 'lesson_activity' AND `focus` IS NOT NULL AND `focus` IN ('reading','grammar','speaking') AND `course_id` IS NOT NULL AND `lesson_id` IS NOT NULL AND `practice_id` IS NOT NULL)
     OR (`activity` = 'drill' AND `focus` IS NULL AND `lesson_id` IS NULL AND `practice_id` IS NULL)
     OR (`activity` IN ('tutor','words') AND `focus` IS NULL AND `course_id` IS NULL AND `lesson_id` IS NULL AND `practice_id` IS NULL)
   )

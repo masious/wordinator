@@ -23,10 +23,11 @@ export type ProviderTarget = { provider: AiProvider; model: string; open(request
 
 export const OPENROUTER_URL = "https://openrouter.ai/api/v1/chat/completions";
 
-// `429`, `5xx`, and `408` move the turn on, and so do `401`/`403` (a refused key is that provider's configuration, not the
-// request). Any other status is a request the next provider would refuse too.
+// `429`, `5xx`, and `408` move the turn on. So do `401`/`403` (a refused key) and `404` (a model or endpoint the provider no
+// longer serves, such as a retired OpenRouter slug): both are that provider's configuration, not the request, so the next
+// provider gets it. Any other status is a request the next provider would refuse too.
 export const isRetryableStatus = (status: number | null) =>
-  status === null || status === 408 || status === 429 || status === 401 || status === 403 || status >= 500;
+  status === null || status === 408 || status === 404 || status === 429 || status === 401 || status === 403 || status >= 500;
 
 // Accepts the resource URL (`https://name.services.ai.azure.com` or `https://name.openai.azure.com`), its `/openai/v1`
 // base URL, or the full chat-completions URL.
@@ -40,13 +41,18 @@ export function azureChatUrl(endpoint: string) {
 const openAiTools = (tools: AiToolDefinition[] | undefined) =>
   tools?.length ? tools.map((tool) => ({ type: "function", function: { name: tool.name, description: tool.description, parameters: tool.parameters } })) : undefined;
 
+// GPT-5-family and o-series reasoning models reject `max_tokens` and a non-default `temperature` (a 400 that no fallback fixes).
+// They take `max_completion_tokens` and no temperature. Matches `gpt-5…`, `o3…` and vendor paths such as `openai/gpt-5-mini`.
+const REASONING_MODEL = /(^|\/)(gpt-5|o\d)/i;
+
 function openAiBody(model: string, request: AiChatRequest) {
   const tools = openAiTools(request.tools);
+  const reasoning = REASONING_MODEL.test(model);
   return {
     model, messages: request.messages, stream: true, stream_options: { include_usage: true },
     ...(tools ? { tools, tool_choice: "auto" } : {}),
-    ...(request.maxTokens ? { max_tokens: request.maxTokens } : {}),
-    ...(request.temperature !== undefined ? { temperature: request.temperature } : {}),
+    ...(request.maxTokens ? (reasoning ? { max_completion_tokens: request.maxTokens } : { max_tokens: request.maxTokens }) : {}),
+    ...(request.temperature !== undefined && !reasoning ? { temperature: request.temperature } : {}),
   };
 }
 

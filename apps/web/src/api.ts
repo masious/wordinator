@@ -32,6 +32,9 @@ export const sessionQueryOptions = () => queryOptions({
   queryFn: () => apiRequest("/api/session", sessionResponseSchema),
 });
 
+// The open and status results, as the contract schemas parse them.
+export type LessonActivityOpenResponse = ReturnType<typeof activityOpenResponseSchema.parse>;
+export type LessonActivityStatusResponse = ReturnType<typeof activityStatusResponseSchema.parse>;
 const lessonActivitiesPath = (_groupId: string, courseId: string, lessonId: string) => `/api/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}/activities`;
 export const lessonActivitiesQueryOptions = (groupId: string, courseId: string, lessonId: string) => queryOptions({
   queryKey: ["lesson-activities", groupId, courseId, lessonId] as const,

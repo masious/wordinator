@@ -3,14 +3,17 @@ import {
   activityOpenResponseSchema, activityRunPatchRequestSchema, activityRunPatchResponseSchema, activitySpeechRequestSchema,
   activitySpeechResponseSchema, activityStatusResponseSchema, gradeLessonActivityAnswer, lessonActivityPayloadSchema,
   lessonActivityViewSchema, resolveLessonActivitySources, toLessonActivityView, verifyLessonActivitySource,
-  type ActivityType, type LessonActivityPayload,
+  type ActivityCompletion, type ActivityDescriptor, type ActivityType, type LessonActivityPayload,
 } from "@wordinator/contracts/lesson-activities";
-import type { LessonDocument } from "@wordinator/contracts/lesson-document";
+import { readDialogueTurns, walkLessonBlocks, type LessonBlockOf, type LessonDocument } from "@wordinator/contracts/lesson-document";
+import { dialogueVoices, speechClipHash } from "@wordinator/contracts/speech";
 import type { Context, Hono, MiddlewareHandler } from "hono";
-import { completeChat, readAiSettings } from "../ai";
+import { aiErrorResponse, assertDailySpeechCap, completeChat, readAiSettings, recordSpeechUsage } from "../ai";
 import type { AppEnvironment } from "../app";
 import { apiError, parseJson } from "../http";
+import { azureSynthesizer, clipUrl, onDemandClip, readClips, storedSpeechCast } from "../speech";
 import { activitySourceData, generateLessonActivity } from "./generate";
+import { speechChunks } from "./speech";
 import { claimGeneration, commitGeneratedPayload, LESSON_ACTIVITY_LEASE_MS, LESSON_ACTIVITY_RETRY_MS, releaseCacheMiss, reserveCacheMiss, type CacheRow } from "./cache";
 
 type ActivityContext = Context<AppEnvironment>;
@@ -36,7 +39,10 @@ const idHash = async (value: string) => {
   return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
 };
 const activityType = (value: string) => value as ActivityType;
-const presentRun = (row: RunRow, ephemeral = false) => ({ ...row, ephemeral });
+// The shared run schema has no activity or account fields: the response carries only the learner's own run state.
+const presentRun = (row: RunRow, ephemeral = false) => ({
+  id: row.id, cursor: row.cursor, cueMode: row.cueMode, status: row.status, startedAt: row.startedAt, updatedAt: row.updatedAt, completedAt: row.completedAt, ephemeral,
+});
 
 async function readActivity(db: D1Database, id: string) {
   return db.prepare(`SELECT ${cacheColumns} FROM lesson_activities WHERE id=?`).bind(id).first<CacheRow>();
@@ -63,6 +69,26 @@ function validPayload(row: CacheRow): LessonActivityPayload | null {
   try { const parsed = lessonActivityPayloadSchema.safeParse(JSON.parse(row.payload)); return parsed.success && parsed.data.type === row.activityType ? parsed.data : null; }
   catch { return null; }
 }
+// Answerable items in the order the run cursor walks them. Answers store these IDs as item_id; summaries and grammar explanations have none.
+function activityItemIds(payload: LessonActivityPayload): string[] {
+  if (payload.type === "story_comprehension" || payload.type === "tricky_grammar" || payload.type === "mixed_practice") return payload.questions.map((question) => question.id);
+  if (payload.type === "quick_grammar") return [payload.question.id];
+  if (payload.type === "roleplay") return payload.turns.filter((turn) => turn.isLearner).map((turn) => turn.id);
+  return [];
+}
+// The viewer's own completed runs in this lesson, counted only when the activity's source fingerprint is the section's current one:
+// a republished section is not done anymore. Ordered, so repeated reads of the same state are identical.
+async function completedActivities(db: D1Database, lesson: ActivityLesson, uid: string, descriptors: readonly ActivityDescriptor[]): Promise<ActivityCompletion[]> {
+  const rows = await db.prepare(`SELECT a.source_id AS sourceId, a.activity_type AS type, a.source_fingerprint AS fingerprint
+    FROM lesson_activity_runs r JOIN lesson_activities a ON a.id = r.activity_id
+    WHERE r.user_id = ? AND r.status = 'completed' AND a.lesson_id = ? AND a.course_id = ?
+    ORDER BY a.source_id, a.activity_type`).bind(uid, lesson.lessonId, lesson.courseId)
+    .all<{ sourceId: string; type: string; fingerprint: string }>();
+  return rows.results.flatMap((row) => {
+    const type = activityType(row.type);
+    return verifyLessonActivitySource(descriptors, row.sourceId, type, row.fingerprint) ? [{ sourceId: row.sourceId, type }] : [];
+  });
+}
 function sourcePayload(row: CacheRow, descriptor: { sourceId: string; sourceLabel: string }, payload: LessonActivityPayload) {
   return lessonActivityViewSchema.parse(toLessonActivityView({ id: row.id, sourceId: descriptor.sourceId, sourceLabel: descriptor.sourceLabel, sourceFingerprint: row.sourceFingerprint, payload }));
 }
@@ -72,7 +98,8 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
   app.get(PATH, deps.requireActivityAccess, async (context) => {
     const found = await getLesson(context); if ("error" in found) return found.error;
     const descriptors = await resolveLessonActivitySources({ document: found.document, title: found.title, includeLessonEnd: true });
-    return context.json(activityDescriptorListResponseSchema.parse({ descriptors }));
+    const completed = await completedActivities(context.env.DB, found, userId(context), descriptors);
+    return context.json(activityDescriptorListResponseSchema.parse({ descriptors, completed }));
   });
 
   const open = async (context: ActivityContext, activityId: string, lesson: ActivityLesson, descriptor: { sourceId: string; sourceLabel: string }, row: CacheRow, ephemeral: boolean) => {
@@ -80,7 +107,7 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     if (!payload) return apiError(context, 503, "ACTIVITY_UNAVAILABLE", "This activity is not ready yet. Try again shortly.");
     const activity = sourcePayload(row, descriptor, payload);
     const run = ephemeral
-      ? { id: crypto.randomUUID(), activityId, userId: userId(context), cursor: 0, cueMode: "english" as const, status: "active" as const, startedAt: Date.now(), updatedAt: Date.now(), completedAt: null, ephemeral: true }
+      ? { id: crypto.randomUUID(), cursor: 0, cueMode: "english" as const, status: "active" as const, startedAt: Date.now(), updatedAt: Date.now(), completedAt: null, ephemeral: true }
       : presentRun(await ensureRun(context.env.DB, activityId, userId(context), Date.now()));
     return context.json(activityOpenResponseSchema.parse({ status: "ready", activity, run, ephemeral }));
   };
@@ -147,7 +174,8 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     const row = await readActivity(context.env.DB, context.req.param("activityId") ?? "");
     if (!row || row.lessonId !== found.lessonId || row.courseId !== found.courseId) return apiError(context, 404, "ACTIVITY_NOT_FOUND", "This activity is not available.");
     if (row.status !== "ready") {
-      if (row.status === "failed" && (row.nextAttemptAt ?? 0) > Date.now()) return context.json(activityStatusResponseSchema.parse({ status: "failed", retryAfterMs: row.nextAttemptAt! - Date.now() }));
+      // A failed row past its backoff reports zero: the client may open the activity again to claim a retry.
+      if (row.status === "failed") return context.json(activityStatusResponseSchema.parse({ status: "failed", retryAfterMs: row.nextAttemptAt === null ? null : Math.max(0, row.nextAttemptAt - Date.now()) }));
       return context.json(activityStatusResponseSchema.parse({ status: "generating", retryAfterMs: RETRY_MS }), 202);
     }
     const payload = validPayload(row); if (!payload) return apiError(context, 503, "ACTIVITY_UNAVAILABLE", "This activity is unavailable.");
@@ -159,7 +187,7 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     if (!run && !found.archived) return apiError(context, 404, "ACTIVITY_NOT_FOUND", "Open this activity from its lesson first.");
     if (!descriptor) return apiError(context, 404, "ACTIVITY_NOT_FOUND", "This activity is no longer available.");
     return context.json(activityStatusResponseSchema.parse({ status: "ready", activity: sourcePayload(row, descriptor, payload), run: run ? presentRun(run) : {
-      id: crypto.randomUUID(), activityId: row.id, userId: uid, cursor: 0, cueMode: "english", status: "active", startedAt: Date.now(), updatedAt: Date.now(), completedAt: null, ephemeral: true,
+      id: crypto.randomUUID(), cursor: 0, cueMode: "english", status: "active", startedAt: Date.now(), updatedAt: Date.now(), completedAt: null, ephemeral: true,
     }, ephemeral: found.archived }));
   });
 
@@ -177,9 +205,10 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     if (!run && !found.archived) return apiError(context, 404, "ACTIVITY_RUN_NOT_FOUND", "This activity run is not available.");
     const grade = gradeLessonActivityAnswer(payload, parsed.data.itemId, parsed.data.answer);
     if (!grade) return apiError(context, 400, "ACTIVITY_ITEM_INVALID", "This answer does not match an activity item.");
+    // One ID for the stored row and the response, so a retry with the same idempotency key returns what the first call returned.
+    const answerId = crypto.randomUUID();
     if (!found.archived && run) {
       const answerText = JSON.stringify(parsed.data.answer);
-      const answerId = crypto.randomUUID();
       try {
         await db.prepare(`INSERT INTO lesson_activity_answers (id,run_id,item_id,idempotency_key,answer,input_mode,correct,matched,reference,pronunciation_json,created_at)
           VALUES (?,?,?,?,?,?,?,?,?,NULL,?)`).bind(answerId, run.id, parsed.data.itemId, parsed.data.idempotencyKey, answerText, parsed.data.inputMode, grade.correct ? 1 : 0, grade.correct ? 1 : 0, grade.reference, Date.now()).run();
@@ -189,7 +218,7 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
         return context.json(activityAnswerResponseSchema.parse({ answerId: duplicate.answerId, itemId: duplicate.itemId, correct: Boolean(duplicate.correct), reference: duplicate.reference, explanation: null, pronunciation: null }));
       }
     }
-    return context.json(activityAnswerResponseSchema.parse({ answerId: crypto.randomUUID(), itemId: parsed.data.itemId, correct: grade.correct, reference: grade.reference, explanation: grade.explanation, pronunciation: null }));
+    return context.json(activityAnswerResponseSchema.parse({ answerId, itemId: parsed.data.itemId, correct: grade.correct, reference: grade.reference, explanation: grade.explanation, pronunciation: null }));
   });
 
   app.patch(`${PATH}/:activityId/run`, deps.requireActivityAccess, async (context) => {
@@ -200,6 +229,7 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     const uid = userId(context); const db = context.env.DB;
     const run = await db.prepare(`SELECT ${runColumns} FROM lesson_activity_runs WHERE activity_id=? AND user_id=?`).bind(row.id, uid).first<RunRow>();
     if (!run) return apiError(context, 404, "ACTIVITY_RUN_NOT_FOUND", "This activity run is not available.");
+    const payload = validPayload(row); if (!payload) return apiError(context, 503, "ACTIVITY_UNAVAILABLE", "This activity is unavailable.");
     const now = Date.now(); let changes = 0;
     if (parsed.data.action === "set_cue_mode") {
       if (activityType(row.activityType) !== "roleplay") return apiError(context, 400, "ACTIVITY_ACTION_INVALID", "Cue mode is available only during dialogue practice.");
@@ -208,14 +238,13 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
       changes = (await db.prepare("UPDATE lesson_activity_runs SET cursor=0,status='active',completed_at=NULL,updated_at=? WHERE id=? AND user_id=?").bind(now, run.id, uid).run()).meta.changes ?? 0;
     } else if (parsed.data.action === "continue") {
       if (parsed.data.expectedCursor !== run.cursor) return apiError(context, 409, "ACTIVITY_CURSOR_STALE", "This activity moved ahead. Refresh to continue.");
-      const count = await db.prepare("SELECT COUNT(*) AS total FROM lesson_activity_answers WHERE run_id=? AND item_id=?").bind(run.id, `${run.cursor}`).first<{ total: number }>();
+      const itemId = activityItemIds(payload)[run.cursor];
+      if (itemId === undefined) return apiError(context, 400, "ACTIVITY_ACTION_INVALID", "There is no next item to continue to.");
+      const count = await db.prepare("SELECT COUNT(*) AS total FROM lesson_activity_answers WHERE run_id=? AND item_id=?").bind(run.id, itemId).first<{ total: number }>();
       if (!count?.total) return apiError(context, 409, "ACTIVITY_ANSWER_REQUIRED", "Answer this item before continuing.");
       changes = (await db.prepare("UPDATE lesson_activity_runs SET cursor=cursor+1,updated_at=? WHERE id=? AND user_id=? AND cursor=?").bind(now, run.id, uid, run.cursor).run()).meta.changes ?? 0;
     } else {
-      const payload = validPayload(row)!;
-      const required = payload.type === "story_summary" || payload.type === "grammar_explanation" ? 0
-        : payload.type === "story_comprehension" || payload.type === "tricky_grammar" || payload.type === "mixed_practice" ? payload.questions.length
-          : payload.type === "quick_grammar" ? 1 : payload.turns.filter((turn) => turn.isLearner).length;
+      const required = activityItemIds(payload).length;
       const saved = await db.prepare("SELECT COUNT(DISTINCT item_id) AS total FROM lesson_activity_answers WHERE run_id=?").bind(run.id).first<{ total: number }>();
       if ((saved?.total ?? 0) < required) return apiError(context, 409, "ACTIVITY_INCOMPLETE", "Finish every item before completing this activity.");
       changes = (await db.prepare("UPDATE lesson_activity_runs SET status='completed',completed_at=?,updated_at=? WHERE id=? AND user_id=?").bind(now, now, run.id, uid).run()).meta.changes ?? 0;
@@ -225,11 +254,61 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     return context.json(activityRunPatchResponseSchema.parse({ run: presentRun(updated!) }));
   });
 
-  // Role-play speech resolves the text and cast voice from the current published dialogue. The speech route is wired below
-  // through the shared lesson speech cache so the request can never choose arbitrary text or a voice.
+  // Role-play speech (docs/speech.md#lesson-activity-role-play): one stored turn of the activity's original dialogue, in its course
+  // cast voice. The request names a turn and, for a long line, a part; the text and the voice come from the stored activity, so
+  // no request text or voice is ever synthesized. Partner lines and Sofia's reference line are both speakable this way.
   app.post(`${PATH}/:activityId/speech`, deps.requireActivityAccess, async (context) => {
+    const found = await getLesson(context); if ("error" in found) return found.error;
     const parsed = await parseJson(context, activitySpeechRequestSchema, 1_024); if ("response" in parsed) return parsed.response;
-    return apiError(context, 503, "ACTIVITY_SPEECH_PENDING", "Dialogue audio is being prepared.");
+    const db = context.env.DB;
+    const row = await readActivity(db, context.req.param("activityId") ?? "");
+    if (!row || row.lessonId !== found.lessonId || row.courseId !== found.courseId || row.status !== "ready") return apiError(context, 404, "ACTIVITY_NOT_FOUND", "This activity is not available.");
+    if (row.activityType !== "roleplay") return apiError(context, 400, "ACTIVITY_ACTION_INVALID", "Dialogue audio is available only for role-play activities.");
+    const payload = validPayload(row);
+    if (!payload || payload.type !== "roleplay") return apiError(context, 503, "ACTIVITY_UNAVAILABLE", "This activity is unavailable.");
+    const uid = userId(context);
+    const run = await db.prepare(`SELECT ${runColumns} FROM lesson_activity_runs WHERE id=? AND activity_id=? AND user_id=?`).bind(parsed.data.runId, row.id, uid).first<RunRow>();
+    // An archived lesson has no owned run to check. As on the answer route, it serves ready audio and writes no learner state.
+    if (!run && !found.archived) return apiError(context, 404, "ACTIVITY_RUN_NOT_FOUND", "This activity run is not available.");
+    const turn = payload.turns.find((candidate) => candidate.id === parsed.data.turnId);
+    if (!turn) return apiError(context, 404, "ACTIVITY_TURN_NOT_FOUND", "This dialogue line is not part of this activity.");
+    const chunks = speechChunks(turn.referenceText.trim());
+    // A long line is never spoken whole or truncated: the learner asks for each part, and a part is required when there are several.
+    if (parsed.data.chunkIndex === undefined && chunks.length > 1) return apiError(context, 400, "ACTIVITY_CHUNK_INVALID", "Ask for this long line one part at a time.");
+    const chunkIndex = parsed.data.chunkIndex ?? 0;
+    const chunk = chunks[chunkIndex];
+    if (chunk === undefined) return apiError(context, 400, "ACTIVITY_CHUNK_INVALID", "This line has no part with that number.");
+    const { AZURE_SPEECH_KEY: key, AZURE_SPEECH_REGION: region } = context.env;
+    if (!key || !region) return apiError(context, 503, "SPEECH_UNAVAILABLE", "Audio is not available.");
+    // The voice resolves exactly as the lesson's own dialogue audio does: the cast entry, else the position among the dialogue's
+    // speakers in the published dialogue (the stored activity's turns when that dialogue is no longer published).
+    const course = await db.prepare("SELECT speech_cast AS speechCast FROM courses WHERE id = ?").bind(found.courseId).first<{ speechCast: string | null }>();
+    const dialogue = [...walkLessonBlocks(found.document.blocks)].map(({ block }) => block)
+      .find((block): block is LessonBlockOf<"dialogue"> => block.type === "dialogue" && block.id === payload.dialogueId);
+    const speakers = (dialogue ? readDialogueTurns(dialogue) : payload.turns).map((candidate) => candidate.speaker);
+    const voice = dialogueVoices(speakers, storedSpeechCast(course?.speechCast ?? null), found.language)(turn.speaker);
+    const spoken = { key: `turn:${turn.id}:${chunkIndex}`, voice, text: chunk, ipa: null };
+    const item = { ...spoken, hash: await speechClipHash(spoken) };
+    // The daily character cap is checked before the clip is looked up, as the tutor's on-demand audio does.
+    const settings = await readAiSettings(db);
+    try {
+      await assertDailySpeechCap(db, uid, settings, chunk.length);
+    } catch (error) {
+      const response = aiErrorResponse(context, error); if (response) return response;
+      throw error;
+    }
+    if (found.archived && (await readClips(db, [item.hash])).get(item.hash)?.status !== "ready") {
+      return apiError(context, 409, "ACTIVITY_READ_ONLY", "This audio has not been made and cannot be made for an archived course.");
+    }
+    // The clip is the lesson's clip for this text and voice: a ready one is served from R2, otherwise it is synthesized here.
+    const clip = await onDemandClip(context.env, item, azureSynthesizer(key, region));
+    if (clip === "pending") return context.json(activitySpeechResponseSchema.parse({ status: "pending", retryAfterMs: RETRY_MS }), 202);
+    if (clip === "failed") return apiError(context, 503, "SPEECH_FAILED", "The audio could not be made. Try again later.");
+    await recordSpeechUsage(db, { userId: uid, surface: "lesson_activity", clipHash: item.hash, characters: chunk.length, cached: clip === "cached" });
+    const base = context.env.PUBLIC_MEDIA_BASE_URL.replace(/\/$/, "");
+    return context.json(activitySpeechResponseSchema.parse({
+      status: "ready", url: clipUrl((clipKey) => `${base}/${clipKey.split("/").map(encodeURIComponent).join("/")}`, item.hash),
+    }));
   });
 }
 

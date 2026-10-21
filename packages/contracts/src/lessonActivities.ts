@@ -1,11 +1,13 @@
 import { z } from "zod";
-import { opaqueIdSchema } from "./index";
-import { dialoguePayloadSchema, inlineText, type LessonDocument, type LessonBlock } from "./lessonDocument";
+import { foldEquivalentAccents, opaqueIdSchema } from "./index";
+import { inlineText, readDialogueTurns, type LessonBlock, type LessonBlockOf, type LessonDocument } from "./lessonDocument";
 
 export const LESSON_ACTIVITY_RECIPE_VERSION = 1;
 export const LESSON_ACTIVITY_SCHEMA_VERSION = 1;
 export const LESSON_ACTIVITY_TEXT_MAX = 4_000;
 export const LESSON_ACTIVITY_ANSWER_MAX = 2_000;
+// Source fingerprints are SHA-256 digests in lowercase hex, shared by descriptors, views and open requests.
+export const SOURCE_FINGERPRINT_SCHEMA = z.string().regex(/^[a-f0-9]{64}$/);
 export const lessonActivityTypeSchema = z.enum([
   "story_summary", "story_comprehension", "grammar_explanation", "quick_grammar", "tricky_grammar", "mixed_practice", "roleplay",
 ]);
@@ -17,37 +19,41 @@ export const lessonActivitySourceKindSchema = z.enum(["section", "dialogue", "le
 export type LessonActivitySourceKind = z.infer<typeof lessonActivitySourceKindSchema>;
 export const lessonActivityDescriptorSchema = z.strictObject({
   sourceId: z.string().min(1).max(200), sourceKind: lessonActivitySourceKindSchema, sourceLabel: z.string().min(1).max(200),
-  returnBlockId: opaqueIdSchema.nullable(), returnHeadingId: opaqueIdSchema.nullable(), fingerprint: z.string().regex(/^[a-f0-9]{64}$/),
+  returnBlockId: opaqueIdSchema.nullable(), returnHeadingId: opaqueIdSchema.nullable(), fingerprint: SOURCE_FINGERPRINT_SCHEMA,
   activityTypes: z.array(lessonActivityTypeSchema),
 });
 export type ActivityDescriptor = z.infer<typeof lessonActivityDescriptorSchema>;
-export const activityDescriptorListResponseSchema = z.strictObject({ descriptors: z.array(lessonActivityDescriptorSchema) });
+// The viewer's own completed activities for the lesson whose source fingerprint is still current (docs/lesson-activities.md#scope-and-entry-point).
+export const activityCompletionSchema = z.strictObject({ sourceId: z.string().min(1).max(200), type: lessonActivityTypeSchema });
+export type ActivityCompletion = z.infer<typeof activityCompletionSchema>;
+export const activityDescriptorListResponseSchema = z.strictObject({
+  descriptors: z.array(lessonActivityDescriptorSchema),
+  completed: z.array(activityCompletionSchema).default([]),
+});
 
 const shortText = z.string().trim().min(1).max(LESSON_ACTIVITY_TEXT_MAX);
-const questionViewSchema = z.discriminatedUnion("kind", [
-  z.strictObject({ id: opaqueIdSchema, kind: z.literal("choice"), prompt: shortText, options: z.array(z.strictObject({ id: opaqueIdSchema, text: shortText })).length(3) }),
-  z.strictObject({ id: opaqueIdSchema, kind: z.literal("fill_in"), prompt: shortText }),
-  z.strictObject({ id: opaqueIdSchema, kind: z.literal("word_order"), prompt: shortText, tokens: z.array(shortText).min(2).max(30) }),
-]);
-const questionPayloadSchema = z.discriminatedUnion("kind", [
-  z.strictObject({ id: opaqueIdSchema, kind: z.literal("choice"), prompt: shortText, options: z.array(z.strictObject({ id: opaqueIdSchema, text: shortText })).length(3), correctOptionId: opaqueIdSchema, explanation: shortText })
-    .superRefine((question, context) => {
-      if (!question.options.some((option) => option.id === question.correctOptionId)) context.addIssue({ code: "custom", path: ["correctOptionId"], message: "Choose one of the listed options." });
-      if (new Set(question.options.map((option) => option.id)).size !== question.options.length) context.addIssue({ code: "custom", path: ["options"], message: "Option IDs must be unique." });
-    }),
-  z.strictObject({ id: opaqueIdSchema, kind: z.literal("fill_in"), prompt: shortText, referenceAnswers: z.array(shortText).min(1).max(10), explanation: shortText }),
-  z.strictObject({ id: opaqueIdSchema, kind: z.literal("word_order"), prompt: shortText, tokens: z.array(shortText).min(2).max(30), expectedOrder: z.array(z.number().int().nonnegative()).min(2).max(30), explanation: shortText })
-    .superRefine((question, context) => {
-      if (question.expectedOrder.length !== question.tokens.length || new Set(question.expectedOrder).size !== question.tokens.length || question.expectedOrder.some((value) => value >= question.tokens.length)) context.addIssue({ code: "custom", path: ["expectedOrder"], message: "Expected order must be a permutation of the tokens." });
-    }),
-]);
+export const choiceQuestionViewSchema = z.strictObject({ id: opaqueIdSchema, kind: z.literal("choice"), prompt: shortText, options: z.array(z.strictObject({ id: opaqueIdSchema, text: shortText })).length(3) });
+const fillInQuestionViewSchema = z.strictObject({ id: opaqueIdSchema, kind: z.literal("fill_in"), prompt: shortText });
+const wordOrderQuestionViewSchema = z.strictObject({ id: opaqueIdSchema, kind: z.literal("word_order"), prompt: shortText, tokens: z.array(shortText).min(2).max(30) });
+const questionViewSchema = z.discriminatedUnion("kind", [choiceQuestionViewSchema, fillInQuestionViewSchema, wordOrderQuestionViewSchema]);
+export const choiceQuestionPayloadSchema = z.strictObject({ id: opaqueIdSchema, kind: z.literal("choice"), prompt: shortText, options: z.array(z.strictObject({ id: opaqueIdSchema, text: shortText })).length(3), correctOptionId: opaqueIdSchema, explanation: shortText })
+  .superRefine((question, context) => {
+    if (!question.options.some((option) => option.id === question.correctOptionId)) context.addIssue({ code: "custom", path: ["correctOptionId"], message: "Choose one of the listed options." });
+    if (new Set(question.options.map((option) => option.id)).size !== question.options.length) context.addIssue({ code: "custom", path: ["options"], message: "Option IDs must be unique." });
+  });
+const fillInQuestionPayloadSchema = z.strictObject({ id: opaqueIdSchema, kind: z.literal("fill_in"), prompt: shortText, referenceAnswers: z.array(shortText).min(1).max(10), explanation: shortText });
+const wordOrderQuestionPayloadSchema = z.strictObject({ id: opaqueIdSchema, kind: z.literal("word_order"), prompt: shortText, tokens: z.array(shortText).min(2).max(30), expectedOrder: z.array(z.number().int().nonnegative()).min(2).max(30), explanation: shortText })
+  .superRefine((question, context) => {
+    if (question.expectedOrder.length !== question.tokens.length || new Set(question.expectedOrder).size !== question.tokens.length || question.expectedOrder.some((value) => value >= question.tokens.length)) context.addIssue({ code: "custom", path: ["expectedOrder"], message: "Expected order must be a permutation of the tokens." });
+  });
+const questionPayloadSchema = z.discriminatedUnion("kind", [choiceQuestionPayloadSchema, fillInQuestionPayloadSchema, wordOrderQuestionPayloadSchema]);
 const roleplayTurnViewSchema = z.strictObject({ id: opaqueIdSchema, index: z.number().int().nonnegative(), speaker: shortText, isLearner: z.boolean(), cue: shortText.nullable(), dutchText: shortText, englishText: shortText.nullable(), voice: z.string().trim().min(1).max(100).nullable() });
 const roleplayTurnPayloadSchema = roleplayTurnViewSchema.extend({ referenceText: shortText });
 const activityContents = {
   story_summary: z.strictObject({ englishSummary: shortText, dutchRecap: shortText }),
-  story_comprehension: z.strictObject({ questions: z.array(questionPayloadSchema.extract(["choice"])).length(4) }),
+  story_comprehension: z.strictObject({ questions: z.array(choiceQuestionPayloadSchema).length(4) }),
   grammar_explanation: z.strictObject({ paragraphs: z.array(shortText).min(1).max(8), examples: z.array(z.strictObject({ dutch: shortText, english: shortText })).min(1).max(12) }),
-  quick_grammar: z.strictObject({ question: questionPayloadSchema.extract(["choice"]) }),
+  quick_grammar: z.strictObject({ question: choiceQuestionPayloadSchema }),
   tricky_grammar: z.strictObject({ questions: z.array(questionPayloadSchema).length(4) }),
   mixed_practice: z.strictObject({ questions: z.array(questionPayloadSchema).length(6) }),
   roleplay: z.strictObject({ dialogueId: opaqueIdSchema, cueLanguage: z.enum(["english", "dutch"]), turns: z.array(roleplayTurnPayloadSchema).min(2).max(60) }),
@@ -69,9 +75,9 @@ export const lessonActivityPayloadSchema = z.discriminatedUnion("type", [
 export type LessonActivityPayload = z.infer<typeof lessonActivityPayloadSchema>;
 const viewContents = {
   story_summary: activityContents.story_summary,
-  story_comprehension: z.strictObject({ questions: z.array(questionViewSchema.extract(["choice"])).length(4) }),
+  story_comprehension: z.strictObject({ questions: z.array(choiceQuestionViewSchema).length(4) }),
   grammar_explanation: activityContents.grammar_explanation,
-  quick_grammar: z.strictObject({ question: questionViewSchema.extract(["choice"]) }),
+  quick_grammar: z.strictObject({ question: choiceQuestionViewSchema }),
   tricky_grammar: z.strictObject({ questions: z.array(questionViewSchema).length(4) }),
   mixed_practice: z.strictObject({ questions: z.array(questionViewSchema).length(6) }),
   roleplay: z.strictObject({ dialogueId: opaqueIdSchema, cueLanguage: z.enum(["english", "dutch"]), turns: z.array(roleplayTurnViewSchema).min(2).max(60) }),
@@ -90,13 +96,13 @@ export const lessonActivityViewPayloadSchema = z.discriminatedUnion("type", [
 ]);
 export type LessonActivityViewPayload = z.infer<typeof lessonActivityViewPayloadSchema>;
 export const lessonActivityViewSchema = z.strictObject({
-  id: opaqueIdSchema, sourceId: z.string().min(1).max(200), sourceLabel: shortText, sourceFingerprint: z.string().regex(/^[a-f0-9]{16}$/), payload: lessonActivityViewPayloadSchema,
+  id: opaqueIdSchema, sourceId: z.string().min(1).max(200), sourceLabel: shortText, sourceFingerprint: SOURCE_FINGERPRINT_SCHEMA, payload: lessonActivityViewPayloadSchema,
 });
 export type LessonActivityView = z.infer<typeof lessonActivityViewSchema>;
 
 export const lessonActivityRunSchema = z.strictObject({ id: opaqueIdSchema, status: z.enum(["active", "completed"]), cursor: z.number().int().nonnegative(), cueMode: z.enum(["english", "dutch"]), startedAt: z.number().int(), updatedAt: z.number().int(), completedAt: z.number().int().nullable(), ephemeral: z.boolean().default(false) });
 export type LessonActivityRun = z.infer<typeof lessonActivityRunSchema>;
-export const activityOpenRequestSchema = z.strictObject({ sourceId: z.string().min(1).max(200), type: lessonActivityTypeSchema, expectedFingerprint: z.string().regex(/^[a-f0-9]{16}$/) });
+export const activityOpenRequestSchema = z.strictObject({ sourceId: z.string().min(1).max(200), type: lessonActivityTypeSchema, expectedFingerprint: SOURCE_FINGERPRINT_SCHEMA });
 export const activityOpenResponseSchema = z.discriminatedUnion("status", [
   z.strictObject({ status: z.literal("ready"), activity: lessonActivityViewSchema, run: lessonActivityRunSchema, ephemeral: z.boolean().default(false) }),
   z.strictObject({ status: z.literal("generating"), activityId: opaqueIdSchema, retryAfterMs: z.number().int().min(250).max(10_000) }),
@@ -144,12 +150,23 @@ export function gradeLessonActivityAnswer(payload: LessonActivityPayload, itemId
     : payload.type === "quick_grammar" ? [payload.question] : payload.type === "roleplay" ? payload.turns.filter((turn) => turn.isLearner) : [];
   const item = items.find((candidate) => candidate.id === itemId);
   if (!item) return null;
-  if ("isLearner" in item) return { correct: normalizeLessonActivityText(answer.kind === "text" ? answer.text : "") === normalizeLessonActivityText(item.referenceText), reference: item.referenceText, explanation: null };
+  if ("isLearner" in item) return { correct: answer.kind === "text" && sameLessonSentence(answer.text, item.referenceText), reference: item.referenceText, explanation: null };
   if (item.kind === "choice") return { correct: answer.kind === "choice" && answer.optionId === item.correctOptionId, reference: item.options.find((option) => option.id === item.correctOptionId)?.text ?? null, explanation: item.explanation };
-  if (item.kind === "fill_in") return { correct: answer.kind === "text" && item.referenceAnswers.some((reference) => normalizeLessonActivityText(reference) === normalizeLessonActivityText(answer.text)), reference: item.referenceAnswers[0] ?? null, explanation: item.explanation };
+  if (item.kind === "fill_in") return { correct: answer.kind === "text" && item.referenceAnswers.some((reference) => sameLessonSentence(answer.text, reference)), reference: item.referenceAnswers[0] ?? null, explanation: item.explanation };
   return { correct: answer.kind === "word_order" && answer.order.length === item.expectedOrder.length && answer.order.every((value, index) => value === item.expectedOrder[index]), reference: item.expectedOrder.map((index) => item.tokens[index] ?? "").join(" "), explanation: item.explanation };
 }
-export const normalizeLessonActivityText = (value: string) => value.normalize("NFKC").trim().replace(/\s+/gu, " ").toLocaleLowerCase();
+// Sentence comparison for role-play reproduction and fill-in answers (plan 04): NFKC, case, the project's accent equivalence
+// (foldEquivalentAccents, the rule answer matching uses), and spacing. Punctuation, quotes, dashes and symbols count as spaces,
+// except an apostrophe inside a word, which is kept and typographic forms are read as straight: "z'n" = "z’n", but "z'n" != "zn".
+// Articles are not dropped (word-card matching does that; this rule does not), so "de man" and "man" differ.
+const edgeApostrophe = /(?<![\p{L}\p{N}\p{M}])['’‘ʼ]|['’‘ʼ](?![\p{L}\p{N}\p{M}])/gu;
+export const normalizeLessonSentence = (value: string) => foldEquivalentAccents(value.normalize("NFKC")).toLowerCase()
+  .replace(edgeApostrophe, " ").replace(/['’‘ʼ]/gu, "'").replace(/[^\p{L}\p{N}\p{M}'\s]+/gu, " ").replace(/\s+/gu, " ").trim();
+// A blank answer never matches, even against a reference that normalizes to nothing.
+const sameLessonSentence = (given: string, reference: string) => {
+  const normalized = normalizeLessonSentence(given);
+  return normalized.length > 0 && normalized === normalizeLessonSentence(reference);
+};
 
 export type LessonActivitySourceInput = { document: LessonDocument; title?: string; includeLessonEnd?: boolean };
 export async function fingerprintLessonActivitySource(value: unknown): Promise<string> {
@@ -161,7 +178,7 @@ const activitySourceBlock = (block: LessonBlock): unknown => {
   if (block.type === "heading" || block.type === "paragraph" || block.type === "bulletListItem" || block.type === "numberedListItem") return { id: block.id, type: block.type, content: block.content };
   if (block.type === "callout") return { id: block.id, type: block.type, variant: block.props.variant, content: block.content };
   if (block.type === "example") return { id: block.id, type: block.type, content: block.content, translation: block.props.translation };
-  if (block.type === "dialogue") return { id: block.id, type: block.type, turns: JSON.parse(block.props.turns) };
+  if (block.type === "dialogue") return { id: block.id, type: block.type, turns: readDialogueTurns(block) };
   if (block.type === "columnList") return { id: block.id, type: block.type, children: block.children.map((column) => ({ id: column.id, children: column.children.map(activitySourceBlock) })) };
   return { id: block.id, type: block.type };
 };
@@ -195,15 +212,18 @@ export async function resolveLessonActivitySources({ document, title = "Lesson",
     if (!activityTypes.length) return;
     descriptors.push({ sourceId, sourceKind, sourceLabel: label, returnBlockId: blockId, returnHeadingId: headingId, fingerprint: await fingerprintLessonActivitySource(content), activityTypes });
   };
+  const isDialogue = (block: LessonBlock): block is LessonBlockOf<"dialogue"> => block.type === "dialogue";
+  // A dialogue is eligible for role-play only when Sofia and at least one partner both have original turns.
+  const isRoleplayEligible = (turns: ReturnType<typeof readDialogueTurns>) => turns.some((turn) => turn.speaker.trim().toLocaleLowerCase() === "sofia") && turns.some((turn) => turn.speaker.trim().toLocaleLowerCase() !== "sofia");
   const firstHeadingIndex = starts.find(({ depth }) => depth === 0)?.index ?? flattened.length;
   const introBlocks = flattened.slice(0, firstHeadingIndex).map(({ block }) => block).filter((block) => block.type !== "divider");
   if (introBlocks.length) {
-    const dialogues = introBlocks.filter((block) => block.type === "dialogue");
+    const dialogues = introBlocks.filter(isDialogue);
     const types: LessonActivityType[] = dialogues.length ? ["story_summary", "story_comprehension"] : [];
     await add("intro", "section", "Introduction", introBlocks[0]!.id, null, introBlocks.map(activitySourceBlock), types);
     for (const dialogue of dialogues) {
-      const turns = dialoguePayloadSchema.shape.turns.parse(JSON.parse(dialogue.props.turns));
-      if (turns.some((turn) => turn.speaker.trim().toLocaleLowerCase() === "sofia") && turns.some((turn) => turn.speaker.trim().toLocaleLowerCase() !== "sofia")) await add(dialogue.id, "dialogue", "Dialogue · Introduction", dialogue.id, null, turns, ["roleplay"]);
+      const turns = readDialogueTurns(dialogue);
+      if (isRoleplayEligible(turns)) await add(dialogue.id, "dialogue", "Dialogue · Introduction", dialogue.id, null, turns, ["roleplay"]);
     }
   }
   const activitySections: typeof sections = [];
@@ -228,7 +248,7 @@ export async function resolveLessonActivitySources({ document, title = "Lesson",
   for (const section of activitySections) {
     const contents = flattened.slice(section.start, section.end).map(({ block }) => block);
     if (!contents.some((block) => block.type !== "divider")) continue;
-    const dialogues = contents.filter((block) => block.type === "dialogue");
+    const dialogues = contents.filter(isDialogue);
     const hasGrammar = section.grammar;
     const hasSummary = /summary|recap|wrap[- ]?up|lesson end/i.test(section.label);
     const types: LessonActivityType[] = dialogues.length ? ["story_summary", "story_comprehension"] : [];
@@ -237,8 +257,8 @@ export async function resolveLessonActivitySources({ document, title = "Lesson",
     const safeTypes = [...new Set(types)];
     await add(section.id, "section", section.label || title, contents[0]?.id ?? section.headingId, section.headingId, contents.map(activitySourceBlock), safeTypes);
     for (const dialogue of dialogues) {
-      const turns = dialoguePayloadSchema.shape.turns.parse(JSON.parse(dialogue.props.turns));
-      if (!turns.some((turn) => turn.speaker.trim().toLocaleLowerCase() === "sofia") || !turns.some((turn) => turn.speaker.trim().toLocaleLowerCase() !== "sofia")) continue;
+      const turns = readDialogueTurns(dialogue);
+      if (!isRoleplayEligible(turns)) continue;
       await add(dialogue.id, "dialogue", `Dialogue · ${section.label}`, dialogue.id, section.headingId, turns, ["roleplay"]);
     }
   }
@@ -250,5 +270,3 @@ export const verifyLessonActivitySource = (descriptors: readonly ActivityDescrip
   const descriptor = descriptors.find((item) => item.sourceId === sourceId && item.activityTypes.includes(type));
   return descriptor?.fingerprint === fingerprint ? descriptor : null;
 }
-
-export const SOURCE_FINGERPRINT_SCHEMA = z.string().regex(/^[a-f0-9]{64}$/);

@@ -412,6 +412,14 @@ export const learningTime = sqliteTable(
     index("learning_time_lesson_idx").on(table.lessonId, table.activity),
     check("learning_time_day_check", sql`${table.day} GLOB '[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]'`),
     check("learning_time_seconds_check", sql`${table.seconds} > 0`),
+    check("learning_time_activity_check", sql`
+      (${table.activity} = 'reading' AND ${table.focus} IN ('lesson', 'grammar') AND ${table.courseId} IS NOT NULL AND ${table.lessonId} IS NOT NULL AND ${table.practiceId} IS NULL)
+      OR (${table.activity} = 'practice' AND ${table.focus} IS NULL AND ${table.courseId} IS NOT NULL AND ${table.lessonId} IS NOT NULL AND ${table.practiceId} IS NOT NULL)
+      OR (${table.activity} = 'ai_practice' AND ${table.focus} IN ('grammar', 'vocabulary', 'reading', 'listening', 'writing') AND ${table.courseId} IS NOT NULL AND ${table.lessonId} IS NOT NULL AND ${table.practiceId} IS NOT NULL)
+      OR (${table.activity} = 'lesson_activity' AND ${table.focus} IS NOT NULL AND ${table.focus} IN ('reading', 'grammar', 'speaking') AND ${table.courseId} IS NOT NULL AND ${table.lessonId} IS NOT NULL AND ${table.practiceId} IS NOT NULL)
+      OR (${table.activity} = 'drill' AND ${table.focus} IS NULL AND ${table.lessonId} IS NULL AND ${table.practiceId} IS NULL)
+      OR (${table.activity} IN ('tutor', 'words') AND ${table.focus} IS NULL AND ${table.courseId} IS NULL AND ${table.lessonId} IS NULL AND ${table.practiceId} IS NULL)
+    `),
   ],
 );
 
@@ -428,6 +436,8 @@ export const lessonActivities = sqliteTable("lesson_activities", {
   check("lesson_activities_status_check", sql`${table.status} in ('generating', 'ready', 'failed')`),
   check("lesson_activities_lease_check", sql`(${table.status} = 'generating') = (${table.leaseToken} IS NOT NULL AND ${table.leaseExpiresAt} IS NOT NULL)`),
   check("lesson_activities_payload_check", sql`(${table.status} = 'ready') = (${table.payload} IS NOT NULL)`),
+  check("lesson_activities_type_check", sql`${table.activityType} in ('story_summary', 'story_comprehension', 'grammar_explanation', 'quick_grammar', 'tricky_grammar', 'mixed_practice', 'roleplay')`),
+  check("lesson_activities_language_check", sql`${table.language} in ('nl', 'de')`),
 ]);
 
 export const lessonActivityRuns = sqliteTable("lesson_activity_runs", {
@@ -438,6 +448,8 @@ export const lessonActivityRuns = sqliteTable("lesson_activity_runs", {
 }, (table) => [uniqueIndex("lesson_activity_runs_activity_user_unique").on(table.activityId, table.userId), index("lesson_activity_runs_user_idx").on(table.userId, table.updatedAt),
   check("lesson_activity_runs_cursor_check", sql`${table.cursor} >= 0`),
   check("lesson_activity_runs_completed_check", sql`(${table.status} = 'completed') = (${table.completedAt} IS NOT NULL)`),
+  check("lesson_activity_runs_cue_check", sql`${table.cueMode} in ('english', 'dutch')`),
+  check("lesson_activity_runs_status_check", sql`${table.status} in ('active', 'completed')`),
 ]);
 
 export const lessonActivityAnswers = sqliteTable("lesson_activity_answers", {
@@ -448,6 +460,7 @@ export const lessonActivityAnswers = sqliteTable("lesson_activity_answers", {
 }, (table) => [uniqueIndex("lesson_activity_answers_run_idempotency_unique").on(table.runId, table.idempotencyKey),
   index("lesson_activity_answers_run_item_idx").on(table.runId, table.itemId, table.createdAt),
   check("lesson_activity_answers_input_check", sql`${table.inputMode} in ('typed', 'spoken')`),
+  check("lesson_activity_answers_boolean_check", sql`${table.correct} IN (0, 1) AND ${table.matched} IN (0, 1)`),
 ]);
 
 // A short-lived quota claim prevents concurrent cache misses for one account from exceeding the daily AI turn allowance.
@@ -734,7 +747,7 @@ export const speechUsage = sqliteTable(
   {
     id: text("id").primaryKey(),
     userId: text("user_id").notNull().references(() => users.id),
-    surface: text("surface", { enum: ["ai_message", "ai_practice"] }).notNull(),
+    surface: text("surface", { enum: ["ai_message", "ai_practice", "lesson_activity"] }).notNull(),
     clipHash: text("clip_hash").notNull(),
     characters: integer("characters").notNull(),
     cached: integer("cached", { mode: "boolean" }).notNull(),
@@ -743,7 +756,7 @@ export const speechUsage = sqliteTable(
   (table) => [
     index("speech_usage_user_created_idx").on(table.userId, table.createdAt),
     index("speech_usage_created_idx").on(table.createdAt),
-    check("speech_usage_surface_check", sql`${table.surface} in ('ai_message', 'ai_practice')`),
+    check("speech_usage_surface_check", sql`${table.surface} in ('ai_message', 'ai_practice', 'lesson_activity')`),
   ],
 );
 

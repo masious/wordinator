@@ -45,8 +45,8 @@ export const DEFAULT_AI_SETTINGS: AiSettings = {
   dailySpeechCharCap: 5_000,
 };
 
-// Surfaces that request on-demand speech; `speech_usage.surface` holds one of them.
-export const SPEECH_USAGE_SURFACES = ["ai_message", "ai_practice"] as const;
+// Surfaces that request on-demand speech; `speech_usage.surface` holds one of them. `lesson_activity` is role-play dialogue audio.
+export const SPEECH_USAGE_SURFACES = ["ai_message", "ai_practice", "lesson_activity"] as const;
 export const speechUsageSurfaceSchema = z.enum(SPEECH_USAGE_SURFACES);
 export type SpeechUsageSurface = z.infer<typeof speechUsageSurfaceSchema>;
 
@@ -89,3 +89,28 @@ export const speechUsageRecordSchema = z.object({
   createdAt: z.number().int(),
 });
 export type SpeechUsageRecord = z.infer<typeof speechUsageRecordSchema>;
+
+// Superuser provider status and connection test (docs/settings-and-administration.md#ai-providers). Status reports only whether
+// a provider's credentials are set and, for Azure, the endpoint's host; no secret, path, or query ever reaches the client.
+export const aiProviderStatusSchema = z.object({
+  provider: aiProviderSchema,
+  credentialsPresent: z.boolean(),
+  endpointHost: z.string().nullable(),
+});
+export type AiProviderStatus = z.infer<typeof aiProviderStatusSchema>;
+export const aiProvidersResponseSchema = z.object({ providers: z.array(aiProviderStatusSchema).length(AI_PROVIDERS.length) });
+export type AiProvidersResponse = z.infer<typeof aiProvidersResponseSchema>;
+
+// One small request to one provider, with the model given. Its outcome is never metered and never counts toward a cap.
+export const aiProviderTestRequestSchema = z.object({ provider: aiProviderSchema, model: aiModelIdSchema });
+export type AiProviderTestRequest = z.infer<typeof aiProviderTestRequestSchema>;
+export const AI_PROVIDER_TEST_MESSAGE_MAX = 300;
+export const aiProviderTestResponseSchema = z.object({
+  ok: z.boolean(),
+  // The HTTP status the provider answered with, or null when no HTTP answer came (network, timeout, binding error).
+  status: z.number().int().nullable(),
+  latencyMs: z.number().int().nonnegative(),
+  // On success the start of the reply (at most 40 characters); on failure the provider's error message, redacted and cut.
+  message: z.string().max(AI_PROVIDER_TEST_MESSAGE_MAX),
+});
+export type AiProviderTestResponse = z.infer<typeof aiProviderTestResponseSchema>;

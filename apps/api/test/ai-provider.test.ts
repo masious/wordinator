@@ -191,6 +191,37 @@ describe("stream formats", () => {
   });
 });
 
+describe("request bodies by model family", () => {
+  // The body an HTTP target sends for one model: Azure for `gpt-5`, OpenRouter for `openai/gpt-5-mini`, and the default-style model.
+  async function bodyFor(provider: "azure" | "openrouter", model: string) {
+    const settings: AiSettings = { ...DEFAULT_AI_SETTINGS, providers: [{ ...preset(provider), model, enabled: true }] };
+    const { calls, fetcher } = stubFetch(() => sseResponse(openAiTextStream("ok")));
+    const tuned: AiChatRequest = { ...request, maxTokens: 100, temperature: 0.2 };
+    await completeChat(tuned, options(fullEnv(unusedBinding().binding), fetcher, { settings }));
+    return JSON.parse(String(calls[0]!.init.body)) as Record<string, unknown>;
+  }
+
+  it("sends max_completion_tokens and no temperature to a GPT-5 Azure deployment", async () => {
+    const body = await bodyFor("azure", "gpt-5");
+    expect(body).toMatchObject({ model: "gpt-5", max_completion_tokens: 100 });
+    expect(body).not.toHaveProperty("max_tokens");
+    expect(body).not.toHaveProperty("temperature");
+  });
+
+  it("sends max_completion_tokens and no temperature to an OpenRouter GPT-5 model", async () => {
+    const body = await bodyFor("openrouter", "openai/gpt-5-mini");
+    expect(body).toMatchObject({ model: "openai/gpt-5-mini", max_completion_tokens: 100 });
+    expect(body).not.toHaveProperty("max_tokens");
+    expect(body).not.toHaveProperty("temperature");
+  });
+
+  it("keeps max_tokens and temperature for a non-reasoning model", async () => {
+    const body = await bodyFor("azure", "gpt-4.1-mini");
+    expect(body).toMatchObject({ model: "gpt-4.1-mini", max_tokens: 100, temperature: 0.2 });
+    expect(body).not.toHaveProperty("max_completion_tokens");
+  });
+});
+
 describe("fallback", () => {
   it("moves through the configured order on 429 and a busy binding, recording every attempt", async () => {
     const { calls, fetcher } = stubFetch((url) => url.startsWith("https://openrouter.ai")
@@ -238,6 +269,19 @@ describe("fallback", () => {
       : sseResponse(openAiTextStream("Azure")));
     const result = await completeChat(request, options(fullEnv(unusedBinding().binding), fetcher, { settings: { ...DEFAULT_AI_SETTINGS, providers: [preset("openrouter"), { ...preset("workers_ai"), enabled: false }, preset("azure")] } }));
     expect(result.provider).toBe("azure");
+  });
+
+  it("falls back on a 404, such as a retired model slug or a missing Azure deployment", async () => {
+    const { calls, fetcher } = stubFetch((url) => url.startsWith("https://openrouter.ai")
+      ? new Response(JSON.stringify({ error: { code: 404, message: "No endpoints found for retired/model" } }), { status: 404 })
+      : sseResponse(openAiTextStream("Van Workers AI")));
+    const workers = stubBinding(async () => sseStream(openAiTextStream("Van Workers AI")));
+    const result = await completeChat(request, options(fullEnv(workers.binding), fetcher));
+    expect(result).toMatchObject({ text: "Van Workers AI", provider: "workers_ai" });
+    expect(calls.map((call) => new URL(call.url).hostname)).toEqual(["openrouter.ai"]);
+    expect(workers.calls).toHaveLength(1);
+    expect((await usageRows()).map((row) => [row.provider, row.ok])).toEqual([["openrouter", 0], ["workers_ai", 1]]);
+    expect(logEvents("ai.fallback")).toEqual([expect.objectContaining({ from: "openrouter", to: "workers_ai", reason: "status", status: 404 })]);
   });
 
   it("does not fall back on a 400 and reports the request failed", async () => {

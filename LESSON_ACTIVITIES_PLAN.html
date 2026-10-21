@@ -24,19 +24,39 @@
 <main>
 <section id="implementation-progress">
 <h2>Implementation progress</h2>
-<p>Implementation started with parallel GPT-6 Luna agents. Entries record observed work and checks, not deployment status.</p>
+<p>Implementation started with parallel GPT-6 Luna agents and continued with Claude Haiku agents. Entries record observed work and checks, not deployment status. Everything is in the uncommitted working tree; nothing is deployed.</p>
 <!-- progress:contracts_data:start -->
-<h3>Contracts and database · in progress</h3><p>GPT-6 Luna: shared contracts, source model, database schema and migrations.</p>
-<p>Implemented: shared payload/view and grading schemas, section/dialogue source resolver, learner time focus contract, private activity tables, quota reservations and migration 0036. Contract and database verification is in progress.</p>
+<h3>Batches 0 and 1 · Ownership, shared contracts and database · implemented</h3>
+<ul>
+<li>Batch 0: owner documents reconciled, with <a href="docs/lesson-activities.md">lesson activities</a> as the behavioral owner and the courses, speech, words, privacy, learning-time, testing, operations, architecture, roadmap and index entries linked to it.</li>
+<li>Batch 1: shared resolver and payload/view schemas in <code>packages/contracts/src/lessonActivities.ts</code>, section and dialogue sources with fingerprints, the sentence-comparison rule, and the tables in migration <code>0036_lesson_activities.sql</code> (private runs and answers, shared cache, quota reservations, <code>learning_time</code> focus). Migration <code>0037_speech_usage_lesson_activity.sql</code> adds the <code>speech_usage</code> surface.</li>
+<li>Checks run: contracts suite 135 tests passing; migration integrity suite 17 tests passing.</li>
+</ul>
 <!-- progress:contracts_data:end -->
 <!-- progress:api_cache:start -->
-<h3>API and cache · in progress</h3><p>GPT-6 Luna: protected endpoints, generation/cache coordination, private runs and speech.</p>
+<h3>Batch 2 · Generation, cache and protected routes · implemented</h3>
+<ul>
+<li>Six bounded recipes and the original-dialogue role-play cues in <code>apps/api/src/lessonActivities/</code>. The model writes content only; the server assigns IDs, shuffles word order, and validates the strict payload before publication.</li>
+<li>Generation leases with recovery, ready-only publication after source rechecks, one daily AI turn reserved per generation, provider fallback, status polling, reference-stripped views, source-only grading, and private run and answer transitions.</li>
+<li>Checks run: lesson-activities API suite 61 tests passing.</li>
+</ul>
 <!-- progress:api_cache:end -->
 <!-- progress:web_activity:start -->
-<h3>Web and role-play · in progress</h3><p>GPT-6 Luna: contextual suggestions, activity pages, hold-to-talk role-play and flow tests.</p>
+<h3>Batches 3 and 4 · Suggestions, activity page and role-play · implemented</h3>
+<ul>
+<li>Batch 3: section-aware suggestions follow the reading line and replace the two generic Tutor prompt links. The dedicated page has loading, retry, timed-out, finished and archived states, a top return link, choice, fill-in and word-order questions, private resume, and device drafts. The lesson page now scrolls the return link's source section into view (<code>useHashScroll</code>), which was the last open item from the first browser run.</li>
+<li>Batch 4: role-play with English or Dutch cues, Start, partner playback, held capture that produces an editable transcript, explicit Send, feedback, Retry, Listen to Sofia, Continue, and typed fallback. Recognition and audio are released on cancel, blur, hidden tab and unmount.</li>
+<li>Checks run: web component suites 122 tests passing. Browser spec <code>apps/web/e2e/lesson-activities.spec.ts</code> passes 8 of 8 in Chromium and WebKit; it passed 6 of 8 before the return-scroll change.</li>
+</ul>
 <!-- progress:web_activity:end -->
 <!-- progress:integration:start -->
-<h3>Integration and documentation · in progress</h3><p>Created <a href="docs/lesson-activities.md">the behavioral owner</a> and linked/reconciled product, flow, architecture, speech/privacy, learning-time, testing and operational owners. Learning-time API and aggregate integration is in progress. Application verification has not yet run.</p>
+<h3>Batches 0 and 5 · Learning lifecycle, documentation and release proof · implemented, not deployed</h3>
+<ul>
+<li>Learning time: a <code>lesson_activity</code> entry counts only for a ready, unarchived activity with the viewer's own run. It aggregates into the AI-practice total and daily goal and does not change lesson medians or completion.</li>
+<li>Reset deletes the viewer's runs and answers for the lesson's activities and keeps shared content. Lesson deletion cascades to both.</li>
+<li>Checks run: lesson-progress reset suite 6 tests passing; AI provider suite 19 tests passing; admin API suite 44 tests passing (including the AI providers route); admin web suite 23 tests passing.</li>
+<li>Remaining gaps: not deployed, and migrations <code>0036</code> and <code>0037</code> are not applied to any D1 database. Real Azure speech is untested. The cache race and lease-expiry paths are not covered by an end-to-end test. No phone or theme visual review has been done. Safari may block partner audio that starts after an async fetch. The recognizer ends a held capture on silence. Pronunciation scores are not sent to the server. On wide screens the suggestions appear only in the New words panel footer, so lessons without vocabulary show no Do more with AI there.</li>
+</ul>
 <!-- progress:integration:end -->
 </section>
 <section id="decisions">

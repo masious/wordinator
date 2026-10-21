@@ -47,12 +47,12 @@ const progress = (completedLessonIds: string[], positions: unknown[] = [], pract
 });
 
 function response(body: unknown, status = 200) { return new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } }); }
-function renderWithRouter(page: ReactNode) {
+function renderWithRouter(page: ReactNode, hash = "") {
   // Mirrors the application's stale time, so preloaded lessons are not refetched on mount.
   const queryClient = new QueryClient({ defaultOptions: { queries: { retry: false, staleTime: 20_000 }, mutations: { retry: false } } });
   const root = createRootRoute();
   const route = createRoute({ getParentRoute: () => root, path: "$", component: () => page });
-  const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: [`/groups/${groupId}/courses/${courseId}`] }) });
+  const router = createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: [`/groups/${groupId}/courses/${courseId}${hash ? `#${hash}` : ""}`] }) });
   return { router, ...render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={router} /></QueryClientProvider></MantineProvider>) };
 }
 let served: CourseLesson[] = [];
@@ -72,8 +72,8 @@ const renderPlayer = (detail: CourseDetailResponse, id = lessonId(1), positions:
 const playerOpen = async () => { const dialog = await screen.findByRole("dialog"); await within(dialog).findByText(/^Step \d+ of \d+$/); return dialog; };
 // Where a play action took the viewer: the lesson's page, with `resume` when it continues at the saved step.
 const landed = (router: ReturnType<typeof renderWithRouter>["router"]) => ({ path: router.state.location.pathname, search: router.state.location.search });
-const renderLesson = (detail: CourseDetailResponse, id = lessonId(1), resume = false) =>
-  renderWithRouter(<LessonView groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} lessonId={id} dataUpdatedAt={Date.now()} resume={resume} />);
+const renderLesson = (detail: CourseDetailResponse, id = lessonId(1), resume = false, hash = "") =>
+  renderWithRouter(<LessonView groupId={groupId} courseId={courseId} accountId={accountId} detail={detail} lessonId={id} dataUpdatedAt={Date.now()} resume={resume} />, hash);
 
 // The lesson page inside the frame's rails: the index, lesson box, and right-rail slots are plain elements here.
 function renderInRails(detail: CourseDetailResponse, id = lessonId(1), openRail = vi.fn(), closeRail = vi.fn()) {
@@ -154,6 +154,65 @@ describe("Course lessons", () => {
     renderLesson(detail, lessonId(1), true);
     await waitFor(() => expect(scrollTo).toHaveBeenCalledWith({ top: 1100, behavior: "auto" }));
     vi.restoreAllMocks();
+  });
+
+  // A return from an activity names the block it came from: that block goes under the top, ahead of the saved step.
+  it("scrolls a lesson opened at a block's hash to that block, and skips the saved step's scroll", async () => {
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    const saved = { lessonId: lessonId(1), stepKey: `${dialogue.id}:1`, stepIndex: 2, passedSteps: 2, totalSteps: 3, updatedAt: 1 };
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") ? response(progress([], [saved])) : original(input, init));
+    const rect = vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(function (this: HTMLElement) {
+      return new DOMRect(0, this.dataset.blockId === dialogue.id ? 1000 : 0, 100, this.dataset.blockId === dialogue.id ? 200 : 20);
+    });
+    const scrollTo = vi.fn(); vi.stubGlobal("scrollTo", scrollTo);
+    const detail = { course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon."), dialogue])] };
+    try {
+      renderLesson(detail, lessonId(1), true, dialogue.id);
+      // The saved step is in place once progress loads; the hashed block scrolls to the top of the reading area, not to the step (1100).
+      expect(await screen.findByText("Step 3 of 3")).toBeInTheDocument();
+      await waitFor(() => expect(scrollTo).toHaveBeenCalledWith({ top: 1000, behavior: "smooth" }));
+      await new Promise((resolve) => requestAnimationFrame(resolve));
+      expect(scrollTo).toHaveBeenCalledTimes(1);
+      expect(scrollTo).not.toHaveBeenCalledWith(expect.objectContaining({ top: 1100 }));
+    } finally { rect.mockRestore(); }
+  });
+
+  it("keeps the normal place when the hashed block is no longer on the page, and still resumes the saved step", async () => {
+    const original = vi.mocked(fetch).getMockImplementation()!;
+    const saved = { lessonId: lessonId(1), stepKey: `${dialogue.id}:1`, stepIndex: 2, passedSteps: 2, totalSteps: 3, updatedAt: 1 };
+    vi.mocked(fetch).mockImplementation(async (input, init) => String(input).endsWith("/progress") ? response(progress([], [saved])) : original(input, init));
+    const rect = vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockImplementation(function (this: HTMLElement) {
+      return new DOMRect(0, this.dataset.blockId === dialogue.id ? 1000 : 0, 100, this.dataset.blockId === dialogue.id ? 200 : 20);
+    });
+    const scrollTo = vi.fn(); vi.stubGlobal("scrollTo", scrollTo);
+    const detail = { course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon."), dialogue])] };
+    try {
+      renderLesson(detail, lessonId(1), true, "50000000-0000-4000-8000-0000000000ff");
+      expect(await screen.findByText("Step 3 of 3")).toBeInTheDocument();
+      // Nothing throws; the missing block leaves the saved step's scroll as it was.
+      await waitFor(() => expect(scrollTo).toHaveBeenCalledWith({ top: 1100, behavior: "auto" }));
+    } finally { rect.mockRestore(); }
+  });
+
+  it("leaves a lesson at its top for a hash it has no block for, without a scroll", async () => {
+    const scrollTo = vi.fn(); vi.stubGlobal("scrollTo", scrollTo);
+    renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon.")])] },
+      lessonId(1), false, "50000000-0000-4000-8000-0000000000ff");
+    expect(await screen.findByText("Er is een balkon.")).toBeInTheDocument();
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    expect(scrollTo).not.toHaveBeenCalled();
+  });
+
+  it("does not scroll a gated lesson to its hashed block; the start gate stays in place", async () => {
+    const scrollTo = vi.fn(); vi.stubGlobal("scrollTo", scrollTo);
+    renderLesson({ course: course(false), outline: [summary(1)], lessons: [lesson(1, [example("50000000-0000-4000-8000-000000000001", "Er is een balkon."), dialogue])] },
+      lessonId(1), false, dialogue.id);
+    expect(await screen.findByRole("button", { name: "Start reading this lesson" })).toBeInTheDocument();
+    // A frame scheduled by an earlier test can land here under load; only scrolls after this lesson rendered count.
+    scrollTo.mockClear();
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    expect(scrollTo).not.toHaveBeenCalled();
   });
 
   it("renders one lesson's published document on its page with links to its neighbours", async () => {
@@ -277,9 +336,10 @@ describe("Course lessons", () => {
     expect(slots.actions.contains(actions)).toBe(true);
     expect(within(actions).getByRole("link", { name: "Practise words" })).toHaveAttribute("href", `/words/drill?source=course&course=${courseId}&direction=mixed`);
     const prompt = (name: string) => new URL(within(actions).getByRole("link", { name }).getAttribute("href")!, "https://wordinator.test").searchParams.get("prompt");
-    expect(prompt("Ask for more practices like this")).toContain("lesson 1, “Lesson title 1”");
-    // Ask AI opens a new tutor conversation prefilled to talk the lesson's grammar and topics through.
-    expect(prompt("Ask AI")).toMatch(/^Let’s talk about lesson 1, “Lesson title 1”.*grammar and its topics/);
+    // The two generic lesson-to-Tutor links (Ask AI and Ask for more practices like this) are replaced by the lesson's contextual activity
+    // links (docs/lesson-activities.md); Practise words stays. No activity is suggested here, so no Tutor link remains.
+    expect(within(actions).queryByRole("link", { name: "Ask AI" })).not.toBeInTheDocument();
+    expect(within(actions).queryByRole("link", { name: "Ask for more practices like this" })).not.toBeInTheDocument();
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`/api/groups/${groupId}/courses/${courseId}/lessons/${lessonId(1)}/metrics`, expect.anything()));
     // The figures start hidden (inert, so nothing in them takes focus); the chevron after the percentage opens them.
     const reveal = within(box).getByRole("button", { name: "Show study figures" });

@@ -484,5 +484,7 @@ export function useSpokenAnswer(term: string, onAnswer: (answer: SpokenAnswer) =
     })();
   };
   const meterRef = (element: HTMLElement | null) => { meterElement.current = element; };
-  return { status, interim, quiet, listen, meterRef, available: scope !== null && recognizer !== null };
+  // Ends the listen in progress with what was said so far; a no-op when none runs (for example, when it already ended itself).
+  const finish = () => { run.current?.finish(); };
+  return { status, interim, quiet, listen, finish, meterRef, available: scope !== null && recognizer !== null };
 }

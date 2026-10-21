@@ -54,9 +54,10 @@ export function reachedStep(steps: readonly LessonStep[], root: HTMLElement, vie
 
 // Opening the lesson to continue it (the course page's Continue actions) brings the saved step to the top of the reading area, where
 // the sticky side column starts, once. The router resets the scroll as the page renders, so the jump waits a frame. Arriving any
-// other way leaves the page at its top.
-export function useResumeScroll({ steps, reading, position, inset }: {
-  steps: readonly LessonStep[]; reading: RefObject<HTMLElement | null>; position: LessonPosition | undefined; inset: () => number;
+// other way leaves the page at its top. `anchor` is a block the URL names (a return from an activity): when that block is on the
+// page it takes the scroll instead, so the saved step is skipped for that load.
+export function useResumeScroll({ steps, reading, position, inset, anchor }: {
+  steps: readonly LessonStep[]; reading: RefObject<HTMLElement | null>; position: LessonPosition | undefined; inset: () => number; anchor?: string;
 }) {
   const done = useRef(false);
   const insetRef = useRef(inset); insetRef.current = inset;
@@ -64,13 +65,15 @@ export function useResumeScroll({ steps, reading, position, inset }: {
     if (done.current || !position || !steps.length) return;
     const index = resolveStepIndex(steps, position.stepKey, position.stepIndex);
     const frame = requestAnimationFrame(() => {
-      const root = reading.current; const top = root ? stepTops(steps, root)[index] : null;
+      const root = reading.current;
+      if (root && anchor && root.querySelector(`[data-block-id="${CSS.escape(anchor)}"]`)) return;
+      const top = root ? stepTops(steps, root)[index] : null;
       if (top === null || top === undefined) return;
       done.current = true;
       window.scrollTo({ top: Math.max(0, top + window.scrollY - insetRef.current()), behavior: "auto" });
     });
     return () => cancelAnimationFrame(frame);
-  }, [position, reading, steps]);
+  }, [anchor, position, reading, steps]);
 }
 
 const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " "]);

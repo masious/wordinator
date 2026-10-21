@@ -60,6 +60,8 @@
 .reader{display:grid;min-width:0}
 /* Docked in the right rail, the panel fills the rail's height. */
 .side{height:100%;min-width:0}
+/* The lesson actions on their own, when a lesson has no New words panel to carry them. */
+.actionsAlone{padding:var(--space-3) var(--space-4);background:var(--color-surface);border:var(--ring-hairline);border-radius:var(--radius-md)}
 /* Below 62em the panel sits under the text. */
 .under{margin-top:var(--space-8);min-width:0}
 /* Previous, Up next with the next lesson's title, and Next lesson. */

@@ -35,6 +35,29 @@ async function seedPronunciation(userId: string, lessonId: string | null, wordId
      VALUES (?, ?, 'drill', ?, ?, ?, ?, 80, 80, 80, 80, '[]', ?)`,
   ).bind(crypto.randomUUID(), userId, termKey, termKey, lessonId, wordId, Date.now()).run();
 }
+// A ready shared activity (no lease, payload set) and the learner's private runs and answers, shaped to the table CHECKs.
+async function seedActivity(courseId: string, lessonId: string, sourceId: string) {
+  const id = crypto.randomUUID(); const now = Date.now();
+  await env.DB.prepare(
+    `INSERT INTO lesson_activities (id, lesson_id, course_id, source_id, activity_type, source_fingerprint, recipe_version, schema_version, language, cache_key, status, lease_token, lease_expires_at, next_attempt_at, payload, created_at, updated_at)
+     VALUES (?, ?, ?, ?, 'story_summary', 'fingerprint', 1, 1, 'nl', ?, 'ready', NULL, NULL, NULL, ?, ?, ?)`,
+  ).bind(id, lessonId, courseId, sourceId, `cache-${id}`, JSON.stringify({ items: [{ id: "item-1" }] }), now, now).run();
+  return id;
+}
+async function seedRun(activityId: string, userId: string) {
+  const id = crypto.randomUUID(); const now = Date.now();
+  await env.DB.prepare(
+    `INSERT INTO lesson_activity_runs (id, activity_id, user_id, cursor, cue_mode, status, started_at, updated_at, completed_at)
+     VALUES (?, ?, ?, 0, 'english', 'active', ?, ?, NULL)`,
+  ).bind(id, activityId, userId, now, now).run();
+  return id;
+}
+async function seedActivityAnswer(runId: string) {
+  await env.DB.prepare(
+    `INSERT INTO lesson_activity_answers (id, run_id, item_id, idempotency_key, answer, input_mode, correct, matched, reference, pronunciation_json, created_at)
+     VALUES (?, ?, 'item-1', ?, 'Hond', 'typed', 1, 1, 'Hond', NULL, ?)`,
+  ).bind(crypto.randomUUID(), runId, crypto.randomUUID(), Date.now()).run();
+}
 const countWhere = async (table: string, where: string, ...values: unknown[]) =>
   (await env.DB.prepare(`SELECT COUNT(*) AS total FROM ${table} WHERE ${where}`).bind(...values).first<{ total: number }>())!.total;
 const memoryOf = (userId: string) => env.DB.prepare(
@@ -186,6 +209,33 @@ describe("Lesson reset", () => {
       { actor: "user", kind: "lesson_completed", lessonId: first.id }, { actor: "user", kind: "lesson_reset", lessonId: first.id },
     ]);
     expect((await lessonProgress(s.path, s.reader)).lessons[0]).toMatchObject({ state: "not_started", practicesDone: 0, wordsReviewed: 0, wordsTotal: 2 });
+  });
+
+  it("deletes the viewer's lesson activity runs and answers for the lesson and keeps the shared activity", async () => {
+    const s = await setup();
+    const { readerId, otherId, course, first, second } = s;
+    const firstActivity = await seedActivity(course.id, first.id, "first-story");
+    const secondActivity = await seedActivity(course.id, second.id, "second-story");
+    const readerRun = await seedRun(firstActivity, readerId);
+    await seedActivityAnswer(readerRun);
+    await seedActivityAnswer(readerRun);
+    const readerOtherLessonRun = await seedRun(secondActivity, readerId);
+    await seedActivityAnswer(readerOtherLessonRun);
+    const otherRun = await seedRun(firstActivity, otherId);
+    await seedActivityAnswer(otherRun);
+
+    expect((await reset(s.path, first.id, s.reader)).status).toBe(200);
+
+    // The reader's runs and answers for the lesson's activity go.
+    expect(await countWhere("lesson_activity_runs", "id = ?", readerRun)).toBe(0);
+    expect(await countWhere("lesson_activity_answers", "run_id = ?", readerRun)).toBe(0);
+    // Another lesson's run of the same learner, and another learner's run in the same lesson, stay with their answers.
+    expect(await countWhere("lesson_activity_runs", "id = ?", readerOtherLessonRun)).toBe(1);
+    expect(await countWhere("lesson_activity_answers", "run_id = ?", readerOtherLessonRun)).toBe(1);
+    expect(await countWhere("lesson_activity_runs", "id = ?", otherRun)).toBe(1);
+    expect(await countWhere("lesson_activity_answers", "run_id = ?", otherRun)).toBe(1);
+    // The shared activities stay ready with their payloads.
+    expect(await countWhere("lesson_activities", "id IN (?, ?) AND status = 'ready' AND payload IS NOT NULL", firstActivity, secondActivity)).toBe(2);
   });
 
   it("refuses archived courses, unreadable lessons, other accounts, and anonymous requests", async () => {

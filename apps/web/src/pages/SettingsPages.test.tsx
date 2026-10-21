@@ -64,10 +64,12 @@ describe("Account settings", () => {
     renderPage();
     await screen.findByRole("heading", { name: "Settings" });
     expect(screen.queryByRole("link", { name: "Open analytics" })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: "Open AI providers and models" })).not.toBeInTheDocument();
     cleanup();
     superuser = true;
     renderPage();
     expect(await screen.findByRole("link", { name: "Open analytics" })).toHaveAttribute("href", "/admin/analytics");
+    expect(screen.getByRole("link", { name: "Open AI providers and models" })).toHaveAttribute("href", "/admin/ai");
   });
 
   it("saves a daily goal in minutes, or no goal", async () => {
