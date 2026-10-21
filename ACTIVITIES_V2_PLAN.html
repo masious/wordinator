@@ -697,7 +697,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <dt>Done when</dt><dd><ul><li>All six test cases pass.</li><li>The PUT position route’s own tests, if any, still pass when run as a single file.</li><li>The snapshot is written on both create and restart.</li></ul></dd>
 <dt>Depends on</dt><dd>T2.1 (the <code>metrics_before</code> column), T1.4 (completion schema), T3.2 (guided answer path)</dd>
 <dt>Parallel-safe</dt><dd>no</dd>
-<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Status</dt><dd class="status">Done 2026-10-21 — lesson-activities.test.ts 90/90; course-progress.test.ts 12/12; orchestrator full-diff review</dd>
 <dt>Risk</dt><dd>⚠ with orchestrator full-diff review</dd>
 </dl>
 <p class="orch"><strong>Resolved:</strong> the current fingerprint reuses the logic of <code>completedActivities</code> at <code>routes.ts:81</code>, which compares against the fingerprint from <code>fingerprintLessonActivitySource</code> (<code>lessonActivities.ts:172</code>).</p>
@@ -1082,6 +1082,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <tr><td>T3.3</td><td>2026-10-21</td><td>lesson-activities.test.ts 80/80; 0 API type errors in lessonActivities</td><td>Done; read_aloud materialized without AI (stable line IDs), speak_from_english English by position</td></tr>
 <tr><td>T3.4</td><td>2026-10-21</td><td>lesson-activities.test.ts 82/82; contracts 30/30</td><td>Done; lineId speech for read_aloud/speak_from_english, narrator for null speaker, lesson_activity usage</td></tr>
 <tr><td>T4.6</td><td>2026-10-21</td><td>Roleplay 11 + ReadAloud 5 + SpeakFromEnglish 5 = 21/21</td><td>Done; shared SpokenLineActivity (read/speak modes), lineId speech, no drafts; no HoldToTalk extraction</td></tr>
+<tr><td>T3.5</td><td>2026-10-21</td><td>lesson-activities.test.ts 90/90; course-progress.test.ts 12/12; orchestrator full-diff review</td><td>Done; metrics.ts, metrics_before on create/restart, guided first-answer reading credit (forward only), completion before/after</td></tr>
 </tbody>
 </table></div>
 </section>

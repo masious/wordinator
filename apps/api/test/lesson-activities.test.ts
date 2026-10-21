@@ -1260,3 +1260,138 @@ describe("speechChunks", () => {
     expect(() => speechChunks("Hallo.", 2.5)).toThrow(RangeError);
   });
 });
+
+// Guided grammar answers credit lesson reading (docs/lesson-activities.md progress): the first answer of a step moves the saved
+// position to the step's last block, forward only, and completion reports the metrics the activity moved.
+describe("metrics and progress write", () => {
+  type Setup = Awaited<ReturnType<typeof setup>>;
+  const guidedReply = (metrics: string[] = ["lesson_grammar"]) => say(JSON.stringify({
+    steps: [[0, 1], [2, 3]].map((chunks, index) => ({ chunks, question: { kind: "choice", prompt: `Step ${index + 1}?`, options: ["Alpha", "Beta", "Gamma"], correctIndex: 0, explanation: "Because." } })), metrics,
+  }));
+  async function openGuided(s: Setup, cookie = s.learner, metrics?: string[]) {
+    const opened = await readyOpen(await openActivity(cookie, s.base, s.descriptor(s.ids.grammar), "guided_grammar", scriptedAi([guidedReply(metrics)])));
+    const payload = opened.activity.payload;
+    if (payload.type !== "guided_grammar") throw new Error("Expected guided_grammar.");
+    return { opened, steps: payload.steps.map((step) => ({ id: step.question.id, option: step.question.options[0]!.id })) };
+  }
+  const answer = (s: Setup, cookie: string, opened: Ready, step: { id: string; option: string }, runId = opened.run.id, key = uuid()) =>
+    call("POST", `${s.base}/${opened.activity.id}/answers`, cookie, answerBody(runId, step.id, step.option, key));
+  const positions = (s: Setup) => countRows("SELECT COUNT(*) AS n FROM course_lesson_positions WHERE lesson_id = ?", s.lessonId);
+  const snapshotOf = async (runId: string) => JSON.parse((await env.DB.prepare("SELECT metrics_before AS snapshot FROM lesson_activity_runs WHERE id = ?").bind(runId).first<{ snapshot: string }>())!.snapshot) as Record<string, number>;
+
+  it("credits reading to the step's last block on the first answer only, and never moves the position back", async () => {
+    const s = await setup();
+    const { opened, steps } = await openGuided(s);
+    expect(await positions(s)).toBe(0);
+    const key = uuid();
+    expect((await answer(s, s.learner, opened, steps[0]!, opened.run.id, key)).status).toBe(200);
+    const first = await env.DB.prepare("SELECT step_index AS stepIndex, reading_reached AS reached, reading_total AS total FROM course_lesson_positions WHERE lesson_id = ?").bind(s.lessonId).first<{ stepIndex: number; reached: number; total: number }>();
+    expect(first!.reached).toBeGreaterThan(0);
+    expect(first!.reached).toBeLessThan(first!.total);
+    // A retry and a re-answer are not a first submission: no second write.
+    await env.DB.prepare("UPDATE course_lesson_positions SET updated_at = 1 WHERE lesson_id = ?").bind(s.lessonId).run();
+    expect((await answer(s, s.learner, opened, steps[0]!, opened.run.id, key)).status).toBe(200);
+    expect((await answer(s, s.learner, opened, steps[0]!)).status).toBe(200);
+    expect(await countRows("SELECT COUNT(*) AS n FROM course_lesson_positions WHERE lesson_id = ? AND updated_at = 1", s.lessonId)).toBe(1);
+
+    // Move the saved position further on through the position route (the last example, short of the lesson's end): a later guided answer leaves it where it is.
+    const lesson = await readLesson(lessonPath(s.groupId, s.courseId, s.lessonId), s.owner);
+    const lastKey = lesson.draft!.document.blocks.filter((block) => block.type === "example").at(-1)!.id;
+    const put = await call("PUT", `${lessonPath(s.groupId, s.courseId, s.lessonId)}/position`, s.learner, { stepKey: lastKey });
+    expect(put.status).toBe(200);
+    const end = await env.DB.prepare("SELECT step_index AS stepIndex, step_key AS stepKey FROM course_lesson_positions WHERE lesson_id = ?").bind(s.lessonId).first<{ stepIndex: number; stepKey: string }>();
+    expect(end!.stepIndex).toBeGreaterThan(first!.stepIndex);
+    await answer(s, s.learner, opened, steps[0]!, opened.run.id);
+    expect(await env.DB.prepare("SELECT step_index AS stepIndex, step_key AS stepKey FROM course_lesson_positions WHERE lesson_id = ?").bind(s.lessonId).first()).toEqual(end);
+  });
+
+  it("completes the lesson only by its normal rule: partial steps do not", async () => {
+    const s = await setup();
+    const { opened, steps } = await openGuided(s);
+    for (const step of steps) expect((await answer(s, s.learner, opened, step)).status).toBe(200);
+    expect(await countRows("SELECT COUNT(*) AS n FROM course_lesson_completions WHERE lesson_id = ?", s.lessonId)).toBe(0);
+    expect((await env.DB.prepare("SELECT reading_reached AS reached, reading_total AS total FROM course_lesson_positions WHERE lesson_id = ?").bind(s.lessonId).first<{ reached: number; total: number }>())!.reached).toBeLessThan(10);
+  });
+
+  it("refuses another account's run for answers and writes no progress", async () => {
+    const s = await setup();
+    const { opened, steps } = await openGuided(s);
+    const stolen = await answer(s, s.rival, opened, steps[0]!);
+    expect(stolen.status).toBe(404);
+    expect(await errorCode(stolen)).toBe("ACTIVITY_RUN_NOT_FOUND");
+    expect(await positions(s)).toBe(0);
+    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activity_answers WHERE run_id = ?", opened.run.id)).toBe(0);
+    const patched = await call("PATCH", `${s.base}/${opened.activity.id}/run`, s.rival, { action: "complete" });
+    expect(patched.status).toBe(404);
+  });
+
+  it("snapshots the metrics when a run is created and again when it restarts, and returns before and after on completion", async () => {
+    const s = await setup();
+    const { opened, steps } = await openGuided(s, s.learner, ["lesson_share", "lesson_reading", "lesson_grammar"]);
+    expect(await snapshotOf(opened.run.id)).toEqual({ lesson_share: 0, lesson_reading: 0, lesson_grammar: 0, lesson_activities: 0 });
+    for (const step of steps) await answer(s, s.learner, opened, step);
+    const patch = (body: unknown) => call("PATCH", `${s.base}/${opened.activity.id}/run`, s.learner, body);
+    const completed = activityRunPatchResponseSchema.parse(await (await patch({ action: "complete" })).json());
+    expect(completed.metrics!.map((metric) => metric.key)).toEqual(["lesson_share", "lesson_reading", "lesson_grammar"]);
+    for (const metric of completed.metrics!) expect(metric.before).toBe(0);
+    const byKey = Object.fromEntries(completed.metrics!.map((metric) => [metric.key, metric.after]));
+    expect(byKey.lesson_reading).toBeGreaterThan(0);
+    expect(byKey.lesson_share).toBeGreaterThan(0);
+    expect(byKey.lesson_grammar).toBeGreaterThan(0);
+    // Only completion carries metrics; a restart takes a new snapshot from the state at that moment.
+    const restarted = activityRunPatchResponseSchema.parse(await (await patch({ action: "restart" })).json());
+    expect(restarted.metrics).toBeUndefined();
+    const snapshot = await snapshotOf(opened.run.id);
+    expect(snapshot.lesson_reading).toBe(byKey.lesson_reading);
+    expect(snapshot.lesson_grammar).toBe(0);
+  });
+
+  it("omits a metric key when the run has no snapshot", async () => {
+    const s = await setup();
+    const { opened, steps } = await openGuided(s);
+    for (const step of steps) await answer(s, s.learner, opened, step);
+    await env.DB.prepare("UPDATE lesson_activity_runs SET metrics_before = NULL WHERE id = ?").bind(opened.run.id).run();
+    const completed = activityRunPatchResponseSchema.parse(await (await call("PATCH", `${s.base}/${opened.activity.id}/run`, s.learner, { action: "complete" })).json());
+    expect(completed.metrics).toEqual([]);
+  });
+
+  it("writes no progress in an archived course, for an existing run or an unsaved one", async () => {
+    const s = await setup();
+    const { opened, steps } = await openGuided(s, s.owner);
+    await env.DB.prepare("UPDATE courses SET status = 'archived' WHERE id = ?").bind(s.courseId).run();
+    expect((await answer(s, s.owner, opened, steps[0]!)).status).toBe(200);
+    expect(await positions(s)).toBe(0);
+    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activity_answers WHERE run_id = ?", opened.run.id)).toBe(0);
+    // A viewer with no run gets an unsaved (ephemeral) one: answers are graded, nothing is stored.
+    const ephemeral = await readyOpen(await openActivity(s.owner, s.base, s.descriptor(s.ids.grammar), "guided_grammar"));
+    expect(ephemeral.ephemeral).toBe(true);
+    expect((await answer(s, s.owner, ephemeral, steps[0]!)).status).toBe(200);
+    expect(await positions(s)).toBe(0);
+  });
+
+  it("refuses an unknown run without writing progress when the course is not archived", async () => {
+    const s = await setup();
+    const { opened, steps } = await openGuided(s);
+    const unknown = await answer(s, s.learner, opened, steps[0]!, uuid());
+    expect(unknown.status).toBe(404);
+    expect(await positions(s)).toBe(0);
+  });
+
+  it("refuses anonymous, setup-incomplete, unpublished and hidden requests on the answer and run routes", async () => {
+    const s = await setup();
+    const { opened, steps } = await openGuided(s);
+    const body = answerBody(opened.run.id, steps[0]!.id, steps[0]!.option);
+    expect((await call("POST", `${s.base}/${opened.activity.id}/answers`, null, body)).status).toBe(401);
+    expect((await call("PATCH", `${s.base}/${opened.activity.id}/run`, null, { action: "complete" })).status).toBe(401);
+    for (const [method, tail, payload] of [["POST", "answers", body], ["PATCH", "run", { action: "complete" }]] as const) {
+      const refused = await call(method, `${s.base}/${opened.activity.id}/${tail}`, s.newcomer, payload);
+      expect(refused.status).toBe(403);
+      expect(await errorCode(refused)).toBe("ONBOARDING_REQUIRED");
+      const unpublished = await call(method, `/api/courses/${s.courseId}/lessons/${s.unpublishedId}/activities/${opened.activity.id}/${tail}`, s.learner, payload);
+      expect(unpublished.status).toBe(404);
+      const hidden = await call(method, `/api/courses/${s.draftCourseId}/lessons/${s.hiddenLessonId}/activities/${opened.activity.id}/${tail}`, s.learner, payload);
+      expect(hidden.status).toBe(404);
+    }
+    expect(await positions(s)).toBe(0);
+  });
+});

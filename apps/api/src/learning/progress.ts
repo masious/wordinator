@@ -1,6 +1,6 @@
 import type { LessonProgressResponse } from "@wordinator/contracts";
 import { sharePercent } from "@wordinator/contracts/learning";
-import { flattenToSteps, readingReached, readPracticeBlock, walkLessonBlocks, type LessonBlockOf, type LessonDocument } from "@wordinator/contracts/lesson-document";
+import { flattenToSteps, readingReached, readPracticeBlock, walkLessonBlocks, type LessonBlockOf, type LessonDocument, type LessonStep } from "@wordinator/contracts/lesson-document";
 import { lessonMemoryKeys, memoryRebuildStatements } from "../learningData";
 import { aiPracticeCounts } from "../tutor/aiPractices";
 import { courseComplete, deriveLessonStates } from "./lessonStates";
@@ -128,4 +128,23 @@ export async function completeIfWhole(db: D1Database, target: LessonTarget, docu
   const whole = reached >= readingTotal && practices.every((practice) => (answered.get(practice.id) ?? 0) >= practice.questions);
   if (whole) await completeLesson(db, target, { actor: "user" });
   return whole;
+}
+
+/**
+ * Saves the step a reader is on (the PUT position route's write, shared with guided grammar answers): the furthest share passed
+ * and the reading steps reached never shrink. Callers authorize, resolve `stepIndex` in `steps`, and check the course is not archived.
+ */
+export async function saveLessonPosition(db: D1Database, target: LessonTarget, steps: readonly LessonStep[], stepIndex: number, stepKey: string) {
+  // Reading steps reached (every step but practice questions) feed the reading half of the lesson share, and never shrink either.
+  const reading = readingReached(steps, stepIndex);
+  return db.prepare(
+    `INSERT INTO course_lesson_positions (group_id, course_id, lesson_id, user_id, step_key, step_index, passed_steps, total_steps, reading_reached, reading_total, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+     ON CONFLICT (lesson_id, user_id) DO UPDATE SET step_key = excluded.step_key, step_index = excluded.step_index,
+       passed_steps = MAX(excluded.passed_steps, MIN(course_lesson_positions.passed_steps, excluded.total_steps - 1)),
+       total_steps = excluded.total_steps,
+       reading_reached = MIN(MAX(excluded.reading_reached, COALESCE(course_lesson_positions.reading_reached, 0)), excluded.reading_total),
+       reading_total = excluded.reading_total, updated_at = excluded.updated_at
+     RETURNING lesson_id AS lessonId, step_key AS stepKey, step_index AS stepIndex, passed_steps AS passedSteps, total_steps AS totalSteps, updated_at AS updatedAt`,
+  ).bind(target.groupId, target.courseId, target.lessonId, target.userId, stepKey, stepIndex, stepIndex, steps.length, reading.reached, reading.total, Date.now()).first();
 }

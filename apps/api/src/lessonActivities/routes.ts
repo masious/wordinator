@@ -5,7 +5,7 @@ import {
   firstImage, lessonActivityViewSchema, resolveLessonActivitySources, toLessonActivityView, verifyLessonActivitySource,
   type ActivityCompletion, type ActivityDescriptor, type ActivityType, type LessonActivityPayload,
 } from "@wordinator/contracts/lesson-activities";
-import { collectLessonWords, readDialogueTurns, walkLessonBlocks, type LessonBlockOf, type LessonDocument } from "@wordinator/contracts/lesson-document";
+import { collectLessonWords, flattenToSteps, lessonStepKey, readDialogueTurns, walkLessonBlocks, type LessonBlockOf, type LessonDocument } from "@wordinator/contracts/lesson-document";
 import { dialogueVoices, speechClipHash } from "@wordinator/contracts/speech";
 import { speechNarrator } from "@wordinator/contracts";
 import type { Context, Hono, MiddlewareHandler } from "hono";
@@ -14,12 +14,14 @@ import type { AppEnvironment } from "../app";
 import { apiError, parseJson } from "../http";
 import { azureSynthesizer, clipUrl, onDemandClip, readClips, storedSpeechCast } from "../speech";
 import { activitySourceBlocks, activitySourceData, generateLessonActivity, materializeReadAloud } from "./generate";
+import { completeIfWhole, saveLessonPosition } from "../learning/progress";
+import { completedActivities, metricsSnapshot, parseMetricsSnapshot, readActivityMetrics } from "./metrics";
 import { speechChunks } from "./speech";
 import { claimGeneration, commitGeneratedPayload, LESSON_ACTIVITY_LEASE_MS, LESSON_ACTIVITY_RETRY_MS, releaseCacheMiss, reserveCacheMiss, type CacheRow } from "./cache";
 
 type ActivityContext = Context<AppEnvironment>;
 export type ActivityLesson = {
-  courseId: string; lessonId: string; archived: boolean; language: "nl" | "de"; title: string; goal: string | null;
+  groupId: string; courseId: string; lessonId: string; archived: boolean; language: "nl" | "de"; title: string; goal: string | null;
   publishedAt: number; document: LessonDocument;
 };
 type RouteDeps = {
@@ -57,12 +59,13 @@ async function currentSource(lesson: ActivityLesson, sourceId: string, type: Act
 async function cacheKey(lesson: ActivityLesson, sourceId: string, type: ActivityType, fingerprint: string) {
   return idHash(JSON.stringify([lesson.lessonId, sourceId, type, fingerprint, 1, 1, lesson.language]));
 }
-async function ensureRun(db: D1Database, activityId: string, uid: string, now: number): Promise<RunRow> {
+// A new run snapshots the four lesson metrics, so completion can report what the activity moved.
+async function ensureRun(db: D1Database, activityId: string, uid: string, now: number, snapshot: () => Promise<string>): Promise<RunRow> {
   const existing = await db.prepare(`SELECT ${runColumns} FROM lesson_activity_runs WHERE activity_id=? AND user_id=?`).bind(activityId, uid).first<RunRow>();
   if (existing) return existing;
   const id = crypto.randomUUID();
-  await db.prepare(`INSERT INTO lesson_activity_runs (id,activity_id,user_id,cursor,cue_mode,status,started_at,updated_at,completed_at)
-    VALUES (?,?,?,0,'english','active',?,?,NULL) ON CONFLICT(activity_id,user_id) DO NOTHING`).bind(id, activityId, uid, now, now).run();
+  await db.prepare(`INSERT INTO lesson_activity_runs (id,activity_id,user_id,cursor,cue_mode,status,started_at,updated_at,completed_at,metrics_before)
+    VALUES (?,?,?,0,'english','active',?,?,NULL,?) ON CONFLICT(activity_id,user_id) DO NOTHING`).bind(id, activityId, uid, now, now, await snapshot()).run();
   return (await db.prepare(`SELECT ${runColumns} FROM lesson_activity_runs WHERE activity_id=? AND user_id=?`).bind(activityId, uid).first<RunRow>())!;
 }
 function validPayload(row: CacheRow): LessonActivityPayload | null {
@@ -78,18 +81,23 @@ function activityItemIds(payload: LessonActivityPayload): string[] {
   if (payload.type === "roleplay") return payload.turns.filter((turn) => turn.isLearner).map((turn) => turn.id);
   return [];
 }
-// The viewer's own completed runs in this lesson, counted only when the activity's source fingerprint is the section's current one:
-// a republished section is not done anymore. Ordered, so repeated reads of the same state are identical.
-async function completedActivities(db: D1Database, lesson: ActivityLesson, uid: string, descriptors: readonly ActivityDescriptor[]): Promise<ActivityCompletion[]> {
-  const rows = await db.prepare(`SELECT a.source_id AS sourceId, a.activity_type AS type, a.source_fingerprint AS fingerprint
-    FROM lesson_activity_runs r JOIN lesson_activities a ON a.id = r.activity_id
-    WHERE r.user_id = ? AND r.status = 'completed' AND a.lesson_id = ? AND a.course_id = ?
-    ORDER BY a.source_id, a.activity_type`).bind(uid, lesson.lessonId, lesson.courseId)
-    .all<{ sourceId: string; type: string; fingerprint: string }>();
-  return rows.results.flatMap((row) => {
-    const type = activityType(row.type);
-    return verifyLessonActivitySource(descriptors, row.sourceId, type, row.fingerprint) ? [{ sourceId: row.sourceId, type }] : [];
-  });
+// A guided grammar step is the lesson text the learner just read: its first answer credits reading up to the step's last block.
+// The saved position only moves forward (never back), nothing is written when the block is no longer published, and the lesson
+// then completes by its normal rule.
+async function creditGuidedReading(db: D1Database, uid: string, lesson: ActivityLesson, payload: LessonActivityPayload, itemId: string) {
+  if (payload.type !== "guided_grammar") return;
+  const lastId = payload.steps.find((step) => step.question.id === itemId)?.blocks.at(-1)?.id;
+  const block = lastId === undefined ? undefined : [...walkLessonBlocks(lesson.document.blocks)].map((entry) => entry.block).find((candidate) => candidate.id === lastId);
+  if (!block) return;
+  const ids = new Set([...walkLessonBlocks([block])].map((entry) => entry.block.id));
+  const steps = flattenToSteps(lesson.document);
+  let index = -1;
+  steps.forEach((step, at) => { if ("blocks" in step ? step.blocks.some((candidate) => ids.has(candidate.id)) : ids.has(step.block.id)) index = at; });
+  if (index < 0) return;
+  const target = { groupId: lesson.groupId, courseId: lesson.courseId, lessonId: lesson.lessonId, userId: uid };
+  const saved = await db.prepare("SELECT step_index AS stepIndex FROM course_lesson_positions WHERE lesson_id = ? AND user_id = ?").bind(lesson.lessonId, uid).first<{ stepIndex: number }>();
+  if (!saved || saved.stepIndex < index) await saveLessonPosition(db, target, steps, index, lessonStepKey(steps[index]!));
+  await completeIfWhole(db, target, lesson.document);
 }
 // A story summary's image is never cached: it is the first image of the current published document's source section.
 function sourcePayload(row: CacheRow, descriptor: { sourceId: string; sourceLabel: string }, payload: LessonActivityPayload, lesson: ActivityLesson, mediaBase: string) {
@@ -116,7 +124,7 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     const activity = sourcePayload(row, descriptor, payload, lesson, context.env.PUBLIC_MEDIA_BASE_URL);
     const run = ephemeral
       ? { id: crypto.randomUUID(), cursor: 0, cueMode: "english" as const, status: "active" as const, startedAt: Date.now(), updatedAt: Date.now(), completedAt: null, ephemeral: true }
-      : presentRun(await ensureRun(context.env.DB, activityId, userId(context), Date.now()));
+      : presentRun(await ensureRun(context.env.DB, activityId, userId(context), Date.now(), () => metricsSnapshot(context.env.DB, userId(context), { id: lesson.courseId }, lesson)));
     return context.json(activityOpenResponseSchema.parse({ status: "ready", activity, run, ephemeral }));
   };
 
@@ -228,6 +236,7 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     const answerId = crypto.randomUUID();
     if (!found.archived && run) {
       const answerText = JSON.stringify(parsed.data.answer);
+      const firstOfItem = payload.type === "guided_grammar" && !(await db.prepare("SELECT COUNT(*) AS total FROM lesson_activity_answers WHERE run_id=? AND item_id=?").bind(run.id, parsed.data.itemId).first<{ total: number }>())?.total;
       try {
         await db.prepare(`INSERT INTO lesson_activity_answers (id,run_id,item_id,idempotency_key,answer,input_mode,correct,matched,reference,pronunciation_json,created_at)
           VALUES (?,?,?,?,?,?,?,?,?,NULL,?)`).bind(answerId, run.id, parsed.data.itemId, parsed.data.idempotencyKey, answerText, parsed.data.inputMode, grade.correct ? 1 : 0, grade.correct ? 1 : 0, grade.reference, Date.now()).run();
@@ -236,6 +245,7 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
         if (!duplicate) throw new Error("ACTIVITY_ANSWER_WRITE_FAILED");
         return context.json(activityAnswerResponseSchema.parse({ answerId: duplicate.answerId, itemId: duplicate.itemId, correct: Boolean(duplicate.correct), reference: duplicate.reference, explanation: null, pronunciation: null }));
       }
+      if (firstOfItem) await creditGuidedReading(db, uid, found, payload, parsed.data.itemId);
     }
     return context.json(activityAnswerResponseSchema.parse({ answerId, itemId: parsed.data.itemId, correct: grade.correct, reference: grade.reference, explanation: grade.explanation, pronunciation: null }));
   });
@@ -255,6 +265,8 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
       changes = (await db.prepare("UPDATE lesson_activity_runs SET cue_mode=?,updated_at=? WHERE id=? AND user_id=?").bind(parsed.data.cueMode, now, run.id, uid).run()).meta.changes ?? 0;
     } else if (parsed.data.action === "restart") {
       changes = (await db.prepare("UPDATE lesson_activity_runs SET cursor=0,status='active',completed_at=NULL,updated_at=? WHERE id=? AND user_id=?").bind(now, run.id, uid).run()).meta.changes ?? 0;
+      // The snapshot is the state once this run no longer counts as completed.
+      if (changes) await db.prepare("UPDATE lesson_activity_runs SET metrics_before=? WHERE id=? AND user_id=?").bind(await metricsSnapshot(db, uid, { id: found.courseId }, found), run.id, uid).run();
     } else if (parsed.data.action === "continue") {
       if (parsed.data.expectedCursor !== run.cursor) return apiError(context, 409, "ACTIVITY_CURSOR_STALE", "This activity moved ahead. Refresh to continue.");
       const itemId = activityItemIds(payload)[run.cursor];
@@ -270,7 +282,13 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     }
     if (!changes) return apiError(context, 409, "ACTIVITY_RUN_STALE", "This activity run changed. Refresh and try again.");
     const updated = await db.prepare(`SELECT ${runColumns} FROM lesson_activity_runs WHERE id=? AND user_id=?`).bind(run.id, uid).first<RunRow>();
-    return context.json(activityRunPatchResponseSchema.parse({ run: presentRun(updated!) }));
+    if (parsed.data.action !== "complete") return context.json(activityRunPatchResponseSchema.parse({ run: presentRun(updated!) }));
+    // Completion reports the payload's requested metrics: the snapshot taken when the run started or restarted, and the values now.
+    // A key the snapshot lacks (a run from before snapshots) is left out.
+    const before = parseMetricsSnapshot((await db.prepare("SELECT metrics_before AS snapshot FROM lesson_activity_runs WHERE id=? AND user_id=?").bind(run.id, uid).first<{ snapshot: string | null }>())?.snapshot ?? null);
+    const after = await readActivityMetrics(db, uid, { id: found.courseId }, found);
+    const metrics = payload.metrics.flatMap((key) => before[key] === undefined ? [] : [{ key, before: before[key], after: after[key] }]);
+    return context.json(activityRunPatchResponseSchema.parse({ run: presentRun(updated!), metrics }));
   });
 
   // Role-play speech (docs/speech.md#lesson-activity-role-play): one stored turn of the activity's original dialogue, in its course

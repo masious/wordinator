@@ -98,7 +98,7 @@ import { buildWordDrillDeck, type WordDrillMemory } from "./wordDrill";
 import { lessonMemoryKeys, memoryRebuildStatements, recordWordReviews } from "./learningData";
 import { readLessonMetrics } from "./learning/metrics";
 import { readCourseDashboard } from "./learning/dashboard";
-import { completeIfWhole, completeLesson, readLessonProgress, resetLesson } from "./learning/progress";
+import { completeIfWhole, completeLesson, readLessonProgress, resetLesson, saveLessonPosition } from "./learning/progress";
 import { lessonShareColumns, shareOfRow, type LessonShareInputs } from "./learning/lessonShare";
 import { registerAttemptRoutes } from "./learning/attempts";
 import { practiceSecondsSql, readCourseTypicalTimes, readLessonTime, registerLearningTimeRoutes, typicalFields } from "./learning/time";
@@ -2578,19 +2578,8 @@ app.put(`${lessonPath}/position`, requireGroupAccess, async (context) => {
   const steps = flattenToSteps(storedDocument(lesson.lesson.publishedDoc, lesson.lesson.id));
   const stepIndex = steps.findIndex((step) => lessonStepKey(step) === parsed.data.stepKey);
   if (stepIndex < 0) return apiError(context, 409, "LESSON_STEP_NOT_FOUND", "This lesson has changed. Reopen it to continue.");
-  // Reading steps reached (every step but practice questions) feed the reading half of the lesson share, and never shrink either.
-  const reading = readingReached(steps, stepIndex);
   const target = { groupId: found.row.groupId, courseId: found.row.id, lessonId: lesson.lesson.id, userId: context.get("user")!.id };
-  const position = await context.env.DB.prepare(
-    `INSERT INTO course_lesson_positions (group_id, course_id, lesson_id, user_id, step_key, step_index, passed_steps, total_steps, reading_reached, reading_total, updated_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-     ON CONFLICT (lesson_id, user_id) DO UPDATE SET step_key = excluded.step_key, step_index = excluded.step_index,
-       passed_steps = MAX(excluded.passed_steps, MIN(course_lesson_positions.passed_steps, excluded.total_steps - 1)),
-       total_steps = excluded.total_steps,
-       reading_reached = MIN(MAX(excluded.reading_reached, COALESCE(course_lesson_positions.reading_reached, 0)), excluded.reading_total),
-       reading_total = excluded.reading_total, updated_at = excluded.updated_at
-     RETURNING lesson_id AS lessonId, step_key AS stepKey, step_index AS stepIndex, passed_steps AS passedSteps, total_steps AS totalSteps, updated_at AS updatedAt`,
-  ).bind(target.groupId, target.courseId, target.lessonId, target.userId, parsed.data.stepKey, stepIndex, stepIndex, steps.length, reading.reached, reading.total, Date.now()).first();
+  const position = await saveLessonPosition(context.env.DB, target, steps, stepIndex, parsed.data.stepKey);
   // Reaching the end with every practice done completes the lesson (docs/courses.md#progress).
   const completed = await completeIfWhole(context.env.DB, target, storedDocument(lesson.lesson.publishedDoc, lesson.lesson.id));
   return context.json(lessonPositionResponseSchema.parse({ position, completed }));
@@ -2853,7 +2842,7 @@ async function activityLesson(context: Context<AppEnvironment>): Promise<{ error
   const [lesson] = await readLessonRows(db, course, [context.req.param("lessonId") ?? ""]);
   if (!lesson?.publishedDoc || lesson.publishedAt === null) return missing;
   return {
-    courseId: course.id, lessonId: lesson.id, archived: course.status === "archived", language: located.language, title: lesson.title, goal: lesson.goal,
+    groupId: located.groupId, courseId: course.id, lessonId: lesson.id, archived: course.status === "archived", language: located.language, title: lesson.title, goal: lesson.goal,
     publishedAt: lesson.publishedAt, document: storedDocument(lesson.publishedDoc, lesson.id),
   };
 }
