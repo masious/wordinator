@@ -925,7 +925,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <dt>Done when</dt><dd><ul><li>The listed test cases pass.</li><li><code>quick_grammar</code> no longer appears in <code>LessonActivityPage.tsx</code>.</li></ul></dd>
 <dt>Depends on</dt><dd>T4.4, T4.5, T4.6, T4.1, T1.3 (<code>practiceBlockId</code>), T3.5 (completion metrics)</dd>
 <dt>Parallel-safe</dt><dd>no (<code>LessonActivityPage.tsx</code>)</dd>
-<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Status</dt><dd class="status">Done 2026-10-21 — LessonActivityPage 14/14; ActivityCompletion 5/5; web typecheck 0 errors</dd>
 <dt>Risk</dt><dd>normal</dd>
 </dl>
 <p class="orch"><strong>Resolved:</strong> the descriptors come from <code>lessonActivitiesQueryOptions</code> in <code>apps/web/src/api.ts:38</code>. The next-activity link targets the activity route <code>/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType</code>. The lesson return hash follows <code>lessonTarget</code> in <code>LessonActivityPage.tsx:39</code>.</p>
@@ -1083,6 +1083,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <tr><td>T3.4</td><td>2026-10-21</td><td>lesson-activities.test.ts 82/82; contracts 30/30</td><td>Done; lineId speech for read_aloud/speak_from_english, narrator for null speaker, lesson_activity usage</td></tr>
 <tr><td>T4.6</td><td>2026-10-21</td><td>Roleplay 11 + ReadAloud 5 + SpeakFromEnglish 5 = 21/21</td><td>Done; shared SpokenLineActivity (read/speak modes), lineId speech, no drafts; no HoldToTalk extraction</td></tr>
 <tr><td>T3.5</td><td>2026-10-21</td><td>lesson-activities.test.ts 90/90; course-progress.test.ts 12/12; orchestrator full-diff review</td><td>Done; metrics.ts, metrics_before on create/restart, guided first-answer reading credit (forward only), completion before/after</td></tr>
+<tr><td>T4.7</td><td>2026-10-21</td><td>LessonActivityPage 14/14; ActivityCompletion 5/5; web typecheck 0 errors</td><td>Done; ActivityCompletion (changed metrics only, Up next D6, back to practices), page branches for nine types</td></tr>
 </tbody>
 </table></div>
 </section>

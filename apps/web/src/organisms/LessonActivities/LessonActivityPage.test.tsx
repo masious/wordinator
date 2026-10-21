@@ -18,13 +18,14 @@ const fingerprint = "a".repeat(64);
 const uuid = (n: number) => `80000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 
 const storyDescriptor: ActivityDescriptor = {
-  sourceId: "section-story", sourceKind: "section", sourceLabel: "Story", returnBlockId: uuid(1), returnHeadingId: uuid(2), fingerprint,
+  sourceId: "section-story", sourceKind: "section", sourceLabel: "Story", returnBlockId: uuid(1), returnHeadingId: uuid(2), practiceBlockId: null, fingerprint,
   activityTypes: ["story_comprehension", "story_summary", "tricky_grammar"],
 };
 const introDescriptor: ActivityDescriptor = {
-  sourceId: "intro", sourceKind: "section", sourceLabel: "Introduction", returnBlockId: uuid(3), returnHeadingId: null, fingerprint,
+  sourceId: "intro", sourceKind: "section", sourceLabel: "Introduction", returnBlockId: uuid(3), returnHeadingId: null, practiceBlockId: null, fingerprint,
   activityTypes: ["story_comprehension"],
 };
+const summaryPayload = { type: "story_summary", recipeVersion: 1, schemaVersion: 1, image: null, pairs: [{ dutch: "Sofia koopt brood.", english: "Sofia buys bread." }, { dutch: "Zij eet het.", english: "She eats it." }], newWords: [{ term: "het brood", translation: "the bread" }] };
 const descriptorList = { descriptors: [storyDescriptor, introDescriptor] };
 
 const run = (overrides: Partial<LessonActivityRun> = {}): LessonActivityRun => ({
@@ -174,7 +175,7 @@ describe("Lesson activity page", () => {
       open: () => ({
         status: "ready", ephemeral: false, run: run(),
         activity: { id: activityId, sourceId: "section-story", sourceLabel: "Story", sourceFingerprint: fingerprint,
-          payload: { type: "story_summary", recipeVersion: 1, schemaVersion: 1, englishSummary: "Sofia buys bread.", dutchRecap: "Sofia koopt brood." } },
+          payload: summaryPayload },
       }),
       run: (body) => ({ run: run({ status: body.action === "complete" ? "completed" : "active", completedAt: body.action === "complete" ? 2 : null }) }),
     });
@@ -188,6 +189,40 @@ describe("Lesson activity page", () => {
     expect(await screen.findByRole("button", { name: "Done" })).toBeInTheDocument();
     await waitFor(() => expect(listReads()).toBe(3));
     expect(callsTo(calls, "/run", "PATCH").map((call) => call.body)).toEqual([{ action: "complete" }, { action: "restart" }]);
+  });
+
+  describe("routes each activity type to its component", () => {
+    const paragraph = (n: number) => ({ id: uuid(500 + n), type: "paragraph", props: { textColor: "default", backgroundColor: "default" }, content: [{ type: "text", text: `Lesson text ${n}.`, styles: {} }], children: [] });
+    const guidedStep = (n: number) => ({ blocks: [paragraph(n)], question: choice(n, `Guided question ${n}?`) });
+    const payloads: Record<string, { payload: Record<string, unknown>; marker: string }> = {
+      story_summary: { payload: summaryPayload, marker: "Sofia koopt brood." },
+      guided_grammar: { payload: { type: "guided_grammar", recipeVersion: 1, schemaVersion: 1, steps: [guidedStep(1), guidedStep(2)], followUps: [] }, marker: "Guided question 1?" },
+      read_aloud: { payload: { type: "read_aloud", recipeVersion: 1, schemaVersion: 1, lines: [{ id: uuid(601), index: 0, speaker: "Dirk", dutchText: "Goedemorgen, Dirk." }] }, marker: "Read this line aloud" },
+      speak_from_english: { payload: { type: "speak_from_english", recipeVersion: 1, schemaVersion: 1, lines: [{ id: uuid(602), index: 0, speaker: "Dirk", englishText: "Good morning, Dirk.", dutchText: null }] }, marker: "Say this in Dutch" },
+    };
+    for (const [type, { payload, marker }] of Object.entries(payloads)) {
+      it(`${type}`, async () => {
+        serve({
+          descriptors: () => ({ descriptors: [{ ...storyDescriptor, activityTypes: [type] }] }),
+          open: () => ({ status: "ready", ephemeral: false, run: run(), activity: { id: activityId, sourceId: "section-story", sourceLabel: "Story", sourceFingerprint: fingerprint, payload } }),
+        });
+        renderPage({ type: type as ActivityType });
+        expect(await screen.findByText(marker)).toBeInTheDocument();
+      });
+    }
+  });
+
+  it("shows only the changed metrics on completion, then Up next and the back links", async () => {
+    serve({
+      descriptors: () => descriptorList,
+      open: () => ({ status: "ready", ephemeral: false, run: run(), activity: { id: activityId, sourceId: "section-story", sourceLabel: "Story", sourceFingerprint: fingerprint, payload: summaryPayload } }),
+      run: () => ({ run: run({ status: "completed", completedAt: 2 }), metrics: [{ key: "lesson_reading", before: 0.2, after: 0.5 }, { key: "lesson_grammar", before: 0.1, after: 0.1 }] }),
+    });
+    renderPage({ type: "story_summary" });
+    fireEvent.click(await screen.findByRole("button", { name: "Done" }));
+    expect(await screen.findByRole("progressbar", { name: "+30% of this lesson's reading" })).toBeInTheDocument();
+    expect(screen.queryByRole("progressbar", { name: /grammar/ })).toBeNull();
+    expect(screen.getByRole("link", { name: /Story comprehension · Introduction/ })).toBeInTheDocument();
   });
 
   it("renders the unavailable state with a return link for an unknown activity type", async () => {

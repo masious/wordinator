@@ -361,7 +361,7 @@ export const resources = {
         types: { story_summary: "Story summary", story_comprehension: "Story comprehension", grammar_explanation: "Grammar explanation", guided_grammar: "Guided grammar", tricky_grammar: "Tricky grammar practice", mixed_practice: "Mixed lesson practice", roleplay: "Dialogue role-play", read_aloud: "Read aloud", speak_from_english: "Speak from English" },
         speaking: { progress: "Line {{n}} of {{total}}", readHeading: "Read this line aloud", speakHeading: "Say this in Dutch", original: "Original line: {{text}}", audioUnavailable: "Audio is unavailable right now. The text is shown, so you can carry on." },
         backToPractices: "Back to the lesson's practices", listen: "Listen", differentLine: "Different from the original line",
-        metrics: { lesson_share: "Lesson {{lesson}} is now {{percent}}% done (+{{delta}}%)", lesson_reading: "+{{delta}}% of this lesson's reading", lesson_grammar: "+{{delta}}% of this lesson's grammar", lesson_activities: "{{percent}}% of this lesson's activities done (+{{delta}}%)" }
+        metrics: { lesson_share: "This lesson is now {{percent}}% done (+{{delta}}%)", lesson_reading: "+{{delta}}% of this lesson's reading", lesson_grammar: "+{{delta}}% of this lesson's grammar", lesson_activities: "{{percent}}% of this lesson's activities done (+{{delta}}%)" }
       },
       courses: {
         loading: "Opening the course library",

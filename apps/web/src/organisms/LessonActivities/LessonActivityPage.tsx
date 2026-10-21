@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 import { ArrowLeft } from "lucide-react";
 import {
   activityRunPatchResponseSchema, lessonActivityFocus,
-  type ActivityDescriptor, type ActivityType, type LessonActivityRun, type LessonActivityViewPayload,
+  type ActivityDescriptor, type ActivityMetricChange, type ActivityType, type LessonActivityRun, type LessonActivityViewPayload,
 } from "@wordinator/contracts/lesson-activities";
 import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { Button, ErrorState, LoadingState, Surface, TextAreaField } from "../../ui";
@@ -15,7 +15,12 @@ import {
 } from "../../api";
 import { useLearningClaim } from "../../learningTime";
 import { draftKey, readDraft, useAnswerAttempt, writeDraft, type AnswerInput } from "./activityAnswers";
+import { ActivityCompletion, lessonTarget } from "./ActivityCompletion";
+import { GuidedGrammarActivity } from "./GuidedGrammarActivity";
+import { ReadAloudActivity } from "./ReadAloudActivity";
 import { RoleplayActivity } from "./RoleplayActivity";
+import { SpeakFromEnglishActivity } from "./SpeakFromEnglishActivity";
+import { SummaryActivity } from "./SummaryActivity";
 import styles from "./LessonActivity.module.css";
 
 export type LessonActivityPageProps = {
@@ -34,13 +39,6 @@ type RunAction = { action: "set_cue_mode"; cueMode: CueMode } | { action: "conti
 
 // How long a generation may take before the page offers Retry instead of polling on (docs/lesson-activities.md#shared-cached-content).
 export const GENERATION_WAIT_MS = 60_000;
-
-// The return link: the canonical lesson URL and the section's heading (or block) anchor; the lesson top when there is none.
-const lessonTarget = (props: Pick<LessonActivityPageProps, "courseSlug" | "lessonSlug">, descriptor?: ActivityDescriptor) => ({
-  to: "/courses/$courseSlug/lessons/$lessonSlug" as const,
-  params: { courseSlug: props.courseSlug, lessonSlug: props.lessonSlug },
-  hash: descriptor?.returnHeadingId ?? descriptor?.returnBlockId ?? undefined,
-});
 
 export function LessonActivityPage(props: LessonActivityPageProps) {
   const { t } = useTranslation();
@@ -91,10 +89,13 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
   const endpoint = lessonActivityEndpoint(props.groupId, props.courseId, props.lessonId, activityId);
   const payload = ready?.activity.payload;
 
+  // The metric changes of the completion that just happened; absent when a finished run is revisited.
+  const [completionMetrics, setCompletionMetrics] = useState<readonly ActivityMetricChange[] | undefined>(undefined);
   const patchRun = useMutation({
     mutationFn: (input: RunAction) => apiRequest(`${endpoint}/run`, activityRunPatchResponseSchema, { method: "PATCH", body: JSON.stringify(input) }),
-    onSuccess: ({ run: next }, input) => {
+    onSuccess: ({ run: next, metrics }, input) => {
       setRunOverride({ runId: next.id, run: next });
+      setCompletionMetrics(input.action === "complete" ? metrics : undefined);
       // Completing or restarting changes the Done marks on the lesson's suggestions, so the list reloads for the lesson page.
       if (input.action === "complete" || input.action === "restart") void client.invalidateQueries({ queryKey: descriptorsOptions.queryKey });
     },
@@ -104,10 +105,11 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
     ? { groupId: props.groupId, target: () => ({ activity: "lesson_activity", courseId: props.courseId, lessonId: props.lessonId, activityId: ready.activity.id, focus: lessonActivityFocus(payload.type) }) }
     : null);
 
-  const items: Question[] = payload?.type === "story_comprehension" || payload?.type === "tricky_grammar" || payload?.type === "mixed_practice" ? payload.questions
-    : payload?.type === "quick_grammar" ? [payload.question] : [];
+  const items: Question[] = payload?.type === "story_comprehension" || payload?.type === "tricky_grammar" || payload?.type === "mixed_practice" ? payload.questions : [];
   const learnerTurns = payload?.type === "roleplay" ? payload.turns.filter((turn) => turn.isLearner) : [];
-  const total = payload?.type === "roleplay" ? learnerTurns.length : items.length;
+  const total = payload?.type === "roleplay" ? learnerTurns.length
+    : payload?.type === "guided_grammar" ? payload.steps.length
+      : payload?.type === "read_aloud" || payload?.type === "speak_from_english" ? payload.lines.length : items.length;
   const cursor = run?.cursor ?? 0;
   const completed = run?.status === "completed";
   const keyFor = (itemId: string) => run && ready ? draftKey(props.accountId, ready.activity.id, run.id, itemId) : null;
@@ -140,12 +142,17 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
     </header>
     {(props.archived || ready.ephemeral) && <Surface tone="quiet"><p>{t("lessonActivities.archivedUnsaved")}</p></Surface>}
     {completed
-      ? <Surface className={styles.panel}><h2>{t("lessonActivities.finished")}</h2><p>{t("lessonActivities.finishedBody")}</p>
-        <div className={styles.actions}><Button onClick={() => void navigate(lessonTarget(props, descriptor))}>{t("lessonActivities.backToLesson")}</Button>
-          <Button variant="secondary" loading={patchRun.isPending} onClick={restart}>{t("lessonActivities.startAgain")}</Button></div></Surface>
-      : payload?.type === "story_summary" ? <Surface className={styles.panel}><h2>{t("lessonActivities.englishSummary")}</h2><p>{payload.englishSummary}</p>
-        <h2>{t("lessonActivities.dutchRecap")}</h2><p>{payload.dutchRecap}</p>
-        <div className={styles.actions}><Button loading={patchRun.isPending} onClick={() => patchRun.mutate({ action: "complete" })}>{t("lessonActivities.done")}</Button></div></Surface>
+      ? <ActivityCompletion courseSlug={props.courseSlug} lessonSlug={props.lessonSlug} lessonLabel={props.lessonTitle} descriptors={descriptors.data.descriptors}
+        descriptor={descriptor} followUps={payload?.type === "guided_grammar" ? payload.followUps : undefined} metrics={completionMetrics}
+        restarting={patchRun.isPending} onRestart={restart} />
+      : payload?.type === "story_summary" ? <SummaryActivity payload={payload} completing={patchRun.isPending} onComplete={() => patchRun.mutate({ action: "complete" })} />
+      : payload?.type === "guided_grammar" && run ? <GuidedGrammarActivity endpoint={endpoint} runId={run.id} steps={payload.steps} cursor={cursor}
+        advancing={patchRun.isPending} onContinue={() => advance()} onComplete={() => patchRun.mutate({ action: "complete" })} />
+      : (payload?.type === "read_aloud" || payload?.type === "speak_from_english") && run ? (() => {
+        const common = { groupId: props.groupId, language: props.language, endpoint, runId: run.id, cursor, advancing: patchRun.isPending, onContinue: () => advance(),
+          backToLesson: <Link className={styles.back} {...lessonTarget(props, descriptor)}>{t("lessonActivities.backToLesson")}</Link> };
+        return payload.type === "read_aloud" ? <ReadAloudActivity {...common} lines={payload.lines} /> : <SpeakFromEnglishActivity {...common} lines={payload.lines} />;
+      })()
       : payload?.type === "grammar_explanation" ? <Surface className={styles.panel}><h2>{t("lessonActivities.explanation")}</h2>
         {payload.paragraphs.map((paragraph, index) => <p key={index}>{paragraph}</p>)}
         {payload.examples.map((example, index) => <div className={styles.turn} key={index}><strong lang="nl">{example.dutch}</strong><p>{example.english}</p></div>)}
