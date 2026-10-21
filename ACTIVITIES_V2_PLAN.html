@@ -1,0 +1,1079 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Wordinator — Lesson activities v2 execution plan</title>
+<style>
+:root{--canvas:#f4f5f9;--paper:#fff;--ink:#191b24;--muted:#626779;--line:#dfe2eb;--accent:#6554cc;--wash:#eeebff;--warn:#8a5200;--warnwash:#fbf1e0;--radius:10px;--space:24px;color-scheme:light dark;font-family:Inter,ui-sans-serif,system-ui,sans-serif;background:var(--canvas);color:var(--ink);line-height:1.65}
+*{box-sizing:border-box}body{margin:0}a{color:var(--accent);text-underline-offset:3px}a:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:4px}header,main,footer{max-width:1100px;margin:auto;padding:40px var(--space)}header{padding-bottom:12px}header p{max-width:780px}.eyebrow{font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;font-weight:750;color:var(--accent)}h1{font-size:clamp(2rem,5vw,3.4rem);letter-spacing:-.04em;line-height:1.12;margin:16px 0}h2{font-size:1.55rem;line-height:1.3;letter-spacing:-.02em;margin-top:0}h3{font-size:1.05rem;margin-bottom:6px}p{margin:10px 0}section{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:28px;margin-bottom:24px;scroll-margin-top:20px}nav{display:flex;gap:8px 20px;flex-wrap:wrap;padding:18px 0}nav a{font-size:.9rem}.meta,.muted{color:var(--muted)}.note{border-left:3px solid var(--accent);padding:10px 16px;background:var(--wash);margin:18px 0}.flow{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}.flow span{padding:10px 14px;background:var(--wash);border-radius:6px;font-weight:600}.table{overflow:auto}table{width:100%;border-collapse:collapse;font-size:.92rem}th,td{text-align:left;vertical-align:top;padding:13px 12px;border-bottom:1px solid var(--line)}th{font-size:.8rem;color:var(--muted)}ul,ol{padding-left:22px}li{margin:7px 0}code{font-size:.87em;background:var(--wash);padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{white-space:pre-wrap;background:var(--wash);padding:16px;border-radius:6px;font-size:.87rem}pre code{padding:0}details{border-top:1px solid var(--line);padding:14px 0}summary{cursor:pointer;font-weight:650}.phase{color:var(--accent);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase}footer{font-size:.85rem;color:var(--muted);padding-top:0}
+.decision{border-top:1px solid var(--line);padding:18px 0}.decision:first-of-type{border-top:0}
+.task{background:var(--paper);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:var(--radius);padding:22px;margin:18px 0;scroll-margin-top:20px}
+.task.risk{border-left-color:var(--warn)}
+.task-head{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.task-head h3{margin:0;font-size:1.1rem}
+.tag{font-size:.75rem;padding:3px 10px;border-radius:999px;background:var(--wash);font-weight:650;white-space:nowrap}
+.tag.warn{background:var(--warnwash);color:var(--warn);border:1px solid var(--warn)}
+.fields{display:grid;grid-template-columns:150px 1fr;gap:12px 18px;margin:16px 0 0}
+.fields dt{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);font-weight:700;padding-top:3px}
+.fields dd{margin:0;min-width:0}
+.fields dd p{margin:0}
+.fields dd ol,.fields dd ul{margin:4px 0}
+.fields dd li{margin:4px 0}
+.orch{border-left:3px solid var(--warn);background:var(--warnwash);padding:9px 14px;margin:14px 0 0;border-radius:4px;font-size:.92rem}
+.orch strong{color:var(--warn)}
+.index td a{font-weight:650}
+.box{border:1px solid var(--accent);background:var(--wash);border-radius:var(--radius);padding:18px;margin:16px 0}
+.box pre{background:var(--paper);border:1px solid var(--line)}
+.empty td{color:var(--muted);font-style:italic}
+@media(prefers-color-scheme:dark){:root{--canvas:#14151c;--paper:#1c1e28;--ink:#eeeff6;--muted:#b0b4c7;--line:#36394a;--accent:#b6aaff;--wash:#2a2542;--warn:#f0c069;--warnwash:#352b14}}
+@media(max-width:640px){header,main,footer{padding:24px 16px}section{padding:20px}th,td{padding:10px 8px}.fields{grid-template-columns:1fr;gap:4px}.fields dt{margin-top:10px}.task{padding:16px}}
+@media print{:root{--canvas:white;--paper:white;--ink:black;--muted:#444;--line:#ccc;--accent:#44349e;--wash:#f5f4fa;--warn:#664000;--warnwash:#fff8e8}header,main,footer{max-width:none;padding:12px 0}section{break-inside:auto;padding:18px}h2,h3{break-after:avoid}nav{display:none}details>*{display:block}a{color:inherit}body{font-size:10pt}.task{break-inside:avoid}}
+</style>
+</head>
+<body>
+<header>
+<div class="eyebrow">Wordinator · Execution plan · 21 October 2026</div>
+<h1>Lesson activities v2 — execution plan</h1>
+<p>Nine activity types, guided grammar, speaking practice, a reversed progress rule, gamified completion and a reworked “Do more with AI” area. Delivered in six batches: the orchestrator dispatches one task card at a time to a Haiku 5.5 worker.</p>
+<p class="meta">Date: 2026-10-21 · Status: Planned — not started · Source: owner brief captured 2026-10-21 (decisions D1–D7)</p>
+<p class="meta">Revision 2 (2026-10-21): course_progress metric removed; orchestrator notes resolved; migration rebuild made cascade-safe.</p>
+<p class="meta">Revision 4: one commit per task; each commit marks its card done and adds a Status log row. Revision 5: v1 is only partly deployed and has no production data, so no v1 compatibility handling or data-preserving migration is needed. Revision 3 (superseded by 5) had assumed production data.</p>
+<nav aria-label="Plan sections"><a href="#summary">Summary</a><a href="#decisions">Owner decisions</a><a href="#out-of-scope">Out of scope</a><a href="#code-map">Code map</a><a href="#commands">Commands</a><a href="#protocol">Execution protocol</a><a href="#batches">Batches and tasks</a><a href="#risks">Open risks</a><a href="#status-log">Status log</a></nav>
+</header>
+<main>
+
+<section id="summary">
+<h2>Summary</h2>
+<p>Lesson activities v1 is committed in <code>a1d0cad</code> and partly deployed, with no production data (owner, 2026-10-21). V2 therefore replaces v1 shapes outright: no compatibility with v1 payloads, runs or cached rows is needed. The catalogue grows from seven types to nine.</p>
+<ul>
+<li>Remove <code>quick_grammar</code> everywhere. Add <code>guided_grammar</code> (ordered steps over lesson blocks, each with a choice question), <code>read_aloud</code> and <code>speak_from_english</code>.</li>
+<li>Story summary gains sentence pairs with hover linking, the section image, and a display-only word dictionary.</li>
+<li>Answering a guided grammar step advances lesson reading progress. This reverses the v1 “never change progress” rule (D4).</li>
+<li>Every activity carries 1–3 metrics. The completion screen shows only the metrics that changed (D5) and an “Up next” list (D6).</li>
+<li>The lesson’s “Do more with AI” area gets a completed-count badge, grows upward, and shows one icon per type (D7).</li>
+</ul>
+<p>The plan has 24 task cards in six batches (0–5). Every task is its own commit on <code>main</code>, which also marks the task done in this file.</p>
+</section>
+
+<section id="decisions">
+<h2>Owner decisions D1–D7</h2>
+<p class="muted">Decided 2026-10-21. These are product rules. Tasks implement them; no task may change them.</p>
+
+<article class="decision" id="D1">
+<h3>D1 · Story summary</h3>
+<ul>
+<li>The recap shows Dutch sentences and their English translations. Hovering or focusing a Dutch sentence highlights its English pair, and the reverse.</li>
+<li>The section’s image (the first <code>image</code> block in the section, including inside columns) appears at the top of the summary activity when present.</li>
+<li>A left-side word dictionary lists <strong>new words used in this section that the lesson does not already teach</strong>. It reuses the visual UI of the lesson’s new-words panel (<code>LessonWords</code>). Display only: no bookmarking, no word memory changes.</li>
+<li>The lesson’s own word list (<code>collectLessonWords</code> terms) goes to the model as “already taught”. The model decides which other words from the section to return in <code>newWords</code>. Validation is shape-only (strict contract). The server only dedupes case-insensitively within the list and against the lesson’s terms.</li>
+<li>On completion, suggest “understand grammar”: the next section’s grammar activity, if a next grammar section exists.</li>
+</ul>
+</article>
+
+<article class="decision" id="D2">
+<h3>D2 · Speaking: two new, separate activity types</h3>
+<ul>
+<li><code>read_aloud</code>: the learner reads each Dutch line aloud, with pronunciation feedback. Model-free: the lines come from the published lesson.</li>
+<li><code>speak_from_english</code>: the learner sees English and produces the Dutch line. English translations are model-written by position (same contract style as role-play cues). The Dutch reference stays server-derived.</li>
+<li>Source: story sections (the sections that today get <code>story_summary</code>). Lines are their dialogue turns (speaker kept) plus prose text split into sentences (speaker <code>null</code>), at most 60 lines.</li>
+<li>“Hint and self-navigating from English” is future work and out of scope. Role-play stays unchanged; merging it is a future decision.</li>
+</ul>
+</article>
+
+<article class="decision" id="D3">
+<h3>D3 · Guided grammar</h3>
+<ul>
+<li>The new type <code>guided_grammar</code> <strong>replaces</strong> <code>quick_grammar</code>, which is removed everywhere. <code>grammar_explanation</code> and <code>tricky_grammar</code> stay as they are.</li>
+<li>Generated once and cached and shared like every activity. No live per-learner adaptation.</li>
+<li>The model receives the grammar section’s blocks as a numbered list of chunks and returns ordered steps. Each step has 1–4 chunk indices (prefer atomic: one sub-rule or one example group per step) and one small choice question (3 options, <code>correctIndex</code>, <code>explanation</code>) that checks or continues teaching that chunk. 2–12 steps in total.</li>
+<li>Chunks ascend in document order across steps, should cover the section, and never overlap.</li>
+<li>The model never writes IDs. The server maps chunk indices to lesson block IDs and snapshots those blocks (immutable, stored in the payload).</li>
+<li>UI: one slide per step. Top: a step progress bar. Below it: the step’s lesson blocks, rendered with the read-only lesson renderer (<code>LessonBlocks</code>). Under that: the small question with feedback. Once the answer is checked, Continue appears.</li>
+<li>The model also returns <code>followUps</code>: 0–2 suggestions from the enum <code>[tricky_grammar, mixed_practice, grammar_explanation]</code> (for example, tricky mixing negation and questions with the new topic). The server keeps only the types actually eligible in this lesson.</li>
+<li>The completion screen offers “Back to the lesson’s practices”: a link to the first practice block inside the source section (hash = block id), otherwise the normal return link.</li>
+</ul>
+</article>
+
+<article class="decision" id="D4">
+<h3>D4 · Progress (reverses the v1 rule)</h3>
+<p>v1 rule being replaced: “Required lesson completion, required practice progress … never change through activities.”</p>
+<p><strong>Why it was forbidden:</strong> the owner asked. It was only a v1 scoping default (<code>LESSON_ACTIVITIES_PLAN.html:146</code>), added to avoid out-of-scope memory and fluency effects. It was not a principle.</p>
+<ul>
+<li><strong>New rule:</strong> answering a <code>guided_grammar</code> step marks the lesson blocks shown in that step as read for lesson progress. The implementation uses the existing reading-position model: advance the viewer’s saved lesson position to the step key of the last shown block <strong>only if it is further than the current saved position</strong> (never move backwards), then run the existing <code>completeIfWhole</code>.</li>
+<li><strong>Note for the docs:</strong> reading share is “furthest position”, so this also credits earlier steps, the same as a reader scrolling ahead. This is a decision the owner can revisit. The alternative is a per-block read set, which is a bigger change.</li>
+<li>Archived courses and unsaved runs: no progress write.</li>
+<li>Word memory never changes through activities.</li>
+</ul>
+</article>
+
+<article class="decision" id="D5">
+<h3>D5 · Gamified progress on completion (all types)</h3>
+<ul>
+<li>Each generated activity payload carries <code>metrics</code>: 1–3 keys chosen by the model from an enum. The model never sees numbers. <code>read_aloud</code> (model-free) uses the fixed default <code>[lesson_share]</code>.</li>
+<li>Metric enum. Values are 0–1 and computed server-side for the viewer:</li>
+</ul>
+<div class="table"><table>
+<thead><tr><th>Key</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><code>lesson_share</code></td><td><code>lessonShare</code> of this lesson (“% of Lesson 8 done”)</td></tr>
+<tr><td><code>lesson_reading</code></td><td>Reading half of the lesson share</td></tr>
+<tr><td><code>lesson_grammar</code></td><td>Share of this lesson’s grammar sources whose <code>guided_grammar</code> run is completed at the current fingerprint</td></tr>
+<tr><td><code>lesson_activities</code></td><td>Share of this lesson’s suggested activities completed at current fingerprints</td></tr>
+</tbody></table></div>
+<ul>
+<li>When a run starts (the first open that creates the run, and on restart), the server snapshots <strong>all</strong> metric values into the run (<code>metrics_before</code> JSON). On completion, the response includes before and after for the activity’s requested keys.</li>
+<li>The UI shows only metrics that changed, as progress bars with friendly copy, for example “+6% of this lesson’s grammar” and “Lesson 8 is now 42% done (+2%)”. If none changed, the block is hidden.</li>
+</ul>
+</article>
+
+<article class="decision" id="D6">
+<h3>D6 · Completion screen “Up next” (all types)</h3>
+<p>In this order: the model’s <code>followUps</code> (<code>guided_grammar</code> only), then the next source’s suggestions in document order (the next section’s activities), then Back to lesson (existing), then Back to practices (<code>guided_grammar</code> only).</p>
+</article>
+
+<article class="decision" id="D7">
+<h3>D7 · “Do more with AI” area on the lesson page</h3>
+<ul>
+<li>The header gets a badge with the count of this lesson’s completed activities, taken from the existing <code>completed</code> list.</li>
+<li>The area expands upward (taller), and the new-words panel shrinks vertically to make room.</li>
+<li>Every activity type gets its own unique icon. The icons come from lucide-react (^1.52); each export must be verified in <code>node_modules</code> before use. Proposed mapping:</li>
+</ul>
+<div class="table"><table>
+<thead><tr><th>Type</th><th>Icon</th></tr></thead>
+<tbody>
+<tr><td><code>story_summary</code></td><td>BookOpenText</td></tr>
+<tr><td><code>story_comprehension</code></td><td>ListChecks</td></tr>
+<tr><td><code>grammar_explanation</code></td><td>NotebookPen</td></tr>
+<tr><td><code>guided_grammar</code></td><td>Footprints</td></tr>
+<tr><td><code>tricky_grammar</code></td><td>Puzzle</td></tr>
+<tr><td><code>mixed_practice</code></td><td>Shuffle</td></tr>
+<tr><td><code>roleplay</code></td><td>Drama</td></tr>
+<tr><td><code>read_aloud</code></td><td>Mic</td></tr>
+<tr><td><code>speak_from_english</code></td><td>Languages</td></tr>
+</tbody></table></div>
+</article>
+</section>
+
+<section id="out-of-scope">
+<h2>Out of scope</h2>
+<ul>
+<li>Hint and self-navigation for speaking from English (future work, D2).</li>
+<li>Merging role-play into the new speaking types.</li>
+<li>Vocabulary and word-memory effects of any activity.</li>
+<li>Live adaptive generation per learner.</li>
+<li>A per-block read set for progress (the furthest-position rule in D4 stays).</li>
+</ul>
+</section>
+
+<section id="code-map">
+<h2>Code map</h2>
+<p class="muted">Verified 2026-10-21 (line numbers from the owner brief). Lines marked “approx.” are ranges. Directories marked “inferred” were not given in the brief and must be confirmed by the orchestrator before dispatch.</p>
+<div class="table"><table>
+<thead><tr><th>Area</th><th>Path:line</th><th>Note</th></tr></thead>
+<tbody>
+<tr><td>Contracts: type enum</td><td><code>packages/contracts/src/lessonActivities.ts:11</code></td><td>Drop <code>quick_grammar</code>; add three types.</td></tr>
+<tr><td>Contracts: focus map</td><td><code>packages/contracts/src/lessonActivities.ts:16</code></td><td><code>lessonActivityFocus</code>; new speaking and grammar mappings.</td></tr>
+<tr><td>Contracts: descriptor</td><td><code>packages/contracts/src/lessonActivities.ts:20</code></td><td>Gains nullable <code>practiceBlockId</code>.</td></tr>
+<tr><td>Contracts: payload contents</td><td><code>packages/contracts/src/lessonActivities.ts:55</code> (approx.)</td><td><code>activityContents</code>.</td></tr>
+<tr><td>Contracts: view contents</td><td><code>packages/contracts/src/lessonActivities.ts:76</code> (approx.)</td><td>View shapes; references stripped.</td></tr>
+<tr><td>Contracts: versions</td><td><code>packages/contracts/src/lessonActivities.ts:5-6</code></td><td>RECIPE and SCHEMA constants, to become 2.</td></tr>
+<tr><td>Contracts: view conversion</td><td><code>packages/contracts/src/lessonActivities.ts:134</code></td><td><code>toLessonActivityView</code>.</td></tr>
+<tr><td>Contracts: grading</td><td><code>packages/contracts/src/lessonActivities.ts:148</code></td><td><code>gradeLessonActivityAnswer</code>.</td></tr>
+<tr><td>Contracts: fingerprint</td><td><code>packages/contracts/src/lessonActivities.ts:172</code></td><td>Used by the <code>lesson_grammar</code> and <code>lesson_activities</code> metrics.</td></tr>
+<tr><td>Contracts: source block</td><td><code>packages/contracts/src/lessonActivities.ts:177</code></td><td><code>activitySourceBlock</code>.</td></tr>
+<tr><td>Contracts: source resolution</td><td><code>packages/contracts/src/lessonActivities.ts:185</code>; grammar :232; summary :253; story via dialogue :254; role-play dialogues :259</td><td><code>resolveLessonActivitySources</code>.</td></tr>
+<tr><td>Contracts: source verification</td><td><code>packages/contracts/src/lessonActivities.ts:269</code></td><td><code>verifyLessonActivitySource</code>.</td></tr>
+<tr><td>Contracts: tests</td><td><code>packages/contracts/src/lessonActivities.test.ts</code></td><td>Existing contract tests.</td></tr>
+<tr><td>Lesson document: image</td><td><code>packages/contracts/src/lessonDocument.ts:80</code></td><td><code>imageSchema</code>: <code>props.url</code>; <code>props.name</code> is the alt text.</td></tr>
+<tr><td>Lesson document: vocabulary</td><td><code>packages/contracts/src/lessonDocument.ts:128</code></td><td>Vocabulary block schema.</td></tr>
+<tr><td>Lesson document: walk</td><td><code>packages/contracts/src/lessonDocument.ts:156</code></td><td><code>walkLessonBlocks</code>.</td></tr>
+<tr><td>Lesson document: practice</td><td><code>packages/contracts/src/lessonDocument.ts:199</code></td><td><code>readPracticeBlock</code>.</td></tr>
+<tr><td>Lesson document: words</td><td><code>packages/contracts/src/lessonDocument.ts:255</code></td><td><code>collectLessonWords</code>; the “already taught” terms.</td></tr>
+<tr><td>Lesson document: step keys</td><td><code>packages/contracts/src/lessonDocument.ts:430</code> (approx.)</td><td><code>lessonStepKey</code>, <code>lessonPositionRequestSchema</code>.</td></tr>
+<tr><td>Generation: options and source slice</td><td><code>apps/api/src/lessonActivities/generate.ts:14</code>, :20, :43</td><td><code>noVocabulary</code>; <code>sourceBlocks</code> (top-level slicing only); <code>countFor</code>.</td></tr>
+<tr><td>Generation: shapes and rules</td><td><code>apps/api/src/lessonActivities/generate.ts:60</code>, :68, :77</td><td><code>SHAPES</code>; <code>RULES</code>; <code>promptFor</code>.</td></tr>
+<tr><td>Generation: role-play cues</td><td><code>apps/api/src/lessonActivities/generate.ts:92</code>, :104, :112, :123</td><td>Role-play cue prompt; reply schema; turn IDs (<code>rolePlayTurnId</code>); <code>generateRolePlay</code>.</td></tr>
+<tr><td>Generation: model schemas</td><td><code>apps/api/src/lessonActivities/generate.ts:160-166</code></td><td>Model output schemas.</td></tr>
+<tr><td>Generation: choice questions</td><td><code>apps/api/src/lessonActivities/generate.ts:170</code></td><td><code>choiceQuestion</code>.</td></tr>
+<tr><td>Generation: assemblers</td><td><code>apps/api/src/lessonActivities/generate.ts:221-238</code></td><td>Per-type assemblers; validation of model output.</td></tr>
+<tr><td>Generation: JSON extraction and entry</td><td><code>apps/api/src/lessonActivities/generate.ts:242</code>, :256, :283</td><td><code>extractJsonText</code>; <code>generateLessonActivity</code>; <code>activitySourceData</code>.</td></tr>
+<tr><td>Routes: list and open</td><td><code>apps/api/src/lessonActivities/routes.ts:81</code>, :98, :115</td><td><code>completedActivities</code>; list; open.</td></tr>
+<tr><td>Routes: status and answers</td><td><code>apps/api/src/lessonActivities/routes.ts:172</code>, :194</td><td>Status polling; answer submission.</td></tr>
+<tr><td>Routes: run and completion</td><td><code>apps/api/src/lessonActivities/routes.ts:224</code>, :238, :249-250</td><td>Run PATCH; restart; complete.</td></tr>
+<tr><td>Routes: speech</td><td><code>apps/api/src/lessonActivities/routes.ts:260</code></td><td>Speech for role-play turns only today; rejects other types.</td></tr>
+<tr><td>Cache</td><td><code>apps/api/src/lessonActivities/cache.ts:14</code>, :27, :50</td><td><code>claimGeneration</code>; <code>reserveCacheMiss</code>; <code>commitGeneratedPayload</code>.</td></tr>
+<tr><td>Metrics module (new)</td><td><code>apps/api/src/lessonActivities/metrics.ts</code></td><td>Created by T3.5. Does not exist yet.</td></tr>
+<tr><td>DB: schema</td><td><code>packages/db/src/schema.ts:372</code>, :427, :439, :443, :455</td><td><code>coursePracticeProgress</code> :372; <code>lessonActivities</code> :427; type CHECK :439; <code>lessonActivityRuns</code> :443; <code>lessonActivityAnswers</code> :455.</td></tr>
+<tr><td>DB: migrations</td><td><code>0036_lesson_activities.sql</code>; <code>0037_speech_usage_lesson_activity.sql</code>; new <code>0038_lesson_activities_v2.sql</code></td><td>Latest is 0037. The migrations directory is not named in the brief (see T2.1).</td></tr>
+<tr><td>Progress: position write</td><td><code>apps/api/src/app.ts:2572</code></td><td>PUT position: writes <code>course_lesson_positions</code> reading fields, then <code>completeIfWhole</code>.</td></tr>
+<tr><td>Progress: completion</td><td><code>apps/api/src/learning/progress.ts</code></td><td><code>completeIfWhole</code>.</td></tr>
+<tr><td>Progress: lesson share</td><td><code>packages/contracts/src/learning.ts:213</code>; <code>apps/api/src/learning/lessonShare.ts:16</code></td><td><code>lessonShare</code> (contracts); <code>lessonShareColumns</code> (API).</td></tr>
+<tr><td>Web: activity page</td><td><code>apps/web/src/organisms/LessonActivities/LessonActivityPage.tsx</code></td><td>Return link :39, :120; completion :142-145; story_summary :146; grammar_explanation :149; roleplay :153; <code>ActivityItem</code> :164; WordOrder :203.</td></tr>
+<tr><td>Web: role-play</td><td><code>apps/web/src/organisms/LessonActivities/RoleplayActivity.tsx</code> (inferred from its test location)</td><td>Hold-to-talk, Send and feedback pattern; speech usage reference.</td></tr>
+<tr><td>Web: drafts</td><td><code>apps/web/src/organisms/LessonActivities/activityAnswers.ts</code> (inferred)</td><td>Device drafts per activity.</td></tr>
+<tr><td>Web: speech recognition</td><td><code>apps/web/src/molecules/speechRecognition.ts:18</code>, :379</td><td><code>PronunciationAssessment</code>; <code>useSpokenAnswer</code>.</td></tr>
+<tr><td>Web: speech controls</td><td><code>apps/web/src/molecules/SpeakControls.tsx:70</code>, :100</td><td><code>ScoreRing</code>; <code>AssessmentBreakdown</code>.</td></tr>
+<tr><td>Web: speech playback</td><td><code>apps/web/src/molecules/Speech.tsx</code> (directory inferred)</td><td><code>playSpeech</code> and related helpers.</td></tr>
+<tr><td>Web: words panel</td><td><code>apps/web/src/organisms/CourseLessons/LessonWords.tsx:101</code>; <code>PanelWord.tsx</code>, <code>LessonWordSearch.tsx</code> (same folder)</td><td>Props: steps, active, placement rail|under|sheet, footer. Used at <code>CourseLessons.tsx:211</code>.</td></tr>
+<tr><td>Web: Do more with AI</td><td><code>apps/web/src/organisms/CourseLessons/LessonBox.tsx:73</code>, :80, :83-86, :90, :94, :99-108</td><td>Suggestion type; actions; labels; done badge; header; links.</td></tr>
+<tr><td>Web: suggestions build</td><td><code>apps/web/src/organisms/CourseLessons/CourseLessons.tsx:145-159</code></td><td>Builds the suggestions.</td></tr>
+<tr><td>Web: read-only renderer</td><td><code>apps/web/src/organisms/LessonDocument/LessonDocument.tsx:584</code></td><td><code>LessonBlocks({blocks, renderPractice?})</code>.</td></tr>
+<tr><td>Web: i18n</td><td><code>apps/web/src/i18n.ts:339</code>, :373, :450</td><td><code>lessonActivities.*</code>; <code>types.*</code>; <code>courses.lessonBox.doMoreWithAi</code>.</td></tr>
+<tr><td>Web: API client</td><td><code>apps/web/src/api.ts:38-48</code></td><td>Web activity API types.</td></tr>
+<tr><td>Tests: API</td><td><code>apps/api/test/lesson-activities.test.ts</code>; <code>apps/api/test/lesson-activities-migration.test.ts</code></td><td>Route and generation tests; migration tests.</td></tr>
+<tr><td>Tests: web</td><td><code>apps/web/src/organisms/LessonActivities/LessonActivityPage.test.tsx</code>; <code>RoleplayActivity.test.tsx</code>; <code>apps/web/src/organisms/CourseLessons/LessonBox.test.tsx</code></td><td>Component suites.</td></tr>
+<tr><td>Tests: e2e</td><td><code>apps/web/e2e/lesson-activities.spec.ts</code>; <code>apps/web/e2e/aiStub.ts:124</code></td><td>Affected Playwright spec; AI stub with <code>activityOutput(type)</code>.</td></tr>
+</tbody></table></div>
+</section>
+
+<section id="commands">
+<h2>Commands</h2>
+<p>Every command is prefixed with <code>rtk</code>. Run only the commands a task lists. Never run the whole API suite from a task (port exhaustion, see <code>docs/workers-tests-port-exhaustion.md</code>).</p>
+<div class="table"><table>
+<thead><tr><th>Area</th><th>Command</th></tr></thead>
+<tbody>
+<tr><td>Contracts typecheck</td><td><code>rtk pnpm --filter @wordinator/contracts typecheck</code></td></tr>
+<tr><td>Contracts test file</td><td><code>rtk pnpm --filter @wordinator/contracts exec vitest run src/lessonActivities.test.ts</code></td></tr>
+<tr><td>DB typecheck</td><td><code>rtk pnpm --filter @wordinator/db typecheck</code></td></tr>
+<tr><td>API typecheck</td><td><code>rtk pnpm --filter @wordinator/api typecheck</code> (batch end; see the gating note below)</td></tr>
+<tr><td>API single file</td><td><code>rtk pnpm --filter @wordinator/api exec vitest run test/lesson-activities.test.ts</code> (one file per run; replace the path for other files)</td></tr>
+<tr><td>Web typecheck</td><td><code>rtk pnpm --filter @wordinator/web typecheck</code></td></tr>
+<tr><td>Web single file</td><td><code>rtk pnpm --filter @wordinator/web exec vitest run &lt;file&gt;</code></td></tr>
+<tr><td>E2E (only this spec)</td><td><code>rtk pnpm --filter @wordinator/web exec playwright test e2e/lesson-activities.spec.ts</code></td></tr>
+<tr><td>API build (batch end only)</td><td><code>rtk pnpm --filter @wordinator/api build</code></td></tr>
+<tr><td>Web build (batch end only)</td><td><code>rtk pnpm --filter @wordinator/web build</code></td></tr>
+<tr><td>Commit (orchestrator)</td><td><code>rtk git commit</code> with the message ending in the trailer <code>Co-Authored-By: Claude Opus 5.5 &lt;noreply@anthropic.com&gt;</code></td></tr>
+</tbody></table></div>
+</section>
+
+<section id="protocol">
+<h2>Execution protocol</h2>
+<ul>
+<li><strong>Roles.</strong> The orchestrator is the main session (Opus). Workers are Haiku 5.5 subagents, one task each, with a fresh context.</li>
+<li><strong>Prompt.</strong> Each worker prompt is the task card verbatim, plus the read rule below. Use the template in the box.</li>
+<li><strong>Read rule.</strong> Workers read only the files listed under Read. They search only when a listed symbol has moved. They never read docs other than those listed, never read <code>todo.md</code>, and never run full suites.</li>
+<li><strong>Report.</strong> Maximum 10 lines: DONE or BLOCKED, files changed, commands run with pass/fail counts, one-line deviations. No diffs and no pasted logs.</li>
+<li><strong>Review.</strong> The orchestrator reviews <code>rtk git diff --stat</code> and spot-checks files. It reads full diffs only for tasks marked ⚠ or when a check fails.</li>
+<li><strong>Retry.</strong> A failing task gets ONE retry with the error excerpt (20 lines at most). A second failure escalates to a Sonnet worker or the orchestrator.</li>
+<li><strong>Parallelism.</strong> Tasks marked parallel-safe touch disjoint files and may run at the same time. Everything else runs in sequence.</li>
+<li><strong>Commits (owner rule, revision 4).</strong> One commit per task on <code>main</code> (the owner works alone on main), made by the orchestrator right after the task’s Verify passes. Subject: <code>activities v2 T1.2: &lt;card title&gt;</code>. The same commit updates this file: the card’s Status field becomes <code>Done YYYY-MM-DD — &lt;checks run, pass counts&gt;</code> and one row is added to the Status log. Hashes are not written into this file (a commit cannot contain its own hash); find a task’s commit with <code>rtk git log --grep "T1.2"</code>. A BLOCKED task is not committed; its Status becomes <code>Blocked — &lt;reason&gt;</code> and is committed with the next task. The commit message ends with the Co-Authored-By line above.</li>
+<li><strong>Risk.</strong> Tasks marked ⚠ get a full-diff review by the orchestrator.</li>
+</ul>
+
+<div class="box" id="worker-prompt">
+<h3>Worker prompt template</h3>
+<p class="muted">The orchestrator pastes this text when it dispatches a task. Replace the placeholder with the task card, copied verbatim.</p>
+<pre><code>You are a worker on the Wordinator “Lesson activities v2” plan.
+Repository: /Users/jsninja/myworkspace/2wordinator. Prefix every shell command with rtk.
+
+TASK CARD (verbatim):
+&lt;paste the full task card here&gt;
+
+READ RULE: Read only the files listed under Read. Search only when a listed symbol has moved. Do not read other docs, do not read todo.md, do not run full test suites, do not commit.
+If an Orchestrator note asks you to confirm something, report BLOCKED instead of guessing.
+Run only the Verify commands on the card.
+
+REPORT FORMAT (maximum 10 lines, no diffs, no logs):
+1. DONE or BLOCKED (if BLOCKED, the blocker in one line)
+2. Files changed (paths only)
+3. Commands run, each with pass/fail counts
+4. Deviations from the card, one line each, or “none”</code></pre>
+</div>
+</section>
+
+<section id="batches">
+<h2>Batches and tasks</h2>
+
+<h3>Task index</h3>
+<div class="table index"><table>
+<thead><tr><th>ID</th><th>Title</th><th>Depends on</th><th>Parallel</th><th>Risk</th></tr></thead>
+<tbody>
+<tr><td><a href="#T0.1">T0.1</a></td><td>Activity behaviour doc</td><td>none</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T0.2">T0.2</a></td><td>Other owner docs</td><td>T0.1</td><td>yes (with each other)</td><td>normal</td></tr>
+<tr><td><a href="#T1.1">T1.1</a></td><td>Types, focus and metric enum</td><td>T0.1</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T1.2">T1.2</a></td><td>Payload and view schemas</td><td>T1.1</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T1.3">T1.3</a></td><td>Resolver, speaking lines and helpers</td><td>T1.2</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T1.4">T1.4</a></td><td>Grading, view stripping and completion schema</td><td>T1.3</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T2.1">T2.1</a></td><td>Migration 0038 and schema</td><td>T1.1</td><td>no</td><td>⚠</td></tr>
+<tr><td><a href="#T3.1">T3.1</a></td><td>Story summary generation and image</td><td>T1.2, T1.3</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T3.2">T3.2</a></td><td>Guided grammar generation</td><td>T3.1</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T3.3">T3.3</a></td><td>Speaking generation and read_aloud materialize</td><td>T3.1, T1.3</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T3.4">T3.4</a></td><td>Speech for speaking lines</td><td>T3.3</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T3.5">T3.5</a></td><td>Metrics, progress write and completion</td><td>T2.1, T1.4, T3.2</td><td>no</td><td>⚠</td></tr>
+<tr><td><a href="#T3.6">T3.6</a></td><td>List counts and backend close</td><td>T3.5</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T4.1">T4.1</a></td><td>API client, i18n and copy keys</td><td>T1.1, T1.2, T1.4</td><td>yes (with T4.2)</td><td>normal</td></tr>
+<tr><td><a href="#T4.2">T4.2</a></td><td>Icon map</td><td>T1.1</td><td>yes (with T4.1)</td><td>normal</td></tr>
+<tr><td><a href="#T4.3">T4.3</a></td><td>Do more with AI badge and layout</td><td>T4.1, T4.2</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T4.4">T4.4</a></td><td>Summary activity</td><td>T4.1, T4.3, T1.2</td><td>yes (with T4.5, T4.6)</td><td>normal</td></tr>
+<tr><td><a href="#T4.5">T4.5</a></td><td>Guided grammar activity</td><td>T4.1, T1.2</td><td>yes (with T4.4, T4.6)</td><td>normal</td></tr>
+<tr><td><a href="#T4.6">T4.6</a></td><td>Speaking activities</td><td>T4.1, T3.4, T1.2</td><td>yes (with T4.4, T4.5)</td><td>normal</td></tr>
+<tr><td><a href="#T4.7">T4.7</a></td><td>Completion screen and page wiring</td><td>T4.4, T4.5, T4.6, T1.3, T3.5</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T4.8">T4.8</a></td><td>Web typecheck, suites and build</td><td>T4.1–T4.7</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T5.1">T5.1</a></td><td>E2E spec and AI stub</td><td>T4.8</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T5.2">T5.2</a></td><td>Close-out (orchestrator-run)</td><td>T5.1</td><td>no</td><td>normal</td></tr>
+<tr><td><a href="#T5.3">T5.3</a></td><td>Production rollout (orchestrator only)</td><td>T5.1</td><td>no</td><td>⚠</td></tr>
+</tbody></table></div>
+<p class="muted">24 task cards. Batch 0 is documentation, Batch 1 contracts, Batch 2 database, Batch 3 API, Batch 4 web, Batch 5 e2e and close-out.</p>
+
+<h3>Batch gating (read before dispatch)</h3>
+<p class="orch"><strong>Orchestrator note (commit gating):</strong> tasks are committed one by one. From T1.1 until Batch 4 completes, the API and the web are expected not to typecheck, so a task’s commit gate is only its own package typecheck plus its listed test files (docs tasks: the Verify grep). Never deploy anything until T5.3. Batch-end checks still run: after T3.6, API test files in groups of six and the API build; after T4.8, web typecheck, the listed web suites and the web build.</p>
+
+<h3 class="phase">Batch 0 · Docs (source of truth first)</h3>
+
+<section class="task" id="T0.1">
+<div class="task-head"><h3>T0.1 · Activity behaviour doc</h3><span class="tag">Batch 0</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Make <code>docs/lesson-activities.md</code> the single owner of the v2 rules D1–D7, with no mention of <code>quick_grammar</code> left in it.</p></dd>
+<dt>Read</dt><dd><ul><li><code>docs/lesson-activities.md</code> (whole file).</li></ul><p>The rules to write are in this card. Do not read other files.</p></dd>
+<dt>Change</dt><dd><ol>
+<li>Catalogue table: remove the Quick grammar row. Add Guided grammar, Read aloud and Speak from English rows, each with its source, content and completion, in the existing row format.</li>
+<li>Model output section: add <code>newWords</code>, sentence pairs for story summary, guided steps through chunk indices, the metric enum and <code>followUps</code>.</li>
+<li>Summary section: add the image rule (the first image block in the section, including inside columns, shown at the top).</li>
+<li>Add the word dictionary rule: new words the lesson does not teach; display only; no bookmarking; no word-memory change.</li>
+<li>Replace the “never change” sentence with the D4 rule. Keep the statement that word memory still never changes through activities.</li>
+<li>Extend the speech privacy exception to <code>read_aloud</code> and <code>speak_from_english</code> transcripts.</li>
+<li>Completion screen: the D5 metric rules and the D6 “Up next” order.</li>
+<li>Do more with AI: the D7 badge and the icon table.</li>
+<li>Keep the “Known gaps” list. Add a note under D4 about furthest-position credit.</li>
+<li>Replace the lesson activities status sentence “implemented in the working tree, not deployed” with “v1 partly deployed (no production data); v2 planned in ACTIVITIES_V2_PLAN.html”.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Edit any other doc (T0.2 owns them).</li><li>Change code.</li><li>Drop or soften any D1–D7 rule.</li><li>Add ranking, filtering, search or pinning to anything.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>None. Docs only.</dd>
+<dt>Verify</dt><dd><code>rtk grep -n quick_grammar docs/lesson-activities.md</code> returns nothing.</dd>
+<dt>Done when</dt><dd><ul><li>No mention of <code>quick_grammar</code> remains in this file.</li><li>Each of D1–D7 can be traced to a heading or bullet in this file.</li><li>The “Known gaps” list is still present, and the furthest-position note is present.</li><li>The old “never change” sentence is gone.</li></ul></dd>
+<dt>Depends on</dt><dd>none (first task)</dd>
+<dt>Parallel-safe</dt><dd>no (T0.2 links to this file)</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> Verify = <code>rtk grep -n quick_grammar docs/lesson-activities.md</code> returns nothing. The worker finds the “never change” sentence by its text.</p>
+</section>
+
+<section class="task" id="T0.2">
+<div class="task-head"><h3>T0.2 · Other owner docs</h3><span class="tag">Batch 0</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Update the seven owner docs so each states its v2 change in one or two sentences and links to <code>docs/lesson-activities.md</code>.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>docs/data-model.md</code> (activity and run tables; find by heading).</li>
+<li><code>docs/courses.md</code> (lesson share and Do more with AI sections).</li>
+<li><code>docs/speech.md</code> (activity speech).</li>
+<li><code>docs/learning-time.md</code> (focus mapping).</li>
+<li><code>docs/security-and-privacy.md</code> (transcript exception).</li>
+<li><code>docs/testing.md</code> (test list).</li>
+<li><code>docs/roadmap.md</code> (add the item).</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li><code>data-model.md</code>: new nullable JSON column <code>metrics_before</code> on the run table; the type list gains <code>guided_grammar</code>, <code>read_aloud</code> and <code>speak_from_english</code>; <code>quick_grammar</code> removed.</li>
+<li><code>courses.md</code>: a guided grammar step answer advances reading position (D4); the Do more with AI badge.</li>
+<li><code>speech.md</code>: activity speech covers <code>read_aloud</code> and <code>speak_from_english</code> lines.</li>
+<li><code>learning-time.md</code>: <code>read_aloud</code> and <code>speak_from_english</code> count as speaking focus; <code>guided_grammar</code> counts as grammar focus.</li>
+<li><code>security-and-privacy.md</code>: the transcript exception scope extends to <code>read_aloud</code> and <code>speak_from_english</code>.</li>
+<li><code>testing.md</code>: list the new test files named in the Code map.</li>
+<li><code>roadmap.md</code>: add a “Lesson activities v2” item with status in progress.</li>
+<li>Every other doc that carries the lesson activities status sentence (find them with <code>rtk grep -rn "not deployed" docs/</code>): replace it with “v1 partly deployed (no production data); v2 planned in ACTIVITIES_V2_PLAN.html”. Leave “not deployed” lines about other features unchanged.</li>
+</ol>Each change links to <code>docs/lesson-activities.md</code> instead of restating the rules.</dd>
+<dt>Do not</dt><dd><ul><li>Edit <code>docs/lesson-activities.md</code> (T0.1 owns it).</li><li>Restate the full D4 rule in any file.</li><li>Change code, or create a new doc file.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>None.</dd>
+<dt>Verify</dt><dd>Each listed doc contains a link to <code>docs/lesson-activities.md</code> in the edited paragraph.</dd>
+<dt>Done when</dt><dd><ul><li>Each of the seven files has its change, with a link to <code>docs/lesson-activities.md</code>.</li><li>The roadmap item reads in progress.</li><li>No file repeats the full D4 rule.</li></ul></dd>
+<dt>Depends on</dt><dd>T0.1 (source of truth first)</dd>
+<dt>Parallel-safe</dt><dd>yes, with each other (the files are disjoint). Start after T0.1.</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> write the <code>testing.md</code> entries now, using the planned test file names from the Code map. T5.2 corrects them with actual results.</p>
+</section>
+
+<h3 class="phase">Batch 1 · Contracts (packages/contracts)</h3>
+
+<section class="task" id="T1.1">
+<div class="task-head"><h3>T1.1 · Types, focus and metric enum</h3><span class="tag">Batch 1</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Move the contracts’ activity type list, focus map and version constants to v2, and add the metric enum.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>packages/contracts/src/lessonActivities.ts:5-6</code> (versions).</li>
+<li><code>packages/contracts/src/lessonActivities.ts:11</code> (types enum).</li>
+<li><code>packages/contracts/src/lessonActivities.ts:16</code> (<code>lessonActivityFocus</code>).</li>
+<li><code>packages/contracts/src/lessonActivities.test.ts</code> (existing tests).</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>Remove <code>quick_grammar</code> from the types enum at :11. Add <code>guided_grammar</code>, <code>read_aloud</code> and <code>speak_from_english</code>. The enum has nine types.</li>
+<li>In <code>lessonActivityFocus</code> at :16, map <code>read_aloud</code> and <code>speak_from_english</code> to speaking, and <code>guided_grammar</code> to grammar.</li>
+<li>Set the RECIPE and SCHEMA version constants at :5-6 to 2.</li>
+<li>Add <code>lessonActivityMetricSchema</code>, a z.enum of exactly four keys: <code>lesson_share</code>, <code>lesson_reading</code>, <code>lesson_grammar</code>, <code>lesson_activities</code>. Export the type <code>ActivityMetric</code>.</li>
+<li>Fix compile errors inside <code>packages/contracts</code> only.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Touch <code>apps/api</code>, <code>apps/web</code> or <code>packages/db</code>. Breakage there is expected until Batches 3–4.</li><li>Change payload or view schemas (T1.2) or the resolver (T1.3).</li></ul></dd>
+<dt>Tests to add/update</dt><dd>In <code>lessonActivities.test.ts</code>: the enum has exactly nine types; <code>quick_grammar</code> is rejected; the focus map gives the three new types their focus; the metric enum accepts the four keys and rejects an unknown key; the SCHEMA and RECIPE constants equal 2.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/contracts typecheck</code><br><code>rtk pnpm --filter @wordinator/contracts exec vitest run src/lessonActivities.test.ts</code></dd>
+<dt>Done when</dt><dd><ul><li>Contracts typecheck passes.</li><li>The contracts test file passes with the new cases.</li><li><code>quick_grammar</code> is absent from the contracts types enum.</li></ul></dd>
+<dt>Depends on</dt><dd>T0.1</dd>
+<dt>Parallel-safe</dt><dd>no (same file as T1.2–T1.4)</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Orchestrator note:</strong> breakage in <code>apps/api</code> and <code>apps/web</code> after this task is intended. Do not ask the worker to fix it. See the batch gating note.</p>
+</section>
+
+<section class="task" id="T1.2">
+<div class="task-head"><h3>T1.2 · Payload and view schemas</h3><span class="tag">Batch 1</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Replace the v1 payload and view shapes for the changed types with the v2 shapes, and add <code>metrics</code> to every payload, roleplay included.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>packages/contracts/src/lessonActivities.ts:20</code> (descriptor).</li>
+<li><code>packages/contracts/src/lessonActivities.ts:55</code> (<code>activityContents</code>, payloads, approx.).</li>
+<li><code>packages/contracts/src/lessonActivities.ts:76</code> (view contents, approx.).</li>
+<li><code>packages/contracts/src/lessonDocument.ts:80</code> (<code>imageSchema</code>).</li>
+<li><code>packages/contracts/src/lessonDocument.ts</code> near :80 to :130 (the existing lesson block schema; reuse it for guided steps).</li>
+<li><code>packages/contracts/src/lessonActivities.test.ts</code>.</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li><code>story_summary</code> payload: <code>pairs</code>, an array of <code>{dutch, english}</code>, 2–16 items; <code>newWords</code>, an array of <code>{term, translation}</code>, 0–12 items; <code>metrics</code>.</li>
+<li><code>story_summary</code> view: the same <code>pairs</code> and <code>newWords</code>, plus <code>image</code>: <code>{url, alt}</code> or <code>null</code>.</li>
+<li><code>guided_grammar</code> payload: <code>steps</code>, an array of 2–12 items, each <code>{blocks: LessonBlock[] (1–4, existing lesson block schema), question: choiceQuestionPayloadSchema}</code>; <code>followUps</code>, an array of at most 2 from the enum <code>[tricky_grammar, mixed_practice, grammar_explanation]</code>; <code>metrics</code>.</li>
+<li><code>guided_grammar</code> view: the same steps, where each question view omits <code>correctIndex</code> and <code>explanation</code> (follow the existing choice view pattern).</li>
+<li><code>read_aloud</code> payload: <code>lines</code>, an array of 1–60 items, each <code>{id, index, speaker (or null), dutchText, referenceText}</code>; <code>metrics</code>.</li>
+<li><code>read_aloud</code> view: keep <code>dutchText</code>; strip <code>referenceText</code>.</li>
+<li><code>speak_from_english</code> payload: the same lines plus a required <code>englishText</code>; <code>metrics</code>.</li>
+<li><code>speak_from_english</code> view: includes <code>englishText</code>; <code>dutchText</code> is <code>null</code> until that line’s answer is submitted; <code>referenceText</code> stripped.</li>
+<li><code>metrics</code>: <code>z.array(metricSchema).min(1).max(3)</code> on every payload, roleplay included.</li>
+<li>Update the <code>superRefine</code> so question IDs are unique across all guided steps.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Change the resolver or grading (T1.3, T1.4).</li><li>Touch <code>apps</code> or <code>packages/db</code>.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>Valid and invalid fixtures for each new shape. Invalid: <code>pairs</code> with fewer than 2 items; <code>newWords</code> with more than 12; <code>steps</code> with 1 item; a step with 0 or 5 blocks; <code>followUps</code> with 3 items or an unknown type; <code>lines</code> with 61 items; <code>speak_from_english</code> without <code>englishText</code>; <code>metrics</code> with 0 or 4 items; duplicate question IDs across steps. Valid: the guided view has no <code>correctIndex</code>; the speak view has <code>dutchText</code> null before an answer.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/contracts typecheck</code><br><code>rtk pnpm --filter @wordinator/contracts exec vitest run src/lessonActivities.test.ts</code></dd>
+<dt>Done when</dt><dd><ul><li>All listed valid and invalid fixtures behave as stated.</li><li>Contracts typecheck and the test file pass.</li></ul></dd>
+<dt>Depends on</dt><dd>T1.1</dd>
+<dt>Parallel-safe</dt><dd>no</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> <code>referenceText</code> and <code>dutchText</code> hold the same Dutch text. <code>referenceText</code> exists only in the stored payload, for grading; views never include it. The <code>read_aloud</code> view shows <code>dutchText</code>. The <code>speak_from_english</code> view has <code>dutchText: null</code> until that line’s answer is submitted.</p>
+<p class="orch"><strong>Orchestrator note:</strong> the <code>image</code> field on the story summary view is required by T4.4 but is not in this card’s text in the brief. It is added here from D1 and T4.4.</p>
+</section>
+
+<section class="task" id="T1.3">
+<div class="task-head"><h3>T1.3 · Resolver, speaking lines and helpers</h3><span class="tag">Batch 1</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Resolve the new sources (guided grammar for grammar sections, speaking for story sections), and add the helpers for speaking lines, the first image and the practice block pointer.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>packages/contracts/src/lessonActivities.ts:177</code> (<code>activitySourceBlock</code>).</li>
+<li><code>packages/contracts/src/lessonActivities.ts:185-268</code> (<code>resolveLessonActivitySources</code>: grammar :232; summary :253; story via dialogue :254; role-play dialogues :259).</li>
+<li><code>packages/contracts/src/lessonActivities.ts:269</code> (<code>verifyLessonActivitySource</code>).</li>
+<li><code>packages/contracts/src/lessonDocument.ts:156</code> (<code>walkLessonBlocks</code>), :199 (<code>readPracticeBlock</code>), :255 (<code>collectLessonWords</code>).</li>
+<li><code>packages/contracts/src/lessonActivities.test.ts</code>.</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>Grammar sources: descriptors get <code>grammar_explanation</code>, <code>guided_grammar</code> and <code>tricky_grammar</code>. Nothing named <code>quick_grammar</code> remains.</li>
+<li>Story sources (dialogue-bearing sections and the intro-with-dialogue source): descriptors additionally get <code>read_aloud</code> and <code>speak_from_english</code>.</li>
+<li>Add the exported helper <code>storySpeakingLines(blocks)</code>. It returns dialogue turns (speaker kept) and prose text split into sentences at <code>.</code>, <code>?</code> and <code>!</code>, keeping the punctuation (speaker <code>null</code>). Lines are in document order and capped at 60.</li>
+<li>Add the exported helper <code>firstImage(blocks)</code>. It returns the first image block, searching inside columns too, as <code>{url, alt}</code> (alt from <code>props.name</code>), or <code>null</code>.</li>
+<li>Add the nullable <code>practiceBlockId</code> to the descriptor schema: the ID of the first practice block inside the source section; <code>null</code> for dialogue and lesson-end sources.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Change grading or view stripping (T1.4).</li><li>Change payload schemas beyond what compiling requires.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>Story fixture: the types include <code>story_summary</code>, <code>read_aloud</code> and <code>speak_from_english</code>; the lines keep dialogue speakers and give prose sentences a <code>null</code> speaker; the cap of 60 holds. Grammar fixture: the types are exactly <code>grammar_explanation</code>, <code>guided_grammar</code> and <code>tricky_grammar</code>. <code>firstImage</code> finds an image inside columns. <code>practiceBlockId</code> points at the first practice block in the section.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/contracts typecheck</code><br><code>rtk pnpm --filter @wordinator/contracts exec vitest run src/lessonActivities.test.ts</code></dd>
+<dt>Done when</dt><dd><ul><li>The story and grammar fixtures pass.</li><li>The helpers are exported and tested.</li><li>Contracts typecheck passes.</li></ul></dd>
+<dt>Depends on</dt><dd>T1.2</dd>
+<dt>Parallel-safe</dt><dd>no</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> the two sets are identical. Every source that gets <code>story_summary</code> (dialogue-bearing sections, and the intro when it has a dialogue) also gets <code>read_aloud</code> and <code>speak_from_english</code>.</p>
+<p class="orch"><strong>Resolved:</strong> the intro source is at <code>packages/contracts/src/lessonActivities.ts:219-228</code>.</p>
+</section>
+
+<section class="task" id="T1.4">
+<div class="task-head"><h3>T1.4 · Grading, view and completion schema</h3><span class="tag">Batch 1</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Grade guided grammar steps and speaking lines, strip references from the new views, and extend the completion response with metrics.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>packages/contracts/src/lessonActivities.ts:134</code> (<code>toLessonActivityView</code>).</li>
+<li><code>packages/contracts/src/lessonActivities.ts:148</code> (<code>gradeLessonActivityAnswer</code>).</li>
+<li><code>packages/contracts/src/lessonActivities.ts:172</code> (fingerprint, for reference).</li>
+<li>The sentence normaliser <code>normalizeLessonSentence</code> (its location is not in the brief; find it under <code>packages/contracts/src/</code> by name, as role-play uses it).</li>
+<li>The completion response schema, <code>activityCompletionResponseSchema</code> (in the same file).</li>
+<li><code>packages/contracts/src/lessonActivities.test.ts</code>.</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li><code>gradeLessonActivityAnswer</code>: guided grammar step questions are graded as choice answers (compare with <code>correctIndex</code>), the same as existing choice questions.</li>
+<li>Read-aloud and speak-from-english lines: the sentence answer is compared with <code>normalizeLessonSentence</code>, as role-play does. A match is correct. The brief says a mismatch is never reported as “incorrect”. Use the same result shape role-play uses for a non-match.</li>
+<li><code>toLessonActivityView</code>: strip <code>referenceText</code> for the new types and apply the T1.2 view rules.</li>
+<li><code>activityCompletionResponseSchema</code>: add <code>metrics</code>, an array of <code>{key, before, after}</code>, where <code>key</code> comes from the metric enum and <code>before</code> and <code>after</code> are numbers.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Touch the database, the API or the web.</li><li>Invent a new normaliser.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>Guided step: correct index is correct, wrong index is incorrect. Read-aloud: a sentence matching after normalisation (case and punctuation as <code>normalizeLessonSentence</code> defines) is correct. A mismatch never returns “incorrect”. The view strips <code>referenceText</code> and <code>correctIndex</code>. The completion schema accepts a valid metrics array and rejects an unknown key.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/contracts typecheck</code><br><code>rtk pnpm --filter @wordinator/contracts exec vitest run src/lessonActivities.test.ts</code></dd>
+<dt>Done when</dt><dd><ul><li>Grading and view tests pass.</li><li>The completion schema accepts and rejects the cases above.</li><li>Contracts typecheck passes.</li></ul></dd>
+<dt>Depends on</dt><dd>T1.3</dd>
+<dt>Parallel-safe</dt><dd>no</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> grading returns <code>correct: boolean</code> (true = matches the reference after <code>normalizeLessonSentence</code>). UI copy says “different from the original line”, never “incorrect”, the same as role-play.</p>
+</section>
+
+<h3 class="phase">Batch 2 · DB (packages/db)</h3>
+
+<section class="task risk" id="T2.1">
+<div class="task-head"><h3>T2.1 · Migration 0038 and schema</h3><span class="tag warn">Batch 2 · ⚠</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Move the activity table’s type check to the v2 list, drop the old <code>quick_grammar</code> rows safely, and add the metrics snapshot column.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>0036_lesson_activities.sql</code> (the source of the table definitions, indexes and columns). Directory: <code>packages/db/migrations/</code>.</li>
+<li><code>0037_speech_usage_lesson_activity.sql</code> (naming and style).</li>
+<li><code>packages/db/src/schema.ts:427-470</code> (<code>lessonActivities</code> :427; type CHECK :439; <code>lessonActivityRuns</code> :443; <code>lessonActivityAnswers</code> :455).</li>
+<li><code>apps/api/test/lesson-activities-migration.test.ts</code>.</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>Create <code>packages/db/migrations/0038_lesson_activities_v2.sql</code>.</li>
+<li>Start the file with <code>PRAGMA defer_foreign_keys = on;</code> (D1 supports it).</li>
+<li>Drop the three tables, children first: <code>lesson_activity_answers</code>, then <code>lesson_activity_runs</code>, then <code>lesson_activities</code> (no production data exists, so nothing is copied).</li>
+<li>Recreate them exactly as in 0036 (columns, foreign keys, indexes), with the new nine-type CHECK and the new nullable <code>metrics_before</code> text column on <code>lesson_activity_runs</code>.</li>
+<li>Update <code>schema.ts</code>: the type CHECK at :439 and <code>metrics_before</code> on <code>lessonActivityRuns</code> at :443.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Edit 0036 or 0037.</li><li>Change any other table.</li><li>Touch the API or the web.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>In <code>lesson-activities-migration.test.ts</code>, add a 0038 case. After 0038 the three tables exist with their indexes and foreign keys. The CHECK rejects <code>quick_grammar</code>. The new types insert fine. The <code>metrics_before</code> column exists and is nullable.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/db typecheck</code><br><code>rtk pnpm --filter @wordinator/api exec vitest run test/lesson-activities-migration.test.ts</code></dd>
+<dt>Done when</dt><dd><ul><li><code>0038_lesson_activities_v2.sql</code> exists and matches <code>schema.ts</code>.</li><li>The migration test file passes, including the new 0038 case.</li><li>DB typecheck passes.</li></ul></dd>
+<dt>Depends on</dt><dd>T1.1 (the nine-type list must match the enum)</dd>
+<dt>Parallel-safe</dt><dd>no</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>⚠ with orchestrator full-diff review</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> the migrations directory is <code>packages/db/migrations/</code>, and the new file is <code>packages/db/migrations/0038_lesson_activities_v2.sql</code>.</p>
+<p class="orch"><strong>Resolved:</strong> v1 has no production data, so 0038 drops and recreates the three tables (children first) instead of copying rows. Before any <code>db:migrate:remote</code>, the orchestrator still asks the owner.</p>
+</section>
+
+<h3 class="phase">Batch 3 · API generation, routes and progress (apps/api)</h3>
+
+<section class="task" id="T3.1">
+<div class="task-head"><h3>T3.1 · Story summary generation and image</h3><span class="tag">Batch 3</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Generate v2 story summaries with sentence pairs, a new-word list filtered against the lesson, and metrics; serve the section image from the current published document.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>apps/api/src/lessonActivities/generate.ts:14</code> (<code>noVocabulary</code>), :20 (<code>sourceBlocks</code>), :60 (<code>SHAPES</code>), :68 (<code>RULES</code>), :77 (<code>promptFor</code>), :160-166 (model schemas), :221-238 (assemblers), :283 (<code>activitySourceData</code>).</li>
+<li><code>apps/api/src/lessonActivities/routes.ts:115</code> (open) and :172 (status).</li>
+<li><code>packages/contracts/src/lessonDocument.ts:255</code> (<code>collectLessonWords</code>).</li>
+<li><code>apps/api/test/lesson-activities.test.ts</code>.</li>
+<li><code>apps/web/e2e/aiStub.ts:124</code> (<code>activityOutput</code>).</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>Story summary prompt: ask for sentence pairs (<code>dutch</code>, <code>english</code>); ask for <code>newWords</code> (<code>term</code>, <code>translation</code>) for words used in the section that the lesson does not already teach; ask for metrics chosen from the metric enum. Pass “already taught” as the <code>collectLessonWords</code> terms of the whole lesson.</li>
+<li>Model schema: non-strict (extra keys are tolerated). The payload contract stays strict.</li>
+<li>Assembler: dedupe <code>newWords</code> case-insensitively, within the list and against the lesson’s terms.</li>
+<li>Status and open routes: fill <code>image</code> with <code>firstImage</code> over the current published document’s source section. Never take it from the cached payload.</li>
+<li>Update <code>activityOutput('story_summary')</code> in <code>apps/web/e2e/aiStub.ts</code> to the v2 shape.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Change generation for other types.</li><li>Change block IDs.</li><li>Change web app code (the AI stub is an e2e support file only).</li></ul></dd>
+<dt>Tests to add/update</dt><dd>In <code>lesson-activities.test.ts</code>: a <code>newWords</code> entry equal to a lesson term (any case) is filtered out; fewer than 2 pairs is invalid output; the status response’s image comes from the current document, not the cached payload (change the document’s image URL in the fixture and check the new URL is returned). Negative authorization tests: a signed-out request gets 401; a setup-incomplete account is refused; an unpublished or hidden lesson gets 404.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/api exec vitest run test/lesson-activities.test.ts</code><br>API typecheck runs at T3.6 (see the batch gating note).</dd>
+<dt>Done when</dt><dd><ul><li>The three listed test cases pass.</li><li>The story summary output matches the v2 shape in the stub.</li></ul></dd>
+<dt>Depends on</dt><dd>T1.2, T1.3</dd>
+<dt>Parallel-safe</dt><dd>no (<code>generate.ts</code> and <code>routes.ts</code> are shared with T3.2–T3.6)</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> the image fill is allowed. <code>routes.ts</code> may be edited at the open route (:115) and the status route (:172) for this change only.</p>
+<p class="orch"><strong>Resolved:</strong> the model schema is non-strict, so extra model keys are tolerated. The final payload contract is strict.</p>
+<p class="orch"><strong>Resolved:</strong> metrics outside the enum are dropped and the rest deduped, keeping at most 3. If none remain, use <code>[lesson_share]</code>. This is not an invalid-output error.</p>
+</section>
+
+<section class="task" id="T3.2">
+<div class="task-head"><h3>T3.2 · Guided grammar generation</h3><span class="tag">Batch 3</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Generate guided grammar steps whose chunk indices the server maps to snapshots of the original lesson blocks, and remove the <code>quick_grammar</code> recipe.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>apps/api/src/lessonActivities/generate.ts:20</code> (<code>sourceBlocks</code>), :43 (<code>countFor</code>), :60 (<code>SHAPES</code>), :68 (<code>RULES</code>), :77 (<code>promptFor</code>), :160-166 (model schemas), :170 (<code>choiceQuestion</code>), :221-238 (assemblers), :242 (<code>extractJsonText</code>), :256 (<code>generateLessonActivity</code>).</li>
+<li><code>packages/contracts/src/lessonActivities.ts</code> (the guided payload shape from T1.2).</li>
+<li><code>apps/web/e2e/aiStub.ts:124</code>.</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>Build chunks from the grammar section’s <code>sourceBlocks</code> slice, excluding vocabulary and practice blocks. Each top-level block is one chunk; a columns block is one chunk. Number the chunks.</li>
+<li>Prompt: ask for steps of the form <code>{chunks: [int], question: {prompt, options (3), correctIndex, explanation}}</code>, plus <code>followUps</code> (0–2 from the enum) and metrics. Ask for 2–12 steps, 1–4 chunks each, ascending, non-overlapping, covering the section, with one sub-rule or example group per step.</li>
+<li>Model schema: non-strict.</li>
+<li>Assembler: check that indices are in range, ascending across steps, and non-overlapping. On failure, throw <code>ACTIVITY_OUTPUT_INVALID</code> with stage <code>"chunks"</code>.</li>
+<li>Map indices to lesson block IDs and snapshot those blocks into the payload. The model never writes IDs. Assign question and option IDs.</li>
+<li>Keep only the <code>followUps</code> types eligible in this lesson. Drop the rest.</li>
+<li>Remove the <code>quick_grammar</code> entries from <code>SHAPES</code>, <code>RULES</code> and the assemblers.</li>
+<li>Update <code>activityOutput('guided_grammar')</code> in the AI stub.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Change block IDs; snapshots keep the original IDs.</li><li>Touch speaking generation (T3.3) or routes.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>In <code>lesson-activities.test.ts</code>: an index out of range is <code>ACTIVITY_OUTPUT_INVALID</code> with stage <code>chunks</code>; overlapping or descending indices are invalid; the happy path stores block snapshots with the original block IDs; an ineligible <code>followUp</code> is dropped.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/api exec vitest run test/lesson-activities.test.ts</code></dd>
+<dt>Done when</dt><dd><ul><li>The four test cases pass.</li><li><code>quick_grammar</code> no longer appears in <code>generate.ts</code>.</li></ul></dd>
+<dt>Depends on</dt><dd>T1.2, T1.3, T3.1 (same files)</dd>
+<dt>Parallel-safe</dt><dd>no</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> chunk numbers are zero-based, matching array positions.</p>
+<p class="orch"><strong>Resolved:</strong> a type is eligible when some descriptor in this lesson offers it. The link targets the first such descriptor after the current source in document order, else the first one in the lesson. Ineligible <code>followUps</code> are dropped silently.</p>
+<p class="orch"><strong>Orchestrator note:</strong> the brief says chunks “should cover the section”. That is a prompt instruction, not a validation rule. The worker does not validate coverage.</p>
+</section>
+
+<section class="task" id="T3.3">
+<div class="task-head"><h3>T3.3 · Speaking generation and read-aloud materialize</h3><span class="tag">Batch 3</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Serve <code>read_aloud</code> from the published lines with no AI call, and generate English cues for <code>speak_from_english</code>.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>apps/api/src/lessonActivities/generate.ts:92</code> (role-play cue prompt), :104 (reply schema), :112 (turn IDs, <code>rolePlayTurnId</code>), :123 (<code>generateRolePlay</code>).</li>
+<li><code>apps/api/src/lessonActivities/routes.ts:115</code> (open).</li>
+<li><code>apps/api/src/lessonActivities/cache.ts:14</code> (<code>claimGeneration</code>), :27 (<code>reserveCacheMiss</code>), :50 (<code>commitGeneratedPayload</code>).</li>
+<li><code>packages/contracts/src/lessonActivities.ts</code> (line shape from T1.2; <code>storySpeakingLines</code> from T1.3).</li>
+<li><code>apps/api/test/lesson-activities.test.ts</code>.</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li><code>read_aloud</code>: lines come from <code>storySpeakingLines</code> over the source blocks. Line IDs are stable: a hash of the source ID and the index, built the same way <code>rolePlayTurnId</code> is built at :112. Metrics are fixed at <code>[lesson_share]</code>.</li>
+<li>Add a materialize branch to the open route at :115. It writes the payload and marks the cache row ready, with no generation lease and no AI allowance. Follow how a cache hit is served.</li>
+<li><code>speak_from_english</code>: the model returns <code>englishText</code> by position, plus metrics. Follow the role-play cue pattern at :92, :104 and :123. If the count of returned lines does not match, the output is <code>ACTIVITY_OUTPUT_INVALID</code>. The Dutch reference comes from the server.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Call the model for <code>read_aloud</code>.</li><li>Change the role-play prompt.</li><li>Change the speech route (T3.4).</li></ul></dd>
+<dt>Tests to add/update</dt><dd>In <code>lesson-activities.test.ts</code>: opening <code>read_aloud</code> consumes no AI allowance; its line IDs are the same across two opens; a <code>speak_from_english</code> line-count mismatch is invalid. Negative authorization tests: a signed-out request gets 401; a setup-incomplete account is refused; an unpublished or hidden lesson gets 404.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/api exec vitest run test/lesson-activities.test.ts</code></dd>
+<dt>Done when</dt><dd><ul><li>The three test cases pass.</li><li>No model call is made on the <code>read_aloud</code> path.</li></ul></dd>
+<dt>Depends on</dt><dd>T3.1, T1.3</dd>
+<dt>Parallel-safe</dt><dd>no</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> yes, <code>read_aloud</code> gets a normal <code>lesson_activities</code> row with status <code>ready</code> and the materialized payload written directly. No lease, no <code>reserveCacheMiss</code>, and no AI allowance.</p>
+<p class="orch"><strong>Resolved:</strong> authorization tests are mandatory per CLAUDE.md. Negative tests are added to the Tests to add/update of T3.3 (below), T3.1, T3.4, T3.5 and T3.6.</p>
+</section>
+
+<section class="task" id="T3.4">
+<div class="task-head"><h3>T3.4 · Speech for speaking lines</h3><span class="tag">Batch 3</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Allow speech audio for <code>read_aloud</code> and <code>speak_from_english</code> lines, voiced by the speaker’s voice.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>apps/api/src/lessonActivities/routes.ts:260</code> (speech handler; role-play turns only today).</li>
+<li>The voice lookup the role-play turn speech already uses inside the same handler.</li>
+<li><code>apps/api/test/lesson-activities.test.ts</code> (existing speech tests, if any).</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>Accept <code>lineId</code> and <code>chunkIndex</code> for <code>read_aloud</code> and <code>speak_from_english</code>.</li>
+<li>Voice: the speaker’s cast voice. A <code>null</code> speaker uses the course narrator voice. Reuse the role-play voice lookup. Do not add a new voice source.</li>
+<li>Keep rejecting every other type.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Change speech usage accounting beyond the new types.</li><li>Touch generation files.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>A non-speaking type (for example <code>grammar_explanation</code>) is still rejected. A <code>read_aloud</code> line returns audio, following the role-play speech test pattern. A <code>speak_from_english</code> line is voiced. Negative authorization tests: a signed-out request gets 401; a setup-incomplete account is refused; an unpublished or hidden lesson gets 404.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/api exec vitest run test/lesson-activities.test.ts</code></dd>
+<dt>Done when</dt><dd><ul><li>The three test cases pass.</li><li>Rejection for other types is unchanged.</li></ul></dd>
+<dt>Depends on</dt><dd>T3.3</dd>
+<dt>Parallel-safe</dt><dd>no (<code>routes.ts</code>)</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> yes. Speech for the new types records <code>speech_usage</code> with surface <code>lesson_activity</code>, the same as role-play. Existing speech limits apply.</p>
+</section>
+
+<section class="task risk" id="T3.5">
+<div class="task-head"><h3>T3.5 · Metrics, progress write and completion</h3><span class="tag warn">Batch 3 · ⚠</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Compute the four progress metrics, snapshot them when a run starts or restarts, credit lesson reading from guided grammar answers, and return before and after metrics on completion.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>apps/api/src/lessonActivities/routes.ts:81</code> (<code>completedActivities</code>), :194 (answers), :224 (run PATCH), :238 (restart), :249-250 (complete).</li>
+<li><code>apps/api/src/app.ts:2572</code> (PUT position: writes <code>course_lesson_positions</code> reading fields, then <code>completeIfWhole</code>).</li>
+<li><code>apps/api/src/learning/progress.ts</code> (<code>completeIfWhole</code>).</li>
+<li><code>apps/api/src/learning/lessonShare.ts:16</code> (<code>lessonShareColumns</code>).</li>
+<li><code>packages/contracts/src/learning.ts:213</code> (<code>lessonShare</code>).</li>
+<li><code>packages/contracts/src/lessonDocument.ts</code> near :430 (<code>lessonStepKey</code>, <code>lessonPositionRequestSchema</code>).</li>
+<li><code>packages/contracts/src/lessonActivities.ts:172</code> (fingerprint).</li>
+<li><code>apps/api/test/lesson-activities.test.ts</code>.</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>New module <code>apps/api/src/lessonActivities/metrics.ts</code> exports <code>readActivityMetrics(db, viewer, course, lesson)</code>. It returns all four values, 0–1: <code>lesson_share</code> (from <code>lessonShare</code>); <code>lesson_reading</code> (reading half of the lesson share); <code>lesson_grammar</code> (share of this lesson’s grammar sources whose <code>guided_grammar</code> run is completed at the current fingerprint); <code>lesson_activities</code> (share of this lesson’s suggested activities completed at current fingerprints). Reuse <code>lessonShareColumns</code> and the existing <code>completedActivities</code> logic. Do not re-implement lesson share.</li>
+<li>Snapshot: when a run is created (open) or restarted (:238), write all four values to <code>metrics_before</code> as JSON.</li>
+<li>Complete action (:249-250): return <code>metrics</code> for the payload’s requested keys, each as <code>{key, before (from the snapshot), after (recomputed)}</code>.</li>
+<li>Guided answer (:194): on the first submission of a step, take the step’s last block and its step key. If that key is further than the viewer’s saved position, advance the saved position to it. Reuse the position-write helper from <code>app.ts:2572</code>; extract it into a shared function if needed, with no behaviour change at the PUT route. Then run <code>completeIfWhole</code>.</li>
+<li>Skip the progress write entirely for unsaved runs and archived courses.</li>
+<li>Never write word memory from activities.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Move a position backwards.</li><li>Change the lesson completion rule.</li><li>Change the PUT position route’s behaviour.</li><li>Touch web files.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>Position never moves backwards (a saved position further than the step stays unchanged). Lesson completion still needs the normal rule (partial steps do not complete the lesson). A cross-account run cannot answer or write progress (negative test). The complete response contains before and after metrics. An archived course writes no progress. An unsaved run writes no progress. Negative authorization tests: a signed-out request gets 401; a setup-incomplete account is refused; an unpublished or hidden lesson gets 404.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/api exec vitest run test/lesson-activities.test.ts</code><br>API typecheck runs at T3.6.</dd>
+<dt>Done when</dt><dd><ul><li>All six test cases pass.</li><li>The PUT position route’s own tests, if any, still pass when run as a single file.</li><li>The snapshot is written on both create and restart.</li></ul></dd>
+<dt>Depends on</dt><dd>T2.1 (the <code>metrics_before</code> column), T1.4 (completion schema), T3.2 (guided answer path)</dd>
+<dt>Parallel-safe</dt><dd>no</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>⚠ with orchestrator full-diff review</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> the current fingerprint reuses the logic of <code>completedActivities</code> at <code>routes.ts:81</code>, which compares against the fingerprint from <code>fingerprintLessonActivitySource</code> (<code>lessonActivities.ts:172</code>).</p>
+<p class="orch"><strong>Resolved:</strong> build the lesson’s steps with the existing step builder in <code>packages/contracts/src/lessonDocument.ts</code> (the function returning <code>LessonStep[]</code>). Find the last step whose block is the step’s last block (for a dialogue, its last line step), and use <code>lessonStepKey</code> on it.</p>
+<p class="orch"><strong>Orchestrator note:</strong> the brief says the position helper is reused from <code>app.ts:2572</code>. The extraction is allowed by the brief, but the worker must keep the PUT route’s behaviour identical.</p>
+</section>
+
+<section class="task" id="T3.6">
+<div class="task-head"><h3>T3.6 · List counts and backend close</h3><span class="tag">Batch 3</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Make the activity list count the new types correctly and confirm archived behaviour, so the backend batch can be checked and committed.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>apps/api/src/lessonActivities/routes.ts:81</code> (<code>completedActivities</code>) and :98 (list).</li>
+<li><code>apps/api/test/lesson-activities.test.ts</code>.</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>List route: keep the response shape unchanged. Completed counts include <code>guided_grammar</code>, <code>read_aloud</code> and <code>speak_from_english</code>. <code>quick_grammar</code> never appears.</li>
+<li>Confirm archived-course behaviour is unchanged. Change code only if the test shows a break.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Change the response shape.</li><li>Touch web files.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>The list counts a completed <code>guided_grammar</code>. An archived course’s list is unchanged. Negative authorization tests: a signed-out request gets 401; a setup-incomplete account is refused; an unpublished or hidden lesson gets 404.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/api typecheck</code><br><code>rtk pnpm --filter @wordinator/api exec vitest run test/lesson-activities.test.ts</code></dd>
+<dt>Done when</dt><dd><ul><li>The list test cases pass.</li><li>API typecheck passes for the first time since Batch 1.</li><li>The worker reports the typecheck and test counts.</li></ul></dd>
+<dt>Depends on</dt><dd>T3.5</dd>
+<dt>Parallel-safe</dt><dd>no</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Orchestrator note:</strong> after T3.6 the orchestrator runs the batch’s API test files in groups of six (see <code>docs/workers-tests-port-exhaustion.md</code>), runs the API build, then commits T3.6. The brief names only <code>apps/api/test/lesson-activities.test.ts</code> and <code>apps/api/test/lesson-activities-migration.test.ts</code> as API test files, plus an unnamed lesson-progress reset suite. The orchestrator confirms the full list. The worker does not run the batch-wide set.</p>
+</section>
+
+<h3 class="phase">Batch 4 · Web (apps/web)</h3>
+
+<section class="task" id="T4.1">
+<div class="task-head"><h3>T4.1 · API client, i18n and copy keys</h3><span class="tag">Batch 4</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Add the web types, labels and copy keys for v2, and remove the <code>quick_grammar</code> keys.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>apps/web/src/api.ts:38-48</code> (activity types and request and response types).</li>
+<li><code>apps/web/src/i18n.ts:339</code> (<code>lessonActivities.*</code>), :373 (<code>types.*</code>), :450 (<code>courses.lessonBox.doMoreWithAi</code>).</li>
+<li><code>packages/contracts/src/lessonActivities.ts</code> (types and metric enum).</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li><code>api.ts</code>: types match the contracts (nine types). The completion response has <code>metrics</code>. The descriptor has <code>practiceBlockId</code>. The story view has <code>image</code>. Use the new payload and view shapes.</li>
+<li><code>i18n.ts</code>: add labels for <code>guided_grammar</code>, <code>read_aloud</code> and <code>speak_from_english</code>. Proposed copy: “Guided grammar”, “Read aloud”, “Speak from English”. Remove the <code>quick_grammar</code> keys.</li>
+<li>Metric copy keys: <code>lessonActivities.metrics.lesson_share</code>, <code>lesson_reading</code>, <code>lesson_grammar</code>, <code>lesson_activities</code>, with interpolation <code>{{percent}}</code>, <code>{{delta}}</code> and <code>{{lesson}}</code>. Example copy: “+6% of this lesson’s grammar”; “Lesson 8 is now 42% done (+2%)”.</li>
+<li>Keys for “Up next”, “Back to the lesson’s practices”, and the badge aria label.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Write component code or CSS.</li><li>Use Tailwind. All visible copy goes through i18next keys.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>None listed in the brief. Type-level only.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/web typecheck</code>. The web will not compile cleanly until the Batch 4 components exist. Report the error count, and fix only errors in <code>api.ts</code> and <code>i18n.ts</code>.</dd>
+<dt>Done when</dt><dd><ul><li><code>api.ts</code> and <code>i18n.ts</code> have no <code>quick_grammar</code> reference.</li><li>No type error remains in <code>api.ts</code> or <code>i18n.ts</code>.</li></ul></dd>
+<dt>Depends on</dt><dd>T1.1, T1.2, T1.4</dd>
+<dt>Parallel-safe</dt><dd>yes, with T4.2 (disjoint files: <code>api.ts</code> and <code>i18n.ts</code> against <code>activityIcons.ts</code> and <code>LessonBox.tsx</code>)</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> the badge aria label key is <code>courses.lessonBox.activitiesDoneCount</code>, placed next to <code>courses.lessonBox.doMoreWithAi</code> (:450).</p>
+<p class="orch"><strong>Resolved:</strong> the English labels for the three new types are “Guided grammar”, “Read aloud” and “Speak from English”.</p>
+</section>
+
+<section class="task" id="T4.2">
+<div class="task-head"><h3>T4.2 · Icon map</h3><span class="tag">Batch 4</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Give every activity type its own icon through one map, used by the Do more with AI links.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>apps/web/src/organisms/CourseLessons/LessonBox.tsx:73</code> (suggestion type), :80 (<code>LessonBoxActions</code>), :83-86 (labels), :99-108 (links).</li>
+<li><code>apps/web/src/organisms/CourseLessons/LessonBox.test.tsx</code>.</li>
+<li><code>node_modules/lucide-react</code> (verify export names only; the brief pins ^1.52).</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>Create <code>apps/web/src/organisms/LessonActivities/activityIcons.ts</code>. Export <code>activityIcon(type)</code>, which returns the icon for each of the nine types: <code>story_summary</code> BookOpenText; <code>story_comprehension</code> ListChecks; <code>grammar_explanation</code> NotebookPen; <code>guided_grammar</code> Footprints; <code>tricky_grammar</code> Puzzle; <code>mixed_practice</code> Shuffle; <code>roleplay</code> Drama; <code>read_aloud</code> Mic; <code>speak_from_english</code> Languages.</li>
+<li>Before use, confirm each export exists in <code>node_modules/lucide-react</code>. If any name is missing, stop with BLOCKED and list the missing names. Do not substitute an icon.</li>
+<li>In the <code>LessonBox.tsx</code> links, replace the per-type MessageCircle and Sparkles choice with <code>activityIcon(type)</code>.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Change label text (T4.1 owns i18n).</li><li>Change the layout (T4.3).</li><li>Add an icon library.</li><li>Use Tailwind.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>In <code>LessonBox.test.tsx</code>: each of the nine types renders a distinct icon. Choose one way to test it (a <code>data-icon</code> attribute on the icon wrapper is preferred) and report the choice.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/web exec vitest run src/organisms/CourseLessons/LessonBox.test.tsx</code></dd>
+<dt>Done when</dt><dd><ul><li>All nine types map to distinct icons, and the test passes.</li><li>Every icon export was verified in <code>node_modules</code>.</li></ul></dd>
+<dt>Depends on</dt><dd>T1.1 (type names)</dd>
+<dt>Parallel-safe</dt><dd>yes, with T4.1 (disjoint files)</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+</section>
+
+<section class="task" id="T4.3">
+<div class="task-head"><h3>T4.3 · Do more with AI badge and layout</h3><span class="tag">Batch 4</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Add the completed-count badge to the Do more with AI header, and let the AI area grow upward while the words panel shrinks.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>apps/web/src/organisms/CourseLessons/LessonBox.tsx</code> :90 (done badge), :94 (header).</li>
+<li><code>apps/web/src/organisms/CourseLessons/CourseLessons.tsx:145-159</code> (suggestion build), :211 (<code>LessonWords</code> usage).</li>
+<li><code>apps/web/src/organisms/CourseLessons/LessonWords.tsx:101</code> (props: steps, active, placement rail|under|sheet, footer).</li>
+<li>The CSS Module that these components already use, in the same folder.</li>
+<li><code>apps/web/src/organisms/CourseLessons/LessonBox.test.tsx</code>.</li>
+<li><code>docs/design-system.md</code> (tokens section only).</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>LessonBox header: a Mantine <code>Badge</code> showing the count of completed suggestions from the existing completed list. Use the aria label key from T4.1.</li>
+<li>Layout: the AI area grows upward (taller). <code>LessonWords</code> shrinks vertically to make room. Use flex in CSS Modules. Use design tokens, not raw values, wherever a token exists.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Change suggestion ordering.</li><li>Add props to <code>LessonWords</code> beyond what the height change needs.</li><li>Change <code>LessonWords</code> placement behaviour.</li><li>Use Tailwind.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>In <code>LessonBox.test.tsx</code>: the badge count equals the number of completed suggestions (two cases, including zero).</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/web exec vitest run src/organisms/CourseLessons/LessonBox.test.tsx</code></dd>
+<dt>Done when</dt><dd><ul><li>Badge test passes.</li><li>The layout uses flex in a CSS Module, with tokens only.</li></ul></dd>
+<dt>Depends on</dt><dd>T4.2 (same file, <code>LessonBox.tsx</code>), T4.1</dd>
+<dt>Parallel-safe</dt><dd>no</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> <code>docs/design-system.md</code> (tokens section only) is added to T4.3’s Read list. Mantine Badge, tokens only.</p>
+<p class="orch"><strong>Orchestrator note:</strong> the brief does not name the CSS Module that holds the layout. The worker picks the module that the components already import. Report which one.</p>
+</section>
+
+<section class="task" id="T4.4">
+<div class="task-head"><h3>T4.4 · Summary activity</h3><span class="tag">Batch 4</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Build the story summary activity: an image header, paired sentences with linked hover, and a display-only word list.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>apps/web/src/organisms/CourseLessons/LessonWords.tsx:101</code>; <code>apps/web/src/organisms/CourseLessons/PanelWord.tsx</code> (same folder).</li>
+<li><code>apps/web/src/organisms/LessonActivities/LessonActivityPage.tsx:146</code> (<code>story_summary</code> branch; prop shape only).</li>
+<li>The story summary view shape from T1.2.</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>Extract a presentational <code>WordList</code> from <code>LessonWords.tsx</code> and <code>PanelWord.tsx</code>. It takes plain <code>{term, translation}[]</code> and has no bookmark or memory actions. <code>LessonWords</code> keeps its behaviour.</li>
+<li>Create <code>apps/web/src/organisms/LessonActivities/SummaryActivity.tsx</code>.</li>
+<li>When <code>image</code> is not <code>null</code>, show it as a header, with <code>alt</code> from <code>image.alt</code>.</li>
+<li>Two columns, Dutch and English. Each sentence is a span with <code>data-pair</code> set to its pair index. Hover or focus on a span highlights its pair in both columns (React state and a CSS class). Spans are keyboard focusable, and each has <code>aria-describedby</code> pointing at its pair.</li>
+<li>Left column: <code>WordList</code> with <code>newWords</code>, display only.</li>
+<li>All visible copy goes through i18n keys (T4.1).</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Add a bookmark button.</li><li>Change word memory.</li><li>Change <code>LessonWords</code> behaviour.</li><li>Use Tailwind.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>New <code>SummaryActivity.test.tsx</code> in the same folder. Hovering a Dutch sentence highlights the English pair, and the reverse. Keyboard focus does the same. The word list renders no bookmark button.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/web exec vitest run src/organisms/LessonActivities/SummaryActivity.test.tsx</code></dd>
+<dt>Done when</dt><dd><ul><li>All three test cases pass.</li><li><code>LessonWords</code> keeps its existing behaviour (any existing <code>LessonWords</code> tests still pass).</li></ul></dd>
+<dt>Depends on</dt><dd>T4.1, T4.3, T1.2</dd>
+<dt>Parallel-safe</dt><dd>yes, with T4.5 and T4.6 (new files). Not with T4.3, which edits the words panel layout.</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Orchestrator note:</strong> D1 says the dictionary is on the left. The brief’s placement options for <code>LessonWords</code> (rail, under, sheet) have no left option. The worker lays out a left column inside <code>SummaryActivity</code> and passes plain items to <code>WordList</code>. Confirm.</p>
+<p class="orch"><strong>Resolved:</strong> use <code>apps/web/src/organisms/CourseLessons/LessonWords.test.tsx</code> and keep it passing.</p>
+</section>
+
+<section class="task" id="T4.5">
+<div class="task-head"><h3>T4.5 · Guided grammar activity</h3><span class="tag">Batch 4</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Build the guided grammar flow: one step per slide, lesson blocks, a choice question with feedback, Continue, and resume.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>apps/web/src/organisms/LessonDocument/LessonDocument.tsx:584</code> (<code>LessonBlocks({blocks, renderPractice?})</code>).</li>
+<li><code>apps/web/src/organisms/LessonActivities/LessonActivityPage.tsx:164</code> (<code>ActivityItem</code>; the existing choice question pattern).</li>
+<li><code>apps/web/src/organisms/LessonActivities/activityAnswers.ts</code> (drafts; inferred location).</li>
+<li>The guided payload and view shape from T1.2.</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>Create <code>apps/web/src/organisms/LessonActivities/GuidedGrammarActivity.tsx</code>.</li>
+<li>Top: a step progress bar, as a Mantine <code>Progress</code> or a segmented bar. Pick one and report it.</li>
+<li>Body: <code>LessonBlocks</code> with the step’s blocks, read-only.</li>
+<li>Under it: the choice question with 3 options. Submitting follows the existing choice question’s pattern in <code>ActivityItem</code>, then feedback shows, then Continue.</li>
+<li>The last step’s Continue completes the activity through the existing flow.</li>
+<li>Resume at the run’s saved step cursor. The brief does not name the cursor field; read the existing run state.</li>
+<li>All visible copy through i18n keys.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Change block rendering.</li><li>Call any new progress API. Progress is written on the server by the existing answer route.</li><li>Use Tailwind.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>New <code>GuidedGrammarActivity.test.tsx</code>. Renders the step’s blocks. An answer shows feedback and then the next step. The last step completes the activity.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/web exec vitest run src/organisms/LessonActivities/GuidedGrammarActivity.test.tsx</code></dd>
+<dt>Done when</dt><dd><ul><li>All three test cases pass.</li><li>Resume starts at the saved step.</li></ul></dd>
+<dt>Depends on</dt><dd>T4.1, T1.2</dd>
+<dt>Parallel-safe</dt><dd>yes, with T4.4 and T4.6 (new files)</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Orchestrator note:</strong> the brief says “Answer checked → Continue” and does not name a check button. The worker follows the submit pattern of the existing choice question. Confirm the pattern on read.</p>
+</section>
+
+<section class="task" id="T4.6">
+<div class="task-head"><h3>T4.6 · Speaking activities</h3><span class="tag">Batch 4</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Build the read-aloud and speak-from-English activities on the existing speech helpers.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>apps/web/src/organisms/LessonActivities/RoleplayActivity.tsx</code> (hold-to-talk, explicit Send, feedback, typed fallback; inferred location).</li>
+<li><code>apps/web/src/molecules/speechRecognition.ts:18</code> (<code>PronunciationAssessment</code>), :379 (<code>useSpokenAnswer</code>).</li>
+<li><code>apps/web/src/molecules/SpeakControls.tsx:70</code> (<code>ScoreRing</code>), :100 (<code>AssessmentBreakdown</code>).</li>
+<li><code>apps/web/src/molecules/Speech.tsx</code> (<code>playSpeech</code>; directory inferred).</li>
+<li><code>apps/web/src/organisms/LessonActivities/activityAnswers.ts</code> (drafts).</li>
+<li><code>apps/web/src/organisms/LessonActivities/RoleplayActivity.test.tsx</code> (test pattern).</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>Create <code>ReadAloudActivity.tsx</code>. It shows the Dutch line and a Listen control, which plays audio from the speech route (T3.4). The learner speaks with hold-to-talk. An explicit Send submits the attempt. <code>ScoreRing</code> and <code>AssessmentBreakdown</code> show the feedback. Then Retry, typed fallback, and Continue.</li>
+<li>Create <code>SpeakFromEnglishActivity.tsx</code>. It shows the English line. The learner speaks or types the Dutch. An explicit Send submits. The Dutch reference is revealed after Send. Feedback as above.</li>
+<li>Reuse <code>useSpokenAnswer</code> and the existing components. Extract a shared <code>HoldToTalk</code> molecule only if it removes duplication cleanly from <code>RoleplayActivity</code> and the two new components. Otherwise copy the minimal pattern and report.</li>
+<li>Save drafts through <code>activityAnswers.ts</code>, keyed by activity and line.</li>
+<li>Release recognition and audio on cancel, blur, hidden tab and unmount, as <code>RoleplayActivity</code> does.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Add hints or self-navigation (out of scope).</li><li>Change role-play behaviour, except for the <code>HoldToTalk</code> extraction if made.</li><li>Call any server route other than the existing answer and speech routes.</li><li>Use Tailwind.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>New <code>ReadAloudActivity.test.tsx</code> and <code>SpeakFromEnglishActivity.test.tsx</code>. Send submits. Releasing the hold without Send never submits. The typed fallback submits a typed sentence.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/web exec vitest run src/organisms/LessonActivities/RoleplayActivity.test.tsx src/organisms/LessonActivities/ReadAloudActivity.test.tsx src/organisms/LessonActivities/SpeakFromEnglishActivity.test.tsx</code></dd>
+<dt>Done when</dt><dd><ul><li>The role-play suite still passes.</li><li>The three test cases pass for each new component.</li></ul></dd>
+<dt>Depends on</dt><dd>T4.1, T3.4 (speech route), T1.2</dd>
+<dt>Parallel-safe</dt><dd>yes, with T4.4 and T4.5 (new files). If <code>HoldToTalk</code> is extracted, <code>RoleplayActivity.tsx</code> is touched, which no other batch-4 task touches.</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Orchestrator note:</strong> whether the <code>HoldToTalk</code> extraction is made is left to the worker by the brief (“only if it removes duplication cleanly”). The worker reports the choice. The orchestrator checks it at the batch review.</p>
+</section>
+
+<section class="task" id="T4.7">
+<div class="task-head"><h3>T4.7 · Completion screen and page wiring</h3><span class="tag">Batch 4</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Replace the completion screen with metric bars, “Up next” and the back links, and wire all the activity branches into the page.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>apps/web/src/organisms/LessonActivities/LessonActivityPage.tsx:39</code> and :120 (return link), :142-145 (completion), :146 (<code>story_summary</code>), :149 (<code>grammar_explanation</code>), :153 (roleplay), :164 (<code>ActivityItem</code>).</li>
+<li><code>apps/web/src/api.ts:38-48</code> (completion and descriptor types).</li>
+<li>The new components from T4.4, T4.5 and T4.6.</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>Create <code>ActivityCompletion.tsx</code> (in <code>apps/web/src/organisms/LessonActivities/</code>). Show metric bars only for metrics where <code>before</code> differs from <code>after</code>. If none changed, render no metrics block. Use the copy keys from T4.1.</li>
+<li>“Up next” (D6), in this order: the model’s <code>followUps</code> (<code>guided_grammar</code> only); then the next source’s suggestions in document order, from the descriptors query; then Back to lesson (existing); then Back to practices (<code>guided_grammar</code> only).</li>
+<li>Back to practices: link to <code>practiceBlockId</code> inside the source section (hash = block ID). If it is <code>null</code>, use the normal return link.</li>
+<li><code>LessonActivityPage.tsx</code>: add branches for <code>story_summary</code> (<code>SummaryActivity</code>), <code>guided_grammar</code> (<code>GuidedGrammarActivity</code>), <code>read_aloud</code> and <code>speak_from_english</code>. Remove the <code>quick_grammar</code> branch.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Change <code>LessonBox</code>.</li><li>Change the descriptors query.</li><li>Use Tailwind.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>New <code>ActivityCompletion.test.tsx</code>. Only changed metrics show. No change means no metrics block. Up-next links target the next section. Back to practices uses <code>practiceBlockId</code>, and falls back to the return link when it is <code>null</code>. In <code>LessonActivityPage.test.tsx</code>, each new type routes to its component.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/web exec vitest run src/organisms/LessonActivities/LessonActivityPage.test.tsx src/organisms/LessonActivities/ActivityCompletion.test.tsx</code></dd>
+<dt>Done when</dt><dd><ul><li>The listed test cases pass.</li><li><code>quick_grammar</code> no longer appears in <code>LessonActivityPage.tsx</code>.</li></ul></dd>
+<dt>Depends on</dt><dd>T4.4, T4.5, T4.6, T4.1, T1.3 (<code>practiceBlockId</code>), T3.5 (completion metrics)</dd>
+<dt>Parallel-safe</dt><dd>no (<code>LessonActivityPage.tsx</code>)</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> the descriptors come from <code>lessonActivitiesQueryOptions</code> in <code>apps/web/src/api.ts:38</code>. The next-activity link targets the activity route <code>/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType</code>. The lesson return hash follows <code>lessonTarget</code> in <code>LessonActivityPage.tsx:39</code>.</p>
+</section>
+
+<section class="task" id="T4.8">
+<div class="task-head"><h3>T4.8 · Web typecheck, suites and build</h3><span class="tag">Batch 4</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Prove the web app compiles, the affected component suites pass, and the web builds.</p></dd>
+<dt>Read</dt><dd><ul><li>The affected test files listed under Tests (no other files).</li></ul></dd>
+<dt>Change</dt><dd><ol>
+<li>No feature changes. Fix only type or test failures in files this batch touched. The one-retry rule applies.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Add features.</li><li>Run Playwright (T5.1 owns the e2e spec).</li><li>Run the full web suite. Run only the listed files.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>Affected files: <code>LessonBox.test.tsx</code>; <code>RoleplayActivity.test.tsx</code>; <code>LessonActivityPage.test.tsx</code>; <code>SummaryActivity.test.tsx</code>; <code>GuidedGrammarActivity.test.tsx</code>; <code>ReadAloudActivity.test.tsx</code>; <code>SpeakFromEnglishActivity.test.tsx</code>; <code>ActivityCompletion.test.tsx</code>. Run each file separately.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/web typecheck</code><br><code>rtk pnpm --filter @wordinator/web exec vitest run &lt;each affected file&gt;</code><br><code>rtk pnpm --filter @wordinator/web build</code></dd>
+<dt>Done when</dt><dd><ul><li>Web typecheck reports zero errors.</li><li>Every listed suite passes, with its counts reported.</li><li>The web build succeeds.</li></ul></dd>
+<dt>Depends on</dt><dd>T4.1 to T4.7</dd>
+<dt>Parallel-safe</dt><dd>no</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Orchestrator note:</strong> after this card passes, the orchestrator commits T4.8; from here every commit typechecks again.</p>
+</section>
+
+<h3 class="phase">Batch 5 · E2E and close-out</h3>
+
+<section class="task" id="T5.1">
+<div class="task-head"><h3>T5.1 · E2E spec and AI stub</h3><span class="tag">Batch 5</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Cover the four new user flows in the one affected Playwright spec.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>apps/web/e2e/aiStub.ts:124</code> (<code>activityOutput(type)</code>).</li>
+<li><code>apps/web/e2e/lesson-activities.spec.ts</code> (existing flows).</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li><code>aiStub.ts</code>: outputs for <code>story_summary</code> (v2), <code>guided_grammar</code> (two steps), and the speaking types as needed.</li>
+<li><code>lesson-activities.spec.ts</code>: (a) hovering a summary sentence highlights its pair; (b) a two-step guided grammar flow advances lesson progress; (c) the <code>read_aloud</code> typed fallback works; (d) completion metrics are visible.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Run any other spec.</li><li>Change production code.</li><li>Change the existing passing tests, except their fixtures.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>The spec itself, as listed.</dd>
+<dt>Verify</dt><dd><code>rtk pnpm --filter @wordinator/web exec playwright test e2e/lesson-activities.spec.ts</code></dd>
+<dt>Done when</dt><dd><ul><li>The spec passes in the browser projects it already uses (the status log of the v1 work records Chromium and WebKit).</li><li>Each of the four flows is covered by a named test.</li></ul></dd>
+<dt>Depends on</dt><dd>T4.8</dd>
+<dt>Parallel-safe</dt><dd>no</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> the spec asserts progress via the lesson page’s reading meter, <code>apps/web/src/organisms/CourseLessons/LessonReadingProgress.tsx</code>.</p>
+</section>
+
+<section class="task" id="T5.2">
+<div class="task-head"><h3>T5.2 · Close-out (orchestrator-run)</h3><span class="tag">Batch 5</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Record the real results in the status docs. The orchestrator runs this task, not a worker.</p></dd>
+<dt>Read</dt><dd><ul>
+<li>This plan’s Status log.</li>
+<li><code>docs/roadmap.md</code>.</li>
+<li><code>LESSON_ACTIVITIES_PLAN.html</code> (the v1 plan; only its implementation-progress block and the rule at :146).</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>Check that the Status log has a row per task (added at each task commit) and reconcile any gaps from <code>git log --grep "activities v2"</code>.</li>
+<li>Update the roadmap item from in progress to its real status.</li>
+<li>Update the v1 plan’s status to record that the never-change rule is superseded by D4 in this plan.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Claim v2 deployment. v1 is partly deployed; the v2 state stays “implemented, not deployed” until T5.3 completes.</li><li>Record a check as passed unless it ran.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>None.</dd>
+<dt>Verify</dt><dd>No new command. The results recorded must come from the batch checks above.</dd>
+<dt>Done when</dt><dd><ul><li>The Status log has a row for each task.</li><li>The roadmap status is correct.</li><li>No document claims v2 deployment before T5.3 completes.</li></ul></dd>
+<dt>Depends on</dt><dd>T5.1</dd>
+<dt>Parallel-safe</dt><dd>no</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>normal</dd>
+</dl>
+<p class="orch"><strong>Resolved:</strong> add one line at the top of <code>LESSON_ACTIVITIES_PLAN.html</code>: “Partly superseded by ACTIVITIES_V2_PLAN.html (quick_grammar replaced, progress rule reversed).” Nothing else in that file is rewritten.</p>
+</section>
+
+<section class="task" id="T5.3">
+<div class="task-head"><h3>T5.3 · Production rollout (orchestrator only)</h3><span class="tag">Batch 5 · ⚠</span></div>
+<dl class="fields">
+<dt>Goal</dt><dd><p>Roll v2 out to production with a restore point and a smoke check. The orchestrator runs this task, not a worker.</p></dd>
+<dt>Read</dt><dd><ul>
+<li><code>packages/db/migrations/0038_lesson_activities_v2.sql</code> (T2.1).</li>
+</ul></dd>
+<dt>Change</dt><dd><ol>
+<li>Ask the owner for go-ahead. Never run a remote command without it.</li>
+<li>Record a D1 Time Travel restore point first: <code>rtk pnpm --filter @wordinator/api exec wrangler d1 time-travel info wordinator</code>. Note the bookmark in the Status log.</li>
+<li>Apply the migration with the target explicitly remote: <code>rtk pnpm db:migrate:remote</code>.</li>
+<li>Deploy the API, then the web straight away in the same session: <code>pnpm --filter @wordinator/api deploy</code>, then <code>pnpm --filter @wordinator/web deploy</code>. The migration lands before the API; the web follows the API.</li>
+<li>Smoke check: open one story summary and one guided grammar activity in production.</li>
+</ol></dd>
+<dt>Do not</dt><dd><ul><li>Run any remote command before the owner’s go-ahead.</li><li>Skip the restore point.</li><li>Deploy the web before the API, or the API before the migration.</li><li>Change code or migrations in this task.</li><li>Record v2 as deployed before the smoke check passes.</li></ul></dd>
+<dt>Tests to add/update</dt><dd>None. The smoke check is the check.</dd>
+<dt>Verify</dt><dd>The migration applies cleanly and the smoke check passes.</dd>
+<dt>Done when</dt><dd><ul><li>Migration applied remotely.</li><li>Both apps deployed.</li><li>Smoke check passed.</li><li>Status log row filled.</li></ul></dd>
+<dt>Depends on</dt><dd>T5.1</dd>
+<dt>Parallel-safe</dt><dd>no (orchestrator only; never in parallel with any other task)</dd>
+<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Risk</dt><dd>⚠ changes production data and deploys; owner go-ahead required</dd>
+</dl>
+<p class="orch"><strong>Orchestrator note:</strong> no worker runs this task. Ask the owner first; the orchestrator runs every remote command itself.</p>
+</section>
+</section>
+
+<section id="risks">
+<h2>Open risks</h2>
+<h3>From the brief</h3>
+<ul>
+<li><strong>Furthest-position credit (D4).</strong> It over-credits earlier sections. The owner may later want a per-block read set.</li>
+<li><strong>Image URL edits do not change the fingerprint.</strong> Image blocks are fingerprinted as <code>{id, type}</code>. Serve the image from the current published document at view time, not from the cached payload (T3.1 and T4.4).</li>
+<li><strong>Safari audio gap.</strong> Safari may block audio that starts after an async fetch. This applies to the read-aloud Listen control too.</li>
+</ul>
+<h3>Added by the orchestrator review of the brief</h3>
+<ul>
+<li><strong>Intermediate commits do not typecheck.</strong> The API breaks from Batch 1 and the web from Batch 1 until Batch 4. Per-task commits in that range use the package-only gate in the commit gating note; none may be deployed.</li>
+<li><strong>Migrations directory not named.</strong> T2.1 cannot start until the path is confirmed.</li>
+<li><strong>Wide-screen suggestions.</strong> The v1 status records that on wide screens the suggestions appear only in the New words panel footer, so lessons without vocabulary show no Do more with AI there. The brief does not ask for a fix. The D7 layout change may or may not cover it. The owner confirms.</li>
+<li><strong>Auth negative tests.</strong> CLAUDE.md requires them for protected API work. The brief lists tests only for T3.5. T3.1, T3.3, T3.4 and T3.6 change protected routes.</li>
+<li><strong>Icon exports unverified.</strong> They are verified only when T4.2 runs. A missing export makes T4.2 BLOCKED.</li>
+</ul>
+<h3>Confirm before dispatch</h3>
+<ul>
+<li>The meaning of <code>referenceText</code> versus <code>dutchText</code> (T1.2).</li>
+<li>Which sections get speaking types: D2 wording or T1.3 wording (T1.3).</li>
+<li>Migrations directory (T2.1).</li>
+<li>Chunk index base, and the definition of “eligible” for <code>followUps</code> (T3.2).</li>
+<li>Whether <code>docs/design-system.md</code> joins the T4.3 read list.</li>
+<li>Namespace of the badge aria label, and the English labels for the new types (T4.1).</li>
+<li>Whether the summary word list sits on the left as D1 says (T4.4).</li>
+<li>Whether the v1 plan is edited in T5.2.</li>
+</ul>
+</section>
+
+<section id="status-log">
+<h2>Status log</h2>
+<p class="muted">One row per task, added by the orchestrator in that task’s own commit (T5.2 reconciles it). No v2 change is deployed until T5.3 completes.</p>
+<div class="table"><table>
+<thead><tr><th>Task</th><th>Date</th><th>Checks run</th><th>Result</th></tr></thead>
+<tbody class="empty">
+<tr><td></td><td></td><td></td><td></td></tr>
+</tbody>
+</table></div>
+</section>
+
+</main>
+<footer>
+<p>Wordinator · Lesson activities v2 execution plan · Planned — not started · 21 October 2026. Authoritative product rules live in <code>docs/lesson-activities.md</code> once T0.1 lands.</p>
+</footer>
+</body>
+</html>
