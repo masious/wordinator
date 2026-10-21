@@ -23,7 +23,7 @@ button.toggle:focus-visible{outline-offset:2px;border-radius:var(--radius-sm)}
 /* A Lumen reference item: the word on the card surface with a line border, its button stack at the row's end. Words of blocks off
    screen are dimmed; the ones on screen are on the soft accent. */
 .word{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:0;min-width:0;overflow:hidden;background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-md);opacity:0.6;transition:background-color var(--motion-standard) var(--ease-physical),border-color var(--motion-standard) var(--ease-physical),opacity var(--motion-standard) var(--ease-physical)}
-.active{opacity:1;background:var(--color-action-soft);border-color:color-mix(in srgb,var(--color-action) 35%,transparent)}
+.active,.queryMatch{opacity:1;background:var(--color-action-soft);border-color:color-mix(in srgb,var(--color-action) 35%,transparent)}
 .copy{display:grid;gap:var(--space-1);min-width:0;padding:var(--space-3)}
 .term{margin:0;font-weight:var(--weight-semibold);overflow-wrap:anywhere}
 .forms{margin:0;font:var(--type-metadata)/var(--line-compact) var(--font-mono);color:var(--color-foreground-muted);overflow-wrap:anywhere}
@@ -50,6 +50,7 @@ button.toggle:focus-visible{outline-offset:2px;border-radius:var(--radius-sm)}
 .example{display:flex;align-items:center;gap:var(--space-2);margin:0;font-size:var(--type-metadata);font-style:italic;overflow-wrap:anywhere}
 .note{margin:0;font-size:var(--type-metadata);color:var(--color-foreground-muted);white-space:pre-wrap;overflow-wrap:anywhere}
 .search{display:grid}
+.query :global(input){font-size:var(--text-xs)}
 /* Where the panel scrolls on its own (the rail and the sheet), the search row stays pinned to its very top edge, past its padding,
    while the words scroll beneath it. Under the text the page scrolls, so it does not stick there. */
 .docked .search,.sheet .search{position:sticky;top:calc(-1 * var(--pad-y));z-index:1;padding-block:var(--space-2)}

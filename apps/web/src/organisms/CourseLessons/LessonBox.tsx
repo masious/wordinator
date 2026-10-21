@@ -75,6 +75,7 @@ export function LessonBoxActions({ lesson, compact = false }: { lesson: LessonBo
   const { t } = useTranslation();
   const named = { number: lesson.number, lesson: lesson.title, course: lesson.courseTitle };
   return <div className={styles.actions} data-compact={compact || undefined} role="group" aria-label={t("courses.lessonBox.actions")}>
+    <h2 className={styles.actionsHeading}><Sparkles aria-hidden="true" /><span>{t("courses.lessonBox.doMoreWithAi")}</span></h2>
     <div className={styles.pair}>
       <Link className={styles.action} title={compact ? t("courses.lessonBox.practiseWords") : undefined} to="/words/drill" search={{ source: "course", course: lesson.courseId, direction: "mixed" }}>
         <Dumbbell aria-hidden="true" /><span className={styles.label}>{t("courses.lessonBox.practiseWords")}</span>

@@ -1,4 +1,4 @@
-.practice{display:grid;gap:var(--space-3);padding:var(--space-5);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
+.practice{display:grid;gap:var(--space-2);padding:var(--space-4);background:var(--color-core);border:var(--ring-hairline);border-radius:var(--radius-lg);box-shadow:var(--shadow-card)}
 .eyebrow{margin:0;font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-action)}
 .instruction{margin:0;font-weight:var(--weight-semibold);white-space:pre-wrap;overflow-wrap:anywhere}
 .passage{display:grid;gap:var(--space-2);padding:var(--space-4);background:var(--color-surface);border:var(--ring-hairline);border-radius:var(--radius-md)}
@@ -6,8 +6,8 @@
 .passage p{margin:0;font-size:var(--type-authored);line-height:var(--line-body);white-space:pre-wrap;overflow-wrap:anywhere}
 .prompts{display:grid;gap:var(--space-2);margin:0;padding-inline-start:var(--space-6);font-size:var(--type-authored);line-height:var(--line-body)}
 .prompts li{white-space:pre-wrap;overflow-wrap:anywhere}
-.composer h4{margin:0;font-size:var(--type-card-title);line-height:var(--line-title)}
-.composer{display:grid;gap:var(--space-3);padding:var(--space-4);background:color-mix(in srgb,var(--color-surface-raised) 92%,var(--color-info-soft));border:var(--ring-hairline);border-radius:var(--radius-md)}
+.composer h4{margin:0;font-size:var(--type-body);line-height:var(--line-body)}
+.composer{display:grid;gap:var(--space-2);padding:var(--space-3);background:color-mix(in srgb,var(--color-surface-raised) 92%,var(--color-info-soft));border:var(--ring-hairline);border-radius:var(--radius-md)}
 .help{margin:0;max-width:52ch;font-size:var(--type-metadata);color:var(--color-foreground-muted)}
 .actions{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:var(--space-2)}
 .answerField{display:grid;gap:var(--space-2);min-width:0}
@@ -29,30 +29,35 @@
 /* Inside the practice stepper, which draws the card. */
 .step{display:grid}
 .summaryHeader{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-3);margin:0}
-.summaryStatus{font-size:var(--type-metadata);color:var(--color-foreground-muted)}
-.ownDone{color:var(--color-success);font-weight:var(--weight-semibold)}
 .summaryBody{display:flex;align-items:flex-end;gap:var(--space-4)}
 .summaryPrompts{display:grid;flex:1;gap:var(--space-1);min-width:0}
 .summaryList{display:grid;gap:var(--space-1);margin:0;padding-inline-start:var(--space-6);font-size:var(--type-body);line-height:var(--line-body)}
 .summaryList li{white-space:pre-wrap;overflow-wrap:anywhere}
+.summaryActive{font-weight:var(--weight-bold);color:var(--color-action)}
+.summaryAccepted{color:var(--color-success)}
+.summaryCheck{display:inline-grid;place-items:center;margin-inline-start:var(--space-2);color:var(--color-success);font-weight:var(--weight-bold)}
 .summaryAnswer{flex:none}
 @media(max-width:30em){.summaryBody{flex-direction:column;align-items:stretch}}
 .position{display:grid;gap:var(--space-2)}
 .positionLabel{margin:0;font-family:var(--font-mono);font-size:var(--type-eyebrow);letter-spacing:var(--tracking-eyebrow);text-transform:uppercase;color:var(--color-foreground-muted)}
+.positionLabelBelow .positionLabel{text-align:center}
+.activeQuestion{overflow-wrap:anywhere}
 .question{display:grid;gap:var(--space-1);min-width:0}
 .reveal{animation:matchIn var(--motion-standard) var(--ease-physical)}
 /* The answer set opened in place under the prompts (no dialog frame, so its passage and answers sit on the card). */
-.expansion{display:grid;gap:var(--space-3);min-width:0;padding-top:var(--space-4);border-top:var(--ring-hairline);animation:expandIn var(--motion-standard) var(--ease-physical)}
+.expansion{display:grid;gap:var(--space-3);min-width:0;animation:expandIn var(--motion-standard) var(--ease-physical)}
 .expansion .passage{padding:0;background:none;border:0;border-radius:0}
 .expansion .composer{padding:0;background:none;border:0}
-/* A row's share control (icon only) sits at the left of the answer box and lines up with the box's bottom edge; with no share control
+/* A row's share control (icon only) sits at the right of the answer box and lines up with the box's bottom edge; with no share control
    (where sharing is not offered) the cell is empty, hidden, and the box takes the full row. */
 .answerRow{display:flex;align-items:flex-end;gap:var(--space-3);min-width:0}
 .answerBox{flex:1;display:grid;min-width:0}
 .answerShare{display:flex;flex:none}
 .answerShare:empty{display:none}
+.visuallyHidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 /* A word-order question: its words are chips in a wrapping row, each with its move controls at the end; a matched row turns them green. */
 .words{display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0;padding:0;list-style:none}
 .word{display:inline-flex;align-items:center;gap:var(--space-1);padding:var(--space-1);background:var(--color-control-surface);border:var(--ring-hairline);border-radius:var(--radius-pill)}
-.chip{min-height:var(--control-height-sm);padding:0 var(--space-3);font:inherit;font-weight:var(--weight-semibold);color:var(--color-foreground);background:none;border:0;border-radius:var(--radius-pill);cursor:pointer}
+.chip{min-height:var(--control-height-sm);padding:0 var(--space-3);font:inherit;font-weight:var(--weight-semibold);color:var(--color-foreground);background:none;border:0;border-radius:var(--radius-pill);cursor:grab}
+.chip:active{cursor:grabbing}
 .matched .word{border-color:var(--color-success)}

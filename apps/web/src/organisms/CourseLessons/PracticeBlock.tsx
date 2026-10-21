@@ -4,7 +4,7 @@ import {
 import { readPracticeBlock, type LessonBlockOf } from "@wordinator/contracts/lesson-document";
 import { useQueryClient } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { type FocusEvent, type FormEvent, type KeyboardEvent, type ReactNode, type RefObject, useCallback, useEffect, useId, useRef, useState } from "react";
+import { type FocusEvent, type FormEvent, type KeyboardEvent, type ReactNode, type RefObject, useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { apiRequest, courseProgressQueryOptions, lessonQueryOptions } from "../../api";
 import { sendPracticeAttempt } from "../../molecules/learningAttempts";
@@ -83,11 +83,12 @@ const plainEnter = (event: KeyboardEvent) =>
   event.key === "Enter" && !event.shiftKey && !event.altKey && !event.ctrlKey && !event.metaKey && !event.nativeEvent.isComposing;
 
 // Where the learner is within a practice: on the third question of eight the bar is three eighths full.
-export function PracticePosition({ current, total, className }: { current: number; total: number; className?: string }) {
+export function PracticePosition({ current, total, className, labelBelow = false }: { current: number; total: number; className?: string; labelBelow?: boolean }) {
   const { t } = useTranslation();
-  return <div className={`${styles.position} ${className ?? ""}`}>
-    <p className={styles.positionLabel}>{t("courses.practice.position", { current, total })}</p>
+  return <div className={`${styles.position} ${labelBelow ? styles.positionLabelBelow : ""} ${className ?? ""}`}>
+    {!labelBelow && <p className={styles.positionLabel}>{t("courses.practice.position", { current, total })}</p>}
     <ProgressMeter size="compact" value={total ? (current / total) * 100 : 0} label={t("courses.practice.progressLabel")} />
+    {labelBelow && <p className={styles.positionLabel}>{t("courses.practice.position", { current, total })}</p>}
   </div>;
 }
 
@@ -112,15 +113,15 @@ export type AnswerSubmit = RefObject<(() => void) | null>;
 type PracticeQuestion = LearnerPracticePayload["items"][number];
 // `blank` names the blank a check covered, or null for the whole item.
 type Check = { answer: string; match: boolean; blank: number | null };
-// `initialFocus` marks the field a dialog's focus trap focuses when it opens. `share` is an optional control placed at the left of the
-// answer box (a practice answer row's share, which is icon-only); the feedback below stays under the box, not under the control.
-export function AnswerField({ question, label, description, value, onChange, minRows, onAdvance, submitRef, onCheck, initialFocus = false, share }: {
+// `initialFocus` marks the field a dialog's focus trap focuses when it opens. `hidePromptLabel` lets the composer show the prompt at
+// the top of its answer box while keeping the field's accessible name; `share` is an optional icon-only control at the row's end.
+export function AnswerField({ question, label, description, value, onChange, minRows, onAdvance, submitRef, onCheck, initialFocus = false, hidePromptLabel = false, replaceOnMatch = false, initiallyMatched = false, share }: {
   question: PracticeQuestion; label: string; description?: ReactNode; value: string; onChange: (value: string) => void; minRows: number;
-  onAdvance?: () => void; submitRef?: AnswerSubmit; onCheck?: (answer: string) => void; initialFocus?: boolean; share?: ReactNode;
+  onAdvance?: () => void; submitRef?: AnswerSubmit; onCheck?: (answer: string) => void; initialFocus?: boolean; hidePromptLabel?: boolean; replaceOnMatch?: boolean; initiallyMatched?: boolean; share?: ReactNode;
 }) {
   const { t } = useTranslation();
   const [checked, setChecked] = useState<Check | null>(null);
-  const current = checked?.answer === value; const matched = current && checked.match && checked.blank === null;
+  const current = checked?.answer === value; const matched = (current && checked.match && checked.blank === null) || (initiallyMatched && !checked);
   const reference = checked && !checked.match && question.authorsVersion.length ? question.authorsVersion : null;
   // The last answer reported to `onCheck`, so pressing Enter again on an unchanged answer reports nothing.
   const reported = useRef<string | null>(null);
@@ -156,24 +157,26 @@ export function AnswerField({ question, label, description, value, onChange, min
   };
   return <div className={styles.answerField} data-answer-field>
     <div className={styles.answerRow}>
-      {share && <div className={styles.answerShare}>{share}</div>}
       <div className={styles.answerBox}>
-        {words
-          ? <WordOrderField words={words} label={label} description={description} value={value} onChange={onChange} onEnter={submit} matched={matched} initialFocus={initialFocus} />
-          : blanks > 1
-          ? <fieldset className={`${styles.blanks} ${matched ? styles.matched : ""}`}>
-            <legend>{label}</legend>
-            {description && <p className={styles.help}>{description}</p>}
-            <div className={styles.blankRow}>{parts.map((part, index) => <TextField key={index} ref={(input) => { blankInputs.current[index] = input; }}
-              label={t("discussion.blankNumber", { number: index + 1 })} value={part} data-autofocus={(initialFocus && index === 0) || undefined} maxLength={RESPONSE_ANSWER_MAX} onKeyDown={blankKeyDown(index)}
-              onChange={(event) => { const text = event.currentTarget.value; onChange(joinBlanks(parts.map((entry, current) => current === index ? text : entry))); }} />)}</div>
-          </fieldset>
-          : <TextAreaField label={label} description={description} value={value} data-autofocus={initialFocus || undefined} maxLength={RESPONSE_ANSWER_MAX} autosize minRows={minRows}
-            className={matched ? styles.matched : undefined} onKeyDown={(event) => { if (plainEnter(event)) { event.preventDefault(); submit(); } }} onChange={(event) => onChange(event.currentTarget.value)} />}
+        {matched && replaceOnMatch
+          ? <p className={styles.match} role="status"><span className={styles.matchMark} aria-hidden="true">✓</span>{t("courses.practice.match")}</p>
+          : words
+            ? <WordOrderField words={words} label={label} hidePromptLabel={hidePromptLabel} description={description} value={value} onChange={onChange} onEnter={submit} matched={matched} initialFocus={initialFocus} />
+            : blanks > 1
+              ? <fieldset className={`${styles.blanks} ${matched ? styles.matched : ""}`}>
+                <legend className={hidePromptLabel ? styles.visuallyHidden : undefined}>{label}</legend>
+                {description && <p className={styles.help}>{description}</p>}
+                <div className={styles.blankRow}>{parts.map((part, index) => <TextField key={index} ref={(input) => { blankInputs.current[index] = input; }}
+                  label={t("discussion.blankNumber", { number: index + 1 })} value={part} data-autofocus={(initialFocus && index === 0) || undefined} maxLength={RESPONSE_ANSWER_MAX} onKeyDown={blankKeyDown(index)}
+                  onChange={(event) => { const text = event.currentTarget.value; onChange(joinBlanks(parts.map((entry, current) => current === index ? text : entry))); }} />)}</div>
+              </fieldset>
+              : <TextAreaField label={hidePromptLabel ? undefined : label} aria-label={label} description={description} value={value} data-autofocus={initialFocus || undefined} maxLength={RESPONSE_ANSWER_MAX} autosize minRows={minRows}
+                className={matched ? styles.matched : undefined} onKeyDown={(event) => { if (plainEnter(event)) { event.preventDefault(); submit(); } }} onChange={(event) => onChange(event.currentTarget.value)} />}
       </div>
+      {share && !matched && <div className={styles.answerShare}>{share}</div>}
     </div>
     <div aria-live="polite">
-      {matched && <p className={styles.match}><span className={styles.matchMark} aria-hidden="true">✓</span>{t("courses.practice.match")}</p>}
+      {matched && !replaceOnMatch && <p className={styles.match}><span className={styles.matchMark} aria-hidden="true">✓</span>{t("courses.practice.match")}</p>}
       {reference && <div className={styles.checkReference}>
         <p className={styles.checkReferenceLabel}>{t("courses.practice.reference")}</p>
         <p className={styles.checkReferenceText}><PlainText>{reference.map((entry) => entry ?? "—").join(BLANK_SEPARATOR)}</PlainText></p>
@@ -187,12 +190,13 @@ export function AnswerField({ question, label, description, value, onChange, min
 // keys on a word. The chips start in the prompt's order and the answer stays empty until one moves, so an untouched question counts as
 // unanswered, like an empty typed answer. A saved answer restores its order; one that is not these words in some order falls back to
 // the prompt's order and is cleared, so it cannot count as an answer. Enter anywhere in the row checks the current order.
-function WordOrderField({ words, label, description, value, onChange, onEnter, matched, initialFocus }: {
-  words: string[]; label: string; description?: ReactNode; value: string; onChange: (value: string) => void; onEnter: () => void; matched: boolean; initialFocus: boolean;
+function WordOrderField({ words, label, hidePromptLabel, description, value, onChange, onEnter, matched, initialFocus }: {
+  words: string[]; label: string; hidePromptLabel: boolean; description?: ReactNode; value: string; onChange: (value: string) => void; onEnter: () => void; matched: boolean; initialFocus: boolean;
 }) {
   const { t } = useTranslation();
   const [order, setOrder] = useState(() => (value && wordOrderFromAnswer(words, value)) || words);
   const chips = useRef<(HTMLButtonElement | null)[]>([]);
+  const dragged = useRef<number | null>(null);
   // The chip that keeps focus after a move, focused once the moved order has rendered.
   const focusIndex = useRef<number | null>(null);
   useEffect(() => { if (value && !wordOrderFromAnswer(words, value)) onChange(""); }, []);
@@ -207,13 +211,24 @@ function WordOrderField({ words, label, description, value, onChange, onEnter, m
     [next[index], next[to]] = [next[to]!, next[index]!];
     setOrder(next); onChange(joinWordOrder(next)); focusIndex.current = to;
   };
+  const moveTo = (from: number, to: number) => {
+    if (from === to || from < 0 || to < 0 || from >= order.length || to >= order.length) return;
+    const next = [...order];
+    const [word] = next.splice(from, 1);
+    next.splice(to, 0, word!);
+    setOrder(next); onChange(joinWordOrder(next)); focusIndex.current = to;
+  };
   return <fieldset className={`${styles.blanks} ${matched ? styles.matched : ""}`} onKeyDown={(event) => { if (plainEnter(event)) { event.preventDefault(); onEnter(); } }}>
-    <legend>{label}</legend>
+    <legend className={hidePromptLabel ? styles.visuallyHidden : undefined}>{label}</legend>
     {description && <p className={styles.help}>{description}</p>}
     <p className={styles.help}>{t("courses.practice.wordOrderHelp")}</p>
     <ol className={styles.words}>
       {order.map((word, index) => <li key={index} className={styles.word}>
-        <button type="button" ref={(node) => { chips.current[index] = node; }} data-word-chip data-autofocus={(initialFocus && index === 0) || undefined} className={styles.chip}
+        <button type="button" ref={(node) => { chips.current[index] = node; }} data-word-chip data-autofocus={(initialFocus && index === 0) || undefined} className={styles.chip} draggable
+          onDragStart={(event) => { dragged.current = index; event.dataTransfer.effectAllowed = "move"; event.dataTransfer.setData("text/plain", word); }}
+          onDragOver={(event) => { event.preventDefault(); event.dataTransfer.dropEffect = "move"; }}
+          onDrop={(event) => { event.preventDefault(); if (dragged.current !== null) moveTo(dragged.current, index); dragged.current = null; }}
+          onDragEnd={() => { dragged.current = null; }}
           onKeyDown={(event) => {
             if (event.key === "ArrowLeft") { event.preventDefault(); move(index, index - 1); }
             if (event.key === "ArrowRight") { event.preventDefault(); move(index, index + 1); }
@@ -256,8 +271,8 @@ export function ownStatus(practice: Practice) {
   return { done: (practice.progress.answered ?? 0) >= total, left: Math.max(total - (practice.progress.answered ?? 0), 0) };
 }
 
-// A practice on the lesson page: its instruction and first prompts, how many people are done and how many questions the viewer has
-// left, and an Answer button that opens and closes the answer set in place, below the prompts. There is no dialog: the answers open
+// A practice on the lesson page: its instruction and first prompts, and an Answer button that opens and closes the answer set in place,
+// below the prompts. There is no dialog: the answers open
 // in the reading column, and on the lesson page they appear one question at a time (`staged`).
 // `step` shows it inside the practice stepper, which supplies the card and the Practice label.
 export function PracticeSummary({ scope, block, published, archived = false, step = false }: {
@@ -266,35 +281,42 @@ export function PracticeSummary({ scope, block, published, archived = false, ste
   const { t } = useTranslation(); const [answering, setAnswering] = useState(false);
   const saveProgress = usePracticeProgress(scope, published);
   const toggle = useId(); const panel = useId();
-  const { payload } = block; const more = payload.items.length - SUMMARY_PROMPTS; const own = ownStatus(block);
-  // Closing the answers in any way saves progress, exactly like the dialog's close did, and hands focus back to the Answer button.
-  const close = () => { saveProgress(block); setAnswering(false); document.getElementById(toggle)?.focus(); };
+  const { payload } = block; const more = payload.items.length - SUMMARY_PROMPTS;
+  const draftKey = practiceDraftKey(scope.accountId, scope.groupId, "practice-answer", block.id);
+  const [savedAnswers] = useState(() => readAnswers(draftKey, payload.items.length));
+  const [acceptedQuestions, setAcceptedQuestions] = useState(() => {
+    return payload.items.map((item, index) => hasAuthorsVersion(item) && answerMatches(item, savedAnswers[index] ?? ""));
+  });
+  const [activeQuestion, setActiveQuestion] = useState(() => Math.max(0, revealedThrough(payload.items, savedAnswers) - 1));
+  // Closing saves progress and restores focus after the Answer button remounts.
+  const close = () => { saveProgress(block); setAnswering(false); requestAnimationFrame(() => document.getElementById(toggle)?.focus()); };
   // Leaving the practice while its answers are open, such as moving to another step of the stepper, saves them like closing does.
   const latest = useRef({ answering, block, saveProgress });
   useEffect(() => { latest.current = { answering, block, saveProgress }; });
   useEffect(() => () => { const last = latest.current; if (last.answering) last.saveProgress(last.block); }, []);
   return <div className={step ? `${styles.summary} ${styles.step}` : `${styles.practice} ${styles.summary}`}>
-    <p className={styles.summaryHeader}>
-      {!step && <span className={styles.eyebrow}>{t("courses.practice.label")}</span>}
-      <span className={styles.summaryStatus}>
-        {t("courses.practice.peopleDone", { count: block.progress.done })}
-        {" · "}
-        {own.done ? <span className={styles.ownDone}>{t("courses.practice.youAreDone")}</span> : t("courses.practice.questionsLeft", { count: own.left })}
-      </span>
-    </p>
+    {!step && <p className={styles.summaryHeader}><span className={styles.eyebrow}>{t("courses.practice.label")}</span></p>}
     <p className={styles.instruction}><PlainText>{payload.instruction}</PlainText></p>
     <div className={styles.summaryBody}>
       <div className={styles.summaryPrompts}>
-        <ol className={styles.summaryList}>{payload.items.slice(0, SUMMARY_PROMPTS).map((item, index) => <li key={index}><PlainText>{item.prompt}</PlainText></li>)}</ol>
-        {more > 0 && <p className={styles.help}>{t("courses.practice.morePrompts", { count: more })}</p>}
+        <ol className={styles.summaryList}>{payload.items.slice(0, answering ? payload.items.length : SUMMARY_PROMPTS).map((item, index) => {
+          const accepted = acceptedQuestions[index] ?? false;
+          const active = index === activeQuestion && !accepted;
+          return <li key={index} className={active ? styles.summaryActive : accepted ? styles.summaryAccepted : undefined}>
+            <PlainText>{item.prompt}</PlainText>{accepted && <span className={styles.summaryCheck} aria-label={t("courses.practice.match")}>✓</span>}
+          </li>;
+        })}</ol>
+        {!answering && more > 0 && <p className={styles.help}>{t("courses.practice.morePrompts", { count: more })}</p>}
       </div>
-      <Button id={toggle} className={styles.summaryAnswer} aria-expanded={answering} aria-controls={panel}
-        onClick={() => answering ? close() : setAnswering(true)}>{t("courses.practice.answer")}</Button>
+      {!answering && <Button id={toggle} className={styles.summaryAnswer} aria-expanded={false} aria-controls={panel}
+        onClick={() => setAnswering(true)}>{t("courses.practice.answer")}</Button>}
     </div>
     {answering && <section id={panel} aria-label={t("courses.practice.dialogTitle")} className={styles.expansion}
       onKeyDown={(event) => { if (event.key === "Escape") close(); }}>
+      <PracticePosition current={activeQuestion + 1} total={payload.items.length} labelBelow />
       {payload.passage && <PracticePassage passage={payload.passage} />}
-      <AnswerSetComposer staged scope={scope} block={block} recordAttempts={published && !archived} timed={published} onDone={close} />
+      <AnswerSetComposer staged scope={scope} block={block} recordAttempts={published && !archived} timed={published} onDone={close} onActiveChange={setActiveQuestion}
+        onAcceptanceChange={(index, accepted) => setAcceptedQuestions((current) => current.map((value, currentIndex) => currentIndex === index ? accepted : value))} />
     </section>}
   </div>;
 }
@@ -315,8 +337,9 @@ function revealedThrough(questions: readonly PracticeQuestion[], answers: readon
 // an answer. The position bar follows the focused question. With `recordAttempts` (a published practice outside an archived course)
 // each answer check is recorded as a practice attempt. With `timed` (a published practice) the open answer set runs the practice's
 // learning time clock (C15).
-export function AnswerSetComposer({ scope, block, recordAttempts = false, timed = false, staged = false, onDone }: {
+export function AnswerSetComposer({ scope, block, recordAttempts = false, timed = false, staged = false, onDone, onActiveChange, onAcceptanceChange }: {
   scope: PracticeScope; block: Practice; recordAttempts?: boolean; timed?: boolean; staged?: boolean; onDone: () => void;
+  onActiveChange?: (index: number) => void; onAcceptanceChange?: (index: number, accepted: boolean) => void;
 }) {
   const { t } = useTranslation();
   useLearningClaim(timed ? { groupId: scope.groupId, target: () => ({ activity: "practice", courseId: scope.courseId, lessonId: scope.lessonId, practiceId: block.id }) } : null);
@@ -324,6 +347,7 @@ export function AnswerSetComposer({ scope, block, recordAttempts = false, timed 
   const key = practiceDraftKey(scope.accountId, scope.groupId, "practice-answer", block.id);
   const questions = block.payload.items;
   const [answers, setAnswers] = useState(() => readAnswers(key, questions.length));
+  const [restoredAnswers] = useState(() => readAnswers(key, questions.length));
   useEffect(() => storeAnswers(key, answers), [answers, key]);
   const [revealed, setRevealed] = useState(() => staged ? revealedThrough(questions, answers) : questions.length);
   const shown = staged ? revealed : questions.length;
@@ -331,41 +355,77 @@ export function AnswerSetComposer({ scope, block, recordAttempts = false, timed 
     if (staged) return revealed - 1;
     const blank = answers.findIndex((answer) => !answer.trim()); return blank < 0 ? questions.length - 1 : blank;
   });
+  const [matchedItems, setMatchedItems] = useState<Set<number>>(() => new Set());
+  const [skippedItems, setSkippedItems] = useState<Set<number>>(() => new Set());
   const form = useRef<HTMLFormElement>(null);
   const passageNote = useId();
   const focusQuestion = (index: number) => {
-    const field = form.current?.querySelectorAll("[data-answer-field]")[index]?.querySelector<HTMLElement>("textarea, input, [data-word-chip]");
+    const field = form.current?.querySelector<HTMLElement>(`[data-question-index="${index}"] [data-answer-field]`)?.querySelector<HTMLElement>("textarea, input, [data-word-chip]");
     (field ?? form.current?.querySelector<HTMLElement>("button[type=submit]"))?.focus();
   };
   // Moving on focuses the next question once it has rendered, so a staged question is revealed first.
   const [focusRequest, setFocusRequest] = useState<{ index: number } | null>(null);
-  useEffect(() => { if (focusRequest) focusQuestion(focusRequest.index); }, [focusRequest]);
+  useLayoutEffect(() => { if (focusRequest) focusQuestion(focusRequest.index); }, [focusRequest]);
+  const hasAdvanced = useRef(false);
   const advance = (index: number) => {
+    hasAdvanced.current = true;
     if (staged) setRevealed((count) => Math.max(count, Math.min(index + 2, questions.length)));
+    const next = Math.min(index + 1, questions.length - 1);
+    setActive(next); onActiveChange?.(next);
     setFocusRequest({ index: index + 1 });
+  };
+  const skip = (index: number) => {
+    setSkippedItems((current) => new Set(current).add(index));
+    advance(index);
   };
   // A centred dialog's focus trap focuses the `initialFocus` field; without a trap, the field is focused here.
   const [initial] = useState(active);
-  useEffect(() => { const frame = requestAnimationFrame(() => focusQuestion(initial)); return () => cancelAnimationFrame(frame); }, [initial]);
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => { if (!hasAdvanced.current && document.activeElement === document.body) focusQuestion(initial); });
+    return () => cancelAnimationFrame(frame);
+  }, [initial]);
   const onFocus = (event: FocusEvent<HTMLFormElement>) => {
-    const field = event.target.closest("[data-answer-field]");
-    const index = field ? [...(form.current?.querySelectorAll("[data-answer-field]") ?? [])].indexOf(field) : -1;
-    if (index >= 0) setActive(index);
+    const field = event.target.closest<HTMLElement>("[data-question-index]");
+    const index = field ? Number(field.dataset.questionIndex) : -1;
+    if (index >= 0) {
+      setActive(index);
+      onActiveChange?.(index);
+      setSkippedItems((current) => { if (!current.has(index)) return current; const next = new Set(current); next.delete(index); return next; });
+    }
   };
   const complete = countAnswered(answers) === questions.length;
   const submit = (event: FormEvent) => { event.preventDefault(); onDone(); };
   return <form ref={form} className={styles.composer} onSubmit={submit} onFocus={onFocus} aria-label={t("courses.practice.yourAnswers")}>
-    <PracticePosition current={active + 1} total={questions.length} />
-    <h4>{t("courses.practice.yourAnswers")}</h4>
+    {!staged && <PracticePosition current={active + 1} total={questions.length} />}
+    {staged
+      ? <h4 className={styles.activeQuestion}><PlainText>{questions[active]?.prompt ?? ""}</PlainText></h4>
+      : <h4>{t("courses.practice.yourAnswers")}</h4>}
     {/* Each question can be shared on its own, except in a reading practice (docs/lesson-shares.md#where-to-share). */}
     {block.payload.passage && <PassageShareNote id={passageNote} />}
-    {questions.slice(0, shown).map((question, index) => <div key={index} className={staged ? `${styles.question} ${styles.reveal}` : styles.question}>
-      <AnswerField question={question} label={t("courses.practice.answerLabel", { number: index + 1, prompt: question.prompt })} value={answers[index] ?? ""} minRows={1} initialFocus={index === initial}
-        onChange={(text) => setAnswers((value) => value.map((entry, current) => current === index ? text : entry))} onAdvance={() => advance(index)}
-        onCheck={(answer) => recordAttempt(block.id, index, answer)}
+    {questions.slice(0, shown).map((question, index) => staged && index !== active ? null : <div key={index} data-question-index={index} className={staged ? `${styles.question} ${styles.reveal}` : styles.question}>
+      <AnswerField question={question} label={t("courses.practice.answerLabel", { number: index + 1, prompt: question.prompt })} value={answers[index] ?? ""} minRows={1} initialFocus={index === initial} hidePromptLabel={staged} replaceOnMatch={staged}
+        initiallyMatched={staged && hasAuthorsVersion(question) && answerMatches(question, restoredAnswers[index] ?? "")}
+        onChange={(text) => {
+          const next = answers.map((entry, current) => current === index ? text : entry);
+          setAnswers(next);
+          onAcceptanceChange?.(index, false);
+          setMatchedItems((current) => { if (!current.has(index)) return current; const next = new Set(current); next.delete(index); return next; });
+        }} onAdvance={() => advance(index)}
+        onCheck={(answer) => {
+          const matches = hasAuthorsVersion(question) && answerMatches(question, answer);
+          onAcceptanceChange?.(index, matches);
+          setMatchedItems((current) => {
+            if (current.has(index) === matches) return current;
+            const next = new Set(current);
+            if (matches) next.add(index); else next.delete(index);
+            return next;
+          });
+          recordAttempt(block.id, index, answer);
+        }}
         share={<ShareButton iconOnly piece={questionPiece(block, index)} label={t("lessonShares.shareNamed.question", { number: index + 1 })} describedBy={passageNote} />} />
     </div>)}
-    <p className={styles.help}>{t("courses.practice.blankHelp")}{showsEnterHint(questions.length) && ` ${t("courses.practice.enterHelp")}`}</p>
-    <div className={styles.actions}><Button type="submit">{complete ? t("courses.practice.done") : t("courses.practice.finishLater")}</Button></div>
+    {(!staged || showsEnterHint(questions.length)) && <p className={styles.help}>{!staged && t("courses.practice.blankHelp")}{showsEnterHint(questions.length) && ` ${t("courses.practice.enterHelp")}`}</p>}
+    <div className={styles.actions}>{staged && !matchedItems.has(active) && !skippedItems.has(active) && !(hasAuthorsVersion(questions[active]!) && answerMatches(questions[active]!, restoredAnswers[active] ?? "")) && <Button variant="quiet" aria-label={t("tutorComponents.skipNamed")} onClick={() => skip(active)}>{t("tutorComponents.skip")}</Button>}
+      <Button type="submit">{complete ? t("courses.practice.done") : t("courses.practice.finishLater")}</Button></div>
   </form>;
 }

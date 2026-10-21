@@ -3,13 +3,14 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { CourseLesson } from "@wordinator/contracts/lesson-document";
 import { SlidePanel } from "../../molecules/SlidePanel";
+import { QuestionPips } from "../../molecules/QuestionPips";
 import { IconButton } from "../../ui";
 import type { PracticeGroupItem } from "../LessonDocument/LessonDocument";
 import { ownStatus, practiceFromBlock, PracticeSummary, type PracticeScope } from "./PracticeBlock";
 import styles from "./PracticeStepper.module.css";
 
 // The lesson page's practice stepper (docs/courses.md#lesson-pages): two or more practices in a row as one card. Its header says
-// how many the viewer has done and has one segment per practice (done, current, or ahead), which moves to that practice, with
+// how many the viewer has done and has one shared status pip per practice (done, current, or open), which moves to that practice, with
 // Previous and Next arrows. Only the current practice shows, under its title; changing practice slides it in from the side of the
 // move. It opens on the first practice the viewer has not done, and stays where they put it while their progress refreshes.
 export function PracticeStepper({ items, scope, progress, published, archived }: {
@@ -35,13 +36,8 @@ export function PracticeStepper({ items, scope, progress, published, archived }:
         <IconButton tone="quiet" label={t("courses.practice.next")} disabled={current === practices.length - 1} onClick={() => setCurrent(current + 1)}><ChevronRight aria-hidden="true" /></IconButton>
       </div>
     </header>
-    <ol className={styles.segments}>
-      {practices.map((item, index) => <li key={item.block.id}>
-        <button type="button" className={styles.segment} data-done={done[index] || undefined} aria-current={index === current ? "step" : undefined}
-          aria-label={label(index)}
-          onClick={() => setCurrent(index)} />
-      </li>)}
-    </ol>
+    <QuestionPips label={t("courses.practice.stepperLabel")} current={current} onSelect={setCurrent}
+      items={practices.map((item, index) => ({ id: item.block.id, state: done[index] ? "done" as const : "open" as const, label: label(index) }))} />
     <SlidePanel index={current}>
       <div className={styles.body}>
         {active.title && <h3 className={styles.title}>{active.title}</h3>}

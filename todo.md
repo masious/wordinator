@@ -2,35 +2,35 @@ this file isn't meant for agents. don't read it if you're an agent.
 
 
 [x] practice progress (current session)
-[ ] re-write leftrail for lesson page:
+[x] re-write leftrail for lesson page:
     [x] in this lesson
     [x] story icon
-    [ ] back to course: needs name of course
-    [ ] change grammar icon (e.g., note, paper, sticky note, open book, book)
-    [ ] only animate the icon for corresponding active section
-    [ ] summary icon's color
-    [ ] no bg and border for headings inside content + bigger static icon
-[ ] answer dialog -> inline expansion with small animation:
+    [x] back to course: needs name of course
+    [x] change grammar icon (e.g., note, paper, sticky note, open book, book)
+    [x] only animate the icon for corresponding active section
+    [x] summary icon's color
+    [x] no bg and border for headings inside content + bigger static icon
+[x] answer dialog -> inline expansion with small animation:
     [x] adding all questions
     [x] inline answer boxes
-    [ ] show the question at the top box by rendering it "active"
-    [ ] remove the repeated question at the bottom box
-    [ ] skip question button
-    [ ] share icon (no text) at the right side 
-    [ ] put in order: drag and drop component
-    [ ] make everything smaller
-    [ ] remove "Nobody done yet · 8 questions left" subheading
-    [ ] for stacks, reuse the component for tutor's tool with multi-practices (dots)
-    [ ] "Matches the author’s version" should replace input(s) component
+    [x] show the question at the top box by rendering it "active"
+    [x] remove the repeated question at the bottom box
+    [x] skip question button
+    [x] share icon (no text) at the right side
+    [x] put in order: drag and drop component
+    [x] make everything smaller
+    [x] remove "Nobody done yet · 8 questions left" subheading
+    [x] for stacks, reuse the component for tutor's tool with multi-practices (dots)
+    [x] "Matches the author’s version" should replace input(s) component
     [x] hide for practices with many questions: "Press Enter to check Shift+Enter for a new line."
-[ ] lesson right section
+[x] lesson right section
     [x] fixed search header
     [x] click icon to reset query inside input
     [x] move three buttons at the leftrail underneath, visible when not searching words
-    [ ] thicker library icon
-    [ ] smaller text in query input
-    [ ] matching items with query should be active (colorful)
-    [ ] header for footer section: Do more with AI (+ icon for header)
+    [x] thicker library icon
+    [x] smaller text in query input
+    [x] matching items with query should be active (colorful)
+    [x] header for footer section: Do more with AI (+ icon for header)
 [x] dashboard progress box
     - no categories, single color
     - a brand new page for extra details on progress

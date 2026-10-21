@@ -141,7 +141,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const badges = useMemo(() => new Map(indexed.map((entry, index) => [entry.id, { category: entry.category, locked: states[index] === "locked" }])), [indexed, states]);
   const renderHeadingBadge = useCallback((id: string) => {
     const badge = badges.get(id);
-    return badge ? <CategoryBadge category={badge.category} locked={badge.locked} /> : null;
+    return badge ? <CategoryBadge category={badge.category} locked={badge.locked} content /> : null;
   }, [badges]);
   const lessonBox = <>
     {rail.box && createPortal(<LessonBox lesson={box} percent={percent} />, rail.box)}

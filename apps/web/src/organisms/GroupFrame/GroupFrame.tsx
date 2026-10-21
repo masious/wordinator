@@ -261,12 +261,12 @@ function Profile({ user, study, studyId }: { user: SignedInSession["user"]; stud
 // A lesson page's rail (docs/courses.md#lesson-box): Back to course, the lesson box, and the lesson's index, which alone scrolls;
 // then the other navigation items as a row of icons. The lesson's actions sit in the drawer only: on wide screens they are in the
 // New words panel's footer (docs/courses.md#lesson-box).
-function LessonRail({ courseSlug, pathname, slots, others, drawer }: {
-  courseSlug: string; pathname: string; slots: SlotRefs | null; others: Array<{ to: NavTarget; active: boolean; icon: ReactNode; label: string }>; drawer: boolean;
+function LessonRail({ courseSlug, courseTitle, pathname, slots, others, drawer }: {
+  courseSlug: string; courseTitle?: string; pathname: string; slots: SlotRefs | null; others: Array<{ to: NavTarget; active: boolean; icon: ReactNode; label: string }>; drawer: boolean;
 }) {
   const { t } = useTranslation();
   return <>
-    <Link className={styles.back} to="/courses/$courseSlug" params={{ courseSlug }}><ChevronLeft aria-hidden="true" />{t("nav.backToCourse")}</Link>
+    <Link className={styles.back} to="/courses/$courseSlug" params={{ courseSlug }}><ChevronLeft aria-hidden="true" />{courseTitle ? t("courses.lessons.backToCourse", { title: courseTitle }) : t("nav.backToCourse")}</Link>
     {slots && <div ref={slots.box} className={styles.lessonBoxSlot} />}
     <RailScroll className={styles.lessonScroll}>{slots && <div ref={slots.index} className={styles.lessonSlot} />}</RailScroll>
     <nav className={styles.iconRow} aria-label={t("nav.primary")}>
@@ -277,7 +277,7 @@ function LessonRail({ courseSlug, pathname, slots, others, drawer }: {
   </>;
 }
 
-function Rail({ groupId, session, pathname, slots, study, drawer = false }: { groupId: string; session: SignedInSession; pathname: string; slots: SlotRefs | null; study: StudyToggle; drawer?: boolean }) {
+function Rail({ groupId, session, pathname, slots, study, courseTitle, drawer = false }: { groupId: string; session: SignedInSession; pathname: string; slots: SlotRefs | null; study: StudyToggle; courseTitle?: string; drawer?: boolean }) {
   const { t } = useTranslation();
   const { user } = session;
   const studyId = useId();
@@ -301,7 +301,7 @@ function Rail({ groupId, session, pathname, slots, study, drawer = false }: { gr
   ];
   return <div className={styles.railBody}>
     <Brand />
-    {lessonCourse ? <LessonRail courseSlug={decodeURIComponent(lessonCourse)} pathname={pathname} slots={slots} others={others} drawer={drawer} />
+    {lessonCourse ? <LessonRail courseSlug={decodeURIComponent(lessonCourse)} courseTitle={courseTitle} pathname={pathname} slots={slots} others={others} drawer={drawer} />
       : <RailScroll>
         <nav className={styles.nav} aria-label={t("nav.primary")}>
           <CourseSubItems groupId={groupId} pathname={pathname} collapsed={collapsed} onToggle={toggle} />
@@ -316,7 +316,7 @@ function Rail({ groupId, session, pathname, slots, study, drawer = false }: { gr
 
 // `fill` pins the frame to the window's height and hands the content column all of it, unpadded, for a page that scrolls its own
 // regions (the tutor's chat) instead of the document.
-export function GroupFrame({ children, groupId, session, fill = false }: PropsWithChildren<{ groupId: string; session: SignedInSession; fill?: boolean }>) {
+export function GroupFrame({ children, groupId, session, fill = false, courseTitle }: PropsWithChildren<{ groupId: string; session: SignedInSession; fill?: boolean; courseTitle?: string }>) {
   const { t } = useTranslation();
   const pathname = useRouterState({ select: (state) => state.location.pathname });
   const [drawer, setDrawer] = useState(false);
@@ -341,7 +341,7 @@ export function GroupFrame({ children, groupId, session, fill = false }: PropsWi
 
   return <RailSlotsContext.Provider value={slots}><div className={styles.shell} style={shellStyle} data-fill={fill || undefined}>
     <aside ref={rail} className={styles.rail}>
-      <Rail groupId={groupId} session={session} pathname={pathname} slots={narrow ? null : slotRefs} study={study} />
+      <Rail groupId={groupId} session={session} pathname={pathname} slots={narrow ? null : slotRefs} study={study} courseTitle={courseTitle} />
       <RailResizer accountId={session.user.id} rail={rail} width={railWidth} onWidth={setRailWidth} />
     </aside>
     <header className={styles.mobileHeader}>
@@ -351,7 +351,7 @@ export function GroupFrame({ children, groupId, session, fill = false }: PropsWi
     </header>
     <Drawer opened={drawer} onClose={() => setDrawer(false)} size="80%" padding={0} withCloseButton={false} title={t("nav.primary")}
       classNames={{ content: styles.drawer, header: styles.drawerHeader }}>
-      <Rail groupId={groupId} session={session} pathname={pathname} slots={narrow ? slotRefs : null} study={study} drawer />
+      <Rail groupId={groupId} session={session} pathname={pathname} slots={narrow ? slotRefs : null} study={study} courseTitle={courseTitle} drawer />
     </Drawer>
     <main className={styles.shellMain}>{children}</main>
     <div ref={setReferenceSlot} className={styles.referenceRail} />

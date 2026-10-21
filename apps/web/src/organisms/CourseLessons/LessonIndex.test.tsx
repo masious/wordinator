@@ -3,6 +3,8 @@ import { act, cleanup, fireEvent, render, screen, within } from "@testing-librar
 import { useRef } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
+import { NotebookPen } from "lucide-react";
+import { stopCategories } from "../LessonOverview/stopCategories";
 import { currentEntry, entryStates, LessonIndex, lessonIndexEntries, useCurrentEntry, type LessonIndexEntry } from "./LessonIndex";
 
 const blockId = (n: number) => `50000000-0000-4000-8000-0000000000${String(n).padStart(2, "0")}`;
@@ -96,6 +98,12 @@ const scroll = async (y: number) => {
 };
 
 describe("LessonIndex", () => {
+  it("uses a note mark for grammar and the accent tone for Summary", () => {
+    expect(stopCategories.grammar.icon).toBe(NotebookPen);
+    expect(stopCategories.grammar.emoji).toBe("✍️");
+    expect(stopCategories.summary.tone).toBe("accent");
+  });
+
   beforeEach(() => {
     scrollY = 0;
     vi.stubGlobal("requestAnimationFrame", (callback: FrameRequestCallback) => setTimeout(() => callback(0), 0));

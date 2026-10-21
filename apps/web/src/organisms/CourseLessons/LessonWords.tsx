@@ -143,7 +143,7 @@ export function LessonWords({ steps, active, groupId, collapsed = false, onToggl
       {library && groupId ? <LibraryWordResults groupId={groupId} query={query} /> : <>
         {key && !shown.length && <p className={styles.status} role="status">{t("courses.words.search.noLessonMatches")}</p>}
         <ul className={styles.list}>{shown.map((word) => <PanelWord key={word.id} word={word} termSpeech={speech(`word:${word.id}`)} exampleSpeech={speech(`wordExample:${word.id}`)}
-          active={active.has(word.id)} className={active.has(word.id) ? `${styles.word} ${styles.active}` : styles.word} />)}</ul>
+          active={active.has(word.id)} className={`${styles.word}${active.has(word.id) ? ` ${styles.active}` : ""}${key ? ` ${styles.queryMatch}` : ""}`} />)}</ul>
       </>}
     </div>}
     {footerBox}

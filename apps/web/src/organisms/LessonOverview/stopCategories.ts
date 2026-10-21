@@ -1,10 +1,10 @@
 import {
   ArrowDownUp, AudioLines, BookA, BookOpenText, Globe, Languages, Lightbulb, ListChecks, MessageSquareReply, MessagesSquare,
-  NotebookPen, PencilLine, Puzzle, Repeat2, Sparkles, type LucideIcon,
+  NotebookPen, PencilLine, Repeat2, Sparkles, type LucideIcon,
 } from "lucide-react";
 import type { OverviewCategory } from "./overviewModel";
 
-export type CategoryTone = "yellow" | "orange" | "red" | "pink" | "violet" | "blue" | "teal" | "green" | "slate";
+export type CategoryTone = "yellow" | "orange" | "red" | "pink" | "violet" | "blue" | "teal" | "green" | "slate" | "accent";
 
 // How each stop category looks on the trail. Tones group related work: orange for dialogue, violet for sentence structure,
 // blue for rewording, teal for filling in and culture. Each category also has one of Noto's animated emoji, by character and
@@ -12,12 +12,12 @@ export type CategoryTone = "yellow" | "orange" | "red" | "pink" | "violet" | "bl
 export const stopCategories = {
   intro: { icon: Sparkles, tone: "yellow", emoji: "👋", codepoint: "1f44b" },
   topic: { icon: Lightbulb, tone: "yellow", emoji: "💡", codepoint: "1f4a1" },
-  grammar: { icon: Puzzle, tone: "violet", emoji: "⚙️", codepoint: "2699_fe0f" },
+  grammar: { icon: NotebookPen, tone: "violet", emoji: "✍️", codepoint: "270d_fe0f" },
   vocabulary: { icon: BookA, tone: "green", emoji: "🧠", codepoint: "1f9e0" },
   pronunciation: { icon: AudioLines, tone: "pink", emoji: "🗣️", codepoint: "1f5e3_fe0f" },
   culture: { icon: Globe, tone: "teal", emoji: "🌍", codepoint: "1f30d" },
   story: { icon: MessagesSquare, tone: "orange", emoji: "🎭", codepoint: "1f3ad" },
-  summary: { icon: ListChecks, tone: "slate", emoji: "✅", codepoint: "2705" },
+  summary: { icon: ListChecks, tone: "accent", emoji: "✅", codepoint: "2705" },
   fillIn: { icon: PencilLine, tone: "teal", emoji: "✏️", codepoint: "270f_fe0f" },
   conversation: { icon: MessageSquareReply, tone: "orange", emoji: "💬", codepoint: "1f4ac" },
   translate: { icon: Languages, tone: "blue", emoji: "🤝", codepoint: "1f91d" },

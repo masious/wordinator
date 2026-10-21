@@ -7,7 +7,7 @@ import { useState } from "react";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import "../../i18n";
 import { LessonView } from "./CourseLessons";
-import { AnswerField, joinBlanks, practiceDraftKey, splitBlanks } from "./PracticeBlock";
+import { AnswerField, AnswerSetComposer, joinBlanks, practiceDraftKey, practiceFromBlock, splitBlanks } from "./PracticeBlock";
 import { wordOrderWords } from "./wordOrder";
 
 const groupId = "20000000-0000-4000-8000-000000000001";
@@ -115,7 +115,7 @@ describe("Practice blocks", () => {
     expect(onAdvance).toHaveBeenCalledTimes(1);
   });
 
-  it("places a share control at the left of the answer box, with the author's version under the box", () => {
+  it("places a share control at the right of the answer box, with the author's version under the box", () => {
     function Field() {
       const [value, setValue] = useState("Er is een tuin.");
       return <AnswerField question={{ prompt: "There is a garden.", authorsVersion: ["Er is een tuin."] }} label="Your answer" value={value} onChange={setValue} minRows={1}
@@ -124,7 +124,7 @@ describe("Practice blocks", () => {
     render(<MantineProvider><Field /></MantineProvider>);
     const share = screen.getByRole("button", { name: "Share question 1" });
     const field = screen.getByRole("textbox", { name: "Your answer" });
-    expect(share.compareDocumentPosition(field) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    expect(field.compareDocumentPosition(share) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
     fireEvent.change(field, { target: { value: "Daar is een tuin." } });
     fireEvent.keyDown(field, { key: "Enter" });
     const reference = screen.getByText("Author’s version", { exact: true });
@@ -179,6 +179,19 @@ describe("Practice blocks", () => {
     expect(onChange).toHaveBeenCalledTimes(3);
   });
 
+  it("reorders word chips by dragging while keeping the keyboard move controls", () => {
+    const onChange = vi.fn();
+    render(<MantineProvider><OrderField onChange={onChange} /></MantineProvider>);
+    const transfer = { effectAllowed: "", dropEffect: "", setData: vi.fn() };
+    fireEvent.dragStart(screen.getByRole("button", { name: "ik" }), { dataTransfer: transfer });
+    fireEvent.dragOver(screen.getByRole("button", { name: "drink" }), { dataTransfer: transfer });
+    fireEvent.drop(screen.getByRole("button", { name: "drink" }), { dataTransfer: transfer });
+    expect(chipOrder()).toEqual(["koffie", "altijd", "drink", "ik"]);
+    expect(onChange).toHaveBeenLastCalledWith("koffie altijd drink ik");
+    expect(screen.getByRole("button", { name: "ik" })).toHaveFocus();
+    expect(screen.getByRole("button", { name: "Move ik earlier" })).toBeEnabled();
+  });
+
   it("checks the current order on Enter and shows the author's version under the chips after a miss", () => {
     const onAdvance = vi.fn();
     render(<MantineProvider><OrderField onAdvance={onAdvance} /></MantineProvider>);
@@ -214,11 +227,10 @@ describe("Practice blocks", () => {
     fireEvent.click(screen.getByRole("button", { name: "Move koffie later" }));
     fireEvent.click(screen.getByRole("button", { name: "Move drink earlier" }));
     expect(chipOrder()).toEqual(["ik", "drink", "altijd", "koffie"]);
-    expect(screen.queryByLabelText(/^2\. There are two bedrooms\./)).not.toBeInTheDocument();
     fireEvent.keyDown(screen.getByRole("button", { name: "drink" }), { key: "Enter" });
-    expect(screen.getByText("Matches the author’s version")).toBeInTheDocument();
+    expect(screen.getByText("Put in order: koffie / ik / altijd / drink").closest("li")).toHaveAttribute("class", expect.stringMatching(/summaryAccepted/));
     const second = screen.getByLabelText(/^2\. There are two bedrooms\./);
-    expect(second).toHaveFocus();
+    await waitFor(() => expect(second).toHaveFocus());
   });
 
   it("lists at most three prompts on the lesson page and keeps the answers closed until the Answer button opens them", async () => {
@@ -231,21 +243,43 @@ describe("Practice blocks", () => {
     for (const prompt of ["Een.", "Twee.", "Drie."]) expect(screen.getByText(prompt)).toBeInTheDocument();
     expect(screen.queryByText("Vier.")).not.toBeInTheDocument();
     expect(screen.getByText("and 2 more questions")).toBeInTheDocument();
-    expect(screen.getByText(/3 people done/)).toHaveTextContent("3 people done · 5 questions left");
+    expect(screen.queryByText(/people done/)).not.toBeInTheDocument();
     expect(screen.queryByRole("button", { name: "Finish later" })).not.toBeInTheDocument();
     expect(screen.queryByText("Ik woon hier.")).not.toBeInTheDocument();
     // The opened answers hold the passage, and show the first question only until it is answered.
     fireEvent.click(screen.getByRole("button", { name: "Answer" }));
     const opened = await screen.findByRole("region", { name: "Answer the practice" });
+    expect(screen.getByText("Vier.")).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "Answer" })).not.toBeInTheDocument();
     expect(within(opened).getByText("Ik woon hier.")).toBeInTheDocument();
+    expect(within(opened).getByRole("heading", { name: "Een." })).toBeInTheDocument();
     expect(within(opened).getByLabelText(/^1\. Een\./)).toBeInTheDocument();
     expect(within(opened).queryByLabelText(/^2\. Twee\./)).not.toBeInTheDocument();
+    expect(within(opened).getByRole("button", { name: "Skip this question" })).toBeInTheDocument();
     expect(within(opened).getByRole("button", { name: "Finish later" })).toBeInTheDocument();
+    expect(within(opened).queryByText(/Your answers stay on this device/)).not.toBeInTheDocument();
+  });
+
+  it("keeps every prompt visible in the non-staged answer set", () => {
+    render(<MantineProvider><AnswerSetComposer scope={{ groupId, courseId, lessonId, accountId }} block={practiceFromBlock(practiceBlock, {})} onDone={vi.fn()} /></MantineProvider>);
+    expect(screen.getByRole("heading", { name: "Your answer set" })).toBeInTheDocument();
+    expect(screen.getByText(/^1\. … een kleine keuken\.$/, { selector: "label" })).toBeVisible();
+    expect(screen.getByText(/^2\. There are two bedrooms\.$/, { selector: "label" })).toBeVisible();
+    expect(screen.queryByRole("heading", { name: "… een kleine keuken." })).not.toBeInTheDocument();
+    const first = screen.getByLabelText(/^1\. … een kleine keuken\./);
+    const firstRow = first.closest("[data-answer-field]") as HTMLElement;
+    fireEvent.change(first, { target: { value: "Er is" } });
+    fireEvent.keyDown(first, { key: "Enter" });
+    expect(within(firstRow).getByRole("textbox")).toBeInTheDocument();
+    expect(within(firstRow).getByText("Matches the author’s version")).toBeInTheDocument();
+    expect(screen.getByText(/^1\. … een kleine keuken\.$/, { selector: "label" })).toBeVisible();
+    expect(screen.getByLabelText(/^2\. There are two bedrooms\./)).toHaveFocus();
   });
 
   it("checks an answer on Enter on the device, celebrating a match and moving focus, or keeping focus to show the author's version", async () => {
     await openPractice(detail());
     const field = screen.getByLabelText(/^1\. … een kleine keuken\./);
+    const firstRow = field.closest("[data-answer-field]") as HTMLElement;
     // The answers open on the first unanswered question, and no author's version shows before a check.
     await waitFor(() => expect(field).toHaveFocus());
     expect(screen.queryByText("Er is")).not.toBeInTheDocument();
@@ -265,18 +299,49 @@ describe("Practice blocks", () => {
     // The next question stays hidden until the answer matches.
     expect(screen.queryByLabelText(/^2\. There are two bedrooms\./)).not.toBeInTheDocument();
     // A match is confirmed, the next question is revealed, and focus moves to it.
+    expect(screen.getAllByText("… een kleine keuken.")[0]?.closest("li")).toHaveAttribute("class", expect.stringMatching(/summaryActive/));
+    expect(screen.getByRole("button", { name: "Skip this question" })).toBeInTheDocument();
     fireEvent.keyDown(field, { key: "Enter" });
-    expect(screen.getByText("Matches the author’s version")).toBeInTheDocument();
-    expect(screen.queryByText(/can still be right/)).not.toBeInTheDocument();
-    const second = screen.getByLabelText(/^2\. There are two bedrooms\./);
-    expect(second).toHaveFocus();
-    // Editing the answer clears the feedback until it is checked again.
-    fireEvent.change(field, { target: { value: "Er is een" } });
     expect(screen.queryByText("Matches the author’s version")).not.toBeInTheDocument();
+    expect(screen.queryByText(/can still be right/)).not.toBeInTheDocument();
+    expect(within(firstRow).queryByRole("textbox")).not.toBeInTheDocument();
+    expect(screen.queryByLabelText(/^1\. … een kleine keuken\./)).not.toBeInTheDocument();
+    expect(screen.getByText("… een kleine keuken.").closest("li")).toHaveAttribute("class", expect.stringMatching(/summaryAccepted/));
+    expect(screen.queryByRole("button", { name: "Share question 1" })).not.toBeInTheDocument();
+    const second = screen.getByLabelText(/^2\. There are two bedrooms\./);
+    const secondRow = second.closest("[data-answer-field]") as HTMLElement;
+    expect(second).toHaveFocus();
     // A match in the last question moves focus to the dialog's button.
     fireEvent.change(second, { target: { value: "er zijn twee slaapkamers" } });
     fireEvent.keyDown(second, { key: "Enter" });
     expect(screen.getByRole("button", { name: "Done" })).toHaveFocus();
+    expect(within(secondRow).queryByRole("textbox")).not.toBeInTheDocument();
+  });
+
+  it("skips an empty question without recording an attempt or progress", async () => {
+    const value = detail();
+    await openPractice(value);
+    fireEvent.click(screen.getByRole("button", { name: "Skip this question" }));
+    expect(screen.getByLabelText(/^2\. There are two bedrooms\./)).toHaveFocus();
+    expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith("/attempts"))).toHaveLength(0);
+    expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path) === `${blockPath}/progress`)).toHaveLength(0);
+    fireEvent.click(screen.getByRole("button", { name: "Finish later" }));
+    expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path) === `${blockPath}/progress`)).toHaveLength(0);
+  });
+
+  it("preserves a typed answer draft when skipping and advances without submitting it", async () => {
+    const key = practiceDraftKey(accountId, groupId, "practice-answer", blockId);
+    await openPractice(detail());
+    const first = screen.getByLabelText(/^1\. … een kleine keuken\./);
+    fireEvent.change(first, { target: { value: "unfinished answer" } });
+    await waitFor(() => expect(JSON.parse(localStorage.getItem(key)!)).toEqual({ version: 1, answers: ["unfinished answer", ""] }));
+    fireEvent.click(screen.getByRole("button", { name: "Skip this question" }));
+    expect(screen.getByLabelText(/^2\. There are two bedrooms\./)).toHaveFocus();
+    expect(screen.queryByLabelText(/^1\. … een kleine keuken\./)).not.toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Skip this question" })).toBeInTheDocument();
+    expect(JSON.parse(localStorage.getItem(key)!)).toEqual({ version: 1, answers: ["unfinished answer", ""] });
+    expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith("/attempts"))).toHaveLength(0);
+    expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path) === `${blockPath}/progress`)).toHaveLength(0);
   });
 
   it("shows the author's version under the question it belongs to after a miss", async () => {
@@ -297,6 +362,7 @@ describe("Practice blocks", () => {
     expect(screen.queryByLabelText(/^2\. There are two bedrooms\./)).not.toBeInTheDocument();
     fireEvent.keyDown(first, { key: "Enter" });
     expect(screen.getByLabelText(/^2\. There are two bedrooms\./)).toHaveFocus();
+    expect(within(screen.getByRole("region", { name: "Answer the practice" })).getByRole("heading", { name: "There are two bedrooms." })).toBeInTheDocument();
     expect(screen.getByText("Question 2 of 2")).toBeInTheDocument();
   });
 
@@ -308,9 +374,45 @@ describe("Practice blocks", () => {
     const opened = await openPractice(value);
     // The first question matches its saved answer; the second does not, so it is the last one shown and it has focus.
     await waitFor(() => expect(within(opened).getByLabelText(/^2\. Twee\./)).toHaveFocus());
-    expect(within(opened).getByLabelText(/^1\. Een\./)).toHaveValue("Eén.");
+    expect(within(opened).queryByLabelText(/^1\. Een\./)).not.toBeInTheDocument();
+    expect(screen.getByText("Een.").closest("li")).toHaveAttribute("class", expect.stringMatching(/summaryAccepted/));
     expect(within(opened).queryByLabelText(/^3\. Drie\./)).not.toBeInTheDocument();
     expect(screen.getByText("Question 2 of 3")).toBeInTheDocument();
+  });
+
+  it("shows restored accepted prompts and the active fifth prompt, then skips the last question to the footer", async () => {
+    const items = ["Een.", "Twee.", "Drie.", "Vier.", "Vijf."].map((prompt) => ({ prompt, authorsVersion: [prompt] }));
+    const five: LessonTopBlock = { ...practiceBlock, props: { data: JSON.stringify({ instruction: "Vertaal.", passage: null, items }) } };
+    const value = detail(); value.lessons = [{ ...value.lessons[0]!, document: { ...document, blocks: [five] } }];
+    const key = practiceDraftKey(accountId, groupId, "practice-answer", blockId);
+    localStorage.setItem(key, JSON.stringify({ version: 1, answers: ["Een.", "Twee.", "Drie.", "Vier.", ""] }));
+    const opened = await openPractice(value);
+    await waitFor(() => expect(within(opened).getByLabelText(/^5\. Vijf\./)).toHaveFocus());
+    for (const prompt of ["Een.", "Twee.", "Drie.", "Vier."]) {
+      expect(screen.getByText(prompt).closest("li")).toHaveAttribute("class", expect.stringMatching(/summaryAccepted/));
+    }
+    expect(screen.getAllByText("Vijf.")[0]?.closest("li")).toHaveAttribute("class", expect.stringMatching(/summaryActive/));
+    expect(within(opened).getByText("Question 5 of 5")).toBeInTheDocument();
+    expect(within(opened).getAllByRole("progressbar", { name: "Practice progress" })).toHaveLength(1);
+    expect(within(opened).queryByLabelText(/^4\. Vier\./)).not.toBeInTheDocument();
+    fireEvent.click(within(opened).getByRole("button", { name: "Skip this question" }));
+    await waitFor(() => expect(within(opened).getByRole("button", { name: "Finish later" })).toHaveFocus());
+    expect(within(opened).queryByRole("button", { name: "Skip this question" })).not.toBeInTheDocument();
+    expect(JSON.parse(localStorage.getItem(key)!)).toEqual({ version: 1, answers: ["Een.", "Twee.", "Drie.", "Vier.", ""] });
+    expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith("/attempts") || String(path) === `${blockPath}/progress`)).toHaveLength(0);
+  });
+
+  it("opens a fully matched restored staged practice without an editable row or Skip action", async () => {
+    const key = practiceDraftKey(accountId, groupId, "practice-answer", blockId);
+    localStorage.setItem(key, JSON.stringify({ version: 1, answers: ["Er is", "Er zijn twee slaapkamers."] }));
+    const opened = await openPractice(detail());
+    expect(screen.getByText("… een kleine keuken.").closest("li")).toHaveAttribute("class", expect.stringMatching(/summaryAccepted/));
+    expect(screen.getAllByText("There are two bedrooms.")[0]?.closest("li")).toHaveAttribute("class", expect.stringMatching(/summaryAccepted/));
+    expect(within(opened).queryByRole("textbox")).not.toBeInTheDocument();
+    expect(within(opened).getByRole("status")).toHaveTextContent("Matches the author’s version");
+    expect(within(opened).queryByRole("button", { name: "Share question 2" })).not.toBeInTheDocument();
+    expect(within(opened).queryByRole("button", { name: "Skip this question" })).not.toBeInTheDocument();
+    await waitFor(() => expect(within(opened).getByRole("button", { name: "Done" })).toHaveFocus());
   });
 
   it("shows the focused question's position within the practice as a progress bar", async () => {
@@ -322,9 +424,8 @@ describe("Practice blocks", () => {
     await waitFor(() => expect(screen.getByLabelText(/^2\. There are two bedrooms\./)).toHaveFocus());
     expect(screen.getByText("Question 2 of 2")).toBeInTheDocument();
     expect(bar()).toHaveAttribute("aria-valuenow", "100");
-    fireEvent.focus(screen.getByLabelText(/^1\. … een kleine keuken\./));
-    expect(screen.getByText("Question 1 of 2")).toBeInTheDocument();
-    expect(bar()).toHaveAttribute("aria-valuenow", "50");
+    expect(within(screen.getByRole("region", { name: "Answer the practice" })).getByText("Question 2 of 2")).toBeInTheDocument();
+    expect(within(screen.getByRole("region", { name: "Answer the practice" })).queryByLabelText(/^1\. … een kleine keuken\./)).not.toBeInTheDocument();
   });
 
   it("has no concealed thread and saves only the answered count when Done closes the dialog", async () => {
@@ -358,7 +459,7 @@ describe("Practice blocks", () => {
     expect(fetch).not.toHaveBeenCalledWith(`${blockPath}/progress`, expect.anything());
 
     fireEvent.click(screen.getByRole("button", { name: "Answer" }));
-    expect(screen.getByRole("button", { name: "Answer" })).toHaveAttribute("aria-expanded", "true");
+    expect(screen.queryByRole("button", { name: "Answer" })).not.toBeInTheDocument();
     const dialog = await screen.findByRole("region", { name: "Answer the practice" });
     fireEvent.change(within(dialog).getByLabelText(/^1\. … een kleine keuken\./), { target: { value: "Er is" } });
     fireEvent.keyDown(dialog, { key: "Escape" });
@@ -371,12 +472,8 @@ describe("Practice blocks", () => {
       .map(([, init]) => { expect(init?.method).toBe("POST"); return JSON.parse(String(init?.body)) as unknown; });
     const field = screen.getByLabelText(/^1\. … een kleine keuken\./);
     await waitFor(() => expect(field).toHaveFocus());
-    fireEvent.keyDown(field, { key: "Enter" });
-    expect(attempts()).toEqual([]);
     // A miss is recorded once; Enter again on the unchanged answer only moves on.
     fireEvent.change(field, { target: { value: "Daar is" } });
-    fireEvent.keyDown(field, { key: "Enter" });
-    expect(attempts()).toEqual([{ item: 0, answer: "Daar is" }]);
     fireEvent.keyDown(field, { key: "Enter" });
     expect(attempts()).toHaveLength(1);
     // A changed answer is checked and recorded again; the client never sends its own match result.
@@ -411,8 +508,9 @@ describe("Practice blocks", () => {
     const field = screen.getByLabelText(/^1\. … een kleine keuken\./);
     fireEvent.change(field, { target: { value: "Er is" } });
     fireEvent.keyDown(field, { key: "Enter" });
-    expect(screen.getByText("Matches the author’s version")).toBeInTheDocument();
-    expect(screen.getByLabelText(/^2\. There are two bedrooms\./)).toHaveFocus();
+    expect(screen.queryByText("Matches the author’s version")).not.toBeInTheDocument();
+    expect(screen.getByText("… een kleine keuken.").closest("li")).toHaveAttribute("class", expect.stringMatching(/summaryAccepted/));
+    await waitFor(() => expect(screen.getByLabelText(/^2\. There are two bedrooms\./)).toHaveFocus());
     await waitFor(() => expect(fetch).toHaveBeenCalledWith(`${blockPath}/attempts`, expect.anything()));
     expect(screen.queryByRole("alert")).not.toBeInTheDocument();
     expect(screen.getByRole("region", { name: "Answer the practice" })).toBeInTheDocument();
@@ -434,22 +532,22 @@ describe("Practice blocks", () => {
     expect(vi.mocked(fetch).mock.calls.filter(([path]) => String(path).endsWith("/attempts"))).toHaveLength(0);
   });
 
-  it("shows the viewer as done once their count reaches the number of questions", async () => {
+  it("does not show the practice progress subheading when the viewer is done", async () => {
     const value = detail(); value.lessons = [{ ...value.lessons[0]!, practiceProgress: { [blockId]: { done: 1, started: 1, answered: 2 } } }];
     await openPractice(value);
-    expect(screen.getByText(/1 person done/)).toHaveTextContent("1 person done · You’re done");
+    expect(screen.queryByText(/1 person done|You’re done/)).not.toBeInTheDocument();
   });
 
   it("shows the Enter hint under the answers of a one-question practice", async () => {
     const one: LessonTopBlock = { ...practiceBlock, props: { data: JSON.stringify({ instruction: "Vertaal.", passage: null, items: [{ prompt: "There is a garden.", authorsVersion: ["Er is een tuin."] }] }) } };
     const value = detail(); value.lessons = [{ ...value.lessons[0]!, document: { ...document, blocks: [one] } }];
     await openPractice(value);
-    expect(screen.getByText(/Your answers stay on this device/)).toHaveTextContent("Press Enter to check, Shift+Enter for a new line.");
+    expect(screen.getByText(/Press Enter to check, Shift\+Enter for a new line/)).toBeInTheDocument();
   });
 
   it("does not show the Enter hint for a practice with two or more questions, and keeps the device note", async () => {
     await openPractice(detail());
-    expect(screen.getByText(/Your answers stay on this device/)).toHaveTextContent("Your answers stay on this device, so you can come back and change them.");
+    expect(screen.queryByText(/Your answers stay on this device/)).not.toBeInTheDocument();
     expect(screen.queryByText(/Press Enter to check/)).not.toBeInTheDocument();
   });
 });

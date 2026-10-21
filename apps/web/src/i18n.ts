@@ -423,6 +423,7 @@ export const resources = {
           number: "Lesson {{number}}",
           progress: "Progress",
           actions: "Lesson actions",
+          doMoreWithAi: "Do more with AI",
           practiseWords: "Practise words",
           askAi: "Ask AI",
           askAiPrompt: "Let’s talk about lesson {{number}}, “{{lesson}}”, of the course “{{course}}”. Walk me through its grammar and its topics, then check that I understood them.",

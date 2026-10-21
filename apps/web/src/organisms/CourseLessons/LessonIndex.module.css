@@ -6,16 +6,20 @@
 .label{display:-webkit-box;min-width:0;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow-wrap:anywhere}
 .entry[data-state="passed"]{color:var(--color-foreground)}
 .entry[data-state="locked"]{color:var(--color-foreground-faint)}
-.entry[data-state="current"]{font-weight:var(--weight-semibold);color:var(--color-action-soft-text);background:var(--color-action-soft)}
+.entry[data-state="current"]{font-weight:var(--weight-semibold);color:var(--color-action-soft-text)}
 .entry:hover{color:var(--color-foreground);background:var(--color-wash)}
-.entry[data-state="current"]:hover{color:var(--color-action-soft-text);background:var(--color-action-soft)}
+.entry[data-state="current"]:hover{color:var(--color-action-soft-text);background:transparent}
 .entry:focus-visible{outline-offset:-2px}
 /* The badge is a soft wash of the category's tone with a ring in the full tone, like the overview's nodes; locked, a grey wash and
    ring around a still lock. Sized in em from the row's font size (`--text-sm`), so a heading in the text can carry it too. */
 .badge{--tone:var(--color-separator);flex:none;display:grid;place-items:center;width:2.6em;height:2.6em;font-size:1em;background:color-mix(in srgb,var(--tone) 16%,var(--color-surface-raised));border:2px solid var(--tone);border-radius:50%}
-.badge>:first-child{font-size:1.45em}
+.badge>:first-child{font-size:1.45em;transform:scale(1);transition:transform var(--motion-standard) var(--ease-physical)}
+.entry[data-state="current"] .badge{background:transparent;border-color:transparent}
+.entry[data-state="current"] .badge>:first-child{transform:scale(1.1)}
 .badge[data-locked]{color:var(--color-foreground-faint);background:var(--color-wash)}
 .badge>.lock{font-size:1em;width:1.1em;height:1.1em}
+.contentBadge{width:1.5em;height:1.5em;font-size:1em;background:none;border:0;border-radius:0}
+.contentBadge>:first-child{font-size:1.35em}
 .badge[data-tone="yellow"]{--tone:var(--color-vivid-yellow)}
 .badge[data-tone="orange"]{--tone:var(--color-vivid-orange)}
 .badge[data-tone="red"]{--tone:var(--color-vivid-red)}
@@ -25,4 +29,5 @@
 .badge[data-tone="teal"]{--tone:var(--color-vivid-teal)}
 .badge[data-tone="green"]{--tone:var(--color-vivid-green)}
 .badge[data-tone="slate"]{--tone:var(--color-vivid-slate)}
-@media(prefers-reduced-motion:reduce){.entry{transition:none}}
+.badge[data-tone="accent"]{--tone:var(--color-action)}
+@media(prefers-reduced-motion:reduce){.entry,.badge,.badge>:first-child{transition:none}}

@@ -25,7 +25,8 @@ export function WordSearchControls({ query, onQuery, mode, onMode }: {
     <SearchField value={query} onChange={(event) => onQuery(event.currentTarget.value)}
       aria-label={library ? t("courses.words.search.libraryLabel") : t("courses.words.search.lessonLabel")}
       placeholder={library ? t("courses.words.search.libraryPlaceholder") : t("courses.words.search.lessonPlaceholder")}
-      toggle={mode ? { icon: <Languages aria-hidden="true" />, label: t("courses.words.search.libraryToggle"), pressed: library, onToggle: () => onMode(library ? "lesson" : "library") } : undefined} />
+      className={styles.query}
+      toggle={mode ? { icon: <Languages aria-hidden="true" strokeWidth={2.6} />, label: t("courses.words.search.libraryToggle"), pressed: library, onToggle: () => onMode(library ? "lesson" : "library") } : undefined} />
   </div>;
 }
 
@@ -52,7 +53,7 @@ export function LibraryWordResults({ groupId, query }: { groupId: string; query:
     <ul className={styles.list} aria-label={t("courses.words.search.results")}>{items.map((item) => {
       const target = { groupId, courseId: item.course.id, lessonId: item.lesson.id };
       return <WordBookmarkScope key={`${item.lesson.id}:${item.word.id}`} resolve={() => target}>
-        <PanelWord word={item.word} termSpeech={item.word.speech.term} exampleSpeech={item.word.speech.example} className={`${styles.word} ${styles.result}`} source={<WordSource item={item} />} />
+        <PanelWord word={item.word} termSpeech={item.word.speech.term} exampleSpeech={item.word.speech.example} className={`${styles.word} ${styles.result} ${styles.queryMatch}`} source={<WordSource item={item} />} />
       </WordBookmarkScope>;
     })}</ul>
     {search.hasNextPage && <Button variant="quiet" loading={search.isFetchingNextPage} onClick={() => void search.fetchNextPage()}>{t("courses.words.search.more")}</Button>}

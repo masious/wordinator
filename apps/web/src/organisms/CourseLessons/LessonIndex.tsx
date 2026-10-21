@@ -82,9 +82,9 @@ export function entryStates(entries: readonly LessonIndexEntry[], current: numbe
 }
 
 // An entry's category as one of Noto's animated emoji on a round badge washed in the category's tone, or, while the entry is locked,
-// a still grey lock. The emoji plays only while the badge is inside the rail's scrolling part (or the window, outside it); out of
-// view it rests on its still. Sized in `em`, so it follows the font size around it (the index's rows, or a heading in the text).
-export function CategoryBadge({ category, locked = false, className }: { category: OverviewCategory; locked?: boolean; className?: string }) {
+// a still grey lock. The active row clears the badge surface and scales its emoji to 1.1; reduced motion keeps it enlarged without transition. The emoji plays only while that badge is inside
+// the rail's scrolling part (or the window, outside it). Sized in `em`, so it follows the row or heading around it.
+export function CategoryBadge({ category, locked = false, active = false, content = false }: { category: OverviewCategory; locked?: boolean; active?: boolean; content?: boolean }) {
   const badge = useRef<HTMLSpanElement>(null);
   const [visible, setVisible] = useState(false);
   useEffect(() => {
@@ -96,8 +96,8 @@ export function CategoryBadge({ category, locked = false, className }: { categor
   }, [locked]);
   const { emoji, codepoint, tone } = stopCategories[category];
   const art = useMemo(() => notoEmoji(codepoint), [codepoint]);
-  return <span ref={badge} className={`${styles.badge} ${className ?? ""}`} data-tone={locked ? undefined : tone} data-locked={locked || undefined} aria-hidden="true">
-    {locked ? <Lock className={styles.lock} /> : <AnimatedEmoji emoji={emoji} {...art} playing={visible} />}
+  return <span ref={badge} className={`${styles.badge} ${content ? styles.contentBadge : ""}`} data-tone={locked ? undefined : tone} data-locked={locked || undefined} aria-hidden="true">
+    {locked ? <Lock className={styles.lock} /> : <AnimatedEmoji emoji={emoji} {...art} playing={active && visible} />}
   </span>;
 }
 
@@ -121,10 +121,10 @@ function useCentreOnResize(scroller: RefObject<HTMLElement | null>, list: RefObj
   }, [scroller, list]);
 }
 
-// The lesson's index in the app rail, under the lesson box: its headings, one row each after their category's badge. The entry
-// the reader is in sits on the soft accent; locked entries are grey behind a lock. Choosing an entry scrolls the page to it, then
-// calls `onJump` (the phone's drawer closes). A long index scrolls with the rail's scrolling part, which keeps the current entry in
-// view.
+// The lesson's index in the app rail, under the lesson box: its headings, one row each after their category's badge. The active
+// entry uses semibold accent text without a background and its emoji scales to 1.1; locked entries are grey behind a lock. Choosing an entry scrolls the page
+// to it, then calls `onJump` (the phone's drawer closes). A long index scrolls with the rail's scrolling part, which keeps the
+// current entry in view.
 export function LessonIndex({ entries, current, states, reading, side, onJump }: {
   entries: readonly LessonIndexEntry[]; current: number; states: readonly EntryState[];
   reading: RefObject<HTMLElement | null>; side: RefObject<HTMLElement | null>; onJump?: () => void;
@@ -148,7 +148,7 @@ export function LessonIndex({ entries, current, states, reading, side, onJump }:
     <ol className={styles.list}>{entries.map((entry, index) => <li key={entry.id}>
       <button type="button" className={styles.entry} data-state={states[index]}
         style={{ "--index-depth": entry.depth } as CSSProperties} aria-current={index === current ? "location" : undefined} title={entry.text} onClick={() => jump(entry.id)}>
-        <CategoryBadge category={entry.category} locked={states[index] === "locked"} />
+        <CategoryBadge category={entry.category} locked={states[index] === "locked"} active={index === current} />
         <span className={styles.label}>{entry.text}</span>
       </button>
     </li>)}</ol>

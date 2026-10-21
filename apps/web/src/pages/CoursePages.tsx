@@ -260,7 +260,7 @@ export function LessonPage({ groupId, courseId, lessonId, resume = false }: { gr
     return <GroupFrame groupId={groupId} session={session.data}><ErrorState title={t("courses.courseUnavailable")} action={back} /></GroupFrame>;
   }
   // The lesson header's breadcrumb links back to the course.
-  return <GroupFrame groupId={groupId} session={session.data}><div className={styles.stack}>
+  return <GroupFrame groupId={groupId} session={session.data} courseTitle={course.data.course.title}><div className={styles.stack}>
     <LessonView key={lessonId} groupId={groupId} courseId={courseId} accountId={session.data.user.id} detail={course.data} lessonId={lessonId} dataUpdatedAt={course.dataUpdatedAt} resume={resume}
       language={session.data.groups.find((group) => group.id === groupId)?.language} />
   </div></GroupFrame>;

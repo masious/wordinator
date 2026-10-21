@@ -471,54 +471,6 @@
   font: var(--type-metadata)/var(--line-compact) var(--font-mono);
   color: var(--color-foreground-muted);
 }
-.dockPips {
-  display: flex;
-  gap: var(--space-1);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-.dockPip {
-  display: grid;
-  place-items: center;
-  width: 28px;
-  height: 28px;
-  padding: 0;
-  background: none;
-  border: 0;
-  border-radius: var(--radius-pill);
-  cursor: pointer;
-}
-.dockPip::before {
-  content: "";
-  width: 10px;
-  height: 10px;
-  background: var(--color-wash-strong);
-  border: var(--ring-hairline);
-  border-radius: 50%;
-  transition: transform var(--motion-standard) var(--ease-physical);
-}
-.dockPip[data-state="answered"]::before {
-  background: var(--color-action);
-  border-color: var(--color-action);
-}
-.dockPip[data-state="skipped"]::before {
-  background: transparent;
-  border: 1px dashed var(--color-foreground-muted);
-}
-.dockPip[aria-current="step"]::before {
-  transform: scale(1.35);
-  box-shadow:
-    0 0 0 2px var(--color-core),
-    0 0 0 3px var(--color-foreground);
-}
-.dockPip:focus-visible {
-  outline: var(--border-strong);
-  outline-offset: 0;
-}
-.dockPip:disabled {
-  cursor: default;
-}
 .dockBody {
   min-height: 0;
   overflow-y: auto;
@@ -556,12 +508,6 @@
   border-radius: var(--radius-md);
   justify-self: start;
 }
-@media (prefers-reduced-motion: reduce) {
-  .dockPip::before {
-    transition: none;
-  }
-}
-
 @media (max-width: 48em) {
   .messages {
     gap: var(--space-4);

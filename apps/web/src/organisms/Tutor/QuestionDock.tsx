@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, Check, ChevronDown, ChevronUp } from "lucide-rea
 import { useCallback, useId, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button, IconButton } from "../../ui";
+import { QuestionPips } from "../../molecules/QuestionPips";
 import { AnswerComponent, DraftContext, type ClipSource, type DraftMode } from "../TutorComponents";
 import styles from "./Tutor.module.css";
 
@@ -89,12 +90,8 @@ export function QuestionDock({ components, onSubmit, onSkipSet, clip, language, 
     <div className={styles.dockHead}>
       <p className={styles.dockPosition} role="status">{count > 1 ? t("tutor.dock.position", { current: index + 1, count }) : t("tutor.dock.single")}</p>
       <div className={styles.dockTools}>
-        {count > 1 && <ol className={styles.dockPips}>
-          {components.map((part, position) => <li key={part.toolCallId}>
-            <button type="button" className={styles.dockPip} data-state={state(part)} aria-current={position === index ? "step" : undefined} disabled={locked}
-              aria-label={t("tutor.dock.goTo", { number: position + 1, state: t(`tutor.dock.states.${state(part)}`) })} onClick={() => go(position)} />
-          </li>)}
-        </ol>}
+        {count > 1 && <QuestionPips label={t("tutor.dock.label")} current={index} disabled={locked} onSelect={go}
+          items={components.map((part, position) => ({ id: part.toolCallId, state: state(part), label: t("tutor.dock.goTo", { number: position + 1, state: t(`tutor.dock.states.${state(part)}`) }) }))} />}
         <IconButton tone="quiet" label={minimized ? t("tutor.dock.expand") : t("tutor.dock.minimize")} aria-expanded={!minimized} aria-controls={bodyId}
           onClick={() => setMinimized((value) => !value)}>
           {minimized ? <ChevronUp size={18} aria-hidden="true" /> : <ChevronDown size={18} aria-hidden="true" />}

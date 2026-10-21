@@ -8,7 +8,7 @@
 .heading{margin:var(--space-4) 0 0;font-family:var(--font-sans);font-weight:var(--weight-bold);letter-spacing:var(--tracking-title);line-height:var(--line-title);overflow-wrap:anywhere}
 /* A heading with a badge (the lesson page's category badges): the badge, sized from the heading's own font, then the text. */
 .heading[data-badged]{display:flex;align-items:center;gap:0.45em}
-.heading[data-badged]>:first-child{font-size:0.5em}
+.heading[data-badged]>:first-child{font-size:1em}
 .level1{font-size:var(--text-3xl)}
 .level2{font-size:var(--text-2xl)}
 .level3{font-size:var(--text-xl)}
