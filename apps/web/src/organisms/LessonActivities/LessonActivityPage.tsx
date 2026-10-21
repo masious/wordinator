@@ -16,6 +16,7 @@ import {
 import { useLearningClaim } from "../../learningTime";
 import { draftKey, readDraft, useAnswerAttempt, writeDraft, type AnswerInput } from "./activityAnswers";
 import { ActivityCompletion, lessonTarget } from "./ActivityCompletion";
+import { suggestedActivities } from "./activitySuggestions";
 import { GuidedGrammarActivity } from "./GuidedGrammarActivity";
 import { ReadAloudActivity } from "./ReadAloudActivity";
 import { RoleplayActivity } from "./RoleplayActivity";
@@ -142,6 +143,15 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
   </main>;
 
   const restart = () => patchRun.mutate({ action: "restart" });
+  // Skip this activity: a plain link to the first suggestion that is neither this activity nor already done, else the lesson. It sends nothing.
+  const skipTo = suggestedActivities(descriptors.data.descriptors, descriptor, payload?.type === "guided_grammar" ? payload.followUps : undefined)
+    .find(({ source, type: suggested }) => !(source.sourceId === descriptor.sourceId && suggested === type)
+      && !descriptors.data.completed.some((done) => done.sourceId === source.sourceId && done.type === suggested));
+  const skipLabel = skipTo ? `${t(`lessonActivities.types.${skipTo.type}`)} · ${skipTo.source.sourceLabel}` : t("lessonActivities.backToLesson");
+  const skipProps = skipTo
+    ? { to: "/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType" as const,
+      params: { courseSlug: props.courseSlug, lessonSlug: props.lessonSlug, sourceId: skipTo.source.sourceId, activityType: skipTo.type } }
+    : lessonTarget(props, descriptor);
   return <main className={styles.page}>{back}
     <header className={styles.header}>
       <span className={styles.eyebrow}>{props.lessonTitle} · {ready.activity.sourceLabel}</span>
@@ -172,6 +182,9 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
         last={cursor + 1 >= items.length} advancing={patchRun.isPending} onContinue={() => advance()} />
       : <Surface className={styles.panel}><p>{t("lessonActivities.unavailable")}</p><Button onClick={() => { setOpened(null); void open(); }}>{t("common.retry")}</Button></Surface>}
     {patchRun.isError && <p className={styles.alert} role="alert">{t("lessonActivities.saveFailed")}</p>}
+    {!completed && <div className={styles.skipRow}>
+      <Link className={styles.back} {...skipProps} aria-label={t("lessonActivities.skipActivityTo", { destination: skipLabel })}>{t("lessonActivities.skipActivity")}</Link>
+    </div>}
   </main>;
 }
 

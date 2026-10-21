@@ -244,6 +244,34 @@ describe("Lesson activity page", () => {
     expect(screen.getByRole("link", { name: /Story comprehension · Introduction/ })).toBeInTheDocument();
   });
 
+  describe("Skip this activity", () => {
+    const grammarDescriptor: ActivityDescriptor = { ...introDescriptor, sourceId: "grammar", sourceLabel: "Grammar", activityTypes: ["guided_grammar", "story_comprehension"] };
+    const skipList = (completed: unknown[] = []) => ({ descriptors: [storyDescriptor, grammarDescriptor], completed });
+    const done = (type: string) => ({ sourceId: "grammar", type, correct: null, total: null, completedAt: null });
+
+    it("links to the next not-completed suggestion and sends nothing", async () => {
+      const calls = serve({ descriptors: () => skipList([done("guided_grammar")]), open: () => readyResponse() });
+      renderPage();
+      const link = await screen.findByRole("link", { name: "Skip this activity, go to Story comprehension · Grammar" });
+      expect(link).toHaveAttribute("href", "/courses/dutch-foundations/lessons/lesson-title/activities/grammar/story_comprehension");
+      expect(calls.filter((call) => call.method !== "GET" && !call.path.endsWith("/activities/open"))).toHaveLength(0);
+    });
+
+    it("falls back to the lesson when every suggestion is done", async () => {
+      serve({ descriptors: () => skipList([done("guided_grammar"), done("story_comprehension")]), open: () => readyResponse() });
+      renderPage();
+      const link = await screen.findByRole("link", { name: "Skip this activity, go to Back to lesson" });
+      expect(link).toHaveAttribute("href", expect.stringContaining("/courses/dutch-foundations/lessons/lesson-title"));
+    });
+
+    it("is absent once the run is completed", async () => {
+      serve({ descriptors: () => skipList(), open: () => readyResponse({ run: { status: "completed", completedAt: 2 } }) });
+      renderPage();
+      expect(await screen.findByText("Activity complete")).toBeInTheDocument();
+      expect(screen.queryByRole("link", { name: /Skip this activity/ })).toBeNull();
+    });
+  });
+
   it("renders the unavailable state with a return link for an unknown activity type", async () => {
     serve({ descriptors: () => descriptorList });
     renderPage({ type: null });

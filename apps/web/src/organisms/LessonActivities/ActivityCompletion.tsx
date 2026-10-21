@@ -7,6 +7,7 @@ import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { relativeTime } from "../../relativeTime";
 import { Button, Surface } from "../../ui";
 import { activityIcon } from "./activityIcons";
+import { suggestedActivities } from "./activitySuggestions";
 import styles from "./LessonActivity.module.css";
 
 type LessonParams = { courseSlug: string; lessonSlug: string };
@@ -42,13 +43,7 @@ export type ActivityCompletionProps = LessonParams & {
 export function ActivityCompletion({ courseSlug, lessonSlug, lessonLabel, descriptors, descriptor, completed = [], followUps, metrics, restarting, onRestart }: ActivityCompletionProps) {
   const { t } = useTranslation();
   const changed = (metrics ?? []).filter((metric) => metric.before !== metric.after);
-  const index = descriptors.findIndex((entry) => entry.sourceId === descriptor.sourceId);
-  const offering = (type: ActivityType) => descriptors.slice(index + 1).find((entry) => entry.activityTypes.includes(type)) ?? descriptors.find((entry) => entry.activityTypes.includes(type));
-  const next = descriptors.slice(index + 1).find((entry) => entry.activityTypes.length > 0);
-  const nextTypes = next ? [...next.activityTypes].sort((a, b) => Number(b === "guided_grammar") - Number(a === "guided_grammar")) : [];
-  const suggestions: { source: ActivityDescriptor; type: ActivityType }[] = [];
-  for (const type of followUps ?? []) { const source = offering(type); if (source) suggestions.push({ source, type }); }
-  if (next) for (const type of nextTypes) suggestions.push({ source: next, type });
+  const suggestions = suggestedActivities(descriptors, descriptor, followUps);
   const lesson = { courseSlug, lessonSlug };
   const doneBadge = (source: ActivityDescriptor, type: ActivityType) => {
     const done = completed.find((entry) => entry.sourceId === source.sourceId && entry.type === type);

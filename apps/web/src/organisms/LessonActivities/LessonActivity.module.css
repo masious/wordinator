@@ -52,3 +52,4 @@
 .token:disabled{cursor:default;opacity:0.6}
 @media(max-width:48em){.page{width:min(100% - 2 * var(--space-3),var(--width-reading));padding-block:var(--space-4)}.panel{padding:0}.title{font-size:var(--type-section-title)}}
 @media(prefers-reduced-motion:reduce){.page *{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
+.skipRow{display:flex;justify-content:flex-end}
