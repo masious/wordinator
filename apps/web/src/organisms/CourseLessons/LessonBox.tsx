@@ -1,3 +1,4 @@
+import { Badge } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { Check, Dumbbell, Sparkles } from "lucide-react";
@@ -83,8 +84,10 @@ function ActivityGlyph({ type }: { type: ActivityType }) {
 // conversation prefilled to talk the lesson's grammar and topics through), and Ask for more practices like this (a new tutor
 // conversation with a prefilled request naming the lesson). A prefilled conversation sends nothing until the learner sends it.
 // `compact` shows icons only, stacked (names stay as tooltips and accessible names). A done suggestion ends with a Done badge,
-// which compact mode reduces to a check on the icon while its text stays for assistive technology.
-export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSlug, suggestions = [] }: { lesson: LessonBoxLesson; compact?: boolean; courseSlug?: string; lessonSlug?: string; suggestions?: readonly LessonActivitySuggestion[] }) {
+// which compact mode reduces to a check on the icon while its text stays for assistive technology. The header's badge counts the
+// completed suggestions, and shows nothing until there is one.
+// `completedCount` is the lesson-wide count of the viewer's completed activities (the completed list), not only this section's.
+export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSlug, suggestions = [], completedCount = 0 }: { lesson: LessonBoxLesson; compact?: boolean; courseSlug?: string; lessonSlug?: string; suggestions?: readonly LessonActivitySuggestion[]; completedCount?: number }) {
   const { t } = useTranslation();
   const named = { number: lesson.number, lesson: lesson.title, course: lesson.courseTitle };
   const activityLabel: Record<ActivityType, string> = {
@@ -99,7 +102,8 @@ export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSl
     {" "}<span className={styles.done} title={t("courses.lessonBox.activityDone")}><Check aria-hidden="true" /><span className={styles.doneText}>{t("courses.lessonBox.activityDone")}</span></span>
   </> : null;
   return <div className={styles.actions} data-compact={compact || undefined} role="group" aria-label={t("courses.lessonBox.actions")}>
-    <h2 className={styles.actionsHeading}><Sparkles aria-hidden="true" /><span>{t("courses.lessonBox.doMoreWithAi")}</span></h2>
+    <h2 className={styles.actionsHeading}><Sparkles aria-hidden="true" /><span>{t("courses.lessonBox.doMoreWithAi")}</span>
+      {completedCount > 0 && <Badge component="span" variant="light" size="sm" aria-label={t("courses.lessonBox.activitiesDoneCount", { count: completedCount })}>{completedCount}</Badge>}</h2>
     <div className={styles.pair}>
       <Link className={styles.action} title={compact ? t("courses.lessonBox.practiseWords") : undefined} to="/words/drill" search={{ source: "course", course: lesson.courseId, direction: "mixed" }}>
         <Dumbbell aria-hidden="true" /><span className={styles.label}>{t("courses.lessonBox.practiseWords")}</span>

@@ -104,7 +104,7 @@ export function LessonWords({ steps, active, groupId, collapsed = false, onToggl
 }) {
   const { t } = useTranslation();
   const speech = useSpeechResolver();
-  const panelRef = useRef<HTMLElement>(null); const bodyId = useId();
+  const panelRef = useRef<HTMLElement>(null); const bodyRef = useRef<HTMLDivElement>(null); const bodyId = useId();
   const words: RecapWord[] = useMemo(() => runWords(steps), [steps]);
   const [query, setQuery] = useState("");
   const [mode, setMode] = useState<WordSearchMode>("lesson");
@@ -114,7 +114,7 @@ export function LessonWords({ steps, active, groupId, collapsed = false, onToggl
   const docked = placement === "rail"; const sheet = placement === "sheet";
   const closed = collapsible && !sheet && collapsed;
   const highlighted = words.filter((word) => active.has(word.id)).length;
-  useRevealCurrent(panelRef, library || closed ? "" : shown.filter((word) => active.has(word.id)).map((word) => word.id).join(" "));
+  useRevealCurrent(docked ? bodyRef : panelRef, library || closed ? "" : shown.filter((word) => active.has(word.id)).map((word) => word.id).join(" "));
   if (!words.length) return null;
   const slim = docked && closed;
   const title = <><span className={styles.title}>{t("courses.words.title")}</span>
@@ -138,7 +138,7 @@ export function LessonWords({ steps, active, groupId, collapsed = false, onToggl
           : <ChevronDown aria-hidden="true" size={16} className={styles.chevron} />}
       </button>
       : <div className={styles.toggle}>{title}</div>}
-    {!closed && <div id={bodyId} className={styles.body}>
+    {!closed && <div id={bodyId} ref={bodyRef} className={styles.body}>
       <WordSearchControls query={query} onQuery={setQuery} mode={groupId ? mode : null} onMode={setMode} />
       {library && groupId ? <LibraryWordResults groupId={groupId} query={query} /> : <>
         {key && !shown.length && <p className={styles.status} role="status">{t("courses.words.search.noLessonMatches")}</p>}
