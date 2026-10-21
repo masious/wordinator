@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { Check, Dumbbell, MessageCircle, Sparkles } from "lucide-react";
+import { Check, Dumbbell, Sparkles } from "lucide-react";
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import type { TypicalTime } from "@wordinator/contracts/learning";
@@ -12,6 +12,7 @@ import { ProgressMeter } from "../../molecules/ProgressMeter";
 import { relativeTime } from "../../relativeTime";
 import { LabelChip } from "../../ui";
 import { useRailSlots } from "../GroupFrame/GroupFrame";
+import { activityIcon } from "../LessonActivities/activityIcons";
 import { Figure, FigureList, FiguresDisclosure, FiguresReveal, useFiguresOpen } from "../StudyTime/StudyTime";
 import { typicalMinutes } from "./LessonTime";
 import styles from "./LessonBox.module.css";
@@ -72,6 +73,12 @@ export function LessonBox({ lesson, percent }: { lesson: LessonBoxLesson; percen
 // (docs/lesson-activities.md#scope-and-entry-point).
 export type LessonActivitySuggestion = { descriptor: ActivityDescriptor; type: ActivityType; done?: boolean };
 
+// The activity type's icon; the svg carries data-icon so tests can tell the icons apart.
+function ActivityGlyph({ type }: { type: ActivityType }) {
+  const Icon = activityIcon(type);
+  return <Icon aria-hidden="true" data-icon={type} />;
+}
+
 // The lesson's actions, above the profile row: Practise words (a drill of the course's words) beside Ask AI (a new tutor
 // conversation prefilled to talk the lesson's grammar and topics through), and Ask for more practices like this (a new tutor
 // conversation with a prefilled request naming the lesson). A prefilled conversation sends nothing until the learner sends it.
@@ -82,8 +89,9 @@ export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSl
   const named = { number: lesson.number, lesson: lesson.title, course: lesson.courseTitle };
   const activityLabel: Record<ActivityType, string> = {
     story_summary: t("lessonActivities.types.story_summary"), story_comprehension: t("lessonActivities.types.story_comprehension"),
-    grammar_explanation: t("lessonActivities.types.grammar_explanation"), quick_grammar: t("lessonActivities.types.quick_grammar"),
+    grammar_explanation: t("lessonActivities.types.grammar_explanation"), guided_grammar: t("lessonActivities.types.guided_grammar"),
     tricky_grammar: t("lessonActivities.types.tricky_grammar"), mixed_practice: t("lessonActivities.types.mixed_practice"), roleplay: t("lessonActivities.types.roleplay"),
+    read_aloud: t("lessonActivities.types.read_aloud"), speak_from_english: t("lessonActivities.types.speak_from_english"),
   };
   // A check-only mark: the word is visually hidden (so the accessible name reads "Story summary Done") and shows as a title tooltip.
   // A space separates it from the label.
@@ -99,13 +107,13 @@ export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSl
       {suggestions.slice(0, 1).map(({ descriptor, type, done }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action}
         title={`${activityLabel[type]} · ${descriptor.sourceLabel}`} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
         params={{ courseSlug: courseSlug!, lessonSlug: lessonSlug!, sourceId: descriptor.sourceId, activityType: type }}>
-        <MessageCircle aria-hidden="true" /><span className={styles.label}>{activityLabel[type]}</span>{doneBadge(done)}
+        <ActivityGlyph type={type} /><span className={styles.label}>{activityLabel[type]}</span>{doneBadge(done)}
       </Link>)}
     </div>
     {suggestions.slice(1).map(({ descriptor, type, done }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action}
       title={`${activityLabel[type]} · ${descriptor.sourceLabel}`} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
       params={{ courseSlug: courseSlug!, lessonSlug: lessonSlug!, sourceId: descriptor.sourceId, activityType: type }}>
-      <Sparkles aria-hidden="true" /><span className={styles.label}>{activityLabel[type]} · {descriptor.sourceLabel}</span>{doneBadge(done)}
+      <ActivityGlyph type={type} /><span className={styles.label}>{activityLabel[type]} · {descriptor.sourceLabel}</span>{doneBadge(done)}
     </Link>)}
   </div>;
 }
