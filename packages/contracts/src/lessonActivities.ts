@@ -2,19 +2,22 @@ import { z } from "zod";
 import { foldEquivalentAccents, opaqueIdSchema } from "./index";
 import { inlineText, readDialogueTurns, type LessonBlock, type LessonBlockOf, type LessonDocument } from "./lessonDocument";
 
-export const LESSON_ACTIVITY_RECIPE_VERSION = 1;
-export const LESSON_ACTIVITY_SCHEMA_VERSION = 1;
+export const LESSON_ACTIVITY_RECIPE_VERSION = 2;
+export const LESSON_ACTIVITY_SCHEMA_VERSION = 2;
 export const LESSON_ACTIVITY_TEXT_MAX = 4_000;
 export const LESSON_ACTIVITY_ANSWER_MAX = 2_000;
 // Source fingerprints are SHA-256 digests in lowercase hex, shared by descriptors, views and open requests.
 export const SOURCE_FINGERPRINT_SCHEMA = z.string().regex(/^[a-f0-9]{64}$/);
 export const lessonActivityTypeSchema = z.enum([
-  "story_summary", "story_comprehension", "grammar_explanation", "quick_grammar", "tricky_grammar", "mixed_practice", "roleplay",
+  "story_summary", "story_comprehension", "grammar_explanation", "tricky_grammar", "mixed_practice", "roleplay", "guided_grammar", "read_aloud", "speak_from_english",
 ]);
 export type LessonActivityType = z.infer<typeof lessonActivityTypeSchema>;
 export type ActivityType = LessonActivityType;
+export const lessonActivityMetricSchema = z.enum(["lesson_share", "lesson_reading", "lesson_grammar", "lesson_activities"]);
+export type ActivityMetric = z.infer<typeof lessonActivityMetricSchema>;
 export const lessonActivityFocus = (type: LessonActivityType): "reading" | "grammar" | "speaking" =>
-  type === "roleplay" ? "speaking" : type === "story_summary" || type === "story_comprehension" ? "reading" : "grammar";
+  type === "roleplay" || type === "read_aloud" || type === "speak_from_english" ? "speaking"
+    : type === "story_summary" || type === "story_comprehension" ? "reading" : "grammar";
 export const lessonActivitySourceKindSchema = z.enum(["section", "dialogue", "lesson_end"]);
 export type LessonActivitySourceKind = z.infer<typeof lessonActivitySourceKindSchema>;
 export const lessonActivityDescriptorSchema = z.strictObject({
@@ -53,7 +56,6 @@ const activityContents = {
   story_summary: z.strictObject({ englishSummary: shortText, dutchRecap: shortText }),
   story_comprehension: z.strictObject({ questions: z.array(choiceQuestionPayloadSchema).length(4) }),
   grammar_explanation: z.strictObject({ paragraphs: z.array(shortText).min(1).max(8), examples: z.array(z.strictObject({ dutch: shortText, english: shortText })).min(1).max(12) }),
-  quick_grammar: z.strictObject({ question: choiceQuestionPayloadSchema }),
   tricky_grammar: z.strictObject({ questions: z.array(questionPayloadSchema).length(4) }),
   mixed_practice: z.strictObject({ questions: z.array(questionPayloadSchema).length(6) }),
   roleplay: z.strictObject({ dialogueId: opaqueIdSchema, cueLanguage: z.enum(["english", "dutch"]), turns: z.array(roleplayTurnPayloadSchema).min(2).max(60) }),
@@ -65,7 +67,6 @@ export const lessonActivityPayloadSchema = z.discriminatedUnion("type", [
   activityPayload("story_summary", activityContents.story_summary.shape),
   activityPayload("story_comprehension", activityContents.story_comprehension.shape),
   activityPayload("grammar_explanation", activityContents.grammar_explanation.shape),
-  activityPayload("quick_grammar", activityContents.quick_grammar.shape),
   activityPayload("tricky_grammar", activityContents.tricky_grammar.shape),
   activityPayload("mixed_practice", activityContents.mixed_practice.shape),
   activityPayload("roleplay", activityContents.roleplay.shape),
@@ -77,7 +78,6 @@ const viewContents = {
   story_summary: activityContents.story_summary,
   story_comprehension: z.strictObject({ questions: z.array(choiceQuestionViewSchema).length(4) }),
   grammar_explanation: activityContents.grammar_explanation,
-  quick_grammar: z.strictObject({ question: choiceQuestionViewSchema }),
   tricky_grammar: z.strictObject({ questions: z.array(questionViewSchema).length(4) }),
   mixed_practice: z.strictObject({ questions: z.array(questionViewSchema).length(6) }),
   roleplay: z.strictObject({ dialogueId: opaqueIdSchema, cueLanguage: z.enum(["english", "dutch"]), turns: z.array(roleplayTurnViewSchema).min(2).max(60) }),
@@ -89,7 +89,6 @@ export const lessonActivityViewPayloadSchema = z.discriminatedUnion("type", [
   activityViewPayload("story_summary", viewContents.story_summary.shape),
   activityViewPayload("story_comprehension", viewContents.story_comprehension.shape),
   activityViewPayload("grammar_explanation", viewContents.grammar_explanation.shape),
-  activityViewPayload("quick_grammar", viewContents.quick_grammar.shape),
   activityViewPayload("tricky_grammar", viewContents.tricky_grammar.shape),
   activityViewPayload("mixed_practice", viewContents.mixed_practice.shape),
   activityViewPayload("roleplay", viewContents.roleplay.shape),
@@ -139,7 +138,6 @@ export function toLessonActivityView(activity: Omit<LessonActivityView, "payload
     return { id: question.id, kind: question.kind, prompt: question.prompt, tokens: question.tokens };
   };
   const clean = payload.type === "story_comprehension" ? { ...payload, questions: payload.questions.map(stripQuestion) }
-    : payload.type === "quick_grammar" ? { ...payload, question: stripQuestion(payload.question) }
       : payload.type === "tricky_grammar" || payload.type === "mixed_practice" ? { ...payload, questions: payload.questions.map(stripQuestion) }
         : payload.type === "roleplay" ? { ...payload, turns: payload.turns.map(({ referenceText: _, ...turn }) => turn) } : payload;
   return lessonActivityViewSchema.parse({ ...rest, payload: clean });
@@ -147,7 +145,7 @@ export function toLessonActivityView(activity: Omit<LessonActivityView, "payload
 
 export function gradeLessonActivityAnswer(payload: LessonActivityPayload, itemId: string, answer: z.infer<typeof activityAnswerSchema>) {
   const items = payload.type === "story_comprehension" || payload.type === "tricky_grammar" || payload.type === "mixed_practice" ? payload.questions
-    : payload.type === "quick_grammar" ? [payload.question] : payload.type === "roleplay" ? payload.turns.filter((turn) => turn.isLearner) : [];
+    : payload.type === "roleplay" ? payload.turns.filter((turn) => turn.isLearner) : [];
   const item = items.find((candidate) => candidate.id === itemId);
   if (!item) return null;
   if ("isLearner" in item) return { correct: answer.kind === "text" && sameLessonSentence(answer.text, item.referenceText), reference: item.referenceText, explanation: null };
@@ -252,7 +250,7 @@ export async function resolveLessonActivitySources({ document, title = "Lesson",
     const hasGrammar = section.grammar;
     const hasSummary = /summary|recap|wrap[- ]?up|lesson end/i.test(section.label);
     const types: LessonActivityType[] = dialogues.length ? ["story_summary", "story_comprehension"] : [];
-    if (hasGrammar) types.push("grammar_explanation", "quick_grammar", "tricky_grammar");
+    if (hasGrammar) types.push("grammar_explanation", "tricky_grammar");
     if (hasSummary) types.push("mixed_practice");
     const safeTypes = [...new Set(types)];
     await add(section.id, "section", section.label || title, contents[0]?.id ?? section.headingId, section.headingId, contents.map(activitySourceBlock), safeTypes);

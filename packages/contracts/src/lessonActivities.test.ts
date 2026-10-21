@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { emptyLessonDocument, type LessonBlock, type LessonDocument } from "./lessonDocument";
-import { gradeLessonActivityAnswer, lessonActivityPayloadSchema, lessonActivityViewSchema, normalizeLessonSentence, resolveLessonActivitySources, toLessonActivityView, verifyLessonActivitySource } from "./lessonActivities";
+import { LESSON_ACTIVITY_RECIPE_VERSION, LESSON_ACTIVITY_SCHEMA_VERSION, gradeLessonActivityAnswer, lessonActivityFocus, lessonActivityMetricSchema, lessonActivityPayloadSchema, lessonActivityTypeSchema, lessonActivityViewSchema, normalizeLessonSentence, resolveLessonActivitySources, toLessonActivityView, verifyLessonActivitySource } from "./lessonActivities";
 
 const uid = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, "0")}`;
 const props = { textColor: "default" as const, backgroundColor: "default" as const };
@@ -14,11 +14,15 @@ const sofiaAndMira = [{ speaker: "Sofia", text: "Hallo." }, { speaker: "Mira", t
 describe("lesson activity contracts", () => {
   it("strips private answer references from activity views and grades from payload", () => {
     const payload = lessonActivityPayloadSchema.parse({
-      type: "quick_grammar", recipeVersion: 1, schemaVersion: 1,
-      question: { id: uid(1), kind: "choice", prompt: "Choose.", options: [{ id: uid(2), text: "A" }, { id: uid(3), text: "B" }, { id: uid(4), text: "C" }], correctOptionId: uid(3), explanation: "B is used here." },
+      type: "tricky_grammar", recipeVersion: 2, schemaVersion: 2,
+      questions: [
+        { id: uid(1), kind: "choice", prompt: "Choose.", options: [{ id: uid(2), text: "A" }, { id: uid(3), text: "B" }, { id: uid(4), text: "C" }], correctOptionId: uid(3), explanation: "B is used here." },
+        ...[5, 6, 7].map((n) => ({ id: uid(n), kind: "fill_in", prompt: "Ik … hier.", referenceAnswers: ["woon"], explanation: "Present tense." })),
+      ],
     });
     const view = toLessonActivityView({ id: uid(10), sourceId: uid(11), sourceLabel: "Grammar", sourceFingerprint: fingerprint, payload });
-    expect(lessonActivityViewSchema.parse(view).payload).not.toHaveProperty("question.correctOptionId");
+    expect(lessonActivityViewSchema.parse(view).payload.type).toBe("tricky_grammar");
+    expect(JSON.stringify(view)).not.toContain("correctOptionId");
     expect(gradeLessonActivityAnswer(payload, uid(1), { kind: "choice", optionId: uid(3) })?.correct).toBe(true);
     expect(gradeLessonActivityAnswer(payload, uid(1), { kind: "choice", optionId: uid(2) })?.correct).toBe(false);
     expect(gradeLessonActivityAnswer(payload, uid(999), { kind: "choice", optionId: uid(3) })).toBeNull();
@@ -117,7 +121,7 @@ describe("lesson activity contracts", () => {
     expect(first).toEqual(again);
     expect(first.some((source) => source.sourceId === "intro")).toBe(true);
     expect(first.filter((source) => source.sourceKind === "dialogue")).toHaveLength(2);
-    expect(first.find((source) => source.sourceId === uid(8))?.activityTypes).toContain("quick_grammar");
+    expect(first.find((source) => source.sourceId === uid(8))?.activityTypes).toContain("tricky_grammar");
     expect(first.find((source) => source.sourceId === "lesson_end")?.activityTypes).toContain("mixed_practice");
     const dialogueSource = first.find((source) => source.sourceKind === "dialogue")!;
     expect(verifyLessonActivitySource(first, dialogueSource.sourceId, "roleplay", dialogueSource.fingerprint)).toEqual(dialogueSource);
@@ -143,6 +147,26 @@ describe("lesson activity contracts", () => {
     expect(sources.some((source) => source.sourceLabel === "Details")).toBe(false);
     expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["story_summary", "story_comprehension"]);
     expect(sources.find((source) => source.sourceId === uid(5))).toMatchObject({ sourceKind: "dialogue", sourceLabel: "Dialogue · Story", activityTypes: ["roleplay"] });
+  });
+
+  it("has nine v2 activity types, rejects quick_grammar and maps focus for the new types", () => {
+    expect(lessonActivityTypeSchema.options).toHaveLength(9);
+    expect(lessonActivityTypeSchema.safeParse("quick_grammar").success).toBe(false);
+    expect(lessonActivityTypeSchema.safeParse("guided_grammar").success).toBe(true);
+    expect(lessonActivityPayloadSchema.safeParse({ type: "quick_grammar", recipeVersion: 2, schemaVersion: 2 }).success).toBe(false);
+    expect(lessonActivityFocus("read_aloud")).toBe("speaking");
+    expect(lessonActivityFocus("speak_from_english")).toBe("speaking");
+    expect(lessonActivityFocus("guided_grammar")).toBe("grammar");
+  });
+
+  it("accepts the four activity metric keys and rejects an unknown key", () => {
+    for (const key of ["lesson_share", "lesson_reading", "lesson_grammar", "lesson_activities"]) expect(lessonActivityMetricSchema.safeParse(key).success).toBe(true);
+    expect(lessonActivityMetricSchema.safeParse("lesson_unknown").success).toBe(false);
+  });
+
+  it("sets the v2 recipe and schema versions", () => {
+    expect(LESSON_ACTIVITY_RECIPE_VERSION).toBe(2);
+    expect(LESSON_ACTIVITY_SCHEMA_VERSION).toBe(2);
   });
 
   it("does not let a heading nested inside a column start a section", async () => {
