@@ -508,6 +508,14 @@ export const resources = {
           deleteConfirm: "Delete “{{title}}” with its content, images, and practice answers? This cannot be undone.",
           fields: { title: "Lesson title", goal: "Goal" }
         },
+        lessonActivities: {
+          backToSection: "Back to {{section}}", loadingSources: "Finding activities for this lesson", unavailable: "This activity is not available for this section.",
+          openFailed: "The activity could not be opened.", preparing: "Preparing your activity", checkAgain: "Check again", archivedUnsaved: "This archived lesson is open for read-only practice. Your answers will not be saved.",
+          finished: "Activity complete", finishedBody: "Your work stays private and does not change lesson completion.", backToLesson: "Back to lesson", progress: "Question {{current}} of {{total}}",
+          englishSummary: "Scene summary", dutchRecap: "Dutch recap", explanation: "The idea", done: "Done", answerLabel: "Your answer", correct: "Correct", tryAgain: "Here is the reference answer.", retry: "Try again", finish: "Finish", continue: "Continue", checkAnswer: "Check answer",
+          cueLanguage: "Cue language", english: "English", dutch: "Dutch", roleplayIntro: "You are {{speaker}} in the original dialogue.", startDialogue: "Start dialogue", yourTurn: "Your reply", holdToSpeak: "Hold to speak", send: "Send", reference: "Reference: {{text}}",
+          types: { story_summary: "Story summary", story_comprehension: "Story comprehension", grammar_explanation: "Grammar explanation", quick_grammar: "Quick grammar question", tricky_grammar: "Tricky grammar practice", mixed_practice: "Mixed lesson practice", roleplay: "Dialogue role-play" }
+        },
         lessonActions: {
           label: "Lesson {{number}}: {{title}}",
           start: "Start",

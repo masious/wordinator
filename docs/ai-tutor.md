@@ -183,3 +183,7 @@ Data lives in [`ai_conversations`](data-model.md#ai_conversations), [`ai_message
 - Voice conversation (speaking whole turns to the tutor); only components listen.
 - Sharing conversations, or showing them to course owners or the superuser. The superuser sees counts and costs, never messages.
 - Ranking, streaks, or scores. The tutor's feedback stays personal, like the rest of Wordinator.
+
+## Separate lesson activities
+
+Approved 2026-10-21; implementation in progress. [Lesson activities](lesson-activities.md) replaces generic lesson-to-Tutor prompt links in Do more with AI with dedicated section-aware activities. This does not create Tutor conversations or use Tutor context, tools or saved-practice lifecycle. Tutor navigation and conversation deep links remain available.

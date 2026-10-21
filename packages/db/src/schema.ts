@@ -397,7 +397,7 @@ export const learningTime = sqliteTable(
     userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
     entryKey: text("entry_key").notNull(),
     day: text("day").notNull(),
-    activity: text("activity", { enum: ["reading", "practice", "ai_practice", "tutor", "drill", "words"] }).notNull(),
+    activity: text("activity", { enum: ["reading", "practice", "ai_practice", "lesson_activity", "tutor", "drill", "words"] }).notNull(),
     focus: text("focus"),
     courseId: text("course_id").references(() => courses.id, { onDelete: "cascade" }),
     lessonId: text("lesson_id").references(() => courseLessons.id, { onDelete: "cascade" }),
@@ -414,6 +414,49 @@ export const learningTime = sqliteTable(
     check("learning_time_seconds_check", sql`${table.seconds} > 0`),
   ],
 );
+
+// Shared, versioned lesson activity content is separate from private learner runs and submitted answers.
+export const lessonActivities = sqliteTable("lesson_activities", {
+  id: text("id").primaryKey(), lessonId: text("lesson_id").notNull().references(() => courseLessons.id, { onDelete: "cascade" }),
+  courseId: text("course_id").notNull().references(() => courses.id, { onDelete: "cascade" }), sourceId: text("source_id").notNull(),
+  activityType: text("activity_type", { enum: ["story_summary", "story_comprehension", "grammar_explanation", "quick_grammar", "tricky_grammar", "mixed_practice", "roleplay"] }).notNull(),
+  sourceFingerprint: text("source_fingerprint").notNull(), recipeVersion: integer("recipe_version").notNull(), schemaVersion: integer("schema_version").notNull(),
+  language: text("language", { enum: ["nl", "de"] }).notNull(), cacheKey: text("cache_key").notNull(),
+  status: text("status", { enum: ["generating", "ready", "failed"] }).notNull(), leaseToken: text("lease_token"), leaseExpiresAt: integer("lease_expires_at"),
+  nextAttemptAt: integer("next_attempt_at"), payload: text("payload"), createdAt: integer("created_at").notNull(), updatedAt: integer("updated_at").notNull(),
+}, (table) => [uniqueIndex("lesson_activities_cache_key_unique").on(table.cacheKey), index("lesson_activities_lesson_idx").on(table.lessonId),
+  check("lesson_activities_status_check", sql`${table.status} in ('generating', 'ready', 'failed')`),
+  check("lesson_activities_lease_check", sql`(${table.status} = 'generating') = (${table.leaseToken} IS NOT NULL AND ${table.leaseExpiresAt} IS NOT NULL)`),
+  check("lesson_activities_payload_check", sql`(${table.status} = 'ready') = (${table.payload} IS NOT NULL)`),
+]);
+
+export const lessonActivityRuns = sqliteTable("lesson_activity_runs", {
+  id: text("id").primaryKey(), activityId: text("activity_id").notNull().references(() => lessonActivities.id, { onDelete: "cascade" }),
+  userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }), cursor: integer("cursor").notNull().default(0),
+  cueMode: text("cue_mode", { enum: ["english", "dutch"] }).notNull().default("english"), status: text("status", { enum: ["active", "completed"] }).notNull().default("active"),
+  startedAt: integer("started_at").notNull(), updatedAt: integer("updated_at").notNull(), completedAt: integer("completed_at"),
+}, (table) => [uniqueIndex("lesson_activity_runs_activity_user_unique").on(table.activityId, table.userId), index("lesson_activity_runs_user_idx").on(table.userId, table.updatedAt),
+  check("lesson_activity_runs_cursor_check", sql`${table.cursor} >= 0`),
+  check("lesson_activity_runs_completed_check", sql`(${table.status} = 'completed') = (${table.completedAt} IS NOT NULL)`),
+]);
+
+export const lessonActivityAnswers = sqliteTable("lesson_activity_answers", {
+  id: text("id").primaryKey(), runId: text("run_id").notNull().references(() => lessonActivityRuns.id, { onDelete: "cascade" }),
+  itemId: text("item_id").notNull(), idempotencyKey: text("idempotency_key").notNull(), answer: text("answer").notNull(),
+  inputMode: text("input_mode", { enum: ["typed", "spoken"] }).notNull(), correct: integer("correct", { mode: "boolean" }).notNull(), matched: integer("matched", { mode: "boolean" }).notNull(),
+  reference: text("reference"), pronunciationJson: text("pronunciation_json"), createdAt: integer("created_at").notNull(),
+}, (table) => [uniqueIndex("lesson_activity_answers_run_idempotency_unique").on(table.runId, table.idempotencyKey),
+  index("lesson_activity_answers_run_item_idx").on(table.runId, table.itemId, table.createdAt),
+  check("lesson_activity_answers_input_check", sql`${table.inputMode} in ('typed', 'spoken')`),
+]);
+
+// A short-lived quota claim prevents concurrent cache misses for one account from exceeding the daily AI turn allowance.
+export const aiTurnReservations = sqliteTable("ai_turn_reservations", {
+  id: text("id").primaryKey(), userId: text("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  cacheKey: text("cache_key").notNull(), dayStart: integer("day_start").notNull(), expiresAt: integer("expires_at").notNull(),
+}, (table) => [uniqueIndex("ai_turn_reservations_user_cache_day_unique").on(table.userId, table.cacheKey, table.dayStart),
+  index("ai_turn_reservations_user_day_expiry_idx").on(table.userId, table.dayStart, table.expiresAt),
+]);
 
 // A member's last step in a lesson they have not finished. The furthest share passed feeds course progress; finishing clears the row.
 export const courseLessonPositions = sqliteTable(

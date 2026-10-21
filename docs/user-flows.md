@@ -164,3 +164,7 @@ In progress (C11): sharing works from the lesson page, the dialogs, and the play
 ## Compatibility period
 
 Existing course and lesson rows were created under the retired group model. Until their columns are rebuilt, the server attaches open registrations to the installation's oldest active library record and keeps the old group ID inside API/storage calls. This is a migration bridge only: it is not exposed as a workspace, membership decision, URL namespace, or product authorization choice.
+
+## Reading into a lesson activity
+
+Approved 2026-10-21; implementation in progress. While reading, the existing Do more with AI area follows the active section. Choosing a suggestion opens a dedicated activity page, reusing shared content or visibly preparing it. The top link returns to the original lesson section. Work resumes privately; completion remains optional. [Lesson activities](lesson-activities.md) owns the exact catalogue, role-play turn flow, cache/version behavior and failure paths.

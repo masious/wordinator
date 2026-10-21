@@ -59,7 +59,7 @@ A vocabulary word has an optional `ipa` field: an IPA transcription of the term,
 
 ## Generation
 
-Lesson generation is strictly background work. Opening or playing a lesson never calls Azure. The only synthesis on request is the tutor's [on-demand audio](#on-demand-audio).
+Lesson generation is strictly background work. Opening or playing a lesson never calls Azure. Synthesis on request is limited to the tutor's [on-demand audio](#on-demand-audio) and the approved [lesson activity role-play](#lesson-activity-role-play) surface.
 
 - **Clip identity.** A clip is identified by the SHA-256 hash of its schema version, voice, and the exact synthesis markup (spoken text or IPA). Its R2 key is `speech/{hash}.mp3`. Identical text with the same voice shares one clip across lessons, courses, and groups, so Azure is called once per distinct clip.
 - **Jobs.** Each lesson has at most one pending speech job. Publishing a lesson makes its job due at once; saving a draft makes it due 2 minutes after the last save, so text typed in between is never synthesized; changing a course's cast makes the job of every lesson in the course due at once.
@@ -99,6 +99,10 @@ C14 (approved product change, 2026-10-15). The [AI tutor](ai-tutor.md) speaks ta
 - **Playback.** Clips play through the shared `Speech` element under the [playback](#playback) rules: one at a time, never automatically. The speaker button shows a spinner while the clip is generated.
 - Without the Azure key the routes answer `503 SPEECH_UNAVAILABLE` and the web hides the speaker buttons for the rest of the visit.
 
+## Lesson activity role-play
+
+Approved 2026-10-21; implementation in progress. [Lesson activities](lesson-activities.md#original-dialogue-role-play) adds original-dialogue playback in course cast voices and hold-to-talk Sofia turns. Activity speech resolves stored original turn/chunk IDs and uses the existing clip cache and on-demand allowance; arbitrary text/voices are not accepted. This is an additional on-demand surface alongside Tutor audio, whose narrator rule stays unchanged. Recording is active only while held; explicit Send may submit a private transcript under the [activity privacy exception](lesson-activities.md#speech-and-privacy-exception).
+
 ## Privacy
 
 Spoken lesson text and the tutor's stored target-language text are sent to Microsoft Azure AI Speech, and clips are public-by-URL like lesson images; see [security and privacy](security-and-privacy.md#lesson-speech). Post, comment, practice answer, and profile text, and anything a learner types, is never sent for synthesis.
@@ -109,7 +113,7 @@ Spoken lesson text and the tutor's stored target-language text are sent to Micro
 - Course words and word bookmark responses add each word's `speech: { term, example }` URLs, `null` while not ready.
 - The course details update (`PATCH .../courses/:courseId`) accepts an optional `speechCast`; leaving it out keeps the cast, and an empty map clears it. It is owner only like the rest of the details, and a voice outside the group language's list is refused with `400 SPEECH_VOICE_INVALID`.
 - `GET .../courses/:courseId/speech-cast` returns the cast editor's data: `speakers` (as listed under [dialogue cast](#dialogue-cast)) and `voices`, the group language's voices narrator first, each with its `sample` URL or `null` while not ready. It is owner only (`403 COURSE_EDIT_FORBIDDEN`), and a course outside the group is `404`.
-- No route accepts text to synthesize. The only route that triggers synthesis directly is the tutor's `POST /api/ai/conversations/:id/messages/:messageId/speech` with `{ spanIndex }` or `{ toolCallId }` (C14g), and the AI practice dictation route `POST .../lessons/:lessonId/ai-practices/:practiceId/speech` (C14h); both read stored text; see [on-demand audio](#on-demand-audio).
+- No route accepts text to synthesize. Alongside the [lesson activity](#lesson-activity-role-play) route, direct synthesis uses the tutor's `POST /api/ai/conversations/:id/messages/:messageId/speech` with `{ spanIndex }` or `{ toolCallId }` (C14g), and the AI practice dictation route `POST .../lessons/:lessonId/ai-practices/:practiceId/speech` (C14h); both read stored text; see [on-demand audio](#on-demand-audio).
 - Data lives in [`speech_clips`](data-model.md#speech_clips), [`speech_jobs`](data-model.md#speech_jobs), and, for on-demand audio, [`speech_usage`](data-model.md#speech_usage); the cast is a column of [`courses`](data-model.md#courses), and the IPA is part of the word payload and of [`course_lesson_words`](data-model.md#course_lesson_words).
 - Speech recognition of spoken answers is not synthesis and is owned by [words](words.md#recognizers); its Microsoft option uses the same Azure resource.
 - Azure is called through its REST endpoint from the Worker, with the key as the `AZURE_SPEECH_KEY` secret and the region as the `AZURE_SPEECH_REGION` variable; see [operations](operations.md).

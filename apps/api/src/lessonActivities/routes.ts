@@ -1,0 +1,235 @@
+import {
+  activityAnswerRequestSchema, activityAnswerResponseSchema, activityDescriptorListResponseSchema, activityOpenRequestSchema,
+  activityOpenResponseSchema, activityRunPatchRequestSchema, activityRunPatchResponseSchema, activitySpeechRequestSchema,
+  activitySpeechResponseSchema, activityStatusResponseSchema, gradeLessonActivityAnswer, lessonActivityPayloadSchema,
+  lessonActivityViewSchema, resolveLessonActivitySources, toLessonActivityView, verifyLessonActivitySource,
+  type ActivityType, type LessonActivityPayload,
+} from "@wordinator/contracts/lesson-activities";
+import type { LessonDocument } from "@wordinator/contracts/lesson-document";
+import type { Context, Hono, MiddlewareHandler } from "hono";
+import { completeChat, readAiSettings } from "../ai";
+import type { AppEnvironment } from "../app";
+import { apiError, parseJson } from "../http";
+import { activitySourceData, generateLessonActivity } from "./generate";
+import { claimGeneration, commitGeneratedPayload, LESSON_ACTIVITY_LEASE_MS, LESSON_ACTIVITY_RETRY_MS, releaseCacheMiss, reserveCacheMiss, type CacheRow } from "./cache";
+
+type ActivityContext = Context<AppEnvironment>;
+export type ActivityLesson = {
+  courseId: string; lessonId: string; archived: boolean; language: "nl" | "de"; title: string; goal: string | null;
+  publishedAt: number; document: LessonDocument;
+};
+type RouteDeps = {
+  requireActivityAccess: MiddlewareHandler<AppEnvironment>;
+  lessonFor: (context: ActivityContext) => Promise<{ error: Response } | ActivityLesson>;
+};
+
+const PATH = "/api/courses/:courseId/lessons/:lessonId/activities";
+const RETRY_MS = 1_000;
+const cacheColumns = `id, lesson_id AS lessonId, course_id AS courseId, source_id AS sourceId, activity_type AS activityType,
+  source_fingerprint AS sourceFingerprint, recipe_version AS recipeVersion, schema_version AS schemaVersion, language, cache_key AS cacheKey,
+  status, lease_token AS leaseToken, lease_expires_at AS leaseExpiresAt, next_attempt_at AS nextAttemptAt, payload`;
+type RunRow = { id: string; activityId: string; userId: string; cursor: number; cueMode: "english" | "dutch"; status: "active" | "completed"; startedAt: number; updatedAt: number; completedAt: number | null };
+const runColumns = `id, activity_id AS activityId, user_id AS userId, cursor, cue_mode AS cueMode, status, started_at AS startedAt, updated_at AS updatedAt, completed_at AS completedAt`;
+const userId = (context: ActivityContext) => context.get("user")!.id;
+const idHash = async (value: string) => {
+  const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, "0")).join("");
+};
+const activityType = (value: string) => value as ActivityType;
+const presentRun = (row: RunRow, ephemeral = false) => ({ ...row, ephemeral });
+
+async function readActivity(db: D1Database, id: string) {
+  return db.prepare(`SELECT ${cacheColumns} FROM lesson_activities WHERE id=?`).bind(id).first<CacheRow>();
+}
+async function currentSource(lesson: ActivityLesson, sourceId: string, type: ActivityType) {
+  const descriptors = await resolveLessonActivitySources({ document: lesson.document, title: lesson.title, includeLessonEnd: true });
+  const found = descriptors.find((item) => item.sourceId === sourceId && item.activityTypes.includes(type));
+  if (!found) return { descriptors, descriptor: null };
+  return { descriptors, descriptor: verifyLessonActivitySource(descriptors, sourceId, type, found.fingerprint) };
+}
+async function cacheKey(lesson: ActivityLesson, sourceId: string, type: ActivityType, fingerprint: string) {
+  return idHash(JSON.stringify([lesson.lessonId, sourceId, type, fingerprint, 1, 1, lesson.language]));
+}
+async function ensureRun(db: D1Database, activityId: string, uid: string, now: number): Promise<RunRow> {
+  const existing = await db.prepare(`SELECT ${runColumns} FROM lesson_activity_runs WHERE activity_id=? AND user_id=?`).bind(activityId, uid).first<RunRow>();
+  if (existing) return existing;
+  const id = crypto.randomUUID();
+  await db.prepare(`INSERT INTO lesson_activity_runs (id,activity_id,user_id,cursor,cue_mode,status,started_at,updated_at,completed_at)
+    VALUES (?,?,?,0,'english','active',?,?,NULL) ON CONFLICT(activity_id,user_id) DO NOTHING`).bind(id, activityId, uid, now, now).run();
+  return (await db.prepare(`SELECT ${runColumns} FROM lesson_activity_runs WHERE activity_id=? AND user_id=?`).bind(activityId, uid).first<RunRow>())!;
+}
+function validPayload(row: CacheRow): LessonActivityPayload | null {
+  if (!row.payload) return null;
+  try { const parsed = lessonActivityPayloadSchema.safeParse(JSON.parse(row.payload)); return parsed.success && parsed.data.type === row.activityType ? parsed.data : null; }
+  catch { return null; }
+}
+function sourcePayload(row: CacheRow, descriptor: { sourceId: string; sourceLabel: string }, payload: LessonActivityPayload) {
+  return lessonActivityViewSchema.parse(toLessonActivityView({ id: row.id, sourceId: descriptor.sourceId, sourceLabel: descriptor.sourceLabel, sourceFingerprint: row.sourceFingerprint, payload }));
+}
+
+export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: RouteDeps) {
+  const getLesson = async (context: ActivityContext) => deps.lessonFor(context);
+  app.get(PATH, deps.requireActivityAccess, async (context) => {
+    const found = await getLesson(context); if ("error" in found) return found.error;
+    const descriptors = await resolveLessonActivitySources({ document: found.document, title: found.title, includeLessonEnd: true });
+    return context.json(activityDescriptorListResponseSchema.parse({ descriptors }));
+  });
+
+  const open = async (context: ActivityContext, activityId: string, lesson: ActivityLesson, descriptor: { sourceId: string; sourceLabel: string }, row: CacheRow, ephemeral: boolean) => {
+    const payload = validPayload(row);
+    if (!payload) return apiError(context, 503, "ACTIVITY_UNAVAILABLE", "This activity is not ready yet. Try again shortly.");
+    const activity = sourcePayload(row, descriptor, payload);
+    const run = ephemeral
+      ? { id: crypto.randomUUID(), activityId, userId: userId(context), cursor: 0, cueMode: "english" as const, status: "active" as const, startedAt: Date.now(), updatedAt: Date.now(), completedAt: null, ephemeral: true }
+      : presentRun(await ensureRun(context.env.DB, activityId, userId(context), Date.now()));
+    return context.json(activityOpenResponseSchema.parse({ status: "ready", activity, run, ephemeral }));
+  };
+
+  app.post(`${PATH}/open`, deps.requireActivityAccess, async (context) => {
+    const found = await getLesson(context); if ("error" in found) return found.error;
+    const parsed = await parseJson(context, activityOpenRequestSchema, 2_048); if ("response" in parsed) return parsed.response;
+    const { sourceId, type, expectedFingerprint } = parsed.data;
+    const resolved = await currentSource(found, sourceId, type);
+    const descriptor = verifyLessonActivitySource(resolved.descriptors, sourceId, type, expectedFingerprint);
+    if (!descriptor) return apiError(context, 409, "SOURCE_CHANGED", "This lesson section changed. Refresh its activities.");
+    const key = await cacheKey(found, sourceId, type, expectedFingerprint);
+    const db = context.env.DB;
+    let row = await db.prepare(`SELECT ${cacheColumns} FROM lesson_activities WHERE cache_key=?`).bind(key).first<CacheRow>();
+    if (row?.status === "ready" && validPayload(row)) return open(context, row.id, found, descriptor, row, found.archived);
+    if (found.archived) return apiError(context, 409, "ACTIVITY_READ_ONLY", "This activity has no cached content and cannot be generated from an archived course.");
+    const uid = userId(context); const now = Date.now(); const token = crypto.randomUUID();
+    if (!row) {
+      const id = crypto.randomUUID();
+      await db.prepare(`INSERT INTO lesson_activities (id,lesson_id,course_id,source_id,activity_type,source_fingerprint,recipe_version,schema_version,language,cache_key,status,lease_token,lease_expires_at,created_at,updated_at)
+        VALUES (?,?,?,?,?,?,?,?,?,?,'generating',?,?,?,?) ON CONFLICT(cache_key) DO NOTHING`)
+        .bind(id, found.lessonId, found.courseId, sourceId, type, expectedFingerprint, 1, 1, found.language, key, token, now + LESSON_ACTIVITY_LEASE_MS, now, now).run();
+      row = await db.prepare(`SELECT ${cacheColumns} FROM lesson_activities WHERE cache_key=?`).bind(key).first<CacheRow>();
+      if (row?.leaseToken !== token) return context.json(activityOpenResponseSchema.parse({ status: "generating", activityId: row!.id, retryAfterMs: RETRY_MS }), 202);
+    } else if (!await claimGeneration(db, { row, leaseToken: token, now })) {
+      return context.json(activityOpenResponseSchema.parse({ status: "generating", activityId: row.id, retryAfterMs: RETRY_MS }), 202);
+    }
+    const settings = await readAiSettings(db);
+    const reserved = await reserveCacheMiss(db, { userId: uid, cacheKey: key, cap: settings.dailyTurnCap, now });
+    if (!reserved) {
+      await db.prepare("UPDATE lesson_activities SET status='failed',lease_token=NULL,lease_expires_at=NULL,next_attempt_at=?,updated_at=? WHERE id=? AND lease_token=?")
+        .bind(now + LESSON_ACTIVITY_RETRY_MS, now, row!.id, token).run();
+      await releaseCacheMiss(db, uid, key, now);
+      return apiError(context, 429, "AI_DAILY_LIMIT", "You have reached today's activity generation limit.");
+    }
+    // Start generation in the request that claimed the lease. Other opens poll this same cache row.
+    try {
+      const source = activitySourceData(found.document, sourceId);
+      const payload = await generateLessonActivity({ env: context.env, db, userId: uid, type, language: found.language, source: source.content, lessonGoal: found.goal, dialogueId: source.dialogueId });
+      // Close the race between the first fingerprint check and the atomic published_at guard.
+      const latest = await getLesson(context);
+      if ("error" in latest) throw new Error("SOURCE_CHANGED");
+      const stillCurrent = await currentSource(latest, sourceId, type);
+      const current = stillCurrent.descriptors.find((item) => item.sourceId === sourceId && item.activityTypes.includes(type));
+      if (latest.publishedAt !== found.publishedAt || current?.fingerprint !== expectedFingerprint) throw new Error("SOURCE_CHANGED");
+      const committed = await commitGeneratedPayload(db, { activityId: row!.id, leaseToken: token, payload: JSON.stringify(payload), publishedAt: found.publishedAt });
+      await releaseCacheMiss(db, uid, key, now);
+      if (!committed) return apiError(context, 409, "SOURCE_CHANGED", "The source changed while this activity was being prepared.");
+      row = await readActivity(db, row!.id);
+      return open(context, row!.id, found, descriptor, row!, false);
+    } catch (error) {
+      await releaseCacheMiss(db, uid, key, now);
+      const code = error instanceof Error ? error.message : "";
+      const freshNow = Date.now();
+      await db.prepare(`UPDATE lesson_activities SET status='failed',lease_token=NULL,lease_expires_at=NULL,next_attempt_at=?,updated_at=?
+        WHERE id=? AND status='generating' AND lease_token=?`).bind(freshNow + LESSON_ACTIVITY_RETRY_MS, freshNow, row!.id, token).run();
+      if (code === "SOURCE_CHANGED") return apiError(context, 409, "SOURCE_CHANGED", "The source changed while this activity was being prepared.");
+      return apiError(context, 503, "ACTIVITY_GENERATION_FAILED", "This activity could not be prepared. Try again shortly.");
+    }
+  });
+
+  app.get(`${PATH}/:activityId`, deps.requireActivityAccess, async (context) => {
+    const found = await getLesson(context); if ("error" in found) return found.error;
+    const row = await readActivity(context.env.DB, context.req.param("activityId") ?? "");
+    if (!row || row.lessonId !== found.lessonId || row.courseId !== found.courseId) return apiError(context, 404, "ACTIVITY_NOT_FOUND", "This activity is not available.");
+    if (row.status !== "ready") {
+      if (row.status === "failed" && (row.nextAttemptAt ?? 0) > Date.now()) return context.json(activityStatusResponseSchema.parse({ status: "failed", retryAfterMs: row.nextAttemptAt! - Date.now() }));
+      return context.json(activityStatusResponseSchema.parse({ status: "generating", retryAfterMs: RETRY_MS }), 202);
+    }
+    const payload = validPayload(row); if (!payload) return apiError(context, 503, "ACTIVITY_UNAVAILABLE", "This activity is unavailable.");
+    const resolved = await currentSource(found, row.sourceId, activityType(row.activityType));
+    const descriptor = resolved.descriptors.find((item) => item.sourceId === row.sourceId && item.activityTypes.includes(activityType(row.activityType)));
+    const uid = userId(context);
+    const run = await context.env.DB.prepare(`SELECT ${runColumns} FROM lesson_activity_runs WHERE activity_id=? AND user_id=?`).bind(row.id, uid).first<RunRow>();
+    if ((!descriptor || descriptor.fingerprint !== row.sourceFingerprint) && !run) return apiError(context, 404, "ACTIVITY_NOT_FOUND", "This activity is no longer available.");
+    if (!run && !found.archived) return apiError(context, 404, "ACTIVITY_NOT_FOUND", "Open this activity from its lesson first.");
+    if (!descriptor) return apiError(context, 404, "ACTIVITY_NOT_FOUND", "This activity is no longer available.");
+    return context.json(activityStatusResponseSchema.parse({ status: "ready", activity: sourcePayload(row, descriptor, payload), run: run ? presentRun(run) : {
+      id: crypto.randomUUID(), activityId: row.id, userId: uid, cursor: 0, cueMode: "english", status: "active", startedAt: Date.now(), updatedAt: Date.now(), completedAt: null, ephemeral: true,
+    }, ephemeral: found.archived }));
+  });
+
+  app.post(`${PATH}/:activityId/answers`, deps.requireActivityAccess, async (context) => {
+    const found = await getLesson(context); if ("error" in found) return found.error;
+    const parsed = await parseJson(context, activityAnswerRequestSchema, 4_096); if ("response" in parsed) return parsed.response;
+    const row = await readActivity(context.env.DB, context.req.param("activityId") ?? "");
+    if (!row || row.lessonId !== found.lessonId || row.status !== "ready") return apiError(context, 404, "ACTIVITY_NOT_FOUND", "This activity is not available.");
+    const payload = validPayload(row); if (!payload) return apiError(context, 404, "ACTIVITY_NOT_FOUND", "This activity is not available.");
+    const uid = userId(context); const db = context.env.DB;
+    const run = await db.prepare(`SELECT ${runColumns} FROM lesson_activity_runs WHERE id=? AND activity_id=? AND user_id=?`).bind(parsed.data.runId, row.id, uid).first<RunRow>();
+    if (!run && !found.archived) return apiError(context, 404, "ACTIVITY_RUN_NOT_FOUND", "This activity run is not available.");
+    const prior = run ? await db.prepare(`SELECT id AS answerId,item_id AS itemId,correct,reference FROM lesson_activity_answers WHERE run_id=? AND idempotency_key=?`).bind(run.id, parsed.data.idempotencyKey).first<{ answerId: string; itemId: string; correct: number; reference: string | null }>() : null;
+    if (prior) return context.json(activityAnswerResponseSchema.parse({ answerId: prior.answerId, itemId: prior.itemId, correct: Boolean(prior.correct), reference: prior.reference, explanation: null, pronunciation: null }));
+    if (!run && !found.archived) return apiError(context, 404, "ACTIVITY_RUN_NOT_FOUND", "This activity run is not available.");
+    const grade = gradeLessonActivityAnswer(payload, parsed.data.itemId, parsed.data.answer);
+    if (!grade) return apiError(context, 400, "ACTIVITY_ITEM_INVALID", "This answer does not match an activity item.");
+    if (!found.archived && run) {
+      const answerText = JSON.stringify(parsed.data.answer);
+      const answerId = crypto.randomUUID();
+      try {
+        await db.prepare(`INSERT INTO lesson_activity_answers (id,run_id,item_id,idempotency_key,answer,input_mode,correct,matched,reference,pronunciation_json,created_at)
+          VALUES (?,?,?,?,?,?,?,?,?,NULL,?)`).bind(answerId, run.id, parsed.data.itemId, parsed.data.idempotencyKey, answerText, parsed.data.inputMode, grade.correct ? 1 : 0, grade.correct ? 1 : 0, grade.reference, Date.now()).run();
+      } catch {
+        const duplicate = await db.prepare(`SELECT id AS answerId,item_id AS itemId,correct,reference FROM lesson_activity_answers WHERE run_id=? AND idempotency_key=?`).bind(run.id, parsed.data.idempotencyKey).first<{ answerId: string; itemId: string; correct: number; reference: string | null }>();
+        if (!duplicate) throw new Error("ACTIVITY_ANSWER_WRITE_FAILED");
+        return context.json(activityAnswerResponseSchema.parse({ answerId: duplicate.answerId, itemId: duplicate.itemId, correct: Boolean(duplicate.correct), reference: duplicate.reference, explanation: null, pronunciation: null }));
+      }
+    }
+    return context.json(activityAnswerResponseSchema.parse({ answerId: crypto.randomUUID(), itemId: parsed.data.itemId, correct: grade.correct, reference: grade.reference, explanation: grade.explanation, pronunciation: null }));
+  });
+
+  app.patch(`${PATH}/:activityId/run`, deps.requireActivityAccess, async (context) => {
+    const found = await getLesson(context); if ("error" in found) return found.error;
+    const parsed = await parseJson(context, activityRunPatchRequestSchema, 2_048); if ("response" in parsed) return parsed.response;
+    const row = await readActivity(context.env.DB, context.req.param("activityId") ?? "");
+    if (!row || row.lessonId !== found.lessonId || row.status !== "ready") return apiError(context, 404, "ACTIVITY_NOT_FOUND", "This activity is not available.");
+    const uid = userId(context); const db = context.env.DB;
+    const run = await db.prepare(`SELECT ${runColumns} FROM lesson_activity_runs WHERE activity_id=? AND user_id=?`).bind(row.id, uid).first<RunRow>();
+    if (!run) return apiError(context, 404, "ACTIVITY_RUN_NOT_FOUND", "This activity run is not available.");
+    const now = Date.now(); let changes = 0;
+    if (parsed.data.action === "set_cue_mode") {
+      if (activityType(row.activityType) !== "roleplay") return apiError(context, 400, "ACTIVITY_ACTION_INVALID", "Cue mode is available only during dialogue practice.");
+      changes = (await db.prepare("UPDATE lesson_activity_runs SET cue_mode=?,updated_at=? WHERE id=? AND user_id=?").bind(parsed.data.cueMode, now, run.id, uid).run()).meta.changes ?? 0;
+    } else if (parsed.data.action === "restart") {
+      changes = (await db.prepare("UPDATE lesson_activity_runs SET cursor=0,status='active',completed_at=NULL,updated_at=? WHERE id=? AND user_id=?").bind(now, run.id, uid).run()).meta.changes ?? 0;
+    } else if (parsed.data.action === "continue") {
+      if (parsed.data.expectedCursor !== run.cursor) return apiError(context, 409, "ACTIVITY_CURSOR_STALE", "This activity moved ahead. Refresh to continue.");
+      const count = await db.prepare("SELECT COUNT(*) AS total FROM lesson_activity_answers WHERE run_id=? AND item_id=?").bind(run.id, `${run.cursor}`).first<{ total: number }>();
+      if (!count?.total) return apiError(context, 409, "ACTIVITY_ANSWER_REQUIRED", "Answer this item before continuing.");
+      changes = (await db.prepare("UPDATE lesson_activity_runs SET cursor=cursor+1,updated_at=? WHERE id=? AND user_id=? AND cursor=?").bind(now, run.id, uid, run.cursor).run()).meta.changes ?? 0;
+    } else {
+      const payload = validPayload(row)!;
+      const required = payload.type === "story_summary" || payload.type === "grammar_explanation" ? 0
+        : payload.type === "story_comprehension" || payload.type === "tricky_grammar" || payload.type === "mixed_practice" ? payload.questions.length
+          : payload.type === "quick_grammar" ? 1 : payload.turns.filter((turn) => turn.isLearner).length;
+      const saved = await db.prepare("SELECT COUNT(DISTINCT item_id) AS total FROM lesson_activity_answers WHERE run_id=?").bind(run.id).first<{ total: number }>();
+      if ((saved?.total ?? 0) < required) return apiError(context, 409, "ACTIVITY_INCOMPLETE", "Finish every item before completing this activity.");
+      changes = (await db.prepare("UPDATE lesson_activity_runs SET status='completed',completed_at=?,updated_at=? WHERE id=? AND user_id=?").bind(now, now, run.id, uid).run()).meta.changes ?? 0;
+    }
+    if (!changes) return apiError(context, 409, "ACTIVITY_RUN_STALE", "This activity run changed. Refresh and try again.");
+    const updated = await db.prepare(`SELECT ${runColumns} FROM lesson_activity_runs WHERE id=? AND user_id=?`).bind(run.id, uid).first<RunRow>();
+    return context.json(activityRunPatchResponseSchema.parse({ run: presentRun(updated!) }));
+  });
+
+  // Role-play speech resolves the text and cast voice from the current published dialogue. The speech route is wired below
+  // through the shared lesson speech cache so the request can never choose arbitrary text or a voice.
+  app.post(`${PATH}/:activityId/speech`, deps.requireActivityAccess, async (context) => {
+    const parsed = await parseJson(context, activitySpeechRequestSchema, 1_024); if ("response" in parsed) return parsed.response;
+    return apiError(context, 503, "ACTIVITY_SPEECH_PENDING", "Dialogue audio is being prepared.");
+  });
+}
+

@@ -149,3 +149,7 @@ The product is installable but online-only. Cache only the minimum static offlin
 ## Environments and delivery
 
 There are two targets: local development and one production installation. A root workspace command runs web and API concurrently. Each app retains independent development, test, build, and Wrangler deployment commands. Deployment is manual; there is no CI/CD initially.
+
+## Lesson activity boundary
+
+Approved 2026-10-21; implementation in progress. [Lesson activities](lesson-activities.md) uses shared `lesson-activities` contracts and global course/lesson activity routes. A pure resolver identifies published sources; the API owns eligibility, shared versioned cache and leases, reference grading, run ownership and stored-turn speech resolution. The web owns section observation, dedicated-page presentation and account/version/item-local unsent drafts. There is no Tutor conversation, learner snapshot or word-memory integration. Learning time uses the one existing clock.

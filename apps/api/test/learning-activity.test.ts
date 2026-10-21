@@ -76,6 +76,16 @@ describe("learning activity read", () => {
     expect(body.totals).toMatchObject({ lesson: 660, grammar: 300, practice: 120, vocabulary: 90, aiPractice: 290, total: 1_460 });
   });
 
+  it("includes lesson activities in AI practice totals and the daily goal without changing practice totals", async () => {
+    const s = await setup();
+    await store(s.learnerId, END, "lesson_activity", 75, { focus: "speaking", courseId: s.courseId, lessonId: s.lessonId, practiceId: "activity-1" });
+    const response = await activity(s, s.learner);
+    expect(response.status).toBe(200);
+    const body = learningActivityResponseSchema.parse(await response.json());
+    expect(body.totals).toMatchObject({ aiPractice: 75, total: 75, lesson: 0, practice: 0 });
+    expect(body.totals.aiPracticeFocus).toEqual({ grammar: 0, vocabulary: 0, reading: 0, listening: 0, writing: 0 });
+  });
+
   it("counts the previous period of the same length and ignores other accounts", async () => {
     const s = await setup();
     await store(s.learnerId, "2026-10-10", "reading", 500, { focus: "lesson", courseId: s.courseId, lessonId: s.lessonId });

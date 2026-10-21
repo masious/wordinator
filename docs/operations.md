@@ -204,3 +204,7 @@ Use structured Worker logs for request ID, route, status, timing, safe error cod
 | `exception` | for `server`, the thrown error's name |
 
 A tool that throws no longer ends the turn: the model receives `TOOL_FAILED` and carries on. Every call, failed or not, still writes the info-level `ai.tool` line (tool and outcome). Arguments, lesson text, answers, and prompts are never logged.
+
+## Lesson activity operations
+
+Approved 2026-10-21; implementation in progress. [The delivery plan](../LESSON_ACTIVITIES_PLAN.html) records migration identifiers and actual checks. Reuse existing model/speech secrets and provider fallback; no new production service is assumed. Generation leases recover abandoned jobs and source/version keys invalidate relevant edits. Unreferenced stale cache versions may be purged; keep versions with private runs. Always select local versus production D1 explicitly. Deployment remains a separate action; apply compatible committed migrations/API before the consuming web release.

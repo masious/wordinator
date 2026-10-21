@@ -12,6 +12,7 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [posts-and-feed.md](posts-and-feed.md) | Journal post shapes, composer, drafts, feed ordering, pagination, and polling |
 | [discussions-and-reactions.md](discussions-and-reactions.md) | Answers, spoiler concealment, comments, replies, pins, and emoji reactions |
 | [courses.md](courses.md) | Course structure, blocks, contributors, publishing, practice progress and attempts, lesson states, the lesson progress tab and reset, AI practices on the lesson page, and loading |
+| [lesson-activities.md](lesson-activities.md) | Section-aware lesson activity suggestions, dedicated pages, shared generated content, private runs, and original-dialogue role-play |
 | [lesson-shares.md](lesson-shares.md) | Sharing examples, dialogues, and practice questions to the journal: snapshots and references, entry points, duplicates, availability, and the shared answer check |
 | [words.md](words.md) | Word cards, word bookmarks, the Words tab, the Weak words view, Drill (including spoken answers), word memory and its review log, and stored pronunciation scores |
 | [speech.md](speech.md) | Lesson speech: spoken items, voices, dialogue cast, pronunciation overrides, background generation, and playback; on-demand audio for tutor messages |
@@ -25,6 +26,7 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [design-system.md](design-system.md) | Visual language and canonical UI tokens |
 | [design-system-plan.md](design-system-plan.md) | Phase 0 design-system implementation tasks, sequencing, and completion criteria |
 | [AI_PLAN.md](../AI_PLAN.md) | AI tutor and learning data (C14, including C14l tutor sessions and memory) delivery steps, status, and release procedure |
+| [LESSON_ACTIVITIES_PLAN.html](../LESSON_ACTIVITIES_PLAN.html) | Planned section-aware lesson activities: resolved decisions, shared content cache, dedicated activity pages, original-dialogue role-play, delivery batches, and acceptance gates; implementation not started |
 | [SPEECH_PLAN.md](../SPEECH_PLAN.md) | Lesson speech (C10) delivery steps, status, and release procedure |
 | [REDESIGN_PLAN.md](../REDESIGN_PLAN.md) | Lumen visual redesign: batch order, component mapping, open decisions, and status |
 | [architecture.md](architecture.md) | Runtime topology, monorepo boundaries, client/server responsibilities, and API conventions |

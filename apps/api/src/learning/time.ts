@@ -1,4 +1,5 @@
 import { parseStoredLessonDocument, walkLessonBlocks } from "@wordinator/contracts/lesson-document";
+import { lessonActivityFocus, lessonActivityTypeSchema } from "@wordinator/contracts/lesson-activities";
 import { learningTimeRequestSchema, type LearningTimeEntry, type LessonTime, type TypicalTime } from "@wordinator/contracts/learning";
 import type { Context, Hono, MiddlewareHandler } from "hono";
 import type { AppEnvironment } from "../app";
@@ -149,6 +150,16 @@ export function registerLearningTimeRoutes(app: Hono<AppEnvironment>, deps: { re
       } else if (entry.activity === "practice") {
         if (!publishedPracticeIds(lesson.publishedDoc).has(entry.practiceId)) return missing();
         rows.push({ activity: "practice", focus: null, courseId, lessonId: entry.lessonId, practiceId: entry.practiceId, seconds: entry.seconds });
+      } else if (entry.activity === "lesson_activity") {
+        const activity = await db.prepare(
+          `SELECT a.activity_type AS activityType FROM lesson_activities a
+           JOIN lesson_activity_runs r ON r.activity_id = a.id AND r.user_id = ?
+           JOIN courses c ON c.id = a.course_id
+           WHERE a.id = ? AND a.lesson_id = ? AND a.course_id = ? AND a.status = 'ready' AND c.status <> 'archived'`,
+        ).bind(userId, entry.activityId, entry.lessonId, entry.courseId).first<{ activityType: string }>();
+        const type = lessonActivityTypeSchema.safeParse(activity?.activityType);
+        if (!type.success) return missing();
+        rows.push({ activity: "lesson_activity", focus: lessonActivityFocus(type.data), courseId, lessonId: entry.lessonId, practiceId: entry.activityId, seconds: entry.seconds });
       } else {
         const tagged = await db.prepare("SELECT p.focus FROM ai_practice_lessons t JOIN ai_practices p ON p.id = t.practice_id WHERE t.lesson_id = ? AND t.practice_id = ?")
           .bind(entry.lessonId, entry.practiceId).first<{ focus: string }>();

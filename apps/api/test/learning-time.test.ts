@@ -138,6 +138,24 @@ describe("sending time", () => {
     expect(focuses).toEqual(expect.arrayContaining([[named.practiceId, "reading"], [defaulted.practiceId, "vocabulary"]]));
     expect((await timeOf(s, s.reader)).practiceSeconds).toBe(30);
   });
+
+  it("records only an owned lesson activity with its server-derived focus, outside required lesson times", async () => {
+    const s = await setup();
+    const activityId = crypto.randomUUID(); const now = Date.now();
+    await env.DB.prepare(
+      `INSERT INTO lesson_activities (id, lesson_id, course_id, source_id, activity_type, source_fingerprint, recipe_version, schema_version, language, cache_key, status, payload, created_at, updated_at)
+       VALUES (?, ?, ?, ?, 'roleplay', 'source', 1, 1, 'nl', ?, 'ready', '{}', ?, ?)`,
+    ).bind(activityId, s.lesson.lesson.id, s.course.id, s.headingId, activityId, now, now).run();
+    await env.DB.prepare(
+      "INSERT INTO lesson_activity_runs (id, activity_id, user_id, cursor, cue_mode, status, started_at, updated_at) VALUES (?, ?, ?, 0, 'english', 'active', ?, ?)",
+    ).bind(crypto.randomUUID(), activityId, s.readerId, now, now).run();
+    const entry: LearningTimeEntry = { activity: "lesson_activity", courseId: s.course.id, lessonId: s.lesson.lesson.id, activityId, focus: "grammar", seconds: 30 };
+    expect((await send(s, s.other, [entry])).status).toBe(404);
+    expect((await send(s, s.reader, [{ ...entry, activityId: crypto.randomUUID() }])).status).toBe(404);
+    expect((await send(s, s.reader, [entry])).status).toBe(204);
+    expect(await rows(s.readerId)).toEqual([expect.objectContaining({ activity: "lesson_activity", focus: "speaking", practiceId: activityId, seconds: 30 })]);
+    expect(await timeOf(s, s.reader)).toEqual({ readingSeconds: 0, practiceSeconds: 0, typical: { reading: null, practice: null } });
+  });
 });
 
 describe("typical times", () => {

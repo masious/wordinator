@@ -1,0 +1,18 @@
+/* Temporary page; delete with its route. */
+.page{display:grid;gap:var(--space-5);max-width:48rem;margin:0 auto;padding:var(--space-5) var(--space-4);color:var(--color-foreground);background:var(--color-surface)}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(18rem,1fr));gap:var(--space-2);margin:0;padding:0;list-style:none}
+.row{display:flex;align-items:center;gap:var(--space-3);padding:var(--space-2) var(--space-3);font-size:var(--text-sm);border:1px solid var(--color-separator);border-radius:var(--radius-md)}
+.label{display:grid;min-width:0}
+.label small{color:var(--color-foreground-faint)}
+.motions{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2)}
+.motions button{font:inherit;padding:var(--space-1) var(--space-3);border:1px solid var(--color-separator);border-radius:var(--radius-md);background:none;color:inherit;cursor:pointer}
+.motions button[aria-pressed="true"]{color:var(--color-action-soft-text);background:var(--color-action-soft)}
+.wiggle{animation:wiggle 1.6s ease-in-out infinite}
+.bob{animation:bob 1.4s ease-in-out infinite}
+.flip{animation:flip 2.4s ease-in-out infinite}
+.pulse{animation:pulse 1.4s ease-in-out infinite}
+@keyframes wiggle{0%,60%,100%{transform:rotate(0)}10%,30%{transform:rotate(-10deg)}20%,40%{transform:rotate(10deg)}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-12%)}}
+@keyframes flip{0%,30%{transform:perspective(20em) rotateY(0)}50%,80%{transform:perspective(20em) rotateY(180deg)}100%{transform:perspective(20em) rotateY(360deg)}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+@media(prefers-reduced-motion:reduce){.wiggle,.bob,.flip,.pulse{animation:none}}

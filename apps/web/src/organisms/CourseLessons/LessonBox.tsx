@@ -4,6 +4,7 @@ import { Dumbbell, MessageCircle, Sparkles } from "lucide-react";
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import type { TypicalTime } from "@wordinator/contracts/learning";
+import type { ActivityDescriptor, ActivityType } from "@wordinator/contracts/lesson-activities";
 import type { TFunction } from "i18next";
 import { lessonMetricsQueryOptions } from "../../api";
 import { learningClock, useMinuteRefresh } from "../../learningTime";
@@ -71,21 +72,30 @@ export function LessonBox({ lesson, percent }: { lesson: LessonBoxLesson; percen
 // conversation prefilled to talk the lesson's grammar and topics through), and Ask for more practices like this (a new tutor
 // conversation with a prefilled request naming the lesson). A prefilled conversation sends nothing until the learner sends it.
 // `compact` shows icons only, stacked (names stay as tooltips and accessible names).
-export function LessonBoxActions({ lesson, compact = false }: { lesson: LessonBoxLesson; compact?: boolean }) {
+export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSlug, suggestions = [] }: { lesson: LessonBoxLesson; compact?: boolean; courseSlug?: string; lessonSlug?: string; suggestions?: readonly { descriptor: ActivityDescriptor; type: ActivityType }[] }) {
   const { t } = useTranslation();
   const named = { number: lesson.number, lesson: lesson.title, course: lesson.courseTitle };
+  const activityLabel: Record<ActivityType, string> = {
+    story_summary: t("lessonActivities.types.story_summary"), story_comprehension: t("lessonActivities.types.story_comprehension"),
+    grammar_explanation: t("lessonActivities.types.grammar_explanation"), quick_grammar: t("lessonActivities.types.quick_grammar"),
+    tricky_grammar: t("lessonActivities.types.tricky_grammar"), mixed_practice: t("lessonActivities.types.mixed_practice"), roleplay: t("lessonActivities.types.roleplay"),
+  };
   return <div className={styles.actions} data-compact={compact || undefined} role="group" aria-label={t("courses.lessonBox.actions")}>
     <h2 className={styles.actionsHeading}><Sparkles aria-hidden="true" /><span>{t("courses.lessonBox.doMoreWithAi")}</span></h2>
     <div className={styles.pair}>
       <Link className={styles.action} title={compact ? t("courses.lessonBox.practiseWords") : undefined} to="/words/drill" search={{ source: "course", course: lesson.courseId, direction: "mixed" }}>
         <Dumbbell aria-hidden="true" /><span className={styles.label}>{t("courses.lessonBox.practiseWords")}</span>
       </Link>
-      <Link className={styles.action} title={compact ? t("courses.lessonBox.askAi") : undefined} to="/ai" search={{ prompt: t("courses.lessonBox.askAiPrompt", named) }}>
-        <MessageCircle aria-hidden="true" /><span className={styles.label}>{t("courses.lessonBox.askAi")}</span>
-      </Link>
+      {suggestions.slice(0, 1).map(({ descriptor, type }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action}
+        title={compact ? `${activityLabel[type]} · ${descriptor.sourceLabel}` : undefined} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
+        params={{ courseSlug: courseSlug!, lessonSlug: lessonSlug!, sourceId: descriptor.sourceId, activityType: type }}>
+        <MessageCircle aria-hidden="true" /><span className={styles.label}>{activityLabel[type]}</span>
+      </Link>)}
     </div>
-    <Link className={styles.action} title={compact ? t("courses.lessonBox.morePractices") : undefined} to="/ai" search={{ prompt: t("courses.lessonBox.morePracticesPrompt", named) }}>
-      <Sparkles aria-hidden="true" /><span className={styles.label}>{t("courses.lessonBox.morePractices")}</span>
-    </Link>
+    {suggestions.slice(1).map(({ descriptor, type }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action}
+      title={compact ? `${activityLabel[type]} · ${descriptor.sourceLabel}` : undefined} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
+      params={{ courseSlug: courseSlug!, lessonSlug: lessonSlug!, sourceId: descriptor.sourceId, activityType: type }}>
+      <Sparkles aria-hidden="true" /><span className={styles.label}>{activityLabel[type]} · {descriptor.sourceLabel}</span>
+    </Link>)}
   </div>;
 }

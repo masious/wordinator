@@ -3,6 +3,7 @@ import {
 } from "@wordinator/contracts";
 import { lessonResponseSchema, type CourseDetailResponse, type CourseLesson, type LessonDocument as LessonDocumentData } from "@wordinator/contracts/lesson-document";
 import type { LessonAiPracticesResponse } from "@wordinator/contracts/tutor";
+import type { ActivityDescriptor, ActivityType } from "@wordinator/contracts/lesson-activities";
 import { Drawer } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -11,7 +12,7 @@ import { type FormEvent, lazy, type RefObject, Suspense, useCallback, useEffect,
 import { createPortal } from "react-dom";
 import { ArrowLeft, ArrowRight, BookA, Check, ChevronRight, ListTree, PencilLine } from "lucide-react";
 import { Trans, useTranslation } from "react-i18next";
-import { apiRequest, courseProgressQueryOptions, courseQueryOptions, courseWordsQueryOptions, lessonAiPracticesQueryOptions, lessonQueryOptions, wordBookmarksKey } from "../../api";
+import { apiRequest, courseProgressQueryOptions, courseQueryOptions, courseWordsQueryOptions, lessonActivitiesQueryOptions, lessonAiPracticesQueryOptions, lessonQueryOptions, wordBookmarksKey } from "../../api";
 import { PlainText } from "../../molecules/PlainText";
 import { relativeTime } from "../../relativeTime";
 import { lessonSpeech, SpeechScope } from "../../molecules/Speech";
@@ -36,6 +37,26 @@ import { PracticeStepper } from "./PracticeStepper";
 import { AiPracticeToggle, useAiPracticeSlots, type AiPracticeScope } from "./AiPractices";
 
 const NO_ENTRIES: LessonIndexEntry[] = [];
+
+function useCurrentActivitySection(descriptors: readonly ActivityDescriptor[], reading: RefObject<HTMLElement | null>, side: RefObject<HTMLElement | null>) {
+  const [current, setCurrent] = useState<ActivityDescriptor | undefined>();
+  useEffect(() => {
+    let frame = 0;
+    const sections = descriptors.filter((entry) => entry.sourceKind !== "dialogue");
+    const measure = () => {
+      frame = 0; const root = reading.current; if (!root) return;
+      const tops = sections.map((entry) => entry.returnHeadingId ? root.querySelector<HTMLElement>(`[data-block-id="${CSS.escape(entry.returnHeadingId)}"]`)?.getBoundingClientRect().top ?? null : null);
+      const line = stickyInset(side.current); const atBottom = window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+      if (atBottom && sections.some((entry) => entry.sourceKind === "lesson_end")) { setCurrent(sections.find((entry) => entry.sourceKind === "lesson_end")); return; }
+      let index = -1; tops.forEach((top, i) => { if (top !== null && top <= line + 8) index = i; });
+      setCurrent(index >= 0 ? sections[index] : sections.find((entry) => entry.sourceKind === "section" && entry.returnHeadingId === null));
+    };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(measure); };
+    window.addEventListener("scroll", onScroll, { passive: true }); window.addEventListener("resize", onScroll); onScroll();
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); if (frame) cancelAnimationFrame(frame); };
+  }, [descriptors, reading, side]);
+  return current;
+}
 
 // The editor and BlockNote load only when someone opens a lesson for editing.
 const LessonEditor = lazy(() => import("../LessonEditor/LessonEditor"));
@@ -102,11 +123,19 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
 }) {
   const { t } = useTranslation();
   const document = playableDocument(lesson);
+  const activityDescriptorsQuery = useQuery({ ...lessonActivitiesQueryOptions(scope.groupId, scope.courseId, lesson.id), enabled: Boolean(lesson.published && document && !gate && !archived) });
+  const allActivityDescriptors = activityDescriptorsQuery.data?.descriptors ?? [];
   // Draft previews show no AI practices; they are tagged to the published document only.
   const slots = useAiPracticeSlots(aiPractices?.scope ?? null, lesson.document, aiPractices?.data);
   const steps = useMemo(() => lessonSteps(lesson), [lesson]);
   const entries = useMemo(() => document ? lessonIndexEntries(document) : [], [document]);
   const reading = useRef<HTMLDivElement>(null); const side = useRef<HTMLDivElement>(null);
+  const activeActivitySection = useCurrentActivitySection(allActivityDescriptors, reading, side);
+  const activitySuggestions: { descriptor: ActivityDescriptor; type: ActivityType }[] = activeActivitySection ? [
+    ...activeActivitySection.activityTypes.map((type) => ({ descriptor: activeActivitySection, type })),
+    ...allActivityDescriptors.filter((entry) => entry.sourceKind === "dialogue" && entry.returnHeadingId === activeActivitySection.returnHeadingId)
+      .flatMap((entry) => entry.activityTypes.map((type) => ({ descriptor: entry, type }))),
+  ] : [];
   const active = useVisibleWords(reading, side, steps);
   useResumeScroll({ steps, reading, position: resume, inset: () => stickyInset(side.current) });
   // Only published lessons record time; draft previews never do.
@@ -145,7 +174,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   }, [badges]);
   const lessonBox = <>
     {rail.box && createPortal(<LessonBox lesson={box} percent={percent} />, rail.box)}
-    {rail.actions && createPortal(<LessonBoxActions lesson={box} />, rail.actions)}
+    {rail.actions && createPortal(<LessonBoxActions lesson={box} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} suggestions={activitySuggestions} />, rail.actions)}
   </>;
   if (!document || !steps.length) return <div className={styles.body}><p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p>{lessonBox}</div>;
   const hasWords = steps.some((step) => step.words.length > 0);
@@ -154,7 +183,7 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const docked = placement === "rail";
   const words = (props: { placement: LessonWordsPlacement; collapsible?: boolean }) =>
     <LessonWords steps={steps} active={active} groupId={scope.groupId} collapsed={wordsCollapsed} onToggle={toggleWords}
-      footer={railDrawer ? undefined : (compact) => <LessonBoxActions lesson={box} compact={compact} />} {...props} />;
+      footer={railDrawer ? undefined : (compact) => <LessonBoxActions lesson={box} compact={compact} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} suggestions={activitySuggestions} />} {...props} />;
   return <LessonShareScope scope={share}><WordBookmarkScope resolve={bookmarkTarget}><SpeechScope resolve={resolveSpeech}><div className={styles.reader} data-action-bar={phone || undefined}>
     {!gate && <LessonReadingProgress steps={steps} reading={reading} tracking={tracking} onPercent={setPercent} onReached={setReachedStep} />}
     <div ref={reading} className={gate ? `${styles.body} ${styles.gated}` : styles.body} style={gate && gateHeight !== null ? { maxBlockSize: gateHeight } : undefined}>

@@ -49,3 +49,7 @@ The release excludes phone-only features (features that exist only on phones), g
 ## Acceptance summary
 
 The release is ready when the critical flows in [user-flows.md](user-flows.md) work in current desktop Chrome and Safari, authentication and global-resource authorization tests pass, both applications type-check/test/build, and a clean installation can be bootstrapped and deployed from the documentation.
+
+## Section-aware lesson activities
+
+Approved 2026-10-21; implementation in progress. [Lesson activities](lesson-activities.md) owns the finite, section-aware activity pages, shared generated content and private learner work. Original-dialogue replay is the narrow role-play exception: learner Sofia, selectable English/Dutch cue, held recording, explicit Send and typed fallback. Activities are optional and never change required lesson completion or word fluency.

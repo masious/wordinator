@@ -15,6 +15,7 @@ describe("categoryOf", () => {
     expect(categoryOf({ activity: "words" })).toBe("vocabulary");
     expect(categoryOf({ activity: "ai_practice", courseId: id, lessonId: id, practiceId: id })).toBe("aiPractice");
     expect(categoryOf({ activity: "tutor" })).toBe("aiPractice");
+    expect(categoryOf({ activity: "lesson_activity", courseId: id, lessonId: id, activityId: id, focus: "speaking" })).toBe("aiPractice");
   });
 });
 

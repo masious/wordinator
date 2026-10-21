@@ -16,6 +16,7 @@ import { Route as JournalRouteImport } from './routes/journal'
 import { Route as NotificationsRouteImport } from './routes/notifications'
 import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as TempRouteImport } from './routes/temp'
 import { Route as UiRouteImport } from './routes/ui'
 import { Route as WordsRouteImport } from './routes/words'
 import { Route as R2overviewLessonSlugRouteImport } from './routes/2overview.$lessonSlug'
@@ -40,6 +41,7 @@ import { Route as GroupsGroupIdSettingsAccountRouteImport } from './routes/group
 import { Route as GroupsGroupIdSettingsGroupRouteImport } from './routes/groups.$groupId_.settings.group'
 import { Route as GroupsGroupIdSettingsMembersRouteImport } from './routes/groups.$groupId_.settings.members'
 import { Route as GroupsGroupIdCoursesCourseIdLessonsLessonIdRouteImport } from './routes/groups.$groupId_.courses_.$courseId_.lessons.$lessonId'
+import { Route as CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRouteImport } from './routes/courses_.$courseSlug_.lessons.$lessonSlug_.activities.$sourceId.$activityType'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -74,6 +76,11 @@ const ProgressRoute = ProgressRouteImport.update({
 const SettingsRoute = SettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TempRoute = TempRouteImport.update({
+  id: '/temp',
+  path: '/temp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const UiRoute = UiRouteImport.update({
@@ -206,6 +213,14 @@ const GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute =
     path: '/groups/$groupId/courses/$courseId/lessons/$lessonId',
     getParentRoute: () => rootRouteImport,
   } as any)
+const CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRoute =
+  CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRouteImport.update(
+    {
+      id: '/courses_/$courseSlug_/lessons/$lessonSlug_/activities/$sourceId/$activityType',
+      path: '/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType',
+      getParentRoute: () => rootRouteImport,
+    } as any,
+  )
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -215,6 +230,7 @@ export interface FileRoutesByFullPath {
   '/notifications': typeof NotificationsRoute
   '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
+  '/temp': typeof TempRoute
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
@@ -239,6 +255,7 @@ export interface FileRoutesByFullPath {
   '/groups/$groupId/settings/members': typeof GroupsGroupIdSettingsMembersRoute
   '/groups/$groupId/settings/': typeof GroupsGroupIdSettingsIndexRoute
   '/groups/$groupId/courses/$courseId/lessons/$lessonId': typeof GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute
+  '/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType': typeof CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -248,6 +265,7 @@ export interface FileRoutesByTo {
   '/notifications': typeof NotificationsRoute
   '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
+  '/temp': typeof TempRoute
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
@@ -272,6 +290,7 @@ export interface FileRoutesByTo {
   '/groups/$groupId/settings/members': typeof GroupsGroupIdSettingsMembersRoute
   '/groups/$groupId/settings': typeof GroupsGroupIdSettingsIndexRoute
   '/groups/$groupId/courses/$courseId/lessons/$lessonId': typeof GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute
+  '/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType': typeof CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -282,6 +301,7 @@ export interface FileRoutesById {
   '/notifications': typeof NotificationsRoute
   '/progress': typeof ProgressRoute
   '/settings': typeof SettingsRoute
+  '/temp': typeof TempRoute
   '/ui': typeof UiRoute
   '/words': typeof WordsRoute
   '/2overview/$lessonSlug': typeof R2overviewLessonSlugRoute
@@ -306,6 +326,7 @@ export interface FileRoutesById {
   '/groups/$groupId_/settings/members': typeof GroupsGroupIdSettingsMembersRoute
   '/groups/$groupId_/settings/': typeof GroupsGroupIdSettingsIndexRoute
   '/groups/$groupId_/courses_/$courseId_/lessons/$lessonId': typeof GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute
+  '/courses_/$courseSlug_/lessons/$lessonSlug_/activities/$sourceId/$activityType': typeof CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -317,6 +338,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/progress'
     | '/settings'
+    | '/temp'
     | '/ui'
     | '/words'
     | '/2overview/$lessonSlug'
@@ -341,6 +363,7 @@ export interface FileRouteTypes {
     | '/groups/$groupId/settings/members'
     | '/groups/$groupId/settings/'
     | '/groups/$groupId/courses/$courseId/lessons/$lessonId'
+    | '/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -350,6 +373,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/progress'
     | '/settings'
+    | '/temp'
     | '/ui'
     | '/words'
     | '/2overview/$lessonSlug'
@@ -374,6 +398,7 @@ export interface FileRouteTypes {
     | '/groups/$groupId/settings/members'
     | '/groups/$groupId/settings'
     | '/groups/$groupId/courses/$courseId/lessons/$lessonId'
+    | '/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType'
   id:
     | '__root__'
     | '/'
@@ -383,6 +408,7 @@ export interface FileRouteTypes {
     | '/notifications'
     | '/progress'
     | '/settings'
+    | '/temp'
     | '/ui'
     | '/words'
     | '/2overview/$lessonSlug'
@@ -407,6 +433,7 @@ export interface FileRouteTypes {
     | '/groups/$groupId_/settings/members'
     | '/groups/$groupId_/settings/'
     | '/groups/$groupId_/courses_/$courseId_/lessons/$lessonId'
+    | '/courses_/$courseSlug_/lessons/$lessonSlug_/activities/$sourceId/$activityType'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -417,6 +444,7 @@ export interface RootRouteChildren {
   NotificationsRoute: typeof NotificationsRoute
   ProgressRoute: typeof ProgressRoute
   SettingsRoute: typeof SettingsRoute
+  TempRoute: typeof TempRoute
   UiRoute: typeof UiRoute
   WordsRoute: typeof WordsRoute
   R2overviewLessonSlugRoute: typeof R2overviewLessonSlugRoute
@@ -441,6 +469,7 @@ export interface RootRouteChildren {
   GroupsGroupIdSettingsMembersRoute: typeof GroupsGroupIdSettingsMembersRoute
   GroupsGroupIdSettingsIndexRoute: typeof GroupsGroupIdSettingsIndexRoute
   GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute: typeof GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute
+  CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRoute: typeof CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -492,6 +521,13 @@ declare module '@tanstack/react-router' {
       path: '/settings'
       fullPath: '/settings'
       preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/temp': {
+      id: '/temp'
+      path: '/temp'
+      fullPath: '/temp'
+      preLoaderRoute: typeof TempRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ui': {
@@ -662,6 +698,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GroupsGroupIdCoursesCourseIdLessonsLessonIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/courses_/$courseSlug_/lessons/$lessonSlug_/activities/$sourceId/$activityType': {
+      id: '/courses_/$courseSlug_/lessons/$lessonSlug_/activities/$sourceId/$activityType'
+      path: '/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType'
+      fullPath: '/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType'
+      preLoaderRoute: typeof CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -673,6 +716,7 @@ const rootRouteChildren: RootRouteChildren = {
   NotificationsRoute: NotificationsRoute,
   ProgressRoute: ProgressRoute,
   SettingsRoute: SettingsRoute,
+  TempRoute: TempRoute,
   UiRoute: UiRoute,
   WordsRoute: WordsRoute,
   R2overviewLessonSlugRoute: R2overviewLessonSlugRoute,
@@ -699,6 +743,8 @@ const rootRouteChildren: RootRouteChildren = {
   GroupsGroupIdSettingsIndexRoute: GroupsGroupIdSettingsIndexRoute,
   GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute:
     GroupsGroupIdCoursesCourseIdLessonsLessonIdRoute,
+  CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRoute:
+    CoursesCourseSlugLessonsLessonSlugActivitiesSourceIdActivityTypeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

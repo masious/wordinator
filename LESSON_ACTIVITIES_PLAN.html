@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Wordinator — Lesson activities execution plan</title>
+<style>
+:root{--canvas:#f4f5f9;--paper:#fff;--ink:#191b24;--muted:#626779;--line:#dfe2eb;--accent:#6554cc;--wash:#eeebff;--radius:10px;--space:24px;color-scheme:light dark;font-family:Inter,ui-sans-serif,system-ui,sans-serif;background:var(--canvas);color:var(--ink);line-height:1.65}
+*{box-sizing:border-box}body{margin:0}a{color:var(--accent);text-underline-offset:3px}a:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:4px}header,main,footer{max-width:1100px;margin:auto;padding:40px var(--space)}header{padding-bottom:12px}header p{max-width:780px}.eyebrow{font-size:.75rem;text-transform:uppercase;letter-spacing:.12em;font-weight:750;color:var(--accent)}h1{font-size:clamp(2rem,5vw,3.4rem);letter-spacing:-.04em;line-height:1.12;margin:16px 0}h2{font-size:1.55rem;line-height:1.3;letter-spacing:-.02em;margin-top:0}h3{font-size:1.05rem;margin-bottom:6px}p{margin:10px 0}section{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);padding:28px;margin-bottom:24px;scroll-margin-top:20px}nav{display:flex;gap:8px 20px;flex-wrap:wrap;padding:18px 0}nav a{font-size:.9rem}.meta,.muted{color:var(--muted)}.note{border-left:3px solid var(--accent);padding:10px 16px;background:var(--wash);margin:18px 0}.flow{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0}.flow span{padding:10px 14px;background:var(--wash);border-radius:6px;font-weight:600}.table{overflow:auto}table{width:100%;border-collapse:collapse;font-size:.92rem}th,td{text-align:left;vertical-align:top;padding:13px 12px;border-bottom:1px solid var(--line)}th{font-size:.8rem;color:var(--muted)}ul,ol{padding-left:22px}li{margin:7px 0}code{font-size:.87em;background:var(--wash);padding:2px 5px;border-radius:4px;overflow-wrap:anywhere}pre{white-space:pre-wrap;background:var(--wash);padding:16px;border-radius:6px;font-size:.87rem}pre code{padding:0}details{border-top:1px solid var(--line);padding:14px 0}summary{cursor:pointer;font-weight:650}.phase{color:var(--accent);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase}footer{font-size:.85rem;color:var(--muted);padding-top:0}
+@media(prefers-color-scheme:dark){:root{--canvas:#14151c;--paper:#1c1e28;--ink:#eeeff6;--muted:#b0b4c7;--line:#36394a;--accent:#b6aaff;--wash:#2a2542}}
+@media(max-width:640px){header,main,footer{padding:24px 16px}section{padding:20px}th,td{padding:10px 8px}}
+@media print{:root{--canvas:white;--paper:white;--ink:black;--muted:#444;--line:#ccc;--accent:#44349e;--wash:#f5f4fa}header,main,footer{max-width:none;padding:12px 0}section{break-inside:auto;padding:18px}h2,h3{break-after:avoid}nav{display:none}details>*{display:block}a{color:inherit}body{font-size:10pt}}
+</style>
+</head>
+<body>
+<header>
+<div class="eyebrow">Wordinator · Execution plan · 21 October 2026</div>
+<h1>Activities that follow<br>the lesson you’re reading.</h1>
+<p>A dedicated activity experience launched from the active lesson section. Shared, reusable AI content; private learner work; a clear path back to the lesson.</p>
+<p class="meta">Status: implementation in progress. Product decisions below come from the planning conversation. Explicit engineering defaults make the work executable without expanding its scope.</p>
+<nav aria-label="Plan sections"><a href="#decisions">Decisions</a><a href="#catalog">Activities</a><a href="#sections">Section model</a><a href="#roleplay">Role-play</a><a href="#cache">Cache</a><a href="#data">Data &amp; API</a><a href="#delivery">Delivery batches</a><a href="#proof">Acceptance &amp; release</a></nav>
+</header>
+<main>
+<section id="implementation-progress">
+<h2>Implementation progress</h2>
+<p>Implementation started with parallel GPT-6 Luna agents. Entries record observed work and checks, not deployment status.</p>
+<!-- progress:contracts_data:start -->
+<h3>Contracts and database · in progress</h3><p>GPT-6 Luna: shared contracts, source model, database schema and migrations.</p>
+<p>Implemented: shared payload/view and grading schemas, section/dialogue source resolver, learner time focus contract, private activity tables, quota reservations and migration 0036. Contract and database verification is in progress.</p>
+<!-- progress:contracts_data:end -->
+<!-- progress:api_cache:start -->
+<h3>API and cache · in progress</h3><p>GPT-6 Luna: protected endpoints, generation/cache coordination, private runs and speech.</p>
+<!-- progress:api_cache:end -->
+<!-- progress:web_activity:start -->
+<h3>Web and role-play · in progress</h3><p>GPT-6 Luna: contextual suggestions, activity pages, hold-to-talk role-play and flow tests.</p>
+<!-- progress:web_activity:end -->
+<!-- progress:integration:start -->
+<h3>Integration and documentation · in progress</h3><p>Created <a href="docs/lesson-activities.md">the behavioral owner</a> and linked/reconciled product, flow, architecture, speech/privacy, learning-time, testing and operational owners. Learning-time API and aggregate integration is in progress. Application verification has not yet run.</p>
+<!-- progress:integration:end -->
+</section>
+<section id="decisions">
+<h2>01 · Settled scope</h2>
+<div class="flow" aria-label="Activity flow"><span>Read a section</span><span>Choose an activity</span><span>Open its own page</span><span>Reuse or generate content</span><span>Return to the section</span></div>
+<ul>
+<li>Suggestions appear in the existing <strong>Do more with AI</strong> area and change with the active section. No inline activity insertion is required.</li>
+<li>Opening an activity navigates in the same browser tab to a new application page. A link at the top returns to the source lesson and section.</li>
+<li>Ship seven activity types: story summary, story comprehension, grammar explanation, quick grammar question, tricky grammar practice, lesson-wide mixed practice, and original-dialogue role-play.</li>
+<li>Attach and suggest are one operation: an eligible activity is associated with its source and offered there, including before any user has generated its content.</li>
+<li>One shared cached activity per source section and type, for the current source and recipe versions. No variants, “generate another,” ratings, or content-management interface in this release.</li>
+<li>Generation starts only when someone opens the activity. Source changes invalidate affected content. Learner answers and completion stay private and do not affect required lesson completion.</li>
+<li>Role-play replays the original dialogue. The learner is Sofia; the app voices all other characters. Learners choose English cues or exact Dutch lines, hold the microphone button to speak, and explicitly send their turn. Typing is always available.</li>
+</ul>
+<div class="note"><strong>Excluded:</strong> vocabulary activities or grouping, weak-word practice, personalization, cross-lesson retrieval, two-lesson checkpoints, older vocabulary, Tutor conversations, live generated dialogue, and changes to existing Tutor-saved practices. Words already present in source sentences remain ordinary lesson content; no vocabulary index or word-memory reads/writes are introduced.</div>
+<p><strong>Engineering defaults:</strong> fixed activity sizes below, finite exercises rather than a chat, no author approval before caching a schema-valid result, private resumable work, existing provider fallback and speech infrastructure, and deterministic suggestion eligibility. These are implementation choices within the agreed scope, not additional claimed user requirements.</p>
+</section>
+<section id="catalog">
+<h2>02 · Activity catalogue</h2>
+<p>Text is plain text with preserved line breaks and safe links. Explanations use structured paragraphs and examples rendered by application components; no new rich-text editor or free-form HTML/Markdown renderer.</p>
+<div class="table"><table><thead><tr><th>Activity / source</th><th>Content and interaction</th><th>Completion / focus</th></tr></thead><tbody>
+<tr><td><strong>Story summary</strong><br>Story section</td><td>Short English explanation of the scene and a short Dutch recap grounded in its story. No separate new-words activity.</td><td>Read, then Done.<br>Reading</td></tr>
+<tr><td><strong>Story comprehension</strong><br>Story section</td><td>Four multiple-choice questions, three options each, one correct option and a short explanation. Show one question at a time; check, then explicitly continue.</td><td>All four answered.<br>Reading</td></tr>
+<tr><td><strong>Grammar explanation</strong><br>Small grammar section</td><td>Concise English explanation of this concept with Dutch examples and English translations. Preserve the lesson’s level and exclusions.</td><td>Read, then Done.<br>Grammar</td></tr>
+<tr><td><strong>Quick grammar question</strong><br>Small grammar section</td><td>Exactly one question and three answer options, with feedback explaining the answer.</td><td>Answer checked.<br>Grammar</td></tr>
+<tr><td><strong>Tricky grammar practice</strong><br>Small grammar section</td><td>Four questions applying this section’s concept: multiple choice, fill-in, or word order. Difficulty comes from taught distinctions, never new grammar.</td><td>All four answered.<br>Grammar</td></tr>
+<tr><td><strong>Lesson-wide mixed practice</strong><br>Summary / end of lesson</td><td>Six questions combining concepts taught in this lesson, using the same bounded question types. Do not fetch other lessons or recycle learner-specific weaknesses.</td><td>All six answered.<br>Grammar</td></tr>
+<tr><td><strong>Dialogue role-play</strong><br>Original dialogue with Sofia</td><td>Original turns, English cues, original Dutch references, existing cast voices, push-to-talk or typed Sofia turns. No generated partner replies.</td><td>All Sofia turns sent.<br>Speaking</td></tr>
+</tbody></table></div>
+<p>Question counts are fixed recipe defaults. Generation must satisfy the count and schema; invalid or incomplete output is not published as a usable activity. Choice and word-order display order is stable for a cached activity.</p>
+<p>Closed questions are graded in the API using stored references. Feedback reveals the reference only for submitted items. Retry is allowed, and Done reports the learner’s own first-submission result and current corrected state without suggesting a proficiency assessment.</p>
+</section>
+<section id="sections">
+<h2>03 · Resolve sections once, consistently</h2>
+<p>The existing index follows level-1/2 headings through <code>LessonIndex.tsx</code>; its overview also understands level-3 stops. Activities need the small grammar sections as well. Extract a deterministic shared section/source resolver into <code>packages/contracts/src/lessonActivities.ts</code>, with no DOM or server dependencies.</p>
+<ol>
+<li>Use stable published block IDs. A content-bearing top-level heading starts a section until the next heading of equal or higher level. Level-3 grammar subsections are eligible independently; nested column headings stay within their top-level section.</li>
+<li>Create a synthetic introduction source for meaningful blocks before the first heading and a synthetic lesson-end source for whole-lesson mixed practice. Empty headings alone do not produce activities.</li>
+<li>Classify from structured lesson content and the existing overview conventions, not a model call while scrolling. Dialogue sections offer story activities. Grammar callouts/recognized grammar sections offer grammar activities. Summary sections and the final lesson endpoint offer mixed practice. Unsupported sections offer no contextual activity.</li>
+<li>A story section with several dialogues offers role-play links labelled by dialogue; each dialogue ID is a distinct role-play source. Offer role-play only for dialogues with a case-insensitive, trimmed Sofia speaker and at least one partner turn. Never silently rename another character to Sofia.</li>
+<li>Use the reading line to resolve the current fine-grained section. Reuse the existing measurement approach; keep index highlighting at its current coarser level. Scrolling backward changes suggestions back. A short final section becomes current at page bottom.</li>
+<li>Before the start gate is passed, in draft previews, and for unpublished lessons, show no new activity suggestions. At lesson top, use an eligible introduction or no suggestions; do not guess a later section. On a finished lesson, suggestions still follow the current viewport.</li>
+</ol>
+<p>Every suggestion carries a stable type, source ID, source label, return heading/block ID, and source fingerprint. Suggestions are computed without content generation and without learner history. The API derives and checks them again rather than trusting browser-supplied block text or eligibility.</p>
+<p><strong>Placement:</strong> replace the two generic lesson-wide AI prompt links within Do more with AI with these contextual activity links. Keep Practise words as an ordinary lesson utility outside this activity list, with its existing behavior. Keep the Tutor navigation destination and existing AI-practice expander unchanged. Use the current footer/drawer placements on narrow screens; do not introduce a second mobile suggestion surface.</p>
+</section>
+<section id="roleplay">
+<h2>04 · Role-play interaction contract</h2>
+<p>The full original dialogue fixes turn order and reference lines. English cues come from stored translations where available; missing cues are generated once and cached without rewriting Dutch lines. Exact Dutch mode and English mode share the same activity and can be switched during a turn.</p>
+<ol>
+<li>The activity opens with a visible source title, top return link, cue-language switch, and a Start dialogue control. The explicit start permits partner audio playback; never autoplay before a user gesture.</li>
+<li>Play consecutive partner turns in the course’s cast voices, in original order, stopping before Sofia’s turn. Display partner text and provide replay. If Sofia opens the scene, begin with her cue.</li>
+<li>On Sofia’s turn, show either her English cue or her exact Dutch sentence. In English mode, Reveal Dutch is available. Keep a typed answer field and an always-visible, ready-to-use hold-to-speak button.</li>
+<li>Pointer down starts capture; pointer release ends the utterance and places the final transcription in an editable draft. Repeated holds may replace that unsent utterance, with an explicit visible draft. Holding Space/Enter while the microphone button is focused provides equivalent keyboard behavior. Ignore repeated keydown events.</li>
+<li>Releasing the microphone <strong>does not send or advance</strong>. Send submits the current spoken transcript or typed answer. Disable it for empty drafts, while recognition is finalizing, and during an in-flight submission. Use an idempotency key so double clicks do not create extra attempts.</li>
+<li>Show feedback against Sofia’s original line, plus pronunciation feedback when available. Offer Retry and Listen to Sofia. An explicit Continue action plays the next partner turn; do not start it behind feedback. The final turn instead offers Finish and Back to lesson.</li>
+</ol>
+<div class="note"><strong>“Microphone ready all the time”</strong> means the control stays visible and the recognition client/token can be prepared after permission. It does not mean continuous recording. Capture runs only while held, never during partner playback. Stop and release capture on pointer cancellation, lost focus, route change, sign-out, and hidden tab. If permission or recognition fails, typing remains usable.</div>
+<p><strong>Feedback default:</strong> this is reproduction of the lesson’s line, in either cue mode. Normalize case, whitespace, punctuation, and the project’s existing accent equivalence for sentence comparison; do not reuse word-card matching that strips leading articles. A different sentence is labelled “Different from Sofia’s line,” with the original shown; it is not automatically called bad Dutch. No open-ended semantic judge is needed for this release. Retrying or continuing is never blocked by a mismatch or a low pronunciation score.</p>
+<p>Microsoft recognition may assess pronunciation against the original line. Browser recognition and typing have no pronunciation score; do not fabricate one. Show reference-based pronunciation as feedback on repeating that specific sentence. Long dialogue lines must have explicit sentence/chunk handling within provider and contract limits; never truncate a reference silently. Keep a chunk position inside the Sofia turn and require Send for the complete turn.</p>
+<p>Audio stays between the browser and the configured recognizer; never store raw learner audio. Sending a spoken answer explicitly sends its editable transcription as private activity answer text. This is a documented extension of the current speech privacy rules, which otherwise say transcripts are not sent. Generated partner speech is public-by-URL under the existing R2 convention, contains only original lesson text, and uses cast voices rather than the narrator-only Tutor audio default.</p>
+</section>
+<section id="cache">
+<h2>05 · Shared content, private work</h2>
+<p><strong>Cache identity:</strong> lesson ID + source ID + activity type + source hash + recipe version + output-schema version + language. For role-play, source ID includes the dialogue block ID. Cue mode and learner ID are not cache dimensions. Use stable serialization and a cryptographic hash.</p>
+<ul>
+<li>The source hash includes the actual published text, relevant headings, dialogue/translation data, and the lesson goal when used by the recipe. Mixed practice hashes the whole allowed lesson source. Exclude standalone vocabulary blocks, private notes, author identity, learner data, and progress. Do not invalidate a grammar exercise merely because an unrelated story changed.</li>
+<li>Role-play text and cues invalidate on dialogue changes. Voice/cast changes invalidate the corresponding audio identity, while keeping unchanged cue content reusable.</li>
+<li>Database rows have <code>pending</code>, <code>ready</code>, or <code>failed</code> state. A unique cache key and a conditional, expiring generation lease elect one generator; simultaneous visitors poll the same row. A stale owner may never overwrite a newer lease.</li>
+<li>After claiming, run bounded generation through the existing configured AI provider layer and fallback. Treat lesson text as data; no tools, learner profile, Tutor snapshot, or user-supplied system prompt. Validate output strictly before atomically marking ready.</li>
+<li>Recheck source identity before committing. A republish during generation leaves the result stale and unavailable to new launches. Do not serve an old version under the new source key.</li>
+<li>Waiting clients poll using the server’s retry hint, with a bounded visible wait and Retry after a timeout. Failed generation can be retried after a short server backoff under the same identity; retries are recovery, not new variants. Cancelled browser navigation does not delete another visitor’s job.</li>
+<li>Role-play with complete existing translations can be materialized deterministically without a model call; audio may still load independently. Content-ready does not imply every audio clip is ready.</li>
+<li>Cache hits remain usable when AI generation is unavailable or the opener has exhausted the generation allowance. Reference grading stays available. Audio remains subject to existing speech availability and caps.</li>
+</ul>
+<p>Published content changes invalidate by key rather than destructive replacement. An already-open run may finish against its immutable version while the lesson remains readable, with a source-updated notice. New runs always resolve current source content. Retain stale rows only while referenced by private runs; purge unreferenced stale rows through the maintenance path. Deleting a lesson deletes its activities and private runs; unpublishing immediately blocks learner access.</p>
+<p><strong>Metering default:</strong> count one cache-miss model generation as one existing daily AI turn for the requesting account, without creating a Tutor conversation; cache hits and deterministic role-play materialization count zero. Fallback attempts count once. Reserve allowance when taking the lease, with concurrency-safe checks, rather than relying only on a pre-request count. Speech uses existing accounting with a new activity surface. No separate user-facing quota setting is introduced.</p>
+</section>
+<section id="data">
+<h2>06 · Contracts, persistence and endpoints</h2>
+<p>Keep one source of shared types in <code>@wordinator/contracts</code>, with a new <code>lesson-activities</code> subpath. Reuse appropriate answer views, pure graders, recognition and playback primitives; do not route these activities through Tutor messages, tools, or conversations.</p>
+<div class="table"><table><thead><tr><th>Proposed entity</th><th>Required shape and constraints</th></tr></thead><tbody>
+<tr><td><code>lesson_activities</code></td><td>Activity ID; lesson ID; source ID; type; source hash; recipe/schema versions; language; unique cache key; generation state; lease token/expiry; retry time; validated payload; created/updated timestamps. Payload includes server-side references. No learner answers.</td></tr>
+<tr><td><code>lesson_activity_runs</code></td><td>Run ID; activity version ID; owning account; current item/turn; cue mode; started/updated/completed times. Keep one resumable run per account/activity version. Explicit Start again resets that private run’s position without generating content or deleting attempts.</td></tr>
+<tr><td><code>lesson_activity_answers</code></td><td>Run ID; item/turn index; idempotency key; answer text or typed selection/order; input mode; grade/reference-match outcome; supported pronunciation scores; timestamp. Multiple retries retained privately. Unique submission key per run. No raw audio.</td></tr>
+</tbody></table></div>
+<p>Use committed Drizzle SQL migrations. Keep activity attempts separate from existing word-review and required-practice recording, which would otherwise introduce out-of-scope memory/fluency effects. Extend lesson reset to delete this learner’s activity runs/answers while preserving shared activity content. Lesson deletion cascades both shared and private activity records.</p>
+<p><strong>Proposed global routes</strong> (under <code>/api/courses/:courseId/lessons/:lessonId</code>; do not add new group-shaped contracts):</p>
+<ul>
+<li><code>GET /activities</code> — deterministic eligible source/type descriptors, never generation and never private payloads.</li>
+<li><code>POST /activities/open</code> — accepts source ID, type, and expected source fingerprint; resolves current published content, reuses/claims cache, and returns ready activity + own run or <code>202</code> with a poll URL. <code>409 SOURCE_CHANGED</code> asks the client to refresh.</li>
+<li><code>GET /activities/:activityId</code> — rechecks access; returns generation status or a reference-stripped activity view plus this account’s run. Stale versions are readable only through an existing owned run.</li>
+<li><code>POST /activities/:activityId/answers</code> — owned run ID, item/turn ID, answer, input mode, optional validated assessment, and idempotency key. Server grades from stored payload, returns private feedback, and never trusts a browser’s verdict. Client pronunciation scores remain unverified learning feedback, not authorization.</li>
+<li><code>PATCH /activities/:activityId/run</code> — narrow validated actions: change cue mode, continue, complete, restart. The server validates legal item/turn transitions and completion conditions.</li>
+<li><code>POST /activities/:activityId/speech</code> — accepts a stored turn/chunk ID only; resolves original text and cast voice server-side, applies speech caps, and returns ready/pending audio. Never accept arbitrary synthesis text or voice.</li>
+</ul>
+<p>All routes require authentication, completed username setup, and current lesson visibility. Verify course/lesson/activity/run/item ownership at every step. A readable archived lesson may serve ready content and audio but cannot create shared content or persist new learner work; use an ephemeral read-only practice run and make its unsaved state clear. Draft preview is excluded even for editors.</p>
+<p><strong>Page route:</strong> <code>/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType</code>. Route loader ensures lesson and descriptor only; Query owns cache status, run, and mutations. Loading/opening is idempotent. Direct links resolve through the same open flow. Back to lesson uses the canonical current lesson URL and original heading/block anchor, falling back to lesson top if that anchor was removed.</p>
+<p><strong>Drafts:</strong> unsent text is device-local and namespaced by account, activity version, run, item, and schema version. Preserve it on sign-out without exposing it to another account. On source change, do not silently apply old drafts to new questions. Refresh resumes submitted work from the server.</p>
+</section>
+<section id="ux">
+<h2>07 · Page states and learning-time boundary</h2>
+<ul>
+<li>Use the normal authenticated frame, a compact source header with the top return link, one primary activity column, and a progress indicator for question/turn position. This is an activity page, not a Tutor conversation with a composer.</li>
+<li>Support preparing, shared generation pending, ready, checking, feedback, finished, failed/retry, source changed, source unavailable, and archived/unsaved states. Errors retain the return link and local draft.</li>
+<li>Use Mantine, CSS Modules, existing Lumen tokens and shared UI; all visible product copy is behind i18next keys. Phone layout preserves the cue switch, microphone, typing, Send, and return link without overflow. Reduced motion disables decorative transitions.</li>
+<li>Retain a keyboard path through every question and role-play action. Announce recognition and generation status without stealing focus; hold-to-talk must also work with touch and keyboard. Explicit user gestures govern audio, recording and advancement.</li>
+<li>Extend the existing learning clock with <code>lesson_activity</code> and reading/grammar/speaking focus. Attribute time to lesson + activity, pause for hidden/idle states and generation waits, and prevent double counting with lesson reading or Tutor time. Add this category to existing totals/daily goal; do not fold it into required practice or typical lesson-reading medians.</li>
+</ul>
+</section>
+<section id="delivery">
+<h2>08 · Ordered delivery batches</h2>
+<p>Each batch ends with relevant tests and owner-document updates. Work in the existing workspace without overwriting the current unrelated lesson/UI edits. Implementation is authorized by the subsequent request to run agents. Production migration and deployment remain separate actions.</p>
+<details open><summary>Batch 0 · Record ownership and reconcile existing rules</summary>
+<p><span class="phase">Outcome</span> A focused <code>docs/lesson-activities.md</code> becomes the behavioral owner, with this HTML as the delivery plan. Link it from <code>docs/index.md</code>, <code>courses.md</code>, <code>user-flows.md</code> and the roadmap.</p>
+<p>Reconcile the existing blanket deferral of interactive role-play in courses, narrator-only on-demand audio in speech, recognizer surface/reference constraints in words, and “transcripts never sent” in security/privacy. Keep these accurate for their existing surfaces; add the narrow lesson-activity exception. Describe replacement of generic lesson AI links while preserving Tutor-saved practices.</p>
+<p><strong>Exit:</strong> ownership, scope, lifecycle, activity matrix and role-play flow are consistent across owners before implementing affected behavior.</p>
+</details>
+<details open><summary>Batch 1 · Shared source model and database foundation</summary>
+<p><span class="phase">Files</span> New contracts <code>lessonActivities.ts</code> and tests; contracts exports; <code>packages/db/src/schema.ts</code>; next available SQL migration; migration tests.</p>
+<p>Implement section extraction, eligibility, source filtering, stable fingerprints, payload/view separation, generation/run state schemas and private storage. Include prefix content, nested columns, level-3 grammar, repeated headings, several dialogues, missing Sofia and synthetic lesson end. Do not assign a migration number until checking the current migration head.</p>
+<p><strong>Exit:</strong> deterministic descriptors, validated payloads, unique cache identities, migration integrity and private ownership are tested.</p>
+</details>
+<details open><summary>Batch 2 · Activity generation, cache and protected routes</summary>
+<p><span class="phase">Files</span> New <code>apps/api/src/lessonActivities/</code> resolver/store/generator/routes; application route registration; existing <code>apps/api/src/ai/</code> metering integration; API tests.</p>
+<p>Implement the six bounded generation recipes, deterministic original-dialogue payloads and cached missing English cues. Add lease claiming/recovery, ready-only publication, current-source rechecks, provider fallback, daily allowance reservation, status polling and reference-stripped reads. Add source-only grading and private run/answer transitions; no Tutor data lookup.</p>
+<p><strong>Exit:</strong> two accounts reuse one generated payload while their runs/answers remain isolated; concurrent opens generate once; source edits cannot publish a stale result as current.</p>
+</details>
+<details open><summary>Batch 3 · Suggestions and ordinary activity page</summary>
+<p><span class="phase">Files</span> <code>LessonIndex.tsx</code>/<code>overviewModel.ts</code> integration; <code>LessonBox.tsx</code>, <code>LessonWords.tsx</code> and <code>CourseLessons.tsx</code> as needed; new activity route/page/feature components; <code>i18n.ts</code>.</p>
+<p>Connect the shared section model to the reading line; replace generic AI prompt links in their current responsive slots. Implement the dedicated page, loading/retry/finished states, top return link, question controls, private resume and drafts. Reuse existing choice/order UI by extracting pure props where necessary rather than inventing fake Tutor components or conversations.</p>
+<p><strong>Exit:</strong> scrolling changes suggestions; a direct/open/reload/back cycle works; all six ordinary activity types are functional on desktop and phones.</p>
+</details>
+<details open><summary>Batch 4 · Dialogue audio and push-to-talk role-play</summary>
+<p><span class="phase">Files</span> Existing speech pipeline and <code>apps/api/src/speechRecognition.ts</code>; new activity speech route; <code>apps/web/src/molecules/speechRecognition.ts</code> and playback primitives; new role-play controller/view; speech/learning contracts where needed.</p>
+<p>Preserve original partner turns and cast mapping. Implement cue modes, Start, partner playback, held capture, editable spoken drafts, Send, reference/pronunciation feedback, Retry, Listen, Continue, typed fallback and final completion. Extend sentence/chunk assessment bounds deliberately; do not globally loosen word-card rules. Release microphone/audio resources on every exit/cancellation.</p>
+<p><strong>Exit:</strong> release never submits; only Send records a Sofia turn; only Continue moves past feedback; failed audio/recognition never traps the learner.</p>
+</details>
+<details open><summary>Batch 5 · Learning lifecycle, documentation and release proof</summary>
+<p><span class="phase">Files</span> Existing learning-time contracts, clock and API; lesson reset/deletion helpers; activity tests/e2e; owner docs listed below.</p>
+<p>Integrate time without progress or word-memory side effects. Finish reset/deletion and stale-source handling. Run targeted suites and affected builds; broaden only for changed shared primitives. Review the UI in both themes and narrow layouts. Record actual results, including any environmental failures.</p>
+<p><strong>Exit:</strong> acceptance cases below pass; docs describe final behavior; migrations and deploy steps are concrete and reviewable. Apply local migrations with an explicit local target; production migration/deployment is a separate action when requested.</p>
+</details>
+</section>
+<section id="proof">
+<h2>09 · Acceptance and verification</h2>
+<div class="table"><table><thead><tr><th>Area</th><th>Required evidence</th></tr></thead><tbody>
+<tr><td>Context and scope</td><td>Story → grammar → summary changes the offered actions; scrolling back restores them. Fine grammar subsections have their own sources. No learner-history, word-memory, Tutor or cross-lesson calls occur.</td></tr>
+<tr><td>Cache</td><td>Two accounts see identical cached questions. Concurrent opens invoke generation once. Cache hit works without a provider. Failed/malformed output stays unavailable. Expired leases recover; stale generators cannot commit over a new lease. Relevant edits invalidate; unrelated edits preserve section content.</td></tr>
+<tr><td>Navigation</td><td>Every activity has a top source link. Return lands at its source section, including after reload and slug changes; removed anchor falls back safely. Direct URL opens work without prior lesson navigation.</td></tr>
+<tr><td>Privacy and authorization</td><td>Anonymous and unfinished accounts refused. Invisible/unpublished lessons hidden. Wrong course/lesson/source/activity/item combinations refused. Account B cannot read or mutate A’s run/feedback. No references in question views before submission. No user answer enters a shared cache or synthesis route. No raw audio stored.</td></tr>
+<tr><td>Role-play</td><td>English/Dutch switch works per turn. Original partner lines/cast play in order. Pointer, touch and keyboard holds work. Release writes only a local draft. Send is explicit and idempotent. Retry/listen/continue are separate. Typing works with blocked microphone. Browser mode shows no invented score. Chunked long lines work. Blur/cancel/hidden/route exit stop capture.</td></tr>
+<tr><td>Lifecycle</td><td>Private progress resumes. Reattempt keeps cached content. Reset clears only this account’s activity work. Lesson deletion cleans dependencies. Republish does not attach old answers to new questions. Archived course creates no new content or durable work. Required lesson completion and word fluency never change.</td></tr>
+<tr><td>UI and time</td><td>Desktop Chromium/WebKit critical flow; phone UI review; keyboard and reduced motion; light/dark; no overflow; escaped hostile source text; no overlapping audio; clock pauses while waiting/idle and never double counts lesson time.</td></tr>
+</tbody></table></div>
+<h3>Commands to run during implementation</h3>
+<p>These commands exist in the workspace. They have <strong>not</strong> been run as implementation checks for this planning task. Use narrow test files first and follow <a href="docs/workers-tests-port-exhaustion.md">Workers test batching</a> and <a href="docs/testing.md">the test harness rules</a>.</p>
+<pre><code>pnpm --filter @wordinator/contracts typecheck
+pnpm --filter @wordinator/db typecheck
+pnpm --filter @wordinator/api typecheck
+pnpm --filter @wordinator/web typecheck
+pnpm --filter @wordinator/contracts test
+pnpm --filter @wordinator/db test
+pnpm --filter @wordinator/api exec vitest run test/lesson-activities.test.ts
+pnpm --filter @wordinator/web exec vitest run src/organisms/LessonActivities
+pnpm --filter @wordinator/web exec playwright test e2e/lesson-activities.spec.ts --project=chromium --project=webkit
+pnpm --filter @wordinator/api build
+pnpm --filter @wordinator/web build</code></pre>
+<p>The new test paths above are planned deliverables. Add regression checks for changed speech, lesson reset/progress, suggestion slots and legacy AI-practice behavior; run the R2 configuration if speech storage changes. Browser tests stub model, audio and recognition services deterministically. Separately smoke-test real speech permission, push-to-talk and cast audio on supported browsers before release.</p>
+</section>
+<section id="docs">
+<h2>10 · Documentation and release checklist</h2>
+<ul>
+<li><strong>New behavioral owner:</strong> <code>docs/lesson-activities.md</code>; index ownership entry. This HTML remains the delivery/status plan and links to that owner when created.</li>
+<li><strong>Product and flows:</strong> courses, product requirements, user flows, design system, and roadmap: activities, contextual actions, dedicated page, optional progress, role-play exception, mobile placement and delivery status.</li>
+<li><strong>Data and architecture:</strong> data model and architecture: cache identity, leases, new tables/routes, learner ownership, reset/deletion, stale-version retention and global-resource authorization.</li>
+<li><strong>Speech and privacy:</strong> speech, words, security/privacy, and relevant operations/provider notes: cast-based activity audio, push-to-talk, sentence/chunk limits, transcript submission, private scores, public generated clips, metering and failure recovery. Link to the activity owner rather than duplicating its flow.</li>
+<li><strong>Learning and testing:</strong> learning-time and testing: new activity time, exclusions from completion/fluency, mandatory negative cases, cache races and role-play critical path.</li>
+<li><strong>Tutor boundary:</strong> AI tutor and tutor sessions/memory need only a link or entry-point correction where applicable; do not rewrite their separate saved-practice lifecycle.</li>
+<li>Before merge: review the final diff, record actual test/build results and migration identifiers, reconcile affected owner docs, and confirm no unrelated in-progress edits were lost.</li>
+<li>Before production: explicitly choose production for committed migrations, deploy API before web that consumes the new routes, smoke-test with two accounts, verify cache reuse and typed fallback, and update roadmap status. Never silently select production.</li>
+</ul>
+<p><strong>Existing documentation needing reconciliation:</strong> the current courses deferral of interactive role-play and the speech/privacy restrictions on surfaces/transcripts predate this approved feature. They must be updated narrowly in Batch 0. They are not evidence that this feature already exists.</p>
+</section>
+</main>
+<footer>Prepared from todo.md, the planning decisions, and inspected repository code. No application implementation, migrations, tests, or deployment is claimed by this document. This file is self-contained, requires no external assets, and can be printed.</footer>
+</body>
+</html>

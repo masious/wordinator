@@ -23,7 +23,7 @@ export function categoryOf(activity: LearningActivity, focus: string | null): Ti
     case "reading": return focus === "grammar" ? "grammar" : "lesson";
     case "practice": return "practice";
     case "drill": case "words": return "vocabulary";
-    case "tutor": case "ai_practice": return "aiPractice";
+    case "tutor": case "ai_practice": case "lesson_activity": return "aiPractice";
   }
 }
 

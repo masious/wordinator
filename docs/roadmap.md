@@ -219,6 +219,10 @@ Completed on 2026-10-06. The [settings and administration blueprint](settings-an
 
 Completed on 2026-10-07. The mobile plan (`MOBILE_PLAN.md`, removed in `1ab9f54`; see git history) removed the horizontal overflow that made phones zoom out, added a mobile token layer (type, header, dock, card inset, and page-header roles), a slim header with a four-slot dock and More sheet, a group switcher in the account menu, a hero-free journal with a one-line create prompt, flat post cards with footer reactions, flattened discussions, a full-screen composer with sticky title and action bars, a collapsible course outline, and compact page headers. The [design system](design-system.md#responsive-behavior) owns the rules. `mobile-layout.spec.ts` covers every authenticated route, the shell, journal, discussion, composer, course outline, and lesson player in Pixel 7, 360px, and iPhone 13 projects. Since 2026-10-10 phones are no longer a target for new work; these layouts are frozen until phone support is discontinued.
 
+## Section-aware lesson activities — in progress 2026-10-21
+
+Decisions and execution batches are in [LESSON_ACTIVITIES_PLAN.html](../LESSON_ACTIVITIES_PLAN.html); parallel implementation is in progress. [Lesson activities](lesson-activities.md) owns behavior. The lesson's Do more with AI area will suggest activities for its active section, opening dedicated pages with a top link back to that section. The scope is story summaries and comprehension, grammar explanations, quick three-choice questions, tricky grammar practice, lesson-wide mixed practice, and replaying original dialogues with the learner as Sofia. Role-play offers English cues or exact Dutch lines, hold-to-talk with explicit Send, and typed fallback. Each source/type reuses one shared cached activity; learner work is private and optional. Vocabulary activities, personalization, cross-lesson work, and Tutor conversations are outside this feature. Existing Tutor-saved practices remain separate. The plan's first batch reconciles affected owner documents, including the current role-play deferral and speech/transcript restrictions, before implementation.
+
 ## Unprioritized future backlog
 
 No ordering is implied.
@@ -240,7 +244,7 @@ No ordering is implied.
 - Contextual sentence rendering for fill-in responses
 - Automated backups and CI/CD
 - Course speaking practice, speak-and-repeat, and spoken answers in lessons (needs a product exception and privacy review; drill and Words tab spoken answers are C13)
-- Course interactive role-play dialogues
+- Open-ended course role-play dialogues beyond the original-dialogue replay in the planned [lesson activities](../LESSON_ACTIVITIES_PLAN.html)
 - Feed posts for course updates
 - Course-specific notifications beyond contributor requests
 - Images inside course blocks

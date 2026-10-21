@@ -12,6 +12,7 @@
     "./learning": "./src/learning.ts",
     "./admin": "./src/admin.ts",
     "./tutor": "./src/tutor.ts"
+    ,"./lesson-activities": "./src/lessonActivities.ts"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

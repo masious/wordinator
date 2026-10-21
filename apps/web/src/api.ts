@@ -4,6 +4,7 @@ import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConv
 import { courseDashboardResponseSchema, learningActivityResponseSchema, learningGoalSchema, lessonMetricsResponseSchema, type LearningActivityRange, type LearningActivityResponse, type LearningTimeEntry } from "@wordinator/contracts/learning";
 import { withSentTime } from "./learningActivity";
 import { weakWordsPageSchema } from "@wordinator/contracts/weak-words";
+import { activityDescriptorListResponseSchema, activityOpenResponseSchema, activityStatusResponseSchema, type ActivityDescriptor, type ActivityType } from "@wordinator/contracts/lesson-activities";
 import { infiniteQueryOptions, queryOptions, type QueryClient } from "@tanstack/react-query";
 
 export class ApiError extends Error {
@@ -30,6 +31,22 @@ export const sessionQueryOptions = () => queryOptions({
   queryKey: ["session"] as const,
   queryFn: () => apiRequest("/api/session", sessionResponseSchema),
 });
+
+const lessonActivitiesPath = (_groupId: string, courseId: string, lessonId: string) => `/api/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}/activities`;
+export const lessonActivitiesQueryOptions = (groupId: string, courseId: string, lessonId: string) => queryOptions({
+  queryKey: ["lesson-activities", groupId, courseId, lessonId] as const,
+  queryFn: () => apiRequest(lessonActivitiesPath(groupId, courseId, lessonId), activityDescriptorListResponseSchema),
+  retry: false,
+});
+export const lessonActivityOpen = (groupId: string, courseId: string, lessonId: string, input: { sourceId: string; type: ActivityType; expectedFingerprint: string }) =>
+  apiRequest(`${lessonActivitiesPath(groupId, courseId, lessonId)}/open`, activityOpenResponseSchema, { method: "POST", body: JSON.stringify(input) });
+export const lessonActivityStatusQueryOptions = (groupId: string, courseId: string, lessonId: string, activityId: string) => queryOptions({
+  queryKey: ["lesson-activity", groupId, courseId, lessonId, activityId] as const,
+  queryFn: () => apiRequest(`${lessonActivitiesPath(groupId, courseId, lessonId)}/${encodeURIComponent(activityId)}`, activityStatusResponseSchema),
+  retry: false,
+});
+export const lessonActivityEndpoint = (groupId: string, courseId: string, lessonId: string, activityId: string) =>
+  `${lessonActivitiesPath(groupId, courseId, lessonId)}/${encodeURIComponent(activityId)}`;
 
 export const invitationQueryOptions = (token: string) => queryOptions({
   queryKey: ["invitation", token] as const,
@@ -251,7 +268,7 @@ export const learningTimeSender = (client: QueryClient) => async (groupId: strin
   });
   if (!response.ok) throw new ApiError(response.status, "LEARNING_TIME_REFUSED", "Learning time was not saved.", null);
   for (const entry of entries) {
-    if (!("lessonId" in entry)) continue;
+    if (!("lessonId" in entry) || entry.activity === "lesson_activity") continue;
     const field = entry.activity === "reading" ? "readingSeconds" : "practiceSeconds";
     client.setQueryData(lessonMetricsQueryOptions(groupId, entry.courseId, entry.lessonId).queryKey,
       (data) => data && { ...data, time: { ...data.time, [field]: data.time[field] + entry.seconds } });

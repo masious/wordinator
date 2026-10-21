@@ -11,7 +11,7 @@ export function categoryOf(target: TimeTarget): ActivityCategory {
     case "reading": return target.focus === "grammar" ? "grammar" : "lesson";
     case "practice": return "practice";
     case "drill": case "words": return "vocabulary";
-    case "ai_practice": case "tutor": return "aiPractice";
+    case "ai_practice": case "tutor": case "lesson_activity": return "aiPractice";
   }
 }
 

@@ -265,3 +265,7 @@ The dual-theme gate (Chromium and WebKit) verifies startup resolution, explicit 
 ## Accessibility status
 
 Formal WCAG 2.2 AA conformance is future work. Mantine semantics, keyboard-operable primitives, sensible focus treatment, and safe contrast should still be preserved; “not initially required” is not permission to remove them.
+
+## Lesson activity surfaces
+
+Approved 2026-10-21; implementation in progress. [Lesson activities](lesson-activities.md) uses the existing Lumen tokens, Mantine/shared controls and CSS Modules. The existing Do more with AI footer/drawer changes its links by active section. Dedicated pages keep the original-lesson link at the top, a single primary column and position progress. Role-play keeps cue switch, hold-to-talk, typing and Send operable on narrow screens, with clear recognition states and explicit advancement. This adds no token palette or rich-text surface.

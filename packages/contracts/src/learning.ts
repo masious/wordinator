@@ -113,10 +113,12 @@ export type CourseDashboardResponse = z.infer<typeof courseDashboardResponseSche
 // docs/learning-time.md owns what is measured and how it is sent; docs/data-model.md#learning_time the rows.
 export const LEARNING_TIME_ENTRIES_MAX = 20;
 export const LEARNING_TIME_SECONDS_MAX = 600;
-export const learningActivitySchema = z.enum(["reading", "practice", "ai_practice", "tutor", "drill", "words"]);
+export const learningActivitySchema = z.enum(["reading", "practice", "ai_practice", "lesson_activity", "tutor", "drill", "words"]);
 export type LearningActivity = z.infer<typeof learningActivitySchema>;
 export const readingFocusSchema = z.enum(["lesson", "grammar"]);
 export type ReadingFocus = z.infer<typeof readingFocusSchema>;
+export const lessonActivityFocusSchema = z.enum(["reading", "grammar", "speaking"]);
+export type LessonActivityFocus = z.infer<typeof lessonActivityFocusSchema>;
 // The skill an AI practice works on; the tutor names it when it saves the practice.
 export const aiPracticeFocusSchema = z.enum(["grammar", "vocabulary", "reading", "listening", "writing"]);
 export type AiPracticeFocus = z.infer<typeof aiPracticeFocusSchema>;
@@ -133,6 +135,7 @@ export const learningTimeEntrySchema = z.discriminatedUnion("activity", [
   z.strictObject({ activity: z.literal("reading"), focus: readingFocusSchema, courseId: opaqueIdSchema, lessonId: opaqueIdSchema, seconds: timeSecondsSchema }),
   z.strictObject({ activity: z.literal("practice"), courseId: opaqueIdSchema, lessonId: opaqueIdSchema, practiceId: opaqueIdSchema, seconds: timeSecondsSchema }),
   z.strictObject({ activity: z.literal("ai_practice"), courseId: opaqueIdSchema, lessonId: opaqueIdSchema, practiceId: opaqueIdSchema, seconds: timeSecondsSchema }),
+  z.strictObject({ activity: z.literal("lesson_activity"), courseId: opaqueIdSchema, lessonId: opaqueIdSchema, activityId: opaqueIdSchema, focus: lessonActivityFocusSchema, seconds: timeSecondsSchema }),
   z.strictObject({ activity: z.literal("drill"), courseId: opaqueIdSchema.optional(), seconds: timeSecondsSchema }),
   z.strictObject({ activity: z.literal("tutor"), seconds: timeSecondsSchema }),
   z.strictObject({ activity: z.literal("words"), seconds: timeSecondsSchema }),

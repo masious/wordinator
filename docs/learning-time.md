@@ -21,6 +21,10 @@ Each measured second belongs to one **activity**. Rows are kept per account, loc
 - **AI practice focus.** Every AI practice has a focus: `grammar`, `vocabulary`, `reading`, `listening`, or `writing`. The tutor chooses it when it saves the practice (`save_ai_practice`, [AI tutor](ai-tutor.md#tools)). Practices saved before C15 get one from their kind: dictation is listening; translate and choice are vocabulary; every other kind is grammar. AI practice time counts as AI practice and keeps its focus, so activity can show both the total and its breakdown.
 - Previews, drafts, and unpublished lessons record nothing. Archived courses record time as long as the learner can read them.
 
+### Lesson activity time
+
+Approved 2026-10-21; implementation in progress. [Lesson activities](lesson-activities.md#learning-time) adds `lesson_activity`, targeted to the lesson and shared activity ID, with reading/grammar/speaking focus. It counts in the existing AI-practice aggregate and daily goal, while retaining its own activity/focus row. Generation waits and completed/inactive work do not claim time. It never changes required-practice or lesson-reading medians.
+
 ## The clock
 
 - Time counts only while the page is visible, the window has focus, and the learner has interacted in the last 90 seconds (`IDLE_MS`): a scroll, wheel, key, pointer, or touch, or typing in a field. Each idle gap stops the clock at the last interaction, so a tab left open adds at most 90 seconds.
