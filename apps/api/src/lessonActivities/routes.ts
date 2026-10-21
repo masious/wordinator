@@ -153,7 +153,7 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     // Start generation in the request that claimed the lease. Other opens poll this same cache row.
     try {
       const source = activitySourceData(found.document, sourceId);
-      const payload = await generateLessonActivity({ env: context.env, db, userId: uid, type, language: found.language, source: source.content, lessonGoal: found.goal, dialogueId: source.dialogueId, lessonTerms: collectLessonWords(found.document).map((word) => word.term) });
+      const payload = await generateLessonActivity({ env: context.env, db, userId: uid, type, language: found.language, source: source.content, lessonGoal: found.goal, dialogueId: source.dialogueId, lessonTerms: collectLessonWords(found.document).map((word) => word.term), blocks: activitySourceBlocks(found.document, sourceId), eligibleFollowUps: resolved.descriptors.flatMap((item) => item.activityTypes) });
       // Close the race between the first fingerprint check and the atomic published_at guard.
       const latest = await getLesson(context);
       if ("error" in latest) throw new Error("SOURCE_CHANGED");

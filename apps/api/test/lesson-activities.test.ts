@@ -590,6 +590,53 @@ describe("model output contract", () => {
     expect(logs.join("\n")).not.toContain("Yes");
   });
 
+  describe("guided grammar generation", () => {
+    const guidedReply = (chunkSets: number[][], extra: Record<string, unknown> = {}) => say(JSON.stringify({
+      steps: chunkSets.map((chunks, index) => ({ chunks, question: choiceItem(`Step ${index + 1}?`) })), metrics: ["lesson_grammar"], ...extra,
+    }));
+    const openGuided = async (reply: ReturnType<typeof say>) => {
+      const s = await setup();
+      return { s, response: await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "guided_grammar", scriptedAi([reply])) };
+    };
+    it("fails an index out of range as ACTIVITY_OUTPUT_INVALID with stage chunks", async () => {
+      const { response } = await openGuided(guidedReply([[0, 1], [2, 99]]));
+      expect(response.status).toBe(503);
+      expect(logged("lesson_activity.output_invalid")).toEqual([expect.objectContaining({ type: "guided_grammar", reason: "chunks", stage: "chunks" })]);
+    });
+    for (const [name, sets] of [["overlapping", [[0, 1], [1, 2]]], ["descending across steps", [[2, 3], [0, 1]]], ["descending within a step", [[1, 0], [2]]]] as const) {
+      it(`fails ${name} indices`, async () => {
+        const { response } = await openGuided(guidedReply(sets.map((set) => [...set])));
+        expect(response.status).toBe(503);
+        expect(logged("lesson_activity.output_invalid")).toEqual([expect.objectContaining({ reason: "chunks", stage: "chunks" })]);
+      });
+    }
+    it("stores snapshots of the original blocks and keeps only eligible follow-ups", async () => {
+      const { s, response } = await openGuided(guidedReply([[0, 1], [2, 3]], { followUps: ["tricky_grammar", "mixed_practice", "bogus", "tricky_grammar"] }));
+      const opened = await readyOpen(response);
+      const payload = opened.activity.payload;
+      if (payload.type !== "guided_grammar") throw new Error("Expected guided_grammar.");
+      const lesson = await readLesson(lessonPath(s.groupId, s.courseId, s.lessonId), s.owner);
+      const original = lesson.draft!.document.blocks;
+      const grammarIndex = original.findIndex((block) => block.id === s.ids.grammar);
+      expect(payload.steps.map((step) => step.blocks.map((block) => block.id))).toEqual([
+        [original[grammarIndex + 1]!.id, original[grammarIndex + 2]!.id], [original[grammarIndex + 3]!.id, original[grammarIndex + 4]!.id],
+      ]);
+      // The summary section offers mixed_practice and the grammar section offers tricky_grammar, so both are eligible; the unknown value is dropped.
+      expect(payload.followUps).toEqual(["tricky_grammar", "mixed_practice"]);
+    });
+    it("drops a follow-up no source in the lesson offers", async () => {
+      // mixed_practice is offered only by the Summary and lesson-end sources, so it is ineligible in a lesson without them.
+      const { generateLessonActivity } = await import("../src/lessonActivities/generate");
+      const block = (text: string) => ({ ...blocks.paragraph(text) });
+      const payload = await generateLessonActivity({
+        env: { ...env, AI: scriptedAi([guidedReply([[0], [1]], { followUps: ["mixed_practice", "grammar_explanation"] })]).binding } as never, db: env.DB, userId: await seedUser("followup-user"), type: "guided_grammar", language: "nl",
+        source: [], lessonGoal: null, blocks: [block("One."), block("Two.")], eligibleFollowUps: ["grammar_explanation"],
+      });
+      if (payload.type !== "guided_grammar") throw new Error("Expected guided_grammar.");
+      expect(payload.followUps).toEqual(["grammar_explanation"]);
+    });
+  });
+
   it("grades a word-order question by the original sentence, whatever order the server shuffled the tokens into", async () => {
     const s = await setup();
     const original = ["Ik", "koop", "brood"];

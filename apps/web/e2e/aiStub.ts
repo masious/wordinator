@@ -121,7 +121,7 @@ const DIALOGUE_LINES: Record<string, { english: string; cue: string }> = {
 };
 
 // The model's JSON for each non-roleplay type, in the shape the generator's model schemas read.
-function activityOutput(type: string): Record<string, unknown> | null {
+function activityOutput(type: string, user = ""): Record<string, unknown> | null {
   if (type === "story_summary") return {
     pairs: [
       { dutch: "Sofia bestelt koffie in een café.", english: "Sofia orders a coffee in a café." },
@@ -145,7 +145,24 @@ function activityOutput(type: string): Record<string, unknown> | null {
     { kind: "choice", ...choice("Which article goes with “fiets”?", ["de", "het", "een"], 0, "Fiets is a de-word.") },
     { kind: "choice", ...choice("Which article goes with “water”?", ["de", "het", "een"], 1, "Water is a het-word.") },
   ], metrics: ["lesson_activities"] };
+  if (type === "guided_grammar") return guidedOutput(user);
   return null;
+}
+
+// Guided grammar: two steps over the first chunks of the numbered "Source chunks" the prompt carries (at most four each). Chunk numbers
+// are zero-based; the server maps them to the lesson's own blocks.
+function guidedOutput(user: string): Record<string, unknown> | null {
+  const count = (JSON.parse(/Source chunks \(JSON, numbered from 0\): (\[.*\])/.exec(user)?.[1] ?? "[]") as unknown[]).length;
+  if (count < 2) return null;
+  const half = Math.min(Math.ceil(count / 2), 4);
+  const range = (from: number, to: number) => Array.from({ length: to - from }, (_, index) => from + index);
+  return {
+    steps: [
+      { chunks: range(0, half), question: choice("Which article goes with “boek”?", ["de", "het", "een"], 1, "Boek is a het-word, so it takes het.") },
+      { chunks: range(half, Math.min(count, half + 4)), question: choice("Which is the plural of “boek”?", ["boeken", "boekjes", "boek"], 0, "The plural adds -en.") },
+    ],
+    followUps: ["tricky_grammar", "mixed_practice"], metrics: ["lesson_grammar"],
+  };
 }
 
 // The reply for an activity generation or a role-play cue request, or null for any other conversation.
@@ -159,7 +176,7 @@ function activityReply(messages: Message[]): Reply | null {
     return { text: JSON.stringify({ cues, metrics: ["lesson_activities"] }) };
   }
   const type = /Activity type: ([a-z_]+)\./.exec(user)?.[1] ?? "";
-  const output = activityOutput(type);
+  const output = activityOutput(type, user);
   return output ? { text: JSON.stringify(output) } : null;
 }
 
