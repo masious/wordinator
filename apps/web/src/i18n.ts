@@ -358,7 +358,9 @@ export const resources = {
           different: "Different from Sofia's line", original: "Sofia's line: {{text}}", pronunciation: "Pronunciation of this line",
           listenSofia: "Listen to Sofia"
         },
-        types: { story_summary: "Story summary", story_comprehension: "Story comprehension", grammar_explanation: "Grammar explanation", quick_grammar: "Quick grammar question", tricky_grammar: "Tricky grammar practice", mixed_practice: "Mixed lesson practice", roleplay: "Dialogue role-play" }
+        types: { story_summary: "Story summary", story_comprehension: "Story comprehension", grammar_explanation: "Grammar explanation", guided_grammar: "Guided grammar", tricky_grammar: "Tricky grammar practice", mixed_practice: "Mixed lesson practice", roleplay: "Dialogue role-play", read_aloud: "Read aloud", speak_from_english: "Speak from English" },
+        backToPractices: "Back to the lesson's practices", listen: "Listen", differentLine: "Different from the original line",
+        metrics: { lesson_share: "Lesson {{lesson}} is now {{percent}}% done (+{{delta}}%)", lesson_reading: "+{{delta}}% of this lesson's reading", lesson_grammar: "+{{delta}}% of this lesson's grammar", lesson_activities: "{{percent}}% of this lesson's activities done (+{{delta}}%)" }
       },
       courses: {
         loading: "Opening the course library",
@@ -448,6 +450,9 @@ export const resources = {
           progress: "Progress",
           actions: "Lesson actions",
           doMoreWithAi: "Do more with AI",
+          activitiesDoneCount_one: "{{count}} activity completed",
+          activitiesDoneCount_other: "{{count}} activities completed",
+          upNext: "Up next",
           practiseWords: "Practise words",
           askAi: "Ask AI",
           askAiPrompt: "Let’s talk about lesson {{number}}, “{{lesson}}”, of the course “{{course}}”. Walk me through its grammar and its topics, then check that I understood them.",

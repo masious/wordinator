@@ -4,7 +4,7 @@ import { lessonAiPracticesResponseSchema, tutorConversationPageSchema, tutorConv
 import { courseDashboardResponseSchema, learningActivityResponseSchema, learningGoalSchema, lessonMetricsResponseSchema, type LearningActivityRange, type LearningActivityResponse, type LearningTimeEntry } from "@wordinator/contracts/learning";
 import { withSentTime } from "./learningActivity";
 import { weakWordsPageSchema } from "@wordinator/contracts/weak-words";
-import { activityDescriptorListResponseSchema, activityOpenResponseSchema, activityStatusResponseSchema, type ActivityDescriptor, type ActivityType } from "@wordinator/contracts/lesson-activities";
+import { activityDescriptorListResponseSchema, activityOpenResponseSchema, activityRunPatchResponseSchema, activityStatusResponseSchema, type ActivityDescriptor, type ActivityType } from "@wordinator/contracts/lesson-activities";
 import { infiniteQueryOptions, queryOptions, type QueryClient } from "@tanstack/react-query";
 
 export class ApiError extends Error {
@@ -32,9 +32,10 @@ export const sessionQueryOptions = () => queryOptions({
   queryFn: () => apiRequest("/api/session", sessionResponseSchema),
 });
 
-// The open and status results, as the contract schemas parse them.
+// The open, status and run-patch (completion) results, as the contract schemas parse them.
 export type LessonActivityOpenResponse = ReturnType<typeof activityOpenResponseSchema.parse>;
 export type LessonActivityStatusResponse = ReturnType<typeof activityStatusResponseSchema.parse>;
+export type LessonActivityRunPatchResponse = ReturnType<typeof activityRunPatchResponseSchema.parse>;
 const lessonActivitiesPath = (_groupId: string, courseId: string, lessonId: string) => `/api/courses/${encodeURIComponent(courseId)}/lessons/${encodeURIComponent(lessonId)}/activities`;
 export const lessonActivitiesQueryOptions = (groupId: string, courseId: string, lessonId: string) => queryOptions({
   queryKey: ["lesson-activities", groupId, courseId, lessonId] as const,

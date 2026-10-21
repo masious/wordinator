@@ -752,7 +752,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <dt>Done when</dt><dd><ul><li><code>api.ts</code> and <code>i18n.ts</code> have no <code>quick_grammar</code> reference.</li><li>No type error remains in <code>api.ts</code> or <code>i18n.ts</code>.</li></ul></dd>
 <dt>Depends on</dt><dd>T1.1, T1.2, T1.4</dd>
 <dt>Parallel-safe</dt><dd>yes, with T4.2 (disjoint files: <code>api.ts</code> and <code>i18n.ts</code> against <code>activityIcons.ts</code> and <code>LessonBox.tsx</code>)</dd>
-<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Status</dt><dd class="status">Done 2026-10-21 — web typecheck: 0 errors in api.ts/i18n.ts (other web errors expected until T4.8)</dd>
 <dt>Risk</dt><dd>normal</dd>
 </dl>
 <p class="orch"><strong>Resolved:</strong> the badge aria label key is <code>courses.lessonBox.activitiesDoneCount</code>, placed next to <code>courses.lessonBox.doMoreWithAi</code> (:450).</p>
@@ -1072,6 +1072,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <tr><td>T1.2</td><td>2026-10-21</td><td>contracts typecheck pass; lessonActivities.test.ts 19/19</td><td>Done; v2 payload/view shapes, metrics on every payload; guided view keeps followUps for Up next</td></tr>
 <tr><td>T1.3</td><td>2026-10-21</td><td>contracts typecheck pass; lessonActivities.test.ts 24/24</td><td>Done; story/grammar types, storySpeakingLines, firstImage, practiceBlockId (nested)</td></tr>
 <tr><td>T1.4</td><td>2026-10-21</td><td>contracts typecheck pass; lessonActivities.test.ts 29/29</td><td>Done; guided/speaking grading, answer-aware speak reveal, optional metrics on run PATCH response</td></tr>
+<tr><td>T4.1</td><td>2026-10-21</td><td>web typecheck: 0 errors in api.ts/i18n.ts (other web errors expected until T4.8)</td><td>Done; run-patch response type, nine type labels, metric/Up next/back-to-practices/badge keys</td></tr>
 </tbody>
 </table></div>
 </section>
