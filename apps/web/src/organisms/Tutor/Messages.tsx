@@ -14,6 +14,7 @@ import styles from "./Tutor.module.css";
 type ToolCallPart = Extract<TutorPart, { type: "tool_call" }>;
 type ToolResultPart = Extract<TutorPart, { type: "tool_result" }>;
 type ConfirmationPart = Extract<TutorPart, { type: "confirmation" }>;
+type VisibleCall = Pick<ToolCallPart, "name" | "toolCallId"> & { arguments?: ToolCallPart["arguments"] };
 // While a turn streams, text parts hold the raw text so far, still with its `[[...]]` marks.
 export type StreamPart = { type: "raw_text"; raw: string } | Exclude<TutorPart, { type: "text" }>;
 
@@ -37,16 +38,18 @@ function LessonSourceChip({ detail }: { detail: ToolResultPart["detail"] }) {
 }
 
 // A tool step: running (spinner), done (check), or failed (cross), opening to its detail.
-export function ToolStep({ call, result, running, showSource = true }: { call: Pick<ToolCallPart, "name" | "toolCallId">; result: ToolResultPart | null; running: boolean; showSource?: boolean }) {
+export function ToolStep({ call, result, running, showSource = true }: { call: VisibleCall; result: ToolResultPart | null; running: boolean; showSource?: boolean }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const detailId = useId();
   const status: StepStatus = result ? (result.ok ? "done" : "failed") : running ? "running" : "done";
   const detail = result?.detail ?? {};
   const values = { ...Object.fromEntries(Object.entries(detail).map(([key, value]) => [key, value === null ? "" : String(value)])) };
-  const label = stepLabel(call.name, status, detail, values, t, result?.error ?? null);
+  const callSummary = typeof call.arguments?.summary === "string" ? call.arguments.summary : null;
+  const label = status === "running" && callSummary ? callSummary : stepLabel(call.name, status, detail, values, t, result?.error ?? null);
   const rows = Object.entries(detail).filter(([key]) => !key.endsWith("Id"));
-  const expandable = status !== "running" && (rows.length > 0 || Boolean(result?.error));
+  if (!rows.some(([key]) => key === "summary") && callSummary) rows.unshift(["summary", callSummary]);
+  const expandable = rows.length > 0 || Boolean(result?.error);
   return <div className={styles.step} data-status={status}>
     <div className={styles.stepSummary}>
       <button type="button" className={styles.chip} aria-expanded={expandable ? open : undefined} aria-controls={expandable ? detailId : undefined}
@@ -78,7 +81,7 @@ function stepLabel(name: string, status: StepStatus, detail: ToolResultPart["det
   return t(`tutor.steps.done.${name}`, { ...values, defaultValue: t("tutor.steps.done.default") });
 }
 
-type StepEntry = { key: number; call: Pick<ToolCallPart, "name" | "toolCallId">; result: ToolResultPart | null; running: boolean };
+type StepEntry = { key: number; call: VisibleCall; result: ToolResultPart | null; running: boolean };
 
 // Consecutive tool steps fold into one chip (Used 4 tools), closed by default, that opens to the single steps.
 export function ToolSteps({ steps }: { steps: StepEntry[] }) {
@@ -89,7 +92,8 @@ export function ToolSteps({ steps }: { steps: StepEntry[] }) {
   const running = steps.some((step) => !step.result && step.running);
   const failedCount = steps.filter((step) => step.result && !step.result.ok).length;
   const status: StepStatus = running ? "running" : "done";
-  const label = running ? stepLabel(steps[steps.length - 1]!.call.name, "running", {}, {}, t) : t("tutor.steps.group", { count: steps.length });
+  const latestCall = steps[steps.length - 1]!.call;
+  const label = running ? (typeof latestCall.arguments?.summary === "string" ? latestCall.arguments.summary : stepLabel(latestCall.name, "running", {}, {}, t)) : t("tutor.steps.group", { count: steps.length });
   const sources = new Map<string, ToolResultPart["detail"]>();
   for (const step of steps) {
     if (!step.result?.ok) continue;

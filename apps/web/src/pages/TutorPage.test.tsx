@@ -249,14 +249,16 @@ describe("Tutor page", () => {
     let stream: ReturnType<typeof sse> | null = null;
     turn = () => {
       stream = sse([{ type: "user_message", message: user }, { type: "start", messageId: assistantId },
-        { type: "tool_call", part: { type: "tool_call", toolCallId: id(20), name: "get_lesson", arguments: { lessonId: "next" } } }], true);
+        { type: "tool_call", part: { type: "tool_call", toolCallId: id(20), name: "get_lesson", arguments: { lessonId: "next", summary: "Finding your next lesson" } } }], true);
       return stream.response;
     };
     renderPage();
     await screen.findByText("What next?", { selector: "p" });
     sendText("Teach me");
     expect(await screen.findByText("Teach me", { selector: "p" })).toBeInTheDocument();
-    expect(await screen.findByText("Looking up a lesson…")).toBeInTheDocument();
+    const runningStep = await screen.findByRole("button", { name: "Finding your next lesson" });
+    fireEvent.click(runningStep);
+    expect(await screen.findByText("What it did")).toBeInTheDocument();
     await act(async () => { stream!.push([
       { type: "tool_result", part: { type: "tool_result", toolCallId: id(20), name: "get_lesson", ok: true, error: null, detail: { lessonTitle: "Lesson 6", courseTitle: "Basics", lessonId: id(30), next: true } } },
       { type: "text", delta: "## Words\nSay [[Goede" }], false); });
