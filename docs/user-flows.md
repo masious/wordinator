@@ -167,4 +167,4 @@ Existing course and lesson rows were created under the retired group model. Unti
 
 ## Reading into a lesson activity
 
-Approved 2026-10-21; implemented in the working tree, not deployed. While reading, the existing Do more with AI area follows the active section. Choosing a suggestion opens a dedicated activity page, reusing shared content or visibly preparing it. The top link returns to the original lesson section. Work resumes privately; completion remains optional. [Lesson activities](lesson-activities.md) owns the exact catalogue, role-play turn flow, cache/version behavior and failure paths.
+v1 partly deployed (no production data); v2 planned in [ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2_PLAN.html). While reading, the existing Do more with AI area follows the active section. Choosing a suggestion opens a dedicated activity page, reusing shared content or visibly preparing it. The top link returns to the original lesson section. Work resumes privately; completion remains optional. [Lesson activities](lesson-activities.md) owns the exact catalogue, role-play turn flow, cache/version behavior and failure paths.

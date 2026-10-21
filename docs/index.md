@@ -26,7 +26,8 @@ These files are the living specification for Wordinator. Each topic has one prim
 | [design-system.md](design-system.md) | Visual language and canonical UI tokens |
 | [design-system-plan.md](design-system-plan.md) | Phase 0 design-system implementation tasks, sequencing, and completion criteria |
 | [AI_PLAN.md](../AI_PLAN.md) | AI tutor and learning data (C14, including C14l tutor sessions and memory) delivery steps, status, and release procedure |
-| [LESSON_ACTIVITIES_PLAN.html](../LESSON_ACTIVITIES_PLAN.html) | Planned section-aware lesson activities: resolved decisions, shared content cache, dedicated activity pages, original-dialogue role-play, delivery batches, and acceptance gates; implemented in the working tree, not deployed |
+| [LESSON_ACTIVITIES_PLAN.html](../LESSON_ACTIVITIES_PLAN.html) | Planned section-aware lesson activities: resolved decisions, shared content cache, dedicated activity pages, original-dialogue role-play, delivery batches, and acceptance gates; v1 partly deployed (no production data) |
+| [ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2_PLAN.html) | Lesson activities v2 execution plan: guided grammar, read aloud, speak from English, completion metrics and Up next, Do more with AI badge and icons; in progress |
 | [SPEECH_PLAN.md](../SPEECH_PLAN.md) | Lesson speech (C10) delivery steps, status, and release procedure |
 | [REDESIGN_PLAN.md](../REDESIGN_PLAN.md) | Lumen visual redesign: batch order, component mapping, open decisions, and status |
 | [architecture.md](architecture.md) | Runtime topology, monorepo boundaries, client/server responsibilities, and API conventions |

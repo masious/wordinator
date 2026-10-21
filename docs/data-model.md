@@ -287,10 +287,10 @@ Every legacy tenant-owned table includes or can unambiguously derive `group_id`.
 
 ## Lesson activity data
 
-Approved 2026-10-21; implemented in the working tree, not deployed. [Lesson activities](lesson-activities.md) owns behavior. Migration `0036_lesson_activities.sql` (checked against the Drizzle schema) adds:
+v1 partly deployed (no production data); v2 planned in [ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2_PLAN.html). [Lesson activities](lesson-activities.md) owns behavior. Migration `0036_lesson_activities.sql` (checked against the Drizzle schema) adds:
 
-- `lesson_activities`: one shared content version per lesson, source, activity type, source fingerprint, recipe and schema version, and language. It carries the `generating`/`ready`/`failed` status, the lease token and expiry, the retry time, and the JSON payload for ready rows. Its unique `cache_key` makes concurrent opens converge on one row. Checks enforce that a lease exists only while generating and a payload only when ready.
-- `lesson_activity_runs`: one account's run per shared activity (unique on activity and account), with cursor, cue mode, status, and timestamps.
+- `lesson_activities`: one shared content version per lesson, source, activity type, source fingerprint, recipe and schema version, and language. In v2 its type CHECK lists the nine [lesson activity](lesson-activities.md) types, adding `guided_grammar`, `read_aloud` and `speak_from_english` and removing `quick_grammar`. It carries the `generating`/`ready`/`failed` status, the lease token and expiry, the retry time, and the JSON payload for ready rows. Its unique `cache_key` makes concurrent opens converge on one row. Checks enforce that a lease exists only while generating and a payload only when ready.
+- `lesson_activity_runs`: one account's run per shared activity (unique on activity and account), with cursor, cue mode, status, and timestamps. Planned migration `0038_lesson_activities_v2.sql` adds a nullable JSON `metrics_before` column, the completion-metric snapshot taken when the run starts ([lesson activities](lesson-activities.md)).
 - `lesson_activity_answers`: private answers per run, unique on `(run_id, idempotency_key)`, with the answer JSON, input mode, correctness, the reference shown, and a null pronunciation column (no scores are stored yet).
 - `ai_turn_reservations`: short-lived claims of a daily AI turn for one generation, unique per account, cache key and UTC day. The lesson-activity route inserts one when it takes a lease and deletes it after the commit or the failure.
 - `learning_time` is rebuilt to allow `lesson_activity` with a `reading`, `grammar`, or `speaking` focus.
