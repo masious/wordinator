@@ -72,7 +72,7 @@ describe("Lesson box actions", () => {
     expect(header[0]).toHaveAttribute("title", "Story: Een tafel bij het raam");
     const link = within(group).getByRole("link", { name: "Story comprehension · Story: Een tafel bij het raam" });
     expect(link.querySelector("span")?.firstChild?.textContent).toBe("Story comprehension");
-    expect(link).toHaveAttribute("data-focus", "reading");
+    expect(link).toHaveAttribute("data-category", "story");
   });
 
   it("keeps the Done word for assistive technology in compact mode, where only the check shows", async () => {

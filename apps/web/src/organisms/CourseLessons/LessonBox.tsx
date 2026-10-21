@@ -18,6 +18,10 @@ import { Figure, FigureList, FiguresDisclosure, FiguresReveal, useFiguresOpen } 
 import { typicalMinutes } from "./LessonTime";
 import styles from "./LessonBox.module.css";
 
+// The learning category that colours an action (docs/design-system.md#learning-categories): grammar activities are grammar; story
+// activities and the speaking ones built on story sections are story. Practise words is the words category.
+const activityCategory = (type: ActivityType) => lessonActivityFocus(type) === "grammar" ? "grammar" : "story";
+
 export type LessonBoxLesson = { groupId: string; courseId: string; courseTitle: string; lessonId: string; title: string; number: number };
 
 // The lesson box (docs/courses.md#lesson-box), pinned at the top of the rail for the open lesson: the lesson's number and title,
@@ -108,16 +112,16 @@ export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSl
       {completedCount > 0 && <Badge component="span" variant="light" size="sm" aria-label={t("courses.lessonBox.activitiesDoneCount", { count: completedCount })}>{completedCount}</Badge>}</h2>
     {sectionLabel && <p className={styles.section} title={sectionLabel}>{sectionLabel}</p>}
     <div className={styles.pair}>
-      <Link className={styles.action} title={compact ? t("courses.lessonBox.practiseWords") : undefined} to="/words/drill" search={{ source: "course", course: lesson.courseId, direction: "mixed" }}>
+      <Link className={styles.action} data-category="words" title={compact ? t("courses.lessonBox.practiseWords") : undefined} to="/words/drill" search={{ source: "course", course: lesson.courseId, direction: "mixed" }}>
         <Dumbbell aria-hidden="true" /><span className={styles.label}>{t("courses.lessonBox.practiseWords")}</span>
       </Link>
-      {suggestions.slice(0, 1).map(({ descriptor, type, done }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action} data-focus={lessonActivityFocus(type)}
+      {suggestions.slice(0, 1).map(({ descriptor, type, done }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action} data-category={activityCategory(type)}
         title={`${activityLabel[type]} · ${descriptor.sourceLabel}`} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
         params={{ courseSlug: courseSlug!, lessonSlug: lessonSlug!, sourceId: descriptor.sourceId, activityType: type }}>
         <ActivityGlyph type={type} /><span className={styles.label}>{activityLabel[type]}</span>{doneBadge(done)}
       </Link>)}
     </div>
-    {suggestions.slice(1).map(({ descriptor, type, done }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action} data-focus={lessonActivityFocus(type)}
+    {suggestions.slice(1).map(({ descriptor, type, done }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action} data-category={activityCategory(type)}
       title={`${activityLabel[type]} · ${descriptor.sourceLabel}`} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
       params={{ courseSlug: courseSlug!, lessonSlug: lessonSlug!, sourceId: descriptor.sourceId, activityType: type }}>
       <ActivityGlyph type={type} /><span className={styles.label}>{activityLabel[type]}{" "}<span className={styles.doneText}>· {descriptor.sourceLabel}</span></span>{doneBadge(done)}

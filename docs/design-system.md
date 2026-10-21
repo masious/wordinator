@@ -268,6 +268,14 @@ Formal WCAG 2.2 AA conformance is future work. Mantine semantics, keyboard-opera
 
 ## Lesson activity surfaces
 
-The lesson box's **Do more with AI** area names the active section once under its heading (one line, ellipsis, full text as a title). Its actions are full-width, at least `--touch-target` tall, set in `--type-action-label`, and tinted by activity focus with `--color-activity-reading-*` (blue lesson role), `--color-activity-grammar-*` (orange), and `--color-activity-speaking-*` (purple), each an `-accent` (icon, hover edge) and a `-surface` (icon chip and gradient tint), which follow the lesson palette in both schemes. `--color-activity-vocabulary-*` is reserved for future vocabulary activities and unused until then: a deep forest green surface (`--palette-vocabulary-deep`, `#2a5a4c`) with a bright lime accent (`--palette-vocabulary-lime`, `#d4ef6e`), one value in both schemes; green and lime are not used by the other categories. Practise words has no focus and stays on the neutral control surface. See [courses](courses.md#lesson-box).
+### Learning categories
+
+Category colours are fixed per learning category, never chosen per surface, and every category-coloured surface builds on them. Each has an `-accent` (icons, hover edges, strong marks) and a `-surface` (tints and chips); both follow the scheme through the palette entries they map to.
+
+- **Grammar** — `--color-category-grammar-accent` is vivid blue (`--color-vivid-blue`, not the soft lesson blue); `--color-category-grammar-surface` is the lesson blue tint.
+- **Stories** — stories and the speaking work built on them (role-play, read aloud, speak from English): `--color-category-story-accent` is the vivid orange, `--color-category-story-surface` the lesson yellow tint.
+- **Words and drills** — the two greens and the soft lime: `--color-category-words-accent` (`--color-success`), `--color-category-words-deep` (`--palette-category-words-deep`, `#2a5a4c`, the deep green for strong elements and hover edges), and `--color-category-words-surface` (`--color-art-lime`, the soft lime).
+
+The lesson box's **Do more with AI** area names the active section once under its heading (one line, ellipsis, full text as a title). Its actions are full-width, at least `--touch-target` tall, set in `--type-action-label`, and tinted by [learning category](#learning-categories): grammar activities use grammar, story activities and the speaking ones built on story sections use story, and Practise words uses words. See [courses](courses.md#lesson-box).
 
 v2 deployed to production 2026-10-21 ([ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2_PLAN.html)). [Lesson activities](lesson-activities.md) uses the existing Lumen tokens, Mantine/shared controls and CSS Modules. The existing Do more with AI footer/drawer changes its links by active section. Dedicated pages keep the original-lesson link at the top, a single primary column and position progress. Role-play keeps cue switch, hold-to-talk, typing and Send operable on narrow screens, with clear recognition states and explicit advancement. This adds no token palette or rich-text surface.

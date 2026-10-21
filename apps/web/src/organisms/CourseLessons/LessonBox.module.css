@@ -22,16 +22,17 @@
 .action .done svg{width:1rem;height:1rem}
 .doneText{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 /* Actions use the action-label role (sans, like the lesson's examples, larger than body) and sit on a tint per activity category
-   (--focus-accent / --focus-surface, set by data-focus); Practise words has no category and stays on the neutral control surface. */
+   (--focus-accent / --focus-surface, set by data-category): grammar, story, or words for Practise words. */
 .action{--focus-accent:var(--color-action);--focus-surface:var(--color-control-surface);position:relative;display:flex;align-items:center;gap:var(--space-3);min-height:var(--touch-target);padding:var(--space-3) var(--space-4);color:var(--color-foreground);background:var(--color-control-surface);border:var(--ring-hairline);border-radius:var(--radius-md);font-family:var(--font-sans);font-size:var(--type-action-label);font-weight:var(--weight-medium);line-height:var(--line-compact);text-decoration:none;transition:border-color var(--motion-standard) ease,background var(--motion-standard) ease}
-.action[data-focus]{background:linear-gradient(135deg,var(--focus-surface),var(--color-control-surface))}
-.action[data-focus="reading"]{--focus-accent:var(--color-activity-reading-accent);--focus-surface:var(--color-activity-reading-surface)}
-.action[data-focus="grammar"]{--focus-accent:var(--color-activity-grammar-accent);--focus-surface:var(--color-activity-grammar-surface)}
-.action[data-focus="speaking"]{--focus-accent:var(--color-activity-speaking-accent);--focus-surface:var(--color-activity-speaking-surface)}
+.action[data-category]{background:linear-gradient(135deg,var(--focus-surface),var(--color-control-surface))}
+.action[data-category="grammar"]{--focus-accent:var(--color-category-grammar-accent);--focus-surface:var(--color-category-grammar-surface)}
+.action[data-category="story"]{--focus-accent:var(--color-category-story-accent);--focus-surface:var(--color-category-story-surface)}
+.action[data-category="words"]{--focus-accent:var(--color-category-words-accent);--focus-surface:var(--color-category-words-surface)}
+.action[data-category="words"]:hover{border-color:var(--color-category-words-deep)}
 .action:hover{border-color:var(--focus-accent)}
-.action[data-focus]:hover{background:linear-gradient(135deg,var(--focus-surface),var(--focus-surface))}
+.action[data-category]:hover{background:linear-gradient(135deg,var(--focus-surface),var(--focus-surface))}
 .action svg{flex:none;width:1.375rem;height:1.375rem;color:var(--focus-accent)}
-.action[data-focus] svg:first-child{box-sizing:content-box;padding:var(--space-1);background:var(--focus-surface);border-radius:var(--radius-sm)}
+.action[data-category] svg:first-child{box-sizing:content-box;padding:var(--space-1);background:var(--focus-surface);border-radius:var(--radius-sm)}
 /* Compact: icons only, stacked; the label stays for assistive technology. */
 .actions[data-compact]{justify-items:center}
 .actions[data-compact] .pair{grid-template-columns:minmax(0,1fr)}

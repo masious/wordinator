@@ -21,8 +21,7 @@
   --palette-lime: #71852a;
   --palette-lime-soft: #e5efb8;
   /* Vocabulary activities (reserved, not yet used): a deep forest green with a bright lime, one value in both schemes; the lime reads on the green (about 7:1). */
-  --palette-vocabulary-deep: #2a5a4c;
-  --palette-vocabulary-lime: #d4ef6e;
+  --palette-category-words-deep: #2a5a4c;
   --palette-warm: #8a5519;
   --palette-warm-soft: #fff0d7;
   --palette-blue: #3a6692;
@@ -184,16 +183,16 @@
   --color-callout-culture: var(--color-lesson-purple-surface);
   --color-callout-false-friend: var(--color-lesson-orange-surface);
   --color-callout-pronunciation: var(--color-lesson-pink-surface);
-  /* Activity categories (the focus of a lesson activity): the Do more with AI actions tint by category. Accent is the icon and hover edge; surface is the tint. */
-  --color-activity-reading-accent: var(--color-lesson-blue-text);
-  --color-activity-reading-surface: var(--color-lesson-blue-surface);
-  --color-activity-grammar-accent: var(--color-lesson-orange-text);
-  --color-activity-grammar-surface: var(--color-lesson-orange-surface);
-  --color-activity-speaking-accent: var(--color-lesson-purple-text);
-  --color-activity-speaking-surface: var(--color-lesson-purple-surface);
-  /* Reserved for future vocabulary activities (unused until then): lime accent on the deep green surface. */
-  --color-activity-vocabulary-surface: var(--palette-vocabulary-deep);
-  --color-activity-vocabulary-accent: var(--palette-vocabulary-lime);
+  /* Learning categories (docs/design-system.md#learning-categories), the base of every category-coloured surface. Accent is the icon and
+     hover edge; surface is the tint. Grammar is blue, stories (and the speaking work built on them) orange on yellow, and words and
+     drills the two greens on soft lime. */
+  --color-category-grammar-accent: var(--color-vivid-blue);
+  --color-category-grammar-surface: var(--color-lesson-blue-surface);
+  --color-category-story-accent: var(--color-vivid-orange);
+  --color-category-story-surface: var(--color-lesson-yellow-surface);
+  --color-category-words-accent: var(--color-success);
+  --color-category-words-deep: var(--palette-category-words-deep);
+  --color-category-words-surface: var(--color-art-lime);
 
   /* Typography families and semantic roles */
   --font-sans: "Inter Variable", Inter, ui-sans-serif, system-ui, sans-serif;
