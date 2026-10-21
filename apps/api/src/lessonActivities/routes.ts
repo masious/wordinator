@@ -2,17 +2,17 @@ import {
   activityAnswerRequestSchema, activityAnswerResponseSchema, activityDescriptorListResponseSchema, activityOpenRequestSchema,
   activityOpenResponseSchema, activityRunPatchRequestSchema, activityRunPatchResponseSchema, activitySpeechRequestSchema,
   activitySpeechResponseSchema, activityStatusResponseSchema, gradeLessonActivityAnswer, lessonActivityPayloadSchema,
-  lessonActivityViewSchema, resolveLessonActivitySources, toLessonActivityView, verifyLessonActivitySource,
+  firstImage, lessonActivityViewSchema, resolveLessonActivitySources, toLessonActivityView, verifyLessonActivitySource,
   type ActivityCompletion, type ActivityDescriptor, type ActivityType, type LessonActivityPayload,
 } from "@wordinator/contracts/lesson-activities";
-import { readDialogueTurns, walkLessonBlocks, type LessonBlockOf, type LessonDocument } from "@wordinator/contracts/lesson-document";
+import { collectLessonWords, readDialogueTurns, walkLessonBlocks, type LessonBlockOf, type LessonDocument } from "@wordinator/contracts/lesson-document";
 import { dialogueVoices, speechClipHash } from "@wordinator/contracts/speech";
 import type { Context, Hono, MiddlewareHandler } from "hono";
 import { aiErrorResponse, assertDailySpeechCap, completeChat, readAiSettings, recordSpeechUsage } from "../ai";
 import type { AppEnvironment } from "../app";
 import { apiError, parseJson } from "../http";
 import { azureSynthesizer, clipUrl, onDemandClip, readClips, storedSpeechCast } from "../speech";
-import { activitySourceData, generateLessonActivity } from "./generate";
+import { activitySourceBlocks, activitySourceData, generateLessonActivity } from "./generate";
 import { speechChunks } from "./speech";
 import { claimGeneration, commitGeneratedPayload, LESSON_ACTIVITY_LEASE_MS, LESSON_ACTIVITY_RETRY_MS, releaseCacheMiss, reserveCacheMiss, type CacheRow } from "./cache";
 
@@ -72,7 +72,8 @@ function validPayload(row: CacheRow): LessonActivityPayload | null {
 // Answerable items in the order the run cursor walks them. Answers store these IDs as item_id; summaries and grammar explanations have none.
 function activityItemIds(payload: LessonActivityPayload): string[] {
   if (payload.type === "story_comprehension" || payload.type === "tricky_grammar" || payload.type === "mixed_practice") return payload.questions.map((question) => question.id);
-  if (payload.type === "quick_grammar") return [payload.question.id];
+  if (payload.type === "guided_grammar") return payload.steps.map((step) => step.question.id);
+  if (payload.type === "read_aloud" || payload.type === "speak_from_english") return payload.lines.map((line) => line.id);
   if (payload.type === "roleplay") return payload.turns.filter((turn) => turn.isLearner).map((turn) => turn.id);
   return [];
 }
@@ -89,8 +90,14 @@ async function completedActivities(db: D1Database, lesson: ActivityLesson, uid: 
     return verifyLessonActivitySource(descriptors, row.sourceId, type, row.fingerprint) ? [{ sourceId: row.sourceId, type }] : [];
   });
 }
-function sourcePayload(row: CacheRow, descriptor: { sourceId: string; sourceLabel: string }, payload: LessonActivityPayload) {
-  return lessonActivityViewSchema.parse(toLessonActivityView({ id: row.id, sourceId: descriptor.sourceId, sourceLabel: descriptor.sourceLabel, sourceFingerprint: row.sourceFingerprint, payload }));
+// A story summary's image is never cached: it is the first image of the current published document's source section.
+function sourcePayload(row: CacheRow, descriptor: { sourceId: string; sourceLabel: string }, payload: LessonActivityPayload, lesson: ActivityLesson, mediaBase: string) {
+  const view = toLessonActivityView({ id: row.id, sourceId: descriptor.sourceId, sourceLabel: descriptor.sourceLabel, sourceFingerprint: row.sourceFingerprint, payload });
+  if (view.payload.type !== "story_summary") return lessonActivityViewSchema.parse(view);
+  // Documents store R2 keys; the view carries the public URL, as every other lesson reader does.
+  const image = firstImage(activitySourceBlocks(lesson.document, descriptor.sourceId));
+  const url = image && `${mediaBase.replace(/\/$/, "")}/${image.url.split("/").map(encodeURIComponent).join("/")}`;
+  return lessonActivityViewSchema.parse({ ...view, payload: { ...view.payload, image: image && url ? { url, alt: image.alt } : null } });
 }
 
 export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: RouteDeps) {
@@ -105,7 +112,7 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
   const open = async (context: ActivityContext, activityId: string, lesson: ActivityLesson, descriptor: { sourceId: string; sourceLabel: string }, row: CacheRow, ephemeral: boolean) => {
     const payload = validPayload(row);
     if (!payload) return apiError(context, 503, "ACTIVITY_UNAVAILABLE", "This activity is not ready yet. Try again shortly.");
-    const activity = sourcePayload(row, descriptor, payload);
+    const activity = sourcePayload(row, descriptor, payload, lesson, context.env.PUBLIC_MEDIA_BASE_URL);
     const run = ephemeral
       ? { id: crypto.randomUUID(), cursor: 0, cueMode: "english" as const, status: "active" as const, startedAt: Date.now(), updatedAt: Date.now(), completedAt: null, ephemeral: true }
       : presentRun(await ensureRun(context.env.DB, activityId, userId(context), Date.now()));
@@ -146,7 +153,7 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     // Start generation in the request that claimed the lease. Other opens poll this same cache row.
     try {
       const source = activitySourceData(found.document, sourceId);
-      const payload = await generateLessonActivity({ env: context.env, db, userId: uid, type, language: found.language, source: source.content, lessonGoal: found.goal, dialogueId: source.dialogueId });
+      const payload = await generateLessonActivity({ env: context.env, db, userId: uid, type, language: found.language, source: source.content, lessonGoal: found.goal, dialogueId: source.dialogueId, lessonTerms: collectLessonWords(found.document).map((word) => word.term) });
       // Close the race between the first fingerprint check and the atomic published_at guard.
       const latest = await getLesson(context);
       if ("error" in latest) throw new Error("SOURCE_CHANGED");
@@ -186,7 +193,7 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     if ((!descriptor || descriptor.fingerprint !== row.sourceFingerprint) && !run) return apiError(context, 404, "ACTIVITY_NOT_FOUND", "This activity is no longer available.");
     if (!run && !found.archived) return apiError(context, 404, "ACTIVITY_NOT_FOUND", "Open this activity from its lesson first.");
     if (!descriptor) return apiError(context, 404, "ACTIVITY_NOT_FOUND", "This activity is no longer available.");
-    return context.json(activityStatusResponseSchema.parse({ status: "ready", activity: sourcePayload(row, descriptor, payload), run: run ? presentRun(run) : {
+    return context.json(activityStatusResponseSchema.parse({ status: "ready", activity: sourcePayload(row, descriptor, payload, found, context.env.PUBLIC_MEDIA_BASE_URL), run: run ? presentRun(run) : {
       id: crypto.randomUUID(), cursor: 0, cueMode: "english", status: "active", startedAt: Date.now(), updatedAt: Date.now(), completedAt: null, ephemeral: true,
     }, ephemeral: found.archived }));
   });

@@ -122,24 +122,29 @@ const DIALOGUE_LINES: Record<string, { english: string; cue: string }> = {
 
 // The model's JSON for each non-roleplay type, in the shape the generator's model schemas read.
 function activityOutput(type: string): Record<string, unknown> | null {
-  if (type === "story_summary") return { englishSummary: "Sofia orders a coffee in a café and asks a stranger the way to the station.", dutchRecap: "Sofia bestelt koffie in een café en vraagt de weg naar het station." };
+  if (type === "story_summary") return {
+    pairs: [
+      { dutch: "Sofia bestelt koffie in een café.", english: "Sofia orders a coffee in a café." },
+      { dutch: "Ze vraagt een vreemde de weg naar het station.", english: "She asks a stranger the way to the station." },
+    ],
+    newWords: [{ term: "het station", translation: "the station" }], metrics: ["lesson_share", "lesson_reading"],
+  };
   if (type === "story_comprehension") return { questions: [
     choice("Where does Sofia order a coffee?", ["At a café", "At the station", "At school"], 0, "The scene opens in a café."),
     choice("What does Sofia ask for?", ["Directions", "Money", "A menu"], 0, "She asks the way to the station."),
     choice("Who does Sofia talk to?", ["A waiter", "A stranger", "Her teacher"], 1, "She talks to a stranger on the street."),
     choice("How does the conversation end?", ["Politely", "Angrily", "Abruptly"], 0, "They say goodbye politely."),
-  ] };
+  ], metrics: ["lesson_reading"] };
   if (type === "grammar_explanation") return {
     paragraphs: ["Use de with most nouns and het with the neuter ones.", "Learn each noun with its article, because the article cannot be guessed reliably."],
-    examples: [{ dutch: "de fiets", english: "the bicycle" }, { dutch: "het huis", english: "the house" }],
+    examples: [{ dutch: "de fiets", english: "the bicycle" }, { dutch: "het huis", english: "the house" }], metrics: ["lesson_grammar"],
   };
-  if (type === "quick_grammar") return { question: choice("Which article goes with “huis”?", ["de", "het", "die"], 1, "Huis is a het-word: het huis.") };
-  if (type === "tricky_grammar") return { questions: trickyQuestions() };
+  if (type === "tricky_grammar") return { questions: trickyQuestions(), metrics: ["lesson_grammar"] };
   if (type === "mixed_practice") return { questions: [
     ...trickyQuestions(),
     { kind: "choice", ...choice("Which article goes with “fiets”?", ["de", "het", "een"], 0, "Fiets is a de-word.") },
     { kind: "choice", ...choice("Which article goes with “water”?", ["de", "het", "een"], 1, "Water is a het-word.") },
-  ] };
+  ], metrics: ["lesson_activities"] };
   return null;
 }
 
@@ -151,7 +156,7 @@ function activityReply(messages: Message[]): Reply | null {
   if (user.includes(ROLEPLAY_CUE_MARK)) {
     const turns = JSON.parse(/Source turns \(JSON, in order\): (\[.*\])/.exec(user)?.[1] ?? "[]") as Array<{ text: string }>;
     const cues = turns.map((turn, index) => ({ index, englishText: DIALOGUE_LINES[turn.text]?.english ?? turn.text, cue: DIALOGUE_LINES[turn.text]?.cue ?? "Say this line." }));
-    return { text: JSON.stringify({ cues }) };
+    return { text: JSON.stringify({ cues, metrics: ["lesson_activities"] }) };
   }
   const type = /Activity type: ([a-z_]+)\./.exec(user)?.[1] ?? "";
   const output = activityOutput(type);

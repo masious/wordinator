@@ -5,12 +5,14 @@ import {
   activitySpeechResponseSchema, activityStatusResponseSchema, lessonActivityPayloadSchema, type ActivityDescriptor, type ActivityType,
 } from "@wordinator/contracts/lesson-activities";
 import type { LessonBlockOf, LessonDocument } from "@wordinator/contracts/lesson-document";
+import { lessonImageUploadResponseSchema } from "@wordinator/contracts/lesson-document";
 import { speechClipHash } from "@wordinator/contracts/speech";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { writeAiSettings } from "../src/ai";
 import { speechChunks } from "../src/lessonActivities/speech";
-import { addLesson, blocks, createCourse, documentOf, errorCode, join, lessonPath, publishLesson, readLesson, resetDatabase, saveDraft, seedGroup, seedUser, signIn } from "./courseApi";
+import { addLesson, blocks, createCourse, documentOf, errorCode, join, lessonPath, publishLesson, readLesson, resetDatabase, saveDraft, seedGroup, seedUser, signIn, word } from "./courseApi";
 import { call, say, scriptedAi } from "./tutorApi";
+import { fetchWorker } from "./worker";
 
 // Lesson activities (docs/lesson-activities.md, LESSON_ACTIVITIES_PLAN.html sections 05, 06 and 09): the global lesson routes under
 // /api/courses/:courseId/lessons/:lessonId/activities. The provider is only ever the stubbed Workers AI binding that call() passes
@@ -25,21 +27,22 @@ const plain = (text: string) => [{ type: "text" as const, text, styles: {} }];
 const dialogue = (turns: Array<{ speaker: string; text: string }>) => ({ id: uuid(), type: "dialogue" as const, props: { turns: JSON.stringify(turns) }, children: [] });
 const callout = (text: string) => ({ id: uuid(), type: "callout" as const, props: { variant: "grammar" as const, icon: "auto" as const }, content: plain(text), children: [] });
 
-const GRAMMAR_TYPES: ActivityType[] = ["grammar_explanation", "quick_grammar", "tricky_grammar"];
+const GRAMMAR_TYPES: ActivityType[] = ["grammar_explanation", "guided_grammar", "tricky_grammar"];
+const STORY_TYPES: ActivityType[] = ["story_summary", "story_comprehension", "read_aloud", "speak_from_english"];
 const SOFIA_LINE = "Goedemorgen, ik wil graag brood kopen.";
 const PIETER_LINE = "Goedemorgen! Wat wilt u hebben?";
 
 // Intro paragraph, a story section with a Sofia/Pieter dialogue, a grammar section with a grammar callout and a level-3 subsection,
 // and a Summary section. The partner line and the learner speaker label can be changed for a test.
-function marketLesson(partner = PIETER_LINE, sofiaSpeaker = "Sofia") {
+function marketLesson(partner = PIETER_LINE, sofiaSpeaker = "Sofia", imageUrl: string | null = null) {
   const story = blocks.heading("Story: at the market");
   const scene = dialogue([{ speaker: sofiaSpeaker, text: SOFIA_LINE }, { speaker: "Pieter", text: partner }]);
   const grammar = blocks.heading("Grammar: verb second");
   const subsection = blocks.heading("Questions", 3);
   const summary = blocks.heading("Summary");
   const document = documentOf(
-    blocks.paragraph("Welcome. Today we shop for bread and practise word order."),
-    story, blocks.paragraph("Sofia goes to the bakery early in the morning."), scene,
+    blocks.paragraph("Welcome. Today we shop for bread and practise word order."), blocks.vocabulary(word("brood"), word("koop")),
+    story, ...(imageUrl ? [blocks.image(imageUrl, "The market")] : []), blocks.paragraph("Sofia goes to the bakery early in the morning."), scene,
     grammar, callout("In a main clause the verb takes second place."), blocks.paragraph("Put the verb after the first element."),
     blocks.example("Ik koop brood.", "I buy bread."),
     subsection, blocks.paragraph("Questions start with the question word, then the verb."), blocks.example("Koop jij brood?", "Do you buy bread?"),
@@ -49,32 +52,37 @@ function marketLesson(partner = PIETER_LINE, sofiaSpeaker = "Sofia") {
 }
 
 // Model replies are content only (docs/lesson-activities.md#model-output): no IDs, type or versions. `correctIndex` names the correct
-// option; the server assigns every ID.
-function quick(correctIndex = 0) {
-  const reply = {
-    question: {
-      prompt: "Which sentence puts the verb second?", options: ["Ik koop brood.", "Ik brood koop.", "Brood ik koop."],
-      correctIndex, explanation: "The verb is the second element.",
-    },
-  };
-  return { json: JSON.stringify(reply) };
+// option; the server assigns every ID. tricky() is four choice questions; the first has the verb-second sentence options.
+function tricky(correctIndex = 0, extra: Record<string, unknown> = {}) {
+  const questions = [0, 1, 2, 3].map((index) => index === 0
+    ? { kind: "choice", prompt: "Which sentence puts the verb second?", options: ["Ik koop brood.", "Ik brood koop.", "Brood ik koop."], correctIndex, explanation: "The verb is the second element." }
+    : { kind: "choice", prompt: `Grammar question ${index + 1}?`, options: ["Yes", "No", "Maybe"], correctIndex, explanation: "The lesson says so." });
+  return { json: JSON.stringify({ questions, metrics: ["lesson_grammar"], ...extra }) };
 }
 
 function story(correctIndex = 0) {
   const questions = [0, 1, 2, 3].map((index) => ({
     prompt: `Scene question ${index + 1}?`, options: ["Yes", "No", "Maybe"], correctIndex, explanation: "The scene says so.",
   }));
-  return { json: JSON.stringify({ questions }) };
+  return { json: JSON.stringify({ questions, metrics: ["lesson_reading"] }) };
 }
 
-// The IDs the server assigned, read from the opened view. Options keep the model's order, so option 0 is the correct one for quick()
+const summary = (extra: Record<string, unknown> = {}) => ({
+  pairs: [{ dutch: "Sofia gaat naar de bakker.", english: "Sofia goes to the baker." }, { dutch: "Ze koopt brood.", english: "She buys bread." }],
+  newWords: [{ term: "bakker", translation: "baker" }], metrics: ["lesson_share"], ...extra,
+});
+
+// The IDs the server assigned, read from the opened view. Options keep the model's order, so option 0 is the correct one for tricky()
 // and story() with their default correctIndex.
 type OpenedPayload = Ready["activity"]["payload"];
-function quickIds(opened: Ready) {
-  const payload = opened.activity.payload as Extract<OpenedPayload, { type: "quick_grammar" }>;
-  const [correct, wrong] = payload.question.options;
-  return { question: payload.question.id, correct: correct!.id, wrong: wrong!.id };
+function trickyAll(opened: Ready) {
+  const payload = opened.activity.payload as Extract<OpenedPayload, { type: "tricky_grammar" }>;
+  return payload.questions.map((question) => {
+    if (question.kind !== "choice") throw new Error("Expected choice questions.");
+    return { question: question.id, correct: question.options[0]!.id, wrong: question.options[1]!.id };
+  });
 }
+const trickyIds = (opened: Ready) => trickyAll(opened)[0]!;
 function storyQuestions(opened: Ready) {
   const payload = opened.activity.payload as Extract<OpenedPayload, { type: "story_comprehension" }>;
   return payload.questions.map((question) => ({ id: question.id, correct: question.options[0]!.id, wrong: question.options[1]!.id }));
@@ -88,7 +96,16 @@ function roleplay(englishPartner = "Good morning! What would you like?") {
   ] });
 }
 
-async function setup(options: { partner?: string; sofiaSpeaker?: string } = {}) {
+// Lesson images must be uploaded to the lesson before a document can use them.
+const png = new Uint8Array([137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13, 73, 72, 68, 82, 0, 0, 0, 3, 0, 0, 0, 2]);
+async function uploadImage(path: string, cookie: string) {
+  const form = new FormData(); form.set("image", new File([png.slice().buffer as ArrayBuffer], "picture.png", { type: "image/png" }));
+  const response = await fetchWorker(`https://wordinator.test${path}/images`, { method: "POST", headers: { cookie }, body: form });
+  expect(response.status).toBe(201);
+  return lessonImageUploadResponseSchema.parse(await response.json()).url;
+}
+
+async function setup(options: { partner?: string; sofiaSpeaker?: string; image?: boolean } = {}) {
   const ownerId = await seedUser("act-owner");
   const learnerId = await seedUser("act-learner");
   const rivalId = await seedUser("act-rival");
@@ -105,8 +122,18 @@ async function setup(options: { partner?: string; sofiaSpeaker?: string } = {}) 
   const stranger = await signIn("act-stranger");
 
   const course = await createCourse(groupId, owner, true, { title: "Market Dutch", summary: "Shopping." });
-  const market = marketLesson(options.partner, options.sofiaSpeaker);
-  const lesson = (await addLesson(groupId, course.id, owner, "Market visit", { document: market.document })).lesson;
+  let lesson: Awaited<ReturnType<typeof addLesson>>["lesson"];
+  let market: ReturnType<typeof marketLesson>;
+  if (options.image) {
+    // The story section starts with one uploaded image: create the lesson, upload, then save and publish the document that uses it.
+    const created = await addLesson(groupId, course.id, owner, "Market visit", { published: false });
+    market = marketLesson(options.partner, options.sofiaSpeaker, await uploadImage(created.path, owner));
+    await saveDraft(created.path, owner, market.document, (await readLesson(created.path, owner)).draft!.version);
+    lesson = await publishLesson(created.path, owner, (await readLesson(created.path, owner)).draft!.version);
+  } else {
+    market = marketLesson(options.partner, options.sofiaSpeaker);
+    lesson = (await addLesson(groupId, course.id, owner, "Market visit", { document: market.document })).lesson;
+  }
   const second = (await addLesson(groupId, course.id, owner, "Second lesson", { document: documentOf(blocks.heading("Other"), blocks.paragraph("Another lesson.")) })).lesson;
   const unpublished = (await addLesson(groupId, course.id, owner, "Unpublished", { published: false, document: documentOf(blocks.paragraph("Not yet.")) })).lesson;
   const otherCourse = await createCourse(groupId, owner, true, { title: "Second course", summary: "Also published." });
@@ -158,7 +185,10 @@ describe("authentication and visibility", () => {
   it("refuses anonymous requests with 401", async () => {
     const s = await setup();
     expect(await errorCode(await call("GET", s.base, null))).toBe("AUTH_REQUIRED");
-    expect(await errorCode(await call("POST", `${s.base}/open`, null, { sourceId: "x", type: "quick_grammar", expectedFingerprint: "0".repeat(64) }))).toBe("AUTH_REQUIRED");
+    expect(await errorCode(await call("POST", `${s.base}/open`, null, { sourceId: "x", type: "story_summary", expectedFingerprint: "0".repeat(64) }))).toBe("AUTH_REQUIRED");
+    const anonymousStatus = await call("GET", `${s.base}/${uuid()}`, null);
+    expect(anonymousStatus.status).toBe(401);
+    expect(await errorCode(anonymousStatus)).toBe("AUTH_REQUIRED");
   });
 
   it("refuses a signed-in account that has not completed username setup", async () => {
@@ -166,9 +196,12 @@ describe("authentication and visibility", () => {
     const listed = await call("GET", s.base, s.newcomer);
     expect(listed.status).toBe(403);
     expect(await errorCode(listed)).toBe("ONBOARDING_REQUIRED");
-    const opened = await openActivity(s.newcomer, s.base, s.descriptor(s.ids.grammar), "quick_grammar");
+    const opened = await openActivity(s.newcomer, s.base, s.descriptor(s.ids.story), "story_summary");
     expect(opened.status).toBe(403);
     expect(await errorCode(opened)).toBe("ONBOARDING_REQUIRED");
+    const polled = await call("GET", `${s.base}/${uuid()}`, s.newcomer);
+    expect(polled.status).toBe(403);
+    expect(await errorCode(polled)).toBe("ONBOARDING_REQUIRED");
   });
 
   it("hides unpublished lessons, lessons in draft courses, and courses the account cannot see", async () => {
@@ -176,22 +209,25 @@ describe("authentication and visibility", () => {
     const unpublished = `/api/courses/${s.courseId}/lessons/${s.unpublishedId}/activities`;
     expect((await call("GET", unpublished, s.learner)).status).toBe(404);
     expect(await errorCode(await call("GET", unpublished, s.learner))).toBe("LESSON_NOT_FOUND");
-    expect((await openActivity(s.learner, unpublished, s.descriptor(s.ids.grammar), "quick_grammar")).status).toBe(404);
+    expect((await openActivity(s.learner, unpublished, s.descriptor(s.ids.story), "story_summary")).status).toBe(404);
+    expect(await errorCode(await call("GET", `${unpublished}/${uuid()}`, s.learner))).toBe("LESSON_NOT_FOUND");
 
     const hidden = `/api/courses/${s.draftCourseId}/lessons/${s.hiddenLessonId}/activities`;
     expect(await errorCode(await call("GET", hidden, s.learner))).toBe("LESSON_NOT_FOUND");
+    expect(await errorCode(await call("GET", `${hidden}/${uuid()}`, s.learner))).toBe("LESSON_NOT_FOUND");
+    expect((await openActivity(s.learner, hidden, s.descriptor(s.ids.story), "story_summary")).status).toBe(404);
     // The owner sees the published lesson in the draft course; the learner, who is not a contributor there, does not.
     expect((await call("GET", hidden, s.owner)).status).toBe(200);
 
     // The stranger is signed in but is not a member of the library.
     expect(await errorCode(await call("GET", s.base, s.stranger))).toBe("LESSON_NOT_FOUND");
-    expect((await openActivity(s.stranger, s.base, s.descriptor(s.ids.grammar), "quick_grammar")).status).toBe(404);
+    expect((await openActivity(s.stranger, s.base, s.descriptor(s.ids.grammar), "tricky_grammar")).status).toBe(404);
   });
 
   it("refuses an activity addressed through the wrong lesson or course", async () => {
     const s = await setup();
-    const ai = scriptedAi([say(quick().json)]);
-    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", ai));
+    const ai = scriptedAi([say(tricky().json)]);
+    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", ai));
     const wrongLesson = `/api/courses/${s.courseId}/lessons/${s.secondId}/activities/${opened.activity.id}`;
     expect(await errorCode(await call("GET", wrongLesson, s.learner))).toBe("ACTIVITY_NOT_FOUND");
     expect((await call("PATCH", `${wrongLesson}/run`, s.learner, { action: "restart" })).status).toBe(404);
@@ -216,7 +252,7 @@ describe("descriptors", () => {
     const s = await setup();
     const offered = Object.fromEntries(s.descriptors.map((item) => [item.sourceId, item.activityTypes]));
     expect(offered).toEqual({
-      [s.ids.story]: ["story_summary", "story_comprehension"],
+      [s.ids.story]: STORY_TYPES,
       [s.ids.dialogue]: ["roleplay"],
       [s.ids.grammar]: GRAMMAR_TYPES,
       [s.ids.subsection]: GRAMMAR_TYPES,
@@ -230,10 +266,10 @@ describe("opening", () => {
   it("answers 409 SOURCE_CHANGED for a stale or wrong fingerprint, and for a type the source does not offer", async () => {
     const s = await setup();
     const ai = scriptedAi([]);
-    const stale = await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", ai, "0".repeat(64));
+    const stale = await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", ai, "0".repeat(64));
     expect(stale.status).toBe(409);
     expect(await errorCode(stale)).toBe("SOURCE_CHANGED");
-    const wrongType = await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "quick_grammar", ai);
+    const wrongType = await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "tricky_grammar", ai);
     expect(await errorCode(wrongType)).toBe("SOURCE_CHANGED");
     expect(ai.calls).toHaveLength(0);
     expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities")).toBe(0);
@@ -241,10 +277,10 @@ describe("opening", () => {
 
   it("shares one cached activity between accounts and gives each account its own run", async () => {
     const s = await setup();
-    const q = quick();
+    const q = tricky();
     const ai = scriptedAi([say(q.json)]);
-    const first = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", ai));
-    const second = await readyOpen(await openActivity(s.rival, s.base, s.descriptor(s.ids.grammar), "quick_grammar", ai));
+    const first = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", ai));
+    const second = await readyOpen(await openActivity(s.rival, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", ai));
     expect(second.activity.id).toBe(first.activity.id);
     expect(second.activity.payload).toEqual(first.activity.payload);
     expect(second.run.id).not.toBe(first.run.id);
@@ -259,28 +295,28 @@ describe("opening", () => {
 describe("references stay server-side until submission", () => {
   it("never sends correct options, reference answers, expected order, explanations or reference text before an answer", async () => {
     const s = await setup();
-    const q = quick();
+    const q = tricky();
     const sc = story();
     const dialogueSource = s.descriptor(s.ids.dialogue);
     const ai = scriptedAi([say(q.json), say(sc.json), say(roleplay())]);
-    const quickOpen = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", ai));
+    const trickyOpen = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", ai));
     const storyOpen = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "story_comprehension", ai));
     const playOpen = await readyOpen(await openActivity(s.learner, s.base, dialogueSource, "roleplay", ai));
     const forbidden = /correctOptionId|referenceAnswers|expectedOrder|"explanation"|referenceText/;
-    for (const body of [quickOpen, storyOpen, playOpen]) expect(JSON.stringify(body.activity)).not.toMatch(forbidden);
-    const polled = await call("GET", `${s.base}/${quickOpen.activity.id}`, s.learner);
+    for (const body of [trickyOpen, storyOpen, playOpen]) expect(JSON.stringify(body.activity)).not.toMatch(forbidden);
+    const polled = await call("GET", `${s.base}/${trickyOpen.activity.id}`, s.learner);
     expect(JSON.stringify(activityStatusResponseSchema.parse(await polled.json()))).not.toMatch(forbidden);
-    expect(JSON.stringify(quickOpen.activity.payload)).toContain(quickIds(quickOpen).question);
+    expect(JSON.stringify(trickyOpen.activity.payload)).toContain(trickyIds(trickyOpen).question);
   });
 });
 
 describe("answers", () => {
   it("grades correct and incorrect choices on the server and reveals the reference after submission", async () => {
     const s = await setup();
-    const q = quick();
+    const q = tricky();
     const ai = scriptedAi([say(q.json)]);
-    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", ai));
-    const ids = quickIds(opened);
+    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", ai));
+    const ids = trickyIds(opened);
     const path = `${s.base}/${opened.activity.id}/answers`;
     const right = await call("POST", path, s.learner, answerBody(opened.run.id, ids.question, ids.correct));
     expect(right.status).toBe(200);
@@ -294,9 +330,9 @@ describe("answers", () => {
 
   it("returns the stored answer for a repeated idempotency key and keeps one row", async () => {
     const s = await setup();
-    const q = quick();
-    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", scriptedAi([say(q.json)])));
-    const ids = quickIds(opened);
+    const q = tricky();
+    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", scriptedAi([say(q.json)])));
+    const ids = trickyIds(opened);
     const path = `${s.base}/${opened.activity.id}/answers`;
     const key = uuid();
     const first = activityAnswerResponseSchema.parse(await (await call("POST", path, s.learner, answerBody(opened.run.id, ids.question, ids.correct, key))).json());
@@ -311,10 +347,10 @@ describe("answers", () => {
 
   it("refuses another account's run, and an item that is not part of this activity", async () => {
     const s = await setup();
-    const q = quick();
-    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", scriptedAi([say(q.json)])));
-    await readyOpen(await openActivity(s.rival, s.base, s.descriptor(s.ids.grammar), "quick_grammar"));
-    const ids = quickIds(opened);
+    const q = tricky();
+    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", scriptedAi([say(q.json)])));
+    await readyOpen(await openActivity(s.rival, s.base, s.descriptor(s.ids.grammar), "tricky_grammar"));
+    const ids = trickyIds(opened);
     const path = `${s.base}/${opened.activity.id}/answers`;
     const denied = await call("POST", path, s.rival, answerBody(opened.run.id, ids.question, ids.correct));
     expect(denied.status).toBe(404);
@@ -373,12 +409,13 @@ describe("completed activities", () => {
   type Setup = Awaited<ReturnType<typeof setup>>;
   const listing = async (s: Setup, cookie: string) => activityDescriptorListResponseSchema.parse(await (await call("GET", s.base, cookie)).json());
 
-  // Opens the grammar section's quick question as the given account, answers it correctly and returns the opened activity.
+  // Opens the grammar section's tricky questions as the given account, answers every one correctly and returns the opened activity.
   async function answerQuick(s: Setup, cookie: string, ai?: Ai) {
-    const opened = await readyOpen(await openActivity(cookie, s.base, s.descriptor(s.ids.grammar), "quick_grammar", ai));
-    const ids = quickIds(opened);
-    const answered = await call("POST", `${s.base}/${opened.activity.id}/answers`, cookie, answerBody(opened.run.id, ids.question, ids.correct));
-    expect(answered.status).toBe(200);
+    const opened = await readyOpen(await openActivity(cookie, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", ai));
+    for (const ids of trickyAll(opened)) {
+      const answered = await call("POST", `${s.base}/${opened.activity.id}/answers`, cookie, answerBody(opened.run.id, ids.question, ids.correct));
+      expect(answered.status).toBe(200);
+    }
     return opened;
   }
   const patchRun = (s: Setup, cookie: string, activityId: string, body: unknown) => call("PATCH", `${s.base}/${activityId}/run`, cookie, body);
@@ -398,21 +435,21 @@ describe("completed activities", () => {
 
   it("lists a completed activity for its owner only, and not while it is only answered", async () => {
     const s = await setup();
-    const opened = await answerQuick(s, s.learner, scriptedAi([say(quick().json)]));
+    const opened = await answerQuick(s, s.learner, scriptedAi([say(tricky().json)]));
     expect((await listing(s, s.learner)).completed).toEqual([]);
 
     // The rival opens the same shared activity and never finishes it: the learner's completion is not theirs.
-    await readyOpen(await openActivity(s.rival, s.base, s.descriptor(s.ids.grammar), "quick_grammar"));
+    await readyOpen(await openActivity(s.rival, s.base, s.descriptor(s.ids.grammar), "tricky_grammar"));
     expect((await patchRun(s, s.learner, opened.activity.id, { action: "complete" })).status).toBe(200);
-    expect((await listing(s, s.learner)).completed).toEqual([{ sourceId: s.ids.grammar, type: "quick_grammar" }]);
+    expect((await listing(s, s.learner)).completed).toEqual([{ sourceId: s.ids.grammar, type: "tricky_grammar" }]);
     expect((await listing(s, s.rival)).completed).toEqual([]);
   });
 
   it("drops a completion once the section's text changes and the lesson is republished", async () => {
     const s = await setup();
-    const opened = await answerQuick(s, s.learner, scriptedAi([say(quick().json)]));
+    const opened = await answerQuick(s, s.learner, scriptedAi([say(tricky().json)]));
     expect((await patchRun(s, s.learner, opened.activity.id, { action: "complete" })).status).toBe(200);
-    expect((await listing(s, s.learner)).completed).toEqual([{ sourceId: s.ids.grammar, type: "quick_grammar" }]);
+    expect((await listing(s, s.learner)).completed).toEqual([{ sourceId: s.ids.grammar, type: "tricky_grammar" }]);
 
     await republishGrammar(s, "In a main clause the verb always takes second place.");
     const after = await listing(s, s.learner);
@@ -423,7 +460,7 @@ describe("completed activities", () => {
 
   it("drops a completion when the run restarts, and lists it again once the run completes", async () => {
     const s = await setup();
-    const opened = await answerQuick(s, s.learner, scriptedAi([say(quick().json)]));
+    const opened = await answerQuick(s, s.learner, scriptedAi([say(tricky().json)]));
     expect((await patchRun(s, s.learner, opened.activity.id, { action: "complete" })).status).toBe(200);
     expect((await listing(s, s.learner)).completed).toHaveLength(1);
 
@@ -432,12 +469,12 @@ describe("completed activities", () => {
     expect((await listing(s, s.learner)).completed).toEqual([]);
 
     expect((await patchRun(s, s.learner, opened.activity.id, { action: "complete" })).status).toBe(200);
-    expect((await listing(s, s.learner)).completed).toEqual([{ sourceId: s.ids.grammar, type: "quick_grammar" }]);
+    expect((await listing(s, s.learner)).completed).toEqual([{ sourceId: s.ids.grammar, type: "tricky_grammar" }]);
   });
 
   it("keeps the list deterministic for the same state", async () => {
     const s = await setup();
-    const opened = await answerQuick(s, s.learner, scriptedAi([say(quick().json)]));
+    const opened = await answerQuick(s, s.learner, scriptedAi([say(tricky().json)]));
     expect((await patchRun(s, s.learner, opened.activity.id, { action: "complete" })).status).toBe(200);
     const first = await (await call("GET", s.base, s.learner)).text();
     expect(await (await call("GET", s.base, s.learner)).text()).toBe(first);
@@ -449,13 +486,13 @@ describe("provider failures", () => {
   it("turns malformed output into a failed row that a later status read reports with a retry hint", async () => {
     const s = await setup();
     const ai = scriptedAi([say("Here is your activity, but it is not JSON.")]);
-    const failed = await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", ai);
+    const failed = await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", ai);
     expect(failed.status).toBe(503);
     expect(await errorCode(failed)).toBe("ACTIVITY_GENERATION_FAILED");
     expect(ai.calls).toHaveLength(1);
 
     const row = await env.DB.prepare("SELECT id, status FROM lesson_activities WHERE source_id = ? AND activity_type = ?")
-      .bind(s.ids.grammar, "quick_grammar").first<{ id: string; status: string }>();
+      .bind(s.ids.grammar, "tricky_grammar").first<{ id: string; status: string }>();
     expect(row?.status).toBe("failed");
     const status = await call("GET", `${s.base}/${row!.id}`, s.learner);
     expect(status.status).toBe(200);
@@ -466,7 +503,7 @@ describe("provider failures", () => {
     expect(wait).toBeLessThanOrEqual(30_000);
 
     // Inside the backoff a retry reports generating without calling the provider again.
-    const retry = await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", ai);
+    const retry = await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", ai);
     expect(retry.status).toBe(202);
     expect(ai.calls).toHaveLength(1);
   });
@@ -491,33 +528,29 @@ describe("model output contract", () => {
     vi.spyOn(console, "log").mockImplementation((line: unknown) => { logs.push(String(line)); });
   });
 
-  it.each(wrappings)("accepts a quick question with extra keys wrapped in %s", async (_, wrap) => {
+  it.each(wrappings)("accepts tricky questions with extra keys wrapped in %s", async (_, wrap) => {
     const s = await setup();
-    const reply = {
-      id: "lesson_001", type: "quick_grammar", recipeVersion: 9, schemaVersion: 9,
-      question: { kind: "choice", prompt: "Which sentence puts the verb second?", options: ["Ik koop brood.", "Ik brood koop.", "Brood ik koop."], correctIndex: 0, explanation: "The verb is the second element." },
-    };
+    const reply = { id: "lesson_001", type: "tricky_grammar", recipeVersion: 9, schemaVersion: 9, ...JSON.parse(tricky().json) };
     const ai = scriptedAi([say(wrap(JSON.stringify(reply)))]);
-    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", ai));
-    expect(Object.keys(opened.activity.payload).sort()).toEqual(["question", "recipeVersion", "schemaVersion", "type"]);
-    expect(opened.activity.payload).toMatchObject({ type: "quick_grammar", recipeVersion: 1, schemaVersion: 1 });
+    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", ai));
+    expect(Object.keys(opened.activity.payload).sort()).toEqual(["questions", "recipeVersion", "schemaVersion", "type"]);
+    expect(opened.activity.payload).toMatchObject({ type: "tricky_grammar", recipeVersion: 2, schemaVersion: 2 });
   });
 
   it.each(wrappings)("accepts a summary with an extra top-level id wrapped in %s", async (_, wrap) => {
     const s = await setup();
-    const reply = { id: "lesson_001", englishSummary: "Sofia buys bread at the market.", dutchRecap: "Sofia koopt brood." };
+    const reply = { id: "lesson_001", ...summary() };
     const ai = scriptedAi([say(wrap(JSON.stringify(reply)))]);
     const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "story_summary", ai));
-    expect(opened.activity.payload).toEqual({ type: "story_summary", recipeVersion: 1, schemaVersion: 1, englishSummary: reply.englishSummary, dutchRecap: reply.dutchRecap });
+    expect(opened.activity.payload).toEqual({ type: "story_summary", recipeVersion: 2, schemaVersion: 2, pairs: reply.pairs, newWords: reply.newWords, image: null });
   });
 
   it("ignores model IDs that are not UUIDs and uses server-assigned UUIDs", async () => {
     const s = await setup();
-    const reply = {
-      id: "lesson_001", question: { id: "q_1", kind: "choice", prompt: "Which sentence puts the verb second?", options: ["Ik koop brood.", "Ik brood koop.", "Brood ik koop."], correctIndex: 0, explanation: "Second place." },
-    };
-    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", scriptedAi([say(JSON.stringify(reply))])));
-    const ids = quickIds(opened);
+    const base = JSON.parse(tricky().json) as { questions: Array<Record<string, unknown>> };
+    const reply = { id: "lesson_001", questions: base.questions.map((question, index) => index === 0 ? { ...question, id: "q_1" } : question) };
+    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", scriptedAi([say(JSON.stringify(reply))])));
+    const ids = trickyIds(opened);
     expect(ids.question).toMatch(UUID);
     expect(ids.question).not.toBe("q_1");
     expect(ids.correct).toMatch(UUID);
@@ -527,12 +560,14 @@ describe("model output contract", () => {
 
   it("grades the option at correctIndex as correct, whichever position the model chose", async () => {
     const s = await setup();
-    const q = quick(2);
-    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", scriptedAi([say(q.json)])));
-    if (opened.activity.payload.type !== "quick_grammar") throw new Error("Expected quick_grammar.");
-    const [first, , third] = opened.activity.payload.question.options;
+    const q = tricky(2);
+    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", scriptedAi([say(q.json)])));
+    if (opened.activity.payload.type !== "tricky_grammar") throw new Error("Expected tricky_grammar.");
+    const question = opened.activity.payload.questions[0]!;
+    if (question.kind !== "choice") throw new Error("Expected a choice question.");
+    const [first, , third] = question.options;
     const path = `${s.base}/${opened.activity.id}/answers`;
-    const itemId = opened.activity.payload.question.id;
+    const itemId = question.id;
     const right = await call("POST", path, s.learner, answerBody(opened.run.id, itemId, third!.id));
     expect(activityAnswerResponseSchema.parse(await right.json())).toMatchObject({ correct: true, reference: "Brood ik koop." });
     const wrong = await call("POST", path, s.learner, answerBody(opened.run.id, itemId, first!.id));
@@ -578,6 +613,87 @@ describe("model output contract", () => {
     expect(activityAnswerResponseSchema.parse(await (await answer(correctOrder)).json())).toMatchObject({ correct: true, reference: "Ik koop brood" });
     const reversed = original.map((_, index) => item.tokens.indexOf(original[original.length - 1 - index]!));
     expect(activityAnswerResponseSchema.parse(await (await answer(reversed)).json())).toMatchObject({ correct: false });
+  });
+});
+
+// Story summary (docs/lesson-activities.md): sentence pairs, new words the lesson does not teach, and an image read from the
+// current published document, never from the cached payload.
+describe("story summary", () => {
+  type Setup = Awaited<ReturnType<typeof setup>>;
+  const openSummary = (s: Setup, reply: unknown, cookie = s.learner) =>
+    openActivity(cookie, s.base, s.descriptor(s.ids.story), "story_summary", scriptedAi([say(JSON.stringify(reply))]));
+  const storedPayload = async (s: Setup) => JSON.parse((await env.DB.prepare("SELECT payload FROM lesson_activities WHERE source_id = ? AND activity_type = 'story_summary'").bind(s.ids.story).first<{ payload: string }>())!.payload) as Record<string, unknown>;
+  const collectImage = (lesson: Awaited<ReturnType<typeof readLesson>>) => {
+    const image = lesson.draft!.document.blocks.find((block): block is LessonBlockOf<"image"> => block.type === "image");
+    if (!image) throw new Error("No image in the lesson");
+    return image.props.url;
+  };
+  // Publishes the lesson with the story section's image URL changed. The image block ID stays, so the section fingerprint stays too.
+  async function publishImage(s: Setup, url: string) {
+    const path = lessonPath(s.groupId, s.courseId, s.lessonId);
+    const lesson = await readLesson(path, s.owner);
+    const document = structuredClone(lesson.draft!.document) as LessonDocument;
+    const image = document.blocks.find((block): block is LessonBlockOf<"image"> => block.type === "image");
+    if (!image) throw new Error("No image in the lesson");
+    image.props.url = url;
+    await saveDraft(path, s.owner, document, lesson.draft!.version);
+    await publishLesson(path, s.owner, (await readLesson(path, s.owner)).draft!.version);
+  }
+
+  it("filters a new word that the lesson already teaches, in any case, and repeats within the list", async () => {
+    const s = await setup();
+    const reply = summary({ newWords: [
+      { term: "BROOD", translation: "bread" }, { term: " Koop ", translation: "buy" }, { term: "bakker", translation: "baker" },
+      { term: "Bakker", translation: "baker again" }, { term: "markt", translation: "market" },
+    ] });
+    const opened = await readyOpen(await openSummary(s, reply));
+    if (opened.activity.payload.type !== "story_summary") throw new Error("Expected story_summary.");
+    expect(opened.activity.payload.newWords).toEqual([{ term: "bakker", translation: "baker" }, { term: "markt", translation: "market" }]);
+    expect(opened.activity.payload.pairs).toEqual(reply.pairs);
+  });
+
+  it("fails fewer than two pairs as ACTIVITY_OUTPUT_INVALID", async () => {
+    const s = await setup();
+    const failed = await openSummary(s, summary({ pairs: [{ dutch: "Sofia gaat naar de bakker.", english: "Sofia goes to the baker." }] }));
+    expect(failed.status).toBe(503);
+    expect(await errorCode(failed)).toBe("ACTIVITY_GENERATION_FAILED");
+    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities WHERE activity_type = 'story_summary' AND status = 'failed'")).toBe(1);
+    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities WHERE status = 'ready'")).toBe(0);
+  });
+
+  it("keeps at most three metrics from the enum, once each, and falls back to lesson_share", async () => {
+    const s = await setup();
+    await readyOpen(await openSummary(s, summary({ metrics: ["bogus", "lesson_reading", "lesson_reading", "lesson_share", "lesson_grammar", "lesson_activities"] })));
+    expect((await storedPayload(s)).metrics).toEqual(["lesson_reading", "lesson_share", "lesson_grammar"]);
+    await env.DB.prepare("DELETE FROM lesson_activities").run();
+    await readyOpen(await openSummary(s, summary({ metrics: ["bogus", 7] })));
+    expect((await storedPayload(s)).metrics).toEqual(["lesson_share"]);
+    await env.DB.prepare("DELETE FROM lesson_activities").run();
+    const { metrics: _omitted, ...withoutMetrics } = summary();
+    await readyOpen(await openSummary(s, withoutMetrics));
+    expect((await storedPayload(s)).metrics).toEqual(["lesson_share"]);
+  });
+
+  it("serves the image from the current published document, never from the cached payload", async () => {
+    const s = await setup({ image: true });
+    const path = lessonPath(s.groupId, s.courseId, s.lessonId);
+    const first = (collectImage(await readLesson(path, s.owner)));
+    const second = await uploadImage(path, s.owner);
+    expect(second).not.toBe(first);
+    const opened = await readyOpen(await openSummary(s, summary()));
+    if (opened.activity.payload.type !== "story_summary") throw new Error("Expected story_summary.");
+    expect(opened.activity.payload.image).toEqual({ url: first, alt: "The market" });
+    expect(JSON.stringify(await storedPayload(s))).not.toContain("image");
+
+    // The lesson is republished with the image block ID unchanged, so the descriptor fingerprint is the same.
+    await publishImage(s, second);
+    const polled = await call("GET", `${s.base}/${opened.activity.id}`, s.learner);
+    expect(polled.status).toBe(200);
+    const body = activityStatusResponseSchema.parse(await polled.json());
+    if (body.status !== "ready" || body.activity.payload.type !== "story_summary") throw new Error("Expected a ready story_summary.");
+    expect(body.activity.payload.image).toEqual({ url: second, alt: "The market" });
+    const reopened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.story), "story_summary"));
+    expect(reopened.activity.payload).toMatchObject({ image: { url: second } });
   });
 });
 
@@ -691,8 +807,8 @@ describe("original-dialogue role-play content", () => {
 describe("daily AI cap", () => {
   it("refuses a cache miss at the cap but still serves an already-ready activity", async () => {
     const s = await setup();
-    const q = quick();
-    const ready = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", scriptedAi([say(q.json)])));
+    const q = tricky();
+    const ready = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", scriptedAi([say(q.json)])));
 
     await writeAiSettings(env.DB, { ...DEFAULT_AI_SETTINGS, dailyTurnCap: 0 });
     const none = scriptedAi([]);
@@ -701,8 +817,8 @@ describe("daily AI cap", () => {
     expect(await errorCode(miss)).toBe("AI_DAILY_LIMIT");
     expect(none.calls).toHaveLength(0);
 
-    const hitForOwner = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", none));
-    const hitForRival = await readyOpen(await openActivity(s.rival, s.base, s.descriptor(s.ids.grammar), "quick_grammar", none));
+    const hitForOwner = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", none));
+    const hitForRival = await readyOpen(await openActivity(s.rival, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", none));
     expect(hitForOwner.activity.id).toBe(ready.activity.id);
     expect(hitForRival.activity.id).toBe(ready.activity.id);
     expect(none.calls).toHaveLength(0);
@@ -900,8 +1016,8 @@ describe("dialogue speech", () => {
 
   it("refuses speech for an activity that is not a role-play", async () => {
     const s = await setup();
-    const q = quick();
-    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "quick_grammar", scriptedAi([say(q.json)])));
+    const q = tricky();
+    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "tricky_grammar", scriptedAi([say(q.json)])));
     const response = await call("POST", SPEAK(s.base, opened.activity.id), s.learner, { runId: opened.run.id, turnId: uuid() }, withSpeech());
     expect(response.status).toBe(400);
     expect(await errorCode(response)).toBe("ACTIVITY_ACTION_INVALID");
