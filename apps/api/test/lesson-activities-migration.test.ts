@@ -151,7 +151,7 @@ describe("Migration 0036 tables", () => {
       "status", "lease_token", "lease_expires_at", "next_attempt_at", "payload", "created_at", "updated_at",
     ]);
     const runs = await columns("lesson_activity_runs");
-    expect(runs.map((column) => column.name)).toEqual(["id", "activity_id", "user_id", "cursor", "cue_mode", "status", "started_at", "updated_at", "completed_at"]);
+    expect(runs.map((column) => column.name)).toEqual(["id", "activity_id", "user_id", "cursor", "cue_mode", "status", "started_at", "updated_at", "completed_at", "metrics_before"]);
     expect(Object.fromEntries(runs.filter((column) => column.dflt_value !== null).map((column) => [column.name, column.dflt_value]))).toEqual({
       cursor: "0", cue_mode: "'english'", status: "'active'",
     });
@@ -344,5 +344,47 @@ describe("learning_time rows for lesson activities", () => {
     await expect(row("no-course", { courseId: null }).run()).rejects.toThrow(/CHECK/);
     await expect(row("bad-day", { day: "2026-1-1" }).run()).rejects.toThrow(/CHECK/);
     await expect(row("ok-speaking").run()).rejects.toThrow(/UNIQUE|PRIMARY KEY/);
+  });
+});
+
+// Migration 0038 (docs/lesson-activities.md): the three activity tables are recreated with the v2 type list, and runs gain a nullable
+// metrics snapshot. The tables are empty after the rebuild, so each case inserts its own rows.
+describe("Migration 0038 lesson activity v2", () => {
+  it("keeps the three tables with their indexes and foreign keys", async () => {
+    const foreignKeys = async (table: string) => (await env.DB.prepare(`PRAGMA foreign_key_list(${table})`).all<{ from: string; table: string; to: string; on_delete: string }>())
+      .results.map((fk) => `${fk.from}->${fk.table}.${fk.to} ON DELETE ${fk.on_delete}`).sort();
+    expect(await foreignKeys("lesson_activities")).toEqual(["course_id->courses.id ON DELETE CASCADE", "lesson_id->course_lessons.id ON DELETE CASCADE"]);
+    expect(await foreignKeys("lesson_activity_runs")).toEqual(["activity_id->lesson_activities.id ON DELETE CASCADE", "user_id->users.id ON DELETE CASCADE"]);
+    expect(await foreignKeys("lesson_activity_answers")).toEqual(["run_id->lesson_activity_runs.id ON DELETE CASCADE"]);
+
+    const indexes = await env.DB.prepare(
+      "SELECT name FROM sqlite_master WHERE type = 'index' AND name NOT LIKE 'sqlite_autoindex%' AND tbl_name IN ('lesson_activities', 'lesson_activity_runs', 'lesson_activity_answers') ORDER BY name",
+    ).all<{ name: string }>();
+    expect(indexes.results.map((index) => index.name)).toEqual(sorted([
+      "lesson_activities_cache_key_unique", "lesson_activities_lesson_idx",
+      "lesson_activity_runs_activity_user_unique", "lesson_activity_runs_user_idx",
+      "lesson_activity_answers_run_idempotency_unique", "lesson_activity_answers_run_item_idx",
+    ]));
+  });
+
+  it("rejects the retired quick_grammar type and admits the nine v2 types", async () => {
+    const lib = await seedLibrary(env.DB);
+    await expect(insertActivity(env.DB, lib, { activityType: "quick_grammar" }).run()).rejects.toThrow(/CHECK/);
+    for (const activityType of ["story_summary", "story_comprehension", "grammar_explanation", "tricky_grammar", "mixed_practice", "roleplay", "guided_grammar", "read_aloud", "speak_from_english"]) {
+      await insertActivity(env.DB, lib, { activityType }).run();
+    }
+  });
+
+  it("adds a nullable metrics_before text column to runs", async () => {
+    const lib = await seedLibrary(env.DB);
+    const activityId = uuid(); const runId = uuid();
+    const column = (await env.DB.prepare("PRAGMA table_info(lesson_activity_runs)").all<{ name: string; type: string; notnull: number; dflt_value: string | null }>())
+      .results.find((info) => info.name === "metrics_before");
+    expect(column).toMatchObject({ type: "TEXT", notnull: 0, dflt_value: null });
+
+    await insertActivity(env.DB, lib, { id: activityId }).run();
+    await insertRun(env.DB, activityId, lib.learner, { id: runId }).run();
+    expect(await env.DB.prepare("SELECT metrics_before AS metricsBefore FROM lesson_activity_runs WHERE id = ?").bind(runId).first<{ metricsBefore: string | null }>())
+      .toEqual({ metricsBefore: null });
   });
 });

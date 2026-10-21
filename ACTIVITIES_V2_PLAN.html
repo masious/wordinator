@@ -540,7 +540,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <dt>Done when</dt><dd><ul><li><code>0038_lesson_activities_v2.sql</code> exists and matches <code>schema.ts</code>.</li><li>The migration test file passes, including the new 0038 case.</li><li>DB typecheck passes.</li></ul></dd>
 <dt>Depends on</dt><dd>T1.1 (the nine-type list must match the enum)</dd>
 <dt>Parallel-safe</dt><dd>no</dd>
-<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Status</dt><dd class="status">Done 2026-10-21 — db typecheck pass; lesson-activities-migration.test.ts 20/20; orchestrator full-diff review</dd>
 <dt>Risk</dt><dd>⚠ with orchestrator full-diff review</dd>
 </dl>
 <p class="orch"><strong>Resolved:</strong> the migrations directory is <code>packages/db/migrations/</code>, and the new file is <code>packages/db/migrations/0038_lesson_activities_v2.sql</code>.</p>
@@ -1068,6 +1068,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <tr><td>T0.1</td><td>2026-10-21</td><td>Verify grep</td><td>Done; docs/lesson-activities.md owns D1–D7</td></tr>
 <tr><td>T0.2</td><td>2026-10-21</td><td>Link greps (14 docs)</td><td>Done; owner docs link lesson-activities.md, status sentences updated</td></tr>
 <tr><td>T1.1</td><td>2026-10-21</td><td>contracts typecheck pass; lessonActivities.test.ts 14/14</td><td>Done; nine types, metric enum, versions 2</td></tr>
+<tr><td>T2.1</td><td>2026-10-21</td><td>db typecheck pass; lesson-activities-migration.test.ts 20/20; orchestrator full-diff review</td><td>Done; 0038 recreates three tables, nine-type CHECK, metrics_before</td></tr>
 </tbody>
 </table></div>
 </section>
