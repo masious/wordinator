@@ -6,15 +6,20 @@ import { AnimatedEmoji } from "../../molecules/AnimatedEmoji";
 import { headingSections, type OverviewCategory } from "../LessonOverview/overviewModel";
 import { notoEmoji } from "../LessonOverview/notoEmoji";
 import { stopCategories } from "../LessonOverview/stopCategories";
+import { HeadingDot } from "./HeadingDot";
 import { useRevealCurrent } from "./LessonWords";
 import styles from "./LessonIndex.module.css";
 
-// One line of a lesson's index: a heading. `depth` indents it: the document's highest heading level is depth 0. `category` is
-// what its section holds, read as the overview reads its stops (Story, Grammar, a practice type, Summary, and so on); `start` is
-// the index of the section's first player step, which unlocks it once reached.
-export type LessonIndexEntry = { id: string; text: string; depth: number; category: OverviewCategory; start: number };
+// One line of a lesson's index: a heading. `depth` indents it: the highest heading level listed is depth 0. `category` is what
+// its section holds, read as the overview reads its stops (Story, Grammar, a practice type, Summary, and so on); `start` is the
+// index of the section's first player step, which unlocks it once reached. A level-3 heading shows `color` instead of a category.
+export type LessonIndexEntry = { id: string; text: string; depth: number; level: 1 | 2 | 3; category: OverviewCategory; start: number; color?: HeadingColor };
 // The entry the reader is in, one before it or reached earlier, or one not reached yet.
 export type EntryState = "current" | "passed" | "locked";
+// Level-3 headings' colours, given in reading order so neighbours differ, as a dot before the heading in the text, its index row,
+// and its activities. They skip the category tones (grammar blue, story orange, words green).
+export const HEADING_COLORS = ["pink", "violet", "teal", "red", "yellow", "slate"] as const;
+export type HeadingColor = (typeof HEADING_COLORS)[number];
 
 // The index shows only when it has at least this many entries; one entry tells the reader nothing.
 export const LESSON_INDEX_MIN = 2;
@@ -22,18 +27,29 @@ export const LESSON_INDEX_MIN = 2;
 const ACTIVE_SLACK_PX = 8;
 const BOTTOM_SLACK_PX = 2;
 
-// Level-1 and level-2 headings in reading order; practices and other blocks are left out. Level-3 headings are too fine for the
-// index, and headings inside columns title only their column, so both are left out, as are empty headings.
+// Top-level headings in reading order; practices and other blocks are left out. Headings inside columns title only their column,
+// so they are left out, as are empty headings and the lesson's own title (a level-1 heading opening the document), which the
+// page's sticky header carries. Level-1 and level-2 categories read their whole section, level-3 parts included; a level-3
+// heading's own start is where its part begins.
 export function lessonIndexEntries(document: LessonDocument): LessonIndexEntry[] {
-  const found: Array<{ id: string; text: string; level: number }> = [];
+  const found: Array<{ id: string; text: string; level: 1 | 2 | 3 }> = [];
   for (const { block, depth } of walkLessonBlocks(document.blocks)) {
-    if (depth > 0 || block.type !== "heading" || block.props.level === 3) continue;
+    if (depth > 0 || block.type !== "heading") continue;
     const text = inlineText(block.content).replace(/\s+/g, " ").trim();
     if (text) found.push({ id: block.id, text, level: block.props.level });
   }
-  const top = Math.min(...found.map((entry) => entry.level));
-  const sections = headingSections(document, found);
-  return found.map(({ level, ...entry }) => ({ ...entry, depth: level - top, category: sections.get(entry.id)?.category ?? "topic", start: sections.get(entry.id)?.start ?? 0 }));
+  const opening = document.blocks[0];
+  const title = opening?.type === "heading" && opening.props.level === 1 ? opening.id : null;
+  const sections = headingSections(document, found.filter((entry) => entry.level < 3));
+  const parts = headingSections(document, found);
+  const listed = found.filter((entry) => entry.id !== title);
+  const top = Math.min(...listed.map((entry) => entry.level));
+  let colors = 0;
+  return listed.map((entry) => {
+    const section = (entry.level === 3 ? parts : sections).get(entry.id);
+    return { ...entry, depth: entry.level - top, category: section?.category ?? "topic", start: section?.start ?? 0,
+      ...(entry.level === 3 ? { color: HEADING_COLORS[colors++ % HEADING_COLORS.length]! } : {}) };
+  });
 }
 
 // The last entry whose top has reached `line` (window coordinates), or -1 before the first. At the bottom of the page the last
@@ -45,10 +61,14 @@ export function currentEntry(tops: ReadonlyArray<number | null>, line: number, a
   return current;
 }
 
-// The sticky side column's top, which is where the reading line sits; 0 when the column does not stick (narrow screens).
+// The reading line, in window coordinates: the sticky side column's top (0 when it does not stick, as on narrow screens), or below
+// the lesson page's sticky header (LessonStickyHeader) when the page has one, whichever is lower.
 export const stickyInset = (side: HTMLElement | null) => {
   const style = side ? getComputedStyle(side) : null;
-  return style?.position === "sticky" ? parseFloat(style.top) || 0 : 0;
+  const column = style?.position === "sticky" ? parseFloat(style.top) || 0 : 0;
+  const header = document.querySelector<HTMLElement>("[data-lesson-header]");
+  const bar = header?.firstElementChild as HTMLElement | null | undefined;
+  return header && bar ? Math.max(column, (parseFloat(getComputedStyle(header).top) || 0) + bar.offsetHeight) : column;
 };
 
 // Follows the window's scroll and returns the index of the entry the reader is in.
@@ -121,7 +141,8 @@ function useCentreOnResize(scroller: RefObject<HTMLElement | null>, list: RefObj
   }, [scroller, list]);
 }
 
-// The lesson's index in the app rail, under the lesson box: its headings, one row each after their category's badge. The active
+// The lesson's index in the app rail, under the lesson box: its headings, one row each after their category's badge (a level-3
+// heading's colour dot). The active
 // entry uses semibold accent text without a background and its emoji scales to 1.1; locked entries are grey behind a lock. Choosing an entry scrolls the page
 // to it, then calls `onJump` (the phone's drawer closes). A long index scrolls with the rail's scrolling part, which keeps the
 // current entry in view.
@@ -148,7 +169,8 @@ export function LessonIndex({ entries, current, states, reading, side, onJump }:
     <ol className={styles.list}>{entries.map((entry, index) => <li key={entry.id}>
       <button type="button" className={styles.entry} data-state={states[index]}
         style={{ "--index-depth": entry.depth } as CSSProperties} aria-current={index === current ? "location" : undefined} title={entry.text} onClick={() => jump(entry.id)}>
-        <CategoryBadge category={entry.category} locked={states[index] === "locked"} active={index === current} />
+        {entry.color ? <span className={styles.dotSlot}><HeadingDot color={entry.color} /></span>
+          : <CategoryBadge category={entry.category} locked={states[index] === "locked"} active={index === current} />}
         <span className={styles.label}>{entry.text}</span>
       </button>
     </li>)}</ol>

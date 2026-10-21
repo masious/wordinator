@@ -15,7 +15,7 @@ test("the lesson index follows the reader, jumps to an entry, and sits above a c
   await seedLesson(page, course.id, `${suffix} lesson`, [
     heading("Greetings"), ...section("Groet"), vocabulary({ term: "hallo", meaning: "hello" }),
     practice("Translate into English", [{ prompt: "Hallo", authorsVersion: ["Hello"] }]),
-    // Practices and level-3 headings are left out of the index.
+    // Practices are left out of the index; a level-3 heading is listed under its level-2 with a colour dot.
     heading("Weather", 3), heading("Small talk"), practice("Answer the questions about the weather.", [{ prompt: "Regent het?", authorsVersion: ["Ja"] }]), ...section("Praat"), vocabulary({ term: "het weer", meaning: "the weather" }),
     heading("Goodbyes"), ...section("Dag"),
   ]);
@@ -23,7 +23,8 @@ test("the lesson index follows the reader, jumps to an entry, and sits above a c
   await page.goto(`/courses/${course.id}`);
   await openLesson(page);
   const index = page.getByRole("navigation", { name: "In this lesson" });
-  await expect(index.getByRole("button")).toHaveText(["Greetings", "Small talk", "Goodbyes"]);
+  await expect(index.getByRole("button")).toHaveText(["Greetings", "Weather", "Small talk", "Goodbyes"]);
+  await expect(index.getByRole("button", { name: "Weather" }).locator('[data-color="pink"]')).toHaveCount(1);
   const words = page.getByRole("complementary", { name: "New words" });
   // The index sits in the app rail, left of the text; the New words panel is docked in the right rail.
   const [indexBox, wordsBox] = [await index.boundingBox(), await words.boundingBox()];
@@ -36,12 +37,37 @@ test("the lesson index follows the reader, jumps to an entry, and sits above a c
   await expect(index.getByRole("button", { name: "Small talk" })).toHaveAttribute("data-state", "passed");
   await expect(page.getByText("Dag zin 1.")).toBeInViewport();
   await expect(index).toBeInViewport();
+  // The sticky header has slid in over the reading column with the lesson's title and the current section, and the jump left the
+  // entry's heading just under it rather than behind it.
+  const header = page.locator("[data-lesson-header] > div");
+  await expect(header).toHaveAttribute("data-shown", "true");
+  await expect(header).toContainText(`${suffix} lesson`);
+  await expect(header).toContainText("Goodbyes");
+  const headerBox = (await header.boundingBox())!;
+  const headerBottom = headerBox.y + headerBox.height;
+  // It spans the main column, from the app rail's edge to the New words panel's (a classic scrollbar may tuck its end under the
+  // right rail).
+  const [railEdge, panelEdge] = [(await page.getByRole("navigation", { name: "In this lesson" }).boundingBox())!, (await page.getByRole("complementary", { name: "New words" }).boundingBox())!];
+  expect(headerBox.x).toBeGreaterThanOrEqual(railEdge.x + railEdge.width);
+  expect(headerBox.x - (railEdge.x + railEdge.width)).toBeLessThan(40);
+  expect(headerBox.x + headerBox.width).toBeGreaterThanOrEqual(panelEdge.x - 1);
+  expect(headerBox.x + headerBox.width - panelEdge.x).toBeLessThan(40);
+  // Its text lines up with the reading column.
+  const textBox = (await header.getByText(`${suffix} lesson`).boundingBox())!;
+  const columnBox = (await page.getByText("Dag zin 1.").locator("xpath=ancestor::article[1]").boundingBox())!;
+  expect(Math.abs(textBox.x - columnBox.x)).toBeLessThan(2);
+  const goodbyes = page.getByRole("main").getByRole("heading", { name: "Goodbyes" });
+  // Its block starts on the reading line; the heading's own top margin puts its text a little lower.
+  const offset = (await goodbyes.boundingBox())!.y - headerBottom;
+  expect(offset).toBeGreaterThanOrEqual(0);
+  expect(offset).toBeLessThan(24);
+  if (process.env.E2E_SHOTS) await page.screenshot({ path: process.env.E2E_SHOTS });
   await index.getByRole("button", { name: "Small talk" }).click();
   await expect(index.getByRole("button", { name: "Small talk" })).toHaveAttribute("aria-current", "location");
   // Goodbyes was reached, so it stays unlocked after scrolling back.
   await expect(index.getByRole("button", { name: "Goodbyes" })).toHaveAttribute("data-state", "passed");
-  // Each listed heading in the text carries the same badge as its entry.
-  await expect(page.getByRole("main").locator("[data-badged]")).toHaveCount(3);
+  // Each listed heading in the text carries the same badge as its entry, or its colour dot.
+  await expect(page.getByRole("main").locator("[data-badged]")).toHaveCount(4);
 
   // The profile row's Study time button shows the Study time card and shrinks the lesson box to its label and progress.
   const box = page.getByRole("region", { name: "This lesson" });
@@ -67,7 +93,7 @@ test("the lesson index follows the reader, jumps to an entry, and sits above a c
   await expect(words).toHaveAttribute("data-rail-slim");
   await expect(words.getByRole("searchbox")).toHaveCount(0);
   expect((await words.boundingBox())!.width).toBeLessThan(80);
-  await expect(words.getByRole("link", { name: "Ask AI" })).toBeVisible();
+  await expect(words.getByRole("link", { name: "Practise words" })).toBeVisible();
   await page.reload();
   await expect(page.getByRole("complementary", { name: "New words" })).toHaveAttribute("data-rail-slim");
   await page.getByRole("complementary", { name: "New words" }).getByRole("button", { name: "Show new words" }).click();

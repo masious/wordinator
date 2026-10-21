@@ -31,3 +31,6 @@
 .badge[data-tone="slate"]{--tone:var(--color-vivid-slate)}
 .badge[data-tone="accent"]{--tone:var(--color-action)}
 @media(prefers-reduced-motion:reduce){.entry,.badge,.badge>:first-child{transition:none}}
+/* A level-3 row's colour dot sits in a badge-wide slot, so its label lines up with its neighbours'. */
+.dotSlot{flex:none;display:grid;place-items:center;width:2.6em;height:2.6em;font-size:1em}
+.dotSlot>*{font-size:1.45em}

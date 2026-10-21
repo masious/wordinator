@@ -1,0 +1,21 @@
+/* The bar hangs from the page's sticky slot, as tall as --size-lesson-header, across the whole main column: from the app rail's
+   edge to the right rail's (the shell's inline insets). The page is centred in that column, so the bar is centred on it, and padded
+   by its overhang so its text lines up with the reading column (percentages here are the page's width). Until something has scrolled into it, it waits above, invisible and out of the pointer's
+   way. */
+.bar{--bar-width:calc(100vw - var(--shell-inline-start, 0px) - var(--shell-inline-end, 0px));position:relative;display:flex;align-items:center;width:var(--bar-width);height:var(--size-lesson-header);margin-inline-start:calc((100% - var(--bar-width)) / 2);padding-inline:calc((var(--bar-width) - 100%) / 2);overflow:hidden;background:var(--color-surface-raised);border-bottom:var(--ring-hairline);box-shadow:var(--shadow-floating);opacity:0;transform:translateY(-100%);pointer-events:none;transition:opacity var(--motion-standard) var(--ease-physical),transform var(--motion-reveal) var(--ease-physical)}
+.bar[data-shown]{opacity:1;transform:none}
+/* The cover, blurred and slightly enlarged so its soft edges stay outside the bar, under a wash that keeps the text legible; without
+   a cover, a light art tone. It fades in once the page's cover has scrolled under the bar. */
+.backdrop{position:absolute;inset:0;background:var(--color-art-violet);opacity:0;transition:opacity var(--motion-reveal) var(--ease-physical)}
+.backdrop[data-shown]{opacity:1}
+.backdrop img{display:block;width:100%;height:100%;object-fit:cover;filter:blur(var(--blur-cover));transform:scale(1.25)}
+.backdrop::after{content:"";position:absolute;inset:0;background:color-mix(in srgb,var(--color-surface-raised) 62%,transparent)}
+.text{position:relative;display:grid;gap:var(--space-1);width:100%;min-width:0}
+/* The lesson's title slides up into place once the page's title has scrolled under the bar; the section is there from the start. */
+.title{overflow:hidden;color:var(--color-foreground-muted);font-size:var(--text-sm);font-weight:var(--weight-semibold);line-height:var(--line-compact);text-overflow:ellipsis;white-space:nowrap;opacity:0;transform:translateY(100%);transition:opacity var(--motion-standard) var(--ease-physical),transform var(--motion-reveal) var(--ease-physical)}
+.title[data-shown]{opacity:1;transform:none}
+.section{display:flex;align-items:center;gap:0.45em;min-width:0;color:var(--color-foreground);font-size:var(--type-card-title);font-weight:var(--weight-semibold);line-height:var(--line-title)}
+.sectionText{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+/* Between a level-3 entry's level-2 section and itself. */
+.separator{flex:none;width:1em;height:1em;color:var(--color-foreground-faint)}
+@media(prefers-reduced-motion:reduce){.bar,.backdrop,.title{transition:none}.bar,.title{transform:none}}

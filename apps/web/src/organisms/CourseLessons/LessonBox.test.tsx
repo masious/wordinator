@@ -128,6 +128,26 @@ describe("Lesson box actions", () => {
     expect(within(group).queryByLabelText(/completed$/)).toBeNull();
   });
 
+  it("names the section it is given, and marks a grammar part's activities with the part's dot and name, the first link too", async () => {
+    const part = { headingId: "50000000-0000-4000-8000-000000000009", label: "Asking permission", color: "violet" as const };
+    const asking = { ...grammar, sourceId: "part-1", sourceLabel: "Asking permission", activityTypes: ["grammar_explanation", "tricky_grammar"] as ActivityType[] };
+    const end: ActivityDescriptor = { ...grammar, sourceId: "lesson_end", sourceKind: "lesson_end", sourceLabel: "Lesson title · End", activityTypes: ["mixed_practice"] };
+    renderActions([{ descriptor: asking, type: "grammar_explanation", part }, { descriptor: asking, type: "tricky_grammar", part }]);
+    let group = await screen.findByRole("group", { name: "Lesson actions" });
+    for (const name of ["Grammar explanation · Asking permission", "Tricky grammar practice · Asking permission"]) {
+      expect(within(group).getByRole("link", { name }).querySelector('[data-color="violet"]')).not.toBeNull();
+    }
+    cleanup();
+    // A section without activities of its own is named after itself while it offers the lesson end.
+    const queryClient = new QueryClient();
+    const root = createRootRoute();
+    const route = createRoute({ getParentRoute: () => root, path: "$", component: () => <LessonBoxActions lesson={lesson} courseSlug="dutch-foundations" lessonSlug="lesson-title" suggestions={[{ descriptor: end, type: "mixed_practice" }]} sectionLabel="Words: in het restaurant" /> });
+    render(<MantineProvider><QueryClientProvider client={queryClient}><RouterProvider router={createRouter({ routeTree: root.addChildren([route]), history: createMemoryHistory({ initialEntries: ["/"] }) })} /></QueryClientProvider></MantineProvider>);
+    group = await screen.findByRole("group", { name: "Lesson actions" });
+    expect(within(group).getByText("Words: in het restaurant", { selector: "p" })).toBeInTheDocument();
+    expect(within(group).getByRole("link", { name: "Mixed lesson practice" }).querySelector("[data-color]")).toBeNull();
+  });
+
   it("keeps Practise words and offers no activity links without suggestions", async () => {
     renderActions([]);
     const group = await screen.findByRole("group", { name: "Lesson actions" });

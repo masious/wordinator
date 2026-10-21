@@ -327,6 +327,9 @@
   --shell-clearance: var(--space-6);
   --navigation-offset: var(--space-3);
   --navigation-height: 56px;
+  /* The lesson page's sticky header (the lesson's title and current section), and the blur of the cover behind it. */
+  --size-lesson-header: 4.5rem;
+  --blur-cover: 20px;
   /* Bottom clearance for fixed bars and floating actions (the phone dock was retired with the Lumen shell). */
   --mobile-dock-clearance: calc(var(--navigation-offset) + env(safe-area-inset-bottom, 0px));
   /* Progress tracks and the default avatar. */

@@ -3,7 +3,7 @@ import {
 } from "@wordinator/contracts";
 import { lessonResponseSchema, type CourseDetailResponse, type CourseLesson, type LessonDocument as LessonDocumentData } from "@wordinator/contracts/lesson-document";
 import type { LessonAiPracticesResponse } from "@wordinator/contracts/tutor";
-import type { ActivityDescriptor, ActivityType } from "@wordinator/contracts/lesson-activities";
+import type { ActivityDescriptor } from "@wordinator/contracts/lesson-activities";
 import { Drawer } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -31,32 +31,16 @@ import { LessonReadingProgress, type ReadingTracking, saveLessonPosition, useRes
 import { typicalMinutes, useReadingTime } from "./LessonTime";
 import { CategoryBadge, entryStates, LessonIndex, lessonIndexEntries, LESSON_INDEX_MIN, stickyInset, useCurrentEntry, type LessonIndexEntry } from "./LessonIndex";
 import { LessonBox, LessonBoxActions, type LessonActivitySuggestion, type LessonBoxLesson } from "./LessonBox";
+import { activityParts, sectionActivities, useVisibleParts } from "./activitySections";
+import { HeadingDot } from "./HeadingDot";
+import { LessonStickyHeader } from "./LessonStickyHeader";
 import { LessonWords, useVisibleWords, useWordsCollapsed, type LessonWordsPlacement } from "./LessonWords";
 import { practiceFromBlock, PracticeSummary } from "./PracticeBlock";
 import { PracticeStepper } from "./PracticeStepper";
 import { AiPracticeToggle, useAiPracticeSlots, type AiPracticeScope } from "./AiPractices";
 
 const NO_ENTRIES: LessonIndexEntry[] = [];
-
-export function useCurrentActivitySection(descriptors: readonly ActivityDescriptor[], reading: RefObject<HTMLElement | null>, side: RefObject<HTMLElement | null>) {
-  const [current, setCurrent] = useState<ActivityDescriptor | undefined>();
-  useEffect(() => {
-    let frame = 0;
-    const sections = descriptors.filter((entry) => entry.sourceKind !== "dialogue");
-    const measure = () => {
-      frame = 0; const root = reading.current; if (!root) return;
-      const tops = sections.map((entry) => entry.returnHeadingId ? root.querySelector<HTMLElement>(`[data-block-id="${CSS.escape(entry.returnHeadingId)}"]`)?.getBoundingClientRect().top ?? null : null);
-      const line = stickyInset(side.current); const atBottom = window.scrollY > 0 && window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
-      if (atBottom && sections.some((entry) => entry.sourceKind === "lesson_end")) { setCurrent(sections.find((entry) => entry.sourceKind === "lesson_end")); return; }
-      let index = -1; tops.forEach((top, i) => { if (top !== null && top <= line + 8) index = i; });
-      setCurrent(index >= 0 ? sections[index] : sections.find((entry) => entry.sourceKind === "section" && entry.returnHeadingId === null));
-    };
-    const onScroll = () => { if (!frame) frame = requestAnimationFrame(measure); };
-    window.addEventListener("scroll", onScroll, { passive: true }); window.addEventListener("resize", onScroll); onScroll();
-    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); if (frame) cancelAnimationFrame(frame); };
-  }, [descriptors, reading, side]);
-  return current;
-}
+const NO_DESCRIPTORS: ActivityDescriptor[] = [];
 
 // The editor and BlockNote load only when someone opens a lesson for editing.
 const LessonEditor = lazy(() => import("../LessonEditor/LessonEditor"));
@@ -135,15 +119,16 @@ function StateChips({ lesson }: { lesson: Pick<CourseLessonSummary, "published" 
 // `aiPractices`, once expanded and read, places the lesson's AI practices after their anchor blocks and at the end.
 // `gate` shows only the lesson's beginning, faded, behind Start reading this lesson (docs/courses.md#lesson-pages), with nothing
 // tracked or indexed until it is pressed. `started` is set once it has been pressed, which starts the reading clock at once.
-function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, box, gate, started }: {
+// `header` is the page's sticky header slot, which the lesson fills with its title, `cover` and current section once started.
+function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, box, gate, started, header, cover }: {
   scope: Scope; lesson: CourseLesson; tracking: ReadingTracking; resume: LessonPosition | undefined; archived: boolean;
   aiPractices?: { scope: AiPracticeScope; data: LessonAiPracticesResponse | undefined }; box: LessonBoxLesson;
-  gate?: () => void; started: boolean;
+  gate?: () => void; started: boolean; header?: HTMLElement | null; cover?: string | null;
 }) {
   const { t } = useTranslation();
   const document = playableDocument(lesson);
   const activityDescriptorsQuery = useQuery({ ...lessonActivitiesQueryOptions(scope.groupId, scope.courseId, lesson.id), enabled: Boolean(lesson.published && document && !gate && !archived) });
-  const allActivityDescriptors = activityDescriptorsQuery.data?.descriptors ?? [];
+  const allActivityDescriptors = activityDescriptorsQuery.data?.descriptors ?? NO_DESCRIPTORS;
   // The viewer's completed activities (current versions only), keyed as `sourceId:type`, mark their suggestions Done.
   const doneActivities = new Set((activityDescriptorsQuery.data?.completed ?? []).map((entry) => `${entry.sourceId}:${entry.type}`));
   // Draft previews show no AI practices; they are tagged to the published document only.
@@ -151,15 +136,6 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const steps = useMemo(() => lessonSteps(lesson), [lesson]);
   const entries = useMemo(() => document ? lessonIndexEntries(document) : [], [document]);
   const reading = useRef<HTMLDivElement>(null); const side = useRef<HTMLDivElement>(null);
-  const activeActivitySection = useCurrentActivitySection(allActivityDescriptors, reading, side);
-  const suggestion = (descriptor: ActivityDescriptor, type: ActivityType): LessonActivitySuggestion => ({ descriptor, type, done: doneActivities.has(`${descriptor.sourceId}:${type}`) });
-  const activitySuggestions: LessonActivitySuggestion[] = activeActivitySection ? [
-    ...activeActivitySection.activityTypes.map((type) => suggestion(activeActivitySection, type)),
-    ...allActivityDescriptors.filter((entry) => entry.sourceKind === "dialogue" && entry.returnHeadingId === activeActivitySection.returnHeadingId)
-      .flatMap((entry) => entry.activityTypes.map((type) => suggestion(entry, type))),
-  ] : [];
-  // The active section's category, so the Do more with AI area shows the same badge as the section's row in the lesson index.
-  const activeSectionCategory = entries.find((entry) => entry.id === activeActivitySection?.returnHeadingId)?.category;
   const active = useVisibleWords(reading, side, steps);
   // The URL's hash, set when an activity returns to its section, wins over the saved step for that load.
   const hash = useRouterState({ select: (state) => state.location.hash });
@@ -190,26 +166,42 @@ function LessonBody({ scope, lesson, tracking, resume, archived, aiPractices, bo
   const practiceScope = { groupId: scope.groupId, courseId: scope.courseId, lessonId: lesson.id, accountId: scope.accountId };
   // The index and the headings it lists share each entry's state: current, passed, or locked until the reader reaches it. Behind
   // the start gate there is neither.
-  const indexed = !gate && entries.length >= LESSON_INDEX_MIN ? entries : NO_ENTRIES;
-  const current = useCurrentEntry(indexed, reading, side);
+  // The current entry is followed even when the index is too short to show, since Do more with AI follows it too.
+  const tracked = gate ? NO_ENTRIES : entries;
+  const indexed = tracked.length >= LESSON_INDEX_MIN ? tracked : NO_ENTRIES;
+  const current = useCurrentEntry(tracked, reading, side);
   const [visited, setVisited] = useState(-1);
   useEffect(() => setVisited((furthest) => Math.max(furthest, current)), [current]);
   const states = useMemo(() => entryStates(indexed, current, reachedStep, visited), [indexed, current, reachedStep, visited]);
-  const badges = useMemo(() => new Map(indexed.map((entry, index) => [entry.id, { category: entry.category, locked: states[index] === "locked" }])), [indexed, states]);
+  const badges = useMemo(() => new Map(indexed.flatMap((entry, index) => entry.color ? [] : [[entry.id, { category: entry.category, locked: states[index] === "locked" }] as const])), [indexed, states]);
+  // Do more with AI offers the current entry's section's activities, with only the grammar parts on screen
+  // (docs/lesson-activities.md#scope-and-entry-point). Every level-3 heading carries its colour dot, in the text as in the index.
+  const parts = useMemo(() => activityParts(tracked, allActivityDescriptors), [tracked, allActivityDescriptors]);
+  const visibleParts = useVisibleParts(parts, tracked, reading, side);
+  const section = sectionActivities(tracked, current, allActivityDescriptors, visibleParts);
+  const activitySuggestions: LessonActivitySuggestion[] = section.activities.flatMap(({ descriptor, part }) => descriptor.activityTypes.map((type) => ({ descriptor, type, part, done: doneActivities.has(`${descriptor.sourceId}:${type}`) })));
+  const colors = useMemo(() => new Map(indexed.flatMap((entry) => entry.color ? [[entry.id, entry.color] as const] : [])), [indexed]);
   const renderHeadingBadge = useCallback((id: string) => {
     const badge = badges.get(id);
-    return badge ? <CategoryBadge category={badge.category} locked={badge.locked} content /> : null;
-  }, [badges]);
+    if (badge) return <CategoryBadge category={badge.category} locked={badge.locked} content />;
+    const color = colors.get(id);
+    return color ? <HeadingDot color={color} /> : null;
+  }, [badges, colors]);
+  // The level-1 or level-2 entry the current one is in, which the sticky header names before a level-3 entry.
+  let sectionIndex = current;
+  while (sectionIndex > 0 && tracked[sectionIndex]?.level === 3) sectionIndex -= 1;
+  const sectionEntry = tracked[sectionIndex]?.level === 3 ? undefined : tracked[sectionIndex];
   const lessonBox = <>
+    {header && !gate && createPortal(<LessonStickyHeader title={box.title} cover={cover ?? null} entry={tracked[current]} section={sectionEntry} />, header)}
     {rail.box && createPortal(<LessonBox lesson={box} percent={percent} />, rail.box)}
-    {rail.actions && createPortal(<LessonBoxActions lesson={box} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} suggestions={activitySuggestions} completedCount={doneActivities.size} sectionCategory={activeSectionCategory} />, rail.actions)}
+    {rail.actions && createPortal(<LessonBoxActions lesson={box} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} suggestions={activitySuggestions} completedCount={doneActivities.size} sectionLabel={section.label} sectionCategory={section.category} />, rail.actions)}
   </>;
   if (!document || !steps.length) return <div className={styles.body}><p className={styles.emptyLesson}>{t("courses.lessons.empty")}</p>{lessonBox}</div>;
   const hasWords = steps.some((step) => step.words.length > 0);
   // Where the vocabulary panel goes: the right rail on wide screens, under the text below 62em (or outside the frame), a sheet on phones.
   const placement = !hasWords ? null : phone ? "sheet" : !inline && rail.reference ? "rail" : "under";
   const docked = placement === "rail";
-  const actions = (compact: boolean) => <LessonBoxActions lesson={box} compact={compact} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} suggestions={activitySuggestions} completedCount={doneActivities.size} sectionCategory={activeSectionCategory} />;
+  const actions = (compact: boolean) => <LessonBoxActions lesson={box} compact={compact} courseSlug={scope.courseSlug} lessonSlug={lesson.slug} suggestions={activitySuggestions} completedCount={doneActivities.size} sectionLabel={section.label} sectionCategory={section.category} />;
   const words = (props: { placement: LessonWordsPlacement; collapsible?: boolean }) =>
     <LessonWords steps={steps} active={active} groupId={scope.groupId} collapsed={wordsCollapsed} onToggle={toggleWords}
       footer={railDrawer ? undefined : actions} {...props} />;
@@ -465,6 +457,7 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
   const queryClient = useQueryClient();
   // Pressing the start gate this visit; the saved position keeps the lesson open whole on later visits.
   const [started, setStarted] = useState(false);
+  const [headerSlot, setHeaderSlot] = useState<HTMLDivElement | null>(null);
   // AI practices (C14h) expand on request and are read only then; the choice is not remembered.
   const [aiShown, setAiShown] = useState(false);
   const aiPracticeCount = lesson.data?.lesson.document ? lesson.data.lesson.aiPracticeCount ?? 0 : 0;
@@ -495,8 +488,10 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
   };
   const lessonLink = (target: CourseLessonSummary) => ({ to: "/courses/$courseSlug/lessons/$lessonSlug" as const, params: { courseSlug: detail.course.slug, lessonSlug: target.slug } });
   return <article className={styles.page} aria-labelledby="lesson-title">
+    {/* The sticky header's slot; the lesson body fills it while the lesson is read. */}
+    <div ref={setHeaderSlot} className={styles.headerSlot} data-lesson-header />
     {/* The lesson's cover: its first image, as on the course page's lesson list; decorative beside the title. */}
-    {summary.imageUrl && <div className={styles.cover}><img src={summary.imageUrl} alt="" decoding="async" /></div>}
+    {summary.imageUrl && <div className={styles.cover} data-lesson-cover><img src={summary.imageUrl} alt="" decoding="async" /></div>}
     <header className={styles.lessonHeader}>
       <nav className={styles.breadcrumb} aria-label={t("courses.lessons.breadcrumb")}>
         <Link to="/courses/$courseSlug" params={{ courseSlug: detail.course.slug }}>{detail.course.title}</Link>
@@ -531,6 +526,7 @@ export function LessonView({ groupId, courseId, accountId, detail, lessonId, dat
         <LessonEditor groupId={groupId} courseId={courseId} accountId={accountId} owner={scope.owner} lesson={data} onClose={() => setEditing(false)} />
       </Suspense>
       : <LessonBody scope={scope} lesson={data} resume={resume ? saved : undefined} archived={archived} gate={gated ? start : undefined} started={started}
+        header={headerSlot} cover={summary.imageUrl}
         box={{ groupId, courseId, courseTitle: detail.course.title, lessonId, title: current.title, number }}
         aiPractices={aiOpen ? { scope: aiScope, data: aiPractices.data } : undefined} tracking={{
         // Scrolling saves the furthest step of a published lesson the viewer has not finished; previews and archived courses never save.

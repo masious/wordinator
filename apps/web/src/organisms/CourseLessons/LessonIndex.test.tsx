@@ -20,7 +20,7 @@ const practice = (n: number, instruction: string): LessonTopBlock => ({
 const document = (blocks: LessonTopBlock[]): LessonDocument => ({ schemaVersion: LESSON_DOCUMENT_SCHEMA_VERSION, blocks });
 
 describe("lesson index entries", () => {
-  it("lists top-level level-1 and level-2 headings in reading order, and leaves out practices and every other block", () => {
+  it("lists top-level headings in reading order, level-3 ones with a colour, and leaves out practices and every other block", () => {
     const entries = lessonIndexEntries(document([
       practice(1, "Warm up"),
       heading(2, 2, "Greetings"), paragraph(3, "Hallo!"), example(4), practice(5, "Translate into English."),
@@ -32,12 +32,14 @@ describe("lesson index entries", () => {
       heading(14, 1, "Your  turn"), heading(15, 2, "Writing"),
     ]));
     expect(entries).toEqual([
-      // The highest heading level in the lesson is depth 0, whatever its level; lower levels are indented.
-      // A section's category reads every step up to the next listed heading, level-3 sections included. It starts at its first
-      // step; one with none of its own starts where the next does (here, after the last step).
-      { id: blockId(2), text: "Greetings", depth: 1, category: "translate", start: 1 },
-      { id: blockId(14), text: "Your turn", depth: 0, category: "topic", start: 6 },
-      { id: blockId(15), text: "Writing", depth: 1, category: "topic", start: 6 },
+      // The highest heading level listed is depth 0, whatever its level; lower levels are indented.
+      // A level-1 or level-2 section's category reads every step up to the next one, its level-3 parts included. It starts at its
+      // first step; one with none of its own starts where the next does (here, after the last step). A level-3 heading starts
+      // where its part does and carries a colour.
+      { id: blockId(2), text: "Greetings", depth: 1, level: 2, category: "translate", start: 1 },
+      { id: blockId(6), text: "Formal", depth: 2, level: 3, category: "fillIn", start: 4, color: "pink" },
+      { id: blockId(14), text: "Your turn", depth: 0, level: 1, category: "topic", start: 6 },
+      { id: blockId(15), text: "Writing", depth: 1, level: 2, category: "topic", start: 6 },
     ]);
   });
 
@@ -49,11 +51,19 @@ describe("lesson index entries", () => {
       heading(4, 2, "Making a suggestion"), callout(5, "grammar"), heading(6, 2, "Sinterklaas"), callout(7, "culture"),
       heading(8, 2, "Practice"), practice(9, "Put the words in the right order."), heading(10, 2, "Summary"), paragraph(11, "Klaar."),
     ]));
-    expect(entries.map((entry) => entry.category)).toEqual(["intro", "story", "grammar", "culture", "wordOrder", "summary"]);
+    // The lesson's own title opens the document; the page's sticky header carries it, so the index leaves it out and the rest
+    // move up a level. It still reads as the introduction, so the first listed section keeps its own category.
+    expect(entries.map((entry) => entry.category)).toEqual(["story", "grammar", "culture", "wordOrder", "summary"]);
+    expect(entries.map((entry) => entry.depth)).toEqual([0, 0, 0, 0, 0]);
+  });
+
+  it("gives level-3 headings colours in reading order, going round so neighbours differ", () => {
+    const entries = lessonIndexEntries(document([heading(1, 2, "Grammar"), ...Array.from({ length: 7 }, (_, index) => heading(index + 2, 3, `Part ${index + 1}`))]));
+    expect(entries.map((entry) => entry.color)).toEqual([undefined, "pink", "violet", "teal", "red", "yellow", "slate", "pink"]);
   });
 
   it("locks the entries the reader has not reached, and keeps those reached unlocked when the current one moves back", () => {
-    const listed = [0, 3, 6].map((start, index) => ({ id: blockId(index), text: `Entry ${index}`, depth: 0, category: "topic" as const, start }));
+    const listed = [0, 3, 6].map((start, index) => ({ id: blockId(index), text: `Entry ${index}`, depth: 0, level: 2 as const, category: "topic" as const, start }));
     expect(entryStates(listed, -1, -1)).toEqual(["locked", "locked", "locked"]);
     expect(entryStates(listed, 0, 1)).toEqual(["current", "locked", "locked"]);
     // The furthest step reached unlocks a section before it becomes current.
@@ -76,9 +86,9 @@ describe("lesson index entries", () => {
 
 // Three entries, 1000px apart, read through an 800px window. Every element's box follows `scrollY`.
 const entries: LessonIndexEntry[] = [
-  { id: blockId(1), text: "Greetings", depth: 0, category: "intro", start: 0 },
-  { id: blockId(2), text: "Small talk", depth: 1, category: "conversation", start: 1 },
-  { id: blockId(3), text: "Goodbyes", depth: 0, category: "summary", start: 2 },
+  { id: blockId(1), text: "Greetings", depth: 0, level: 1, category: "intro", start: 0 },
+  { id: blockId(2), text: "Small talk", depth: 1, level: 2, category: "conversation", start: 1 },
+  { id: blockId(3), text: "Goodbyes", depth: 0, level: 1, category: "summary", start: 2 },
 ];
 const layout = new Map(entries.map((entry, index) => [entry.id, 300 + index * 1000]));
 let scrollY = 0;

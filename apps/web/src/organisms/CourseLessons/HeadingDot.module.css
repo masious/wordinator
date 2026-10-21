@@ -1,0 +1,7 @@
+/* A level-3 heading's dot: a filled vivid circle; vivid tones read on either scheme, so they are never used as text colour. */
+.dot{display:inline-block;flex:none;width:0.55em;height:0.55em;border-radius:var(--radius-pill);background:var(--color-vivid-slate)}
+.dot[data-color="pink"]{background:var(--color-vivid-pink)}
+.dot[data-color="violet"]{background:var(--color-vivid-violet)}
+.dot[data-color="teal"]{background:var(--color-vivid-teal)}
+.dot[data-color="red"]{background:var(--color-vivid-red)}
+.dot[data-color="yellow"]{background:var(--color-vivid-yellow)}

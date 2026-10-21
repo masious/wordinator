@@ -46,6 +46,11 @@
 /* The lesson page's reading column; the index and lesson box live in the app rail, the vocabulary panel in the right rail. */
 .page{display:grid;gap:var(--space-6);min-width:0;max-width:var(--width-reading);margin-inline:auto;width:100%}
 /* The lesson cover: the lesson's first image as a full-width banner, cropped to fill. */
+/* The sticky header's slot (LessonStickyHeader): first in the column, taking no room, so the bar hangs over the page's top. The
+   next item cancels the column's gap after it. Below 68rem it sticks under the slim header. */
+.headerSlot{position:sticky;top:0;z-index:var(--z-content);height:0}
+.headerSlot+*{margin-top:calc(var(--space-6) * -1)}
+@media(max-width:68rem){.headerSlot{top:var(--navigation-height)}}
 .cover{overflow:hidden;aspect-ratio:16/6;background:var(--color-surface-muted);border-radius:var(--radius-lg)}
 .cover img{display:block;width:100%;height:100%;object-fit:cover}
 .lessonHeader{display:grid;justify-items:start;gap:var(--space-3);padding-bottom:var(--space-5);border-bottom:var(--ring-hairline)}

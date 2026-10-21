@@ -17,6 +17,8 @@ import { LabelChip } from "../../ui";
 import { useRailSlots } from "../GroupFrame/GroupFrame";
 import { activityIcon } from "../LessonActivities/activityIcons";
 import { Figure, FigureList, FiguresDisclosure, FiguresReveal, useFiguresOpen } from "../StudyTime/StudyTime";
+import type { ActivityPart } from "./activitySections";
+import { HeadingDot } from "./HeadingDot";
 import { typicalMinutes } from "./LessonTime";
 import styles from "./LessonBox.module.css";
 
@@ -78,7 +80,8 @@ export function LessonBox({ lesson, percent }: { lesson: LessonBoxLesson; percen
 
 // A suggested activity for the section at the reading line. `done` marks the viewer's own completed run of the current version
 // (docs/lesson-activities.md#scope-and-entry-point).
-export type LessonActivitySuggestion = { descriptor: ActivityDescriptor; type: ActivityType; done?: boolean };
+// `part` is the grammar part (a level-3 heading) the activity belongs to, marked with that part's colour dot.
+export type LessonActivitySuggestion = { descriptor: ActivityDescriptor; type: ActivityType; done?: boolean; part?: ActivityPart | null };
 
 // The activity type's icon; the svg carries data-icon so tests can tell the icons apart.
 function ActivityGlyph({ type }: { type: ActivityType }) {
@@ -93,7 +96,7 @@ function ActivityGlyph({ type }: { type: ActivityType }) {
 // which compact mode reduces to a check on the icon while its text stays for assistive technology. The header's badge counts the
 // completed suggestions, and shows nothing until there is one.
 // `completedCount` is the lesson-wide count of the viewer's completed activities (the completed list), not only this section's.
-export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSlug, suggestions = [], completedCount = 0, sectionCategory }: { lesson: LessonBoxLesson; compact?: boolean; courseSlug?: string; lessonSlug?: string; suggestions?: readonly LessonActivitySuggestion[]; completedCount?: number; sectionCategory?: OverviewCategory | undefined }) {
+export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSlug, suggestions = [], completedCount = 0, sectionLabel: label, sectionCategory }: { lesson: LessonBoxLesson; compact?: boolean; courseSlug?: string; lessonSlug?: string; suggestions?: readonly LessonActivitySuggestion[]; completedCount?: number; sectionLabel?: string | null; sectionCategory?: OverviewCategory | undefined }) {
   const { t } = useTranslation();
   const named = { number: lesson.number, lesson: lesson.title, course: lesson.courseTitle };
   const activityLabel: Record<ActivityType, string> = {
@@ -108,7 +111,15 @@ export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSl
     {" "}<span className={styles.done} title={t("courses.lessonBox.activityDone")}><Check aria-hidden="true" /><span className={styles.doneText}>{t("courses.lessonBox.activityDone")}</span></span>
   </> : null;
   // The section the suggestions belong to: dialogue suggestions share their section's heading, so name that section.
-  const sectionLabel = (suggestions.find((entry) => entry.descriptor.sourceKind === "section")?.descriptor.sourceLabel ?? suggestions[0]?.descriptor.sourceLabel.replace(/^Dialogue · /, "")) || null;
+  // `sectionLabel`, when given, names it (the lesson page passes its current index entry).
+  const sectionLabel = label !== undefined ? label : (suggestions.find((entry) => entry.descriptor.sourceKind === "section")?.descriptor.sourceLabel ?? suggestions[0]?.descriptor.sourceLabel.replace(/^Dialogue · /, "")) || null;
+  // Every link but the first keeps its source in its accessible name; so does the first when it belongs to a grammar part, which
+  // the heading does not name. A part's activities start with its colour dot.
+  const activityLink = ({ descriptor, type, done, part }: LessonActivitySuggestion, named: boolean) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action} data-category={activityCategory(type)}
+    title={`${activityLabel[type]} · ${descriptor.sourceLabel}`} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
+    params={{ courseSlug: courseSlug!, lessonSlug: lessonSlug!, sourceId: descriptor.sourceId, activityType: type }}>
+    <ActivityGlyph type={type} /><span className={styles.label}>{part && <><HeadingDot color={part.color} />{" "}</>}{activityLabel[type]}{named && <>{" "}<span className={styles.doneText}>· {descriptor.sourceLabel}</span></>}</span>{doneBadge(done)}
+  </Link>;
   return <div className={styles.actions} data-compact={compact || undefined} role="group" aria-label={t("courses.lessonBox.actions")}>
     <h2 className={styles.actionsHeading}><Sparkles aria-hidden="true" /><span>{t("courses.lessonBox.doMoreWithAi")}</span>
       {completedCount > 0 && <Badge component="span" variant="light" size="sm" aria-label={t("courses.lessonBox.activitiesDoneCount", { count: completedCount })}>{completedCount}</Badge>}
@@ -119,16 +130,8 @@ export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSl
       <Link className={styles.action} data-category="words" title={compact ? t("courses.lessonBox.practiseWords") : undefined} to="/words/drill" search={{ source: "course", course: lesson.courseId, direction: "mixed" }}>
         <Dumbbell aria-hidden="true" /><span className={styles.label}>{t("courses.lessonBox.practiseWords")}</span>
       </Link>
-      {suggestions.slice(0, 1).map(({ descriptor, type, done }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action} data-category={activityCategory(type)}
-        title={`${activityLabel[type]} · ${descriptor.sourceLabel}`} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
-        params={{ courseSlug: courseSlug!, lessonSlug: lessonSlug!, sourceId: descriptor.sourceId, activityType: type }}>
-        <ActivityGlyph type={type} /><span className={styles.label}>{activityLabel[type]}</span>{doneBadge(done)}
-      </Link>)}
+      {suggestions.slice(0, 1).map((suggestion) => activityLink(suggestion, Boolean(suggestion.part)))}
     </div>
-    {suggestions.slice(1).map(({ descriptor, type, done }) => <Link key={`${descriptor.sourceId}:${type}`} className={styles.action} data-category={activityCategory(type)}
-      title={`${activityLabel[type]} · ${descriptor.sourceLabel}`} to="/courses/$courseSlug/lessons/$lessonSlug/activities/$sourceId/$activityType"
-      params={{ courseSlug: courseSlug!, lessonSlug: lessonSlug!, sourceId: descriptor.sourceId, activityType: type }}>
-      <ActivityGlyph type={type} /><span className={styles.label}>{activityLabel[type]}{" "}<span className={styles.doneText}>· {descriptor.sourceLabel}</span></span>{doneBadge(done)}
-    </Link>)}
+    {suggestions.slice(1).map((suggestion) => activityLink(suggestion, true))}
   </div>;
 }
