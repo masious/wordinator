@@ -12,7 +12,7 @@ import { aiErrorResponse, assertDailySpeechCap, completeChat, readAiSettings, re
 import type { AppEnvironment } from "../app";
 import { apiError, parseJson } from "../http";
 import { azureSynthesizer, clipUrl, onDemandClip, readClips, storedSpeechCast } from "../speech";
-import { activitySourceBlocks, activitySourceData, generateLessonActivity } from "./generate";
+import { activitySourceBlocks, activitySourceData, generateLessonActivity, materializeReadAloud } from "./generate";
 import { speechChunks } from "./speech";
 import { claimGeneration, commitGeneratedPayload, LESSON_ACTIVITY_LEASE_MS, LESSON_ACTIVITY_RETRY_MS, releaseCacheMiss, reserveCacheMiss, type CacheRow } from "./cache";
 
@@ -130,6 +130,17 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     const db = context.env.DB;
     let row = await db.prepare(`SELECT ${cacheColumns} FROM lesson_activities WHERE cache_key=?`).bind(key).first<CacheRow>();
     if (row?.status === "ready" && validPayload(row)) return open(context, row.id, found, descriptor, row, found.archived);
+    if (type === "read_aloud") {
+      // No model, no lease and no AI allowance: the payload is written straight from the published source and the row is ready.
+      let materialized: LessonActivityPayload;
+      try { materialized = await materializeReadAloud({ sourceId, blocks: activitySourceBlocks(found.document, sourceId) }); } catch { return apiError(context, 503, "ACTIVITY_GENERATION_FAILED", "This activity could not be prepared. Try again shortly."); }
+      const now = Date.now();
+      await db.prepare(`INSERT INTO lesson_activities (id,lesson_id,course_id,source_id,activity_type,source_fingerprint,recipe_version,schema_version,language,cache_key,status,payload,created_at,updated_at)
+        VALUES (?,?,?,?,?,?,?,?,?,?,'ready',?,?,?) ON CONFLICT(cache_key) DO UPDATE SET status='ready',payload=excluded.payload,lease_token=NULL,lease_expires_at=NULL,next_attempt_at=NULL,updated_at=excluded.updated_at WHERE lesson_activities.status!='ready'`)
+        .bind(crypto.randomUUID(), found.lessonId, found.courseId, sourceId, type, expectedFingerprint, 1, 1, found.language, key, JSON.stringify(materialized), now, now).run();
+      row = await db.prepare(`SELECT ${cacheColumns} FROM lesson_activities WHERE cache_key=?`).bind(key).first<CacheRow>();
+      return open(context, row!.id, found, descriptor, row!, found.archived);
+    }
     if (found.archived) return apiError(context, 409, "ACTIVITY_READ_ONLY", "This activity has no cached content and cannot be generated from an archived course.");
     const uid = userId(context); const now = Date.now(); const token = crypto.randomUUID();
     if (!row) {
@@ -153,7 +164,7 @@ export function registerLessonActivityRoutes(app: Hono<AppEnvironment>, deps: Ro
     // Start generation in the request that claimed the lease. Other opens poll this same cache row.
     try {
       const source = activitySourceData(found.document, sourceId);
-      const payload = await generateLessonActivity({ env: context.env, db, userId: uid, type, language: found.language, source: source.content, lessonGoal: found.goal, dialogueId: source.dialogueId, lessonTerms: collectLessonWords(found.document).map((word) => word.term), blocks: activitySourceBlocks(found.document, sourceId), eligibleFollowUps: resolved.descriptors.flatMap((item) => item.activityTypes) });
+      const payload = await generateLessonActivity({ env: context.env, db, userId: uid, type, language: found.language, source: source.content, lessonGoal: found.goal, dialogueId: source.dialogueId, sourceId, lessonTerms: collectLessonWords(found.document).map((word) => word.term), blocks: activitySourceBlocks(found.document, sourceId), eligibleFollowUps: resolved.descriptors.flatMap((item) => item.activityTypes) });
       // Close the race between the first fingerprint check and the atomic published_at guard.
       const latest = await getLesson(context);
       if ("error" in latest) throw new Error("SOURCE_CHANGED");

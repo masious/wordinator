@@ -851,6 +851,70 @@ describe("original-dialogue role-play content", () => {
   });
 });
 
+// Read aloud is served from the published lines with no model; speak from English asks the model for English by position only.
+describe("speaking activities", () => {
+  type Setup = Awaited<ReturnType<typeof setup>>;
+  const openSpeaking = (s: Setup, type: ActivityType, ai?: Ai, cookie = s.learner) => openActivity(cookie, s.base, s.descriptor(s.ids.story), type, ai);
+  const storedLines = async (s: Setup, type: string) => (JSON.parse((await env.DB.prepare("SELECT payload FROM lesson_activities WHERE source_id = ? AND activity_type = ?").bind(s.ids.story, type).first<{ payload: string }>())!.payload) as { lines: Array<Record<string, unknown>>; metrics: string[] }).lines;
+  let logs: string[];
+  const logged = (name: string) => logs.map((line) => JSON.parse(line) as Record<string, unknown>).filter((line) => line.event === name);
+  beforeEach(() => { logs = []; vi.spyOn(console, "log").mockImplementation((line: unknown) => { logs.push(String(line)); }); });
+  const english = (count: number) => JSON.stringify({ lines: Array.from({ length: count }, (_, index) => ({ index, englishText: `English ${index}` })), metrics: ["speaking"] });
+
+  it("opens read aloud with no model call, no AI allowance and stable line IDs", async () => {
+    const s = await setup();
+    const none = scriptedAi([]);
+    const first = await readyOpen(await openSpeaking(s, "read_aloud", none));
+    expect(first.activity.payload.type).toBe("read_aloud");
+    const stored = await storedLines(s, "read_aloud");
+    expect(stored.map((line) => line.dutchText)).toEqual(["Sofia goes to the bakery early in the morning.", SOFIA_LINE, PIETER_LINE]);
+    expect(stored.map((line) => line.referenceText)).toEqual(stored.map((line) => line.dutchText));
+    const ids = stored.map((line) => line.id);
+    expect(new Set(ids).size).toBe(3);
+    const second = await readyOpen(await openSpeaking(s, "read_aloud", none, s.rival));
+    expect(second.activity.id).toBe(first.activity.id);
+    expect((await storedLines(s, "read_aloud")).map((line) => line.id)).toEqual(ids);
+    expect(none.calls).toHaveLength(0);
+    expect(await countRows("SELECT COUNT(*) AS n FROM ai_usage")).toBe(0);
+    expect(await countRows("SELECT COUNT(*) AS n FROM ai_turn_reservations")).toBe(0);
+    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities WHERE activity_type = 'read_aloud' AND status = 'ready' AND lease_token IS NULL")).toBe(1);
+  });
+
+  it("serves read aloud even at a zero daily AI cap", async () => {
+    const s = await setup();
+    await writeAiSettings(env.DB, { ...DEFAULT_AI_SETTINGS, dailyTurnCap: 0 });
+    await readyOpen(await openSpeaking(s, "read_aloud", scriptedAi([])));
+  });
+
+  it("refuses read aloud to anonymous, setup-incomplete and out-of-library requests, and for hidden lessons", async () => {
+    const s = await setup();
+    const body = { sourceId: s.ids.story, type: "read_aloud", expectedFingerprint: s.descriptor(s.ids.story).fingerprint };
+    expect((await call("POST", `${s.base}/open`, null, body)).status).toBe(401);
+    expect((await openSpeaking(s, "read_aloud", undefined, s.newcomer)).status).toBe(403);
+    expect((await openSpeaking(s, "read_aloud", undefined, s.stranger)).status).toBe(404);
+    expect((await openActivity(s.learner, `/api/courses/${s.courseId}/lessons/${s.unpublishedId}/activities`, s.descriptor(s.ids.story), "read_aloud")).status).toBe(404);
+    expect((await openActivity(s.learner, `/api/courses/${s.draftCourseId}/lessons/${s.hiddenLessonId}/activities`, s.descriptor(s.ids.story), "read_aloud")).status).toBe(404);
+    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities WHERE activity_type = 'read_aloud'")).toBe(0);
+  });
+
+  it("builds speak from English with server Dutch lines and the model's English by position", async () => {
+    const s = await setup();
+    await readyOpen(await openSpeaking(s, "speak_from_english", scriptedAi([say(english(3))])));
+    const lines = await storedLines(s, "speak_from_english");
+    expect(lines.map((line) => line.dutchText)).toEqual(["Sofia goes to the bakery early in the morning.", SOFIA_LINE, PIETER_LINE]);
+    expect(lines.map((line) => line.englishText)).toEqual(["English 0", "English 1", "English 2"]);
+  });
+
+  it("fails a speak from English line-count mismatch as ACTIVITY_OUTPUT_INVALID", async () => {
+    const s = await setup();
+    const failed = await openSpeaking(s, "speak_from_english", scriptedAi([say(english(2))]));
+    expect(failed.status).toBe(503);
+    expect(await errorCode(failed)).toBe("ACTIVITY_GENERATION_FAILED");
+    expect(logged("lesson_activity.output_invalid")).toEqual([expect.objectContaining({ type: "speak_from_english", reason: "schema" })]);
+    expect(await countRows("SELECT COUNT(*) AS n FROM lesson_activities WHERE activity_type = 'speak_from_english' AND status = 'failed'")).toBe(1);
+  });
+});
+
 describe("daily AI cap", () => {
   it("refuses a cache miss at the cap but still serves an already-ready activity", async () => {
     const s = await setup();
