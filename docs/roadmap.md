@@ -225,7 +225,7 @@ Decisions and execution batches are in [LESSON_ACTIVITIES_PLAN.html](../LESSON_A
 
 ## Lesson activities v2 — deployed 2026-10-21
 
-Plan and execution batches are in [ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2_PLAN.html). Adds guided grammar steps, read-aloud and speak-from-English activities, a Do more with AI badge, and a completion-metric snapshot per run, on top of v1 (see the section above). [Lesson activities](lesson-activities.md) owns behavior. Migration `0038_lesson_activities_v2.sql` was applied to production and both apps were deployed on 2026-10-21. The Up next Done badges (first-try score and finish time) were committed after that deploy and ship with the next one. The Playwright spec update is in progress.
+Plan and execution batches are in [ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2_PLAN.html). Adds guided grammar steps, read-aloud and speak-from-English activities, a Do more with AI badge, and a completion-metric snapshot per run, on top of v1 (see the section above). [Lesson activities](lesson-activities.md) owns behavior. Migration `0038_lesson_activities_v2.sql` was applied to production and both apps were deployed on 2026-10-21. The Up next Done badges (first-try score and finish time) were committed after that deploy and ship with the next one.
 
 ## Unprioritized future backlog
 

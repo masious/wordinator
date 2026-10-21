@@ -16,7 +16,8 @@ const DIALOGUE = [
 ];
 
 async function seedActivityLesson(page: Page, testInfo: TestInfo) {
-  const suffix = `activity-${uniqueTag(testInfo)}`;
+  // uniqueTag is per project and run; tests in one project run in parallel, so the test ID keeps each seeded course (and slug) apart.
+  const suffix = `activity-${uniqueTag(testInfo)}-${testInfo.testId.slice(0, 8)}`;
   await signIn(page);
   const api = courseApi(page);
   const { course } = await api<{ course: { id: string } }>("/courses", { title: `${suffix} course`, summary: "Oefenen" });
@@ -60,7 +61,7 @@ test("scrolling from the story section to the grammar section swaps the suggeste
 
   await readTo(page, grammar);
   await expect(actions.getByRole("link", { name: "Grammar explanation", exact: true })).toBeVisible();
-  await expect(actions.getByRole("link", { name: `Quick grammar question · ${GRAMMAR}`, exact: true })).toBeVisible();
+  await expect(actions.getByRole("link", { name: `Guided grammar · ${GRAMMAR}`, exact: true })).toBeVisible();
   await expect(actions.getByRole("link", { name: `Tricky grammar practice · ${GRAMMAR}`, exact: true })).toBeVisible();
   await expect(actions.getByRole("link", { name: "Story summary" })).toHaveCount(0);
 
@@ -69,30 +70,107 @@ test("scrolling from the story section to the grammar section swaps the suggeste
   await expect(actions.getByRole("link", { name: "Grammar explanation" })).toHaveCount(0);
 });
 
-test("a quick grammar question opens on its own page with a link back to its section, and Back to lesson returns to that section", async ({ page }, testInfo) => {
-  testInfo.setTimeout(90_000);
+test("a two-step guided grammar flow advances the lesson's progress meter, shows the completion metrics, and Back to lesson returns to its section", async ({ page }, testInfo) => {
+  testInfo.setTimeout(120_000);
   const { courseId, grammar } = await seedActivityLesson(page, testInfo);
   await page.goto(`/courses/${courseId}`);
   await openLesson(page);
   await readTo(page, grammar);
   const actions = page.getByRole("group", { name: "Lesson actions" }).first();
+  const meter = page.getByRole("progressbar", { name: "Lesson progress" });
+  const before = Number(await meter.getAttribute("aria-valuenow"));
 
-  await actions.getByRole("link", { name: `Quick grammar question · ${GRAMMAR}`, exact: true }).click();
-  await expect(page).toHaveURL(new RegExp(`/activities/${grammar}/quick_grammar$`));
+  await actions.getByRole("link", { name: `Guided grammar · ${GRAMMAR}`, exact: true }).click();
+  await expect(page).toHaveURL(new RegExp(`/activities/${grammar}/guided_grammar$`));
   const back = page.getByRole("link", { name: `Back to ${GRAMMAR}`, exact: true });
   await expect(back).toBeVisible();
   await expect(back).toHaveAttribute("href", new RegExp(`#${grammar}$`));
-  await expect(page.getByRole("heading", { name: "Quick grammar question", level: 1 })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Guided grammar", level: 1 })).toBeVisible();
+  await expect(page.getByRole("progressbar", { name: "Guided grammar" })).toHaveAttribute("aria-valuetext", "Question 1 of 2");
 
   await page.getByRole("button", { name: "het", exact: true }).click();
   await page.getByRole("button", { name: "Check answer", exact: true }).click();
   await expect(page.getByText("Correct", { exact: true })).toBeVisible();
+  await page.getByRole("button", { name: "Continue", exact: true }).click();
+  await expect(page.getByRole("progressbar", { name: "Guided grammar" })).toHaveAttribute("aria-valuetext", "Question 2 of 2");
+  await page.getByRole("button", { name: "boeken", exact: true }).click();
+  await page.getByRole("button", { name: "Check answer", exact: true }).click();
+  await expect(page.getByText("Correct", { exact: true })).toBeVisible();
   await page.getByRole("button", { name: "Finish", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Activity complete", level: 2 })).toBeVisible();
+  await expect(page.getByText("Your work stays private.", { exact: true })).toBeVisible();
+  const metrics = page.getByTestId("completion-metrics");
+  await expect(metrics).toBeVisible();
+  await expect(metrics.getByText(/\+\d+% of this lesson's grammar/)).toBeVisible();
 
-  await page.getByRole("button", { name: "Back to lesson", exact: true }).click();
+  await page.getByRole("link", { name: "Back to lesson", exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`/lessons/[^/]+#${grammar}$`));
   await expect(page.locator(`[data-block-id="${grammar}"]`).first()).toBeInViewport();
+  await expect(async () => {
+    expect(Number(await meter.getAttribute("aria-valuenow"))).toBeGreaterThan(before);
+  }).toPass();
+});
+
+test("hovering a story summary sentence highlights its pair in both columns", async ({ page }, testInfo) => {
+  testInfo.setTimeout(90_000);
+  const { courseId, story } = await seedActivityLesson(page, testInfo);
+  await page.goto(`/courses/${courseId}`);
+  await openLesson(page);
+  await readTo(page, story);
+  const actions = page.getByRole("group", { name: "Lesson actions" }).first();
+  await actions.getByRole("link", { name: "Story summary", exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Story summary", level: 1 })).toBeVisible();
+
+  const first = page.locator('[data-pair="0"]');
+  const second = page.locator('[data-pair="1"]');
+  await expect(first).toHaveCount(2);
+  await expect(first.first()).toHaveText("Sofia bestelt koffie in een café.");
+  await expect(first.nth(1)).toHaveText("Sofia orders a coffee in a café.");
+  await expect(first.first()).not.toHaveClass(/highlighted/);
+
+  await first.first().hover();
+  await expect(first.first()).toHaveClass(/highlighted/);
+  await expect(first.nth(1)).toHaveClass(/highlighted/);
+  await expect(second.first()).not.toHaveClass(/highlighted/);
+  await expect(second.nth(1)).not.toHaveClass(/highlighted/);
+
+  await second.nth(1).hover();
+  await expect(second.first()).toHaveClass(/highlighted/);
+  await expect(first.first()).not.toHaveClass(/highlighted/);
+});
+
+test("a read-aloud line with a blocked microphone takes a typed reply through Send, Continue and Finish", async ({ page }, testInfo) => {
+  testInfo.setTimeout(120_000);
+  await page.addInitScript(() => {
+    for (const name of ["SpeechRecognition", "webkitSpeechRecognition"]) Object.defineProperty(window, name, { value: undefined, configurable: true });
+    if (navigator.mediaDevices) {
+      Object.defineProperty(navigator.mediaDevices, "getUserMedia", { value: () => Promise.reject(new DOMException("Blocked", "NotAllowedError")), configurable: true });
+    }
+  });
+  const { courseId, story } = await seedActivityLesson(page, testInfo);
+  await page.goto(`/courses/${courseId}`);
+  await openLesson(page);
+  await readTo(page, story);
+  const actions = page.getByRole("group", { name: "Lesson actions" }).first();
+  await actions.getByRole("link", { name: `Read aloud · ${STORY}`, exact: true }).click();
+  await expect(page.getByRole("heading", { name: "Read aloud", level: 1 })).toBeVisible();
+
+  const send = page.getByRole("button", { name: "Send", exact: true });
+  await expect(send).toBeDisabled();
+  for (let guard = 0; guard < 20; guard += 1) {
+    // The page may still be settling on the saved line, so the line is read once it holds still.
+    const shown = page.getByText("Read this line aloud", { exact: true }).locator("xpath=following-sibling::p");
+    let line = await shown.innerText();
+    await page.waitForTimeout(600);
+    for (let settle = 0; settle < 10 && (await shown.innerText()) !== line; settle += 1) { line = await shown.innerText(); await page.waitForTimeout(600); }
+    await page.getByRole("textbox", { name: "Your reply" }).fill(line);
+    await send.click();
+    await expect(page.getByText("Correct", { exact: true })).toBeVisible();
+    const finish = page.getByRole("button", { name: "Finish", exact: true });
+    if (await finish.count()) { await finish.click(); break; }
+    await page.getByRole("button", { name: "Continue", exact: true }).click();
+  }
+  await expect(page.getByRole("heading", { name: "Activity complete", level: 2 })).toBeVisible();
 });
 
 test("reloading a tricky grammar page resumes at the question reached, and so does opening its address again", async ({ page }, testInfo) => {
@@ -163,7 +241,7 @@ test("a role-play dialogue with a blocked microphone takes typed replies through
   await page.getByRole("button", { name: "Finish", exact: true }).click();
   await expect(page.getByRole("heading", { name: "Activity complete", level: 2 })).toBeVisible();
 
-  await page.getByRole("button", { name: "Back to lesson", exact: true }).click();
+  await page.getByRole("link", { name: "Back to lesson", exact: true }).click();
   await expect(page).toHaveURL(new RegExp(`/lessons/[^/]+#${story}$`));
   await expect(page.locator(`[data-block-id="${story}"]`).first()).toBeInViewport();
 });
