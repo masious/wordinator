@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { foldEquivalentAccents, opaqueIdSchema } from "./index";
-import { inlineText, readDialogueTurns, type LessonBlock, type LessonBlockOf, type LessonDocument } from "./lessonDocument";
+import { inlineText, LESSON_IMAGE_ALT_MAX, LESSON_IMAGE_URL_MAX, readDialogueTurns, topBlockSchema, type LessonBlock, type LessonBlockOf, type LessonDocument } from "./lessonDocument";
 
 export const LESSON_ACTIVITY_RECIPE_VERSION = 2;
 export const LESSON_ACTIVITY_SCHEMA_VERSION = 2;
@@ -52,16 +52,28 @@ const wordOrderQuestionPayloadSchema = z.strictObject({ id: opaqueIdSchema, kind
 const questionPayloadSchema = z.discriminatedUnion("kind", [choiceQuestionPayloadSchema, fillInQuestionPayloadSchema, wordOrderQuestionPayloadSchema]);
 const roleplayTurnViewSchema = z.strictObject({ id: opaqueIdSchema, index: z.number().int().nonnegative(), speaker: shortText, isLearner: z.boolean(), cue: shortText.nullable(), dutchText: shortText, englishText: shortText.nullable(), voice: z.string().trim().min(1).max(100).nullable() });
 const roleplayTurnPayloadSchema = roleplayTurnViewSchema.extend({ referenceText: shortText });
+// Every activity payload carries one to three metric keys; views never include them.
+const lessonActivityMetricsSchema = z.array(lessonActivityMetricSchema).min(1).max(3);
+const summaryPairsSchema = z.array(z.strictObject({ dutch: shortText, english: shortText })).min(2).max(16);
+const summaryNewWordsSchema = z.array(z.strictObject({ term: shortText, translation: shortText })).max(12);
+const guidedStepBlocksSchema = z.array(topBlockSchema).min(1).max(4);
+const followUpTypeSchema = z.enum(["tricky_grammar", "mixed_practice", "grammar_explanation"]);
+// referenceText is the stored Dutch used for grading; views strip it. dutchText and referenceText hold the same Dutch text.
+const readAloudLineSchema = z.strictObject({ id: opaqueIdSchema, index: z.number().int().nonnegative(), speaker: shortText.nullable(), dutchText: shortText, referenceText: shortText });
+const speakFromEnglishLineSchema = readAloudLineSchema.extend({ englishText: shortText });
 const activityContents = {
-  story_summary: z.strictObject({ englishSummary: shortText, dutchRecap: shortText }),
+  story_summary: z.strictObject({ pairs: summaryPairsSchema, newWords: summaryNewWordsSchema }),
   story_comprehension: z.strictObject({ questions: z.array(choiceQuestionPayloadSchema).length(4) }),
   grammar_explanation: z.strictObject({ paragraphs: z.array(shortText).min(1).max(8), examples: z.array(z.strictObject({ dutch: shortText, english: shortText })).min(1).max(12) }),
   tricky_grammar: z.strictObject({ questions: z.array(questionPayloadSchema).length(4) }),
   mixed_practice: z.strictObject({ questions: z.array(questionPayloadSchema).length(6) }),
   roleplay: z.strictObject({ dialogueId: opaqueIdSchema, cueLanguage: z.enum(["english", "dutch"]), turns: z.array(roleplayTurnPayloadSchema).min(2).max(60) }),
+  guided_grammar: z.strictObject({ steps: z.array(z.strictObject({ blocks: guidedStepBlocksSchema, question: choiceQuestionPayloadSchema })).min(2).max(12), followUps: z.array(followUpTypeSchema).max(2) }),
+  read_aloud: z.strictObject({ lines: z.array(readAloudLineSchema).min(1).max(60) }),
+  speak_from_english: z.strictObject({ lines: z.array(speakFromEnglishLineSchema).min(1).max(60) }),
 } as const;
 const activityPayload = <T extends LessonActivityType, S extends z.ZodRawShape>(type: T, shape: S) => z.strictObject({
-  type: z.literal(type), recipeVersion: z.number().int().positive(), schemaVersion: z.number().int().positive(), ...shape,
+  type: z.literal(type), recipeVersion: z.number().int().positive(), schemaVersion: z.number().int().positive(), metrics: lessonActivityMetricsSchema, ...shape,
 });
 export const lessonActivityPayloadSchema = z.discriminatedUnion("type", [
   activityPayload("story_summary", activityContents.story_summary.shape),
@@ -70,17 +82,25 @@ export const lessonActivityPayloadSchema = z.discriminatedUnion("type", [
   activityPayload("tricky_grammar", activityContents.tricky_grammar.shape),
   activityPayload("mixed_practice", activityContents.mixed_practice.shape),
   activityPayload("roleplay", activityContents.roleplay.shape),
+  activityPayload("guided_grammar", activityContents.guided_grammar.shape),
+  activityPayload("read_aloud", activityContents.read_aloud.shape),
+  activityPayload("speak_from_english", activityContents.speak_from_english.shape),
 ]).superRefine((payload, context) => {
-  if ("questions" in payload && new Set(payload.questions.map((question) => question.id)).size !== payload.questions.length) context.addIssue({ code: "custom", path: ["questions"], message: "Question IDs must be unique." });
+  const questionIds = payload.type === "guided_grammar" ? payload.steps.map((step) => step.question.id)
+    : "questions" in payload ? payload.questions.map((question) => question.id) : [];
+  if (new Set(questionIds).size !== questionIds.length) context.addIssue({ code: "custom", path: [payload.type === "guided_grammar" ? "steps" : "questions"], message: "Question IDs must be unique." });
 });
 export type LessonActivityPayload = z.infer<typeof lessonActivityPayloadSchema>;
 const viewContents = {
-  story_summary: activityContents.story_summary,
+  story_summary: z.strictObject({ pairs: summaryPairsSchema, newWords: summaryNewWordsSchema, image: z.strictObject({ url: z.string().min(1).max(LESSON_IMAGE_URL_MAX), alt: z.string().max(LESSON_IMAGE_ALT_MAX) }).nullable() }),
   story_comprehension: z.strictObject({ questions: z.array(choiceQuestionViewSchema).length(4) }),
   grammar_explanation: activityContents.grammar_explanation,
   tricky_grammar: z.strictObject({ questions: z.array(questionViewSchema).length(4) }),
   mixed_practice: z.strictObject({ questions: z.array(questionViewSchema).length(6) }),
   roleplay: z.strictObject({ dialogueId: opaqueIdSchema, cueLanguage: z.enum(["english", "dutch"]), turns: z.array(roleplayTurnViewSchema).min(2).max(60) }),
+  guided_grammar: z.strictObject({ steps: z.array(z.strictObject({ blocks: guidedStepBlocksSchema, question: choiceQuestionViewSchema })).min(2).max(12), followUps: z.array(followUpTypeSchema).max(2) }),
+  read_aloud: z.strictObject({ lines: z.array(readAloudLineSchema.omit({ referenceText: true })).min(1).max(60) }),
+  speak_from_english: z.strictObject({ lines: z.array(speakFromEnglishLineSchema.omit({ referenceText: true }).extend({ dutchText: shortText.nullable() })).min(1).max(60) }),
 } as const;
 const activityViewPayload = <T extends LessonActivityType, S extends z.ZodRawShape>(type: T, shape: S) => z.strictObject({
   type: z.literal(type), recipeVersion: z.number().int().positive(), schemaVersion: z.number().int().positive(), ...shape,
@@ -92,6 +112,9 @@ export const lessonActivityViewPayloadSchema = z.discriminatedUnion("type", [
   activityViewPayload("tricky_grammar", viewContents.tricky_grammar.shape),
   activityViewPayload("mixed_practice", viewContents.mixed_practice.shape),
   activityViewPayload("roleplay", viewContents.roleplay.shape),
+  activityViewPayload("guided_grammar", viewContents.guided_grammar.shape),
+  activityViewPayload("read_aloud", viewContents.read_aloud.shape),
+  activityViewPayload("speak_from_english", viewContents.speak_from_english.shape),
 ]);
 export type LessonActivityViewPayload = z.infer<typeof lessonActivityViewPayloadSchema>;
 export const lessonActivityViewSchema = z.strictObject({
@@ -137,9 +160,16 @@ export function toLessonActivityView(activity: Omit<LessonActivityView, "payload
     if (question.kind === "fill_in") return { id: question.id, kind: question.kind, prompt: question.prompt };
     return { id: question.id, kind: question.kind, prompt: question.prompt, tokens: question.tokens };
   };
-  const clean = payload.type === "story_comprehension" ? { ...payload, questions: payload.questions.map(stripQuestion) }
-      : payload.type === "tricky_grammar" || payload.type === "mixed_practice" ? { ...payload, questions: payload.questions.map(stripQuestion) }
-        : payload.type === "roleplay" ? { ...payload, turns: payload.turns.map(({ referenceText: _, ...turn }) => turn) } : payload;
+  const stripChoice = (question: z.infer<typeof choiceQuestionPayloadSchema>): z.infer<typeof choiceQuestionViewSchema> => ({ id: question.id, kind: question.kind, prompt: question.prompt, options: question.options });
+  // Metrics are server-side only and never reach a view; guided follow-ups do, for the completion screen.
+  const { metrics: _metrics, ...content } = payload;
+  const clean = content.type === "story_comprehension" ? { ...content, questions: content.questions.map(stripQuestion) }
+      : content.type === "tricky_grammar" || content.type === "mixed_practice" ? { ...content, questions: content.questions.map(stripQuestion) }
+        : content.type === "roleplay" ? { ...content, turns: content.turns.map(({ referenceText: _, ...turn }) => turn) }
+          : content.type === "story_summary" ? { ...content, image: null }
+            : content.type === "guided_grammar" ? { type: content.type, recipeVersion: content.recipeVersion, schemaVersion: content.schemaVersion, steps: content.steps.map(({ blocks, question }) => ({ blocks, question: stripChoice(question) })), followUps: content.followUps }
+              : content.type === "read_aloud" ? { ...content, lines: content.lines.map(({ referenceText: _, ...line }) => line) }
+                : content.type === "speak_from_english" ? { ...content, lines: content.lines.map(({ referenceText: _, ...line }) => ({ ...line, dutchText: null })) } : content;
   return lessonActivityViewSchema.parse({ ...rest, payload: clean });
 }
 

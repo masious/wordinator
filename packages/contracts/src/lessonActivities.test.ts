@@ -10,11 +10,25 @@ const para = (id: number, text: string): LessonBlock => ({ id: uid(id), type: "p
 // Dialogue turns are stored as a bare JSON array of { speaker, text } (see lessonDocument.ts readDialogueTurns).
 const dialogue = (id: number, turns: { speaker: string; text: string }[]): LessonBlock => ({ id: uid(id), type: "dialogue", props: { turns: JSON.stringify(turns) }, content: undefined, children: [] });
 const sofiaAndMira = [{ speaker: "Sofia", text: "Hallo." }, { speaker: "Mira", text: "Goedemorgen." }];
+const metrics = ["lesson_activities"];
+const choice = (n: number) => ({ id: uid(n), kind: "choice", prompt: "Kies.", options: [1, 2, 3].map((x) => ({ id: uid(n * 10 + x), text: `Optie ${x}` })), correctOptionId: uid(n * 10 + 1), explanation: "Omdat." });
+const step = (n: number, blocks: LessonBlock[] = [para(n * 100, "Uitleg.")]) => ({ blocks, question: choice(n) });
+const guidedPayload = { type: "guided_grammar", recipeVersion: 2, schemaVersion: 2, metrics, steps: [step(10), step(20)], followUps: ["tricky_grammar", "mixed_practice"] };
+const readAloudLine = (n: number) => ({ id: uid(n), index: n, speaker: null, dutchText: "Goedemorgen.", referenceText: "Goedemorgen." });
+const readAloudPayload = { type: "read_aloud", recipeVersion: 2, schemaVersion: 2, metrics, lines: [readAloudLine(50)] };
+const speakLine = { id: uid(60), index: 0, speaker: "Sofia", dutchText: "Goedemorgen.", referenceText: "Goedemorgen.", englishText: "Good morning." };
+const speakPayload = { type: "speak_from_english", recipeVersion: 2, schemaVersion: 2, metrics, lines: [speakLine] };
+const summaryPayload = { type: "story_summary", recipeVersion: 2, schemaVersion: 2, metrics, pairs: [{ dutch: "Hallo.", english: "Hello." }, { dutch: "Ik heet Mira.", english: "My name is Mira." }], newWords: [{ term: "hallo", translation: "hello" }] };
+const roleplayPayload = { type: "roleplay", recipeVersion: 2, schemaVersion: 2, metrics, dialogueId: uid(70), cueLanguage: "english", turns: [
+  { id: uid(71), index: 0, speaker: "Sofia", isLearner: false, cue: null, dutchText: "Hallo", englishText: null, voice: null, referenceText: "Hallo" },
+  { id: uid(72), index: 1, speaker: "Mira", isLearner: true, cue: "Greet her.", dutchText: "Hallo", englishText: null, voice: null, referenceText: "Hallo" },
+] };
+const viewOf = (payload: unknown) => toLessonActivityView({ id: uid(10), sourceId: uid(11), sourceLabel: "Lesson", sourceFingerprint: fingerprint, payload: lessonActivityPayloadSchema.parse(payload) });
 
 describe("lesson activity contracts", () => {
   it("strips private answer references from activity views and grades from payload", () => {
     const payload = lessonActivityPayloadSchema.parse({
-      type: "tricky_grammar", recipeVersion: 2, schemaVersion: 2,
+      type: "tricky_grammar", recipeVersion: 2, schemaVersion: 2, metrics,
       questions: [
         { id: uid(1), kind: "choice", prompt: "Choose.", options: [{ id: uid(2), text: "A" }, { id: uid(3), text: "B" }, { id: uid(4), text: "C" }], correctOptionId: uid(3), explanation: "B is used here." },
         ...[5, 6, 7].map((n) => ({ id: uid(n), kind: "fill_in", prompt: "Ik … hier.", referenceAnswers: ["woon"], explanation: "Present tense." })),
@@ -30,7 +44,7 @@ describe("lesson activity contracts", () => {
 
   it("normalizes bounded text and grades fill and ordering from stored references", () => {
     expect(normalizeLessonSentence("  IK\twoon  ")).toBe("ik woon");
-    const fill = { type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, questions: [
+    const fill = { type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, metrics, questions: [
       { id: uid(1), kind: "fill_in", prompt: "Ik … hier.", referenceAnswers: ["woon"], explanation: "Present tense." },
       ...[2, 3, 4].map((n) => ({ id: uid(n), kind: "choice", prompt: "Pick", options: [1, 2, 3].map((x) => ({ id: uid(n * 10 + x), text: `Option ${x}` })), correctOptionId: uid(n * 10 + 1), explanation: "Because." })),
     ] } as const;
@@ -42,17 +56,17 @@ describe("lesson activity contracts", () => {
   it("grades word order against the stored expected order and rejects a non-permutation", () => {
     const wordOrder = { id: uid(1), kind: "word_order", prompt: "Order the words.", tokens: ["hier", "woon", "ik"], expectedOrder: [2, 1, 0], explanation: "Verb second." };
     const fillIn = (n: number) => ({ id: uid(n), kind: "fill_in", prompt: "Ik … hier.", referenceAnswers: ["woon"], explanation: "Present tense." });
-    const payload = lessonActivityPayloadSchema.parse({ type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, questions: [wordOrder, fillIn(2), fillIn(3), fillIn(4)] });
+    const payload = lessonActivityPayloadSchema.parse({ type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, metrics, questions: [wordOrder, fillIn(2), fillIn(3), fillIn(4)] });
     expect(gradeLessonActivityAnswer(payload, uid(1), { kind: "word_order", order: [2, 1, 0] })).toMatchObject({ correct: true, reference: "ik woon hier" });
     expect(gradeLessonActivityAnswer(payload, uid(1), { kind: "word_order", order: [0, 1, 2] })?.correct).toBe(false);
     expect(gradeLessonActivityAnswer(payload, uid(1), { kind: "word_order", order: [2, 1] })?.correct).toBe(false);
     expect(gradeLessonActivityAnswer(payload, uid(1), { kind: "text", text: "ik woon hier" })?.correct).toBe(false);
-    expect(lessonActivityPayloadSchema.safeParse({ type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, questions: [{ ...wordOrder, expectedOrder: [0, 0, 1] }, fillIn(2), fillIn(3), fillIn(4)] }).success).toBe(false);
+    expect(lessonActivityPayloadSchema.safeParse({ type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, metrics, questions: [{ ...wordOrder, expectedOrder: [0, 0, 1] }, fillIn(2), fillIn(3), fillIn(4)] }).success).toBe(false);
   });
 
   it("strips role-play reference text from the learner-facing view and still grades it", () => {
     const turn = (index: number, speaker: string, isLearner: boolean) => ({ id: uid(20 + index), index, speaker, isLearner, cue: "Say hello.", dutchText: "Hallo Sofia", englishText: "Hello Sofia", voice: null, referenceText: "Hallo Sofia" });
-    const payload = lessonActivityPayloadSchema.parse({ type: "roleplay", recipeVersion: 1, schemaVersion: 1, dialogueId: uid(30), cueLanguage: "english", turns: [turn(0, "Sofia", false), turn(1, "Mira", true)] });
+    const payload = lessonActivityPayloadSchema.parse({ type: "roleplay", recipeVersion: 1, schemaVersion: 1, metrics, dialogueId: uid(30), cueLanguage: "english", turns: [turn(0, "Sofia", false), turn(1, "Mira", true)] });
     const view = toLessonActivityView({ id: uid(10), sourceId: uid(31), sourceLabel: "Dialogue", sourceFingerprint: fingerprint, payload });
     expect(view.payload.type === "roleplay" && view.payload.turns.length).toBe(2);
     expect(view.payload.type === "roleplay" && view.payload.turns.every((item) => !("referenceText" in item))).toBe(true);
@@ -63,7 +77,7 @@ describe("lesson activity contracts", () => {
   });
 
   it("compares sentences by punctuation, accent equivalence and spacing, but not by dropping articles", () => {
-    const reply = (referenceText: string) => lessonActivityPayloadSchema.parse({ type: "roleplay", recipeVersion: 1, schemaVersion: 1, dialogueId: uid(40), cueLanguage: "dutch", turns: [
+    const reply = (referenceText: string) => lessonActivityPayloadSchema.parse({ type: "roleplay", recipeVersion: 1, schemaVersion: 1, metrics, dialogueId: uid(40), cueLanguage: "dutch", turns: [
       { id: uid(41), index: 0, speaker: "Sofia", isLearner: false, cue: null, dutchText: "Hallo", englishText: null, voice: null, referenceText: "Hallo" },
       { id: uid(42), index: 1, speaker: "Dirk", isLearner: true, cue: "Greet him.", dutchText: referenceText, englishText: null, voice: null, referenceText },
     ] });
@@ -99,7 +113,7 @@ describe("lesson activity contracts", () => {
   });
 
   it("applies the same sentence rule to fill-in answers", () => {
-    const fill = lessonActivityPayloadSchema.parse({ type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, questions: [
+    const fill = lessonActivityPayloadSchema.parse({ type: "tricky_grammar", recipeVersion: 1, schemaVersion: 1, metrics, questions: [
       { id: uid(1), kind: "fill_in", prompt: "Ik … hier.", referenceAnswers: ["woon"], explanation: "Present tense." },
       ...[2, 3, 4].map((n) => ({ id: uid(n), kind: "choice", prompt: "Pick", options: [1, 2, 3].map((x) => ({ id: uid(n * 10 + x), text: `Option ${x}` })), correctOptionId: uid(n * 10 + 1), explanation: "Because." })),
     ] });
@@ -179,5 +193,54 @@ describe("lesson activity contracts", () => {
     expect(sources.map((source) => source.sourceId)).not.toContain(uid(5));
     expect(sources.find((source) => source.sourceId === uid(1))?.activityTypes).toEqual(["story_summary", "story_comprehension"]);
     expect(sources.find((source) => source.sourceId === uid(9))).toMatchObject({ sourceLabel: "Dialogue · Story", activityTypes: ["roleplay"] });
+  });
+
+  it("validates story summary pairs, new words and the view image", () => {
+    expect(lessonActivityPayloadSchema.safeParse(summaryPayload).success).toBe(true);
+    expect(lessonActivityPayloadSchema.safeParse({ ...summaryPayload, pairs: summaryPayload.pairs.slice(0, 1) }).success).toBe(false);
+    expect(lessonActivityPayloadSchema.safeParse({ ...summaryPayload, newWords: Array.from({ length: 13 }, (_, n) => ({ term: `woord${n}`, translation: "word" })) }).success).toBe(false);
+    const view = viewOf(summaryPayload);
+    expect(lessonActivityViewSchema.parse(view).payload).toMatchObject({ type: "story_summary", image: null, pairs: summaryPayload.pairs });
+    expect(JSON.stringify(view)).not.toContain("metrics");
+  });
+
+  it("validates guided grammar steps and follow-ups, and omits the answer from its view", () => {
+    expect(lessonActivityPayloadSchema.safeParse(guidedPayload).success).toBe(true);
+    expect(lessonActivityPayloadSchema.safeParse({ ...guidedPayload, steps: [step(10)] }).success).toBe(false);
+    expect(lessonActivityPayloadSchema.safeParse({ ...guidedPayload, steps: [{ ...step(10), blocks: [] }, step(20)] }).success).toBe(false);
+    expect(lessonActivityPayloadSchema.safeParse({ ...guidedPayload, steps: [{ ...step(10), blocks: Array.from({ length: 5 }, (_, n) => para(300 + n, "Regel.")) }, step(20)] }).success).toBe(false);
+    expect(lessonActivityPayloadSchema.safeParse({ ...guidedPayload, followUps: ["tricky_grammar", "mixed_practice", "grammar_explanation"] }).success).toBe(false);
+    expect(lessonActivityPayloadSchema.safeParse({ ...guidedPayload, followUps: ["quick_grammar"] }).success).toBe(false);
+    expect(lessonActivityPayloadSchema.safeParse({ ...guidedPayload, steps: [step(10), step(10)] }).success).toBe(false);
+    const view = viewOf(guidedPayload);
+    expect(lessonActivityViewSchema.parse(view).payload.type).toBe("guided_grammar");
+    expect(JSON.stringify(view)).not.toContain("correctOptionId");
+    expect(JSON.stringify(view)).not.toContain("explanation");
+    expect(view.payload.type === "guided_grammar" && view.payload.followUps).toEqual(["tricky_grammar", "mixed_practice"]);
+  });
+
+  it("validates read-aloud lines and strips reference text from the view", () => {
+    expect(lessonActivityPayloadSchema.safeParse(readAloudPayload).success).toBe(true);
+    expect(lessonActivityPayloadSchema.safeParse({ ...readAloudPayload, lines: Array.from({ length: 61 }, (_, n) => readAloudLine(100 + n)) }).success).toBe(false);
+    const view = viewOf(readAloudPayload);
+    expect(lessonActivityViewSchema.parse(view).payload).toMatchObject({ type: "read_aloud", lines: [{ dutchText: "Goedemorgen." }] });
+    expect(JSON.stringify(view)).not.toContain("referenceText");
+  });
+
+  it("validates speak-from-English lines and shows Dutch text only after an answer", () => {
+    expect(lessonActivityPayloadSchema.safeParse(speakPayload).success).toBe(true);
+    const { englishText: _englishText, ...withoutEnglish } = speakLine;
+    expect(lessonActivityPayloadSchema.safeParse({ ...speakPayload, lines: [withoutEnglish] }).success).toBe(false);
+    const view = viewOf(speakPayload);
+    expect(lessonActivityViewSchema.parse(view).payload).toMatchObject({ type: "speak_from_english", lines: [{ englishText: "Good morning.", dutchText: null }] });
+    expect(JSON.stringify(view)).not.toContain("referenceText");
+  });
+
+  it("requires one to three metrics on every payload, roleplay included", () => {
+    for (const payload of [summaryPayload, guidedPayload, readAloudPayload, speakPayload, roleplayPayload]) {
+      expect(lessonActivityPayloadSchema.safeParse(payload).success).toBe(true);
+      expect(lessonActivityPayloadSchema.safeParse({ ...payload, metrics: [] }).success).toBe(false);
+      expect(lessonActivityPayloadSchema.safeParse({ ...payload, metrics: ["lesson_share", "lesson_reading", "lesson_grammar", "lesson_activities"] }).success).toBe(false);
+    }
   });
 });

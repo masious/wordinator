@@ -143,7 +143,7 @@ const columnListSchema = z.strictObject({
   id: blockId, type: z.literal("columnList"), props: z.strictObject({}), content: noContent,
   children: z.array(columnSchema).min(LESSON_COLUMNS_MIN).max(LESSON_COLUMNS_MAX),
 });
-const topBlockSchema = z.discriminatedUnion("type", [...leafBlockSchema.options, columnListSchema]);
+export const topBlockSchema = z.discriminatedUnion("type", [...leafBlockSchema.options, columnListSchema]);
 
 export type LessonLeafBlock = z.infer<typeof leafBlockSchema>;
 export type LessonColumnBlock = z.infer<typeof columnSchema>;
