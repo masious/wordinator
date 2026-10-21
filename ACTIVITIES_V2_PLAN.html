@@ -345,7 +345,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <dt>Done when</dt><dd><ul><li>No mention of <code>quick_grammar</code> remains in this file.</li><li>Each of D1–D7 can be traced to a heading or bullet in this file.</li><li>The “Known gaps” list is still present, and the furthest-position note is present.</li><li>The old “never change” sentence is gone.</li></ul></dd>
 <dt>Depends on</dt><dd>none (first task)</dd>
 <dt>Parallel-safe</dt><dd>no (T0.2 links to this file)</dd>
-<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Status</dt><dd class="status">Done 2026-10-21 — Verify grep: 0 quick_grammar matches</dd>
 <dt>Risk</dt><dd>normal</dd>
 </dl>
 <p class="orch"><strong>Resolved:</strong> Verify = <code>rtk grep -n quick_grammar docs/lesson-activities.md</code> returns nothing. The worker finds the “never change” sentence by its text.</p>
@@ -1065,8 +1065,8 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <p class="muted">One row per task, added by the orchestrator in that task’s own commit (T5.2 reconciles it). No v2 change is deployed until T5.3 completes.</p>
 <div class="table"><table>
 <thead><tr><th>Task</th><th>Date</th><th>Checks run</th><th>Result</th></tr></thead>
-<tbody class="empty">
-<tr><td></td><td></td><td></td><td></td></tr>
+<tbody>
+<tr><td>T0.1</td><td>2026-10-21</td><td>Verify grep</td><td>Done; docs/lesson-activities.md owns D1–D7</td></tr>
 </tbody>
 </table></div>
 </section>

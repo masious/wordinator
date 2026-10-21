@@ -1,6 +1,6 @@
 # Lesson activities
 
-Approved 2026-10-21; deployed to production 2026-10-21. This document owns section-aware lesson activities. Delivery tasks and live verification status are in [the execution plan](../LESSON_ACTIVITIES_PLAN.html). The [lesson page](courses.md#lesson-pages), [Tutor](ai-tutor.md), and [Tutor-saved practices](courses.md#ai-practices) retain their own owners.
+v1 partly deployed (no production data); v2 planned in [ACTIVITIES_V2_PLAN.html](../ACTIVITIES_V2_PLAN.html). This document owns section-aware lesson activities. Delivery tasks and live verification status are in [the execution plan](../LESSON_ACTIVITIES_PLAN.html). The [lesson page](courses.md#lesson-pages), [Tutor](ai-tutor.md), and [Tutor-saved practices](courses.md#ai-practices) retain their own owners.
 
 ## Scope and entry point
 
@@ -16,13 +16,19 @@ Attaching an activity to its source and suggesting it are one feature. Suggestio
 | --- | --- | --- | --- |
 | Story summary | Story section | Short English scene explanation and Dutch recap | Explicit Done |
 | Story comprehension | Story section | Four questions, three choices each, feedback | All answered |
+| Read aloud | Story section | Each Dutch line to read aloud, with pronunciation feedback; model-free | All lines read |
+| Speak from English | Story section | English line for each Dutch line; learner produces the Dutch line | All lines sent |
 | Grammar explanation | Grammar section | English explanation, Dutch examples and translations | Explicit Done |
-| Quick grammar | Grammar section | One question with three choices and feedback | Answer checked |
+| Guided grammar | Grammar section | Ordered steps over the section's blocks, each with a choice question and feedback | All steps answered |
 | Tricky grammar | Grammar section | Four choice, fill-in or word-order questions using taught distinctions | All answered |
 | Mixed practice | Summary or lesson endpoint | Six questions combining this lesson's concepts | All answered |
 | Role-play | Original dialogue containing Sofia and a partner | Original dialogue; learner produces Sofia's lines | All Sofia turns sent |
 
-Counts are fixed generation-recipe defaults. Activities are finite, not chats. Text is escaped plain text: each paragraph and example is its own element, and activity pages do not parse links. Structured explanation components do not extend lesson rich text to other surfaces. Required lesson completion, required practice progress and word memory never change through activities.
+Counts are fixed generation-recipe defaults, except guided grammar (2-12 steps) and speaking lines (at most 60 per section). Activities are finite, not chats. Text is escaped plain text: each paragraph and example is its own element, and activity pages do not parse links, except the snapshotted lesson blocks of a guided grammar step (see [Guided grammar](#guided-grammar)). Structured explanation components do not extend lesson rich text to other surfaces.
+
+**Progress.** Answering a guided grammar step marks the lesson blocks shown in that step as read for lesson progress. The viewer's saved lesson position advances to the step key of the last shown block only if it is further than the current saved position (it never moves backwards), then the existing completion check runs. Archived courses and unsaved runs make no progress write. Word memory never changes through activities.
+
+**Note on furthest-position credit.** Reading share is based on the furthest position, so this also credits earlier steps, the same as a reader scrolling ahead. The owner may revisit this; the alternative is a per-block read set, which is a larger change.
 
 ## Sources and sections
 
@@ -46,7 +52,60 @@ Generation uses the existing provider fallback without Tutor conversations or to
 
 ## Model output
 
-For the non-role-play types the model writes content only: summary text, explanation paragraphs and examples, or questions with `prompt`, `options` (three strings), `correctIndex` (0-2), `explanation`, fill-in `referenceAnswers`, and word-order `tokens` in their correct sentence order. The model never writes IDs, a `type` or version numbers. Wordinator parses that with non-strict schemas (unknown keys are dropped), assigns every ID with `crypto.randomUUID()`, shuffles word-order tokens with a sentence-seeded permutation and derives `expectedOrder`, then validates the result with the strict payload contract. Question counts stay exact (story comprehension 4, tricky grammar 4, mixed practice 6, quick grammar 1). A reply wrapped in a Markdown fence or with prose around the JSON is accepted; anything that still fails is `ACTIVITY_OUTPUT_INVALID`. Outside role-play it is logged as `lesson_activity.output_invalid` with the type, the failure stage and the issue paths only, never the model text or lesson content; role-play failures return the same error without that log line. Role-play keeps its own contract above.
+For the non-role-play types the model writes content only: summary text, explanation paragraphs and examples, or questions with `prompt`, `options` (three strings), `correctIndex` (0-2), `explanation`, fill-in `referenceAnswers`, and word-order `tokens` in their correct sentence order. The model never writes IDs, a `type` or version numbers. Wordinator parses that with non-strict schemas (unknown keys are dropped), assigns every ID with `crypto.randomUUID()`, shuffles word-order tokens with a sentence-seeded permutation and derives `expectedOrder`, then validates the result with the strict payload contract. Question counts stay exact (story comprehension 4, tricky grammar 4, mixed practice 6). A reply wrapped in a Markdown fence or with prose around the JSON is accepted; anything that still fails is `ACTIVITY_OUTPUT_INVALID`. Outside role-play it is logged as `lesson_activity.output_invalid` with the type, the failure stage and the issue paths only, never the model text or lesson content; role-play failures return the same error without that log line. Role-play keeps its own contract above.
+
+Additional shapes: `story_summary` returns sentence pairs (each Dutch sentence with its English translation, in order) and `newWords`, the other section words the lesson does not teach. The model receives the lesson's own terms as already taught (see [Story summary](#story-summary)). `guided_grammar` returns ordered `steps`, each with 1-4 chunk indices into the numbered grammar chunks and one choice question (`prompt`, `options`, `correctIndex`, `explanation`). The server maps indices to lesson block IDs and snapshots those blocks into the payload; the model never writes IDs. `guided_grammar` also returns `followUps`, 0-2 values from `tricky_grammar`, `mixed_practice` and `grammar_explanation`; the server keeps only the types eligible in this lesson. Every generated payload carries `metrics`: 1-3 keys from the enum `lesson_share`, `lesson_reading`, `lesson_grammar` and `lesson_activities`, chosen by the model, which never sees numbers. `read_aloud` has no model output: its lines come from the published lesson and its metrics are the fixed default `[lesson_share]`.
+
+## Story summary
+
+The recap shows Dutch sentences with their English translations. Hovering or focusing a Dutch sentence highlights its English pair, and the reverse. The section's image (the first image block in the section, including inside columns), when present, appears at the top of the activity. On completion, the activity suggests "understand grammar": the next section's grammar activity, when a next grammar section exists.
+
+- **Word dictionary.** A left-side list of new words used in this section that the lesson does not already teach. It reuses the visual UI of the lesson's new-words panel (`LessonWords`). Display only: no bookmarking and no word-memory change.
+- **Newly listed words.** The lesson's own word list (`collectLessonWords` terms) goes to the model as already taught. The model decides which other section words to return in `newWords`. Validation is shape-only under the strict contract; the server only dedupes case-insensitively within the list and against the lesson's terms.
+
+## Guided grammar
+
+`guided_grammar` replaces the earlier one-question grammar activity, which is removed everywhere. `grammar_explanation` and `tricky_grammar` are unchanged. Content is generated once, cached and shared like every activity, with no live per-learner adaptation.
+
+- The model receives the grammar section's blocks as a numbered list of chunks and returns ordered steps. Each step has 1-4 chunk indices (prefer atomic: one sub-rule or one example group per step) and one small choice question with three options, `correctIndex` and `explanation`, that checks or continues teaching that chunk. An activity has 2-12 steps in total.
+- Chunks ascend in document order across steps, should cover the section, and never overlap.
+- UI: one slide per step. A step progress bar sits at the top. Below it are the step's lesson blocks, rendered with the read-only lesson renderer (`LessonBlocks`). Under those is the small question with feedback. Once the answer is checked, Continue appears. These step blocks are the one rich-text exception on an activity page, as the lesson share's example sentence is elsewhere.
+- Answering a step applies the progress rule under [Activity catalogue](#activity-catalogue).
+- Completion offers "Back to the lesson's practices": a link to the first practice block inside the source section (hash = block ID), otherwise the normal return link. The rest of the completion order is under [Completion and progress](#completion-and-progress).
+
+## Speaking activities
+
+`read_aloud` and `speak_from_english` are two new, separate activity types. Role-play stays unchanged.
+
+- `read_aloud`: the learner reads each Dutch line aloud and gets pronunciation feedback. It is model-free: the lines come from the published lesson.
+- `speak_from_english`: the learner sees the English line and produces the Dutch line. English translations are model-written by position, in the same contract style as role-play cues. The Dutch reference stays server-derived.
+- Both use story sections (the sections that get `story_summary`). Lines are the section's dialogue turns (speaker kept) and its prose text split into sentences (speaker `null`), at most 60 lines.
+- Out of scope: a hint or self-navigation mode for speaking from English, and any merge with role-play.
+
+## Completion and progress
+
+Completion works the same way for every activity type.
+
+- **Metrics.** Each metric key has a value from 0 to 1, computed server-side for the viewer. `lesson_share` is this lesson's `lessonShare` ("% of Lesson 8 done"). `lesson_reading` is the reading half of that share. `lesson_grammar` is the share of this lesson's grammar sources whose `guided_grammar` run is completed at the current fingerprint. `lesson_activities` is the share of this lesson's suggested activities completed at current fingerprints.
+- **Snapshots.** When a run starts (the first open that creates it, and on restart), the server stores all metric values in the run as `metrics_before`. On completion, the response includes before and after values for the activity's requested keys.
+- **Display.** The screen shows only metrics that changed, as progress bars with friendly copy, for example "+6% of this lesson's grammar" or "Lesson 8 is now 42% done (+2%)". If none changed, the block is hidden.
+- **Up next**, in this order: the model's `followUps` (`guided_grammar` only); the next source's suggestions in document order (the next section's activities); Back to lesson (the existing link); Back to practices (`guided_grammar` only, see [Guided grammar](#guided-grammar)).
+
+## Do more with AI
+
+The lesson's **Do more with AI** header shows a badge with the count of this lesson's completed activities, taken from the existing completed list. The area expands upward to a taller size, and the new-words panel shrinks vertically to make room. Every activity type has its own lucide-react icon:
+
+| Activity | Icon |
+| --- | --- |
+| Story summary | `BookOpenText` |
+| Story comprehension | `ListChecks` |
+| Grammar explanation | `NotebookPen` |
+| Guided grammar | `Footprints` |
+| Tricky grammar | `Puzzle` |
+| Mixed practice | `Shuffle` |
+| Role-play | `Drama` |
+| Read aloud | `Mic` |
+| Speak from English | `Languages` |
 
 ## Dedicated page and private work
 
@@ -76,13 +135,13 @@ Microsoft recognition can return reference-based pronunciation scores. Browser r
 
 ## Speech and privacy exception
 
-The existing recognizers send audio directly from the browser to their service; Wordinator never stores raw learner audio. **Explicit Send sends the editable transcription as private activity answer text.** This is the narrow approved exception to the no-transcript-storage rule of drill/word-card speech. Nothing is sent to another learner or placed in shared cached content.
+The existing recognizers send audio directly from the browser to their service; Wordinator never stores raw learner audio. **Explicit Send sends the editable transcription as private activity answer text.** This is the narrow approved exception to the no-transcript-storage rule of drill/word-card speech. The same exception covers `read_aloud` and `speak_from_english` transcripts, which are private answer text in the same way. Nothing is sent to another learner or placed in shared cached content.
 
 Partner and reference playback resolves original stored turn IDs server-side, never arbitrary client text or voices. Use existing content-addressed R2 speech with course cast voices. Generated clips are intentionally public-by-URL. The speech route, long-line parts, metering and archived-course behaviour are described in [speech](speech.md#lesson-activity-role-play). The existing narrator-only on-demand Tutor rule is unchanged for Tutor surfaces; role-play adds a cast-based activity surface.
 
 ## Learning time
 
-Use the one learning clock with activity `lesson_activity`, lesson/activity target and reading, grammar or speaking focus. Count active work only, not generation waits, hidden/idle time or duplicate lesson/Tutor claims. Aggregate into existing AI-practice time totals and daily goals, retaining focus on stored entries. Do not change typical lesson-reading medians, required-practice medians or lesson completion.
+Use the one learning clock with activity `lesson_activity`, lesson/activity target and reading, grammar or speaking focus. Count active work only, not generation waits, hidden/idle time or duplicate lesson/Tutor claims. Aggregate into existing AI-practice time totals and daily goals, retaining focus on stored entries. Recorded time never changes typical lesson-reading medians, required-practice medians or lesson completion; only answered guided grammar steps move lesson progress.
 
 ## API and persistence
 
@@ -93,7 +152,8 @@ Contracts in `@wordinator/contracts/lesson-activities` own descriptors, payloads
 - Safari may block partner audio that starts after an asynchronous fetch, because the play call is no longer inside the learner's tap. The audio-unavailable notice shows and typing still works.
 - The recognizer ends a held capture on silence, so a long pause ends the transcript before release.
 - Pronunciation scores are shown on the device only. They are not sent to the server and are not stored.
+- Future, not in v2: a hint or self-navigation mode for speaking from English; merging role-play into the speaking types; vocabulary and word-memory effects; live adaptive generation; a per-block read set for progress.
 
 ## Verification
 
-Mandatory negative tests cover signed-out/setup-incomplete accounts, hidden/unpublished lessons, mismatched nested IDs, cross-account runs and reference stripping. Cache tests cover duplicate opens, source changes during generation, stale leases and retries. Flow tests cover current-section suggestions, dedicated navigation/resume, cue modes, explicit Send, microphone cleanup and typed fallback. Learning/reset tests prove that no required progress or word memory is changed. See [testing](testing.md) and the execution plan for actual commands and results.
+Mandatory negative tests cover signed-out/setup-incomplete accounts, hidden/unpublished lessons, mismatched nested IDs, cross-account runs and reference stripping. Cache tests cover duplicate opens, source changes during generation, stale leases and retries. Flow tests cover current-section suggestions, dedicated navigation/resume, cue modes, explicit Send, microphone cleanup and typed fallback. Learning/reset tests prove that word memory is never changed, that recorded time changes no medians or completion, and that progress moves only through answered guided grammar steps, with no write for archived or unsaved runs. See [testing](testing.md) and the execution plan for actual commands and results.
