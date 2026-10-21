@@ -1,7 +1,7 @@
 import { Badge } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { Check, Dumbbell, Sparkles } from "lucide-react";
+import { Check, Dumbbell, MessageCircle, Sparkles } from "lucide-react";
 import { useId } from "react";
 import { useTranslation } from "react-i18next";
 import type { TypicalTime } from "@wordinator/contracts/learning";
@@ -109,7 +109,9 @@ export function LessonBoxActions({ lesson, compact = false, courseSlug, lessonSl
   const sectionLabel = (suggestions.find((entry) => entry.descriptor.sourceKind === "section")?.descriptor.sourceLabel ?? suggestions[0]?.descriptor.sourceLabel.replace(/^Dialogue · /, "")) || null;
   return <div className={styles.actions} data-compact={compact || undefined} role="group" aria-label={t("courses.lessonBox.actions")}>
     <h2 className={styles.actionsHeading}><Sparkles aria-hidden="true" /><span>{t("courses.lessonBox.doMoreWithAi")}</span>
-      {completedCount > 0 && <Badge component="span" variant="light" size="sm" aria-label={t("courses.lessonBox.activitiesDoneCount", { count: completedCount })}>{completedCount}</Badge>}</h2>
+      {completedCount > 0 && <Badge component="span" variant="light" size="sm" aria-label={t("courses.lessonBox.activitiesDoneCount", { count: completedCount })}>{completedCount}</Badge>}
+      {/* The AI mark the navigation rail uses for the AI tutor, at the row's end. */}
+      <MessageCircle aria-hidden="true" className={styles.aiMark} /></h2>
     {sectionLabel && <p className={styles.section} title={sectionLabel}>{sectionLabel}</p>}
     <div className={styles.pair}>
       <Link className={styles.action} data-category="words" title={compact ? t("courses.lessonBox.practiseWords") : undefined} to="/words/drill" search={{ source: "course", course: lesson.courseId, direction: "mixed" }}>
