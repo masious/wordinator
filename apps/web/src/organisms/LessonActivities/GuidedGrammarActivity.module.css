@@ -1,0 +1,7 @@
+/* Guided grammar: the step bar above the lesson blocks. The question panel reuses LessonActivity.module.css. */
+.guided{display:grid;gap:var(--space-4)}
+.steps{display:flex;gap:var(--space-1)}
+.segment{flex:1;height:var(--space-1);border-radius:var(--radius-sm);background:var(--color-control-surface)}
+.segment[data-current]{background:var(--color-action-soft)}
+.segment[data-done]{background:var(--color-action)}
+.body{display:grid;gap:var(--space-3)}
