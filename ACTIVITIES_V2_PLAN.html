@@ -723,7 +723,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <dt>Done when</dt><dd><ul><li>The list test cases pass.</li><li>API typecheck passes for the first time since Batch 1.</li><li>The worker reports the typecheck and test counts.</li></ul></dd>
 <dt>Depends on</dt><dd>T3.5</dd>
 <dt>Parallel-safe</dt><dd>no</dd>
-<dt>Status</dt><dd class="status">Not started</dd>
+<dt>Status</dt><dd class="status">Done 2026-10-21 — API typecheck 0 errors; lesson-activities 92/92; full API suite in 8 batches of 6: 44 files 429 tests pass; R2 4 files 20 tests pass; API build ok</dd>
 <dt>Risk</dt><dd>normal</dd>
 </dl>
 <p class="orch"><strong>Orchestrator note:</strong> after T3.6 the orchestrator runs the batch’s API test files in groups of six (see <code>docs/workers-tests-port-exhaustion.md</code>), runs the API build, then commits T3.6. The brief names only <code>apps/api/test/lesson-activities.test.ts</code> and <code>apps/api/test/lesson-activities-migration.test.ts</code> as API test files, plus an unnamed lesson-progress reset suite. The orchestrator confirms the full list. The worker does not run the batch-wide set.</p>
@@ -1085,6 +1085,7 @@ REPORT FORMAT (maximum 10 lines, no diffs, no logs):
 <tr><td>T3.5</td><td>2026-10-21</td><td>lesson-activities.test.ts 90/90; course-progress.test.ts 12/12; orchestrator full-diff review</td><td>Done; metrics.ts, metrics_before on create/restart, guided first-answer reading credit (forward only), completion before/after</td></tr>
 <tr><td>T4.7</td><td>2026-10-21</td><td>LessonActivityPage 14/14; ActivityCompletion 5/5; web typecheck 0 errors</td><td>Done; ActivityCompletion (changed metrics only, Up next D6, back to practices), page branches for nine types</td></tr>
 <tr><td>T4.8</td><td>2026-10-21</td><td>web typecheck 0; LessonBox 7, Roleplay 11, LessonActivityPage 14, Summary 3, Guided 3, ReadAloud 5, SpeakFromEnglish 5, ActivityCompletion 5, LessonWords 10; web build ok</td><td>Done; web compiles and builds</td></tr>
+<tr><td>T3.6</td><td>2026-10-21</td><td>API typecheck 0 errors; lesson-activities 92/92; full API suite in 8 batches of 6: 44 files 429 tests pass; R2 4 files 20 tests pass; API build ok</td><td>Done; list counts new types, archived list unchanged; Batch 3 closed</td></tr>
 </tbody>
 </table></div>
 </section>

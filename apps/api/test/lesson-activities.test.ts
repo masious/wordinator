@@ -445,6 +445,38 @@ describe("completed activities", () => {
     expect((await listing(s, s.rival)).completed).toEqual([]);
   });
 
+  it("counts a completed guided grammar activity for its owner", async () => {
+    const s = await setup();
+    const reply = say(JSON.stringify({
+      steps: [[0, 1], [2, 3]].map((chunks, index) => ({ chunks, question: { kind: "choice", prompt: `Step ${index + 1}?`, options: ["Alpha", "Beta", "Gamma"], correctIndex: 0, explanation: "Because." } })),
+      metrics: ["lesson_grammar"],
+    }));
+    const opened = await readyOpen(await openActivity(s.learner, s.base, s.descriptor(s.ids.grammar), "guided_grammar", scriptedAi([reply])));
+    const payload = opened.activity.payload;
+    if (payload.type !== "guided_grammar") throw new Error("Expected guided_grammar.");
+    expect((await listing(s, s.learner)).completed).toEqual([]);
+    for (const step of payload.steps) {
+      const answered = await call("POST", `${s.base}/${opened.activity.id}/answers`, s.learner, answerBody(opened.run.id, step.question.id, step.question.options[0]!.id));
+      expect(answered.status).toBe(200);
+    }
+    expect((await patchRun(s, s.learner, opened.activity.id, { action: "complete" })).status).toBe(200);
+    expect((await listing(s, s.learner)).completed).toEqual([{ sourceId: s.ids.grammar, type: "guided_grammar" }]);
+    expect((await listing(s, s.rival)).completed).toEqual([]);
+  });
+
+  it("lists the same descriptors and completions for an archived course as before it was archived", async () => {
+    const s = await setup();
+    // An archived course is visible to its owner (the learner gets 404), so the owner's completion is the one listed.
+    const opened = await answerQuick(s, s.owner, scriptedAi([say(tricky().json)]));
+    expect((await patchRun(s, s.owner, opened.activity.id, { action: "complete" })).status).toBe(200);
+    const before = await (await call("GET", s.base, s.owner)).text();
+    await env.DB.prepare("UPDATE courses SET status = 'archived' WHERE id = ?").bind(s.courseId).run();
+    const archived = await call("GET", s.base, s.owner);
+    expect(archived.status).toBe(200);
+    expect(await archived.text()).toBe(before);
+    expect((await listing(s, s.owner)).completed).toEqual([{ sourceId: s.ids.grammar, type: "tricky_grammar" }]);
+  });
+
   it("drops a completion once the section's text changes and the lesson is republished", async () => {
     const s = await setup();
     const opened = await answerQuick(s, s.learner, scriptedAi([say(tricky().json)]));
