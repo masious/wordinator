@@ -143,7 +143,7 @@ export function LessonActivityPage(props: LessonActivityPageProps) {
     {(props.archived || ready.ephemeral) && <Surface tone="quiet"><p>{t("lessonActivities.archivedUnsaved")}</p></Surface>}
     {completed
       ? <ActivityCompletion courseSlug={props.courseSlug} lessonSlug={props.lessonSlug} lessonLabel={props.lessonTitle} descriptors={descriptors.data.descriptors}
-        descriptor={descriptor} followUps={payload?.type === "guided_grammar" ? payload.followUps : undefined} metrics={completionMetrics}
+        descriptor={descriptor} completed={descriptors.data.completed} followUps={payload?.type === "guided_grammar" ? payload.followUps : undefined} metrics={completionMetrics}
         restarting={patchRun.isPending} onRestart={restart} />
       : payload?.type === "story_summary" ? <SummaryActivity payload={payload} completing={patchRun.isPending} onComplete={() => patchRun.mutate({ action: "complete" })} />
       : payload?.type === "guided_grammar" && run ? <GuidedGrammarActivity endpoint={endpoint} runId={run.id} steps={payload.steps} cursor={cursor}

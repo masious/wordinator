@@ -441,8 +441,21 @@ describe("completed activities", () => {
     // The rival opens the same shared activity and never finishes it: the learner's completion is not theirs.
     await readyOpen(await openActivity(s.rival, s.base, s.descriptor(s.ids.grammar), "tricky_grammar"));
     expect((await patchRun(s, s.learner, opened.activity.id, { action: "complete" })).status).toBe(200);
-    expect((await listing(s, s.learner)).completed).toEqual([{ sourceId: s.ids.grammar, type: "tricky_grammar" }]);
+    expect((await listing(s, s.learner)).completed).toMatchObject([{ sourceId: s.ids.grammar, type: "tricky_grammar" }]);
     expect((await listing(s, s.rival)).completed).toEqual([]);
+  });
+
+  it("scores a completed activity by each item's first answer and records when it finished", async () => {
+    const s = await setup();
+    const opened = await answerQuick(s, s.learner, scriptedAi([say(tricky().json)]));
+    // A second, wrong answer to an already-answered item never changes its first-try score.
+    const [first] = trickyAll(opened);
+    await call("POST", `${s.base}/${opened.activity.id}/answers`, s.learner, answerBody(opened.run.id, first!.question, first!.wrong));
+    const before = Date.now();
+    expect((await patchRun(s, s.learner, opened.activity.id, { action: "complete" })).status).toBe(200);
+    const [done] = (await listing(s, s.learner)).completed;
+    expect(done).toMatchObject({ type: "tricky_grammar", correct: 4, total: 4 });
+    expect(done!.completedAt).toBeGreaterThanOrEqual(before - 1_000);
   });
 
   it("counts a completed guided grammar activity for its owner", async () => {
@@ -460,7 +473,7 @@ describe("completed activities", () => {
       expect(answered.status).toBe(200);
     }
     expect((await patchRun(s, s.learner, opened.activity.id, { action: "complete" })).status).toBe(200);
-    expect((await listing(s, s.learner)).completed).toEqual([{ sourceId: s.ids.grammar, type: "guided_grammar" }]);
+    expect((await listing(s, s.learner)).completed).toMatchObject([{ sourceId: s.ids.grammar, type: "guided_grammar" }]);
     expect((await listing(s, s.rival)).completed).toEqual([]);
   });
 
@@ -474,14 +487,14 @@ describe("completed activities", () => {
     const archived = await call("GET", s.base, s.owner);
     expect(archived.status).toBe(200);
     expect(await archived.text()).toBe(before);
-    expect((await listing(s, s.owner)).completed).toEqual([{ sourceId: s.ids.grammar, type: "tricky_grammar" }]);
+    expect((await listing(s, s.owner)).completed).toMatchObject([{ sourceId: s.ids.grammar, type: "tricky_grammar" }]);
   });
 
   it("drops a completion once the section's text changes and the lesson is republished", async () => {
     const s = await setup();
     const opened = await answerQuick(s, s.learner, scriptedAi([say(tricky().json)]));
     expect((await patchRun(s, s.learner, opened.activity.id, { action: "complete" })).status).toBe(200);
-    expect((await listing(s, s.learner)).completed).toEqual([{ sourceId: s.ids.grammar, type: "tricky_grammar" }]);
+    expect((await listing(s, s.learner)).completed).toMatchObject([{ sourceId: s.ids.grammar, type: "tricky_grammar" }]);
 
     await republishGrammar(s, "In a main clause the verb always takes second place.");
     const after = await listing(s, s.learner);
@@ -501,7 +514,7 @@ describe("completed activities", () => {
     expect((await listing(s, s.learner)).completed).toEqual([]);
 
     expect((await patchRun(s, s.learner, opened.activity.id, { action: "complete" })).status).toBe(200);
-    expect((await listing(s, s.learner)).completed).toEqual([{ sourceId: s.ids.grammar, type: "tricky_grammar" }]);
+    expect((await listing(s, s.learner)).completed).toMatchObject([{ sourceId: s.ids.grammar, type: "tricky_grammar" }]);
   });
 
   it("keeps the list deterministic for the same state", async () => {

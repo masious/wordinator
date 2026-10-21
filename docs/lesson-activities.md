@@ -90,6 +90,7 @@ Completion works the same way for every activity type.
 - **Snapshots.** When a run starts (the first open that creates it, and on restart), the server stores all metric values in the run as `metrics_before`. On completion, the response includes before and after values for the activity's requested keys.
 - **Display.** The screen shows only metrics that changed, as progress bars with friendly copy, for example "+6% of this lesson's grammar" or "Lesson 8 is now 42% done (+2%)". If none changed, the block is hidden.
 - **Up next**, in this order: the model's `followUps` (`guided_grammar` only); the next source's suggestions in document order (the next section's activities); Back to lesson (the existing link); Back to practices (`guided_grammar` only, see [Guided grammar](#guided-grammar)).
+- **Done marks.** An Up next item the viewer has already completed (current version) shows a Done badge with when it was finished ("Done · 3 days ago"). Question activities (story comprehension, guided grammar, tricky grammar, mixed practice) show their first-try score instead of Done ("3/4 correct · 3 days ago"): each item's first answer counts, so later tries and restarts never raise it.
 
 ## Do more with AI
 

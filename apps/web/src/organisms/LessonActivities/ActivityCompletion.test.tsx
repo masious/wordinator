@@ -52,6 +52,16 @@ describe("ActivityCompletion", () => {
     ]);
   });
 
+  it("marks done Up next items with their first-try score or Done, and when they were finished", async () => {
+    const threeDaysAgo = Date.now() - 3 * 86_400_000;
+    await renderCompletion({ completed: [
+      { sourceId: "reading", type: "guided_grammar", completedAt: threeDaysAgo, correct: 3, total: 4 },
+      { sourceId: "reading", type: "story_comprehension", completedAt: null, correct: null, total: null },
+    ] });
+    expect(screen.getByRole("link", { name: /Guided grammar · Reading/ })).toHaveTextContent("3/4 correct · 3 days ago");
+    expect(screen.getByRole("link", { name: /Story comprehension · Reading/ })).toHaveTextContent(/Done$/);
+  });
+
   it("Back to practices targets practiceBlockId, and the return link when it is null", async () => {
     await renderCompletion({ followUps: [] });
     expect(screen.getByRole("link", { name: "Back to the lesson's practices" })).toHaveAttribute("href", `/courses/dutch/lessons/one#${uuid(9)}`);

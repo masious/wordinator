@@ -27,7 +27,9 @@ export const lessonActivityDescriptorSchema = z.strictObject({
 });
 export type ActivityDescriptor = z.infer<typeof lessonActivityDescriptorSchema>;
 // The viewer's own completed activities for the lesson whose source fingerprint is still current (docs/lesson-activities.md#scope-and-entry-point).
-export const activityCompletionSchema = z.strictObject({ sourceId: z.string().min(1).max(200), type: lessonActivityTypeSchema });
+// `completedAt` is when the run finished. `correct`/`total` score the first answer to each item of an answered activity; both are null for one finished without answers.
+const scoreCountSchema = z.number().int().nonnegative().nullable().default(null);
+export const activityCompletionSchema = z.strictObject({ sourceId: z.string().min(1).max(200), type: lessonActivityTypeSchema, completedAt: z.number().int().nullable().default(null), correct: scoreCountSchema, total: scoreCountSchema });
 export type ActivityCompletion = z.infer<typeof activityCompletionSchema>;
 export const activityDescriptorListResponseSchema = z.strictObject({
   descriptors: z.array(lessonActivityDescriptorSchema),

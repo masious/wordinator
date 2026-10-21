@@ -339,7 +339,7 @@ export const resources = {
       lessonActivities: {
         backToSection: "Back to {{section}}", loadingSources: "Finding activities for this lesson", unavailable: "This activity is not available for this section.",
         openFailed: "The activity could not be opened.", preparing: "Preparing your activity", checkAgain: "Check again", generationTimedOut: "This is taking longer than expected. Try again in a moment.", archivedUnsaved: "This archived lesson is open for read-only practice. Your answers will not be saved.",
-        finished: "Activity complete", finishedBody: "Your work stays private and does not change lesson completion.", backToLesson: "Back to lesson", progress: "Question {{current}} of {{total}}",
+        finished: "Activity complete", finishedBody: "Your work stays private.", doneScore: "{{correct}}/{{total}} correct", doneWhen: "{{status}} · {{when}}", backToLesson: "Back to lesson", progress: "Question {{current}} of {{total}}",
         englishSummary: "Scene summary", dutchRecap: "Dutch recap", explanation: "The idea", done: "Done", answerLabel: "Your answer", correct: "Correct", tryAgain: "Here is the reference answer.", retry: "Try again", finish: "Finish", continue: "Continue", checkAnswer: "Check answer",
         cueLanguage: "Cue language", english: "English", dutch: "Dutch", roleplayIntro: "You are {{speaker}} in the original dialogue.", startDialogue: "Start dialogue", yourTurn: "Your reply", holdToSpeak: "Hold to speak", send: "Send",
         opening: "Opening activity", startAgain: "Start again", saveFailed: "Your progress could not be saved. Try again.", answerFailed: "Your answer could not be checked. Try again.",

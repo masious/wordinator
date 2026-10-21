@@ -8,14 +8,18 @@ import type { ActivityLesson } from "./routes";
 // The viewer's own completed runs in this lesson, counted only when the activity's source fingerprint is the section's current one:
 // a republished section is not done anymore. Ordered, so repeated reads of the same state are identical.
 export async function completedActivities(db: D1Database, lesson: Pick<ActivityLesson, "lessonId" | "courseId">, uid: string, descriptors: readonly ActivityDescriptor[]): Promise<ActivityCompletion[]> {
-  const rows = await db.prepare(`SELECT a.source_id AS sourceId, a.activity_type AS type, a.source_fingerprint AS fingerprint
+  // The score counts each item's first answer (a restart keeps earlier answers, so later tries never raise it).
+  const rows = await db.prepare(`SELECT a.source_id AS sourceId, a.activity_type AS type, a.source_fingerprint AS fingerprint, r.completed_at AS completedAt,
+      (SELECT COUNT(DISTINCT x.item_id) FROM lesson_activity_answers x WHERE x.run_id = r.id) AS total,
+      (SELECT COUNT(*) FROM lesson_activity_answers x WHERE x.run_id = r.id AND x.correct = 1
+        AND x.rowid = (SELECT MIN(y.rowid) FROM lesson_activity_answers y WHERE y.run_id = r.id AND y.item_id = x.item_id)) AS correct
     FROM lesson_activity_runs r JOIN lesson_activities a ON a.id = r.activity_id
     WHERE r.user_id = ? AND r.status = 'completed' AND a.lesson_id = ? AND a.course_id = ?
     ORDER BY a.source_id, a.activity_type`).bind(uid, lesson.lessonId, lesson.courseId)
-    .all<{ sourceId: string; type: string; fingerprint: string }>();
+    .all<{ sourceId: string; type: string; fingerprint: string; completedAt: number | null; total: number; correct: number }>();
   return rows.results.flatMap((row) => {
     const type = row.type as ActivityType;
-    return verifyLessonActivitySource(descriptors, row.sourceId, type, row.fingerprint) ? [{ sourceId: row.sourceId, type }] : [];
+    return verifyLessonActivitySource(descriptors, row.sourceId, type, row.fingerprint) ? [{ sourceId: row.sourceId, type, completedAt: row.completedAt, ...(row.total > 0 ? { correct: row.correct, total: row.total } : { correct: null, total: null }) }] : [];
   });
 }
 
